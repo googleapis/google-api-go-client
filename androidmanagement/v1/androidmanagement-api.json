@@ -1168,7 +1168,7 @@
       }
     }
   },
-  "revision": "20241203",
+  "revision": "20241204",
   "rootUrl": "https://androidmanagement.googleapis.com/",
   "schemas": {
     "AdbShellCommandEvent": {
@@ -6640,11 +6640,13 @@
           "description": "Required. Wi-Fi roaming mode for the specified SSID.",
           "enum": [
             "WIFI_ROAMING_MODE_UNSPECIFIED",
+            "WIFI_ROAMING_DISABLED",
             "WIFI_ROAMING_DEFAULT",
             "WIFI_ROAMING_AGGRESSIVE"
           ],
           "enumDescriptions": [
             "Unspecified. Defaults to WIFI_ROAMING_DEFAULT.",
+            "Wi-Fi roaming is disabled. Supported on Android 15 and above on fully managed devices and work profiles on company-owned devices. A nonComplianceDetail with MANAGEMENT_MODE is reported for other management modes. A nonComplianceDetail with API_LEVEL is reported if the Android version is less than 15.",
             "Default Wi-Fi roaming mode of the device.",
             "Aggressive roaming mode which allows quicker Wi-Fi roaming. Supported on Android 15 and above on fully managed devices and work profiles on company-owned devices. A nonComplianceDetail with MANAGEMENT_MODE is reported for other management modes. A nonComplianceDetail with API_LEVEL is reported if the Android version is less than 15. A nonComplianceDetail with DEVICE_INCOMPATIBLE is reported if the device does not support aggressive roaming mode."
           ],

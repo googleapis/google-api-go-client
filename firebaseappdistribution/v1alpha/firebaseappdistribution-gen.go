@@ -541,6 +541,7 @@ func (s GoogleFirebaseAppdistroV1alphaAiStepResult) MarshalJSON() ([]byte, error
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GoogleFirebaseAppdistroV1alphaApp: An app.
 type GoogleFirebaseAppdistroV1alphaApp struct {
 	// AabCertificate: App bundle test certificate generated for the app.
 	AabCertificate *GoogleFirebaseAppdistroV1alphaAabCertificate `json:"aabCertificate,omitempty"`
@@ -652,6 +653,8 @@ type GoogleFirebaseAppdistroV1alphaCancelReleaseTestResponse struct {
 	googleapi.ServerResponse `json:"-"`
 }
 
+// GoogleFirebaseAppdistroV1alphaCreateReleaseNotesRequest: The request message
+// for `CreateReleaseNotes`.
 type GoogleFirebaseAppdistroV1alphaCreateReleaseNotesRequest struct {
 	// ReleaseNotes: The actual release notes body from the user
 	ReleaseNotes *GoogleFirebaseAppdistroV1alphaReleaseNotes `json:"releaseNotes,omitempty"`
@@ -673,6 +676,8 @@ func (s GoogleFirebaseAppdistroV1alphaCreateReleaseNotesRequest) MarshalJSON() (
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GoogleFirebaseAppdistroV1alphaCreateReleaseNotesResponse: The response
+// message for `CreateReleaseNotes`.
 type GoogleFirebaseAppdistroV1alphaCreateReleaseNotesResponse struct {
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
@@ -872,6 +877,8 @@ func (s GoogleFirebaseAppdistroV1alphaDeviceInteractionWait) MarshalJSON() ([]by
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GoogleFirebaseAppdistroV1alphaEnableAccessOnReleaseRequest: The request
+// message for `EnableAccessOnRelease`.
 type GoogleFirebaseAppdistroV1alphaEnableAccessOnReleaseRequest struct {
 	// BuildVersion: Optional. Ignored. Used to be build version of the app release
 	// if an instance identifier was provided for the release_id.
@@ -904,6 +911,8 @@ func (s GoogleFirebaseAppdistroV1alphaEnableAccessOnReleaseRequest) MarshalJSON(
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GoogleFirebaseAppdistroV1alphaEnableAccessOnReleaseResponse: The response
+// message for `EnableAccessOnRelease`.
 type GoogleFirebaseAppdistroV1alphaEnableAccessOnReleaseResponse struct {
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
@@ -961,6 +970,8 @@ func (s GoogleFirebaseAppdistroV1alphaGetTesterUdidsResponse) MarshalJSON() ([]b
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GoogleFirebaseAppdistroV1alphaGetUploadStatusResponse: The response message
+// for `GetUploadStatus`.
 type GoogleFirebaseAppdistroV1alphaGetUploadStatusResponse struct {
 	// ErrorCode: The error code associated with (only set on "FAILURE")
 	//
@@ -997,11 +1008,11 @@ type GoogleFirebaseAppdistroV1alphaGetUploadStatusResponse struct {
 	// Status: The status of the upload
 	//
 	// Possible values:
-	//   "STATUS_UNSPECIFIED"
-	//   "IN_PROGRESS"
-	//   "ALREADY_UPLOADED"
-	//   "SUCCESS"
-	//   "ERROR"
+	//   "STATUS_UNSPECIFIED" - Status unspecified.
+	//   "IN_PROGRESS" - The upload is in progress.
+	//   "ALREADY_UPLOADED" - The binary has already been uploaded.
+	//   "SUCCESS" - The upload was successful.
+	//   "ERROR" - The upload failed.
 	Status string `json:"status,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
@@ -1076,7 +1087,9 @@ func (s GoogleFirebaseAppdistroV1alphaGoalDetails) MarshalJSON() ([]byte, error)
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GoogleFirebaseAppdistroV1alphaJwt: A JWT token.
 type GoogleFirebaseAppdistroV1alphaJwt struct {
+	// Token: The JWT token (three Base64URL-encoded strings joined by dots).
 	Token string `json:"token,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
@@ -1218,6 +1231,8 @@ func (s GoogleFirebaseAppdistroV1alphaLoginCredentialFieldHints) MarshalJSON() (
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GoogleFirebaseAppdistroV1alphaProvisionAppResponse: The response message for
+// `ProvisionApp`.
 type GoogleFirebaseAppdistroV1alphaProvisionAppResponse struct {
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
@@ -1266,7 +1281,9 @@ func (s GoogleFirebaseAppdistroV1alphaRelease) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GoogleFirebaseAppdistroV1alphaReleaseNotes: Release notes for a release.
 type GoogleFirebaseAppdistroV1alphaReleaseNotes struct {
+	// ReleaseNotes: The actual release notes text from the user.
 	ReleaseNotes string `json:"releaseNotes,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "ReleaseNotes") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -1305,6 +1322,11 @@ type GoogleFirebaseAppdistroV1alphaReleaseTest struct {
 	// `projects/{project_number}/apps/{app_id}/releases/{release_id}/tests/{test_id
 	// }`
 	Name string `json:"name,omitempty"`
+	// TestCase: Optional. The test case that was used to generate this release
+	// test. Note: The test case may have changed or been deleted since the release
+	// test was created. Format:
+	// `projects/{project_number}/apps/{app}/testCases/{test_case}`
+	TestCase string `json:"testCase,omitempty"`
 	// TestState: Output only. The state of the release test.
 	//
 	// Possible values:

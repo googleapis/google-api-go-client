@@ -960,6 +960,14 @@ type GoogleCloudAiplatformV1beta1GenerationConfig struct {
 	// prompted to output the appropriate response type, otherwise the behavior is
 	// undefined. This is a preview feature.
 	ResponseMimeType string `json:"responseMimeType,omitempty"`
+	// ResponseModalities: Optional. The modalities of the response.
+	//
+	// Possible values:
+	//   "MODALITY_UNSPECIFIED" - Unspecified modality. Will be processed as text.
+	//   "TEXT" - Text modality.
+	//   "IMAGE" - Image modality.
+	//   "AUDIO" - Audio modality.
+	ResponseModalities []string `json:"responseModalities,omitempty"`
 	// ResponseSchema: Optional. The `Schema` object allows the definition of input
 	// and output data types. These types can be objects, but also primitives and
 	// arrays. Represents a select subset of an OpenAPI 3.0 schema object
@@ -971,10 +979,22 @@ type GoogleCloudAiplatformV1beta1GenerationConfig struct {
 	RoutingConfig *GoogleCloudAiplatformV1beta1GenerationConfigRoutingConfig `json:"routingConfig,omitempty"`
 	// Seed: Optional. Seed.
 	Seed int64 `json:"seed,omitempty"`
+	// SpeechConfig: Optional. The speech generation config.
+	SpeechConfig *GoogleCloudAiplatformV1beta1SpeechConfig `json:"speechConfig,omitempty"`
 	// StopSequences: Optional. Stop sequences.
 	StopSequences []string `json:"stopSequences,omitempty"`
 	// Temperature: Optional. Controls the randomness of predictions.
 	Temperature float64 `json:"temperature,omitempty"`
+	// TokenResolution: Optional. If specified, the token resolution specified will
+	// be used.
+	//
+	// Possible values:
+	//   "TOKEN_RESOLUTION_UNSPECIFIED" - Token resolution has not been set.
+	//   "TOKEN_RESOLUTION_LOW" - Token resolution set to low (64 tokens).
+	//   "TOKEN_RESOLUTION_MEDIUM" - Token resolution set to medium (256 tokens).
+	//   "TOKEN_RESOLUTION_HIGH" - Token resolution set to high (P&S with 256
+	// tokens).
+	TokenResolution string `json:"tokenResolution,omitempty"`
 	// TopK: Optional. If specified, top-k sampling will be used.
 	TopK float64 `json:"topK,omitempty"`
 	// TopP: Optional. If specified, nucleus sampling will be used.
@@ -1416,6 +1436,29 @@ type GoogleCloudAiplatformV1beta1Part struct {
 
 func (s GoogleCloudAiplatformV1beta1Part) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1beta1Part
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudAiplatformV1beta1PrebuiltVoiceConfig: The configuration for the
+// prebuilt speaker to use.
+type GoogleCloudAiplatformV1beta1PrebuiltVoiceConfig struct {
+	// VoiceName: The name of the preset voice to use.
+	VoiceName string `json:"voiceName,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "VoiceName") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "VoiceName") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudAiplatformV1beta1PrebuiltVoiceConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudAiplatformV1beta1PrebuiltVoiceConfig
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -1965,6 +2008,28 @@ func (s GoogleCloudAiplatformV1beta1Segment) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudAiplatformV1beta1SpeechConfig: The speech generation config.
+type GoogleCloudAiplatformV1beta1SpeechConfig struct {
+	// VoiceConfig: The configuration for the speaker to use.
+	VoiceConfig *GoogleCloudAiplatformV1beta1VoiceConfig `json:"voiceConfig,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "VoiceConfig") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "VoiceConfig") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudAiplatformV1beta1SpeechConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudAiplatformV1beta1SpeechConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudAiplatformV1beta1Tool: Tool details that the model may use to
 // generate response. A `Tool` is a piece of code that enables the system to
 // interact with external systems to perform an action, or set of actions,
@@ -1984,6 +2049,9 @@ type GoogleCloudAiplatformV1beta1Tool struct {
 	// will generate the final response back to the user. Maximum 128 function
 	// declarations can be provided.
 	FunctionDeclarations []*GoogleCloudAiplatformV1beta1FunctionDeclaration `json:"functionDeclarations,omitempty"`
+	// GoogleSearch: Optional. GoogleSearch tool type. Tool to support Google
+	// Search in Model. Powered by Google.
+	GoogleSearch *GoogleCloudAiplatformV1beta1ToolGoogleSearch `json:"googleSearch,omitempty"`
 	// GoogleSearchRetrieval: Optional. GoogleSearchRetrieval tool type.
 	// Specialized retrieval tool that is powered by Google search.
 	GoogleSearchRetrieval *GoogleCloudAiplatformV1beta1GoogleSearchRetrieval `json:"googleSearchRetrieval,omitempty"`
@@ -2037,6 +2105,11 @@ type GoogleCloudAiplatformV1beta1ToolConfig struct {
 func (s GoogleCloudAiplatformV1beta1ToolConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1beta1ToolConfig
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudAiplatformV1beta1ToolGoogleSearch: GoogleSearch tool type. Tool
+// to support Google Search in Model. Powered by Google.
+type GoogleCloudAiplatformV1beta1ToolGoogleSearch struct {
 }
 
 // GoogleCloudAiplatformV1beta1VertexAISearch: Retrieve from Vertex AI Search
@@ -2164,6 +2237,29 @@ type GoogleCloudAiplatformV1beta1VideoMetadata struct {
 
 func (s GoogleCloudAiplatformV1beta1VideoMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1beta1VideoMetadata
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudAiplatformV1beta1VoiceConfig: The configuration for the voice to
+// use.
+type GoogleCloudAiplatformV1beta1VoiceConfig struct {
+	// PrebuiltVoiceConfig: The configuration for the prebuilt voice to use.
+	PrebuiltVoiceConfig *GoogleCloudAiplatformV1beta1PrebuiltVoiceConfig `json:"prebuiltVoiceConfig,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "PrebuiltVoiceConfig") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "PrebuiltVoiceConfig") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudAiplatformV1beta1VoiceConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudAiplatformV1beta1VoiceConfig
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 

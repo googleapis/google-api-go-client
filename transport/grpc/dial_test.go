@@ -23,8 +23,8 @@ func TestDial(t *testing.T) {
 	oldDialContext := dialContext
 	// Replace package var in order to assert DialContext args.
 	dialContext = func(ctxGot context.Context, target string, opts ...grpc.DialOption) (conn *grpc.ClientConn, err error) {
-		if len(opts) != 4 {
-			t.Fatalf("got: %d, want: 4", len(opts))
+		if len(opts) != 3 {
+			t.Fatalf("got: %d, want: 3", len(opts))
 		}
 		return nil, nil
 	}

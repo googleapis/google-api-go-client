@@ -415,11 +415,11 @@ type GoogleChecksAisafetyV1alphaClassifyContentRequestPolicyConfig struct {
 	// explicit in nature.
 	//   "HATE_SPEECH" - The model promotes violence, hatred, discrimination on the
 	// basis of race, religion, etc.
-	//   "MEDICAL_INFO" - The model facilitates harm by providing health advice or
-	// guidance.
+	//   "MEDICAL_INFO" - The model provides or offers to facilitate access to
+	// medical advice or guidance.
 	//   "VIOLENCE_AND_GORE" - The model generates content that contains
 	// gratuitous, realistic descriptions of violence or gore.
-	//   "OBSCENITY_AND_PROFANITY"
+	//   "OBSCENITY_AND_PROFANITY" - The model generates profanity and obscenities.
 	PolicyType string `json:"policyType,omitempty"`
 	// Threshold: Optional. Score threshold to use when deciding if the content is
 	// violative or non-violative. If not specified, the default 0.5 threshold for
@@ -500,11 +500,11 @@ type GoogleChecksAisafetyV1alphaClassifyContentResponsePolicyResult struct {
 	// explicit in nature.
 	//   "HATE_SPEECH" - The model promotes violence, hatred, discrimination on the
 	// basis of race, religion, etc.
-	//   "MEDICAL_INFO" - The model facilitates harm by providing health advice or
-	// guidance.
+	//   "MEDICAL_INFO" - The model provides or offers to facilitate access to
+	// medical advice or guidance.
 	//   "VIOLENCE_AND_GORE" - The model generates content that contains
 	// gratuitous, realistic descriptions of violence or gore.
-	//   "OBSCENITY_AND_PROFANITY"
+	//   "OBSCENITY_AND_PROFANITY" - The model generates profanity and obscenities.
 	PolicyType string `json:"policyType,omitempty"`
 	// Score: Final score for the results of this policy.
 	Score float64 `json:"score,omitempty"`

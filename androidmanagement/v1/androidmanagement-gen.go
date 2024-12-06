@@ -6723,6 +6723,11 @@ type WifiRoamingSetting struct {
 	// Possible values:
 	//   "WIFI_ROAMING_MODE_UNSPECIFIED" - Unspecified. Defaults to
 	// WIFI_ROAMING_DEFAULT.
+	//   "WIFI_ROAMING_DISABLED" - Wi-Fi roaming is disabled. Supported on Android
+	// 15 and above on fully managed devices and work profiles on company-owned
+	// devices. A nonComplianceDetail with MANAGEMENT_MODE is reported for other
+	// management modes. A nonComplianceDetail with API_LEVEL is reported if the
+	// Android version is less than 15.
 	//   "WIFI_ROAMING_DEFAULT" - Default Wi-Fi roaming mode of the device.
 	//   "WIFI_ROAMING_AGGRESSIVE" - Aggressive roaming mode which allows quicker
 	// Wi-Fi roaming. Supported on Android 15 and above on fully managed devices

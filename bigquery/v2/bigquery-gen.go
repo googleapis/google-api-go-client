@@ -10484,7 +10484,7 @@ func (r *DatasetsService) Get(projectId string, datasetId string) *DatasetsGetCa
 // Requests specifying an invalid value will be rejected. Requests for
 // conditional access policy binding in datasets must specify version 3.
 // Dataset with no conditional role bindings in access policy may specify any
-// valid value or leave the field unset. This field will be maped to [IAM
+// valid value or leave the field unset. This field will be mapped to [IAM
 // Policy version] (https://cloud.google.com/iam/docs/policies#versions) and
 // will be used to fetch policy from IAM. If unset or if 0 or 1 value is used
 // for dataset with conditional bindings, access entry with condition will have
@@ -10637,7 +10637,7 @@ func (r *DatasetsService) Insert(projectId string, dataset *Dataset) *DatasetsIn
 // access policy binding in datasets must specify version 3. * But dataset with
 // no conditional role bindings in access policy may specify any valid value or
 // leave the field unset. If unset or if 0 or 1 value is used for dataset with
-// conditional bindings, request will be rejected. This field will be maped to
+// conditional bindings, request will be rejected. This field will be mapped to
 // IAM Policy version (https://cloud.google.com/iam/docs/policies#versions) and
 // will be used to set policy in IAM.
 func (c *DatasetsInsertCall) AccessPolicyVersion(accessPolicyVersion int64) *DatasetsInsertCall {
@@ -10927,7 +10927,7 @@ func (r *DatasetsService) Patch(projectId string, datasetId string, dataset *Dat
 // entry with condition. * But dataset with no conditional role bindings in
 // access policy may specify any valid value or leave the field unset. If unset
 // or if 0 or 1 value is used for dataset with conditional bindings, request
-// will be rejected. This field will be maped to IAM Policy version
+// will be rejected. This field will be mapped to IAM Policy version
 // (https://cloud.google.com/iam/docs/policies#versions) and will be used to
 // set policy in IAM.
 func (c *DatasetsPatchCall) AccessPolicyVersion(accessPolicyVersion int64) *DatasetsPatchCall {
@@ -11161,7 +11161,7 @@ func (r *DatasetsService) Update(projectId string, datasetId string, dataset *Da
 // entry with condition. * But dataset with no conditional role bindings in
 // access policy may specify any valid value or leave the field unset. If unset
 // or if 0 or 1 value is used for dataset with conditional bindings, request
-// will be rejected. This field will be maped to IAM Policy version
+// will be rejected. This field will be mapped to IAM Policy version
 // (https://cloud.google.com/iam/docs/policies#versions) and will be used to
 // set policy in IAM.
 func (c *DatasetsUpdateCall) AccessPolicyVersion(accessPolicyVersion int64) *DatasetsUpdateCall {

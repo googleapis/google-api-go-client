@@ -6834,6 +6834,7 @@ type ExchangeAssignedTargetingOptionDetails struct {
 	//   "EXCHANGE_ADMOST_GBID" - AdMost.
 	//   "EXCHANGE_TOPON_GBID" - TopOn.
 	//   "EXCHANGE_NETFLIX" - Netflix.
+	//   "EXCHANGE_CORE" - Core.
 	//   "EXCHANGE_TUBI" - Tubi.
 	Exchange string `json:"exchange,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Exchange") to
@@ -6968,6 +6969,7 @@ type ExchangeConfigEnabledExchange struct {
 	//   "EXCHANGE_ADMOST_GBID" - AdMost.
 	//   "EXCHANGE_TOPON_GBID" - TopOn.
 	//   "EXCHANGE_NETFLIX" - Netflix.
+	//   "EXCHANGE_CORE" - Core.
 	//   "EXCHANGE_TUBI" - Tubi.
 	Exchange string `json:"exchange,omitempty"`
 	// GoogleAdManagerAgencyId: Output only. Agency ID of Google Ad Manager. The
@@ -7086,6 +7088,7 @@ type ExchangeReviewStatus struct {
 	//   "EXCHANGE_ADMOST_GBID" - AdMost.
 	//   "EXCHANGE_TOPON_GBID" - TopOn.
 	//   "EXCHANGE_NETFLIX" - Netflix.
+	//   "EXCHANGE_CORE" - Core.
 	//   "EXCHANGE_TUBI" - Tubi.
 	Exchange string `json:"exchange,omitempty"`
 	// Status: Status of the exchange review.
@@ -7207,6 +7210,7 @@ type ExchangeTargetingOptionDetails struct {
 	//   "EXCHANGE_ADMOST_GBID" - AdMost.
 	//   "EXCHANGE_TOPON_GBID" - TopOn.
 	//   "EXCHANGE_NETFLIX" - Netflix.
+	//   "EXCHANGE_CORE" - Core.
 	//   "EXCHANGE_TUBI" - Tubi.
 	Exchange string `json:"exchange,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Exchange") to
@@ -8241,6 +8245,7 @@ type GuaranteedOrder struct {
 	//   "EXCHANGE_ADMOST_GBID" - AdMost.
 	//   "EXCHANGE_TOPON_GBID" - TopOn.
 	//   "EXCHANGE_NETFLIX" - Netflix.
+	//   "EXCHANGE_CORE" - Core.
 	//   "EXCHANGE_TUBI" - Tubi.
 	Exchange string `json:"exchange,omitempty"`
 	// GuaranteedOrderId: Output only. The unique identifier of the guaranteed
@@ -9027,6 +9032,7 @@ type InventorySource struct {
 	//   "EXCHANGE_ADMOST_GBID" - AdMost.
 	//   "EXCHANGE_TOPON_GBID" - TopOn.
 	//   "EXCHANGE_NETFLIX" - Netflix.
+	//   "EXCHANGE_CORE" - Core.
 	//   "EXCHANGE_TUBI" - Tubi.
 	Exchange string `json:"exchange,omitempty"`
 	// GuaranteedOrderId: Immutable. The ID of the guaranteed order that this
@@ -29523,8 +29529,8 @@ func (c *FirstAndThirdPartyAudiencesListCall) OrderBy(orderBy string) *FirstAndT
 }
 
 // PageSize sets the optional parameter "pageSize": Requested page size. Must
-// be between `1` and `200`. If unspecified will default to `100`. Returns
-// error code `INVALID_ARGUMENT` if an invalid value is specified.
+// be between `1` and `5000`. If unspecified, this value defaults to `100`.
+// Returns error code `INVALID_ARGUMENT` if an invalid value is specified.
 func (c *FirstAndThirdPartyAudiencesListCall) PageSize(pageSize int64) *FirstAndThirdPartyAudiencesListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c

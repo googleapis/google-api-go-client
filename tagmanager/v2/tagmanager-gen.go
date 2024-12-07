@@ -1427,6 +1427,9 @@ type GalleryReference struct {
 	// import time. This value is recomputed whenever the template is updated from
 	// the gallery.
 	Signature string `json:"signature,omitempty"`
+	// TemplateDeveloperId: The developer id of the community gallery template.
+	// This value is set whenever the template is created from the gallery.
+	TemplateDeveloperId string `json:"templateDeveloperId,omitempty"`
 	// Version: The version of the community gallery template.
 	Version string `json:"version,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Host") to unconditionally

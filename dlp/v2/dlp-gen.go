@@ -6079,6 +6079,8 @@ type GooglePrivacyDlpV2InfoTypeDescription struct {
 	Description string `json:"description,omitempty"`
 	// DisplayName: Human readable form of the infoType name.
 	DisplayName string `json:"displayName,omitempty"`
+	// Example: A sample true positive for this infoType.
+	Example string `json:"example,omitempty"`
 	// Name: Internal name of the infoType.
 	Name string `json:"name,omitempty"`
 	// SensitivityScore: The default sensitivity of the infoType.

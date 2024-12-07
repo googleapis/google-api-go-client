@@ -2163,8 +2163,8 @@ type OperationMetadata struct {
 	EndTime string `json:"endTime,omitempty"`
 	// RequestedCancellation: Output only. Identifies whether the caller has
 	// requested cancellation of the operation. Operations that have successfully
-	// been cancelled have Operation.error value with a google.rpc.Status.code of
-	// 1, corresponding to Code.CANCELLED.
+	// been cancelled have google.longrunning.Operation.error value with a
+	// google.rpc.Status.code of 1, corresponding to Code.CANCELLED.
 	RequestedCancellation bool `json:"requestedCancellation,omitempty"`
 	// StatusMessage: Output only. Human-readable status of the operation, if any.
 	StatusMessage string `json:"statusMessage,omitempty"`
@@ -2430,7 +2430,7 @@ func (s Restore) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// RestoreServiceRequest: Request message for DataprocMetastore.Restore.
+// RestoreServiceRequest: Request message for DataprocMetastore.RestoreService.
 type RestoreServiceRequest struct {
 	// Backup: Optional. The relative resource name of the metastore service backup
 	// to restore from, in the following

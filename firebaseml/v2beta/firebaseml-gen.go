@@ -949,6 +949,16 @@ type GoogleCloudAiplatformV1beta1GenerationConfig struct {
 	// MaxOutputTokens: Optional. The maximum number of output tokens to generate
 	// per message.
 	MaxOutputTokens int64 `json:"maxOutputTokens,omitempty"`
+	// MediaResolution: Optional. If specified, the media resolution specified will
+	// be used.
+	//
+	// Possible values:
+	//   "MEDIA_RESOLUTION_UNSPECIFIED" - Media resolution has not been set.
+	//   "MEDIA_RESOLUTION_LOW" - Media resolution set to low (64 tokens).
+	//   "MEDIA_RESOLUTION_MEDIUM" - Media resolution set to medium (256 tokens).
+	//   "MEDIA_RESOLUTION_HIGH" - Media resolution set to high (zoomed reframing
+	// with 256 tokens).
+	MediaResolution string `json:"mediaResolution,omitempty"`
 	// PresencePenalty: Optional. Positive penalties.
 	PresencePenalty float64 `json:"presencePenalty,omitempty"`
 	// ResponseLogprobs: Optional. If true, export the logprobs results in
@@ -985,16 +995,6 @@ type GoogleCloudAiplatformV1beta1GenerationConfig struct {
 	StopSequences []string `json:"stopSequences,omitempty"`
 	// Temperature: Optional. Controls the randomness of predictions.
 	Temperature float64 `json:"temperature,omitempty"`
-	// TokenResolution: Optional. If specified, the token resolution specified will
-	// be used.
-	//
-	// Possible values:
-	//   "TOKEN_RESOLUTION_UNSPECIFIED" - Token resolution has not been set.
-	//   "TOKEN_RESOLUTION_LOW" - Token resolution set to low (64 tokens).
-	//   "TOKEN_RESOLUTION_MEDIUM" - Token resolution set to medium (256 tokens).
-	//   "TOKEN_RESOLUTION_HIGH" - Token resolution set to high (P&S with 256
-	// tokens).
-	TokenResolution string `json:"tokenResolution,omitempty"`
 	// TopK: Optional. If specified, top-k sampling will be used.
 	TopK float64 `json:"topK,omitempty"`
 	// TopP: Optional. If specified, nucleus sampling will be used.

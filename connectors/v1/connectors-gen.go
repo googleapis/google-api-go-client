@@ -685,21 +685,21 @@ func (s AuthSchema) MarshalJSON() ([]byte, error) {
 // AuthorizationCodeLink: This configuration captures the details required to
 // render an authorization link for the OAuth Authorization Code Flow.
 type AuthorizationCodeLink struct {
-	// ClientId: The client ID assigned to the Google Cloud Connectors OAuth app
-	// for the connector data source.
+	// ClientId: Optional. The client ID assigned to the Google Cloud Connectors
+	// OAuth app for the connector data source.
 	ClientId string `json:"clientId,omitempty"`
 	// ClientSecret: Optional. The client secret assigned to the Google Cloud
 	// Connectors OAuth app for the connector data source.
 	ClientSecret *Secret `json:"clientSecret,omitempty"`
-	// EnablePkce: Whether to enable PKCE for the auth code flow.
+	// EnablePkce: Optional. Whether to enable PKCE for the auth code flow.
 	EnablePkce bool `json:"enablePkce,omitempty"`
 	// OmitQueryParams: Optional. Omit query params from the redirect URI.
 	OmitQueryParams bool `json:"omitQueryParams,omitempty"`
-	// Scopes: The scopes for which the user will authorize Google Cloud Connectors
-	// on the connector data source.
+	// Scopes: Optional. The scopes for which the user will authorize Google Cloud
+	// Connectors on the connector data source.
 	Scopes []string `json:"scopes,omitempty"`
-	// Uri: The base URI the user must click to trigger the authorization code
-	// login flow.
+	// Uri: Optional. The base URI the user must click to trigger the authorization
+	// code login flow.
 	Uri string `json:"uri,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "ClientId") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -885,14 +885,15 @@ func (s ConfigVariable) MarshalJSON() ([]byte, error) {
 // ConfigVariableTemplate: ConfigVariableTemplate provides metadata about a
 // `ConfigVariable` that is used in a Connection.
 type ConfigVariableTemplate struct {
-	// AuthorizationCodeLink: Authorization code link options. To be populated if
-	// `ValueType` is `AUTHORIZATION_CODE`
+	// AuthorizationCodeLink: Optional. Authorization code link options. To be
+	// populated if `ValueType` is `AUTHORIZATION_CODE`
 	AuthorizationCodeLink *AuthorizationCodeLink `json:"authorizationCodeLink,omitempty"`
-	// Description: Description.
+	// Description: Optional. Description.
 	Description string `json:"description,omitempty"`
-	// DisplayName: Display name of the parameter.
+	// DisplayName: Optional. Display name of the parameter.
 	DisplayName string `json:"displayName,omitempty"`
-	// EnumOptions: Enum options. To be populated if `ValueType` is `ENUM`
+	// EnumOptions: Optional. Enum options. To be populated if `ValueType` is
+	// `ENUM`
 	EnumOptions []*EnumOption `json:"enumOptions,omitempty"`
 	// EnumSource: Optional. enum source denotes the source of api to fill the enum
 	// options
@@ -901,9 +902,10 @@ type ConfigVariableTemplate struct {
 	//   "ENUM_SOURCE_UNSPECIFIED" - Api type unspecified.
 	//   "EVENT_TYPES_API" - list event types.
 	EnumSource string `json:"enumSource,omitempty"`
-	// IsAdvanced: Indicates if current template is part of advanced settings
+	// IsAdvanced: Optional. Indicates if current template is part of advanced
+	// settings
 	IsAdvanced bool `json:"isAdvanced,omitempty"`
-	// Key: Key of the config variable.
+	// Key: Optional. Key of the config variable.
 	Key string `json:"key,omitempty"`
 	// LocationType: Optional. Location Tyep denotes where this value should be
 	// sent in BYOC connections.
@@ -918,26 +920,27 @@ type ConfigVariableTemplate struct {
 	// MultipleSelectConfig: Optional. MultipleSelectConfig represents the multiple
 	// options for a config variable.
 	MultipleSelectConfig *MultipleSelectConfig `json:"multipleSelectConfig,omitempty"`
-	// Required: Flag represents that this `ConfigVariable` must be provided for a
-	// connection.
+	// Required: Optional. Flag represents that this `ConfigVariable` must be
+	// provided for a connection.
 	Required bool `json:"required,omitempty"`
-	// RequiredCondition: Condition under which a field would be required. The
-	// condition can be represented in the form of a logical expression.
+	// RequiredCondition: Optional. Condition under which a field would be
+	// required. The condition can be represented in the form of a logical
+	// expression.
 	RequiredCondition *LogicalExpression `json:"requiredCondition,omitempty"`
-	// RoleGrant: Role grant configuration for the config variable.
+	// RoleGrant: Optional. Role grant configuration for the config variable.
 	RoleGrant *RoleGrant `json:"roleGrant,omitempty"`
-	// State: State of the config variable.
+	// State: Output only. State of the config variable.
 	//
 	// Possible values:
 	//   "STATE_UNSPECIFIED" - Status is unspecified.
 	//   "ACTIVE" - Config variable is active
 	//   "DEPRECATED" - Config variable is deprecated.
 	State string `json:"state,omitempty"`
-	// ValidationRegex: Regular expression in RE2 syntax used for validating the
-	// `value` of a `ConfigVariable`.
+	// ValidationRegex: Optional. Regular expression in RE2 syntax used for
+	// validating the `value` of a `ConfigVariable`.
 	ValidationRegex string `json:"validationRegex,omitempty"`
-	// ValueType: Type of the parameter: string, int, bool etc. consider custom
-	// type for the benefit for the validation.
+	// ValueType: Optional. Type of the parameter: string, int, bool etc. consider
+	// custom type for the benefit for the validation.
 	//
 	// Possible values:
 	//   "VALUE_TYPE_UNSPECIFIED" - Value type is not specified.
@@ -1005,6 +1008,7 @@ type Connection struct {
 	//   "PREVIEW" - PREVIEW.
 	//   "GA" - GA.
 	//   "DEPRECATED" - DEPRECATED.
+	//   "TEST" - TEST.
 	//   "PRIVATE_PREVIEW" - PRIVATE_PREVIEW.
 	ConnectorVersionLaunchStage string `json:"connectorVersionLaunchStage,omitempty"`
 	// CreateTime: Output only. Created time.
@@ -1230,8 +1234,12 @@ type Connector struct {
 	//   "PREVIEW" - PREVIEW.
 	//   "GA" - GA.
 	//   "DEPRECATED" - DEPRECATED.
+	//   "TEST" - TEST.
 	//   "PRIVATE_PREVIEW" - PRIVATE_PREVIEW.
 	LaunchStage string `json:"launchStage,omitempty"`
+	// MarketplaceConnectorDetails: Output only. Marketplace connector details.
+	// Will be null if the connector is not marketplace connector.
+	MarketplaceConnectorDetails *MarketplaceConnectorDetails `json:"marketplaceConnectorDetails,omitempty"`
 	// Name: Output only. Resource name of the Connector. Format:
 	// projects/{project}/locations/{location}/providers/{provider}/connectors/{conn
 	// ector} Only global location is supported for Connector resource.
@@ -1369,6 +1377,7 @@ type ConnectorVersion struct {
 	//   "PREVIEW" - PREVIEW.
 	//   "GA" - GA.
 	//   "DEPRECATED" - DEPRECATED.
+	//   "TEST" - TEST.
 	//   "PRIVATE_PREVIEW" - PRIVATE_PREVIEW.
 	LaunchStage string `json:"launchStage,omitempty"`
 	// Name: Output only. Resource name of the Version. Format:
@@ -1435,7 +1444,7 @@ type ConnectorVersionInfraConfig struct {
 	// ConnectionRatelimitWindowSeconds: Output only. The window used for
 	// ratelimiting runtime requests to connections.
 	ConnectionRatelimitWindowSeconds int64 `json:"connectionRatelimitWindowSeconds,omitempty,string"`
-	// DeploymentModel: Optional. Indicates whether connector is deployed on
+	// DeploymentModel: Output only. Indicates whether connector is deployed on
 	// GKE/CloudRun
 	//
 	// Possible values:
@@ -2075,9 +2084,9 @@ func (s EndpointAttachment) MarshalJSON() ([]byte, error) {
 
 // EnumOption: EnumOption definition
 type EnumOption struct {
-	// DisplayName: Display name of the option.
+	// DisplayName: Optional. Display name of the option.
 	DisplayName string `json:"displayName,omitempty"`
-	// Id: Id of the option.
+	// Id: Optional. Id of the option.
 	Id string `json:"id,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "DisplayName") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -2151,6 +2160,8 @@ func (s EventSubscription) MarshalJSON() ([]byte, error) {
 type EventSubscriptionDestination struct {
 	// Endpoint: OPTION 1: Hit an endpoint when we receive an event.
 	Endpoint *EndPoint `json:"endpoint,omitempty"`
+	// Gsutil: OPTION 2: Write the event to Cloud Storage bucket.
+	Gsutil *GSUtil `json:"gsutil,omitempty"`
 	// ServiceAccount: Service account needed for runtime plane to trigger IP
 	// workflow.
 	ServiceAccount string `json:"serviceAccount,omitempty"`
@@ -2159,6 +2170,8 @@ type EventSubscriptionDestination struct {
 	// Possible values:
 	//   "TYPE_UNSPECIFIED" - Default state.
 	//   "ENDPOINT" - Endpoint - Hit the value of endpoint when event is received
+	//   "GCS" - Cloud Storage - Write the event to Cloud Storage bucket
+	//   "PUBSUB" - Pub/Sub - Write the event to Pub/Sub topic
 	Type string `json:"type,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Endpoint") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -2258,14 +2271,14 @@ func (s EventType) MarshalJSON() ([]byte, error) {
 
 // EventingConfig: Eventing Configuration of a connection
 type EventingConfig struct {
-	// AdditionalVariables: Additional eventing related field values
+	// AdditionalVariables: Optional. Additional eventing related field values
 	AdditionalVariables []*ConfigVariable `json:"additionalVariables,omitempty"`
-	// AuthConfig: Auth details for the webhook adapter.
+	// AuthConfig: Optional. Auth details for the webhook adapter.
 	AuthConfig *AuthConfig `json:"authConfig,omitempty"`
 	// DeadLetterConfig: Optional. Dead letter configuration for eventing of a
 	// connection.
 	DeadLetterConfig *DeadLetterConfig `json:"deadLetterConfig,omitempty"`
-	// EnrichmentEnabled: Enrichment Enabled.
+	// EnrichmentEnabled: Optional. Enrichment Enabled.
 	EnrichmentEnabled bool `json:"enrichmentEnabled,omitempty"`
 	// EventsListenerIngressEndpoint: Optional. Ingress endpoint of the event
 	// listener. This is used only when private connectivity is enabled.
@@ -2276,7 +2289,8 @@ type EventingConfig struct {
 	PrivateConnectivityEnabled bool `json:"privateConnectivityEnabled,omitempty"`
 	// ProxyDestinationConfig: Optional. Proxy for Eventing auto-registration.
 	ProxyDestinationConfig *DestinationConfig `json:"proxyDestinationConfig,omitempty"`
-	// RegistrationDestinationConfig: Registration endpoint for auto registration.
+	// RegistrationDestinationConfig: Optional. Registration endpoint for auto
+	// registration.
 	RegistrationDestinationConfig *DestinationConfig `json:"registrationDestinationConfig,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AdditionalVariables") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -2367,6 +2381,7 @@ type EventingDetails struct {
 	//   "PREVIEW" - PREVIEW.
 	//   "GA" - GA.
 	//   "DEPRECATED" - DEPRECATED.
+	//   "TEST" - TEST.
 	//   "PRIVATE_PREVIEW" - PRIVATE_PREVIEW.
 	LaunchStage string `json:"launchStage,omitempty"`
 	// Name: Output only. Name of the Eventing trigger.
@@ -2681,7 +2696,7 @@ func (s Field) MarshalJSON() ([]byte, error) {
 type FieldComparison struct {
 	// BoolValue: Boolean value
 	BoolValue bool `json:"boolValue,omitempty"`
-	// Comparator: Comparator to use for comparing the field value.
+	// Comparator: Optional. Comparator to use for comparing the field value.
 	//
 	// Possible values:
 	//   "COMPARATOR_UNSPECIFIED" - The default value.
@@ -2690,7 +2705,7 @@ type FieldComparison struct {
 	Comparator string `json:"comparator,omitempty"`
 	// IntValue: Integer value
 	IntValue int64 `json:"intValue,omitempty,string"`
-	// Key: Key of the field.
+	// Key: Optional. Key of the field.
 	Key string `json:"key,omitempty"`
 	// StringValue: String value
 	StringValue string `json:"stringValue,omitempty"`
@@ -2709,6 +2724,29 @@ type FieldComparison struct {
 
 func (s FieldComparison) MarshalJSON() ([]byte, error) {
 	type NoMethod FieldComparison
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GSUtil: GSUtil message includes details of the Destination Cloud Storage
+// bucket.
+type GSUtil struct {
+	// GsutilUri: Required. The URI of the Cloud Storage bucket.
+	GsutilUri string `json:"gsutilUri,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "GsutilUri") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "GsutilUri") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GSUtil) MarshalJSON() ([]byte, error) {
+	type NoMethod GSUtil
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -3688,12 +3726,12 @@ func (s LockConfig) MarshalJSON() ([]byte, error) {
 
 // LogicalExpression: Struct for representing boolean expressions.
 type LogicalExpression struct {
-	// FieldComparisons: A list of fields to be compared.
+	// FieldComparisons: Optional. A list of fields to be compared.
 	FieldComparisons []*FieldComparison `json:"fieldComparisons,omitempty"`
-	// LogicalExpressions: A list of nested conditions to be compared.
+	// LogicalExpressions: Optional. A list of nested conditions to be compared.
 	LogicalExpressions []*LogicalExpression `json:"logicalExpressions,omitempty"`
-	// LogicalOperator: The logical operator to use between the fields and
-	// conditions.
+	// LogicalOperator: Optional. The logical operator to use between the fields
+	// and conditions.
 	//
 	// Possible values:
 	//   "OPERATOR_UNSPECIFIED" - The default value.
@@ -3904,6 +3942,34 @@ type ManagedZone struct {
 
 func (s ManagedZone) MarshalJSON() ([]byte, error) {
 	type NoMethod ManagedZone
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// MarketplaceConnectorDetails: Marketplace connector details.
+type MarketplaceConnectorDetails struct {
+	// MarketplaceProduct: Marketplace product name.
+	MarketplaceProduct string `json:"marketplaceProduct,omitempty"`
+	// MarketplaceProductId: Marketplace product ID.
+	MarketplaceProductId string `json:"marketplaceProductId,omitempty"`
+	// MarketplaceProductUri: Marketplace product URL.
+	MarketplaceProductUri string `json:"marketplaceProductUri,omitempty"`
+	// Partner: The name of the partner.
+	Partner string `json:"partner,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "MarketplaceProduct") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "MarketplaceProduct") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s MarketplaceConnectorDetails) MarshalJSON() ([]byte, error) {
+	type NoMethod MarketplaceConnectorDetails
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -4494,6 +4560,7 @@ type Provider struct {
 	//   "PREVIEW" - PREVIEW.
 	//   "GA" - GA.
 	//   "DEPRECATED" - DEPRECATED.
+	//   "TEST" - TEST.
 	//   "PRIVATE_PREVIEW" - PRIVATE_PREVIEW.
 	LaunchStage string `json:"launchStage,omitempty"`
 	// Name: Output only. Resource name of the Provider. Format:
@@ -4553,6 +4620,30 @@ type ProvisionedResource struct {
 
 func (s ProvisionedResource) MarshalJSON() ([]byte, error) {
 	type NoMethod ProvisionedResource
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// PublishCustomConnectorVersionRequest: Request message for
+// ConnectorsService.PublishCustomConnectorVersion
+type PublishCustomConnectorVersionRequest struct {
+	// PartnerMetadata: Required. Partner metadata details for validating and
+	// publishing the custom connector as a partner connector version.
+	PartnerMetadata *PartnerMetadata `json:"partnerMetadata,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "PartnerMetadata") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "PartnerMetadata") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s PublishCustomConnectorVersionRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod PublishCustomConnectorVersionRequest
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -4638,11 +4729,11 @@ type RepairEventingRequest struct {
 
 // Resource: Resource definition
 type Resource struct {
-	// PathTemplate: Template to uniquely represent a Google Cloud resource in a
-	// format IAM expects This is a template that can have references to other
-	// values provided in the config variable template.
+	// PathTemplate: Optional. Template to uniquely represent a Google Cloud
+	// resource in a format IAM expects This is a template that can have references
+	// to other values provided in the config variable template.
 	PathTemplate string `json:"pathTemplate,omitempty"`
-	// Type: Different types of resource supported.
+	// Type: Optional. Different types of resource supported.
 	//
 	// Possible values:
 	//   "TYPE_UNSPECIFIED" - Value type is not specified.
@@ -4814,10 +4905,10 @@ type RetryEventSubscriptionRequest struct {
 // used by the UI to render a 'grant' button to do the same on behalf of the
 // user.
 type RoleGrant struct {
-	// HelperTextTemplate: Template that UI can use to provide helper text to
-	// customers.
+	// HelperTextTemplate: Optional. Template that UI can use to provide helper
+	// text to customers.
 	HelperTextTemplate string `json:"helperTextTemplate,omitempty"`
-	// Principal: Prinicipal/Identity for whom the role need to assigned.
+	// Principal: Optional. Prinicipal/Identity for whom the role need to assigned.
 	//
 	// Possible values:
 	//   "PRINCIPAL_UNSPECIFIED" - Value type is not specified.
@@ -4825,9 +4916,10 @@ type RoleGrant struct {
 	// is either the default service account if unspecified or Service Account
 	// provided by Customers through BYOSA.
 	Principal string `json:"principal,omitempty"`
-	// Resource: Resource on which the roles needs to be granted for the principal.
+	// Resource: Optional. Resource on which the roles needs to be granted for the
+	// principal.
 	Resource *Resource `json:"resource,omitempty"`
-	// Roles: List of roles that need to be granted.
+	// Roles: Optional. List of roles that need to be granted.
 	Roles []string `json:"roles,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "HelperTextTemplate") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -5311,45 +5403,45 @@ func (s SshPublicKey) MarshalJSON() ([]byte, error) {
 
 // SslConfig: SSL Configuration of a connection
 type SslConfig struct {
-	// AdditionalVariables: Additional SSL related field values
+	// AdditionalVariables: Optional. Additional SSL related field values
 	AdditionalVariables []*ConfigVariable `json:"additionalVariables,omitempty"`
-	// ClientCertType: Type of Client Cert (PEM/JKS/.. etc.)
+	// ClientCertType: Optional. Type of Client Cert (PEM/JKS/.. etc.)
 	//
 	// Possible values:
 	//   "CERT_TYPE_UNSPECIFIED" - Cert type unspecified.
 	//   "PEM" - Privacy Enhanced Mail (PEM) Type
 	ClientCertType string `json:"clientCertType,omitempty"`
-	// ClientCertificate: Client Certificate
+	// ClientCertificate: Optional. Client Certificate
 	ClientCertificate *Secret `json:"clientCertificate,omitempty"`
-	// ClientPrivateKey: Client Private Key
+	// ClientPrivateKey: Optional. Client Private Key
 	ClientPrivateKey *Secret `json:"clientPrivateKey,omitempty"`
-	// ClientPrivateKeyPass: Secret containing the passphrase protecting the Client
-	// Private Key
+	// ClientPrivateKeyPass: Optional. Secret containing the passphrase protecting
+	// the Client Private Key
 	ClientPrivateKeyPass *Secret `json:"clientPrivateKeyPass,omitempty"`
-	// PrivateServerCertificate: Private Server Certificate. Needs to be specified
-	// if trust model is `PRIVATE`.
+	// PrivateServerCertificate: Optional. Private Server Certificate. Needs to be
+	// specified if trust model is `PRIVATE`.
 	PrivateServerCertificate *Secret `json:"privateServerCertificate,omitempty"`
-	// ServerCertType: Type of Server Cert (PEM/JKS/.. etc.)
+	// ServerCertType: Optional. Type of Server Cert (PEM/JKS/.. etc.)
 	//
 	// Possible values:
 	//   "CERT_TYPE_UNSPECIFIED" - Cert type unspecified.
 	//   "PEM" - Privacy Enhanced Mail (PEM) Type
 	ServerCertType string `json:"serverCertType,omitempty"`
-	// TrustModel: Trust Model of the SSL connection
+	// TrustModel: Optional. Trust Model of the SSL connection
 	//
 	// Possible values:
 	//   "PUBLIC" - Public Trust Model. Takes the Default Java trust store.
 	//   "PRIVATE" - Private Trust Model. Takes custom/private trust store.
 	//   "INSECURE" - Insecure Trust Model. Accept all certificates.
 	TrustModel string `json:"trustModel,omitempty"`
-	// Type: Controls the ssl type for the given connector version.
+	// Type: Optional. Controls the ssl type for the given connector version.
 	//
 	// Possible values:
 	//   "SSL_TYPE_UNSPECIFIED" - No SSL configuration required.
 	//   "TLS" - TLS Handshake
 	//   "MTLS" - mutual TLS (MTLS) Handshake
 	Type string `json:"type,omitempty"`
-	// UseSsl: Bool for enabling SSL
+	// UseSsl: Optional. Bool for enabling SSL
 	UseSsl bool `json:"useSsl,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AdditionalVariables") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -5817,6 +5909,11 @@ type WeeklyCycle struct {
 func (s WeeklyCycle) MarshalJSON() ([]byte, error) {
 	type NoMethod WeeklyCycle
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// WithdrawCustomConnectorVersionRequest: Request message for
+// ConnectorsService.WithdrawCustomConnectorVersion
+type WithdrawCustomConnectorVersionRequest struct {
 }
 
 type ProjectsLocationsGetCall struct {
@@ -9772,6 +9869,214 @@ func (c *ProjectsLocationsCustomConnectorsCustomConnectorVersionsDeprecateCall) 
 	return ret, nil
 }
 
+type ProjectsLocationsCustomConnectorsCustomConnectorVersionsPublishCall struct {
+	s                                    *Service
+	name                                 string
+	publishcustomconnectorversionrequest *PublishCustomConnectorVersionRequest
+	urlParams_                           gensupport.URLParams
+	ctx_                                 context.Context
+	header_                              http.Header
+}
+
+// Publish: Publish request for the CustomConnectorVersion. Once approved, the
+// CustomConnectorVersion will be published as PartnerConnector.
+//
+//   - name: Resource name of the form:
+//     `projects/{project}/locations/{location}/customConnectors/{custom_connector
+//     }/customConnectorVersions/{custom_connector_version}`.
+func (r *ProjectsLocationsCustomConnectorsCustomConnectorVersionsService) Publish(name string, publishcustomconnectorversionrequest *PublishCustomConnectorVersionRequest) *ProjectsLocationsCustomConnectorsCustomConnectorVersionsPublishCall {
+	c := &ProjectsLocationsCustomConnectorsCustomConnectorVersionsPublishCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.publishcustomconnectorversionrequest = publishcustomconnectorversionrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsCustomConnectorsCustomConnectorVersionsPublishCall) Fields(s ...googleapi.Field) *ProjectsLocationsCustomConnectorsCustomConnectorVersionsPublishCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsCustomConnectorsCustomConnectorVersionsPublishCall) Context(ctx context.Context) *ProjectsLocationsCustomConnectorsCustomConnectorVersionsPublishCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsCustomConnectorsCustomConnectorVersionsPublishCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsCustomConnectorsCustomConnectorVersionsPublishCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.publishcustomconnectorversionrequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}:publish")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "connectors.projects.locations.customConnectors.customConnectorVersions.publish" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsCustomConnectorsCustomConnectorVersionsPublishCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+}
+
+type ProjectsLocationsCustomConnectorsCustomConnectorVersionsWithdrawCall struct {
+	s                                     *Service
+	name                                  string
+	withdrawcustomconnectorversionrequest *WithdrawCustomConnectorVersionRequest
+	urlParams_                            gensupport.URLParams
+	ctx_                                  context.Context
+	header_                               http.Header
+}
+
+// Withdraw: Withdraw the publish request for the CustomConnectorVersion. This
+// can only be used before the CustomConnectorVersion is published.
+//
+//   - name: Resource name of the form:
+//     `projects/{project}/locations/{location}/customConnectors/{custom_connector
+//     }/customConnectorVersions/{custom_connector_version}`.
+func (r *ProjectsLocationsCustomConnectorsCustomConnectorVersionsService) Withdraw(name string, withdrawcustomconnectorversionrequest *WithdrawCustomConnectorVersionRequest) *ProjectsLocationsCustomConnectorsCustomConnectorVersionsWithdrawCall {
+	c := &ProjectsLocationsCustomConnectorsCustomConnectorVersionsWithdrawCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.withdrawcustomconnectorversionrequest = withdrawcustomconnectorversionrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsCustomConnectorsCustomConnectorVersionsWithdrawCall) Fields(s ...googleapi.Field) *ProjectsLocationsCustomConnectorsCustomConnectorVersionsWithdrawCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsCustomConnectorsCustomConnectorVersionsWithdrawCall) Context(ctx context.Context) *ProjectsLocationsCustomConnectorsCustomConnectorVersionsWithdrawCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsCustomConnectorsCustomConnectorVersionsWithdrawCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsCustomConnectorsCustomConnectorVersionsWithdrawCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.withdrawcustomconnectorversionrequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}:withdraw")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "connectors.projects.locations.customConnectors.customConnectorVersions.withdraw" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsCustomConnectorsCustomConnectorVersionsWithdrawCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+}
+
 type ProjectsLocationsEndpointAttachmentsCreateCall struct {
 	s                  *Service
 	parent             string
@@ -12152,7 +12457,7 @@ type ProjectsLocationsOperationsCancelCall struct {
 // other methods to check whether the cancellation succeeded or whether the
 // operation completed despite cancellation. On successful cancellation, the
 // operation is not deleted; instead, it becomes an operation with an
-// Operation.error value with a google.rpc.Status.code of 1, corresponding to
+// Operation.error value with a google.rpc.Status.code of `1`, corresponding to
 // `Code.CANCELLED`.
 //
 // - name: The name of the operation resource to be cancelled.

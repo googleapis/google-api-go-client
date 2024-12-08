@@ -283,8 +283,8 @@ type AutomatedBackupConfig struct {
 	// frequency.
 	FixedFrequencySchedule *FixedFrequencySchedule `json:"fixedFrequencySchedule,omitempty"`
 	// Retention: Optional. How long to keep automated backups before the backups
-	// are deleted. If not specified, the default value is 100 years which is also
-	// the maximum value supported. The minimum value is 1 day.
+	// are deleted. The value should be between 1 day and 365 days. If not
+	// specified, the default value is 35 days.
 	Retention string `json:"retention,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AutomatedBackupMode") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -394,9 +394,13 @@ type Backup struct {
 	//   "CREATING" - The backup is being created.
 	//   "ACTIVE" - The backup is active to be used.
 	//   "DELETING" - The backup is being deleted.
+	//   "SUSPENDED" - The backup is currently suspended due to reasons like
+	// project deletion, billing account closure, etc.
 	State string `json:"state,omitempty"`
 	// TotalSizeBytes: Output only. Total size of the backup in bytes.
 	TotalSizeBytes int64 `json:"totalSizeBytes,omitempty,string"`
+	// Uid: Output only. System assigned unique identifier of the backup.
+	Uid string `json:"uid,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
@@ -454,6 +458,9 @@ type BackupCollection struct {
 	ClusterUid string `json:"clusterUid,omitempty"`
 	// Name: Identifier. Full resource path of the backup collection.
 	Name string `json:"name,omitempty"`
+	// Uid: Output only. System assigned unique identifier of the backup
+	// collection.
+	Uid string `json:"uid,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
@@ -938,18 +945,21 @@ func (s Compliance) MarshalJSON() ([]byte, error) {
 
 // ConnectionDetail: Detailed information of each PSC connection.
 type ConnectionDetail struct {
+	// PscAutoConnection: Detailed information of a PSC connection that is created
+	// through service connectivity automation.
+	PscAutoConnection *PscAutoConnection `json:"pscAutoConnection,omitempty"`
 	// PscConnection: Detailed information of a PSC connection that is created by
 	// the customer who owns the cluster.
 	PscConnection *PscConnection `json:"pscConnection,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "PscConnection") to
+	// ForceSendFields is a list of field names (e.g. "PscAutoConnection") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "PscConnection") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
+	// NullFields is a list of field names (e.g. "PscAutoConnection") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -1953,11 +1963,8 @@ func (s FailoverInstanceRequest) MarshalJSON() ([]byte, error) {
 // FixedFrequencySchedule: This schedule allows the backup to be triggered at a
 // fixed frequency (currently only daily is supported).
 type FixedFrequencySchedule struct {
-	// StartTime: Optional. The start time of every automated backup in UTC. It
-	// must be set to the start of an hour. If not specified, the default value is
-	// the start of the hour when the automated backup config is enabled. For
-	// example, if the automated backup config is enabled at 10:13 AM UTC without
-	// specifying start_time, the default start time is 10:00 AM UTC.
+	// StartTime: Required. The start time of every automated backup in UTC. It
+	// must be set to the start of an hour. This field is required.
 	StartTime *TimeOfDay `json:"startTime,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "StartTime") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -3193,6 +3200,69 @@ type Product struct {
 
 func (s Product) MarshalJSON() ([]byte, error) {
 	type NoMethod Product
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// PscAutoConnection: Details of consumer resources in a PSC connection that is
+// created through Service Connectivity Automation.
+type PscAutoConnection struct {
+	// Address: Output only. The IP allocated on the consumer network for the PSC
+	// forwarding rule.
+	Address string `json:"address,omitempty"`
+	// ConnectionType: Output only. Type of the PSC connection.
+	//
+	// Possible values:
+	//   "CONNECTION_TYPE_UNSPECIFIED" - Cluster endpoint Type is not set
+	//   "CONNECTION_TYPE_DISCOVERY" - Cluster endpoint that will be used as for
+	// cluster topology discovery.
+	//   "CONNECTION_TYPE_PRIMARY" - Cluster endpoint that will be used as primary
+	// endpoint to access primary.
+	//   "CONNECTION_TYPE_READER" - Cluster endpoint that will be used as reader
+	// endpoint to access replicas.
+	ConnectionType string `json:"connectionType,omitempty"`
+	// ForwardingRule: Output only. The URI of the consumer side forwarding rule.
+	// Example:
+	// projects/{projectNumOrId}/regions/us-east1/forwardingRules/{resourceId}.
+	ForwardingRule string `json:"forwardingRule,omitempty"`
+	// Network: Required. The consumer network where the IP address resides, in the
+	// form of projects/{project_id}/global/networks/{network_id}.
+	Network string `json:"network,omitempty"`
+	// ProjectId: Required. The consumer project_id where the forwarding rule is
+	// created from.
+	ProjectId string `json:"projectId,omitempty"`
+	// PscConnectionId: Output only. The PSC connection id of the forwarding rule
+	// connected to the service attachment.
+	PscConnectionId string `json:"pscConnectionId,omitempty"`
+	// PscConnectionStatus: Output only. The status of the PSC connection. Please
+	// note that this value is updated periodically. Please use Private Service
+	// Connect APIs for the latest status.
+	//
+	// Possible values:
+	//   "PSC_CONNECTION_STATUS_UNSPECIFIED" - PSC connection status is not
+	// specified.
+	//   "PSC_CONNECTION_STATUS_ACTIVE" - The connection is active
+	//   "PSC_CONNECTION_STATUS_NOT_FOUND" - Connection not found
+	PscConnectionStatus string `json:"pscConnectionStatus,omitempty"`
+	// ServiceAttachment: Output only. The service attachment which is the target
+	// of the PSC connection, in the form of
+	// projects/{project-id}/regions/{region}/serviceAttachments/{service-attachment
+	// -id}.
+	ServiceAttachment string `json:"serviceAttachment,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Address") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Address") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s PscAutoConnection) MarshalJSON() ([]byte, error) {
+	type NoMethod PscAutoConnection
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -4856,7 +4926,12 @@ type ProjectsLocationsClustersBackupCall struct {
 // belongs to this collection. Both collection and backup will have a resource
 // name. Backup will be executed for each shard. A replica (primary if nonHA)
 // will be selected to perform the execution. Backup call will be rejected if
-// there is an ongoing backup or update operation.
+// there is an ongoing backup or update operation. Be aware that during
+// preview, if the cluster's internal software version is too old, critical
+// update will be performed before actual backup. Once the internal software
+// version is updated to the minimum version required by the backup feature,
+// subsequent backups will not require critical update. After preview, there
+// will be no critical update needed for backup.
 //
 //   - name: Redis cluster resource name using the form:
 //     `projects/{project_id}/locations/{location_id}/clusters/{cluster_id}`

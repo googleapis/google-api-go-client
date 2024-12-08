@@ -737,6 +737,14 @@ type ConnectivityTest struct {
 	// analysis. This is applicable to scenarios where a test can cross project
 	// boundaries.
 	RelatedProjects []string `json:"relatedProjects,omitempty"`
+	// ReturnReachabilityDetails: Output only. The reachability details of this
+	// test from the latest run for the return path. The details are updated when
+	// creating a new test, updating an existing test, or triggering a one-time
+	// rerun of an existing test.
+	ReturnReachabilityDetails *ReachabilityDetails `json:"returnReachabilityDetails,omitempty"`
+	// RoundTrip: Whether run analysis for the return path from destination to
+	// source. Default value is false.
+	RoundTrip bool `json:"roundTrip,omitempty"`
 	// Source: Required. Source specification of the Connectivity Test. You can use
 	// a combination of source IP address, virtual machine (VM) instance, or
 	// Compute Engine network to uniquely identify the source location. Examples:
@@ -4375,7 +4383,7 @@ type ProjectsLocationsGlobalOperationsCancelCall struct {
 // other methods to check whether the cancellation succeeded or whether the
 // operation completed despite cancellation. On successful cancellation, the
 // operation is not deleted; instead, it becomes an operation with an
-// Operation.error value with a google.rpc.Status.code of 1, corresponding to
+// Operation.error value with a google.rpc.Status.code of `1`, corresponding to
 // `Code.CANCELLED`.
 //
 // - name: The name of the operation resource to be cancelled.

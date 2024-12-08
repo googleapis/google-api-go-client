@@ -4485,6 +4485,7 @@ type GoogleCloudDiscoveryengineV1alphaAnswer struct {
 	//   "IN_PROGRESS" - Answer generation is currently in progress.
 	//   "FAILED" - Answer generation currently failed.
 	//   "SUCCEEDED" - Answer generation has succeeded.
+	//   "STREAMING" - Answer generation is currently in progress.
 	State string `json:"state,omitempty"`
 	// Steps: Answer generation steps.
 	Steps []*GoogleCloudDiscoveryengineV1alphaAnswerStep `json:"steps,omitempty"`
@@ -7670,8 +7671,9 @@ type GoogleCloudDiscoveryengineV1alphaListSessionsRequest struct {
 	Filter string `json:"filter,omitempty"`
 	// OrderBy: A comma-separated list of fields to order by, sorted in ascending
 	// order. Use "desc" after a field name for descending. Supported fields: *
-	// `update_time` * `create_time` * `session_name` Example: "update_time desc"
-	// "create_time"
+	// `update_time` * `create_time` * `session_name` * `is_pinned` Example: *
+	// "update_time desc" * "create_time" * "is_pinned desc,update_time desc": list
+	// sessions by is_pinned first, then by update_time.
 	OrderBy string `json:"orderBy,omitempty"`
 	// PageSize: Maximum number of results to return. If unspecified, defaults to
 	// 50. Max allowed value is 1000.
@@ -10637,6 +10639,7 @@ type GoogleCloudDiscoveryengineV1betaAnswer struct {
 	//   "IN_PROGRESS" - Answer generation is currently in progress.
 	//   "FAILED" - Answer generation currently failed.
 	//   "SUCCEEDED" - Answer generation has succeeded.
+	//   "STREAMING" - Answer generation is currently in progress.
 	State string `json:"state,omitempty"`
 	// Steps: Answer generation steps.
 	Steps []*GoogleCloudDiscoveryengineV1betaAnswerStep `json:"steps,omitempty"`
@@ -28199,7 +28202,9 @@ func (c *ProjectsLocationsCollectionsDataStoresSessionsListCall) Filter(filter s
 // OrderBy sets the optional parameter "orderBy": A comma-separated list of
 // fields to order by, sorted in ascending order. Use "desc" after a field name
 // for descending. Supported fields: * `update_time` * `create_time` *
-// `session_name` Example: "update_time desc" "create_time"
+// `session_name` * `is_pinned` Example: * "update_time desc" * "create_time" *
+// "is_pinned desc,update_time desc": list sessions by is_pinned first, then by
+// update_time.
 func (c *ProjectsLocationsCollectionsDataStoresSessionsListCall) OrderBy(orderBy string) *ProjectsLocationsCollectionsDataStoresSessionsListCall {
 	c.urlParams_.Set("orderBy", orderBy)
 	return c
@@ -35088,7 +35093,9 @@ func (c *ProjectsLocationsCollectionsEnginesSessionsListCall) Filter(filter stri
 // OrderBy sets the optional parameter "orderBy": A comma-separated list of
 // fields to order by, sorted in ascending order. Use "desc" after a field name
 // for descending. Supported fields: * `update_time` * `create_time` *
-// `session_name` Example: "update_time desc" "create_time"
+// `session_name` * `is_pinned` Example: * "update_time desc" * "create_time" *
+// "is_pinned desc,update_time desc": list sessions by is_pinned first, then by
+// update_time.
 func (c *ProjectsLocationsCollectionsEnginesSessionsListCall) OrderBy(orderBy string) *ProjectsLocationsCollectionsEnginesSessionsListCall {
 	c.urlParams_.Set("orderBy", orderBy)
 	return c
@@ -41960,7 +41967,9 @@ func (c *ProjectsLocationsDataStoresSessionsListCall) Filter(filter string) *Pro
 // OrderBy sets the optional parameter "orderBy": A comma-separated list of
 // fields to order by, sorted in ascending order. Use "desc" after a field name
 // for descending. Supported fields: * `update_time` * `create_time` *
-// `session_name` Example: "update_time desc" "create_time"
+// `session_name` * `is_pinned` Example: * "update_time desc" * "create_time" *
+// "is_pinned desc,update_time desc": list sessions by is_pinned first, then by
+// update_time.
 func (c *ProjectsLocationsDataStoresSessionsListCall) OrderBy(orderBy string) *ProjectsLocationsDataStoresSessionsListCall {
 	c.urlParams_.Set("orderBy", orderBy)
 	return c

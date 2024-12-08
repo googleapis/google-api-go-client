@@ -423,7 +423,12 @@ func (s Binding) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// BoostConfig: A configuration that workstations can boost to.
+// BoostConfig: A boost configuration is a set of resources that a workstation
+// can use to increase its performance. If a boost configuration is specified,
+// when starting a workstation, users can choose to use a VM provisioned under
+// the boost config by passing the boost config id in the start request. If no
+// boost config id is provided in the start request, the system will choose a
+// VM from the pool provisioned under the default config.
 type BoostConfig struct {
 	// Accelerators: Optional. A list of the type and count of accelerator cards
 	// attached to the boost instance. Defaults to `none`.
@@ -451,7 +456,7 @@ type BoostConfig struct {
 	// nested virtualization can only be enabled on boost configurations that
 	// specify a machine_type in the N1 or N2 machine series.
 	EnableNestedVirtualization bool `json:"enableNestedVirtualization,omitempty"`
-	// Id: Optional. Required. The id to be used for the boost configuration.
+	// Id: Required. The id to be used for the boost configuration.
 	Id string `json:"id,omitempty"`
 	// MachineType: Optional. The type of machine that boosted VM instances will
 	// use—for example, `e2-standard-4`. For more information about machine types
@@ -692,7 +697,9 @@ type GceInstance struct {
 	// attached to the instance.
 	Accelerators []*Accelerator `json:"accelerators,omitempty"`
 	// BoostConfigs: Optional. A list of the boost configurations that workstations
-	// created using this workstation configuration are allowed to use.
+	// created using this workstation configuration are allowed to use. If
+	// specified, users will have the option to choose from the list of boost
+	// configs when starting a workstation.
 	BoostConfigs []*BoostConfig `json:"boostConfigs,omitempty"`
 	// BootDiskSizeGb: Optional. The size of the boot disk for the VM in gigabytes
 	// (GB). The minimum boot disk size is `30` GB. Defaults to `50` GB.
@@ -2058,7 +2065,7 @@ type ProjectsLocationsOperationsCancelCall struct {
 // other methods to check whether the cancellation succeeded or whether the
 // operation completed despite cancellation. On successful cancellation, the
 // operation is not deleted; instead, it becomes an operation with an
-// Operation.error value with a google.rpc.Status.code of 1, corresponding to
+// Operation.error value with a google.rpc.Status.code of `1`, corresponding to
 // `Code.CANCELLED`.
 //
 // - name: The name of the operation resource to be cancelled.
@@ -4445,7 +4452,8 @@ type ProjectsLocationsWorkstationClustersWorkstationConfigsWorkstationsGenerateA
 }
 
 // GenerateAccessToken: Returns a short-lived credential that can be used to
-// send authenticated and authorized traffic to a workstation.
+// send authenticated and authorized traffic to a workstation. Once generated
+// this token cannot be revoked and is good for the lifetime of the token.
 //
 //   - workstation: Name of the workstation for which the access token should be
 //     generated.

@@ -2202,8 +2202,8 @@ type GoogleCloudClouddmsV1OperationMetadata struct {
 	EndTime string `json:"endTime,omitempty"`
 	// RequestedCancellation: Output only. Identifies whether the user has
 	// requested cancellation of the operation. Operations that have successfully
-	// been cancelled have Operation.error value with a google.rpc.Status.code of
-	// 1, corresponding to `Code.CANCELLED`.
+	// been cancelled have google.longrunning.Operation.error value with a
+	// google.rpc.Status.code of 1, corresponding to `Code.CANCELLED`.
 	RequestedCancellation bool `json:"requestedCancellation,omitempty"`
 	// StatusMessage: Output only. Human-readable status of the operation, if any.
 	StatusMessage string `json:"statusMessage,omitempty"`
@@ -2517,6 +2517,35 @@ func (s ListMappingRulesResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// ListMigrationJobObjectsResponse: Response containing the objects for a
+// migration job.
+type ListMigrationJobObjectsResponse struct {
+	// MigrationJobObjects: List of migration job objects.
+	MigrationJobObjects []*MigrationJobObject `json:"migrationJobObjects,omitempty"`
+	// NextPageToken: A token, which can be sent as `page_token` to retrieve the
+	// next page.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "MigrationJobObjects") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "MigrationJobObjects") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ListMigrationJobObjectsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ListMigrationJobObjectsResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // ListMigrationJobsResponse: Response message for 'ListMigrationJobs' request.
 type ListMigrationJobsResponse struct {
 	// MigrationJobs: The list of migration jobs objects.
@@ -2671,6 +2700,30 @@ func (s LogFileDirectories) MarshalJSON() ([]byte, error) {
 
 // LogMiner: Configuration to use LogMiner CDC method.
 type LogMiner struct {
+}
+
+// LookupMigrationJobObjectRequest: Request for looking up a specific migration
+// job object by its source object identifier.
+type LookupMigrationJobObjectRequest struct {
+	// SourceObjectIdentifier: Required. The source object identifier which maps to
+	// the migration job object.
+	SourceObjectIdentifier *SourceObjectIdentifier `json:"sourceObjectIdentifier,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "SourceObjectIdentifier") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "SourceObjectIdentifier") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s LookupMigrationJobObjectRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod LookupMigrationJobObjectRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // MachineConfig: MachineConfig describes the configuration of a machine.
@@ -2845,6 +2898,8 @@ func (s MappingRuleFilter) MarshalJSON() ([]byte, error) {
 type MaterializedViewEntity struct {
 	// CustomFeatures: Custom engine specific features.
 	CustomFeatures googleapi.RawMessage `json:"customFeatures,omitempty"`
+	// Indices: View indices.
+	Indices []*IndexEntity `json:"indices,omitempty"`
 	// SqlCode: The SQL code which creates the view.
 	SqlCode string `json:"sqlCode,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "CustomFeatures") to
@@ -2929,6 +2984,8 @@ type MigrationJob struct {
 	// Name: The name (URI) of this migration job resource, in the form of:
 	// projects/{project}/locations/{location}/migrationJobs/{migrationJob}.
 	Name string `json:"name,omitempty"`
+	// ObjectsConfig: Optional. The objects that need to be migrated.
+	ObjectsConfig *MigrationJobObjectsConfig `json:"objectsConfig,omitempty"`
 	// OracleToPostgresConfig: Configuration for heterogeneous **Oracle to Cloud
 	// SQL for PostgreSQL** and **Oracle to AlloyDB for PostgreSQL** migrations.
 	OracleToPostgresConfig *OracleToPostgresConfig `json:"oracleToPostgresConfig,omitempty"`
@@ -3013,6 +3070,89 @@ type MigrationJob struct {
 
 func (s MigrationJob) MarshalJSON() ([]byte, error) {
 	type NoMethod MigrationJob
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// MigrationJobObject: A specific Migration Job Object (e.g. a specifc DB
+// Table)
+type MigrationJobObject struct {
+	// CreateTime: Output only. The creation time of the migration job object.
+	CreateTime string `json:"createTime,omitempty"`
+	// Error: Output only. The error details in case of failure.
+	Error *Status `json:"error,omitempty"`
+	// Name: The object's name.
+	Name string `json:"name,omitempty"`
+	// Phase: Output only. The phase of the migration job object.
+	//
+	// Possible values:
+	//   "PHASE_UNSPECIFIED" - The phase of the migration job is unknown.
+	//   "FULL_DUMP" - The migration job object is in the full dump phase.
+	//   "CDC" - The migration job object is in CDC phase.
+	//   "READY_FOR_PROMOTE" - The migration job object is ready to be promoted.
+	//   "PROMOTE_IN_PROGRESS" - The migration job object is in running the promote
+	// phase.
+	//   "PROMOTED" - The migration job is promoted.
+	//   "DIFF_BACKUP" - The migration job object is in the differential backup
+	// phase.
+	Phase string `json:"phase,omitempty"`
+	// SourceObject: The object identifier in the data source.
+	SourceObject *SourceObjectIdentifier `json:"sourceObject,omitempty"`
+	// State: The state of the migration job object.
+	//
+	// Possible values:
+	//   "STATE_UNSPECIFIED" - The state of the migration job object is unknown.
+	//   "NOT_STARTED" - The migration job object is not started.
+	//   "RUNNING" - The migration job object is running.
+	//   "STOPPING" - The migration job object is being stopped.
+	//   "STOPPED" - The migration job object is currently stopped.
+	//   "RESTARTING" - The migration job object is restarting.
+	//   "FAILED" - The migration job object failed.
+	//   "REMOVING" - The migration job object is deleting.
+	//   "NOT_SELECTED" - The migration job object is not selected for migration.
+	//   "COMPLETED" - The migration job object is completed.
+	State string `json:"state,omitempty"`
+	// UpdateTime: Output only. The last update time of the migration job object.
+	UpdateTime string `json:"updateTime,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "CreateTime") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CreateTime") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s MigrationJobObject) MarshalJSON() ([]byte, error) {
+	type NoMethod MigrationJobObject
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// MigrationJobObjectsConfig: Configuration for the objects to be migrated.
+type MigrationJobObjectsConfig struct {
+	// SourceObjectsConfig: The list of the migration job objects.
+	SourceObjectsConfig *SourceObjectsConfig `json:"sourceObjectsConfig,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "SourceObjectsConfig") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "SourceObjectsConfig") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s MigrationJobObjectsConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod MigrationJobObjectsConfig
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -3857,23 +3997,43 @@ func (s PrivateServiceConnectConnectivity) MarshalJSON() ([]byte, error) {
 // PromoteMigrationJobRequest: Request message for 'PromoteMigrationJob'
 // request.
 type PromoteMigrationJobRequest struct {
-}
-
-// RestartMigrationJobRequest: Request message for 'RestartMigrationJob'
-// request.
-type RestartMigrationJobRequest struct {
-	// SkipValidation: Optional. Restart the migration job without running prior
-	// configuration verification. Defaults to `false`.
-	SkipValidation bool `json:"skipValidation,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "SkipValidation") to
+	// ObjectsFilter: Optional. The object filter to apply to the migration job.
+	ObjectsFilter *MigrationJobObjectsConfig `json:"objectsFilter,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ObjectsFilter") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "SkipValidation") to include in
-	// API requests with the JSON null value. By default, fields with empty values
-	// are omitted from API requests. See
+	// NullFields is a list of field names (e.g. "ObjectsFilter") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s PromoteMigrationJobRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod PromoteMigrationJobRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// RestartMigrationJobRequest: Request message for 'RestartMigrationJob'
+// request.
+type RestartMigrationJobRequest struct {
+	// ObjectsFilter: Optional. The object filter to apply to the migration job.
+	ObjectsFilter *MigrationJobObjectsConfig `json:"objectsFilter,omitempty"`
+	// SkipValidation: Optional. Restart the migration job without running prior
+	// configuration verification. Defaults to `false`.
+	SkipValidation bool `json:"skipValidation,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ObjectsFilter") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ObjectsFilter") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -4353,6 +4513,90 @@ func (s SourceNumericFilter) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// SourceObjectConfig: Config for a single migration job object.
+type SourceObjectConfig struct {
+	// ObjectIdentifier: The object identifier.
+	ObjectIdentifier *SourceObjectIdentifier `json:"objectIdentifier,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ObjectIdentifier") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ObjectIdentifier") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s SourceObjectConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod SourceObjectConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// SourceObjectIdentifier: An identifier for the Migration Job Object.
+type SourceObjectIdentifier struct {
+	// Database: The database name. This will be required only if the object uses a
+	// database name as part of its unique identifier.
+	Database string `json:"database,omitempty"`
+	// Type: Required. The type of the migration job object.
+	//
+	// Possible values:
+	//   "MIGRATION_JOB_OBJECT_TYPE_UNSPECIFIED" - The type of the migration job
+	// object is unknown.
+	//   "DATABASE" - The migration job object is a database.
+	Type string `json:"type,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Database") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Database") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s SourceObjectIdentifier) MarshalJSON() ([]byte, error) {
+	type NoMethod SourceObjectIdentifier
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// SourceObjectsConfig: List of configurations for the source objects to be
+// migrated.
+type SourceObjectsConfig struct {
+	// ObjectConfigs: The list of the objects to be migrated.
+	ObjectConfigs []*SourceObjectConfig `json:"objectConfigs,omitempty"`
+	// ObjectsSelectionType: Optional. The objects selection type of the migration
+	// job.
+	//
+	// Possible values:
+	//   "OBJECTS_SELECTION_TYPE_UNSPECIFIED" - The type of the objects selection
+	// is unknown, indicating that the migration job is at instance level.
+	//   "ALL_OBJECTS" - Migrate all of the objects.
+	//   "SPECIFIED_OBJECTS" - Migrate specific objects.
+	ObjectsSelectionType string `json:"objectsSelectionType,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ObjectConfigs") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ObjectConfigs") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s SourceObjectsConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod SourceObjectsConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // SourceSqlChange: Options to configure rule type SourceSqlChange. The rule is
 // used to alter the sql code for database entities. The rule filter field can
 // refer to one entity. The rule scope can be: StoredProcedure, Function,
@@ -4588,11 +4832,15 @@ func (s SqlServerDatabaseBackup) MarshalJSON() ([]byte, error) {
 
 // SqlServerEncryptionOptions: Encryption settings for the SQL Server database.
 type SqlServerEncryptionOptions struct {
-	// CertPath: Required. Path to certificate.
+	// CertPath: Required. Path to the Certificate (.cer) in Cloud Storage, in the
+	// form `gs://bucketName/fileName`. The instance must have write permissions to
+	// the bucket and read access to the file.
 	CertPath string `json:"certPath,omitempty"`
-	// PvkPassword: Required. Input only. Private key password.
+	// PvkPassword: Required. Input only. Password that encrypts the private key.
 	PvkPassword string `json:"pvkPassword,omitempty"`
-	// PvkPath: Required. Path to certificate private key.
+	// PvkPath: Required. Path to the Certificate Private Key (.pvk) in Cloud
+	// Storage, in the form `gs://bucketName/fileName`. The instance must have
+	// write permissions to the bucket and read access to the file.
 	PvkPath string `json:"pvkPath,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "CertPath") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -9573,6 +9821,117 @@ func (c *ProjectsLocationsMigrationJobsDemoteDestinationCall) Do(opts ...googlea
 	return ret, nil
 }
 
+type ProjectsLocationsMigrationJobsFetchSourceObjectsCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// FetchSourceObjects: Retrieves objects from the source database that can be
+// selected for data migration. This is applicable for the following
+// migrations: 1. PostgreSQL to Cloud SQL for PostgreSQL 2. PostgreSQL to
+// AlloyDB for PostgreSQL.
+//
+//   - name: The resource name for the migration job for which source objects
+//     should be returned.
+func (r *ProjectsLocationsMigrationJobsService) FetchSourceObjects(name string) *ProjectsLocationsMigrationJobsFetchSourceObjectsCall {
+	c := &ProjectsLocationsMigrationJobsFetchSourceObjectsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsMigrationJobsFetchSourceObjectsCall) Fields(s ...googleapi.Field) *ProjectsLocationsMigrationJobsFetchSourceObjectsCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsMigrationJobsFetchSourceObjectsCall) IfNoneMatch(entityTag string) *ProjectsLocationsMigrationJobsFetchSourceObjectsCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsMigrationJobsFetchSourceObjectsCall) Context(ctx context.Context) *ProjectsLocationsMigrationJobsFetchSourceObjectsCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsMigrationJobsFetchSourceObjectsCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsMigrationJobsFetchSourceObjectsCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}:fetchSourceObjects")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "datamigration.projects.locations.migrationJobs.fetchSourceObjects" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsMigrationJobsFetchSourceObjectsCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+}
+
 type ProjectsLocationsMigrationJobsGenerateSshScriptCall struct {
 	s                        *Service
 	migrationJob             string
@@ -11128,6 +11487,114 @@ func (c *ProjectsLocationsMigrationJobsVerifyCall) Do(opts ...googleapi.CallOpti
 	return ret, nil
 }
 
+type ProjectsLocationsMigrationJobsObjectsGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Use this method to get details about a migration job object.
+//
+// - name: The name of the migration job object resource to get.
+func (r *ProjectsLocationsMigrationJobsObjectsService) Get(name string) *ProjectsLocationsMigrationJobsObjectsGetCall {
+	c := &ProjectsLocationsMigrationJobsObjectsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsMigrationJobsObjectsGetCall) Fields(s ...googleapi.Field) *ProjectsLocationsMigrationJobsObjectsGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsMigrationJobsObjectsGetCall) IfNoneMatch(entityTag string) *ProjectsLocationsMigrationJobsObjectsGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsMigrationJobsObjectsGetCall) Context(ctx context.Context) *ProjectsLocationsMigrationJobsObjectsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsMigrationJobsObjectsGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsMigrationJobsObjectsGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "datamigration.projects.locations.migrationJobs.objects.get" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *MigrationJobObject.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *ProjectsLocationsMigrationJobsObjectsGetCall) Do(opts ...googleapi.CallOption) (*MigrationJobObject, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &MigrationJobObject{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+}
+
 type ProjectsLocationsMigrationJobsObjectsGetIamPolicyCall struct {
 	s            *Service
 	resource     string
@@ -11243,6 +11710,256 @@ func (c *ProjectsLocationsMigrationJobsObjectsGetIamPolicyCall) Do(opts ...googl
 		return nil, gensupport.WrapError(err)
 	}
 	ret := &Policy{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+}
+
+type ProjectsLocationsMigrationJobsObjectsListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Use this method to list the objects of a specific migration job.
+//
+// - parent: The parent migration job that owns the collection of objects.
+func (r *ProjectsLocationsMigrationJobsObjectsService) List(parent string) *ProjectsLocationsMigrationJobsObjectsListCall {
+	c := &ProjectsLocationsMigrationJobsObjectsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": Maximum number of objects
+// to return. Default is 50. The maximum value is 1000; values above 1000 will
+// be coerced to 1000.
+func (c *ProjectsLocationsMigrationJobsObjectsListCall) PageSize(pageSize int64) *ProjectsLocationsMigrationJobsObjectsListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": Page token received from
+// a previous `ListMigrationJObObjectsRequest` call. Provide this to retrieve
+// the subsequent page. When paginating, all other parameters provided to
+// `ListMigrationJobObjectsRequest` must match the call that provided the page
+// token.
+func (c *ProjectsLocationsMigrationJobsObjectsListCall) PageToken(pageToken string) *ProjectsLocationsMigrationJobsObjectsListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsMigrationJobsObjectsListCall) Fields(s ...googleapi.Field) *ProjectsLocationsMigrationJobsObjectsListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsMigrationJobsObjectsListCall) IfNoneMatch(entityTag string) *ProjectsLocationsMigrationJobsObjectsListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsMigrationJobsObjectsListCall) Context(ctx context.Context) *ProjectsLocationsMigrationJobsObjectsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsMigrationJobsObjectsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsMigrationJobsObjectsListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/objects")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "datamigration.projects.locations.migrationJobs.objects.list" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *ListMigrationJobObjectsResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsMigrationJobsObjectsListCall) Do(opts ...googleapi.CallOption) (*ListMigrationJobObjectsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ListMigrationJobObjectsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsLocationsMigrationJobsObjectsListCall) Pages(ctx context.Context, f func(*ListMigrationJobObjectsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+type ProjectsLocationsMigrationJobsObjectsLookupCall struct {
+	s                               *Service
+	parent                          string
+	lookupmigrationjobobjectrequest *LookupMigrationJobObjectRequest
+	urlParams_                      gensupport.URLParams
+	ctx_                            context.Context
+	header_                         http.Header
+}
+
+// Lookup: Use this method to look up a migration job object by its source
+// object identifier.
+//
+// - parent: The parent migration job that owns the collection of objects.
+func (r *ProjectsLocationsMigrationJobsObjectsService) Lookup(parent string, lookupmigrationjobobjectrequest *LookupMigrationJobObjectRequest) *ProjectsLocationsMigrationJobsObjectsLookupCall {
+	c := &ProjectsLocationsMigrationJobsObjectsLookupCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.lookupmigrationjobobjectrequest = lookupmigrationjobobjectrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsMigrationJobsObjectsLookupCall) Fields(s ...googleapi.Field) *ProjectsLocationsMigrationJobsObjectsLookupCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsMigrationJobsObjectsLookupCall) Context(ctx context.Context) *ProjectsLocationsMigrationJobsObjectsLookupCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsMigrationJobsObjectsLookupCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsMigrationJobsObjectsLookupCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.lookupmigrationjobobjectrequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/objects:lookup")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "datamigration.projects.locations.migrationJobs.objects.lookup" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *MigrationJobObject.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *ProjectsLocationsMigrationJobsObjectsLookupCall) Do(opts ...googleapi.CallOption) (*MigrationJobObject, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &MigrationJobObject{
 		ServerResponse: googleapi.ServerResponse{
 			Header:         res.Header,
 			HTTPStatusCode: res.StatusCode,
@@ -11485,7 +12202,7 @@ type ProjectsLocationsOperationsCancelCall struct {
 // other methods to check whether the cancellation succeeded or whether the
 // operation completed despite cancellation. On successful cancellation, the
 // operation is not deleted; instead, it becomes an operation with an
-// Operation.error value with a google.rpc.Status.code of 1, corresponding to
+// Operation.error value with a google.rpc.Status.code of `1`, corresponding to
 // `Code.CANCELLED`.
 //
 // - name: The name of the operation resource to be cancelled.

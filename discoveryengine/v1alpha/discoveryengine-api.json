@@ -2522,7 +2522,7 @@
                               "type": "string"
                             },
                             "orderBy": {
-                              "description": "A comma-separated list of fields to order by, sorted in ascending order. Use \"desc\" after a field name for descending. Supported fields: * `update_time` * `create_time` * `session_name` Example: \"update_time desc\" \"create_time\"",
+                              "description": "A comma-separated list of fields to order by, sorted in ascending order. Use \"desc\" after a field name for descending. Supported fields: * `update_time` * `create_time` * `session_name` * `is_pinned` Example: * \"update_time desc\" * \"create_time\" * \"is_pinned desc,update_time desc\": list sessions by is_pinned first, then by update_time.",
                               "location": "query",
                               "type": "string"
                             },
@@ -4435,7 +4435,7 @@
                               "type": "string"
                             },
                             "orderBy": {
-                              "description": "A comma-separated list of fields to order by, sorted in ascending order. Use \"desc\" after a field name for descending. Supported fields: * `update_time` * `create_time` * `session_name` Example: \"update_time desc\" \"create_time\"",
+                              "description": "A comma-separated list of fields to order by, sorted in ascending order. Use \"desc\" after a field name for descending. Supported fields: * `update_time` * `create_time` * `session_name` * `is_pinned` Example: * \"update_time desc\" * \"create_time\" * \"is_pinned desc,update_time desc\": list sessions by is_pinned first, then by update_time.",
                               "location": "query",
                               "type": "string"
                             },
@@ -6482,7 +6482,7 @@
                           "type": "string"
                         },
                         "orderBy": {
-                          "description": "A comma-separated list of fields to order by, sorted in ascending order. Use \"desc\" after a field name for descending. Supported fields: * `update_time` * `create_time` * `session_name` Example: \"update_time desc\" \"create_time\"",
+                          "description": "A comma-separated list of fields to order by, sorted in ascending order. Use \"desc\" after a field name for descending. Supported fields: * `update_time` * `create_time` * `session_name` * `is_pinned` Example: * \"update_time desc\" * \"create_time\" * \"is_pinned desc,update_time desc\": list sessions by is_pinned first, then by update_time.",
                           "location": "query",
                           "type": "string"
                         },
@@ -8156,7 +8156,7 @@
       }
     }
   },
-  "revision": "20241205",
+  "revision": "20241206",
   "rootUrl": "https://discoveryengine.googleapis.com/",
   "schemas": {
     "GoogleApiDistribution": {
@@ -10935,13 +10935,15 @@
             "STATE_UNSPECIFIED",
             "IN_PROGRESS",
             "FAILED",
-            "SUCCEEDED"
+            "SUCCEEDED",
+            "STREAMING"
           ],
           "enumDescriptions": [
             "Unknown.",
             "Answer generation is currently in progress.",
             "Answer generation currently failed.",
-            "Answer generation has succeeded."
+            "Answer generation has succeeded.",
+            "Answer generation is currently in progress."
           ],
           "type": "string"
         },
@@ -15566,7 +15568,7 @@
           "type": "string"
         },
         "orderBy": {
-          "description": "A comma-separated list of fields to order by, sorted in ascending order. Use \"desc\" after a field name for descending. Supported fields: * `update_time` * `create_time` * `session_name` Example: \"update_time desc\" \"create_time\"",
+          "description": "A comma-separated list of fields to order by, sorted in ascending order. Use \"desc\" after a field name for descending. Supported fields: * `update_time` * `create_time` * `session_name` * `is_pinned` Example: * \"update_time desc\" * \"create_time\" * \"is_pinned desc,update_time desc\": list sessions by is_pinned first, then by update_time.",
           "type": "string"
         },
         "pageSize": {

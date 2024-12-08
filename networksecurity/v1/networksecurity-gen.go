@@ -609,9 +609,9 @@ func (s AuthzPolicy) MarshalJSON() ([]byte, error) {
 
 // AuthzPolicyAuthzRule: Conditions to match against the incoming request.
 type AuthzPolicyAuthzRule struct {
-	// From: Optional. Describes properties of one or more sources of a request.
+	// From: Optional. Describes properties of a source of a request.
 	From *AuthzPolicyAuthzRuleFrom `json:"from,omitempty"`
-	// To: Optional. Describes properties of one or more targets of a request.
+	// To: Optional. Describes properties of a target of a request.
 	To *AuthzPolicyAuthzRuleTo `json:"to,omitempty"`
 	// When: Optional. CEL expression that describes the conditions to be satisfied
 	// for the action. The result of the CEL expression is ANDed with the from and
@@ -643,8 +643,8 @@ type AuthzPolicyAuthzRuleFrom struct {
 	// this field. At least one of sources or notSources must be specified.
 	NotSources []*AuthzPolicyAuthzRuleFromRequestSource `json:"notSources,omitempty"`
 	// Sources: Optional. Describes the properties of a request's sources. At least
-	// one of sources or notSources must be specified. Limited to 5 sources. A
-	// match occurs when ANY source (in sources or notSources) matches the request.
+	// one of sources or notSources must be specified. Limited to 1 source. A match
+	// occurs when ANY source (in sources or notSources) matches the request.
 	// Within a single source, the match follows AND semantics across fields and OR
 	// semantics within a single field, i.e. a match occurs when ANY principal
 	// matches AND ANY ipBlocks match.
@@ -829,7 +829,7 @@ type AuthzPolicyAuthzRuleTo struct {
 	NotOperations []*AuthzPolicyAuthzRuleToRequestOperation `json:"notOperations,omitempty"`
 	// Operations: Optional. Describes properties of one or more targets of a
 	// request. At least one of operations or notOperations must be specified.
-	// Limited to 5 operations. A match occurs when ANY operation (in operations or
+	// Limited to 1 operation. A match occurs when ANY operation (in operations or
 	// notOperations) matches. Within an operation, the match follows AND semantics
 	// across fields and OR semantics within a field, i.e. a match occurs when ANY
 	// path matches AND ANY header matches and ANY method matches.
@@ -1134,6 +1134,31 @@ type CloneAddressGroupItemsRequest struct {
 
 func (s CloneAddressGroupItemsRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod CloneAddressGroupItemsRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// CustomInterceptProfile: CustomInterceptProfile defines the Packet Intercept
+// Endpoint Group used to intercept traffic to a third-party firewall in a
+// Firewall rule.
+type CustomInterceptProfile struct {
+	// InterceptEndpointGroup: Required. The InterceptEndpointGroup to which
+	// traffic associated with the SP should be mirrored.
+	InterceptEndpointGroup string `json:"interceptEndpointGroup,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "InterceptEndpointGroup") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "InterceptEndpointGroup") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s CustomInterceptProfile) MarshalJSON() ([]byte, error) {
+	type NoMethod CustomInterceptProfile
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -2694,10 +2719,13 @@ func (s Rule) MarshalJSON() ([]byte, error) {
 }
 
 // SecurityProfile: SecurityProfile is a resource that defines the behavior for
-// one of many ProfileTypes. Next ID: 12
+// one of many ProfileTypes.
 type SecurityProfile struct {
 	// CreateTime: Output only. Resource creation timestamp.
 	CreateTime string `json:"createTime,omitempty"`
+	// CustomInterceptProfile: The custom TPPI configuration for the
+	// SecurityProfile.
+	CustomInterceptProfile *CustomInterceptProfile `json:"customInterceptProfile,omitempty"`
 	// CustomMirroringProfile: The custom Packet Mirroring v2 configuration for the
 	// SecurityProfile.
 	CustomMirroringProfile *CustomMirroringProfile `json:"customMirroringProfile,omitempty"`
@@ -2725,6 +2753,7 @@ type SecurityProfile struct {
 	//   "PROFILE_TYPE_UNSPECIFIED" - Profile type not specified.
 	//   "THREAT_PREVENTION" - Profile type for threat prevention.
 	//   "CUSTOM_MIRRORING" - Profile type for packet mirroring v2
+	//   "CUSTOM_INTERCEPT" - Profile type for TPPI.
 	Type string `json:"type,omitempty"`
 	// UpdateTime: Output only. Last resource update timestamp.
 	UpdateTime string `json:"updateTime,omitempty"`
@@ -2750,10 +2779,13 @@ func (s SecurityProfile) MarshalJSON() ([]byte, error) {
 }
 
 // SecurityProfileGroup: SecurityProfileGroup is a resource that defines the
-// behavior for various ProfileTypes. Next ID: 11
+// behavior for various ProfileTypes.
 type SecurityProfileGroup struct {
 	// CreateTime: Output only. Resource creation timestamp.
 	CreateTime string `json:"createTime,omitempty"`
+	// CustomInterceptProfile: Optional. Reference to a SecurityProfile with the
+	// CustomIntercept configuration.
+	CustomInterceptProfile string `json:"customInterceptProfile,omitempty"`
 	// CustomMirroringProfile: Optional. Reference to a SecurityProfile with the
 	// CustomMirroring configuration.
 	CustomMirroringProfile string `json:"customMirroringProfile,omitempty"`
@@ -4949,7 +4981,7 @@ type OrganizationsLocationsOperationsCancelCall struct {
 // other methods to check whether the cancellation succeeded or whether the
 // operation completed despite cancellation. On successful cancellation, the
 // operation is not deleted; instead, it becomes an operation with an
-// Operation.error value with a google.rpc.Status.code of 1, corresponding to
+// Operation.error value with a google.rpc.Status.code of `1`, corresponding to
 // `Code.CANCELLED`.
 //
 // - name: The name of the operation resource to be cancelled.
@@ -12873,7 +12905,7 @@ type ProjectsLocationsOperationsCancelCall struct {
 // other methods to check whether the cancellation succeeded or whether the
 // operation completed despite cancellation. On successful cancellation, the
 // operation is not deleted; instead, it becomes an operation with an
-// Operation.error value with a google.rpc.Status.code of 1, corresponding to
+// Operation.error value with a google.rpc.Status.code of `1`, corresponding to
 // `Code.CANCELLED`.
 //
 // - name: The name of the operation resource to be cancelled.

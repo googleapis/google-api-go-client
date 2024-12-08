@@ -169,7 +169,7 @@ type ProjectsService struct {
 func NewProjectsLocationsService(s *Service) *ProjectsLocationsService {
 	rs := &ProjectsLocationsService{s: s}
 	rs.AnalysisRules = NewProjectsLocationsAnalysisRulesService(s)
-	rs.AuthorizedViewSet = NewProjectsLocationsAuthorizedViewSetService(s)
+	rs.AuthorizedViewSets = NewProjectsLocationsAuthorizedViewSetsService(s)
 	rs.Conversations = NewProjectsLocationsConversationsService(s)
 	rs.EncryptionSpec = NewProjectsLocationsEncryptionSpecService(s)
 	rs.Insightsdata = NewProjectsLocationsInsightsdataService(s)
@@ -186,7 +186,7 @@ type ProjectsLocationsService struct {
 
 	AnalysisRules *ProjectsLocationsAnalysisRulesService
 
-	AuthorizedViewSet *ProjectsLocationsAuthorizedViewSetService
+	AuthorizedViewSets *ProjectsLocationsAuthorizedViewSetsService
 
 	Conversations *ProjectsLocationsConversationsService
 
@@ -214,24 +214,24 @@ type ProjectsLocationsAnalysisRulesService struct {
 	s *Service
 }
 
-func NewProjectsLocationsAuthorizedViewSetService(s *Service) *ProjectsLocationsAuthorizedViewSetService {
-	rs := &ProjectsLocationsAuthorizedViewSetService{s: s}
-	rs.AuthorizedView = NewProjectsLocationsAuthorizedViewSetAuthorizedViewService(s)
+func NewProjectsLocationsAuthorizedViewSetsService(s *Service) *ProjectsLocationsAuthorizedViewSetsService {
+	rs := &ProjectsLocationsAuthorizedViewSetsService{s: s}
+	rs.AuthorizedViews = NewProjectsLocationsAuthorizedViewSetsAuthorizedViewsService(s)
 	return rs
 }
 
-type ProjectsLocationsAuthorizedViewSetService struct {
+type ProjectsLocationsAuthorizedViewSetsService struct {
 	s *Service
 
-	AuthorizedView *ProjectsLocationsAuthorizedViewSetAuthorizedViewService
+	AuthorizedViews *ProjectsLocationsAuthorizedViewSetsAuthorizedViewsService
 }
 
-func NewProjectsLocationsAuthorizedViewSetAuthorizedViewService(s *Service) *ProjectsLocationsAuthorizedViewSetAuthorizedViewService {
-	rs := &ProjectsLocationsAuthorizedViewSetAuthorizedViewService{s: s}
+func NewProjectsLocationsAuthorizedViewSetsAuthorizedViewsService(s *Service) *ProjectsLocationsAuthorizedViewSetsAuthorizedViewsService {
+	rs := &ProjectsLocationsAuthorizedViewSetsAuthorizedViewsService{s: s}
 	return rs
 }
 
-type ProjectsLocationsAuthorizedViewSetAuthorizedViewService struct {
+type ProjectsLocationsAuthorizedViewSetsAuthorizedViewsService struct {
 	s *Service
 }
 
@@ -1665,8 +1665,13 @@ type GoogleCloudContactcenterinsightsV1ConversationQualityMetadataAgentInfo stru
 	// DispositionCode: A user-provided string indicating the outcome of the
 	// agent's segment of the call.
 	DispositionCode string `json:"dispositionCode,omitempty"`
-	// Team: A user-specified string representing the agent's team.
+	// Location: The agent's location.
+	Location string `json:"location,omitempty"`
+	// Team: A user-specified string representing the agent's team. Deprecated in
+	// favor of the `teams` field.
 	Team string `json:"team,omitempty"`
+	// Teams: User-specified strings representing the agent's teams.
+	Teams []string `json:"teams,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AgentId") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
 	// omitted from API requests. See
@@ -6414,8 +6419,13 @@ type GoogleCloudContactcenterinsightsV1alpha1ConversationQualityMetadataAgentInf
 	// DispositionCode: A user-provided string indicating the outcome of the
 	// agent's segment of the call.
 	DispositionCode string `json:"dispositionCode,omitempty"`
-	// Team: A user-specified string representing the agent's team.
+	// Location: The agent's location.
+	Location string `json:"location,omitempty"`
+	// Team: A user-specified string representing the agent's team. Deprecated in
+	// favor of the `teams` field.
 	Team string `json:"team,omitempty"`
+	// Teams: User-specified strings representing the agent's teams.
+	Teams []string `json:"teams,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AgentId") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
 	// omitted from API requests. See
@@ -10754,7 +10764,7 @@ func (c *ProjectsLocationsAnalysisRulesPatchCall) Do(opts ...googleapi.CallOptio
 	return ret, nil
 }
 
-type ProjectsLocationsAuthorizedViewSetAuthorizedViewCalculateStatsCall struct {
+type ProjectsLocationsAuthorizedViewSetsAuthorizedViewsCalculateStatsCall struct {
 	s            *Service
 	location     string
 	urlParams_   gensupport.URLParams
@@ -10766,8 +10776,8 @@ type ProjectsLocationsAuthorizedViewSetAuthorizedViewCalculateStatsCall struct {
 // CalculateStats: Gets conversation statistics.
 //
 // - location: The location of the conversations.
-func (r *ProjectsLocationsAuthorizedViewSetAuthorizedViewService) CalculateStats(location string) *ProjectsLocationsAuthorizedViewSetAuthorizedViewCalculateStatsCall {
-	c := &ProjectsLocationsAuthorizedViewSetAuthorizedViewCalculateStatsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+func (r *ProjectsLocationsAuthorizedViewSetsAuthorizedViewsService) CalculateStats(location string) *ProjectsLocationsAuthorizedViewSetsAuthorizedViewsCalculateStatsCall {
+	c := &ProjectsLocationsAuthorizedViewSetsAuthorizedViewsCalculateStatsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.location = location
 	return c
 }
@@ -10775,7 +10785,7 @@ func (r *ProjectsLocationsAuthorizedViewSetAuthorizedViewService) CalculateStats
 // Filter sets the optional parameter "filter": A filter to reduce results to a
 // specific subset. This field is useful for getting statistics about
 // conversations with specific properties.
-func (c *ProjectsLocationsAuthorizedViewSetAuthorizedViewCalculateStatsCall) Filter(filter string) *ProjectsLocationsAuthorizedViewSetAuthorizedViewCalculateStatsCall {
+func (c *ProjectsLocationsAuthorizedViewSetsAuthorizedViewsCalculateStatsCall) Filter(filter string) *ProjectsLocationsAuthorizedViewSetsAuthorizedViewsCalculateStatsCall {
 	c.urlParams_.Set("filter", filter)
 	return c
 }
@@ -10783,7 +10793,7 @@ func (c *ProjectsLocationsAuthorizedViewSetAuthorizedViewCalculateStatsCall) Fil
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
 // details.
-func (c *ProjectsLocationsAuthorizedViewSetAuthorizedViewCalculateStatsCall) Fields(s ...googleapi.Field) *ProjectsLocationsAuthorizedViewSetAuthorizedViewCalculateStatsCall {
+func (c *ProjectsLocationsAuthorizedViewSetsAuthorizedViewsCalculateStatsCall) Fields(s ...googleapi.Field) *ProjectsLocationsAuthorizedViewSetsAuthorizedViewsCalculateStatsCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
@@ -10791,27 +10801,27 @@ func (c *ProjectsLocationsAuthorizedViewSetAuthorizedViewCalculateStatsCall) Fie
 // IfNoneMatch sets an optional parameter which makes the operation fail if the
 // object's ETag matches the given value. This is useful for getting updates
 // only after the object has changed since the last request.
-func (c *ProjectsLocationsAuthorizedViewSetAuthorizedViewCalculateStatsCall) IfNoneMatch(entityTag string) *ProjectsLocationsAuthorizedViewSetAuthorizedViewCalculateStatsCall {
+func (c *ProjectsLocationsAuthorizedViewSetsAuthorizedViewsCalculateStatsCall) IfNoneMatch(entityTag string) *ProjectsLocationsAuthorizedViewSetsAuthorizedViewsCalculateStatsCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
 // Context sets the context to be used in this call's Do method.
-func (c *ProjectsLocationsAuthorizedViewSetAuthorizedViewCalculateStatsCall) Context(ctx context.Context) *ProjectsLocationsAuthorizedViewSetAuthorizedViewCalculateStatsCall {
+func (c *ProjectsLocationsAuthorizedViewSetsAuthorizedViewsCalculateStatsCall) Context(ctx context.Context) *ProjectsLocationsAuthorizedViewSetsAuthorizedViewsCalculateStatsCall {
 	c.ctx_ = ctx
 	return c
 }
 
 // Header returns a http.Header that can be modified by the caller to add
 // headers to the request.
-func (c *ProjectsLocationsAuthorizedViewSetAuthorizedViewCalculateStatsCall) Header() http.Header {
+func (c *ProjectsLocationsAuthorizedViewSetsAuthorizedViewsCalculateStatsCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
 	}
 	return c.header_
 }
 
-func (c *ProjectsLocationsAuthorizedViewSetAuthorizedViewCalculateStatsCall) doRequest(alt string) (*http.Response, error) {
+func (c *ProjectsLocationsAuthorizedViewSetsAuthorizedViewsCalculateStatsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
@@ -10832,13 +10842,13 @@ func (c *ProjectsLocationsAuthorizedViewSetAuthorizedViewCalculateStatsCall) doR
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
-// Do executes the "contactcenterinsights.projects.locations.authorizedViewSet.authorizedView.calculateStats" call.
+// Do executes the "contactcenterinsights.projects.locations.authorizedViewSets.authorizedViews.calculateStats" call.
 // Any non-2xx status code is an error. Response headers are in either
 // *GoogleCloudContactcenterinsightsV1CalculateStatsResponse.ServerResponse.Head
 // er or (if a response was returned at all) in
 // error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
 // whether the returned error was because http.StatusNotModified was returned.
-func (c *ProjectsLocationsAuthorizedViewSetAuthorizedViewCalculateStatsCall) Do(opts ...googleapi.CallOption) (*GoogleCloudContactcenterinsightsV1CalculateStatsResponse, error) {
+func (c *ProjectsLocationsAuthorizedViewSetsAuthorizedViewsCalculateStatsCall) Do(opts ...googleapi.CallOption) (*GoogleCloudContactcenterinsightsV1CalculateStatsResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
@@ -10870,7 +10880,7 @@ func (c *ProjectsLocationsAuthorizedViewSetAuthorizedViewCalculateStatsCall) Do(
 	return ret, nil
 }
 
-type ProjectsLocationsAuthorizedViewSetAuthorizedViewQueryMetricsCall struct {
+type ProjectsLocationsAuthorizedViewSetsAuthorizedViewsQueryMetricsCall struct {
 	s                                                     *Service
 	location                                              string
 	googlecloudcontactcenterinsightsv1querymetricsrequest *GoogleCloudContactcenterinsightsV1QueryMetricsRequest
@@ -10883,8 +10893,8 @@ type ProjectsLocationsAuthorizedViewSetAuthorizedViewQueryMetricsCall struct {
 //
 //   - location: The location of the data.
 //     "projects/{project}/locations/{location}".
-func (r *ProjectsLocationsAuthorizedViewSetAuthorizedViewService) QueryMetrics(location string, googlecloudcontactcenterinsightsv1querymetricsrequest *GoogleCloudContactcenterinsightsV1QueryMetricsRequest) *ProjectsLocationsAuthorizedViewSetAuthorizedViewQueryMetricsCall {
-	c := &ProjectsLocationsAuthorizedViewSetAuthorizedViewQueryMetricsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+func (r *ProjectsLocationsAuthorizedViewSetsAuthorizedViewsService) QueryMetrics(location string, googlecloudcontactcenterinsightsv1querymetricsrequest *GoogleCloudContactcenterinsightsV1QueryMetricsRequest) *ProjectsLocationsAuthorizedViewSetsAuthorizedViewsQueryMetricsCall {
+	c := &ProjectsLocationsAuthorizedViewSetsAuthorizedViewsQueryMetricsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.location = location
 	c.googlecloudcontactcenterinsightsv1querymetricsrequest = googlecloudcontactcenterinsightsv1querymetricsrequest
 	return c
@@ -10893,27 +10903,27 @@ func (r *ProjectsLocationsAuthorizedViewSetAuthorizedViewService) QueryMetrics(l
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
 // details.
-func (c *ProjectsLocationsAuthorizedViewSetAuthorizedViewQueryMetricsCall) Fields(s ...googleapi.Field) *ProjectsLocationsAuthorizedViewSetAuthorizedViewQueryMetricsCall {
+func (c *ProjectsLocationsAuthorizedViewSetsAuthorizedViewsQueryMetricsCall) Fields(s ...googleapi.Field) *ProjectsLocationsAuthorizedViewSetsAuthorizedViewsQueryMetricsCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
 // Context sets the context to be used in this call's Do method.
-func (c *ProjectsLocationsAuthorizedViewSetAuthorizedViewQueryMetricsCall) Context(ctx context.Context) *ProjectsLocationsAuthorizedViewSetAuthorizedViewQueryMetricsCall {
+func (c *ProjectsLocationsAuthorizedViewSetsAuthorizedViewsQueryMetricsCall) Context(ctx context.Context) *ProjectsLocationsAuthorizedViewSetsAuthorizedViewsQueryMetricsCall {
 	c.ctx_ = ctx
 	return c
 }
 
 // Header returns a http.Header that can be modified by the caller to add
 // headers to the request.
-func (c *ProjectsLocationsAuthorizedViewSetAuthorizedViewQueryMetricsCall) Header() http.Header {
+func (c *ProjectsLocationsAuthorizedViewSetsAuthorizedViewsQueryMetricsCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
 	}
 	return c.header_
 }
 
-func (c *ProjectsLocationsAuthorizedViewSetAuthorizedViewQueryMetricsCall) doRequest(alt string) (*http.Response, error) {
+func (c *ProjectsLocationsAuthorizedViewSetsAuthorizedViewsQueryMetricsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudcontactcenterinsightsv1querymetricsrequest)
@@ -10935,13 +10945,13 @@ func (c *ProjectsLocationsAuthorizedViewSetAuthorizedViewQueryMetricsCall) doReq
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
-// Do executes the "contactcenterinsights.projects.locations.authorizedViewSet.authorizedView.queryMetrics" call.
+// Do executes the "contactcenterinsights.projects.locations.authorizedViewSets.authorizedViews.queryMetrics" call.
 // Any non-2xx status code is an error. Response headers are in either
 // *GoogleLongrunningOperation.ServerResponse.Header or (if a response was
 // returned at all) in error.(*googleapi.Error).Header. Use
 // googleapi.IsNotModified to check whether the returned error was because
 // http.StatusNotModified was returned.
-func (c *ProjectsLocationsAuthorizedViewSetAuthorizedViewQueryMetricsCall) Do(opts ...googleapi.CallOption) (*GoogleLongrunningOperation, error) {
+func (c *ProjectsLocationsAuthorizedViewSetsAuthorizedViewsQueryMetricsCall) Do(opts ...googleapi.CallOption) (*GoogleLongrunningOperation, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {

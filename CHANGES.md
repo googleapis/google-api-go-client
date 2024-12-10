@@ -1,5 +1,23 @@
 # Changes
 
+## [0.211.0](https://github.com/googleapis/google-api-go-client/compare/v0.210.0...v0.211.0) (2024-12-10)
+
+
+### Features
+
+* **all:** Auto-regenerate discovery clients ([#2897](https://github.com/googleapis/google-api-go-client/issues/2897)) ([a7a9149](https://github.com/googleapis/google-api-go-client/commit/a7a9149289b538150b5ec600a19899ce3b19d3b7))
+* **all:** Auto-regenerate discovery clients ([#2899](https://github.com/googleapis/google-api-go-client/issues/2899)) ([587a11d](https://github.com/googleapis/google-api-go-client/commit/587a11df23378396e3e174fd7021afcb4c59db0e))
+* **all:** Auto-regenerate discovery clients ([#2902](https://github.com/googleapis/google-api-go-client/issues/2902)) ([d4cb90f](https://github.com/googleapis/google-api-go-client/commit/d4cb90f490006155566779810a37100c56a57780))
+* **all:** Auto-regenerate discovery clients ([#2903](https://github.com/googleapis/google-api-go-client/issues/2903)) ([6528fb2](https://github.com/googleapis/google-api-go-client/commit/6528fb2369704b3448dc2144cff0624e40072ca8))
+* **all:** Auto-regenerate discovery clients ([#2905](https://github.com/googleapis/google-api-go-client/issues/2905)) ([f37ece7](https://github.com/googleapis/google-api-go-client/commit/f37ece71d34f784c1b8bd65ec8c17cee4f306deb))
+* **all:** Auto-regenerate discovery clients ([#2906](https://github.com/googleapis/google-api-go-client/issues/2906)) ([91960b1](https://github.com/googleapis/google-api-go-client/commit/91960b196e5b2dedfc21045964b07944d284a629))
+* **transport:** Remove deprecated EXPERIMENTAL OpenCensus trace context propagation ([#2901](https://github.com/googleapis/google-api-go-client/issues/2901)) ([2b3363e](https://github.com/googleapis/google-api-go-client/commit/2b3363e799feff4ed8d191bc69cd3afdb70f1f99))
+
+
+### Bug Fixes
+
+* Remove dep hacks for old cycle deps ([#2908](https://github.com/googleapis/google-api-go-client/issues/2908)) ([f4c1ac6](https://github.com/googleapis/google-api-go-client/commit/f4c1ac651f453b5970402d2f1d3d918e93d05c44)), refs [#2559](https://github.com/googleapis/google-api-go-client/issues/2559)
+
 ## [0.210.0](https://github.com/googleapis/google-api-go-client/compare/v0.209.0...v0.210.0) (2024-12-04)
 
 

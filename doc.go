@@ -143,11 +143,3 @@
 //		 // Do something with the response
 //		 fmt.Println(op.Response)
 package api
-
-import (
-	// Force dependency on main module to ensure it is unambiguous during
-	// module resolution.
-	// See: https://github.com/googleapis/google-api-go-client/issues/2559.
-	_ "cloud.google.com/go/civil"
-	_ "google.golang.org/genproto/googleapis/type/datetime"
-)

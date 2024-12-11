@@ -11005,6 +11005,205 @@ func (c *ObjectsListCall) Pages(ctx context.Context, f func(*Objects) error) err
 	}
 }
 
+type ObjectsMoveCall struct {
+	s                 *Service
+	bucket            string
+	sourceObject      string
+	destinationObject string
+	urlParams_        gensupport.URLParams
+	ctx_              context.Context
+	header_           http.Header
+}
+
+// Move: Moves the source object to the destination object in the same bucket.
+//
+//   - bucket: Name of the bucket in which the object resides.
+//   - destinationObject: Name of the destination object. For information about
+//     how to URL encode object names to be path safe, see Encoding URI Path
+//     Parts (https://cloud.google.com/storage/docs/request-endpoints#encoding).
+//   - sourceObject: Name of the source object. For information about how to URL
+//     encode object names to be path safe, see Encoding URI Path Parts
+//     (https://cloud.google.com/storage/docs/request-endpoints#encoding).
+func (r *ObjectsService) Move(bucket string, sourceObject string, destinationObject string) *ObjectsMoveCall {
+	c := &ObjectsMoveCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.bucket = bucket
+	c.sourceObject = sourceObject
+	c.destinationObject = destinationObject
+	return c
+}
+
+// IfGenerationMatch sets the optional parameter "ifGenerationMatch": Makes the
+// operation conditional on whether the destination object's current generation
+// matches the given value. Setting to 0 makes the operation succeed only if
+// there are no live versions of the object. `ifGenerationMatch` and
+// `ifGenerationNotMatch` conditions are mutually exclusive: it's an error for
+// both of them to be set in the request.
+func (c *ObjectsMoveCall) IfGenerationMatch(ifGenerationMatch int64) *ObjectsMoveCall {
+	c.urlParams_.Set("ifGenerationMatch", fmt.Sprint(ifGenerationMatch))
+	return c
+}
+
+// IfGenerationNotMatch sets the optional parameter "ifGenerationNotMatch":
+// Makes the operation conditional on whether the destination object's current
+// generation does not match the given value. If no live object exists, the
+// precondition fails. Setting to 0 makes the operation succeed only if there
+// is a live version of the object.`ifGenerationMatch` and
+// `ifGenerationNotMatch` conditions are mutually exclusive: it's an error for
+// both of them to be set in the request.
+func (c *ObjectsMoveCall) IfGenerationNotMatch(ifGenerationNotMatch int64) *ObjectsMoveCall {
+	c.urlParams_.Set("ifGenerationNotMatch", fmt.Sprint(ifGenerationNotMatch))
+	return c
+}
+
+// IfMetagenerationMatch sets the optional parameter "ifMetagenerationMatch":
+// Makes the operation conditional on whether the destination object's current
+// metageneration matches the given value. `ifMetagenerationMatch` and
+// `ifMetagenerationNotMatch` conditions are mutually exclusive: it's an error
+// for both of them to be set in the request.
+func (c *ObjectsMoveCall) IfMetagenerationMatch(ifMetagenerationMatch int64) *ObjectsMoveCall {
+	c.urlParams_.Set("ifMetagenerationMatch", fmt.Sprint(ifMetagenerationMatch))
+	return c
+}
+
+// IfMetagenerationNotMatch sets the optional parameter
+// "ifMetagenerationNotMatch": Makes the operation conditional on whether the
+// destination object's current metageneration does not match the given value.
+// `ifMetagenerationMatch` and `ifMetagenerationNotMatch` conditions are
+// mutually exclusive: it's an error for both of them to be set in the request.
+func (c *ObjectsMoveCall) IfMetagenerationNotMatch(ifMetagenerationNotMatch int64) *ObjectsMoveCall {
+	c.urlParams_.Set("ifMetagenerationNotMatch", fmt.Sprint(ifMetagenerationNotMatch))
+	return c
+}
+
+// IfSourceGenerationMatch sets the optional parameter
+// "ifSourceGenerationMatch": Makes the operation conditional on whether the
+// source object's current generation matches the given value.
+// `ifSourceGenerationMatch` and `ifSourceGenerationNotMatch` conditions are
+// mutually exclusive: it's an error for both of them to be set in the request.
+func (c *ObjectsMoveCall) IfSourceGenerationMatch(ifSourceGenerationMatch int64) *ObjectsMoveCall {
+	c.urlParams_.Set("ifSourceGenerationMatch", fmt.Sprint(ifSourceGenerationMatch))
+	return c
+}
+
+// IfSourceGenerationNotMatch sets the optional parameter
+// "ifSourceGenerationNotMatch": Makes the operation conditional on whether the
+// source object's current generation does not match the given value.
+// `ifSourceGenerationMatch` and `ifSourceGenerationNotMatch` conditions are
+// mutually exclusive: it's an error for both of them to be set in the request.
+func (c *ObjectsMoveCall) IfSourceGenerationNotMatch(ifSourceGenerationNotMatch int64) *ObjectsMoveCall {
+	c.urlParams_.Set("ifSourceGenerationNotMatch", fmt.Sprint(ifSourceGenerationNotMatch))
+	return c
+}
+
+// IfSourceMetagenerationMatch sets the optional parameter
+// "ifSourceMetagenerationMatch": Makes the operation conditional on whether
+// the source object's current metageneration matches the given value.
+// `ifSourceMetagenerationMatch` and `ifSourceMetagenerationNotMatch`
+// conditions are mutually exclusive: it's an error for both of them to be set
+// in the request.
+func (c *ObjectsMoveCall) IfSourceMetagenerationMatch(ifSourceMetagenerationMatch int64) *ObjectsMoveCall {
+	c.urlParams_.Set("ifSourceMetagenerationMatch", fmt.Sprint(ifSourceMetagenerationMatch))
+	return c
+}
+
+// IfSourceMetagenerationNotMatch sets the optional parameter
+// "ifSourceMetagenerationNotMatch": Makes the operation conditional on whether
+// the source object's current metageneration does not match the given value.
+// `ifSourceMetagenerationMatch` and `ifSourceMetagenerationNotMatch`
+// conditions are mutually exclusive: it's an error for both of them to be set
+// in the request.
+func (c *ObjectsMoveCall) IfSourceMetagenerationNotMatch(ifSourceMetagenerationNotMatch int64) *ObjectsMoveCall {
+	c.urlParams_.Set("ifSourceMetagenerationNotMatch", fmt.Sprint(ifSourceMetagenerationNotMatch))
+	return c
+}
+
+// UserProject sets the optional parameter "userProject": The project to be
+// billed for this request. Required for Requester Pays buckets.
+func (c *ObjectsMoveCall) UserProject(userProject string) *ObjectsMoveCall {
+	c.urlParams_.Set("userProject", userProject)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ObjectsMoveCall) Fields(s ...googleapi.Field) *ObjectsMoveCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ObjectsMoveCall) Context(ctx context.Context) *ObjectsMoveCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ObjectsMoveCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ObjectsMoveCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "b/{bucket}/o/{sourceObject}/moveTo/o/{destinationObject}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"bucket":            c.bucket,
+		"sourceObject":      c.sourceObject,
+		"destinationObject": c.destinationObject,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "storage.objects.move" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Object.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ObjectsMoveCall) Do(opts ...googleapi.CallOption) (*Object, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Object{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+}
+
 type ObjectsPatchCall struct {
 	s          *Service
 	bucket     string

@@ -512,7 +512,7 @@ type AutomatedBackupPolicy struct {
 	// hours.
 	Frequency string `json:"frequency,omitempty"`
 	// RetentionPeriod: Required. How long the automated backups should be
-	// retained. The only supported value at this time is 3 days.
+	// retained. Values must be at least 3 days and at most 90 days.
 	RetentionPeriod string `json:"retentionPeriod,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Frequency") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -3101,8 +3101,8 @@ type RestoreTableMetadata struct {
 	// OptimizeTableOperationName: If exists, the name of the long-running
 	// operation that will be used to track the post-restore optimization process
 	// to optimize the performance of the restored table. The metadata type of the
-	// long-running operation is OptimizeRestoreTableMetadata. The response type is
-	// Empty. This long-running operation may be automatically created by the
+	// long-running operation is OptimizeRestoredTableMetadata. The response type
+	// is Empty. This long-running operation may be automatically created by the
 	// system if applicable after the RestoreTable long-running operation completes
 	// successfully. This operation may not be created if the table is already
 	// optimized or the restore was not successful.

@@ -789,12 +789,12 @@ func (s TestResult) MarshalJSON() ([]byte, error) {
 
 // TestRulesetRequest: The request for FirebaseRulesService.TestRuleset.
 type TestRulesetRequest struct {
-	// Source: Optional `Source` to be checked for correctness. This field must not
-	// be set when the resource name refers to a `Ruleset`.
+	// Source: Optional. Optional `Source` to be checked for correctness. This
+	// field must not be set when the resource name refers to a `Ruleset`.
 	Source *Source `json:"source,omitempty"`
-	// TestSuite: The tests to execute against the `Source`. When `Source` is
-	// provided inline, the test cases will only be run if the `Source` is
-	// syntactically and semantically valid. Inline `TestSuite` to run.
+	// TestSuite: Required. The tests to execute against the `Source`. When
+	// `Source` is provided inline, the test cases will only be run if the `Source`
+	// is syntactically and semantically valid. Inline `TestSuite` to run.
 	TestSuite *TestSuite `json:"testSuite,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Source") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -873,7 +873,7 @@ func (s TestSuite) MarshalJSON() ([]byte, error) {
 type UpdateReleaseRequest struct {
 	// Release: Required. `Release` to update.
 	Release *Release `json:"release,omitempty"`
-	// UpdateMask: Specifies which fields to update.
+	// UpdateMask: Optional. Specifies which fields to update.
 	UpdateMask string `json:"updateMask,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Release") to unconditionally
 	// include in API requests. By default, fields with empty or default values are

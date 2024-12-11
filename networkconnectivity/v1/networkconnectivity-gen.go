@@ -1698,7 +1698,7 @@ func (s ListLocationsResponse) MarshalJSON() ([]byte, error) {
 }
 
 // ListPolicyBasedRoutesResponse: Response for
-// PolicyBasedRouting.ListPolicyBasedRoutes method.
+// PolicyBasedRoutingService.ListPolicyBasedRoutes method.
 type ListPolicyBasedRoutesResponse struct {
 	// NextPageToken: The next pagination token in the List response. It should be
 	// used as page_token for the following request. An empty value means no more
@@ -2197,8 +2197,8 @@ type OperationMetadata struct {
 	EndTime string `json:"endTime,omitempty"`
 	// RequestedCancellation: Output only. Identifies whether the user has
 	// requested cancellation of the operation. Operations that have been cancelled
-	// successfully have Operation.error value with a google.rpc.Status.code of 1,
-	// corresponding to `Code.CANCELLED`.
+	// successfully have google.longrunning.Operation.error value with a
+	// google.rpc.Status.code of 1, corresponding to `Code.CANCELLED`.
 	RequestedCancellation bool `json:"requestedCancellation,omitempty"`
 	// StatusMessage: Output only. Human-readable status of the operation, if any.
 	StatusMessage string `json:"statusMessage,omitempty"`
@@ -2659,7 +2659,8 @@ type RegionalEndpoint struct {
 	// Address: Optional. The IP Address of the Regional Endpoint. When no address
 	// is provided, an IP from the subnetwork is allocated. Use one of the
 	// following formats: * IPv4 address as in `10.0.0.1` * Address resource URI as
-	// in `projects/{project}/regions/{region}/addresses/{address_name}`
+	// in `projects/{project}/regions/{region}/addresses/{address_name}` for an
+	// IPv4 or IPv6 address.
 	Address string `json:"address,omitempty"`
 	// CreateTime: Output only. Time when the RegionalEndpoint was created.
 	CreateTime string `json:"createTime,omitempty"`

@@ -7541,20 +7541,23 @@ func (s SetBasicFilterRequest) MarshalJSON() ([]byte, error) {
 // SetDataValidationRequest: Sets a data validation rule to every cell in the
 // range. To clear validation in a range, call this with no rule specified.
 type SetDataValidationRequest struct {
+	// FilteredRowsIncluded: Optional. If true, the data validation rule will be
+	// applied to the filtered rows as well.
+	FilteredRowsIncluded bool `json:"filteredRowsIncluded,omitempty"`
 	// Range: The range the data validation rule should apply to.
 	Range *GridRange `json:"range,omitempty"`
 	// Rule: The data validation rule to set on each cell in the range, or empty to
 	// clear the data validation in the range.
 	Rule *DataValidationRule `json:"rule,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "Range") to unconditionally
-	// include in API requests. By default, fields with empty or default values are
-	// omitted from API requests. See
+	// ForceSendFields is a list of field names (e.g. "FilteredRowsIncluded") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Range") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
+	// NullFields is a list of field names (e.g. "FilteredRowsIncluded") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }

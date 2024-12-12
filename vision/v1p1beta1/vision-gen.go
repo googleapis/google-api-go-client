@@ -126,7 +126,10 @@ func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, err
 	if err != nil {
 		return nil, err
 	}
-	s, err := New(client)
+	s := &Service{client: client, BasePath: basePath}
+	s.Files = NewFilesService(s)
+	s.Images = NewImagesService(s)
+	s.Projects = NewProjectsService(s)
 	if err != nil {
 		return nil, err
 	}
@@ -145,11 +148,7 @@ func New(client *http.Client) (*Service, error) {
 	if client == nil {
 		return nil, errors.New("client is nil")
 	}
-	s := &Service{client: client, BasePath: basePath}
-	s.Files = NewFilesService(s)
-	s.Images = NewImagesService(s)
-	s.Projects = NewProjectsService(s)
-	return s, nil
+	return NewService(context.Background(), option.WithHTTPClient(client))
 }
 
 type Service struct {
@@ -11023,8 +11022,7 @@ func (c *FilesAnnotateCall) Header() http.Header {
 
 func (c *FilesAnnotateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudvisionv1p1beta1batchannotatefilesrequest)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googlecloudvisionv1p1beta1batchannotatefilesrequest)
 	if err != nil {
 		return nil, err
 	}
@@ -11123,8 +11121,7 @@ func (c *FilesAsyncBatchAnnotateCall) Header() http.Header {
 
 func (c *FilesAsyncBatchAnnotateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudvisionv1p1beta1asyncbatchannotatefilesrequest)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googlecloudvisionv1p1beta1asyncbatchannotatefilesrequest)
 	if err != nil {
 		return nil, err
 	}
@@ -11217,8 +11214,7 @@ func (c *ImagesAnnotateCall) Header() http.Header {
 
 func (c *ImagesAnnotateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudvisionv1p1beta1batchannotateimagesrequest)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googlecloudvisionv1p1beta1batchannotateimagesrequest)
 	if err != nil {
 		return nil, err
 	}
@@ -11318,8 +11314,7 @@ func (c *ImagesAsyncBatchAnnotateCall) Header() http.Header {
 
 func (c *ImagesAsyncBatchAnnotateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudvisionv1p1beta1asyncbatchannotateimagesrequest)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googlecloudvisionv1p1beta1asyncbatchannotateimagesrequest)
 	if err != nil {
 		return nil, err
 	}
@@ -11425,8 +11420,7 @@ func (c *ProjectsFilesAnnotateCall) Header() http.Header {
 
 func (c *ProjectsFilesAnnotateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudvisionv1p1beta1batchannotatefilesrequest)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googlecloudvisionv1p1beta1batchannotatefilesrequest)
 	if err != nil {
 		return nil, err
 	}
@@ -11536,8 +11530,7 @@ func (c *ProjectsFilesAsyncBatchAnnotateCall) Header() http.Header {
 
 func (c *ProjectsFilesAsyncBatchAnnotateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudvisionv1p1beta1asyncbatchannotatefilesrequest)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googlecloudvisionv1p1beta1asyncbatchannotatefilesrequest)
 	if err != nil {
 		return nil, err
 	}
@@ -11641,8 +11634,7 @@ func (c *ProjectsImagesAnnotateCall) Header() http.Header {
 
 func (c *ProjectsImagesAnnotateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudvisionv1p1beta1batchannotateimagesrequest)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googlecloudvisionv1p1beta1batchannotateimagesrequest)
 	if err != nil {
 		return nil, err
 	}
@@ -11753,8 +11745,7 @@ func (c *ProjectsImagesAsyncBatchAnnotateCall) Header() http.Header {
 
 func (c *ProjectsImagesAsyncBatchAnnotateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudvisionv1p1beta1asyncbatchannotateimagesrequest)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googlecloudvisionv1p1beta1asyncbatchannotateimagesrequest)
 	if err != nil {
 		return nil, err
 	}
@@ -11863,8 +11854,7 @@ func (c *ProjectsLocationsFilesAnnotateCall) Header() http.Header {
 
 func (c *ProjectsLocationsFilesAnnotateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudvisionv1p1beta1batchannotatefilesrequest)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googlecloudvisionv1p1beta1batchannotatefilesrequest)
 	if err != nil {
 		return nil, err
 	}
@@ -11974,8 +11964,7 @@ func (c *ProjectsLocationsFilesAsyncBatchAnnotateCall) Header() http.Header {
 
 func (c *ProjectsLocationsFilesAsyncBatchAnnotateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudvisionv1p1beta1asyncbatchannotatefilesrequest)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googlecloudvisionv1p1beta1asyncbatchannotatefilesrequest)
 	if err != nil {
 		return nil, err
 	}
@@ -12079,8 +12068,7 @@ func (c *ProjectsLocationsImagesAnnotateCall) Header() http.Header {
 
 func (c *ProjectsLocationsImagesAnnotateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudvisionv1p1beta1batchannotateimagesrequest)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googlecloudvisionv1p1beta1batchannotateimagesrequest)
 	if err != nil {
 		return nil, err
 	}
@@ -12191,8 +12179,7 @@ func (c *ProjectsLocationsImagesAsyncBatchAnnotateCall) Header() http.Header {
 
 func (c *ProjectsLocationsImagesAsyncBatchAnnotateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudvisionv1p1beta1asyncbatchannotateimagesrequest)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googlecloudvisionv1p1beta1asyncbatchannotateimagesrequest)
 	if err != nil {
 		return nil, err
 	}

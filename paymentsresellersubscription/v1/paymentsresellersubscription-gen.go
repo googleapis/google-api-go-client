@@ -114,7 +114,8 @@ func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, err
 	if err != nil {
 		return nil, err
 	}
-	s, err := New(client)
+	s := &Service{client: client, BasePath: basePath}
+	s.Partners = NewPartnersService(s)
 	if err != nil {
 		return nil, err
 	}
@@ -133,9 +134,7 @@ func New(client *http.Client) (*Service, error) {
 	if client == nil {
 		return nil, errors.New("client is nil")
 	}
-	s := &Service{client: client, BasePath: basePath}
-	s.Partners = NewPartnersService(s)
-	return s, nil
+	return NewService(context.Background(), option.WithHTTPClient(client))
 }
 
 type Service struct {
@@ -1822,12 +1821,11 @@ func (c *PartnersProductsListCall) doRequest(alt string) (*http.Response, error)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
-	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/products")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, body)
+	req, err := http.NewRequest("GET", urls, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -1944,8 +1942,7 @@ func (c *PartnersPromotionsFindEligibleCall) Header() http.Header {
 
 func (c *PartnersPromotionsFindEligibleCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudpaymentsresellersubscriptionv1findeligiblepromotionsrequest)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googlecloudpaymentsresellersubscriptionv1findeligiblepromotionsrequest)
 	if err != nil {
 		return nil, err
 	}
@@ -2116,12 +2113,11 @@ func (c *PartnersPromotionsListCall) doRequest(alt string) (*http.Response, erro
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
-	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/promotions")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, body)
+	req, err := http.NewRequest("GET", urls, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -2238,8 +2234,7 @@ func (c *PartnersSubscriptionsCancelCall) Header() http.Header {
 
 func (c *PartnersSubscriptionsCancelCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudpaymentsresellersubscriptionv1cancelsubscriptionrequest)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googlecloudpaymentsresellersubscriptionv1cancelsubscriptionrequest)
 	if err != nil {
 		return nil, err
 	}
@@ -2353,8 +2348,7 @@ func (c *PartnersSubscriptionsCreateCall) Header() http.Header {
 
 func (c *PartnersSubscriptionsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudpaymentsresellersubscriptionv1subscription)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googlecloudpaymentsresellersubscriptionv1subscription)
 	if err != nil {
 		return nil, err
 	}
@@ -2460,8 +2454,7 @@ func (c *PartnersSubscriptionsEntitleCall) Header() http.Header {
 
 func (c *PartnersSubscriptionsEntitleCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudpaymentsresellersubscriptionv1entitlesubscriptionrequest)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googlecloudpaymentsresellersubscriptionv1entitlesubscriptionrequest)
 	if err != nil {
 		return nil, err
 	}
@@ -2566,8 +2559,7 @@ func (c *PartnersSubscriptionsExtendCall) Header() http.Header {
 
 func (c *PartnersSubscriptionsExtendCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudpaymentsresellersubscriptionv1extendsubscriptionrequest)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googlecloudpaymentsresellersubscriptionv1extendsubscriptionrequest)
 	if err != nil {
 		return nil, err
 	}
@@ -2680,12 +2672,11 @@ func (c *PartnersSubscriptionsGetCall) doRequest(alt string) (*http.Response, er
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
-	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, body)
+	req, err := http.NewRequest("GET", urls, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -2793,8 +2784,7 @@ func (c *PartnersSubscriptionsProvisionCall) Header() http.Header {
 
 func (c *PartnersSubscriptionsProvisionCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudpaymentsresellersubscriptionv1subscription)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googlecloudpaymentsresellersubscriptionv1subscription)
 	if err != nil {
 		return nil, err
 	}
@@ -2901,8 +2891,7 @@ func (c *PartnersSubscriptionsUndoCancelCall) Header() http.Header {
 
 func (c *PartnersSubscriptionsUndoCancelCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudpaymentsresellersubscriptionv1undocancelsubscriptionrequest)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googlecloudpaymentsresellersubscriptionv1undocancelsubscriptionrequest)
 	if err != nil {
 		return nil, err
 	}
@@ -3009,8 +2998,7 @@ func (c *PartnersUserSessionsGenerateCall) Header() http.Header {
 
 func (c *PartnersUserSessionsGenerateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudpaymentsresellersubscriptionv1generateusersessionrequest)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googlecloudpaymentsresellersubscriptionv1generateusersessionrequest)
 	if err != nil {
 		return nil, err
 	}

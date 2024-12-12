@@ -121,7 +121,8 @@ func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, err
 	if err != nil {
 		return nil, err
 	}
-	s, err := New(client)
+	s := &Service{client: client, BasePath: basePath}
+	s.WebResource = NewWebResourceService(s)
 	if err != nil {
 		return nil, err
 	}
@@ -140,9 +141,7 @@ func New(client *http.Client) (*Service, error) {
 	if client == nil {
 		return nil, errors.New("client is nil")
 	}
-	s := &Service{client: client, BasePath: basePath}
-	s.WebResource = NewWebResourceService(s)
-	return s, nil
+	return NewService(context.Background(), option.WithHTTPClient(client))
 }
 
 type Service struct {
@@ -375,12 +374,11 @@ func (c *WebResourceDeleteCall) Header() http.Header {
 
 func (c *WebResourceDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
-	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "webResource/{id}")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("DELETE", urls, body)
+	req, err := http.NewRequest("DELETE", urls, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -459,12 +457,11 @@ func (c *WebResourceGetCall) doRequest(alt string) (*http.Response, error) {
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
-	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "webResource/{id}")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, body)
+	req, err := http.NewRequest("GET", urls, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -553,8 +550,7 @@ func (c *WebResourceGetTokenCall) Header() http.Header {
 
 func (c *WebResourceGetTokenCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.siteverificationwebresourcegettokenrequest)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.siteverificationwebresourcegettokenrequest)
 	if err != nil {
 		return nil, err
 	}
@@ -651,8 +647,7 @@ func (c *WebResourceInsertCall) Header() http.Header {
 
 func (c *WebResourceInsertCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.siteverificationwebresourceresource)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.siteverificationwebresourceresource)
 	if err != nil {
 		return nil, err
 	}
@@ -756,12 +751,11 @@ func (c *WebResourceListCall) doRequest(alt string) (*http.Response, error) {
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
-	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "webResource")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, body)
+	req, err := http.NewRequest("GET", urls, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -852,8 +846,7 @@ func (c *WebResourcePatchCall) Header() http.Header {
 
 func (c *WebResourcePatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.siteverificationwebresourceresource)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.siteverificationwebresourceresource)
 	if err != nil {
 		return nil, err
 	}
@@ -954,8 +947,7 @@ func (c *WebResourceUpdateCall) Header() http.Header {
 
 func (c *WebResourceUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.siteverificationwebresourceresource)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.siteverificationwebresourceresource)
 	if err != nil {
 		return nil, err
 	}

@@ -115,7 +115,8 @@ func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, err
 	if err != nil {
 		return nil, err
 	}
-	s, err := New(client)
+	s := &Service{client: client, BasePath: basePath}
+	s.Projects = NewProjectsService(s)
 	if err != nil {
 		return nil, err
 	}
@@ -134,9 +135,7 @@ func New(client *http.Client) (*Service, error) {
 	if client == nil {
 		return nil, errors.New("client is nil")
 	}
-	s := &Service{client: client, BasePath: basePath}
-	s.Projects = NewProjectsService(s)
-	return s, nil
+	return NewService(context.Background(), option.WithHTTPClient(client))
 }
 
 type Service struct {
@@ -9204,12 +9203,11 @@ func (c *ProjectsGetAlertConfigCall) doRequest(alt string) (*http.Response, erro
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
-	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v2beta/{+name}")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, body)
+	req, err := http.NewRequest("GET", urls, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -9311,8 +9309,7 @@ func (c *ProjectsUpdateAlertConfigCall) Header() http.Header {
 
 func (c *ProjectsUpdateAlertConfigCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudretailv2betaalertconfig)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googlecloudretailv2betaalertconfig)
 	if err != nil {
 		return nil, err
 	}
@@ -9512,12 +9509,11 @@ func (c *ProjectsLocationsCatalogsCompleteQueryCall) doRequest(alt string) (*htt
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
-	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v2beta/{+catalog}:completeQuery")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, body)
+	req, err := http.NewRequest("GET", urls, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -9613,8 +9609,7 @@ func (c *ProjectsLocationsCatalogsExportAnalyticsMetricsCall) Header() http.Head
 
 func (c *ProjectsLocationsCatalogsExportAnalyticsMetricsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudretailv2betaexportanalyticsmetricsrequest)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googlecloudretailv2betaexportanalyticsmetricsrequest)
 	if err != nil {
 		return nil, err
 	}
@@ -9727,12 +9722,11 @@ func (c *ProjectsLocationsCatalogsGetAttributesConfigCall) doRequest(alt string)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
-	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v2beta/{+name}")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, body)
+	req, err := http.NewRequest("GET", urls, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -9837,12 +9831,11 @@ func (c *ProjectsLocationsCatalogsGetCompletionConfigCall) doRequest(alt string)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
-	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v2beta/{+name}")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, body)
+	req, err := http.NewRequest("GET", urls, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -9947,12 +9940,11 @@ func (c *ProjectsLocationsCatalogsGetDefaultBranchCall) doRequest(alt string) (*
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
-	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v2beta/{+catalog}:getDefaultBranch")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, body)
+	req, err := http.NewRequest("GET", urls, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -10057,12 +10049,11 @@ func (c *ProjectsLocationsCatalogsGetGenerativeQuestionFeatureCall) doRequest(al
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
-	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v2beta/{+catalog}/generativeQuestionFeature")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, body)
+	req, err := http.NewRequest("GET", urls, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -10188,12 +10179,11 @@ func (c *ProjectsLocationsCatalogsListCall) doRequest(alt string) (*http.Respons
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
-	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v2beta/{+parent}/catalogs")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, body)
+	req, err := http.NewRequest("GET", urls, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -10315,8 +10305,7 @@ func (c *ProjectsLocationsCatalogsPatchCall) Header() http.Header {
 
 func (c *ProjectsLocationsCatalogsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudretailv2betacatalog)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googlecloudretailv2betacatalog)
 	if err != nil {
 		return nil, err
 	}
@@ -10438,8 +10427,7 @@ func (c *ProjectsLocationsCatalogsSetDefaultBranchCall) Header() http.Header {
 
 func (c *ProjectsLocationsCatalogsSetDefaultBranchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudretailv2betasetdefaultbranchrequest)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googlecloudretailv2betasetdefaultbranchrequest)
 	if err != nil {
 		return nil, err
 	}
@@ -10556,8 +10544,7 @@ func (c *ProjectsLocationsCatalogsUpdateAttributesConfigCall) Header() http.Head
 
 func (c *ProjectsLocationsCatalogsUpdateAttributesConfigCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudretailv2betaattributesconfig)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googlecloudretailv2betaattributesconfig)
 	if err != nil {
 		return nil, err
 	}
@@ -10669,8 +10656,7 @@ func (c *ProjectsLocationsCatalogsUpdateCompletionConfigCall) Header() http.Head
 
 func (c *ProjectsLocationsCatalogsUpdateCompletionConfigCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudretailv2betacompletionconfig)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googlecloudretailv2betacompletionconfig)
 	if err != nil {
 		return nil, err
 	}
@@ -10781,8 +10767,7 @@ func (c *ProjectsLocationsCatalogsUpdateGenerativeQuestionCall) Header() http.He
 
 func (c *ProjectsLocationsCatalogsUpdateGenerativeQuestionCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudretailv2betagenerativequestionconfig)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googlecloudretailv2betagenerativequestionconfig)
 	if err != nil {
 		return nil, err
 	}
@@ -10893,8 +10878,7 @@ func (c *ProjectsLocationsCatalogsUpdateGenerativeQuestionFeatureCall) Header() 
 
 func (c *ProjectsLocationsCatalogsUpdateGenerativeQuestionFeatureCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudretailv2betagenerativequestionsfeatureconfig)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googlecloudretailv2betagenerativequestionsfeatureconfig)
 	if err != nil {
 		return nil, err
 	}
@@ -10999,8 +10983,7 @@ func (c *ProjectsLocationsCatalogsAttributesConfigAddCatalogAttributeCall) Heade
 
 func (c *ProjectsLocationsCatalogsAttributesConfigAddCatalogAttributeCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudretailv2betaaddcatalogattributerequest)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googlecloudretailv2betaaddcatalogattributerequest)
 	if err != nil {
 		return nil, err
 	}
@@ -11105,8 +11088,7 @@ func (c *ProjectsLocationsCatalogsAttributesConfigBatchRemoveCatalogAttributesCa
 
 func (c *ProjectsLocationsCatalogsAttributesConfigBatchRemoveCatalogAttributesCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudretailv2betabatchremovecatalogattributesrequest)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googlecloudretailv2betabatchremovecatalogattributesrequest)
 	if err != nil {
 		return nil, err
 	}
@@ -11211,8 +11193,7 @@ func (c *ProjectsLocationsCatalogsAttributesConfigRemoveCatalogAttributeCall) He
 
 func (c *ProjectsLocationsCatalogsAttributesConfigRemoveCatalogAttributeCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudretailv2betaremovecatalogattributerequest)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googlecloudretailv2betaremovecatalogattributerequest)
 	if err != nil {
 		return nil, err
 	}
@@ -11318,8 +11299,7 @@ func (c *ProjectsLocationsCatalogsAttributesConfigReplaceCatalogAttributeCall) H
 
 func (c *ProjectsLocationsCatalogsAttributesConfigReplaceCatalogAttributeCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudretailv2betareplacecatalogattributerequest)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googlecloudretailv2betareplacecatalogattributerequest)
 	if err != nil {
 		return nil, err
 	}
@@ -11432,12 +11412,11 @@ func (c *ProjectsLocationsCatalogsBranchesOperationsGetCall) doRequest(alt strin
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
-	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v2beta/{+name}")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, body)
+	req, err := http.NewRequest("GET", urls, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -11548,8 +11527,7 @@ func (c *ProjectsLocationsCatalogsBranchesProductsAddFulfillmentPlacesCall) Head
 
 func (c *ProjectsLocationsCatalogsBranchesProductsAddFulfillmentPlacesCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudretailv2betaaddfulfillmentplacesrequest)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googlecloudretailv2betaaddfulfillmentplacesrequest)
 	if err != nil {
 		return nil, err
 	}
@@ -11667,8 +11645,7 @@ func (c *ProjectsLocationsCatalogsBranchesProductsAddLocalInventoriesCall) Heade
 
 func (c *ProjectsLocationsCatalogsBranchesProductsAddLocalInventoriesCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudretailv2betaaddlocalinventoriesrequest)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googlecloudretailv2betaaddlocalinventoriesrequest)
 	if err != nil {
 		return nil, err
 	}
@@ -11784,8 +11761,7 @@ func (c *ProjectsLocationsCatalogsBranchesProductsCreateCall) Header() http.Head
 
 func (c *ProjectsLocationsCatalogsBranchesProductsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudretailv2betaproduct)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googlecloudretailv2betaproduct)
 	if err != nil {
 		return nil, err
 	}
@@ -11893,12 +11869,11 @@ func (c *ProjectsLocationsCatalogsBranchesProductsDeleteCall) Header() http.Head
 
 func (c *ProjectsLocationsCatalogsBranchesProductsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
-	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v2beta/{+name}")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("DELETE", urls, body)
+	req, err := http.NewRequest("DELETE", urls, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -11994,8 +11969,7 @@ func (c *ProjectsLocationsCatalogsBranchesProductsExportCall) Header() http.Head
 
 func (c *ProjectsLocationsCatalogsBranchesProductsExportCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudretailv2betaexportproductsrequest)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googlecloudretailv2betaexportproductsrequest)
 	if err != nil {
 		return nil, err
 	}
@@ -12111,12 +12085,11 @@ func (c *ProjectsLocationsCatalogsBranchesProductsGetCall) doRequest(alt string)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
-	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v2beta/{+name}")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, body)
+	req, err := http.NewRequest("GET", urls, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -12214,8 +12187,7 @@ func (c *ProjectsLocationsCatalogsBranchesProductsImportCall) Header() http.Head
 
 func (c *ProjectsLocationsCatalogsBranchesProductsImportCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudretailv2betaimportproductsrequest)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googlecloudretailv2betaimportproductsrequest)
 	if err != nil {
 		return nil, err
 	}
@@ -12379,12 +12351,11 @@ func (c *ProjectsLocationsCatalogsBranchesProductsListCall) doRequest(alt string
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
-	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v2beta/{+parent}/products")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, body)
+	req, err := http.NewRequest("GET", urls, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -12521,8 +12492,7 @@ func (c *ProjectsLocationsCatalogsBranchesProductsPatchCall) Header() http.Heade
 
 func (c *ProjectsLocationsCatalogsBranchesProductsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudretailv2betaproduct)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googlecloudretailv2betaproduct)
 	if err != nil {
 		return nil, err
 	}
@@ -12633,8 +12603,7 @@ func (c *ProjectsLocationsCatalogsBranchesProductsPurgeCall) Header() http.Heade
 
 func (c *ProjectsLocationsCatalogsBranchesProductsPurgeCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudretailv2betapurgeproductsrequest)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googlecloudretailv2betapurgeproductsrequest)
 	if err != nil {
 		return nil, err
 	}
@@ -12753,8 +12722,7 @@ func (c *ProjectsLocationsCatalogsBranchesProductsRemoveFulfillmentPlacesCall) H
 
 func (c *ProjectsLocationsCatalogsBranchesProductsRemoveFulfillmentPlacesCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudretailv2betaremovefulfillmentplacesrequest)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googlecloudretailv2betaremovefulfillmentplacesrequest)
 	if err != nil {
 		return nil, err
 	}
@@ -12870,8 +12838,7 @@ func (c *ProjectsLocationsCatalogsBranchesProductsRemoveLocalInventoriesCall) He
 
 func (c *ProjectsLocationsCatalogsBranchesProductsRemoveLocalInventoriesCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudretailv2betaremovelocalinventoriesrequest)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googlecloudretailv2betaremovelocalinventoriesrequest)
 	if err != nil {
 		return nil, err
 	}
@@ -12995,8 +12962,7 @@ func (c *ProjectsLocationsCatalogsBranchesProductsSetInventoryCall) Header() htt
 
 func (c *ProjectsLocationsCatalogsBranchesProductsSetInventoryCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudretailv2betasetinventoryrequest)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googlecloudretailv2betasetinventoryrequest)
 	if err != nil {
 		return nil, err
 	}
@@ -13103,8 +13069,7 @@ func (c *ProjectsLocationsCatalogsCompletionDataImportCall) Header() http.Header
 
 func (c *ProjectsLocationsCatalogsCompletionDataImportCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudretailv2betaimportcompletiondatarequest)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googlecloudretailv2betaimportcompletiondatarequest)
 	if err != nil {
 		return nil, err
 	}
@@ -13216,8 +13181,7 @@ func (c *ProjectsLocationsCatalogsControlsCreateCall) Header() http.Header {
 
 func (c *ProjectsLocationsCatalogsControlsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudretailv2betacontrol)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googlecloudretailv2betacontrol)
 	if err != nil {
 		return nil, err
 	}
@@ -13319,12 +13283,11 @@ func (c *ProjectsLocationsCatalogsControlsDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsCatalogsControlsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
-	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v2beta/{+name}")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("DELETE", urls, body)
+	req, err := http.NewRequest("DELETE", urls, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -13429,12 +13392,11 @@ func (c *ProjectsLocationsCatalogsControlsGetCall) doRequest(alt string) (*http.
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
-	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v2beta/{+name}")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, body)
+	req, err := http.NewRequest("GET", urls, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -13562,12 +13524,11 @@ func (c *ProjectsLocationsCatalogsControlsListCall) doRequest(alt string) (*http
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
-	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v2beta/{+parent}/controls")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, body)
+	req, err := http.NewRequest("GET", urls, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -13692,8 +13653,7 @@ func (c *ProjectsLocationsCatalogsControlsPatchCall) Header() http.Header {
 
 func (c *ProjectsLocationsCatalogsControlsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudretailv2betacontrol)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googlecloudretailv2betacontrol)
 	if err != nil {
 		return nil, err
 	}
@@ -13795,8 +13755,7 @@ func (c *ProjectsLocationsCatalogsGenerativeQuestionBatchUpdateCall) Header() ht
 
 func (c *ProjectsLocationsCatalogsGenerativeQuestionBatchUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudretailv2betabatchupdategenerativequestionconfigsrequest)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googlecloudretailv2betabatchupdategenerativequestionconfigsrequest)
 	if err != nil {
 		return nil, err
 	}
@@ -13908,12 +13867,11 @@ func (c *ProjectsLocationsCatalogsGenerativeQuestionsListCall) doRequest(alt str
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
-	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v2beta/{+parent}/generativeQuestions")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, body)
+	req, err := http.NewRequest("GET", urls, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -14014,8 +13972,7 @@ func (c *ProjectsLocationsCatalogsModelsCreateCall) Header() http.Header {
 
 func (c *ProjectsLocationsCatalogsModelsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudretailv2betamodel)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googlecloudretailv2betamodel)
 	if err != nil {
 		return nil, err
 	}
@@ -14116,12 +14073,11 @@ func (c *ProjectsLocationsCatalogsModelsDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsCatalogsModelsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
-	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v2beta/{+name}")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("DELETE", urls, body)
+	req, err := http.NewRequest("DELETE", urls, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -14226,12 +14182,11 @@ func (c *ProjectsLocationsCatalogsModelsGetCall) doRequest(alt string) (*http.Re
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
-	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v2beta/{+name}")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, body)
+	req, err := http.NewRequest("GET", urls, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -14350,12 +14305,11 @@ func (c *ProjectsLocationsCatalogsModelsListCall) doRequest(alt string) (*http.R
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
-	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v2beta/{+parent}/models")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, body)
+	req, err := http.NewRequest("GET", urls, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -14482,8 +14436,7 @@ func (c *ProjectsLocationsCatalogsModelsPatchCall) Header() http.Header {
 
 func (c *ProjectsLocationsCatalogsModelsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudretailv2betamodel)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googlecloudretailv2betamodel)
 	if err != nil {
 		return nil, err
 	}
@@ -14586,8 +14539,7 @@ func (c *ProjectsLocationsCatalogsModelsPauseCall) Header() http.Header {
 
 func (c *ProjectsLocationsCatalogsModelsPauseCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudretailv2betapausemodelrequest)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googlecloudretailv2betapausemodelrequest)
 	if err != nil {
 		return nil, err
 	}
@@ -14690,8 +14642,7 @@ func (c *ProjectsLocationsCatalogsModelsResumeCall) Header() http.Header {
 
 func (c *ProjectsLocationsCatalogsModelsResumeCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudretailv2betaresumemodelrequest)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googlecloudretailv2betaresumemodelrequest)
 	if err != nil {
 		return nil, err
 	}
@@ -14794,8 +14745,7 @@ func (c *ProjectsLocationsCatalogsModelsTuneCall) Header() http.Header {
 
 func (c *ProjectsLocationsCatalogsModelsTuneCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudretailv2betatunemodelrequest)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googlecloudretailv2betatunemodelrequest)
 	if err != nil {
 		return nil, err
 	}
@@ -14908,12 +14858,11 @@ func (c *ProjectsLocationsCatalogsOperationsGetCall) doRequest(alt string) (*htt
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
-	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v2beta/{+name}")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, body)
+	req, err := http.NewRequest("GET", urls, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -15037,12 +14986,11 @@ func (c *ProjectsLocationsCatalogsOperationsListCall) doRequest(alt string) (*ht
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
-	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v2beta/{+name}/operations")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, body)
+	req, err := http.NewRequest("GET", urls, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -15167,8 +15115,7 @@ func (c *ProjectsLocationsCatalogsPlacementsPredictCall) Header() http.Header {
 
 func (c *ProjectsLocationsCatalogsPlacementsPredictCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudretailv2betapredictrequest)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googlecloudretailv2betapredictrequest)
 	if err != nil {
 		return nil, err
 	}
@@ -15276,8 +15223,7 @@ func (c *ProjectsLocationsCatalogsPlacementsSearchCall) Header() http.Header {
 
 func (c *ProjectsLocationsCatalogsPlacementsSearchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudretailv2betasearchrequest)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googlecloudretailv2betasearchrequest)
 	if err != nil {
 		return nil, err
 	}
@@ -15407,8 +15353,7 @@ func (c *ProjectsLocationsCatalogsServingConfigsAddControlCall) Header() http.He
 
 func (c *ProjectsLocationsCatalogsServingConfigsAddControlCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudretailv2betaaddcontrolrequest)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googlecloudretailv2betaaddcontrolrequest)
 	if err != nil {
 		return nil, err
 	}
@@ -15520,8 +15465,7 @@ func (c *ProjectsLocationsCatalogsServingConfigsCreateCall) Header() http.Header
 
 func (c *ProjectsLocationsCatalogsServingConfigsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudretailv2betaservingconfig)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googlecloudretailv2betaservingconfig)
 	if err != nil {
 		return nil, err
 	}
@@ -15623,12 +15567,11 @@ func (c *ProjectsLocationsCatalogsServingConfigsDeleteCall) Header() http.Header
 
 func (c *ProjectsLocationsCatalogsServingConfigsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
-	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v2beta/{+name}")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("DELETE", urls, body)
+	req, err := http.NewRequest("DELETE", urls, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -15734,12 +15677,11 @@ func (c *ProjectsLocationsCatalogsServingConfigsGetCall) doRequest(alt string) (
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
-	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v2beta/{+name}")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, body)
+	req, err := http.NewRequest("GET", urls, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -15859,12 +15801,11 @@ func (c *ProjectsLocationsCatalogsServingConfigsListCall) doRequest(alt string) 
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
-	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v2beta/{+parent}/servingConfigs")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, body)
+	req, err := http.NewRequest("GET", urls, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -15987,8 +15928,7 @@ func (c *ProjectsLocationsCatalogsServingConfigsPatchCall) Header() http.Header 
 
 func (c *ProjectsLocationsCatalogsServingConfigsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudretailv2betaservingconfig)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googlecloudretailv2betaservingconfig)
 	if err != nil {
 		return nil, err
 	}
@@ -16100,8 +16040,7 @@ func (c *ProjectsLocationsCatalogsServingConfigsPredictCall) Header() http.Heade
 
 func (c *ProjectsLocationsCatalogsServingConfigsPredictCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudretailv2betapredictrequest)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googlecloudretailv2betapredictrequest)
 	if err != nil {
 		return nil, err
 	}
@@ -16206,8 +16145,7 @@ func (c *ProjectsLocationsCatalogsServingConfigsRemoveControlCall) Header() http
 
 func (c *ProjectsLocationsCatalogsServingConfigsRemoveControlCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudretailv2betaremovecontrolrequest)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googlecloudretailv2betaremovecontrolrequest)
 	if err != nil {
 		return nil, err
 	}
@@ -16315,8 +16253,7 @@ func (c *ProjectsLocationsCatalogsServingConfigsSearchCall) Header() http.Header
 
 func (c *ProjectsLocationsCatalogsServingConfigsSearchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudretailv2betasearchrequest)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googlecloudretailv2betasearchrequest)
 	if err != nil {
 		return nil, err
 	}
@@ -16493,12 +16430,11 @@ func (c *ProjectsLocationsCatalogsUserEventsCollectCall) doRequest(alt string) (
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
-	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v2beta/{+parent}/userEvents:collect")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, body)
+	req, err := http.NewRequest("GET", urls, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -16593,8 +16529,7 @@ func (c *ProjectsLocationsCatalogsUserEventsExportCall) Header() http.Header {
 
 func (c *ProjectsLocationsCatalogsUserEventsExportCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudretailv2betaexportusereventsrequest)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googlecloudretailv2betaexportusereventsrequest)
 	if err != nil {
 		return nil, err
 	}
@@ -16699,8 +16634,7 @@ func (c *ProjectsLocationsCatalogsUserEventsImportCall) Header() http.Header {
 
 func (c *ProjectsLocationsCatalogsUserEventsImportCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudretailv2betaimportusereventsrequest)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googlecloudretailv2betaimportusereventsrequest)
 	if err != nil {
 		return nil, err
 	}
@@ -16806,8 +16740,7 @@ func (c *ProjectsLocationsCatalogsUserEventsPurgeCall) Header() http.Header {
 
 func (c *ProjectsLocationsCatalogsUserEventsPurgeCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudretailv2betapurgeusereventsrequest)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googlecloudretailv2betapurgeusereventsrequest)
 	if err != nil {
 		return nil, err
 	}
@@ -16916,8 +16849,7 @@ func (c *ProjectsLocationsCatalogsUserEventsRejoinCall) Header() http.Header {
 
 func (c *ProjectsLocationsCatalogsUserEventsRejoinCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudretailv2betarejoinusereventsrequest)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googlecloudretailv2betarejoinusereventsrequest)
 	if err != nil {
 		return nil, err
 	}
@@ -17029,8 +16961,7 @@ func (c *ProjectsLocationsCatalogsUserEventsWriteCall) Header() http.Header {
 
 func (c *ProjectsLocationsCatalogsUserEventsWriteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudretailv2betauserevent)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googlecloudretailv2betauserevent)
 	if err != nil {
 		return nil, err
 	}
@@ -17143,12 +17074,11 @@ func (c *ProjectsLocationsOperationsGetCall) doRequest(alt string) (*http.Respon
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
-	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v2beta/{+name}")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, body)
+	req, err := http.NewRequest("GET", urls, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -17272,12 +17202,11 @@ func (c *ProjectsLocationsOperationsListCall) doRequest(alt string) (*http.Respo
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
-	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v2beta/{+name}/operations")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, body)
+	req, err := http.NewRequest("GET", urls, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -17403,12 +17332,11 @@ func (c *ProjectsOperationsGetCall) doRequest(alt string) (*http.Response, error
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
-	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v2beta/{+name}")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, body)
+	req, err := http.NewRequest("GET", urls, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -17532,12 +17460,11 @@ func (c *ProjectsOperationsListCall) doRequest(alt string) (*http.Response, erro
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
-	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v2beta/{+name}/operations")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, body)
+	req, err := http.NewRequest("GET", urls, nil)
 	if err != nil {
 		return nil, err
 	}

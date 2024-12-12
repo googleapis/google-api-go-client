@@ -121,7 +121,8 @@ func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, err
 	if err != nil {
 		return nil, err
 	}
-	s, err := New(client)
+	s := &Service{client: client, BasePath: basePath}
+	s.Relyingparty = NewRelyingpartyService(s)
 	if err != nil {
 		return nil, err
 	}
@@ -140,9 +141,7 @@ func New(client *http.Client) (*Service, error) {
 	if client == nil {
 		return nil, errors.New("client is nil")
 	}
-	s := &Service{client: client, BasePath: basePath}
-	s.Relyingparty = NewRelyingpartyService(s)
-	return s, nil
+	return NewService(context.Background(), option.WithHTTPClient(client))
 }
 
 type Service struct {
@@ -1876,8 +1875,7 @@ func (c *RelyingpartyCreateAuthUriCall) Header() http.Header {
 
 func (c *RelyingpartyCreateAuthUriCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.identitytoolkitrelyingpartycreateauthurirequest)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.identitytoolkitrelyingpartycreateauthurirequest)
 	if err != nil {
 		return nil, err
 	}
@@ -1971,8 +1969,7 @@ func (c *RelyingpartyDeleteAccountCall) Header() http.Header {
 
 func (c *RelyingpartyDeleteAccountCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.identitytoolkitrelyingpartydeleteaccountrequest)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.identitytoolkitrelyingpartydeleteaccountrequest)
 	if err != nil {
 		return nil, err
 	}
@@ -2066,8 +2063,7 @@ func (c *RelyingpartyDownloadAccountCall) Header() http.Header {
 
 func (c *RelyingpartyDownloadAccountCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.identitytoolkitrelyingpartydownloadaccountrequest)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.identitytoolkitrelyingpartydownloadaccountrequest)
 	if err != nil {
 		return nil, err
 	}
@@ -2182,8 +2178,7 @@ func (c *RelyingpartyEmailLinkSigninCall) Header() http.Header {
 
 func (c *RelyingpartyEmailLinkSigninCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.identitytoolkitrelyingpartyemaillinksigninrequest)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.identitytoolkitrelyingpartyemaillinksigninrequest)
 	if err != nil {
 		return nil, err
 	}
@@ -2277,8 +2272,7 @@ func (c *RelyingpartyGetAccountInfoCall) Header() http.Header {
 
 func (c *RelyingpartyGetAccountInfoCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.identitytoolkitrelyingpartygetaccountinforequest)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.identitytoolkitrelyingpartygetaccountinforequest)
 	if err != nil {
 		return nil, err
 	}
@@ -2372,8 +2366,7 @@ func (c *RelyingpartyGetOobConfirmationCodeCall) Header() http.Header {
 
 func (c *RelyingpartyGetOobConfirmationCodeCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.relyingparty)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.relyingparty)
 	if err != nil {
 		return nil, err
 	}
@@ -2491,12 +2484,11 @@ func (c *RelyingpartyGetProjectConfigCall) doRequest(alt string) (*http.Response
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
-	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "getProjectConfig")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, body)
+	req, err := http.NewRequest("GET", urls, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -2592,12 +2584,11 @@ func (c *RelyingpartyGetPublicKeysCall) doRequest(alt string) (*http.Response, e
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
-	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "publicKeys")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, body)
+	req, err := http.NewRequest("GET", urls, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -2674,12 +2665,11 @@ func (c *RelyingpartyGetRecaptchaParamCall) doRequest(alt string) (*http.Respons
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
-	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "getRecaptchaParam")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, body)
+	req, err := http.NewRequest("GET", urls, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -2765,8 +2755,7 @@ func (c *RelyingpartyResetPasswordCall) Header() http.Header {
 
 func (c *RelyingpartyResetPasswordCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.identitytoolkitrelyingpartyresetpasswordrequest)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.identitytoolkitrelyingpartyresetpasswordrequest)
 	if err != nil {
 		return nil, err
 	}
@@ -2860,8 +2849,7 @@ func (c *RelyingpartySendVerificationCodeCall) Header() http.Header {
 
 func (c *RelyingpartySendVerificationCodeCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.identitytoolkitrelyingpartysendverificationcoderequest)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.identitytoolkitrelyingpartysendverificationcoderequest)
 	if err != nil {
 		return nil, err
 	}
@@ -2955,8 +2943,7 @@ func (c *RelyingpartySetAccountInfoCall) Header() http.Header {
 
 func (c *RelyingpartySetAccountInfoCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.identitytoolkitrelyingpartysetaccountinforequest)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.identitytoolkitrelyingpartysetaccountinforequest)
 	if err != nil {
 		return nil, err
 	}
@@ -3050,8 +3037,7 @@ func (c *RelyingpartySetProjectConfigCall) Header() http.Header {
 
 func (c *RelyingpartySetProjectConfigCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.identitytoolkitrelyingpartysetprojectconfigrequest)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.identitytoolkitrelyingpartysetprojectconfigrequest)
 	if err != nil {
 		return nil, err
 	}
@@ -3145,8 +3131,7 @@ func (c *RelyingpartySignOutUserCall) Header() http.Header {
 
 func (c *RelyingpartySignOutUserCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.identitytoolkitrelyingpartysignoutuserrequest)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.identitytoolkitrelyingpartysignoutuserrequest)
 	if err != nil {
 		return nil, err
 	}
@@ -3240,8 +3225,7 @@ func (c *RelyingpartySignupNewUserCall) Header() http.Header {
 
 func (c *RelyingpartySignupNewUserCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.identitytoolkitrelyingpartysignupnewuserrequest)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.identitytoolkitrelyingpartysignupnewuserrequest)
 	if err != nil {
 		return nil, err
 	}
@@ -3335,8 +3319,7 @@ func (c *RelyingpartyUploadAccountCall) Header() http.Header {
 
 func (c *RelyingpartyUploadAccountCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.identitytoolkitrelyingpartyuploadaccountrequest)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.identitytoolkitrelyingpartyuploadaccountrequest)
 	if err != nil {
 		return nil, err
 	}
@@ -3430,8 +3413,7 @@ func (c *RelyingpartyVerifyAssertionCall) Header() http.Header {
 
 func (c *RelyingpartyVerifyAssertionCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.identitytoolkitrelyingpartyverifyassertionrequest)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.identitytoolkitrelyingpartyverifyassertionrequest)
 	if err != nil {
 		return nil, err
 	}
@@ -3525,8 +3507,7 @@ func (c *RelyingpartyVerifyCustomTokenCall) Header() http.Header {
 
 func (c *RelyingpartyVerifyCustomTokenCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.identitytoolkitrelyingpartyverifycustomtokenrequest)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.identitytoolkitrelyingpartyverifycustomtokenrequest)
 	if err != nil {
 		return nil, err
 	}
@@ -3620,8 +3601,7 @@ func (c *RelyingpartyVerifyPasswordCall) Header() http.Header {
 
 func (c *RelyingpartyVerifyPasswordCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.identitytoolkitrelyingpartyverifypasswordrequest)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.identitytoolkitrelyingpartyverifypasswordrequest)
 	if err != nil {
 		return nil, err
 	}
@@ -3716,8 +3696,7 @@ func (c *RelyingpartyVerifyPhoneNumberCall) Header() http.Header {
 
 func (c *RelyingpartyVerifyPhoneNumberCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.identitytoolkitrelyingpartyverifyphonenumberrequest)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.identitytoolkitrelyingpartyverifyphonenumberrequest)
 	if err != nil {
 		return nil, err
 	}

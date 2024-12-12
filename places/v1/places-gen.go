@@ -149,7 +149,8 @@ func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, err
 	if err != nil {
 		return nil, err
 	}
-	s, err := New(client)
+	s := &Service{client: client, BasePath: basePath}
+	s.Places = NewPlacesService(s)
 	if err != nil {
 		return nil, err
 	}
@@ -168,9 +169,7 @@ func New(client *http.Client) (*Service, error) {
 	if client == nil {
 		return nil, errors.New("client is nil")
 	}
-	s := &Service{client: client, BasePath: basePath}
-	s.Places = NewPlacesService(s)
-	return s, nil
+	return NewService(context.Background(), option.WithHTTPClient(client))
 }
 
 type Service struct {
@@ -3033,8 +3032,7 @@ func (c *PlacesAutocompleteCall) Header() http.Header {
 
 func (c *PlacesAutocompleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlemapsplacesv1autocompleteplacesrequest)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googlemapsplacesv1autocompleteplacesrequest)
 	if err != nil {
 		return nil, err
 	}
@@ -3188,12 +3186,11 @@ func (c *PlacesGetCall) doRequest(alt string) (*http.Response, error) {
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
-	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, body)
+	req, err := http.NewRequest("GET", urls, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -3282,8 +3279,7 @@ func (c *PlacesSearchNearbyCall) Header() http.Header {
 
 func (c *PlacesSearchNearbyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlemapsplacesv1searchnearbyrequest)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googlemapsplacesv1searchnearbyrequest)
 	if err != nil {
 		return nil, err
 	}
@@ -3377,8 +3373,7 @@ func (c *PlacesSearchTextCall) Header() http.Header {
 
 func (c *PlacesSearchTextCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlemapsplacesv1searchtextrequest)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googlemapsplacesv1searchtextrequest)
 	if err != nil {
 		return nil, err
 	}
@@ -3552,12 +3547,11 @@ func (c *PlacesPhotosGetMediaCall) doRequest(alt string) (*http.Response, error)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
-	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, body)
+	req, err := http.NewRequest("GET", urls, nil)
 	if err != nil {
 		return nil, err
 	}

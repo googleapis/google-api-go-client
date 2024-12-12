@@ -125,7 +125,9 @@ func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, err
 	if err != nil {
 		return nil, err
 	}
-	s, err := New(client)
+	s := &Service{client: client, BasePath: basePath}
+	s.Customers = NewCustomersService(s)
+	s.Media = NewMediaService(s)
 	if err != nil {
 		return nil, err
 	}
@@ -144,10 +146,7 @@ func New(client *http.Client) (*Service, error) {
 	if client == nil {
 		return nil, errors.New("client is nil")
 	}
-	s := &Service{client: client, BasePath: basePath}
-	s.Customers = NewCustomersService(s)
-	s.Media = NewMediaService(s)
-	return s, nil
+	return NewService(context.Background(), option.WithHTTPClient(client))
 }
 
 type Service struct {
@@ -1903,8 +1902,7 @@ func (c *CustomersPoliciesResolveCall) Header() http.Header {
 
 func (c *CustomersPoliciesResolveCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlechromepolicyversionsv1resolverequest)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googlechromepolicyversionsv1resolverequest)
 	if err != nil {
 		return nil, err
 	}
@@ -2032,8 +2030,7 @@ func (c *CustomersPoliciesGroupsBatchDeleteCall) Header() http.Header {
 
 func (c *CustomersPoliciesGroupsBatchDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlechromepolicyversionsv1batchdeletegrouppoliciesrequest)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googlechromepolicyversionsv1batchdeletegrouppoliciesrequest)
 	if err != nil {
 		return nil, err
 	}
@@ -2140,8 +2137,7 @@ func (c *CustomersPoliciesGroupsBatchModifyCall) Header() http.Header {
 
 func (c *CustomersPoliciesGroupsBatchModifyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlechromepolicyversionsv1batchmodifygrouppoliciesrequest)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googlechromepolicyversionsv1batchmodifygrouppoliciesrequest)
 	if err != nil {
 		return nil, err
 	}
@@ -2246,8 +2242,7 @@ func (c *CustomersPoliciesGroupsListGroupPriorityOrderingCall) Header() http.Hea
 
 func (c *CustomersPoliciesGroupsListGroupPriorityOrderingCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlechromepolicyversionsv1listgrouppriorityorderingrequest)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googlechromepolicyversionsv1listgrouppriorityorderingrequest)
 	if err != nil {
 		return nil, err
 	}
@@ -2352,8 +2347,7 @@ func (c *CustomersPoliciesGroupsUpdateGroupPriorityOrderingCall) Header() http.H
 
 func (c *CustomersPoliciesGroupsUpdateGroupPriorityOrderingCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlechromepolicyversionsv1updategrouppriorityorderingrequest)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googlechromepolicyversionsv1updategrouppriorityorderingrequest)
 	if err != nil {
 		return nil, err
 	}
@@ -2454,8 +2448,7 @@ func (c *CustomersPoliciesNetworksDefineCertificateCall) Header() http.Header {
 
 func (c *CustomersPoliciesNetworksDefineCertificateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlechromepolicyversionsv1definecertificaterequest)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googlechromepolicyversionsv1definecertificaterequest)
 	if err != nil {
 		return nil, err
 	}
@@ -2556,8 +2549,7 @@ func (c *CustomersPoliciesNetworksDefineNetworkCall) Header() http.Header {
 
 func (c *CustomersPoliciesNetworksDefineNetworkCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlechromepolicyversionsv1definenetworkrequest)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googlechromepolicyversionsv1definenetworkrequest)
 	if err != nil {
 		return nil, err
 	}
@@ -2658,8 +2650,7 @@ func (c *CustomersPoliciesNetworksRemoveCertificateCall) Header() http.Header {
 
 func (c *CustomersPoliciesNetworksRemoveCertificateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlechromepolicyversionsv1removecertificaterequest)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googlechromepolicyversionsv1removecertificaterequest)
 	if err != nil {
 		return nil, err
 	}
@@ -2760,8 +2751,7 @@ func (c *CustomersPoliciesNetworksRemoveNetworkCall) Header() http.Header {
 
 func (c *CustomersPoliciesNetworksRemoveNetworkCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlechromepolicyversionsv1removenetworkrequest)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googlechromepolicyversionsv1removenetworkrequest)
 	if err != nil {
 		return nil, err
 	}
@@ -2869,8 +2859,7 @@ func (c *CustomersPoliciesOrgunitsBatchInheritCall) Header() http.Header {
 
 func (c *CustomersPoliciesOrgunitsBatchInheritCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlechromepolicyversionsv1batchinheritorgunitpoliciesrequest)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googlechromepolicyversionsv1batchinheritorgunitpoliciesrequest)
 	if err != nil {
 		return nil, err
 	}
@@ -2977,8 +2966,7 @@ func (c *CustomersPoliciesOrgunitsBatchModifyCall) Header() http.Header {
 
 func (c *CustomersPoliciesOrgunitsBatchModifyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlechromepolicyversionsv1batchmodifyorgunitpoliciesrequest)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googlechromepolicyversionsv1batchmodifyorgunitpoliciesrequest)
 	if err != nil {
 		return nil, err
 	}
@@ -3089,12 +3077,11 @@ func (c *CustomersPolicySchemasGetCall) doRequest(alt string) (*http.Response, e
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
-	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, body)
+	req, err := http.NewRequest("GET", urls, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -3220,12 +3207,11 @@ func (c *CustomersPolicySchemasListCall) doRequest(alt string) (*http.Response, 
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
-	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/policySchemas")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, body)
+	req, err := http.NewRequest("GET", urls, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -3379,8 +3365,7 @@ func (c *MediaUploadCall) Header() http.Header {
 
 func (c *MediaUploadCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlechromepolicyversionsv1uploadpolicyfilerequest)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googlechromepolicyversionsv1uploadpolicyfilerequest)
 	if err != nil {
 		return nil, err
 	}
@@ -3391,14 +3376,10 @@ func (c *MediaUploadCall) doRequest(alt string) (*http.Response, error) {
 		urls = googleapi.ResolveRelative(c.s.BasePath, "/upload/v1/{+customer}/policies/files:uploadPolicyFile")
 		c.urlParams_.Set("uploadType", c.mediaInfo_.UploadType())
 	}
-	if body == nil {
-		body = new(bytes.Buffer)
-		reqHeaders.Set("Content-Type", "application/json")
-	}
-	body, getBody, cleanup := c.mediaInfo_.UploadRequest(reqHeaders, body)
+	newBody, getBody, cleanup := c.mediaInfo_.UploadRequest(reqHeaders, body)
 	defer cleanup()
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("POST", urls, body)
+	req, err := http.NewRequest("POST", urls, newBody)
 	if err != nil {
 		return nil, err
 	}

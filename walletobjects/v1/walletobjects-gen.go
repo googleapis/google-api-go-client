@@ -114,25 +114,6 @@ func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, err
 	if err != nil {
 		return nil, err
 	}
-	s, err := New(client)
-	if err != nil {
-		return nil, err
-	}
-	if endpoint != "" {
-		s.BasePath = endpoint
-	}
-	return s, nil
-}
-
-// New creates a new Service. It uses the provided http.Client for requests.
-//
-// Deprecated: please use NewService instead.
-// To provide a custom HTTP client, use option.WithHTTPClient.
-// If you are using google.golang.org/api/googleapis/transport.APIKey, use option.WithAPIKey with NewService instead.
-func New(client *http.Client) (*Service, error) {
-	if client == nil {
-		return nil, errors.New("client is nil")
-	}
 	s := &Service{client: client, BasePath: basePath}
 	s.Eventticketclass = NewEventticketclassService(s)
 	s.Eventticketobject = NewEventticketobjectService(s)
@@ -153,7 +134,25 @@ func New(client *http.Client) (*Service, error) {
 	s.Smarttap = NewSmarttapService(s)
 	s.Transitclass = NewTransitclassService(s)
 	s.Transitobject = NewTransitobjectService(s)
+	if err != nil {
+		return nil, err
+	}
+	if endpoint != "" {
+		s.BasePath = endpoint
+	}
 	return s, nil
+}
+
+// New creates a new Service. It uses the provided http.Client for requests.
+//
+// Deprecated: please use NewService instead.
+// To provide a custom HTTP client, use option.WithHTTPClient.
+// If you are using google.golang.org/api/googleapis/transport.APIKey, use option.WithAPIKey with NewService instead.
+func New(client *http.Client) (*Service, error) {
+	if client == nil {
+		return nil, errors.New("client is nil")
+	}
+	return NewService(context.Background(), option.WithHTTPClient(client))
 }
 
 type Service struct {
@@ -7859,8 +7858,7 @@ func (c *EventticketclassAddmessageCall) Header() http.Header {
 
 func (c *EventticketclassAddmessageCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.addmessagerequest)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.addmessagerequest)
 	if err != nil {
 		return nil, err
 	}
@@ -7975,12 +7973,11 @@ func (c *EventticketclassGetCall) doRequest(alt string) (*http.Response, error) 
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
-	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "walletobjects/v1/eventTicketClass/{resourceId}")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, body)
+	req, err := http.NewRequest("GET", urls, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -8069,8 +8066,7 @@ func (c *EventticketclassInsertCall) Header() http.Header {
 
 func (c *EventticketclassInsertCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.eventticketclass)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.eventticketclass)
 	if err != nil {
 		return nil, err
 	}
@@ -8200,12 +8196,11 @@ func (c *EventticketclassListCall) doRequest(alt string) (*http.Response, error)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
-	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "walletobjects/v1/eventTicketClass")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, body)
+	req, err := http.NewRequest("GET", urls, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -8300,8 +8295,7 @@ func (c *EventticketclassPatchCall) Header() http.Header {
 
 func (c *EventticketclassPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.eventticketclass)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.eventticketclass)
 	if err != nil {
 		return nil, err
 	}
@@ -8406,8 +8400,7 @@ func (c *EventticketclassUpdateCall) Header() http.Header {
 
 func (c *EventticketclassUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.eventticketclass)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.eventticketclass)
 	if err != nil {
 		return nil, err
 	}
@@ -8513,8 +8506,7 @@ func (c *EventticketobjectAddmessageCall) Header() http.Header {
 
 func (c *EventticketobjectAddmessageCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.addmessagerequest)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.addmessagerequest)
 	if err != nil {
 		return nil, err
 	}
@@ -8629,12 +8621,11 @@ func (c *EventticketobjectGetCall) doRequest(alt string) (*http.Response, error)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
-	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "walletobjects/v1/eventTicketObject/{resourceId}")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, body)
+	req, err := http.NewRequest("GET", urls, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -8723,8 +8714,7 @@ func (c *EventticketobjectInsertCall) Header() http.Header {
 
 func (c *EventticketobjectInsertCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.eventticketobject)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.eventticketobject)
 	if err != nil {
 		return nil, err
 	}
@@ -8854,12 +8844,11 @@ func (c *EventticketobjectListCall) doRequest(alt string) (*http.Response, error
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
-	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "walletobjects/v1/eventTicketObject")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, body)
+	req, err := http.NewRequest("GET", urls, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -8954,8 +8943,7 @@ func (c *EventticketobjectModifylinkedofferobjectsCall) Header() http.Header {
 
 func (c *EventticketobjectModifylinkedofferobjectsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.modifylinkedofferobjectsrequest)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.modifylinkedofferobjectsrequest)
 	if err != nil {
 		return nil, err
 	}
@@ -9061,8 +9049,7 @@ func (c *EventticketobjectPatchCall) Header() http.Header {
 
 func (c *EventticketobjectPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.eventticketobject)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.eventticketobject)
 	if err != nil {
 		return nil, err
 	}
@@ -9167,8 +9154,7 @@ func (c *EventticketobjectUpdateCall) Header() http.Header {
 
 func (c *EventticketobjectUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.eventticketobject)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.eventticketobject)
 	if err != nil {
 		return nil, err
 	}
@@ -9274,8 +9260,7 @@ func (c *FlightclassAddmessageCall) Header() http.Header {
 
 func (c *FlightclassAddmessageCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.addmessagerequest)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.addmessagerequest)
 	if err != nil {
 		return nil, err
 	}
@@ -9390,12 +9375,11 @@ func (c *FlightclassGetCall) doRequest(alt string) (*http.Response, error) {
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
-	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "walletobjects/v1/flightClass/{resourceId}")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, body)
+	req, err := http.NewRequest("GET", urls, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -9483,8 +9467,7 @@ func (c *FlightclassInsertCall) Header() http.Header {
 
 func (c *FlightclassInsertCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.flightclass)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.flightclass)
 	if err != nil {
 		return nil, err
 	}
@@ -9613,12 +9596,11 @@ func (c *FlightclassListCall) doRequest(alt string) (*http.Response, error) {
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
-	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "walletobjects/v1/flightClass")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, body)
+	req, err := http.NewRequest("GET", urls, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -9713,8 +9695,7 @@ func (c *FlightclassPatchCall) Header() http.Header {
 
 func (c *FlightclassPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.flightclass)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.flightclass)
 	if err != nil {
 		return nil, err
 	}
@@ -9818,8 +9799,7 @@ func (c *FlightclassUpdateCall) Header() http.Header {
 
 func (c *FlightclassUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.flightclass)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.flightclass)
 	if err != nil {
 		return nil, err
 	}
@@ -9924,8 +9904,7 @@ func (c *FlightobjectAddmessageCall) Header() http.Header {
 
 func (c *FlightobjectAddmessageCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.addmessagerequest)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.addmessagerequest)
 	if err != nil {
 		return nil, err
 	}
@@ -10040,12 +10019,11 @@ func (c *FlightobjectGetCall) doRequest(alt string) (*http.Response, error) {
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
-	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "walletobjects/v1/flightObject/{resourceId}")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, body)
+	req, err := http.NewRequest("GET", urls, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -10133,8 +10111,7 @@ func (c *FlightobjectInsertCall) Header() http.Header {
 
 func (c *FlightobjectInsertCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.flightobject)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.flightobject)
 	if err != nil {
 		return nil, err
 	}
@@ -10263,12 +10240,11 @@ func (c *FlightobjectListCall) doRequest(alt string) (*http.Response, error) {
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
-	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "walletobjects/v1/flightObject")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, body)
+	req, err := http.NewRequest("GET", urls, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -10363,8 +10339,7 @@ func (c *FlightobjectPatchCall) Header() http.Header {
 
 func (c *FlightobjectPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.flightobject)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.flightobject)
 	if err != nil {
 		return nil, err
 	}
@@ -10468,8 +10443,7 @@ func (c *FlightobjectUpdateCall) Header() http.Header {
 
 func (c *FlightobjectUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.flightobject)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.flightobject)
 	if err != nil {
 		return nil, err
 	}
@@ -10574,8 +10548,7 @@ func (c *GenericclassAddmessageCall) Header() http.Header {
 
 func (c *GenericclassAddmessageCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.addmessagerequest)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.addmessagerequest)
 	if err != nil {
 		return nil, err
 	}
@@ -10690,12 +10663,11 @@ func (c *GenericclassGetCall) doRequest(alt string) (*http.Response, error) {
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
-	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "walletobjects/v1/genericClass/{resourceId}")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, body)
+	req, err := http.NewRequest("GET", urls, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -10783,8 +10755,7 @@ func (c *GenericclassInsertCall) Header() http.Header {
 
 func (c *GenericclassInsertCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.genericclass)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.genericclass)
 	if err != nil {
 		return nil, err
 	}
@@ -10913,12 +10884,11 @@ func (c *GenericclassListCall) doRequest(alt string) (*http.Response, error) {
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
-	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "walletobjects/v1/genericClass")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, body)
+	req, err := http.NewRequest("GET", urls, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -11013,8 +10983,7 @@ func (c *GenericclassPatchCall) Header() http.Header {
 
 func (c *GenericclassPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.genericclass)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.genericclass)
 	if err != nil {
 		return nil, err
 	}
@@ -11118,8 +11087,7 @@ func (c *GenericclassUpdateCall) Header() http.Header {
 
 func (c *GenericclassUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.genericclass)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.genericclass)
 	if err != nil {
 		return nil, err
 	}
@@ -11224,8 +11192,7 @@ func (c *GenericobjectAddmessageCall) Header() http.Header {
 
 func (c *GenericobjectAddmessageCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.addmessagerequest)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.addmessagerequest)
 	if err != nil {
 		return nil, err
 	}
@@ -11340,12 +11307,11 @@ func (c *GenericobjectGetCall) doRequest(alt string) (*http.Response, error) {
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
-	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "walletobjects/v1/genericObject/{resourceId}")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, body)
+	req, err := http.NewRequest("GET", urls, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -11433,8 +11399,7 @@ func (c *GenericobjectInsertCall) Header() http.Header {
 
 func (c *GenericobjectInsertCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.genericobject)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.genericobject)
 	if err != nil {
 		return nil, err
 	}
@@ -11563,12 +11528,11 @@ func (c *GenericobjectListCall) doRequest(alt string) (*http.Response, error) {
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
-	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "walletobjects/v1/genericObject")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, body)
+	req, err := http.NewRequest("GET", urls, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -11663,8 +11627,7 @@ func (c *GenericobjectPatchCall) Header() http.Header {
 
 func (c *GenericobjectPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.genericobject)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.genericobject)
 	if err != nil {
 		return nil, err
 	}
@@ -11768,8 +11731,7 @@ func (c *GenericobjectUpdateCall) Header() http.Header {
 
 func (c *GenericobjectUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.genericobject)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.genericobject)
 	if err != nil {
 		return nil, err
 	}
@@ -11874,8 +11836,7 @@ func (c *GiftcardclassAddmessageCall) Header() http.Header {
 
 func (c *GiftcardclassAddmessageCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.addmessagerequest)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.addmessagerequest)
 	if err != nil {
 		return nil, err
 	}
@@ -11990,12 +11951,11 @@ func (c *GiftcardclassGetCall) doRequest(alt string) (*http.Response, error) {
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
-	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "walletobjects/v1/giftCardClass/{resourceId}")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, body)
+	req, err := http.NewRequest("GET", urls, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -12083,8 +12043,7 @@ func (c *GiftcardclassInsertCall) Header() http.Header {
 
 func (c *GiftcardclassInsertCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.giftcardclass)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.giftcardclass)
 	if err != nil {
 		return nil, err
 	}
@@ -12213,12 +12172,11 @@ func (c *GiftcardclassListCall) doRequest(alt string) (*http.Response, error) {
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
-	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "walletobjects/v1/giftCardClass")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, body)
+	req, err := http.NewRequest("GET", urls, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -12313,8 +12271,7 @@ func (c *GiftcardclassPatchCall) Header() http.Header {
 
 func (c *GiftcardclassPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.giftcardclass)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.giftcardclass)
 	if err != nil {
 		return nil, err
 	}
@@ -12418,8 +12375,7 @@ func (c *GiftcardclassUpdateCall) Header() http.Header {
 
 func (c *GiftcardclassUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.giftcardclass)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.giftcardclass)
 	if err != nil {
 		return nil, err
 	}
@@ -12524,8 +12480,7 @@ func (c *GiftcardobjectAddmessageCall) Header() http.Header {
 
 func (c *GiftcardobjectAddmessageCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.addmessagerequest)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.addmessagerequest)
 	if err != nil {
 		return nil, err
 	}
@@ -12640,12 +12595,11 @@ func (c *GiftcardobjectGetCall) doRequest(alt string) (*http.Response, error) {
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
-	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "walletobjects/v1/giftCardObject/{resourceId}")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, body)
+	req, err := http.NewRequest("GET", urls, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -12733,8 +12687,7 @@ func (c *GiftcardobjectInsertCall) Header() http.Header {
 
 func (c *GiftcardobjectInsertCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.giftcardobject)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.giftcardobject)
 	if err != nil {
 		return nil, err
 	}
@@ -12863,12 +12816,11 @@ func (c *GiftcardobjectListCall) doRequest(alt string) (*http.Response, error) {
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
-	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "walletobjects/v1/giftCardObject")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, body)
+	req, err := http.NewRequest("GET", urls, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -12963,8 +12915,7 @@ func (c *GiftcardobjectPatchCall) Header() http.Header {
 
 func (c *GiftcardobjectPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.giftcardobject)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.giftcardobject)
 	if err != nil {
 		return nil, err
 	}
@@ -13068,8 +13019,7 @@ func (c *GiftcardobjectUpdateCall) Header() http.Header {
 
 func (c *GiftcardobjectUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.giftcardobject)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.giftcardobject)
 	if err != nil {
 		return nil, err
 	}
@@ -13179,12 +13129,11 @@ func (c *IssuerGetCall) doRequest(alt string) (*http.Response, error) {
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
-	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "walletobjects/v1/issuer/{resourceId}")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, body)
+	req, err := http.NewRequest("GET", urls, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -13272,8 +13221,7 @@ func (c *IssuerInsertCall) Header() http.Header {
 
 func (c *IssuerInsertCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.issuer)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.issuer)
 	if err != nil {
 		return nil, err
 	}
@@ -13376,12 +13324,11 @@ func (c *IssuerListCall) doRequest(alt string) (*http.Response, error) {
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
-	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "walletobjects/v1/issuer")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, body)
+	req, err := http.NewRequest("GET", urls, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -13472,8 +13419,7 @@ func (c *IssuerPatchCall) Header() http.Header {
 
 func (c *IssuerPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.issuer)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.issuer)
 	if err != nil {
 		return nil, err
 	}
@@ -13573,8 +13519,7 @@ func (c *IssuerUpdateCall) Header() http.Header {
 
 func (c *IssuerUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.issuer)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.issuer)
 	if err != nil {
 		return nil, err
 	}
@@ -13670,8 +13615,7 @@ func (c *JwtInsertCall) Header() http.Header {
 
 func (c *JwtInsertCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.jwtresource)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.jwtresource)
 	if err != nil {
 		return nil, err
 	}
@@ -13774,8 +13718,7 @@ func (c *LoyaltyclassAddmessageCall) Header() http.Header {
 
 func (c *LoyaltyclassAddmessageCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.addmessagerequest)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.addmessagerequest)
 	if err != nil {
 		return nil, err
 	}
@@ -13890,12 +13833,11 @@ func (c *LoyaltyclassGetCall) doRequest(alt string) (*http.Response, error) {
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
-	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "walletobjects/v1/loyaltyClass/{resourceId}")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, body)
+	req, err := http.NewRequest("GET", urls, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -13983,8 +13925,7 @@ func (c *LoyaltyclassInsertCall) Header() http.Header {
 
 func (c *LoyaltyclassInsertCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.loyaltyclass)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.loyaltyclass)
 	if err != nil {
 		return nil, err
 	}
@@ -14113,12 +14054,11 @@ func (c *LoyaltyclassListCall) doRequest(alt string) (*http.Response, error) {
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
-	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "walletobjects/v1/loyaltyClass")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, body)
+	req, err := http.NewRequest("GET", urls, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -14213,8 +14153,7 @@ func (c *LoyaltyclassPatchCall) Header() http.Header {
 
 func (c *LoyaltyclassPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.loyaltyclass)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.loyaltyclass)
 	if err != nil {
 		return nil, err
 	}
@@ -14318,8 +14257,7 @@ func (c *LoyaltyclassUpdateCall) Header() http.Header {
 
 func (c *LoyaltyclassUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.loyaltyclass)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.loyaltyclass)
 	if err != nil {
 		return nil, err
 	}
@@ -14424,8 +14362,7 @@ func (c *LoyaltyobjectAddmessageCall) Header() http.Header {
 
 func (c *LoyaltyobjectAddmessageCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.addmessagerequest)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.addmessagerequest)
 	if err != nil {
 		return nil, err
 	}
@@ -14540,12 +14477,11 @@ func (c *LoyaltyobjectGetCall) doRequest(alt string) (*http.Response, error) {
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
-	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "walletobjects/v1/loyaltyObject/{resourceId}")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, body)
+	req, err := http.NewRequest("GET", urls, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -14633,8 +14569,7 @@ func (c *LoyaltyobjectInsertCall) Header() http.Header {
 
 func (c *LoyaltyobjectInsertCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.loyaltyobject)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.loyaltyobject)
 	if err != nil {
 		return nil, err
 	}
@@ -14763,12 +14698,11 @@ func (c *LoyaltyobjectListCall) doRequest(alt string) (*http.Response, error) {
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
-	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "walletobjects/v1/loyaltyObject")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, body)
+	req, err := http.NewRequest("GET", urls, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -14863,8 +14797,7 @@ func (c *LoyaltyobjectModifylinkedofferobjectsCall) Header() http.Header {
 
 func (c *LoyaltyobjectModifylinkedofferobjectsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.modifylinkedofferobjectsrequest)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.modifylinkedofferobjectsrequest)
 	if err != nil {
 		return nil, err
 	}
@@ -14969,8 +14902,7 @@ func (c *LoyaltyobjectPatchCall) Header() http.Header {
 
 func (c *LoyaltyobjectPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.loyaltyobject)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.loyaltyobject)
 	if err != nil {
 		return nil, err
 	}
@@ -15074,8 +15006,7 @@ func (c *LoyaltyobjectUpdateCall) Header() http.Header {
 
 func (c *LoyaltyobjectUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.loyaltyobject)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.loyaltyobject)
 	if err != nil {
 		return nil, err
 	}
@@ -15190,12 +15121,11 @@ func (c *MediaDownloadCall) doRequest(alt string) (*http.Response, error) {
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
-	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "walletobjects/v1/transitObject/{resourceId}/downloadRotatingBarcodeValues")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, body)
+	req, err := http.NewRequest("GET", urls, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -15349,8 +15279,7 @@ func (c *MediaUploadCall) Header() http.Header {
 
 func (c *MediaUploadCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.transitobjectuploadrotatingbarcodevaluesrequest)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.transitobjectuploadrotatingbarcodevaluesrequest)
 	if err != nil {
 		return nil, err
 	}
@@ -15361,14 +15290,10 @@ func (c *MediaUploadCall) doRequest(alt string) (*http.Response, error) {
 		urls = googleapi.ResolveRelative(c.s.BasePath, "/upload/walletobjects/v1/transitObject/{resourceId}/uploadRotatingBarcodeValues")
 		c.urlParams_.Set("uploadType", c.mediaInfo_.UploadType())
 	}
-	if body == nil {
-		body = new(bytes.Buffer)
-		reqHeaders.Set("Content-Type", "application/json")
-	}
-	body, getBody, cleanup := c.mediaInfo_.UploadRequest(reqHeaders, body)
+	newBody, getBody, cleanup := c.mediaInfo_.UploadRequest(reqHeaders, body)
 	defer cleanup()
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("POST", urls, body)
+	req, err := http.NewRequest("POST", urls, newBody)
 	if err != nil {
 		return nil, err
 	}
@@ -15484,8 +15409,7 @@ func (c *OfferclassAddmessageCall) Header() http.Header {
 
 func (c *OfferclassAddmessageCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.addmessagerequest)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.addmessagerequest)
 	if err != nil {
 		return nil, err
 	}
@@ -15600,12 +15524,11 @@ func (c *OfferclassGetCall) doRequest(alt string) (*http.Response, error) {
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
-	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "walletobjects/v1/offerClass/{resourceId}")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, body)
+	req, err := http.NewRequest("GET", urls, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -15693,8 +15616,7 @@ func (c *OfferclassInsertCall) Header() http.Header {
 
 func (c *OfferclassInsertCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.offerclass)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.offerclass)
 	if err != nil {
 		return nil, err
 	}
@@ -15823,12 +15745,11 @@ func (c *OfferclassListCall) doRequest(alt string) (*http.Response, error) {
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
-	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "walletobjects/v1/offerClass")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, body)
+	req, err := http.NewRequest("GET", urls, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -15923,8 +15844,7 @@ func (c *OfferclassPatchCall) Header() http.Header {
 
 func (c *OfferclassPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.offerclass)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.offerclass)
 	if err != nil {
 		return nil, err
 	}
@@ -16028,8 +15948,7 @@ func (c *OfferclassUpdateCall) Header() http.Header {
 
 func (c *OfferclassUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.offerclass)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.offerclass)
 	if err != nil {
 		return nil, err
 	}
@@ -16134,8 +16053,7 @@ func (c *OfferobjectAddmessageCall) Header() http.Header {
 
 func (c *OfferobjectAddmessageCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.addmessagerequest)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.addmessagerequest)
 	if err != nil {
 		return nil, err
 	}
@@ -16250,12 +16168,11 @@ func (c *OfferobjectGetCall) doRequest(alt string) (*http.Response, error) {
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
-	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "walletobjects/v1/offerObject/{resourceId}")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, body)
+	req, err := http.NewRequest("GET", urls, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -16343,8 +16260,7 @@ func (c *OfferobjectInsertCall) Header() http.Header {
 
 func (c *OfferobjectInsertCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.offerobject)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.offerobject)
 	if err != nil {
 		return nil, err
 	}
@@ -16473,12 +16389,11 @@ func (c *OfferobjectListCall) doRequest(alt string) (*http.Response, error) {
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
-	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "walletobjects/v1/offerObject")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, body)
+	req, err := http.NewRequest("GET", urls, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -16573,8 +16488,7 @@ func (c *OfferobjectPatchCall) Header() http.Header {
 
 func (c *OfferobjectPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.offerobject)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.offerobject)
 	if err != nil {
 		return nil, err
 	}
@@ -16678,8 +16592,7 @@ func (c *OfferobjectUpdateCall) Header() http.Header {
 
 func (c *OfferobjectUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.offerobject)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.offerobject)
 	if err != nil {
 		return nil, err
 	}
@@ -16790,12 +16703,11 @@ func (c *PermissionsGetCall) doRequest(alt string) (*http.Response, error) {
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
-	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "walletobjects/v1/permissions/{resourceId}")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, body)
+	req, err := http.NewRequest("GET", urls, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -16888,8 +16800,7 @@ func (c *PermissionsUpdateCall) Header() http.Header {
 
 func (c *PermissionsUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.permissions)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.permissions)
 	if err != nil {
 		return nil, err
 	}
@@ -16985,8 +16896,7 @@ func (c *SmarttapInsertCall) Header() http.Header {
 
 func (c *SmarttapInsertCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.smarttap)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.smarttap)
 	if err != nil {
 		return nil, err
 	}
@@ -17088,8 +16998,7 @@ func (c *TransitclassAddmessageCall) Header() http.Header {
 
 func (c *TransitclassAddmessageCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.addmessagerequest)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.addmessagerequest)
 	if err != nil {
 		return nil, err
 	}
@@ -17204,12 +17113,11 @@ func (c *TransitclassGetCall) doRequest(alt string) (*http.Response, error) {
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
-	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "walletobjects/v1/transitClass/{resourceId}")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, body)
+	req, err := http.NewRequest("GET", urls, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -17297,8 +17205,7 @@ func (c *TransitclassInsertCall) Header() http.Header {
 
 func (c *TransitclassInsertCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.transitclass)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.transitclass)
 	if err != nil {
 		return nil, err
 	}
@@ -17427,12 +17334,11 @@ func (c *TransitclassListCall) doRequest(alt string) (*http.Response, error) {
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
-	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "walletobjects/v1/transitClass")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, body)
+	req, err := http.NewRequest("GET", urls, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -17527,8 +17433,7 @@ func (c *TransitclassPatchCall) Header() http.Header {
 
 func (c *TransitclassPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.transitclass)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.transitclass)
 	if err != nil {
 		return nil, err
 	}
@@ -17632,8 +17537,7 @@ func (c *TransitclassUpdateCall) Header() http.Header {
 
 func (c *TransitclassUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.transitclass)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.transitclass)
 	if err != nil {
 		return nil, err
 	}
@@ -17738,8 +17642,7 @@ func (c *TransitobjectAddmessageCall) Header() http.Header {
 
 func (c *TransitobjectAddmessageCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.addmessagerequest)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.addmessagerequest)
 	if err != nil {
 		return nil, err
 	}
@@ -17854,12 +17757,11 @@ func (c *TransitobjectGetCall) doRequest(alt string) (*http.Response, error) {
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
-	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "walletobjects/v1/transitObject/{resourceId}")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, body)
+	req, err := http.NewRequest("GET", urls, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -17947,8 +17849,7 @@ func (c *TransitobjectInsertCall) Header() http.Header {
 
 func (c *TransitobjectInsertCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.transitobject)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.transitobject)
 	if err != nil {
 		return nil, err
 	}
@@ -18077,12 +17978,11 @@ func (c *TransitobjectListCall) doRequest(alt string) (*http.Response, error) {
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
-	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "walletobjects/v1/transitObject")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, body)
+	req, err := http.NewRequest("GET", urls, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -18177,8 +18077,7 @@ func (c *TransitobjectPatchCall) Header() http.Header {
 
 func (c *TransitobjectPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.transitobject)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.transitobject)
 	if err != nil {
 		return nil, err
 	}
@@ -18282,8 +18181,7 @@ func (c *TransitobjectUpdateCall) Header() http.Header {
 
 func (c *TransitobjectUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.transitobject)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.transitobject)
 	if err != nil {
 		return nil, err
 	}

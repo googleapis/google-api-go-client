@@ -133,7 +133,10 @@ func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, err
 	if err != nil {
 		return nil, err
 	}
-	s, err := New(client)
+	s := &Service{client: client, BasePath: basePath}
+	s.Labels = NewLabelsService(s)
+	s.Limits = NewLimitsService(s)
+	s.Users = NewUsersService(s)
 	if err != nil {
 		return nil, err
 	}
@@ -152,11 +155,7 @@ func New(client *http.Client) (*Service, error) {
 	if client == nil {
 		return nil, errors.New("client is nil")
 	}
-	s := &Service{client: client, BasePath: basePath}
-	s.Labels = NewLabelsService(s)
-	s.Limits = NewLimitsService(s)
-	s.Users = NewUsersService(s)
-	return s, nil
+	return NewService(context.Background(), option.WithHTTPClient(client))
 }
 
 type Service struct {
@@ -2888,8 +2887,7 @@ func (c *LabelsCreateCall) Header() http.Header {
 
 func (c *LabelsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googleappsdrivelabelsv2label)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googleappsdrivelabelsv2label)
 	if err != nil {
 		return nil, err
 	}
@@ -3005,12 +3003,11 @@ func (c *LabelsDeleteCall) Header() http.Header {
 
 func (c *LabelsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
-	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+name}")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("DELETE", urls, body)
+	req, err := http.NewRequest("DELETE", urls, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -3106,8 +3103,7 @@ func (c *LabelsDeltaCall) Header() http.Header {
 
 func (c *LabelsDeltaCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googleappsdrivelabelsv2deltaupdatelabelrequest)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googleappsdrivelabelsv2deltaupdatelabelrequest)
 	if err != nil {
 		return nil, err
 	}
@@ -3212,8 +3208,7 @@ func (c *LabelsDisableCall) Header() http.Header {
 
 func (c *LabelsDisableCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googleappsdrivelabelsv2disablelabelrequest)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googleappsdrivelabelsv2disablelabelrequest)
 	if err != nil {
 		return nil, err
 	}
@@ -3317,8 +3312,7 @@ func (c *LabelsEnableCall) Header() http.Header {
 
 func (c *LabelsEnableCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googleappsdrivelabelsv2enablelabelrequest)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googleappsdrivelabelsv2enablelabelrequest)
 	if err != nil {
 		return nil, err
 	}
@@ -3466,12 +3460,11 @@ func (c *LabelsGetCall) doRequest(alt string) (*http.Response, error) {
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
-	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+name}")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, body)
+	req, err := http.NewRequest("GET", urls, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -3662,12 +3655,11 @@ func (c *LabelsListCall) doRequest(alt string) (*http.Response, error) {
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
-	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/labels")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, body)
+	req, err := http.NewRequest("GET", urls, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -3790,8 +3782,7 @@ func (c *LabelsPublishCall) Header() http.Header {
 
 func (c *LabelsPublishCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googleappsdrivelabelsv2publishlabelrequest)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googleappsdrivelabelsv2publishlabelrequest)
 	if err != nil {
 		return nil, err
 	}
@@ -3893,8 +3884,7 @@ func (c *LabelsUpdateLabelCopyModeCall) Header() http.Header {
 
 func (c *LabelsUpdateLabelCopyModeCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googleappsdrivelabelsv2updatelabelcopymoderequest)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googleappsdrivelabelsv2updatelabelcopymoderequest)
 	if err != nil {
 		return nil, err
 	}
@@ -4006,8 +3996,7 @@ func (c *LabelsUpdatePermissionsCall) Header() http.Header {
 
 func (c *LabelsUpdatePermissionsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googleappsdrivelabelsv2labelpermission)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googleappsdrivelabelsv2labelpermission)
 	if err != nil {
 		return nil, err
 	}
@@ -4132,12 +4121,11 @@ func (c *LabelsLocksListCall) doRequest(alt string) (*http.Response, error) {
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
-	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+parent}/locks")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, body)
+	req, err := http.NewRequest("GET", urls, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -4255,8 +4243,7 @@ func (c *LabelsPermissionsBatchDeleteCall) Header() http.Header {
 
 func (c *LabelsPermissionsBatchDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googleappsdrivelabelsv2batchdeletelabelpermissionsrequest)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googleappsdrivelabelsv2batchdeletelabelpermissionsrequest)
 	if err != nil {
 		return nil, err
 	}
@@ -4363,8 +4350,7 @@ func (c *LabelsPermissionsBatchUpdateCall) Header() http.Header {
 
 func (c *LabelsPermissionsBatchUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googleappsdrivelabelsv2batchupdatelabelpermissionsrequest)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googleappsdrivelabelsv2batchupdatelabelpermissionsrequest)
 	if err != nil {
 		return nil, err
 	}
@@ -4477,8 +4463,7 @@ func (c *LabelsPermissionsCreateCall) Header() http.Header {
 
 func (c *LabelsPermissionsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googleappsdrivelabelsv2labelpermission)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googleappsdrivelabelsv2labelpermission)
 	if err != nil {
 		return nil, err
 	}
@@ -4586,12 +4571,11 @@ func (c *LabelsPermissionsDeleteCall) Header() http.Header {
 
 func (c *LabelsPermissionsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
-	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+name}")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("DELETE", urls, body)
+	req, err := http.NewRequest("DELETE", urls, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -4717,12 +4701,11 @@ func (c *LabelsPermissionsListCall) doRequest(alt string) (*http.Response, error
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
-	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+parent}/permissions")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, body)
+	req, err := http.NewRequest("GET", urls, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -4847,8 +4830,7 @@ func (c *LabelsRevisionsUpdatePermissionsCall) Header() http.Header {
 
 func (c *LabelsRevisionsUpdatePermissionsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googleappsdrivelabelsv2labelpermission)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googleappsdrivelabelsv2labelpermission)
 	if err != nil {
 		return nil, err
 	}
@@ -4973,12 +4955,11 @@ func (c *LabelsRevisionsLocksListCall) doRequest(alt string) (*http.Response, er
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
-	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+parent}/locks")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, body)
+	req, err := http.NewRequest("GET", urls, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -5096,8 +5077,7 @@ func (c *LabelsRevisionsPermissionsBatchDeleteCall) Header() http.Header {
 
 func (c *LabelsRevisionsPermissionsBatchDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googleappsdrivelabelsv2batchdeletelabelpermissionsrequest)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googleappsdrivelabelsv2batchdeletelabelpermissionsrequest)
 	if err != nil {
 		return nil, err
 	}
@@ -5204,8 +5184,7 @@ func (c *LabelsRevisionsPermissionsBatchUpdateCall) Header() http.Header {
 
 func (c *LabelsRevisionsPermissionsBatchUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googleappsdrivelabelsv2batchupdatelabelpermissionsrequest)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googleappsdrivelabelsv2batchupdatelabelpermissionsrequest)
 	if err != nil {
 		return nil, err
 	}
@@ -5318,8 +5297,7 @@ func (c *LabelsRevisionsPermissionsCreateCall) Header() http.Header {
 
 func (c *LabelsRevisionsPermissionsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googleappsdrivelabelsv2labelpermission)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googleappsdrivelabelsv2labelpermission)
 	if err != nil {
 		return nil, err
 	}
@@ -5427,12 +5405,11 @@ func (c *LabelsRevisionsPermissionsDeleteCall) Header() http.Header {
 
 func (c *LabelsRevisionsPermissionsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
-	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+name}")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("DELETE", urls, body)
+	req, err := http.NewRequest("DELETE", urls, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -5558,12 +5535,11 @@ func (c *LabelsRevisionsPermissionsListCall) doRequest(alt string) (*http.Respon
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
-	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+parent}/permissions")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, body)
+	req, err := http.NewRequest("GET", urls, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -5691,12 +5667,11 @@ func (c *LimitsGetLabelCall) doRequest(alt string) (*http.Response, error) {
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
-	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/limits/label")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, body)
+	req, err := http.NewRequest("GET", urls, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -5805,12 +5780,11 @@ func (c *UsersGetCapabilitiesCall) doRequest(alt string) (*http.Response, error)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
-	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+name}")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, body)
+	req, err := http.NewRequest("GET", urls, nil)
 	if err != nil {
 		return nil, err
 	}

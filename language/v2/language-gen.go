@@ -126,7 +126,8 @@ func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, err
 	if err != nil {
 		return nil, err
 	}
-	s, err := New(client)
+	s := &Service{client: client, BasePath: basePath}
+	s.Documents = NewDocumentsService(s)
 	if err != nil {
 		return nil, err
 	}
@@ -145,9 +146,7 @@ func New(client *http.Client) (*Service, error) {
 	if client == nil {
 		return nil, errors.New("client is nil")
 	}
-	s := &Service{client: client, BasePath: basePath}
-	s.Documents = NewDocumentsService(s)
-	return s, nil
+	return NewService(context.Background(), option.WithHTTPClient(client))
 }
 
 type Service struct {
@@ -5791,8 +5790,7 @@ func (c *DocumentsAnalyzeEntitiesCall) Header() http.Header {
 
 func (c *DocumentsAnalyzeEntitiesCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.analyzeentitiesrequest)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.analyzeentitiesrequest)
 	if err != nil {
 		return nil, err
 	}
@@ -5886,8 +5884,7 @@ func (c *DocumentsAnalyzeSentimentCall) Header() http.Header {
 
 func (c *DocumentsAnalyzeSentimentCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.analyzesentimentrequest)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.analyzesentimentrequest)
 	if err != nil {
 		return nil, err
 	}
@@ -5981,8 +5978,7 @@ func (c *DocumentsAnnotateTextCall) Header() http.Header {
 
 func (c *DocumentsAnnotateTextCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.annotatetextrequest)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.annotatetextrequest)
 	if err != nil {
 		return nil, err
 	}
@@ -6076,8 +6072,7 @@ func (c *DocumentsClassifyTextCall) Header() http.Header {
 
 func (c *DocumentsClassifyTextCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.classifytextrequest)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.classifytextrequest)
 	if err != nil {
 		return nil, err
 	}
@@ -6171,8 +6166,7 @@ func (c *DocumentsModerateTextCall) Header() http.Header {
 
 func (c *DocumentsModerateTextCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.moderatetextrequest)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.moderatetextrequest)
 	if err != nil {
 		return nil, err
 	}

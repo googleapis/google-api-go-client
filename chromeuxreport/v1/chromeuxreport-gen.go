@@ -103,7 +103,8 @@ func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, err
 	if err != nil {
 		return nil, err
 	}
-	s, err := New(client)
+	s := &Service{client: client, BasePath: basePath}
+	s.Records = NewRecordsService(s)
 	if err != nil {
 		return nil, err
 	}
@@ -122,9 +123,7 @@ func New(client *http.Client) (*Service, error) {
 	if client == nil {
 		return nil, errors.New("client is nil")
 	}
-	s := &Service{client: client, BasePath: basePath}
-	s.Records = NewRecordsService(s)
-	return s, nil
+	return NewService(context.Background(), option.WithHTTPClient(client))
 }
 
 type Service struct {
@@ -856,8 +855,7 @@ func (c *RecordsQueryHistoryRecordCall) Header() http.Header {
 
 func (c *RecordsQueryHistoryRecordCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.queryhistoryrequest)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.queryhistoryrequest)
 	if err != nil {
 		return nil, err
 	}
@@ -953,8 +951,7 @@ func (c *RecordsQueryRecordCall) Header() http.Header {
 
 func (c *RecordsQueryRecordCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.queryrequest)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.queryrequest)
 	if err != nil {
 		return nil, err
 	}

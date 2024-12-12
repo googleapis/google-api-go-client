@@ -1199,8 +1199,8 @@ func (c *AccountsListChildAccountsCall) LabelId(labelId int64) *AccountsListChil
 
 // PageSize sets the optional parameter "pageSize": The maximum number of
 // accounts to return. The service may return fewer than this value. If
-// unspecified, at most 50 accounts will be returned. The maximum value is
-// 1000; values above 1000 will be coerced to 1000.
+// unspecified, at most 50 accounts will be returned. The maximum value is 100;
+// values above 100 will be coerced to 100.
 func (c *AccountsListChildAccountsCall) PageSize(pageSize int64) *AccountsListChildAccountsCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
@@ -1557,11 +1557,11 @@ func (r *AccountsCssProductInputsService) Insert(parent string, cssproductinput 
 	return c
 }
 
-// FeedId sets the optional parameter "feedId": Required. The primary or
-// supplemental feed id. If CSS Product already exists and feed id provided is
-// different, then the CSS Product will be moved to a new feed. Note: For now,
-// CSSs do not need to provide feed ids as we create feeds on the fly. We do
-// not have supplemental feed support for CSS Products yet.
+// FeedId sets the optional parameter "feedId": The primary or supplemental
+// feed id. If CSS Product already exists and feed id provided is different,
+// then the CSS Product will be moved to a new feed. Note: For now, CSSs do not
+// need to provide feed ids as we create feeds on the fly. We do not have
+// supplemental feed support for CSS Products yet.
 func (c *AccountsCssProductInputsInsertCall) FeedId(feedId int64) *AccountsCssProductInputsInsertCall {
 	c.urlParams_.Set("feedId", fmt.Sprint(feedId))
 	return c

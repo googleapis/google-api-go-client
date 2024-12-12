@@ -23,6 +23,12 @@
         "https://www.googleapis.com/auth/cloud-identity.inboundsso.readonly": {
           "description": "See all of the Inbound SSO profiles and their assignments to any Org Units or Google Groups in your Cloud Identity Organization."
         },
+        "https://www.googleapis.com/auth/cloud-identity.orgunits": {
+          "description": "List, Move orgmembers of an OrgUnit in your Cloud Identity Organization."
+        },
+        "https://www.googleapis.com/auth/cloud-identity.orgunits.readonly": {
+          "description": "List org members of an OrgUnit in your Cloud Identity Organization."
+        },
         "https://www.googleapis.com/auth/cloud-identity.policies": {
           "description": "See and edit policies in your Cloud Identity Organization."
         },
@@ -2015,7 +2021,11 @@
               "path": "v1beta1/{+parent}/memberships",
               "response": {
                 "$ref": "ListOrgMembershipsResponse"
-              }
+              },
+              "scopes": [
+                "https://www.googleapis.com/auth/cloud-identity.orgunits",
+                "https://www.googleapis.com/auth/cloud-identity.orgunits.readonly"
+              ]
             },
             "move": {
               "description": "Move an OrgMembership to a new OrgUnit. NOTE: This is an atomic copy-and-delete. The resource will have a new copy under the destination OrgUnit and be deleted from the source OrgUnit. The resource can only be searched under the destination OrgUnit afterwards.",
@@ -2040,7 +2050,10 @@
               },
               "response": {
                 "$ref": "Operation"
-              }
+              },
+              "scopes": [
+                "https://www.googleapis.com/auth/cloud-identity.orgunits"
+              ]
             }
           }
         }
@@ -2110,7 +2123,7 @@
       }
     }
   },
-  "revision": "20241126",
+  "revision": "20241208",
   "rootUrl": "https://cloudidentity.googleapis.com/",
   "schemas": {
     "AddIdpCredentialOperationMetadata": {

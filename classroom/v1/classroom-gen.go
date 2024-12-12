@@ -100,6 +100,13 @@ const mtlsBasePath = "https://classroom.mtls.googleapis.com/"
 
 // OAuth2 scopes used by this API.
 const (
+	// See and update its own attachments to posts in Google Classroom
+	ClassroomAddonsStudentScope = "https://www.googleapis.com/auth/classroom.addons.student"
+
+	// See, create, and update its own attachments to posts in classes you teach in
+	// Google Classroom
+	ClassroomAddonsTeacherScope = "https://www.googleapis.com/auth/classroom.addons.teacher"
+
 	// View and manage announcements in Google Classroom
 	ClassroomAnnouncementsScope = "https://www.googleapis.com/auth/classroom.announcements"
 
@@ -174,6 +181,8 @@ const (
 // NewService creates a new Service.
 func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, error) {
 	scopesOption := internaloption.WithDefaultScopes(
+		"https://www.googleapis.com/auth/classroom.addons.student",
+		"https://www.googleapis.com/auth/classroom.addons.teacher",
 		"https://www.googleapis.com/auth/classroom.announcements",
 		"https://www.googleapis.com/auth/classroom.announcements.readonly",
 		"https://www.googleapis.com/auth/classroom.courses",
@@ -6842,8 +6851,11 @@ type CoursesCourseWorkUpdateRubricCall struct {
 
 // UpdateRubric: Updates a rubric. See google.classroom.v1.Rubric for details
 // of which fields can be updated. Rubric update capabilities are limited
-// (/classroom/rubrics/limitations) once grading has started. This request must
-// be made by the Google Cloud console of the OAuth client ID
+// (/classroom/rubrics/limitations) once grading has started. The requesting
+// user and course owner must have rubrics creation capabilities. For details,
+// see licensing requirements
+// (https://developers.google.com/classroom/rubrics/limitations#license-requirements).
+// This request must be made by the Google Cloud console of the OAuth client ID
 // (https://support.google.com/cloud/answer/6158849) used to create the parent
 // course work item. This method returns the following error codes: *
 // `PERMISSION_DENIED` if the requesting developer project didn't create the
@@ -7929,19 +7941,21 @@ type CoursesCourseWorkRubricsCreateCall struct {
 	header_      http.Header
 }
 
-// Create: Creates a rubric. This request must be made by the Google Cloud
-// console of the OAuth client ID
+// Create: Creates a rubric. The requesting user and course owner must have
+// rubrics creation capabilities. For details, see licensing requirements
+// (https://developers.google.com/classroom/rubrics/limitations#license-requirements).
+// For further details, see Rubrics structure and known limitations
+// (/classroom/rubrics/limitations). This request must be made by the Google
+// Cloud console of the OAuth client ID
 // (https://support.google.com/cloud/answer/6158849) used to create the parent
-// course work item. For further details, see Rubrics structure and known
-// limitations (/classroom/rubrics/limitations). This method returns the
-// following error codes: * `PERMISSION_DENIED` if the requesting user isn't
-// permitted to create rubrics for course work in the requested course. *
-// `INTERNAL` if the request has insufficient OAuth scopes. *
-// `INVALID_ARGUMENT` if the request is malformed and for the following request
-// error: * `RubricCriteriaInvalidFormat` * `NOT_FOUND` if the requested course
-// or course work don't exist or the user doesn't have access to the course or
-// course work. * `FAILED_PRECONDITION` for the following request error: *
-// `AttachmentNotVisible`
+// course work item. This method returns the following error codes: *
+// `PERMISSION_DENIED` if the requesting user isn't permitted to create rubrics
+// for course work in the requested course. * `INTERNAL` if the request has
+// insufficient OAuth scopes. * `INVALID_ARGUMENT` if the request is malformed
+// and for the following request error: * `RubricCriteriaInvalidFormat` *
+// `NOT_FOUND` if the requested course or course work don't exist or the user
+// doesn't have access to the course or course work. * `FAILED_PRECONDITION`
+// for the following request error: * `AttachmentNotVisible`
 //
 // - courseId: Identifier of the course.
 // - courseWorkId: Identifier of the course work.
@@ -8046,8 +8060,10 @@ type CoursesCourseWorkRubricsDeleteCall struct {
 	header_      http.Header
 }
 
-// Delete: Deletes a rubric. This request must be made by the Google Cloud
-// console of the OAuth client ID
+// Delete: Deletes a rubric. The requesting user and course owner must have
+// rubrics creation capabilities. For details, see licensing requirements
+// (https://developers.google.com/classroom/rubrics/limitations#license-requirements).
+// This request must be made by the Google Cloud console of the OAuth client ID
 // (https://support.google.com/cloud/answer/6158849) used to create the
 // corresponding rubric. This method returns the following error codes: *
 // `PERMISSION_DENIED` if the requesting developer project didn't create the
@@ -8433,8 +8449,11 @@ type CoursesCourseWorkRubricsPatchCall struct {
 
 // Patch: Updates a rubric. See google.classroom.v1.Rubric for details of which
 // fields can be updated. Rubric update capabilities are limited
-// (/classroom/rubrics/limitations) once grading has started. This request must
-// be made by the Google Cloud console of the OAuth client ID
+// (/classroom/rubrics/limitations) once grading has started. The requesting
+// user and course owner must have rubrics creation capabilities. For details,
+// see licensing requirements
+// (https://developers.google.com/classroom/rubrics/limitations#license-requirements).
+// This request must be made by the Google Cloud console of the OAuth client ID
 // (https://support.google.com/cloud/answer/6158849) used to create the parent
 // course work item. This method returns the following error codes: *
 // `PERMISSION_DENIED` if the requesting developer project didn't create the

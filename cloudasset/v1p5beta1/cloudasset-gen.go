@@ -1331,6 +1331,11 @@ type GoogleIdentityAccesscontextmanagerV1EgressPolicy struct {
 	// EgressTo: Defines the conditions on the ApiOperation and destination
 	// resources that cause this EgressPolicy to apply.
 	EgressTo *GoogleIdentityAccesscontextmanagerV1EgressTo `json:"egressTo,omitempty"`
+	// Title: Optional. Human-readable title for the egress rule. The title must be
+	// unique within the perimeter and can not exceed 100 characters. Within the
+	// access policy, the combined length of all rule titles must not exceed
+	// 240,000 characters.
+	Title string `json:"title,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "EgressFrom") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -1490,6 +1495,11 @@ type GoogleIdentityAccesscontextmanagerV1IngressPolicy struct {
 	// IngressTo: Defines the conditions on the ApiOperation and request
 	// destination that cause this IngressPolicy to apply.
 	IngressTo *GoogleIdentityAccesscontextmanagerV1IngressTo `json:"ingressTo,omitempty"`
+	// Title: Optional. Human-readable title for the ingress rule. The title must
+	// be unique within the perimeter and can not exceed 100 characters. Within the
+	// access policy, the combined length of all rule titles must not exceed
+	// 240,000 characters.
+	Title string `json:"title,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "IngressFrom") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See

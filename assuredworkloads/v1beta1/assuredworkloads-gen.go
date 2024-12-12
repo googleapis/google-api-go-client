@@ -448,6 +448,7 @@ type GoogleCloudAssuredworkloadsV1beta1CreateWorkloadOperationMetadata struct {
 	//   "HEALTHCARE_AND_LIFE_SCIENCES_CONTROLS_US_SUPPORT" - Healthcare and Life
 	// Science Controls with US Support
 	//   "IRS_1075" - Internal Revenue Service 1075 controls
+	//   "CANADA_CONTROLLED_GOODS" - Canada Controlled Goods
 	ComplianceRegime string `json:"complianceRegime,omitempty"`
 	// CreateTime: Optional. Time when the operation was created.
 	CreateTime string `json:"createTime,omitempty"`
@@ -1147,6 +1148,7 @@ type GoogleCloudAssuredworkloadsV1beta1Workload struct {
 	//   "HEALTHCARE_AND_LIFE_SCIENCES_CONTROLS_US_SUPPORT" - Healthcare and Life
 	// Science Controls with US Support
 	//   "IRS_1075" - Internal Revenue Service 1075 controls
+	//   "CANADA_CONTROLLED_GOODS" - Canada Controlled Goods
 	ComplianceRegime string `json:"complianceRegime,omitempty"`
 	// ComplianceStatus: Output only. Count of active Violations in the Workload.
 	ComplianceStatus *GoogleCloudAssuredworkloadsV1beta1WorkloadComplianceStatus `json:"complianceStatus,omitempty"`
@@ -1369,8 +1371,8 @@ type GoogleCloudAssuredworkloadsV1beta1WorkloadEkmProvisioningResponse struct {
 	//   "MISSING_EKM_CONNECTION_ADMIN_PERMISSION" - Iam permission
 	// cloudkms.ekmConnectionsAdmin wasn't applied.
 	EkmProvisioningErrorMapping string `json:"ekmProvisioningErrorMapping,omitempty"`
-	// EkmProvisioningState: Indicates Ekm enrollment Provisioning of a given
-	// workload.
+	// EkmProvisioningState: Output only. Indicates Ekm enrollment Provisioning of
+	// a given workload.
 	//
 	// Possible values:
 	//   "EKM_PROVISIONING_STATE_UNSPECIFIED" - Default State for Ekm Provisioning
@@ -1506,8 +1508,8 @@ type GoogleCloudAssuredworkloadsV1beta1WorkloadPartnerPermissions struct {
 	// AssuredWorkloadsMonitoring: Optional. Allow partner to view violation
 	// alerts.
 	AssuredWorkloadsMonitoring bool `json:"assuredWorkloadsMonitoring,omitempty"`
-	// DataLogsViewer: Allow the partner to view inspectability logs and monitoring
-	// violations.
+	// DataLogsViewer: Optional. Allow the partner to view inspectability logs and
+	// monitoring violations.
 	DataLogsViewer bool `json:"dataLogsViewer,omitempty"`
 	// ServiceAccessApprover: Optional. Allow partner to view access approval logs.
 	ServiceAccessApprover bool `json:"serviceAccessApprover,omitempty"`
@@ -1534,7 +1536,7 @@ func (s GoogleCloudAssuredworkloadsV1beta1WorkloadPartnerPermissions) MarshalJSO
 // GoogleCloudAssuredworkloadsV1beta1WorkloadResourceInfo: Represent the
 // resources that are children of this Workload.
 type GoogleCloudAssuredworkloadsV1beta1WorkloadResourceInfo struct {
-	// ResourceId: Resource identifier. For a project this represents
+	// ResourceId: Output only. Resource identifier. For a project this represents
 	// project_number.
 	ResourceId int64 `json:"resourceId,omitempty,string"`
 	// ResourceType: Indicates the type of resource.
@@ -1624,7 +1626,8 @@ type GoogleCloudAssuredworkloadsV1beta1WorkloadSaaEnrollmentResponse struct {
 	//   "ERROR_SETUP_CHECK_FAILED" - Returned when exception was encountered
 	// during evaluation of other criteria.
 	SetupErrors []string `json:"setupErrors,omitempty"`
-	// SetupStatus: Indicates SAA enrollment status of a given workload.
+	// SetupStatus: Output only. Indicates SAA enrollment status of a given
+	// workload.
 	//
 	// Possible values:
 	//   "SETUP_STATE_UNSPECIFIED" - Unspecified.

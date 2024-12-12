@@ -255,8 +255,7 @@ type Connection struct {
 	// Reconciling: Output only. Set to true when the connection is being set up or
 	// updated in the background.
 	Reconciling bool `json:"reconciling,omitempty"`
-	// Uid: Output only. A system-assigned unique identifier for a the
-	// GitRepositoryLink.
+	// Uid: Output only. A system-assigned unique identifier for the Connection.
 	Uid string `json:"uid,omitempty"`
 	// UpdateTime: Output only. [Output only] Update timestamp
 	UpdateTime string `json:"updateTime,omitempty"`
@@ -669,7 +668,7 @@ type GitRepositoryLink struct {
 	// Reconciling: Output only. Set to true when the connection is being set up or
 	// updated in the background.
 	Reconciling bool `json:"reconciling,omitempty"`
-	// Uid: Output only. A system-assigned unique identifier for a the
+	// Uid: Output only. A system-assigned unique identifier for the
 	// GitRepositoryLink.
 	Uid string `json:"uid,omitempty"`
 	// UpdateTime: Output only. [Output only] Update timestamp
@@ -3654,7 +3653,7 @@ type ProjectsLocationsOperationsCancelCall struct {
 // other methods to check whether the cancellation succeeded or whether the
 // operation completed despite cancellation. On successful cancellation, the
 // operation is not deleted; instead, it becomes an operation with an
-// Operation.error value with a google.rpc.Status.code of 1, corresponding to
+// Operation.error value with a google.rpc.Status.code of `1`, corresponding to
 // `Code.CANCELLED`.
 //
 // - name: The name of the operation resource to be cancelled.

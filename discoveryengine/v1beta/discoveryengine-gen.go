@@ -2717,9 +2717,8 @@ type GoogleCloudDiscoveryengineV1Engine struct {
 	// readable. UTF-8 encoded string with limit of 1024 characters.
 	DisplayName string `json:"displayName,omitempty"`
 	// IndustryVertical: The industry vertical that the engine registers. The
-	// restriction of the Engine industry vertical is based on DataStore: If
-	// unspecified, default to `GENERIC`. Vertical on Engine has to match vertical
-	// of the DataStore linked to the engine.
+	// restriction of the Engine industry vertical is based on DataStore: Vertical
+	// on Engine has to match vertical of the DataStore linked to the engine.
 	//
 	// Possible values:
 	//   "INDUSTRY_VERTICAL_UNSPECIFIED" - Value used when unset.
@@ -5693,60 +5692,6 @@ func (s GoogleCloudDiscoveryengineV1alphaCustomFineTuningSpec) MarshalJSON() ([]
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudDiscoveryengineV1alphaCustomTuningModel: Metadata that describes
-// a custom tuned model.
-type GoogleCloudDiscoveryengineV1alphaCustomTuningModel struct {
-	// CreateTime: Deprecated: Timestamp the Model was created at.
-	CreateTime string `json:"createTime,omitempty"`
-	// DisplayName: The display name of the model.
-	DisplayName string `json:"displayName,omitempty"`
-	// ErrorMessage: Currently this is only populated if the model state is
-	// `INPUT_VALIDATION_FAILED`.
-	ErrorMessage string `json:"errorMessage,omitempty"`
-	// Metrics: The metrics of the trained model.
-	Metrics map[string]float64 `json:"metrics,omitempty"`
-	// ModelState: The state that the model is in (e.g.`TRAINING` or
-	// `TRAINING_FAILED`).
-	//
-	// Possible values:
-	//   "MODEL_STATE_UNSPECIFIED" - Default value.
-	//   "TRAINING_PAUSED" - The model is in a paused training state.
-	//   "TRAINING" - The model is currently training.
-	//   "TRAINING_COMPLETE" - The model has successfully completed training.
-	//   "READY_FOR_SERVING" - The model is ready for serving.
-	//   "TRAINING_FAILED" - The model training failed.
-	//   "NO_IMPROVEMENT" - The model training finished successfully but metrics
-	// did not improve.
-	//   "INPUT_VALIDATION_FAILED" - Input data validation failed. Model training
-	// didn't start.
-	ModelState string `json:"modelState,omitempty"`
-	// ModelVersion: The version of the model.
-	ModelVersion int64 `json:"modelVersion,omitempty,string"`
-	// Name: Required. The fully qualified resource name of the model. Format:
-	// `projects/{project}/locations/{location}/collections/{collection}/dataStores/
-	// {data_store}/customTuningModels/{custom_tuning_model}`. Model must be an
-	// alpha-numerical string with limit of 40 characters.
-	Name string `json:"name,omitempty"`
-	// TrainingStartTime: Timestamp the model training was initiated.
-	TrainingStartTime string `json:"trainingStartTime,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "CreateTime") to
-	// unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
-	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "CreateTime") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
-	NullFields []string `json:"-"`
-}
-
-func (s GoogleCloudDiscoveryengineV1alphaCustomTuningModel) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudDiscoveryengineV1alphaCustomTuningModel
-	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
-}
-
 // GoogleCloudDiscoveryengineV1alphaDataStore: DataStore captures global
 // settings and configs at the DataStore level.
 type GoogleCloudDiscoveryengineV1alphaDataStore struct {
@@ -6368,9 +6313,8 @@ type GoogleCloudDiscoveryengineV1alphaEngine struct {
 	// readable. UTF-8 encoded string with limit of 1024 characters.
 	DisplayName string `json:"displayName,omitempty"`
 	// IndustryVertical: The industry vertical that the engine registers. The
-	// restriction of the Engine industry vertical is based on DataStore: If
-	// unspecified, default to `GENERIC`. Vertical on Engine has to match vertical
-	// of the DataStore linked to the engine.
+	// restriction of the Engine industry vertical is based on DataStore: Vertical
+	// on Engine has to match vertical of the DataStore linked to the engine.
 	//
 	// Possible values:
 	//   "INDUSTRY_VERTICAL_UNSPECIFIED" - Value used when unset.
@@ -7637,29 +7581,6 @@ type GoogleCloudDiscoveryengineV1alphaLanguageInfo struct {
 
 func (s GoogleCloudDiscoveryengineV1alphaLanguageInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDiscoveryengineV1alphaLanguageInfo
-	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
-}
-
-// GoogleCloudDiscoveryengineV1alphaListCustomModelsResponse: Response message
-// for SearchTuningService.ListCustomModels method.
-type GoogleCloudDiscoveryengineV1alphaListCustomModelsResponse struct {
-	// Models: List of custom tuning models.
-	Models []*GoogleCloudDiscoveryengineV1alphaCustomTuningModel `json:"models,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "Models") to unconditionally
-	// include in API requests. By default, fields with empty or default values are
-	// omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
-	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Models") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
-	NullFields []string `json:"-"`
-}
-
-func (s GoogleCloudDiscoveryengineV1alphaListCustomModelsResponse) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudDiscoveryengineV1alphaListCustomModelsResponse
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -14533,9 +14454,8 @@ type GoogleCloudDiscoveryengineV1betaEngine struct {
 	// readable. UTF-8 encoded string with limit of 1024 characters.
 	DisplayName string `json:"displayName,omitempty"`
 	// IndustryVertical: The industry vertical that the engine registers. The
-	// restriction of the Engine industry vertical is based on DataStore: If
-	// unspecified, default to `GENERIC`. Vertical on Engine has to match vertical
-	// of the DataStore linked to the engine.
+	// restriction of the Engine industry vertical is based on DataStore: Vertical
+	// on Engine has to match vertical of the DataStore linked to the engine.
 	//
 	// Possible values:
 	//   "INDUSTRY_VERTICAL_UNSPECIFIED" - Value used when unset.

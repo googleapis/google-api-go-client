@@ -3490,7 +3490,8 @@ type GoogleCloudDataplexV1DataScan struct {
 	ExecutionStatus *GoogleCloudDataplexV1DataScanExecutionStatus `json:"executionStatus,omitempty"`
 	// Labels: Optional. User-defined labels for the scan.
 	Labels map[string]string `json:"labels,omitempty"`
-	// Name: Output only. The relative resource name of the scan, of the form:
+	// Name: Output only. Identifier. The relative resource name of the scan, of
+	// the form:
 	// projects/{project}/locations/{location_id}/dataScans/{datascan_id}, where
 	// project refers to a project_id or project_number and location_id refers to a
 	// GCP region.
@@ -3870,9 +3871,9 @@ type GoogleCloudDataplexV1DataScanExecutionStatus struct {
 	// LatestJobCreateTime: Optional. The time when the DataScanJob execution was
 	// created.
 	LatestJobCreateTime string `json:"latestJobCreateTime,omitempty"`
-	// LatestJobEndTime: The time when the latest DataScanJob ended.
+	// LatestJobEndTime: Optional. The time when the latest DataScanJob ended.
 	LatestJobEndTime string `json:"latestJobEndTime,omitempty"`
-	// LatestJobStartTime: The time when the latest DataScanJob started.
+	// LatestJobStartTime: Optional. The time when the latest DataScanJob started.
 	LatestJobStartTime string `json:"latestJobStartTime,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "LatestJobCreateTime") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -3913,8 +3914,8 @@ type GoogleCloudDataplexV1DataScanJob struct {
 	EndTime string `json:"endTime,omitempty"`
 	// Message: Output only. Additional information about the current state.
 	Message string `json:"message,omitempty"`
-	// Name: Output only. The relative resource name of the DataScanJob, of the
-	// form:
+	// Name: Output only. Identifier. The relative resource name of the
+	// DataScanJob, of the form:
 	// projects/{project}/locations/{location_id}/dataScans/{datascan_id}/jobs/{job_
 	// id}, where project refers to a project_id or project_number and location_id
 	// refers to a GCP region.
@@ -5056,10 +5057,10 @@ type GoogleCloudDataplexV1ImportItem struct {
 	// AspectKeys: The aspects to modify. Supports the following syntaxes:
 	// {aspect_type_reference}: matches aspects that belong to the specified aspect
 	// type and are attached directly to the entry. {aspect_type_reference}@{path}:
-	// matches aspects that belong to the specified aspect type and path.
-	// {aspect_type_reference}@*: matches aspects that belong to the specified
-	// aspect type for all paths.Replace {aspect_type_reference} with a reference
-	// to the aspect type, in the format
+	// matches aspects that belong to the specified aspect type and path. @* :
+	// matches aspects of the given type for all paths. *@path : matches aspects of
+	// all types on the given path. Replace {aspect_type_reference} with a
+	// reference to the aspect type, in the format
 	// {project_id_or_number}.{location_id}.{aspect_type_id}.If you leave this
 	// field empty, it is treated as specifying exactly those aspects that are
 	// present within the specified entry.In FULL entry sync mode, Dataplex
@@ -9494,7 +9495,8 @@ func (r *ProjectsLocationsService) SearchEntries(name string) *ProjectsLocations
 }
 
 // OrderBy sets the optional parameter "orderBy": Specifies the ordering of
-// results.
+// results. Supported values are: * relevance (default) *
+// last_modified_timestamp * last_modified_timestamp asc
 func (c *ProjectsLocationsSearchEntriesCall) OrderBy(orderBy string) *ProjectsLocationsSearchEntriesCall {
 	c.urlParams_.Set("orderBy", orderBy)
 	return c
@@ -9516,7 +9518,9 @@ func (c *ProjectsLocationsSearchEntriesCall) PageToken(pageToken string) *Projec
 }
 
 // Query sets the optional parameter "query": Required. The query against which
-// entries in scope should be matched.
+// entries in scope should be matched. The query syntax is defined in Search
+// syntax for Dataplex Catalog
+// (https://cloud.google.com/dataplex/docs/search-syntax).
 func (c *ProjectsLocationsSearchEntriesCall) Query(query string) *ProjectsLocationsSearchEntriesCall {
 	c.urlParams_.Set("query", query)
 	return c
@@ -11700,6 +11704,14 @@ func (r *ProjectsLocationsDataScansService) Delete(name string) *ProjectsLocatio
 	return c
 }
 
+// Force sets the optional parameter "force": If set to true, any child
+// resources of this data scan will also be deleted. (Otherwise, the request
+// will only work if the data scan has no child resources.)
+func (c *ProjectsLocationsDataScansDeleteCall) Force(force bool) *ProjectsLocationsDataScansDeleteCall {
+	c.urlParams_.Set("force", fmt.Sprint(force))
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
 // details.
@@ -12311,7 +12323,8 @@ type ProjectsLocationsDataScansPatchCall struct {
 
 // Patch: Updates a DataScan resource.
 //
-//   - name: Output only. The relative resource name of the scan, of the form:
+//   - name: Output only. Identifier. The relative resource name of the scan, of
+//     the form:
 //     projects/{project}/locations/{location_id}/dataScans/{datascan_id}, where
 //     project refers to a project_id or project_number and location_id refers to
 //     a GCP region.
@@ -12322,8 +12335,8 @@ func (r *ProjectsLocationsDataScansService) Patch(name string, googleclouddatapl
 	return c
 }
 
-// UpdateMask sets the optional parameter "updateMask": Required. Mask of
-// fields to update.
+// UpdateMask sets the optional parameter "updateMask": Mask of fields to
+// update.
 func (c *ProjectsLocationsDataScansPatchCall) UpdateMask(updateMask string) *ProjectsLocationsDataScansPatchCall {
 	c.urlParams_.Set("updateMask", updateMask)
 	return c
@@ -16582,7 +16595,7 @@ func (c *ProjectsLocationsEntryGroupsEntriesPatchCall) AllowMissing(allowMissing
 // - matches an aspect of the given type and empty path. @path - matches an
 // aspect of the given type and specified path. For example, to attach an
 // aspect to a field that is specified by the schema aspect, the path should
-// have the format Schema.. * - matches aspects of the given type for all
+// have the format Schema.. @* - matches aspects of the given type for all
 // paths. *@path - matches aspects of all types on the given path.The service
 // will not remove existing aspects matching the syntax unless
 // delete_missing_aspects is set to true.If this field is left empty, the

@@ -2414,10 +2414,13 @@ func (s Operation) MarshalJSON() ([]byte, error) {
 }
 
 // Permission: A permission for a file. A permission grants a user, group,
-// domain, or the world access to a file or a folder hierarchy. Some resource
-// methods (such as `permissions.update`) require a `permissionId`. Use the
-// `permissions.list` method to retrieve the ID for a file, folder, or shared
-// drive.
+// domain, or the world access to a file or a folder hierarchy. By default,
+// permissions requests only return a subset of fields. Permission kind, ID,
+// type, and role are always returned. To retrieve specific fields, see
+// https://developers.google.com/drive/api/guides/fields-parameter. Some
+// resource methods (such as `permissions.update`) require a `permissionId`.
+// Use the `permissions.list` method to retrieve the ID for a file, folder, or
+// shared drive.
 type Permission struct {
 	// AllowFileDiscovery: Whether the permission allows the file to be discovered
 	// through search. This is only applicable for permissions of type `domain` or
@@ -3215,7 +3218,11 @@ type AboutGetCall struct {
 }
 
 // Get: Gets information about the user, the user's Drive, and system
-// capabilities.
+// capabilities. For more information, see Return user info
+// (https://developers.google.com/drive/api/guides/user-info). Required: The
+// `fields` parameter must be set. To return the exact fields you need, see
+// Return specific fields
+// (https://developers.google.com/drive/api/guides/fields-parameter).
 func (r *AboutService) Get() *AboutGetCall {
 	c := &AboutGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	return c
@@ -3654,7 +3661,8 @@ type AppsGetCall struct {
 	header_      http.Header
 }
 
-// Get: Gets a specific app.
+// Get: Gets a specific app. For more information, see Return user info
+// (https://developers.google.com/drive/api/guides/user-info).
 //
 // - appId: The ID of the app.
 func (r *AppsService) Get(appId string) *AppsGetCall {
@@ -3760,7 +3768,8 @@ type AppsListCall struct {
 	header_      http.Header
 }
 
-// List: Lists a user's installed apps.
+// List: Lists a user's installed apps. For more information, see Return user
+// info (https://developers.google.com/drive/api/guides/user-info).
 func (r *AppsService) List() *AppsListCall {
 	c := &AppsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	return c
@@ -3889,6 +3898,8 @@ type ChangesGetStartPageTokenCall struct {
 }
 
 // GetStartPageToken: Gets the starting pageToken for listing future changes.
+// For more information, see Retrieve changes
+// (https://developers.google.com/drive/api/guides/manage-changes).
 func (r *ChangesService) GetStartPageToken() *ChangesGetStartPageTokenCall {
 	c := &ChangesGetStartPageTokenCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	return c
@@ -4017,7 +4028,9 @@ type ChangesListCall struct {
 	header_      http.Header
 }
 
-// List: Lists the changes for a user or shared drive.
+// List: Lists the changes for a user or shared drive. For more information,
+// see Retrieve changes
+// (https://developers.google.com/drive/api/guides/manage-changes).
 //
 //   - pageToken: The token for continuing a previous list request on the next
 //     page. This should be set to the value of 'nextPageToken' from the previous
@@ -4223,7 +4236,9 @@ type ChangesWatchCall struct {
 	header_    http.Header
 }
 
-// Watch: Subscribes to changes for a user.
+// Watch: Subscribes to changes for a user. For more information, see
+// Notifications for resource changes
+// (https://developers.google.com/drive/api/guides/push).
 //
 //   - pageToken: The token for continuing a previous list request on the next
 //     page. This should be set to the value of 'nextPageToken' from the previous
@@ -4423,7 +4438,9 @@ type ChannelsStopCall struct {
 	header_    http.Header
 }
 
-// Stop: Stops watching resources through this channel.
+// Stop: Stops watching resources through this channel. For more information,
+// see Notifications for resource changes
+// (https://developers.google.com/drive/api/guides/push).
 func (r *ChannelsService) Stop(channel *Channel) *ChannelsStopCall {
 	c := &ChannelsStopCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.channel = channel
@@ -4495,7 +4512,12 @@ type CommentsCreateCall struct {
 	header_    http.Header
 }
 
-// Create: Creates a comment on a file.
+// Create: Creates a comment on a file. For more information, see Manage
+// comments and replies
+// (https://developers.google.com/drive/api/guides/manage-comments). Required:
+// The `fields` parameter must be set. To return the exact fields you need, see
+// Return specific fields
+// (https://developers.google.com/drive/api/guides/fields-parameter).
 //
 // - fileId: The ID of the file.
 func (r *CommentsService) Create(fileId string, comment *Comment) *CommentsCreateCall {
@@ -4596,7 +4618,11 @@ type CommentsDeleteCall struct {
 	header_    http.Header
 }
 
-// Delete: Deletes a comment.
+// Delete: Deletes a comment. For more information, see Manage comments and
+// replies (https://developers.google.com/drive/api/guides/manage-comments).
+// Required: The `fields` parameter must be set. To return the exact fields you
+// need, see Return specific fields
+// (https://developers.google.com/drive/api/guides/fields-parameter).
 //
 // - commentId: The ID of the comment.
 // - fileId: The ID of the file.
@@ -4673,7 +4699,11 @@ type CommentsGetCall struct {
 	header_      http.Header
 }
 
-// Get: Gets a comment by ID.
+// Get: Gets a comment by ID. For more information, see Manage comments and
+// replies (https://developers.google.com/drive/api/guides/manage-comments).
+// Required: The `fields` parameter must be set. To return the exact fields you
+// need, see Return specific fields
+// (https://developers.google.com/drive/api/guides/fields-parameter).
 //
 // - commentId: The ID of the comment.
 // - fileId: The ID of the file.
@@ -4791,7 +4821,11 @@ type CommentsListCall struct {
 	header_      http.Header
 }
 
-// List: Lists a file's comments.
+// List: Lists a file's comments. For more information, see Manage comments and
+// replies (https://developers.google.com/drive/api/guides/manage-comments).
+// Required: The `fields` parameter must be set. To return the exact fields you
+// need, see Return specific fields
+// (https://developers.google.com/drive/api/guides/fields-parameter).
 //
 // - fileId: The ID of the file.
 func (r *CommentsService) List(fileId string) *CommentsListCall {
@@ -4951,7 +4985,12 @@ type CommentsUpdateCall struct {
 	header_    http.Header
 }
 
-// Update: Updates a comment with patch semantics.
+// Update: Updates a comment with patch semantics. For more information, see
+// Manage comments and replies
+// (https://developers.google.com/drive/api/guides/manage-comments). Required:
+// The `fields` parameter must be set. To return the exact fields you need, see
+// Return specific fields
+// (https://developers.google.com/drive/api/guides/fields-parameter).
 //
 // - commentId: The ID of the comment.
 // - fileId: The ID of the file.

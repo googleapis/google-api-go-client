@@ -2681,6 +2681,9 @@ type Repository struct {
 	// `projects/p1/locations/us-central1/repositories/repo1`. For each location in
 	// a project, repository names must be unique.
 	Name string `json:"name,omitempty"`
+	// RegistryUri: Output only. The repository endpoint, for example:
+	// `us-docker.pkg.dev/my-proj/my-repo`.
+	RegistryUri string `json:"registryUri,omitempty"`
 	// RemoteRepositoryConfig: Configuration specific for a Remote Repository.
 	RemoteRepositoryConfig *RemoteRepositoryConfig `json:"remoteRepositoryConfig,omitempty"`
 	// SatisfiesPzi: Output only. If set, the repository satisfies physical zone

@@ -4722,6 +4722,10 @@ func (c *AccountsReportsGenerateCall) DateRange(dateRange string) *AccountsRepor
 //
 // dimension match the values from CustomChannel.reporting_dimension_id.
 //
+//	"HOSTED_CUSTOM_CHANNEL_ID" - Unique ID of a hosted client's custom
+//
+// channel.
+//
 //	"OWNED_SITE_DOMAIN_NAME" - Domain name of a verified site (e.g.
 //
 // "example.com"). The members of this dimension match the values from
@@ -5302,6 +5306,10 @@ func (c *AccountsReportsGenerateCsvCall) DateRange(dateRange string) *AccountsRe
 //	"CUSTOM_CHANNEL_ID" - Unique ID of a custom channel. The members of this
 //
 // dimension match the values from CustomChannel.reporting_dimension_id.
+//
+//	"HOSTED_CUSTOM_CHANNEL_ID" - Unique ID of a hosted client's custom
+//
+// channel.
 //
 //	"OWNED_SITE_DOMAIN_NAME" - Domain name of a verified site (e.g.
 //

@@ -1537,8 +1537,8 @@ func (s GoogleCloudIdentitytoolkitV1QueryUserInfoResponse) MarshalJSON() ([]byte
 // GoogleCloudIdentitytoolkitV1ResetPasswordRequest: Request message for
 // ResetPassword.
 type GoogleCloudIdentitytoolkitV1ResetPasswordRequest struct {
-	// Email: The email of the account to be modified. Specify this and the old
-	// password in order to change an account's password without using an
+	// Email: Optional. The email of the account to be modified. Specify this and
+	// the old password in order to change an account's password without using an
 	// out-of-band code.
 	Email string `json:"email,omitempty"`
 	// NewPassword: The new password to be set for this account. Specifying this
@@ -1555,8 +1555,8 @@ type GoogleCloudIdentitytoolkitV1ResetPasswordRequest struct {
 	// state. Only a PASSWORD_RESET out-of-band code can be consumed via this
 	// method.
 	OobCode string `json:"oobCode,omitempty"`
-	// TenantId: The tenant ID of the Identity Platform tenant the account belongs
-	// to.
+	// TenantId: Optional. The tenant ID of the Identity Platform tenant the
+	// account belongs to.
 	TenantId string `json:"tenantId,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Email") to unconditionally
 	// include in API requests. By default, fields with empty or default values are

@@ -2415,6 +2415,10 @@ func (s GoogleCloudRunV2ServiceMesh) MarshalJSON() ([]byte, error) {
 // GoogleCloudRunV2ServiceScaling: Scaling settings applied at the service
 // level rather than at the revision level.
 type GoogleCloudRunV2ServiceScaling struct {
+	// ManualInstanceCount: Optional. total instance count for the service in
+	// manual scaling mode. This number of instances is divided among all revisions
+	// with specified traffic based on the percent of traffic they are receiving.
+	ManualInstanceCount int64 `json:"manualInstanceCount,omitempty"`
 	// MinInstanceCount: Optional. total min instances for the service. This number
 	// of instances is divided among all revisions with specified traffic based on
 	// the percent of traffic they are receiving.
@@ -2426,15 +2430,15 @@ type GoogleCloudRunV2ServiceScaling struct {
 	//   "AUTOMATIC" - Scale based on traffic between min and max instances.
 	//   "MANUAL" - Scale to exactly min instances and ignore max instances.
 	ScalingMode string `json:"scalingMode,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "MinInstanceCount") to
+	// ForceSendFields is a list of field names (e.g. "ManualInstanceCount") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "MinInstanceCount") to include in
-	// API requests with the JSON null value. By default, fields with empty values
-	// are omitted from API requests. See
+	// NullFields is a list of field names (e.g. "ManualInstanceCount") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }

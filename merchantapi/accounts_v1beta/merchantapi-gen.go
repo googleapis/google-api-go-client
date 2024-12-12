@@ -456,8 +456,9 @@ type AddAccountService struct {
 	// (https://support.google.com/merchants/answer/188487) for the account.
 	// Payload for service type Account Aggregation.
 	AccountAggregation *AccountAggregation `json:"accountAggregation,omitempty"`
-	// Provider: Required. The provider of the service. Format:
-	// `accounts/{account}`
+	// Provider: Required. The provider of the service. Either the reference to an
+	// account such as `providers/123` or a well-known service provider (one of
+	// `providers/GOOGLE_ADS` or `providers/GOOGLE_BUSINESS_PROFILE`).
 	Provider string `json:"provider,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AccountAggregation") to
 	// unconditionally include in API requests. By default, fields with empty or

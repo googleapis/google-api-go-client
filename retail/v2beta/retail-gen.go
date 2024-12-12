@@ -4523,9 +4523,10 @@ func (s GoogleCloudRetailV2betaGetDefaultBranchResponse) MarshalJSON() ([]byte, 
 }
 
 // GoogleCloudRetailV2betaImage: Product image. Recommendations AI and Retail
-// Search do not use product images to improve prediction and search results.
-// However, product images can be returned in results, and are shown in
-// prediction or search previews in the console.
+// Search use product images to improve prediction and search results. Product
+// images can be returned in results, and are shown in prediction or search
+// previews in the console. Please try to provide correct product images and
+// avoid using images with size too small.
 type GoogleCloudRetailV2betaImage struct {
 	// Height: Height of the image in number of pixels. This field must be
 	// nonnegative. Otherwise, an INVALID_ARGUMENT error is returned.

@@ -895,7 +895,10 @@ func (a *API) GenerateCode() ([]byte, error) {
 
 	pn("client, endpoint, err := htransport.NewClient(ctx, opts...)")
 	pn("if err != nil { return nil, err }")
-	pn("s, err := New(client)")
+	pn("s := &%s{client: client, BasePath: basePath}", service)
+	for _, res := range a.doc.Resources { // add top level resources.
+		pn("s.%s = New%s(s)", resourceGoField(res, nil), resourceGoType(res))
+	}
 	pn("if err != nil { return nil, err }")
 	pn(`if endpoint != "" { s.BasePath = endpoint }`)
 	pn("return s, nil")
@@ -908,11 +911,7 @@ func (a *API) GenerateCode() ([]byte, error) {
 	pn("// If you are using google.golang.org/api/googleapis/transport.APIKey, use option.WithAPIKey with NewService instead.")
 	pn("func New(client *http.Client) (*%s, error) {", service)
 	pn("if client == nil { return nil, errors.New(\"client is nil\") }")
-	pn("s := &%s{client: client, BasePath: basePath}", service)
-	for _, res := range a.doc.Resources { // add top level resources.
-		pn("s.%s = New%s(s)", resourceGoField(res, nil), resourceGoType(res))
-	}
-	pn("return s, nil")
+	pn("return NewService(context.Background(), option.WithHTTPClient(client))")
 	pn("}")
 
 	pn("\ntype %s struct {", service)
@@ -994,7 +993,6 @@ func splitFileHeading(w io.Writer, pkg string) {
 	for _, imp := range []string{
 		"context",
 		"fmt",
-		"io",
 		"net/http",
 	} {
 		pn("  %q", imp)
@@ -2265,7 +2263,7 @@ func (meth *Method) generateCode() {
 
 	pn("\nfunc (c *%s) doRequest(alt string) (*http.Response, error) {", callName)
 	var contentType = `""`
-	if !meth.IsRawRequest() && args.bodyArg() != nil && httpMethod != "GET" {
+	if !meth.IsRawRequest() && args.bodyArg() != nil && httpMethod != "GET" || meth.supportsMediaUpload() && args.bodyArg() == nil {
 		contentType = `"application/json"`
 	}
 	apiVersion := meth.m.APIVersion
@@ -2279,30 +2277,39 @@ func (meth *Method) generateCode() {
 		pn(` reqHeaders.Set("If-None-Match",  c.ifNoneMatch_)`)
 		pn("}")
 	}
-	pn("var body io.Reader = nil")
+	var hasBody bool
 	if meth.IsRawRequest() {
-		pn("body = c.body_")
+		pn("body := bytes.NewBuffer(nil)")
+		pn("_, err := body.ReadFrom(c.body_)")
+		pn("if err != nil { return nil, err }")
+		hasBody = true
 	} else if meth.IsProtoStructRequest() {
 		pn("protoBytes, err := json.Marshal(c.req)")
 		pn("if err != nil { return nil, err }")
-		pn("body = bytes.NewReader(protoBytes)")
+		pn("body := bytes.NewReader(protoBytes)")
+		hasBody = true
 	} else {
 		if ba := args.bodyArg(); ba != nil && httpMethod != "GET" {
 			if meth.m.ID == "ml.projects.predict" {
 				// TODO(cbro): move ML API to rawHTTP (it will be a breaking change)
-				// Skip JSONReader for APIs that require clients to pass in JSON already.
-				pn("body = strings.NewReader(c.%s.HttpBody.Data)", ba.goname)
+				// Skip JSONBuffer for APIs that require clients to pass in JSON already.
+				pn("body := bytes.NewBufferString(c.%s.HttpBody.Data)", ba.goname)
 			} else {
 				style := "WithoutDataWrapper"
 				if a.needsDataWrapper() {
 					style = "WithDataWrapper"
 				}
-				pn("body, err := googleapi.%s.JSONReader(c.%s)", style, ba.goname)
+				pn("body, err := googleapi.%s.JSONBuffer(c.%s)", style, ba.goname)
 				pn("if err != nil { return nil, err }")
 			}
+			hasBody = true
 		}
 		pn(`c.urlParams_.Set("alt", alt)`)
 		pn(`c.urlParams_.Set("prettyPrint", "false")`)
+	}
+	body := "nil"
+	if hasBody {
+		body = "body"
 	}
 
 	pn("urls := googleapi.ResolveRelative(c.s.BasePath, %q)", meth.m.Path)
@@ -2312,15 +2319,12 @@ func (meth *Method) generateCode() {
 		pn(`  c.urlParams_.Set("uploadType", c.mediaInfo_.UploadType())`)
 		pn("}")
 
-		pn("if body == nil {")
-		pn(" body = new(bytes.Buffer)")
-		pn(` reqHeaders.Set("Content-Type", "application/json")`)
-		pn("}")
-		pn("body, getBody, cleanup := c.mediaInfo_.UploadRequest(reqHeaders, body)")
+		pn("newBody, getBody, cleanup := c.mediaInfo_.UploadRequest(reqHeaders, %s)", body)
 		pn("defer cleanup()")
+		body = "newBody"
 	}
 	pn(`urls += "?" + c.urlParams_.Encode()`)
-	pn("req, err := http.NewRequest(%q, urls, body)", httpMethod)
+	pn("req, err := http.NewRequest(%q, urls, %s)", httpMethod, body)
 	pn("if err != nil { return nil, err }")
 	pn("req.Header = reqHeaders")
 	if meth.supportsMediaUpload() {

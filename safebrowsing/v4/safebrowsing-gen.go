@@ -103,7 +103,14 @@ func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, err
 	if err != nil {
 		return nil, err
 	}
-	s, err := New(client)
+	s := &Service{client: client, BasePath: basePath}
+	s.EncodedFullHashes = NewEncodedFullHashesService(s)
+	s.EncodedUpdates = NewEncodedUpdatesService(s)
+	s.FullHashes = NewFullHashesService(s)
+	s.ThreatHits = NewThreatHitsService(s)
+	s.ThreatListUpdates = NewThreatListUpdatesService(s)
+	s.ThreatLists = NewThreatListsService(s)
+	s.ThreatMatches = NewThreatMatchesService(s)
 	if err != nil {
 		return nil, err
 	}
@@ -122,15 +129,7 @@ func New(client *http.Client) (*Service, error) {
 	if client == nil {
 		return nil, errors.New("client is nil")
 	}
-	s := &Service{client: client, BasePath: basePath}
-	s.EncodedFullHashes = NewEncodedFullHashesService(s)
-	s.EncodedUpdates = NewEncodedUpdatesService(s)
-	s.FullHashes = NewFullHashesService(s)
-	s.ThreatHits = NewThreatHitsService(s)
-	s.ThreatListUpdates = NewThreatListUpdatesService(s)
-	s.ThreatLists = NewThreatListsService(s)
-	s.ThreatMatches = NewThreatMatchesService(s)
-	return s, nil
+	return NewService(context.Background(), option.WithHTTPClient(client))
 }
 
 type Service struct {
@@ -1353,12 +1352,11 @@ func (c *EncodedFullHashesGetCall) doRequest(alt string) (*http.Response, error)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
-	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v4/encodedFullHashes/{encodedRequest}")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, body)
+	req, err := http.NewRequest("GET", urls, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -1475,12 +1473,11 @@ func (c *EncodedUpdatesGetCall) doRequest(alt string) (*http.Response, error) {
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
-	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v4/encodedUpdates/{encodedRequest}")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, body)
+	req, err := http.NewRequest("GET", urls, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -1569,8 +1566,7 @@ func (c *FullHashesFindCall) Header() http.Header {
 
 func (c *FullHashesFindCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlesecuritysafebrowsingv4findfullhashesrequest)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googlesecuritysafebrowsingv4findfullhashesrequest)
 	if err != nil {
 		return nil, err
 	}
@@ -1665,8 +1661,7 @@ func (c *ThreatHitsCreateCall) Header() http.Header {
 
 func (c *ThreatHitsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlesecuritysafebrowsingv4threathit)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googlesecuritysafebrowsingv4threathit)
 	if err != nil {
 		return nil, err
 	}
@@ -1761,8 +1756,7 @@ func (c *ThreatListUpdatesFetchCall) Header() http.Header {
 
 func (c *ThreatListUpdatesFetchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlesecuritysafebrowsingv4fetchthreatlistupdatesrequest)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googlesecuritysafebrowsingv4fetchthreatlistupdatesrequest)
 	if err != nil {
 		return nil, err
 	}
@@ -1866,12 +1860,11 @@ func (c *ThreatListsListCall) doRequest(alt string) (*http.Response, error) {
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
-	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v4/threatLists")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, body)
+	req, err := http.NewRequest("GET", urls, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -1957,8 +1950,7 @@ func (c *ThreatMatchesFindCall) Header() http.Header {
 
 func (c *ThreatMatchesFindCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlesecuritysafebrowsingv4findthreatmatchesrequest)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googlesecuritysafebrowsingv4findthreatmatchesrequest)
 	if err != nil {
 		return nil, err
 	}

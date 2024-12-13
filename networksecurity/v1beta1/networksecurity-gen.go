@@ -115,7 +115,9 @@ func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, err
 	if err != nil {
 		return nil, err
 	}
-	s, err := New(client)
+	s := &Service{client: client, BasePath: basePath}
+	s.Organizations = NewOrganizationsService(s)
+	s.Projects = NewProjectsService(s)
 	if err != nil {
 		return nil, err
 	}
@@ -134,10 +136,7 @@ func New(client *http.Client) (*Service, error) {
 	if client == nil {
 		return nil, errors.New("client is nil")
 	}
-	s := &Service{client: client, BasePath: basePath}
-	s.Organizations = NewOrganizationsService(s)
-	s.Projects = NewProjectsService(s)
-	return s, nil
+	return NewService(context.Background(), option.WithHTTPClient(client))
 }
 
 type Service struct {
@@ -4256,8 +4255,7 @@ func (c *OrganizationsLocationsAddressGroupsAddItemsCall) Header() http.Header {
 
 func (c *OrganizationsLocationsAddressGroupsAddItemsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.addaddressgroupitemsrequest)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.addaddressgroupitemsrequest)
 	if err != nil {
 		return nil, err
 	}
@@ -4358,8 +4356,7 @@ func (c *OrganizationsLocationsAddressGroupsCloneItemsCall) Header() http.Header
 
 func (c *OrganizationsLocationsAddressGroupsCloneItemsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.cloneaddressgroupitemsrequest)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.cloneaddressgroupitemsrequest)
 	if err != nil {
 		return nil, err
 	}
@@ -4485,8 +4482,7 @@ func (c *OrganizationsLocationsAddressGroupsCreateCall) Header() http.Header {
 
 func (c *OrganizationsLocationsAddressGroupsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.addressgroup)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.addressgroup)
 	if err != nil {
 		return nil, err
 	}
@@ -4601,12 +4597,11 @@ func (c *OrganizationsLocationsAddressGroupsDeleteCall) Header() http.Header {
 
 func (c *OrganizationsLocationsAddressGroupsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
-	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+name}")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("DELETE", urls, body)
+	req, err := http.NewRequest("DELETE", urls, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -4709,12 +4704,11 @@ func (c *OrganizationsLocationsAddressGroupsGetCall) doRequest(alt string) (*htt
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
-	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+name}")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, body)
+	req, err := http.NewRequest("GET", urls, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -4833,12 +4827,11 @@ func (c *OrganizationsLocationsAddressGroupsListCall) doRequest(alt string) (*ht
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
-	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+parent}/addressGroups")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, body)
+	req, err := http.NewRequest("GET", urls, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -4980,12 +4973,11 @@ func (c *OrganizationsLocationsAddressGroupsListReferencesCall) doRequest(alt st
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
-	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+addressGroup}:listReferences")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, body)
+	req, err := http.NewRequest("GET", urls, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -5127,8 +5119,7 @@ func (c *OrganizationsLocationsAddressGroupsPatchCall) Header() http.Header {
 
 func (c *OrganizationsLocationsAddressGroupsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.addressgroup)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.addressgroup)
 	if err != nil {
 		return nil, err
 	}
@@ -5229,8 +5220,7 @@ func (c *OrganizationsLocationsAddressGroupsRemoveItemsCall) Header() http.Heade
 
 func (c *OrganizationsLocationsAddressGroupsRemoveItemsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.removeaddressgroupitemsrequest)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.removeaddressgroupitemsrequest)
 	if err != nil {
 		return nil, err
 	}
@@ -5355,8 +5345,7 @@ func (c *OrganizationsLocationsFirewallEndpointsCreateCall) Header() http.Header
 
 func (c *OrganizationsLocationsFirewallEndpointsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.firewallendpoint)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.firewallendpoint)
 	if err != nil {
 		return nil, err
 	}
@@ -5470,12 +5459,11 @@ func (c *OrganizationsLocationsFirewallEndpointsDeleteCall) Header() http.Header
 
 func (c *OrganizationsLocationsFirewallEndpointsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
-	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+name}")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("DELETE", urls, body)
+	req, err := http.NewRequest("DELETE", urls, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -5577,12 +5565,11 @@ func (c *OrganizationsLocationsFirewallEndpointsGetCall) doRequest(alt string) (
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
-	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+name}")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, body)
+	req, err := http.NewRequest("GET", urls, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -5713,12 +5700,11 @@ func (c *OrganizationsLocationsFirewallEndpointsListCall) doRequest(alt string) 
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
-	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+parent}/firewallEndpoints")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, body)
+	req, err := http.NewRequest("GET", urls, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -5859,8 +5845,7 @@ func (c *OrganizationsLocationsFirewallEndpointsPatchCall) Header() http.Header 
 
 func (c *OrganizationsLocationsFirewallEndpointsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.firewallendpoint)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.firewallendpoint)
 	if err != nil {
 		return nil, err
 	}
@@ -5968,8 +5953,7 @@ func (c *OrganizationsLocationsOperationsCancelCall) Header() http.Header {
 
 func (c *OrganizationsLocationsOperationsCancelCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.canceloperationrequest)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.canceloperationrequest)
 	if err != nil {
 		return nil, err
 	}
@@ -6070,12 +6054,11 @@ func (c *OrganizationsLocationsOperationsDeleteCall) Header() http.Header {
 
 func (c *OrganizationsLocationsOperationsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
-	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+name}")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("DELETE", urls, body)
+	req, err := http.NewRequest("DELETE", urls, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -6179,12 +6162,11 @@ func (c *OrganizationsLocationsOperationsGetCall) doRequest(alt string) (*http.R
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
-	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+name}")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, body)
+	req, err := http.NewRequest("GET", urls, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -6307,12 +6289,11 @@ func (c *OrganizationsLocationsOperationsListCall) doRequest(alt string) (*http.
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
-	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+name}/operations")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, body)
+	req, err := http.NewRequest("GET", urls, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -6438,8 +6419,7 @@ func (c *OrganizationsLocationsSecurityProfileGroupsCreateCall) Header() http.He
 
 func (c *OrganizationsLocationsSecurityProfileGroupsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.securityprofilegroup)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.securityprofilegroup)
 	if err != nil {
 		return nil, err
 	}
@@ -6546,12 +6526,11 @@ func (c *OrganizationsLocationsSecurityProfileGroupsDeleteCall) Header() http.He
 
 func (c *OrganizationsLocationsSecurityProfileGroupsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
-	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+name}")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("DELETE", urls, body)
+	req, err := http.NewRequest("DELETE", urls, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -6655,12 +6634,11 @@ func (c *OrganizationsLocationsSecurityProfileGroupsGetCall) doRequest(alt strin
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
-	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+name}")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, body)
+	req, err := http.NewRequest("GET", urls, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -6781,12 +6759,11 @@ func (c *OrganizationsLocationsSecurityProfileGroupsListCall) doRequest(alt stri
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
-	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+parent}/securityProfileGroups")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, body)
+	req, err := http.NewRequest("GET", urls, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -6913,8 +6890,7 @@ func (c *OrganizationsLocationsSecurityProfileGroupsPatchCall) Header() http.Hea
 
 func (c *OrganizationsLocationsSecurityProfileGroupsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.securityprofilegroup)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.securityprofilegroup)
 	if err != nil {
 		return nil, err
 	}
@@ -7024,8 +7000,7 @@ func (c *OrganizationsLocationsSecurityProfilesCreateCall) Header() http.Header 
 
 func (c *OrganizationsLocationsSecurityProfilesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.securityprofile)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.securityprofile)
 	if err != nil {
 		return nil, err
 	}
@@ -7132,12 +7107,11 @@ func (c *OrganizationsLocationsSecurityProfilesDeleteCall) Header() http.Header 
 
 func (c *OrganizationsLocationsSecurityProfilesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
-	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+name}")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("DELETE", urls, body)
+	req, err := http.NewRequest("DELETE", urls, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -7241,12 +7215,11 @@ func (c *OrganizationsLocationsSecurityProfilesGetCall) doRequest(alt string) (*
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
-	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+name}")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, body)
+	req, err := http.NewRequest("GET", urls, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -7367,12 +7340,11 @@ func (c *OrganizationsLocationsSecurityProfilesListCall) doRequest(alt string) (
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
-	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+parent}/securityProfiles")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, body)
+	req, err := http.NewRequest("GET", urls, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -7499,8 +7471,7 @@ func (c *OrganizationsLocationsSecurityProfilesPatchCall) Header() http.Header {
 
 func (c *OrganizationsLocationsSecurityProfilesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.securityprofile)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.securityprofile)
 	if err != nil {
 		return nil, err
 	}
@@ -7610,12 +7581,11 @@ func (c *ProjectsLocationsGetCall) doRequest(alt string) (*http.Response, error)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
-	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+name}")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, body)
+	req, err := http.NewRequest("GET", urls, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -7741,12 +7711,11 @@ func (c *ProjectsLocationsListCall) doRequest(alt string) (*http.Response, error
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
-	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+name}/locations")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, body)
+	req, err := http.NewRequest("GET", urls, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -7861,8 +7830,7 @@ func (c *ProjectsLocationsAddressGroupsAddItemsCall) Header() http.Header {
 
 func (c *ProjectsLocationsAddressGroupsAddItemsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.addaddressgroupitemsrequest)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.addaddressgroupitemsrequest)
 	if err != nil {
 		return nil, err
 	}
@@ -7963,8 +7931,7 @@ func (c *ProjectsLocationsAddressGroupsCloneItemsCall) Header() http.Header {
 
 func (c *ProjectsLocationsAddressGroupsCloneItemsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.cloneaddressgroupitemsrequest)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.cloneaddressgroupitemsrequest)
 	if err != nil {
 		return nil, err
 	}
@@ -8090,8 +8057,7 @@ func (c *ProjectsLocationsAddressGroupsCreateCall) Header() http.Header {
 
 func (c *ProjectsLocationsAddressGroupsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.addressgroup)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.addressgroup)
 	if err != nil {
 		return nil, err
 	}
@@ -8206,12 +8172,11 @@ func (c *ProjectsLocationsAddressGroupsDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsAddressGroupsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
-	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+name}")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("DELETE", urls, body)
+	req, err := http.NewRequest("DELETE", urls, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -8314,12 +8279,11 @@ func (c *ProjectsLocationsAddressGroupsGetCall) doRequest(alt string) (*http.Res
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
-	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+name}")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, body)
+	req, err := http.NewRequest("GET", urls, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -8441,12 +8405,11 @@ func (c *ProjectsLocationsAddressGroupsGetIamPolicyCall) doRequest(alt string) (
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
-	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+resource}:getIamPolicy")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, body)
+	req, err := http.NewRequest("GET", urls, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -8566,12 +8529,11 @@ func (c *ProjectsLocationsAddressGroupsListCall) doRequest(alt string) (*http.Re
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
-	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+parent}/addressGroups")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, body)
+	req, err := http.NewRequest("GET", urls, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -8713,12 +8675,11 @@ func (c *ProjectsLocationsAddressGroupsListReferencesCall) doRequest(alt string)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
-	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+addressGroup}:listReferences")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, body)
+	req, err := http.NewRequest("GET", urls, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -8860,8 +8821,7 @@ func (c *ProjectsLocationsAddressGroupsPatchCall) Header() http.Header {
 
 func (c *ProjectsLocationsAddressGroupsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.addressgroup)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.addressgroup)
 	if err != nil {
 		return nil, err
 	}
@@ -8962,8 +8922,7 @@ func (c *ProjectsLocationsAddressGroupsRemoveItemsCall) Header() http.Header {
 
 func (c *ProjectsLocationsAddressGroupsRemoveItemsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.removeaddressgroupitemsrequest)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.removeaddressgroupitemsrequest)
 	if err != nil {
 		return nil, err
 	}
@@ -9067,8 +9026,7 @@ func (c *ProjectsLocationsAddressGroupsSetIamPolicyCall) Header() http.Header {
 
 func (c *ProjectsLocationsAddressGroupsSetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googleiamv1setiampolicyrequest)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googleiamv1setiampolicyrequest)
 	if err != nil {
 		return nil, err
 	}
@@ -9176,8 +9134,7 @@ func (c *ProjectsLocationsAddressGroupsTestIamPermissionsCall) Header() http.Hea
 
 func (c *ProjectsLocationsAddressGroupsTestIamPermissionsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googleiamv1testiampermissionsrequest)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googleiamv1testiampermissionsrequest)
 	if err != nil {
 		return nil, err
 	}
@@ -9289,8 +9246,7 @@ func (c *ProjectsLocationsAuthorizationPoliciesCreateCall) Header() http.Header 
 
 func (c *ProjectsLocationsAuthorizationPoliciesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.authorizationpolicy)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.authorizationpolicy)
 	if err != nil {
 		return nil, err
 	}
@@ -9389,12 +9345,11 @@ func (c *ProjectsLocationsAuthorizationPoliciesDeleteCall) Header() http.Header 
 
 func (c *ProjectsLocationsAuthorizationPoliciesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
-	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+name}")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("DELETE", urls, body)
+	req, err := http.NewRequest("DELETE", urls, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -9497,12 +9452,11 @@ func (c *ProjectsLocationsAuthorizationPoliciesGetCall) doRequest(alt string) (*
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
-	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+name}")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, body)
+	req, err := http.NewRequest("GET", urls, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -9625,12 +9579,11 @@ func (c *ProjectsLocationsAuthorizationPoliciesGetIamPolicyCall) doRequest(alt s
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
-	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+resource}:getIamPolicy")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, body)
+	req, err := http.NewRequest("GET", urls, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -9751,12 +9704,11 @@ func (c *ProjectsLocationsAuthorizationPoliciesListCall) doRequest(alt string) (
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
-	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+parent}/authorizationPolicies")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, body)
+	req, err := http.NewRequest("GET", urls, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -9882,8 +9834,7 @@ func (c *ProjectsLocationsAuthorizationPoliciesPatchCall) Header() http.Header {
 
 func (c *ProjectsLocationsAuthorizationPoliciesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.authorizationpolicy)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.authorizationpolicy)
 	if err != nil {
 		return nil, err
 	}
@@ -9987,8 +9938,7 @@ func (c *ProjectsLocationsAuthorizationPoliciesSetIamPolicyCall) Header() http.H
 
 func (c *ProjectsLocationsAuthorizationPoliciesSetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googleiamv1setiampolicyrequest)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googleiamv1setiampolicyrequest)
 	if err != nil {
 		return nil, err
 	}
@@ -10096,8 +10046,7 @@ func (c *ProjectsLocationsAuthorizationPoliciesTestIamPermissionsCall) Header() 
 
 func (c *ProjectsLocationsAuthorizationPoliciesTestIamPermissionsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googleiamv1testiampermissionsrequest)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googleiamv1testiampermissionsrequest)
 	if err != nil {
 		return nil, err
 	}
@@ -10222,8 +10171,7 @@ func (c *ProjectsLocationsAuthzPoliciesCreateCall) Header() http.Header {
 
 func (c *ProjectsLocationsAuthzPoliciesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.authzpolicy)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.authzpolicy)
 	if err != nil {
 		return nil, err
 	}
@@ -10339,12 +10287,11 @@ func (c *ProjectsLocationsAuthzPoliciesDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsAuthzPoliciesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
-	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+name}")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("DELETE", urls, body)
+	req, err := http.NewRequest("DELETE", urls, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -10447,12 +10394,11 @@ func (c *ProjectsLocationsAuthzPoliciesGetCall) doRequest(alt string) (*http.Res
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
-	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+name}")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, body)
+	req, err := http.NewRequest("GET", urls, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -10574,12 +10520,11 @@ func (c *ProjectsLocationsAuthzPoliciesGetIamPolicyCall) doRequest(alt string) (
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
-	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+resource}:getIamPolicy")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, body)
+	req, err := http.NewRequest("GET", urls, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -10712,12 +10657,11 @@ func (c *ProjectsLocationsAuthzPoliciesListCall) doRequest(alt string) (*http.Re
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
-	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+parent}/authzPolicies")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, body)
+	req, err := http.NewRequest("GET", urls, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -10859,8 +10803,7 @@ func (c *ProjectsLocationsAuthzPoliciesPatchCall) Header() http.Header {
 
 func (c *ProjectsLocationsAuthzPoliciesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.authzpolicy)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.authzpolicy)
 	if err != nil {
 		return nil, err
 	}
@@ -10964,8 +10907,7 @@ func (c *ProjectsLocationsAuthzPoliciesSetIamPolicyCall) Header() http.Header {
 
 func (c *ProjectsLocationsAuthzPoliciesSetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googleiamv1setiampolicyrequest)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googleiamv1setiampolicyrequest)
 	if err != nil {
 		return nil, err
 	}
@@ -11073,8 +11015,7 @@ func (c *ProjectsLocationsAuthzPoliciesTestIamPermissionsCall) Header() http.Hea
 
 func (c *ProjectsLocationsAuthzPoliciesTestIamPermissionsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googleiamv1testiampermissionsrequest)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googleiamv1testiampermissionsrequest)
 	if err != nil {
 		return nil, err
 	}
@@ -11185,8 +11126,7 @@ func (c *ProjectsLocationsClientTlsPoliciesCreateCall) Header() http.Header {
 
 func (c *ProjectsLocationsClientTlsPoliciesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.clienttlspolicy)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.clienttlspolicy)
 	if err != nil {
 		return nil, err
 	}
@@ -11285,12 +11225,11 @@ func (c *ProjectsLocationsClientTlsPoliciesDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsClientTlsPoliciesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
-	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+name}")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("DELETE", urls, body)
+	req, err := http.NewRequest("DELETE", urls, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -11393,12 +11332,11 @@ func (c *ProjectsLocationsClientTlsPoliciesGetCall) doRequest(alt string) (*http
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
-	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+name}")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, body)
+	req, err := http.NewRequest("GET", urls, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -11521,12 +11459,11 @@ func (c *ProjectsLocationsClientTlsPoliciesGetIamPolicyCall) doRequest(alt strin
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
-	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+resource}:getIamPolicy")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, body)
+	req, err := http.NewRequest("GET", urls, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -11646,12 +11583,11 @@ func (c *ProjectsLocationsClientTlsPoliciesListCall) doRequest(alt string) (*htt
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
-	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+parent}/clientTlsPolicies")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, body)
+	req, err := http.NewRequest("GET", urls, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -11777,8 +11713,7 @@ func (c *ProjectsLocationsClientTlsPoliciesPatchCall) Header() http.Header {
 
 func (c *ProjectsLocationsClientTlsPoliciesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.clienttlspolicy)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.clienttlspolicy)
 	if err != nil {
 		return nil, err
 	}
@@ -11882,8 +11817,7 @@ func (c *ProjectsLocationsClientTlsPoliciesSetIamPolicyCall) Header() http.Heade
 
 func (c *ProjectsLocationsClientTlsPoliciesSetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googleiamv1setiampolicyrequest)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googleiamv1setiampolicyrequest)
 	if err != nil {
 		return nil, err
 	}
@@ -11991,8 +11925,7 @@ func (c *ProjectsLocationsClientTlsPoliciesTestIamPermissionsCall) Header() http
 
 func (c *ProjectsLocationsClientTlsPoliciesTestIamPermissionsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googleiamv1testiampermissionsrequest)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googleiamv1testiampermissionsrequest)
 	if err != nil {
 		return nil, err
 	}
@@ -12119,8 +12052,7 @@ func (c *ProjectsLocationsFirewallEndpointAssociationsCreateCall) Header() http.
 
 func (c *ProjectsLocationsFirewallEndpointAssociationsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.firewallendpointassociation)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.firewallendpointassociation)
 	if err != nil {
 		return nil, err
 	}
@@ -12234,12 +12166,11 @@ func (c *ProjectsLocationsFirewallEndpointAssociationsDeleteCall) Header() http.
 
 func (c *ProjectsLocationsFirewallEndpointAssociationsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
-	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+name}")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("DELETE", urls, body)
+	req, err := http.NewRequest("DELETE", urls, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -12341,12 +12272,11 @@ func (c *ProjectsLocationsFirewallEndpointAssociationsGetCall) doRequest(alt str
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
-	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+name}")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, body)
+	req, err := http.NewRequest("GET", urls, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -12477,12 +12407,11 @@ func (c *ProjectsLocationsFirewallEndpointAssociationsListCall) doRequest(alt st
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
-	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+parent}/firewallEndpointAssociations")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, body)
+	req, err := http.NewRequest("GET", urls, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -12623,8 +12552,7 @@ func (c *ProjectsLocationsFirewallEndpointAssociationsPatchCall) Header() http.H
 
 func (c *ProjectsLocationsFirewallEndpointAssociationsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.firewallendpointassociation)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.firewallendpointassociation)
 	if err != nil {
 		return nil, err
 	}
@@ -12735,8 +12663,7 @@ func (c *ProjectsLocationsGatewaySecurityPoliciesCreateCall) Header() http.Heade
 
 func (c *ProjectsLocationsGatewaySecurityPoliciesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.gatewaysecuritypolicy)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.gatewaysecuritypolicy)
 	if err != nil {
 		return nil, err
 	}
@@ -12835,12 +12762,11 @@ func (c *ProjectsLocationsGatewaySecurityPoliciesDeleteCall) Header() http.Heade
 
 func (c *ProjectsLocationsGatewaySecurityPoliciesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
-	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+name}")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("DELETE", urls, body)
+	req, err := http.NewRequest("DELETE", urls, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -12943,12 +12869,11 @@ func (c *ProjectsLocationsGatewaySecurityPoliciesGetCall) doRequest(alt string) 
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
-	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+name}")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, body)
+	req, err := http.NewRequest("GET", urls, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -13069,12 +12994,11 @@ func (c *ProjectsLocationsGatewaySecurityPoliciesListCall) doRequest(alt string)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
-	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+parent}/gatewaySecurityPolicies")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, body)
+	req, err := http.NewRequest("GET", urls, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -13202,8 +13126,7 @@ func (c *ProjectsLocationsGatewaySecurityPoliciesPatchCall) Header() http.Header
 
 func (c *ProjectsLocationsGatewaySecurityPoliciesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.gatewaysecuritypolicy)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.gatewaysecuritypolicy)
 	if err != nil {
 		return nil, err
 	}
@@ -13313,8 +13236,7 @@ func (c *ProjectsLocationsGatewaySecurityPoliciesRulesCreateCall) Header() http.
 
 func (c *ProjectsLocationsGatewaySecurityPoliciesRulesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.gatewaysecuritypolicyrule)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.gatewaysecuritypolicyrule)
 	if err != nil {
 		return nil, err
 	}
@@ -13415,12 +13337,11 @@ func (c *ProjectsLocationsGatewaySecurityPoliciesRulesDeleteCall) Header() http.
 
 func (c *ProjectsLocationsGatewaySecurityPoliciesRulesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
-	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+name}")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("DELETE", urls, body)
+	req, err := http.NewRequest("DELETE", urls, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -13523,12 +13444,11 @@ func (c *ProjectsLocationsGatewaySecurityPoliciesRulesGetCall) doRequest(alt str
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
-	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+name}")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, body)
+	req, err := http.NewRequest("GET", urls, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -13650,12 +13570,11 @@ func (c *ProjectsLocationsGatewaySecurityPoliciesRulesListCall) doRequest(alt st
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
-	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+parent}/rules")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, body)
+	req, err := http.NewRequest("GET", urls, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -13783,8 +13702,7 @@ func (c *ProjectsLocationsGatewaySecurityPoliciesRulesPatchCall) Header() http.H
 
 func (c *ProjectsLocationsGatewaySecurityPoliciesRulesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.gatewaysecuritypolicyrule)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.gatewaysecuritypolicyrule)
 	if err != nil {
 		return nil, err
 	}
@@ -13910,8 +13828,7 @@ func (c *ProjectsLocationsInterceptDeploymentGroupsCreateCall) Header() http.Hea
 
 func (c *ProjectsLocationsInterceptDeploymentGroupsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.interceptdeploymentgroup)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.interceptdeploymentgroup)
 	if err != nil {
 		return nil, err
 	}
@@ -14025,12 +13942,11 @@ func (c *ProjectsLocationsInterceptDeploymentGroupsDeleteCall) Header() http.Hea
 
 func (c *ProjectsLocationsInterceptDeploymentGroupsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
-	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+name}")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("DELETE", urls, body)
+	req, err := http.NewRequest("DELETE", urls, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -14132,12 +14048,11 @@ func (c *ProjectsLocationsInterceptDeploymentGroupsGetCall) doRequest(alt string
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
-	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+name}")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, body)
+	req, err := http.NewRequest("GET", urls, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -14268,12 +14183,11 @@ func (c *ProjectsLocationsInterceptDeploymentGroupsListCall) doRequest(alt strin
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
-	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+parent}/interceptDeploymentGroups")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, body)
+	req, err := http.NewRequest("GET", urls, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -14414,8 +14328,7 @@ func (c *ProjectsLocationsInterceptDeploymentGroupsPatchCall) Header() http.Head
 
 func (c *ProjectsLocationsInterceptDeploymentGroupsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.interceptdeploymentgroup)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.interceptdeploymentgroup)
 	if err != nil {
 		return nil, err
 	}
@@ -14540,8 +14453,7 @@ func (c *ProjectsLocationsInterceptDeploymentsCreateCall) Header() http.Header {
 
 func (c *ProjectsLocationsInterceptDeploymentsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.interceptdeployment)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.interceptdeployment)
 	if err != nil {
 		return nil, err
 	}
@@ -14655,12 +14567,11 @@ func (c *ProjectsLocationsInterceptDeploymentsDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsInterceptDeploymentsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
-	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+name}")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("DELETE", urls, body)
+	req, err := http.NewRequest("DELETE", urls, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -14762,12 +14673,11 @@ func (c *ProjectsLocationsInterceptDeploymentsGetCall) doRequest(alt string) (*h
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
-	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+name}")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, body)
+	req, err := http.NewRequest("GET", urls, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -14898,12 +14808,11 @@ func (c *ProjectsLocationsInterceptDeploymentsListCall) doRequest(alt string) (*
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
-	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+parent}/interceptDeployments")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, body)
+	req, err := http.NewRequest("GET", urls, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -15044,8 +14953,7 @@ func (c *ProjectsLocationsInterceptDeploymentsPatchCall) Header() http.Header {
 
 func (c *ProjectsLocationsInterceptDeploymentsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.interceptdeployment)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.interceptdeployment)
 	if err != nil {
 		return nil, err
 	}
@@ -15172,8 +15080,7 @@ func (c *ProjectsLocationsInterceptEndpointGroupAssociationsCreateCall) Header()
 
 func (c *ProjectsLocationsInterceptEndpointGroupAssociationsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.interceptendpointgroupassociation)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.interceptendpointgroupassociation)
 	if err != nil {
 		return nil, err
 	}
@@ -15287,12 +15194,11 @@ func (c *ProjectsLocationsInterceptEndpointGroupAssociationsDeleteCall) Header()
 
 func (c *ProjectsLocationsInterceptEndpointGroupAssociationsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
-	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+name}")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("DELETE", urls, body)
+	req, err := http.NewRequest("DELETE", urls, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -15394,12 +15300,11 @@ func (c *ProjectsLocationsInterceptEndpointGroupAssociationsGetCall) doRequest(a
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
-	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+name}")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, body)
+	req, err := http.NewRequest("GET", urls, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -15531,12 +15436,11 @@ func (c *ProjectsLocationsInterceptEndpointGroupAssociationsListCall) doRequest(
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
-	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+parent}/interceptEndpointGroupAssociations")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, body)
+	req, err := http.NewRequest("GET", urls, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -15678,8 +15582,7 @@ func (c *ProjectsLocationsInterceptEndpointGroupAssociationsPatchCall) Header() 
 
 func (c *ProjectsLocationsInterceptEndpointGroupAssociationsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.interceptendpointgroupassociation)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.interceptendpointgroupassociation)
 	if err != nil {
 		return nil, err
 	}
@@ -15805,8 +15708,7 @@ func (c *ProjectsLocationsInterceptEndpointGroupsCreateCall) Header() http.Heade
 
 func (c *ProjectsLocationsInterceptEndpointGroupsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.interceptendpointgroup)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.interceptendpointgroup)
 	if err != nil {
 		return nil, err
 	}
@@ -15920,12 +15822,11 @@ func (c *ProjectsLocationsInterceptEndpointGroupsDeleteCall) Header() http.Heade
 
 func (c *ProjectsLocationsInterceptEndpointGroupsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
-	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+name}")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("DELETE", urls, body)
+	req, err := http.NewRequest("DELETE", urls, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -16027,12 +15928,11 @@ func (c *ProjectsLocationsInterceptEndpointGroupsGetCall) doRequest(alt string) 
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
-	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+name}")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, body)
+	req, err := http.NewRequest("GET", urls, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -16163,12 +16063,11 @@ func (c *ProjectsLocationsInterceptEndpointGroupsListCall) doRequest(alt string)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
-	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+parent}/interceptEndpointGroups")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, body)
+	req, err := http.NewRequest("GET", urls, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -16309,8 +16208,7 @@ func (c *ProjectsLocationsInterceptEndpointGroupsPatchCall) Header() http.Header
 
 func (c *ProjectsLocationsInterceptEndpointGroupsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.interceptendpointgroup)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.interceptendpointgroup)
 	if err != nil {
 		return nil, err
 	}
@@ -16436,8 +16334,7 @@ func (c *ProjectsLocationsMirroringDeploymentGroupsCreateCall) Header() http.Hea
 
 func (c *ProjectsLocationsMirroringDeploymentGroupsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.mirroringdeploymentgroup)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.mirroringdeploymentgroup)
 	if err != nil {
 		return nil, err
 	}
@@ -16551,12 +16448,11 @@ func (c *ProjectsLocationsMirroringDeploymentGroupsDeleteCall) Header() http.Hea
 
 func (c *ProjectsLocationsMirroringDeploymentGroupsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
-	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+name}")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("DELETE", urls, body)
+	req, err := http.NewRequest("DELETE", urls, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -16658,12 +16554,11 @@ func (c *ProjectsLocationsMirroringDeploymentGroupsGetCall) doRequest(alt string
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
-	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+name}")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, body)
+	req, err := http.NewRequest("GET", urls, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -16794,12 +16689,11 @@ func (c *ProjectsLocationsMirroringDeploymentGroupsListCall) doRequest(alt strin
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
-	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+parent}/mirroringDeploymentGroups")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, body)
+	req, err := http.NewRequest("GET", urls, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -16940,8 +16834,7 @@ func (c *ProjectsLocationsMirroringDeploymentGroupsPatchCall) Header() http.Head
 
 func (c *ProjectsLocationsMirroringDeploymentGroupsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.mirroringdeploymentgroup)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.mirroringdeploymentgroup)
 	if err != nil {
 		return nil, err
 	}
@@ -17066,8 +16959,7 @@ func (c *ProjectsLocationsMirroringDeploymentsCreateCall) Header() http.Header {
 
 func (c *ProjectsLocationsMirroringDeploymentsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.mirroringdeployment)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.mirroringdeployment)
 	if err != nil {
 		return nil, err
 	}
@@ -17181,12 +17073,11 @@ func (c *ProjectsLocationsMirroringDeploymentsDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsMirroringDeploymentsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
-	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+name}")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("DELETE", urls, body)
+	req, err := http.NewRequest("DELETE", urls, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -17288,12 +17179,11 @@ func (c *ProjectsLocationsMirroringDeploymentsGetCall) doRequest(alt string) (*h
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
-	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+name}")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, body)
+	req, err := http.NewRequest("GET", urls, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -17424,12 +17314,11 @@ func (c *ProjectsLocationsMirroringDeploymentsListCall) doRequest(alt string) (*
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
-	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+parent}/mirroringDeployments")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, body)
+	req, err := http.NewRequest("GET", urls, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -17570,8 +17459,7 @@ func (c *ProjectsLocationsMirroringDeploymentsPatchCall) Header() http.Header {
 
 func (c *ProjectsLocationsMirroringDeploymentsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.mirroringdeployment)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.mirroringdeployment)
 	if err != nil {
 		return nil, err
 	}
@@ -17698,8 +17586,7 @@ func (c *ProjectsLocationsMirroringEndpointGroupAssociationsCreateCall) Header()
 
 func (c *ProjectsLocationsMirroringEndpointGroupAssociationsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.mirroringendpointgroupassociation)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.mirroringendpointgroupassociation)
 	if err != nil {
 		return nil, err
 	}
@@ -17813,12 +17700,11 @@ func (c *ProjectsLocationsMirroringEndpointGroupAssociationsDeleteCall) Header()
 
 func (c *ProjectsLocationsMirroringEndpointGroupAssociationsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
-	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+name}")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("DELETE", urls, body)
+	req, err := http.NewRequest("DELETE", urls, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -17920,12 +17806,11 @@ func (c *ProjectsLocationsMirroringEndpointGroupAssociationsGetCall) doRequest(a
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
-	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+name}")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, body)
+	req, err := http.NewRequest("GET", urls, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -18057,12 +17942,11 @@ func (c *ProjectsLocationsMirroringEndpointGroupAssociationsListCall) doRequest(
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
-	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+parent}/mirroringEndpointGroupAssociations")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, body)
+	req, err := http.NewRequest("GET", urls, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -18204,8 +18088,7 @@ func (c *ProjectsLocationsMirroringEndpointGroupAssociationsPatchCall) Header() 
 
 func (c *ProjectsLocationsMirroringEndpointGroupAssociationsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.mirroringendpointgroupassociation)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.mirroringendpointgroupassociation)
 	if err != nil {
 		return nil, err
 	}
@@ -18331,8 +18214,7 @@ func (c *ProjectsLocationsMirroringEndpointGroupsCreateCall) Header() http.Heade
 
 func (c *ProjectsLocationsMirroringEndpointGroupsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.mirroringendpointgroup)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.mirroringendpointgroup)
 	if err != nil {
 		return nil, err
 	}
@@ -18446,12 +18328,11 @@ func (c *ProjectsLocationsMirroringEndpointGroupsDeleteCall) Header() http.Heade
 
 func (c *ProjectsLocationsMirroringEndpointGroupsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
-	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+name}")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("DELETE", urls, body)
+	req, err := http.NewRequest("DELETE", urls, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -18553,12 +18434,11 @@ func (c *ProjectsLocationsMirroringEndpointGroupsGetCall) doRequest(alt string) 
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
-	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+name}")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, body)
+	req, err := http.NewRequest("GET", urls, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -18689,12 +18569,11 @@ func (c *ProjectsLocationsMirroringEndpointGroupsListCall) doRequest(alt string)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
-	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+parent}/mirroringEndpointGroups")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, body)
+	req, err := http.NewRequest("GET", urls, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -18836,8 +18715,7 @@ func (c *ProjectsLocationsMirroringEndpointGroupsPatchCall) Header() http.Header
 
 func (c *ProjectsLocationsMirroringEndpointGroupsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.mirroringendpointgroup)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.mirroringendpointgroup)
 	if err != nil {
 		return nil, err
 	}
@@ -18945,8 +18823,7 @@ func (c *ProjectsLocationsOperationsCancelCall) Header() http.Header {
 
 func (c *ProjectsLocationsOperationsCancelCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.canceloperationrequest)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.canceloperationrequest)
 	if err != nil {
 		return nil, err
 	}
@@ -19047,12 +18924,11 @@ func (c *ProjectsLocationsOperationsDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsOperationsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
-	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+name}")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("DELETE", urls, body)
+	req, err := http.NewRequest("DELETE", urls, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -19156,12 +19032,11 @@ func (c *ProjectsLocationsOperationsGetCall) doRequest(alt string) (*http.Respon
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
-	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+name}")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, body)
+	req, err := http.NewRequest("GET", urls, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -19284,12 +19159,11 @@ func (c *ProjectsLocationsOperationsListCall) doRequest(alt string) (*http.Respo
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
-	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+name}/operations")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, body)
+	req, err := http.NewRequest("GET", urls, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -19413,8 +19287,7 @@ func (c *ProjectsLocationsServerTlsPoliciesCreateCall) Header() http.Header {
 
 func (c *ProjectsLocationsServerTlsPoliciesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.servertlspolicy)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.servertlspolicy)
 	if err != nil {
 		return nil, err
 	}
@@ -19513,12 +19386,11 @@ func (c *ProjectsLocationsServerTlsPoliciesDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsServerTlsPoliciesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
-	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+name}")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("DELETE", urls, body)
+	req, err := http.NewRequest("DELETE", urls, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -19621,12 +19493,11 @@ func (c *ProjectsLocationsServerTlsPoliciesGetCall) doRequest(alt string) (*http
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
-	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+name}")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, body)
+	req, err := http.NewRequest("GET", urls, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -19749,12 +19620,11 @@ func (c *ProjectsLocationsServerTlsPoliciesGetIamPolicyCall) doRequest(alt strin
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
-	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+resource}:getIamPolicy")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, body)
+	req, err := http.NewRequest("GET", urls, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -19874,12 +19744,11 @@ func (c *ProjectsLocationsServerTlsPoliciesListCall) doRequest(alt string) (*htt
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
-	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+parent}/serverTlsPolicies")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, body)
+	req, err := http.NewRequest("GET", urls, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -20005,8 +19874,7 @@ func (c *ProjectsLocationsServerTlsPoliciesPatchCall) Header() http.Header {
 
 func (c *ProjectsLocationsServerTlsPoliciesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.servertlspolicy)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.servertlspolicy)
 	if err != nil {
 		return nil, err
 	}
@@ -20110,8 +19978,7 @@ func (c *ProjectsLocationsServerTlsPoliciesSetIamPolicyCall) Header() http.Heade
 
 func (c *ProjectsLocationsServerTlsPoliciesSetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googleiamv1setiampolicyrequest)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googleiamv1setiampolicyrequest)
 	if err != nil {
 		return nil, err
 	}
@@ -20219,8 +20086,7 @@ func (c *ProjectsLocationsServerTlsPoliciesTestIamPermissionsCall) Header() http
 
 func (c *ProjectsLocationsServerTlsPoliciesTestIamPermissionsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googleiamv1testiampermissionsrequest)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googleiamv1testiampermissionsrequest)
 	if err != nil {
 		return nil, err
 	}
@@ -20332,8 +20198,7 @@ func (c *ProjectsLocationsTlsInspectionPoliciesCreateCall) Header() http.Header 
 
 func (c *ProjectsLocationsTlsInspectionPoliciesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.tlsinspectionpolicy)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.tlsinspectionpolicy)
 	if err != nil {
 		return nil, err
 	}
@@ -20441,12 +20306,11 @@ func (c *ProjectsLocationsTlsInspectionPoliciesDeleteCall) Header() http.Header 
 
 func (c *ProjectsLocationsTlsInspectionPoliciesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
-	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+name}")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("DELETE", urls, body)
+	req, err := http.NewRequest("DELETE", urls, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -20550,12 +20414,11 @@ func (c *ProjectsLocationsTlsInspectionPoliciesGetCall) doRequest(alt string) (*
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
-	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+name}")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, body)
+	req, err := http.NewRequest("GET", urls, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -20676,12 +20539,11 @@ func (c *ProjectsLocationsTlsInspectionPoliciesListCall) doRequest(alt string) (
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
-	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+parent}/tlsInspectionPolicies")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, body)
+	req, err := http.NewRequest("GET", urls, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -20809,8 +20671,7 @@ func (c *ProjectsLocationsTlsInspectionPoliciesPatchCall) Header() http.Header {
 
 func (c *ProjectsLocationsTlsInspectionPoliciesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.tlsinspectionpolicy)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.tlsinspectionpolicy)
 	if err != nil {
 		return nil, err
 	}
@@ -20920,8 +20781,7 @@ func (c *ProjectsLocationsUrlListsCreateCall) Header() http.Header {
 
 func (c *ProjectsLocationsUrlListsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.urllist)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.urllist)
 	if err != nil {
 		return nil, err
 	}
@@ -21020,12 +20880,11 @@ func (c *ProjectsLocationsUrlListsDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsUrlListsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
-	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+name}")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("DELETE", urls, body)
+	req, err := http.NewRequest("DELETE", urls, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -21128,12 +20987,11 @@ func (c *ProjectsLocationsUrlListsGetCall) doRequest(alt string) (*http.Response
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
-	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+name}")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, body)
+	req, err := http.NewRequest("GET", urls, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -21252,12 +21110,11 @@ func (c *ProjectsLocationsUrlListsListCall) doRequest(alt string) (*http.Respons
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
-	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+parent}/urlLists")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, body)
+	req, err := http.NewRequest("GET", urls, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -21383,8 +21240,7 @@ func (c *ProjectsLocationsUrlListsPatchCall) Header() http.Header {
 
 func (c *ProjectsLocationsUrlListsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.urllist)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.urllist)
 	if err != nil {
 		return nil, err
 	}

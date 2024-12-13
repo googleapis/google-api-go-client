@@ -114,7 +114,8 @@ func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, err
 	if err != nil {
 		return nil, err
 	}
-	s, err := New(client)
+	s := &Service{client: client, BasePath: basePath}
+	s.Accounts = NewAccountsService(s)
 	if err != nil {
 		return nil, err
 	}
@@ -133,9 +134,7 @@ func New(client *http.Client) (*Service, error) {
 	if client == nil {
 		return nil, errors.New("client is nil")
 	}
-	s := &Service{client: client, BasePath: basePath}
-	s.Accounts = NewAccountsService(s)
-	return s, nil
+	return NewService(context.Background(), option.WithHTTPClient(client))
 }
 
 type Service struct {
@@ -320,8 +319,7 @@ func (c *AccountsCustomAppsCreateCall) Header() http.Header {
 
 func (c *AccountsCustomAppsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.customapp)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.customapp)
 	if err != nil {
 		return nil, err
 	}
@@ -332,14 +330,10 @@ func (c *AccountsCustomAppsCreateCall) doRequest(alt string) (*http.Response, er
 		urls = googleapi.ResolveRelative(c.s.BasePath, "/upload/playcustomapp/v1/accounts/{account}/customApps")
 		c.urlParams_.Set("uploadType", c.mediaInfo_.UploadType())
 	}
-	if body == nil {
-		body = new(bytes.Buffer)
-		reqHeaders.Set("Content-Type", "application/json")
-	}
-	body, getBody, cleanup := c.mediaInfo_.UploadRequest(reqHeaders, body)
+	newBody, getBody, cleanup := c.mediaInfo_.UploadRequest(reqHeaders, body)
 	defer cleanup()
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("POST", urls, body)
+	req, err := http.NewRequest("POST", urls, newBody)
 	if err != nil {
 		return nil, err
 	}

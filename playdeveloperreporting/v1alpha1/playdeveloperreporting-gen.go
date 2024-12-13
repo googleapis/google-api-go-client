@@ -114,7 +114,10 @@ func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, err
 	if err != nil {
 		return nil, err
 	}
-	s, err := New(client)
+	s := &Service{client: client, BasePath: basePath}
+	s.Anomalies = NewAnomaliesService(s)
+	s.Apps = NewAppsService(s)
+	s.Vitals = NewVitalsService(s)
 	if err != nil {
 		return nil, err
 	}
@@ -133,11 +136,7 @@ func New(client *http.Client) (*Service, error) {
 	if client == nil {
 		return nil, errors.New("client is nil")
 	}
-	s := &Service{client: client, BasePath: basePath}
-	s.Anomalies = NewAnomaliesService(s)
-	s.Apps = NewAppsService(s)
-	s.Vitals = NewVitalsService(s)
-	return s, nil
+	return NewService(context.Background(), option.WithHTTPClient(client))
 }
 
 type Service struct {
@@ -2856,12 +2855,11 @@ func (c *AnomaliesListCall) doRequest(alt string) (*http.Response, error) {
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
-	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha1/{+parent}/anomalies")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, body)
+	req, err := http.NewRequest("GET", urls, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -2986,12 +2984,11 @@ func (c *AppsFetchReleaseFilterOptionsCall) doRequest(alt string) (*http.Respons
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
-	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha1/{+name}:fetchReleaseFilterOptions")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, body)
+	req, err := http.NewRequest("GET", urls, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -3108,12 +3105,11 @@ func (c *AppsSearchCall) doRequest(alt string) (*http.Response, error) {
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
-	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha1/apps:search")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, body)
+	req, err := http.NewRequest("GET", urls, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -3234,12 +3230,11 @@ func (c *VitalsAnrrateGetCall) doRequest(alt string) (*http.Response, error) {
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
-	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha1/{+name}")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, body)
+	req, err := http.NewRequest("GET", urls, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -3332,8 +3327,7 @@ func (c *VitalsAnrrateQueryCall) Header() http.Header {
 
 func (c *VitalsAnrrateQueryCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googleplaydeveloperreportingv1alpha1queryanrratemetricsetrequest)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googleplaydeveloperreportingv1alpha1queryanrratemetricsetrequest)
 	if err != nil {
 		return nil, err
 	}
@@ -3465,12 +3459,11 @@ func (c *VitalsCrashrateGetCall) doRequest(alt string) (*http.Response, error) {
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
-	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha1/{+name}")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, body)
+	req, err := http.NewRequest("GET", urls, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -3565,8 +3558,7 @@ func (c *VitalsCrashrateQueryCall) Header() http.Header {
 
 func (c *VitalsCrashrateQueryCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googleplaydeveloperreportingv1alpha1querycrashratemetricsetrequest)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googleplaydeveloperreportingv1alpha1querycrashratemetricsetrequest)
 	if err != nil {
 		return nil, err
 	}
@@ -3699,12 +3691,11 @@ func (c *VitalsErrorsCountsGetCall) doRequest(alt string) (*http.Response, error
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
-	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha1/{+name}")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, body)
+	req, err := http.NewRequest("GET", urls, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -3797,8 +3788,7 @@ func (c *VitalsErrorsCountsQueryCall) Header() http.Header {
 
 func (c *VitalsErrorsCountsQueryCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googleplaydeveloperreportingv1alpha1queryerrorcountmetricsetrequest)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googleplaydeveloperreportingv1alpha1queryerrorcountmetricsetrequest)
 	if err != nil {
 		return nil, err
 	}
@@ -4173,12 +4163,11 @@ func (c *VitalsErrorsIssuesSearchCall) doRequest(alt string) (*http.Response, er
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
-	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha1/{+parent}/errorIssues:search")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, body)
+	req, err := http.NewRequest("GET", urls, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -4529,12 +4518,11 @@ func (c *VitalsErrorsReportsSearchCall) doRequest(alt string) (*http.Response, e
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
-	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha1/{+parent}/errorReports:search")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, body)
+	req, err := http.NewRequest("GET", urls, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -4658,12 +4646,11 @@ func (c *VitalsExcessivewakeuprateGetCall) doRequest(alt string) (*http.Response
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
-	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha1/{+name}")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, body)
+	req, err := http.NewRequest("GET", urls, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -4756,8 +4743,7 @@ func (c *VitalsExcessivewakeuprateQueryCall) Header() http.Header {
 
 func (c *VitalsExcessivewakeuprateQueryCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googleplaydeveloperreportingv1alpha1queryexcessivewakeupratemetricsetrequest)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googleplaydeveloperreportingv1alpha1queryexcessivewakeupratemetricsetrequest)
 	if err != nil {
 		return nil, err
 	}
@@ -4891,12 +4877,11 @@ func (c *VitalsSlowrenderingrateGetCall) doRequest(alt string) (*http.Response, 
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
-	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha1/{+name}")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, body)
+	req, err := http.NewRequest("GET", urls, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -4989,8 +4974,7 @@ func (c *VitalsSlowrenderingrateQueryCall) Header() http.Header {
 
 func (c *VitalsSlowrenderingrateQueryCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googleplaydeveloperreportingv1alpha1queryslowrenderingratemetricsetrequest)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googleplaydeveloperreportingv1alpha1queryslowrenderingratemetricsetrequest)
 	if err != nil {
 		return nil, err
 	}
@@ -5124,12 +5108,11 @@ func (c *VitalsSlowstartrateGetCall) doRequest(alt string) (*http.Response, erro
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
-	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha1/{+name}")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, body)
+	req, err := http.NewRequest("GET", urls, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -5222,8 +5205,7 @@ func (c *VitalsSlowstartrateQueryCall) Header() http.Header {
 
 func (c *VitalsSlowstartrateQueryCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googleplaydeveloperreportingv1alpha1queryslowstartratemetricsetrequest)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googleplaydeveloperreportingv1alpha1queryslowstartratemetricsetrequest)
 	if err != nil {
 		return nil, err
 	}
@@ -5358,12 +5340,11 @@ func (c *VitalsStuckbackgroundwakelockrateGetCall) doRequest(alt string) (*http.
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
-	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha1/{+name}")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, body)
+	req, err := http.NewRequest("GET", urls, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -5457,8 +5438,7 @@ func (c *VitalsStuckbackgroundwakelockrateQueryCall) Header() http.Header {
 
 func (c *VitalsStuckbackgroundwakelockrateQueryCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googleplaydeveloperreportingv1alpha1querystuckbackgroundwakelockratemetricsetrequest)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googleplaydeveloperreportingv1alpha1querystuckbackgroundwakelockratemetricsetrequest)
 	if err != nil {
 		return nil, err
 	}

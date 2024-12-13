@@ -115,7 +115,8 @@ func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, err
 	if err != nil {
 		return nil, err
 	}
-	s, err := New(client)
+	s := &Service{client: client, BasePath: basePath}
+	s.Projects = NewProjectsService(s)
 	if err != nil {
 		return nil, err
 	}
@@ -134,9 +135,7 @@ func New(client *http.Client) (*Service, error) {
 	if client == nil {
 		return nil, errors.New("client is nil")
 	}
-	s := &Service{client: client, BasePath: basePath}
-	s.Projects = NewProjectsService(s)
-	return s, nil
+	return NewService(context.Background(), option.WithHTTPClient(client))
 }
 
 type Service struct {
@@ -6812,8 +6811,7 @@ func (c *ProjectsFetchAclCall) Header() http.Header {
 
 func (c *ProjectsFetchAclCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudcontentwarehousev1fetchaclrequest)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googlecloudcontentwarehousev1fetchaclrequest)
 	if err != nil {
 		return nil, err
 	}
@@ -6920,8 +6918,7 @@ func (c *ProjectsSetAclCall) Header() http.Header {
 
 func (c *ProjectsSetAclCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudcontentwarehousev1setaclrequest)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googlecloudcontentwarehousev1setaclrequest)
 	if err != nil {
 		return nil, err
 	}
@@ -7033,12 +7030,11 @@ func (c *ProjectsLocationsGetStatusCall) doRequest(alt string) (*http.Response, 
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
-	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+location}:getStatus")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, body)
+	req, err := http.NewRequest("GET", urls, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -7133,8 +7129,7 @@ func (c *ProjectsLocationsInitializeCall) Header() http.Header {
 
 func (c *ProjectsLocationsInitializeCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudcontentwarehousev1initializeprojectrequest)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googlecloudcontentwarehousev1initializeprojectrequest)
 	if err != nil {
 		return nil, err
 	}
@@ -7236,8 +7231,7 @@ func (c *ProjectsLocationsRunPipelineCall) Header() http.Header {
 
 func (c *ProjectsLocationsRunPipelineCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudcontentwarehousev1runpipelinerequest)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googlecloudcontentwarehousev1runpipelinerequest)
 	if err != nil {
 		return nil, err
 	}
@@ -7338,8 +7332,7 @@ func (c *ProjectsLocationsDocumentSchemasCreateCall) Header() http.Header {
 
 func (c *ProjectsLocationsDocumentSchemasCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudcontentwarehousev1documentschema)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googlecloudcontentwarehousev1documentschema)
 	if err != nil {
 		return nil, err
 	}
@@ -7440,12 +7433,11 @@ func (c *ProjectsLocationsDocumentSchemasDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsDocumentSchemasDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
-	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("DELETE", urls, body)
+	req, err := http.NewRequest("DELETE", urls, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -7549,12 +7541,11 @@ func (c *ProjectsLocationsDocumentSchemasGetCall) doRequest(alt string) (*http.R
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
-	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, body)
+	req, err := http.NewRequest("GET", urls, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -7676,12 +7667,11 @@ func (c *ProjectsLocationsDocumentSchemasListCall) doRequest(alt string) (*http.
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
-	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/documentSchemas")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, body)
+	req, err := http.NewRequest("GET", urls, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -7802,8 +7792,7 @@ func (c *ProjectsLocationsDocumentSchemasPatchCall) Header() http.Header {
 
 func (c *ProjectsLocationsDocumentSchemasPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudcontentwarehousev1updatedocumentschemarequest)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googlecloudcontentwarehousev1updatedocumentschemarequest)
 	if err != nil {
 		return nil, err
 	}
@@ -7905,8 +7894,7 @@ func (c *ProjectsLocationsDocumentsCreateCall) Header() http.Header {
 
 func (c *ProjectsLocationsDocumentsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudcontentwarehousev1createdocumentrequest)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googlecloudcontentwarehousev1createdocumentrequest)
 	if err != nil {
 		return nil, err
 	}
@@ -8011,8 +7999,7 @@ func (c *ProjectsLocationsDocumentsDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsDocumentsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudcontentwarehousev1deletedocumentrequest)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googlecloudcontentwarehousev1deletedocumentrequest)
 	if err != nil {
 		return nil, err
 	}
@@ -8120,8 +8107,7 @@ func (c *ProjectsLocationsDocumentsFetchAclCall) Header() http.Header {
 
 func (c *ProjectsLocationsDocumentsFetchAclCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudcontentwarehousev1fetchaclrequest)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googlecloudcontentwarehousev1fetchaclrequest)
 	if err != nil {
 		return nil, err
 	}
@@ -8225,8 +8211,7 @@ func (c *ProjectsLocationsDocumentsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsDocumentsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudcontentwarehousev1getdocumentrequest)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googlecloudcontentwarehousev1getdocumentrequest)
 	if err != nil {
 		return nil, err
 	}
@@ -8330,8 +8315,7 @@ func (c *ProjectsLocationsDocumentsLinkedSourcesCall) Header() http.Header {
 
 func (c *ProjectsLocationsDocumentsLinkedSourcesCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudcontentwarehousev1listlinkedsourcesrequest)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googlecloudcontentwarehousev1listlinkedsourcesrequest)
 	if err != nil {
 		return nil, err
 	}
@@ -8458,8 +8442,7 @@ func (c *ProjectsLocationsDocumentsLinkedTargetsCall) Header() http.Header {
 
 func (c *ProjectsLocationsDocumentsLinkedTargetsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudcontentwarehousev1listlinkedtargetsrequest)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googlecloudcontentwarehousev1listlinkedtargetsrequest)
 	if err != nil {
 		return nil, err
 	}
@@ -8563,8 +8546,7 @@ func (c *ProjectsLocationsDocumentsLockCall) Header() http.Header {
 
 func (c *ProjectsLocationsDocumentsLockCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudcontentwarehousev1lockdocumentrequest)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googlecloudcontentwarehousev1lockdocumentrequest)
 	if err != nil {
 		return nil, err
 	}
@@ -8669,8 +8651,7 @@ func (c *ProjectsLocationsDocumentsPatchCall) Header() http.Header {
 
 func (c *ProjectsLocationsDocumentsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudcontentwarehousev1updatedocumentrequest)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googlecloudcontentwarehousev1updatedocumentrequest)
 	if err != nil {
 		return nil, err
 	}
@@ -8774,8 +8755,7 @@ func (c *ProjectsLocationsDocumentsSearchCall) Header() http.Header {
 
 func (c *ProjectsLocationsDocumentsSearchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudcontentwarehousev1searchdocumentsrequest)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googlecloudcontentwarehousev1searchdocumentsrequest)
 	if err != nil {
 		return nil, err
 	}
@@ -8903,8 +8883,7 @@ func (c *ProjectsLocationsDocumentsSetAclCall) Header() http.Header {
 
 func (c *ProjectsLocationsDocumentsSetAclCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudcontentwarehousev1setaclrequest)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googlecloudcontentwarehousev1setaclrequest)
 	if err != nil {
 		return nil, err
 	}
@@ -9008,8 +8987,7 @@ func (c *ProjectsLocationsDocumentsDocumentLinksCreateCall) Header() http.Header
 
 func (c *ProjectsLocationsDocumentsDocumentLinksCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudcontentwarehousev1createdocumentlinkrequest)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googlecloudcontentwarehousev1createdocumentlinkrequest)
 	if err != nil {
 		return nil, err
 	}
@@ -9112,8 +9090,7 @@ func (c *ProjectsLocationsDocumentsDocumentLinksDeleteCall) Header() http.Header
 
 func (c *ProjectsLocationsDocumentsDocumentLinksDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudcontentwarehousev1deletedocumentlinkrequest)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googlecloudcontentwarehousev1deletedocumentlinkrequest)
 	if err != nil {
 		return nil, err
 	}
@@ -9218,8 +9195,7 @@ func (c *ProjectsLocationsDocumentsReferenceIdDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsDocumentsReferenceIdDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudcontentwarehousev1deletedocumentrequest)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googlecloudcontentwarehousev1deletedocumentrequest)
 	if err != nil {
 		return nil, err
 	}
@@ -9323,8 +9299,7 @@ func (c *ProjectsLocationsDocumentsReferenceIdGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsDocumentsReferenceIdGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudcontentwarehousev1getdocumentrequest)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googlecloudcontentwarehousev1getdocumentrequest)
 	if err != nil {
 		return nil, err
 	}
@@ -9429,8 +9404,7 @@ func (c *ProjectsLocationsDocumentsReferenceIdPatchCall) Header() http.Header {
 
 func (c *ProjectsLocationsDocumentsReferenceIdPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudcontentwarehousev1updatedocumentrequest)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googlecloudcontentwarehousev1updatedocumentrequest)
 	if err != nil {
 		return nil, err
 	}
@@ -9543,12 +9517,11 @@ func (c *ProjectsLocationsOperationsGetCall) doRequest(alt string) (*http.Respon
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
-	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, body)
+	req, err := http.NewRequest("GET", urls, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -9642,8 +9615,7 @@ func (c *ProjectsLocationsRuleSetsCreateCall) Header() http.Header {
 
 func (c *ProjectsLocationsRuleSetsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudcontentwarehousev1ruleset)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googlecloudcontentwarehousev1ruleset)
 	if err != nil {
 		return nil, err
 	}
@@ -9743,12 +9715,11 @@ func (c *ProjectsLocationsRuleSetsDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsRuleSetsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
-	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("DELETE", urls, body)
+	req, err := http.NewRequest("DELETE", urls, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -9852,12 +9823,11 @@ func (c *ProjectsLocationsRuleSetsGetCall) doRequest(alt string) (*http.Response
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
-	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, body)
+	req, err := http.NewRequest("GET", urls, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -9979,12 +9949,11 @@ func (c *ProjectsLocationsRuleSetsListCall) doRequest(alt string) (*http.Respons
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
-	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/ruleSets")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, body)
+	req, err := http.NewRequest("GET", urls, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -10100,8 +10069,7 @@ func (c *ProjectsLocationsRuleSetsPatchCall) Header() http.Header {
 
 func (c *ProjectsLocationsRuleSetsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudcontentwarehousev1updaterulesetrequest)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googlecloudcontentwarehousev1updaterulesetrequest)
 	if err != nil {
 		return nil, err
 	}
@@ -10204,8 +10172,7 @@ func (c *ProjectsLocationsSynonymSetsCreateCall) Header() http.Header {
 
 func (c *ProjectsLocationsSynonymSetsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudcontentwarehousev1synonymset)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googlecloudcontentwarehousev1synonymset)
 	if err != nil {
 		return nil, err
 	}
@@ -10306,12 +10273,11 @@ func (c *ProjectsLocationsSynonymSetsDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsSynonymSetsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
-	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("DELETE", urls, body)
+	req, err := http.NewRequest("DELETE", urls, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -10416,12 +10382,11 @@ func (c *ProjectsLocationsSynonymSetsGetCall) doRequest(alt string) (*http.Respo
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
-	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, body)
+	req, err := http.NewRequest("GET", urls, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -10543,12 +10508,11 @@ func (c *ProjectsLocationsSynonymSetsListCall) doRequest(alt string) (*http.Resp
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
-	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/synonymSets")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, body)
+	req, err := http.NewRequest("GET", urls, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -10664,8 +10628,7 @@ func (c *ProjectsLocationsSynonymSetsPatchCall) Header() http.Header {
 
 func (c *ProjectsLocationsSynonymSetsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudcontentwarehousev1synonymset)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googlecloudcontentwarehousev1synonymset)
 	if err != nil {
 		return nil, err
 	}

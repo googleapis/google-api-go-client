@@ -114,7 +114,9 @@ func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, err
 	if err != nil {
 		return nil, err
 	}
-	s, err := New(client)
+	s := &Service{client: client, BasePath: basePath}
+	s.DeviceRecall = NewDeviceRecallService(s)
+	s.V1 = NewV1Service(s)
 	if err != nil {
 		return nil, err
 	}
@@ -133,10 +135,7 @@ func New(client *http.Client) (*Service, error) {
 	if client == nil {
 		return nil, errors.New("client is nil")
 	}
-	s := &Service{client: client, BasePath: basePath}
-	s.DeviceRecall = NewDeviceRecallService(s)
-	s.V1 = NewV1Service(s)
-	return s, nil
+	return NewService(context.Background(), option.WithHTTPClient(client))
 }
 
 type Service struct {
@@ -847,8 +846,7 @@ func (c *DeviceRecallWriteCall) Header() http.Header {
 
 func (c *DeviceRecallWriteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.writedevicerecallrequest)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.writedevicerecallrequest)
 	if err != nil {
 		return nil, err
 	}
@@ -951,8 +949,7 @@ func (c *V1DecodeIntegrityTokenCall) Header() http.Header {
 
 func (c *V1DecodeIntegrityTokenCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.decodeintegritytokenrequest)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.decodeintegritytokenrequest)
 	if err != nil {
 		return nil, err
 	}

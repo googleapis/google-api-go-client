@@ -115,7 +115,8 @@ func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, err
 	if err != nil {
 		return nil, err
 	}
-	s, err := New(client)
+	s := &Service{client: client, BasePath: basePath}
+	s.Projects = NewProjectsService(s)
 	if err != nil {
 		return nil, err
 	}
@@ -134,9 +135,7 @@ func New(client *http.Client) (*Service, error) {
 	if client == nil {
 		return nil, errors.New("client is nil")
 	}
-	s := &Service{client: client, BasePath: basePath}
-	s.Projects = NewProjectsService(s)
-	return s, nil
+	return NewService(context.Background(), option.WithHTTPClient(client))
 }
 
 type Service struct {
@@ -2337,8 +2336,7 @@ func (c *ProjectsLocationsPublishersModelsCountTokensCall) Header() http.Header 
 
 func (c *ProjectsLocationsPublishersModelsCountTokensCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudaiplatformv1beta1counttokensrequest)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googlecloudaiplatformv1beta1counttokensrequest)
 	if err != nil {
 		return nil, err
 	}
@@ -2443,8 +2441,7 @@ func (c *ProjectsLocationsPublishersModelsGenerateContentCall) Header() http.Hea
 
 func (c *ProjectsLocationsPublishersModelsGenerateContentCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudaiplatformv1beta1generatecontentrequest)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googlecloudaiplatformv1beta1generatecontentrequest)
 	if err != nil {
 		return nil, err
 	}
@@ -2550,8 +2547,7 @@ func (c *ProjectsLocationsPublishersModelsStreamGenerateContentCall) Header() ht
 
 func (c *ProjectsLocationsPublishersModelsStreamGenerateContentCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudaiplatformv1beta1generatecontentrequest)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googlecloudaiplatformv1beta1generatecontentrequest)
 	if err != nil {
 		return nil, err
 	}

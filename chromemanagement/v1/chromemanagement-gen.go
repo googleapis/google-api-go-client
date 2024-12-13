@@ -489,16 +489,16 @@ type GoogleChromeManagementV1AppUsageData struct {
 	//   "APPLICATION_TYPE_WEB" - Application type web.
 	//   "APPLICATION_TYPE_MAC_OS" - Application type Mac OS.
 	//   "APPLICATION_TYPE_PLUGIN_VM" - Application type Plugin VM.
-	//   "APPLICATION_TYPE_STANDALONE_BROWSER" - Application type standalone
-	// browser (Lacros browser app).
+	//   "APPLICATION_TYPE_STANDALONE_BROWSER" - Deprecated. This vaule is no
+	// longer used. Application type standalone browser (Lacros browser app).
 	//   "APPLICATION_TYPE_REMOTE" - Application type remote.
 	//   "APPLICATION_TYPE_BOREALIS" - Application type borealis.
 	//   "APPLICATION_TYPE_SYSTEM_WEB" - Application type system web.
-	//   "APPLICATION_TYPE_STANDALONE_BROWSER_CHROME_APP" - Application type
-	// standalone browser chrome app (hosted in Lacros).
+	//   "APPLICATION_TYPE_STANDALONE_BROWSER_CHROME_APP" - Deprecated. This vaule
+	// is no longer used. Application type standalone browser chrome app.
 	//   "APPLICATION_TYPE_EXTENSION" - Application type extension.
-	//   "APPLICATION_TYPE_STANDALONE_BROWSER_EXTENSION" - Application type
-	// standalone browser extension.
+	//   "APPLICATION_TYPE_STANDALONE_BROWSER_EXTENSION" - Deprecated. This vaule
+	// is no longer used. Application type standalone browser extension.
 	//   "APPLICATION_TYPE_BRUSCHETTA" - Application type bruschetta.
 	AppType string `json:"appType,omitempty"`
 	// RunningDuration: App foreground running time.
@@ -2983,16 +2983,16 @@ type GoogleChromeManagementV1TelemetryAppInstallEvent struct {
 	//   "APPLICATION_TYPE_WEB" - Application type web.
 	//   "APPLICATION_TYPE_MAC_OS" - Application type Mac OS.
 	//   "APPLICATION_TYPE_PLUGIN_VM" - Application type Plugin VM.
-	//   "APPLICATION_TYPE_STANDALONE_BROWSER" - Application type standalone
-	// browser (Lacros browser app).
+	//   "APPLICATION_TYPE_STANDALONE_BROWSER" - Deprecated. This vaule is no
+	// longer used. Application type standalone browser (Lacros browser app).
 	//   "APPLICATION_TYPE_REMOTE" - Application type remote.
 	//   "APPLICATION_TYPE_BOREALIS" - Application type borealis.
 	//   "APPLICATION_TYPE_SYSTEM_WEB" - Application type system web.
-	//   "APPLICATION_TYPE_STANDALONE_BROWSER_CHROME_APP" - Application type
-	// standalone browser chrome app (hosted in Lacros).
+	//   "APPLICATION_TYPE_STANDALONE_BROWSER_CHROME_APP" - Deprecated. This vaule
+	// is no longer used. Application type standalone browser chrome app.
 	//   "APPLICATION_TYPE_EXTENSION" - Application type extension.
-	//   "APPLICATION_TYPE_STANDALONE_BROWSER_EXTENSION" - Application type
-	// standalone browser extension.
+	//   "APPLICATION_TYPE_STANDALONE_BROWSER_EXTENSION" - Deprecated. This vaule
+	// is no longer used. Application type standalone browser extension.
 	//   "APPLICATION_TYPE_BRUSCHETTA" - Application type bruschetta.
 	AppType string `json:"appType,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AppId") to unconditionally
@@ -3115,16 +3115,16 @@ type GoogleChromeManagementV1TelemetryAppLaunchEvent struct {
 	//   "APPLICATION_TYPE_WEB" - Application type web.
 	//   "APPLICATION_TYPE_MAC_OS" - Application type Mac OS.
 	//   "APPLICATION_TYPE_PLUGIN_VM" - Application type Plugin VM.
-	//   "APPLICATION_TYPE_STANDALONE_BROWSER" - Application type standalone
-	// browser (Lacros browser app).
+	//   "APPLICATION_TYPE_STANDALONE_BROWSER" - Deprecated. This vaule is no
+	// longer used. Application type standalone browser (Lacros browser app).
 	//   "APPLICATION_TYPE_REMOTE" - Application type remote.
 	//   "APPLICATION_TYPE_BOREALIS" - Application type borealis.
 	//   "APPLICATION_TYPE_SYSTEM_WEB" - Application type system web.
-	//   "APPLICATION_TYPE_STANDALONE_BROWSER_CHROME_APP" - Application type
-	// standalone browser chrome app (hosted in Lacros).
+	//   "APPLICATION_TYPE_STANDALONE_BROWSER_CHROME_APP" - Deprecated. This vaule
+	// is no longer used. Application type standalone browser chrome app.
 	//   "APPLICATION_TYPE_EXTENSION" - Application type extension.
-	//   "APPLICATION_TYPE_STANDALONE_BROWSER_EXTENSION" - Application type
-	// standalone browser extension.
+	//   "APPLICATION_TYPE_STANDALONE_BROWSER_EXTENSION" - Deprecated. This vaule
+	// is no longer used. Application type standalone browser extension.
 	//   "APPLICATION_TYPE_BRUSCHETTA" - Application type bruschetta.
 	AppType string `json:"appType,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AppId") to unconditionally
@@ -3161,16 +3161,16 @@ type GoogleChromeManagementV1TelemetryAppUninstallEvent struct {
 	//   "APPLICATION_TYPE_WEB" - Application type web.
 	//   "APPLICATION_TYPE_MAC_OS" - Application type Mac OS.
 	//   "APPLICATION_TYPE_PLUGIN_VM" - Application type Plugin VM.
-	//   "APPLICATION_TYPE_STANDALONE_BROWSER" - Application type standalone
-	// browser (Lacros browser app).
+	//   "APPLICATION_TYPE_STANDALONE_BROWSER" - Deprecated. This vaule is no
+	// longer used. Application type standalone browser (Lacros browser app).
 	//   "APPLICATION_TYPE_REMOTE" - Application type remote.
 	//   "APPLICATION_TYPE_BOREALIS" - Application type borealis.
 	//   "APPLICATION_TYPE_SYSTEM_WEB" - Application type system web.
-	//   "APPLICATION_TYPE_STANDALONE_BROWSER_CHROME_APP" - Application type
-	// standalone browser chrome app (hosted in Lacros).
+	//   "APPLICATION_TYPE_STANDALONE_BROWSER_CHROME_APP" - Deprecated. This vaule
+	// is no longer used. Application type standalone browser chrome app.
 	//   "APPLICATION_TYPE_EXTENSION" - Application type extension.
-	//   "APPLICATION_TYPE_STANDALONE_BROWSER_EXTENSION" - Application type
-	// standalone browser extension.
+	//   "APPLICATION_TYPE_STANDALONE_BROWSER_EXTENSION" - Deprecated. This vaule
+	// is no longer used. Application type standalone browser extension.
 	//   "APPLICATION_TYPE_BRUSCHETTA" - Application type bruschetta.
 	AppType string `json:"appType,omitempty"`
 	// AppUninstallSource: App uninstall source.

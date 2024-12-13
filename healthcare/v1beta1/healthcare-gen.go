@@ -4439,6 +4439,15 @@ func (s GoogleCloudHealthcareV1beta1DicomStreamConfig) MarshalJSON() ([]byte, er
 // GoogleCloudHealthcareV1beta1FhirBigQueryDestination: The configuration for
 // exporting to BigQuery.
 type GoogleCloudHealthcareV1beta1FhirBigQueryDestination struct {
+	// ChangeDataCaptureConfig: Optional. Setting this field will enable BigQuery's
+	// Change Data Capture (CDC) on the destination tables. Use this field if you:
+	// - Want to only keep the latest version of each resource. Updates and deletes
+	// to an existing resource will overwrite the corresponding row. - Have a store
+	// with enabled history modifications and want to keep the entire history of
+	// resource versions but want the history to be mutable. Updates and deletes to
+	// a specific resource version will overwrite the corresponding row. See
+	// https://cloud.google.com/bigquery/docs/change-data-capture for details.
+	ChangeDataCaptureConfig *GoogleCloudHealthcareV1beta1FhirChangeDataCaptureConfig `json:"changeDataCaptureConfig,omitempty"`
 	// DatasetUri: BigQuery URI to an existing dataset, up to 2000 characters long,
 	// in the format `bq://projectId.bqDatasetId`.
 	DatasetUri string `json:"datasetUri,omitempty"`
@@ -4461,21 +4470,57 @@ type GoogleCloudHealthcareV1beta1FhirBigQueryDestination struct {
 	// before writing the FHIR resources.
 	//   "WRITE_APPEND" - Append data to the destination tables.
 	WriteDisposition string `json:"writeDisposition,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "DatasetUri") to
+	// ForceSendFields is a list of field names (e.g. "ChangeDataCaptureConfig") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "DatasetUri") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
+	// NullFields is a list of field names (e.g. "ChangeDataCaptureConfig") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s GoogleCloudHealthcareV1beta1FhirBigQueryDestination) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudHealthcareV1beta1FhirBigQueryDestination
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudHealthcareV1beta1FhirChangeDataCaptureConfig: BigQuery Change
+// Data Capture configuration.
+type GoogleCloudHealthcareV1beta1FhirChangeDataCaptureConfig struct {
+	// HistoryMode: Optional. Configures how historical versions of FHIR resources
+	// will be reflected in the destination table through updates and deletes.
+	// Defaults to `HistoryMode.KEEP_LATEST_VERSION` if unspecified.
+	//
+	// Possible values:
+	//   "HISTORY_MODE_UNSPECIFIED" - Default behavior is the same as
+	// KEEP_LATEST_VERSION.
+	//   "KEEP_LATEST_VERSION" - The table will have a unique entry for each
+	// resource ID. Updates and deletes will overwrite the row matching the
+	// resource ID if it exists in the table.
+	//   "KEEP_ALL_VERSIONS" - Historical versions of resources will be maintained.
+	// However, history mutation is allowed. Updates will overwrite the row
+	// matching the resource ID and version if it exists in the table. This option
+	// is only supported for stores with history enabled.
+	HistoryMode string `json:"historyMode,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "HistoryMode") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "HistoryMode") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudHealthcareV1beta1FhirChangeDataCaptureConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudHealthcareV1beta1FhirChangeDataCaptureConfig
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 

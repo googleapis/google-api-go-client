@@ -692,15 +692,13 @@ type GoogleCloudRecaptchaenterpriseV1Event struct {
 	// FraudPrevention: Optional. The Fraud Prevention setting for this assessment.
 	//
 	// Possible values:
-	//   "FRAUD_PREVENTION_UNSPECIFIED" - Default, unspecified setting. If opted in
-	// for automatic detection, `fraud_prevention_assessment` is returned based on
-	// the request. Otherwise, `fraud_prevention_assessment` is returned if
-	// `transaction_data` is present in the `Event` and Fraud Prevention is enabled
-	// in the Google Cloud console.
+	//   "FRAUD_PREVENTION_UNSPECIFIED" - Default, unspecified setting.
+	// `fraud_prevention_assessment` is returned if `transaction_data` is present
+	// in `Event` and Fraud Prevention is enabled in the Google Cloud console.
 	//   "ENABLED" - Enable Fraud Prevention for this assessment, if Fraud
 	// Prevention is enabled in the Google Cloud console.
 	//   "DISABLED" - Disable Fraud Prevention for this assessment, regardless of
-	// opt-in status or Google Cloud console settings.
+	// Google Cloud console settings.
 	FraudPrevention string `json:"fraudPrevention,omitempty"`
 	// HashedAccountId: Optional. Deprecated: use `user_info.account_id` instead.
 	// Unique stable hashed user identifier for the request. The identifier must be

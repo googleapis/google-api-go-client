@@ -687,9 +687,10 @@ func (c *UsersImportSshPublicKeyCall) ProjectId(projectId string) *UsersImportSs
 	return c
 }
 
-// Regions sets the optional parameter "regions": The regions to which to
-// assert that the key was written. If unspecified, defaults to all regions.
-// Regions are listed at https://cloud.google.com/about/locations#region.
+// Regions sets the optional parameter "regions": The regions to wait for a
+// POSIX account to be written to before returning a response. If unspecified,
+// defaults to all regions. Regions are listed at
+// https://cloud.google.com/about/locations#region.
 func (c *UsersImportSshPublicKeyCall) Regions(regions ...string) *UsersImportSshPublicKeyCall {
 	c.urlParams_.SetMulti("regions", append([]string{}, regions...))
 	return c

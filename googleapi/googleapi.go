@@ -202,7 +202,11 @@ var WithoutDataWrapper = MarshalStyle(false)
 
 // JSONReader is like JSONBuffer, but returns an io.Reader instead.
 func (wrap MarshalStyle) JSONReader(v interface{}) (io.Reader, error) {
-	return wrap.JSONBuffer(v)
+	buf, err := wrap.JSONBuffer(v)
+	if err != nil {
+		return nil, err
+	}
+	return buf, nil
 }
 
 // JSONBuffer encodes the body and wraps it if needed.

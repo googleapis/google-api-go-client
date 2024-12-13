@@ -43,6 +43,7 @@ func TestAPIs(t *testing.T) {
 		"mapofint64strings",
 		"mapofobjects",
 		"mapofstrings-1",
+		"mediaupload",
 		"param-rename",
 		"quotednum",
 		"repeated",

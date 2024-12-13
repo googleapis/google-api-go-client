@@ -2263,7 +2263,8 @@ func (meth *Method) generateCode() {
 
 	pn("\nfunc (c *%s) doRequest(alt string) (*http.Response, error) {", callName)
 	var contentType = `""`
-	if !meth.IsRawRequest() && args.bodyArg() != nil && httpMethod != "GET" || meth.supportsMediaUpload() && args.bodyArg() == nil {
+	if (!meth.IsRawRequest() && args.bodyArg() != nil && httpMethod != "GET") ||
+		(meth.supportsMediaUpload() && args.bodyArg() == nil) {
 		contentType = `"application/json"`
 	}
 	apiVersion := meth.m.APIVersion
@@ -2307,9 +2308,9 @@ func (meth *Method) generateCode() {
 		pn(`c.urlParams_.Set("alt", alt)`)
 		pn(`c.urlParams_.Set("prettyPrint", "false")`)
 	}
-	body := "nil"
+	bodyArg := "nil"
 	if hasBody {
-		body = "body"
+		bodyArg = "body"
 	}
 
 	pn("urls := googleapi.ResolveRelative(c.s.BasePath, %q)", meth.m.Path)
@@ -2319,12 +2320,12 @@ func (meth *Method) generateCode() {
 		pn(`  c.urlParams_.Set("uploadType", c.mediaInfo_.UploadType())`)
 		pn("}")
 
-		pn("newBody, getBody, cleanup := c.mediaInfo_.UploadRequest(reqHeaders, %s)", body)
+		pn("newBody, getBody, cleanup := c.mediaInfo_.UploadRequest(reqHeaders, %s)", bodyArg)
 		pn("defer cleanup()")
-		body = "newBody"
+		bodyArg = "newBody"
 	}
 	pn(`urls += "?" + c.urlParams_.Encode()`)
-	pn("req, err := http.NewRequest(%q, urls, %s)", httpMethod, body)
+	pn("req, err := http.NewRequest(%q, urls, %s)", httpMethod, bodyArg)
 	pn("if err != nil { return nil, err }")
 	pn("req.Header = reqHeaders")
 	if meth.supportsMediaUpload() {

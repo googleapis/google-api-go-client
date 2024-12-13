@@ -1,0 +1,226 @@
+{
+  "auth": {
+    "oauth2": {
+      "scopes": {
+        "https://www.googleapis.com/auth/youtube": {
+          "description": "Manage your YouTube account"
+        },
+        "https://www.googleapis.com/auth/youtube.channel-memberships.creator": {
+          "description": "See a list of your current active channel members, their current level, and when they became a member"
+        },
+        "https://www.googleapis.com/auth/youtube.force-ssl": {
+          "description": "See, edit, and permanently delete your YouTube videos, ratings, comments and captions"
+        },
+        "https://www.googleapis.com/auth/youtube.readonly": {
+          "description": "View your YouTube account"
+        },
+        "https://www.googleapis.com/auth/youtube.upload": {
+          "description": "Manage your YouTube videos"
+        },
+        "https://www.googleapis.com/auth/youtubepartner": {
+          "description": "View and manage your assets and associated content on YouTube"
+        },
+        "https://www.googleapis.com/auth/youtubepartner-channel-audit": {
+          "description": "View private information of your YouTube channel relevant during the audit process with a YouTube partner"
+        }
+      }
+    }
+  },
+  "basePath": "",
+  "baseUrl": "https://youtube.googleapis.com/",
+  "batchPath": "batch",
+  "canonicalName": "YouTube",
+  "description": "The YouTube Data API v3 is an API that provides access to YouTube data, such as videos, playlists, and channels.",
+  "discoveryVersion": "v1",
+  "documentationLink": "https://developers.google.com/youtube/",
+  "fullyEncodeReservedExpansion": true,
+  "icons": {
+    "x16": "http://www.google.com/images/icons/product/search-16.gif",
+    "x32": "http://www.google.com/images/icons/product/search-32.gif"
+  },
+  "id": "youtube:v3",
+  "kind": "discovery#restDescription",
+  "mtlsRootUrl": "https://youtube.mtls.googleapis.com/",
+  "name": "youtube",
+  "ownerDomain": "google.com",
+  "ownerName": "Google",
+  "parameters": {
+    "$.xgafv": {
+      "description": "V1 error format.",
+      "enum": [
+        "1",
+        "2"
+      ],
+      "enumDescriptions": [
+        "v1 error format",
+        "v2 error format"
+      ],
+      "location": "query",
+      "type": "string"
+    },
+    "access_token": {
+      "description": "OAuth access token.",
+      "location": "query",
+      "type": "string"
+    },
+    "alt": {
+      "default": "json",
+      "description": "Data format for response.",
+      "enum": [
+        "json",
+        "media",
+        "proto"
+      ],
+      "enumDescriptions": [
+        "Responses with Content-Type of application/json",
+        "Media download with context-dependent Content-Type",
+        "Responses with Content-Type of application/x-protobuf"
+      ],
+      "location": "query",
+      "type": "string"
+    },
+    "callback": {
+      "description": "JSONP",
+      "location": "query",
+      "type": "string"
+    },
+    "fields": {
+      "description": "Selector specifying which fields to include in a partial response.",
+      "location": "query",
+      "type": "string"
+    },
+    "key": {
+      "description": "API key. Your API key identifies your project and provides you with API access, quota, and reports. Required unless you provide an OAuth 2.0 token.",
+      "location": "query",
+      "type": "string"
+    },
+    "oauth_token": {
+      "description": "OAuth 2.0 token for the current user.",
+      "location": "query",
+      "type": "string"
+    },
+    "prettyPrint": {
+      "default": "true",
+      "description": "Returns response with indentations and line breaks.",
+      "location": "query",
+      "type": "boolean"
+    },
+    "quotaUser": {
+      "description": "Available to use for quota purposes for server-side applications. Can be any arbitrary string assigned to a user, but should not exceed 40 characters.",
+      "location": "query",
+      "type": "string"
+    },
+    "uploadType": {
+      "description": "Legacy upload protocol for media (e.g. \"media\", \"multipart\").",
+      "location": "query",
+      "type": "string"
+    },
+    "upload_protocol": {
+      "description": "Upload protocol for media (e.g. \"raw\", \"multipart\").",
+      "location": "query",
+      "type": "string"
+    }
+  },
+  "protocol": "rest",
+  "revision": "20241203",
+  "rootUrl": "https://youtube.googleapis.com/",
+  "servicePath": "",
+  "title": "YouTube Data API v3",
+  "version": "v3",
+  "resources": {
+    "captions": {
+      "methods": {
+        "insert": {
+          "description": "Inserts a new resource into this collection.",
+          "flatPath": "youtube/v3/captions",
+          "httpMethod": "POST",
+          "id": "youtube.captions.insert",
+          "mediaUpload": {
+            "accept": [
+              "text/xml",
+              "application/octet-stream",
+              "*/*"
+            ],
+            "maxSize": "104857600",
+            "protocols": {
+              "resumable": {
+                "multipart": true,
+                "path": "/resumable/upload/youtube/v3/captions"
+              },
+              "simple": {
+                "multipart": true,
+                "path": "/upload/youtube/v3/captions"
+              }
+            }
+          },
+          "parameterOrder": [
+            "part"
+          ],
+          "parameters": {
+            "onBehalfOf": {
+              "description": "ID of the Google+ Page for the channel that the request is be on behalf of",
+              "location": "query",
+              "type": "string"
+            },
+            "onBehalfOfContentOwner": {
+              "description": "*Note:* This parameter is intended exclusively for YouTube content partners. The *onBehalfOfContentOwner* parameter indicates that the request's authorization credentials identify a YouTube CMS user who is acting on behalf of the content owner specified in the parameter value. This parameter is intended for YouTube content partners that own and manage many different YouTube channels. It allows content owners to authenticate once and get access to all their video and channel data, without having to provide authentication credentials for each individual channel. The actual CMS account that the user authenticates with must be linked to the specified YouTube content owner.",
+              "location": "query",
+              "type": "string"
+            },
+            "part": {
+              "description": "The *part* parameter specifies the caption resource parts that the API response will include. Set the parameter value to snippet.",
+              "location": "query",
+              "repeated": true,
+              "required": true,
+              "type": "string"
+            },
+            "sync": {
+              "description": "Extra parameter to allow automatically syncing the uploaded caption/transcript with the audio.",
+              "location": "query",
+              "type": "boolean"
+            }
+          },
+          "path": "youtube/v3/captions",
+          "request": {
+            "$ref": "Caption"
+          },
+          "response": {
+            "$ref": "Caption"
+          },
+          "scopes": [
+            "https://www.googleapis.com/auth/youtube.force-ssl",
+            "https://www.googleapis.com/auth/youtubepartner"
+          ],
+          "supportsMediaUpload": true
+        }
+      }
+    }
+  },
+  "schemas": {
+    "Caption": {
+      "description": "A *caption* resource represents a YouTube caption track. A caption track is associated with exactly one YouTube video.",
+      "id": "Caption",
+      "properties": {
+        "etag": {
+          "description": "Etag of this resource.",
+          "type": "string"
+        },
+        "id": {
+          "annotations": {
+            "required": [
+              "youtube.captions.update"
+            ]
+          },
+          "description": "The ID that YouTube uses to uniquely identify the caption track.",
+          "type": "string"
+        },
+        "kind": {
+          "default": "youtube#caption",
+          "description": "Identifies what kind of resource this is. Value: the fixed string \"youtube#caption\".",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    }
+  }
+}

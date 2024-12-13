@@ -810,6 +810,9 @@ type ConnectSettings struct {
 	//   "SECOND_GEN" - V2 speckle instance.
 	//   "EXTERNAL" - On premises instance.
 	BackendType string `json:"backendType,omitempty"`
+	// CustomSubjectAlternativeNames: Custom subject alternative names for the
+	// server certificate.
+	CustomSubjectAlternativeNames []string `json:"customSubjectAlternativeNames,omitempty"`
 	// DatabaseVersion: The database engine type and version. The `databaseVersion`
 	// field cannot be changed after instance creation. MySQL instances:
 	// `MYSQL_8_0`, `MYSQL_5_7` (default), or `MYSQL_5_6`. PostgreSQL instances:
@@ -1219,8 +1222,8 @@ type DatabaseInstance struct {
 	ReplicaNames []string `json:"replicaNames,omitempty"`
 	// ReplicationCluster: A primary instance and disaster recovery (DR) replica
 	// pair. A DR replica is a cross-region replica that you designate for failover
-	// in the event that the primary instance experiences regional failure. Only
-	// applicable to MySQL.
+	// in the event that the primary instance experiences regional failure.
+	// Applicable to MySQL and PostgreSQL.
 	ReplicationCluster *ReplicationCluster `json:"replicationCluster,omitempty"`
 	// RootPassword: Initial root password. Use only on creation. You must set root
 	// passwords before you can connect to PostgreSQL instances.
@@ -1290,6 +1293,13 @@ type DatabaseInstance struct {
 	// enabled to switch storing point-in-time recovery log files from a data disk
 	// to Cloud Storage.
 	SwitchTransactionLogsToCloudStorageEnabled bool `json:"switchTransactionLogsToCloudStorageEnabled,omitempty"`
+	// Tags: Optional. Input only. Immutable. Tag keys and tag values that are
+	// bound to this instance. You must represent each item in the map as: "" :
+	// "". For example, a single resource can have the following tags: ```
+	// "123/environment": "production", "123/costCenter": "marketing", ``` For more
+	// information on tag creation and management, see
+	// https://cloud.google.com/resource-manager/docs/tags/tags-overview.
+	Tags map[string]string `json:"tags,omitempty"`
 	// UpgradableDatabaseVersions: Output only. All database versions that are
 	// available for upgrade.
 	UpgradableDatabaseVersions []*AvailableDatabaseVersion `json:"upgradableDatabaseVersions,omitempty"`
@@ -2799,6 +2809,9 @@ type IpConfiguration struct {
 	// connect to the instance using the IP. In 'CIDR' notation, also known as
 	// 'slash' notation (for example: `157.197.200.0/24`).
 	AuthorizedNetworks []*AclEntry `json:"authorizedNetworks,omitempty"`
+	// CustomSubjectAlternativeNames: Optional. Custom Subject Alternative
+	// Name(SAN)s for a Cloud SQL instance.
+	CustomSubjectAlternativeNames []string `json:"customSubjectAlternativeNames,omitempty"`
 	// EnablePrivatePathForGoogleCloudServices: Controls connectivity to private IP
 	// instances from Google services, such as BigQuery.
 	EnablePrivatePathForGoogleCloudServices bool `json:"enablePrivatePathForGoogleCloudServices,omitempty"`
@@ -2827,7 +2840,13 @@ type IpConfiguration struct {
 	//   "GOOGLE_MANAGED_INTERNAL_CA" - Google-managed self-signed internal CA.
 	//   "GOOGLE_MANAGED_CAS_CA" - Google-managed regional CA part of root CA
 	// hierarchy hosted on Google Cloud's Certificate Authority Service (CAS).
+	//   "CUSTOMER_MANAGED_CAS_CA" - Customer-managed CA hosted on Google Cloud's
+	// Certificate Authority Service (CAS).
 	ServerCaMode string `json:"serverCaMode,omitempty"`
+	// ServerCaPool: Optional. The resource name of the server CA pool for an
+	// instance with `CUSTOMER_MANAGED_CAS_CA` as the `server_ca_mode`. Format:
+	// projects//locations//caPools/
+	ServerCaPool string `json:"serverCaPool,omitempty"`
 	// SslMode: Specify how SSL/TLS is enforced in database connections. If you
 	// must use the `require_ssl` flag for backward compatibility, then only the
 	// following value pairs are valid: For PostgreSQL and MySQL: *
@@ -3266,6 +3285,8 @@ type Operation struct {
 	//   "RUNNING" - The operation is running.
 	//   "DONE" - The operation completed.
 	Status string `json:"status,omitempty"`
+	// SubOperationType: Optional. The sub operation based on the operation type.
+	SubOperationType *SqlSubOperationType `json:"subOperationType,omitempty"`
 	// TargetId: Name of the database instance related to this operation.
 	TargetId   string `json:"targetId,omitempty"`
 	TargetLink string `json:"targetLink,omitempty"`
@@ -3351,8 +3372,8 @@ type OperationMetadata struct {
 	ApiVersion string `json:"apiVersion,omitempty"`
 	// CancelRequested: Output only. Identifies whether the user has requested
 	// cancellation of the operation. Operations that have been cancelled
-	// successfully have Operation.error value with a google.rpc.Status.code of 1,
-	// corresponding to `Code.CANCELLED`.
+	// successfully have google.longrunning.Operation.error value with a
+	// google.rpc.Status.code of `1`, corresponding to `Code.CANCELLED`.
 	CancelRequested bool `json:"cancelRequested,omitempty"`
 	// CreateTime: Output only. The time the operation was created.
 	CreateTime string `json:"createTime,omitempty"`
@@ -3614,8 +3635,8 @@ func (s ReplicaConfiguration) MarshalJSON() ([]byte, error) {
 
 // ReplicationCluster: A primary instance and disaster recovery (DR) replica
 // pair. A DR replica is a cross-region replica that you designate for failover
-// in the event that the primary instance has regional failure. Only applicable
-// to MySQL.
+// in the event that the primary instance has regional failure. Applicable to
+// MySQL and PostgreSQL.
 type ReplicationCluster struct {
 	// DrReplica: Output only. Read-only field that indicates whether the replica
 	// is a DR replica. This field is not set if the instance is a primary
@@ -3628,14 +3649,14 @@ type ReplicationCluster struct {
 	// replica name to designate a DR replica for a primary instance. Remove the
 	// replica name to remove the DR replica designation.
 	FailoverDrReplicaName string `json:"failoverDrReplicaName,omitempty"`
-	// PsaWriteEndpoint: Output only. If set, it indicates this instance has a
-	// private service access (PSA) dns endpoint that is pointing to the primary
-	// instance of the cluster. If this instance is the primary, the dns should be
-	// pointing to this instance. After Switchover or Replica failover, this DNS
-	// endpoint points to the promoted instance. This is a read-only field,
-	// returned to the user as information. This field can exist even if a
-	// standalone instance does not yet have a replica, or had a DR replica that
-	// was deleted.
+	// PsaWriteEndpoint: Output only. If set, this field indicates this instance
+	// has a private service access (PSA) DNS endpoint that is pointing to the
+	// primary instance of the cluster. If this instance is the primary, then the
+	// DNS endpoint points to this instance. After a switchover or replica failover
+	// operation, this DNS endpoint points to the promoted instance. This is a
+	// read-only field, returned to the user as information. This field can exist
+	// even if a standalone instance doesn't have a DR replica yet or the DR
+	// replica is deleted.
 	PsaWriteEndpoint string `json:"psaWriteEndpoint,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "DrReplica") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -4570,6 +4591,45 @@ type SqlServerUserDetails struct {
 
 func (s SqlServerUserDetails) MarshalJSON() ([]byte, error) {
 	type NoMethod SqlServerUserDetails
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// SqlSubOperationType: The sub operation type based on the operation type.
+type SqlSubOperationType struct {
+	// MaintenanceType: The type of maintenance to be performed on the instance.
+	//
+	// Possible values:
+	//   "SQL_MAINTENANCE_TYPE_UNSPECIFIED" - Maintenance type is unspecified.
+	//   "INSTANCE_MAINTENANCE" - Indicates that a standalone instance is
+	// undergoing maintenance. The instance can be either a primary instance or a
+	// replica.
+	//   "REPLICA_INCLUDED_MAINTENANCE" - Indicates that the primary instance and
+	// all of its replicas, including cascading replicas, are undergoing
+	// maintenance. Maintenance is performed on groups of replicas first, followed
+	// by the primary instance.
+	//   "INSTANCE_SELF_SERVICE_MAINTENANCE" - Indicates that the standalone
+	// instance is undergoing maintenance, initiated by self-service. The instance
+	// can be either a primary instance or a replica.
+	//   "REPLICA_INCLUDED_SELF_SERVICE_MAINTENANCE" - Indicates that the primary
+	// instance and all of its replicas are undergoing maintenance, initiated by
+	// self-service. Maintenance is performed on groups of replicas first, followed
+	// by the primary instance.
+	MaintenanceType string `json:"maintenanceType,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "MaintenanceType") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "MaintenanceType") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s SqlSubOperationType) MarshalJSON() ([]byte, error) {
+	type NoMethod SqlSubOperationType
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -8373,12 +8433,11 @@ func (r *InstancesService) PromoteReplica(project string, instance string) *Inst
 }
 
 // Failover sets the optional parameter "failover": Set to true to invoke a
-// replica failover to the designated DR replica. As part of replica failover,
-// the promote operation attempts to add the original primary instance as a
-// replica of the promoted DR replica when the original primary instance comes
-// back online. If set to false or not specified, then the original primary
-// instance becomes an independent Cloud SQL primary instance. Only applicable
-// to MySQL.
+// replica failover to the DR replica. As part of replica failover, the promote
+// operation attempts to add the original primary instance as a replica of the
+// promoted DR replica when the original primary instance comes back online. If
+// set to false or not specified, then the original primary instance becomes an
+// independent Cloud SQL primary instance.
 func (c *InstancesPromoteReplicaCall) Failover(failover bool) *InstancesPromoteReplicaCall {
 	c.urlParams_.Set("failover", fmt.Sprint(failover))
 	return c
@@ -9295,8 +9354,8 @@ type InstancesSwitchoverCall struct {
 	header_    http.Header
 }
 
-// Switchover: Switches over from the primary instance to the designated DR
-// replica instance.
+// Switchover: Switches over from the primary instance to the DR replica
+// instance.
 //
 // - instance: Cloud SQL read replica instance name.
 // - project: ID of the project that contains the replica.
@@ -9307,10 +9366,10 @@ func (r *InstancesService) Switchover(project string, instance string) *Instance
 	return c
 }
 
-// DbTimeout sets the optional parameter "dbTimeout": (MySQL only) Cloud SQL
-// instance operations timeout, which is a sum of all database operations.
-// Default value is 10 minutes and can be modified to a maximum value of 24
-// hours.
+// DbTimeout sets the optional parameter "dbTimeout": (MySQL and PostgreSQL
+// only) Cloud SQL instance operations timeout, which is a sum of all database
+// operations. Default value is 10 minutes and can be modified to a maximum
+// value of 24 hours.
 func (c *InstancesSwitchoverCall) DbTimeout(dbTimeout string) *InstancesSwitchoverCall {
 	c.urlParams_.Set("dbTimeout", dbTimeout)
 	return c

@@ -6,7 +6,7 @@
 
 // Package parallelstore provides access to the Parallelstore API.
 //
-// For product documentation, see: https://cloud.google.com/
+// For product documentation, see: https://cloud.google.com/parallelstore
 //
 // # Library status
 //

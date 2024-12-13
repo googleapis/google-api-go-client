@@ -155,23 +155,24 @@ const (
 	// View members in Google Chat conversations.
 	ChatMembershipsReadonlyScope = "https://www.googleapis.com/auth/chat.memberships.readonly"
 
-	// See, compose, send, update, and delete messages and their associated
-	// attachments, and add, see, and delete reactions to messages.
+	// See, compose, send, update, and delete messages as well as their message
+	// content; add, see, and delete reactions to messages.
 	ChatMessagesScope = "https://www.googleapis.com/auth/chat.messages"
 
 	// Compose and send messages in Google Chat
 	ChatMessagesCreateScope = "https://www.googleapis.com/auth/chat.messages.create"
 
-	// See, add, and delete reactions to messages in Google Chat
+	// See, add, and delete reactions as well as their reaction content to messages
+	// in Google Chat
 	ChatMessagesReactionsScope = "https://www.googleapis.com/auth/chat.messages.reactions"
 
 	// Add reactions to messages in Google Chat
 	ChatMessagesReactionsCreateScope = "https://www.googleapis.com/auth/chat.messages.reactions.create"
 
-	// View reactions to messages in Google Chat
+	// View reactions as well as their reaction content to messages in Google Chat
 	ChatMessagesReactionsReadonlyScope = "https://www.googleapis.com/auth/chat.messages.reactions.readonly"
 
-	// See messages and their associated reactions and attachments in Google Chat
+	// See messages as well as their reactions and message content in Google Chat
 	ChatMessagesReadonlyScope = "https://www.googleapis.com/auth/chat.messages.readonly"
 
 	// Create conversations and spaces and see or update metadata (including
@@ -1913,8 +1914,11 @@ func (s GoogleAppsCardV1ButtonList) MarshalJSON() ([]byte, error) {
 // Chat apps, see Design the components of a card or dialog
 // (https://developers.google.com/workspace/chat/design-components-card-dialog).
 // * For Google Workspace Add-ons, see Card-based interfaces
-// (https://developers.google.com/apps-script/add-ons/concepts/cards).
-// **Example: Card message for a Google Chat app** !Example contact card
+// (https://developers.google.com/apps-script/add-ons/concepts/cards). Note:
+// You can add up to 100 widgets per card. Any widgets beyond this limit are
+// ignored. This limit applies to both card messages and dialogs in Google Chat
+// apps, and to cards in Google Workspace Add-ons. **Example: Card message for
+// a Google Chat app** !Example contact card
 // (https://developers.google.com/workspace/chat/images/card_api_reference.png)
 // To create the sample card message in Google Chat, use the following JSON:
 // ``` { "cardsV2": [ { "cardId": "unique-card-id", "card": { "header": {
@@ -2114,6 +2118,67 @@ type GoogleAppsCardV1CardHeader struct {
 
 func (s GoogleAppsCardV1CardHeader) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAppsCardV1CardHeader
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleAppsCardV1Carousel: Developer Preview
+// (https://developers.google.com/workspace/preview): A carousel, also known as
+// a slider, rotates and displays a list of widgets in a slideshow format, with
+// buttons navigating to the previous or next widget. For example, this is a
+// JSON representation of a carousel that contains three text paragraph
+// widgets. ``` { "carouselCards": [ { "widgets": [ { "textParagraph": {
+// "text": "First text paragraph in carousel", } } ] }, { "widgets": [ {
+// "textParagraph": { "text": "Second text paragraph in carousel", } } ] }, {
+// "widgets": [ { "textParagraph": { "text": "Third text paragraph in
+// carousel", } } ] } ] } ``` Google Chat apps
+// (https://developers.google.com/workspace/chat):
+type GoogleAppsCardV1Carousel struct {
+	// CarouselCards: A list of cards included in the carousel.
+	CarouselCards []*GoogleAppsCardV1CarouselCard `json:"carouselCards,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "CarouselCards") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CarouselCards") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleAppsCardV1Carousel) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleAppsCardV1Carousel
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleAppsCardV1CarouselCard: Developer Preview
+// (https://developers.google.com/workspace/preview): A card that can be
+// displayed as a carousel item. Google Chat apps
+// (https://developers.google.com/workspace/chat):
+type GoogleAppsCardV1CarouselCard struct {
+	// FooterWidgets: A list of widgets displayed at the bottom of the carousel
+	// card. The widgets are displayed in the order that they are specified.
+	FooterWidgets []*GoogleAppsCardV1NestedWidget `json:"footerWidgets,omitempty"`
+	// Widgets: A list of widgets displayed in the carousel card. The widgets are
+	// displayed in the order that they are specified.
+	Widgets []*GoogleAppsCardV1NestedWidget `json:"widgets,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "FooterWidgets") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "FooterWidgets") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleAppsCardV1CarouselCard) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleAppsCardV1CarouselCard
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -2775,6 +2840,35 @@ func (s GoogleAppsCardV1MaterialIcon) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GoogleAppsCardV1NestedWidget: Developer Preview
+// (https://developers.google.com/workspace/preview): A list of widgets that
+// can be displayed in a containing layout, such as a `CarouselCard`. Google
+// Chat apps (https://developers.google.com/workspace/chat):
+type GoogleAppsCardV1NestedWidget struct {
+	// ButtonList: A button list widget.
+	ButtonList *GoogleAppsCardV1ButtonList `json:"buttonList,omitempty"`
+	// Image: An image widget.
+	Image *GoogleAppsCardV1Image `json:"image,omitempty"`
+	// TextParagraph: A text paragraph widget.
+	TextParagraph *GoogleAppsCardV1TextParagraph `json:"textParagraph,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ButtonList") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ButtonList") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleAppsCardV1NestedWidget) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleAppsCardV1NestedWidget
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GoogleAppsCardV1OnClick: Represents how to respond when users click an
 // interactive element on a card, such as a button. Google Workspace Add-ons
 // and Chat apps (https://developers.google.com/workspace/extend):
@@ -3374,6 +3468,12 @@ type GoogleAppsCardV1Widget struct {
 	// "icon": { "knownIcon": "INVITE", "altText": "check calendar" }, "onClick": {
 	// "openLink": { "url": "https://example.com/calendar" } } } ] } ```
 	ButtonList *GoogleAppsCardV1ButtonList `json:"buttonList,omitempty"`
+	// Carousel: A carousel contains a collection of nested widgets. For example,
+	// this is a JSON representation of a carousel that contains two text
+	// paragraphs. ``` { "widgets": [ { "textParagraph": { "text": "First text
+	// paragraph in the carousel." } }, { "textParagraph": { "text": "Second text
+	// paragraph in the carousel." } } ] } ```
+	Carousel *GoogleAppsCardV1Carousel `json:"carousel,omitempty"`
 	// ChipList: A list of chips. For example, the following JSON creates two
 	// chips. The first is a text chip and the second is an icon chip that opens a
 	// link: ``` "chipList": { "chips": [ { "text": "Edit", "disabled": true, }, {
@@ -4933,7 +5033,7 @@ func (s SelectionItems) MarshalJSON() ([]byte, error) {
 type SetUpSpaceRequest struct {
 	// Memberships: Optional. The Google Chat users or groups to invite to join the
 	// space. Omit the calling user, as they are added automatically. The set
-	// currently allows up to 20 memberships (in addition to the caller). For human
+	// currently allows up to 49 memberships (in addition to the caller). For human
 	// membership, the `Membership.member` field must contain a `user` with `name`
 	// populated (format: `users/{user}`) and `type` set to `User.Type.HUMAN`. You
 	// can only add human users when setting up a space (adding Chat apps is only
@@ -5092,6 +5192,12 @@ type Space struct {
 	// in `Import Mode`requires user authentication
 	// (https://developers.google.com/workspace/chat/authenticate-authorize-chat-user).
 	ImportMode bool `json:"importMode,omitempty"`
+	// ImportModeExpireTime: Output only. The time when the space will be
+	// automatically deleted by the system if it remains in import mode. Each space
+	// created in import mode must exit this mode before this expire time using
+	// `spaces.completeImport`. This field is only populated for spaces that were
+	// created with import mode.
+	ImportModeExpireTime string `json:"importModeExpireTime,omitempty"`
 	// LastActiveTime: Output only. Timestamp of the last message in the space.
 	LastActiveTime string `json:"lastActiveTime,omitempty"`
 	// MembershipCount: Output only. The count of joined memberships grouped by

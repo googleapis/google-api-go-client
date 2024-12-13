@@ -126,12 +126,6 @@ const (
 	// or Google Groups in your Cloud Identity Organization.
 	CloudIdentityInboundssoReadonlyScope = "https://www.googleapis.com/auth/cloud-identity.inboundsso.readonly"
 
-	// List, Move orgmembers of an OrgUnit in your Cloud Identity Organization.
-	CloudIdentityOrgunitsScope = "https://www.googleapis.com/auth/cloud-identity.orgunits"
-
-	// List org members of an OrgUnit in your Cloud Identity Organization.
-	CloudIdentityOrgunitsReadonlyScope = "https://www.googleapis.com/auth/cloud-identity.orgunits.readonly"
-
 	// See and edit policies in your Cloud Identity Organization.
 	CloudIdentityPoliciesScope = "https://www.googleapis.com/auth/cloud-identity.policies"
 
@@ -153,8 +147,6 @@ func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, err
 		"https://www.googleapis.com/auth/cloud-identity.groups.readonly",
 		"https://www.googleapis.com/auth/cloud-identity.inboundsso",
 		"https://www.googleapis.com/auth/cloud-identity.inboundsso.readonly",
-		"https://www.googleapis.com/auth/cloud-identity.orgunits",
-		"https://www.googleapis.com/auth/cloud-identity.orgunits.readonly",
 		"https://www.googleapis.com/auth/cloud-identity.policies",
 		"https://www.googleapis.com/auth/cloud-identity.policies.readonly",
 		"https://www.googleapis.com/auth/cloud-platform",

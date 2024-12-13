@@ -433,8 +433,7 @@ type Attributes struct {
 	// SubscriptionCost: Number of periods (months or years) and amount of payment
 	// per period for an item with an associated subscription contract.
 	SubscriptionCost *SubscriptionCost `json:"subscriptionCost,omitempty"`
-	// TaxCategory: The tax category of the product, used to configure detailed tax
-	// nexus in account-level tax settings.
+	// TaxCategory: The tax category of the product.
 	TaxCategory string `json:"taxCategory,omitempty"`
 	// Taxes: Tax information.
 	Taxes []*Tax `json:"taxes,omitempty"`

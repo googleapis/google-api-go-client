@@ -906,6 +906,7 @@ type GoogleCloudFunctionsV2alphaOperationMetadata struct {
 	//   "SETUP_FUNCTION_UPGRADE_CONFIG" - SetupFunctionUpgradeConfig
 	//   "ABORT_FUNCTION_UPGRADE" - AbortFunctionUpgrade
 	//   "COMMIT_FUNCTION_UPGRADE" - CommitFunctionUpgrade
+	//   "DETACH_FUNCTION" - DetachFunction
 	OperationType string `json:"operationType,omitempty"`
 	// RequestResource: The original request that started the operation.
 	RequestResource googleapi.RawMessage `json:"requestResource,omitempty"`

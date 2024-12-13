@@ -57,11 +57,13 @@ import (
 	"errors"
 	"fmt"
 	"io"
+	"log/slog"
 	"net/http"
 	"net/url"
 	"strconv"
 	"strings"
 
+	"github.com/googleapis/gax-go/v2/internallog"
 	googleapi "google.golang.org/api/googleapi"
 	internal "google.golang.org/api/internal"
 	gensupport "google.golang.org/api/internal/gensupport"
@@ -85,6 +87,7 @@ var _ = strings.Replace
 var _ = context.Canceled
 var _ = internaloption.WithDefaultEndpoint
 var _ = internal.Version
+var _ = internallog.New
 
 const apiId = "paymentsresellersubscription:v1"
 const apiName = "paymentsresellersubscription"
@@ -114,7 +117,7 @@ func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, err
 	if err != nil {
 		return nil, err
 	}
-	s := &Service{client: client, BasePath: basePath}
+	s := &Service{client: client, BasePath: basePath, logger: internaloption.GetLogger(opts)}
 	s.Partners = NewPartnersService(s)
 	if err != nil {
 		return nil, err
@@ -139,6 +142,7 @@ func New(client *http.Client) (*Service, error) {
 
 type Service struct {
 	client    *http.Client
+	logger    *slog.Logger
 	BasePath  string // API endpoint base URL
 	UserAgent string // optional additional User-Agent fragment
 
@@ -1833,6 +1837,7 @@ func (c *PartnersProductsListCall) doRequest(alt string) (*http.Response, error)
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "paymentsresellersubscription.partners.products.list", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -1868,9 +1873,11 @@ func (c *PartnersProductsListCall) Do(opts ...googleapi.CallOption) (*GoogleClou
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "paymentsresellersubscription.partners.products.list", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -1958,6 +1965,7 @@ func (c *PartnersPromotionsFindEligibleCall) doRequest(alt string) (*http.Respon
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "paymentsresellersubscription.partners.promotions.findEligible", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -1993,9 +2001,11 @@ func (c *PartnersPromotionsFindEligibleCall) Do(opts ...googleapi.CallOption) (*
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "paymentsresellersubscription.partners.promotions.findEligible", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -2125,6 +2135,7 @@ func (c *PartnersPromotionsListCall) doRequest(alt string) (*http.Response, erro
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "paymentsresellersubscription.partners.promotions.list", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -2160,9 +2171,11 @@ func (c *PartnersPromotionsListCall) Do(opts ...googleapi.CallOption) (*GoogleCl
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "paymentsresellersubscription.partners.promotions.list", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -2250,6 +2263,7 @@ func (c *PartnersSubscriptionsCancelCall) doRequest(alt string) (*http.Response,
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "paymentsresellersubscription.partners.subscriptions.cancel", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -2285,9 +2299,11 @@ func (c *PartnersSubscriptionsCancelCall) Do(opts ...googleapi.CallOption) (*Goo
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "paymentsresellersubscription.partners.subscriptions.cancel", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -2364,6 +2380,7 @@ func (c *PartnersSubscriptionsCreateCall) doRequest(alt string) (*http.Response,
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parentid,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "paymentsresellersubscription.partners.subscriptions.create", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -2399,9 +2416,11 @@ func (c *PartnersSubscriptionsCreateCall) Do(opts ...googleapi.CallOption) (*Goo
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "paymentsresellersubscription.partners.subscriptions.create", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -2470,6 +2489,7 @@ func (c *PartnersSubscriptionsEntitleCall) doRequest(alt string) (*http.Response
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "paymentsresellersubscription.partners.subscriptions.entitle", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -2505,9 +2525,11 @@ func (c *PartnersSubscriptionsEntitleCall) Do(opts ...googleapi.CallOption) (*Go
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "paymentsresellersubscription.partners.subscriptions.entitle", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -2575,6 +2597,7 @@ func (c *PartnersSubscriptionsExtendCall) doRequest(alt string) (*http.Response,
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "paymentsresellersubscription.partners.subscriptions.extend", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -2610,9 +2633,11 @@ func (c *PartnersSubscriptionsExtendCall) Do(opts ...googleapi.CallOption) (*Goo
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "paymentsresellersubscription.partners.subscriptions.extend", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -2684,6 +2709,7 @@ func (c *PartnersSubscriptionsGetCall) doRequest(alt string) (*http.Response, er
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "paymentsresellersubscription.partners.subscriptions.get", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -2719,9 +2745,11 @@ func (c *PartnersSubscriptionsGetCall) Do(opts ...googleapi.CallOption) (*Google
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "paymentsresellersubscription.partners.subscriptions.get", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -2800,6 +2828,7 @@ func (c *PartnersSubscriptionsProvisionCall) doRequest(alt string) (*http.Respon
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parentid,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "paymentsresellersubscription.partners.subscriptions.provision", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -2835,9 +2864,11 @@ func (c *PartnersSubscriptionsProvisionCall) Do(opts ...googleapi.CallOption) (*
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "paymentsresellersubscription.partners.subscriptions.provision", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -2907,6 +2938,7 @@ func (c *PartnersSubscriptionsUndoCancelCall) doRequest(alt string) (*http.Respo
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "paymentsresellersubscription.partners.subscriptions.undoCancel", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -2942,9 +2974,11 @@ func (c *PartnersSubscriptionsUndoCancelCall) Do(opts ...googleapi.CallOption) (
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "paymentsresellersubscription.partners.subscriptions.undoCancel", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -3014,6 +3048,7 @@ func (c *PartnersUserSessionsGenerateCall) doRequest(alt string) (*http.Response
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "paymentsresellersubscription.partners.userSessions.generate", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -3049,8 +3084,10 @@ func (c *PartnersUserSessionsGenerateCall) Do(opts ...googleapi.CallOption) (*Go
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "paymentsresellersubscription.partners.userSessions.generate", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }

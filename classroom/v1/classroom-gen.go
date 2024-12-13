@@ -62,11 +62,13 @@ import (
 	"errors"
 	"fmt"
 	"io"
+	"log/slog"
 	"net/http"
 	"net/url"
 	"strconv"
 	"strings"
 
+	"github.com/googleapis/gax-go/v2/internallog"
 	googleapi "google.golang.org/api/googleapi"
 	internal "google.golang.org/api/internal"
 	gensupport "google.golang.org/api/internal/gensupport"
@@ -90,6 +92,7 @@ var _ = strings.Replace
 var _ = context.Canceled
 var _ = internaloption.WithDefaultEndpoint
 var _ = internal.Version
+var _ = internallog.New
 
 const apiId = "classroom:v1"
 const apiName = "classroom"
@@ -207,7 +210,7 @@ func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, err
 	if err != nil {
 		return nil, err
 	}
-	s := &Service{client: client, BasePath: basePath}
+	s := &Service{client: client, BasePath: basePath, logger: internaloption.GetLogger(opts)}
 	s.Courses = NewCoursesService(s)
 	s.Invitations = NewInvitationsService(s)
 	s.Registrations = NewRegistrationsService(s)
@@ -235,6 +238,7 @@ func New(client *http.Client) (*Service, error) {
 
 type Service struct {
 	client    *http.Client
+	logger    *slog.Logger
 	BasePath  string // API endpoint base URL
 	UserAgent string // optional additional User-Agent fragment
 
@@ -3282,6 +3286,7 @@ func (c *CoursesCreateCall) doRequest(alt string) (*http.Response, error) {
 		return nil, err
 	}
 	req.Header = reqHeaders
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "classroom.courses.create", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -3316,9 +3321,11 @@ func (c *CoursesCreateCall) Do(opts ...googleapi.CallOption) (*Course, error) {
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "classroom.courses.create", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -3380,6 +3387,7 @@ func (c *CoursesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"id": c.id,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "classroom.courses.delete", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -3414,9 +3422,11 @@ func (c *CoursesDeleteCall) Do(opts ...googleapi.CallOption) (*Empty, error) {
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "classroom.courses.delete", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -3490,6 +3500,7 @@ func (c *CoursesGetCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"id": c.id,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "classroom.courses.get", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -3524,9 +3535,11 @@ func (c *CoursesGetCall) Do(opts ...googleapi.CallOption) (*Course, error) {
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "classroom.courses.get", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -3668,6 +3681,7 @@ func (c *CoursesListCall) doRequest(alt string) (*http.Response, error) {
 		return nil, err
 	}
 	req.Header = reqHeaders
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "classroom.courses.list", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -3703,9 +3717,11 @@ func (c *CoursesListCall) Do(opts ...googleapi.CallOption) (*ListCoursesResponse
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "classroom.courses.list", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -3811,6 +3827,7 @@ func (c *CoursesPatchCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"id": c.id,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "classroom.courses.patch", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -3845,9 +3862,11 @@ func (c *CoursesPatchCall) Do(opts ...googleapi.CallOption) (*Course, error) {
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "classroom.courses.patch", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -3916,6 +3935,7 @@ func (c *CoursesUpdateCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"id": c.id,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "classroom.courses.update", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -3950,9 +3970,11 @@ func (c *CoursesUpdateCall) Do(opts ...googleapi.CallOption) (*Course, error) {
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "classroom.courses.update", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -4023,6 +4045,7 @@ func (c *CoursesAliasesCreateCall) doRequest(alt string) (*http.Response, error)
 	googleapi.Expand(req.URL, map[string]string{
 		"courseId": c.courseId,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "classroom.courses.aliases.create", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -4057,9 +4080,11 @@ func (c *CoursesAliasesCreateCall) Do(opts ...googleapi.CallOption) (*CourseAlia
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "classroom.courses.aliases.create", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -4127,6 +4152,7 @@ func (c *CoursesAliasesDeleteCall) doRequest(alt string) (*http.Response, error)
 		"courseId": c.courseId,
 		"alias":    c.aliasid,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "classroom.courses.aliases.delete", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -4161,9 +4187,11 @@ func (c *CoursesAliasesDeleteCall) Do(opts ...googleapi.CallOption) (*Empty, err
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "classroom.courses.aliases.delete", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -4254,6 +4282,7 @@ func (c *CoursesAliasesListCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"courseId": c.courseId,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "classroom.courses.aliases.list", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -4289,9 +4318,11 @@ func (c *CoursesAliasesListCall) Do(opts ...googleapi.CallOption) (*ListCourseAl
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "classroom.courses.aliases.list", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -4383,6 +4414,7 @@ func (c *CoursesAnnouncementsCreateCall) doRequest(alt string) (*http.Response, 
 	googleapi.Expand(req.URL, map[string]string{
 		"courseId": c.courseId,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "classroom.courses.announcements.create", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -4417,9 +4449,11 @@ func (c *CoursesAnnouncementsCreateCall) Do(opts ...googleapi.CallOption) (*Anno
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "classroom.courses.announcements.create", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -4491,6 +4525,7 @@ func (c *CoursesAnnouncementsDeleteCall) doRequest(alt string) (*http.Response, 
 		"courseId": c.courseId,
 		"id":       c.id,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "classroom.courses.announcements.delete", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -4525,9 +4560,11 @@ func (c *CoursesAnnouncementsDeleteCall) Do(opts ...googleapi.CallOption) (*Empt
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "classroom.courses.announcements.delete", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -4606,6 +4643,7 @@ func (c *CoursesAnnouncementsGetCall) doRequest(alt string) (*http.Response, err
 		"courseId": c.courseId,
 		"id":       c.id,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "classroom.courses.announcements.get", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -4640,9 +4678,11 @@ func (c *CoursesAnnouncementsGetCall) Do(opts ...googleapi.CallOption) (*Announc
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "classroom.courses.announcements.get", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -4752,6 +4792,7 @@ func (c *CoursesAnnouncementsGetAddOnContextCall) doRequest(alt string) (*http.R
 		"courseId": c.courseId,
 		"itemId":   c.itemId,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "classroom.courses.announcements.getAddOnContext", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -4786,9 +4827,11 @@ func (c *CoursesAnnouncementsGetAddOnContextCall) Do(opts ...googleapi.CallOptio
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "classroom.courses.announcements.getAddOnContext", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -4920,6 +4963,7 @@ func (c *CoursesAnnouncementsListCall) doRequest(alt string) (*http.Response, er
 	googleapi.Expand(req.URL, map[string]string{
 		"courseId": c.courseId,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "classroom.courses.announcements.list", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -4955,9 +4999,11 @@ func (c *CoursesAnnouncementsListCall) Do(opts ...googleapi.CallOption) (*ListAn
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "classroom.courses.announcements.list", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -5052,6 +5098,7 @@ func (c *CoursesAnnouncementsModifyAssigneesCall) doRequest(alt string) (*http.R
 		"courseId": c.courseId,
 		"id":       c.id,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "classroom.courses.announcements.modifyAssignees", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -5086,9 +5133,11 @@ func (c *CoursesAnnouncementsModifyAssigneesCall) Do(opts ...googleapi.CallOptio
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "classroom.courses.announcements.modifyAssignees", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -5175,6 +5224,7 @@ func (c *CoursesAnnouncementsPatchCall) doRequest(alt string) (*http.Response, e
 		"courseId": c.courseId,
 		"id":       c.id,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "classroom.courses.announcements.patch", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -5209,9 +5259,11 @@ func (c *CoursesAnnouncementsPatchCall) Do(opts ...googleapi.CallOption) (*Annou
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "classroom.courses.announcements.patch", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -5304,6 +5356,7 @@ func (c *CoursesAnnouncementsAddOnAttachmentsCreateCall) doRequest(alt string) (
 		"courseId": c.courseId,
 		"itemId":   c.itemId,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "classroom.courses.announcements.addOnAttachments.create", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -5339,9 +5392,11 @@ func (c *CoursesAnnouncementsAddOnAttachmentsCreateCall) Do(opts ...googleapi.Ca
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "classroom.courses.announcements.addOnAttachments.create", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -5420,6 +5475,7 @@ func (c *CoursesAnnouncementsAddOnAttachmentsDeleteCall) doRequest(alt string) (
 		"itemId":       c.itemId,
 		"attachmentId": c.attachmentId,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "classroom.courses.announcements.addOnAttachments.delete", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -5454,9 +5510,11 @@ func (c *CoursesAnnouncementsAddOnAttachmentsDeleteCall) Do(opts ...googleapi.Ca
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "classroom.courses.announcements.addOnAttachments.delete", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -5547,6 +5605,7 @@ func (c *CoursesAnnouncementsAddOnAttachmentsGetCall) doRequest(alt string) (*ht
 		"itemId":       c.itemId,
 		"attachmentId": c.attachmentId,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "classroom.courses.announcements.addOnAttachments.get", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -5582,9 +5641,11 @@ func (c *CoursesAnnouncementsAddOnAttachmentsGetCall) Do(opts ...googleapi.CallO
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "classroom.courses.announcements.addOnAttachments.get", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -5691,6 +5752,7 @@ func (c *CoursesAnnouncementsAddOnAttachmentsListCall) doRequest(alt string) (*h
 		"courseId": c.courseId,
 		"itemId":   c.itemId,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "classroom.courses.announcements.addOnAttachments.list", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -5726,9 +5788,11 @@ func (c *CoursesAnnouncementsAddOnAttachmentsListCall) Do(opts ...googleapi.Call
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "classroom.courses.announcements.addOnAttachments.list", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -5846,6 +5910,7 @@ func (c *CoursesAnnouncementsAddOnAttachmentsPatchCall) doRequest(alt string) (*
 		"itemId":       c.itemId,
 		"attachmentId": c.attachmentId,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "classroom.courses.announcements.addOnAttachments.patch", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -5881,9 +5946,11 @@ func (c *CoursesAnnouncementsAddOnAttachmentsPatchCall) Do(opts ...googleapi.Cal
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "classroom.courses.announcements.addOnAttachments.patch", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -5959,6 +6026,7 @@ func (c *CoursesCourseWorkCreateCall) doRequest(alt string) (*http.Response, err
 	googleapi.Expand(req.URL, map[string]string{
 		"courseId": c.courseId,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "classroom.courses.courseWork.create", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -5993,9 +6061,11 @@ func (c *CoursesCourseWorkCreateCall) Do(opts ...googleapi.CallOption) (*CourseW
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "classroom.courses.courseWork.create", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -6067,6 +6137,7 @@ func (c *CoursesCourseWorkDeleteCall) doRequest(alt string) (*http.Response, err
 		"courseId": c.courseId,
 		"id":       c.id,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "classroom.courses.courseWork.delete", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -6101,9 +6172,11 @@ func (c *CoursesCourseWorkDeleteCall) Do(opts ...googleapi.CallOption) (*Empty, 
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "classroom.courses.courseWork.delete", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -6182,6 +6255,7 @@ func (c *CoursesCourseWorkGetCall) doRequest(alt string) (*http.Response, error)
 		"courseId": c.courseId,
 		"id":       c.id,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "classroom.courses.courseWork.get", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -6216,9 +6290,11 @@ func (c *CoursesCourseWorkGetCall) Do(opts ...googleapi.CallOption) (*CourseWork
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "classroom.courses.courseWork.get", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -6328,6 +6404,7 @@ func (c *CoursesCourseWorkGetAddOnContextCall) doRequest(alt string) (*http.Resp
 		"courseId": c.courseId,
 		"itemId":   c.itemId,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "classroom.courses.courseWork.getAddOnContext", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -6362,9 +6439,11 @@ func (c *CoursesCourseWorkGetAddOnContextCall) Do(opts ...googleapi.CallOption) 
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "classroom.courses.courseWork.getAddOnContext", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -6496,6 +6575,7 @@ func (c *CoursesCourseWorkListCall) doRequest(alt string) (*http.Response, error
 	googleapi.Expand(req.URL, map[string]string{
 		"courseId": c.courseId,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "classroom.courses.courseWork.list", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -6531,9 +6611,11 @@ func (c *CoursesCourseWorkListCall) Do(opts ...googleapi.CallOption) (*ListCours
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "classroom.courses.courseWork.list", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -6628,6 +6710,7 @@ func (c *CoursesCourseWorkModifyAssigneesCall) doRequest(alt string) (*http.Resp
 		"courseId": c.courseId,
 		"id":       c.id,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "classroom.courses.courseWork.modifyAssignees", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -6662,9 +6745,11 @@ func (c *CoursesCourseWorkModifyAssigneesCall) Do(opts ...googleapi.CallOption) 
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "classroom.courses.courseWork.modifyAssignees", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -6761,6 +6846,7 @@ func (c *CoursesCourseWorkPatchCall) doRequest(alt string) (*http.Response, erro
 		"courseId": c.courseId,
 		"id":       c.id,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "classroom.courses.courseWork.patch", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -6795,9 +6881,11 @@ func (c *CoursesCourseWorkPatchCall) Do(opts ...googleapi.CallOption) (*CourseWo
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "classroom.courses.courseWork.patch", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -6904,6 +6992,7 @@ func (c *CoursesCourseWorkUpdateRubricCall) doRequest(alt string) (*http.Respons
 		"courseId":     c.courseId,
 		"courseWorkId": c.courseWorkId,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "classroom.courses.courseWork.updateRubric", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -6938,9 +7027,11 @@ func (c *CoursesCourseWorkUpdateRubricCall) Do(opts ...googleapi.CallOption) (*R
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "classroom.courses.courseWork.updateRubric", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -7033,6 +7124,7 @@ func (c *CoursesCourseWorkAddOnAttachmentsCreateCall) doRequest(alt string) (*ht
 		"courseId": c.courseId,
 		"itemId":   c.itemId,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "classroom.courses.courseWork.addOnAttachments.create", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -7068,9 +7160,11 @@ func (c *CoursesCourseWorkAddOnAttachmentsCreateCall) Do(opts ...googleapi.CallO
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "classroom.courses.courseWork.addOnAttachments.create", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -7149,6 +7243,7 @@ func (c *CoursesCourseWorkAddOnAttachmentsDeleteCall) doRequest(alt string) (*ht
 		"itemId":       c.itemId,
 		"attachmentId": c.attachmentId,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "classroom.courses.courseWork.addOnAttachments.delete", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -7183,9 +7278,11 @@ func (c *CoursesCourseWorkAddOnAttachmentsDeleteCall) Do(opts ...googleapi.CallO
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "classroom.courses.courseWork.addOnAttachments.delete", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -7276,6 +7373,7 @@ func (c *CoursesCourseWorkAddOnAttachmentsGetCall) doRequest(alt string) (*http.
 		"itemId":       c.itemId,
 		"attachmentId": c.attachmentId,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "classroom.courses.courseWork.addOnAttachments.get", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -7311,9 +7409,11 @@ func (c *CoursesCourseWorkAddOnAttachmentsGetCall) Do(opts ...googleapi.CallOpti
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "classroom.courses.courseWork.addOnAttachments.get", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -7420,6 +7520,7 @@ func (c *CoursesCourseWorkAddOnAttachmentsListCall) doRequest(alt string) (*http
 		"courseId": c.courseId,
 		"itemId":   c.itemId,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "classroom.courses.courseWork.addOnAttachments.list", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -7455,9 +7556,11 @@ func (c *CoursesCourseWorkAddOnAttachmentsListCall) Do(opts ...googleapi.CallOpt
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "classroom.courses.courseWork.addOnAttachments.list", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -7575,6 +7678,7 @@ func (c *CoursesCourseWorkAddOnAttachmentsPatchCall) doRequest(alt string) (*htt
 		"itemId":       c.itemId,
 		"attachmentId": c.attachmentId,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "classroom.courses.courseWork.addOnAttachments.patch", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -7610,9 +7714,11 @@ func (c *CoursesCourseWorkAddOnAttachmentsPatchCall) Do(opts ...googleapi.CallOp
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "classroom.courses.courseWork.addOnAttachments.patch", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -7706,6 +7812,7 @@ func (c *CoursesCourseWorkAddOnAttachmentsStudentSubmissionsGetCall) doRequest(a
 		"attachmentId": c.attachmentId,
 		"submissionId": c.submissionId,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "classroom.courses.courseWork.addOnAttachments.studentSubmissions.get", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -7741,9 +7848,11 @@ func (c *CoursesCourseWorkAddOnAttachmentsStudentSubmissionsGetCall) Do(opts ...
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "classroom.courses.courseWork.addOnAttachments.studentSubmissions.get", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -7844,6 +7953,7 @@ func (c *CoursesCourseWorkAddOnAttachmentsStudentSubmissionsPatchCall) doRequest
 		"attachmentId": c.attachmentId,
 		"submissionId": c.submissionId,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "classroom.courses.courseWork.addOnAttachments.studentSubmissions.patch", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -7879,9 +7989,11 @@ func (c *CoursesCourseWorkAddOnAttachmentsStudentSubmissionsPatchCall) Do(opts .
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "classroom.courses.courseWork.addOnAttachments.studentSubmissions.patch", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -7963,6 +8075,7 @@ func (c *CoursesCourseWorkRubricsCreateCall) doRequest(alt string) (*http.Respon
 		"courseId":     c.courseId,
 		"courseWorkId": c.courseWorkId,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "classroom.courses.courseWork.rubrics.create", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -7997,9 +8110,11 @@ func (c *CoursesCourseWorkRubricsCreateCall) Do(opts ...googleapi.CallOption) (*
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "classroom.courses.courseWork.rubrics.create", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -8075,6 +8190,7 @@ func (c *CoursesCourseWorkRubricsDeleteCall) doRequest(alt string) (*http.Respon
 		"courseWorkId": c.courseWorkId,
 		"id":           c.id,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "classroom.courses.courseWork.rubrics.delete", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -8109,9 +8225,11 @@ func (c *CoursesCourseWorkRubricsDeleteCall) Do(opts ...googleapi.CallOption) (*
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "classroom.courses.courseWork.rubrics.delete", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -8193,6 +8311,7 @@ func (c *CoursesCourseWorkRubricsGetCall) doRequest(alt string) (*http.Response,
 		"courseWorkId": c.courseWorkId,
 		"id":           c.id,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "classroom.courses.courseWork.rubrics.get", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -8227,9 +8346,11 @@ func (c *CoursesCourseWorkRubricsGetCall) Do(opts ...googleapi.CallOption) (*Rub
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "classroom.courses.courseWork.rubrics.get", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -8324,6 +8445,7 @@ func (c *CoursesCourseWorkRubricsListCall) doRequest(alt string) (*http.Response
 		"courseId":     c.courseId,
 		"courseWorkId": c.courseWorkId,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "classroom.courses.courseWork.rubrics.list", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -8359,9 +8481,11 @@ func (c *CoursesCourseWorkRubricsListCall) Do(opts ...googleapi.CallOption) (*Li
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "classroom.courses.courseWork.rubrics.list", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -8487,6 +8611,7 @@ func (c *CoursesCourseWorkRubricsPatchCall) doRequest(alt string) (*http.Respons
 		"courseWorkId": c.courseWorkId,
 		"id":           c.id,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "classroom.courses.courseWork.rubrics.patch", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -8521,9 +8646,11 @@ func (c *CoursesCourseWorkRubricsPatchCall) Do(opts ...googleapi.CallOption) (*R
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "classroom.courses.courseWork.rubrics.patch", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -8606,6 +8733,7 @@ func (c *CoursesCourseWorkStudentSubmissionsGetCall) doRequest(alt string) (*htt
 		"courseWorkId": c.courseWorkId,
 		"id":           c.id,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "classroom.courses.courseWork.studentSubmissions.get", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -8641,9 +8769,11 @@ func (c *CoursesCourseWorkStudentSubmissionsGetCall) Do(opts ...googleapi.CallOp
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "classroom.courses.courseWork.studentSubmissions.get", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -8795,6 +8925,7 @@ func (c *CoursesCourseWorkStudentSubmissionsListCall) doRequest(alt string) (*ht
 		"courseId":     c.courseId,
 		"courseWorkId": c.courseWorkId,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "classroom.courses.courseWork.studentSubmissions.list", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -8830,9 +8961,11 @@ func (c *CoursesCourseWorkStudentSubmissionsListCall) Do(opts ...googleapi.CallO
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "classroom.courses.courseWork.studentSubmissions.list", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -8936,6 +9069,7 @@ func (c *CoursesCourseWorkStudentSubmissionsModifyAttachmentsCall) doRequest(alt
 		"courseWorkId": c.courseWorkId,
 		"id":           c.id,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "classroom.courses.courseWork.studentSubmissions.modifyAttachments", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -8971,9 +9105,11 @@ func (c *CoursesCourseWorkStudentSubmissionsModifyAttachmentsCall) Do(opts ...go
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "classroom.courses.courseWork.studentSubmissions.modifyAttachments", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -9066,6 +9202,7 @@ func (c *CoursesCourseWorkStudentSubmissionsPatchCall) doRequest(alt string) (*h
 		"courseWorkId": c.courseWorkId,
 		"id":           c.id,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "classroom.courses.courseWork.studentSubmissions.patch", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -9101,9 +9238,11 @@ func (c *CoursesCourseWorkStudentSubmissionsPatchCall) Do(opts ...googleapi.Call
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "classroom.courses.courseWork.studentSubmissions.patch", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -9189,6 +9328,7 @@ func (c *CoursesCourseWorkStudentSubmissionsReclaimCall) doRequest(alt string) (
 		"courseWorkId": c.courseWorkId,
 		"id":           c.id,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "classroom.courses.courseWork.studentSubmissions.reclaim", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -9223,9 +9363,11 @@ func (c *CoursesCourseWorkStudentSubmissionsReclaimCall) Do(opts ...googleapi.Ca
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "classroom.courses.courseWork.studentSubmissions.reclaim", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -9310,6 +9452,7 @@ func (c *CoursesCourseWorkStudentSubmissionsReturnCall) doRequest(alt string) (*
 		"courseWorkId": c.courseWorkId,
 		"id":           c.id,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "classroom.courses.courseWork.studentSubmissions.return", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -9344,9 +9487,11 @@ func (c *CoursesCourseWorkStudentSubmissionsReturnCall) Do(opts ...googleapi.Cal
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "classroom.courses.courseWork.studentSubmissions.return", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -9430,6 +9575,7 @@ func (c *CoursesCourseWorkStudentSubmissionsTurnInCall) doRequest(alt string) (*
 		"courseWorkId": c.courseWorkId,
 		"id":           c.id,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "classroom.courses.courseWork.studentSubmissions.turnIn", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -9464,9 +9610,11 @@ func (c *CoursesCourseWorkStudentSubmissionsTurnInCall) Do(opts ...googleapi.Cal
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "classroom.courses.courseWork.studentSubmissions.turnIn", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -9537,6 +9685,7 @@ func (c *CoursesCourseWorkMaterialsCreateCall) doRequest(alt string) (*http.Resp
 	googleapi.Expand(req.URL, map[string]string{
 		"courseId": c.courseId,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "classroom.courses.courseWorkMaterials.create", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -9572,9 +9721,11 @@ func (c *CoursesCourseWorkMaterialsCreateCall) Do(opts ...googleapi.CallOption) 
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "classroom.courses.courseWorkMaterials.create", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -9646,6 +9797,7 @@ func (c *CoursesCourseWorkMaterialsDeleteCall) doRequest(alt string) (*http.Resp
 		"courseId": c.courseId,
 		"id":       c.id,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "classroom.courses.courseWorkMaterials.delete", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -9680,9 +9832,11 @@ func (c *CoursesCourseWorkMaterialsDeleteCall) Do(opts ...googleapi.CallOption) 
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "classroom.courses.courseWorkMaterials.delete", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -9761,6 +9915,7 @@ func (c *CoursesCourseWorkMaterialsGetCall) doRequest(alt string) (*http.Respons
 		"courseId": c.courseId,
 		"id":       c.id,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "classroom.courses.courseWorkMaterials.get", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -9796,9 +9951,11 @@ func (c *CoursesCourseWorkMaterialsGetCall) Do(opts ...googleapi.CallOption) (*C
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "classroom.courses.courseWorkMaterials.get", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -9908,6 +10065,7 @@ func (c *CoursesCourseWorkMaterialsGetAddOnContextCall) doRequest(alt string) (*
 		"courseId": c.courseId,
 		"itemId":   c.itemId,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "classroom.courses.courseWorkMaterials.getAddOnContext", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -9942,9 +10100,11 @@ func (c *CoursesCourseWorkMaterialsGetAddOnContextCall) Do(opts ...googleapi.Cal
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "classroom.courses.courseWorkMaterials.getAddOnContext", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -10095,6 +10255,7 @@ func (c *CoursesCourseWorkMaterialsListCall) doRequest(alt string) (*http.Respon
 	googleapi.Expand(req.URL, map[string]string{
 		"courseId": c.courseId,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "classroom.courses.courseWorkMaterials.list", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -10130,9 +10291,11 @@ func (c *CoursesCourseWorkMaterialsListCall) Do(opts ...googleapi.CallOption) (*
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "classroom.courses.courseWorkMaterials.list", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -10241,6 +10404,7 @@ func (c *CoursesCourseWorkMaterialsPatchCall) doRequest(alt string) (*http.Respo
 		"courseId": c.courseId,
 		"id":       c.id,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "classroom.courses.courseWorkMaterials.patch", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -10276,9 +10440,11 @@ func (c *CoursesCourseWorkMaterialsPatchCall) Do(opts ...googleapi.CallOption) (
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "classroom.courses.courseWorkMaterials.patch", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -10371,6 +10537,7 @@ func (c *CoursesCourseWorkMaterialsAddOnAttachmentsCreateCall) doRequest(alt str
 		"courseId": c.courseId,
 		"itemId":   c.itemId,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "classroom.courses.courseWorkMaterials.addOnAttachments.create", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -10406,9 +10573,11 @@ func (c *CoursesCourseWorkMaterialsAddOnAttachmentsCreateCall) Do(opts ...google
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "classroom.courses.courseWorkMaterials.addOnAttachments.create", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -10487,6 +10656,7 @@ func (c *CoursesCourseWorkMaterialsAddOnAttachmentsDeleteCall) doRequest(alt str
 		"itemId":       c.itemId,
 		"attachmentId": c.attachmentId,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "classroom.courses.courseWorkMaterials.addOnAttachments.delete", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -10521,9 +10691,11 @@ func (c *CoursesCourseWorkMaterialsAddOnAttachmentsDeleteCall) Do(opts ...google
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "classroom.courses.courseWorkMaterials.addOnAttachments.delete", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -10614,6 +10786,7 @@ func (c *CoursesCourseWorkMaterialsAddOnAttachmentsGetCall) doRequest(alt string
 		"itemId":       c.itemId,
 		"attachmentId": c.attachmentId,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "classroom.courses.courseWorkMaterials.addOnAttachments.get", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -10649,9 +10822,11 @@ func (c *CoursesCourseWorkMaterialsAddOnAttachmentsGetCall) Do(opts ...googleapi
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "classroom.courses.courseWorkMaterials.addOnAttachments.get", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -10758,6 +10933,7 @@ func (c *CoursesCourseWorkMaterialsAddOnAttachmentsListCall) doRequest(alt strin
 		"courseId": c.courseId,
 		"itemId":   c.itemId,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "classroom.courses.courseWorkMaterials.addOnAttachments.list", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -10793,9 +10969,11 @@ func (c *CoursesCourseWorkMaterialsAddOnAttachmentsListCall) Do(opts ...googleap
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "classroom.courses.courseWorkMaterials.addOnAttachments.list", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -10913,6 +11091,7 @@ func (c *CoursesCourseWorkMaterialsAddOnAttachmentsPatchCall) doRequest(alt stri
 		"itemId":       c.itemId,
 		"attachmentId": c.attachmentId,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "classroom.courses.courseWorkMaterials.addOnAttachments.patch", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -10948,9 +11127,11 @@ func (c *CoursesCourseWorkMaterialsAddOnAttachmentsPatchCall) Do(opts ...googlea
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "classroom.courses.courseWorkMaterials.addOnAttachments.patch", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -11060,6 +11241,7 @@ func (c *CoursesPostsGetAddOnContextCall) doRequest(alt string) (*http.Response,
 		"courseId": c.courseId,
 		"postId":   c.postId,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "classroom.courses.posts.getAddOnContext", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -11094,9 +11276,11 @@ func (c *CoursesPostsGetAddOnContextCall) Do(opts ...googleapi.CallOption) (*Add
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "classroom.courses.posts.getAddOnContext", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -11189,6 +11373,7 @@ func (c *CoursesPostsAddOnAttachmentsCreateCall) doRequest(alt string) (*http.Re
 		"courseId": c.courseId,
 		"postId":   c.postId,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "classroom.courses.posts.addOnAttachments.create", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -11224,9 +11409,11 @@ func (c *CoursesPostsAddOnAttachmentsCreateCall) Do(opts ...googleapi.CallOption
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "classroom.courses.posts.addOnAttachments.create", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -11305,6 +11492,7 @@ func (c *CoursesPostsAddOnAttachmentsDeleteCall) doRequest(alt string) (*http.Re
 		"postId":       c.postId,
 		"attachmentId": c.attachmentId,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "classroom.courses.posts.addOnAttachments.delete", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -11339,9 +11527,11 @@ func (c *CoursesPostsAddOnAttachmentsDeleteCall) Do(opts ...googleapi.CallOption
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "classroom.courses.posts.addOnAttachments.delete", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -11432,6 +11622,7 @@ func (c *CoursesPostsAddOnAttachmentsGetCall) doRequest(alt string) (*http.Respo
 		"postId":       c.postId,
 		"attachmentId": c.attachmentId,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "classroom.courses.posts.addOnAttachments.get", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -11467,9 +11658,11 @@ func (c *CoursesPostsAddOnAttachmentsGetCall) Do(opts ...googleapi.CallOption) (
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "classroom.courses.posts.addOnAttachments.get", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -11576,6 +11769,7 @@ func (c *CoursesPostsAddOnAttachmentsListCall) doRequest(alt string) (*http.Resp
 		"courseId": c.courseId,
 		"postId":   c.postId,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "classroom.courses.posts.addOnAttachments.list", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -11611,9 +11805,11 @@ func (c *CoursesPostsAddOnAttachmentsListCall) Do(opts ...googleapi.CallOption) 
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "classroom.courses.posts.addOnAttachments.list", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -11731,6 +11927,7 @@ func (c *CoursesPostsAddOnAttachmentsPatchCall) doRequest(alt string) (*http.Res
 		"postId":       c.postId,
 		"attachmentId": c.attachmentId,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "classroom.courses.posts.addOnAttachments.patch", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -11766,9 +11963,11 @@ func (c *CoursesPostsAddOnAttachmentsPatchCall) Do(opts ...googleapi.CallOption)
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "classroom.courses.posts.addOnAttachments.patch", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -11862,6 +12061,7 @@ func (c *CoursesPostsAddOnAttachmentsStudentSubmissionsGetCall) doRequest(alt st
 		"attachmentId": c.attachmentId,
 		"submissionId": c.submissionId,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "classroom.courses.posts.addOnAttachments.studentSubmissions.get", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -11897,9 +12097,11 @@ func (c *CoursesPostsAddOnAttachmentsStudentSubmissionsGetCall) Do(opts ...googl
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "classroom.courses.posts.addOnAttachments.studentSubmissions.get", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -12000,6 +12202,7 @@ func (c *CoursesPostsAddOnAttachmentsStudentSubmissionsPatchCall) doRequest(alt 
 		"attachmentId": c.attachmentId,
 		"submissionId": c.submissionId,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "classroom.courses.posts.addOnAttachments.studentSubmissions.patch", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -12035,9 +12238,11 @@ func (c *CoursesPostsAddOnAttachmentsStudentSubmissionsPatchCall) Do(opts ...goo
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "classroom.courses.posts.addOnAttachments.studentSubmissions.patch", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -12122,6 +12327,7 @@ func (c *CoursesStudentsCreateCall) doRequest(alt string) (*http.Response, error
 	googleapi.Expand(req.URL, map[string]string{
 		"courseId": c.courseId,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "classroom.courses.students.create", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -12156,9 +12362,11 @@ func (c *CoursesStudentsCreateCall) Do(opts ...googleapi.CallOption) (*Student, 
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "classroom.courses.students.create", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -12226,6 +12434,7 @@ func (c *CoursesStudentsDeleteCall) doRequest(alt string) (*http.Response, error
 		"courseId": c.courseId,
 		"userId":   c.userId,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "classroom.courses.students.delete", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -12260,9 +12469,11 @@ func (c *CoursesStudentsDeleteCall) Do(opts ...googleapi.CallOption) (*Empty, er
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "classroom.courses.students.delete", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -12342,6 +12553,7 @@ func (c *CoursesStudentsGetCall) doRequest(alt string) (*http.Response, error) {
 		"courseId": c.courseId,
 		"userId":   c.userId,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "classroom.courses.students.get", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -12376,9 +12588,11 @@ func (c *CoursesStudentsGetCall) Do(opts ...googleapi.CallOption) (*Student, err
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "classroom.courses.students.get", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -12469,6 +12683,7 @@ func (c *CoursesStudentsListCall) doRequest(alt string) (*http.Response, error) 
 	googleapi.Expand(req.URL, map[string]string{
 		"courseId": c.courseId,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "classroom.courses.students.list", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -12504,9 +12719,11 @@ func (c *CoursesStudentsListCall) Do(opts ...googleapi.CallOption) (*ListStudent
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "classroom.courses.students.list", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -12603,6 +12820,7 @@ func (c *CoursesTeachersCreateCall) doRequest(alt string) (*http.Response, error
 	googleapi.Expand(req.URL, map[string]string{
 		"courseId": c.courseId,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "classroom.courses.teachers.create", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -12637,9 +12855,11 @@ func (c *CoursesTeachersCreateCall) Do(opts ...googleapi.CallOption) (*Teacher, 
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "classroom.courses.teachers.create", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -12711,6 +12931,7 @@ func (c *CoursesTeachersDeleteCall) doRequest(alt string) (*http.Response, error
 		"courseId": c.courseId,
 		"userId":   c.userId,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "classroom.courses.teachers.delete", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -12745,9 +12966,11 @@ func (c *CoursesTeachersDeleteCall) Do(opts ...googleapi.CallOption) (*Empty, er
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "classroom.courses.teachers.delete", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -12827,6 +13050,7 @@ func (c *CoursesTeachersGetCall) doRequest(alt string) (*http.Response, error) {
 		"courseId": c.courseId,
 		"userId":   c.userId,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "classroom.courses.teachers.get", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -12861,9 +13085,11 @@ func (c *CoursesTeachersGetCall) Do(opts ...googleapi.CallOption) (*Teacher, err
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "classroom.courses.teachers.get", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -12954,6 +13180,7 @@ func (c *CoursesTeachersListCall) doRequest(alt string) (*http.Response, error) 
 	googleapi.Expand(req.URL, map[string]string{
 		"courseId": c.courseId,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "classroom.courses.teachers.list", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -12989,9 +13216,11 @@ func (c *CoursesTeachersListCall) Do(opts ...googleapi.CallOption) (*ListTeacher
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "classroom.courses.teachers.list", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -13081,6 +13310,7 @@ func (c *CoursesTopicsCreateCall) doRequest(alt string) (*http.Response, error) 
 	googleapi.Expand(req.URL, map[string]string{
 		"courseId": c.courseId,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "classroom.courses.topics.create", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -13115,9 +13345,11 @@ func (c *CoursesTopicsCreateCall) Do(opts ...googleapi.CallOption) (*Topic, erro
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "classroom.courses.topics.create", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -13184,6 +13416,7 @@ func (c *CoursesTopicsDeleteCall) doRequest(alt string) (*http.Response, error) 
 		"courseId": c.courseId,
 		"id":       c.id,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "classroom.courses.topics.delete", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -13218,9 +13451,11 @@ func (c *CoursesTopicsDeleteCall) Do(opts ...googleapi.CallOption) (*Empty, erro
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "classroom.courses.topics.delete", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -13298,6 +13533,7 @@ func (c *CoursesTopicsGetCall) doRequest(alt string) (*http.Response, error) {
 		"courseId": c.courseId,
 		"id":       c.id,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "classroom.courses.topics.get", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -13332,9 +13568,11 @@ func (c *CoursesTopicsGetCall) Do(opts ...googleapi.CallOption) (*Topic, error) 
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "classroom.courses.topics.get", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -13426,6 +13664,7 @@ func (c *CoursesTopicsListCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"courseId": c.courseId,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "classroom.courses.topics.list", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -13461,9 +13700,11 @@ func (c *CoursesTopicsListCall) Do(opts ...googleapi.CallOption) (*ListTopicResp
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "classroom.courses.topics.list", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -13569,6 +13810,7 @@ func (c *CoursesTopicsPatchCall) doRequest(alt string) (*http.Response, error) {
 		"courseId": c.courseId,
 		"id":       c.id,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "classroom.courses.topics.patch", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -13603,9 +13845,11 @@ func (c *CoursesTopicsPatchCall) Do(opts ...googleapi.CallOption) (*Topic, error
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "classroom.courses.topics.patch", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -13671,6 +13915,7 @@ func (c *InvitationsAcceptCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"id": c.id,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "classroom.invitations.accept", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -13705,9 +13950,11 @@ func (c *InvitationsAcceptCall) Do(opts ...googleapi.CallOption) (*Empty, error)
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "classroom.invitations.accept", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -13772,6 +14019,7 @@ func (c *InvitationsCreateCall) doRequest(alt string) (*http.Response, error) {
 		return nil, err
 	}
 	req.Header = reqHeaders
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "classroom.invitations.create", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -13806,9 +14054,11 @@ func (c *InvitationsCreateCall) Do(opts ...googleapi.CallOption) (*Invitation, e
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "classroom.invitations.create", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -13869,6 +14119,7 @@ func (c *InvitationsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"id": c.id,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "classroom.invitations.delete", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -13903,9 +14154,11 @@ func (c *InvitationsDeleteCall) Do(opts ...googleapi.CallOption) (*Empty, error)
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "classroom.invitations.delete", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -13978,6 +14231,7 @@ func (c *InvitationsGetCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"id": c.id,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "classroom.invitations.get", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -14012,9 +14266,11 @@ func (c *InvitationsGetCall) Do(opts ...googleapi.CallOption) (*Invitation, erro
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "classroom.invitations.get", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -14114,6 +14370,7 @@ func (c *InvitationsListCall) doRequest(alt string) (*http.Response, error) {
 		return nil, err
 	}
 	req.Header = reqHeaders
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "classroom.invitations.list", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -14149,9 +14406,11 @@ func (c *InvitationsListCall) Do(opts ...googleapi.CallOption) (*ListInvitations
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "classroom.invitations.list", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -14250,6 +14509,7 @@ func (c *RegistrationsCreateCall) doRequest(alt string) (*http.Response, error) 
 		return nil, err
 	}
 	req.Header = reqHeaders
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "classroom.registrations.create", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -14284,9 +14544,11 @@ func (c *RegistrationsCreateCall) Do(opts ...googleapi.CallOption) (*Registratio
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "classroom.registrations.create", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -14345,6 +14607,7 @@ func (c *RegistrationsDeleteCall) doRequest(alt string) (*http.Response, error) 
 	googleapi.Expand(req.URL, map[string]string{
 		"registrationId": c.registrationId,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "classroom.registrations.delete", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -14379,9 +14642,11 @@ func (c *RegistrationsDeleteCall) Do(opts ...googleapi.CallOption) (*Empty, erro
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "classroom.registrations.delete", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -14456,6 +14721,7 @@ func (c *UserProfilesGetCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"userId": c.userId,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "classroom.userProfiles.get", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -14490,9 +14756,11 @@ func (c *UserProfilesGetCall) Do(opts ...googleapi.CallOption) (*UserProfile, er
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "classroom.userProfiles.get", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -14578,6 +14846,7 @@ func (c *UserProfilesGuardianInvitationsCreateCall) doRequest(alt string) (*http
 	googleapi.Expand(req.URL, map[string]string{
 		"studentId": c.studentId,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "classroom.userProfiles.guardianInvitations.create", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -14613,9 +14882,11 @@ func (c *UserProfilesGuardianInvitationsCreateCall) Do(opts ...googleapi.CallOpt
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "classroom.userProfiles.guardianInvitations.create", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -14699,6 +14970,7 @@ func (c *UserProfilesGuardianInvitationsGetCall) doRequest(alt string) (*http.Re
 		"studentId":    c.studentId,
 		"invitationId": c.invitationId,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "classroom.userProfiles.guardianInvitations.get", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -14734,9 +15006,11 @@ func (c *UserProfilesGuardianInvitationsGetCall) Do(opts ...googleapi.CallOption
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "classroom.userProfiles.guardianInvitations.get", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -14863,6 +15137,7 @@ func (c *UserProfilesGuardianInvitationsListCall) doRequest(alt string) (*http.R
 	googleapi.Expand(req.URL, map[string]string{
 		"studentId": c.studentId,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "classroom.userProfiles.guardianInvitations.list", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -14898,9 +15173,11 @@ func (c *UserProfilesGuardianInvitationsListCall) Do(opts ...googleapi.CallOptio
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "classroom.userProfiles.guardianInvitations.list", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -15012,6 +15289,7 @@ func (c *UserProfilesGuardianInvitationsPatchCall) doRequest(alt string) (*http.
 		"studentId":    c.studentId,
 		"invitationId": c.invitationId,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "classroom.userProfiles.guardianInvitations.patch", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -15047,9 +15325,11 @@ func (c *UserProfilesGuardianInvitationsPatchCall) Do(opts ...googleapi.CallOpti
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "classroom.userProfiles.guardianInvitations.patch", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -15124,6 +15404,7 @@ func (c *UserProfilesGuardiansDeleteCall) doRequest(alt string) (*http.Response,
 		"studentId":  c.studentId,
 		"guardianId": c.guardianId,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "classroom.userProfiles.guardians.delete", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -15158,9 +15439,11 @@ func (c *UserProfilesGuardiansDeleteCall) Do(opts ...googleapi.CallOption) (*Emp
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "classroom.userProfiles.guardians.delete", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -15246,6 +15529,7 @@ func (c *UserProfilesGuardiansGetCall) doRequest(alt string) (*http.Response, er
 		"studentId":  c.studentId,
 		"guardianId": c.guardianId,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "classroom.userProfiles.guardians.get", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -15280,9 +15564,11 @@ func (c *UserProfilesGuardiansGetCall) Do(opts ...googleapi.CallOption) (*Guardi
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "classroom.userProfiles.guardians.get", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -15397,6 +15683,7 @@ func (c *UserProfilesGuardiansListCall) doRequest(alt string) (*http.Response, e
 	googleapi.Expand(req.URL, map[string]string{
 		"studentId": c.studentId,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "classroom.userProfiles.guardians.list", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -15432,9 +15719,11 @@ func (c *UserProfilesGuardiansListCall) Do(opts ...googleapi.CallOption) (*ListG
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "classroom.userProfiles.guardians.list", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 

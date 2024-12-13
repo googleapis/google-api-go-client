@@ -62,11 +62,13 @@ import (
 	"errors"
 	"fmt"
 	"io"
+	"log/slog"
 	"net/http"
 	"net/url"
 	"strconv"
 	"strings"
 
+	"github.com/googleapis/gax-go/v2/internallog"
 	googleapi "google.golang.org/api/googleapi"
 	internal "google.golang.org/api/internal"
 	gensupport "google.golang.org/api/internal/gensupport"
@@ -90,6 +92,7 @@ var _ = strings.Replace
 var _ = context.Canceled
 var _ = internaloption.WithDefaultEndpoint
 var _ = internal.Version
+var _ = internallog.New
 
 const apiId = "servicenetworking:v1"
 const apiName = "servicenetworking"
@@ -124,7 +127,7 @@ func NewService(ctx context.Context, opts ...option.ClientOption) (*APIService, 
 	if err != nil {
 		return nil, err
 	}
-	s := &APIService{client: client, BasePath: basePath}
+	s := &APIService{client: client, BasePath: basePath, logger: internaloption.GetLogger(opts)}
 	s.Operations = NewOperationsService(s)
 	s.Services = NewServicesService(s)
 	if err != nil {
@@ -150,6 +153,7 @@ func New(client *http.Client) (*APIService, error) {
 
 type APIService struct {
 	client    *http.Client
+	logger    *slog.Logger
 	BasePath  string // API endpoint base URL
 	UserAgent string // optional additional User-Agent fragment
 
@@ -4993,6 +4997,7 @@ func (c *OperationsCancelCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "servicenetworking.operations.cancel", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -5027,9 +5032,11 @@ func (c *OperationsCancelCall) Do(opts ...googleapi.CallOption) (*Empty, error) 
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "servicenetworking.operations.cancel", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -5090,6 +5097,7 @@ func (c *OperationsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "servicenetworking.operations.delete", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -5124,9 +5132,11 @@ func (c *OperationsDeleteCall) Do(opts ...googleapi.CallOption) (*Empty, error) 
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "servicenetworking.operations.delete", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -5198,6 +5208,7 @@ func (c *OperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "servicenetworking.operations.get", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -5232,9 +5243,11 @@ func (c *OperationsGetCall) Do(opts ...googleapi.CallOption) (*Operation, error)
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "servicenetworking.operations.get", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -5325,6 +5338,7 @@ func (c *OperationsListCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "servicenetworking.operations.list", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -5360,9 +5374,11 @@ func (c *OperationsListCall) Do(opts ...googleapi.CallOption) (*ListOperationsRe
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "servicenetworking.operations.list", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -5460,6 +5476,7 @@ func (c *ServicesAddSubnetworkCall) doRequest(alt string) (*http.Response, error
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "servicenetworking.services.addSubnetwork", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -5494,9 +5511,11 @@ func (c *ServicesAddSubnetworkCall) Do(opts ...googleapi.CallOption) (*Operation
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "servicenetworking.services.addSubnetwork", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -5562,6 +5581,7 @@ func (c *ServicesDisableVpcServiceControlsCall) doRequest(alt string) (*http.Res
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "servicenetworking.services.disableVpcServiceControls", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -5596,9 +5616,11 @@ func (c *ServicesDisableVpcServiceControlsCall) Do(opts ...googleapi.CallOption)
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "servicenetworking.services.disableVpcServiceControls", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -5664,6 +5686,7 @@ func (c *ServicesEnableVpcServiceControlsCall) doRequest(alt string) (*http.Resp
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "servicenetworking.services.enableVpcServiceControls", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -5698,9 +5721,11 @@ func (c *ServicesEnableVpcServiceControlsCall) Do(opts ...googleapi.CallOption) 
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "servicenetworking.services.enableVpcServiceControls", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -5771,6 +5796,7 @@ func (c *ServicesSearchRangeCall) doRequest(alt string) (*http.Response, error) 
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "servicenetworking.services.searchRange", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -5805,9 +5831,11 @@ func (c *ServicesSearchRangeCall) Do(opts ...googleapi.CallOption) (*Operation, 
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "servicenetworking.services.searchRange", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -5876,6 +5904,7 @@ func (c *ServicesValidateCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "servicenetworking.services.validate", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -5911,9 +5940,11 @@ func (c *ServicesValidateCall) Do(opts ...googleapi.CallOption) (*ValidateConsum
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "servicenetworking.services.validate", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -5985,6 +6016,7 @@ func (c *ServicesConnectionsCreateCall) doRequest(alt string) (*http.Response, e
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "servicenetworking.services.connections.create", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -6019,9 +6051,11 @@ func (c *ServicesConnectionsCreateCall) Do(opts ...googleapi.CallOption) (*Opera
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "servicenetworking.services.connections.create", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -6091,6 +6125,7 @@ func (c *ServicesConnectionsDeleteConnectionCall) doRequest(alt string) (*http.R
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "servicenetworking.services.connections.deleteConnection", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -6125,9 +6160,11 @@ func (c *ServicesConnectionsDeleteConnectionCall) Do(opts ...googleapi.CallOptio
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "servicenetworking.services.connections.deleteConnection", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -6213,6 +6250,7 @@ func (c *ServicesConnectionsListCall) doRequest(alt string) (*http.Response, err
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "servicenetworking.services.connections.list", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -6248,9 +6286,11 @@ func (c *ServicesConnectionsListCall) Do(opts ...googleapi.CallOption) (*ListCon
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "servicenetworking.services.connections.list", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -6335,6 +6375,7 @@ func (c *ServicesConnectionsPatchCall) doRequest(alt string) (*http.Response, er
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "servicenetworking.services.connections.patch", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -6369,9 +6410,11 @@ func (c *ServicesConnectionsPatchCall) Do(opts ...googleapi.CallOption) (*Operat
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "servicenetworking.services.connections.patch", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -6438,6 +6481,7 @@ func (c *ServicesDnsRecordSetsAddCall) doRequest(alt string) (*http.Response, er
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "servicenetworking.services.dnsRecordSets.add", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -6472,9 +6516,11 @@ func (c *ServicesDnsRecordSetsAddCall) Do(opts ...googleapi.CallOption) (*Operat
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "servicenetworking.services.dnsRecordSets.add", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -6577,6 +6623,7 @@ func (c *ServicesDnsRecordSetsGetCall) doRequest(alt string) (*http.Response, er
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "servicenetworking.services.dnsRecordSets.get", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -6611,9 +6658,11 @@ func (c *ServicesDnsRecordSetsGetCall) Do(opts ...googleapi.CallOption) (*DnsRec
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "servicenetworking.services.dnsRecordSets.get", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -6704,6 +6753,7 @@ func (c *ServicesDnsRecordSetsListCall) doRequest(alt string) (*http.Response, e
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "servicenetworking.services.dnsRecordSets.list", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -6739,9 +6789,11 @@ func (c *ServicesDnsRecordSetsListCall) Do(opts ...googleapi.CallOption) (*ListD
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "servicenetworking.services.dnsRecordSets.list", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -6808,6 +6860,7 @@ func (c *ServicesDnsRecordSetsRemoveCall) doRequest(alt string) (*http.Response,
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "servicenetworking.services.dnsRecordSets.remove", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -6842,9 +6895,11 @@ func (c *ServicesDnsRecordSetsRemoveCall) Do(opts ...googleapi.CallOption) (*Ope
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "servicenetworking.services.dnsRecordSets.remove", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -6911,6 +6966,7 @@ func (c *ServicesDnsRecordSetsUpdateCall) doRequest(alt string) (*http.Response,
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "servicenetworking.services.dnsRecordSets.update", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -6945,9 +7001,11 @@ func (c *ServicesDnsRecordSetsUpdateCall) Do(opts ...googleapi.CallOption) (*Ope
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "servicenetworking.services.dnsRecordSets.update", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -7015,6 +7073,7 @@ func (c *ServicesDnsZonesAddCall) doRequest(alt string) (*http.Response, error) 
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "servicenetworking.services.dnsZones.add", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -7049,9 +7108,11 @@ func (c *ServicesDnsZonesAddCall) Do(opts ...googleapi.CallOption) (*Operation, 
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "servicenetworking.services.dnsZones.add", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -7119,6 +7180,7 @@ func (c *ServicesDnsZonesRemoveCall) doRequest(alt string) (*http.Response, erro
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "servicenetworking.services.dnsZones.remove", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -7153,9 +7215,11 @@ func (c *ServicesDnsZonesRemoveCall) Do(opts ...googleapi.CallOption) (*Operatio
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "servicenetworking.services.dnsZones.remove", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -7243,6 +7307,7 @@ func (c *ServicesProjectsGlobalNetworksGetCall) doRequest(alt string) (*http.Res
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "servicenetworking.services.projects.global.networks.get", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -7277,9 +7342,11 @@ func (c *ServicesProjectsGlobalNetworksGetCall) Do(opts ...googleapi.CallOption)
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "servicenetworking.services.projects.global.networks.get", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -7357,6 +7424,7 @@ func (c *ServicesProjectsGlobalNetworksGetVpcServiceControlsCall) doRequest(alt 
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "servicenetworking.services.projects.global.networks.getVpcServiceControls", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -7392,9 +7460,11 @@ func (c *ServicesProjectsGlobalNetworksGetVpcServiceControlsCall) Do(opts ...goo
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "servicenetworking.services.projects.global.networks.getVpcServiceControls", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -7468,6 +7538,7 @@ func (c *ServicesProjectsGlobalNetworksUpdateConsumerConfigCall) doRequest(alt s
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "servicenetworking.services.projects.global.networks.updateConsumerConfig", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -7502,9 +7573,11 @@ func (c *ServicesProjectsGlobalNetworksUpdateConsumerConfigCall) Do(opts ...goog
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "servicenetworking.services.projects.global.networks.updateConsumerConfig", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -7582,6 +7655,7 @@ func (c *ServicesProjectsGlobalNetworksDnsZonesGetCall) doRequest(alt string) (*
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "servicenetworking.services.projects.global.networks.dnsZones.get", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -7617,9 +7691,11 @@ func (c *ServicesProjectsGlobalNetworksDnsZonesGetCall) Do(opts ...googleapi.Cal
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "servicenetworking.services.projects.global.networks.dnsZones.get", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -7698,6 +7774,7 @@ func (c *ServicesProjectsGlobalNetworksDnsZonesListCall) doRequest(alt string) (
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "servicenetworking.services.projects.global.networks.dnsZones.list", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -7733,9 +7810,11 @@ func (c *ServicesProjectsGlobalNetworksDnsZonesListCall) Do(opts ...googleapi.Ca
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "servicenetworking.services.projects.global.networks.dnsZones.list", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -7809,6 +7888,7 @@ func (c *ServicesProjectsGlobalNetworksPeeredDnsDomainsCreateCall) doRequest(alt
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "servicenetworking.services.projects.global.networks.peeredDnsDomains.create", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -7843,9 +7923,11 @@ func (c *ServicesProjectsGlobalNetworksPeeredDnsDomainsCreateCall) Do(opts ...go
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "servicenetworking.services.projects.global.networks.peeredDnsDomains.create", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -7911,6 +7993,7 @@ func (c *ServicesProjectsGlobalNetworksPeeredDnsDomainsDeleteCall) doRequest(alt
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "servicenetworking.services.projects.global.networks.peeredDnsDomains.delete", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -7945,9 +8028,11 @@ func (c *ServicesProjectsGlobalNetworksPeeredDnsDomainsDeleteCall) Do(opts ...go
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "servicenetworking.services.projects.global.networks.peeredDnsDomains.delete", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -8024,6 +8109,7 @@ func (c *ServicesProjectsGlobalNetworksPeeredDnsDomainsListCall) doRequest(alt s
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "servicenetworking.services.projects.global.networks.peeredDnsDomains.list", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -8059,9 +8145,11 @@ func (c *ServicesProjectsGlobalNetworksPeeredDnsDomainsListCall) Do(opts ...goog
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "servicenetworking.services.projects.global.networks.peeredDnsDomains.list", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -8130,6 +8218,7 @@ func (c *ServicesRolesAddCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "servicenetworking.services.roles.add", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -8164,8 +8253,10 @@ func (c *ServicesRolesAddCall) Do(opts ...googleapi.CallOption) (*Operation, err
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "servicenetworking.services.roles.add", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }

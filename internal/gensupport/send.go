@@ -224,7 +224,7 @@ func DecodeResponse(target interface{}, res *http.Response) error {
 	return json.NewDecoder(res.Body).Decode(target)
 }
 
-// DecodeResponse decodes the body of res into target and returns bytes read
+// DecodeResponseBytes decodes the body of res into target and returns bytes read
 // from the body. If there is no body, target is unchanged.
 func DecodeResponseBytes(target interface{}, res *http.Response) ([]byte, error) {
 	if res.StatusCode == http.StatusNoContent {

@@ -57,11 +57,13 @@ import (
 	"errors"
 	"fmt"
 	"io"
+	"log/slog"
 	"net/http"
 	"net/url"
 	"strconv"
 	"strings"
 
+	"github.com/googleapis/gax-go/v2/internallog"
 	googleapi "google.golang.org/api/googleapi"
 	internal "google.golang.org/api/internal"
 	gensupport "google.golang.org/api/internal/gensupport"
@@ -85,6 +87,7 @@ var _ = strings.Replace
 var _ = context.Canceled
 var _ = internaloption.WithDefaultEndpoint
 var _ = internal.Version
+var _ = internallog.New
 
 const apiId = "datamigration:v1"
 const apiName = "datamigration"
@@ -115,7 +118,7 @@ func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, err
 	if err != nil {
 		return nil, err
 	}
-	s := &Service{client: client, BasePath: basePath}
+	s := &Service{client: client, BasePath: basePath, logger: internaloption.GetLogger(opts)}
 	s.Projects = NewProjectsService(s)
 	if err != nil {
 		return nil, err
@@ -140,6 +143,7 @@ func New(client *http.Client) (*Service, error) {
 
 type Service struct {
 	client    *http.Client
+	logger    *slog.Logger
 	BasePath  string // API endpoint base URL
 	UserAgent string // optional additional User-Agent fragment
 
@@ -5617,6 +5621,7 @@ func (c *ProjectsLocationsFetchStaticIpsCall) doRequest(alt string) (*http.Respo
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "datamigration.projects.locations.fetchStaticIps", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -5652,9 +5657,11 @@ func (c *ProjectsLocationsFetchStaticIpsCall) Do(opts ...googleapi.CallOption) (
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "datamigration.projects.locations.fetchStaticIps", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -5745,6 +5752,7 @@ func (c *ProjectsLocationsGetCall) doRequest(alt string) (*http.Response, error)
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "datamigration.projects.locations.get", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -5779,9 +5787,11 @@ func (c *ProjectsLocationsGetCall) Do(opts ...googleapi.CallOption) (*Location, 
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "datamigration.projects.locations.get", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -5875,6 +5885,7 @@ func (c *ProjectsLocationsListCall) doRequest(alt string) (*http.Response, error
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "datamigration.projects.locations.list", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -5910,9 +5921,11 @@ func (c *ProjectsLocationsListCall) Do(opts ...googleapi.CallOption) (*ListLocat
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "datamigration.projects.locations.list", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -6030,6 +6043,7 @@ func (c *ProjectsLocationsConnectionProfilesCreateCall) doRequest(alt string) (*
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "datamigration.projects.locations.connectionProfiles.create", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -6064,9 +6078,11 @@ func (c *ProjectsLocationsConnectionProfilesCreateCall) Do(opts ...googleapi.Cal
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "datamigration.projects.locations.connectionProfiles.create", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -6144,6 +6160,7 @@ func (c *ProjectsLocationsConnectionProfilesDeleteCall) doRequest(alt string) (*
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "datamigration.projects.locations.connectionProfiles.delete", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -6178,9 +6195,11 @@ func (c *ProjectsLocationsConnectionProfilesDeleteCall) Do(opts ...googleapi.Cal
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "datamigration.projects.locations.connectionProfiles.delete", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -6250,6 +6269,7 @@ func (c *ProjectsLocationsConnectionProfilesGetCall) doRequest(alt string) (*htt
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "datamigration.projects.locations.connectionProfiles.get", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -6285,9 +6305,11 @@ func (c *ProjectsLocationsConnectionProfilesGetCall) Do(opts ...googleapi.CallOp
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "datamigration.projects.locations.connectionProfiles.get", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -6377,6 +6399,7 @@ func (c *ProjectsLocationsConnectionProfilesGetIamPolicyCall) doRequest(alt stri
 	googleapi.Expand(req.URL, map[string]string{
 		"resource": c.resource,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "datamigration.projects.locations.connectionProfiles.getIamPolicy", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -6411,9 +6434,11 @@ func (c *ProjectsLocationsConnectionProfilesGetIamPolicyCall) Do(opts ...googlea
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "datamigration.projects.locations.connectionProfiles.getIamPolicy", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -6523,6 +6548,7 @@ func (c *ProjectsLocationsConnectionProfilesListCall) doRequest(alt string) (*ht
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "datamigration.projects.locations.connectionProfiles.list", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -6558,9 +6584,11 @@ func (c *ProjectsLocationsConnectionProfilesListCall) Do(opts ...googleapi.CallO
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "datamigration.projects.locations.connectionProfiles.list", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -6681,6 +6709,7 @@ func (c *ProjectsLocationsConnectionProfilesPatchCall) doRequest(alt string) (*h
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "datamigration.projects.locations.connectionProfiles.patch", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -6715,9 +6744,11 @@ func (c *ProjectsLocationsConnectionProfilesPatchCall) Do(opts ...googleapi.Call
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "datamigration.projects.locations.connectionProfiles.patch", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -6785,6 +6816,7 @@ func (c *ProjectsLocationsConnectionProfilesSetIamPolicyCall) doRequest(alt stri
 	googleapi.Expand(req.URL, map[string]string{
 		"resource": c.resource,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "datamigration.projects.locations.connectionProfiles.setIamPolicy", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -6819,9 +6851,11 @@ func (c *ProjectsLocationsConnectionProfilesSetIamPolicyCall) Do(opts ...googlea
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "datamigration.projects.locations.connectionProfiles.setIamPolicy", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -6892,6 +6926,7 @@ func (c *ProjectsLocationsConnectionProfilesTestIamPermissionsCall) doRequest(al
 	googleapi.Expand(req.URL, map[string]string{
 		"resource": c.resource,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "datamigration.projects.locations.connectionProfiles.testIamPermissions", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -6927,9 +6962,11 @@ func (c *ProjectsLocationsConnectionProfilesTestIamPermissionsCall) Do(opts ...g
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "datamigration.projects.locations.connectionProfiles.testIamPermissions", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -6996,6 +7033,7 @@ func (c *ProjectsLocationsConversionWorkspacesApplyCall) doRequest(alt string) (
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "datamigration.projects.locations.conversionWorkspaces.apply", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -7030,9 +7068,11 @@ func (c *ProjectsLocationsConversionWorkspacesApplyCall) Do(opts ...googleapi.Ca
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "datamigration.projects.locations.conversionWorkspaces.apply", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -7096,6 +7136,7 @@ func (c *ProjectsLocationsConversionWorkspacesCommitCall) doRequest(alt string) 
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "datamigration.projects.locations.conversionWorkspaces.commit", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -7130,9 +7171,11 @@ func (c *ProjectsLocationsConversionWorkspacesCommitCall) Do(opts ...googleapi.C
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "datamigration.projects.locations.conversionWorkspaces.commit", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -7198,6 +7241,7 @@ func (c *ProjectsLocationsConversionWorkspacesConvertCall) doRequest(alt string)
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "datamigration.projects.locations.conversionWorkspaces.convert", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -7232,9 +7276,11 @@ func (c *ProjectsLocationsConversionWorkspacesConvertCall) Do(opts ...googleapi.
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "datamigration.projects.locations.conversionWorkspaces.convert", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -7315,6 +7361,7 @@ func (c *ProjectsLocationsConversionWorkspacesCreateCall) doRequest(alt string) 
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "datamigration.projects.locations.conversionWorkspaces.create", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -7349,9 +7396,11 @@ func (c *ProjectsLocationsConversionWorkspacesCreateCall) Do(opts ...googleapi.C
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "datamigration.projects.locations.conversionWorkspaces.create", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -7426,6 +7475,7 @@ func (c *ProjectsLocationsConversionWorkspacesDeleteCall) doRequest(alt string) 
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "datamigration.projects.locations.conversionWorkspaces.delete", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -7460,9 +7510,11 @@ func (c *ProjectsLocationsConversionWorkspacesDeleteCall) Do(opts ...googleapi.C
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "datamigration.projects.locations.conversionWorkspaces.delete", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -7543,6 +7595,7 @@ func (c *ProjectsLocationsConversionWorkspacesDescribeConversionWorkspaceRevisio
 	googleapi.Expand(req.URL, map[string]string{
 		"conversionWorkspace": c.conversionWorkspace,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "datamigration.projects.locations.conversionWorkspaces.describeConversionWorkspaceRevisions", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -7578,9 +7631,11 @@ func (c *ProjectsLocationsConversionWorkspacesDescribeConversionWorkspaceRevisio
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "datamigration.projects.locations.conversionWorkspaces.describeConversionWorkspaceRevisions", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -7740,6 +7795,7 @@ func (c *ProjectsLocationsConversionWorkspacesDescribeDatabaseEntitiesCall) doRe
 	googleapi.Expand(req.URL, map[string]string{
 		"conversionWorkspace": c.conversionWorkspace,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "datamigration.projects.locations.conversionWorkspaces.describeDatabaseEntities", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -7775,9 +7831,11 @@ func (c *ProjectsLocationsConversionWorkspacesDescribeDatabaseEntitiesCall) Do(o
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "datamigration.projects.locations.conversionWorkspaces.describeDatabaseEntities", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -7868,6 +7926,7 @@ func (c *ProjectsLocationsConversionWorkspacesGetCall) doRequest(alt string) (*h
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "datamigration.projects.locations.conversionWorkspaces.get", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -7903,9 +7962,11 @@ func (c *ProjectsLocationsConversionWorkspacesGetCall) Do(opts ...googleapi.Call
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "datamigration.projects.locations.conversionWorkspaces.get", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -7995,6 +8056,7 @@ func (c *ProjectsLocationsConversionWorkspacesGetIamPolicyCall) doRequest(alt st
 	googleapi.Expand(req.URL, map[string]string{
 		"resource": c.resource,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "datamigration.projects.locations.conversionWorkspaces.getIamPolicy", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -8029,9 +8091,11 @@ func (c *ProjectsLocationsConversionWorkspacesGetIamPolicyCall) Do(opts ...googl
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "datamigration.projects.locations.conversionWorkspaces.getIamPolicy", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -8133,6 +8197,7 @@ func (c *ProjectsLocationsConversionWorkspacesListCall) doRequest(alt string) (*
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "datamigration.projects.locations.conversionWorkspaces.list", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -8168,9 +8233,11 @@ func (c *ProjectsLocationsConversionWorkspacesListCall) Do(opts ...googleapi.Cal
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "datamigration.projects.locations.conversionWorkspaces.list", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -8275,6 +8342,7 @@ func (c *ProjectsLocationsConversionWorkspacesPatchCall) doRequest(alt string) (
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "datamigration.projects.locations.conversionWorkspaces.patch", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -8309,9 +8377,11 @@ func (c *ProjectsLocationsConversionWorkspacesPatchCall) Do(opts ...googleapi.Ca
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "datamigration.projects.locations.conversionWorkspaces.patch", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -8375,6 +8445,7 @@ func (c *ProjectsLocationsConversionWorkspacesRollbackCall) doRequest(alt string
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "datamigration.projects.locations.conversionWorkspaces.rollback", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -8409,9 +8480,11 @@ func (c *ProjectsLocationsConversionWorkspacesRollbackCall) Do(opts ...googleapi
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "datamigration.projects.locations.conversionWorkspaces.rollback", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -8512,6 +8585,7 @@ func (c *ProjectsLocationsConversionWorkspacesSearchBackgroundJobsCall) doReques
 	googleapi.Expand(req.URL, map[string]string{
 		"conversionWorkspace": c.conversionWorkspace,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "datamigration.projects.locations.conversionWorkspaces.searchBackgroundJobs", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -8547,9 +8621,11 @@ func (c *ProjectsLocationsConversionWorkspacesSearchBackgroundJobsCall) Do(opts 
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "datamigration.projects.locations.conversionWorkspaces.searchBackgroundJobs", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -8617,6 +8693,7 @@ func (c *ProjectsLocationsConversionWorkspacesSeedCall) doRequest(alt string) (*
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "datamigration.projects.locations.conversionWorkspaces.seed", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -8651,9 +8728,11 @@ func (c *ProjectsLocationsConversionWorkspacesSeedCall) Do(opts ...googleapi.Cal
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "datamigration.projects.locations.conversionWorkspaces.seed", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -8721,6 +8800,7 @@ func (c *ProjectsLocationsConversionWorkspacesSetIamPolicyCall) doRequest(alt st
 	googleapi.Expand(req.URL, map[string]string{
 		"resource": c.resource,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "datamigration.projects.locations.conversionWorkspaces.setIamPolicy", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -8755,9 +8835,11 @@ func (c *ProjectsLocationsConversionWorkspacesSetIamPolicyCall) Do(opts ...googl
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "datamigration.projects.locations.conversionWorkspaces.setIamPolicy", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -8828,6 +8910,7 @@ func (c *ProjectsLocationsConversionWorkspacesTestIamPermissionsCall) doRequest(
 	googleapi.Expand(req.URL, map[string]string{
 		"resource": c.resource,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "datamigration.projects.locations.conversionWorkspaces.testIamPermissions", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -8863,9 +8946,11 @@ func (c *ProjectsLocationsConversionWorkspacesTestIamPermissionsCall) Do(opts ..
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "datamigration.projects.locations.conversionWorkspaces.testIamPermissions", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -8946,6 +9031,7 @@ func (c *ProjectsLocationsConversionWorkspacesMappingRulesCreateCall) doRequest(
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "datamigration.projects.locations.conversionWorkspaces.mappingRules.create", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -8980,9 +9066,11 @@ func (c *ProjectsLocationsConversionWorkspacesMappingRulesCreateCall) Do(opts ..
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "datamigration.projects.locations.conversionWorkspaces.mappingRules.create", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -9050,6 +9138,7 @@ func (c *ProjectsLocationsConversionWorkspacesMappingRulesDeleteCall) doRequest(
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "datamigration.projects.locations.conversionWorkspaces.mappingRules.delete", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -9084,9 +9173,11 @@ func (c *ProjectsLocationsConversionWorkspacesMappingRulesDeleteCall) Do(opts ..
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "datamigration.projects.locations.conversionWorkspaces.mappingRules.delete", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -9161,6 +9252,7 @@ func (c *ProjectsLocationsConversionWorkspacesMappingRulesGetCall) doRequest(alt
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "datamigration.projects.locations.conversionWorkspaces.mappingRules.get", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -9195,9 +9287,11 @@ func (c *ProjectsLocationsConversionWorkspacesMappingRulesGetCall) Do(opts ...go
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "datamigration.projects.locations.conversionWorkspaces.mappingRules.get", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -9265,6 +9359,7 @@ func (c *ProjectsLocationsConversionWorkspacesMappingRulesImportCall) doRequest(
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "datamigration.projects.locations.conversionWorkspaces.mappingRules.import", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -9299,9 +9394,11 @@ func (c *ProjectsLocationsConversionWorkspacesMappingRulesImportCall) Do(opts ..
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "datamigration.projects.locations.conversionWorkspaces.mappingRules.import", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -9391,6 +9488,7 @@ func (c *ProjectsLocationsConversionWorkspacesMappingRulesListCall) doRequest(al
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "datamigration.projects.locations.conversionWorkspaces.mappingRules.list", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -9426,9 +9524,11 @@ func (c *ProjectsLocationsConversionWorkspacesMappingRulesListCall) Do(opts ...g
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "datamigration.projects.locations.conversionWorkspaces.mappingRules.list", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -9530,6 +9630,7 @@ func (c *ProjectsLocationsMigrationJobsCreateCall) doRequest(alt string) (*http.
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "datamigration.projects.locations.migrationJobs.create", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -9564,9 +9665,11 @@ func (c *ProjectsLocationsMigrationJobsCreateCall) Do(opts ...googleapi.CallOpti
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "datamigration.projects.locations.migrationJobs.create", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -9642,6 +9745,7 @@ func (c *ProjectsLocationsMigrationJobsDeleteCall) doRequest(alt string) (*http.
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "datamigration.projects.locations.migrationJobs.delete", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -9676,9 +9780,11 @@ func (c *ProjectsLocationsMigrationJobsDeleteCall) Do(opts ...googleapi.CallOpti
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "datamigration.projects.locations.migrationJobs.delete", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -9745,6 +9851,7 @@ func (c *ProjectsLocationsMigrationJobsDemoteDestinationCall) doRequest(alt stri
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "datamigration.projects.locations.migrationJobs.demoteDestination", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -9779,9 +9886,11 @@ func (c *ProjectsLocationsMigrationJobsDemoteDestinationCall) Do(opts ...googlea
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "datamigration.projects.locations.migrationJobs.demoteDestination", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -9855,6 +9964,7 @@ func (c *ProjectsLocationsMigrationJobsFetchSourceObjectsCall) doRequest(alt str
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "datamigration.projects.locations.migrationJobs.fetchSourceObjects", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -9889,9 +9999,11 @@ func (c *ProjectsLocationsMigrationJobsFetchSourceObjectsCall) Do(opts ...google
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "datamigration.projects.locations.migrationJobs.fetchSourceObjects", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -9957,6 +10069,7 @@ func (c *ProjectsLocationsMigrationJobsGenerateSshScriptCall) doRequest(alt stri
 	googleapi.Expand(req.URL, map[string]string{
 		"migrationJob": c.migrationJob,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "datamigration.projects.locations.migrationJobs.generateSshScript", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -9991,9 +10104,11 @@ func (c *ProjectsLocationsMigrationJobsGenerateSshScriptCall) Do(opts ...googlea
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "datamigration.projects.locations.migrationJobs.generateSshScript", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -10059,6 +10174,7 @@ func (c *ProjectsLocationsMigrationJobsGenerateTcpProxyScriptCall) doRequest(alt
 	googleapi.Expand(req.URL, map[string]string{
 		"migrationJob": c.migrationJob,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "datamigration.projects.locations.migrationJobs.generateTcpProxyScript", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -10093,9 +10209,11 @@ func (c *ProjectsLocationsMigrationJobsGenerateTcpProxyScriptCall) Do(opts ...go
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "datamigration.projects.locations.migrationJobs.generateTcpProxyScript", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -10165,6 +10283,7 @@ func (c *ProjectsLocationsMigrationJobsGetCall) doRequest(alt string) (*http.Res
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "datamigration.projects.locations.migrationJobs.get", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -10199,9 +10318,11 @@ func (c *ProjectsLocationsMigrationJobsGetCall) Do(opts ...googleapi.CallOption)
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "datamigration.projects.locations.migrationJobs.get", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -10291,6 +10412,7 @@ func (c *ProjectsLocationsMigrationJobsGetIamPolicyCall) doRequest(alt string) (
 	googleapi.Expand(req.URL, map[string]string{
 		"resource": c.resource,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "datamigration.projects.locations.migrationJobs.getIamPolicy", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -10325,9 +10447,11 @@ func (c *ProjectsLocationsMigrationJobsGetIamPolicyCall) Do(opts ...googleapi.Ca
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "datamigration.projects.locations.migrationJobs.getIamPolicy", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -10438,6 +10562,7 @@ func (c *ProjectsLocationsMigrationJobsListCall) doRequest(alt string) (*http.Re
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "datamigration.projects.locations.migrationJobs.list", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -10473,9 +10598,11 @@ func (c *ProjectsLocationsMigrationJobsListCall) Do(opts ...googleapi.CallOption
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "datamigration.projects.locations.migrationJobs.list", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -10579,6 +10706,7 @@ func (c *ProjectsLocationsMigrationJobsPatchCall) doRequest(alt string) (*http.R
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "datamigration.projects.locations.migrationJobs.patch", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -10613,9 +10741,11 @@ func (c *ProjectsLocationsMigrationJobsPatchCall) Do(opts ...googleapi.CallOptio
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "datamigration.projects.locations.migrationJobs.patch", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -10680,6 +10810,7 @@ func (c *ProjectsLocationsMigrationJobsPromoteCall) doRequest(alt string) (*http
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "datamigration.projects.locations.migrationJobs.promote", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -10714,9 +10845,11 @@ func (c *ProjectsLocationsMigrationJobsPromoteCall) Do(opts ...googleapi.CallOpt
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "datamigration.projects.locations.migrationJobs.promote", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -10782,6 +10915,7 @@ func (c *ProjectsLocationsMigrationJobsRestartCall) doRequest(alt string) (*http
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "datamigration.projects.locations.migrationJobs.restart", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -10816,9 +10950,11 @@ func (c *ProjectsLocationsMigrationJobsRestartCall) Do(opts ...googleapi.CallOpt
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "datamigration.projects.locations.migrationJobs.restart", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -10883,6 +11019,7 @@ func (c *ProjectsLocationsMigrationJobsResumeCall) doRequest(alt string) (*http.
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "datamigration.projects.locations.migrationJobs.resume", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -10917,9 +11054,11 @@ func (c *ProjectsLocationsMigrationJobsResumeCall) Do(opts ...googleapi.CallOpti
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "datamigration.projects.locations.migrationJobs.resume", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -10987,6 +11126,7 @@ func (c *ProjectsLocationsMigrationJobsSetIamPolicyCall) doRequest(alt string) (
 	googleapi.Expand(req.URL, map[string]string{
 		"resource": c.resource,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "datamigration.projects.locations.migrationJobs.setIamPolicy", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -11021,9 +11161,11 @@ func (c *ProjectsLocationsMigrationJobsSetIamPolicyCall) Do(opts ...googleapi.Ca
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "datamigration.projects.locations.migrationJobs.setIamPolicy", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -11087,6 +11229,7 @@ func (c *ProjectsLocationsMigrationJobsStartCall) doRequest(alt string) (*http.R
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "datamigration.projects.locations.migrationJobs.start", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -11121,9 +11264,11 @@ func (c *ProjectsLocationsMigrationJobsStartCall) Do(opts ...googleapi.CallOptio
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "datamigration.projects.locations.migrationJobs.start", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -11187,6 +11332,7 @@ func (c *ProjectsLocationsMigrationJobsStopCall) doRequest(alt string) (*http.Re
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "datamigration.projects.locations.migrationJobs.stop", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -11221,9 +11367,11 @@ func (c *ProjectsLocationsMigrationJobsStopCall) Do(opts ...googleapi.CallOption
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "datamigration.projects.locations.migrationJobs.stop", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -11294,6 +11442,7 @@ func (c *ProjectsLocationsMigrationJobsTestIamPermissionsCall) doRequest(alt str
 	googleapi.Expand(req.URL, map[string]string{
 		"resource": c.resource,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "datamigration.projects.locations.migrationJobs.testIamPermissions", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -11329,9 +11478,11 @@ func (c *ProjectsLocationsMigrationJobsTestIamPermissionsCall) Do(opts ...google
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "datamigration.projects.locations.migrationJobs.testIamPermissions", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -11396,6 +11547,7 @@ func (c *ProjectsLocationsMigrationJobsVerifyCall) doRequest(alt string) (*http.
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "datamigration.projects.locations.migrationJobs.verify", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -11430,9 +11582,11 @@ func (c *ProjectsLocationsMigrationJobsVerifyCall) Do(opts ...googleapi.CallOpti
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "datamigration.projects.locations.migrationJobs.verify", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -11502,6 +11656,7 @@ func (c *ProjectsLocationsMigrationJobsObjectsGetCall) doRequest(alt string) (*h
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "datamigration.projects.locations.migrationJobs.objects.get", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -11537,9 +11692,11 @@ func (c *ProjectsLocationsMigrationJobsObjectsGetCall) Do(opts ...googleapi.Call
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "datamigration.projects.locations.migrationJobs.objects.get", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -11629,6 +11786,7 @@ func (c *ProjectsLocationsMigrationJobsObjectsGetIamPolicyCall) doRequest(alt st
 	googleapi.Expand(req.URL, map[string]string{
 		"resource": c.resource,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "datamigration.projects.locations.migrationJobs.objects.getIamPolicy", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -11663,9 +11821,11 @@ func (c *ProjectsLocationsMigrationJobsObjectsGetIamPolicyCall) Do(opts ...googl
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "datamigration.projects.locations.migrationJobs.objects.getIamPolicy", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -11753,6 +11913,7 @@ func (c *ProjectsLocationsMigrationJobsObjectsListCall) doRequest(alt string) (*
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "datamigration.projects.locations.migrationJobs.objects.list", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -11788,9 +11949,11 @@ func (c *ProjectsLocationsMigrationJobsObjectsListCall) Do(opts ...googleapi.Cal
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "datamigration.projects.locations.migrationJobs.objects.list", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -11876,6 +12039,7 @@ func (c *ProjectsLocationsMigrationJobsObjectsLookupCall) doRequest(alt string) 
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "datamigration.projects.locations.migrationJobs.objects.lookup", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -11911,9 +12075,11 @@ func (c *ProjectsLocationsMigrationJobsObjectsLookupCall) Do(opts ...googleapi.C
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "datamigration.projects.locations.migrationJobs.objects.lookup", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -11981,6 +12147,7 @@ func (c *ProjectsLocationsMigrationJobsObjectsSetIamPolicyCall) doRequest(alt st
 	googleapi.Expand(req.URL, map[string]string{
 		"resource": c.resource,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "datamigration.projects.locations.migrationJobs.objects.setIamPolicy", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -12015,9 +12182,11 @@ func (c *ProjectsLocationsMigrationJobsObjectsSetIamPolicyCall) Do(opts ...googl
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "datamigration.projects.locations.migrationJobs.objects.setIamPolicy", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -12088,6 +12257,7 @@ func (c *ProjectsLocationsMigrationJobsObjectsTestIamPermissionsCall) doRequest(
 	googleapi.Expand(req.URL, map[string]string{
 		"resource": c.resource,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "datamigration.projects.locations.migrationJobs.objects.testIamPermissions", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -12123,9 +12293,11 @@ func (c *ProjectsLocationsMigrationJobsObjectsTestIamPermissionsCall) Do(opts ..
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "datamigration.projects.locations.migrationJobs.objects.testIamPermissions", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -12197,6 +12369,7 @@ func (c *ProjectsLocationsOperationsCancelCall) doRequest(alt string) (*http.Res
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "datamigration.projects.locations.operations.cancel", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -12231,9 +12404,11 @@ func (c *ProjectsLocationsOperationsCancelCall) Do(opts ...googleapi.CallOption)
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "datamigration.projects.locations.operations.cancel", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -12294,6 +12469,7 @@ func (c *ProjectsLocationsOperationsDeleteCall) doRequest(alt string) (*http.Res
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "datamigration.projects.locations.operations.delete", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -12328,9 +12504,11 @@ func (c *ProjectsLocationsOperationsDeleteCall) Do(opts ...googleapi.CallOption)
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "datamigration.projects.locations.operations.delete", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -12402,6 +12580,7 @@ func (c *ProjectsLocationsOperationsGetCall) doRequest(alt string) (*http.Respon
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "datamigration.projects.locations.operations.get", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -12436,9 +12615,11 @@ func (c *ProjectsLocationsOperationsGetCall) Do(opts ...googleapi.CallOption) (*
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "datamigration.projects.locations.operations.get", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -12529,6 +12710,7 @@ func (c *ProjectsLocationsOperationsListCall) doRequest(alt string) (*http.Respo
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "datamigration.projects.locations.operations.list", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -12564,9 +12746,11 @@ func (c *ProjectsLocationsOperationsListCall) Do(opts ...googleapi.CallOption) (
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "datamigration.projects.locations.operations.list", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -12675,6 +12859,7 @@ func (c *ProjectsLocationsPrivateConnectionsCreateCall) doRequest(alt string) (*
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "datamigration.projects.locations.privateConnections.create", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -12709,9 +12894,11 @@ func (c *ProjectsLocationsPrivateConnectionsCreateCall) Do(opts ...googleapi.Cal
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "datamigration.projects.locations.privateConnections.create", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -12779,6 +12966,7 @@ func (c *ProjectsLocationsPrivateConnectionsDeleteCall) doRequest(alt string) (*
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "datamigration.projects.locations.privateConnections.delete", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -12813,9 +13001,11 @@ func (c *ProjectsLocationsPrivateConnectionsDeleteCall) Do(opts ...googleapi.Cal
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "datamigration.projects.locations.privateConnections.delete", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -12885,6 +13075,7 @@ func (c *ProjectsLocationsPrivateConnectionsGetCall) doRequest(alt string) (*htt
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "datamigration.projects.locations.privateConnections.get", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -12920,9 +13111,11 @@ func (c *ProjectsLocationsPrivateConnectionsGetCall) Do(opts ...googleapi.CallOp
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "datamigration.projects.locations.privateConnections.get", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -13012,6 +13205,7 @@ func (c *ProjectsLocationsPrivateConnectionsGetIamPolicyCall) doRequest(alt stri
 	googleapi.Expand(req.URL, map[string]string{
 		"resource": c.resource,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "datamigration.projects.locations.privateConnections.getIamPolicy", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -13046,9 +13240,11 @@ func (c *ProjectsLocationsPrivateConnectionsGetIamPolicyCall) Do(opts ...googlea
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "datamigration.projects.locations.privateConnections.getIamPolicy", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -13156,6 +13352,7 @@ func (c *ProjectsLocationsPrivateConnectionsListCall) doRequest(alt string) (*ht
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "datamigration.projects.locations.privateConnections.list", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -13191,9 +13388,11 @@ func (c *ProjectsLocationsPrivateConnectionsListCall) Do(opts ...googleapi.CallO
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "datamigration.projects.locations.privateConnections.list", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -13282,6 +13481,7 @@ func (c *ProjectsLocationsPrivateConnectionsSetIamPolicyCall) doRequest(alt stri
 	googleapi.Expand(req.URL, map[string]string{
 		"resource": c.resource,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "datamigration.projects.locations.privateConnections.setIamPolicy", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -13316,9 +13516,11 @@ func (c *ProjectsLocationsPrivateConnectionsSetIamPolicyCall) Do(opts ...googlea
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "datamigration.projects.locations.privateConnections.setIamPolicy", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -13389,6 +13591,7 @@ func (c *ProjectsLocationsPrivateConnectionsTestIamPermissionsCall) doRequest(al
 	googleapi.Expand(req.URL, map[string]string{
 		"resource": c.resource,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "datamigration.projects.locations.privateConnections.testIamPermissions", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -13424,8 +13627,10 @@ func (c *ProjectsLocationsPrivateConnectionsTestIamPermissionsCall) Do(opts ...g
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "datamigration.projects.locations.privateConnections.testIamPermissions", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }

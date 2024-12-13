@@ -62,11 +62,13 @@ import (
 	"errors"
 	"fmt"
 	"io"
+	"log/slog"
 	"net/http"
 	"net/url"
 	"strconv"
 	"strings"
 
+	"github.com/googleapis/gax-go/v2/internallog"
 	googleapi "google.golang.org/api/googleapi"
 	internal "google.golang.org/api/internal"
 	gensupport "google.golang.org/api/internal/gensupport"
@@ -90,6 +92,7 @@ var _ = strings.Replace
 var _ = context.Canceled
 var _ = internaloption.WithDefaultEndpoint
 var _ = internal.Version
+var _ = internallog.New
 
 const apiId = "displayvideo:v3"
 const apiName = "displayvideo"
@@ -134,7 +137,7 @@ func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, err
 	if err != nil {
 		return nil, err
 	}
-	s := &Service{client: client, BasePath: basePath}
+	s := &Service{client: client, BasePath: basePath, logger: internaloption.GetLogger(opts)}
 	s.Advertisers = NewAdvertisersService(s)
 	s.CombinedAudiences = NewCombinedAudiencesService(s)
 	s.CustomBiddingAlgorithms = NewCustomBiddingAlgorithmsService(s)
@@ -173,6 +176,7 @@ func New(client *http.Client) (*Service, error) {
 
 type Service struct {
 	client    *http.Client
+	logger    *slog.Logger
 	BasePath  string // API endpoint base URL
 	UserAgent string // optional additional User-Agent fragment
 
@@ -16202,6 +16206,7 @@ func (c *AdvertisersAuditCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"advertiserId": strconv.FormatInt(c.advertiserId, 10),
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "displayvideo.advertisers.audit", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -16237,9 +16242,11 @@ func (c *AdvertisersAuditCall) Do(opts ...googleapi.CallOption) (*AuditAdvertise
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "displayvideo.advertisers.audit", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -16300,6 +16307,7 @@ func (c *AdvertisersCreateCall) doRequest(alt string) (*http.Response, error) {
 		return nil, err
 	}
 	req.Header = reqHeaders
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "displayvideo.advertisers.create", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -16334,9 +16342,11 @@ func (c *AdvertisersCreateCall) Do(opts ...googleapi.CallOption) (*Advertiser, e
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "displayvideo.advertisers.create", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -16396,6 +16406,7 @@ func (c *AdvertisersDeleteCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"advertiserId": strconv.FormatInt(c.advertiserId, 10),
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "displayvideo.advertisers.delete", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -16430,9 +16441,11 @@ func (c *AdvertisersDeleteCall) Do(opts ...googleapi.CallOption) (*Empty, error)
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "displayvideo.advertisers.delete", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -16501,6 +16514,7 @@ func (c *AdvertisersEditAssignedTargetingOptionsCall) doRequest(alt string) (*ht
 	googleapi.Expand(req.URL, map[string]string{
 		"advertiserId": strconv.FormatInt(c.advertiserId, 10),
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "displayvideo.advertisers.editAssignedTargetingOptions", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -16536,9 +16550,11 @@ func (c *AdvertisersEditAssignedTargetingOptionsCall) Do(opts ...googleapi.CallO
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "displayvideo.advertisers.editAssignedTargetingOptions", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -16608,6 +16624,7 @@ func (c *AdvertisersGetCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"advertiserId": strconv.FormatInt(c.advertiserId, 10),
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "displayvideo.advertisers.get", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -16642,9 +16659,11 @@ func (c *AdvertisersGetCall) Do(opts ...googleapi.CallOption) (*Advertiser, erro
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "displayvideo.advertisers.get", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -16764,6 +16783,7 @@ func (c *AdvertisersListCall) doRequest(alt string) (*http.Response, error) {
 		return nil, err
 	}
 	req.Header = reqHeaders
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "displayvideo.advertisers.list", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -16799,9 +16819,11 @@ func (c *AdvertisersListCall) Do(opts ...googleapi.CallOption) (*ListAdvertisers
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "displayvideo.advertisers.list", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -16936,6 +16958,7 @@ func (c *AdvertisersListAssignedTargetingOptionsCall) doRequest(alt string) (*ht
 	googleapi.Expand(req.URL, map[string]string{
 		"advertiserId": strconv.FormatInt(c.advertiserId, 10),
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "displayvideo.advertisers.listAssignedTargetingOptions", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -16971,9 +16994,11 @@ func (c *AdvertisersListAssignedTargetingOptionsCall) Do(opts ...googleapi.CallO
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "displayvideo.advertisers.listAssignedTargetingOptions", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -17067,6 +17092,7 @@ func (c *AdvertisersPatchCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"advertiserId": strconv.FormatInt(c.advertiserId, 10),
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "displayvideo.advertisers.patch", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -17101,9 +17127,11 @@ func (c *AdvertisersPatchCall) Do(opts ...googleapi.CallOption) (*Advertiser, er
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "displayvideo.advertisers.patch", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -17177,6 +17205,7 @@ func (c *AdvertisersAdGroupAdsGetCall) doRequest(alt string) (*http.Response, er
 		"advertiserId": strconv.FormatInt(c.advertiserId, 10),
 		"adGroupAdId":  strconv.FormatInt(c.adGroupAdId, 10),
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "displayvideo.advertisers.adGroupAds.get", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -17211,9 +17240,11 @@ func (c *AdvertisersAdGroupAdsGetCall) Do(opts ...googleapi.CallOption) (*AdGrou
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "displayvideo.advertisers.adGroupAds.get", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -17329,6 +17360,7 @@ func (c *AdvertisersAdGroupAdsListCall) doRequest(alt string) (*http.Response, e
 	googleapi.Expand(req.URL, map[string]string{
 		"advertiserId": strconv.FormatInt(c.advertiserId, 10),
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "displayvideo.advertisers.adGroupAds.list", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -17364,9 +17396,11 @@ func (c *AdvertisersAdGroupAdsListCall) Do(opts ...googleapi.CallOption) (*ListA
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "displayvideo.advertisers.adGroupAds.list", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -17515,6 +17549,7 @@ func (c *AdvertisersAdGroupsBulkListAdGroupAssignedTargetingOptionsCall) doReque
 	googleapi.Expand(req.URL, map[string]string{
 		"advertiserId": strconv.FormatInt(c.advertiserId, 10),
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "displayvideo.advertisers.adGroups.bulkListAdGroupAssignedTargetingOptions", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -17550,9 +17585,11 @@ func (c *AdvertisersAdGroupsBulkListAdGroupAssignedTargetingOptionsCall) Do(opts
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "displayvideo.advertisers.adGroups.bulkListAdGroupAssignedTargetingOptions", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -17647,6 +17684,7 @@ func (c *AdvertisersAdGroupsGetCall) doRequest(alt string) (*http.Response, erro
 		"advertiserId": strconv.FormatInt(c.advertiserId, 10),
 		"adGroupId":    strconv.FormatInt(c.adGroupId, 10),
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "displayvideo.advertisers.adGroups.get", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -17681,9 +17719,11 @@ func (c *AdvertisersAdGroupsGetCall) Do(opts ...googleapi.CallOption) (*AdGroup,
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "displayvideo.advertisers.adGroups.get", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -17799,6 +17839,7 @@ func (c *AdvertisersAdGroupsListCall) doRequest(alt string) (*http.Response, err
 	googleapi.Expand(req.URL, map[string]string{
 		"advertiserId": strconv.FormatInt(c.advertiserId, 10),
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "displayvideo.advertisers.adGroups.list", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -17834,9 +17875,11 @@ func (c *AdvertisersAdGroupsListCall) Do(opts ...googleapi.CallOption) (*ListAdG
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "displayvideo.advertisers.adGroups.list", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -17950,6 +17993,7 @@ func (c *AdvertisersAdGroupsTargetingTypesAssignedTargetingOptionsGetCall) doReq
 		"targetingType":             c.targetingType,
 		"assignedTargetingOptionId": c.assignedTargetingOptionId,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "displayvideo.advertisers.adGroups.targetingTypes.assignedTargetingOptions.get", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -17985,9 +18029,11 @@ func (c *AdvertisersAdGroupsTargetingTypesAssignedTargetingOptionsGetCall) Do(op
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "displayvideo.advertisers.adGroups.targetingTypes.assignedTargetingOptions.get", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -18116,6 +18162,7 @@ func (c *AdvertisersAdGroupsTargetingTypesAssignedTargetingOptionsListCall) doRe
 		"adGroupId":     strconv.FormatInt(c.adGroupId, 10),
 		"targetingType": c.targetingType,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "displayvideo.advertisers.adGroups.targetingTypes.assignedTargetingOptions.list", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -18151,9 +18198,11 @@ func (c *AdvertisersAdGroupsTargetingTypesAssignedTargetingOptionsListCall) Do(o
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "displayvideo.advertisers.adGroups.targetingTypes.assignedTargetingOptions.list", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -18290,6 +18339,7 @@ func (c *AdvertisersAssetsUploadCall) doRequest(alt string) (*http.Response, err
 	googleapi.Expand(req.URL, map[string]string{
 		"advertiserId": strconv.FormatInt(c.advertiserId, 10),
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "displayvideo.advertisers.assets.upload", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -18342,9 +18392,11 @@ func (c *AdvertisersAssetsUploadCall) Do(opts ...googleapi.CallOption) (*CreateA
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "displayvideo.advertisers.assets.upload", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -18410,6 +18462,7 @@ func (c *AdvertisersCampaignsCreateCall) doRequest(alt string) (*http.Response, 
 	googleapi.Expand(req.URL, map[string]string{
 		"advertiserId": strconv.FormatInt(c.advertiserId, 10),
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "displayvideo.advertisers.campaigns.create", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -18444,9 +18497,11 @@ func (c *AdvertisersCampaignsCreateCall) Do(opts ...googleapi.CallOption) (*Camp
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "displayvideo.advertisers.campaigns.create", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -18513,6 +18568,7 @@ func (c *AdvertisersCampaignsDeleteCall) doRequest(alt string) (*http.Response, 
 		"advertiserId": strconv.FormatInt(c.advertiserId, 10),
 		"campaignId":   strconv.FormatInt(c.campaignId, 10),
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "displayvideo.advertisers.campaigns.delete", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -18547,9 +18603,11 @@ func (c *AdvertisersCampaignsDeleteCall) Do(opts ...googleapi.CallOption) (*Empt
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "displayvideo.advertisers.campaigns.delete", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -18623,6 +18681,7 @@ func (c *AdvertisersCampaignsGetCall) doRequest(alt string) (*http.Response, err
 		"advertiserId": strconv.FormatInt(c.advertiserId, 10),
 		"campaignId":   strconv.FormatInt(c.campaignId, 10),
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "displayvideo.advertisers.campaigns.get", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -18657,9 +18716,11 @@ func (c *AdvertisersCampaignsGetCall) Do(opts ...googleapi.CallOption) (*Campaig
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "displayvideo.advertisers.campaigns.get", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -18780,6 +18841,7 @@ func (c *AdvertisersCampaignsListCall) doRequest(alt string) (*http.Response, er
 	googleapi.Expand(req.URL, map[string]string{
 		"advertiserId": strconv.FormatInt(c.advertiserId, 10),
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "displayvideo.advertisers.campaigns.list", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -18815,9 +18877,11 @@ func (c *AdvertisersCampaignsListCall) Do(opts ...googleapi.CallOption) (*ListCa
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "displayvideo.advertisers.campaigns.list", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -18960,6 +19024,7 @@ func (c *AdvertisersCampaignsListAssignedTargetingOptionsCall) doRequest(alt str
 		"advertiserId": strconv.FormatInt(c.advertiserId, 10),
 		"campaignId":   strconv.FormatInt(c.campaignId, 10),
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "displayvideo.advertisers.campaigns.listAssignedTargetingOptions", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -18995,9 +19060,11 @@ func (c *AdvertisersCampaignsListAssignedTargetingOptionsCall) Do(opts ...google
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "displayvideo.advertisers.campaigns.listAssignedTargetingOptions", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -19096,6 +19163,7 @@ func (c *AdvertisersCampaignsPatchCall) doRequest(alt string) (*http.Response, e
 		"advertiserId": strconv.FormatInt(c.advertiserId, 10),
 		"campaignId":   strconv.FormatInt(c.campaignId, 10),
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "displayvideo.advertisers.campaigns.patch", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -19130,9 +19198,11 @@ func (c *AdvertisersCampaignsPatchCall) Do(opts ...googleapi.CallOption) (*Campa
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "displayvideo.advertisers.campaigns.patch", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -19230,6 +19300,7 @@ func (c *AdvertisersCampaignsTargetingTypesAssignedTargetingOptionsGetCall) doRe
 		"targetingType":             c.targetingType,
 		"assignedTargetingOptionId": c.assignedTargetingOptionId,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "displayvideo.advertisers.campaigns.targetingTypes.assignedTargetingOptions.get", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -19265,9 +19336,11 @@ func (c *AdvertisersCampaignsTargetingTypesAssignedTargetingOptionsGetCall) Do(o
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "displayvideo.advertisers.campaigns.targetingTypes.assignedTargetingOptions.get", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -19405,6 +19478,7 @@ func (c *AdvertisersCampaignsTargetingTypesAssignedTargetingOptionsListCall) doR
 		"campaignId":    strconv.FormatInt(c.campaignId, 10),
 		"targetingType": c.targetingType,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "displayvideo.advertisers.campaigns.targetingTypes.assignedTargetingOptions.list", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -19440,9 +19514,11 @@ func (c *AdvertisersCampaignsTargetingTypesAssignedTargetingOptionsListCall) Do(
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "displayvideo.advertisers.campaigns.targetingTypes.assignedTargetingOptions.list", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -19535,6 +19611,7 @@ func (c *AdvertisersChannelsCreateCall) doRequest(alt string) (*http.Response, e
 	googleapi.Expand(req.URL, map[string]string{
 		"advertiserId": strconv.FormatInt(c.advertiserId, 10),
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "displayvideo.advertisers.channels.create", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -19569,9 +19646,11 @@ func (c *AdvertisersChannelsCreateCall) Do(opts ...googleapi.CallOption) (*Chann
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "displayvideo.advertisers.channels.create", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -19652,6 +19731,7 @@ func (c *AdvertisersChannelsGetCall) doRequest(alt string) (*http.Response, erro
 		"advertiserId": strconv.FormatInt(c.advertiserId, 10),
 		"channelId":    strconv.FormatInt(c.channelId, 10),
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "displayvideo.advertisers.channels.get", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -19686,9 +19766,11 @@ func (c *AdvertisersChannelsGetCall) Do(opts ...googleapi.CallOption) (*Channel,
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "displayvideo.advertisers.channels.get", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -19805,6 +19887,7 @@ func (c *AdvertisersChannelsListCall) doRequest(alt string) (*http.Response, err
 	googleapi.Expand(req.URL, map[string]string{
 		"advertiserId": strconv.FormatInt(c.advertiserId, 10),
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "displayvideo.advertisers.channels.list", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -19840,9 +19923,11 @@ func (c *AdvertisersChannelsListCall) Do(opts ...googleapi.CallOption) (*ListCha
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "displayvideo.advertisers.channels.list", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -19946,6 +20031,7 @@ func (c *AdvertisersChannelsPatchCall) doRequest(alt string) (*http.Response, er
 		"advertiserId": strconv.FormatInt(c.advertiserId, 10),
 		"channelId":    strconv.FormatInt(c.channelId, 10),
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "displayvideo.advertisers.channels.patch", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -19980,9 +20066,11 @@ func (c *AdvertisersChannelsPatchCall) Do(opts ...googleapi.CallOption) (*Channe
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "displayvideo.advertisers.channels.patch", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -20052,6 +20140,7 @@ func (c *AdvertisersChannelsSitesBulkEditCall) doRequest(alt string) (*http.Resp
 		"advertiserId": strconv.FormatInt(c.advertiserId, 10),
 		"channelId":    strconv.FormatInt(c.channelId, 10),
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "displayvideo.advertisers.channels.sites.bulkEdit", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -20087,9 +20176,11 @@ func (c *AdvertisersChannelsSitesBulkEditCall) Do(opts ...googleapi.CallOption) 
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "displayvideo.advertisers.channels.sites.bulkEdit", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -20164,6 +20255,7 @@ func (c *AdvertisersChannelsSitesCreateCall) doRequest(alt string) (*http.Respon
 		"advertiserId": strconv.FormatInt(c.advertiserId, 10),
 		"channelId":    strconv.FormatInt(c.channelId, 10),
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "displayvideo.advertisers.channels.sites.create", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -20198,9 +20290,11 @@ func (c *AdvertisersChannelsSitesCreateCall) Do(opts ...googleapi.CallOption) (*
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "displayvideo.advertisers.channels.sites.create", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -20273,6 +20367,7 @@ func (c *AdvertisersChannelsSitesDeleteCall) doRequest(alt string) (*http.Respon
 		"channelId":    strconv.FormatInt(c.channelId, 10),
 		"urlOrAppId":   c.urlOrAppId,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "displayvideo.advertisers.channels.sites.delete", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -20307,9 +20402,11 @@ func (c *AdvertisersChannelsSitesDeleteCall) Do(opts ...googleapi.CallOption) (*
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "displayvideo.advertisers.channels.sites.delete", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -20430,6 +20527,7 @@ func (c *AdvertisersChannelsSitesListCall) doRequest(alt string) (*http.Response
 		"advertiserId": strconv.FormatInt(c.advertiserId, 10),
 		"channelId":    strconv.FormatInt(c.channelId, 10),
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "displayvideo.advertisers.channels.sites.list", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -20465,9 +20563,11 @@ func (c *AdvertisersChannelsSitesListCall) Do(opts ...googleapi.CallOption) (*Li
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "displayvideo.advertisers.channels.sites.list", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -20561,6 +20661,7 @@ func (c *AdvertisersChannelsSitesReplaceCall) doRequest(alt string) (*http.Respo
 		"advertiserId": strconv.FormatInt(c.advertiserId, 10),
 		"channelId":    strconv.FormatInt(c.channelId, 10),
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "displayvideo.advertisers.channels.sites.replace", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -20596,9 +20697,11 @@ func (c *AdvertisersChannelsSitesReplaceCall) Do(opts ...googleapi.CallOption) (
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "displayvideo.advertisers.channels.sites.replace", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -20666,6 +20769,7 @@ func (c *AdvertisersCreativesCreateCall) doRequest(alt string) (*http.Response, 
 	googleapi.Expand(req.URL, map[string]string{
 		"advertiserId": strconv.FormatInt(c.advertiserId, 10),
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "displayvideo.advertisers.creatives.create", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -20700,9 +20804,11 @@ func (c *AdvertisersCreativesCreateCall) Do(opts ...googleapi.CallOption) (*Crea
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "displayvideo.advertisers.creatives.create", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -20769,6 +20875,7 @@ func (c *AdvertisersCreativesDeleteCall) doRequest(alt string) (*http.Response, 
 		"advertiserId": strconv.FormatInt(c.advertiserId, 10),
 		"creativeId":   strconv.FormatInt(c.creativeId, 10),
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "displayvideo.advertisers.creatives.delete", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -20803,9 +20910,11 @@ func (c *AdvertisersCreativesDeleteCall) Do(opts ...googleapi.CallOption) (*Empt
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "displayvideo.advertisers.creatives.delete", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -20879,6 +20988,7 @@ func (c *AdvertisersCreativesGetCall) doRequest(alt string) (*http.Response, err
 		"advertiserId": strconv.FormatInt(c.advertiserId, 10),
 		"creativeId":   strconv.FormatInt(c.creativeId, 10),
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "displayvideo.advertisers.creatives.get", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -20913,9 +21023,11 @@ func (c *AdvertisersCreativesGetCall) Do(opts ...googleapi.CallOption) (*Creativ
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "displayvideo.advertisers.creatives.get", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -21055,6 +21167,7 @@ func (c *AdvertisersCreativesListCall) doRequest(alt string) (*http.Response, er
 	googleapi.Expand(req.URL, map[string]string{
 		"advertiserId": strconv.FormatInt(c.advertiserId, 10),
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "displayvideo.advertisers.creatives.list", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -21090,9 +21203,11 @@ func (c *AdvertisersCreativesListCall) Do(opts ...googleapi.CallOption) (*ListCr
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "displayvideo.advertisers.creatives.list", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -21193,6 +21308,7 @@ func (c *AdvertisersCreativesPatchCall) doRequest(alt string) (*http.Response, e
 		"advertiserId": strconv.FormatInt(c.advertiserId, 10),
 		"creativeId":   strconv.FormatInt(c.creativeId, 10),
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "displayvideo.advertisers.creatives.patch", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -21227,9 +21343,11 @@ func (c *AdvertisersCreativesPatchCall) Do(opts ...googleapi.CallOption) (*Creat
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "displayvideo.advertisers.creatives.patch", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -21295,6 +21413,7 @@ func (c *AdvertisersInsertionOrdersCreateCall) doRequest(alt string) (*http.Resp
 	googleapi.Expand(req.URL, map[string]string{
 		"advertiserId": strconv.FormatInt(c.advertiserId, 10),
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "displayvideo.advertisers.insertionOrders.create", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -21329,9 +21448,11 @@ func (c *AdvertisersInsertionOrdersCreateCall) Do(opts ...googleapi.CallOption) 
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "displayvideo.advertisers.insertionOrders.create", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -21396,6 +21517,7 @@ func (c *AdvertisersInsertionOrdersDeleteCall) doRequest(alt string) (*http.Resp
 		"advertiserId":     strconv.FormatInt(c.advertiserId, 10),
 		"insertionOrderId": strconv.FormatInt(c.insertionOrderId, 10),
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "displayvideo.advertisers.insertionOrders.delete", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -21430,9 +21552,11 @@ func (c *AdvertisersInsertionOrdersDeleteCall) Do(opts ...googleapi.CallOption) 
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "displayvideo.advertisers.insertionOrders.delete", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -21507,6 +21631,7 @@ func (c *AdvertisersInsertionOrdersGetCall) doRequest(alt string) (*http.Respons
 		"advertiserId":     strconv.FormatInt(c.advertiserId, 10),
 		"insertionOrderId": strconv.FormatInt(c.insertionOrderId, 10),
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "displayvideo.advertisers.insertionOrders.get", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -21541,9 +21666,11 @@ func (c *AdvertisersInsertionOrdersGetCall) Do(opts ...googleapi.CallOption) (*I
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "displayvideo.advertisers.insertionOrders.get", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -21666,6 +21793,7 @@ func (c *AdvertisersInsertionOrdersListCall) doRequest(alt string) (*http.Respon
 	googleapi.Expand(req.URL, map[string]string{
 		"advertiserId": strconv.FormatInt(c.advertiserId, 10),
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "displayvideo.advertisers.insertionOrders.list", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -21701,9 +21829,11 @@ func (c *AdvertisersInsertionOrdersListCall) Do(opts ...googleapi.CallOption) (*
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "displayvideo.advertisers.insertionOrders.list", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -21848,6 +21978,7 @@ func (c *AdvertisersInsertionOrdersListAssignedTargetingOptionsCall) doRequest(a
 		"advertiserId":     strconv.FormatInt(c.advertiserId, 10),
 		"insertionOrderId": strconv.FormatInt(c.insertionOrderId, 10),
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "displayvideo.advertisers.insertionOrders.listAssignedTargetingOptions", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -21885,9 +22016,11 @@ func (c *AdvertisersInsertionOrdersListAssignedTargetingOptionsCall) Do(opts ...
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "displayvideo.advertisers.insertionOrders.listAssignedTargetingOptions", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -21986,6 +22119,7 @@ func (c *AdvertisersInsertionOrdersPatchCall) doRequest(alt string) (*http.Respo
 		"advertiserId":     strconv.FormatInt(c.advertiserId, 10),
 		"insertionOrderId": strconv.FormatInt(c.insertionOrderId, 10),
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "displayvideo.advertisers.insertionOrders.patch", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -22020,9 +22154,11 @@ func (c *AdvertisersInsertionOrdersPatchCall) Do(opts ...googleapi.CallOption) (
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "displayvideo.advertisers.insertionOrders.patch", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -22115,6 +22251,7 @@ func (c *AdvertisersInsertionOrdersTargetingTypesAssignedTargetingOptionsCreateC
 		"insertionOrderId": strconv.FormatInt(c.insertionOrderId, 10),
 		"targetingType":    c.targetingType,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "displayvideo.advertisers.insertionOrders.targetingTypes.assignedTargetingOptions.create", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -22150,9 +22287,11 @@ func (c *AdvertisersInsertionOrdersTargetingTypesAssignedTargetingOptionsCreateC
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "displayvideo.advertisers.insertionOrders.targetingTypes.assignedTargetingOptions.create", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -22243,6 +22382,7 @@ func (c *AdvertisersInsertionOrdersTargetingTypesAssignedTargetingOptionsDeleteC
 		"targetingType":             c.targetingType,
 		"assignedTargetingOptionId": c.assignedTargetingOptionId,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "displayvideo.advertisers.insertionOrders.targetingTypes.assignedTargetingOptions.delete", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -22277,9 +22417,11 @@ func (c *AdvertisersInsertionOrdersTargetingTypesAssignedTargetingOptionsDeleteC
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "displayvideo.advertisers.insertionOrders.targetingTypes.assignedTargetingOptions.delete", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -22390,6 +22532,7 @@ func (c *AdvertisersInsertionOrdersTargetingTypesAssignedTargetingOptionsGetCall
 		"targetingType":             c.targetingType,
 		"assignedTargetingOptionId": c.assignedTargetingOptionId,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "displayvideo.advertisers.insertionOrders.targetingTypes.assignedTargetingOptions.get", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -22425,9 +22568,11 @@ func (c *AdvertisersInsertionOrdersTargetingTypesAssignedTargetingOptionsGetCall
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "displayvideo.advertisers.insertionOrders.targetingTypes.assignedTargetingOptions.get", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -22578,6 +22723,7 @@ func (c *AdvertisersInsertionOrdersTargetingTypesAssignedTargetingOptionsListCal
 		"insertionOrderId": strconv.FormatInt(c.insertionOrderId, 10),
 		"targetingType":    c.targetingType,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "displayvideo.advertisers.insertionOrders.targetingTypes.assignedTargetingOptions.list", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -22613,9 +22759,11 @@ func (c *AdvertisersInsertionOrdersTargetingTypesAssignedTargetingOptionsListCal
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "displayvideo.advertisers.insertionOrders.targetingTypes.assignedTargetingOptions.list", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -22747,6 +22895,7 @@ func (c *AdvertisersInvoicesListCall) doRequest(alt string) (*http.Response, err
 	googleapi.Expand(req.URL, map[string]string{
 		"advertiserId": strconv.FormatInt(c.advertiserId, 10),
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "displayvideo.advertisers.invoices.list", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -22782,9 +22931,11 @@ func (c *AdvertisersInvoicesListCall) Do(opts ...googleapi.CallOption) (*ListInv
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "displayvideo.advertisers.invoices.list", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -22884,6 +23035,7 @@ func (c *AdvertisersInvoicesLookupInvoiceCurrencyCall) doRequest(alt string) (*h
 	googleapi.Expand(req.URL, map[string]string{
 		"advertiserId": strconv.FormatInt(c.advertiserId, 10),
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "displayvideo.advertisers.invoices.lookupInvoiceCurrency", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -22919,9 +23071,11 @@ func (c *AdvertisersInvoicesLookupInvoiceCurrencyCall) Do(opts ...googleapi.Call
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "displayvideo.advertisers.invoices.lookupInvoiceCurrency", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -22993,6 +23147,7 @@ func (c *AdvertisersLineItemsBulkEditAssignedTargetingOptionsCall) doRequest(alt
 	googleapi.Expand(req.URL, map[string]string{
 		"advertiserId": strconv.FormatInt(c.advertiserId, 10),
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "displayvideo.advertisers.lineItems.bulkEditAssignedTargetingOptions", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -23028,9 +23183,11 @@ func (c *AdvertisersLineItemsBulkEditAssignedTargetingOptionsCall) Do(opts ...go
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "displayvideo.advertisers.lineItems.bulkEditAssignedTargetingOptions", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -23161,6 +23318,7 @@ func (c *AdvertisersLineItemsBulkListAssignedTargetingOptionsCall) doRequest(alt
 	googleapi.Expand(req.URL, map[string]string{
 		"advertiserId": strconv.FormatInt(c.advertiserId, 10),
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "displayvideo.advertisers.lineItems.bulkListAssignedTargetingOptions", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -23196,9 +23354,11 @@ func (c *AdvertisersLineItemsBulkListAssignedTargetingOptionsCall) Do(opts ...go
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "displayvideo.advertisers.lineItems.bulkListAssignedTargetingOptions", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -23287,6 +23447,7 @@ func (c *AdvertisersLineItemsBulkUpdateCall) doRequest(alt string) (*http.Respon
 	googleapi.Expand(req.URL, map[string]string{
 		"advertiserId": strconv.FormatInt(c.advertiserId, 10),
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "displayvideo.advertisers.lineItems.bulkUpdate", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -23322,9 +23483,11 @@ func (c *AdvertisersLineItemsBulkUpdateCall) Do(opts ...googleapi.CallOption) (*
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "displayvideo.advertisers.lineItems.bulkUpdate", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -23391,6 +23554,7 @@ func (c *AdvertisersLineItemsCreateCall) doRequest(alt string) (*http.Response, 
 	googleapi.Expand(req.URL, map[string]string{
 		"advertiserId": strconv.FormatInt(c.advertiserId, 10),
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "displayvideo.advertisers.lineItems.create", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -23425,9 +23589,11 @@ func (c *AdvertisersLineItemsCreateCall) Do(opts ...googleapi.CallOption) (*Line
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "displayvideo.advertisers.lineItems.create", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -23492,6 +23658,7 @@ func (c *AdvertisersLineItemsDeleteCall) doRequest(alt string) (*http.Response, 
 		"advertiserId": strconv.FormatInt(c.advertiserId, 10),
 		"lineItemId":   strconv.FormatInt(c.lineItemId, 10),
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "displayvideo.advertisers.lineItems.delete", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -23526,9 +23693,11 @@ func (c *AdvertisersLineItemsDeleteCall) Do(opts ...googleapi.CallOption) (*Empt
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "displayvideo.advertisers.lineItems.delete", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -23601,6 +23770,7 @@ func (c *AdvertisersLineItemsDuplicateCall) doRequest(alt string) (*http.Respons
 		"advertiserId": strconv.FormatInt(c.advertiserId, 10),
 		"lineItemId":   strconv.FormatInt(c.lineItemId, 10),
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "displayvideo.advertisers.lineItems.duplicate", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -23636,9 +23806,11 @@ func (c *AdvertisersLineItemsDuplicateCall) Do(opts ...googleapi.CallOption) (*D
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "displayvideo.advertisers.lineItems.duplicate", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -23708,6 +23880,7 @@ func (c *AdvertisersLineItemsGenerateDefaultCall) doRequest(alt string) (*http.R
 	googleapi.Expand(req.URL, map[string]string{
 		"advertiserId": strconv.FormatInt(c.advertiserId, 10),
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "displayvideo.advertisers.lineItems.generateDefault", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -23742,9 +23915,11 @@ func (c *AdvertisersLineItemsGenerateDefaultCall) Do(opts ...googleapi.CallOptio
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "displayvideo.advertisers.lineItems.generateDefault", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -23818,6 +23993,7 @@ func (c *AdvertisersLineItemsGetCall) doRequest(alt string) (*http.Response, err
 		"advertiserId": strconv.FormatInt(c.advertiserId, 10),
 		"lineItemId":   strconv.FormatInt(c.lineItemId, 10),
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "displayvideo.advertisers.lineItems.get", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -23852,9 +24028,11 @@ func (c *AdvertisersLineItemsGetCall) Do(opts ...googleapi.CallOption) (*LineIte
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "displayvideo.advertisers.lineItems.get", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -23979,6 +24157,7 @@ func (c *AdvertisersLineItemsListCall) doRequest(alt string) (*http.Response, er
 	googleapi.Expand(req.URL, map[string]string{
 		"advertiserId": strconv.FormatInt(c.advertiserId, 10),
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "displayvideo.advertisers.lineItems.list", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -24014,9 +24193,11 @@ func (c *AdvertisersLineItemsListCall) Do(opts ...googleapi.CallOption) (*ListLi
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "displayvideo.advertisers.lineItems.list", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -24123,6 +24304,7 @@ func (c *AdvertisersLineItemsPatchCall) doRequest(alt string) (*http.Response, e
 		"advertiserId": strconv.FormatInt(c.advertiserId, 10),
 		"lineItemId":   strconv.FormatInt(c.lineItemId, 10),
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "displayvideo.advertisers.lineItems.patch", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -24157,9 +24339,11 @@ func (c *AdvertisersLineItemsPatchCall) Do(opts ...googleapi.CallOption) (*LineI
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "displayvideo.advertisers.lineItems.patch", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -24263,6 +24447,7 @@ func (c *AdvertisersLineItemsTargetingTypesAssignedTargetingOptionsCreateCall) d
 		"lineItemId":    strconv.FormatInt(c.lineItemId, 10),
 		"targetingType": c.targetingType,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "displayvideo.advertisers.lineItems.targetingTypes.assignedTargetingOptions.create", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -24298,9 +24483,11 @@ func (c *AdvertisersLineItemsTargetingTypesAssignedTargetingOptionsCreateCall) D
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "displayvideo.advertisers.lineItems.targetingTypes.assignedTargetingOptions.create", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -24403,6 +24590,7 @@ func (c *AdvertisersLineItemsTargetingTypesAssignedTargetingOptionsDeleteCall) d
 		"targetingType":             c.targetingType,
 		"assignedTargetingOptionId": c.assignedTargetingOptionId,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "displayvideo.advertisers.lineItems.targetingTypes.assignedTargetingOptions.delete", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -24437,9 +24625,11 @@ func (c *AdvertisersLineItemsTargetingTypesAssignedTargetingOptionsDeleteCall) D
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "displayvideo.advertisers.lineItems.targetingTypes.assignedTargetingOptions.delete", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -24554,6 +24744,7 @@ func (c *AdvertisersLineItemsTargetingTypesAssignedTargetingOptionsGetCall) doRe
 		"targetingType":             c.targetingType,
 		"assignedTargetingOptionId": c.assignedTargetingOptionId,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "displayvideo.advertisers.lineItems.targetingTypes.assignedTargetingOptions.get", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -24589,9 +24780,11 @@ func (c *AdvertisersLineItemsTargetingTypesAssignedTargetingOptionsGetCall) Do(o
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "displayvideo.advertisers.lineItems.targetingTypes.assignedTargetingOptions.get", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -24746,6 +24939,7 @@ func (c *AdvertisersLineItemsTargetingTypesAssignedTargetingOptionsListCall) doR
 		"lineItemId":    strconv.FormatInt(c.lineItemId, 10),
 		"targetingType": c.targetingType,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "displayvideo.advertisers.lineItems.targetingTypes.assignedTargetingOptions.list", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -24781,9 +24975,11 @@ func (c *AdvertisersLineItemsTargetingTypesAssignedTargetingOptionsListCall) Do(
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "displayvideo.advertisers.lineItems.targetingTypes.assignedTargetingOptions.list", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -24870,6 +25066,7 @@ func (c *AdvertisersLocationListsCreateCall) doRequest(alt string) (*http.Respon
 	googleapi.Expand(req.URL, map[string]string{
 		"advertiserId": strconv.FormatInt(c.advertiserId, 10),
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "displayvideo.advertisers.locationLists.create", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -24904,9 +25101,11 @@ func (c *AdvertisersLocationListsCreateCall) Do(opts ...googleapi.CallOption) (*
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "displayvideo.advertisers.locationLists.create", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -24981,6 +25180,7 @@ func (c *AdvertisersLocationListsGetCall) doRequest(alt string) (*http.Response,
 		"advertiserId":   strconv.FormatInt(c.advertiserId, 10),
 		"locationListId": strconv.FormatInt(c.locationListId, 10),
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "displayvideo.advertisers.locationLists.get", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -25015,9 +25215,11 @@ func (c *AdvertisersLocationListsGetCall) Do(opts ...googleapi.CallOption) (*Loc
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "displayvideo.advertisers.locationLists.get", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -25131,6 +25333,7 @@ func (c *AdvertisersLocationListsListCall) doRequest(alt string) (*http.Response
 	googleapi.Expand(req.URL, map[string]string{
 		"advertiserId": strconv.FormatInt(c.advertiserId, 10),
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "displayvideo.advertisers.locationLists.list", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -25166,9 +25369,11 @@ func (c *AdvertisersLocationListsListCall) Do(opts ...googleapi.CallOption) (*Li
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "displayvideo.advertisers.locationLists.list", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -25267,6 +25472,7 @@ func (c *AdvertisersLocationListsPatchCall) doRequest(alt string) (*http.Respons
 		"advertiserId":   strconv.FormatInt(c.advertiserId, 10),
 		"locationListId": strconv.FormatInt(c.locationListId, 10),
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "displayvideo.advertisers.locationLists.patch", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -25301,9 +25507,11 @@ func (c *AdvertisersLocationListsPatchCall) Do(opts ...googleapi.CallOption) (*L
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "displayvideo.advertisers.locationLists.patch", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -25376,6 +25584,7 @@ func (c *AdvertisersLocationListsAssignedLocationsBulkEditCall) doRequest(alt st
 		"advertiserId":   strconv.FormatInt(c.advertiserId, 10),
 		"locationListId": strconv.FormatInt(c.locationListId, 10),
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "displayvideo.advertisers.locationLists.assignedLocations.bulkEdit", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -25411,9 +25620,11 @@ func (c *AdvertisersLocationListsAssignedLocationsBulkEditCall) Do(opts ...googl
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "displayvideo.advertisers.locationLists.assignedLocations.bulkEdit", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -25483,6 +25694,7 @@ func (c *AdvertisersLocationListsAssignedLocationsCreateCall) doRequest(alt stri
 		"advertiserId":   strconv.FormatInt(c.advertiserId, 10),
 		"locationListId": strconv.FormatInt(c.locationListId, 10),
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "displayvideo.advertisers.locationLists.assignedLocations.create", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -25518,9 +25730,11 @@ func (c *AdvertisersLocationListsAssignedLocationsCreateCall) Do(opts ...googlea
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "displayvideo.advertisers.locationLists.assignedLocations.create", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -25588,6 +25802,7 @@ func (c *AdvertisersLocationListsAssignedLocationsDeleteCall) doRequest(alt stri
 		"locationListId":     strconv.FormatInt(c.locationListId, 10),
 		"assignedLocationId": strconv.FormatInt(c.assignedLocationId, 10),
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "displayvideo.advertisers.locationLists.assignedLocations.delete", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -25622,9 +25837,11 @@ func (c *AdvertisersLocationListsAssignedLocationsDeleteCall) Do(opts ...googlea
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "displayvideo.advertisers.locationLists.assignedLocations.delete", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -25740,6 +25957,7 @@ func (c *AdvertisersLocationListsAssignedLocationsListCall) doRequest(alt string
 		"advertiserId":   strconv.FormatInt(c.advertiserId, 10),
 		"locationListId": strconv.FormatInt(c.locationListId, 10),
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "displayvideo.advertisers.locationLists.assignedLocations.list", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -25775,9 +25993,11 @@ func (c *AdvertisersLocationListsAssignedLocationsListCall) Do(opts ...googleapi
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "displayvideo.advertisers.locationLists.assignedLocations.list", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -25864,6 +26084,7 @@ func (c *AdvertisersNegativeKeywordListsCreateCall) doRequest(alt string) (*http
 	googleapi.Expand(req.URL, map[string]string{
 		"advertiserId": strconv.FormatInt(c.advertiserId, 10),
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "displayvideo.advertisers.negativeKeywordLists.create", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -25899,9 +26120,11 @@ func (c *AdvertisersNegativeKeywordListsCreateCall) Do(opts ...googleapi.CallOpt
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "displayvideo.advertisers.negativeKeywordLists.create", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -25965,6 +26188,7 @@ func (c *AdvertisersNegativeKeywordListsDeleteCall) doRequest(alt string) (*http
 		"advertiserId":          strconv.FormatInt(c.advertiserId, 10),
 		"negativeKeywordListId": strconv.FormatInt(c.negativeKeywordListId, 10),
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "displayvideo.advertisers.negativeKeywordLists.delete", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -25999,9 +26223,11 @@ func (c *AdvertisersNegativeKeywordListsDeleteCall) Do(opts ...googleapi.CallOpt
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "displayvideo.advertisers.negativeKeywordLists.delete", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -26077,6 +26303,7 @@ func (c *AdvertisersNegativeKeywordListsGetCall) doRequest(alt string) (*http.Re
 		"advertiserId":          strconv.FormatInt(c.advertiserId, 10),
 		"negativeKeywordListId": strconv.FormatInt(c.negativeKeywordListId, 10),
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "displayvideo.advertisers.negativeKeywordLists.get", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -26112,9 +26339,11 @@ func (c *AdvertisersNegativeKeywordListsGetCall) Do(opts ...googleapi.CallOption
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "displayvideo.advertisers.negativeKeywordLists.get", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -26203,6 +26432,7 @@ func (c *AdvertisersNegativeKeywordListsListCall) doRequest(alt string) (*http.R
 	googleapi.Expand(req.URL, map[string]string{
 		"advertiserId": strconv.FormatInt(c.advertiserId, 10),
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "displayvideo.advertisers.negativeKeywordLists.list", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -26238,9 +26468,11 @@ func (c *AdvertisersNegativeKeywordListsListCall) Do(opts ...googleapi.CallOptio
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "displayvideo.advertisers.negativeKeywordLists.list", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -26339,6 +26571,7 @@ func (c *AdvertisersNegativeKeywordListsPatchCall) doRequest(alt string) (*http.
 		"advertiserId":          strconv.FormatInt(c.advertiserId, 10),
 		"negativeKeywordListId": strconv.FormatInt(c.negativeKeywordListId, 10),
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "displayvideo.advertisers.negativeKeywordLists.patch", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -26374,9 +26607,11 @@ func (c *AdvertisersNegativeKeywordListsPatchCall) Do(opts ...googleapi.CallOpti
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "displayvideo.advertisers.negativeKeywordLists.patch", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -26452,6 +26687,7 @@ func (c *AdvertisersNegativeKeywordListsNegativeKeywordsBulkEditCall) doRequest(
 		"advertiserId":          strconv.FormatInt(c.advertiserId, 10),
 		"negativeKeywordListId": strconv.FormatInt(c.negativeKeywordListId, 10),
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "displayvideo.advertisers.negativeKeywordLists.negativeKeywords.bulkEdit", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -26487,9 +26723,11 @@ func (c *AdvertisersNegativeKeywordListsNegativeKeywordsBulkEditCall) Do(opts ..
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "displayvideo.advertisers.negativeKeywordLists.negativeKeywords.bulkEdit", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -26559,6 +26797,7 @@ func (c *AdvertisersNegativeKeywordListsNegativeKeywordsCreateCall) doRequest(al
 		"advertiserId":          strconv.FormatInt(c.advertiserId, 10),
 		"negativeKeywordListId": strconv.FormatInt(c.negativeKeywordListId, 10),
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "displayvideo.advertisers.negativeKeywordLists.negativeKeywords.create", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -26594,9 +26833,11 @@ func (c *AdvertisersNegativeKeywordListsNegativeKeywordsCreateCall) Do(opts ...g
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "displayvideo.advertisers.negativeKeywordLists.negativeKeywords.create", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -26664,6 +26905,7 @@ func (c *AdvertisersNegativeKeywordListsNegativeKeywordsDeleteCall) doRequest(al
 		"negativeKeywordListId": strconv.FormatInt(c.negativeKeywordListId, 10),
 		"keywordValue":          c.keywordValue,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "displayvideo.advertisers.negativeKeywordLists.negativeKeywords.delete", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -26698,9 +26940,11 @@ func (c *AdvertisersNegativeKeywordListsNegativeKeywordsDeleteCall) Do(opts ...g
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "displayvideo.advertisers.negativeKeywordLists.negativeKeywords.delete", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -26816,6 +27060,7 @@ func (c *AdvertisersNegativeKeywordListsNegativeKeywordsListCall) doRequest(alt 
 		"advertiserId":          strconv.FormatInt(c.advertiserId, 10),
 		"negativeKeywordListId": strconv.FormatInt(c.negativeKeywordListId, 10),
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "displayvideo.advertisers.negativeKeywordLists.negativeKeywords.list", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -26851,9 +27096,11 @@ func (c *AdvertisersNegativeKeywordListsNegativeKeywordsListCall) Do(opts ...goo
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "displayvideo.advertisers.negativeKeywordLists.negativeKeywords.list", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -26946,6 +27193,7 @@ func (c *AdvertisersNegativeKeywordListsNegativeKeywordsReplaceCall) doRequest(a
 		"advertiserId":          strconv.FormatInt(c.advertiserId, 10),
 		"negativeKeywordListId": strconv.FormatInt(c.negativeKeywordListId, 10),
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "displayvideo.advertisers.negativeKeywordLists.negativeKeywords.replace", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -26981,9 +27229,11 @@ func (c *AdvertisersNegativeKeywordListsNegativeKeywordsReplaceCall) Do(opts ...
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "displayvideo.advertisers.negativeKeywordLists.negativeKeywords.replace", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -27055,6 +27305,7 @@ func (c *AdvertisersTargetingTypesAssignedTargetingOptionsCreateCall) doRequest(
 		"advertiserId":  strconv.FormatInt(c.advertiserId, 10),
 		"targetingType": c.targetingType,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "displayvideo.advertisers.targetingTypes.assignedTargetingOptions.create", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -27090,9 +27341,11 @@ func (c *AdvertisersTargetingTypesAssignedTargetingOptionsCreateCall) Do(opts ..
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "displayvideo.advertisers.targetingTypes.assignedTargetingOptions.create", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -27162,6 +27415,7 @@ func (c *AdvertisersTargetingTypesAssignedTargetingOptionsDeleteCall) doRequest(
 		"targetingType":             c.targetingType,
 		"assignedTargetingOptionId": c.assignedTargetingOptionId,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "displayvideo.advertisers.targetingTypes.assignedTargetingOptions.delete", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -27196,9 +27450,11 @@ func (c *AdvertisersTargetingTypesAssignedTargetingOptionsDeleteCall) Do(opts ..
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "displayvideo.advertisers.targetingTypes.assignedTargetingOptions.delete", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -27283,6 +27539,7 @@ func (c *AdvertisersTargetingTypesAssignedTargetingOptionsGetCall) doRequest(alt
 		"targetingType":             c.targetingType,
 		"assignedTargetingOptionId": c.assignedTargetingOptionId,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "displayvideo.advertisers.targetingTypes.assignedTargetingOptions.get", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -27318,9 +27575,11 @@ func (c *AdvertisersTargetingTypesAssignedTargetingOptionsGetCall) Do(opts ...go
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "displayvideo.advertisers.targetingTypes.assignedTargetingOptions.get", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -27441,6 +27700,7 @@ func (c *AdvertisersTargetingTypesAssignedTargetingOptionsListCall) doRequest(al
 		"advertiserId":  strconv.FormatInt(c.advertiserId, 10),
 		"targetingType": c.targetingType,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "displayvideo.advertisers.targetingTypes.assignedTargetingOptions.list", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -27476,9 +27736,11 @@ func (c *AdvertisersTargetingTypesAssignedTargetingOptionsListCall) Do(opts ...g
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "displayvideo.advertisers.targetingTypes.assignedTargetingOptions.list", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -27583,6 +27845,7 @@ func (c *CombinedAudiencesGetCall) doRequest(alt string) (*http.Response, error)
 	googleapi.Expand(req.URL, map[string]string{
 		"combinedAudienceId": strconv.FormatInt(c.combinedAudienceId, 10),
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "displayvideo.combinedAudiences.get", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -27618,9 +27881,11 @@ func (c *CombinedAudiencesGetCall) Do(opts ...googleapi.CallOption) (*CombinedAu
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "displayvideo.combinedAudiences.get", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -27739,6 +28004,7 @@ func (c *CombinedAudiencesListCall) doRequest(alt string) (*http.Response, error
 		return nil, err
 	}
 	req.Header = reqHeaders
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "displayvideo.combinedAudiences.list", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -27774,9 +28040,11 @@ func (c *CombinedAudiencesListCall) Do(opts ...googleapi.CallOption) (*ListCombi
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "displayvideo.combinedAudiences.list", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -27855,6 +28123,7 @@ func (c *CustomBiddingAlgorithmsCreateCall) doRequest(alt string) (*http.Respons
 		return nil, err
 	}
 	req.Header = reqHeaders
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "displayvideo.customBiddingAlgorithms.create", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -27890,9 +28159,11 @@ func (c *CustomBiddingAlgorithmsCreateCall) Do(opts ...googleapi.CallOption) (*C
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "displayvideo.customBiddingAlgorithms.create", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -27976,6 +28247,7 @@ func (c *CustomBiddingAlgorithmsGetCall) doRequest(alt string) (*http.Response, 
 	googleapi.Expand(req.URL, map[string]string{
 		"customBiddingAlgorithmId": strconv.FormatInt(c.customBiddingAlgorithmId, 10),
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "displayvideo.customBiddingAlgorithms.get", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -28011,9 +28283,11 @@ func (c *CustomBiddingAlgorithmsGetCall) Do(opts ...googleapi.CallOption) (*Cust
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "displayvideo.customBiddingAlgorithms.get", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -28137,6 +28411,7 @@ func (c *CustomBiddingAlgorithmsListCall) doRequest(alt string) (*http.Response,
 		return nil, err
 	}
 	req.Header = reqHeaders
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "displayvideo.customBiddingAlgorithms.list", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -28172,9 +28447,11 @@ func (c *CustomBiddingAlgorithmsListCall) Do(opts ...googleapi.CallOption) (*Lis
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "displayvideo.customBiddingAlgorithms.list", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -28268,6 +28545,7 @@ func (c *CustomBiddingAlgorithmsPatchCall) doRequest(alt string) (*http.Response
 	googleapi.Expand(req.URL, map[string]string{
 		"customBiddingAlgorithmId": strconv.FormatInt(c.customBiddingAlgorithmId, 10),
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "displayvideo.customBiddingAlgorithms.patch", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -28303,9 +28581,11 @@ func (c *CustomBiddingAlgorithmsPatchCall) Do(opts ...googleapi.CallOption) (*Cu
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "displayvideo.customBiddingAlgorithms.patch", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -28393,6 +28673,7 @@ func (c *CustomBiddingAlgorithmsUploadRulesCall) doRequest(alt string) (*http.Re
 	googleapi.Expand(req.URL, map[string]string{
 		"customBiddingAlgorithmId": strconv.FormatInt(c.customBiddingAlgorithmId, 10),
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "displayvideo.customBiddingAlgorithms.uploadRules", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -28428,9 +28709,11 @@ func (c *CustomBiddingAlgorithmsUploadRulesCall) Do(opts ...googleapi.CallOption
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "displayvideo.customBiddingAlgorithms.uploadRules", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -28519,6 +28802,7 @@ func (c *CustomBiddingAlgorithmsUploadScriptCall) doRequest(alt string) (*http.R
 	googleapi.Expand(req.URL, map[string]string{
 		"customBiddingAlgorithmId": strconv.FormatInt(c.customBiddingAlgorithmId, 10),
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "displayvideo.customBiddingAlgorithms.uploadScript", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -28554,9 +28838,11 @@ func (c *CustomBiddingAlgorithmsUploadScriptCall) Do(opts ...googleapi.CallOptio
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "displayvideo.customBiddingAlgorithms.uploadScript", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -28637,6 +28923,7 @@ func (c *CustomBiddingAlgorithmsRulesCreateCall) doRequest(alt string) (*http.Re
 	googleapi.Expand(req.URL, map[string]string{
 		"customBiddingAlgorithmId": strconv.FormatInt(c.customBiddingAlgorithmId, 10),
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "displayvideo.customBiddingAlgorithms.rules.create", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -28672,9 +28959,11 @@ func (c *CustomBiddingAlgorithmsRulesCreateCall) Do(opts ...googleapi.CallOption
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "displayvideo.customBiddingAlgorithms.rules.create", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -28763,6 +29052,7 @@ func (c *CustomBiddingAlgorithmsRulesGetCall) doRequest(alt string) (*http.Respo
 		"customBiddingAlgorithmId":      strconv.FormatInt(c.customBiddingAlgorithmId, 10),
 		"customBiddingAlgorithmRulesId": strconv.FormatInt(c.customBiddingAlgorithmRulesId, 10),
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "displayvideo.customBiddingAlgorithms.rules.get", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -28798,9 +29088,11 @@ func (c *CustomBiddingAlgorithmsRulesGetCall) Do(opts ...googleapi.CallOption) (
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "displayvideo.customBiddingAlgorithms.rules.get", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -28913,6 +29205,7 @@ func (c *CustomBiddingAlgorithmsRulesListCall) doRequest(alt string) (*http.Resp
 	googleapi.Expand(req.URL, map[string]string{
 		"customBiddingAlgorithmId": strconv.FormatInt(c.customBiddingAlgorithmId, 10),
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "displayvideo.customBiddingAlgorithms.rules.list", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -28948,9 +29241,11 @@ func (c *CustomBiddingAlgorithmsRulesListCall) Do(opts ...googleapi.CallOption) 
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "displayvideo.customBiddingAlgorithms.rules.list", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -29052,6 +29347,7 @@ func (c *CustomBiddingAlgorithmsScriptsCreateCall) doRequest(alt string) (*http.
 	googleapi.Expand(req.URL, map[string]string{
 		"customBiddingAlgorithmId": strconv.FormatInt(c.customBiddingAlgorithmId, 10),
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "displayvideo.customBiddingAlgorithms.scripts.create", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -29087,9 +29383,11 @@ func (c *CustomBiddingAlgorithmsScriptsCreateCall) Do(opts ...googleapi.CallOpti
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "displayvideo.customBiddingAlgorithms.scripts.create", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -29179,6 +29477,7 @@ func (c *CustomBiddingAlgorithmsScriptsGetCall) doRequest(alt string) (*http.Res
 		"customBiddingAlgorithmId": strconv.FormatInt(c.customBiddingAlgorithmId, 10),
 		"customBiddingScriptId":    strconv.FormatInt(c.customBiddingScriptId, 10),
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "displayvideo.customBiddingAlgorithms.scripts.get", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -29214,9 +29513,11 @@ func (c *CustomBiddingAlgorithmsScriptsGetCall) Do(opts ...googleapi.CallOption)
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "displayvideo.customBiddingAlgorithms.scripts.get", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -29330,6 +29631,7 @@ func (c *CustomBiddingAlgorithmsScriptsListCall) doRequest(alt string) (*http.Re
 	googleapi.Expand(req.URL, map[string]string{
 		"customBiddingAlgorithmId": strconv.FormatInt(c.customBiddingAlgorithmId, 10),
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "displayvideo.customBiddingAlgorithms.scripts.list", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -29365,9 +29667,11 @@ func (c *CustomBiddingAlgorithmsScriptsListCall) Do(opts ...googleapi.CallOption
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "displayvideo.customBiddingAlgorithms.scripts.list", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -29465,6 +29769,7 @@ func (c *CustomListsGetCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"customListId": strconv.FormatInt(c.customListId, 10),
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "displayvideo.customLists.get", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -29499,9 +29804,11 @@ func (c *CustomListsGetCall) Do(opts ...googleapi.CallOption) (*CustomList, erro
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "displayvideo.customLists.get", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -29611,6 +29918,7 @@ func (c *CustomListsListCall) doRequest(alt string) (*http.Response, error) {
 		return nil, err
 	}
 	req.Header = reqHeaders
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "displayvideo.customLists.list", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -29646,9 +29954,11 @@ func (c *CustomListsListCall) Do(opts ...googleapi.CallOption) (*ListCustomLists
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "displayvideo.customLists.list", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -29735,6 +30045,7 @@ func (c *FirstAndThirdPartyAudiencesCreateCall) doRequest(alt string) (*http.Res
 		return nil, err
 	}
 	req.Header = reqHeaders
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "displayvideo.firstAndThirdPartyAudiences.create", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -29770,9 +30081,11 @@ func (c *FirstAndThirdPartyAudiencesCreateCall) Do(opts ...googleapi.CallOption)
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "displayvideo.firstAndThirdPartyAudiences.create", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -29839,6 +30152,7 @@ func (c *FirstAndThirdPartyAudiencesEditCustomerMatchMembersCall) doRequest(alt 
 	googleapi.Expand(req.URL, map[string]string{
 		"firstAndThirdPartyAudienceId": strconv.FormatInt(c.firstAndThirdPartyAudienceId, 10),
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "displayvideo.firstAndThirdPartyAudiences.editCustomerMatchMembers", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -29874,9 +30188,11 @@ func (c *FirstAndThirdPartyAudiencesEditCustomerMatchMembersCall) Do(opts ...goo
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "displayvideo.firstAndThirdPartyAudiences.editCustomerMatchMembers", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -29961,6 +30277,7 @@ func (c *FirstAndThirdPartyAudiencesGetCall) doRequest(alt string) (*http.Respon
 	googleapi.Expand(req.URL, map[string]string{
 		"firstAndThirdPartyAudienceId": strconv.FormatInt(c.firstAndThirdPartyAudienceId, 10),
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "displayvideo.firstAndThirdPartyAudiences.get", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -29996,9 +30313,11 @@ func (c *FirstAndThirdPartyAudiencesGetCall) Do(opts ...googleapi.CallOption) (*
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "displayvideo.firstAndThirdPartyAudiences.get", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -30118,6 +30437,7 @@ func (c *FirstAndThirdPartyAudiencesListCall) doRequest(alt string) (*http.Respo
 		return nil, err
 	}
 	req.Header = reqHeaders
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "displayvideo.firstAndThirdPartyAudiences.list", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -30153,9 +30473,11 @@ func (c *FirstAndThirdPartyAudiencesListCall) Do(opts ...googleapi.CallOption) (
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "displayvideo.firstAndThirdPartyAudiences.list", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -30258,6 +30580,7 @@ func (c *FirstAndThirdPartyAudiencesPatchCall) doRequest(alt string) (*http.Resp
 	googleapi.Expand(req.URL, map[string]string{
 		"firstAndThirdPartyAudienceId": strconv.FormatInt(c.firstAndThirdPartyAudienceId, 10),
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "displayvideo.firstAndThirdPartyAudiences.patch", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -30293,9 +30616,11 @@ func (c *FirstAndThirdPartyAudiencesPatchCall) Do(opts ...googleapi.CallOption) 
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "displayvideo.firstAndThirdPartyAudiences.patch", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -30372,6 +30697,7 @@ func (c *FloodlightGroupsGetCall) doRequest(alt string) (*http.Response, error) 
 	googleapi.Expand(req.URL, map[string]string{
 		"floodlightGroupId": strconv.FormatInt(c.floodlightGroupId, 10),
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "displayvideo.floodlightGroups.get", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -30407,9 +30733,11 @@ func (c *FloodlightGroupsGetCall) Do(opts ...googleapi.CallOption) (*FloodlightG
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "displayvideo.floodlightGroups.get", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -30489,6 +30817,7 @@ func (c *FloodlightGroupsPatchCall) doRequest(alt string) (*http.Response, error
 	googleapi.Expand(req.URL, map[string]string{
 		"floodlightGroupId": strconv.FormatInt(c.floodlightGroupId, 10),
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "displayvideo.floodlightGroups.patch", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -30524,9 +30853,11 @@ func (c *FloodlightGroupsPatchCall) Do(opts ...googleapi.CallOption) (*Floodligh
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "displayvideo.floodlightGroups.patch", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -30608,6 +30939,7 @@ func (c *FloodlightGroupsFloodlightActivitiesGetCall) doRequest(alt string) (*ht
 		"floodlightGroupId":    strconv.FormatInt(c.floodlightGroupId, 10),
 		"floodlightActivityId": strconv.FormatInt(c.floodlightActivityId, 10),
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "displayvideo.floodlightGroups.floodlightActivities.get", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -30643,9 +30975,11 @@ func (c *FloodlightGroupsFloodlightActivitiesGetCall) Do(opts ...googleapi.CallO
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "displayvideo.floodlightGroups.floodlightActivities.get", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -30751,6 +31085,7 @@ func (c *FloodlightGroupsFloodlightActivitiesListCall) doRequest(alt string) (*h
 	googleapi.Expand(req.URL, map[string]string{
 		"floodlightGroupId": strconv.FormatInt(c.floodlightGroupId, 10),
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "displayvideo.floodlightGroups.floodlightActivities.list", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -30786,9 +31121,11 @@ func (c *FloodlightGroupsFloodlightActivitiesListCall) Do(opts ...googleapi.Call
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "displayvideo.floodlightGroups.floodlightActivities.list", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -30893,6 +31230,7 @@ func (c *GoogleAudiencesGetCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"googleAudienceId": strconv.FormatInt(c.googleAudienceId, 10),
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "displayvideo.googleAudiences.get", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -30927,9 +31265,11 @@ func (c *GoogleAudiencesGetCall) Do(opts ...googleapi.CallOption) (*GoogleAudien
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "displayvideo.googleAudiences.get", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -31048,6 +31388,7 @@ func (c *GoogleAudiencesListCall) doRequest(alt string) (*http.Response, error) 
 		return nil, err
 	}
 	req.Header = reqHeaders
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "displayvideo.googleAudiences.list", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -31083,9 +31424,11 @@ func (c *GoogleAudiencesListCall) Do(opts ...googleapi.CallOption) (*ListGoogleA
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "displayvideo.googleAudiences.list", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -31178,6 +31521,7 @@ func (c *GuaranteedOrdersCreateCall) doRequest(alt string) (*http.Response, erro
 		return nil, err
 	}
 	req.Header = reqHeaders
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "displayvideo.guaranteedOrders.create", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -31213,9 +31557,11 @@ func (c *GuaranteedOrdersCreateCall) Do(opts ...googleapi.CallOption) (*Guarante
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "displayvideo.guaranteedOrders.create", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -31281,6 +31627,7 @@ func (c *GuaranteedOrdersEditGuaranteedOrderReadAccessorsCall) doRequest(alt str
 	googleapi.Expand(req.URL, map[string]string{
 		"guaranteedOrderId": c.guaranteedOrderId,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "displayvideo.guaranteedOrders.editGuaranteedOrderReadAccessors", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -31316,9 +31663,11 @@ func (c *GuaranteedOrdersEditGuaranteedOrderReadAccessorsCall) Do(opts ...google
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "displayvideo.guaranteedOrders.editGuaranteedOrderReadAccessors", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -31403,6 +31752,7 @@ func (c *GuaranteedOrdersGetCall) doRequest(alt string) (*http.Response, error) 
 	googleapi.Expand(req.URL, map[string]string{
 		"guaranteedOrderId": c.guaranteedOrderId,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "displayvideo.guaranteedOrders.get", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -31438,9 +31788,11 @@ func (c *GuaranteedOrdersGetCall) Do(opts ...googleapi.CallOption) (*GuaranteedO
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "displayvideo.guaranteedOrders.get", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -31563,6 +31915,7 @@ func (c *GuaranteedOrdersListCall) doRequest(alt string) (*http.Response, error)
 		return nil, err
 	}
 	req.Header = reqHeaders
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "displayvideo.guaranteedOrders.list", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -31598,9 +31951,11 @@ func (c *GuaranteedOrdersListCall) Do(opts ...googleapi.CallOption) (*ListGuaran
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "displayvideo.guaranteedOrders.list", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -31709,6 +32064,7 @@ func (c *GuaranteedOrdersPatchCall) doRequest(alt string) (*http.Response, error
 	googleapi.Expand(req.URL, map[string]string{
 		"guaranteedOrderId": c.guaranteedOrderId,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "displayvideo.guaranteedOrders.patch", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -31744,9 +32100,11 @@ func (c *GuaranteedOrdersPatchCall) Do(opts ...googleapi.CallOption) (*Guarantee
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "displayvideo.guaranteedOrders.patch", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -31821,6 +32179,7 @@ func (c *InventorySourceGroupsCreateCall) doRequest(alt string) (*http.Response,
 		return nil, err
 	}
 	req.Header = reqHeaders
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "displayvideo.inventorySourceGroups.create", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -31856,9 +32215,11 @@ func (c *InventorySourceGroupsCreateCall) Do(opts ...googleapi.CallOption) (*Inv
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "displayvideo.inventorySourceGroups.create", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -31932,6 +32293,7 @@ func (c *InventorySourceGroupsDeleteCall) doRequest(alt string) (*http.Response,
 	googleapi.Expand(req.URL, map[string]string{
 		"inventorySourceGroupId": strconv.FormatInt(c.inventorySourceGroupId, 10),
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "displayvideo.inventorySourceGroups.delete", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -31966,9 +32328,11 @@ func (c *InventorySourceGroupsDeleteCall) Do(opts ...googleapi.CallOption) (*Emp
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "displayvideo.inventorySourceGroups.delete", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -32055,6 +32419,7 @@ func (c *InventorySourceGroupsGetCall) doRequest(alt string) (*http.Response, er
 	googleapi.Expand(req.URL, map[string]string{
 		"inventorySourceGroupId": strconv.FormatInt(c.inventorySourceGroupId, 10),
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "displayvideo.inventorySourceGroups.get", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -32090,9 +32455,11 @@ func (c *InventorySourceGroupsGetCall) Do(opts ...googleapi.CallOption) (*Invent
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "displayvideo.inventorySourceGroups.get", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -32212,6 +32579,7 @@ func (c *InventorySourceGroupsListCall) doRequest(alt string) (*http.Response, e
 		return nil, err
 	}
 	req.Header = reqHeaders
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "displayvideo.inventorySourceGroups.list", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -32247,9 +32615,11 @@ func (c *InventorySourceGroupsListCall) Do(opts ...googleapi.CallOption) (*ListI
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "displayvideo.inventorySourceGroups.list", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -32359,6 +32729,7 @@ func (c *InventorySourceGroupsPatchCall) doRequest(alt string) (*http.Response, 
 	googleapi.Expand(req.URL, map[string]string{
 		"inventorySourceGroupId": strconv.FormatInt(c.inventorySourceGroupId, 10),
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "displayvideo.inventorySourceGroups.patch", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -32394,9 +32765,11 @@ func (c *InventorySourceGroupsPatchCall) Do(opts ...googleapi.CallOption) (*Inve
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "displayvideo.inventorySourceGroups.patch", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -32466,6 +32839,7 @@ func (c *InventorySourceGroupsAssignedInventorySourcesBulkEditCall) doRequest(al
 	googleapi.Expand(req.URL, map[string]string{
 		"inventorySourceGroupId": strconv.FormatInt(c.inventorySourceGroupId, 10),
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "displayvideo.inventorySourceGroups.assignedInventorySources.bulkEdit", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -32501,9 +32875,11 @@ func (c *InventorySourceGroupsAssignedInventorySourcesBulkEditCall) Do(opts ...g
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "displayvideo.inventorySourceGroups.assignedInventorySources.bulkEdit", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -32585,6 +32961,7 @@ func (c *InventorySourceGroupsAssignedInventorySourcesCreateCall) doRequest(alt 
 	googleapi.Expand(req.URL, map[string]string{
 		"inventorySourceGroupId": strconv.FormatInt(c.inventorySourceGroupId, 10),
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "displayvideo.inventorySourceGroups.assignedInventorySources.create", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -32620,9 +32997,11 @@ func (c *InventorySourceGroupsAssignedInventorySourcesCreateCall) Do(opts ...goo
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "displayvideo.inventorySourceGroups.assignedInventorySources.create", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -32703,6 +33082,7 @@ func (c *InventorySourceGroupsAssignedInventorySourcesDeleteCall) doRequest(alt 
 		"inventorySourceGroupId":    strconv.FormatInt(c.inventorySourceGroupId, 10),
 		"assignedInventorySourceId": strconv.FormatInt(c.assignedInventorySourceId, 10),
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "displayvideo.inventorySourceGroups.assignedInventorySources.delete", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -32737,9 +33117,11 @@ func (c *InventorySourceGroupsAssignedInventorySourcesDeleteCall) Do(opts ...goo
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "displayvideo.inventorySourceGroups.assignedInventorySources.delete", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -32868,6 +33250,7 @@ func (c *InventorySourceGroupsAssignedInventorySourcesListCall) doRequest(alt st
 	googleapi.Expand(req.URL, map[string]string{
 		"inventorySourceGroupId": strconv.FormatInt(c.inventorySourceGroupId, 10),
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "displayvideo.inventorySourceGroups.assignedInventorySources.list", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -32903,9 +33286,11 @@ func (c *InventorySourceGroupsAssignedInventorySourcesListCall) Do(opts ...googl
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "displayvideo.inventorySourceGroups.assignedInventorySources.list", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -32998,6 +33383,7 @@ func (c *InventorySourcesCreateCall) doRequest(alt string) (*http.Response, erro
 		return nil, err
 	}
 	req.Header = reqHeaders
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "displayvideo.inventorySources.create", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -33033,9 +33419,11 @@ func (c *InventorySourcesCreateCall) Do(opts ...googleapi.CallOption) (*Inventor
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "displayvideo.inventorySources.create", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -33101,6 +33489,7 @@ func (c *InventorySourcesEditInventorySourceReadWriteAccessorsCall) doRequest(al
 	googleapi.Expand(req.URL, map[string]string{
 		"inventorySourceId": strconv.FormatInt(c.inventorySourceId, 10),
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "displayvideo.inventorySources.editInventorySourceReadWriteAccessors", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -33136,9 +33525,11 @@ func (c *InventorySourcesEditInventorySourceReadWriteAccessorsCall) Do(opts ...g
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "displayvideo.inventorySources.editInventorySourceReadWriteAccessors", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -33224,6 +33615,7 @@ func (c *InventorySourcesGetCall) doRequest(alt string) (*http.Response, error) 
 	googleapi.Expand(req.URL, map[string]string{
 		"inventorySourceId": strconv.FormatInt(c.inventorySourceId, 10),
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "displayvideo.inventorySources.get", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -33259,9 +33651,11 @@ func (c *InventorySourcesGetCall) Do(opts ...googleapi.CallOption) (*InventorySo
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "displayvideo.inventorySources.get", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -33385,6 +33779,7 @@ func (c *InventorySourcesListCall) doRequest(alt string) (*http.Response, error)
 		return nil, err
 	}
 	req.Header = reqHeaders
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "displayvideo.inventorySources.list", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -33420,9 +33815,11 @@ func (c *InventorySourcesListCall) Do(opts ...googleapi.CallOption) (*ListInvent
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "displayvideo.inventorySources.list", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -33530,6 +33927,7 @@ func (c *InventorySourcesPatchCall) doRequest(alt string) (*http.Response, error
 	googleapi.Expand(req.URL, map[string]string{
 		"inventorySourceId": strconv.FormatInt(c.inventorySourceId, 10),
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "displayvideo.inventorySources.patch", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -33565,9 +33963,11 @@ func (c *InventorySourcesPatchCall) Do(opts ...googleapi.CallOption) (*Inventory
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "displayvideo.inventorySources.patch", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -33640,6 +34040,7 @@ func (c *MediaDownloadCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"resourceName": c.resourceName,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "displayvideo.media.download", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -33691,9 +34092,11 @@ func (c *MediaDownloadCall) Do(opts ...googleapi.CallOption) (*GoogleBytestreamM
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "displayvideo.media.download", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -33807,6 +34210,7 @@ func (c *MediaUploadCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"resourceName": c.resourceName,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "displayvideo.media.upload", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -33859,9 +34263,11 @@ func (c *MediaUploadCall) Do(opts ...googleapi.CallOption) (*GoogleBytestreamMed
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "displayvideo.media.upload", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -33929,6 +34335,7 @@ func (c *PartnersEditAssignedTargetingOptionsCall) doRequest(alt string) (*http.
 	googleapi.Expand(req.URL, map[string]string{
 		"partnerId": strconv.FormatInt(c.partnerId, 10),
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "displayvideo.partners.editAssignedTargetingOptions", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -33964,9 +34371,11 @@ func (c *PartnersEditAssignedTargetingOptionsCall) Do(opts ...googleapi.CallOpti
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "displayvideo.partners.editAssignedTargetingOptions", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -34036,6 +34445,7 @@ func (c *PartnersGetCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"partnerId": strconv.FormatInt(c.partnerId, 10),
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "displayvideo.partners.get", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -34070,9 +34480,11 @@ func (c *PartnersGetCall) Do(opts ...googleapi.CallOption) (*Partner, error) {
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "displayvideo.partners.get", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -34176,6 +34588,7 @@ func (c *PartnersListCall) doRequest(alt string) (*http.Response, error) {
 		return nil, err
 	}
 	req.Header = reqHeaders
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "displayvideo.partners.list", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -34211,9 +34624,11 @@ func (c *PartnersListCall) Do(opts ...googleapi.CallOption) (*ListPartnersRespon
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "displayvideo.partners.list", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -34306,6 +34721,7 @@ func (c *PartnersChannelsCreateCall) doRequest(alt string) (*http.Response, erro
 	googleapi.Expand(req.URL, map[string]string{
 		"partnerId": strconv.FormatInt(c.partnerId, 10),
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "displayvideo.partners.channels.create", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -34340,9 +34756,11 @@ func (c *PartnersChannelsCreateCall) Do(opts ...googleapi.CallOption) (*Channel,
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "displayvideo.partners.channels.create", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -34423,6 +34841,7 @@ func (c *PartnersChannelsGetCall) doRequest(alt string) (*http.Response, error) 
 		"partnerId": strconv.FormatInt(c.partnerId, 10),
 		"channelId": strconv.FormatInt(c.channelId, 10),
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "displayvideo.partners.channels.get", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -34457,9 +34876,11 @@ func (c *PartnersChannelsGetCall) Do(opts ...googleapi.CallOption) (*Channel, er
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "displayvideo.partners.channels.get", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -34576,6 +34997,7 @@ func (c *PartnersChannelsListCall) doRequest(alt string) (*http.Response, error)
 	googleapi.Expand(req.URL, map[string]string{
 		"partnerId": strconv.FormatInt(c.partnerId, 10),
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "displayvideo.partners.channels.list", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -34611,9 +35033,11 @@ func (c *PartnersChannelsListCall) Do(opts ...googleapi.CallOption) (*ListChanne
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "displayvideo.partners.channels.list", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -34717,6 +35141,7 @@ func (c *PartnersChannelsPatchCall) doRequest(alt string) (*http.Response, error
 		"partnerId": strconv.FormatInt(c.partnerId, 10),
 		"channelId": strconv.FormatInt(c.channelId, 10),
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "displayvideo.partners.channels.patch", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -34751,9 +35176,11 @@ func (c *PartnersChannelsPatchCall) Do(opts ...googleapi.CallOption) (*Channel, 
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "displayvideo.partners.channels.patch", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -34823,6 +35250,7 @@ func (c *PartnersChannelsSitesBulkEditCall) doRequest(alt string) (*http.Respons
 		"partnerId": strconv.FormatInt(c.partnerId, 10),
 		"channelId": strconv.FormatInt(c.channelId, 10),
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "displayvideo.partners.channels.sites.bulkEdit", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -34858,9 +35286,11 @@ func (c *PartnersChannelsSitesBulkEditCall) Do(opts ...googleapi.CallOption) (*B
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "displayvideo.partners.channels.sites.bulkEdit", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -34935,6 +35365,7 @@ func (c *PartnersChannelsSitesCreateCall) doRequest(alt string) (*http.Response,
 		"partnerId": strconv.FormatInt(c.partnerId, 10),
 		"channelId": strconv.FormatInt(c.channelId, 10),
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "displayvideo.partners.channels.sites.create", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -34969,9 +35400,11 @@ func (c *PartnersChannelsSitesCreateCall) Do(opts ...googleapi.CallOption) (*Sit
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "displayvideo.partners.channels.sites.create", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -35044,6 +35477,7 @@ func (c *PartnersChannelsSitesDeleteCall) doRequest(alt string) (*http.Response,
 		"channelId":  strconv.FormatInt(c.channelId, 10),
 		"urlOrAppId": c.urlOrAppId,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "displayvideo.partners.channels.sites.delete", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -35078,9 +35512,11 @@ func (c *PartnersChannelsSitesDeleteCall) Do(opts ...googleapi.CallOption) (*Emp
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "displayvideo.partners.channels.sites.delete", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -35201,6 +35637,7 @@ func (c *PartnersChannelsSitesListCall) doRequest(alt string) (*http.Response, e
 		"partnerId": strconv.FormatInt(c.partnerId, 10),
 		"channelId": strconv.FormatInt(c.channelId, 10),
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "displayvideo.partners.channels.sites.list", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -35236,9 +35673,11 @@ func (c *PartnersChannelsSitesListCall) Do(opts ...googleapi.CallOption) (*ListS
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "displayvideo.partners.channels.sites.list", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -35332,6 +35771,7 @@ func (c *PartnersChannelsSitesReplaceCall) doRequest(alt string) (*http.Response
 		"partnerId": strconv.FormatInt(c.partnerId, 10),
 		"channelId": strconv.FormatInt(c.channelId, 10),
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "displayvideo.partners.channels.sites.replace", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -35367,9 +35807,11 @@ func (c *PartnersChannelsSitesReplaceCall) Do(opts ...googleapi.CallOption) (*Re
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "displayvideo.partners.channels.sites.replace", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -35439,6 +35881,7 @@ func (c *PartnersTargetingTypesAssignedTargetingOptionsCreateCall) doRequest(alt
 		"partnerId":     strconv.FormatInt(c.partnerId, 10),
 		"targetingType": c.targetingType,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "displayvideo.partners.targetingTypes.assignedTargetingOptions.create", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -35474,9 +35917,11 @@ func (c *PartnersTargetingTypesAssignedTargetingOptionsCreateCall) Do(opts ...go
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "displayvideo.partners.targetingTypes.assignedTargetingOptions.create", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -35544,6 +35989,7 @@ func (c *PartnersTargetingTypesAssignedTargetingOptionsDeleteCall) doRequest(alt
 		"targetingType":             c.targetingType,
 		"assignedTargetingOptionId": c.assignedTargetingOptionId,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "displayvideo.partners.targetingTypes.assignedTargetingOptions.delete", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -35578,9 +36024,11 @@ func (c *PartnersTargetingTypesAssignedTargetingOptionsDeleteCall) Do(opts ...go
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "displayvideo.partners.targetingTypes.assignedTargetingOptions.delete", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -35661,6 +36109,7 @@ func (c *PartnersTargetingTypesAssignedTargetingOptionsGetCall) doRequest(alt st
 		"targetingType":             c.targetingType,
 		"assignedTargetingOptionId": c.assignedTargetingOptionId,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "displayvideo.partners.targetingTypes.assignedTargetingOptions.get", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -35696,9 +36145,11 @@ func (c *PartnersTargetingTypesAssignedTargetingOptionsGetCall) Do(opts ...googl
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "displayvideo.partners.targetingTypes.assignedTargetingOptions.get", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -35816,6 +36267,7 @@ func (c *PartnersTargetingTypesAssignedTargetingOptionsListCall) doRequest(alt s
 		"partnerId":     strconv.FormatInt(c.partnerId, 10),
 		"targetingType": c.targetingType,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "displayvideo.partners.targetingTypes.assignedTargetingOptions.list", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -35851,9 +36303,11 @@ func (c *PartnersTargetingTypesAssignedTargetingOptionsListCall) Do(opts ...goog
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "displayvideo.partners.targetingTypes.assignedTargetingOptions.list", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -35938,6 +36392,7 @@ func (c *SdfdownloadtasksCreateCall) doRequest(alt string) (*http.Response, erro
 		return nil, err
 	}
 	req.Header = reqHeaders
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "displayvideo.sdfdownloadtasks.create", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -35972,9 +36427,11 @@ func (c *SdfdownloadtasksCreateCall) Do(opts ...googleapi.CallOption) (*Operatio
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "displayvideo.sdfdownloadtasks.create", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -36045,6 +36502,7 @@ func (c *SdfdownloadtasksOperationsGetCall) doRequest(alt string) (*http.Respons
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "displayvideo.sdfdownloadtasks.operations.get", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -36079,9 +36537,11 @@ func (c *SdfdownloadtasksOperationsGetCall) Do(opts ...googleapi.CallOption) (*O
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "displayvideo.sdfdownloadtasks.operations.get", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -36177,6 +36637,7 @@ func (c *TargetingTypesTargetingOptionsGetCall) doRequest(alt string) (*http.Res
 		"targetingType":     c.targetingType,
 		"targetingOptionId": c.targetingOptionId,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "displayvideo.targetingTypes.targetingOptions.get", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -36212,9 +36673,11 @@ func (c *TargetingTypesTargetingOptionsGetCall) Do(opts ...googleapi.CallOption)
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "displayvideo.targetingTypes.targetingOptions.get", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -36354,6 +36817,7 @@ func (c *TargetingTypesTargetingOptionsListCall) doRequest(alt string) (*http.Re
 	googleapi.Expand(req.URL, map[string]string{
 		"targetingType": c.targetingType,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "displayvideo.targetingTypes.targetingOptions.list", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -36389,9 +36853,11 @@ func (c *TargetingTypesTargetingOptionsListCall) Do(opts ...googleapi.CallOption
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "displayvideo.targetingTypes.targetingOptions.list", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -36479,6 +36945,7 @@ func (c *TargetingTypesTargetingOptionsSearchCall) doRequest(alt string) (*http.
 	googleapi.Expand(req.URL, map[string]string{
 		"targetingType": c.targetingType,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "displayvideo.targetingTypes.targetingOptions.search", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -36514,9 +36981,11 @@ func (c *TargetingTypesTargetingOptionsSearchCall) Do(opts ...googleapi.CallOpti
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "displayvideo.targetingTypes.targetingOptions.search", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -36609,6 +37078,7 @@ func (c *UsersBulkEditAssignedUserRolesCall) doRequest(alt string) (*http.Respon
 	googleapi.Expand(req.URL, map[string]string{
 		"userId": strconv.FormatInt(c.userId, 10),
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "displayvideo.users.bulkEditAssignedUserRoles", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -36644,9 +37114,11 @@ func (c *UsersBulkEditAssignedUserRolesCall) Do(opts ...googleapi.CallOption) (*
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "displayvideo.users.bulkEditAssignedUserRoles", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -36707,6 +37179,7 @@ func (c *UsersCreateCall) doRequest(alt string) (*http.Response, error) {
 		return nil, err
 	}
 	req.Header = reqHeaders
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "displayvideo.users.create", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -36741,9 +37214,11 @@ func (c *UsersCreateCall) Do(opts ...googleapi.CallOption) (*User, error) {
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "displayvideo.users.create", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -36804,6 +37279,7 @@ func (c *UsersDeleteCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"userId": strconv.FormatInt(c.userId, 10),
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "displayvideo.users.delete", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -36838,9 +37314,11 @@ func (c *UsersDeleteCall) Do(opts ...googleapi.CallOption) (*Empty, error) {
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "displayvideo.users.delete", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -36913,6 +37391,7 @@ func (c *UsersGetCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"userId": strconv.FormatInt(c.userId, 10),
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "displayvideo.users.get", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -36947,9 +37426,11 @@ func (c *UsersGetCall) Do(opts ...googleapi.CallOption) (*User, error) {
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "displayvideo.users.get", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -37075,6 +37556,7 @@ func (c *UsersListCall) doRequest(alt string) (*http.Response, error) {
 		return nil, err
 	}
 	req.Header = reqHeaders
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "displayvideo.users.list", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -37110,9 +37592,11 @@ func (c *UsersListCall) Do(opts ...googleapi.CallOption) (*ListUsersResponse, er
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "displayvideo.users.list", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -37208,6 +37692,7 @@ func (c *UsersPatchCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"userId": strconv.FormatInt(c.userId, 10),
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "displayvideo.users.patch", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -37242,8 +37727,10 @@ func (c *UsersPatchCall) Do(opts ...googleapi.CallOption) (*User, error) {
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "displayvideo.users.patch", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }

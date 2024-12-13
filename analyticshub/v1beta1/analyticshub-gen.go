@@ -62,11 +62,13 @@ import (
 	"errors"
 	"fmt"
 	"io"
+	"log/slog"
 	"net/http"
 	"net/url"
 	"strconv"
 	"strings"
 
+	"github.com/googleapis/gax-go/v2/internallog"
 	googleapi "google.golang.org/api/googleapi"
 	internal "google.golang.org/api/internal"
 	gensupport "google.golang.org/api/internal/gensupport"
@@ -90,6 +92,7 @@ var _ = strings.Replace
 var _ = context.Canceled
 var _ = internaloption.WithDefaultEndpoint
 var _ = internal.Version
+var _ = internallog.New
 
 const apiId = "analyticshub:v1beta1"
 const apiName = "analyticshub"
@@ -125,7 +128,7 @@ func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, err
 	if err != nil {
 		return nil, err
 	}
-	s := &Service{client: client, BasePath: basePath}
+	s := &Service{client: client, BasePath: basePath, logger: internaloption.GetLogger(opts)}
 	s.Organizations = NewOrganizationsService(s)
 	s.Projects = NewProjectsService(s)
 	if err != nil {
@@ -151,6 +154,7 @@ func New(client *http.Client) (*Service, error) {
 
 type Service struct {
 	client    *http.Client
+	logger    *slog.Logger
 	BasePath  string // API endpoint base URL
 	UserAgent string // optional additional User-Agent fragment
 
@@ -1406,6 +1410,7 @@ func (c *OrganizationsLocationsDataExchangesListCall) doRequest(alt string) (*ht
 	googleapi.Expand(req.URL, map[string]string{
 		"organization": c.organization,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "analyticshub.organizations.locations.dataExchanges.list", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -1441,9 +1446,11 @@ func (c *OrganizationsLocationsDataExchangesListCall) Do(opts ...googleapi.CallO
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "analyticshub.organizations.locations.dataExchanges.list", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -1538,6 +1545,7 @@ func (c *ProjectsLocationsDataExchangesCreateCall) doRequest(alt string) (*http.
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "analyticshub.projects.locations.dataExchanges.create", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -1572,9 +1580,11 @@ func (c *ProjectsLocationsDataExchangesCreateCall) Do(opts ...googleapi.CallOpti
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "analyticshub.projects.locations.dataExchanges.create", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -1633,6 +1643,7 @@ func (c *ProjectsLocationsDataExchangesDeleteCall) doRequest(alt string) (*http.
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "analyticshub.projects.locations.dataExchanges.delete", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -1667,9 +1678,11 @@ func (c *ProjectsLocationsDataExchangesDeleteCall) Do(opts ...googleapi.CallOpti
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "analyticshub.projects.locations.dataExchanges.delete", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -1740,6 +1753,7 @@ func (c *ProjectsLocationsDataExchangesGetCall) doRequest(alt string) (*http.Res
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "analyticshub.projects.locations.dataExchanges.get", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -1774,9 +1788,11 @@ func (c *ProjectsLocationsDataExchangesGetCall) Do(opts ...googleapi.CallOption)
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "analyticshub.projects.locations.dataExchanges.get", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -1842,6 +1858,7 @@ func (c *ProjectsLocationsDataExchangesGetIamPolicyCall) doRequest(alt string) (
 	googleapi.Expand(req.URL, map[string]string{
 		"resource": c.resource,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "analyticshub.projects.locations.dataExchanges.getIamPolicy", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -1876,9 +1893,11 @@ func (c *ProjectsLocationsDataExchangesGetIamPolicyCall) Do(opts ...googleapi.Ca
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "analyticshub.projects.locations.dataExchanges.getIamPolicy", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -1964,6 +1983,7 @@ func (c *ProjectsLocationsDataExchangesListCall) doRequest(alt string) (*http.Re
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "analyticshub.projects.locations.dataExchanges.list", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -1999,9 +2019,11 @@ func (c *ProjectsLocationsDataExchangesListCall) Do(opts ...googleapi.CallOption
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "analyticshub.projects.locations.dataExchanges.list", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -2096,6 +2118,7 @@ func (c *ProjectsLocationsDataExchangesPatchCall) doRequest(alt string) (*http.R
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "analyticshub.projects.locations.dataExchanges.patch", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -2130,9 +2153,11 @@ func (c *ProjectsLocationsDataExchangesPatchCall) Do(opts ...googleapi.CallOptio
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "analyticshub.projects.locations.dataExchanges.patch", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -2198,6 +2223,7 @@ func (c *ProjectsLocationsDataExchangesSetIamPolicyCall) doRequest(alt string) (
 	googleapi.Expand(req.URL, map[string]string{
 		"resource": c.resource,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "analyticshub.projects.locations.dataExchanges.setIamPolicy", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -2232,9 +2258,11 @@ func (c *ProjectsLocationsDataExchangesSetIamPolicyCall) Do(opts ...googleapi.Ca
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "analyticshub.projects.locations.dataExchanges.setIamPolicy", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -2301,6 +2329,7 @@ func (c *ProjectsLocationsDataExchangesTestIamPermissionsCall) doRequest(alt str
 	googleapi.Expand(req.URL, map[string]string{
 		"resource": c.resource,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "analyticshub.projects.locations.dataExchanges.testIamPermissions", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -2336,9 +2365,11 @@ func (c *ProjectsLocationsDataExchangesTestIamPermissionsCall) Do(opts ...google
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "analyticshub.projects.locations.dataExchanges.testIamPermissions", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -2412,6 +2443,7 @@ func (c *ProjectsLocationsDataExchangesListingsCreateCall) doRequest(alt string)
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "analyticshub.projects.locations.dataExchanges.listings.create", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -2446,9 +2478,11 @@ func (c *ProjectsLocationsDataExchangesListingsCreateCall) Do(opts ...googleapi.
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "analyticshub.projects.locations.dataExchanges.listings.create", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -2507,6 +2541,7 @@ func (c *ProjectsLocationsDataExchangesListingsDeleteCall) doRequest(alt string)
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "analyticshub.projects.locations.dataExchanges.listings.delete", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -2541,9 +2576,11 @@ func (c *ProjectsLocationsDataExchangesListingsDeleteCall) Do(opts ...googleapi.
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "analyticshub.projects.locations.dataExchanges.listings.delete", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -2614,6 +2651,7 @@ func (c *ProjectsLocationsDataExchangesListingsGetCall) doRequest(alt string) (*
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "analyticshub.projects.locations.dataExchanges.listings.get", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -2648,9 +2686,11 @@ func (c *ProjectsLocationsDataExchangesListingsGetCall) Do(opts ...googleapi.Cal
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "analyticshub.projects.locations.dataExchanges.listings.get", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -2716,6 +2756,7 @@ func (c *ProjectsLocationsDataExchangesListingsGetIamPolicyCall) doRequest(alt s
 	googleapi.Expand(req.URL, map[string]string{
 		"resource": c.resource,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "analyticshub.projects.locations.dataExchanges.listings.getIamPolicy", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -2750,9 +2791,11 @@ func (c *ProjectsLocationsDataExchangesListingsGetIamPolicyCall) Do(opts ...goog
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "analyticshub.projects.locations.dataExchanges.listings.getIamPolicy", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -2838,6 +2881,7 @@ func (c *ProjectsLocationsDataExchangesListingsListCall) doRequest(alt string) (
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "analyticshub.projects.locations.dataExchanges.listings.list", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -2873,9 +2917,11 @@ func (c *ProjectsLocationsDataExchangesListingsListCall) Do(opts ...googleapi.Ca
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "analyticshub.projects.locations.dataExchanges.listings.list", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -2969,6 +3015,7 @@ func (c *ProjectsLocationsDataExchangesListingsPatchCall) doRequest(alt string) 
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "analyticshub.projects.locations.dataExchanges.listings.patch", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -3003,9 +3050,11 @@ func (c *ProjectsLocationsDataExchangesListingsPatchCall) Do(opts ...googleapi.C
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "analyticshub.projects.locations.dataExchanges.listings.patch", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -3071,6 +3120,7 @@ func (c *ProjectsLocationsDataExchangesListingsSetIamPolicyCall) doRequest(alt s
 	googleapi.Expand(req.URL, map[string]string{
 		"resource": c.resource,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "analyticshub.projects.locations.dataExchanges.listings.setIamPolicy", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -3105,9 +3155,11 @@ func (c *ProjectsLocationsDataExchangesListingsSetIamPolicyCall) Do(opts ...goog
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "analyticshub.projects.locations.dataExchanges.listings.setIamPolicy", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -3175,6 +3227,7 @@ func (c *ProjectsLocationsDataExchangesListingsSubscribeCall) doRequest(alt stri
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "analyticshub.projects.locations.dataExchanges.listings.subscribe", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -3210,9 +3263,11 @@ func (c *ProjectsLocationsDataExchangesListingsSubscribeCall) Do(opts ...googlea
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "analyticshub.projects.locations.dataExchanges.listings.subscribe", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -3279,6 +3334,7 @@ func (c *ProjectsLocationsDataExchangesListingsTestIamPermissionsCall) doRequest
 	googleapi.Expand(req.URL, map[string]string{
 		"resource": c.resource,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "analyticshub.projects.locations.dataExchanges.listings.testIamPermissions", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -3314,8 +3370,10 @@ func (c *ProjectsLocationsDataExchangesListingsTestIamPermissionsCall) Do(opts .
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "analyticshub.projects.locations.dataExchanges.listings.testIamPermissions", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }

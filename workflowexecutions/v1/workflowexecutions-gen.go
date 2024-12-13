@@ -57,11 +57,13 @@ import (
 	"errors"
 	"fmt"
 	"io"
+	"log/slog"
 	"net/http"
 	"net/url"
 	"strconv"
 	"strings"
 
+	"github.com/googleapis/gax-go/v2/internallog"
 	googleapi "google.golang.org/api/googleapi"
 	internal "google.golang.org/api/internal"
 	gensupport "google.golang.org/api/internal/gensupport"
@@ -85,6 +87,7 @@ var _ = strings.Replace
 var _ = context.Canceled
 var _ = internaloption.WithDefaultEndpoint
 var _ = internal.Version
+var _ = internallog.New
 
 const apiId = "workflowexecutions:v1"
 const apiName = "workflowexecutions"
@@ -115,7 +118,7 @@ func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, err
 	if err != nil {
 		return nil, err
 	}
-	s := &Service{client: client, BasePath: basePath}
+	s := &Service{client: client, BasePath: basePath, logger: internaloption.GetLogger(opts)}
 	s.Projects = NewProjectsService(s)
 	if err != nil {
 		return nil, err
@@ -140,6 +143,7 @@ func New(client *http.Client) (*Service, error) {
 
 type Service struct {
 	client    *http.Client
+	logger    *slog.Logger
 	BasePath  string // API endpoint base URL
 	UserAgent string // optional additional User-Agent fragment
 
@@ -1041,6 +1045,7 @@ func (c *ProjectsLocationsWorkflowsTriggerPubsubExecutionCall) doRequest(alt str
 	googleapi.Expand(req.URL, map[string]string{
 		"workflow": c.workflow,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "workflowexecutions.projects.locations.workflows.triggerPubsubExecution", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -1075,9 +1080,11 @@ func (c *ProjectsLocationsWorkflowsTriggerPubsubExecutionCall) Do(opts ...google
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "workflowexecutions.projects.locations.workflows.triggerPubsubExecution", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -1143,6 +1150,7 @@ func (c *ProjectsLocationsWorkflowsExecutionsCancelCall) doRequest(alt string) (
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "workflowexecutions.projects.locations.workflows.executions.cancel", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -1177,9 +1185,11 @@ func (c *ProjectsLocationsWorkflowsExecutionsCancelCall) Do(opts ...googleapi.Ca
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "workflowexecutions.projects.locations.workflows.executions.cancel", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -1246,6 +1256,7 @@ func (c *ProjectsLocationsWorkflowsExecutionsCreateCall) doRequest(alt string) (
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "workflowexecutions.projects.locations.workflows.executions.create", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -1280,9 +1291,11 @@ func (c *ProjectsLocationsWorkflowsExecutionsCreateCall) Do(opts ...googleapi.Ca
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "workflowexecutions.projects.locations.workflows.executions.create", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -1349,6 +1362,7 @@ func (c *ProjectsLocationsWorkflowsExecutionsDeleteExecutionHistoryCall) doReque
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "workflowexecutions.projects.locations.workflows.executions.deleteExecutionHistory", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -1383,9 +1397,11 @@ func (c *ProjectsLocationsWorkflowsExecutionsDeleteExecutionHistoryCall) Do(opts
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "workflowexecutions.projects.locations.workflows.executions.deleteExecutionHistory", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -1458,6 +1474,7 @@ func (c *ProjectsLocationsWorkflowsExecutionsExportDataCall) doRequest(alt strin
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "workflowexecutions.projects.locations.workflows.executions.exportData", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -1493,9 +1510,11 @@ func (c *ProjectsLocationsWorkflowsExecutionsExportDataCall) Do(opts ...googleap
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "workflowexecutions.projects.locations.workflows.executions.exportData", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -1584,6 +1603,7 @@ func (c *ProjectsLocationsWorkflowsExecutionsGetCall) doRequest(alt string) (*ht
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "workflowexecutions.projects.locations.workflows.executions.get", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -1618,9 +1638,11 @@ func (c *ProjectsLocationsWorkflowsExecutionsGetCall) Do(opts ...googleapi.CallO
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "workflowexecutions.projects.locations.workflows.executions.get", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -1756,6 +1778,7 @@ func (c *ProjectsLocationsWorkflowsExecutionsListCall) doRequest(alt string) (*h
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "workflowexecutions.projects.locations.workflows.executions.list", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -1791,9 +1814,11 @@ func (c *ProjectsLocationsWorkflowsExecutionsListCall) Do(opts ...googleapi.Call
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "workflowexecutions.projects.locations.workflows.executions.list", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -1905,6 +1930,7 @@ func (c *ProjectsLocationsWorkflowsExecutionsCallbacksListCall) doRequest(alt st
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "workflowexecutions.projects.locations.workflows.executions.callbacks.list", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -1940,9 +1966,11 @@ func (c *ProjectsLocationsWorkflowsExecutionsCallbacksListCall) Do(opts ...googl
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "workflowexecutions.projects.locations.workflows.executions.callbacks.list", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -2050,6 +2078,7 @@ func (c *ProjectsLocationsWorkflowsExecutionsStepEntriesGetCall) doRequest(alt s
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "workflowexecutions.projects.locations.workflows.executions.stepEntries.get", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -2084,9 +2113,11 @@ func (c *ProjectsLocationsWorkflowsExecutionsStepEntriesGetCall) Do(opts ...goog
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "workflowexecutions.projects.locations.workflows.executions.stepEntries.get", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -2221,6 +2252,7 @@ func (c *ProjectsLocationsWorkflowsExecutionsStepEntriesListCall) doRequest(alt 
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "workflowexecutions.projects.locations.workflows.executions.stepEntries.list", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -2256,9 +2288,11 @@ func (c *ProjectsLocationsWorkflowsExecutionsStepEntriesListCall) Do(opts ...goo
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "workflowexecutions.projects.locations.workflows.executions.stepEntries.list", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 

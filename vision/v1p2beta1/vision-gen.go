@@ -64,11 +64,13 @@ import (
 	"errors"
 	"fmt"
 	"io"
+	"log/slog"
 	"net/http"
 	"net/url"
 	"strconv"
 	"strings"
 
+	"github.com/googleapis/gax-go/v2/internallog"
 	googleapi "google.golang.org/api/googleapi"
 	internal "google.golang.org/api/internal"
 	gensupport "google.golang.org/api/internal/gensupport"
@@ -92,6 +94,7 @@ var _ = strings.Replace
 var _ = context.Canceled
 var _ = internaloption.WithDefaultEndpoint
 var _ = internal.Version
+var _ = internallog.New
 
 const apiId = "vision:v1p2beta1"
 const apiName = "vision"
@@ -126,7 +129,7 @@ func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, err
 	if err != nil {
 		return nil, err
 	}
-	s := &Service{client: client, BasePath: basePath}
+	s := &Service{client: client, BasePath: basePath, logger: internaloption.GetLogger(opts)}
 	s.Files = NewFilesService(s)
 	s.Images = NewImagesService(s)
 	s.Projects = NewProjectsService(s)
@@ -153,6 +156,7 @@ func New(client *http.Client) (*Service, error) {
 
 type Service struct {
 	client    *http.Client
+	logger    *slog.Logger
 	BasePath  string // API endpoint base URL
 	UserAgent string // optional additional User-Agent fragment
 
@@ -11035,6 +11039,7 @@ func (c *FilesAnnotateCall) doRequest(alt string) (*http.Response, error) {
 		return nil, err
 	}
 	req.Header = reqHeaders
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "vision.files.annotate", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -11070,9 +11075,11 @@ func (c *FilesAnnotateCall) Do(opts ...googleapi.CallOption) (*GoogleCloudVision
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "vision.files.annotate", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -11134,6 +11141,7 @@ func (c *FilesAsyncBatchAnnotateCall) doRequest(alt string) (*http.Response, err
 		return nil, err
 	}
 	req.Header = reqHeaders
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "vision.files.asyncBatchAnnotate", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -11168,9 +11176,11 @@ func (c *FilesAsyncBatchAnnotateCall) Do(opts ...googleapi.CallOption) (*Operati
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "vision.files.asyncBatchAnnotate", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -11227,6 +11237,7 @@ func (c *ImagesAnnotateCall) doRequest(alt string) (*http.Response, error) {
 		return nil, err
 	}
 	req.Header = reqHeaders
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "vision.images.annotate", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -11262,9 +11273,11 @@ func (c *ImagesAnnotateCall) Do(opts ...googleapi.CallOption) (*GoogleCloudVisio
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "vision.images.annotate", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -11327,6 +11340,7 @@ func (c *ImagesAsyncBatchAnnotateCall) doRequest(alt string) (*http.Response, er
 		return nil, err
 	}
 	req.Header = reqHeaders
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "vision.images.asyncBatchAnnotate", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -11361,9 +11375,11 @@ func (c *ImagesAsyncBatchAnnotateCall) Do(opts ...googleapi.CallOption) (*Operat
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "vision.images.asyncBatchAnnotate", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -11436,6 +11452,7 @@ func (c *ProjectsFilesAnnotateCall) doRequest(alt string) (*http.Response, error
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "vision.projects.files.annotate", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -11471,9 +11488,11 @@ func (c *ProjectsFilesAnnotateCall) Do(opts ...googleapi.CallOption) (*GoogleClo
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "vision.projects.files.annotate", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -11546,6 +11565,7 @@ func (c *ProjectsFilesAsyncBatchAnnotateCall) doRequest(alt string) (*http.Respo
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "vision.projects.files.asyncBatchAnnotate", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -11580,9 +11600,11 @@ func (c *ProjectsFilesAsyncBatchAnnotateCall) Do(opts ...googleapi.CallOption) (
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "vision.projects.files.asyncBatchAnnotate", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -11650,6 +11672,7 @@ func (c *ProjectsImagesAnnotateCall) doRequest(alt string) (*http.Response, erro
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "vision.projects.images.annotate", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -11685,9 +11708,11 @@ func (c *ProjectsImagesAnnotateCall) Do(opts ...googleapi.CallOption) (*GoogleCl
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "vision.projects.images.annotate", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -11761,6 +11786,7 @@ func (c *ProjectsImagesAsyncBatchAnnotateCall) doRequest(alt string) (*http.Resp
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "vision.projects.images.asyncBatchAnnotate", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -11795,9 +11821,11 @@ func (c *ProjectsImagesAsyncBatchAnnotateCall) Do(opts ...googleapi.CallOption) 
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "vision.projects.images.asyncBatchAnnotate", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -11870,6 +11898,7 @@ func (c *ProjectsLocationsFilesAnnotateCall) doRequest(alt string) (*http.Respon
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "vision.projects.locations.files.annotate", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -11905,9 +11934,11 @@ func (c *ProjectsLocationsFilesAnnotateCall) Do(opts ...googleapi.CallOption) (*
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "vision.projects.locations.files.annotate", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -11980,6 +12011,7 @@ func (c *ProjectsLocationsFilesAsyncBatchAnnotateCall) doRequest(alt string) (*h
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "vision.projects.locations.files.asyncBatchAnnotate", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -12014,9 +12046,11 @@ func (c *ProjectsLocationsFilesAsyncBatchAnnotateCall) Do(opts ...googleapi.Call
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "vision.projects.locations.files.asyncBatchAnnotate", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -12084,6 +12118,7 @@ func (c *ProjectsLocationsImagesAnnotateCall) doRequest(alt string) (*http.Respo
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "vision.projects.locations.images.annotate", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -12119,9 +12154,11 @@ func (c *ProjectsLocationsImagesAnnotateCall) Do(opts ...googleapi.CallOption) (
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "vision.projects.locations.images.annotate", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -12195,6 +12232,7 @@ func (c *ProjectsLocationsImagesAsyncBatchAnnotateCall) doRequest(alt string) (*
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "vision.projects.locations.images.asyncBatchAnnotate", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -12229,8 +12267,10 @@ func (c *ProjectsLocationsImagesAsyncBatchAnnotateCall) Do(opts ...googleapi.Cal
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "vision.projects.locations.images.asyncBatchAnnotate", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }

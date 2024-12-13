@@ -57,11 +57,13 @@ import (
 	"errors"
 	"fmt"
 	"io"
+	"log/slog"
 	"net/http"
 	"net/url"
 	"strconv"
 	"strings"
 
+	"github.com/googleapis/gax-go/v2/internallog"
 	googleapi "google.golang.org/api/googleapi"
 	internal "google.golang.org/api/internal"
 	gensupport "google.golang.org/api/internal/gensupport"
@@ -85,6 +87,7 @@ var _ = strings.Replace
 var _ = context.Canceled
 var _ = internaloption.WithDefaultEndpoint
 var _ = internal.Version
+var _ = internallog.New
 
 const apiId = "gamesConfiguration:v1configuration"
 const apiName = "gamesConfiguration"
@@ -114,7 +117,7 @@ func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, err
 	if err != nil {
 		return nil, err
 	}
-	s := &Service{client: client, BasePath: basePath}
+	s := &Service{client: client, BasePath: basePath, logger: internaloption.GetLogger(opts)}
 	s.AchievementConfigurations = NewAchievementConfigurationsService(s)
 	s.LeaderboardConfigurations = NewLeaderboardConfigurationsService(s)
 	if err != nil {
@@ -140,6 +143,7 @@ func New(client *http.Client) (*Service, error) {
 
 type Service struct {
 	client    *http.Client
+	logger    *slog.Logger
 	BasePath  string // API endpoint base URL
 	UserAgent string // optional additional User-Agent fragment
 
@@ -576,6 +580,7 @@ func (c *AchievementConfigurationsDeleteCall) doRequest(alt string) (*http.Respo
 	googleapi.Expand(req.URL, map[string]string{
 		"achievementId": c.achievementId,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "gamesConfiguration.achievementConfigurations.delete", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -590,6 +595,7 @@ func (c *AchievementConfigurationsDeleteCall) Do(opts ...googleapi.CallOption) e
 	if err := googleapi.CheckResponse(res); err != nil {
 		return gensupport.WrapError(err)
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "gamesConfiguration.achievementConfigurations.delete", "response", internallog.HTTPResponse(res, nil))
 	return nil
 }
 
@@ -660,6 +666,7 @@ func (c *AchievementConfigurationsGetCall) doRequest(alt string) (*http.Response
 	googleapi.Expand(req.URL, map[string]string{
 		"achievementId": c.achievementId,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "gamesConfiguration.achievementConfigurations.get", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -695,9 +702,11 @@ func (c *AchievementConfigurationsGetCall) Do(opts ...googleapi.CallOption) (*Ac
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "gamesConfiguration.achievementConfigurations.get", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -761,6 +770,7 @@ func (c *AchievementConfigurationsInsertCall) doRequest(alt string) (*http.Respo
 	googleapi.Expand(req.URL, map[string]string{
 		"applicationId": c.applicationId,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "gamesConfiguration.achievementConfigurations.insert", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -796,9 +806,11 @@ func (c *AchievementConfigurationsInsertCall) Do(opts ...googleapi.CallOption) (
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "gamesConfiguration.achievementConfigurations.insert", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -884,6 +896,7 @@ func (c *AchievementConfigurationsListCall) doRequest(alt string) (*http.Respons
 	googleapi.Expand(req.URL, map[string]string{
 		"applicationId": c.applicationId,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "gamesConfiguration.achievementConfigurations.list", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -919,9 +932,11 @@ func (c *AchievementConfigurationsListCall) Do(opts ...googleapi.CallOption) (*A
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "gamesConfiguration.achievementConfigurations.list", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -1007,6 +1022,7 @@ func (c *AchievementConfigurationsUpdateCall) doRequest(alt string) (*http.Respo
 	googleapi.Expand(req.URL, map[string]string{
 		"achievementId": c.achievementId,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "gamesConfiguration.achievementConfigurations.update", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -1042,9 +1058,11 @@ func (c *AchievementConfigurationsUpdateCall) Do(opts ...googleapi.CallOption) (
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "gamesConfiguration.achievementConfigurations.update", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -1102,6 +1120,7 @@ func (c *LeaderboardConfigurationsDeleteCall) doRequest(alt string) (*http.Respo
 	googleapi.Expand(req.URL, map[string]string{
 		"leaderboardId": c.leaderboardId,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "gamesConfiguration.leaderboardConfigurations.delete", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -1116,6 +1135,7 @@ func (c *LeaderboardConfigurationsDeleteCall) Do(opts ...googleapi.CallOption) e
 	if err := googleapi.CheckResponse(res); err != nil {
 		return gensupport.WrapError(err)
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "gamesConfiguration.leaderboardConfigurations.delete", "response", internallog.HTTPResponse(res, nil))
 	return nil
 }
 
@@ -1186,6 +1206,7 @@ func (c *LeaderboardConfigurationsGetCall) doRequest(alt string) (*http.Response
 	googleapi.Expand(req.URL, map[string]string{
 		"leaderboardId": c.leaderboardId,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "gamesConfiguration.leaderboardConfigurations.get", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -1221,9 +1242,11 @@ func (c *LeaderboardConfigurationsGetCall) Do(opts ...googleapi.CallOption) (*Le
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "gamesConfiguration.leaderboardConfigurations.get", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -1287,6 +1310,7 @@ func (c *LeaderboardConfigurationsInsertCall) doRequest(alt string) (*http.Respo
 	googleapi.Expand(req.URL, map[string]string{
 		"applicationId": c.applicationId,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "gamesConfiguration.leaderboardConfigurations.insert", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -1322,9 +1346,11 @@ func (c *LeaderboardConfigurationsInsertCall) Do(opts ...googleapi.CallOption) (
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "gamesConfiguration.leaderboardConfigurations.insert", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -1410,6 +1436,7 @@ func (c *LeaderboardConfigurationsListCall) doRequest(alt string) (*http.Respons
 	googleapi.Expand(req.URL, map[string]string{
 		"applicationId": c.applicationId,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "gamesConfiguration.leaderboardConfigurations.list", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -1445,9 +1472,11 @@ func (c *LeaderboardConfigurationsListCall) Do(opts ...googleapi.CallOption) (*L
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "gamesConfiguration.leaderboardConfigurations.list", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -1533,6 +1562,7 @@ func (c *LeaderboardConfigurationsUpdateCall) doRequest(alt string) (*http.Respo
 	googleapi.Expand(req.URL, map[string]string{
 		"leaderboardId": c.leaderboardId,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "gamesConfiguration.leaderboardConfigurations.update", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -1568,8 +1598,10 @@ func (c *LeaderboardConfigurationsUpdateCall) Do(opts ...googleapi.CallOption) (
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "gamesConfiguration.leaderboardConfigurations.update", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }

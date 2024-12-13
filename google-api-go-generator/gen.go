@@ -851,6 +851,7 @@ func (a *API) GenerateCode() ([]byte, error) {
 	pn("var _ = context.Canceled")
 	pn("var _ = internaloption.WithDefaultEndpoint")
 	pn("var _ = internal.Version")
+	pn("var _ = internallog.New")
 	if a.Name == "storage" {
 		pn("var _ = gax.Version")
 	}
@@ -996,8 +997,6 @@ func splitFileHeading(w io.Writer, pkg string) {
 	for _, imp := range []string{
 		"context",
 		"fmt",
-		"io",
-		"log/slog",
 		"net/http",
 	} {
 		pn("  %q", imp)
@@ -1009,6 +1008,7 @@ func splitFileHeading(w io.Writer, pkg string) {
 	}{
 		{*gensupportPkg, "gensupport"},
 		{*googleapiPkg, "googleapi"},
+		{"github.com/googleapis/gax-go/v2/internallog", "internallog"},
 	} {
 		pn("  %s %q", imp.lname, imp.pkg)
 	}

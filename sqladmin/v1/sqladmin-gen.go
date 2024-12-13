@@ -62,11 +62,13 @@ import (
 	"errors"
 	"fmt"
 	"io"
+	"log/slog"
 	"net/http"
 	"net/url"
 	"strconv"
 	"strings"
 
+	"github.com/googleapis/gax-go/v2/internallog"
 	googleapi "google.golang.org/api/googleapi"
 	internal "google.golang.org/api/internal"
 	gensupport "google.golang.org/api/internal/gensupport"
@@ -90,6 +92,7 @@ var _ = strings.Replace
 var _ = context.Canceled
 var _ = internaloption.WithDefaultEndpoint
 var _ = internal.Version
+var _ = internallog.New
 
 const apiId = "sqladmin:v1"
 const apiName = "sqladmin"
@@ -124,7 +127,7 @@ func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, err
 	if err != nil {
 		return nil, err
 	}
-	s := &Service{client: client, BasePath: basePath}
+	s := &Service{client: client, BasePath: basePath, logger: internaloption.GetLogger(opts)}
 	s.BackupRuns = NewBackupRunsService(s)
 	s.Connect = NewConnectService(s)
 	s.Databases = NewDatabasesService(s)
@@ -158,6 +161,7 @@ func New(client *http.Client) (*Service, error) {
 
 type Service struct {
 	client    *http.Client
+	logger    *slog.Logger
 	BasePath  string // API endpoint base URL
 	UserAgent string // optional additional User-Agent fragment
 
@@ -5117,6 +5121,7 @@ func (c *BackupRunsDeleteCall) doRequest(alt string) (*http.Response, error) {
 		"instance": c.instance,
 		"id":       strconv.FormatInt(c.id, 10),
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "sql.backupRuns.delete", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -5151,9 +5156,11 @@ func (c *BackupRunsDeleteCall) Do(opts ...googleapi.CallOption) (*Operation, err
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "sql.backupRuns.delete", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -5231,6 +5238,7 @@ func (c *BackupRunsGetCall) doRequest(alt string) (*http.Response, error) {
 		"instance": c.instance,
 		"id":       strconv.FormatInt(c.id, 10),
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "sql.backupRuns.get", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -5265,9 +5273,11 @@ func (c *BackupRunsGetCall) Do(opts ...googleapi.CallOption) (*BackupRun, error)
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "sql.backupRuns.get", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -5335,6 +5345,7 @@ func (c *BackupRunsInsertCall) doRequest(alt string) (*http.Response, error) {
 		"project":  c.project,
 		"instance": c.instance,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "sql.backupRuns.insert", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -5369,9 +5380,11 @@ func (c *BackupRunsInsertCall) Do(opts ...googleapi.CallOption) (*Operation, err
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "sql.backupRuns.insert", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -5462,6 +5475,7 @@ func (c *BackupRunsListCall) doRequest(alt string) (*http.Response, error) {
 		"project":  c.project,
 		"instance": c.instance,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "sql.backupRuns.list", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -5497,9 +5511,11 @@ func (c *BackupRunsListCall) Do(opts ...googleapi.CallOption) (*BackupRunsListRe
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "sql.backupRuns.list", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -5591,6 +5607,7 @@ func (c *ConnectGenerateEphemeralCertCall) doRequest(alt string) (*http.Response
 		"project":  c.project,
 		"instance": c.instance,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "sql.connect.generateEphemeral", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -5626,9 +5643,11 @@ func (c *ConnectGenerateEphemeralCertCall) Do(opts ...googleapi.CallOption) (*Ge
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "sql.connect.generateEphemeral", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -5709,6 +5728,7 @@ func (c *ConnectGetCall) doRequest(alt string) (*http.Response, error) {
 		"project":  c.project,
 		"instance": c.instance,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "sql.connect.get", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -5744,9 +5764,11 @@ func (c *ConnectGetCall) Do(opts ...googleapi.CallOption) (*ConnectSettings, err
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "sql.connect.get", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -5812,6 +5834,7 @@ func (c *DatabasesDeleteCall) doRequest(alt string) (*http.Response, error) {
 		"instance": c.instance,
 		"database": c.database,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "sql.databases.delete", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -5846,9 +5869,11 @@ func (c *DatabasesDeleteCall) Do(opts ...googleapi.CallOption) (*Operation, erro
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "sql.databases.delete", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -5927,6 +5952,7 @@ func (c *DatabasesGetCall) doRequest(alt string) (*http.Response, error) {
 		"instance": c.instance,
 		"database": c.database,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "sql.databases.get", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -5961,9 +5987,11 @@ func (c *DatabasesGetCall) Do(opts ...googleapi.CallOption) (*Database, error) {
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "sql.databases.get", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -6033,6 +6061,7 @@ func (c *DatabasesInsertCall) doRequest(alt string) (*http.Response, error) {
 		"project":  c.project,
 		"instance": c.instance,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "sql.databases.insert", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -6067,9 +6096,11 @@ func (c *DatabasesInsertCall) Do(opts ...googleapi.CallOption) (*Operation, erro
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "sql.databases.insert", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -6143,6 +6174,7 @@ func (c *DatabasesListCall) doRequest(alt string) (*http.Response, error) {
 		"project":  c.project,
 		"instance": c.instance,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "sql.databases.list", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -6178,9 +6210,11 @@ func (c *DatabasesListCall) Do(opts ...googleapi.CallOption) (*DatabasesListResp
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "sql.databases.list", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -6253,6 +6287,7 @@ func (c *DatabasesPatchCall) doRequest(alt string) (*http.Response, error) {
 		"instance": c.instance,
 		"database": c.database,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "sql.databases.patch", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -6287,9 +6322,11 @@ func (c *DatabasesPatchCall) Do(opts ...googleapi.CallOption) (*Operation, error
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "sql.databases.patch", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -6362,6 +6399,7 @@ func (c *DatabasesUpdateCall) doRequest(alt string) (*http.Response, error) {
 		"instance": c.instance,
 		"database": c.database,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "sql.databases.update", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -6396,9 +6434,11 @@ func (c *DatabasesUpdateCall) Do(opts ...googleapi.CallOption) (*Operation, erro
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "sql.databases.update", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -6469,6 +6509,7 @@ func (c *FlagsListCall) doRequest(alt string) (*http.Response, error) {
 		return nil, err
 	}
 	req.Header = reqHeaders
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "sql.flags.list", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -6504,9 +6545,11 @@ func (c *FlagsListCall) Do(opts ...googleapi.CallOption) (*FlagsListResponse, er
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "sql.flags.list", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -6585,6 +6628,7 @@ func (c *InstancesListServerCertificatesCall) doRequest(alt string) (*http.Respo
 		"project":  c.project,
 		"instance": c.instance,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "sql.instances.ListServerCertificates", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -6620,9 +6664,11 @@ func (c *InstancesListServerCertificatesCall) Do(opts ...googleapi.CallOption) (
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "sql.instances.ListServerCertificates", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -6693,6 +6739,7 @@ func (c *InstancesRotateServerCertificateCall) doRequest(alt string) (*http.Resp
 		"project":  c.project,
 		"instance": c.instance,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "sql.instances.RotateServerCertificate", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -6727,9 +6774,11 @@ func (c *InstancesRotateServerCertificateCall) Do(opts ...googleapi.CallOption) 
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "sql.instances.RotateServerCertificate", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -6802,6 +6851,7 @@ func (c *InstancesAcquireSsrsLeaseCall) doRequest(alt string) (*http.Response, e
 		"project":  c.project,
 		"instance": c.instance,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "sql.instances.acquireSsrsLease", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -6837,9 +6887,11 @@ func (c *InstancesAcquireSsrsLeaseCall) Do(opts ...googleapi.CallOption) (*SqlIn
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "sql.instances.acquireSsrsLease", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -6907,6 +6959,7 @@ func (c *InstancesAddServerCaCall) doRequest(alt string) (*http.Response, error)
 		"project":  c.project,
 		"instance": c.instance,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "sql.instances.addServerCa", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -6941,9 +6994,11 @@ func (c *InstancesAddServerCaCall) Do(opts ...googleapi.CallOption) (*Operation,
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "sql.instances.addServerCa", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -7011,6 +7066,7 @@ func (c *InstancesAddServerCertificateCall) doRequest(alt string) (*http.Respons
 		"project":  c.project,
 		"instance": c.instance,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "sql.instances.addServerCertificate", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -7045,9 +7101,11 @@ func (c *InstancesAddServerCertificateCall) Do(opts ...googleapi.CallOption) (*O
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "sql.instances.addServerCertificate", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -7117,6 +7175,7 @@ func (c *InstancesCloneCall) doRequest(alt string) (*http.Response, error) {
 		"project":  c.project,
 		"instance": c.instance,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "sql.instances.clone", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -7151,9 +7210,11 @@ func (c *InstancesCloneCall) Do(opts ...googleapi.CallOption) (*Operation, error
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "sql.instances.clone", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -7216,6 +7277,7 @@ func (c *InstancesDeleteCall) doRequest(alt string) (*http.Response, error) {
 		"project":  c.project,
 		"instance": c.instance,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "sql.instances.delete", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -7250,9 +7312,11 @@ func (c *InstancesDeleteCall) Do(opts ...googleapi.CallOption) (*Operation, erro
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "sql.instances.delete", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -7321,6 +7385,7 @@ func (c *InstancesDemoteCall) doRequest(alt string) (*http.Response, error) {
 		"project":  c.project,
 		"instance": c.instance,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "sql.instances.demote", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -7355,9 +7420,11 @@ func (c *InstancesDemoteCall) Do(opts ...googleapi.CallOption) (*Operation, erro
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "sql.instances.demote", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -7426,6 +7493,7 @@ func (c *InstancesDemoteMasterCall) doRequest(alt string) (*http.Response, error
 		"project":  c.project,
 		"instance": c.instance,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "sql.instances.demoteMaster", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -7460,9 +7528,11 @@ func (c *InstancesDemoteMasterCall) Do(opts ...googleapi.CallOption) (*Operation
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "sql.instances.demoteMaster", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -7532,6 +7602,7 @@ func (c *InstancesExportCall) doRequest(alt string) (*http.Response, error) {
 		"project":  c.project,
 		"instance": c.instance,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "sql.instances.export", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -7566,9 +7637,11 @@ func (c *InstancesExportCall) Do(opts ...googleapi.CallOption) (*Operation, erro
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "sql.instances.export", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -7642,6 +7715,7 @@ func (c *InstancesFailoverCall) doRequest(alt string) (*http.Response, error) {
 		"project":  c.project,
 		"instance": c.instance,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "sql.instances.failover", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -7676,9 +7750,11 @@ func (c *InstancesFailoverCall) Do(opts ...googleapi.CallOption) (*Operation, er
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "sql.instances.failover", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -7752,6 +7828,7 @@ func (c *InstancesGetCall) doRequest(alt string) (*http.Response, error) {
 		"project":  c.project,
 		"instance": c.instance,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "sql.instances.get", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -7787,9 +7864,11 @@ func (c *InstancesGetCall) Do(opts ...googleapi.CallOption) (*DatabaseInstance, 
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "sql.instances.get", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -7858,6 +7937,7 @@ func (c *InstancesImportCall) doRequest(alt string) (*http.Response, error) {
 		"project":  c.project,
 		"instance": c.instance,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "sql.instances.import", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -7892,9 +7972,11 @@ func (c *InstancesImportCall) Do(opts ...googleapi.CallOption) (*Operation, erro
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "sql.instances.import", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -7959,6 +8041,7 @@ func (c *InstancesInsertCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"project": c.project,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "sql.instances.insert", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -7993,9 +8076,11 @@ func (c *InstancesInsertCall) Do(opts ...googleapi.CallOption) (*Operation, erro
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "sql.instances.insert", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -8094,6 +8179,7 @@ func (c *InstancesListCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"project": c.project,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "sql.instances.list", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -8129,9 +8215,11 @@ func (c *InstancesListCall) Do(opts ...googleapi.CallOption) (*InstancesListResp
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "sql.instances.list", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -8230,6 +8318,7 @@ func (c *InstancesListServerCasCall) doRequest(alt string) (*http.Response, erro
 		"project":  c.project,
 		"instance": c.instance,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "sql.instances.listServerCas", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -8265,9 +8354,11 @@ func (c *InstancesListServerCasCall) Do(opts ...googleapi.CallOption) (*Instance
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "sql.instances.listServerCas", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -8337,6 +8428,7 @@ func (c *InstancesPatchCall) doRequest(alt string) (*http.Response, error) {
 		"project":  c.project,
 		"instance": c.instance,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "sql.instances.patch", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -8371,9 +8463,11 @@ func (c *InstancesPatchCall) Do(opts ...googleapi.CallOption) (*Operation, error
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "sql.instances.patch", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -8448,6 +8542,7 @@ func (c *InstancesPromoteReplicaCall) doRequest(alt string) (*http.Response, err
 		"project":  c.project,
 		"instance": c.instance,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "sql.instances.promoteReplica", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -8482,9 +8577,11 @@ func (c *InstancesPromoteReplicaCall) Do(opts ...googleapi.CallOption) (*Operati
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "sql.instances.promoteReplica", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -8552,6 +8649,7 @@ func (c *InstancesReencryptCall) doRequest(alt string) (*http.Response, error) {
 		"project":  c.project,
 		"instance": c.instance,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "sql.instances.reencrypt", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -8586,9 +8684,11 @@ func (c *InstancesReencryptCall) Do(opts ...googleapi.CallOption) (*Operation, e
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "sql.instances.reencrypt", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -8654,6 +8754,7 @@ func (c *InstancesReleaseSsrsLeaseCall) doRequest(alt string) (*http.Response, e
 		"project":  c.project,
 		"instance": c.instance,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "sql.instances.releaseSsrsLease", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -8689,9 +8790,11 @@ func (c *InstancesReleaseSsrsLeaseCall) Do(opts ...googleapi.CallOption) (*SqlIn
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "sql.instances.releaseSsrsLease", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -8754,6 +8857,7 @@ func (c *InstancesResetSslConfigCall) doRequest(alt string) (*http.Response, err
 		"project":  c.project,
 		"instance": c.instance,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "sql.instances.resetSslConfig", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -8788,9 +8892,11 @@ func (c *InstancesResetSslConfigCall) Do(opts ...googleapi.CallOption) (*Operati
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "sql.instances.resetSslConfig", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -8853,6 +8959,7 @@ func (c *InstancesRestartCall) doRequest(alt string) (*http.Response, error) {
 		"project":  c.project,
 		"instance": c.instance,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "sql.instances.restart", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -8887,9 +8994,11 @@ func (c *InstancesRestartCall) Do(opts ...googleapi.CallOption) (*Operation, err
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "sql.instances.restart", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -8958,6 +9067,7 @@ func (c *InstancesRestoreBackupCall) doRequest(alt string) (*http.Response, erro
 		"project":  c.project,
 		"instance": c.instance,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "sql.instances.restoreBackup", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -8992,9 +9102,11 @@ func (c *InstancesRestoreBackupCall) Do(opts ...googleapi.CallOption) (*Operatio
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "sql.instances.restoreBackup", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -9066,6 +9178,7 @@ func (c *InstancesRotateServerCaCall) doRequest(alt string) (*http.Response, err
 		"project":  c.project,
 		"instance": c.instance,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "sql.instances.rotateServerCa", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -9100,9 +9213,11 @@ func (c *InstancesRotateServerCaCall) Do(opts ...googleapi.CallOption) (*Operati
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "sql.instances.rotateServerCa", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -9164,6 +9279,7 @@ func (c *InstancesStartReplicaCall) doRequest(alt string) (*http.Response, error
 		"project":  c.project,
 		"instance": c.instance,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "sql.instances.startReplica", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -9198,9 +9314,11 @@ func (c *InstancesStartReplicaCall) Do(opts ...googleapi.CallOption) (*Operation
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "sql.instances.startReplica", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -9262,6 +9380,7 @@ func (c *InstancesStopReplicaCall) doRequest(alt string) (*http.Response, error)
 		"project":  c.project,
 		"instance": c.instance,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "sql.instances.stopReplica", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -9296,9 +9415,11 @@ func (c *InstancesStopReplicaCall) Do(opts ...googleapi.CallOption) (*Operation,
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "sql.instances.stopReplica", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -9370,6 +9491,7 @@ func (c *InstancesSwitchoverCall) doRequest(alt string) (*http.Response, error) 
 		"project":  c.project,
 		"instance": c.instance,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "sql.instances.switchover", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -9404,9 +9526,11 @@ func (c *InstancesSwitchoverCall) Do(opts ...googleapi.CallOption) (*Operation, 
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "sql.instances.switchover", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -9474,6 +9598,7 @@ func (c *InstancesTruncateLogCall) doRequest(alt string) (*http.Response, error)
 		"project":  c.project,
 		"instance": c.instance,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "sql.instances.truncateLog", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -9508,9 +9633,11 @@ func (c *InstancesTruncateLogCall) Do(opts ...googleapi.CallOption) (*Operation,
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "sql.instances.truncateLog", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -9579,6 +9706,7 @@ func (c *InstancesUpdateCall) doRequest(alt string) (*http.Response, error) {
 		"project":  c.project,
 		"instance": c.instance,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "sql.instances.update", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -9613,9 +9741,11 @@ func (c *InstancesUpdateCall) Do(opts ...googleapi.CallOption) (*Operation, erro
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "sql.instances.update", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -9678,6 +9808,7 @@ func (c *OperationsCancelCall) doRequest(alt string) (*http.Response, error) {
 		"project":   c.project,
 		"operation": c.operation,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "sql.operations.cancel", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -9712,9 +9843,11 @@ func (c *OperationsCancelCall) Do(opts ...googleapi.CallOption) (*Empty, error) 
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "sql.operations.cancel", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -9788,6 +9921,7 @@ func (c *OperationsGetCall) doRequest(alt string) (*http.Response, error) {
 		"project":   c.project,
 		"operation": c.operation,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "sql.operations.get", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -9822,9 +9956,11 @@ func (c *OperationsGetCall) Do(opts ...googleapi.CallOption) (*Operation, error)
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "sql.operations.get", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -9916,6 +10052,7 @@ func (c *OperationsListCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"project": c.project,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "sql.operations.list", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -9951,9 +10088,11 @@ func (c *OperationsListCall) Do(opts ...googleapi.CallOption) (*OperationsListRe
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "sql.operations.list", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -10048,6 +10187,7 @@ func (c *ProjectsInstancesGetDiskShrinkConfigCall) doRequest(alt string) (*http.
 		"project":  c.project,
 		"instance": c.instance,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "sql.projects.instances.getDiskShrinkConfig", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -10083,9 +10223,11 @@ func (c *ProjectsInstancesGetDiskShrinkConfigCall) Do(opts ...googleapi.CallOpti
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "sql.projects.instances.getDiskShrinkConfig", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -10159,6 +10301,7 @@ func (c *ProjectsInstancesGetLatestRecoveryTimeCall) doRequest(alt string) (*htt
 		"project":  c.project,
 		"instance": c.instance,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "sql.projects.instances.getLatestRecoveryTime", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -10194,9 +10337,11 @@ func (c *ProjectsInstancesGetLatestRecoveryTimeCall) Do(opts ...googleapi.CallOp
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "sql.projects.instances.getLatestRecoveryTime", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -10264,6 +10409,7 @@ func (c *ProjectsInstancesPerformDiskShrinkCall) doRequest(alt string) (*http.Re
 		"project":  c.project,
 		"instance": c.instance,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "sql.projects.instances.performDiskShrink", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -10298,9 +10444,11 @@ func (c *ProjectsInstancesPerformDiskShrinkCall) Do(opts ...googleapi.CallOption
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "sql.projects.instances.performDiskShrink", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -10368,6 +10516,7 @@ func (c *ProjectsInstancesRescheduleMaintenanceCall) doRequest(alt string) (*htt
 		"project":  c.project,
 		"instance": c.instance,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "sql.projects.instances.rescheduleMaintenance", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -10402,9 +10551,11 @@ func (c *ProjectsInstancesRescheduleMaintenanceCall) Do(opts ...googleapi.CallOp
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "sql.projects.instances.rescheduleMaintenance", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -10472,6 +10623,7 @@ func (c *ProjectsInstancesResetReplicaSizeCall) doRequest(alt string) (*http.Res
 		"project":  c.project,
 		"instance": c.instance,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "sql.projects.instances.resetReplicaSize", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -10506,9 +10658,11 @@ func (c *ProjectsInstancesResetReplicaSizeCall) Do(opts ...googleapi.CallOption)
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "sql.projects.instances.resetReplicaSize", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -10576,6 +10730,7 @@ func (c *ProjectsInstancesStartExternalSyncCall) doRequest(alt string) (*http.Re
 		"project":  c.project,
 		"instance": c.instance,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "sql.projects.instances.startExternalSync", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -10610,9 +10765,11 @@ func (c *ProjectsInstancesStartExternalSyncCall) Do(opts ...googleapi.CallOption
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "sql.projects.instances.startExternalSync", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -10681,6 +10838,7 @@ func (c *ProjectsInstancesVerifyExternalSyncSettingsCall) doRequest(alt string) 
 		"project":  c.project,
 		"instance": c.instance,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "sql.projects.instances.verifyExternalSyncSettings", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -10716,9 +10874,11 @@ func (c *ProjectsInstancesVerifyExternalSyncSettingsCall) Do(opts ...googleapi.C
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "sql.projects.instances.verifyExternalSyncSettings", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -10789,6 +10949,7 @@ func (c *SslCertsCreateEphemeralCall) doRequest(alt string) (*http.Response, err
 		"project":  c.project,
 		"instance": c.instance,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "sql.sslCerts.createEphemeral", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -10823,9 +10984,11 @@ func (c *SslCertsCreateEphemeralCall) Do(opts ...googleapi.CallOption) (*SslCert
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "sql.sslCerts.createEphemeral", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -10892,6 +11055,7 @@ func (c *SslCertsDeleteCall) doRequest(alt string) (*http.Response, error) {
 		"instance":        c.instance,
 		"sha1Fingerprint": c.sha1Fingerprint,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "sql.sslCerts.delete", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -10926,9 +11090,11 @@ func (c *SslCertsDeleteCall) Do(opts ...googleapi.CallOption) (*Operation, error
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "sql.sslCerts.delete", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -11008,6 +11174,7 @@ func (c *SslCertsGetCall) doRequest(alt string) (*http.Response, error) {
 		"instance":        c.instance,
 		"sha1Fingerprint": c.sha1Fingerprint,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "sql.sslCerts.get", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -11042,9 +11209,11 @@ func (c *SslCertsGetCall) Do(opts ...googleapi.CallOption) (*SslCert, error) {
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "sql.sslCerts.get", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -11114,6 +11283,7 @@ func (c *SslCertsInsertCall) doRequest(alt string) (*http.Response, error) {
 		"project":  c.project,
 		"instance": c.instance,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "sql.sslCerts.insert", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -11149,9 +11319,11 @@ func (c *SslCertsInsertCall) Do(opts ...googleapi.CallOption) (*SslCertsInsertRe
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "sql.sslCerts.insert", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -11225,6 +11397,7 @@ func (c *SslCertsListCall) doRequest(alt string) (*http.Response, error) {
 		"project":  c.project,
 		"instance": c.instance,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "sql.sslCerts.list", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -11260,9 +11433,11 @@ func (c *SslCertsListCall) Do(opts ...googleapi.CallOption) (*SslCertsListRespon
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "sql.sslCerts.list", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -11334,6 +11509,7 @@ func (c *TiersListCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"project": c.project,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "sql.tiers.list", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -11369,9 +11545,11 @@ func (c *TiersListCall) Do(opts ...googleapi.CallOption) (*TiersListResponse, er
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "sql.tiers.list", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -11445,6 +11623,7 @@ func (c *UsersDeleteCall) doRequest(alt string) (*http.Response, error) {
 		"project":  c.project,
 		"instance": c.instance,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "sql.users.delete", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -11479,9 +11658,11 @@ func (c *UsersDeleteCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "sql.users.delete", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -11565,6 +11746,7 @@ func (c *UsersGetCall) doRequest(alt string) (*http.Response, error) {
 		"instance": c.instance,
 		"name":     c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "sql.users.get", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -11599,9 +11781,11 @@ func (c *UsersGetCall) Do(opts ...googleapi.CallOption) (*User, error) {
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "sql.users.get", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -11669,6 +11853,7 @@ func (c *UsersInsertCall) doRequest(alt string) (*http.Response, error) {
 		"project":  c.project,
 		"instance": c.instance,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "sql.users.insert", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -11703,9 +11888,11 @@ func (c *UsersInsertCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "sql.users.insert", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -11779,6 +11966,7 @@ func (c *UsersListCall) doRequest(alt string) (*http.Response, error) {
 		"project":  c.project,
 		"instance": c.instance,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "sql.users.list", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -11814,9 +12002,11 @@ func (c *UsersListCall) Do(opts ...googleapi.CallOption) (*UsersListResponse, er
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "sql.users.list", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -11896,6 +12086,7 @@ func (c *UsersUpdateCall) doRequest(alt string) (*http.Response, error) {
 		"project":  c.project,
 		"instance": c.instance,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "sql.users.update", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -11930,8 +12121,10 @@ func (c *UsersUpdateCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "sql.users.update", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }

@@ -62,11 +62,13 @@ import (
 	"errors"
 	"fmt"
 	"io"
+	"log/slog"
 	"net/http"
 	"net/url"
 	"strconv"
 	"strings"
 
+	"github.com/googleapis/gax-go/v2/internallog"
 	googleapi "google.golang.org/api/googleapi"
 	internal "google.golang.org/api/internal"
 	gensupport "google.golang.org/api/internal/gensupport"
@@ -90,6 +92,7 @@ var _ = strings.Replace
 var _ = context.Canceled
 var _ = internaloption.WithDefaultEndpoint
 var _ = internal.Version
+var _ = internallog.New
 
 const apiId = "analyticsdata:v1beta"
 const apiName = "analyticsdata"
@@ -123,7 +126,7 @@ func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, err
 	if err != nil {
 		return nil, err
 	}
-	s := &Service{client: client, BasePath: basePath}
+	s := &Service{client: client, BasePath: basePath, logger: internaloption.GetLogger(opts)}
 	s.Properties = NewPropertiesService(s)
 	if err != nil {
 		return nil, err
@@ -148,6 +151,7 @@ func New(client *http.Client) (*Service, error) {
 
 type Service struct {
 	client    *http.Client
+	logger    *slog.Logger
 	BasePath  string // API endpoint base URL
 	UserAgent string // optional additional User-Agent fragment
 
@@ -2748,6 +2752,7 @@ func (c *PropertiesBatchRunPivotReportsCall) doRequest(alt string) (*http.Respon
 	googleapi.Expand(req.URL, map[string]string{
 		"property": c.propertyid,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "analyticsdata.properties.batchRunPivotReports", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -2783,9 +2788,11 @@ func (c *PropertiesBatchRunPivotReportsCall) Do(opts ...googleapi.CallOption) (*
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "analyticsdata.properties.batchRunPivotReports", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -2856,6 +2863,7 @@ func (c *PropertiesBatchRunReportsCall) doRequest(alt string) (*http.Response, e
 	googleapi.Expand(req.URL, map[string]string{
 		"property": c.propertyid,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "analyticsdata.properties.batchRunReports", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -2891,9 +2899,11 @@ func (c *PropertiesBatchRunReportsCall) Do(opts ...googleapi.CallOption) (*Batch
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "analyticsdata.properties.batchRunReports", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -2968,6 +2978,7 @@ func (c *PropertiesCheckCompatibilityCall) doRequest(alt string) (*http.Response
 	googleapi.Expand(req.URL, map[string]string{
 		"property": c.propertyid,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "analyticsdata.properties.checkCompatibility", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -3003,9 +3014,11 @@ func (c *PropertiesCheckCompatibilityCall) Do(opts ...googleapi.CallOption) (*Ch
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "analyticsdata.properties.checkCompatibility", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -3089,6 +3102,7 @@ func (c *PropertiesGetMetadataCall) doRequest(alt string) (*http.Response, error
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.nameid,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "analyticsdata.properties.getMetadata", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -3123,9 +3137,11 @@ func (c *PropertiesGetMetadataCall) Do(opts ...googleapi.CallOption) (*Metadata,
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "analyticsdata.properties.getMetadata", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -3198,6 +3214,7 @@ func (c *PropertiesRunPivotReportCall) doRequest(alt string) (*http.Response, er
 	googleapi.Expand(req.URL, map[string]string{
 		"property": c.propertyid,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "analyticsdata.properties.runPivotReport", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -3233,9 +3250,11 @@ func (c *PropertiesRunPivotReportCall) Do(opts ...googleapi.CallOption) (*RunPiv
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "analyticsdata.properties.runPivotReport", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -3310,6 +3329,7 @@ func (c *PropertiesRunRealtimeReportCall) doRequest(alt string) (*http.Response,
 	googleapi.Expand(req.URL, map[string]string{
 		"property": c.propertyid,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "analyticsdata.properties.runRealtimeReport", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -3345,9 +3365,11 @@ func (c *PropertiesRunRealtimeReportCall) Do(opts ...googleapi.CallOption) (*Run
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "analyticsdata.properties.runRealtimeReport", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -3424,6 +3446,7 @@ func (c *PropertiesRunReportCall) doRequest(alt string) (*http.Response, error) 
 	googleapi.Expand(req.URL, map[string]string{
 		"property": c.propertyid,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "analyticsdata.properties.runReport", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -3459,9 +3482,11 @@ func (c *PropertiesRunReportCall) Do(opts ...googleapi.CallOption) (*RunReportRe
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "analyticsdata.properties.runReport", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -3544,6 +3569,7 @@ func (c *PropertiesAudienceExportsCreateCall) doRequest(alt string) (*http.Respo
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "analyticsdata.properties.audienceExports.create", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -3578,9 +3604,11 @@ func (c *PropertiesAudienceExportsCreateCall) Do(opts ...googleapi.CallOption) (
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "analyticsdata.properties.audienceExports.create", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -3659,6 +3687,7 @@ func (c *PropertiesAudienceExportsGetCall) doRequest(alt string) (*http.Response
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "analyticsdata.properties.audienceExports.get", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -3693,9 +3722,11 @@ func (c *PropertiesAudienceExportsGetCall) Do(opts ...googleapi.CallOption) (*Au
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "analyticsdata.properties.audienceExports.get", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -3794,6 +3825,7 @@ func (c *PropertiesAudienceExportsListCall) doRequest(alt string) (*http.Respons
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "analyticsdata.properties.audienceExports.list", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -3829,9 +3861,11 @@ func (c *PropertiesAudienceExportsListCall) Do(opts ...googleapi.CallOption) (*L
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "analyticsdata.properties.audienceExports.list", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -3930,6 +3964,7 @@ func (c *PropertiesAudienceExportsQueryCall) doRequest(alt string) (*http.Respon
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "analyticsdata.properties.audienceExports.query", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -3965,8 +4000,10 @@ func (c *PropertiesAudienceExportsQueryCall) Do(opts ...googleapi.CallOption) (*
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "analyticsdata.properties.audienceExports.query", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }

@@ -62,11 +62,13 @@ import (
 	"errors"
 	"fmt"
 	"io"
+	"log/slog"
 	"net/http"
 	"net/url"
 	"strconv"
 	"strings"
 
+	"github.com/googleapis/gax-go/v2/internallog"
 	googleapi "google.golang.org/api/googleapi"
 	internal "google.golang.org/api/internal"
 	gensupport "google.golang.org/api/internal/gensupport"
@@ -90,6 +92,7 @@ var _ = strings.Replace
 var _ = context.Canceled
 var _ = internaloption.WithDefaultEndpoint
 var _ = internal.Version
+var _ = internallog.New
 
 const apiId = "identitytoolkit:v3"
 const apiName = "identitytoolkit"
@@ -121,7 +124,7 @@ func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, err
 	if err != nil {
 		return nil, err
 	}
-	s := &Service{client: client, BasePath: basePath}
+	s := &Service{client: client, BasePath: basePath, logger: internaloption.GetLogger(opts)}
 	s.Relyingparty = NewRelyingpartyService(s)
 	if err != nil {
 		return nil, err
@@ -146,6 +149,7 @@ func New(client *http.Client) (*Service, error) {
 
 type Service struct {
 	client    *http.Client
+	logger    *slog.Logger
 	BasePath  string // API endpoint base URL
 	UserAgent string // optional additional User-Agent fragment
 
@@ -1888,6 +1892,7 @@ func (c *RelyingpartyCreateAuthUriCall) doRequest(alt string) (*http.Response, e
 		return nil, err
 	}
 	req.Header = reqHeaders
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "identitytoolkit.relyingparty.createAuthUri", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -1923,9 +1928,11 @@ func (c *RelyingpartyCreateAuthUriCall) Do(opts ...googleapi.CallOption) (*Creat
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "identitytoolkit.relyingparty.createAuthUri", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -1982,6 +1989,7 @@ func (c *RelyingpartyDeleteAccountCall) doRequest(alt string) (*http.Response, e
 		return nil, err
 	}
 	req.Header = reqHeaders
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "identitytoolkit.relyingparty.deleteAccount", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -2017,9 +2025,11 @@ func (c *RelyingpartyDeleteAccountCall) Do(opts ...googleapi.CallOption) (*Delet
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "identitytoolkit.relyingparty.deleteAccount", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -2076,6 +2086,7 @@ func (c *RelyingpartyDownloadAccountCall) doRequest(alt string) (*http.Response,
 		return nil, err
 	}
 	req.Header = reqHeaders
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "identitytoolkit.relyingparty.downloadAccount", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -2111,9 +2122,11 @@ func (c *RelyingpartyDownloadAccountCall) Do(opts ...googleapi.CallOption) (*Dow
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "identitytoolkit.relyingparty.downloadAccount", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -2191,6 +2204,7 @@ func (c *RelyingpartyEmailLinkSigninCall) doRequest(alt string) (*http.Response,
 		return nil, err
 	}
 	req.Header = reqHeaders
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "identitytoolkit.relyingparty.emailLinkSignin", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -2226,9 +2240,11 @@ func (c *RelyingpartyEmailLinkSigninCall) Do(opts ...googleapi.CallOption) (*Ema
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "identitytoolkit.relyingparty.emailLinkSignin", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -2285,6 +2301,7 @@ func (c *RelyingpartyGetAccountInfoCall) doRequest(alt string) (*http.Response, 
 		return nil, err
 	}
 	req.Header = reqHeaders
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "identitytoolkit.relyingparty.getAccountInfo", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -2320,9 +2337,11 @@ func (c *RelyingpartyGetAccountInfoCall) Do(opts ...googleapi.CallOption) (*GetA
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "identitytoolkit.relyingparty.getAccountInfo", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -2379,6 +2398,7 @@ func (c *RelyingpartyGetOobConfirmationCodeCall) doRequest(alt string) (*http.Re
 		return nil, err
 	}
 	req.Header = reqHeaders
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "identitytoolkit.relyingparty.getOobConfirmationCode", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -2414,9 +2434,11 @@ func (c *RelyingpartyGetOobConfirmationCodeCall) Do(opts ...googleapi.CallOption
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "identitytoolkit.relyingparty.getOobConfirmationCode", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -2493,6 +2515,7 @@ func (c *RelyingpartyGetProjectConfigCall) doRequest(alt string) (*http.Response
 		return nil, err
 	}
 	req.Header = reqHeaders
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "identitytoolkit.relyingparty.getProjectConfig", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -2528,9 +2551,11 @@ func (c *RelyingpartyGetProjectConfigCall) Do(opts ...googleapi.CallOption) (*Id
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "identitytoolkit.relyingparty.getProjectConfig", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -2593,6 +2618,7 @@ func (c *RelyingpartyGetPublicKeysCall) doRequest(alt string) (*http.Response, e
 		return nil, err
 	}
 	req.Header = reqHeaders
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "identitytoolkit.relyingparty.getPublicKeys", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -2609,9 +2635,11 @@ func (c *RelyingpartyGetPublicKeysCall) Do(opts ...googleapi.CallOption) (map[st
 	}
 	var ret map[string]string
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "identitytoolkit.relyingparty.getPublicKeys", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -2674,6 +2702,7 @@ func (c *RelyingpartyGetRecaptchaParamCall) doRequest(alt string) (*http.Respons
 		return nil, err
 	}
 	req.Header = reqHeaders
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "identitytoolkit.relyingparty.getRecaptchaParam", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -2709,9 +2738,11 @@ func (c *RelyingpartyGetRecaptchaParamCall) Do(opts ...googleapi.CallOption) (*G
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "identitytoolkit.relyingparty.getRecaptchaParam", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -2768,6 +2799,7 @@ func (c *RelyingpartyResetPasswordCall) doRequest(alt string) (*http.Response, e
 		return nil, err
 	}
 	req.Header = reqHeaders
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "identitytoolkit.relyingparty.resetPassword", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -2803,9 +2835,11 @@ func (c *RelyingpartyResetPasswordCall) Do(opts ...googleapi.CallOption) (*Reset
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "identitytoolkit.relyingparty.resetPassword", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -2862,6 +2896,7 @@ func (c *RelyingpartySendVerificationCodeCall) doRequest(alt string) (*http.Resp
 		return nil, err
 	}
 	req.Header = reqHeaders
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "identitytoolkit.relyingparty.sendVerificationCode", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -2897,9 +2932,11 @@ func (c *RelyingpartySendVerificationCodeCall) Do(opts ...googleapi.CallOption) 
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "identitytoolkit.relyingparty.sendVerificationCode", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -2956,6 +2993,7 @@ func (c *RelyingpartySetAccountInfoCall) doRequest(alt string) (*http.Response, 
 		return nil, err
 	}
 	req.Header = reqHeaders
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "identitytoolkit.relyingparty.setAccountInfo", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -2991,9 +3029,11 @@ func (c *RelyingpartySetAccountInfoCall) Do(opts ...googleapi.CallOption) (*SetA
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "identitytoolkit.relyingparty.setAccountInfo", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -3050,6 +3090,7 @@ func (c *RelyingpartySetProjectConfigCall) doRequest(alt string) (*http.Response
 		return nil, err
 	}
 	req.Header = reqHeaders
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "identitytoolkit.relyingparty.setProjectConfig", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -3085,9 +3126,11 @@ func (c *RelyingpartySetProjectConfigCall) Do(opts ...googleapi.CallOption) (*Id
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "identitytoolkit.relyingparty.setProjectConfig", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -3144,6 +3187,7 @@ func (c *RelyingpartySignOutUserCall) doRequest(alt string) (*http.Response, err
 		return nil, err
 	}
 	req.Header = reqHeaders
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "identitytoolkit.relyingparty.signOutUser", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -3179,9 +3223,11 @@ func (c *RelyingpartySignOutUserCall) Do(opts ...googleapi.CallOption) (*Identit
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "identitytoolkit.relyingparty.signOutUser", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -3238,6 +3284,7 @@ func (c *RelyingpartySignupNewUserCall) doRequest(alt string) (*http.Response, e
 		return nil, err
 	}
 	req.Header = reqHeaders
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "identitytoolkit.relyingparty.signupNewUser", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -3273,9 +3320,11 @@ func (c *RelyingpartySignupNewUserCall) Do(opts ...googleapi.CallOption) (*Signu
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "identitytoolkit.relyingparty.signupNewUser", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -3332,6 +3381,7 @@ func (c *RelyingpartyUploadAccountCall) doRequest(alt string) (*http.Response, e
 		return nil, err
 	}
 	req.Header = reqHeaders
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "identitytoolkit.relyingparty.uploadAccount", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -3367,9 +3417,11 @@ func (c *RelyingpartyUploadAccountCall) Do(opts ...googleapi.CallOption) (*Uploa
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "identitytoolkit.relyingparty.uploadAccount", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -3426,6 +3478,7 @@ func (c *RelyingpartyVerifyAssertionCall) doRequest(alt string) (*http.Response,
 		return nil, err
 	}
 	req.Header = reqHeaders
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "identitytoolkit.relyingparty.verifyAssertion", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -3461,9 +3514,11 @@ func (c *RelyingpartyVerifyAssertionCall) Do(opts ...googleapi.CallOption) (*Ver
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "identitytoolkit.relyingparty.verifyAssertion", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -3520,6 +3575,7 @@ func (c *RelyingpartyVerifyCustomTokenCall) doRequest(alt string) (*http.Respons
 		return nil, err
 	}
 	req.Header = reqHeaders
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "identitytoolkit.relyingparty.verifyCustomToken", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -3555,9 +3611,11 @@ func (c *RelyingpartyVerifyCustomTokenCall) Do(opts ...googleapi.CallOption) (*V
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "identitytoolkit.relyingparty.verifyCustomToken", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -3614,6 +3672,7 @@ func (c *RelyingpartyVerifyPasswordCall) doRequest(alt string) (*http.Response, 
 		return nil, err
 	}
 	req.Header = reqHeaders
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "identitytoolkit.relyingparty.verifyPassword", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -3649,9 +3708,11 @@ func (c *RelyingpartyVerifyPasswordCall) Do(opts ...googleapi.CallOption) (*Veri
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "identitytoolkit.relyingparty.verifyPassword", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -3709,6 +3770,7 @@ func (c *RelyingpartyVerifyPhoneNumberCall) doRequest(alt string) (*http.Respons
 		return nil, err
 	}
 	req.Header = reqHeaders
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "identitytoolkit.relyingparty.verifyPhoneNumber", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -3744,8 +3806,10 @@ func (c *RelyingpartyVerifyPhoneNumberCall) Do(opts ...googleapi.CallOption) (*I
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "identitytoolkit.relyingparty.verifyPhoneNumber", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }

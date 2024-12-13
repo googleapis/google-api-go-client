@@ -57,11 +57,13 @@ import (
 	"errors"
 	"fmt"
 	"io"
+	"log/slog"
 	"net/http"
 	"net/url"
 	"strconv"
 	"strings"
 
+	"github.com/googleapis/gax-go/v2/internallog"
 	googleapi "google.golang.org/api/googleapi"
 	internal "google.golang.org/api/internal"
 	gensupport "google.golang.org/api/internal/gensupport"
@@ -85,6 +87,7 @@ var _ = strings.Replace
 var _ = context.Canceled
 var _ = internaloption.WithDefaultEndpoint
 var _ = internal.Version
+var _ = internallog.New
 
 const apiId = "playdeveloperreporting:v1beta1"
 const apiName = "playdeveloperreporting"
@@ -114,7 +117,7 @@ func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, err
 	if err != nil {
 		return nil, err
 	}
-	s := &Service{client: client, BasePath: basePath}
+	s := &Service{client: client, BasePath: basePath, logger: internaloption.GetLogger(opts)}
 	s.Anomalies = NewAnomaliesService(s)
 	s.Apps = NewAppsService(s)
 	s.Vitals = NewVitalsService(s)
@@ -141,6 +144,7 @@ func New(client *http.Client) (*Service, error) {
 
 type Service struct {
 	client    *http.Client
+	logger    *slog.Logger
 	BasePath  string // API endpoint base URL
 	UserAgent string // optional additional User-Agent fragment
 
@@ -2867,6 +2871,7 @@ func (c *AnomaliesListCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "playdeveloperreporting.anomalies.list", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -2902,9 +2907,11 @@ func (c *AnomaliesListCall) Do(opts ...googleapi.CallOption) (*GooglePlayDevelop
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "playdeveloperreporting.anomalies.list", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -2996,6 +3003,7 @@ func (c *AppsFetchReleaseFilterOptionsCall) doRequest(alt string) (*http.Respons
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "playdeveloperreporting.apps.fetchReleaseFilterOptions", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -3031,9 +3039,11 @@ func (c *AppsFetchReleaseFilterOptionsCall) Do(opts ...googleapi.CallOption) (*G
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "playdeveloperreporting.apps.fetchReleaseFilterOptions", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -3114,6 +3124,7 @@ func (c *AppsSearchCall) doRequest(alt string) (*http.Response, error) {
 		return nil, err
 	}
 	req.Header = reqHeaders
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "playdeveloperreporting.apps.search", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -3149,9 +3160,11 @@ func (c *AppsSearchCall) Do(opts ...googleapi.CallOption) (*GooglePlayDeveloperR
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "playdeveloperreporting.apps.search", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -3242,6 +3255,7 @@ func (c *VitalsAnrrateGetCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "playdeveloperreporting.vitals.anrrate.get", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -3277,9 +3291,11 @@ func (c *VitalsAnrrateGetCall) Do(opts ...googleapi.CallOption) (*GooglePlayDeve
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "playdeveloperreporting.vitals.anrrate.get", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -3343,6 +3359,7 @@ func (c *VitalsAnrrateQueryCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "playdeveloperreporting.vitals.anrrate.query", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -3378,9 +3395,11 @@ func (c *VitalsAnrrateQueryCall) Do(opts ...googleapi.CallOption) (*GooglePlayDe
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "playdeveloperreporting.vitals.anrrate.query", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -3471,6 +3490,7 @@ func (c *VitalsCrashrateGetCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "playdeveloperreporting.vitals.crashrate.get", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -3506,9 +3526,11 @@ func (c *VitalsCrashrateGetCall) Do(opts ...googleapi.CallOption) (*GooglePlayDe
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "playdeveloperreporting.vitals.crashrate.get", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -3572,6 +3594,7 @@ func (c *VitalsCrashrateQueryCall) doRequest(alt string) (*http.Response, error)
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "playdeveloperreporting.vitals.crashrate.query", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -3607,9 +3630,11 @@ func (c *VitalsCrashrateQueryCall) Do(opts ...googleapi.CallOption) (*GooglePlay
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "playdeveloperreporting.vitals.crashrate.query", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -3701,6 +3726,7 @@ func (c *VitalsErrorsCountsGetCall) doRequest(alt string) (*http.Response, error
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "playdeveloperreporting.vitals.errors.counts.get", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -3738,9 +3764,11 @@ func (c *VitalsErrorsCountsGetCall) Do(opts ...googleapi.CallOption) (*GooglePla
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "playdeveloperreporting.vitals.errors.counts.get", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -3804,6 +3832,7 @@ func (c *VitalsErrorsCountsQueryCall) doRequest(alt string) (*http.Response, err
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "playdeveloperreporting.vitals.errors.counts.query", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -3839,9 +3868,11 @@ func (c *VitalsErrorsCountsQueryCall) Do(opts ...googleapi.CallOption) (*GoogleP
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "playdeveloperreporting.vitals.errors.counts.query", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -4175,6 +4206,7 @@ func (c *VitalsErrorsIssuesSearchCall) doRequest(alt string) (*http.Response, er
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "playdeveloperreporting.vitals.errors.issues.search", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -4210,9 +4242,11 @@ func (c *VitalsErrorsIssuesSearchCall) Do(opts ...googleapi.CallOption) (*Google
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "playdeveloperreporting.vitals.errors.issues.search", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -4530,6 +4564,7 @@ func (c *VitalsErrorsReportsSearchCall) doRequest(alt string) (*http.Response, e
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "playdeveloperreporting.vitals.errors.reports.search", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -4565,9 +4600,11 @@ func (c *VitalsErrorsReportsSearchCall) Do(opts ...googleapi.CallOption) (*Googl
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "playdeveloperreporting.vitals.errors.reports.search", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -4658,6 +4695,7 @@ func (c *VitalsExcessivewakeuprateGetCall) doRequest(alt string) (*http.Response
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "playdeveloperreporting.vitals.excessivewakeuprate.get", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -4693,9 +4731,11 @@ func (c *VitalsExcessivewakeuprateGetCall) Do(opts ...googleapi.CallOption) (*Go
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "playdeveloperreporting.vitals.excessivewakeuprate.get", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -4759,6 +4799,7 @@ func (c *VitalsExcessivewakeuprateQueryCall) doRequest(alt string) (*http.Respon
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "playdeveloperreporting.vitals.excessivewakeuprate.query", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -4794,9 +4835,11 @@ func (c *VitalsExcessivewakeuprateQueryCall) Do(opts ...googleapi.CallOption) (*
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "playdeveloperreporting.vitals.excessivewakeuprate.query", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -4889,6 +4932,7 @@ func (c *VitalsSlowrenderingrateGetCall) doRequest(alt string) (*http.Response, 
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "playdeveloperreporting.vitals.slowrenderingrate.get", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -4924,9 +4968,11 @@ func (c *VitalsSlowrenderingrateGetCall) Do(opts ...googleapi.CallOption) (*Goog
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "playdeveloperreporting.vitals.slowrenderingrate.get", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -4990,6 +5036,7 @@ func (c *VitalsSlowrenderingrateQueryCall) doRequest(alt string) (*http.Response
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "playdeveloperreporting.vitals.slowrenderingrate.query", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -5025,9 +5072,11 @@ func (c *VitalsSlowrenderingrateQueryCall) Do(opts ...googleapi.CallOption) (*Go
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "playdeveloperreporting.vitals.slowrenderingrate.query", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -5120,6 +5169,7 @@ func (c *VitalsSlowstartrateGetCall) doRequest(alt string) (*http.Response, erro
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "playdeveloperreporting.vitals.slowstartrate.get", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -5155,9 +5205,11 @@ func (c *VitalsSlowstartrateGetCall) Do(opts ...googleapi.CallOption) (*GooglePl
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "playdeveloperreporting.vitals.slowstartrate.get", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -5221,6 +5273,7 @@ func (c *VitalsSlowstartrateQueryCall) doRequest(alt string) (*http.Response, er
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "playdeveloperreporting.vitals.slowstartrate.query", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -5256,9 +5309,11 @@ func (c *VitalsSlowstartrateQueryCall) Do(opts ...googleapi.CallOption) (*Google
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "playdeveloperreporting.vitals.slowstartrate.query", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -5352,6 +5407,7 @@ func (c *VitalsStuckbackgroundwakelockrateGetCall) doRequest(alt string) (*http.
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "playdeveloperreporting.vitals.stuckbackgroundwakelockrate.get", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -5387,9 +5443,11 @@ func (c *VitalsStuckbackgroundwakelockrateGetCall) Do(opts ...googleapi.CallOpti
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "playdeveloperreporting.vitals.stuckbackgroundwakelockrate.get", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -5454,6 +5512,7 @@ func (c *VitalsStuckbackgroundwakelockrateQueryCall) doRequest(alt string) (*htt
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "playdeveloperreporting.vitals.stuckbackgroundwakelockrate.query", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -5489,9 +5548,11 @@ func (c *VitalsStuckbackgroundwakelockrateQueryCall) Do(opts ...googleapi.CallOp
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "playdeveloperreporting.vitals.stuckbackgroundwakelockrate.query", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 

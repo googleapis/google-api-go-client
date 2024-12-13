@@ -57,11 +57,13 @@ import (
 	"errors"
 	"fmt"
 	"io"
+	"log/slog"
 	"net/http"
 	"net/url"
 	"strconv"
 	"strings"
 
+	"github.com/googleapis/gax-go/v2/internallog"
 	googleapi "google.golang.org/api/googleapi"
 	internal "google.golang.org/api/internal"
 	gensupport "google.golang.org/api/internal/gensupport"
@@ -85,6 +87,7 @@ var _ = strings.Replace
 var _ = context.Canceled
 var _ = internaloption.WithDefaultEndpoint
 var _ = internal.Version
+var _ = internallog.New
 
 const apiId = "adexchangebuyer2:v2beta1"
 const apiName = "adexchangebuyer2"
@@ -114,7 +117,7 @@ func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, err
 	if err != nil {
 		return nil, err
 	}
-	s := &Service{client: client, BasePath: basePath}
+	s := &Service{client: client, BasePath: basePath, logger: internaloption.GetLogger(opts)}
 	s.Accounts = NewAccountsService(s)
 	s.Bidders = NewBiddersService(s)
 	s.Buyers = NewBuyersService(s)
@@ -141,6 +144,7 @@ func New(client *http.Client) (*Service, error) {
 
 type Service struct {
 	client    *http.Client
+	logger    *slog.Logger
 	BasePath  string // API endpoint base URL
 	UserAgent string // optional additional User-Agent fragment
 
@@ -4866,6 +4870,7 @@ func (c *AccountsClientsCreateCall) doRequest(alt string) (*http.Response, error
 	googleapi.Expand(req.URL, map[string]string{
 		"accountId": strconv.FormatInt(c.accountId, 10),
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "adexchangebuyer2.accounts.clients.create", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -4900,9 +4905,11 @@ func (c *AccountsClientsCreateCall) Do(opts ...googleapi.CallOption) (*Client, e
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "adexchangebuyer2.accounts.clients.create", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -4977,6 +4984,7 @@ func (c *AccountsClientsGetCall) doRequest(alt string) (*http.Response, error) {
 		"accountId":       strconv.FormatInt(c.accountId, 10),
 		"clientAccountId": strconv.FormatInt(c.clientAccountId, 10),
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "adexchangebuyer2.accounts.clients.get", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -5011,9 +5019,11 @@ func (c *AccountsClientsGetCall) Do(opts ...googleapi.CallOption) (*Client, erro
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "adexchangebuyer2.accounts.clients.get", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -5110,6 +5120,7 @@ func (c *AccountsClientsListCall) doRequest(alt string) (*http.Response, error) 
 	googleapi.Expand(req.URL, map[string]string{
 		"accountId": strconv.FormatInt(c.accountId, 10),
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "adexchangebuyer2.accounts.clients.list", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -5145,9 +5156,11 @@ func (c *AccountsClientsListCall) Do(opts ...googleapi.CallOption) (*ListClients
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "adexchangebuyer2.accounts.clients.list", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -5238,6 +5251,7 @@ func (c *AccountsClientsUpdateCall) doRequest(alt string) (*http.Response, error
 		"accountId":       strconv.FormatInt(c.accountId, 10),
 		"clientAccountId": strconv.FormatInt(c.clientAccountId, 10),
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "adexchangebuyer2.accounts.clients.update", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -5272,9 +5286,11 @@ func (c *AccountsClientsUpdateCall) Do(opts ...googleapi.CallOption) (*Client, e
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "adexchangebuyer2.accounts.clients.update", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -5344,6 +5360,7 @@ func (c *AccountsClientsInvitationsCreateCall) doRequest(alt string) (*http.Resp
 		"accountId":       strconv.FormatInt(c.accountId, 10),
 		"clientAccountId": strconv.FormatInt(c.clientAccountId, 10),
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "adexchangebuyer2.accounts.clients.invitations.create", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -5379,9 +5396,11 @@ func (c *AccountsClientsInvitationsCreateCall) Do(opts ...googleapi.CallOption) 
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "adexchangebuyer2.accounts.clients.invitations.create", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -5461,6 +5480,7 @@ func (c *AccountsClientsInvitationsGetCall) doRequest(alt string) (*http.Respons
 		"clientAccountId": strconv.FormatInt(c.clientAccountId, 10),
 		"invitationId":    strconv.FormatInt(c.invitationId, 10),
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "adexchangebuyer2.accounts.clients.invitations.get", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -5496,9 +5516,11 @@ func (c *AccountsClientsInvitationsGetCall) Do(opts ...googleapi.CallOption) (*C
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "adexchangebuyer2.accounts.clients.invitations.get", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -5593,6 +5615,7 @@ func (c *AccountsClientsInvitationsListCall) doRequest(alt string) (*http.Respon
 		"accountId":       strconv.FormatInt(c.accountId, 10),
 		"clientAccountId": c.clientAccountId,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "adexchangebuyer2.accounts.clients.invitations.list", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -5628,9 +5651,11 @@ func (c *AccountsClientsInvitationsListCall) Do(opts ...googleapi.CallOption) (*
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "adexchangebuyer2.accounts.clients.invitations.list", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -5730,6 +5755,7 @@ func (c *AccountsClientsUsersGetCall) doRequest(alt string) (*http.Response, err
 		"clientAccountId": strconv.FormatInt(c.clientAccountId, 10),
 		"userId":          strconv.FormatInt(c.userId, 10),
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "adexchangebuyer2.accounts.clients.users.get", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -5764,9 +5790,11 @@ func (c *AccountsClientsUsersGetCall) Do(opts ...googleapi.CallOption) (*ClientU
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "adexchangebuyer2.accounts.clients.users.get", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -5862,6 +5890,7 @@ func (c *AccountsClientsUsersListCall) doRequest(alt string) (*http.Response, er
 		"accountId":       strconv.FormatInt(c.accountId, 10),
 		"clientAccountId": c.clientAccountId,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "adexchangebuyer2.accounts.clients.users.list", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -5897,9 +5926,11 @@ func (c *AccountsClientsUsersListCall) Do(opts ...googleapi.CallOption) (*ListCl
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "adexchangebuyer2.accounts.clients.users.list", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -5994,6 +6025,7 @@ func (c *AccountsClientsUsersUpdateCall) doRequest(alt string) (*http.Response, 
 		"clientAccountId": strconv.FormatInt(c.clientAccountId, 10),
 		"userId":          strconv.FormatInt(c.userId, 10),
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "adexchangebuyer2.accounts.clients.users.update", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -6028,9 +6060,11 @@ func (c *AccountsClientsUsersUpdateCall) Do(opts ...googleapi.CallOption) (*Clie
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "adexchangebuyer2.accounts.clients.users.update", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -6117,6 +6151,7 @@ func (c *AccountsCreativesCreateCall) doRequest(alt string) (*http.Response, err
 	googleapi.Expand(req.URL, map[string]string{
 		"accountId": c.accountId,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "adexchangebuyer2.accounts.creatives.create", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -6151,9 +6186,11 @@ func (c *AccountsCreativesCreateCall) Do(opts ...googleapi.CallOption) (*Creativ
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "adexchangebuyer2.accounts.creatives.create", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -6227,6 +6264,7 @@ func (c *AccountsCreativesGetCall) doRequest(alt string) (*http.Response, error)
 		"accountId":  c.accountId,
 		"creativeId": c.creativeId,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "adexchangebuyer2.accounts.creatives.get", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -6261,9 +6299,11 @@ func (c *AccountsCreativesGetCall) Do(opts ...googleapi.CallOption) (*Creative, 
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "adexchangebuyer2.accounts.creatives.get", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -6367,6 +6407,7 @@ func (c *AccountsCreativesListCall) doRequest(alt string) (*http.Response, error
 	googleapi.Expand(req.URL, map[string]string{
 		"accountId": c.accountId,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "adexchangebuyer2.accounts.creatives.list", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -6402,9 +6443,11 @@ func (c *AccountsCreativesListCall) Do(opts ...googleapi.CallOption) (*ListCreat
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "adexchangebuyer2.accounts.creatives.list", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -6495,6 +6538,7 @@ func (c *AccountsCreativesStopWatchingCall) doRequest(alt string) (*http.Respons
 		"accountId":  c.accountId,
 		"creativeId": c.creativeId,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "adexchangebuyer2.accounts.creatives.stopWatching", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -6529,9 +6573,11 @@ func (c *AccountsCreativesStopWatchingCall) Do(opts ...googleapi.CallOption) (*E
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "adexchangebuyer2.accounts.creatives.stopWatching", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -6601,6 +6647,7 @@ func (c *AccountsCreativesUpdateCall) doRequest(alt string) (*http.Response, err
 		"accountId":  c.accountId,
 		"creativeId": c.creativeId,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "adexchangebuyer2.accounts.creatives.update", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -6635,9 +6682,11 @@ func (c *AccountsCreativesUpdateCall) Do(opts ...googleapi.CallOption) (*Creativ
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "adexchangebuyer2.accounts.creatives.update", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -6709,6 +6758,7 @@ func (c *AccountsCreativesWatchCall) doRequest(alt string) (*http.Response, erro
 		"accountId":  c.accountId,
 		"creativeId": c.creativeId,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "adexchangebuyer2.accounts.creatives.watch", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -6743,9 +6793,11 @@ func (c *AccountsCreativesWatchCall) Do(opts ...googleapi.CallOption) (*Empty, e
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "adexchangebuyer2.accounts.creatives.watch", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -6813,6 +6865,7 @@ func (c *AccountsCreativesDealAssociationsAddCall) doRequest(alt string) (*http.
 		"accountId":  c.accountId,
 		"creativeId": c.creativeId,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "adexchangebuyer2.accounts.creatives.dealAssociations.add", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -6847,9 +6900,11 @@ func (c *AccountsCreativesDealAssociationsAddCall) Do(opts ...googleapi.CallOpti
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "adexchangebuyer2.accounts.creatives.dealAssociations.add", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -6954,6 +7009,7 @@ func (c *AccountsCreativesDealAssociationsListCall) doRequest(alt string) (*http
 		"accountId":  c.accountId,
 		"creativeId": c.creativeId,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "adexchangebuyer2.accounts.creatives.dealAssociations.list", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -6989,9 +7045,11 @@ func (c *AccountsCreativesDealAssociationsListCall) Do(opts ...googleapi.CallOpt
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "adexchangebuyer2.accounts.creatives.dealAssociations.list", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -7080,6 +7138,7 @@ func (c *AccountsCreativesDealAssociationsRemoveCall) doRequest(alt string) (*ht
 		"accountId":  c.accountId,
 		"creativeId": c.creativeId,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "adexchangebuyer2.accounts.creatives.dealAssociations.remove", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -7114,9 +7173,11 @@ func (c *AccountsCreativesDealAssociationsRemoveCall) Do(opts ...googleapi.CallO
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "adexchangebuyer2.accounts.creatives.dealAssociations.remove", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -7234,6 +7295,7 @@ func (c *AccountsFinalizedProposalsListCall) doRequest(alt string) (*http.Respon
 	googleapi.Expand(req.URL, map[string]string{
 		"accountId": c.accountId,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "adexchangebuyer2.accounts.finalizedProposals.list", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -7269,9 +7331,11 @@ func (c *AccountsFinalizedProposalsListCall) Do(opts ...googleapi.CallOption) (*
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "adexchangebuyer2.accounts.finalizedProposals.list", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -7366,6 +7430,7 @@ func (c *AccountsFinalizedProposalsPauseCall) doRequest(alt string) (*http.Respo
 		"accountId":  c.accountId,
 		"proposalId": c.proposalId,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "adexchangebuyer2.accounts.finalizedProposals.pause", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -7400,9 +7465,11 @@ func (c *AccountsFinalizedProposalsPauseCall) Do(opts ...googleapi.CallOption) (
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "adexchangebuyer2.accounts.finalizedProposals.pause", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -7476,6 +7543,7 @@ func (c *AccountsFinalizedProposalsResumeCall) doRequest(alt string) (*http.Resp
 		"accountId":  c.accountId,
 		"proposalId": c.proposalId,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "adexchangebuyer2.accounts.finalizedProposals.resume", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -7510,9 +7578,11 @@ func (c *AccountsFinalizedProposalsResumeCall) Do(opts ...googleapi.CallOption) 
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "adexchangebuyer2.accounts.finalizedProposals.resume", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -7586,6 +7656,7 @@ func (c *AccountsProductsGetCall) doRequest(alt string) (*http.Response, error) 
 		"accountId": c.accountId,
 		"productId": c.productId,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "adexchangebuyer2.accounts.products.get", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -7620,9 +7691,11 @@ func (c *AccountsProductsGetCall) Do(opts ...googleapi.CallOption) (*Product, er
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "adexchangebuyer2.accounts.products.get", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -7718,6 +7791,7 @@ func (c *AccountsProductsListCall) doRequest(alt string) (*http.Response, error)
 	googleapi.Expand(req.URL, map[string]string{
 		"accountId": c.accountId,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "adexchangebuyer2.accounts.products.list", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -7753,9 +7827,11 @@ func (c *AccountsProductsListCall) Do(opts ...googleapi.CallOption) (*ListProduc
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "adexchangebuyer2.accounts.products.list", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -7849,6 +7925,7 @@ func (c *AccountsProposalsAcceptCall) doRequest(alt string) (*http.Response, err
 		"accountId":  c.accountId,
 		"proposalId": c.proposalId,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "adexchangebuyer2.accounts.proposals.accept", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -7883,9 +7960,11 @@ func (c *AccountsProposalsAcceptCall) Do(opts ...googleapi.CallOption) (*Proposa
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "adexchangebuyer2.accounts.proposals.accept", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -7955,6 +8034,7 @@ func (c *AccountsProposalsAddNoteCall) doRequest(alt string) (*http.Response, er
 		"accountId":  c.accountId,
 		"proposalId": c.proposalId,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "adexchangebuyer2.accounts.proposals.addNote", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -7989,9 +8069,11 @@ func (c *AccountsProposalsAddNoteCall) Do(opts ...googleapi.CallOption) (*Note, 
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "adexchangebuyer2.accounts.proposals.addNote", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -8061,6 +8143,7 @@ func (c *AccountsProposalsCancelNegotiationCall) doRequest(alt string) (*http.Re
 		"accountId":  c.accountId,
 		"proposalId": c.proposalId,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "adexchangebuyer2.accounts.proposals.cancelNegotiation", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -8095,9 +8178,11 @@ func (c *AccountsProposalsCancelNegotiationCall) Do(opts ...googleapi.CallOption
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "adexchangebuyer2.accounts.proposals.cancelNegotiation", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -8173,6 +8258,7 @@ func (c *AccountsProposalsCompleteSetupCall) doRequest(alt string) (*http.Respon
 		"accountId":  c.accountId,
 		"proposalId": c.proposalId,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "adexchangebuyer2.accounts.proposals.completeSetup", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -8207,9 +8293,11 @@ func (c *AccountsProposalsCompleteSetupCall) Do(opts ...googleapi.CallOption) (*
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "adexchangebuyer2.accounts.proposals.completeSetup", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -8274,6 +8362,7 @@ func (c *AccountsProposalsCreateCall) doRequest(alt string) (*http.Response, err
 	googleapi.Expand(req.URL, map[string]string{
 		"accountId": c.accountId,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "adexchangebuyer2.accounts.proposals.create", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -8308,9 +8397,11 @@ func (c *AccountsProposalsCreateCall) Do(opts ...googleapi.CallOption) (*Proposa
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "adexchangebuyer2.accounts.proposals.create", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -8385,6 +8476,7 @@ func (c *AccountsProposalsGetCall) doRequest(alt string) (*http.Response, error)
 		"accountId":  c.accountId,
 		"proposalId": c.proposalId,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "adexchangebuyer2.accounts.proposals.get", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -8419,9 +8511,11 @@ func (c *AccountsProposalsGetCall) Do(opts ...googleapi.CallOption) (*Proposal, 
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "adexchangebuyer2.accounts.proposals.get", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -8542,6 +8636,7 @@ func (c *AccountsProposalsListCall) doRequest(alt string) (*http.Response, error
 	googleapi.Expand(req.URL, map[string]string{
 		"accountId": c.accountId,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "adexchangebuyer2.accounts.proposals.list", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -8577,9 +8672,11 @@ func (c *AccountsProposalsListCall) Do(opts ...googleapi.CallOption) (*ListPropo
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "adexchangebuyer2.accounts.proposals.list", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -8672,6 +8769,7 @@ func (c *AccountsProposalsPauseCall) doRequest(alt string) (*http.Response, erro
 		"accountId":  c.accountId,
 		"proposalId": c.proposalId,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "adexchangebuyer2.accounts.proposals.pause", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -8706,9 +8804,11 @@ func (c *AccountsProposalsPauseCall) Do(opts ...googleapi.CallOption) (*Proposal
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "adexchangebuyer2.accounts.proposals.pause", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -8781,6 +8881,7 @@ func (c *AccountsProposalsResumeCall) doRequest(alt string) (*http.Response, err
 		"accountId":  c.accountId,
 		"proposalId": c.proposalId,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "adexchangebuyer2.accounts.proposals.resume", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -8815,9 +8916,11 @@ func (c *AccountsProposalsResumeCall) Do(opts ...googleapi.CallOption) (*Proposa
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "adexchangebuyer2.accounts.proposals.resume", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -8894,6 +8997,7 @@ func (c *AccountsProposalsUpdateCall) doRequest(alt string) (*http.Response, err
 		"accountId":  c.accountId,
 		"proposalId": c.proposalId,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "adexchangebuyer2.accounts.proposals.update", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -8928,9 +9032,11 @@ func (c *AccountsProposalsUpdateCall) Do(opts ...googleapi.CallOption) (*Proposa
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "adexchangebuyer2.accounts.proposals.update", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -9004,6 +9110,7 @@ func (c *AccountsPublisherProfilesGetCall) doRequest(alt string) (*http.Response
 		"accountId":          c.accountId,
 		"publisherProfileId": c.publisherProfileId,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "adexchangebuyer2.accounts.publisherProfiles.get", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -9039,9 +9146,11 @@ func (c *AccountsPublisherProfilesGetCall) Do(opts ...googleapi.CallOption) (*Pu
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "adexchangebuyer2.accounts.publisherProfiles.get", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -9125,6 +9234,7 @@ func (c *AccountsPublisherProfilesListCall) doRequest(alt string) (*http.Respons
 	googleapi.Expand(req.URL, map[string]string{
 		"accountId": c.accountId,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "adexchangebuyer2.accounts.publisherProfiles.list", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -9160,9 +9270,11 @@ func (c *AccountsPublisherProfilesListCall) Do(opts ...googleapi.CallOption) (*L
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "adexchangebuyer2.accounts.publisherProfiles.list", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -9262,6 +9374,7 @@ func (c *BiddersAccountsFilterSetsCreateCall) doRequest(alt string) (*http.Respo
 	googleapi.Expand(req.URL, map[string]string{
 		"ownerName": c.ownerName,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "adexchangebuyer2.bidders.accounts.filterSets.create", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -9296,9 +9409,11 @@ func (c *BiddersAccountsFilterSetsCreateCall) Do(opts ...googleapi.CallOption) (
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "adexchangebuyer2.bidders.accounts.filterSets.create", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -9362,6 +9477,7 @@ func (c *BiddersAccountsFilterSetsDeleteCall) doRequest(alt string) (*http.Respo
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "adexchangebuyer2.bidders.accounts.filterSets.delete", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -9396,9 +9512,11 @@ func (c *BiddersAccountsFilterSetsDeleteCall) Do(opts ...googleapi.CallOption) (
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "adexchangebuyer2.bidders.accounts.filterSets.delete", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -9474,6 +9592,7 @@ func (c *BiddersAccountsFilterSetsGetCall) doRequest(alt string) (*http.Response
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "adexchangebuyer2.bidders.accounts.filterSets.get", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -9508,9 +9627,11 @@ func (c *BiddersAccountsFilterSetsGetCall) Do(opts ...googleapi.CallOption) (*Fi
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "adexchangebuyer2.bidders.accounts.filterSets.get", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -9602,6 +9723,7 @@ func (c *BiddersAccountsFilterSetsListCall) doRequest(alt string) (*http.Respons
 	googleapi.Expand(req.URL, map[string]string{
 		"ownerName": c.ownerName,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "adexchangebuyer2.bidders.accounts.filterSets.list", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -9637,9 +9759,11 @@ func (c *BiddersAccountsFilterSetsListCall) Do(opts ...googleapi.CallOption) (*L
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "adexchangebuyer2.bidders.accounts.filterSets.list", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -9753,6 +9877,7 @@ func (c *BiddersAccountsFilterSetsBidMetricsListCall) doRequest(alt string) (*ht
 	googleapi.Expand(req.URL, map[string]string{
 		"filterSetName": c.filterSetName,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "adexchangebuyer2.bidders.accounts.filterSets.bidMetrics.list", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -9788,9 +9913,11 @@ func (c *BiddersAccountsFilterSetsBidMetricsListCall) Do(opts ...googleapi.CallO
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "adexchangebuyer2.bidders.accounts.filterSets.bidMetrics.list", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -9905,6 +10032,7 @@ func (c *BiddersAccountsFilterSetsBidResponseErrorsListCall) doRequest(alt strin
 	googleapi.Expand(req.URL, map[string]string{
 		"filterSetName": c.filterSetName,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "adexchangebuyer2.bidders.accounts.filterSets.bidResponseErrors.list", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -9940,9 +10068,11 @@ func (c *BiddersAccountsFilterSetsBidResponseErrorsListCall) Do(opts ...googleap
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "adexchangebuyer2.bidders.accounts.filterSets.bidResponseErrors.list", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -10057,6 +10187,7 @@ func (c *BiddersAccountsFilterSetsBidResponsesWithoutBidsListCall) doRequest(alt
 	googleapi.Expand(req.URL, map[string]string{
 		"filterSetName": c.filterSetName,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "adexchangebuyer2.bidders.accounts.filterSets.bidResponsesWithoutBids.list", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -10092,9 +10223,11 @@ func (c *BiddersAccountsFilterSetsBidResponsesWithoutBidsListCall) Do(opts ...go
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "adexchangebuyer2.bidders.accounts.filterSets.bidResponsesWithoutBids.list", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -10209,6 +10342,7 @@ func (c *BiddersAccountsFilterSetsFilteredBidRequestsListCall) doRequest(alt str
 	googleapi.Expand(req.URL, map[string]string{
 		"filterSetName": c.filterSetName,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "adexchangebuyer2.bidders.accounts.filterSets.filteredBidRequests.list", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -10244,9 +10378,11 @@ func (c *BiddersAccountsFilterSetsFilteredBidRequestsListCall) Do(opts ...google
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "adexchangebuyer2.bidders.accounts.filterSets.filteredBidRequests.list", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -10361,6 +10497,7 @@ func (c *BiddersAccountsFilterSetsFilteredBidsListCall) doRequest(alt string) (*
 	googleapi.Expand(req.URL, map[string]string{
 		"filterSetName": c.filterSetName,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "adexchangebuyer2.bidders.accounts.filterSets.filteredBids.list", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -10396,9 +10533,11 @@ func (c *BiddersAccountsFilterSetsFilteredBidsListCall) Do(opts ...googleapi.Cal
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "adexchangebuyer2.bidders.accounts.filterSets.filteredBids.list", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -10519,6 +10658,7 @@ func (c *BiddersAccountsFilterSetsFilteredBidsCreativesListCall) doRequest(alt s
 		"filterSetName":    c.filterSetName,
 		"creativeStatusId": strconv.FormatInt(c.creativeStatusId, 10),
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "adexchangebuyer2.bidders.accounts.filterSets.filteredBids.creatives.list", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -10554,9 +10694,11 @@ func (c *BiddersAccountsFilterSetsFilteredBidsCreativesListCall) Do(opts ...goog
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "adexchangebuyer2.bidders.accounts.filterSets.filteredBids.creatives.list", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -10679,6 +10821,7 @@ func (c *BiddersAccountsFilterSetsFilteredBidsDetailsListCall) doRequest(alt str
 		"filterSetName":    c.filterSetName,
 		"creativeStatusId": strconv.FormatInt(c.creativeStatusId, 10),
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "adexchangebuyer2.bidders.accounts.filterSets.filteredBids.details.list", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -10714,9 +10857,11 @@ func (c *BiddersAccountsFilterSetsFilteredBidsDetailsListCall) Do(opts ...google
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "adexchangebuyer2.bidders.accounts.filterSets.filteredBids.details.list", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -10830,6 +10975,7 @@ func (c *BiddersAccountsFilterSetsImpressionMetricsListCall) doRequest(alt strin
 	googleapi.Expand(req.URL, map[string]string{
 		"filterSetName": c.filterSetName,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "adexchangebuyer2.bidders.accounts.filterSets.impressionMetrics.list", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -10865,9 +11011,11 @@ func (c *BiddersAccountsFilterSetsImpressionMetricsListCall) Do(opts ...googleap
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "adexchangebuyer2.bidders.accounts.filterSets.impressionMetrics.list", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -10982,6 +11130,7 @@ func (c *BiddersAccountsFilterSetsLosingBidsListCall) doRequest(alt string) (*ht
 	googleapi.Expand(req.URL, map[string]string{
 		"filterSetName": c.filterSetName,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "adexchangebuyer2.bidders.accounts.filterSets.losingBids.list", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -11017,9 +11166,11 @@ func (c *BiddersAccountsFilterSetsLosingBidsListCall) Do(opts ...googleapi.CallO
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "adexchangebuyer2.bidders.accounts.filterSets.losingBids.list", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -11134,6 +11285,7 @@ func (c *BiddersAccountsFilterSetsNonBillableWinningBidsListCall) doRequest(alt 
 	googleapi.Expand(req.URL, map[string]string{
 		"filterSetName": c.filterSetName,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "adexchangebuyer2.bidders.accounts.filterSets.nonBillableWinningBids.list", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -11169,9 +11321,11 @@ func (c *BiddersAccountsFilterSetsNonBillableWinningBidsListCall) Do(opts ...goo
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "adexchangebuyer2.bidders.accounts.filterSets.nonBillableWinningBids.list", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -11271,6 +11425,7 @@ func (c *BiddersFilterSetsCreateCall) doRequest(alt string) (*http.Response, err
 	googleapi.Expand(req.URL, map[string]string{
 		"ownerName": c.ownerName,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "adexchangebuyer2.bidders.filterSets.create", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -11305,9 +11460,11 @@ func (c *BiddersFilterSetsCreateCall) Do(opts ...googleapi.CallOption) (*FilterS
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "adexchangebuyer2.bidders.filterSets.create", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -11371,6 +11528,7 @@ func (c *BiddersFilterSetsDeleteCall) doRequest(alt string) (*http.Response, err
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "adexchangebuyer2.bidders.filterSets.delete", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -11405,9 +11563,11 @@ func (c *BiddersFilterSetsDeleteCall) Do(opts ...googleapi.CallOption) (*Empty, 
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "adexchangebuyer2.bidders.filterSets.delete", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -11483,6 +11643,7 @@ func (c *BiddersFilterSetsGetCall) doRequest(alt string) (*http.Response, error)
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "adexchangebuyer2.bidders.filterSets.get", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -11517,9 +11678,11 @@ func (c *BiddersFilterSetsGetCall) Do(opts ...googleapi.CallOption) (*FilterSet,
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "adexchangebuyer2.bidders.filterSets.get", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -11611,6 +11774,7 @@ func (c *BiddersFilterSetsListCall) doRequest(alt string) (*http.Response, error
 	googleapi.Expand(req.URL, map[string]string{
 		"ownerName": c.ownerName,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "adexchangebuyer2.bidders.filterSets.list", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -11646,9 +11810,11 @@ func (c *BiddersFilterSetsListCall) Do(opts ...googleapi.CallOption) (*ListFilte
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "adexchangebuyer2.bidders.filterSets.list", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -11762,6 +11928,7 @@ func (c *BiddersFilterSetsBidMetricsListCall) doRequest(alt string) (*http.Respo
 	googleapi.Expand(req.URL, map[string]string{
 		"filterSetName": c.filterSetName,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "adexchangebuyer2.bidders.filterSets.bidMetrics.list", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -11797,9 +11964,11 @@ func (c *BiddersFilterSetsBidMetricsListCall) Do(opts ...googleapi.CallOption) (
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "adexchangebuyer2.bidders.filterSets.bidMetrics.list", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -11914,6 +12083,7 @@ func (c *BiddersFilterSetsBidResponseErrorsListCall) doRequest(alt string) (*htt
 	googleapi.Expand(req.URL, map[string]string{
 		"filterSetName": c.filterSetName,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "adexchangebuyer2.bidders.filterSets.bidResponseErrors.list", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -11949,9 +12119,11 @@ func (c *BiddersFilterSetsBidResponseErrorsListCall) Do(opts ...googleapi.CallOp
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "adexchangebuyer2.bidders.filterSets.bidResponseErrors.list", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -12066,6 +12238,7 @@ func (c *BiddersFilterSetsBidResponsesWithoutBidsListCall) doRequest(alt string)
 	googleapi.Expand(req.URL, map[string]string{
 		"filterSetName": c.filterSetName,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "adexchangebuyer2.bidders.filterSets.bidResponsesWithoutBids.list", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -12101,9 +12274,11 @@ func (c *BiddersFilterSetsBidResponsesWithoutBidsListCall) Do(opts ...googleapi.
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "adexchangebuyer2.bidders.filterSets.bidResponsesWithoutBids.list", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -12218,6 +12393,7 @@ func (c *BiddersFilterSetsFilteredBidRequestsListCall) doRequest(alt string) (*h
 	googleapi.Expand(req.URL, map[string]string{
 		"filterSetName": c.filterSetName,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "adexchangebuyer2.bidders.filterSets.filteredBidRequests.list", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -12253,9 +12429,11 @@ func (c *BiddersFilterSetsFilteredBidRequestsListCall) Do(opts ...googleapi.Call
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "adexchangebuyer2.bidders.filterSets.filteredBidRequests.list", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -12370,6 +12548,7 @@ func (c *BiddersFilterSetsFilteredBidsListCall) doRequest(alt string) (*http.Res
 	googleapi.Expand(req.URL, map[string]string{
 		"filterSetName": c.filterSetName,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "adexchangebuyer2.bidders.filterSets.filteredBids.list", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -12405,9 +12584,11 @@ func (c *BiddersFilterSetsFilteredBidsListCall) Do(opts ...googleapi.CallOption)
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "adexchangebuyer2.bidders.filterSets.filteredBids.list", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -12528,6 +12709,7 @@ func (c *BiddersFilterSetsFilteredBidsCreativesListCall) doRequest(alt string) (
 		"filterSetName":    c.filterSetName,
 		"creativeStatusId": strconv.FormatInt(c.creativeStatusId, 10),
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "adexchangebuyer2.bidders.filterSets.filteredBids.creatives.list", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -12563,9 +12745,11 @@ func (c *BiddersFilterSetsFilteredBidsCreativesListCall) Do(opts ...googleapi.Ca
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "adexchangebuyer2.bidders.filterSets.filteredBids.creatives.list", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -12688,6 +12872,7 @@ func (c *BiddersFilterSetsFilteredBidsDetailsListCall) doRequest(alt string) (*h
 		"filterSetName":    c.filterSetName,
 		"creativeStatusId": strconv.FormatInt(c.creativeStatusId, 10),
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "adexchangebuyer2.bidders.filterSets.filteredBids.details.list", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -12723,9 +12908,11 @@ func (c *BiddersFilterSetsFilteredBidsDetailsListCall) Do(opts ...googleapi.Call
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "adexchangebuyer2.bidders.filterSets.filteredBids.details.list", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -12839,6 +13026,7 @@ func (c *BiddersFilterSetsImpressionMetricsListCall) doRequest(alt string) (*htt
 	googleapi.Expand(req.URL, map[string]string{
 		"filterSetName": c.filterSetName,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "adexchangebuyer2.bidders.filterSets.impressionMetrics.list", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -12874,9 +13062,11 @@ func (c *BiddersFilterSetsImpressionMetricsListCall) Do(opts ...googleapi.CallOp
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "adexchangebuyer2.bidders.filterSets.impressionMetrics.list", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -12991,6 +13181,7 @@ func (c *BiddersFilterSetsLosingBidsListCall) doRequest(alt string) (*http.Respo
 	googleapi.Expand(req.URL, map[string]string{
 		"filterSetName": c.filterSetName,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "adexchangebuyer2.bidders.filterSets.losingBids.list", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -13026,9 +13217,11 @@ func (c *BiddersFilterSetsLosingBidsListCall) Do(opts ...googleapi.CallOption) (
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "adexchangebuyer2.bidders.filterSets.losingBids.list", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -13143,6 +13336,7 @@ func (c *BiddersFilterSetsNonBillableWinningBidsListCall) doRequest(alt string) 
 	googleapi.Expand(req.URL, map[string]string{
 		"filterSetName": c.filterSetName,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "adexchangebuyer2.bidders.filterSets.nonBillableWinningBids.list", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -13178,9 +13372,11 @@ func (c *BiddersFilterSetsNonBillableWinningBidsListCall) Do(opts ...googleapi.C
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "adexchangebuyer2.bidders.filterSets.nonBillableWinningBids.list", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -13280,6 +13476,7 @@ func (c *BuyersFilterSetsCreateCall) doRequest(alt string) (*http.Response, erro
 	googleapi.Expand(req.URL, map[string]string{
 		"ownerName": c.ownerName,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "adexchangebuyer2.buyers.filterSets.create", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -13314,9 +13511,11 @@ func (c *BuyersFilterSetsCreateCall) Do(opts ...googleapi.CallOption) (*FilterSe
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "adexchangebuyer2.buyers.filterSets.create", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -13380,6 +13579,7 @@ func (c *BuyersFilterSetsDeleteCall) doRequest(alt string) (*http.Response, erro
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "adexchangebuyer2.buyers.filterSets.delete", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -13414,9 +13614,11 @@ func (c *BuyersFilterSetsDeleteCall) Do(opts ...googleapi.CallOption) (*Empty, e
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "adexchangebuyer2.buyers.filterSets.delete", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -13492,6 +13694,7 @@ func (c *BuyersFilterSetsGetCall) doRequest(alt string) (*http.Response, error) 
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "adexchangebuyer2.buyers.filterSets.get", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -13526,9 +13729,11 @@ func (c *BuyersFilterSetsGetCall) Do(opts ...googleapi.CallOption) (*FilterSet, 
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "adexchangebuyer2.buyers.filterSets.get", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -13620,6 +13825,7 @@ func (c *BuyersFilterSetsListCall) doRequest(alt string) (*http.Response, error)
 	googleapi.Expand(req.URL, map[string]string{
 		"ownerName": c.ownerName,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "adexchangebuyer2.buyers.filterSets.list", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -13655,9 +13861,11 @@ func (c *BuyersFilterSetsListCall) Do(opts ...googleapi.CallOption) (*ListFilter
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "adexchangebuyer2.buyers.filterSets.list", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -13771,6 +13979,7 @@ func (c *BuyersFilterSetsBidMetricsListCall) doRequest(alt string) (*http.Respon
 	googleapi.Expand(req.URL, map[string]string{
 		"filterSetName": c.filterSetName,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "adexchangebuyer2.buyers.filterSets.bidMetrics.list", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -13806,9 +14015,11 @@ func (c *BuyersFilterSetsBidMetricsListCall) Do(opts ...googleapi.CallOption) (*
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "adexchangebuyer2.buyers.filterSets.bidMetrics.list", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -13923,6 +14134,7 @@ func (c *BuyersFilterSetsBidResponseErrorsListCall) doRequest(alt string) (*http
 	googleapi.Expand(req.URL, map[string]string{
 		"filterSetName": c.filterSetName,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "adexchangebuyer2.buyers.filterSets.bidResponseErrors.list", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -13958,9 +14170,11 @@ func (c *BuyersFilterSetsBidResponseErrorsListCall) Do(opts ...googleapi.CallOpt
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "adexchangebuyer2.buyers.filterSets.bidResponseErrors.list", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -14075,6 +14289,7 @@ func (c *BuyersFilterSetsBidResponsesWithoutBidsListCall) doRequest(alt string) 
 	googleapi.Expand(req.URL, map[string]string{
 		"filterSetName": c.filterSetName,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "adexchangebuyer2.buyers.filterSets.bidResponsesWithoutBids.list", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -14110,9 +14325,11 @@ func (c *BuyersFilterSetsBidResponsesWithoutBidsListCall) Do(opts ...googleapi.C
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "adexchangebuyer2.buyers.filterSets.bidResponsesWithoutBids.list", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -14227,6 +14444,7 @@ func (c *BuyersFilterSetsFilteredBidRequestsListCall) doRequest(alt string) (*ht
 	googleapi.Expand(req.URL, map[string]string{
 		"filterSetName": c.filterSetName,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "adexchangebuyer2.buyers.filterSets.filteredBidRequests.list", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -14262,9 +14480,11 @@ func (c *BuyersFilterSetsFilteredBidRequestsListCall) Do(opts ...googleapi.CallO
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "adexchangebuyer2.buyers.filterSets.filteredBidRequests.list", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -14379,6 +14599,7 @@ func (c *BuyersFilterSetsFilteredBidsListCall) doRequest(alt string) (*http.Resp
 	googleapi.Expand(req.URL, map[string]string{
 		"filterSetName": c.filterSetName,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "adexchangebuyer2.buyers.filterSets.filteredBids.list", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -14414,9 +14635,11 @@ func (c *BuyersFilterSetsFilteredBidsListCall) Do(opts ...googleapi.CallOption) 
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "adexchangebuyer2.buyers.filterSets.filteredBids.list", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -14537,6 +14760,7 @@ func (c *BuyersFilterSetsFilteredBidsCreativesListCall) doRequest(alt string) (*
 		"filterSetName":    c.filterSetName,
 		"creativeStatusId": strconv.FormatInt(c.creativeStatusId, 10),
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "adexchangebuyer2.buyers.filterSets.filteredBids.creatives.list", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -14572,9 +14796,11 @@ func (c *BuyersFilterSetsFilteredBidsCreativesListCall) Do(opts ...googleapi.Cal
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "adexchangebuyer2.buyers.filterSets.filteredBids.creatives.list", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -14697,6 +14923,7 @@ func (c *BuyersFilterSetsFilteredBidsDetailsListCall) doRequest(alt string) (*ht
 		"filterSetName":    c.filterSetName,
 		"creativeStatusId": strconv.FormatInt(c.creativeStatusId, 10),
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "adexchangebuyer2.buyers.filterSets.filteredBids.details.list", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -14732,9 +14959,11 @@ func (c *BuyersFilterSetsFilteredBidsDetailsListCall) Do(opts ...googleapi.CallO
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "adexchangebuyer2.buyers.filterSets.filteredBids.details.list", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -14848,6 +15077,7 @@ func (c *BuyersFilterSetsImpressionMetricsListCall) doRequest(alt string) (*http
 	googleapi.Expand(req.URL, map[string]string{
 		"filterSetName": c.filterSetName,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "adexchangebuyer2.buyers.filterSets.impressionMetrics.list", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -14883,9 +15113,11 @@ func (c *BuyersFilterSetsImpressionMetricsListCall) Do(opts ...googleapi.CallOpt
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "adexchangebuyer2.buyers.filterSets.impressionMetrics.list", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -15000,6 +15232,7 @@ func (c *BuyersFilterSetsLosingBidsListCall) doRequest(alt string) (*http.Respon
 	googleapi.Expand(req.URL, map[string]string{
 		"filterSetName": c.filterSetName,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "adexchangebuyer2.buyers.filterSets.losingBids.list", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -15035,9 +15268,11 @@ func (c *BuyersFilterSetsLosingBidsListCall) Do(opts ...googleapi.CallOption) (*
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "adexchangebuyer2.buyers.filterSets.losingBids.list", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -15152,6 +15387,7 @@ func (c *BuyersFilterSetsNonBillableWinningBidsListCall) doRequest(alt string) (
 	googleapi.Expand(req.URL, map[string]string{
 		"filterSetName": c.filterSetName,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "adexchangebuyer2.buyers.filterSets.nonBillableWinningBids.list", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -15187,9 +15423,11 @@ func (c *BuyersFilterSetsNonBillableWinningBidsListCall) Do(opts ...googleapi.Ca
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "adexchangebuyer2.buyers.filterSets.nonBillableWinningBids.list", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 

@@ -57,11 +57,13 @@ import (
 	"errors"
 	"fmt"
 	"io"
+	"log/slog"
 	"net/http"
 	"net/url"
 	"strconv"
 	"strings"
 
+	"github.com/googleapis/gax-go/v2/internallog"
 	googleapi "google.golang.org/api/googleapi"
 	internal "google.golang.org/api/internal"
 	gensupport "google.golang.org/api/internal/gensupport"
@@ -85,6 +87,7 @@ var _ = strings.Replace
 var _ = context.Canceled
 var _ = internaloption.WithDefaultEndpoint
 var _ = internal.Version
+var _ = internallog.New
 
 const apiId = "recaptchaenterprise:v1"
 const apiName = "recaptchaenterprise"
@@ -115,7 +118,7 @@ func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, err
 	if err != nil {
 		return nil, err
 	}
-	s := &Service{client: client, BasePath: basePath}
+	s := &Service{client: client, BasePath: basePath, logger: internaloption.GetLogger(opts)}
 	s.Projects = NewProjectsService(s)
 	if err != nil {
 		return nil, err
@@ -140,6 +143,7 @@ func New(client *http.Client) (*Service, error) {
 
 type Service struct {
 	client    *http.Client
+	logger    *slog.Logger
 	BasePath  string // API endpoint base URL
 	UserAgent string // optional additional User-Agent fragment
 
@@ -2708,6 +2712,7 @@ func (c *ProjectsAssessmentsAnnotateCall) doRequest(alt string) (*http.Response,
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "recaptchaenterprise.projects.assessments.annotate", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -2743,9 +2748,11 @@ func (c *ProjectsAssessmentsAnnotateCall) Do(opts ...googleapi.CallOption) (*Goo
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "recaptchaenterprise.projects.assessments.annotate", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -2810,6 +2817,7 @@ func (c *ProjectsAssessmentsCreateCall) doRequest(alt string) (*http.Response, e
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "recaptchaenterprise.projects.assessments.create", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -2845,9 +2853,11 @@ func (c *ProjectsAssessmentsCreateCall) Do(opts ...googleapi.CallOption) (*Googl
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "recaptchaenterprise.projects.assessments.create", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -2914,6 +2924,7 @@ func (c *ProjectsFirewallpoliciesCreateCall) doRequest(alt string) (*http.Respon
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "recaptchaenterprise.projects.firewallpolicies.create", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -2949,9 +2960,11 @@ func (c *ProjectsFirewallpoliciesCreateCall) Do(opts ...googleapi.CallOption) (*
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "recaptchaenterprise.projects.firewallpolicies.create", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -3010,6 +3023,7 @@ func (c *ProjectsFirewallpoliciesDeleteCall) doRequest(alt string) (*http.Respon
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "recaptchaenterprise.projects.firewallpolicies.delete", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -3045,9 +3059,11 @@ func (c *ProjectsFirewallpoliciesDeleteCall) Do(opts ...googleapi.CallOption) (*
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "recaptchaenterprise.projects.firewallpolicies.delete", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -3118,6 +3134,7 @@ func (c *ProjectsFirewallpoliciesGetCall) doRequest(alt string) (*http.Response,
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "recaptchaenterprise.projects.firewallpolicies.get", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -3153,9 +3170,11 @@ func (c *ProjectsFirewallpoliciesGetCall) Do(opts ...googleapi.CallOption) (*Goo
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "recaptchaenterprise.projects.firewallpolicies.get", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -3240,6 +3259,7 @@ func (c *ProjectsFirewallpoliciesListCall) doRequest(alt string) (*http.Response
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "recaptchaenterprise.projects.firewallpolicies.list", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -3275,9 +3295,11 @@ func (c *ProjectsFirewallpoliciesListCall) Do(opts ...googleapi.CallOption) (*Go
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "recaptchaenterprise.projects.firewallpolicies.list", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -3371,6 +3393,7 @@ func (c *ProjectsFirewallpoliciesPatchCall) doRequest(alt string) (*http.Respons
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "recaptchaenterprise.projects.firewallpolicies.patch", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -3406,9 +3429,11 @@ func (c *ProjectsFirewallpoliciesPatchCall) Do(opts ...googleapi.CallOption) (*G
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "recaptchaenterprise.projects.firewallpolicies.patch", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -3473,6 +3498,7 @@ func (c *ProjectsFirewallpoliciesReorderCall) doRequest(alt string) (*http.Respo
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "recaptchaenterprise.projects.firewallpolicies.reorder", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -3508,9 +3534,11 @@ func (c *ProjectsFirewallpoliciesReorderCall) Do(opts ...googleapi.CallOption) (
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "recaptchaenterprise.projects.firewallpolicies.reorder", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -3578,6 +3606,7 @@ func (c *ProjectsKeysAddIpOverrideCall) doRequest(alt string) (*http.Response, e
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "recaptchaenterprise.projects.keys.addIpOverride", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -3613,9 +3642,11 @@ func (c *ProjectsKeysAddIpOverrideCall) Do(opts ...googleapi.CallOption) (*Googl
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "recaptchaenterprise.projects.keys.addIpOverride", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -3680,6 +3711,7 @@ func (c *ProjectsKeysCreateCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "recaptchaenterprise.projects.keys.create", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -3715,9 +3747,11 @@ func (c *ProjectsKeysCreateCall) Do(opts ...googleapi.CallOption) (*GoogleCloudR
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "recaptchaenterprise.projects.keys.create", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -3776,6 +3810,7 @@ func (c *ProjectsKeysDeleteCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "recaptchaenterprise.projects.keys.delete", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -3811,9 +3846,11 @@ func (c *ProjectsKeysDeleteCall) Do(opts ...googleapi.CallOption) (*GoogleProtob
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "recaptchaenterprise.projects.keys.delete", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -3884,6 +3921,7 @@ func (c *ProjectsKeysGetCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "recaptchaenterprise.projects.keys.get", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -3919,9 +3957,11 @@ func (c *ProjectsKeysGetCall) Do(opts ...googleapi.CallOption) (*GoogleCloudReca
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "recaptchaenterprise.projects.keys.get", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -3993,6 +4033,7 @@ func (c *ProjectsKeysGetMetricsCall) doRequest(alt string) (*http.Response, erro
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "recaptchaenterprise.projects.keys.getMetrics", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -4028,9 +4069,11 @@ func (c *ProjectsKeysGetMetricsCall) Do(opts ...googleapi.CallOption) (*GoogleCl
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "recaptchaenterprise.projects.keys.getMetrics", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -4115,6 +4158,7 @@ func (c *ProjectsKeysListCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "recaptchaenterprise.projects.keys.list", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -4150,9 +4194,11 @@ func (c *ProjectsKeysListCall) Do(opts ...googleapi.CallOption) (*GoogleCloudRec
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "recaptchaenterprise.projects.keys.list", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -4260,6 +4306,7 @@ func (c *ProjectsKeysListIpOverridesCall) doRequest(alt string) (*http.Response,
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "recaptchaenterprise.projects.keys.listIpOverrides", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -4295,9 +4342,11 @@ func (c *ProjectsKeysListIpOverridesCall) Do(opts ...googleapi.CallOption) (*Goo
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "recaptchaenterprise.projects.keys.listIpOverrides", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -4387,6 +4436,7 @@ func (c *ProjectsKeysMigrateCall) doRequest(alt string) (*http.Response, error) 
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "recaptchaenterprise.projects.keys.migrate", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -4422,9 +4472,11 @@ func (c *ProjectsKeysMigrateCall) Do(opts ...googleapi.CallOption) (*GoogleCloud
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "recaptchaenterprise.projects.keys.migrate", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -4497,6 +4549,7 @@ func (c *ProjectsKeysPatchCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "recaptchaenterprise.projects.keys.patch", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -4532,9 +4585,11 @@ func (c *ProjectsKeysPatchCall) Do(opts ...googleapi.CallOption) (*GoogleCloudRe
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "recaptchaenterprise.projects.keys.patch", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -4603,6 +4658,7 @@ func (c *ProjectsKeysRemoveIpOverrideCall) doRequest(alt string) (*http.Response
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "recaptchaenterprise.projects.keys.removeIpOverride", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -4638,9 +4694,11 @@ func (c *ProjectsKeysRemoveIpOverrideCall) Do(opts ...googleapi.CallOption) (*Go
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "recaptchaenterprise.projects.keys.removeIpOverride", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -4713,6 +4771,7 @@ func (c *ProjectsKeysRetrieveLegacySecretKeyCall) doRequest(alt string) (*http.R
 	googleapi.Expand(req.URL, map[string]string{
 		"key": c.key,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "recaptchaenterprise.projects.keys.retrieveLegacySecretKey", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -4748,9 +4807,11 @@ func (c *ProjectsKeysRetrieveLegacySecretKeyCall) Do(opts ...googleapi.CallOptio
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "recaptchaenterprise.projects.keys.retrieveLegacySecretKey", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -4816,6 +4877,7 @@ func (c *ProjectsRelatedaccountgroupmembershipsSearchCall) doRequest(alt string)
 	googleapi.Expand(req.URL, map[string]string{
 		"project": c.project,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "recaptchaenterprise.projects.relatedaccountgroupmemberships.search", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -4851,9 +4913,11 @@ func (c *ProjectsRelatedaccountgroupmembershipsSearchCall) Do(opts ...googleapi.
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "recaptchaenterprise.projects.relatedaccountgroupmemberships.search", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -4965,6 +5029,7 @@ func (c *ProjectsRelatedaccountgroupsListCall) doRequest(alt string) (*http.Resp
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "recaptchaenterprise.projects.relatedaccountgroups.list", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -5000,9 +5065,11 @@ func (c *ProjectsRelatedaccountgroupsListCall) Do(opts ...googleapi.CallOption) 
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "recaptchaenterprise.projects.relatedaccountgroups.list", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -5112,6 +5179,7 @@ func (c *ProjectsRelatedaccountgroupsMembershipsListCall) doRequest(alt string) 
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "recaptchaenterprise.projects.relatedaccountgroups.memberships.list", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -5147,9 +5215,11 @@ func (c *ProjectsRelatedaccountgroupsMembershipsListCall) Do(opts ...googleapi.C
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "recaptchaenterprise.projects.relatedaccountgroups.memberships.list", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 

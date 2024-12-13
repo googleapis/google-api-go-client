@@ -57,11 +57,13 @@ import (
 	"errors"
 	"fmt"
 	"io"
+	"log/slog"
 	"net/http"
 	"net/url"
 	"strconv"
 	"strings"
 
+	"github.com/googleapis/gax-go/v2/internallog"
 	googleapi "google.golang.org/api/googleapi"
 	internal "google.golang.org/api/internal"
 	gensupport "google.golang.org/api/internal/gensupport"
@@ -85,6 +87,7 @@ var _ = strings.Replace
 var _ = context.Canceled
 var _ = internaloption.WithDefaultEndpoint
 var _ = internal.Version
+var _ = internallog.New
 
 const apiId = "androidenterprise:v1"
 const apiName = "androidenterprise"
@@ -114,7 +117,7 @@ func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, err
 	if err != nil {
 		return nil, err
 	}
-	s := &Service{client: client, BasePath: basePath}
+	s := &Service{client: client, BasePath: basePath, logger: internaloption.GetLogger(opts)}
 	s.Devices = NewDevicesService(s)
 	s.Enterprises = NewEnterprisesService(s)
 	s.Entitlements = NewEntitlementsService(s)
@@ -154,6 +157,7 @@ func New(client *http.Client) (*Service, error) {
 
 type Service struct {
 	client    *http.Client
+	logger    *slog.Logger
 	BasePath  string // API endpoint base URL
 	UserAgent string // optional additional User-Agent fragment
 
@@ -3502,6 +3506,7 @@ func (c *DevicesForceReportUploadCall) doRequest(alt string) (*http.Response, er
 		"userId":       c.userId,
 		"deviceId":     c.deviceId,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "androidenterprise.devices.forceReportUpload", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -3516,6 +3521,7 @@ func (c *DevicesForceReportUploadCall) Do(opts ...googleapi.CallOption) error {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return gensupport.WrapError(err)
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "androidenterprise.devices.forceReportUpload", "response", internallog.HTTPResponse(res, nil))
 	return nil
 }
 
@@ -3593,6 +3599,7 @@ func (c *DevicesGetCall) doRequest(alt string) (*http.Response, error) {
 		"userId":       c.userId,
 		"deviceId":     c.deviceId,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "androidenterprise.devices.get", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -3627,9 +3634,11 @@ func (c *DevicesGetCall) Do(opts ...googleapi.CallOption) (*Device, error) {
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "androidenterprise.devices.get", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -3711,6 +3720,7 @@ func (c *DevicesGetStateCall) doRequest(alt string) (*http.Response, error) {
 		"userId":       c.userId,
 		"deviceId":     c.deviceId,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "androidenterprise.devices.getState", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -3745,9 +3755,11 @@ func (c *DevicesGetStateCall) Do(opts ...googleapi.CallOption) (*DeviceState, er
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "androidenterprise.devices.getState", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -3821,6 +3833,7 @@ func (c *DevicesListCall) doRequest(alt string) (*http.Response, error) {
 		"enterpriseId": c.enterpriseId,
 		"userId":       c.userId,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "androidenterprise.devices.list", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -3856,9 +3869,11 @@ func (c *DevicesListCall) Do(opts ...googleapi.CallOption) (*DevicesListResponse
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "androidenterprise.devices.list", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -3934,6 +3949,7 @@ func (c *DevicesSetStateCall) doRequest(alt string) (*http.Response, error) {
 		"userId":       c.userId,
 		"deviceId":     c.deviceId,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "androidenterprise.devices.setState", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -3968,9 +3984,11 @@ func (c *DevicesSetStateCall) Do(opts ...googleapi.CallOption) (*DeviceState, er
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "androidenterprise.devices.setState", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -4057,6 +4075,7 @@ func (c *DevicesUpdateCall) doRequest(alt string) (*http.Response, error) {
 		"userId":       c.userId,
 		"deviceId":     c.deviceId,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "androidenterprise.devices.update", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -4091,9 +4110,11 @@ func (c *DevicesUpdateCall) Do(opts ...googleapi.CallOption) (*Device, error) {
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "androidenterprise.devices.update", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -4154,6 +4175,7 @@ func (c *EnterprisesAcknowledgeNotificationSetCall) doRequest(alt string) (*http
 		return nil, err
 	}
 	req.Header = reqHeaders
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "androidenterprise.enterprises.acknowledgeNotificationSet", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -4168,6 +4190,7 @@ func (c *EnterprisesAcknowledgeNotificationSetCall) Do(opts ...googleapi.CallOpt
 	if err := googleapi.CheckResponse(res); err != nil {
 		return gensupport.WrapError(err)
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "androidenterprise.enterprises.acknowledgeNotificationSet", "response", internallog.HTTPResponse(res, nil))
 	return nil
 }
 
@@ -4234,6 +4257,7 @@ func (c *EnterprisesCompleteSignupCall) doRequest(alt string) (*http.Response, e
 		return nil, err
 	}
 	req.Header = reqHeaders
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "androidenterprise.enterprises.completeSignup", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -4268,9 +4292,11 @@ func (c *EnterprisesCompleteSignupCall) Do(opts ...googleapi.CallOption) (*Enter
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "androidenterprise.enterprises.completeSignup", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -4377,6 +4403,7 @@ func (c *EnterprisesCreateEnrollmentTokenCall) doRequest(alt string) (*http.Resp
 	googleapi.Expand(req.URL, map[string]string{
 		"enterpriseId": c.enterpriseId,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "androidenterprise.enterprises.createEnrollmentToken", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -4412,9 +4439,11 @@ func (c *EnterprisesCreateEnrollmentTokenCall) Do(opts ...googleapi.CallOption) 
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "androidenterprise.enterprises.createEnrollmentToken", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -4481,6 +4510,7 @@ func (c *EnterprisesCreateWebTokenCall) doRequest(alt string) (*http.Response, e
 	googleapi.Expand(req.URL, map[string]string{
 		"enterpriseId": c.enterpriseId,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "androidenterprise.enterprises.createWebToken", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -4516,9 +4546,11 @@ func (c *EnterprisesCreateWebTokenCall) Do(opts ...googleapi.CallOption) (*Admin
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "androidenterprise.enterprises.createWebToken", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -4578,6 +4610,7 @@ func (c *EnterprisesEnrollCall) doRequest(alt string) (*http.Response, error) {
 		return nil, err
 	}
 	req.Header = reqHeaders
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "androidenterprise.enterprises.enroll", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -4612,9 +4645,11 @@ func (c *EnterprisesEnrollCall) Do(opts ...googleapi.CallOption) (*Enterprise, e
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "androidenterprise.enterprises.enroll", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -4686,6 +4721,7 @@ func (c *EnterprisesGenerateSignupUrlCall) doRequest(alt string) (*http.Response
 		return nil, err
 	}
 	req.Header = reqHeaders
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "androidenterprise.enterprises.generateSignupUrl", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -4720,9 +4756,11 @@ func (c *EnterprisesGenerateSignupUrlCall) Do(opts ...googleapi.CallOption) (*Si
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "androidenterprise.enterprises.generateSignupUrl", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -4792,6 +4830,7 @@ func (c *EnterprisesGetCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"enterpriseId": c.enterpriseId,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "androidenterprise.enterprises.get", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -4826,9 +4865,11 @@ func (c *EnterprisesGetCall) Do(opts ...googleapi.CallOption) (*Enterprise, erro
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "androidenterprise.enterprises.get", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -4924,6 +4965,7 @@ func (c *EnterprisesGetServiceAccountCall) doRequest(alt string) (*http.Response
 	googleapi.Expand(req.URL, map[string]string{
 		"enterpriseId": c.enterpriseId,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "androidenterprise.enterprises.getServiceAccount", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -4958,9 +5000,11 @@ func (c *EnterprisesGetServiceAccountCall) Do(opts ...googleapi.CallOption) (*Se
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "androidenterprise.enterprises.getServiceAccount", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -5032,6 +5076,7 @@ func (c *EnterprisesGetStoreLayoutCall) doRequest(alt string) (*http.Response, e
 	googleapi.Expand(req.URL, map[string]string{
 		"enterpriseId": c.enterpriseId,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "androidenterprise.enterprises.getStoreLayout", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -5066,9 +5111,11 @@ func (c *EnterprisesGetStoreLayoutCall) Do(opts ...googleapi.CallOption) (*Store
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "androidenterprise.enterprises.getStoreLayout", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -5138,6 +5185,7 @@ func (c *EnterprisesListCall) doRequest(alt string) (*http.Response, error) {
 		return nil, err
 	}
 	req.Header = reqHeaders
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "androidenterprise.enterprises.list", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -5173,9 +5221,11 @@ func (c *EnterprisesListCall) Do(opts ...googleapi.CallOption) (*EnterprisesList
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "androidenterprise.enterprises.list", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -5258,6 +5308,7 @@ func (c *EnterprisesPullNotificationSetCall) doRequest(alt string) (*http.Respon
 		return nil, err
 	}
 	req.Header = reqHeaders
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "androidenterprise.enterprises.pullNotificationSet", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -5293,9 +5344,11 @@ func (c *EnterprisesPullNotificationSetCall) Do(opts ...googleapi.CallOption) (*
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "androidenterprise.enterprises.pullNotificationSet", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -5354,6 +5407,7 @@ func (c *EnterprisesSendTestPushNotificationCall) doRequest(alt string) (*http.R
 	googleapi.Expand(req.URL, map[string]string{
 		"enterpriseId": c.enterpriseId,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "androidenterprise.enterprises.sendTestPushNotification", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -5389,9 +5443,11 @@ func (c *EnterprisesSendTestPushNotificationCall) Do(opts ...googleapi.CallOptio
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "androidenterprise.enterprises.sendTestPushNotification", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -5456,6 +5512,7 @@ func (c *EnterprisesSetAccountCall) doRequest(alt string) (*http.Response, error
 	googleapi.Expand(req.URL, map[string]string{
 		"enterpriseId": c.enterpriseId,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "androidenterprise.enterprises.setAccount", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -5491,9 +5548,11 @@ func (c *EnterprisesSetAccountCall) Do(opts ...googleapi.CallOption) (*Enterpris
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "androidenterprise.enterprises.setAccount", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -5564,6 +5623,7 @@ func (c *EnterprisesSetStoreLayoutCall) doRequest(alt string) (*http.Response, e
 	googleapi.Expand(req.URL, map[string]string{
 		"enterpriseId": c.enterpriseId,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "androidenterprise.enterprises.setStoreLayout", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -5598,9 +5658,11 @@ func (c *EnterprisesSetStoreLayoutCall) Do(opts ...googleapi.CallOption) (*Store
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "androidenterprise.enterprises.setStoreLayout", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -5658,6 +5720,7 @@ func (c *EnterprisesUnenrollCall) doRequest(alt string) (*http.Response, error) 
 	googleapi.Expand(req.URL, map[string]string{
 		"enterpriseId": c.enterpriseId,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "androidenterprise.enterprises.unenroll", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -5672,6 +5735,7 @@ func (c *EnterprisesUnenrollCall) Do(opts ...googleapi.CallOption) error {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return gensupport.WrapError(err)
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "androidenterprise.enterprises.unenroll", "response", internallog.HTTPResponse(res, nil))
 	return nil
 }
 
@@ -5740,6 +5804,7 @@ func (c *EntitlementsDeleteCall) doRequest(alt string) (*http.Response, error) {
 		"userId":        c.userId,
 		"entitlementId": c.entitlementId,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "androidenterprise.entitlements.delete", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -5754,6 +5819,7 @@ func (c *EntitlementsDeleteCall) Do(opts ...googleapi.CallOption) error {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return gensupport.WrapError(err)
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "androidenterprise.entitlements.delete", "response", internallog.HTTPResponse(res, nil))
 	return nil
 }
 
@@ -5834,6 +5900,7 @@ func (c *EntitlementsGetCall) doRequest(alt string) (*http.Response, error) {
 		"userId":        c.userId,
 		"entitlementId": c.entitlementId,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "androidenterprise.entitlements.get", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -5868,9 +5935,11 @@ func (c *EntitlementsGetCall) Do(opts ...googleapi.CallOption) (*Entitlement, er
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "androidenterprise.entitlements.get", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -5946,6 +6015,7 @@ func (c *EntitlementsListCall) doRequest(alt string) (*http.Response, error) {
 		"enterpriseId": c.enterpriseId,
 		"userId":       c.userId,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "androidenterprise.entitlements.list", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -5981,9 +6051,11 @@ func (c *EntitlementsListCall) Do(opts ...googleapi.CallOption) (*EntitlementsLi
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "androidenterprise.entitlements.list", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -6068,6 +6140,7 @@ func (c *EntitlementsUpdateCall) doRequest(alt string) (*http.Response, error) {
 		"userId":        c.userId,
 		"entitlementId": c.entitlementId,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "androidenterprise.entitlements.update", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -6102,9 +6175,11 @@ func (c *EntitlementsUpdateCall) Do(opts ...googleapi.CallOption) (*Entitlement,
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "androidenterprise.entitlements.update", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -6181,6 +6256,7 @@ func (c *GrouplicensesGetCall) doRequest(alt string) (*http.Response, error) {
 		"enterpriseId":   c.enterpriseId,
 		"groupLicenseId": c.groupLicenseId,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "androidenterprise.grouplicenses.get", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -6215,9 +6291,11 @@ func (c *GrouplicensesGetCall) Do(opts ...googleapi.CallOption) (*GroupLicense, 
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "androidenterprise.grouplicenses.get", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -6289,6 +6367,7 @@ func (c *GrouplicensesListCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"enterpriseId": c.enterpriseId,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "androidenterprise.grouplicenses.list", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -6324,9 +6403,11 @@ func (c *GrouplicensesListCall) Do(opts ...googleapi.CallOption) (*GroupLicenses
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "androidenterprise.grouplicenses.list", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -6403,6 +6484,7 @@ func (c *GrouplicenseusersListCall) doRequest(alt string) (*http.Response, error
 		"enterpriseId":   c.enterpriseId,
 		"groupLicenseId": c.groupLicenseId,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "androidenterprise.grouplicenseusers.list", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -6438,9 +6520,11 @@ func (c *GrouplicenseusersListCall) Do(opts ...googleapi.CallOption) (*GroupLice
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "androidenterprise.grouplicenseusers.list", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -6516,6 +6600,7 @@ func (c *InstallsDeleteCall) doRequest(alt string) (*http.Response, error) {
 		"deviceId":     c.deviceId,
 		"installId":    c.installId,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "androidenterprise.installs.delete", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -6530,6 +6615,7 @@ func (c *InstallsDeleteCall) Do(opts ...googleapi.CallOption) error {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return gensupport.WrapError(err)
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "androidenterprise.installs.delete", "response", internallog.HTTPResponse(res, nil))
 	return nil
 }
 
@@ -6612,6 +6698,7 @@ func (c *InstallsGetCall) doRequest(alt string) (*http.Response, error) {
 		"deviceId":     c.deviceId,
 		"installId":    c.installId,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "androidenterprise.installs.get", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -6646,9 +6733,11 @@ func (c *InstallsGetCall) Do(opts ...googleapi.CallOption) (*Install, error) {
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "androidenterprise.installs.get", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -6726,6 +6815,7 @@ func (c *InstallsListCall) doRequest(alt string) (*http.Response, error) {
 		"userId":       c.userId,
 		"deviceId":     c.deviceId,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "androidenterprise.installs.list", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -6761,9 +6851,11 @@ func (c *InstallsListCall) Do(opts ...googleapi.CallOption) (*InstallsListRespon
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "androidenterprise.installs.list", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -6842,6 +6934,7 @@ func (c *InstallsUpdateCall) doRequest(alt string) (*http.Response, error) {
 		"deviceId":     c.deviceId,
 		"installId":    c.installId,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "androidenterprise.installs.update", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -6876,9 +6969,11 @@ func (c *InstallsUpdateCall) Do(opts ...googleapi.CallOption) (*Install, error) 
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "androidenterprise.installs.update", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -6950,6 +7045,7 @@ func (c *ManagedconfigurationsfordeviceDeleteCall) doRequest(alt string) (*http.
 		"deviceId":                        c.deviceId,
 		"managedConfigurationForDeviceId": c.managedConfigurationForDeviceId,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "androidenterprise.managedconfigurationsfordevice.delete", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -6964,6 +7060,7 @@ func (c *ManagedconfigurationsfordeviceDeleteCall) Do(opts ...googleapi.CallOpti
 	if err := googleapi.CheckResponse(res); err != nil {
 		return gensupport.WrapError(err)
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "androidenterprise.managedconfigurationsfordevice.delete", "response", internallog.HTTPResponse(res, nil))
 	return nil
 }
 
@@ -7046,6 +7143,7 @@ func (c *ManagedconfigurationsfordeviceGetCall) doRequest(alt string) (*http.Res
 		"deviceId":                        c.deviceId,
 		"managedConfigurationForDeviceId": c.managedConfigurationForDeviceId,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "androidenterprise.managedconfigurationsfordevice.get", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -7081,9 +7179,11 @@ func (c *ManagedconfigurationsfordeviceGetCall) Do(opts ...googleapi.CallOption)
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "androidenterprise.managedconfigurationsfordevice.get", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -7162,6 +7262,7 @@ func (c *ManagedconfigurationsfordeviceListCall) doRequest(alt string) (*http.Re
 		"userId":       c.userId,
 		"deviceId":     c.deviceId,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "androidenterprise.managedconfigurationsfordevice.list", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -7197,9 +7298,11 @@ func (c *ManagedconfigurationsfordeviceListCall) Do(opts ...googleapi.CallOption
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "androidenterprise.managedconfigurationsfordevice.list", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -7277,6 +7380,7 @@ func (c *ManagedconfigurationsfordeviceUpdateCall) doRequest(alt string) (*http.
 		"deviceId":                        c.deviceId,
 		"managedConfigurationForDeviceId": c.managedConfigurationForDeviceId,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "androidenterprise.managedconfigurationsfordevice.update", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -7312,9 +7416,11 @@ func (c *ManagedconfigurationsfordeviceUpdateCall) Do(opts ...googleapi.CallOpti
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "androidenterprise.managedconfigurationsfordevice.update", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -7382,6 +7488,7 @@ func (c *ManagedconfigurationsforuserDeleteCall) doRequest(alt string) (*http.Re
 		"userId":                        c.userId,
 		"managedConfigurationForUserId": c.managedConfigurationForUserId,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "androidenterprise.managedconfigurationsforuser.delete", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -7396,6 +7503,7 @@ func (c *ManagedconfigurationsforuserDeleteCall) Do(opts ...googleapi.CallOption
 	if err := googleapi.CheckResponse(res); err != nil {
 		return gensupport.WrapError(err)
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "androidenterprise.managedconfigurationsforuser.delete", "response", internallog.HTTPResponse(res, nil))
 	return nil
 }
 
@@ -7475,6 +7583,7 @@ func (c *ManagedconfigurationsforuserGetCall) doRequest(alt string) (*http.Respo
 		"userId":                        c.userId,
 		"managedConfigurationForUserId": c.managedConfigurationForUserId,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "androidenterprise.managedconfigurationsforuser.get", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -7510,9 +7619,11 @@ func (c *ManagedconfigurationsforuserGetCall) Do(opts ...googleapi.CallOption) (
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "androidenterprise.managedconfigurationsforuser.get", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -7587,6 +7698,7 @@ func (c *ManagedconfigurationsforuserListCall) doRequest(alt string) (*http.Resp
 		"enterpriseId": c.enterpriseId,
 		"userId":       c.userId,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "androidenterprise.managedconfigurationsforuser.list", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -7622,9 +7734,11 @@ func (c *ManagedconfigurationsforuserListCall) Do(opts ...googleapi.CallOption) 
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "androidenterprise.managedconfigurationsforuser.list", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -7702,6 +7816,7 @@ func (c *ManagedconfigurationsforuserUpdateCall) doRequest(alt string) (*http.Re
 		"userId":                        c.userId,
 		"managedConfigurationForUserId": c.managedConfigurationForUserId,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "androidenterprise.managedconfigurationsforuser.update", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -7737,9 +7852,11 @@ func (c *ManagedconfigurationsforuserUpdateCall) Do(opts ...googleapi.CallOption
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "androidenterprise.managedconfigurationsforuser.update", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -7814,6 +7931,7 @@ func (c *ManagedconfigurationssettingsListCall) doRequest(alt string) (*http.Res
 		"enterpriseId": c.enterpriseId,
 		"productId":    c.productId,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "androidenterprise.managedconfigurationssettings.list", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -7849,9 +7967,11 @@ func (c *ManagedconfigurationssettingsListCall) Do(opts ...googleapi.CallOption)
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "androidenterprise.managedconfigurationssettings.list", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -7929,6 +8049,7 @@ func (c *PermissionsGetCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"permissionId": c.permissionId,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "androidenterprise.permissions.get", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -7963,9 +8084,11 @@ func (c *PermissionsGetCall) Do(opts ...googleapi.CallOption) (*Permission, erro
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "androidenterprise.permissions.get", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -8038,6 +8161,7 @@ func (c *ProductsApproveCall) doRequest(alt string) (*http.Response, error) {
 		"enterpriseId": c.enterpriseId,
 		"productId":    c.productId,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "androidenterprise.products.approve", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -8052,6 +8176,7 @@ func (c *ProductsApproveCall) Do(opts ...googleapi.CallOption) error {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return gensupport.WrapError(err)
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "androidenterprise.products.approve", "response", internallog.HTTPResponse(res, nil))
 	return nil
 }
 
@@ -8130,6 +8255,7 @@ func (c *ProductsGenerateApprovalUrlCall) doRequest(alt string) (*http.Response,
 		"enterpriseId": c.enterpriseId,
 		"productId":    c.productId,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "androidenterprise.products.generateApprovalUrl", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -8165,9 +8291,11 @@ func (c *ProductsGenerateApprovalUrlCall) Do(opts ...googleapi.CallOption) (*Pro
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "androidenterprise.products.generateApprovalUrl", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -8248,6 +8376,7 @@ func (c *ProductsGetCall) doRequest(alt string) (*http.Response, error) {
 		"enterpriseId": c.enterpriseId,
 		"productId":    c.productId,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "androidenterprise.products.get", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -8282,9 +8411,11 @@ func (c *ProductsGetCall) Do(opts ...googleapi.CallOption) (*Product, error) {
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "androidenterprise.products.get", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -8370,6 +8501,7 @@ func (c *ProductsGetAppRestrictionsSchemaCall) doRequest(alt string) (*http.Resp
 		"enterpriseId": c.enterpriseId,
 		"productId":    c.productId,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "androidenterprise.products.getAppRestrictionsSchema", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -8405,9 +8537,11 @@ func (c *ProductsGetAppRestrictionsSchemaCall) Do(opts ...googleapi.CallOption) 
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "androidenterprise.products.getAppRestrictionsSchema", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -8481,6 +8615,7 @@ func (c *ProductsGetPermissionsCall) doRequest(alt string) (*http.Response, erro
 		"enterpriseId": c.enterpriseId,
 		"productId":    c.productId,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "androidenterprise.products.getPermissions", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -8516,9 +8651,11 @@ func (c *ProductsGetPermissionsCall) Do(opts ...googleapi.CallOption) (*ProductP
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "androidenterprise.products.getPermissions", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -8632,6 +8769,7 @@ func (c *ProductsListCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"enterpriseId": c.enterpriseId,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "androidenterprise.products.list", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -8667,9 +8805,11 @@ func (c *ProductsListCall) Do(opts ...googleapi.CallOption) (*ProductsListRespon
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "androidenterprise.products.list", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -8734,6 +8874,7 @@ func (c *ProductsUnapproveCall) doRequest(alt string) (*http.Response, error) {
 		"enterpriseId": c.enterpriseId,
 		"productId":    c.productId,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "androidenterprise.products.unapprove", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -8748,6 +8889,7 @@ func (c *ProductsUnapproveCall) Do(opts ...googleapi.CallOption) error {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return gensupport.WrapError(err)
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "androidenterprise.products.unapprove", "response", internallog.HTTPResponse(res, nil))
 	return nil
 }
 
@@ -8813,6 +8955,7 @@ func (c *ServiceaccountkeysDeleteCall) doRequest(alt string) (*http.Response, er
 		"enterpriseId": c.enterpriseId,
 		"keyId":        c.keyId,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "androidenterprise.serviceaccountkeys.delete", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -8827,6 +8970,7 @@ func (c *ServiceaccountkeysDeleteCall) Do(opts ...googleapi.CallOption) error {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return gensupport.WrapError(err)
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "androidenterprise.serviceaccountkeys.delete", "response", internallog.HTTPResponse(res, nil))
 	return nil
 }
 
@@ -8894,6 +9038,7 @@ func (c *ServiceaccountkeysInsertCall) doRequest(alt string) (*http.Response, er
 	googleapi.Expand(req.URL, map[string]string{
 		"enterpriseId": c.enterpriseId,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "androidenterprise.serviceaccountkeys.insert", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -8929,9 +9074,11 @@ func (c *ServiceaccountkeysInsertCall) Do(opts ...googleapi.CallOption) (*Servic
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "androidenterprise.serviceaccountkeys.insert", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -9005,6 +9152,7 @@ func (c *ServiceaccountkeysListCall) doRequest(alt string) (*http.Response, erro
 	googleapi.Expand(req.URL, map[string]string{
 		"enterpriseId": c.enterpriseId,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "androidenterprise.serviceaccountkeys.list", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -9040,9 +9188,11 @@ func (c *ServiceaccountkeysListCall) Do(opts ...googleapi.CallOption) (*ServiceA
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "androidenterprise.serviceaccountkeys.list", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -9108,6 +9258,7 @@ func (c *StorelayoutclustersDeleteCall) doRequest(alt string) (*http.Response, e
 		"pageId":       c.pageId,
 		"clusterId":    c.clusterId,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "androidenterprise.storelayoutclusters.delete", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -9122,6 +9273,7 @@ func (c *StorelayoutclustersDeleteCall) Do(opts ...googleapi.CallOption) error {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return gensupport.WrapError(err)
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "androidenterprise.storelayoutclusters.delete", "response", internallog.HTTPResponse(res, nil))
 	return nil
 }
 
@@ -9199,6 +9351,7 @@ func (c *StorelayoutclustersGetCall) doRequest(alt string) (*http.Response, erro
 		"pageId":       c.pageId,
 		"clusterId":    c.clusterId,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "androidenterprise.storelayoutclusters.get", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -9233,9 +9386,11 @@ func (c *StorelayoutclustersGetCall) Do(opts ...googleapi.CallOption) (*StoreClu
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "androidenterprise.storelayoutclusters.get", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -9303,6 +9458,7 @@ func (c *StorelayoutclustersInsertCall) doRequest(alt string) (*http.Response, e
 		"enterpriseId": c.enterpriseId,
 		"pageId":       c.pageId,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "androidenterprise.storelayoutclusters.insert", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -9337,9 +9493,11 @@ func (c *StorelayoutclustersInsertCall) Do(opts ...googleapi.CallOption) (*Store
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "androidenterprise.storelayoutclusters.insert", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -9413,6 +9571,7 @@ func (c *StorelayoutclustersListCall) doRequest(alt string) (*http.Response, err
 		"enterpriseId": c.enterpriseId,
 		"pageId":       c.pageId,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "androidenterprise.storelayoutclusters.list", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -9448,9 +9607,11 @@ func (c *StorelayoutclustersListCall) Do(opts ...googleapi.CallOption) (*StoreLa
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "androidenterprise.storelayoutclusters.list", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -9522,6 +9683,7 @@ func (c *StorelayoutclustersUpdateCall) doRequest(alt string) (*http.Response, e
 		"pageId":       c.pageId,
 		"clusterId":    c.clusterId,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "androidenterprise.storelayoutclusters.update", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -9556,9 +9718,11 @@ func (c *StorelayoutclustersUpdateCall) Do(opts ...googleapi.CallOption) (*Store
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "androidenterprise.storelayoutclusters.update", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -9620,6 +9784,7 @@ func (c *StorelayoutpagesDeleteCall) doRequest(alt string) (*http.Response, erro
 		"enterpriseId": c.enterpriseId,
 		"pageId":       c.pageId,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "androidenterprise.storelayoutpages.delete", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -9634,6 +9799,7 @@ func (c *StorelayoutpagesDeleteCall) Do(opts ...googleapi.CallOption) error {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return gensupport.WrapError(err)
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "androidenterprise.storelayoutpages.delete", "response", internallog.HTTPResponse(res, nil))
 	return nil
 }
 
@@ -9707,6 +9873,7 @@ func (c *StorelayoutpagesGetCall) doRequest(alt string) (*http.Response, error) 
 		"enterpriseId": c.enterpriseId,
 		"pageId":       c.pageId,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "androidenterprise.storelayoutpages.get", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -9741,9 +9908,11 @@ func (c *StorelayoutpagesGetCall) Do(opts ...googleapi.CallOption) (*StorePage, 
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "androidenterprise.storelayoutpages.get", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -9807,6 +9976,7 @@ func (c *StorelayoutpagesInsertCall) doRequest(alt string) (*http.Response, erro
 	googleapi.Expand(req.URL, map[string]string{
 		"enterpriseId": c.enterpriseId,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "androidenterprise.storelayoutpages.insert", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -9841,9 +10011,11 @@ func (c *StorelayoutpagesInsertCall) Do(opts ...googleapi.CallOption) (*StorePag
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "androidenterprise.storelayoutpages.insert", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -9913,6 +10085,7 @@ func (c *StorelayoutpagesListCall) doRequest(alt string) (*http.Response, error)
 	googleapi.Expand(req.URL, map[string]string{
 		"enterpriseId": c.enterpriseId,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "androidenterprise.storelayoutpages.list", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -9948,9 +10121,11 @@ func (c *StorelayoutpagesListCall) Do(opts ...googleapi.CallOption) (*StoreLayou
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "androidenterprise.storelayoutpages.list", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -10018,6 +10193,7 @@ func (c *StorelayoutpagesUpdateCall) doRequest(alt string) (*http.Response, erro
 		"enterpriseId": c.enterpriseId,
 		"pageId":       c.pageId,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "androidenterprise.storelayoutpages.update", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -10052,9 +10228,11 @@ func (c *StorelayoutpagesUpdateCall) Do(opts ...googleapi.CallOption) (*StorePag
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "androidenterprise.storelayoutpages.update", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -10116,6 +10294,7 @@ func (c *UsersDeleteCall) doRequest(alt string) (*http.Response, error) {
 		"enterpriseId": c.enterpriseId,
 		"userId":       c.userId,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "androidenterprise.users.delete", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -10130,6 +10309,7 @@ func (c *UsersDeleteCall) Do(opts ...googleapi.CallOption) error {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return gensupport.WrapError(err)
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "androidenterprise.users.delete", "response", internallog.HTTPResponse(res, nil))
 	return nil
 }
 
@@ -10195,6 +10375,7 @@ func (c *UsersGenerateAuthenticationTokenCall) doRequest(alt string) (*http.Resp
 		"enterpriseId": c.enterpriseId,
 		"userId":       c.userId,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "androidenterprise.users.generateAuthenticationToken", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -10230,9 +10411,11 @@ func (c *UsersGenerateAuthenticationTokenCall) Do(opts ...googleapi.CallOption) 
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "androidenterprise.users.generateAuthenticationToken", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -10306,6 +10489,7 @@ func (c *UsersGetCall) doRequest(alt string) (*http.Response, error) {
 		"enterpriseId": c.enterpriseId,
 		"userId":       c.userId,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "androidenterprise.users.get", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -10340,9 +10524,11 @@ func (c *UsersGetCall) Do(opts ...googleapi.CallOption) (*User, error) {
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "androidenterprise.users.get", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -10418,6 +10604,7 @@ func (c *UsersGetAvailableProductSetCall) doRequest(alt string) (*http.Response,
 		"enterpriseId": c.enterpriseId,
 		"userId":       c.userId,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "androidenterprise.users.getAvailableProductSet", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -10452,9 +10639,11 @@ func (c *UsersGetAvailableProductSetCall) Do(opts ...googleapi.CallOption) (*Pro
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "androidenterprise.users.getAvailableProductSet", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -10522,6 +10711,7 @@ func (c *UsersInsertCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"enterpriseId": c.enterpriseId,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "androidenterprise.users.insert", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -10556,9 +10746,11 @@ func (c *UsersInsertCall) Do(opts ...googleapi.CallOption) (*User, error) {
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "androidenterprise.users.insert", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -10632,6 +10824,7 @@ func (c *UsersListCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"enterpriseId": c.enterpriseId,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "androidenterprise.users.list", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -10667,9 +10860,11 @@ func (c *UsersListCall) Do(opts ...googleapi.CallOption) (*UsersListResponse, er
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "androidenterprise.users.list", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -10734,6 +10929,7 @@ func (c *UsersRevokeDeviceAccessCall) doRequest(alt string) (*http.Response, err
 		"enterpriseId": c.enterpriseId,
 		"userId":       c.userId,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "androidenterprise.users.revokeDeviceAccess", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -10748,6 +10944,7 @@ func (c *UsersRevokeDeviceAccessCall) Do(opts ...googleapi.CallOption) error {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return gensupport.WrapError(err)
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "androidenterprise.users.revokeDeviceAccess", "response", internallog.HTTPResponse(res, nil))
 	return nil
 }
 
@@ -10820,6 +11017,7 @@ func (c *UsersSetAvailableProductSetCall) doRequest(alt string) (*http.Response,
 		"enterpriseId": c.enterpriseId,
 		"userId":       c.userId,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "androidenterprise.users.setAvailableProductSet", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -10854,9 +11052,11 @@ func (c *UsersSetAvailableProductSetCall) Do(opts ...googleapi.CallOption) (*Pro
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "androidenterprise.users.setAvailableProductSet", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -10928,6 +11128,7 @@ func (c *UsersUpdateCall) doRequest(alt string) (*http.Response, error) {
 		"enterpriseId": c.enterpriseId,
 		"userId":       c.userId,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "androidenterprise.users.update", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -10962,9 +11163,11 @@ func (c *UsersUpdateCall) Do(opts ...googleapi.CallOption) (*User, error) {
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "androidenterprise.users.update", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -11026,6 +11229,7 @@ func (c *WebappsDeleteCall) doRequest(alt string) (*http.Response, error) {
 		"enterpriseId": c.enterpriseId,
 		"webAppId":     c.webAppId,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "androidenterprise.webapps.delete", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -11040,6 +11244,7 @@ func (c *WebappsDeleteCall) Do(opts ...googleapi.CallOption) error {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return gensupport.WrapError(err)
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "androidenterprise.webapps.delete", "response", internallog.HTTPResponse(res, nil))
 	return nil
 }
 
@@ -11113,6 +11318,7 @@ func (c *WebappsGetCall) doRequest(alt string) (*http.Response, error) {
 		"enterpriseId": c.enterpriseId,
 		"webAppId":     c.webAppId,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "androidenterprise.webapps.get", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -11147,9 +11353,11 @@ func (c *WebappsGetCall) Do(opts ...googleapi.CallOption) (*WebApp, error) {
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "androidenterprise.webapps.get", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -11213,6 +11421,7 @@ func (c *WebappsInsertCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"enterpriseId": c.enterpriseId,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "androidenterprise.webapps.insert", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -11247,9 +11456,11 @@ func (c *WebappsInsertCall) Do(opts ...googleapi.CallOption) (*WebApp, error) {
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "androidenterprise.webapps.insert", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -11319,6 +11530,7 @@ func (c *WebappsListCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"enterpriseId": c.enterpriseId,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "androidenterprise.webapps.list", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -11354,9 +11566,11 @@ func (c *WebappsListCall) Do(opts ...googleapi.CallOption) (*WebAppsListResponse
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "androidenterprise.webapps.list", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -11424,6 +11638,7 @@ func (c *WebappsUpdateCall) doRequest(alt string) (*http.Response, error) {
 		"enterpriseId": c.enterpriseId,
 		"webAppId":     c.webAppId,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "androidenterprise.webapps.update", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -11458,8 +11673,10 @@ func (c *WebappsUpdateCall) Do(opts ...googleapi.CallOption) (*WebApp, error) {
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "androidenterprise.webapps.update", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }

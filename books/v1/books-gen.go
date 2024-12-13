@@ -57,11 +57,13 @@ import (
 	"errors"
 	"fmt"
 	"io"
+	"log/slog"
 	"net/http"
 	"net/url"
 	"strconv"
 	"strings"
 
+	"github.com/googleapis/gax-go/v2/internallog"
 	googleapi "google.golang.org/api/googleapi"
 	internal "google.golang.org/api/internal"
 	gensupport "google.golang.org/api/internal/gensupport"
@@ -85,6 +87,7 @@ var _ = strings.Replace
 var _ = context.Canceled
 var _ = internaloption.WithDefaultEndpoint
 var _ = internal.Version
+var _ = internallog.New
 
 const apiId = "books:v1"
 const apiName = "books"
@@ -114,7 +117,7 @@ func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, err
 	if err != nil {
 		return nil, err
 	}
-	s := &Service{client: client, BasePath: basePath}
+	s := &Service{client: client, BasePath: basePath, logger: internaloption.GetLogger(opts)}
 	s.Bookshelves = NewBookshelvesService(s)
 	s.Cloudloading = NewCloudloadingService(s)
 	s.Dictionary = NewDictionaryService(s)
@@ -151,6 +154,7 @@ func New(client *http.Client) (*Service, error) {
 
 type Service struct {
 	client    *http.Client
+	logger    *slog.Logger
 	BasePath  string // API endpoint base URL
 	UserAgent string // optional additional User-Agent fragment
 
@@ -3861,6 +3865,7 @@ func (c *BookshelvesGetCall) doRequest(alt string) (*http.Response, error) {
 		"userId": c.userId,
 		"shelf":  c.shelf,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "books.bookshelves.get", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -3895,9 +3900,11 @@ func (c *BookshelvesGetCall) Do(opts ...googleapi.CallOption) (*Bookshelf, error
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "books.bookshelves.get", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -3974,6 +3981,7 @@ func (c *BookshelvesListCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"userId": c.userId,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "books.bookshelves.list", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -4008,9 +4016,11 @@ func (c *BookshelvesListCall) Do(opts ...googleapi.CallOption) (*Bookshelves, er
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "books.bookshelves.list", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -4112,6 +4122,7 @@ func (c *BookshelvesVolumesListCall) doRequest(alt string) (*http.Response, erro
 		"userId": c.userId,
 		"shelf":  c.shelf,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "books.bookshelves.volumes.list", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -4146,9 +4157,11 @@ func (c *BookshelvesVolumesListCall) Do(opts ...googleapi.CallOption) (*Volumes,
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "books.bookshelves.volumes.list", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -4227,6 +4240,7 @@ func (c *CloudloadingAddBookCall) doRequest(alt string) (*http.Response, error) 
 		return nil, err
 	}
 	req.Header = reqHeaders
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "books.cloudloading.addBook", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -4262,9 +4276,11 @@ func (c *CloudloadingAddBookCall) Do(opts ...googleapi.CallOption) (*BooksCloudl
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "books.cloudloading.addBook", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -4318,6 +4334,7 @@ func (c *CloudloadingDeleteBookCall) doRequest(alt string) (*http.Response, erro
 		return nil, err
 	}
 	req.Header = reqHeaders
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "books.cloudloading.deleteBook", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -4352,9 +4369,11 @@ func (c *CloudloadingDeleteBookCall) Do(opts ...googleapi.CallOption) (*Empty, e
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "books.cloudloading.deleteBook", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -4411,6 +4430,7 @@ func (c *CloudloadingUpdateBookCall) doRequest(alt string) (*http.Response, erro
 		return nil, err
 	}
 	req.Header = reqHeaders
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "books.cloudloading.updateBook", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -4446,9 +4466,11 @@ func (c *CloudloadingUpdateBookCall) Do(opts ...googleapi.CallOption) (*BooksClo
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "books.cloudloading.updateBook", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -4514,6 +4536,7 @@ func (c *DictionaryListOfflineMetadataCall) doRequest(alt string) (*http.Respons
 		return nil, err
 	}
 	req.Header = reqHeaders
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "books.dictionary.listOfflineMetadata", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -4548,9 +4571,11 @@ func (c *DictionaryListOfflineMetadataCall) Do(opts ...googleapi.CallOption) (*M
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "books.dictionary.listOfflineMetadata", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -4621,6 +4646,7 @@ func (c *FamilysharingGetFamilyInfoCall) doRequest(alt string) (*http.Response, 
 		return nil, err
 	}
 	req.Header = reqHeaders
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "books.familysharing.getFamilyInfo", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -4655,9 +4681,11 @@ func (c *FamilysharingGetFamilyInfoCall) Do(opts ...googleapi.CallOption) (*Fami
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "books.familysharing.getFamilyInfo", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -4728,6 +4756,7 @@ func (c *FamilysharingShareCall) doRequest(alt string) (*http.Response, error) {
 		return nil, err
 	}
 	req.Header = reqHeaders
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "books.familysharing.share", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -4762,9 +4791,11 @@ func (c *FamilysharingShareCall) Do(opts ...googleapi.CallOption) (*Empty, error
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "books.familysharing.share", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -4835,6 +4866,7 @@ func (c *FamilysharingUnshareCall) doRequest(alt string) (*http.Response, error)
 		return nil, err
 	}
 	req.Header = reqHeaders
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "books.familysharing.unshare", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -4869,9 +4901,11 @@ func (c *FamilysharingUnshareCall) Do(opts ...googleapi.CallOption) (*Empty, err
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "books.familysharing.unshare", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -4959,6 +4993,7 @@ func (c *LayersGetCall) doRequest(alt string) (*http.Response, error) {
 		"volumeId":  c.volumeId,
 		"summaryId": c.summaryId,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "books.layers.get", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -4993,9 +5028,11 @@ func (c *LayersGetCall) Do(opts ...googleapi.CallOption) (*Layersummary, error) 
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "books.layers.get", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -5093,6 +5130,7 @@ func (c *LayersListCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"volumeId": c.volumeId,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "books.layers.list", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -5127,9 +5165,11 @@ func (c *LayersListCall) Do(opts ...googleapi.CallOption) (*Layersummaries, erro
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "books.layers.list", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -5252,6 +5292,7 @@ func (c *LayersAnnotationDataGetCall) doRequest(alt string) (*http.Response, err
 		"layerId":          c.layerId,
 		"annotationDataId": c.annotationDataId,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "books.layers.annotationData.get", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -5287,9 +5328,11 @@ func (c *LayersAnnotationDataGetCall) Do(opts ...googleapi.CallOption) (*Diction
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "books.layers.annotationData.get", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -5435,6 +5478,7 @@ func (c *LayersAnnotationDataListCall) doRequest(alt string) (*http.Response, er
 		"volumeId": c.volumeId,
 		"layerId":  c.layerId,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "books.layers.annotationData.list", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -5470,9 +5514,11 @@ func (c *LayersAnnotationDataListCall) Do(opts ...googleapi.CallOption) (*Annota
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "books.layers.annotationData.list", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -5585,6 +5631,7 @@ func (c *LayersVolumeAnnotationsGetCall) doRequest(alt string) (*http.Response, 
 		"layerId":      c.layerId,
 		"annotationId": c.annotationId,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "books.layers.volumeAnnotations.get", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -5620,9 +5667,11 @@ func (c *LayersVolumeAnnotationsGetCall) Do(opts ...googleapi.CallOption) (*Volu
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "books.layers.volumeAnnotations.get", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -5784,6 +5833,7 @@ func (c *LayersVolumeAnnotationsListCall) doRequest(alt string) (*http.Response,
 		"volumeId": c.volumeId,
 		"layerId":  c.layerId,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "books.layers.volumeAnnotations.list", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -5819,9 +5869,11 @@ func (c *LayersVolumeAnnotationsListCall) Do(opts ...googleapi.CallOption) (*Vol
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "books.layers.volumeAnnotations.list", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -5912,6 +5964,7 @@ func (c *MyconfigGetUserSettingsCall) doRequest(alt string) (*http.Response, err
 		return nil, err
 	}
 	req.Header = reqHeaders
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "books.myconfig.getUserSettings", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -5946,9 +5999,11 @@ func (c *MyconfigGetUserSettingsCall) Do(opts ...googleapi.CallOption) (*Userset
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "books.myconfig.getUserSettings", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -6018,6 +6073,7 @@ func (c *MyconfigReleaseDownloadAccessCall) doRequest(alt string) (*http.Respons
 		return nil, err
 	}
 	req.Header = reqHeaders
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "books.myconfig.releaseDownloadAccess", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -6053,9 +6109,11 @@ func (c *MyconfigReleaseDownloadAccessCall) Do(opts ...googleapi.CallOption) (*D
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "books.myconfig.releaseDownloadAccess", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -6136,6 +6194,7 @@ func (c *MyconfigRequestAccessCall) doRequest(alt string) (*http.Response, error
 		return nil, err
 	}
 	req.Header = reqHeaders
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "books.myconfig.requestAccess", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -6171,9 +6230,11 @@ func (c *MyconfigRequestAccessCall) Do(opts ...googleapi.CallOption) (*RequestAc
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "books.myconfig.requestAccess", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -6272,6 +6333,7 @@ func (c *MyconfigSyncVolumeLicensesCall) doRequest(alt string) (*http.Response, 
 		return nil, err
 	}
 	req.Header = reqHeaders
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "books.myconfig.syncVolumeLicenses", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -6306,9 +6368,11 @@ func (c *MyconfigSyncVolumeLicensesCall) Do(opts ...googleapi.CallOption) (*Volu
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "books.myconfig.syncVolumeLicenses", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -6367,6 +6431,7 @@ func (c *MyconfigUpdateUserSettingsCall) doRequest(alt string) (*http.Response, 
 		return nil, err
 	}
 	req.Header = reqHeaders
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "books.myconfig.updateUserSettings", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -6401,9 +6466,11 @@ func (c *MyconfigUpdateUserSettingsCall) Do(opts ...googleapi.CallOption) (*User
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "books.myconfig.updateUserSettings", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -6468,6 +6535,7 @@ func (c *MylibraryAnnotationsDeleteCall) doRequest(alt string) (*http.Response, 
 	googleapi.Expand(req.URL, map[string]string{
 		"annotationId": c.annotationId,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "books.mylibrary.annotations.delete", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -6502,9 +6570,11 @@ func (c *MylibraryAnnotationsDeleteCall) Do(opts ...googleapi.CallOption) (*Empt
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "books.mylibrary.annotations.delete", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -6590,6 +6660,7 @@ func (c *MylibraryAnnotationsInsertCall) doRequest(alt string) (*http.Response, 
 		return nil, err
 	}
 	req.Header = reqHeaders
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "books.mylibrary.annotations.insert", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -6624,9 +6695,11 @@ func (c *MylibraryAnnotationsInsertCall) Do(opts ...googleapi.CallOption) (*Anno
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "books.mylibrary.annotations.insert", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -6760,6 +6833,7 @@ func (c *MylibraryAnnotationsListCall) doRequest(alt string) (*http.Response, er
 		return nil, err
 	}
 	req.Header = reqHeaders
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "books.mylibrary.annotations.list", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -6794,9 +6868,11 @@ func (c *MylibraryAnnotationsListCall) Do(opts ...googleapi.CallOption) (*Annota
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "books.mylibrary.annotations.list", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -6880,6 +6956,7 @@ func (c *MylibraryAnnotationsSummaryCall) doRequest(alt string) (*http.Response,
 		return nil, err
 	}
 	req.Header = reqHeaders
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "books.mylibrary.annotations.summary", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -6915,9 +6992,11 @@ func (c *MylibraryAnnotationsSummaryCall) Do(opts ...googleapi.CallOption) (*Ann
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "books.mylibrary.annotations.summary", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -6988,6 +7067,7 @@ func (c *MylibraryAnnotationsUpdateCall) doRequest(alt string) (*http.Response, 
 	googleapi.Expand(req.URL, map[string]string{
 		"annotationId": c.annotationId,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "books.mylibrary.annotations.update", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -7022,9 +7102,11 @@ func (c *MylibraryAnnotationsUpdateCall) Do(opts ...googleapi.CallOption) (*Anno
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "books.mylibrary.annotations.update", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -7105,6 +7187,7 @@ func (c *MylibraryBookshelvesAddVolumeCall) doRequest(alt string) (*http.Respons
 	googleapi.Expand(req.URL, map[string]string{
 		"shelf": c.shelf,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "books.mylibrary.bookshelves.addVolume", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -7139,9 +7222,11 @@ func (c *MylibraryBookshelvesAddVolumeCall) Do(opts ...googleapi.CallOption) (*E
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "books.mylibrary.bookshelves.addVolume", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -7206,6 +7291,7 @@ func (c *MylibraryBookshelvesClearVolumesCall) doRequest(alt string) (*http.Resp
 	googleapi.Expand(req.URL, map[string]string{
 		"shelf": c.shelf,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "books.mylibrary.bookshelves.clearVolumes", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -7240,9 +7326,11 @@ func (c *MylibraryBookshelvesClearVolumesCall) Do(opts ...googleapi.CallOption) 
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "books.mylibrary.bookshelves.clearVolumes", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -7320,6 +7408,7 @@ func (c *MylibraryBookshelvesGetCall) doRequest(alt string) (*http.Response, err
 	googleapi.Expand(req.URL, map[string]string{
 		"shelf": c.shelf,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "books.mylibrary.bookshelves.get", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -7354,9 +7443,11 @@ func (c *MylibraryBookshelvesGetCall) Do(opts ...googleapi.CallOption) (*Bookshe
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "books.mylibrary.bookshelves.get", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -7426,6 +7517,7 @@ func (c *MylibraryBookshelvesListCall) doRequest(alt string) (*http.Response, er
 		return nil, err
 	}
 	req.Header = reqHeaders
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "books.mylibrary.bookshelves.list", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -7460,9 +7552,11 @@ func (c *MylibraryBookshelvesListCall) Do(opts ...googleapi.CallOption) (*Booksh
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "books.mylibrary.bookshelves.list", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -7533,6 +7627,7 @@ func (c *MylibraryBookshelvesMoveVolumeCall) doRequest(alt string) (*http.Respon
 	googleapi.Expand(req.URL, map[string]string{
 		"shelf": c.shelf,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "books.mylibrary.bookshelves.moveVolume", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -7567,9 +7662,11 @@ func (c *MylibraryBookshelvesMoveVolumeCall) Do(opts ...googleapi.CallOption) (*
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "books.mylibrary.bookshelves.moveVolume", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -7648,6 +7745,7 @@ func (c *MylibraryBookshelvesRemoveVolumeCall) doRequest(alt string) (*http.Resp
 	googleapi.Expand(req.URL, map[string]string{
 		"shelf": c.shelf,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "books.mylibrary.bookshelves.removeVolume", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -7682,9 +7780,11 @@ func (c *MylibraryBookshelvesRemoveVolumeCall) Do(opts ...googleapi.CallOption) 
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "books.mylibrary.bookshelves.removeVolume", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -7809,6 +7909,7 @@ func (c *MylibraryBookshelvesVolumesListCall) doRequest(alt string) (*http.Respo
 	googleapi.Expand(req.URL, map[string]string{
 		"shelf": c.shelf,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "books.mylibrary.bookshelves.volumes.list", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -7843,9 +7944,11 @@ func (c *MylibraryBookshelvesVolumesListCall) Do(opts ...googleapi.CallOption) (
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "books.mylibrary.bookshelves.volumes.list", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -7929,6 +8032,7 @@ func (c *MylibraryReadingpositionsGetCall) doRequest(alt string) (*http.Response
 	googleapi.Expand(req.URL, map[string]string{
 		"volumeId": c.volumeId,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "books.mylibrary.readingpositions.get", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -7964,9 +8068,11 @@ func (c *MylibraryReadingpositionsGetCall) Do(opts ...googleapi.CallOption) (*Re
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "books.mylibrary.readingpositions.get", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -8067,6 +8173,7 @@ func (c *MylibraryReadingpositionsSetPositionCall) doRequest(alt string) (*http.
 	googleapi.Expand(req.URL, map[string]string{
 		"volumeId": c.volumeId,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "books.mylibrary.readingpositions.setPosition", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -8101,9 +8208,11 @@ func (c *MylibraryReadingpositionsSetPositionCall) Do(opts ...googleapi.CallOpti
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "books.mylibrary.readingpositions.setPosition", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -8184,6 +8293,7 @@ func (c *NotificationGetCall) doRequest(alt string) (*http.Response, error) {
 		return nil, err
 	}
 	req.Header = reqHeaders
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "books.notification.get", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -8218,9 +8328,11 @@ func (c *NotificationGetCall) Do(opts ...googleapi.CallOption) (*Notification, e
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "books.notification.get", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -8290,6 +8402,7 @@ func (c *OnboardingListCategoriesCall) doRequest(alt string) (*http.Response, er
 		return nil, err
 	}
 	req.Header = reqHeaders
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "books.onboarding.listCategories", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -8324,9 +8437,11 @@ func (c *OnboardingListCategoriesCall) Do(opts ...googleapi.CallOption) (*Catego
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "books.onboarding.listCategories", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -8432,6 +8547,7 @@ func (c *OnboardingListCategoryVolumesCall) doRequest(alt string) (*http.Respons
 		return nil, err
 	}
 	req.Header = reqHeaders
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "books.onboarding.listCategoryVolumes", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -8466,9 +8582,11 @@ func (c *OnboardingListCategoryVolumesCall) Do(opts ...googleapi.CallOption) (*V
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "books.onboarding.listCategoryVolumes", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -8580,6 +8698,7 @@ func (c *PersonalizedstreamGetCall) doRequest(alt string) (*http.Response, error
 		return nil, err
 	}
 	req.Header = reqHeaders
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "books.personalizedstream.get", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -8615,9 +8734,11 @@ func (c *PersonalizedstreamGetCall) Do(opts ...googleapi.CallOption) (*Discovery
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "books.personalizedstream.get", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -8717,6 +8838,7 @@ func (c *PromoofferAcceptCall) doRequest(alt string) (*http.Response, error) {
 		return nil, err
 	}
 	req.Header = reqHeaders
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "books.promooffer.accept", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -8751,9 +8873,11 @@ func (c *PromoofferAcceptCall) Do(opts ...googleapi.CallOption) (*Empty, error) 
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "books.promooffer.accept", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -8846,6 +8970,7 @@ func (c *PromoofferDismissCall) doRequest(alt string) (*http.Response, error) {
 		return nil, err
 	}
 	req.Header = reqHeaders
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "books.promooffer.dismiss", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -8880,9 +9005,11 @@ func (c *PromoofferDismissCall) Do(opts ...googleapi.CallOption) (*Empty, error)
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "books.promooffer.dismiss", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -8981,6 +9108,7 @@ func (c *PromoofferGetCall) doRequest(alt string) (*http.Response, error) {
 		return nil, err
 	}
 	req.Header = reqHeaders
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "books.promooffer.get", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -9015,9 +9143,11 @@ func (c *PromoofferGetCall) Do(opts ...googleapi.CallOption) (*Offers, error) {
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "books.promooffer.get", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -9083,6 +9213,7 @@ func (c *SeriesGetCall) doRequest(alt string) (*http.Response, error) {
 		return nil, err
 	}
 	req.Header = reqHeaders
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "books.series.get", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -9117,9 +9248,11 @@ func (c *SeriesGetCall) Do(opts ...googleapi.CallOption) (*Series, error) {
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "books.series.get", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -9199,6 +9332,7 @@ func (c *SeriesMembershipGetCall) doRequest(alt string) (*http.Response, error) 
 		return nil, err
 	}
 	req.Header = reqHeaders
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "books.series.membership.get", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -9234,9 +9368,11 @@ func (c *SeriesMembershipGetCall) Do(opts ...googleapi.CallOption) (*Seriesmembe
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "books.series.membership.get", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -9353,6 +9489,7 @@ func (c *VolumesGetCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"volumeId": c.volumeId,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "books.volumes.get", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -9387,9 +9524,11 @@ func (c *VolumesGetCall) Do(opts ...googleapi.CallOption) (*Volume, error) {
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "books.volumes.get", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -9590,6 +9729,7 @@ func (c *VolumesListCall) doRequest(alt string) (*http.Response, error) {
 		return nil, err
 	}
 	req.Header = reqHeaders
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "books.volumes.list", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -9624,9 +9764,11 @@ func (c *VolumesListCall) Do(opts ...googleapi.CallOption) (*Volumes, error) {
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "books.volumes.list", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -9737,6 +9879,7 @@ func (c *VolumesAssociatedListCall) doRequest(alt string) (*http.Response, error
 	googleapi.Expand(req.URL, map[string]string{
 		"volumeId": c.volumeId,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "books.volumes.associated.list", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -9771,9 +9914,11 @@ func (c *VolumesAssociatedListCall) Do(opts ...googleapi.CallOption) (*Volumes, 
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "books.volumes.associated.list", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -9905,6 +10050,7 @@ func (c *VolumesMybooksListCall) doRequest(alt string) (*http.Response, error) {
 		return nil, err
 	}
 	req.Header = reqHeaders
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "books.volumes.mybooks.list", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -9939,9 +10085,11 @@ func (c *VolumesMybooksListCall) Do(opts ...googleapi.CallOption) (*Volumes, err
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "books.volumes.mybooks.list", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -10032,6 +10180,7 @@ func (c *VolumesRecommendedListCall) doRequest(alt string) (*http.Response, erro
 		return nil, err
 	}
 	req.Header = reqHeaders
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "books.volumes.recommended.list", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -10066,9 +10215,11 @@ func (c *VolumesRecommendedListCall) Do(opts ...googleapi.CallOption) (*Volumes,
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "books.volumes.recommended.list", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -10138,6 +10289,7 @@ func (c *VolumesRecommendedRateCall) doRequest(alt string) (*http.Response, erro
 		return nil, err
 	}
 	req.Header = reqHeaders
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "books.volumes.recommended.rate", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -10173,9 +10325,11 @@ func (c *VolumesRecommendedRateCall) Do(opts ...googleapi.CallOption) (*BooksVol
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "books.volumes.recommended.rate", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -10288,6 +10442,7 @@ func (c *VolumesUseruploadedListCall) doRequest(alt string) (*http.Response, err
 		return nil, err
 	}
 	req.Header = reqHeaders
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "books.volumes.useruploaded.list", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -10322,8 +10477,10 @@ func (c *VolumesUseruploadedListCall) Do(opts ...googleapi.CallOption) (*Volumes
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "books.volumes.useruploaded.list", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }

@@ -62,11 +62,13 @@ import (
 	"errors"
 	"fmt"
 	"io"
+	"log/slog"
 	"net/http"
 	"net/url"
 	"strconv"
 	"strings"
 
+	"github.com/googleapis/gax-go/v2/internallog"
 	googleapi "google.golang.org/api/googleapi"
 	internal "google.golang.org/api/internal"
 	gensupport "google.golang.org/api/internal/gensupport"
@@ -90,6 +92,7 @@ var _ = strings.Replace
 var _ = context.Canceled
 var _ = internaloption.WithDefaultEndpoint
 var _ = internal.Version
+var _ = internallog.New
 
 const apiId = "chromepolicy:v1"
 const apiName = "chromepolicy"
@@ -125,7 +128,7 @@ func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, err
 	if err != nil {
 		return nil, err
 	}
-	s := &Service{client: client, BasePath: basePath}
+	s := &Service{client: client, BasePath: basePath, logger: internaloption.GetLogger(opts)}
 	s.Customers = NewCustomersService(s)
 	s.Media = NewMediaService(s)
 	if err != nil {
@@ -151,6 +154,7 @@ func New(client *http.Client) (*Service, error) {
 
 type Service struct {
 	client    *http.Client
+	logger    *slog.Logger
 	BasePath  string // API endpoint base URL
 	UserAgent string // optional additional User-Agent fragment
 
@@ -1918,6 +1922,7 @@ func (c *CustomersPoliciesResolveCall) doRequest(alt string) (*http.Response, er
 	googleapi.Expand(req.URL, map[string]string{
 		"customer": c.customer,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "chromepolicy.customers.policies.resolve", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -1953,9 +1958,11 @@ func (c *CustomersPoliciesResolveCall) Do(opts ...googleapi.CallOption) (*Google
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "chromepolicy.customers.policies.resolve", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -2046,6 +2053,7 @@ func (c *CustomersPoliciesGroupsBatchDeleteCall) doRequest(alt string) (*http.Re
 	googleapi.Expand(req.URL, map[string]string{
 		"customer": c.customer,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "chromepolicy.customers.policies.groups.batchDelete", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -2081,9 +2089,11 @@ func (c *CustomersPoliciesGroupsBatchDeleteCall) Do(opts ...googleapi.CallOption
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "chromepolicy.customers.policies.groups.batchDelete", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -2153,6 +2163,7 @@ func (c *CustomersPoliciesGroupsBatchModifyCall) doRequest(alt string) (*http.Re
 	googleapi.Expand(req.URL, map[string]string{
 		"customer": c.customer,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "chromepolicy.customers.policies.groups.batchModify", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -2188,9 +2199,11 @@ func (c *CustomersPoliciesGroupsBatchModifyCall) Do(opts ...googleapi.CallOption
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "chromepolicy.customers.policies.groups.batchModify", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -2258,6 +2271,7 @@ func (c *CustomersPoliciesGroupsListGroupPriorityOrderingCall) doRequest(alt str
 	googleapi.Expand(req.URL, map[string]string{
 		"customer": c.customer,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "chromepolicy.customers.policies.groups.listGroupPriorityOrdering", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -2293,9 +2307,11 @@ func (c *CustomersPoliciesGroupsListGroupPriorityOrderingCall) Do(opts ...google
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "chromepolicy.customers.policies.groups.listGroupPriorityOrdering", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -2363,6 +2379,7 @@ func (c *CustomersPoliciesGroupsUpdateGroupPriorityOrderingCall) doRequest(alt s
 	googleapi.Expand(req.URL, map[string]string{
 		"customer": c.customer,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "chromepolicy.customers.policies.groups.updateGroupPriorityOrdering", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -2398,9 +2415,11 @@ func (c *CustomersPoliciesGroupsUpdateGroupPriorityOrderingCall) Do(opts ...goog
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "chromepolicy.customers.policies.groups.updateGroupPriorityOrdering", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -2464,6 +2483,7 @@ func (c *CustomersPoliciesNetworksDefineCertificateCall) doRequest(alt string) (
 	googleapi.Expand(req.URL, map[string]string{
 		"customer": c.customer,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "chromepolicy.customers.policies.networks.defineCertificate", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -2499,9 +2519,11 @@ func (c *CustomersPoliciesNetworksDefineCertificateCall) Do(opts ...googleapi.Ca
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "chromepolicy.customers.policies.networks.defineCertificate", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -2565,6 +2587,7 @@ func (c *CustomersPoliciesNetworksDefineNetworkCall) doRequest(alt string) (*htt
 	googleapi.Expand(req.URL, map[string]string{
 		"customer": c.customer,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "chromepolicy.customers.policies.networks.defineNetwork", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -2600,9 +2623,11 @@ func (c *CustomersPoliciesNetworksDefineNetworkCall) Do(opts ...googleapi.CallOp
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "chromepolicy.customers.policies.networks.defineNetwork", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -2666,6 +2691,7 @@ func (c *CustomersPoliciesNetworksRemoveCertificateCall) doRequest(alt string) (
 	googleapi.Expand(req.URL, map[string]string{
 		"customer": c.customer,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "chromepolicy.customers.policies.networks.removeCertificate", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -2701,9 +2727,11 @@ func (c *CustomersPoliciesNetworksRemoveCertificateCall) Do(opts ...googleapi.Ca
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "chromepolicy.customers.policies.networks.removeCertificate", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -2767,6 +2795,7 @@ func (c *CustomersPoliciesNetworksRemoveNetworkCall) doRequest(alt string) (*htt
 	googleapi.Expand(req.URL, map[string]string{
 		"customer": c.customer,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "chromepolicy.customers.policies.networks.removeNetwork", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -2802,9 +2831,11 @@ func (c *CustomersPoliciesNetworksRemoveNetworkCall) Do(opts ...googleapi.CallOp
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "chromepolicy.customers.policies.networks.removeNetwork", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -2875,6 +2906,7 @@ func (c *CustomersPoliciesOrgunitsBatchInheritCall) doRequest(alt string) (*http
 	googleapi.Expand(req.URL, map[string]string{
 		"customer": c.customer,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "chromepolicy.customers.policies.orgunits.batchInherit", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -2910,9 +2942,11 @@ func (c *CustomersPoliciesOrgunitsBatchInheritCall) Do(opts ...googleapi.CallOpt
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "chromepolicy.customers.policies.orgunits.batchInherit", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -2982,6 +3016,7 @@ func (c *CustomersPoliciesOrgunitsBatchModifyCall) doRequest(alt string) (*http.
 	googleapi.Expand(req.URL, map[string]string{
 		"customer": c.customer,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "chromepolicy.customers.policies.orgunits.batchModify", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -3017,9 +3052,11 @@ func (c *CustomersPoliciesOrgunitsBatchModifyCall) Do(opts ...googleapi.CallOpti
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "chromepolicy.customers.policies.orgunits.batchModify", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -3089,6 +3126,7 @@ func (c *CustomersPolicySchemasGetCall) doRequest(alt string) (*http.Response, e
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "chromepolicy.customers.policySchemas.get", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -3124,9 +3162,11 @@ func (c *CustomersPolicySchemasGetCall) Do(opts ...googleapi.CallOption) (*Googl
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "chromepolicy.customers.policySchemas.get", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -3219,6 +3259,7 @@ func (c *CustomersPolicySchemasListCall) doRequest(alt string) (*http.Response, 
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "chromepolicy.customers.policySchemas.list", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -3254,9 +3295,11 @@ func (c *CustomersPolicySchemasListCall) Do(opts ...googleapi.CallOption) (*Goog
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "chromepolicy.customers.policySchemas.list", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -3388,6 +3431,7 @@ func (c *MediaUploadCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"customer": c.customer,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "chromepolicy.media.upload", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -3440,8 +3484,10 @@ func (c *MediaUploadCall) Do(opts ...googleapi.CallOption) (*GoogleChromePolicyV
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "chromepolicy.media.upload", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }

@@ -62,11 +62,13 @@ import (
 	"errors"
 	"fmt"
 	"io"
+	"log/slog"
 	"net/http"
 	"net/url"
 	"strconv"
 	"strings"
 
+	"github.com/googleapis/gax-go/v2/internallog"
 	googleapi "google.golang.org/api/googleapi"
 	internal "google.golang.org/api/internal"
 	gensupport "google.golang.org/api/internal/gensupport"
@@ -90,6 +92,7 @@ var _ = strings.Replace
 var _ = context.Canceled
 var _ = internaloption.WithDefaultEndpoint
 var _ = internal.Version
+var _ = internallog.New
 
 const apiId = "serviceusage:v1beta1"
 const apiName = "serviceusage"
@@ -129,7 +132,7 @@ func NewService(ctx context.Context, opts ...option.ClientOption) (*APIService, 
 	if err != nil {
 		return nil, err
 	}
-	s := &APIService{client: client, BasePath: basePath}
+	s := &APIService{client: client, BasePath: basePath, logger: internaloption.GetLogger(opts)}
 	s.Operations = NewOperationsService(s)
 	s.Services = NewServicesService(s)
 	if err != nil {
@@ -155,6 +158,7 @@ func New(client *http.Client) (*APIService, error) {
 
 type APIService struct {
 	client    *http.Client
+	logger    *slog.Logger
 	BasePath  string // API endpoint base URL
 	UserAgent string // optional additional User-Agent fragment
 
@@ -5230,6 +5234,7 @@ func (c *OperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "serviceusage.operations.get", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -5264,9 +5269,11 @@ func (c *OperationsGetCall) Do(opts ...googleapi.CallOption) (*Operation, error)
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "serviceusage.operations.get", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -5357,6 +5364,7 @@ func (c *OperationsListCall) doRequest(alt string) (*http.Response, error) {
 		return nil, err
 	}
 	req.Header = reqHeaders
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "serviceusage.operations.list", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -5392,9 +5400,11 @@ func (c *OperationsListCall) Do(opts ...googleapi.CallOption) (*ListOperationsRe
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "serviceusage.operations.list", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -5483,6 +5493,7 @@ func (c *ServicesBatchEnableCall) doRequest(alt string) (*http.Response, error) 
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "serviceusage.services.batchEnable", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -5517,9 +5528,11 @@ func (c *ServicesBatchEnableCall) Do(opts ...googleapi.CallOption) (*Operation, 
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "serviceusage.services.batchEnable", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -5591,6 +5604,7 @@ func (c *ServicesDisableCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "serviceusage.services.disable", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -5625,9 +5639,11 @@ func (c *ServicesDisableCall) Do(opts ...googleapi.CallOption) (*Operation, erro
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "serviceusage.services.disable", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -5697,6 +5713,7 @@ func (c *ServicesEnableCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "serviceusage.services.enable", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -5731,9 +5748,11 @@ func (c *ServicesEnableCall) Do(opts ...googleapi.CallOption) (*Operation, error
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "serviceusage.services.enable", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -5796,6 +5815,7 @@ func (c *ServicesGenerateServiceIdentityCall) doRequest(alt string) (*http.Respo
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "serviceusage.services.generateServiceIdentity", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -5830,9 +5850,11 @@ func (c *ServicesGenerateServiceIdentityCall) Do(opts ...googleapi.CallOption) (
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "serviceusage.services.generateServiceIdentity", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -5905,6 +5927,7 @@ func (c *ServicesGetCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "serviceusage.services.get", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -5939,9 +5962,11 @@ func (c *ServicesGetCall) Do(opts ...googleapi.CallOption) (*Service, error) {
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "serviceusage.services.get", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -6041,6 +6066,7 @@ func (c *ServicesListCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "serviceusage.services.list", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -6076,9 +6102,11 @@ func (c *ServicesListCall) Do(opts ...googleapi.CallOption) (*ListServicesRespon
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "serviceusage.services.list", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -6193,6 +6221,7 @@ func (c *ServicesConsumerQuotaMetricsGetCall) doRequest(alt string) (*http.Respo
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "serviceusage.services.consumerQuotaMetrics.get", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -6228,9 +6257,11 @@ func (c *ServicesConsumerQuotaMetricsGetCall) Do(opts ...googleapi.CallOption) (
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "serviceusage.services.consumerQuotaMetrics.get", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -6297,6 +6328,7 @@ func (c *ServicesConsumerQuotaMetricsImportAdminOverridesCall) doRequest(alt str
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "serviceusage.services.consumerQuotaMetrics.importAdminOverrides", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -6331,9 +6363,11 @@ func (c *ServicesConsumerQuotaMetricsImportAdminOverridesCall) Do(opts ...google
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "serviceusage.services.consumerQuotaMetrics.importAdminOverrides", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -6400,6 +6434,7 @@ func (c *ServicesConsumerQuotaMetricsImportConsumerOverridesCall) doRequest(alt 
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "serviceusage.services.consumerQuotaMetrics.importConsumerOverrides", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -6434,9 +6469,11 @@ func (c *ServicesConsumerQuotaMetricsImportConsumerOverridesCall) Do(opts ...goo
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "serviceusage.services.consumerQuotaMetrics.importConsumerOverrides", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -6549,6 +6586,7 @@ func (c *ServicesConsumerQuotaMetricsListCall) doRequest(alt string) (*http.Resp
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "serviceusage.services.consumerQuotaMetrics.list", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -6584,9 +6622,11 @@ func (c *ServicesConsumerQuotaMetricsListCall) Do(opts ...googleapi.CallOption) 
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "serviceusage.services.consumerQuotaMetrics.list", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -6701,6 +6741,7 @@ func (c *ServicesConsumerQuotaMetricsLimitsGetCall) doRequest(alt string) (*http
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "serviceusage.services.consumerQuotaMetrics.limits.get", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -6736,9 +6777,11 @@ func (c *ServicesConsumerQuotaMetricsLimitsGetCall) Do(opts ...googleapi.CallOpt
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "serviceusage.services.consumerQuotaMetrics.limits.get", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -6845,6 +6888,7 @@ func (c *ServicesConsumerQuotaMetricsLimitsAdminOverridesCreateCall) doRequest(a
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "serviceusage.services.consumerQuotaMetrics.limits.adminOverrides.create", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -6879,9 +6923,11 @@ func (c *ServicesConsumerQuotaMetricsLimitsAdminOverridesCreateCall) Do(opts ...
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "serviceusage.services.consumerQuotaMetrics.limits.adminOverrides.create", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -6977,6 +7023,7 @@ func (c *ServicesConsumerQuotaMetricsLimitsAdminOverridesDeleteCall) doRequest(a
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "serviceusage.services.consumerQuotaMetrics.limits.adminOverrides.delete", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -7011,9 +7058,11 @@ func (c *ServicesConsumerQuotaMetricsLimitsAdminOverridesDeleteCall) Do(opts ...
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "serviceusage.services.consumerQuotaMetrics.limits.adminOverrides.delete", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -7101,6 +7150,7 @@ func (c *ServicesConsumerQuotaMetricsLimitsAdminOverridesListCall) doRequest(alt
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "serviceusage.services.consumerQuotaMetrics.limits.adminOverrides.list", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -7136,9 +7186,11 @@ func (c *ServicesConsumerQuotaMetricsLimitsAdminOverridesListCall) Do(opts ...go
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "serviceusage.services.consumerQuotaMetrics.limits.adminOverrides.list", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -7268,6 +7320,7 @@ func (c *ServicesConsumerQuotaMetricsLimitsAdminOverridesPatchCall) doRequest(al
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "serviceusage.services.consumerQuotaMetrics.limits.adminOverrides.patch", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -7302,9 +7355,11 @@ func (c *ServicesConsumerQuotaMetricsLimitsAdminOverridesPatchCall) Do(opts ...g
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "serviceusage.services.consumerQuotaMetrics.limits.adminOverrides.patch", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -7410,6 +7465,7 @@ func (c *ServicesConsumerQuotaMetricsLimitsConsumerOverridesCreateCall) doReques
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "serviceusage.services.consumerQuotaMetrics.limits.consumerOverrides.create", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -7444,9 +7500,11 @@ func (c *ServicesConsumerQuotaMetricsLimitsConsumerOverridesCreateCall) Do(opts 
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "serviceusage.services.consumerQuotaMetrics.limits.consumerOverrides.create", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -7543,6 +7601,7 @@ func (c *ServicesConsumerQuotaMetricsLimitsConsumerOverridesDeleteCall) doReques
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "serviceusage.services.consumerQuotaMetrics.limits.consumerOverrides.delete", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -7577,9 +7636,11 @@ func (c *ServicesConsumerQuotaMetricsLimitsConsumerOverridesDeleteCall) Do(opts 
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "serviceusage.services.consumerQuotaMetrics.limits.consumerOverrides.delete", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -7667,6 +7728,7 @@ func (c *ServicesConsumerQuotaMetricsLimitsConsumerOverridesListCall) doRequest(
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "serviceusage.services.consumerQuotaMetrics.limits.consumerOverrides.list", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -7702,9 +7764,11 @@ func (c *ServicesConsumerQuotaMetricsLimitsConsumerOverridesListCall) Do(opts ..
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "serviceusage.services.consumerQuotaMetrics.limits.consumerOverrides.list", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -7835,6 +7899,7 @@ func (c *ServicesConsumerQuotaMetricsLimitsConsumerOverridesPatchCall) doRequest
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "serviceusage.services.consumerQuotaMetrics.limits.consumerOverrides.patch", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -7869,8 +7934,10 @@ func (c *ServicesConsumerQuotaMetricsLimitsConsumerOverridesPatchCall) Do(opts .
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "serviceusage.services.consumerQuotaMetrics.limits.consumerOverrides.patch", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }

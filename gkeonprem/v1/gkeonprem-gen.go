@@ -57,11 +57,13 @@ import (
 	"errors"
 	"fmt"
 	"io"
+	"log/slog"
 	"net/http"
 	"net/url"
 	"strconv"
 	"strings"
 
+	"github.com/googleapis/gax-go/v2/internallog"
 	googleapi "google.golang.org/api/googleapi"
 	internal "google.golang.org/api/internal"
 	gensupport "google.golang.org/api/internal/gensupport"
@@ -85,6 +87,7 @@ var _ = strings.Replace
 var _ = context.Canceled
 var _ = internaloption.WithDefaultEndpoint
 var _ = internal.Version
+var _ = internallog.New
 
 const apiId = "gkeonprem:v1"
 const apiName = "gkeonprem"
@@ -115,7 +118,7 @@ func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, err
 	if err != nil {
 		return nil, err
 	}
-	s := &Service{client: client, BasePath: basePath}
+	s := &Service{client: client, BasePath: basePath, logger: internaloption.GetLogger(opts)}
 	s.Projects = NewProjectsService(s)
 	if err != nil {
 		return nil, err
@@ -140,6 +143,7 @@ func New(client *http.Client) (*Service, error) {
 
 type Service struct {
 	client    *http.Client
+	logger    *slog.Logger
 	BasePath  string // API endpoint base URL
 	UserAgent string // optional additional User-Agent fragment
 
@@ -5444,6 +5448,7 @@ func (c *ProjectsLocationsGetCall) doRequest(alt string) (*http.Response, error)
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "gkeonprem.projects.locations.get", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -5478,9 +5483,11 @@ func (c *ProjectsLocationsGetCall) Do(opts ...googleapi.CallOption) (*Location, 
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "gkeonprem.projects.locations.get", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -5574,6 +5581,7 @@ func (c *ProjectsLocationsListCall) doRequest(alt string) (*http.Response, error
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "gkeonprem.projects.locations.list", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -5609,9 +5617,11 @@ func (c *ProjectsLocationsListCall) Do(opts ...googleapi.CallOption) (*ListLocat
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "gkeonprem.projects.locations.list", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -5726,6 +5736,7 @@ func (c *ProjectsLocationsBareMetalAdminClustersCreateCall) doRequest(alt string
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "gkeonprem.projects.locations.bareMetalAdminClusters.create", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -5760,9 +5771,11 @@ func (c *ProjectsLocationsBareMetalAdminClustersCreateCall) Do(opts ...googleapi
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "gkeonprem.projects.locations.bareMetalAdminClusters.create", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -5831,6 +5844,7 @@ func (c *ProjectsLocationsBareMetalAdminClustersEnrollCall) doRequest(alt string
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "gkeonprem.projects.locations.bareMetalAdminClusters.enroll", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -5865,9 +5879,11 @@ func (c *ProjectsLocationsBareMetalAdminClustersEnrollCall) Do(opts ...googleapi
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "gkeonprem.projects.locations.bareMetalAdminClusters.enroll", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -5970,6 +5986,7 @@ func (c *ProjectsLocationsBareMetalAdminClustersGetCall) doRequest(alt string) (
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "gkeonprem.projects.locations.bareMetalAdminClusters.get", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -6005,9 +6022,11 @@ func (c *ProjectsLocationsBareMetalAdminClustersGetCall) Do(opts ...googleapi.Ca
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "gkeonprem.projects.locations.bareMetalAdminClusters.get", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -6097,6 +6116,7 @@ func (c *ProjectsLocationsBareMetalAdminClustersGetIamPolicyCall) doRequest(alt 
 	googleapi.Expand(req.URL, map[string]string{
 		"resource": c.resource,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "gkeonprem.projects.locations.bareMetalAdminClusters.getIamPolicy", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -6131,9 +6151,11 @@ func (c *ProjectsLocationsBareMetalAdminClustersGetIamPolicyCall) Do(opts ...goo
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "gkeonprem.projects.locations.bareMetalAdminClusters.getIamPolicy", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -6252,6 +6274,7 @@ func (c *ProjectsLocationsBareMetalAdminClustersListCall) doRequest(alt string) 
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "gkeonprem.projects.locations.bareMetalAdminClusters.list", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -6287,9 +6310,11 @@ func (c *ProjectsLocationsBareMetalAdminClustersListCall) Do(opts ...googleapi.C
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "gkeonprem.projects.locations.bareMetalAdminClusters.list", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -6393,6 +6418,7 @@ func (c *ProjectsLocationsBareMetalAdminClustersPatchCall) doRequest(alt string)
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "gkeonprem.projects.locations.bareMetalAdminClusters.patch", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -6427,9 +6453,11 @@ func (c *ProjectsLocationsBareMetalAdminClustersPatchCall) Do(opts ...googleapi.
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "gkeonprem.projects.locations.bareMetalAdminClusters.patch", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -6498,6 +6526,7 @@ func (c *ProjectsLocationsBareMetalAdminClustersQueryVersionConfigCall) doReques
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "gkeonprem.projects.locations.bareMetalAdminClusters.queryVersionConfig", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -6533,9 +6562,11 @@ func (c *ProjectsLocationsBareMetalAdminClustersQueryVersionConfigCall) Do(opts 
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "gkeonprem.projects.locations.bareMetalAdminClusters.queryVersionConfig", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -6603,6 +6634,7 @@ func (c *ProjectsLocationsBareMetalAdminClustersSetIamPolicyCall) doRequest(alt 
 	googleapi.Expand(req.URL, map[string]string{
 		"resource": c.resource,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "gkeonprem.projects.locations.bareMetalAdminClusters.setIamPolicy", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -6637,9 +6669,11 @@ func (c *ProjectsLocationsBareMetalAdminClustersSetIamPolicyCall) Do(opts ...goo
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "gkeonprem.projects.locations.bareMetalAdminClusters.setIamPolicy", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -6710,6 +6744,7 @@ func (c *ProjectsLocationsBareMetalAdminClustersTestIamPermissionsCall) doReques
 	googleapi.Expand(req.URL, map[string]string{
 		"resource": c.resource,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "gkeonprem.projects.locations.bareMetalAdminClusters.testIamPermissions", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -6745,9 +6780,11 @@ func (c *ProjectsLocationsBareMetalAdminClustersTestIamPermissionsCall) Do(opts 
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "gkeonprem.projects.locations.bareMetalAdminClusters.testIamPermissions", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -6845,6 +6882,7 @@ func (c *ProjectsLocationsBareMetalAdminClustersUnenrollCall) doRequest(alt stri
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "gkeonprem.projects.locations.bareMetalAdminClusters.unenroll", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -6879,9 +6917,11 @@ func (c *ProjectsLocationsBareMetalAdminClustersUnenrollCall) Do(opts ...googlea
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "gkeonprem.projects.locations.bareMetalAdminClusters.unenroll", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -6953,6 +6993,7 @@ func (c *ProjectsLocationsBareMetalAdminClustersOperationsGetCall) doRequest(alt
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "gkeonprem.projects.locations.bareMetalAdminClusters.operations.get", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -6987,9 +7028,11 @@ func (c *ProjectsLocationsBareMetalAdminClustersOperationsGetCall) Do(opts ...go
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "gkeonprem.projects.locations.bareMetalAdminClusters.operations.get", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -7080,6 +7123,7 @@ func (c *ProjectsLocationsBareMetalAdminClustersOperationsListCall) doRequest(al
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "gkeonprem.projects.locations.bareMetalAdminClusters.operations.list", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -7115,9 +7159,11 @@ func (c *ProjectsLocationsBareMetalAdminClustersOperationsListCall) Do(opts ...g
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "gkeonprem.projects.locations.bareMetalAdminClusters.operations.list", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -7229,6 +7275,7 @@ func (c *ProjectsLocationsBareMetalClustersCreateCall) doRequest(alt string) (*h
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "gkeonprem.projects.locations.bareMetalClusters.create", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -7263,9 +7310,11 @@ func (c *ProjectsLocationsBareMetalClustersCreateCall) Do(opts ...googleapi.Call
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "gkeonprem.projects.locations.bareMetalClusters.create", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -7367,6 +7416,7 @@ func (c *ProjectsLocationsBareMetalClustersDeleteCall) doRequest(alt string) (*h
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "gkeonprem.projects.locations.bareMetalClusters.delete", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -7401,9 +7451,11 @@ func (c *ProjectsLocationsBareMetalClustersDeleteCall) Do(opts ...googleapi.Call
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "gkeonprem.projects.locations.bareMetalClusters.delete", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -7473,6 +7525,7 @@ func (c *ProjectsLocationsBareMetalClustersEnrollCall) doRequest(alt string) (*h
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "gkeonprem.projects.locations.bareMetalClusters.enroll", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -7507,9 +7560,11 @@ func (c *ProjectsLocationsBareMetalClustersEnrollCall) Do(opts ...googleapi.Call
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "gkeonprem.projects.locations.bareMetalClusters.enroll", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -7612,6 +7667,7 @@ func (c *ProjectsLocationsBareMetalClustersGetCall) doRequest(alt string) (*http
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "gkeonprem.projects.locations.bareMetalClusters.get", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -7647,9 +7703,11 @@ func (c *ProjectsLocationsBareMetalClustersGetCall) Do(opts ...googleapi.CallOpt
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "gkeonprem.projects.locations.bareMetalClusters.get", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -7739,6 +7797,7 @@ func (c *ProjectsLocationsBareMetalClustersGetIamPolicyCall) doRequest(alt strin
 	googleapi.Expand(req.URL, map[string]string{
 		"resource": c.resource,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "gkeonprem.projects.locations.bareMetalClusters.getIamPolicy", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -7773,9 +7832,11 @@ func (c *ProjectsLocationsBareMetalClustersGetIamPolicyCall) Do(opts ...googleap
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "gkeonprem.projects.locations.bareMetalClusters.getIamPolicy", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -7901,6 +7962,7 @@ func (c *ProjectsLocationsBareMetalClustersListCall) doRequest(alt string) (*htt
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "gkeonprem.projects.locations.bareMetalClusters.list", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -7936,9 +7998,11 @@ func (c *ProjectsLocationsBareMetalClustersListCall) Do(opts ...googleapi.CallOp
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "gkeonprem.projects.locations.bareMetalClusters.list", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -8051,6 +8115,7 @@ func (c *ProjectsLocationsBareMetalClustersPatchCall) doRequest(alt string) (*ht
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "gkeonprem.projects.locations.bareMetalClusters.patch", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -8085,9 +8150,11 @@ func (c *ProjectsLocationsBareMetalClustersPatchCall) Do(opts ...googleapi.CallO
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "gkeonprem.projects.locations.bareMetalClusters.patch", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -8175,6 +8242,7 @@ func (c *ProjectsLocationsBareMetalClustersQueryVersionConfigCall) doRequest(alt
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "gkeonprem.projects.locations.bareMetalClusters.queryVersionConfig", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -8210,9 +8278,11 @@ func (c *ProjectsLocationsBareMetalClustersQueryVersionConfigCall) Do(opts ...go
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "gkeonprem.projects.locations.bareMetalClusters.queryVersionConfig", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -8280,6 +8350,7 @@ func (c *ProjectsLocationsBareMetalClustersSetIamPolicyCall) doRequest(alt strin
 	googleapi.Expand(req.URL, map[string]string{
 		"resource": c.resource,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "gkeonprem.projects.locations.bareMetalClusters.setIamPolicy", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -8314,9 +8385,11 @@ func (c *ProjectsLocationsBareMetalClustersSetIamPolicyCall) Do(opts ...googleap
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "gkeonprem.projects.locations.bareMetalClusters.setIamPolicy", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -8387,6 +8460,7 @@ func (c *ProjectsLocationsBareMetalClustersTestIamPermissionsCall) doRequest(alt
 	googleapi.Expand(req.URL, map[string]string{
 		"resource": c.resource,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "gkeonprem.projects.locations.bareMetalClusters.testIamPermissions", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -8422,9 +8496,11 @@ func (c *ProjectsLocationsBareMetalClustersTestIamPermissionsCall) Do(opts ...go
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "gkeonprem.projects.locations.bareMetalClusters.testIamPermissions", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -8519,6 +8595,7 @@ func (c *ProjectsLocationsBareMetalClustersUnenrollCall) doRequest(alt string) (
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "gkeonprem.projects.locations.bareMetalClusters.unenroll", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -8553,9 +8630,11 @@ func (c *ProjectsLocationsBareMetalClustersUnenrollCall) Do(opts ...googleapi.Ca
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "gkeonprem.projects.locations.bareMetalClusters.unenroll", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -8639,6 +8718,7 @@ func (c *ProjectsLocationsBareMetalClustersBareMetalNodePoolsCreateCall) doReque
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "gkeonprem.projects.locations.bareMetalClusters.bareMetalNodePools.create", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -8673,9 +8753,11 @@ func (c *ProjectsLocationsBareMetalClustersBareMetalNodePoolsCreateCall) Do(opts
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "gkeonprem.projects.locations.bareMetalClusters.bareMetalNodePools.create", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -8771,6 +8853,7 @@ func (c *ProjectsLocationsBareMetalClustersBareMetalNodePoolsDeleteCall) doReque
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "gkeonprem.projects.locations.bareMetalClusters.bareMetalNodePools.delete", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -8805,9 +8888,11 @@ func (c *ProjectsLocationsBareMetalClustersBareMetalNodePoolsDeleteCall) Do(opts
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "gkeonprem.projects.locations.bareMetalClusters.bareMetalNodePools.delete", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -8875,6 +8960,7 @@ func (c *ProjectsLocationsBareMetalClustersBareMetalNodePoolsEnrollCall) doReque
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "gkeonprem.projects.locations.bareMetalClusters.bareMetalNodePools.enroll", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -8909,9 +8995,11 @@ func (c *ProjectsLocationsBareMetalClustersBareMetalNodePoolsEnrollCall) Do(opts
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "gkeonprem.projects.locations.bareMetalClusters.bareMetalNodePools.enroll", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -9006,6 +9094,7 @@ func (c *ProjectsLocationsBareMetalClustersBareMetalNodePoolsGetCall) doRequest(
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "gkeonprem.projects.locations.bareMetalClusters.bareMetalNodePools.get", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -9041,9 +9130,11 @@ func (c *ProjectsLocationsBareMetalClustersBareMetalNodePoolsGetCall) Do(opts ..
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "gkeonprem.projects.locations.bareMetalClusters.bareMetalNodePools.get", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -9133,6 +9224,7 @@ func (c *ProjectsLocationsBareMetalClustersBareMetalNodePoolsGetIamPolicyCall) d
 	googleapi.Expand(req.URL, map[string]string{
 		"resource": c.resource,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "gkeonprem.projects.locations.bareMetalClusters.bareMetalNodePools.getIamPolicy", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -9167,9 +9259,11 @@ func (c *ProjectsLocationsBareMetalClustersBareMetalNodePoolsGetIamPolicyCall) D
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "gkeonprem.projects.locations.bareMetalClusters.bareMetalNodePools.getIamPolicy", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -9284,6 +9378,7 @@ func (c *ProjectsLocationsBareMetalClustersBareMetalNodePoolsListCall) doRequest
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "gkeonprem.projects.locations.bareMetalClusters.bareMetalNodePools.list", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -9319,9 +9414,11 @@ func (c *ProjectsLocationsBareMetalClustersBareMetalNodePoolsListCall) Do(opts .
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "gkeonprem.projects.locations.bareMetalClusters.bareMetalNodePools.list", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -9434,6 +9531,7 @@ func (c *ProjectsLocationsBareMetalClustersBareMetalNodePoolsPatchCall) doReques
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "gkeonprem.projects.locations.bareMetalClusters.bareMetalNodePools.patch", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -9468,9 +9566,11 @@ func (c *ProjectsLocationsBareMetalClustersBareMetalNodePoolsPatchCall) Do(opts 
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "gkeonprem.projects.locations.bareMetalClusters.bareMetalNodePools.patch", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -9538,6 +9638,7 @@ func (c *ProjectsLocationsBareMetalClustersBareMetalNodePoolsSetIamPolicyCall) d
 	googleapi.Expand(req.URL, map[string]string{
 		"resource": c.resource,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "gkeonprem.projects.locations.bareMetalClusters.bareMetalNodePools.setIamPolicy", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -9572,9 +9673,11 @@ func (c *ProjectsLocationsBareMetalClustersBareMetalNodePoolsSetIamPolicyCall) D
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "gkeonprem.projects.locations.bareMetalClusters.bareMetalNodePools.setIamPolicy", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -9645,6 +9748,7 @@ func (c *ProjectsLocationsBareMetalClustersBareMetalNodePoolsTestIamPermissionsC
 	googleapi.Expand(req.URL, map[string]string{
 		"resource": c.resource,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "gkeonprem.projects.locations.bareMetalClusters.bareMetalNodePools.testIamPermissions", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -9680,9 +9784,11 @@ func (c *ProjectsLocationsBareMetalClustersBareMetalNodePoolsTestIamPermissionsC
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "gkeonprem.projects.locations.bareMetalClusters.bareMetalNodePools.testIamPermissions", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -9765,6 +9871,7 @@ func (c *ProjectsLocationsBareMetalClustersBareMetalNodePoolsUnenrollCall) doReq
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "gkeonprem.projects.locations.bareMetalClusters.bareMetalNodePools.unenroll", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -9799,9 +9906,11 @@ func (c *ProjectsLocationsBareMetalClustersBareMetalNodePoolsUnenrollCall) Do(op
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "gkeonprem.projects.locations.bareMetalClusters.bareMetalNodePools.unenroll", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -9873,6 +9982,7 @@ func (c *ProjectsLocationsBareMetalClustersBareMetalNodePoolsOperationsGetCall) 
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "gkeonprem.projects.locations.bareMetalClusters.bareMetalNodePools.operations.get", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -9907,9 +10017,11 @@ func (c *ProjectsLocationsBareMetalClustersBareMetalNodePoolsOperationsGetCall) 
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "gkeonprem.projects.locations.bareMetalClusters.bareMetalNodePools.operations.get", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -10000,6 +10112,7 @@ func (c *ProjectsLocationsBareMetalClustersBareMetalNodePoolsOperationsListCall)
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "gkeonprem.projects.locations.bareMetalClusters.bareMetalNodePools.operations.list", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -10035,9 +10148,11 @@ func (c *ProjectsLocationsBareMetalClustersBareMetalNodePoolsOperationsListCall)
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "gkeonprem.projects.locations.bareMetalClusters.bareMetalNodePools.operations.list", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -10130,6 +10245,7 @@ func (c *ProjectsLocationsBareMetalClustersOperationsGetCall) doRequest(alt stri
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "gkeonprem.projects.locations.bareMetalClusters.operations.get", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -10164,9 +10280,11 @@ func (c *ProjectsLocationsBareMetalClustersOperationsGetCall) Do(opts ...googlea
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "gkeonprem.projects.locations.bareMetalClusters.operations.get", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -10257,6 +10375,7 @@ func (c *ProjectsLocationsBareMetalClustersOperationsListCall) doRequest(alt str
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "gkeonprem.projects.locations.bareMetalClusters.operations.list", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -10292,9 +10411,11 @@ func (c *ProjectsLocationsBareMetalClustersOperationsListCall) Do(opts ...google
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "gkeonprem.projects.locations.bareMetalClusters.operations.list", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -10387,6 +10508,7 @@ func (c *ProjectsLocationsOperationsCancelCall) doRequest(alt string) (*http.Res
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "gkeonprem.projects.locations.operations.cancel", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -10421,9 +10543,11 @@ func (c *ProjectsLocationsOperationsCancelCall) Do(opts ...googleapi.CallOption)
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "gkeonprem.projects.locations.operations.cancel", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -10484,6 +10608,7 @@ func (c *ProjectsLocationsOperationsDeleteCall) doRequest(alt string) (*http.Res
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "gkeonprem.projects.locations.operations.delete", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -10518,9 +10643,11 @@ func (c *ProjectsLocationsOperationsDeleteCall) Do(opts ...googleapi.CallOption)
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "gkeonprem.projects.locations.operations.delete", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -10592,6 +10719,7 @@ func (c *ProjectsLocationsOperationsGetCall) doRequest(alt string) (*http.Respon
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "gkeonprem.projects.locations.operations.get", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -10626,9 +10754,11 @@ func (c *ProjectsLocationsOperationsGetCall) Do(opts ...googleapi.CallOption) (*
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "gkeonprem.projects.locations.operations.get", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -10719,6 +10849,7 @@ func (c *ProjectsLocationsOperationsListCall) doRequest(alt string) (*http.Respo
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "gkeonprem.projects.locations.operations.list", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -10754,9 +10885,11 @@ func (c *ProjectsLocationsOperationsListCall) Do(opts ...googleapi.CallOption) (
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "gkeonprem.projects.locations.operations.list", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -10869,6 +11002,7 @@ func (c *ProjectsLocationsVmwareAdminClustersCreateCall) doRequest(alt string) (
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "gkeonprem.projects.locations.vmwareAdminClusters.create", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -10903,9 +11037,11 @@ func (c *ProjectsLocationsVmwareAdminClustersCreateCall) Do(opts ...googleapi.Ca
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "gkeonprem.projects.locations.vmwareAdminClusters.create", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -10974,6 +11110,7 @@ func (c *ProjectsLocationsVmwareAdminClustersEnrollCall) doRequest(alt string) (
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "gkeonprem.projects.locations.vmwareAdminClusters.enroll", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -11008,9 +11145,11 @@ func (c *ProjectsLocationsVmwareAdminClustersEnrollCall) Do(opts ...googleapi.Ca
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "gkeonprem.projects.locations.vmwareAdminClusters.enroll", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -11112,6 +11251,7 @@ func (c *ProjectsLocationsVmwareAdminClustersGetCall) doRequest(alt string) (*ht
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "gkeonprem.projects.locations.vmwareAdminClusters.get", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -11147,9 +11287,11 @@ func (c *ProjectsLocationsVmwareAdminClustersGetCall) Do(opts ...googleapi.CallO
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "gkeonprem.projects.locations.vmwareAdminClusters.get", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -11239,6 +11381,7 @@ func (c *ProjectsLocationsVmwareAdminClustersGetIamPolicyCall) doRequest(alt str
 	googleapi.Expand(req.URL, map[string]string{
 		"resource": c.resource,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "gkeonprem.projects.locations.vmwareAdminClusters.getIamPolicy", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -11273,9 +11416,11 @@ func (c *ProjectsLocationsVmwareAdminClustersGetIamPolicyCall) Do(opts ...google
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "gkeonprem.projects.locations.vmwareAdminClusters.getIamPolicy", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -11394,6 +11539,7 @@ func (c *ProjectsLocationsVmwareAdminClustersListCall) doRequest(alt string) (*h
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "gkeonprem.projects.locations.vmwareAdminClusters.list", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -11429,9 +11575,11 @@ func (c *ProjectsLocationsVmwareAdminClustersListCall) Do(opts ...googleapi.Call
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "gkeonprem.projects.locations.vmwareAdminClusters.list", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -11535,6 +11683,7 @@ func (c *ProjectsLocationsVmwareAdminClustersPatchCall) doRequest(alt string) (*
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "gkeonprem.projects.locations.vmwareAdminClusters.patch", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -11569,9 +11718,11 @@ func (c *ProjectsLocationsVmwareAdminClustersPatchCall) Do(opts ...googleapi.Cal
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "gkeonprem.projects.locations.vmwareAdminClusters.patch", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -11639,6 +11790,7 @@ func (c *ProjectsLocationsVmwareAdminClustersSetIamPolicyCall) doRequest(alt str
 	googleapi.Expand(req.URL, map[string]string{
 		"resource": c.resource,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "gkeonprem.projects.locations.vmwareAdminClusters.setIamPolicy", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -11673,9 +11825,11 @@ func (c *ProjectsLocationsVmwareAdminClustersSetIamPolicyCall) Do(opts ...google
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "gkeonprem.projects.locations.vmwareAdminClusters.setIamPolicy", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -11746,6 +11900,7 @@ func (c *ProjectsLocationsVmwareAdminClustersTestIamPermissionsCall) doRequest(a
 	googleapi.Expand(req.URL, map[string]string{
 		"resource": c.resource,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "gkeonprem.projects.locations.vmwareAdminClusters.testIamPermissions", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -11781,9 +11936,11 @@ func (c *ProjectsLocationsVmwareAdminClustersTestIamPermissionsCall) Do(opts ...
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "gkeonprem.projects.locations.vmwareAdminClusters.testIamPermissions", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -11869,6 +12026,7 @@ func (c *ProjectsLocationsVmwareAdminClustersUnenrollCall) doRequest(alt string)
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "gkeonprem.projects.locations.vmwareAdminClusters.unenroll", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -11903,9 +12061,11 @@ func (c *ProjectsLocationsVmwareAdminClustersUnenrollCall) Do(opts ...googleapi.
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "gkeonprem.projects.locations.vmwareAdminClusters.unenroll", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -11977,6 +12137,7 @@ func (c *ProjectsLocationsVmwareAdminClustersOperationsGetCall) doRequest(alt st
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "gkeonprem.projects.locations.vmwareAdminClusters.operations.get", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -12011,9 +12172,11 @@ func (c *ProjectsLocationsVmwareAdminClustersOperationsGetCall) Do(opts ...googl
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "gkeonprem.projects.locations.vmwareAdminClusters.operations.get", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -12104,6 +12267,7 @@ func (c *ProjectsLocationsVmwareAdminClustersOperationsListCall) doRequest(alt s
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "gkeonprem.projects.locations.vmwareAdminClusters.operations.list", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -12139,9 +12303,11 @@ func (c *ProjectsLocationsVmwareAdminClustersOperationsListCall) Do(opts ...goog
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "gkeonprem.projects.locations.vmwareAdminClusters.operations.list", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -12253,6 +12419,7 @@ func (c *ProjectsLocationsVmwareClustersCreateCall) doRequest(alt string) (*http
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "gkeonprem.projects.locations.vmwareClusters.create", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -12287,9 +12454,11 @@ func (c *ProjectsLocationsVmwareClustersCreateCall) Do(opts ...googleapi.CallOpt
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "gkeonprem.projects.locations.vmwareClusters.create", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -12390,6 +12559,7 @@ func (c *ProjectsLocationsVmwareClustersDeleteCall) doRequest(alt string) (*http
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "gkeonprem.projects.locations.vmwareClusters.delete", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -12424,9 +12594,11 @@ func (c *ProjectsLocationsVmwareClustersDeleteCall) Do(opts ...googleapi.CallOpt
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "gkeonprem.projects.locations.vmwareClusters.delete", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -12496,6 +12668,7 @@ func (c *ProjectsLocationsVmwareClustersEnrollCall) doRequest(alt string) (*http
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "gkeonprem.projects.locations.vmwareClusters.enroll", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -12530,9 +12703,11 @@ func (c *ProjectsLocationsVmwareClustersEnrollCall) Do(opts ...googleapi.CallOpt
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "gkeonprem.projects.locations.vmwareClusters.enroll", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -12634,6 +12809,7 @@ func (c *ProjectsLocationsVmwareClustersGetCall) doRequest(alt string) (*http.Re
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "gkeonprem.projects.locations.vmwareClusters.get", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -12668,9 +12844,11 @@ func (c *ProjectsLocationsVmwareClustersGetCall) Do(opts ...googleapi.CallOption
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "gkeonprem.projects.locations.vmwareClusters.get", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -12760,6 +12938,7 @@ func (c *ProjectsLocationsVmwareClustersGetIamPolicyCall) doRequest(alt string) 
 	googleapi.Expand(req.URL, map[string]string{
 		"resource": c.resource,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "gkeonprem.projects.locations.vmwareClusters.getIamPolicy", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -12794,9 +12973,11 @@ func (c *ProjectsLocationsVmwareClustersGetIamPolicyCall) Do(opts ...googleapi.C
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "gkeonprem.projects.locations.vmwareClusters.getIamPolicy", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -12922,6 +13103,7 @@ func (c *ProjectsLocationsVmwareClustersListCall) doRequest(alt string) (*http.R
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "gkeonprem.projects.locations.vmwareClusters.list", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -12957,9 +13139,11 @@ func (c *ProjectsLocationsVmwareClustersListCall) Do(opts ...googleapi.CallOptio
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "gkeonprem.projects.locations.vmwareClusters.list", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -13063,6 +13247,7 @@ func (c *ProjectsLocationsVmwareClustersPatchCall) doRequest(alt string) (*http.
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "gkeonprem.projects.locations.vmwareClusters.patch", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -13097,9 +13282,11 @@ func (c *ProjectsLocationsVmwareClustersPatchCall) Do(opts ...googleapi.CallOpti
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "gkeonprem.projects.locations.vmwareClusters.patch", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -13186,6 +13373,7 @@ func (c *ProjectsLocationsVmwareClustersQueryVersionConfigCall) doRequest(alt st
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "gkeonprem.projects.locations.vmwareClusters.queryVersionConfig", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -13221,9 +13409,11 @@ func (c *ProjectsLocationsVmwareClustersQueryVersionConfigCall) Do(opts ...googl
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "gkeonprem.projects.locations.vmwareClusters.queryVersionConfig", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -13291,6 +13481,7 @@ func (c *ProjectsLocationsVmwareClustersSetIamPolicyCall) doRequest(alt string) 
 	googleapi.Expand(req.URL, map[string]string{
 		"resource": c.resource,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "gkeonprem.projects.locations.vmwareClusters.setIamPolicy", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -13325,9 +13516,11 @@ func (c *ProjectsLocationsVmwareClustersSetIamPolicyCall) Do(opts ...googleapi.C
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "gkeonprem.projects.locations.vmwareClusters.setIamPolicy", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -13398,6 +13591,7 @@ func (c *ProjectsLocationsVmwareClustersTestIamPermissionsCall) doRequest(alt st
 	googleapi.Expand(req.URL, map[string]string{
 		"resource": c.resource,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "gkeonprem.projects.locations.vmwareClusters.testIamPermissions", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -13433,9 +13627,11 @@ func (c *ProjectsLocationsVmwareClustersTestIamPermissionsCall) Do(opts ...googl
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "gkeonprem.projects.locations.vmwareClusters.testIamPermissions", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -13529,6 +13725,7 @@ func (c *ProjectsLocationsVmwareClustersUnenrollCall) doRequest(alt string) (*ht
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "gkeonprem.projects.locations.vmwareClusters.unenroll", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -13563,9 +13760,11 @@ func (c *ProjectsLocationsVmwareClustersUnenrollCall) Do(opts ...googleapi.CallO
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "gkeonprem.projects.locations.vmwareClusters.unenroll", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -13637,6 +13836,7 @@ func (c *ProjectsLocationsVmwareClustersOperationsGetCall) doRequest(alt string)
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "gkeonprem.projects.locations.vmwareClusters.operations.get", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -13671,9 +13871,11 @@ func (c *ProjectsLocationsVmwareClustersOperationsGetCall) Do(opts ...googleapi.
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "gkeonprem.projects.locations.vmwareClusters.operations.get", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -13764,6 +13966,7 @@ func (c *ProjectsLocationsVmwareClustersOperationsListCall) doRequest(alt string
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "gkeonprem.projects.locations.vmwareClusters.operations.list", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -13799,9 +14002,11 @@ func (c *ProjectsLocationsVmwareClustersOperationsListCall) Do(opts ...googleapi
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "gkeonprem.projects.locations.vmwareClusters.operations.list", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -13906,6 +14111,7 @@ func (c *ProjectsLocationsVmwareClustersVmwareNodePoolsCreateCall) doRequest(alt
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "gkeonprem.projects.locations.vmwareClusters.vmwareNodePools.create", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -13940,9 +14146,11 @@ func (c *ProjectsLocationsVmwareClustersVmwareNodePoolsCreateCall) Do(opts ...go
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "gkeonprem.projects.locations.vmwareClusters.vmwareNodePools.create", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -14038,6 +14246,7 @@ func (c *ProjectsLocationsVmwareClustersVmwareNodePoolsDeleteCall) doRequest(alt
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "gkeonprem.projects.locations.vmwareClusters.vmwareNodePools.delete", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -14072,9 +14281,11 @@ func (c *ProjectsLocationsVmwareClustersVmwareNodePoolsDeleteCall) Do(opts ...go
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "gkeonprem.projects.locations.vmwareClusters.vmwareNodePools.delete", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -14138,6 +14349,7 @@ func (c *ProjectsLocationsVmwareClustersVmwareNodePoolsEnrollCall) doRequest(alt
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "gkeonprem.projects.locations.vmwareClusters.vmwareNodePools.enroll", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -14172,9 +14384,11 @@ func (c *ProjectsLocationsVmwareClustersVmwareNodePoolsEnrollCall) Do(opts ...go
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "gkeonprem.projects.locations.vmwareClusters.vmwareNodePools.enroll", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -14269,6 +14483,7 @@ func (c *ProjectsLocationsVmwareClustersVmwareNodePoolsGetCall) doRequest(alt st
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "gkeonprem.projects.locations.vmwareClusters.vmwareNodePools.get", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -14303,9 +14518,11 @@ func (c *ProjectsLocationsVmwareClustersVmwareNodePoolsGetCall) Do(opts ...googl
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "gkeonprem.projects.locations.vmwareClusters.vmwareNodePools.get", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -14395,6 +14612,7 @@ func (c *ProjectsLocationsVmwareClustersVmwareNodePoolsGetIamPolicyCall) doReque
 	googleapi.Expand(req.URL, map[string]string{
 		"resource": c.resource,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "gkeonprem.projects.locations.vmwareClusters.vmwareNodePools.getIamPolicy", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -14429,9 +14647,11 @@ func (c *ProjectsLocationsVmwareClustersVmwareNodePoolsGetIamPolicyCall) Do(opts
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "gkeonprem.projects.locations.vmwareClusters.vmwareNodePools.getIamPolicy", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -14544,6 +14764,7 @@ func (c *ProjectsLocationsVmwareClustersVmwareNodePoolsListCall) doRequest(alt s
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "gkeonprem.projects.locations.vmwareClusters.vmwareNodePools.list", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -14579,9 +14800,11 @@ func (c *ProjectsLocationsVmwareClustersVmwareNodePoolsListCall) Do(opts ...goog
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "gkeonprem.projects.locations.vmwareClusters.vmwareNodePools.list", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -14685,6 +14908,7 @@ func (c *ProjectsLocationsVmwareClustersVmwareNodePoolsPatchCall) doRequest(alt 
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "gkeonprem.projects.locations.vmwareClusters.vmwareNodePools.patch", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -14719,9 +14943,11 @@ func (c *ProjectsLocationsVmwareClustersVmwareNodePoolsPatchCall) Do(opts ...goo
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "gkeonprem.projects.locations.vmwareClusters.vmwareNodePools.patch", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -14789,6 +15015,7 @@ func (c *ProjectsLocationsVmwareClustersVmwareNodePoolsSetIamPolicyCall) doReque
 	googleapi.Expand(req.URL, map[string]string{
 		"resource": c.resource,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "gkeonprem.projects.locations.vmwareClusters.vmwareNodePools.setIamPolicy", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -14823,9 +15050,11 @@ func (c *ProjectsLocationsVmwareClustersVmwareNodePoolsSetIamPolicyCall) Do(opts
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "gkeonprem.projects.locations.vmwareClusters.vmwareNodePools.setIamPolicy", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -14896,6 +15125,7 @@ func (c *ProjectsLocationsVmwareClustersVmwareNodePoolsTestIamPermissionsCall) d
 	googleapi.Expand(req.URL, map[string]string{
 		"resource": c.resource,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "gkeonprem.projects.locations.vmwareClusters.vmwareNodePools.testIamPermissions", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -14931,9 +15161,11 @@ func (c *ProjectsLocationsVmwareClustersVmwareNodePoolsTestIamPermissionsCall) D
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "gkeonprem.projects.locations.vmwareClusters.vmwareNodePools.testIamPermissions", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -15016,6 +15248,7 @@ func (c *ProjectsLocationsVmwareClustersVmwareNodePoolsUnenrollCall) doRequest(a
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "gkeonprem.projects.locations.vmwareClusters.vmwareNodePools.unenroll", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -15050,9 +15283,11 @@ func (c *ProjectsLocationsVmwareClustersVmwareNodePoolsUnenrollCall) Do(opts ...
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "gkeonprem.projects.locations.vmwareClusters.vmwareNodePools.unenroll", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -15124,6 +15359,7 @@ func (c *ProjectsLocationsVmwareClustersVmwareNodePoolsOperationsGetCall) doRequ
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "gkeonprem.projects.locations.vmwareClusters.vmwareNodePools.operations.get", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -15158,9 +15394,11 @@ func (c *ProjectsLocationsVmwareClustersVmwareNodePoolsOperationsGetCall) Do(opt
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "gkeonprem.projects.locations.vmwareClusters.vmwareNodePools.operations.get", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -15251,6 +15489,7 @@ func (c *ProjectsLocationsVmwareClustersVmwareNodePoolsOperationsListCall) doReq
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "gkeonprem.projects.locations.vmwareClusters.vmwareNodePools.operations.list", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -15286,9 +15525,11 @@ func (c *ProjectsLocationsVmwareClustersVmwareNodePoolsOperationsListCall) Do(op
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "gkeonprem.projects.locations.vmwareClusters.vmwareNodePools.operations.list", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 

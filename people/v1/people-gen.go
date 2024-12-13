@@ -62,11 +62,13 @@ import (
 	"errors"
 	"fmt"
 	"io"
+	"log/slog"
 	"net/http"
 	"net/url"
 	"strconv"
 	"strings"
 
+	"github.com/googleapis/gax-go/v2/internallog"
 	googleapi "google.golang.org/api/googleapi"
 	internal "google.golang.org/api/internal"
 	gensupport "google.golang.org/api/internal/gensupport"
@@ -90,6 +92,7 @@ var _ = strings.Replace
 var _ = context.Canceled
 var _ = internaloption.WithDefaultEndpoint
 var _ = internal.Version
+var _ = internallog.New
 
 const apiId = "people:v1"
 const apiName = "people"
@@ -164,7 +167,7 @@ func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, err
 	if err != nil {
 		return nil, err
 	}
-	s := &Service{client: client, BasePath: basePath}
+	s := &Service{client: client, BasePath: basePath, logger: internaloption.GetLogger(opts)}
 	s.ContactGroups = NewContactGroupsService(s)
 	s.OtherContacts = NewOtherContactsService(s)
 	s.People = NewPeopleService(s)
@@ -191,6 +194,7 @@ func New(client *http.Client) (*Service, error) {
 
 type Service struct {
 	client    *http.Client
+	logger    *slog.Logger
 	BasePath  string // API endpoint base URL
 	UserAgent string // optional additional User-Agent fragment
 
@@ -2782,6 +2786,7 @@ func (c *ContactGroupsBatchGetCall) doRequest(alt string) (*http.Response, error
 		return nil, err
 	}
 	req.Header = reqHeaders
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "people.contactGroups.batchGet", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -2817,9 +2822,11 @@ func (c *ContactGroupsBatchGetCall) Do(opts ...googleapi.CallOption) (*BatchGetC
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "people.contactGroups.batchGet", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -2880,6 +2887,7 @@ func (c *ContactGroupsCreateCall) doRequest(alt string) (*http.Response, error) 
 		return nil, err
 	}
 	req.Header = reqHeaders
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "people.contactGroups.create", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -2914,9 +2922,11 @@ func (c *ContactGroupsCreateCall) Do(opts ...googleapi.CallOption) (*ContactGrou
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "people.contactGroups.create", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -2983,6 +2993,7 @@ func (c *ContactGroupsDeleteCall) doRequest(alt string) (*http.Response, error) 
 	googleapi.Expand(req.URL, map[string]string{
 		"resourceName": c.resourceName,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "people.contactGroups.delete", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -3017,9 +3028,11 @@ func (c *ContactGroupsDeleteCall) Do(opts ...googleapi.CallOption) (*Empty, erro
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "people.contactGroups.delete", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -3107,6 +3120,7 @@ func (c *ContactGroupsGetCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"resourceName": c.resourceName,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "people.contactGroups.get", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -3141,9 +3155,11 @@ func (c *ContactGroupsGetCall) Do(opts ...googleapi.CallOption) (*ContactGroup, 
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "people.contactGroups.get", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -3241,6 +3257,7 @@ func (c *ContactGroupsListCall) doRequest(alt string) (*http.Response, error) {
 		return nil, err
 	}
 	req.Header = reqHeaders
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "people.contactGroups.list", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -3276,9 +3293,11 @@ func (c *ContactGroupsListCall) Do(opts ...googleapi.CallOption) (*ListContactGr
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "people.contactGroups.list", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -3369,6 +3388,7 @@ func (c *ContactGroupsUpdateCall) doRequest(alt string) (*http.Response, error) 
 	googleapi.Expand(req.URL, map[string]string{
 		"resourceName": c.resourceName,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "people.contactGroups.update", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -3403,9 +3423,11 @@ func (c *ContactGroupsUpdateCall) Do(opts ...googleapi.CallOption) (*ContactGrou
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "people.contactGroups.update", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -3472,6 +3494,7 @@ func (c *ContactGroupsMembersModifyCall) doRequest(alt string) (*http.Response, 
 	googleapi.Expand(req.URL, map[string]string{
 		"resourceName": c.resourceName,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "people.contactGroups.members.modify", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -3507,9 +3530,11 @@ func (c *ContactGroupsMembersModifyCall) Do(opts ...googleapi.CallOption) (*Modi
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "people.contactGroups.members.modify", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -3575,6 +3600,7 @@ func (c *OtherContactsCopyOtherContactToMyContactsGroupCall) doRequest(alt strin
 	googleapi.Expand(req.URL, map[string]string{
 		"resourceName": c.resourceName,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "people.otherContacts.copyOtherContactToMyContactsGroup", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -3609,9 +3635,11 @@ func (c *OtherContactsCopyOtherContactToMyContactsGroupCall) Do(opts ...googleap
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "people.otherContacts.copyOtherContactToMyContactsGroup", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -3765,6 +3793,7 @@ func (c *OtherContactsListCall) doRequest(alt string) (*http.Response, error) {
 		return nil, err
 	}
 	req.Header = reqHeaders
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "people.otherContacts.list", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -3800,9 +3829,11 @@ func (c *OtherContactsListCall) Do(opts ...googleapi.CallOption) (*ListOtherCont
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "people.otherContacts.list", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -3917,6 +3948,7 @@ func (c *OtherContactsSearchCall) doRequest(alt string) (*http.Response, error) 
 		return nil, err
 	}
 	req.Header = reqHeaders
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "people.otherContacts.search", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -3951,9 +3983,11 @@ func (c *OtherContactsSearchCall) Do(opts ...googleapi.CallOption) (*SearchRespo
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "people.otherContacts.search", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -4012,6 +4046,7 @@ func (c *PeopleBatchCreateContactsCall) doRequest(alt string) (*http.Response, e
 		return nil, err
 	}
 	req.Header = reqHeaders
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "people.people.batchCreateContacts", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -4047,9 +4082,11 @@ func (c *PeopleBatchCreateContactsCall) Do(opts ...googleapi.CallOption) (*Batch
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "people.people.batchCreateContacts", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -4108,6 +4145,7 @@ func (c *PeopleBatchDeleteContactsCall) doRequest(alt string) (*http.Response, e
 		return nil, err
 	}
 	req.Header = reqHeaders
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "people.people.batchDeleteContacts", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -4142,9 +4180,11 @@ func (c *PeopleBatchDeleteContactsCall) Do(opts ...googleapi.CallOption) (*Empty
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "people.people.batchDeleteContacts", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -4204,6 +4244,7 @@ func (c *PeopleBatchUpdateContactsCall) doRequest(alt string) (*http.Response, e
 		return nil, err
 	}
 	req.Header = reqHeaders
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "people.people.batchUpdateContacts", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -4239,9 +4280,11 @@ func (c *PeopleBatchUpdateContactsCall) Do(opts ...googleapi.CallOption) (*Batch
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "people.people.batchUpdateContacts", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -4335,6 +4378,7 @@ func (c *PeopleCreateContactCall) doRequest(alt string) (*http.Response, error) 
 		return nil, err
 	}
 	req.Header = reqHeaders
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "people.people.createContact", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -4369,9 +4413,11 @@ func (c *PeopleCreateContactCall) Do(opts ...googleapi.CallOption) (*Person, err
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "people.people.createContact", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -4431,6 +4477,7 @@ func (c *PeopleDeleteContactCall) doRequest(alt string) (*http.Response, error) 
 	googleapi.Expand(req.URL, map[string]string{
 		"resourceName": c.resourceName,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "people.people.deleteContact", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -4465,9 +4512,11 @@ func (c *PeopleDeleteContactCall) Do(opts ...googleapi.CallOption) (*Empty, erro
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "people.people.deleteContact", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -4560,6 +4609,7 @@ func (c *PeopleDeleteContactPhotoCall) doRequest(alt string) (*http.Response, er
 	googleapi.Expand(req.URL, map[string]string{
 		"resourceName": c.resourceName,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "people.people.deleteContactPhoto", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -4595,9 +4645,11 @@ func (c *PeopleDeleteContactPhotoCall) Do(opts ...googleapi.CallOption) (*Delete
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "people.people.deleteContactPhoto", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -4715,6 +4767,7 @@ func (c *PeopleGetCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"resourceName": c.resourceName,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "people.people.get", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -4749,9 +4802,11 @@ func (c *PeopleGetCall) Do(opts ...googleapi.CallOption) (*Person, error) {
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "people.people.get", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -4871,6 +4926,7 @@ func (c *PeopleGetBatchGetCall) doRequest(alt string) (*http.Response, error) {
 		return nil, err
 	}
 	req.Header = reqHeaders
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "people.people.getBatchGet", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -4906,9 +4962,11 @@ func (c *PeopleGetBatchGetCall) Do(opts ...googleapi.CallOption) (*GetPeopleResp
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "people.people.getBatchGet", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -5059,6 +5117,7 @@ func (c *PeopleListDirectoryPeopleCall) doRequest(alt string) (*http.Response, e
 		return nil, err
 	}
 	req.Header = reqHeaders
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "people.people.listDirectoryPeople", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -5094,9 +5153,11 @@ func (c *PeopleListDirectoryPeopleCall) Do(opts ...googleapi.CallOption) (*ListD
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "people.people.listDirectoryPeople", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -5234,6 +5295,7 @@ func (c *PeopleSearchContactsCall) doRequest(alt string) (*http.Response, error)
 		return nil, err
 	}
 	req.Header = reqHeaders
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "people.people.searchContacts", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -5268,9 +5330,11 @@ func (c *PeopleSearchContactsCall) Do(opts ...googleapi.CallOption) (*SearchResp
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "people.people.searchContacts", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -5403,6 +5467,7 @@ func (c *PeopleSearchDirectoryPeopleCall) doRequest(alt string) (*http.Response,
 		return nil, err
 	}
 	req.Header = reqHeaders
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "people.people.searchDirectoryPeople", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -5438,9 +5503,11 @@ func (c *PeopleSearchDirectoryPeopleCall) Do(opts ...googleapi.CallOption) (*Sea
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "people.people.searchDirectoryPeople", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -5586,6 +5653,7 @@ func (c *PeopleUpdateContactCall) doRequest(alt string) (*http.Response, error) 
 	googleapi.Expand(req.URL, map[string]string{
 		"resourceName": c.resourceName,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "people.people.updateContact", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -5620,9 +5688,11 @@ func (c *PeopleUpdateContactCall) Do(opts ...googleapi.CallOption) (*Person, err
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "people.people.updateContact", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -5687,6 +5757,7 @@ func (c *PeopleUpdateContactPhotoCall) doRequest(alt string) (*http.Response, er
 	googleapi.Expand(req.URL, map[string]string{
 		"resourceName": c.resourceName,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "people.people.updateContactPhoto", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -5722,9 +5793,11 @@ func (c *PeopleUpdateContactPhotoCall) Do(opts ...googleapi.CallOption) (*Update
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "people.people.updateContactPhoto", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -5909,6 +5982,7 @@ func (c *PeopleConnectionsListCall) doRequest(alt string) (*http.Response, error
 	googleapi.Expand(req.URL, map[string]string{
 		"resourceName": c.resourceName,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "people.people.connections.list", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -5944,9 +6018,11 @@ func (c *PeopleConnectionsListCall) Do(opts ...googleapi.CallOption) (*ListConne
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "people.people.connections.list", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 

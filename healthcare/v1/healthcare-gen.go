@@ -62,11 +62,13 @@ import (
 	"errors"
 	"fmt"
 	"io"
+	"log/slog"
 	"net/http"
 	"net/url"
 	"strconv"
 	"strings"
 
+	"github.com/googleapis/gax-go/v2/internallog"
 	googleapi "google.golang.org/api/googleapi"
 	internal "google.golang.org/api/internal"
 	gensupport "google.golang.org/api/internal/gensupport"
@@ -90,6 +92,7 @@ var _ = strings.Replace
 var _ = context.Canceled
 var _ = internaloption.WithDefaultEndpoint
 var _ = internal.Version
+var _ = internallog.New
 
 const apiId = "healthcare:v1"
 const apiName = "healthcare"
@@ -124,7 +127,7 @@ func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, err
 	if err != nil {
 		return nil, err
 	}
-	s := &Service{client: client, BasePath: basePath}
+	s := &Service{client: client, BasePath: basePath, logger: internaloption.GetLogger(opts)}
 	s.Projects = NewProjectsService(s)
 	if err != nil {
 		return nil, err
@@ -149,6 +152,7 @@ func New(client *http.Client) (*Service, error) {
 
 type Service struct {
 	client    *http.Client
+	logger    *slog.Logger
 	BasePath  string // API endpoint base URL
 	UserAgent string // optional additional User-Agent fragment
 
@@ -6466,6 +6470,7 @@ func (c *ProjectsLocationsGetCall) doRequest(alt string) (*http.Response, error)
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "healthcare.projects.locations.get", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -6500,9 +6505,11 @@ func (c *ProjectsLocationsGetCall) Do(opts ...googleapi.CallOption) (*Location, 
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "healthcare.projects.locations.get", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -6596,6 +6603,7 @@ func (c *ProjectsLocationsListCall) doRequest(alt string) (*http.Response, error
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "healthcare.projects.locations.list", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -6631,9 +6639,11 @@ func (c *ProjectsLocationsListCall) Do(opts ...googleapi.CallOption) (*ListLocat
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "healthcare.projects.locations.list", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -6730,6 +6740,7 @@ func (c *ProjectsLocationsDatasetsCreateCall) doRequest(alt string) (*http.Respo
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "healthcare.projects.locations.datasets.create", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -6764,9 +6775,11 @@ func (c *ProjectsLocationsDatasetsCreateCall) Do(opts ...googleapi.CallOption) (
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "healthcare.projects.locations.datasets.create", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -6839,6 +6852,7 @@ func (c *ProjectsLocationsDatasetsDeidentifyCall) doRequest(alt string) (*http.R
 	googleapi.Expand(req.URL, map[string]string{
 		"sourceDataset": c.sourceDataset,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "healthcare.projects.locations.datasets.deidentify", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -6873,9 +6887,11 @@ func (c *ProjectsLocationsDatasetsDeidentifyCall) Do(opts ...googleapi.CallOptio
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "healthcare.projects.locations.datasets.deidentify", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -6936,6 +6952,7 @@ func (c *ProjectsLocationsDatasetsDeleteCall) doRequest(alt string) (*http.Respo
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "healthcare.projects.locations.datasets.delete", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -6970,9 +6987,11 @@ func (c *ProjectsLocationsDatasetsDeleteCall) Do(opts ...googleapi.CallOption) (
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "healthcare.projects.locations.datasets.delete", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -7043,6 +7062,7 @@ func (c *ProjectsLocationsDatasetsGetCall) doRequest(alt string) (*http.Response
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "healthcare.projects.locations.datasets.get", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -7077,9 +7097,11 @@ func (c *ProjectsLocationsDatasetsGetCall) Do(opts ...googleapi.CallOption) (*Da
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "healthcare.projects.locations.datasets.get", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -7169,6 +7191,7 @@ func (c *ProjectsLocationsDatasetsGetIamPolicyCall) doRequest(alt string) (*http
 	googleapi.Expand(req.URL, map[string]string{
 		"resource": c.resource,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "healthcare.projects.locations.datasets.getIamPolicy", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -7203,9 +7226,11 @@ func (c *ProjectsLocationsDatasetsGetIamPolicyCall) Do(opts ...googleapi.CallOpt
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "healthcare.projects.locations.datasets.getIamPolicy", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -7290,6 +7315,7 @@ func (c *ProjectsLocationsDatasetsListCall) doRequest(alt string) (*http.Respons
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "healthcare.projects.locations.datasets.list", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -7325,9 +7351,11 @@ func (c *ProjectsLocationsDatasetsListCall) Do(opts ...googleapi.CallOption) (*L
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "healthcare.projects.locations.datasets.list", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -7421,6 +7449,7 @@ func (c *ProjectsLocationsDatasetsPatchCall) doRequest(alt string) (*http.Respon
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "healthcare.projects.locations.datasets.patch", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -7455,9 +7484,11 @@ func (c *ProjectsLocationsDatasetsPatchCall) Do(opts ...googleapi.CallOption) (*
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "healthcare.projects.locations.datasets.patch", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -7525,6 +7556,7 @@ func (c *ProjectsLocationsDatasetsSetIamPolicyCall) doRequest(alt string) (*http
 	googleapi.Expand(req.URL, map[string]string{
 		"resource": c.resource,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "healthcare.projects.locations.datasets.setIamPolicy", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -7559,9 +7591,11 @@ func (c *ProjectsLocationsDatasetsSetIamPolicyCall) Do(opts ...googleapi.CallOpt
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "healthcare.projects.locations.datasets.setIamPolicy", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -7632,6 +7666,7 @@ func (c *ProjectsLocationsDatasetsTestIamPermissionsCall) doRequest(alt string) 
 	googleapi.Expand(req.URL, map[string]string{
 		"resource": c.resource,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "healthcare.projects.locations.datasets.testIamPermissions", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -7667,9 +7702,11 @@ func (c *ProjectsLocationsDatasetsTestIamPermissionsCall) Do(opts ...googleapi.C
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "healthcare.projects.locations.datasets.testIamPermissions", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -7737,6 +7774,7 @@ func (c *ProjectsLocationsDatasetsConsentStoresCheckDataAccessCall) doRequest(al
 	googleapi.Expand(req.URL, map[string]string{
 		"consentStore": c.consentStore,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "healthcare.projects.locations.datasets.consentStores.checkDataAccess", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -7772,9 +7810,11 @@ func (c *ProjectsLocationsDatasetsConsentStoresCheckDataAccessCall) Do(opts ...g
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "healthcare.projects.locations.datasets.consentStores.checkDataAccess", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -7848,6 +7888,7 @@ func (c *ProjectsLocationsDatasetsConsentStoresCreateCall) doRequest(alt string)
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "healthcare.projects.locations.datasets.consentStores.create", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -7882,9 +7923,11 @@ func (c *ProjectsLocationsDatasetsConsentStoresCreateCall) Do(opts ...googleapi.
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "healthcare.projects.locations.datasets.consentStores.create", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -7943,6 +7986,7 @@ func (c *ProjectsLocationsDatasetsConsentStoresDeleteCall) doRequest(alt string)
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "healthcare.projects.locations.datasets.consentStores.delete", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -7977,9 +8021,11 @@ func (c *ProjectsLocationsDatasetsConsentStoresDeleteCall) Do(opts ...googleapi.
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "healthcare.projects.locations.datasets.consentStores.delete", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -8047,6 +8093,7 @@ func (c *ProjectsLocationsDatasetsConsentStoresEvaluateUserConsentsCall) doReque
 	googleapi.Expand(req.URL, map[string]string{
 		"consentStore": c.consentStore,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "healthcare.projects.locations.datasets.consentStores.evaluateUserConsents", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -8082,9 +8129,11 @@ func (c *ProjectsLocationsDatasetsConsentStoresEvaluateUserConsentsCall) Do(opts
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "healthcare.projects.locations.datasets.consentStores.evaluateUserConsents", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -8175,6 +8224,7 @@ func (c *ProjectsLocationsDatasetsConsentStoresGetCall) doRequest(alt string) (*
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "healthcare.projects.locations.datasets.consentStores.get", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -8209,9 +8259,11 @@ func (c *ProjectsLocationsDatasetsConsentStoresGetCall) Do(opts ...googleapi.Cal
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "healthcare.projects.locations.datasets.consentStores.get", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -8301,6 +8353,7 @@ func (c *ProjectsLocationsDatasetsConsentStoresGetIamPolicyCall) doRequest(alt s
 	googleapi.Expand(req.URL, map[string]string{
 		"resource": c.resource,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "healthcare.projects.locations.datasets.consentStores.getIamPolicy", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -8335,9 +8388,11 @@ func (c *ProjectsLocationsDatasetsConsentStoresGetIamPolicyCall) Do(opts ...goog
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "healthcare.projects.locations.datasets.consentStores.getIamPolicy", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -8430,6 +8485,7 @@ func (c *ProjectsLocationsDatasetsConsentStoresListCall) doRequest(alt string) (
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "healthcare.projects.locations.datasets.consentStores.list", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -8465,9 +8521,11 @@ func (c *ProjectsLocationsDatasetsConsentStoresListCall) Do(opts ...googleapi.Ca
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "healthcare.projects.locations.datasets.consentStores.list", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -8564,6 +8622,7 @@ func (c *ProjectsLocationsDatasetsConsentStoresPatchCall) doRequest(alt string) 
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "healthcare.projects.locations.datasets.consentStores.patch", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -8598,9 +8657,11 @@ func (c *ProjectsLocationsDatasetsConsentStoresPatchCall) Do(opts ...googleapi.C
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "healthcare.projects.locations.datasets.consentStores.patch", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -8690,6 +8751,7 @@ func (c *ProjectsLocationsDatasetsConsentStoresQueryAccessibleDataCall) doReques
 	googleapi.Expand(req.URL, map[string]string{
 		"consentStore": c.consentStore,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "healthcare.projects.locations.datasets.consentStores.queryAccessibleData", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -8724,9 +8786,11 @@ func (c *ProjectsLocationsDatasetsConsentStoresQueryAccessibleDataCall) Do(opts 
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "healthcare.projects.locations.datasets.consentStores.queryAccessibleData", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -8794,6 +8858,7 @@ func (c *ProjectsLocationsDatasetsConsentStoresSetIamPolicyCall) doRequest(alt s
 	googleapi.Expand(req.URL, map[string]string{
 		"resource": c.resource,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "healthcare.projects.locations.datasets.consentStores.setIamPolicy", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -8828,9 +8893,11 @@ func (c *ProjectsLocationsDatasetsConsentStoresSetIamPolicyCall) Do(opts ...goog
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "healthcare.projects.locations.datasets.consentStores.setIamPolicy", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -8901,6 +8968,7 @@ func (c *ProjectsLocationsDatasetsConsentStoresTestIamPermissionsCall) doRequest
 	googleapi.Expand(req.URL, map[string]string{
 		"resource": c.resource,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "healthcare.projects.locations.datasets.consentStores.testIamPermissions", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -8936,9 +9004,11 @@ func (c *ProjectsLocationsDatasetsConsentStoresTestIamPermissionsCall) Do(opts .
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "healthcare.projects.locations.datasets.consentStores.testIamPermissions", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -9013,6 +9083,7 @@ func (c *ProjectsLocationsDatasetsConsentStoresAttributeDefinitionsCreateCall) d
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "healthcare.projects.locations.datasets.consentStores.attributeDefinitions.create", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -9048,9 +9119,11 @@ func (c *ProjectsLocationsDatasetsConsentStoresAttributeDefinitionsCreateCall) D
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "healthcare.projects.locations.datasets.consentStores.attributeDefinitions.create", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -9112,6 +9185,7 @@ func (c *ProjectsLocationsDatasetsConsentStoresAttributeDefinitionsDeleteCall) d
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "healthcare.projects.locations.datasets.consentStores.attributeDefinitions.delete", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -9146,9 +9220,11 @@ func (c *ProjectsLocationsDatasetsConsentStoresAttributeDefinitionsDeleteCall) D
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "healthcare.projects.locations.datasets.consentStores.attributeDefinitions.delete", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -9218,6 +9294,7 @@ func (c *ProjectsLocationsDatasetsConsentStoresAttributeDefinitionsGetCall) doRe
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "healthcare.projects.locations.datasets.consentStores.attributeDefinitions.get", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -9253,9 +9330,11 @@ func (c *ProjectsLocationsDatasetsConsentStoresAttributeDefinitionsGetCall) Do(o
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "healthcare.projects.locations.datasets.consentStores.attributeDefinitions.get", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -9348,6 +9427,7 @@ func (c *ProjectsLocationsDatasetsConsentStoresAttributeDefinitionsListCall) doR
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "healthcare.projects.locations.datasets.consentStores.attributeDefinitions.list", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -9383,9 +9463,11 @@ func (c *ProjectsLocationsDatasetsConsentStoresAttributeDefinitionsListCall) Do(
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "healthcare.projects.locations.datasets.consentStores.attributeDefinitions.list", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -9484,6 +9566,7 @@ func (c *ProjectsLocationsDatasetsConsentStoresAttributeDefinitionsPatchCall) do
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "healthcare.projects.locations.datasets.consentStores.attributeDefinitions.patch", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -9519,9 +9602,11 @@ func (c *ProjectsLocationsDatasetsConsentStoresAttributeDefinitionsPatchCall) Do
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "healthcare.projects.locations.datasets.consentStores.attributeDefinitions.patch", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -9585,6 +9670,7 @@ func (c *ProjectsLocationsDatasetsConsentStoresConsentArtifactsCreateCall) doReq
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "healthcare.projects.locations.datasets.consentStores.consentArtifacts.create", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -9620,9 +9706,11 @@ func (c *ProjectsLocationsDatasetsConsentStoresConsentArtifactsCreateCall) Do(op
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "healthcare.projects.locations.datasets.consentStores.consentArtifacts.create", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -9683,6 +9771,7 @@ func (c *ProjectsLocationsDatasetsConsentStoresConsentArtifactsDeleteCall) doReq
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "healthcare.projects.locations.datasets.consentStores.consentArtifacts.delete", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -9717,9 +9806,11 @@ func (c *ProjectsLocationsDatasetsConsentStoresConsentArtifactsDeleteCall) Do(op
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "healthcare.projects.locations.datasets.consentStores.consentArtifacts.delete", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -9789,6 +9880,7 @@ func (c *ProjectsLocationsDatasetsConsentStoresConsentArtifactsGetCall) doReques
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "healthcare.projects.locations.datasets.consentStores.consentArtifacts.get", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -9824,9 +9916,11 @@ func (c *ProjectsLocationsDatasetsConsentStoresConsentArtifactsGetCall) Do(opts 
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "healthcare.projects.locations.datasets.consentStores.consentArtifacts.get", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -9942,6 +10036,7 @@ func (c *ProjectsLocationsDatasetsConsentStoresConsentArtifactsListCall) doReque
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "healthcare.projects.locations.datasets.consentStores.consentArtifacts.list", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -9977,9 +10072,11 @@ func (c *ProjectsLocationsDatasetsConsentStoresConsentArtifactsListCall) Do(opts
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "healthcare.projects.locations.datasets.consentStores.consentArtifacts.list", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -10071,6 +10168,7 @@ func (c *ProjectsLocationsDatasetsConsentStoresConsentsActivateCall) doRequest(a
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "healthcare.projects.locations.datasets.consentStores.consents.activate", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -10105,9 +10203,11 @@ func (c *ProjectsLocationsDatasetsConsentStoresConsentsActivateCall) Do(opts ...
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "healthcare.projects.locations.datasets.consentStores.consents.activate", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -10171,6 +10271,7 @@ func (c *ProjectsLocationsDatasetsConsentStoresConsentsCreateCall) doRequest(alt
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "healthcare.projects.locations.datasets.consentStores.consents.create", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -10205,9 +10306,11 @@ func (c *ProjectsLocationsDatasetsConsentStoresConsentsCreateCall) Do(opts ...go
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "healthcare.projects.locations.datasets.consentStores.consents.create", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -10271,6 +10374,7 @@ func (c *ProjectsLocationsDatasetsConsentStoresConsentsDeleteCall) doRequest(alt
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "healthcare.projects.locations.datasets.consentStores.consents.delete", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -10305,9 +10409,11 @@ func (c *ProjectsLocationsDatasetsConsentStoresConsentsDeleteCall) Do(opts ...go
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "healthcare.projects.locations.datasets.consentStores.consents.delete", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -10371,6 +10477,7 @@ func (c *ProjectsLocationsDatasetsConsentStoresConsentsDeleteRevisionCall) doReq
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "healthcare.projects.locations.datasets.consentStores.consents.deleteRevision", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -10405,9 +10512,11 @@ func (c *ProjectsLocationsDatasetsConsentStoresConsentsDeleteRevisionCall) Do(op
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "healthcare.projects.locations.datasets.consentStores.consents.deleteRevision", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -10483,6 +10592,7 @@ func (c *ProjectsLocationsDatasetsConsentStoresConsentsGetCall) doRequest(alt st
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "healthcare.projects.locations.datasets.consentStores.consents.get", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -10517,9 +10627,11 @@ func (c *ProjectsLocationsDatasetsConsentStoresConsentsGetCall) Do(opts ...googl
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "healthcare.projects.locations.datasets.consentStores.consents.get", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -10637,6 +10749,7 @@ func (c *ProjectsLocationsDatasetsConsentStoresConsentsListCall) doRequest(alt s
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "healthcare.projects.locations.datasets.consentStores.consents.list", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -10672,9 +10785,11 @@ func (c *ProjectsLocationsDatasetsConsentStoresConsentsListCall) Do(opts ...goog
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "healthcare.projects.locations.datasets.consentStores.consents.list", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -10813,6 +10928,7 @@ func (c *ProjectsLocationsDatasetsConsentStoresConsentsListRevisionsCall) doRequ
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "healthcare.projects.locations.datasets.consentStores.consents.listRevisions", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -10848,9 +10964,11 @@ func (c *ProjectsLocationsDatasetsConsentStoresConsentsListRevisionsCall) Do(opt
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "healthcare.projects.locations.datasets.consentStores.consents.listRevisions", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -10951,6 +11069,7 @@ func (c *ProjectsLocationsDatasetsConsentStoresConsentsPatchCall) doRequest(alt 
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "healthcare.projects.locations.datasets.consentStores.consents.patch", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -10985,9 +11104,11 @@ func (c *ProjectsLocationsDatasetsConsentStoresConsentsPatchCall) Do(opts ...goo
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "healthcare.projects.locations.datasets.consentStores.consents.patch", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -11058,6 +11179,7 @@ func (c *ProjectsLocationsDatasetsConsentStoresConsentsRejectCall) doRequest(alt
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "healthcare.projects.locations.datasets.consentStores.consents.reject", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -11092,9 +11214,11 @@ func (c *ProjectsLocationsDatasetsConsentStoresConsentsRejectCall) Do(opts ...go
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "healthcare.projects.locations.datasets.consentStores.consents.reject", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -11165,6 +11289,7 @@ func (c *ProjectsLocationsDatasetsConsentStoresConsentsRevokeCall) doRequest(alt
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "healthcare.projects.locations.datasets.consentStores.consents.revoke", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -11199,9 +11324,11 @@ func (c *ProjectsLocationsDatasetsConsentStoresConsentsRevokeCall) Do(opts ...go
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "healthcare.projects.locations.datasets.consentStores.consents.revoke", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -11265,6 +11392,7 @@ func (c *ProjectsLocationsDatasetsConsentStoresUserDataMappingsArchiveCall) doRe
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "healthcare.projects.locations.datasets.consentStores.userDataMappings.archive", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -11300,9 +11428,11 @@ func (c *ProjectsLocationsDatasetsConsentStoresUserDataMappingsArchiveCall) Do(o
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "healthcare.projects.locations.datasets.consentStores.userDataMappings.archive", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -11366,6 +11496,7 @@ func (c *ProjectsLocationsDatasetsConsentStoresUserDataMappingsCreateCall) doReq
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "healthcare.projects.locations.datasets.consentStores.userDataMappings.create", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -11401,9 +11532,11 @@ func (c *ProjectsLocationsDatasetsConsentStoresUserDataMappingsCreateCall) Do(op
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "healthcare.projects.locations.datasets.consentStores.userDataMappings.create", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -11461,6 +11594,7 @@ func (c *ProjectsLocationsDatasetsConsentStoresUserDataMappingsDeleteCall) doReq
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "healthcare.projects.locations.datasets.consentStores.userDataMappings.delete", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -11495,9 +11629,11 @@ func (c *ProjectsLocationsDatasetsConsentStoresUserDataMappingsDeleteCall) Do(op
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "healthcare.projects.locations.datasets.consentStores.userDataMappings.delete", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -11567,6 +11703,7 @@ func (c *ProjectsLocationsDatasetsConsentStoresUserDataMappingsGetCall) doReques
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "healthcare.projects.locations.datasets.consentStores.userDataMappings.get", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -11602,9 +11739,11 @@ func (c *ProjectsLocationsDatasetsConsentStoresUserDataMappingsGetCall) Do(opts 
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "healthcare.projects.locations.datasets.consentStores.userDataMappings.get", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -11718,6 +11857,7 @@ func (c *ProjectsLocationsDatasetsConsentStoresUserDataMappingsListCall) doReque
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "healthcare.projects.locations.datasets.consentStores.userDataMappings.list", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -11753,9 +11893,11 @@ func (c *ProjectsLocationsDatasetsConsentStoresUserDataMappingsListCall) Do(opts
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "healthcare.projects.locations.datasets.consentStores.userDataMappings.list", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -11852,6 +11994,7 @@ func (c *ProjectsLocationsDatasetsConsentStoresUserDataMappingsPatchCall) doRequ
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "healthcare.projects.locations.datasets.consentStores.userDataMappings.patch", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -11887,9 +12030,11 @@ func (c *ProjectsLocationsDatasetsConsentStoresUserDataMappingsPatchCall) Do(opt
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "healthcare.projects.locations.datasets.consentStores.userDataMappings.patch", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -11979,6 +12124,7 @@ func (c *ProjectsLocationsDatasetsDataMapperWorkspacesGetIamPolicyCall) doReques
 	googleapi.Expand(req.URL, map[string]string{
 		"resource": c.resource,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "healthcare.projects.locations.datasets.dataMapperWorkspaces.getIamPolicy", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -12013,9 +12159,11 @@ func (c *ProjectsLocationsDatasetsDataMapperWorkspacesGetIamPolicyCall) Do(opts 
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "healthcare.projects.locations.datasets.dataMapperWorkspaces.getIamPolicy", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -12083,6 +12231,7 @@ func (c *ProjectsLocationsDatasetsDataMapperWorkspacesSetIamPolicyCall) doReques
 	googleapi.Expand(req.URL, map[string]string{
 		"resource": c.resource,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "healthcare.projects.locations.datasets.dataMapperWorkspaces.setIamPolicy", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -12117,9 +12266,11 @@ func (c *ProjectsLocationsDatasetsDataMapperWorkspacesSetIamPolicyCall) Do(opts 
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "healthcare.projects.locations.datasets.dataMapperWorkspaces.setIamPolicy", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -12190,6 +12341,7 @@ func (c *ProjectsLocationsDatasetsDataMapperWorkspacesTestIamPermissionsCall) do
 	googleapi.Expand(req.URL, map[string]string{
 		"resource": c.resource,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "healthcare.projects.locations.datasets.dataMapperWorkspaces.testIamPermissions", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -12225,9 +12377,11 @@ func (c *ProjectsLocationsDatasetsDataMapperWorkspacesTestIamPermissionsCall) Do
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "healthcare.projects.locations.datasets.dataMapperWorkspaces.testIamPermissions", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -12299,6 +12453,7 @@ func (c *ProjectsLocationsDatasetsDicomStoresCreateCall) doRequest(alt string) (
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "healthcare.projects.locations.datasets.dicomStores.create", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -12333,9 +12488,11 @@ func (c *ProjectsLocationsDatasetsDicomStoresCreateCall) Do(opts ...googleapi.Ca
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "healthcare.projects.locations.datasets.dicomStores.create", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -12409,6 +12566,7 @@ func (c *ProjectsLocationsDatasetsDicomStoresDeidentifyCall) doRequest(alt strin
 	googleapi.Expand(req.URL, map[string]string{
 		"sourceStore": c.sourceStore,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "healthcare.projects.locations.datasets.dicomStores.deidentify", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -12443,9 +12601,11 @@ func (c *ProjectsLocationsDatasetsDicomStoresDeidentifyCall) Do(opts ...googleap
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "healthcare.projects.locations.datasets.dicomStores.deidentify", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -12504,6 +12664,7 @@ func (c *ProjectsLocationsDatasetsDicomStoresDeleteCall) doRequest(alt string) (
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "healthcare.projects.locations.datasets.dicomStores.delete", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -12538,9 +12699,11 @@ func (c *ProjectsLocationsDatasetsDicomStoresDeleteCall) Do(opts ...googleapi.Ca
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "healthcare.projects.locations.datasets.dicomStores.delete", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -12611,6 +12774,7 @@ func (c *ProjectsLocationsDatasetsDicomStoresExportCall) doRequest(alt string) (
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "healthcare.projects.locations.datasets.dicomStores.export", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -12645,9 +12809,11 @@ func (c *ProjectsLocationsDatasetsDicomStoresExportCall) Do(opts ...googleapi.Ca
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "healthcare.projects.locations.datasets.dicomStores.export", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -12717,6 +12883,7 @@ func (c *ProjectsLocationsDatasetsDicomStoresGetCall) doRequest(alt string) (*ht
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "healthcare.projects.locations.datasets.dicomStores.get", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -12751,9 +12918,11 @@ func (c *ProjectsLocationsDatasetsDicomStoresGetCall) Do(opts ...googleapi.CallO
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "healthcare.projects.locations.datasets.dicomStores.get", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -12823,6 +12992,7 @@ func (c *ProjectsLocationsDatasetsDicomStoresGetDICOMStoreMetricsCall) doRequest
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "healthcare.projects.locations.datasets.dicomStores.getDICOMStoreMetrics", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -12858,9 +13028,11 @@ func (c *ProjectsLocationsDatasetsDicomStoresGetDICOMStoreMetricsCall) Do(opts .
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "healthcare.projects.locations.datasets.dicomStores.getDICOMStoreMetrics", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -12950,6 +13122,7 @@ func (c *ProjectsLocationsDatasetsDicomStoresGetIamPolicyCall) doRequest(alt str
 	googleapi.Expand(req.URL, map[string]string{
 		"resource": c.resource,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "healthcare.projects.locations.datasets.dicomStores.getIamPolicy", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -12984,9 +13157,11 @@ func (c *ProjectsLocationsDatasetsDicomStoresGetIamPolicyCall) Do(opts ...google
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "healthcare.projects.locations.datasets.dicomStores.getIamPolicy", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -13057,6 +13232,7 @@ func (c *ProjectsLocationsDatasetsDicomStoresImportCall) doRequest(alt string) (
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "healthcare.projects.locations.datasets.dicomStores.import", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -13091,9 +13267,11 @@ func (c *ProjectsLocationsDatasetsDicomStoresImportCall) Do(opts ...googleapi.Ca
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "healthcare.projects.locations.datasets.dicomStores.import", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -13206,6 +13384,7 @@ func (c *ProjectsLocationsDatasetsDicomStoresListCall) doRequest(alt string) (*h
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "healthcare.projects.locations.datasets.dicomStores.list", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -13241,9 +13420,11 @@ func (c *ProjectsLocationsDatasetsDicomStoresListCall) Do(opts ...googleapi.Call
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "healthcare.projects.locations.datasets.dicomStores.list", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -13338,6 +13519,7 @@ func (c *ProjectsLocationsDatasetsDicomStoresPatchCall) doRequest(alt string) (*
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "healthcare.projects.locations.datasets.dicomStores.patch", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -13372,9 +13554,11 @@ func (c *ProjectsLocationsDatasetsDicomStoresPatchCall) Do(opts ...googleapi.Cal
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "healthcare.projects.locations.datasets.dicomStores.patch", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -13460,6 +13644,7 @@ func (c *ProjectsLocationsDatasetsDicomStoresSearchForInstancesCall) doRequest(a
 		"parent":       c.parent,
 		"dicomWebPath": c.dicomWebPath,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "healthcare.projects.locations.datasets.dicomStores.searchForInstances", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -13549,6 +13734,7 @@ func (c *ProjectsLocationsDatasetsDicomStoresSearchForSeriesCall) doRequest(alt 
 		"parent":       c.parent,
 		"dicomWebPath": c.dicomWebPath,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "healthcare.projects.locations.datasets.dicomStores.searchForSeries", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -13639,6 +13825,7 @@ func (c *ProjectsLocationsDatasetsDicomStoresSearchForStudiesCall) doRequest(alt
 		"parent":       c.parent,
 		"dicomWebPath": c.dicomWebPath,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "healthcare.projects.locations.datasets.dicomStores.searchForStudies", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -13720,6 +13907,7 @@ func (c *ProjectsLocationsDatasetsDicomStoresSetBlobStorageSettingsCall) doReque
 	googleapi.Expand(req.URL, map[string]string{
 		"resource": c.resource,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "healthcare.projects.locations.datasets.dicomStores.setBlobStorageSettings", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -13754,9 +13942,11 @@ func (c *ProjectsLocationsDatasetsDicomStoresSetBlobStorageSettingsCall) Do(opts
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "healthcare.projects.locations.datasets.dicomStores.setBlobStorageSettings", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -13824,6 +14014,7 @@ func (c *ProjectsLocationsDatasetsDicomStoresSetIamPolicyCall) doRequest(alt str
 	googleapi.Expand(req.URL, map[string]string{
 		"resource": c.resource,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "healthcare.projects.locations.datasets.dicomStores.setIamPolicy", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -13858,9 +14049,11 @@ func (c *ProjectsLocationsDatasetsDicomStoresSetIamPolicyCall) Do(opts ...google
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "healthcare.projects.locations.datasets.dicomStores.setIamPolicy", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -13937,6 +14130,7 @@ func (c *ProjectsLocationsDatasetsDicomStoresStoreInstancesCall) doRequest(alt s
 		"parent":       c.parent,
 		"dicomWebPath": c.dicomWebPath,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "healthcare.projects.locations.datasets.dicomStores.storeInstances", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -14013,6 +14207,7 @@ func (c *ProjectsLocationsDatasetsDicomStoresTestIamPermissionsCall) doRequest(a
 	googleapi.Expand(req.URL, map[string]string{
 		"resource": c.resource,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "healthcare.projects.locations.datasets.dicomStores.testIamPermissions", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -14048,9 +14243,11 @@ func (c *ProjectsLocationsDatasetsDicomStoresTestIamPermissionsCall) Do(opts ...
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "healthcare.projects.locations.datasets.dicomStores.testIamPermissions", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -14122,6 +14319,7 @@ func (c *ProjectsLocationsDatasetsDicomStoresDicomWebStudiesGetStudyMetricsCall)
 	googleapi.Expand(req.URL, map[string]string{
 		"study": c.study,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "healthcare.projects.locations.datasets.dicomStores.dicomWeb.studies.getStudyMetrics", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -14156,9 +14354,11 @@ func (c *ProjectsLocationsDatasetsDicomStoresDicomWebStudiesGetStudyMetricsCall)
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "healthcare.projects.locations.datasets.dicomStores.dicomWeb.studies.getStudyMetrics", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -14234,6 +14434,7 @@ func (c *ProjectsLocationsDatasetsDicomStoresDicomWebStudiesSetBlobStorageSettin
 	googleapi.Expand(req.URL, map[string]string{
 		"resource": c.resource,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "healthcare.projects.locations.datasets.dicomStores.dicomWeb.studies.setBlobStorageSettings", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -14268,9 +14469,11 @@ func (c *ProjectsLocationsDatasetsDicomStoresDicomWebStudiesSetBlobStorageSettin
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "healthcare.projects.locations.datasets.dicomStores.dicomWeb.studies.setBlobStorageSettings", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -14342,6 +14545,7 @@ func (c *ProjectsLocationsDatasetsDicomStoresDicomWebStudiesSeriesGetSeriesMetri
 	googleapi.Expand(req.URL, map[string]string{
 		"series": c.series,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "healthcare.projects.locations.datasets.dicomStores.dicomWeb.studies.series.getSeriesMetrics", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -14376,9 +14580,11 @@ func (c *ProjectsLocationsDatasetsDicomStoresDicomWebStudiesSeriesGetSeriesMetri
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "healthcare.projects.locations.datasets.dicomStores.dicomWeb.studies.series.getSeriesMetrics", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -14453,6 +14659,7 @@ func (c *ProjectsLocationsDatasetsDicomStoresDicomWebStudiesSeriesInstancesGetSt
 	googleapi.Expand(req.URL, map[string]string{
 		"resource": c.resource,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "healthcare.projects.locations.datasets.dicomStores.dicomWeb.studies.series.instances.getStorageInfo", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -14487,9 +14694,11 @@ func (c *ProjectsLocationsDatasetsDicomStoresDicomWebStudiesSeriesInstancesGetSt
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "healthcare.projects.locations.datasets.dicomStores.dicomWeb.studies.series.instances.getStorageInfo", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -14559,6 +14768,7 @@ func (c *ProjectsLocationsDatasetsDicomStoresStudiesDeleteCall) doRequest(alt st
 		"parent":       c.parent,
 		"dicomWebPath": c.dicomWebPath,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "healthcare.projects.locations.datasets.dicomStores.studies.delete", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -14593,9 +14803,11 @@ func (c *ProjectsLocationsDatasetsDicomStoresStudiesDeleteCall) Do(opts ...googl
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "healthcare.projects.locations.datasets.dicomStores.studies.delete", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -14681,6 +14893,7 @@ func (c *ProjectsLocationsDatasetsDicomStoresStudiesRetrieveMetadataCall) doRequ
 		"parent":       c.parent,
 		"dicomWebPath": c.dicomWebPath,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "healthcare.projects.locations.datasets.dicomStores.studies.retrieveMetadata", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -14771,6 +14984,7 @@ func (c *ProjectsLocationsDatasetsDicomStoresStudiesRetrieveStudyCall) doRequest
 		"parent":       c.parent,
 		"dicomWebPath": c.dicomWebPath,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "healthcare.projects.locations.datasets.dicomStores.studies.retrieveStudy", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -14862,6 +15076,7 @@ func (c *ProjectsLocationsDatasetsDicomStoresStudiesSearchForInstancesCall) doRe
 		"parent":       c.parent,
 		"dicomWebPath": c.dicomWebPath,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "healthcare.projects.locations.datasets.dicomStores.studies.searchForInstances", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -14951,6 +15166,7 @@ func (c *ProjectsLocationsDatasetsDicomStoresStudiesSearchForSeriesCall) doReque
 		"parent":       c.parent,
 		"dicomWebPath": c.dicomWebPath,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "healthcare.projects.locations.datasets.dicomStores.studies.searchForSeries", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -15033,6 +15249,7 @@ func (c *ProjectsLocationsDatasetsDicomStoresStudiesStoreInstancesCall) doReques
 		"parent":       c.parent,
 		"dicomWebPath": c.dicomWebPath,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "healthcare.projects.locations.datasets.dicomStores.studies.storeInstances", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -15110,6 +15327,7 @@ func (c *ProjectsLocationsDatasetsDicomStoresStudiesSeriesDeleteCall) doRequest(
 		"parent":       c.parent,
 		"dicomWebPath": c.dicomWebPath,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "healthcare.projects.locations.datasets.dicomStores.studies.series.delete", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -15144,9 +15362,11 @@ func (c *ProjectsLocationsDatasetsDicomStoresStudiesSeriesDeleteCall) Do(opts ..
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "healthcare.projects.locations.datasets.dicomStores.studies.series.delete", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -15232,6 +15452,7 @@ func (c *ProjectsLocationsDatasetsDicomStoresStudiesSeriesRetrieveMetadataCall) 
 		"parent":       c.parent,
 		"dicomWebPath": c.dicomWebPath,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "healthcare.projects.locations.datasets.dicomStores.studies.series.retrieveMetadata", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -15322,6 +15543,7 @@ func (c *ProjectsLocationsDatasetsDicomStoresStudiesSeriesRetrieveSeriesCall) do
 		"parent":       c.parent,
 		"dicomWebPath": c.dicomWebPath,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "healthcare.projects.locations.datasets.dicomStores.studies.series.retrieveSeries", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -15413,6 +15635,7 @@ func (c *ProjectsLocationsDatasetsDicomStoresStudiesSeriesSearchForInstancesCall
 		"parent":       c.parent,
 		"dicomWebPath": c.dicomWebPath,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "healthcare.projects.locations.datasets.dicomStores.studies.series.searchForInstances", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -15489,6 +15712,7 @@ func (c *ProjectsLocationsDatasetsDicomStoresStudiesSeriesInstancesDeleteCall) d
 		"parent":       c.parent,
 		"dicomWebPath": c.dicomWebPath,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "healthcare.projects.locations.datasets.dicomStores.studies.series.instances.delete", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -15523,9 +15747,11 @@ func (c *ProjectsLocationsDatasetsDicomStoresStudiesSeriesInstancesDeleteCall) D
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "healthcare.projects.locations.datasets.dicomStores.studies.series.instances.delete", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -15613,6 +15839,7 @@ func (c *ProjectsLocationsDatasetsDicomStoresStudiesSeriesInstancesRetrieveInsta
 		"parent":       c.parent,
 		"dicomWebPath": c.dicomWebPath,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "healthcare.projects.locations.datasets.dicomStores.studies.series.instances.retrieveInstance", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -15706,6 +15933,7 @@ func (c *ProjectsLocationsDatasetsDicomStoresStudiesSeriesInstancesRetrieveMetad
 		"parent":       c.parent,
 		"dicomWebPath": c.dicomWebPath,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "healthcare.projects.locations.datasets.dicomStores.studies.series.instances.retrieveMetadata", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -15799,6 +16027,7 @@ func (c *ProjectsLocationsDatasetsDicomStoresStudiesSeriesInstancesRetrieveRende
 		"parent":       c.parent,
 		"dicomWebPath": c.dicomWebPath,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "healthcare.projects.locations.datasets.dicomStores.studies.series.instances.retrieveRendered", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -15890,6 +16119,7 @@ func (c *ProjectsLocationsDatasetsDicomStoresStudiesSeriesInstancesFramesRetriev
 		"parent":       c.parent,
 		"dicomWebPath": c.dicomWebPath,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "healthcare.projects.locations.datasets.dicomStores.studies.series.instances.frames.retrieveFrames", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -15983,6 +16213,7 @@ func (c *ProjectsLocationsDatasetsDicomStoresStudiesSeriesInstancesFramesRetriev
 		"parent":       c.parent,
 		"dicomWebPath": c.dicomWebPath,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "healthcare.projects.locations.datasets.dicomStores.studies.series.instances.frames.retrieveRendered", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -16053,8 +16284,7 @@ func (c *ProjectsLocationsDatasetsFhirStoresApplyAdminConsentsCall) Header() htt
 
 func (c *ProjectsLocationsDatasetsFhirStoresApplyAdminConsentsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.applyadminconsentsrequest)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.applyadminconsentsrequest)
 	if err != nil {
 		return nil, err
 	}
@@ -16070,6 +16300,7 @@ func (c *ProjectsLocationsDatasetsFhirStoresApplyAdminConsentsCall) doRequest(al
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "healthcare.projects.locations.datasets.fhirStores.applyAdminConsents", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -16104,9 +16335,11 @@ func (c *ProjectsLocationsDatasetsFhirStoresApplyAdminConsentsCall) Do(opts ...g
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "healthcare.projects.locations.datasets.fhirStores.applyAdminConsents", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -16168,8 +16401,7 @@ func (c *ProjectsLocationsDatasetsFhirStoresApplyConsentsCall) Header() http.Hea
 
 func (c *ProjectsLocationsDatasetsFhirStoresApplyConsentsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.applyconsentsrequest)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.applyconsentsrequest)
 	if err != nil {
 		return nil, err
 	}
@@ -16185,6 +16417,7 @@ func (c *ProjectsLocationsDatasetsFhirStoresApplyConsentsCall) doRequest(alt str
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "healthcare.projects.locations.datasets.fhirStores.applyConsents", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -16219,9 +16452,11 @@ func (c *ProjectsLocationsDatasetsFhirStoresApplyConsentsCall) Do(opts ...google
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "healthcare.projects.locations.datasets.fhirStores.applyConsents", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -16293,6 +16528,7 @@ func (c *ProjectsLocationsDatasetsFhirStoresCreateCall) doRequest(alt string) (*
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "healthcare.projects.locations.datasets.fhirStores.create", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -16327,9 +16563,11 @@ func (c *ProjectsLocationsDatasetsFhirStoresCreateCall) Do(opts ...googleapi.Cal
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "healthcare.projects.locations.datasets.fhirStores.create", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -16400,6 +16638,7 @@ func (c *ProjectsLocationsDatasetsFhirStoresDeidentifyCall) doRequest(alt string
 	googleapi.Expand(req.URL, map[string]string{
 		"sourceStore": c.sourceStore,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "healthcare.projects.locations.datasets.fhirStores.deidentify", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -16434,9 +16673,11 @@ func (c *ProjectsLocationsDatasetsFhirStoresDeidentifyCall) Do(opts ...googleapi
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "healthcare.projects.locations.datasets.fhirStores.deidentify", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -16495,6 +16736,7 @@ func (c *ProjectsLocationsDatasetsFhirStoresDeleteCall) doRequest(alt string) (*
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "healthcare.projects.locations.datasets.fhirStores.delete", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -16529,9 +16771,11 @@ func (c *ProjectsLocationsDatasetsFhirStoresDeleteCall) Do(opts ...googleapi.Cal
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "healthcare.projects.locations.datasets.fhirStores.delete", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -16599,12 +16843,11 @@ func (c *ProjectsLocationsDatasetsFhirStoresExplainDataAccessCall) doRequest(alt
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
-	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}:explainDataAccess")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, body)
+	req, err := http.NewRequest("GET", urls, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -16612,6 +16855,7 @@ func (c *ProjectsLocationsDatasetsFhirStoresExplainDataAccessCall) doRequest(alt
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "healthcare.projects.locations.datasets.fhirStores.explainDataAccess", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -16647,9 +16891,11 @@ func (c *ProjectsLocationsDatasetsFhirStoresExplainDataAccessCall) Do(opts ...go
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "healthcare.projects.locations.datasets.fhirStores.explainDataAccess", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -16722,6 +16968,7 @@ func (c *ProjectsLocationsDatasetsFhirStoresExportCall) doRequest(alt string) (*
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "healthcare.projects.locations.datasets.fhirStores.export", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -16756,9 +17003,11 @@ func (c *ProjectsLocationsDatasetsFhirStoresExportCall) Do(opts ...googleapi.Cal
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "healthcare.projects.locations.datasets.fhirStores.export", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -16828,6 +17077,7 @@ func (c *ProjectsLocationsDatasetsFhirStoresGetCall) doRequest(alt string) (*htt
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "healthcare.projects.locations.datasets.fhirStores.get", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -16862,9 +17112,11 @@ func (c *ProjectsLocationsDatasetsFhirStoresGetCall) Do(opts ...googleapi.CallOp
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "healthcare.projects.locations.datasets.fhirStores.get", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -16934,6 +17186,7 @@ func (c *ProjectsLocationsDatasetsFhirStoresGetFHIRStoreMetricsCall) doRequest(a
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "healthcare.projects.locations.datasets.fhirStores.getFHIRStoreMetrics", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -16969,9 +17222,11 @@ func (c *ProjectsLocationsDatasetsFhirStoresGetFHIRStoreMetricsCall) Do(opts ...
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "healthcare.projects.locations.datasets.fhirStores.getFHIRStoreMetrics", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -17061,6 +17316,7 @@ func (c *ProjectsLocationsDatasetsFhirStoresGetIamPolicyCall) doRequest(alt stri
 	googleapi.Expand(req.URL, map[string]string{
 		"resource": c.resource,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "healthcare.projects.locations.datasets.fhirStores.getIamPolicy", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -17095,9 +17351,11 @@ func (c *ProjectsLocationsDatasetsFhirStoresGetIamPolicyCall) Do(opts ...googlea
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "healthcare.projects.locations.datasets.fhirStores.getIamPolicy", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -17218,6 +17476,7 @@ func (c *ProjectsLocationsDatasetsFhirStoresImportCall) doRequest(alt string) (*
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "healthcare.projects.locations.datasets.fhirStores.import", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -17252,9 +17511,11 @@ func (c *ProjectsLocationsDatasetsFhirStoresImportCall) Do(opts ...googleapi.Cal
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "healthcare.projects.locations.datasets.fhirStores.import", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -17367,6 +17628,7 @@ func (c *ProjectsLocationsDatasetsFhirStoresListCall) doRequest(alt string) (*ht
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "healthcare.projects.locations.datasets.fhirStores.list", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -17402,9 +17664,11 @@ func (c *ProjectsLocationsDatasetsFhirStoresListCall) Do(opts ...googleapi.CallO
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "healthcare.projects.locations.datasets.fhirStores.list", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -17500,6 +17764,7 @@ func (c *ProjectsLocationsDatasetsFhirStoresPatchCall) doRequest(alt string) (*h
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "healthcare.projects.locations.datasets.fhirStores.patch", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -17534,9 +17799,11 @@ func (c *ProjectsLocationsDatasetsFhirStoresPatchCall) Do(opts ...googleapi.Call
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "healthcare.projects.locations.datasets.fhirStores.patch", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -17609,6 +17876,7 @@ func (c *ProjectsLocationsDatasetsFhirStoresRollbackCall) doRequest(alt string) 
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "healthcare.projects.locations.datasets.fhirStores.rollback", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -17643,9 +17911,11 @@ func (c *ProjectsLocationsDatasetsFhirStoresRollbackCall) Do(opts ...googleapi.C
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "healthcare.projects.locations.datasets.fhirStores.rollback", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -17713,6 +17983,7 @@ func (c *ProjectsLocationsDatasetsFhirStoresSetIamPolicyCall) doRequest(alt stri
 	googleapi.Expand(req.URL, map[string]string{
 		"resource": c.resource,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "healthcare.projects.locations.datasets.fhirStores.setIamPolicy", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -17747,9 +18018,11 @@ func (c *ProjectsLocationsDatasetsFhirStoresSetIamPolicyCall) Do(opts ...googlea
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "healthcare.projects.locations.datasets.fhirStores.setIamPolicy", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -17820,6 +18093,7 @@ func (c *ProjectsLocationsDatasetsFhirStoresTestIamPermissionsCall) doRequest(al
 	googleapi.Expand(req.URL, map[string]string{
 		"resource": c.resource,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "healthcare.projects.locations.datasets.fhirStores.testIamPermissions", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -17855,9 +18129,11 @@ func (c *ProjectsLocationsDatasetsFhirStoresTestIamPermissionsCall) Do(opts ...g
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "healthcare.projects.locations.datasets.fhirStores.testIamPermissions", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -17950,6 +18226,7 @@ func (c *ProjectsLocationsDatasetsFhirStoresFhirBinaryCreateCall) doRequest(alt 
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "healthcare.projects.locations.datasets.fhirStores.fhir.Binary-create", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -18033,6 +18310,7 @@ func (c *ProjectsLocationsDatasetsFhirStoresFhirBinaryReadCall) doRequest(alt st
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "healthcare.projects.locations.datasets.fhirStores.fhir.Binary-read", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -18135,6 +18413,7 @@ func (c *ProjectsLocationsDatasetsFhirStoresFhirBinaryUpdateCall) doRequest(alt 
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "healthcare.projects.locations.datasets.fhirStores.fhir.Binary-update", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -18218,6 +18497,7 @@ func (c *ProjectsLocationsDatasetsFhirStoresFhirBinaryVreadCall) doRequest(alt s
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "healthcare.projects.locations.datasets.fhirStores.fhir.Binary-vread", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -18287,12 +18567,11 @@ func (c *ProjectsLocationsDatasetsFhirStoresFhirConsentEnforcementStatusCall) do
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
-	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}/$consent-enforcement-status")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, body)
+	req, err := http.NewRequest("GET", urls, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -18300,6 +18579,7 @@ func (c *ProjectsLocationsDatasetsFhirStoresFhirConsentEnforcementStatusCall) do
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "healthcare.projects.locations.datasets.fhirStores.fhir.Consent-enforcement-status", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -18388,12 +18668,11 @@ func (c *ProjectsLocationsDatasetsFhirStoresFhirPatientConsentEnforcementStatusC
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
-	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}/$consent-enforcement-status")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, body)
+	req, err := http.NewRequest("GET", urls, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -18401,6 +18680,7 @@ func (c *ProjectsLocationsDatasetsFhirStoresFhirPatientConsentEnforcementStatusC
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "healthcare.projects.locations.datasets.fhirStores.fhir.Patient-consent-enforcement-status", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -18555,6 +18835,7 @@ func (c *ProjectsLocationsDatasetsFhirStoresFhirPatientEverythingCall) doRequest
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "healthcare.projects.locations.datasets.fhirStores.fhir.Patient-everything", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -18623,6 +18904,7 @@ func (c *ProjectsLocationsDatasetsFhirStoresFhirResourcePurgeCall) doRequest(alt
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "healthcare.projects.locations.datasets.fhirStores.fhir.Resource-purge", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -18657,9 +18939,11 @@ func (c *ProjectsLocationsDatasetsFhirStoresFhirResourcePurgeCall) Do(opts ...go
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "healthcare.projects.locations.datasets.fhirStores.fhir.Resource-purge", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -18759,6 +19043,7 @@ func (c *ProjectsLocationsDatasetsFhirStoresFhirResourceValidateCall) doRequest(
 		"parent": c.parent,
 		"type":   c.type_,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "healthcare.projects.locations.datasets.fhirStores.fhir.Resource-validate", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -18847,6 +19132,7 @@ func (c *ProjectsLocationsDatasetsFhirStoresFhirCapabilitiesCall) doRequest(alt 
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "healthcare.projects.locations.datasets.fhirStores.fhir.capabilities", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -18930,6 +19216,7 @@ func (c *ProjectsLocationsDatasetsFhirStoresFhirConditionalDeleteCall) doRequest
 		"parent": c.parent,
 		"type":   c.type_,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "healthcare.projects.locations.datasets.fhirStores.fhir.conditionalDelete", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -18964,9 +19251,11 @@ func (c *ProjectsLocationsDatasetsFhirStoresFhirConditionalDeleteCall) Do(opts .
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "healthcare.projects.locations.datasets.fhirStores.fhir.conditionalDelete", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -19055,6 +19344,7 @@ func (c *ProjectsLocationsDatasetsFhirStoresFhirConditionalPatchCall) doRequest(
 		"parent": c.parent,
 		"type":   c.type_,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "healthcare.projects.locations.datasets.fhirStores.fhir.conditionalPatch", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -19157,6 +19447,7 @@ func (c *ProjectsLocationsDatasetsFhirStoresFhirConditionalUpdateCall) doRequest
 		"parent": c.parent,
 		"type":   c.type_,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "healthcare.projects.locations.datasets.fhirStores.fhir.conditionalUpdate", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -19259,6 +19550,7 @@ func (c *ProjectsLocationsDatasetsFhirStoresFhirCreateCall) doRequest(alt string
 		"parent": c.parent,
 		"type":   c.type_,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "healthcare.projects.locations.datasets.fhirStores.fhir.create", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -19332,6 +19624,7 @@ func (c *ProjectsLocationsDatasetsFhirStoresFhirDeleteCall) doRequest(alt string
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "healthcare.projects.locations.datasets.fhirStores.fhir.delete", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -19435,6 +19728,7 @@ func (c *ProjectsLocationsDatasetsFhirStoresFhirExecuteBundleCall) doRequest(alt
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "healthcare.projects.locations.datasets.fhirStores.fhir.executeBundle", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -19563,6 +19857,7 @@ func (c *ProjectsLocationsDatasetsFhirStoresFhirHistoryCall) doRequest(alt strin
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "healthcare.projects.locations.datasets.fhirStores.fhir.history", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -19646,6 +19941,7 @@ func (c *ProjectsLocationsDatasetsFhirStoresFhirPatchCall) doRequest(alt string)
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "healthcare.projects.locations.datasets.fhirStores.fhir.patch", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -19737,6 +20033,7 @@ func (c *ProjectsLocationsDatasetsFhirStoresFhirReadCall) doRequest(alt string) 
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "healthcare.projects.locations.datasets.fhirStores.fhir.read", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -19873,6 +20170,7 @@ func (c *ProjectsLocationsDatasetsFhirStoresFhirSearchCall) doRequest(alt string
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "healthcare.projects.locations.datasets.fhirStores.fhir.search", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -20017,6 +20315,7 @@ func (c *ProjectsLocationsDatasetsFhirStoresFhirSearchTypeCall) doRequest(alt st
 		"parent":       c.parent,
 		"resourceType": c.resourceType,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "healthcare.projects.locations.datasets.fhirStores.fhir.search-type", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -20106,6 +20405,7 @@ func (c *ProjectsLocationsDatasetsFhirStoresFhirUpdateCall) doRequest(alt string
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "healthcare.projects.locations.datasets.fhirStores.fhir.update", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -20192,6 +20492,7 @@ func (c *ProjectsLocationsDatasetsFhirStoresFhirVreadCall) doRequest(alt string)
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "healthcare.projects.locations.datasets.fhirStores.fhir.vread", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -20269,6 +20570,7 @@ func (c *ProjectsLocationsDatasetsHl7V2StoresCreateCall) doRequest(alt string) (
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "healthcare.projects.locations.datasets.hl7V2Stores.create", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -20303,9 +20605,11 @@ func (c *ProjectsLocationsDatasetsHl7V2StoresCreateCall) Do(opts ...googleapi.Ca
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "healthcare.projects.locations.datasets.hl7V2Stores.create", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -20364,6 +20668,7 @@ func (c *ProjectsLocationsDatasetsHl7V2StoresDeleteCall) doRequest(alt string) (
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "healthcare.projects.locations.datasets.hl7V2Stores.delete", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -20398,9 +20703,11 @@ func (c *ProjectsLocationsDatasetsHl7V2StoresDeleteCall) Do(opts ...googleapi.Ca
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "healthcare.projects.locations.datasets.hl7V2Stores.delete", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -20472,6 +20779,7 @@ func (c *ProjectsLocationsDatasetsHl7V2StoresExportCall) doRequest(alt string) (
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "healthcare.projects.locations.datasets.hl7V2Stores.export", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -20506,9 +20814,11 @@ func (c *ProjectsLocationsDatasetsHl7V2StoresExportCall) Do(opts ...googleapi.Ca
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "healthcare.projects.locations.datasets.hl7V2Stores.export", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -20578,6 +20888,7 @@ func (c *ProjectsLocationsDatasetsHl7V2StoresGetCall) doRequest(alt string) (*ht
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "healthcare.projects.locations.datasets.hl7V2Stores.get", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -20612,9 +20923,11 @@ func (c *ProjectsLocationsDatasetsHl7V2StoresGetCall) Do(opts ...googleapi.CallO
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "healthcare.projects.locations.datasets.hl7V2Stores.get", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -20687,6 +21000,7 @@ func (c *ProjectsLocationsDatasetsHl7V2StoresGetHL7v2StoreMetricsCall) doRequest
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "healthcare.projects.locations.datasets.hl7V2Stores.getHL7v2StoreMetrics", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -20722,9 +21036,11 @@ func (c *ProjectsLocationsDatasetsHl7V2StoresGetHL7v2StoreMetricsCall) Do(opts .
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "healthcare.projects.locations.datasets.hl7V2Stores.getHL7v2StoreMetrics", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -20814,6 +21130,7 @@ func (c *ProjectsLocationsDatasetsHl7V2StoresGetIamPolicyCall) doRequest(alt str
 	googleapi.Expand(req.URL, map[string]string{
 		"resource": c.resource,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "healthcare.projects.locations.datasets.hl7V2Stores.getIamPolicy", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -20848,9 +21165,11 @@ func (c *ProjectsLocationsDatasetsHl7V2StoresGetIamPolicyCall) Do(opts ...google
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "healthcare.projects.locations.datasets.hl7V2Stores.getIamPolicy", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -20940,6 +21259,7 @@ func (c *ProjectsLocationsDatasetsHl7V2StoresImportCall) doRequest(alt string) (
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "healthcare.projects.locations.datasets.hl7V2Stores.import", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -20974,9 +21294,11 @@ func (c *ProjectsLocationsDatasetsHl7V2StoresImportCall) Do(opts ...googleapi.Ca
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "healthcare.projects.locations.datasets.hl7V2Stores.import", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -21089,6 +21411,7 @@ func (c *ProjectsLocationsDatasetsHl7V2StoresListCall) doRequest(alt string) (*h
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "healthcare.projects.locations.datasets.hl7V2Stores.list", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -21124,9 +21447,11 @@ func (c *ProjectsLocationsDatasetsHl7V2StoresListCall) Do(opts ...googleapi.Call
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "healthcare.projects.locations.datasets.hl7V2Stores.list", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -21221,6 +21546,7 @@ func (c *ProjectsLocationsDatasetsHl7V2StoresPatchCall) doRequest(alt string) (*
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "healthcare.projects.locations.datasets.hl7V2Stores.patch", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -21255,9 +21581,11 @@ func (c *ProjectsLocationsDatasetsHl7V2StoresPatchCall) Do(opts ...googleapi.Cal
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "healthcare.projects.locations.datasets.hl7V2Stores.patch", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -21330,6 +21658,7 @@ func (c *ProjectsLocationsDatasetsHl7V2StoresRollbackCall) doRequest(alt string)
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "healthcare.projects.locations.datasets.hl7V2Stores.rollback", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -21364,9 +21693,11 @@ func (c *ProjectsLocationsDatasetsHl7V2StoresRollbackCall) Do(opts ...googleapi.
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "healthcare.projects.locations.datasets.hl7V2Stores.rollback", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -21434,6 +21765,7 @@ func (c *ProjectsLocationsDatasetsHl7V2StoresSetIamPolicyCall) doRequest(alt str
 	googleapi.Expand(req.URL, map[string]string{
 		"resource": c.resource,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "healthcare.projects.locations.datasets.hl7V2Stores.setIamPolicy", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -21468,9 +21800,11 @@ func (c *ProjectsLocationsDatasetsHl7V2StoresSetIamPolicyCall) Do(opts ...google
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "healthcare.projects.locations.datasets.hl7V2Stores.setIamPolicy", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -21541,6 +21875,7 @@ func (c *ProjectsLocationsDatasetsHl7V2StoresTestIamPermissionsCall) doRequest(a
 	googleapi.Expand(req.URL, map[string]string{
 		"resource": c.resource,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "healthcare.projects.locations.datasets.hl7V2Stores.testIamPermissions", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -21576,9 +21911,11 @@ func (c *ProjectsLocationsDatasetsHl7V2StoresTestIamPermissionsCall) Do(opts ...
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "healthcare.projects.locations.datasets.hl7V2Stores.testIamPermissions", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -21646,6 +21983,7 @@ func (c *ProjectsLocationsDatasetsHl7V2StoresMessagesCreateCall) doRequest(alt s
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "healthcare.projects.locations.datasets.hl7V2Stores.messages.create", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -21680,9 +22018,11 @@ func (c *ProjectsLocationsDatasetsHl7V2StoresMessagesCreateCall) Do(opts ...goog
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "healthcare.projects.locations.datasets.hl7V2Stores.messages.create", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -21740,6 +22080,7 @@ func (c *ProjectsLocationsDatasetsHl7V2StoresMessagesDeleteCall) doRequest(alt s
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "healthcare.projects.locations.datasets.hl7V2Stores.messages.delete", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -21774,9 +22115,11 @@ func (c *ProjectsLocationsDatasetsHl7V2StoresMessagesDeleteCall) Do(opts ...goog
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "healthcare.projects.locations.datasets.hl7V2Stores.messages.delete", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -21872,6 +22215,7 @@ func (c *ProjectsLocationsDatasetsHl7V2StoresMessagesGetCall) doRequest(alt stri
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "healthcare.projects.locations.datasets.hl7V2Stores.messages.get", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -21906,9 +22250,11 @@ func (c *ProjectsLocationsDatasetsHl7V2StoresMessagesGetCall) Do(opts ...googlea
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "healthcare.projects.locations.datasets.hl7V2Stores.messages.get", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -21980,6 +22326,7 @@ func (c *ProjectsLocationsDatasetsHl7V2StoresMessagesIngestCall) doRequest(alt s
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "healthcare.projects.locations.datasets.hl7V2Stores.messages.ingest", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -22015,9 +22362,11 @@ func (c *ProjectsLocationsDatasetsHl7V2StoresMessagesIngestCall) Do(opts ...goog
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "healthcare.projects.locations.datasets.hl7V2Stores.messages.ingest", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -22185,6 +22534,7 @@ func (c *ProjectsLocationsDatasetsHl7V2StoresMessagesListCall) doRequest(alt str
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "healthcare.projects.locations.datasets.hl7V2Stores.messages.list", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -22220,9 +22570,11 @@ func (c *ProjectsLocationsDatasetsHl7V2StoresMessagesListCall) Do(opts ...google
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "healthcare.projects.locations.datasets.hl7V2Stores.messages.list", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -22321,6 +22673,7 @@ func (c *ProjectsLocationsDatasetsHl7V2StoresMessagesPatchCall) doRequest(alt st
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "healthcare.projects.locations.datasets.hl7V2Stores.messages.patch", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -22355,9 +22708,11 @@ func (c *ProjectsLocationsDatasetsHl7V2StoresMessagesPatchCall) Do(opts ...googl
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "healthcare.projects.locations.datasets.hl7V2Stores.messages.patch", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -22429,6 +22784,7 @@ func (c *ProjectsLocationsDatasetsOperationsCancelCall) doRequest(alt string) (*
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "healthcare.projects.locations.datasets.operations.cancel", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -22463,9 +22819,11 @@ func (c *ProjectsLocationsDatasetsOperationsCancelCall) Do(opts ...googleapi.Cal
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "healthcare.projects.locations.datasets.operations.cancel", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -22537,6 +22895,7 @@ func (c *ProjectsLocationsDatasetsOperationsGetCall) doRequest(alt string) (*htt
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "healthcare.projects.locations.datasets.operations.get", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -22571,9 +22930,11 @@ func (c *ProjectsLocationsDatasetsOperationsGetCall) Do(opts ...googleapi.CallOp
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "healthcare.projects.locations.datasets.operations.get", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -22664,6 +23025,7 @@ func (c *ProjectsLocationsDatasetsOperationsListCall) doRequest(alt string) (*ht
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "healthcare.projects.locations.datasets.operations.list", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -22699,9 +23061,11 @@ func (c *ProjectsLocationsDatasetsOperationsListCall) Do(opts ...googleapi.CallO
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "healthcare.projects.locations.datasets.operations.list", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -22789,6 +23153,7 @@ func (c *ProjectsLocationsServicesNlpAnalyzeEntitiesCall) doRequest(alt string) 
 	googleapi.Expand(req.URL, map[string]string{
 		"nlpService": c.nlpService,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "healthcare.projects.locations.services.nlp.analyzeEntities", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -22824,8 +23189,10 @@ func (c *ProjectsLocationsServicesNlpAnalyzeEntitiesCall) Do(opts ...googleapi.C
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "healthcare.projects.locations.services.nlp.analyzeEntities", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }

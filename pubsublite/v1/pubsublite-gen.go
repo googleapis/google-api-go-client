@@ -57,11 +57,13 @@ import (
 	"errors"
 	"fmt"
 	"io"
+	"log/slog"
 	"net/http"
 	"net/url"
 	"strconv"
 	"strings"
 
+	"github.com/googleapis/gax-go/v2/internallog"
 	googleapi "google.golang.org/api/googleapi"
 	internal "google.golang.org/api/internal"
 	gensupport "google.golang.org/api/internal/gensupport"
@@ -85,6 +87,7 @@ var _ = strings.Replace
 var _ = context.Canceled
 var _ = internaloption.WithDefaultEndpoint
 var _ = internal.Version
+var _ = internallog.New
 
 const apiId = "pubsublite:v1"
 const apiName = "pubsublite"
@@ -115,7 +118,7 @@ func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, err
 	if err != nil {
 		return nil, err
 	}
-	s := &Service{client: client, BasePath: basePath}
+	s := &Service{client: client, BasePath: basePath, logger: internaloption.GetLogger(opts)}
 	s.Admin = NewAdminService(s)
 	s.Cursor = NewCursorService(s)
 	s.TopicStats = NewTopicStatsService(s)
@@ -142,6 +145,7 @@ func New(client *http.Client) (*Service, error) {
 
 type Service struct {
 	client    *http.Client
+	logger    *slog.Logger
 	BasePath  string // API endpoint base URL
 	UserAgent string // optional additional User-Agent fragment
 
@@ -1426,6 +1430,7 @@ func (c *AdminProjectsLocationsOperationsCancelCall) doRequest(alt string) (*htt
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "pubsublite.admin.projects.locations.operations.cancel", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -1460,9 +1465,11 @@ func (c *AdminProjectsLocationsOperationsCancelCall) Do(opts ...googleapi.CallOp
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "pubsublite.admin.projects.locations.operations.cancel", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -1523,6 +1530,7 @@ func (c *AdminProjectsLocationsOperationsDeleteCall) doRequest(alt string) (*htt
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "pubsublite.admin.projects.locations.operations.delete", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -1557,9 +1565,11 @@ func (c *AdminProjectsLocationsOperationsDeleteCall) Do(opts ...googleapi.CallOp
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "pubsublite.admin.projects.locations.operations.delete", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -1631,6 +1641,7 @@ func (c *AdminProjectsLocationsOperationsGetCall) doRequest(alt string) (*http.R
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "pubsublite.admin.projects.locations.operations.get", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -1665,9 +1676,11 @@ func (c *AdminProjectsLocationsOperationsGetCall) Do(opts ...googleapi.CallOptio
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "pubsublite.admin.projects.locations.operations.get", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -1758,6 +1771,7 @@ func (c *AdminProjectsLocationsOperationsListCall) doRequest(alt string) (*http.
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "pubsublite.admin.projects.locations.operations.list", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -1793,9 +1807,11 @@ func (c *AdminProjectsLocationsOperationsListCall) Do(opts ...googleapi.CallOpti
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "pubsublite.admin.projects.locations.operations.list", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -1889,6 +1905,7 @@ func (c *AdminProjectsLocationsReservationsCreateCall) doRequest(alt string) (*h
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "pubsublite.admin.projects.locations.reservations.create", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -1923,9 +1940,11 @@ func (c *AdminProjectsLocationsReservationsCreateCall) Do(opts ...googleapi.Call
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "pubsublite.admin.projects.locations.reservations.create", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -1985,6 +2004,7 @@ func (c *AdminProjectsLocationsReservationsDeleteCall) doRequest(alt string) (*h
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "pubsublite.admin.projects.locations.reservations.delete", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -2019,9 +2039,11 @@ func (c *AdminProjectsLocationsReservationsDeleteCall) Do(opts ...googleapi.Call
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "pubsublite.admin.projects.locations.reservations.delete", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -2094,6 +2116,7 @@ func (c *AdminProjectsLocationsReservationsGetCall) doRequest(alt string) (*http
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "pubsublite.admin.projects.locations.reservations.get", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -2128,9 +2151,11 @@ func (c *AdminProjectsLocationsReservationsGetCall) Do(opts ...googleapi.CallOpt
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "pubsublite.admin.projects.locations.reservations.get", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -2218,6 +2243,7 @@ func (c *AdminProjectsLocationsReservationsListCall) doRequest(alt string) (*htt
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "pubsublite.admin.projects.locations.reservations.list", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -2253,9 +2279,11 @@ func (c *AdminProjectsLocationsReservationsListCall) Do(opts ...googleapi.CallOp
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "pubsublite.admin.projects.locations.reservations.list", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -2349,6 +2377,7 @@ func (c *AdminProjectsLocationsReservationsPatchCall) doRequest(alt string) (*ht
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "pubsublite.admin.projects.locations.reservations.patch", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -2383,9 +2412,11 @@ func (c *AdminProjectsLocationsReservationsPatchCall) Do(opts ...googleapi.CallO
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "pubsublite.admin.projects.locations.reservations.patch", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -2474,6 +2505,7 @@ func (c *AdminProjectsLocationsReservationsTopicsListCall) doRequest(alt string)
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "pubsublite.admin.projects.locations.reservations.topics.list", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -2509,9 +2541,11 @@ func (c *AdminProjectsLocationsReservationsTopicsListCall) Do(opts ...googleapi.
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "pubsublite.admin.projects.locations.reservations.topics.list", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -2614,6 +2648,7 @@ func (c *AdminProjectsLocationsSubscriptionsCreateCall) doRequest(alt string) (*
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "pubsublite.admin.projects.locations.subscriptions.create", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -2648,9 +2683,11 @@ func (c *AdminProjectsLocationsSubscriptionsCreateCall) Do(opts ...googleapi.Cal
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "pubsublite.admin.projects.locations.subscriptions.create", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -2708,6 +2745,7 @@ func (c *AdminProjectsLocationsSubscriptionsDeleteCall) doRequest(alt string) (*
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "pubsublite.admin.projects.locations.subscriptions.delete", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -2742,9 +2780,11 @@ func (c *AdminProjectsLocationsSubscriptionsDeleteCall) Do(opts ...googleapi.Cal
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "pubsublite.admin.projects.locations.subscriptions.delete", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -2814,6 +2854,7 @@ func (c *AdminProjectsLocationsSubscriptionsGetCall) doRequest(alt string) (*htt
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "pubsublite.admin.projects.locations.subscriptions.get", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -2848,9 +2889,11 @@ func (c *AdminProjectsLocationsSubscriptionsGetCall) Do(opts ...googleapi.CallOp
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "pubsublite.admin.projects.locations.subscriptions.get", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -2938,6 +2981,7 @@ func (c *AdminProjectsLocationsSubscriptionsListCall) doRequest(alt string) (*ht
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "pubsublite.admin.projects.locations.subscriptions.list", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -2973,9 +3017,11 @@ func (c *AdminProjectsLocationsSubscriptionsListCall) Do(opts ...googleapi.CallO
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "pubsublite.admin.projects.locations.subscriptions.list", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -3069,6 +3115,7 @@ func (c *AdminProjectsLocationsSubscriptionsPatchCall) doRequest(alt string) (*h
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "pubsublite.admin.projects.locations.subscriptions.patch", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -3103,9 +3150,11 @@ func (c *AdminProjectsLocationsSubscriptionsPatchCall) Do(opts ...googleapi.Call
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "pubsublite.admin.projects.locations.subscriptions.patch", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -3184,6 +3233,7 @@ func (c *AdminProjectsLocationsSubscriptionsSeekCall) doRequest(alt string) (*ht
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "pubsublite.admin.projects.locations.subscriptions.seek", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -3218,9 +3268,11 @@ func (c *AdminProjectsLocationsSubscriptionsSeekCall) Do(opts ...googleapi.CallO
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "pubsublite.admin.projects.locations.subscriptions.seek", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -3293,6 +3345,7 @@ func (c *AdminProjectsLocationsTopicsCreateCall) doRequest(alt string) (*http.Re
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "pubsublite.admin.projects.locations.topics.create", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -3327,9 +3380,11 @@ func (c *AdminProjectsLocationsTopicsCreateCall) Do(opts ...googleapi.CallOption
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "pubsublite.admin.projects.locations.topics.create", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -3387,6 +3442,7 @@ func (c *AdminProjectsLocationsTopicsDeleteCall) doRequest(alt string) (*http.Re
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "pubsublite.admin.projects.locations.topics.delete", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -3421,9 +3477,11 @@ func (c *AdminProjectsLocationsTopicsDeleteCall) Do(opts ...googleapi.CallOption
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "pubsublite.admin.projects.locations.topics.delete", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -3493,6 +3551,7 @@ func (c *AdminProjectsLocationsTopicsGetCall) doRequest(alt string) (*http.Respo
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "pubsublite.admin.projects.locations.topics.get", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -3527,9 +3586,11 @@ func (c *AdminProjectsLocationsTopicsGetCall) Do(opts ...googleapi.CallOption) (
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "pubsublite.admin.projects.locations.topics.get", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -3599,6 +3660,7 @@ func (c *AdminProjectsLocationsTopicsGetPartitionsCall) doRequest(alt string) (*
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "pubsublite.admin.projects.locations.topics.getPartitions", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -3634,9 +3696,11 @@ func (c *AdminProjectsLocationsTopicsGetPartitionsCall) Do(opts ...googleapi.Cal
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "pubsublite.admin.projects.locations.topics.getPartitions", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -3724,6 +3788,7 @@ func (c *AdminProjectsLocationsTopicsListCall) doRequest(alt string) (*http.Resp
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "pubsublite.admin.projects.locations.topics.list", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -3759,9 +3824,11 @@ func (c *AdminProjectsLocationsTopicsListCall) Do(opts ...googleapi.CallOption) 
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "pubsublite.admin.projects.locations.topics.list", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -3854,6 +3921,7 @@ func (c *AdminProjectsLocationsTopicsPatchCall) doRequest(alt string) (*http.Res
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "pubsublite.admin.projects.locations.topics.patch", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -3888,9 +3956,11 @@ func (c *AdminProjectsLocationsTopicsPatchCall) Do(opts ...googleapi.CallOption)
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "pubsublite.admin.projects.locations.topics.patch", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -3977,6 +4047,7 @@ func (c *AdminProjectsLocationsTopicsSubscriptionsListCall) doRequest(alt string
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "pubsublite.admin.projects.locations.topics.subscriptions.list", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -4012,9 +4083,11 @@ func (c *AdminProjectsLocationsTopicsSubscriptionsListCall) Do(opts ...googleapi
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "pubsublite.admin.projects.locations.topics.subscriptions.list", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -4099,6 +4172,7 @@ func (c *CursorProjectsLocationsSubscriptionsCommitCursorCall) doRequest(alt str
 	googleapi.Expand(req.URL, map[string]string{
 		"subscription": c.subscription,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "pubsublite.cursor.projects.locations.subscriptions.commitCursor", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -4134,9 +4208,11 @@ func (c *CursorProjectsLocationsSubscriptionsCommitCursorCall) Do(opts ...google
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "pubsublite.cursor.projects.locations.subscriptions.commitCursor", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -4225,6 +4301,7 @@ func (c *CursorProjectsLocationsSubscriptionsCursorsListCall) doRequest(alt stri
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "pubsublite.cursor.projects.locations.subscriptions.cursors.list", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -4260,9 +4337,11 @@ func (c *CursorProjectsLocationsSubscriptionsCursorsListCall) Do(opts ...googlea
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "pubsublite.cursor.projects.locations.subscriptions.cursors.list", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -4351,6 +4430,7 @@ func (c *TopicStatsProjectsLocationsTopicsComputeHeadCursorCall) doRequest(alt s
 	googleapi.Expand(req.URL, map[string]string{
 		"topic": c.topic,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "pubsublite.topicStats.projects.locations.topics.computeHeadCursor", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -4386,9 +4466,11 @@ func (c *TopicStatsProjectsLocationsTopicsComputeHeadCursorCall) Do(opts ...goog
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "pubsublite.topicStats.projects.locations.topics.computeHeadCursor", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -4453,6 +4535,7 @@ func (c *TopicStatsProjectsLocationsTopicsComputeMessageStatsCall) doRequest(alt
 	googleapi.Expand(req.URL, map[string]string{
 		"topic": c.topic,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "pubsublite.topicStats.projects.locations.topics.computeMessageStats", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -4488,9 +4571,11 @@ func (c *TopicStatsProjectsLocationsTopicsComputeMessageStatsCall) Do(opts ...go
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "pubsublite.topicStats.projects.locations.topics.computeMessageStats", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -4555,6 +4640,7 @@ func (c *TopicStatsProjectsLocationsTopicsComputeTimeCursorCall) doRequest(alt s
 	googleapi.Expand(req.URL, map[string]string{
 		"topic": c.topic,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "pubsublite.topicStats.projects.locations.topics.computeTimeCursor", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -4590,8 +4676,10 @@ func (c *TopicStatsProjectsLocationsTopicsComputeTimeCursorCall) Do(opts ...goog
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "pubsublite.topicStats.projects.locations.topics.computeTimeCursor", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }

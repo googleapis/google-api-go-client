@@ -57,11 +57,13 @@ import (
 	"errors"
 	"fmt"
 	"io"
+	"log/slog"
 	"net/http"
 	"net/url"
 	"strconv"
 	"strings"
 
+	"github.com/googleapis/gax-go/v2/internallog"
 	googleapi "google.golang.org/api/googleapi"
 	internal "google.golang.org/api/internal"
 	gensupport "google.golang.org/api/internal/gensupport"
@@ -85,6 +87,7 @@ var _ = strings.Replace
 var _ = context.Canceled
 var _ = internaloption.WithDefaultEndpoint
 var _ = internal.Version
+var _ = internallog.New
 
 const apiId = "recommendationengine:v1beta1"
 const apiName = "recommendationengine"
@@ -115,7 +118,7 @@ func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, err
 	if err != nil {
 		return nil, err
 	}
-	s := &Service{client: client, BasePath: basePath}
+	s := &Service{client: client, BasePath: basePath, logger: internaloption.GetLogger(opts)}
 	s.Projects = NewProjectsService(s)
 	if err != nil {
 		return nil, err
@@ -140,6 +143,7 @@ func New(client *http.Client) (*Service, error) {
 
 type Service struct {
 	client    *http.Client
+	logger    *slog.Logger
 	BasePath  string // API endpoint base URL
 	UserAgent string // optional additional User-Agent fragment
 
@@ -2235,6 +2239,7 @@ func (c *ProjectsLocationsCatalogsListCall) doRequest(alt string) (*http.Respons
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "recommendationengine.projects.locations.catalogs.list", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -2270,9 +2275,11 @@ func (c *ProjectsLocationsCatalogsListCall) Do(opts ...googleapi.CallOption) (*G
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "recommendationengine.projects.locations.catalogs.list", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -2366,6 +2373,7 @@ func (c *ProjectsLocationsCatalogsPatchCall) doRequest(alt string) (*http.Respon
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "recommendationengine.projects.locations.catalogs.patch", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -2401,9 +2409,11 @@ func (c *ProjectsLocationsCatalogsPatchCall) Do(opts ...googleapi.CallOption) (*
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "recommendationengine.projects.locations.catalogs.patch", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -2468,6 +2478,7 @@ func (c *ProjectsLocationsCatalogsCatalogItemsCreateCall) doRequest(alt string) 
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "recommendationengine.projects.locations.catalogs.catalogItems.create", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -2503,9 +2514,11 @@ func (c *ProjectsLocationsCatalogsCatalogItemsCreateCall) Do(opts ...googleapi.C
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "recommendationengine.projects.locations.catalogs.catalogItems.create", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -2565,6 +2578,7 @@ func (c *ProjectsLocationsCatalogsCatalogItemsDeleteCall) doRequest(alt string) 
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "recommendationengine.projects.locations.catalogs.catalogItems.delete", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -2600,9 +2614,11 @@ func (c *ProjectsLocationsCatalogsCatalogItemsDeleteCall) Do(opts ...googleapi.C
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "recommendationengine.projects.locations.catalogs.catalogItems.delete", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -2674,6 +2690,7 @@ func (c *ProjectsLocationsCatalogsCatalogItemsGetCall) doRequest(alt string) (*h
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "recommendationengine.projects.locations.catalogs.catalogItems.get", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -2709,9 +2726,11 @@ func (c *ProjectsLocationsCatalogsCatalogItemsGetCall) Do(opts ...googleapi.Call
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "recommendationengine.projects.locations.catalogs.catalogItems.get", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -2780,6 +2799,7 @@ func (c *ProjectsLocationsCatalogsCatalogItemsImportCall) doRequest(alt string) 
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "recommendationengine.projects.locations.catalogs.catalogItems.import", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -2815,9 +2835,11 @@ func (c *ProjectsLocationsCatalogsCatalogItemsImportCall) Do(opts ...googleapi.C
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "recommendationengine.projects.locations.catalogs.catalogItems.import", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -2909,6 +2931,7 @@ func (c *ProjectsLocationsCatalogsCatalogItemsListCall) doRequest(alt string) (*
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "recommendationengine.projects.locations.catalogs.catalogItems.list", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -2944,9 +2967,11 @@ func (c *ProjectsLocationsCatalogsCatalogItemsListCall) Do(opts ...googleapi.Cal
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "recommendationengine.projects.locations.catalogs.catalogItems.list", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -3042,6 +3067,7 @@ func (c *ProjectsLocationsCatalogsCatalogItemsPatchCall) doRequest(alt string) (
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "recommendationengine.projects.locations.catalogs.catalogItems.patch", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -3077,9 +3103,11 @@ func (c *ProjectsLocationsCatalogsCatalogItemsPatchCall) Do(opts ...googleapi.Ca
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "recommendationengine.projects.locations.catalogs.catalogItems.patch", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -3151,6 +3179,7 @@ func (c *ProjectsLocationsCatalogsEventStoresOperationsGetCall) doRequest(alt st
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "recommendationengine.projects.locations.catalogs.eventStores.operations.get", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -3186,9 +3215,11 @@ func (c *ProjectsLocationsCatalogsEventStoresOperationsGetCall) Do(opts ...googl
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "recommendationengine.projects.locations.catalogs.eventStores.operations.get", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -3279,6 +3310,7 @@ func (c *ProjectsLocationsCatalogsEventStoresOperationsListCall) doRequest(alt s
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "recommendationengine.projects.locations.catalogs.eventStores.operations.list", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -3314,9 +3346,11 @@ func (c *ProjectsLocationsCatalogsEventStoresOperationsListCall) Do(opts ...goog
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "recommendationengine.projects.locations.catalogs.eventStores.operations.list", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -3404,6 +3438,7 @@ func (c *ProjectsLocationsCatalogsEventStoresPlacementsPredictCall) doRequest(al
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "recommendationengine.projects.locations.catalogs.eventStores.placements.predict", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -3439,9 +3474,11 @@ func (c *ProjectsLocationsCatalogsEventStoresPlacementsPredictCall) Do(opts ...g
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "recommendationengine.projects.locations.catalogs.eventStores.placements.predict", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -3528,6 +3565,7 @@ func (c *ProjectsLocationsCatalogsEventStoresPredictionApiKeyRegistrationsCreate
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "recommendationengine.projects.locations.catalogs.eventStores.predictionApiKeyRegistrations.create", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -3563,9 +3601,11 @@ func (c *ProjectsLocationsCatalogsEventStoresPredictionApiKeyRegistrationsCreate
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "recommendationengine.projects.locations.catalogs.eventStores.predictionApiKeyRegistrations.create", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -3625,6 +3665,7 @@ func (c *ProjectsLocationsCatalogsEventStoresPredictionApiKeyRegistrationsDelete
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "recommendationengine.projects.locations.catalogs.eventStores.predictionApiKeyRegistrations.delete", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -3660,9 +3701,11 @@ func (c *ProjectsLocationsCatalogsEventStoresPredictionApiKeyRegistrationsDelete
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "recommendationengine.projects.locations.catalogs.eventStores.predictionApiKeyRegistrations.delete", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -3748,6 +3791,7 @@ func (c *ProjectsLocationsCatalogsEventStoresPredictionApiKeyRegistrationsListCa
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "recommendationengine.projects.locations.catalogs.eventStores.predictionApiKeyRegistrations.list", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -3783,9 +3827,11 @@ func (c *ProjectsLocationsCatalogsEventStoresPredictionApiKeyRegistrationsListCa
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "recommendationengine.projects.locations.catalogs.eventStores.predictionApiKeyRegistrations.list", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -3906,6 +3952,7 @@ func (c *ProjectsLocationsCatalogsEventStoresUserEventsCollectCall) doRequest(al
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "recommendationengine.projects.locations.catalogs.eventStores.userEvents.collect", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -3941,9 +3988,11 @@ func (c *ProjectsLocationsCatalogsEventStoresUserEventsCollectCall) Do(opts ...g
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "recommendationengine.projects.locations.catalogs.eventStores.userEvents.collect", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -4013,6 +4062,7 @@ func (c *ProjectsLocationsCatalogsEventStoresUserEventsImportCall) doRequest(alt
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "recommendationengine.projects.locations.catalogs.eventStores.userEvents.import", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -4048,9 +4098,11 @@ func (c *ProjectsLocationsCatalogsEventStoresUserEventsImportCall) Do(opts ...go
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "recommendationengine.projects.locations.catalogs.eventStores.userEvents.import", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -4168,6 +4220,7 @@ func (c *ProjectsLocationsCatalogsEventStoresUserEventsListCall) doRequest(alt s
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "recommendationengine.projects.locations.catalogs.eventStores.userEvents.list", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -4203,9 +4256,11 @@ func (c *ProjectsLocationsCatalogsEventStoresUserEventsListCall) Do(opts ...goog
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "recommendationengine.projects.locations.catalogs.eventStores.userEvents.list", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -4296,6 +4351,7 @@ func (c *ProjectsLocationsCatalogsEventStoresUserEventsPurgeCall) doRequest(alt 
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "recommendationengine.projects.locations.catalogs.eventStores.userEvents.purge", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -4331,9 +4387,11 @@ func (c *ProjectsLocationsCatalogsEventStoresUserEventsPurgeCall) Do(opts ...goo
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "recommendationengine.projects.locations.catalogs.eventStores.userEvents.purge", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -4405,6 +4463,7 @@ func (c *ProjectsLocationsCatalogsEventStoresUserEventsRejoinCall) doRequest(alt
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "recommendationengine.projects.locations.catalogs.eventStores.userEvents.rejoin", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -4440,9 +4499,11 @@ func (c *ProjectsLocationsCatalogsEventStoresUserEventsRejoinCall) Do(opts ...go
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "recommendationengine.projects.locations.catalogs.eventStores.userEvents.rejoin", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -4508,6 +4569,7 @@ func (c *ProjectsLocationsCatalogsEventStoresUserEventsWriteCall) doRequest(alt 
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "recommendationengine.projects.locations.catalogs.eventStores.userEvents.write", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -4543,9 +4605,11 @@ func (c *ProjectsLocationsCatalogsEventStoresUserEventsWriteCall) Do(opts ...goo
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "recommendationengine.projects.locations.catalogs.eventStores.userEvents.write", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -4617,6 +4681,7 @@ func (c *ProjectsLocationsCatalogsOperationsGetCall) doRequest(alt string) (*htt
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "recommendationengine.projects.locations.catalogs.operations.get", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -4652,9 +4717,11 @@ func (c *ProjectsLocationsCatalogsOperationsGetCall) Do(opts ...googleapi.CallOp
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "recommendationengine.projects.locations.catalogs.operations.get", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -4745,6 +4812,7 @@ func (c *ProjectsLocationsCatalogsOperationsListCall) doRequest(alt string) (*ht
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "recommendationengine.projects.locations.catalogs.operations.list", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -4780,9 +4848,11 @@ func (c *ProjectsLocationsCatalogsOperationsListCall) Do(opts ...googleapi.CallO
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "recommendationengine.projects.locations.catalogs.operations.list", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 

@@ -57,11 +57,13 @@ import (
 	"errors"
 	"fmt"
 	"io"
+	"log/slog"
 	"net/http"
 	"net/url"
 	"strconv"
 	"strings"
 
+	"github.com/googleapis/gax-go/v2/internallog"
 	googleapi "google.golang.org/api/googleapi"
 	internal "google.golang.org/api/internal"
 	gensupport "google.golang.org/api/internal/gensupport"
@@ -85,6 +87,7 @@ var _ = strings.Replace
 var _ = context.Canceled
 var _ = internaloption.WithDefaultEndpoint
 var _ = internal.Version
+var _ = internallog.New
 
 const apiId = "walletobjects:v1"
 const apiName = "walletobjects"
@@ -114,7 +117,7 @@ func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, err
 	if err != nil {
 		return nil, err
 	}
-	s := &Service{client: client, BasePath: basePath}
+	s := &Service{client: client, BasePath: basePath, logger: internaloption.GetLogger(opts)}
 	s.Eventticketclass = NewEventticketclassService(s)
 	s.Eventticketobject = NewEventticketobjectService(s)
 	s.Flightclass = NewFlightclassService(s)
@@ -157,6 +160,7 @@ func New(client *http.Client) (*Service, error) {
 
 type Service struct {
 	client    *http.Client
+	logger    *slog.Logger
 	BasePath  string // API endpoint base URL
 	UserAgent string // optional additional User-Agent fragment
 
@@ -7874,6 +7878,7 @@ func (c *EventticketclassAddmessageCall) doRequest(alt string) (*http.Response, 
 	googleapi.Expand(req.URL, map[string]string{
 		"resourceId": c.resourceId,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "walletobjects.eventticketclass.addmessage", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -7909,9 +7914,11 @@ func (c *EventticketclassAddmessageCall) Do(opts ...googleapi.CallOption) (*Even
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "walletobjects.eventticketclass.addmessage", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -7985,6 +7992,7 @@ func (c *EventticketclassGetCall) doRequest(alt string) (*http.Response, error) 
 	googleapi.Expand(req.URL, map[string]string{
 		"resourceId": c.resourceId,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "walletobjects.eventticketclass.get", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -8020,9 +8028,11 @@ func (c *EventticketclassGetCall) Do(opts ...googleapi.CallOption) (*EventTicket
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "walletobjects.eventticketclass.get", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -8079,6 +8089,7 @@ func (c *EventticketclassInsertCall) doRequest(alt string) (*http.Response, erro
 		return nil, err
 	}
 	req.Header = reqHeaders
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "walletobjects.eventticketclass.insert", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -8114,9 +8125,11 @@ func (c *EventticketclassInsertCall) Do(opts ...googleapi.CallOption) (*EventTic
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "walletobjects.eventticketclass.insert", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -8205,6 +8218,7 @@ func (c *EventticketclassListCall) doRequest(alt string) (*http.Response, error)
 		return nil, err
 	}
 	req.Header = reqHeaders
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "walletobjects.eventticketclass.list", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -8240,9 +8254,11 @@ func (c *EventticketclassListCall) Do(opts ...googleapi.CallOption) (*EventTicke
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "walletobjects.eventticketclass.list", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -8311,6 +8327,7 @@ func (c *EventticketclassPatchCall) doRequest(alt string) (*http.Response, error
 	googleapi.Expand(req.URL, map[string]string{
 		"resourceId": c.resourceId,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "walletobjects.eventticketclass.patch", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -8346,9 +8363,11 @@ func (c *EventticketclassPatchCall) Do(opts ...googleapi.CallOption) (*EventTick
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "walletobjects.eventticketclass.patch", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -8416,6 +8435,7 @@ func (c *EventticketclassUpdateCall) doRequest(alt string) (*http.Response, erro
 	googleapi.Expand(req.URL, map[string]string{
 		"resourceId": c.resourceId,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "walletobjects.eventticketclass.update", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -8451,9 +8471,11 @@ func (c *EventticketclassUpdateCall) Do(opts ...googleapi.CallOption) (*EventTic
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "walletobjects.eventticketclass.update", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -8522,6 +8544,7 @@ func (c *EventticketobjectAddmessageCall) doRequest(alt string) (*http.Response,
 	googleapi.Expand(req.URL, map[string]string{
 		"resourceId": c.resourceId,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "walletobjects.eventticketobject.addmessage", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -8557,9 +8580,11 @@ func (c *EventticketobjectAddmessageCall) Do(opts ...googleapi.CallOption) (*Eve
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "walletobjects.eventticketobject.addmessage", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -8633,6 +8658,7 @@ func (c *EventticketobjectGetCall) doRequest(alt string) (*http.Response, error)
 	googleapi.Expand(req.URL, map[string]string{
 		"resourceId": c.resourceId,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "walletobjects.eventticketobject.get", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -8668,9 +8694,11 @@ func (c *EventticketobjectGetCall) Do(opts ...googleapi.CallOption) (*EventTicke
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "walletobjects.eventticketobject.get", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -8727,6 +8755,7 @@ func (c *EventticketobjectInsertCall) doRequest(alt string) (*http.Response, err
 		return nil, err
 	}
 	req.Header = reqHeaders
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "walletobjects.eventticketobject.insert", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -8762,9 +8791,11 @@ func (c *EventticketobjectInsertCall) Do(opts ...googleapi.CallOption) (*EventTi
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "walletobjects.eventticketobject.insert", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -8853,6 +8884,7 @@ func (c *EventticketobjectListCall) doRequest(alt string) (*http.Response, error
 		return nil, err
 	}
 	req.Header = reqHeaders
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "walletobjects.eventticketobject.list", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -8888,9 +8920,11 @@ func (c *EventticketobjectListCall) Do(opts ...googleapi.CallOption) (*EventTick
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "walletobjects.eventticketobject.list", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -8959,6 +8993,7 @@ func (c *EventticketobjectModifylinkedofferobjectsCall) doRequest(alt string) (*
 	googleapi.Expand(req.URL, map[string]string{
 		"resourceId": c.resourceId,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "walletobjects.eventticketobject.modifylinkedofferobjects", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -8994,9 +9029,11 @@ func (c *EventticketobjectModifylinkedofferobjectsCall) Do(opts ...googleapi.Cal
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "walletobjects.eventticketobject.modifylinkedofferobjects", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -9065,6 +9102,7 @@ func (c *EventticketobjectPatchCall) doRequest(alt string) (*http.Response, erro
 	googleapi.Expand(req.URL, map[string]string{
 		"resourceId": c.resourceId,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "walletobjects.eventticketobject.patch", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -9100,9 +9138,11 @@ func (c *EventticketobjectPatchCall) Do(opts ...googleapi.CallOption) (*EventTic
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "walletobjects.eventticketobject.patch", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -9170,6 +9210,7 @@ func (c *EventticketobjectUpdateCall) doRequest(alt string) (*http.Response, err
 	googleapi.Expand(req.URL, map[string]string{
 		"resourceId": c.resourceId,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "walletobjects.eventticketobject.update", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -9205,9 +9246,11 @@ func (c *EventticketobjectUpdateCall) Do(opts ...googleapi.CallOption) (*EventTi
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "walletobjects.eventticketobject.update", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -9276,6 +9319,7 @@ func (c *FlightclassAddmessageCall) doRequest(alt string) (*http.Response, error
 	googleapi.Expand(req.URL, map[string]string{
 		"resourceId": c.resourceId,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "walletobjects.flightclass.addmessage", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -9311,9 +9355,11 @@ func (c *FlightclassAddmessageCall) Do(opts ...googleapi.CallOption) (*FlightCla
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "walletobjects.flightclass.addmessage", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -9387,6 +9433,7 @@ func (c *FlightclassGetCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"resourceId": c.resourceId,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "walletobjects.flightclass.get", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -9421,9 +9468,11 @@ func (c *FlightclassGetCall) Do(opts ...googleapi.CallOption) (*FlightClass, err
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "walletobjects.flightclass.get", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -9480,6 +9529,7 @@ func (c *FlightclassInsertCall) doRequest(alt string) (*http.Response, error) {
 		return nil, err
 	}
 	req.Header = reqHeaders
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "walletobjects.flightclass.insert", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -9514,9 +9564,11 @@ func (c *FlightclassInsertCall) Do(opts ...googleapi.CallOption) (*FlightClass, 
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "walletobjects.flightclass.insert", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -9605,6 +9657,7 @@ func (c *FlightclassListCall) doRequest(alt string) (*http.Response, error) {
 		return nil, err
 	}
 	req.Header = reqHeaders
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "walletobjects.flightclass.list", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -9640,9 +9693,11 @@ func (c *FlightclassListCall) Do(opts ...googleapi.CallOption) (*FlightClassList
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "walletobjects.flightclass.list", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -9711,6 +9766,7 @@ func (c *FlightclassPatchCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"resourceId": c.resourceId,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "walletobjects.flightclass.patch", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -9745,9 +9801,11 @@ func (c *FlightclassPatchCall) Do(opts ...googleapi.CallOption) (*FlightClass, e
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "walletobjects.flightclass.patch", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -9815,6 +9873,7 @@ func (c *FlightclassUpdateCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"resourceId": c.resourceId,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "walletobjects.flightclass.update", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -9849,9 +9908,11 @@ func (c *FlightclassUpdateCall) Do(opts ...googleapi.CallOption) (*FlightClass, 
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "walletobjects.flightclass.update", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -9920,6 +9981,7 @@ func (c *FlightobjectAddmessageCall) doRequest(alt string) (*http.Response, erro
 	googleapi.Expand(req.URL, map[string]string{
 		"resourceId": c.resourceId,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "walletobjects.flightobject.addmessage", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -9955,9 +10017,11 @@ func (c *FlightobjectAddmessageCall) Do(opts ...googleapi.CallOption) (*FlightOb
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "walletobjects.flightobject.addmessage", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -10031,6 +10095,7 @@ func (c *FlightobjectGetCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"resourceId": c.resourceId,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "walletobjects.flightobject.get", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -10065,9 +10130,11 @@ func (c *FlightobjectGetCall) Do(opts ...googleapi.CallOption) (*FlightObject, e
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "walletobjects.flightobject.get", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -10124,6 +10191,7 @@ func (c *FlightobjectInsertCall) doRequest(alt string) (*http.Response, error) {
 		return nil, err
 	}
 	req.Header = reqHeaders
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "walletobjects.flightobject.insert", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -10158,9 +10226,11 @@ func (c *FlightobjectInsertCall) Do(opts ...googleapi.CallOption) (*FlightObject
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "walletobjects.flightobject.insert", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -10249,6 +10319,7 @@ func (c *FlightobjectListCall) doRequest(alt string) (*http.Response, error) {
 		return nil, err
 	}
 	req.Header = reqHeaders
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "walletobjects.flightobject.list", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -10284,9 +10355,11 @@ func (c *FlightobjectListCall) Do(opts ...googleapi.CallOption) (*FlightObjectLi
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "walletobjects.flightobject.list", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -10355,6 +10428,7 @@ func (c *FlightobjectPatchCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"resourceId": c.resourceId,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "walletobjects.flightobject.patch", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -10389,9 +10463,11 @@ func (c *FlightobjectPatchCall) Do(opts ...googleapi.CallOption) (*FlightObject,
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "walletobjects.flightobject.patch", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -10459,6 +10535,7 @@ func (c *FlightobjectUpdateCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"resourceId": c.resourceId,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "walletobjects.flightobject.update", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -10493,9 +10570,11 @@ func (c *FlightobjectUpdateCall) Do(opts ...googleapi.CallOption) (*FlightObject
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "walletobjects.flightobject.update", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -10564,6 +10643,7 @@ func (c *GenericclassAddmessageCall) doRequest(alt string) (*http.Response, erro
 	googleapi.Expand(req.URL, map[string]string{
 		"resourceId": c.resourceId,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "walletobjects.genericclass.addmessage", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -10599,9 +10679,11 @@ func (c *GenericclassAddmessageCall) Do(opts ...googleapi.CallOption) (*GenericC
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "walletobjects.genericclass.addmessage", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -10675,6 +10757,7 @@ func (c *GenericclassGetCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"resourceId": c.resourceId,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "walletobjects.genericclass.get", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -10709,9 +10792,11 @@ func (c *GenericclassGetCall) Do(opts ...googleapi.CallOption) (*GenericClass, e
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "walletobjects.genericclass.get", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -10768,6 +10853,7 @@ func (c *GenericclassInsertCall) doRequest(alt string) (*http.Response, error) {
 		return nil, err
 	}
 	req.Header = reqHeaders
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "walletobjects.genericclass.insert", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -10802,9 +10888,11 @@ func (c *GenericclassInsertCall) Do(opts ...googleapi.CallOption) (*GenericClass
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "walletobjects.genericclass.insert", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -10893,6 +10981,7 @@ func (c *GenericclassListCall) doRequest(alt string) (*http.Response, error) {
 		return nil, err
 	}
 	req.Header = reqHeaders
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "walletobjects.genericclass.list", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -10928,9 +11017,11 @@ func (c *GenericclassListCall) Do(opts ...googleapi.CallOption) (*GenericClassLi
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "walletobjects.genericclass.list", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -10999,6 +11090,7 @@ func (c *GenericclassPatchCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"resourceId": c.resourceId,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "walletobjects.genericclass.patch", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -11033,9 +11125,11 @@ func (c *GenericclassPatchCall) Do(opts ...googleapi.CallOption) (*GenericClass,
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "walletobjects.genericclass.patch", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -11103,6 +11197,7 @@ func (c *GenericclassUpdateCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"resourceId": c.resourceId,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "walletobjects.genericclass.update", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -11137,9 +11232,11 @@ func (c *GenericclassUpdateCall) Do(opts ...googleapi.CallOption) (*GenericClass
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "walletobjects.genericclass.update", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -11208,6 +11305,7 @@ func (c *GenericobjectAddmessageCall) doRequest(alt string) (*http.Response, err
 	googleapi.Expand(req.URL, map[string]string{
 		"resourceId": c.resourceId,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "walletobjects.genericobject.addmessage", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -11243,9 +11341,11 @@ func (c *GenericobjectAddmessageCall) Do(opts ...googleapi.CallOption) (*Generic
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "walletobjects.genericobject.addmessage", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -11319,6 +11419,7 @@ func (c *GenericobjectGetCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"resourceId": c.resourceId,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "walletobjects.genericobject.get", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -11353,9 +11454,11 @@ func (c *GenericobjectGetCall) Do(opts ...googleapi.CallOption) (*GenericObject,
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "walletobjects.genericobject.get", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -11412,6 +11515,7 @@ func (c *GenericobjectInsertCall) doRequest(alt string) (*http.Response, error) 
 		return nil, err
 	}
 	req.Header = reqHeaders
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "walletobjects.genericobject.insert", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -11446,9 +11550,11 @@ func (c *GenericobjectInsertCall) Do(opts ...googleapi.CallOption) (*GenericObje
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "walletobjects.genericobject.insert", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -11537,6 +11643,7 @@ func (c *GenericobjectListCall) doRequest(alt string) (*http.Response, error) {
 		return nil, err
 	}
 	req.Header = reqHeaders
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "walletobjects.genericobject.list", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -11572,9 +11679,11 @@ func (c *GenericobjectListCall) Do(opts ...googleapi.CallOption) (*GenericObject
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "walletobjects.genericobject.list", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -11643,6 +11752,7 @@ func (c *GenericobjectPatchCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"resourceId": c.resourceId,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "walletobjects.genericobject.patch", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -11677,9 +11787,11 @@ func (c *GenericobjectPatchCall) Do(opts ...googleapi.CallOption) (*GenericObjec
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "walletobjects.genericobject.patch", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -11747,6 +11859,7 @@ func (c *GenericobjectUpdateCall) doRequest(alt string) (*http.Response, error) 
 	googleapi.Expand(req.URL, map[string]string{
 		"resourceId": c.resourceId,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "walletobjects.genericobject.update", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -11781,9 +11894,11 @@ func (c *GenericobjectUpdateCall) Do(opts ...googleapi.CallOption) (*GenericObje
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "walletobjects.genericobject.update", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -11852,6 +11967,7 @@ func (c *GiftcardclassAddmessageCall) doRequest(alt string) (*http.Response, err
 	googleapi.Expand(req.URL, map[string]string{
 		"resourceId": c.resourceId,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "walletobjects.giftcardclass.addmessage", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -11887,9 +12003,11 @@ func (c *GiftcardclassAddmessageCall) Do(opts ...googleapi.CallOption) (*GiftCar
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "walletobjects.giftcardclass.addmessage", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -11963,6 +12081,7 @@ func (c *GiftcardclassGetCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"resourceId": c.resourceId,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "walletobjects.giftcardclass.get", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -11997,9 +12116,11 @@ func (c *GiftcardclassGetCall) Do(opts ...googleapi.CallOption) (*GiftCardClass,
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "walletobjects.giftcardclass.get", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -12056,6 +12177,7 @@ func (c *GiftcardclassInsertCall) doRequest(alt string) (*http.Response, error) 
 		return nil, err
 	}
 	req.Header = reqHeaders
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "walletobjects.giftcardclass.insert", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -12090,9 +12212,11 @@ func (c *GiftcardclassInsertCall) Do(opts ...googleapi.CallOption) (*GiftCardCla
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "walletobjects.giftcardclass.insert", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -12181,6 +12305,7 @@ func (c *GiftcardclassListCall) doRequest(alt string) (*http.Response, error) {
 		return nil, err
 	}
 	req.Header = reqHeaders
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "walletobjects.giftcardclass.list", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -12216,9 +12341,11 @@ func (c *GiftcardclassListCall) Do(opts ...googleapi.CallOption) (*GiftCardClass
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "walletobjects.giftcardclass.list", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -12287,6 +12414,7 @@ func (c *GiftcardclassPatchCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"resourceId": c.resourceId,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "walletobjects.giftcardclass.patch", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -12321,9 +12449,11 @@ func (c *GiftcardclassPatchCall) Do(opts ...googleapi.CallOption) (*GiftCardClas
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "walletobjects.giftcardclass.patch", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -12391,6 +12521,7 @@ func (c *GiftcardclassUpdateCall) doRequest(alt string) (*http.Response, error) 
 	googleapi.Expand(req.URL, map[string]string{
 		"resourceId": c.resourceId,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "walletobjects.giftcardclass.update", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -12425,9 +12556,11 @@ func (c *GiftcardclassUpdateCall) Do(opts ...googleapi.CallOption) (*GiftCardCla
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "walletobjects.giftcardclass.update", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -12496,6 +12629,7 @@ func (c *GiftcardobjectAddmessageCall) doRequest(alt string) (*http.Response, er
 	googleapi.Expand(req.URL, map[string]string{
 		"resourceId": c.resourceId,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "walletobjects.giftcardobject.addmessage", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -12531,9 +12665,11 @@ func (c *GiftcardobjectAddmessageCall) Do(opts ...googleapi.CallOption) (*GiftCa
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "walletobjects.giftcardobject.addmessage", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -12607,6 +12743,7 @@ func (c *GiftcardobjectGetCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"resourceId": c.resourceId,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "walletobjects.giftcardobject.get", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -12641,9 +12778,11 @@ func (c *GiftcardobjectGetCall) Do(opts ...googleapi.CallOption) (*GiftCardObjec
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "walletobjects.giftcardobject.get", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -12700,6 +12839,7 @@ func (c *GiftcardobjectInsertCall) doRequest(alt string) (*http.Response, error)
 		return nil, err
 	}
 	req.Header = reqHeaders
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "walletobjects.giftcardobject.insert", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -12734,9 +12874,11 @@ func (c *GiftcardobjectInsertCall) Do(opts ...googleapi.CallOption) (*GiftCardOb
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "walletobjects.giftcardobject.insert", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -12825,6 +12967,7 @@ func (c *GiftcardobjectListCall) doRequest(alt string) (*http.Response, error) {
 		return nil, err
 	}
 	req.Header = reqHeaders
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "walletobjects.giftcardobject.list", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -12860,9 +13003,11 @@ func (c *GiftcardobjectListCall) Do(opts ...googleapi.CallOption) (*GiftCardObje
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "walletobjects.giftcardobject.list", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -12931,6 +13076,7 @@ func (c *GiftcardobjectPatchCall) doRequest(alt string) (*http.Response, error) 
 	googleapi.Expand(req.URL, map[string]string{
 		"resourceId": c.resourceId,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "walletobjects.giftcardobject.patch", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -12965,9 +13111,11 @@ func (c *GiftcardobjectPatchCall) Do(opts ...googleapi.CallOption) (*GiftCardObj
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "walletobjects.giftcardobject.patch", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -13035,6 +13183,7 @@ func (c *GiftcardobjectUpdateCall) doRequest(alt string) (*http.Response, error)
 	googleapi.Expand(req.URL, map[string]string{
 		"resourceId": c.resourceId,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "walletobjects.giftcardobject.update", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -13069,9 +13218,11 @@ func (c *GiftcardobjectUpdateCall) Do(opts ...googleapi.CallOption) (*GiftCardOb
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "walletobjects.giftcardobject.update", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -13141,6 +13292,7 @@ func (c *IssuerGetCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"resourceId": strconv.FormatInt(c.resourceId, 10),
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "walletobjects.issuer.get", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -13175,9 +13327,11 @@ func (c *IssuerGetCall) Do(opts ...googleapi.CallOption) (*Issuer, error) {
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "walletobjects.issuer.get", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -13234,6 +13388,7 @@ func (c *IssuerInsertCall) doRequest(alt string) (*http.Response, error) {
 		return nil, err
 	}
 	req.Header = reqHeaders
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "walletobjects.issuer.insert", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -13268,9 +13423,11 @@ func (c *IssuerInsertCall) Do(opts ...googleapi.CallOption) (*Issuer, error) {
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "walletobjects.issuer.insert", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -13333,6 +13490,7 @@ func (c *IssuerListCall) doRequest(alt string) (*http.Response, error) {
 		return nil, err
 	}
 	req.Header = reqHeaders
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "walletobjects.issuer.list", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -13368,9 +13526,11 @@ func (c *IssuerListCall) Do(opts ...googleapi.CallOption) (*IssuerListResponse, 
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "walletobjects.issuer.list", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -13435,6 +13595,7 @@ func (c *IssuerPatchCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"resourceId": strconv.FormatInt(c.resourceId, 10),
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "walletobjects.issuer.patch", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -13469,9 +13630,11 @@ func (c *IssuerPatchCall) Do(opts ...googleapi.CallOption) (*Issuer, error) {
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "walletobjects.issuer.patch", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -13535,6 +13698,7 @@ func (c *IssuerUpdateCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"resourceId": strconv.FormatInt(c.resourceId, 10),
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "walletobjects.issuer.update", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -13569,9 +13733,11 @@ func (c *IssuerUpdateCall) Do(opts ...googleapi.CallOption) (*Issuer, error) {
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "walletobjects.issuer.update", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -13628,6 +13794,7 @@ func (c *JwtInsertCall) doRequest(alt string) (*http.Response, error) {
 		return nil, err
 	}
 	req.Header = reqHeaders
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "walletobjects.jwt.insert", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -13663,9 +13830,11 @@ func (c *JwtInsertCall) Do(opts ...googleapi.CallOption) (*JwtInsertResponse, er
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "walletobjects.jwt.insert", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -13734,6 +13903,7 @@ func (c *LoyaltyclassAddmessageCall) doRequest(alt string) (*http.Response, erro
 	googleapi.Expand(req.URL, map[string]string{
 		"resourceId": c.resourceId,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "walletobjects.loyaltyclass.addmessage", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -13769,9 +13939,11 @@ func (c *LoyaltyclassAddmessageCall) Do(opts ...googleapi.CallOption) (*LoyaltyC
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "walletobjects.loyaltyclass.addmessage", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -13845,6 +14017,7 @@ func (c *LoyaltyclassGetCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"resourceId": c.resourceId,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "walletobjects.loyaltyclass.get", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -13879,9 +14052,11 @@ func (c *LoyaltyclassGetCall) Do(opts ...googleapi.CallOption) (*LoyaltyClass, e
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "walletobjects.loyaltyclass.get", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -13938,6 +14113,7 @@ func (c *LoyaltyclassInsertCall) doRequest(alt string) (*http.Response, error) {
 		return nil, err
 	}
 	req.Header = reqHeaders
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "walletobjects.loyaltyclass.insert", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -13972,9 +14148,11 @@ func (c *LoyaltyclassInsertCall) Do(opts ...googleapi.CallOption) (*LoyaltyClass
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "walletobjects.loyaltyclass.insert", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -14063,6 +14241,7 @@ func (c *LoyaltyclassListCall) doRequest(alt string) (*http.Response, error) {
 		return nil, err
 	}
 	req.Header = reqHeaders
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "walletobjects.loyaltyclass.list", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -14098,9 +14277,11 @@ func (c *LoyaltyclassListCall) Do(opts ...googleapi.CallOption) (*LoyaltyClassLi
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "walletobjects.loyaltyclass.list", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -14169,6 +14350,7 @@ func (c *LoyaltyclassPatchCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"resourceId": c.resourceId,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "walletobjects.loyaltyclass.patch", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -14203,9 +14385,11 @@ func (c *LoyaltyclassPatchCall) Do(opts ...googleapi.CallOption) (*LoyaltyClass,
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "walletobjects.loyaltyclass.patch", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -14273,6 +14457,7 @@ func (c *LoyaltyclassUpdateCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"resourceId": c.resourceId,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "walletobjects.loyaltyclass.update", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -14307,9 +14492,11 @@ func (c *LoyaltyclassUpdateCall) Do(opts ...googleapi.CallOption) (*LoyaltyClass
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "walletobjects.loyaltyclass.update", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -14378,6 +14565,7 @@ func (c *LoyaltyobjectAddmessageCall) doRequest(alt string) (*http.Response, err
 	googleapi.Expand(req.URL, map[string]string{
 		"resourceId": c.resourceId,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "walletobjects.loyaltyobject.addmessage", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -14413,9 +14601,11 @@ func (c *LoyaltyobjectAddmessageCall) Do(opts ...googleapi.CallOption) (*Loyalty
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "walletobjects.loyaltyobject.addmessage", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -14489,6 +14679,7 @@ func (c *LoyaltyobjectGetCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"resourceId": c.resourceId,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "walletobjects.loyaltyobject.get", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -14523,9 +14714,11 @@ func (c *LoyaltyobjectGetCall) Do(opts ...googleapi.CallOption) (*LoyaltyObject,
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "walletobjects.loyaltyobject.get", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -14582,6 +14775,7 @@ func (c *LoyaltyobjectInsertCall) doRequest(alt string) (*http.Response, error) 
 		return nil, err
 	}
 	req.Header = reqHeaders
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "walletobjects.loyaltyobject.insert", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -14616,9 +14810,11 @@ func (c *LoyaltyobjectInsertCall) Do(opts ...googleapi.CallOption) (*LoyaltyObje
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "walletobjects.loyaltyobject.insert", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -14707,6 +14903,7 @@ func (c *LoyaltyobjectListCall) doRequest(alt string) (*http.Response, error) {
 		return nil, err
 	}
 	req.Header = reqHeaders
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "walletobjects.loyaltyobject.list", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -14742,9 +14939,11 @@ func (c *LoyaltyobjectListCall) Do(opts ...googleapi.CallOption) (*LoyaltyObject
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "walletobjects.loyaltyobject.list", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -14813,6 +15012,7 @@ func (c *LoyaltyobjectModifylinkedofferobjectsCall) doRequest(alt string) (*http
 	googleapi.Expand(req.URL, map[string]string{
 		"resourceId": c.resourceId,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "walletobjects.loyaltyobject.modifylinkedofferobjects", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -14847,9 +15047,11 @@ func (c *LoyaltyobjectModifylinkedofferobjectsCall) Do(opts ...googleapi.CallOpt
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "walletobjects.loyaltyobject.modifylinkedofferobjects", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -14918,6 +15120,7 @@ func (c *LoyaltyobjectPatchCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"resourceId": c.resourceId,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "walletobjects.loyaltyobject.patch", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -14952,9 +15155,11 @@ func (c *LoyaltyobjectPatchCall) Do(opts ...googleapi.CallOption) (*LoyaltyObjec
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "walletobjects.loyaltyobject.patch", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -15022,6 +15227,7 @@ func (c *LoyaltyobjectUpdateCall) doRequest(alt string) (*http.Response, error) 
 	googleapi.Expand(req.URL, map[string]string{
 		"resourceId": c.resourceId,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "walletobjects.loyaltyobject.update", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -15056,9 +15262,11 @@ func (c *LoyaltyobjectUpdateCall) Do(opts ...googleapi.CallOption) (*LoyaltyObje
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "walletobjects.loyaltyobject.update", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -15133,6 +15341,7 @@ func (c *MediaDownloadCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"resourceId": c.resourceId,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "walletobjects.media.download", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -15183,9 +15392,11 @@ func (c *MediaDownloadCall) Do(opts ...googleapi.CallOption) (*Media, error) {
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "walletobjects.media.download", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -15302,6 +15513,7 @@ func (c *MediaUploadCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"resourceId": c.resourceId,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "walletobjects.media.upload", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -15354,9 +15566,11 @@ func (c *MediaUploadCall) Do(opts ...googleapi.CallOption) (*TransitObjectUpload
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "walletobjects.media.upload", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -15425,6 +15639,7 @@ func (c *OfferclassAddmessageCall) doRequest(alt string) (*http.Response, error)
 	googleapi.Expand(req.URL, map[string]string{
 		"resourceId": c.resourceId,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "walletobjects.offerclass.addmessage", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -15460,9 +15675,11 @@ func (c *OfferclassAddmessageCall) Do(opts ...googleapi.CallOption) (*OfferClass
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "walletobjects.offerclass.addmessage", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -15536,6 +15753,7 @@ func (c *OfferclassGetCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"resourceId": c.resourceId,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "walletobjects.offerclass.get", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -15570,9 +15788,11 @@ func (c *OfferclassGetCall) Do(opts ...googleapi.CallOption) (*OfferClass, error
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "walletobjects.offerclass.get", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -15629,6 +15849,7 @@ func (c *OfferclassInsertCall) doRequest(alt string) (*http.Response, error) {
 		return nil, err
 	}
 	req.Header = reqHeaders
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "walletobjects.offerclass.insert", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -15663,9 +15884,11 @@ func (c *OfferclassInsertCall) Do(opts ...googleapi.CallOption) (*OfferClass, er
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "walletobjects.offerclass.insert", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -15754,6 +15977,7 @@ func (c *OfferclassListCall) doRequest(alt string) (*http.Response, error) {
 		return nil, err
 	}
 	req.Header = reqHeaders
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "walletobjects.offerclass.list", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -15789,9 +16013,11 @@ func (c *OfferclassListCall) Do(opts ...googleapi.CallOption) (*OfferClassListRe
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "walletobjects.offerclass.list", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -15860,6 +16086,7 @@ func (c *OfferclassPatchCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"resourceId": c.resourceId,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "walletobjects.offerclass.patch", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -15894,9 +16121,11 @@ func (c *OfferclassPatchCall) Do(opts ...googleapi.CallOption) (*OfferClass, err
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "walletobjects.offerclass.patch", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -15964,6 +16193,7 @@ func (c *OfferclassUpdateCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"resourceId": c.resourceId,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "walletobjects.offerclass.update", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -15998,9 +16228,11 @@ func (c *OfferclassUpdateCall) Do(opts ...googleapi.CallOption) (*OfferClass, er
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "walletobjects.offerclass.update", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -16069,6 +16301,7 @@ func (c *OfferobjectAddmessageCall) doRequest(alt string) (*http.Response, error
 	googleapi.Expand(req.URL, map[string]string{
 		"resourceId": c.resourceId,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "walletobjects.offerobject.addmessage", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -16104,9 +16337,11 @@ func (c *OfferobjectAddmessageCall) Do(opts ...googleapi.CallOption) (*OfferObje
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "walletobjects.offerobject.addmessage", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -16180,6 +16415,7 @@ func (c *OfferobjectGetCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"resourceId": c.resourceId,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "walletobjects.offerobject.get", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -16214,9 +16450,11 @@ func (c *OfferobjectGetCall) Do(opts ...googleapi.CallOption) (*OfferObject, err
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "walletobjects.offerobject.get", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -16273,6 +16511,7 @@ func (c *OfferobjectInsertCall) doRequest(alt string) (*http.Response, error) {
 		return nil, err
 	}
 	req.Header = reqHeaders
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "walletobjects.offerobject.insert", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -16307,9 +16546,11 @@ func (c *OfferobjectInsertCall) Do(opts ...googleapi.CallOption) (*OfferObject, 
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "walletobjects.offerobject.insert", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -16398,6 +16639,7 @@ func (c *OfferobjectListCall) doRequest(alt string) (*http.Response, error) {
 		return nil, err
 	}
 	req.Header = reqHeaders
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "walletobjects.offerobject.list", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -16433,9 +16675,11 @@ func (c *OfferobjectListCall) Do(opts ...googleapi.CallOption) (*OfferObjectList
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "walletobjects.offerobject.list", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -16504,6 +16748,7 @@ func (c *OfferobjectPatchCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"resourceId": c.resourceId,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "walletobjects.offerobject.patch", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -16538,9 +16783,11 @@ func (c *OfferobjectPatchCall) Do(opts ...googleapi.CallOption) (*OfferObject, e
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "walletobjects.offerobject.patch", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -16608,6 +16855,7 @@ func (c *OfferobjectUpdateCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"resourceId": c.resourceId,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "walletobjects.offerobject.update", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -16642,9 +16890,11 @@ func (c *OfferobjectUpdateCall) Do(opts ...googleapi.CallOption) (*OfferObject, 
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "walletobjects.offerobject.update", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -16715,6 +16965,7 @@ func (c *PermissionsGetCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"resourceId": strconv.FormatInt(c.resourceId, 10),
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "walletobjects.permissions.get", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -16749,9 +17000,11 @@ func (c *PermissionsGetCall) Do(opts ...googleapi.CallOption) (*Permissions, err
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "walletobjects.permissions.get", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -16816,6 +17069,7 @@ func (c *PermissionsUpdateCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"resourceId": strconv.FormatInt(c.resourceId, 10),
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "walletobjects.permissions.update", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -16850,9 +17104,11 @@ func (c *PermissionsUpdateCall) Do(opts ...googleapi.CallOption) (*Permissions, 
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "walletobjects.permissions.update", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -16909,6 +17165,7 @@ func (c *SmarttapInsertCall) doRequest(alt string) (*http.Response, error) {
 		return nil, err
 	}
 	req.Header = reqHeaders
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "walletobjects.smarttap.insert", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -16943,9 +17200,11 @@ func (c *SmarttapInsertCall) Do(opts ...googleapi.CallOption) (*SmartTap, error)
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "walletobjects.smarttap.insert", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -17014,6 +17273,7 @@ func (c *TransitclassAddmessageCall) doRequest(alt string) (*http.Response, erro
 	googleapi.Expand(req.URL, map[string]string{
 		"resourceId": c.resourceId,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "walletobjects.transitclass.addmessage", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -17049,9 +17309,11 @@ func (c *TransitclassAddmessageCall) Do(opts ...googleapi.CallOption) (*TransitC
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "walletobjects.transitclass.addmessage", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -17125,6 +17387,7 @@ func (c *TransitclassGetCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"resourceId": c.resourceId,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "walletobjects.transitclass.get", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -17159,9 +17422,11 @@ func (c *TransitclassGetCall) Do(opts ...googleapi.CallOption) (*TransitClass, e
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "walletobjects.transitclass.get", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -17218,6 +17483,7 @@ func (c *TransitclassInsertCall) doRequest(alt string) (*http.Response, error) {
 		return nil, err
 	}
 	req.Header = reqHeaders
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "walletobjects.transitclass.insert", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -17252,9 +17518,11 @@ func (c *TransitclassInsertCall) Do(opts ...googleapi.CallOption) (*TransitClass
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "walletobjects.transitclass.insert", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -17343,6 +17611,7 @@ func (c *TransitclassListCall) doRequest(alt string) (*http.Response, error) {
 		return nil, err
 	}
 	req.Header = reqHeaders
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "walletobjects.transitclass.list", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -17378,9 +17647,11 @@ func (c *TransitclassListCall) Do(opts ...googleapi.CallOption) (*TransitClassLi
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "walletobjects.transitclass.list", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -17449,6 +17720,7 @@ func (c *TransitclassPatchCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"resourceId": c.resourceId,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "walletobjects.transitclass.patch", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -17483,9 +17755,11 @@ func (c *TransitclassPatchCall) Do(opts ...googleapi.CallOption) (*TransitClass,
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "walletobjects.transitclass.patch", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -17553,6 +17827,7 @@ func (c *TransitclassUpdateCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"resourceId": c.resourceId,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "walletobjects.transitclass.update", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -17587,9 +17862,11 @@ func (c *TransitclassUpdateCall) Do(opts ...googleapi.CallOption) (*TransitClass
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "walletobjects.transitclass.update", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -17658,6 +17935,7 @@ func (c *TransitobjectAddmessageCall) doRequest(alt string) (*http.Response, err
 	googleapi.Expand(req.URL, map[string]string{
 		"resourceId": c.resourceId,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "walletobjects.transitobject.addmessage", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -17693,9 +17971,11 @@ func (c *TransitobjectAddmessageCall) Do(opts ...googleapi.CallOption) (*Transit
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "walletobjects.transitobject.addmessage", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -17769,6 +18049,7 @@ func (c *TransitobjectGetCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"resourceId": c.resourceId,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "walletobjects.transitobject.get", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -17803,9 +18084,11 @@ func (c *TransitobjectGetCall) Do(opts ...googleapi.CallOption) (*TransitObject,
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "walletobjects.transitobject.get", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -17862,6 +18145,7 @@ func (c *TransitobjectInsertCall) doRequest(alt string) (*http.Response, error) 
 		return nil, err
 	}
 	req.Header = reqHeaders
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "walletobjects.transitobject.insert", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -17896,9 +18180,11 @@ func (c *TransitobjectInsertCall) Do(opts ...googleapi.CallOption) (*TransitObje
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "walletobjects.transitobject.insert", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -17987,6 +18273,7 @@ func (c *TransitobjectListCall) doRequest(alt string) (*http.Response, error) {
 		return nil, err
 	}
 	req.Header = reqHeaders
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "walletobjects.transitobject.list", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -18022,9 +18309,11 @@ func (c *TransitobjectListCall) Do(opts ...googleapi.CallOption) (*TransitObject
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "walletobjects.transitobject.list", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -18093,6 +18382,7 @@ func (c *TransitobjectPatchCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"resourceId": c.resourceId,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "walletobjects.transitobject.patch", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -18127,9 +18417,11 @@ func (c *TransitobjectPatchCall) Do(opts ...googleapi.CallOption) (*TransitObjec
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "walletobjects.transitobject.patch", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -18197,6 +18489,7 @@ func (c *TransitobjectUpdateCall) doRequest(alt string) (*http.Response, error) 
 	googleapi.Expand(req.URL, map[string]string{
 		"resourceId": c.resourceId,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "walletobjects.transitobject.update", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -18231,8 +18524,10 @@ func (c *TransitobjectUpdateCall) Do(opts ...googleapi.CallOption) (*TransitObje
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "walletobjects.transitobject.update", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }

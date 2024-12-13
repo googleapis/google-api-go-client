@@ -57,11 +57,13 @@ import (
 	"errors"
 	"fmt"
 	"io"
+	"log/slog"
 	"net/http"
 	"net/url"
 	"strconv"
 	"strings"
 
+	"github.com/googleapis/gax-go/v2/internallog"
 	googleapi "google.golang.org/api/googleapi"
 	internal "google.golang.org/api/internal"
 	gensupport "google.golang.org/api/internal/gensupport"
@@ -85,6 +87,7 @@ var _ = strings.Replace
 var _ = context.Canceled
 var _ = internaloption.WithDefaultEndpoint
 var _ = internal.Version
+var _ = internallog.New
 
 const apiId = "accessapproval:v1"
 const apiName = "accessapproval"
@@ -115,7 +118,7 @@ func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, err
 	if err != nil {
 		return nil, err
 	}
-	s := &Service{client: client, BasePath: basePath}
+	s := &Service{client: client, BasePath: basePath, logger: internaloption.GetLogger(opts)}
 	s.Folders = NewFoldersService(s)
 	s.Organizations = NewOrganizationsService(s)
 	s.Projects = NewProjectsService(s)
@@ -142,6 +145,7 @@ func New(client *http.Client) (*Service, error) {
 
 type Service struct {
 	client    *http.Client
+	logger    *slog.Logger
 	BasePath  string // API endpoint base URL
 	UserAgent string // optional additional User-Agent fragment
 
@@ -870,6 +874,7 @@ func (c *FoldersDeleteAccessApprovalSettingsCall) doRequest(alt string) (*http.R
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "accessapproval.folders.deleteAccessApprovalSettings", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -904,9 +909,11 @@ func (c *FoldersDeleteAccessApprovalSettingsCall) Do(opts ...googleapi.CallOptio
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "accessapproval.folders.deleteAccessApprovalSettings", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -978,6 +985,7 @@ func (c *FoldersGetAccessApprovalSettingsCall) doRequest(alt string) (*http.Resp
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "accessapproval.folders.getAccessApprovalSettings", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -1013,9 +1021,11 @@ func (c *FoldersGetAccessApprovalSettingsCall) Do(opts ...googleapi.CallOption) 
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "accessapproval.folders.getAccessApprovalSettings", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -1086,6 +1096,7 @@ func (c *FoldersGetServiceAccountCall) doRequest(alt string) (*http.Response, er
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "accessapproval.folders.getServiceAccount", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -1121,9 +1132,11 @@ func (c *FoldersGetServiceAccountCall) Do(opts ...googleapi.CallOption) (*Access
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "accessapproval.folders.getServiceAccount", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -1206,6 +1219,7 @@ func (c *FoldersUpdateAccessApprovalSettingsCall) doRequest(alt string) (*http.R
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "accessapproval.folders.updateAccessApprovalSettings", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -1241,9 +1255,11 @@ func (c *FoldersUpdateAccessApprovalSettingsCall) Do(opts ...googleapi.CallOptio
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "accessapproval.folders.updateAccessApprovalSettings", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -1309,6 +1325,7 @@ func (c *FoldersApprovalRequestsApproveCall) doRequest(alt string) (*http.Respon
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "accessapproval.folders.approvalRequests.approve", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -1344,9 +1361,11 @@ func (c *FoldersApprovalRequestsApproveCall) Do(opts ...googleapi.CallOption) (*
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "accessapproval.folders.approvalRequests.approve", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -1414,6 +1433,7 @@ func (c *FoldersApprovalRequestsDismissCall) doRequest(alt string) (*http.Respon
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "accessapproval.folders.approvalRequests.dismiss", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -1449,9 +1469,11 @@ func (c *FoldersApprovalRequestsDismissCall) Do(opts ...googleapi.CallOption) (*
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "accessapproval.folders.approvalRequests.dismiss", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -1523,6 +1545,7 @@ func (c *FoldersApprovalRequestsGetCall) doRequest(alt string) (*http.Response, 
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "accessapproval.folders.approvalRequests.get", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -1558,9 +1581,11 @@ func (c *FoldersApprovalRequestsGetCall) Do(opts ...googleapi.CallOption) (*Appr
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "accessapproval.folders.approvalRequests.get", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -1628,6 +1653,7 @@ func (c *FoldersApprovalRequestsInvalidateCall) doRequest(alt string) (*http.Res
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "accessapproval.folders.approvalRequests.invalidate", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -1663,9 +1689,11 @@ func (c *FoldersApprovalRequestsInvalidateCall) Do(opts ...googleapi.CallOption)
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "accessapproval.folders.approvalRequests.invalidate", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -1764,6 +1792,7 @@ func (c *FoldersApprovalRequestsListCall) doRequest(alt string) (*http.Response,
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "accessapproval.folders.approvalRequests.list", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -1799,9 +1828,11 @@ func (c *FoldersApprovalRequestsListCall) Do(opts ...googleapi.CallOption) (*Lis
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "accessapproval.folders.approvalRequests.list", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -1885,6 +1916,7 @@ func (c *OrganizationsDeleteAccessApprovalSettingsCall) doRequest(alt string) (*
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "accessapproval.organizations.deleteAccessApprovalSettings", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -1919,9 +1951,11 @@ func (c *OrganizationsDeleteAccessApprovalSettingsCall) Do(opts ...googleapi.Cal
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "accessapproval.organizations.deleteAccessApprovalSettings", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -1993,6 +2027,7 @@ func (c *OrganizationsGetAccessApprovalSettingsCall) doRequest(alt string) (*htt
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "accessapproval.organizations.getAccessApprovalSettings", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -2028,9 +2063,11 @@ func (c *OrganizationsGetAccessApprovalSettingsCall) Do(opts ...googleapi.CallOp
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "accessapproval.organizations.getAccessApprovalSettings", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -2101,6 +2138,7 @@ func (c *OrganizationsGetServiceAccountCall) doRequest(alt string) (*http.Respon
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "accessapproval.organizations.getServiceAccount", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -2136,9 +2174,11 @@ func (c *OrganizationsGetServiceAccountCall) Do(opts ...googleapi.CallOption) (*
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "accessapproval.organizations.getServiceAccount", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -2221,6 +2261,7 @@ func (c *OrganizationsUpdateAccessApprovalSettingsCall) doRequest(alt string) (*
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "accessapproval.organizations.updateAccessApprovalSettings", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -2256,9 +2297,11 @@ func (c *OrganizationsUpdateAccessApprovalSettingsCall) Do(opts ...googleapi.Cal
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "accessapproval.organizations.updateAccessApprovalSettings", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -2324,6 +2367,7 @@ func (c *OrganizationsApprovalRequestsApproveCall) doRequest(alt string) (*http.
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "accessapproval.organizations.approvalRequests.approve", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -2359,9 +2403,11 @@ func (c *OrganizationsApprovalRequestsApproveCall) Do(opts ...googleapi.CallOpti
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "accessapproval.organizations.approvalRequests.approve", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -2429,6 +2475,7 @@ func (c *OrganizationsApprovalRequestsDismissCall) doRequest(alt string) (*http.
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "accessapproval.organizations.approvalRequests.dismiss", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -2464,9 +2511,11 @@ func (c *OrganizationsApprovalRequestsDismissCall) Do(opts ...googleapi.CallOpti
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "accessapproval.organizations.approvalRequests.dismiss", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -2538,6 +2587,7 @@ func (c *OrganizationsApprovalRequestsGetCall) doRequest(alt string) (*http.Resp
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "accessapproval.organizations.approvalRequests.get", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -2573,9 +2623,11 @@ func (c *OrganizationsApprovalRequestsGetCall) Do(opts ...googleapi.CallOption) 
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "accessapproval.organizations.approvalRequests.get", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -2643,6 +2695,7 @@ func (c *OrganizationsApprovalRequestsInvalidateCall) doRequest(alt string) (*ht
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "accessapproval.organizations.approvalRequests.invalidate", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -2678,9 +2731,11 @@ func (c *OrganizationsApprovalRequestsInvalidateCall) Do(opts ...googleapi.CallO
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "accessapproval.organizations.approvalRequests.invalidate", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -2779,6 +2834,7 @@ func (c *OrganizationsApprovalRequestsListCall) doRequest(alt string) (*http.Res
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "accessapproval.organizations.approvalRequests.list", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -2814,9 +2870,11 @@ func (c *OrganizationsApprovalRequestsListCall) Do(opts ...googleapi.CallOption)
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "accessapproval.organizations.approvalRequests.list", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -2900,6 +2958,7 @@ func (c *ProjectsDeleteAccessApprovalSettingsCall) doRequest(alt string) (*http.
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "accessapproval.projects.deleteAccessApprovalSettings", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -2934,9 +2993,11 @@ func (c *ProjectsDeleteAccessApprovalSettingsCall) Do(opts ...googleapi.CallOpti
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "accessapproval.projects.deleteAccessApprovalSettings", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -3008,6 +3069,7 @@ func (c *ProjectsGetAccessApprovalSettingsCall) doRequest(alt string) (*http.Res
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "accessapproval.projects.getAccessApprovalSettings", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -3043,9 +3105,11 @@ func (c *ProjectsGetAccessApprovalSettingsCall) Do(opts ...googleapi.CallOption)
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "accessapproval.projects.getAccessApprovalSettings", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -3116,6 +3180,7 @@ func (c *ProjectsGetServiceAccountCall) doRequest(alt string) (*http.Response, e
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "accessapproval.projects.getServiceAccount", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -3151,9 +3216,11 @@ func (c *ProjectsGetServiceAccountCall) Do(opts ...googleapi.CallOption) (*Acces
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "accessapproval.projects.getServiceAccount", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -3236,6 +3303,7 @@ func (c *ProjectsUpdateAccessApprovalSettingsCall) doRequest(alt string) (*http.
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "accessapproval.projects.updateAccessApprovalSettings", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -3271,9 +3339,11 @@ func (c *ProjectsUpdateAccessApprovalSettingsCall) Do(opts ...googleapi.CallOpti
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "accessapproval.projects.updateAccessApprovalSettings", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -3339,6 +3409,7 @@ func (c *ProjectsApprovalRequestsApproveCall) doRequest(alt string) (*http.Respo
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "accessapproval.projects.approvalRequests.approve", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -3374,9 +3445,11 @@ func (c *ProjectsApprovalRequestsApproveCall) Do(opts ...googleapi.CallOption) (
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "accessapproval.projects.approvalRequests.approve", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -3444,6 +3517,7 @@ func (c *ProjectsApprovalRequestsDismissCall) doRequest(alt string) (*http.Respo
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "accessapproval.projects.approvalRequests.dismiss", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -3479,9 +3553,11 @@ func (c *ProjectsApprovalRequestsDismissCall) Do(opts ...googleapi.CallOption) (
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "accessapproval.projects.approvalRequests.dismiss", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -3553,6 +3629,7 @@ func (c *ProjectsApprovalRequestsGetCall) doRequest(alt string) (*http.Response,
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "accessapproval.projects.approvalRequests.get", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -3588,9 +3665,11 @@ func (c *ProjectsApprovalRequestsGetCall) Do(opts ...googleapi.CallOption) (*App
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "accessapproval.projects.approvalRequests.get", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -3658,6 +3737,7 @@ func (c *ProjectsApprovalRequestsInvalidateCall) doRequest(alt string) (*http.Re
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "accessapproval.projects.approvalRequests.invalidate", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -3693,9 +3773,11 @@ func (c *ProjectsApprovalRequestsInvalidateCall) Do(opts ...googleapi.CallOption
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "accessapproval.projects.approvalRequests.invalidate", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -3794,6 +3876,7 @@ func (c *ProjectsApprovalRequestsListCall) doRequest(alt string) (*http.Response
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "accessapproval.projects.approvalRequests.list", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -3829,9 +3912,11 @@ func (c *ProjectsApprovalRequestsListCall) Do(opts ...googleapi.CallOption) (*Li
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "accessapproval.projects.approvalRequests.list", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 

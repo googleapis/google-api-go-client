@@ -555,8 +555,8 @@ type CaPool struct {
 	IssuancePolicy *IssuancePolicy `json:"issuancePolicy,omitempty"`
 	// Labels: Optional. Labels with user-defined metadata.
 	Labels map[string]string `json:"labels,omitempty"`
-	// Name: Output only. Identifier. The resource name for this CaPool in the
-	// format `projects/*/locations/*/caPools/*`.
+	// Name: Identifier. The resource name for this CaPool in the format
+	// `projects/*/locations/*/caPools/*`.
 	Name string `json:"name,omitempty"`
 	// PublishingOptions: Optional. The PublishingOptions to follow when issuing
 	// Certificates from any CertificateAuthority in this CaPool.
@@ -644,7 +644,7 @@ type Certificate struct {
 	// certificate. Note that the lifetime may be truncated if it would extend past
 	// the life of any certificate authority in the issuing chain.
 	Lifetime string `json:"lifetime,omitempty"`
-	// Name: Output only. The resource name for this Certificate in the format
+	// Name: Identifier. The resource name for this Certificate in the format
 	// `projects/*/locations/*/caPools/*/certificates/*`.
 	Name string `json:"name,omitempty"`
 	// PemCertificate: Output only. The pem-encoded, signed X.509 certificate.
@@ -739,9 +739,8 @@ type CertificateAuthority struct {
 	// Used to create the "not_before_time" and "not_after_time" fields inside an
 	// X.509 certificate.
 	Lifetime string `json:"lifetime,omitempty"`
-	// Name: Output only. Identifier. The resource name for this
-	// CertificateAuthority in the format
-	// `projects/*/locations/*/caPools/*/certificateAuthorities/*`.
+	// Name: Identifier. The resource name for this CertificateAuthority in the
+	// format `projects/*/locations/*/caPools/*/certificateAuthorities/*`.
 	Name string `json:"name,omitempty"`
 	// PemCaCertificates: Output only. This CertificateAuthority's certificate
 	// chain, including the current CertificateAuthority's certificate. Ordered
@@ -1056,7 +1055,7 @@ type CertificateRevocationList struct {
 	CreateTime string `json:"createTime,omitempty"`
 	// Labels: Optional. Labels with user-defined metadata.
 	Labels map[string]string `json:"labels,omitempty"`
-	// Name: Output only. The resource name for this CertificateRevocationList in
+	// Name: Identifier. The resource name for this CertificateRevocationList in
 	// the format `projects/*/locations/*/caPools/*certificateAuthorities/*/
 	// certificateRevocationLists/*`.
 	Name string `json:"name,omitempty"`
@@ -1126,7 +1125,7 @@ type CertificateTemplate struct {
 	// maximum_lifetime, the effective lifetime will be explicitly truncated to
 	// match it.
 	MaximumLifetime string `json:"maximumLifetime,omitempty"`
-	// Name: Output only. The resource name for this CertificateTemplate in the
+	// Name: Identifier. The resource name for this CertificateTemplate in the
 	// format `projects/*/locations/*/certificateTemplates/*`.
 	Name string `json:"name,omitempty"`
 	// PassthroughExtensions: Optional. Describes the set of X.509 extensions that
@@ -3911,8 +3910,8 @@ type ProjectsLocationsCaPoolsPatchCall struct {
 
 // Patch: Update a CaPool.
 //
-//   - name: Output only. Identifier. The resource name for this CaPool in the
-//     format `projects/*/locations/*/caPools/*`.
+//   - name: Identifier. The resource name for this CaPool in the format
+//     `projects/*/locations/*/caPools/*`.
 func (r *ProjectsLocationsCaPoolsService) Patch(name string, capool *CaPool) *ProjectsLocationsCaPoolsPatchCall {
 	c := &ProjectsLocationsCaPoolsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5197,9 +5196,8 @@ type ProjectsLocationsCaPoolsCertificateAuthoritiesPatchCall struct {
 
 // Patch: Update a CertificateAuthority.
 //
-//   - name: Output only. Identifier. The resource name for this
-//     CertificateAuthority in the format
-//     `projects/*/locations/*/caPools/*/certificateAuthorities/*`.
+//   - name: Identifier. The resource name for this CertificateAuthority in the
+//     format `projects/*/locations/*/caPools/*/certificateAuthorities/*`.
 func (r *ProjectsLocationsCaPoolsCertificateAuthoritiesService) Patch(name string, certificateauthority *CertificateAuthority) *ProjectsLocationsCaPoolsCertificateAuthoritiesPatchCall {
 	c := &ProjectsLocationsCaPoolsCertificateAuthoritiesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5817,7 +5815,7 @@ type ProjectsLocationsCaPoolsCertificateAuthoritiesCertificateRevocationListsPat
 
 // Patch: Update a CertificateRevocationList.
 //
-//   - name: Output only. The resource name for this CertificateRevocationList in
+//   - name: Identifier. The resource name for this CertificateRevocationList in
 //     the format `projects/*/locations/*/caPools/*certificateAuthorities/*/
 //     certificateRevocationLists/*`.
 func (r *ProjectsLocationsCaPoolsCertificateAuthoritiesCertificateRevocationListsService) Patch(name string, certificaterevocationlist *CertificateRevocationList) *ProjectsLocationsCaPoolsCertificateAuthoritiesCertificateRevocationListsPatchCall {
@@ -6578,7 +6576,7 @@ type ProjectsLocationsCaPoolsCertificatesPatchCall struct {
 // Patch: Update a Certificate. Currently, the only field you can update is the
 // labels field.
 //
-//   - name: Output only. The resource name for this Certificate in the format
+//   - name: Identifier. The resource name for this Certificate in the format
 //     `projects/*/locations/*/caPools/*/certificates/*`.
 func (r *ProjectsLocationsCaPoolsCertificatesService) Patch(name string, certificate *Certificate) *ProjectsLocationsCaPoolsCertificatesPatchCall {
 	c := &ProjectsLocationsCaPoolsCertificatesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -7432,7 +7430,7 @@ type ProjectsLocationsCertificateTemplatesPatchCall struct {
 
 // Patch: Update a CertificateTemplate.
 //
-//   - name: Output only. The resource name for this CertificateTemplate in the
+//   - name: Identifier. The resource name for this CertificateTemplate in the
 //     format `projects/*/locations/*/certificateTemplates/*`.
 func (r *ProjectsLocationsCertificateTemplatesService) Patch(name string, certificatetemplate *CertificateTemplate) *ProjectsLocationsCertificateTemplatesPatchCall {
 	c := &ProjectsLocationsCertificateTemplatesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -7773,7 +7771,7 @@ type ProjectsLocationsOperationsCancelCall struct {
 // other methods to check whether the cancellation succeeded or whether the
 // operation completed despite cancellation. On successful cancellation, the
 // operation is not deleted; instead, it becomes an operation with an
-// Operation.error value with a google.rpc.Status.code of 1, corresponding to
+// Operation.error value with a google.rpc.Status.code of `1`, corresponding to
 // `Code.CANCELLED`.
 //
 // - name: The name of the operation resource to be cancelled.

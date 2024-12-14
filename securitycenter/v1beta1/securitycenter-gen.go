@@ -1663,6 +1663,55 @@ func (s DataFlowEvent) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// DataRetentionDeletionEvent: Details about data retention deletion
+// violations, in which the data is non-compliant based on their retention or
+// deletion time, as defined in the applicable data security policy. The Data
+// Retention Deletion (DRD) control is a control of the DSPM (Data Security
+// Posture Management) suite that enables organizations to manage data
+// retention and deletion policies in compliance with regulations, such as GDPR
+// and CRPA. DRD supports two primary policy types: maximum storage length (max
+// TTL) and minimum storage length (min TTL). Both are aimed at helping
+// organizations meet regulatory and data management commitments.
+type DataRetentionDeletionEvent struct {
+	// DataObjectCount: Number of objects that violated the policy for this
+	// resource. If the number is less than 1,000, then the value of this field is
+	// the exact number. If the number of objects that violated the policy is
+	// greater than or equal to 1,000, then the value of this field is 1000.
+	DataObjectCount int64 `json:"dataObjectCount,omitempty,string"`
+	// EventDetectionTime: Timestamp indicating when the event was detected.
+	EventDetectionTime string `json:"eventDetectionTime,omitempty"`
+	// EventType: Type of the DRD event.
+	//
+	// Possible values:
+	//   "EVENT_TYPE_UNSPECIFIED" - Unspecified event type.
+	//   "EVENT_TYPE_MAX_TTL_EXCEEDED" - The maximum retention time has been
+	// exceeded.
+	EventType string `json:"eventType,omitempty"`
+	// MaxRetentionAllowed: Maximum duration of retention allowed from the DRD
+	// control. This comes from the DRD control where users set a max TTL for their
+	// data. For example, suppose that a user set the max TTL for a Cloud Storage
+	// bucket to 90 days. However, an object in that bucket is 100 days old. In
+	// this case, a DataRetentionDeletionEvent will be generated for that Cloud
+	// Storage bucket, and the max_retention_allowed is 90 days.
+	MaxRetentionAllowed string `json:"maxRetentionAllowed,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "DataObjectCount") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DataObjectCount") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s DataRetentionDeletionEvent) MarshalJSON() ([]byte, error) {
+	type NoMethod DataRetentionDeletionEvent
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // Database: Represents database access information, such as queries. A
 // database may be a sub-resource of an instance (as in the case of Cloud SQL
 // instances or Cloud Spanner instances), or the database instance itself. Some
@@ -2070,6 +2119,9 @@ type Finding struct {
 	DataAccessEvents []*DataAccessEvent `json:"dataAccessEvents,omitempty"`
 	// DataFlowEvents: Data flow events associated with the finding.
 	DataFlowEvents []*DataFlowEvent `json:"dataFlowEvents,omitempty"`
+	// DataRetentionDeletionEvents: Data retention deletion events associated with
+	// the finding.
+	DataRetentionDeletionEvents []*DataRetentionDeletionEvent `json:"dataRetentionDeletionEvents,omitempty"`
 	// Database: Database associated with the finding.
 	Database *Database `json:"database,omitempty"`
 	// Description: Contains more details about the finding.
@@ -4840,6 +4892,56 @@ func (s GoogleCloudSecuritycenterV2DataFlowEvent) MarshalJSON() ([]byte, error) 
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudSecuritycenterV2DataRetentionDeletionEvent: Details about data
+// retention deletion violations, in which the data is non-compliant based on
+// their retention or deletion time, as defined in the applicable data security
+// policy. The Data Retention Deletion (DRD) control is a control of the DSPM
+// (Data Security Posture Management) suite that enables organizations to
+// manage data retention and deletion policies in compliance with regulations,
+// such as GDPR and CRPA. DRD supports two primary policy types: maximum
+// storage length (max TTL) and minimum storage length (min TTL). Both are
+// aimed at helping organizations meet regulatory and data management
+// commitments.
+type GoogleCloudSecuritycenterV2DataRetentionDeletionEvent struct {
+	// DataObjectCount: Number of objects that violated the policy for this
+	// resource. If the number is less than 1,000, then the value of this field is
+	// the exact number. If the number of objects that violated the policy is
+	// greater than or equal to 1,000, then the value of this field is 1000.
+	DataObjectCount int64 `json:"dataObjectCount,omitempty,string"`
+	// EventDetectionTime: Timestamp indicating when the event was detected.
+	EventDetectionTime string `json:"eventDetectionTime,omitempty"`
+	// EventType: Type of the DRD event.
+	//
+	// Possible values:
+	//   "EVENT_TYPE_UNSPECIFIED" - Unspecified event type.
+	//   "EVENT_TYPE_MAX_TTL_EXCEEDED" - The maximum retention time has been
+	// exceeded.
+	EventType string `json:"eventType,omitempty"`
+	// MaxRetentionAllowed: Maximum duration of retention allowed from the DRD
+	// control. This comes from the DRD control where users set a max TTL for their
+	// data. For example, suppose that a user set the max TTL for a Cloud Storage
+	// bucket to 90 days. However, an object in that bucket is 100 days old. In
+	// this case, a DataRetentionDeletionEvent will be generated for that Cloud
+	// Storage bucket, and the max_retention_allowed is 90 days.
+	MaxRetentionAllowed string `json:"maxRetentionAllowed,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "DataObjectCount") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DataObjectCount") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudSecuritycenterV2DataRetentionDeletionEvent) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudSecuritycenterV2DataRetentionDeletionEvent
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudSecuritycenterV2Database: Represents database access information,
 // such as queries. A database may be a sub-resource of an instance (as in the
 // case of Cloud SQL instances or Cloud Spanner instances), or the database
@@ -5262,6 +5364,9 @@ type GoogleCloudSecuritycenterV2Finding struct {
 	DataAccessEvents []*GoogleCloudSecuritycenterV2DataAccessEvent `json:"dataAccessEvents,omitempty"`
 	// DataFlowEvents: Data flow events associated with the finding.
 	DataFlowEvents []*GoogleCloudSecuritycenterV2DataFlowEvent `json:"dataFlowEvents,omitempty"`
+	// DataRetentionDeletionEvents: Data retention deletion events associated with
+	// the finding.
+	DataRetentionDeletionEvents []*GoogleCloudSecuritycenterV2DataRetentionDeletionEvent `json:"dataRetentionDeletionEvents,omitempty"`
 	// Database: Database associated with the finding.
 	Database *GoogleCloudSecuritycenterV2Database `json:"database,omitempty"`
 	// Description: Contains more details about the finding.

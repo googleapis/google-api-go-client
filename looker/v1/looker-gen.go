@@ -801,6 +801,9 @@ type Instance struct {
 	//   "LOOKER_CORE_STANDARD_ANNUAL" - Subscription Standard.
 	//   "LOOKER_CORE_ENTERPRISE_ANNUAL" - Subscription Enterprise.
 	//   "LOOKER_CORE_EMBED_ANNUAL" - Subscription Embed.
+	//   "LOOKER_CORE_NONPROD_STANDARD_ANNUAL" - Nonprod Subscription Standard.
+	//   "LOOKER_CORE_NONPROD_ENTERPRISE_ANNUAL" - Nonprod Subscription Enterprise.
+	//   "LOOKER_CORE_NONPROD_EMBED_ANNUAL" - Nonprod Subscription Embed.
 	PlatformEdition string `json:"platformEdition,omitempty"`
 	// PrivateIpEnabled: Whether private IP is enabled on the Looker instance.
 	PrivateIpEnabled bool `json:"privateIpEnabled,omitempty"`
@@ -3320,7 +3323,7 @@ type ProjectsLocationsOperationsCancelCall struct {
 // other methods to check whether the cancellation succeeded or whether the
 // operation completed despite cancellation. On successful cancellation, the
 // operation is not deleted; instead, it becomes an operation with an
-// Operation.error value with a google.rpc.Status.code of 1, corresponding to
+// Operation.error value with a google.rpc.Status.code of `1`, corresponding to
 // `Code.CANCELLED`.
 //
 // - name: The name of the operation resource to be cancelled.

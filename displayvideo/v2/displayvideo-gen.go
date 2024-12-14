@@ -1560,6 +1560,21 @@ type AssetAssociation struct {
 	//   "ASSET_ROLE_COVER_IMAGE" - The cover image of a native video creative.
 	// This role is only supported and required in following creative_type: *
 	// `CREATIVE_TYPE_VIDEO`
+	//   "ASSET_ROLE_BACKGROUND_COLOR" - The main color to use in a creative. This
+	// role is only supported and required in following creative_type: *
+	// `CREATIVE_TYPE_ASSET_BASED_CREATIVE`
+	//   "ASSET_ROLE_ACCENT_COLOR" - The accent color to use in a creative. This
+	// role is only supported and required in following creative_type: *
+	// `CREATIVE_TYPE_ASSET_BASED_CREATIVE`
+	//   "ASSET_ROLE_REQUIRE_LOGO" - Whether the creative must use a logo asset.
+	// This role is only supported and required in following creative_type: *
+	// `CREATIVE_TYPE_ASSET_BASED_CREATIVE`
+	//   "ASSET_ROLE_REQUIRE_IMAGE" - Whether the creative must use an image asset.
+	// This role is only supported and required in following creative_type: *
+	// `CREATIVE_TYPE_ASSET_BASED_CREATIVE`
+	//   "ASSET_ROLE_ENABLE_ASSET_ENHANCEMENTS" - Whether asset enhancements can be
+	// applied to the creative. This role is only supported and required in
+	// following creative_type: * `CREATIVE_TYPE_ASSET_BASED_CREATIVE`
 	Role string `json:"role,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Asset") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -4921,6 +4936,9 @@ type Creative struct {
 	//   "CREATIVE_TYPE_TEMPLATED_APP_INSTALL_VIDEO" - Templated app install mobile
 	// video creative. Create and update methods are **not** supported for this
 	// creative type.
+	//   "CREATIVE_TYPE_ASSET_BASED_CREATIVE" - Asset based creative. Create and
+	// update methods are supported for this creative type if the hosting_source is
+	// `HOSTING_SOURCE_HOSTED`.
 	CreativeType string `json:"creativeType,omitempty"`
 	// Dimensions: Required. Primary dimensions of the creative. Applicable to all
 	// creative types. The value of width_pixels and height_pixels defaults to `0`
@@ -5222,6 +5240,9 @@ type CreativeConfig struct {
 	//   "CREATIVE_TYPE_TEMPLATED_APP_INSTALL_VIDEO" - Templated app install mobile
 	// video creative. Create and update methods are **not** supported for this
 	// creative type.
+	//   "CREATIVE_TYPE_ASSET_BASED_CREATIVE" - Asset based creative. Create and
+	// update methods are supported for this creative type if the hosting_source is
+	// `HOSTING_SOURCE_HOSTED`.
 	CreativeType string `json:"creativeType,omitempty"`
 	// DisplayCreativeConfig: The configuration for display creatives. Applicable
 	// when creative_type is `CREATIVE_TYPE_STANDARD`.

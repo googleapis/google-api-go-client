@@ -898,20 +898,32 @@ func (s ContinuousBackupSource) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// CsvExportOptions: Options for exporting data in CSV format. For now, we only
-// support a query to get the data that needs to be exported.
+// CsvExportOptions: Options for exporting data in CSV format.
 type CsvExportOptions struct {
-	// SelectQuery: Required. The select_query used to extract the data.
+	// EscapeCharacter: Optional. Specifies the character that should appear before
+	// a data character that needs to be escaped. The default is the same as quote
+	// character. The value of this argument has to be a character in Hex ASCII
+	// Code.
+	EscapeCharacter string `json:"escapeCharacter,omitempty"`
+	// FieldDelimiter: Optional. Specifies the character that separates columns
+	// within each row (line) of the file. The default is comma. The value of this
+	// argument has to be a character in Hex ASCII Code.
+	FieldDelimiter string `json:"fieldDelimiter,omitempty"`
+	// QuoteCharacter: Optional. Specifies the quoting character to be used when a
+	// data value is quoted. The default is double-quote. The value of this
+	// argument has to be a character in Hex ASCII Code.
+	QuoteCharacter string `json:"quoteCharacter,omitempty"`
+	// SelectQuery: Required. The SELECT query used to extract the data.
 	SelectQuery string `json:"selectQuery,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "SelectQuery") to
+	// ForceSendFields is a list of field names (e.g. "EscapeCharacter") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "SelectQuery") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
+	// NullFields is a list of field names (e.g. "EscapeCharacter") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -996,12 +1008,15 @@ type ExportClusterRequest struct {
 	// CsvExportOptions: Options for exporting data in CSV format. Required field
 	// to be set for CSV file type.
 	CsvExportOptions *CsvExportOptions `json:"csvExportOptions,omitempty"`
-	// Database: Required. Name of the database where the query will be executed.
-	// Note - Value provided should be the same as expected from `SELECT
+	// Database: Required. Name of the database where the export command will be
+	// executed. Note - Value provided should be the same as expected from `SELECT
 	// current_database();` and NOT as a resource reference.
 	Database string `json:"database,omitempty"`
 	// GcsDestination: Required. Option to export data to cloud storage.
 	GcsDestination *GcsDestination `json:"gcsDestination,omitempty"`
+	// SqlExportOptions: Options for exporting data in SQL format. Required field
+	// to be set for SQL file type.
+	SqlExportOptions *SqlExportOptions `json:"sqlExportOptions,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "CsvExportOptions") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -1082,8 +1097,7 @@ func (s FailoverInstanceRequest) MarshalJSON() ([]byte, error) {
 // storage.
 type GcsDestination struct {
 	// Uri: Required. The path to the file in Google Cloud Storage where the export
-	// will be stored. The URI is in the form `gs://bucketName/fileName`. If the
-	// file already exists, the request succeeds, but the operation fails.
+	// will be stored. The URI is in the form `gs://bucketName/fileName`.
 	Uri string `json:"uri,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Uri") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -1948,8 +1962,8 @@ type OperationMetadata struct {
 	EndTime string `json:"endTime,omitempty"`
 	// RequestedCancellation: Output only. Identifies whether the user has
 	// requested cancellation of the operation. Operations that have successfully
-	// been cancelled have Operation.error value with a google.rpc.Status.code of
-	// 1, corresponding to `Code.CANCELLED`.
+	// been cancelled have google.longrunning.Operation.error value with a
+	// google.rpc.Status.code of 1, corresponding to `Code.CANCELLED`.
 	RequestedCancellation bool `json:"requestedCancellation,omitempty"`
 	// StatusMessage: Output only. Human-readable status of the operation, if any.
 	StatusMessage string `json:"statusMessage,omitempty"`
@@ -2312,6 +2326,37 @@ type SecondaryConfig struct {
 
 func (s SecondaryConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod SecondaryConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// SqlExportOptions: Options for exporting data in SQL format.
+type SqlExportOptions struct {
+	// CleanTargetObjects: Optional. If true, output commands to DROP all the
+	// dumped database objects prior to outputting the commands for creating them.
+	CleanTargetObjects bool `json:"cleanTargetObjects,omitempty"`
+	// IfExistTargetObjects: Optional. If true, use DROP ... IF EXISTS commands to
+	// check for the object's existence before dropping it in clean_target_objects
+	// mode.
+	IfExistTargetObjects bool `json:"ifExistTargetObjects,omitempty"`
+	// SchemaOnly: Optional. If true, only export the schema.
+	SchemaOnly bool `json:"schemaOnly,omitempty"`
+	// Tables: Optional. Tables to export from.
+	Tables []string `json:"tables,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "CleanTargetObjects") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CleanTargetObjects") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s SqlExportOptions) MarshalJSON() ([]byte, error) {
+	type NoMethod SqlExportOptions
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -3446,6 +3491,9 @@ type StorageDatabasecenterPartnerapiV1mainMachineConfiguration struct {
 	MemorySizeInBytes int64 `json:"memorySizeInBytes,omitempty,string"`
 	// ShardCount: Optional. Number of shards (if applicable).
 	ShardCount int64 `json:"shardCount,omitempty"`
+	// VcpuCount: Optional. The number of vCPUs. TODO(b/342344482, b/342346271) add
+	// proto validations again after bug fix.
+	VcpuCount float64 `json:"vcpuCount,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "CpuCount") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -3462,6 +3510,20 @@ type StorageDatabasecenterPartnerapiV1mainMachineConfiguration struct {
 func (s StorageDatabasecenterPartnerapiV1mainMachineConfiguration) MarshalJSON() ([]byte, error) {
 	type NoMethod StorageDatabasecenterPartnerapiV1mainMachineConfiguration
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+func (s *StorageDatabasecenterPartnerapiV1mainMachineConfiguration) UnmarshalJSON(data []byte) error {
+	type NoMethod StorageDatabasecenterPartnerapiV1mainMachineConfiguration
+	var s1 struct {
+		VcpuCount gensupport.JSONFloat64 `json:"vcpuCount"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.VcpuCount = float64(s1.VcpuCount)
+	return nil
 }
 
 type StorageDatabasecenterPartnerapiV1mainObservabilityMetricData struct {
@@ -8319,7 +8381,7 @@ type ProjectsLocationsOperationsCancelCall struct {
 // other methods to check whether the cancellation succeeded or whether the
 // operation completed despite cancellation. On successful cancellation, the
 // operation is not deleted; instead, it becomes an operation with an
-// Operation.error value with a google.rpc.Status.code of 1, corresponding to
+// Operation.error value with a google.rpc.Status.code of `1`, corresponding to
 // `Code.CANCELLED`.
 //
 // - name: The name of the operation resource to be cancelled.

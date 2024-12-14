@@ -1278,6 +1278,30 @@ func (s DataSamplingReport) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// DataflowGaugeValue: The gauge value of a metric.
+type DataflowGaugeValue struct {
+	// MeasuredTime: The timestamp when the gauge was recorded.
+	MeasuredTime string `json:"measuredTime,omitempty"`
+	// Value: The value of the gauge.
+	Value int64 `json:"value,omitempty,string"`
+	// ForceSendFields is a list of field names (e.g. "MeasuredTime") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "MeasuredTime") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s DataflowGaugeValue) MarshalJSON() ([]byte, error) {
+	type NoMethod DataflowGaugeValue
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // DataflowHistogramValue: Summary statistics for a population of values.
 // HistogramValue contains a sequence of buckets and gives a count of values
 // that fall into each bucket. Bucket boundares are defined by a formula and
@@ -3614,6 +3638,8 @@ type MetricValue struct {
 	Metric string `json:"metric,omitempty"`
 	// MetricLabels: Optional. Set of metric labels for this metric.
 	MetricLabels map[string]string `json:"metricLabels,omitempty"`
+	// ValueGauge64: Non-cumulative int64 value of this metric.
+	ValueGauge64 *DataflowGaugeValue `json:"valueGauge64,omitempty"`
 	// ValueHistogram: Histogram value of this metric.
 	ValueHistogram *DataflowHistogramValue `json:"valueHistogram,omitempty"`
 	// ValueInt64: Integer value of this metric.

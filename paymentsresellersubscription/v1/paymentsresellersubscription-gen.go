@@ -1184,6 +1184,10 @@ type GoogleCloudPaymentsResellerSubscriptionV1Subscription struct {
 	FreeTrialEndTime string `json:"freeTrialEndTime,omitempty"`
 	// LineItems: Required. The line items of the subscription.
 	LineItems []*GoogleCloudPaymentsResellerSubscriptionV1SubscriptionLineItem `json:"lineItems,omitempty"`
+	// MigrationDetails: Output only. Describes the details of the migrated
+	// subscription. Only populated if this subscription is migrated from another
+	// system.
+	MigrationDetails *GoogleCloudPaymentsResellerSubscriptionV1SubscriptionMigrationDetails `json:"migrationDetails,omitempty"`
 	// Name: Identifier. Resource name of the subscription. It will have the format
 	// of "partners/{partner_id}/subscriptions/{subscription_id}". This is
 	// available for authorizeAddon, but otherwise is response only.
@@ -1458,6 +1462,30 @@ type GoogleCloudPaymentsResellerSubscriptionV1SubscriptionLineItemOneTimeRecurre
 
 func (s GoogleCloudPaymentsResellerSubscriptionV1SubscriptionLineItemOneTimeRecurrenceDetails) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudPaymentsResellerSubscriptionV1SubscriptionLineItemOneTimeRecurrenceDetails
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudPaymentsResellerSubscriptionV1SubscriptionMigrationDetails:
+// Describes the details of the migrated subscription.
+type GoogleCloudPaymentsResellerSubscriptionV1SubscriptionMigrationDetails struct {
+	// MigratedSubscriptionId: Output only. The migrated subscription id in the
+	// legacy system.
+	MigratedSubscriptionId string `json:"migratedSubscriptionId,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "MigratedSubscriptionId") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "MigratedSubscriptionId") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudPaymentsResellerSubscriptionV1SubscriptionMigrationDetails) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudPaymentsResellerSubscriptionV1SubscriptionMigrationDetails
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 

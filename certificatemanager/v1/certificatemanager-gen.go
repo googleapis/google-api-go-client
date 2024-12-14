@@ -364,13 +364,15 @@ type Certificate struct {
 	// Scope: Optional. Immutable. The scope of the certificate.
 	//
 	// Possible values:
-	//   "DEFAULT" - Certificates with default scope are served from core Google
-	// data centers. If unsure, choose this option.
-	//   "EDGE_CACHE" - Certificates with scope EDGE_CACHE are special-purposed
-	// certificates, served from Edge Points of Presence. See
-	// https://cloud.google.com/vpc/docs/edge-locations.
-	//   "ALL_REGIONS" - Certificates with ALL_REGIONS scope are served from all
-	// Google Cloud regions. See
+	//   "DEFAULT" - Use the DEFAULT scope if you plan to use the certificate with
+	// global external Application Load Balancer, global external proxy Network
+	// Load Balancer, or any of the regional Google Cloud services.
+	//   "EDGE_CACHE" - Use the EDGE_CACHE scope if you plan to use the certificate
+	// with Media CDN. The certificates are served from Edge Points of Presence.
+	// See https://cloud.google.com/vpc/docs/edge-locations.
+	//   "ALL_REGIONS" - Use the ALL_REGIONS scope if you plan to use the
+	// certificate with cross-region internal Application Load Balancer. The
+	// certificates are served from all Google Cloud regions. See
 	// https://cloud.google.com/compute/docs/regions-zones.
 	Scope string `json:"scope,omitempty"`
 	// SelfManaged: If set, defines data of a self-managed certificate.
@@ -1186,8 +1188,8 @@ type OperationMetadata struct {
 	EndTime string `json:"endTime,omitempty"`
 	// RequestedCancellation: Identifies whether the user has requested
 	// cancellation of the operation. Operations that have successfully been
-	// cancelled have Operation.error value with a google.rpc.Status.code of 1,
-	// corresponding to `Code.CANCELLED`.
+	// cancelled have google.longrunning.Operation.error value with a
+	// google.rpc.Status.code of `1`, corresponding to `Code.CANCELLED`.
 	RequestedCancellation bool `json:"requestedCancellation,omitempty"`
 	// StatusMessage: Human-readable status of the operation, if any.
 	StatusMessage string `json:"statusMessage,omitempty"`
@@ -4599,7 +4601,7 @@ type ProjectsLocationsOperationsCancelCall struct {
 // other methods to check whether the cancellation succeeded or whether the
 // operation completed despite cancellation. On successful cancellation, the
 // operation is not deleted; instead, it becomes an operation with an
-// Operation.error value with a google.rpc.Status.code of 1, corresponding to
+// Operation.error value with a google.rpc.Status.code of `1`, corresponding to
 // `Code.CANCELLED`.
 //
 // - name: The name of the operation resource to be cancelled.

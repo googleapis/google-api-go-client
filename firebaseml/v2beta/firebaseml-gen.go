@@ -236,8 +236,7 @@ func (s Date) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudAiplatformV1beta1Blob: Content blob. It's preferred to send as
-// text directly rather than raw bytes.
+// GoogleCloudAiplatformV1beta1Blob: Content blob.
 type GoogleCloudAiplatformV1beta1Blob struct {
 	// Data: Required. Raw bytes.
 	Data string `json:"data,omitempty"`

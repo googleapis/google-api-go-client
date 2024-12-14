@@ -314,9 +314,14 @@ type Backup struct {
 	// backups share storage, this number is expected to change with backup
 	// creation/deletion.
 	StorageBytes int64 `json:"storageBytes,omitempty,string"`
-	// Tags: Optional. Input only. Immutable. Tag key-value pairs are bound to this
-	// resource. For example: "123/environment": "production", "123/costCenter":
-	// "marketing"
+	// Tags: Optional. Input only. Immutable. Tag key-value pairs bound to this
+	// resource. Each key must be a namespaced name and each value a short name.
+	// Example: "123456789012/environment" : "production",
+	// "123456789013/costCenter" : "marketing" See the documentation for more
+	// information: - Namespaced name:
+	// https://cloud.google.com/resource-manager/docs/tags/tags-creating-and-managing#retrieving_tag_key
+	// - Short name:
+	// https://cloud.google.com/resource-manager/docs/tags/tags-creating-and-managing#retrieving_tag_value
 	Tags map[string]string `json:"tags,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
@@ -512,9 +517,6 @@ func (s FileShareConfig) MarshalJSON() ([]byte, error) {
 type FixedIOPS struct {
 	// MaxIops: Required. Maximum IOPS.
 	MaxIops int64 `json:"maxIops,omitempty,string"`
-	// MaxReadIops: Optional. Deprecated: `max_iops` should be used instead of this
-	// parameter. Maximum read IOPS.
-	MaxReadIops int64 `json:"maxReadIops,omitempty,string"`
 	// ForceSendFields is a list of field names (e.g. "MaxIops") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
 	// omitted from API requests. See
@@ -915,9 +917,6 @@ func (s GoogleCloudSaasacceleratorManagementProvidersV1SloMetadata) MarshalJSON(
 type IOPSPerTB struct {
 	// MaxIopsPerTb: Required. Maximum IOPS per TiB.
 	MaxIopsPerTb int64 `json:"maxIopsPerTb,omitempty,string"`
-	// MaxReadIopsPerTb: Optional. Deprecated: `max_iops_per_tb` should be used
-	// instead of this parameter. Maximum read IOPS per TiB.
-	MaxReadIopsPerTb int64 `json:"maxReadIopsPerTb,omitempty,string"`
 	// ForceSendFields is a list of field names (e.g. "MaxIopsPerTb") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -1038,9 +1037,14 @@ type Instance struct {
 	//   "KMS_KEY_ISSUE" - The KMS key used by the instance is either revoked or
 	// denied access to.
 	SuspensionReasons []string `json:"suspensionReasons,omitempty"`
-	// Tags: Optional. Input only. Immutable. Tag key-value pairs are bound to this
-	// resource. For example: "123/environment": "production", "123/costCenter":
-	// "marketing"
+	// Tags: Optional. Input only. Immutable. Tag key-value pairs bound to this
+	// resource. Each key must be a namespaced name and each value a short name.
+	// Example: "123456789012/environment" : "production",
+	// "123456789013/costCenter" : "marketing" See the documentation for more
+	// information: - Namespaced name:
+	// https://cloud.google.com/resource-manager/docs/tags/tags-creating-and-managing#retrieving_tag_key
+	// - Short name:
+	// https://cloud.google.com/resource-manager/docs/tags/tags-creating-and-managing#retrieving_tag_value
 	Tags map[string]string `json:"tags,omitempty"`
 	// Tier: The service tier of the instance.
 	//
@@ -1096,7 +1100,7 @@ type ListBackupsResponse struct {
 	// NextPageToken: The token you can use to retrieve the next page of results.
 	// Not returned if there are no more results in the list.
 	NextPageToken string `json:"nextPageToken,omitempty"`
-	// Unreachable: Locations that could not be reached.
+	// Unreachable: Unordered list. Locations that could not be reached.
 	Unreachable []string `json:"unreachable,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
@@ -1131,7 +1135,7 @@ type ListInstancesResponse struct {
 	// NextPageToken: The token you can use to retrieve the next page of results.
 	// Not returned if there are no more results in the list.
 	NextPageToken string `json:"nextPageToken,omitempty"`
-	// Unreachable: Locations that could not be reached.
+	// Unreachable: Unordered list. Locations that could not be reached.
 	Unreachable []string `json:"unreachable,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
@@ -1217,7 +1221,7 @@ type ListSharesResponse struct {
 	NextPageToken string `json:"nextPageToken,omitempty"`
 	// Shares: A list of shares in the project for the specified instance.
 	Shares []*Share `json:"shares,omitempty"`
-	// Unreachable: Locations that could not be reached.
+	// Unreachable: Unordered list. Locations that could not be reached.
 	Unreachable []string `json:"unreachable,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
@@ -1248,6 +1252,8 @@ type ListSnapshotsResponse struct {
 	NextPageToken string `json:"nextPageToken,omitempty"`
 	// Snapshots: A list of snapshots in the project for the specified instance.
 	Snapshots []*Snapshot `json:"snapshots,omitempty"`
+	// Unreachable: Unordered list. Locations that could not be reached.
+	Unreachable []string `json:"unreachable,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
@@ -1590,8 +1596,8 @@ type OperationMetadata struct {
 	ApiVersion string `json:"apiVersion,omitempty"`
 	// CancelRequested: Output only. Identifies whether the user has requested
 	// cancellation of the operation. Operations that have been cancelled
-	// successfully have Operation.error value with a google.rpc.Status.code of 1,
-	// corresponding to `Code.CANCELLED`.
+	// successfully have google.longrunning.Operation.error value with a
+	// google.rpc.Status.code of `1`, corresponding to `Code.CANCELLED`.
 	CancelRequested bool `json:"cancelRequested,omitempty"`
 	// CreateTime: Output only. The time the operation was created.
 	CreateTime string `json:"createTime,omitempty"`
@@ -1950,9 +1956,14 @@ type Snapshot struct {
 	//   "READY" - Snapshot is available for use.
 	//   "DELETING" - Snapshot is being deleted.
 	State string `json:"state,omitempty"`
-	// Tags: Optional. Input only. Immutable. Tag key-value pairs are bound to this
-	// resource. For example: "123/environment": "production", "123/costCenter":
-	// "marketing"
+	// Tags: Optional. Input only. Immutable. Tag key-value pairs bound to this
+	// resource. Each key must be a namespaced name and each value a short name.
+	// Example: "123456789012/environment" : "production",
+	// "123456789013/costCenter" : "marketing" See the documentation for more
+	// information: - Namespaced name:
+	// https://cloud.google.com/resource-manager/docs/tags/tags-creating-and-managing#retrieving_tag_key
+	// - Short name:
+	// https://cloud.google.com/resource-manager/docs/tags/tags-creating-and-managing#retrieving_tag_value
 	Tags map[string]string `json:"tags,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
@@ -4807,6 +4818,13 @@ func (c *ProjectsLocationsInstancesSnapshotsListCall) PageToken(pageToken string
 	return c
 }
 
+// ReturnPartialSuccess sets the optional parameter "returnPartialSuccess": If
+// true, allow partial responses for multi-regional Aggregated List requests.
+func (c *ProjectsLocationsInstancesSnapshotsListCall) ReturnPartialSuccess(returnPartialSuccess bool) *ProjectsLocationsInstancesSnapshotsListCall {
+	c.urlParams_.Set("returnPartialSuccess", fmt.Sprint(returnPartialSuccess))
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
 // details.
@@ -5042,7 +5060,7 @@ type ProjectsLocationsOperationsCancelCall struct {
 // other methods to check whether the cancellation succeeded or whether the
 // operation completed despite cancellation. On successful cancellation, the
 // operation is not deleted; instead, it becomes an operation with an
-// Operation.error value with a google.rpc.Status.code of 1, corresponding to
+// Operation.error value with a google.rpc.Status.code of `1`, corresponding to
 // `Code.CANCELLED`.
 //
 // - name: The name of the operation resource to be cancelled.

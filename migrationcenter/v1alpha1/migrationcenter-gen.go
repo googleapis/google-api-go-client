@@ -6860,9 +6860,10 @@ func (s Status) MarshalJSON() ([]byte, error) {
 // TimeZone: Represents a time zone from the IANA Time Zone Database
 // (https://www.iana.org/time-zones).
 type TimeZone struct {
-	// Id: IANA Time Zone Database time zone, e.g. "America/New_York".
+	// Id: IANA Time Zone Database time zone. For example "America/New_York".
 	Id string `json:"id,omitempty"`
-	// Version: Optional. IANA Time Zone Database version number, e.g. "2019a".
+	// Version: Optional. IANA Time Zone Database version number. For example
+	// "2019a".
 	Version string `json:"version,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Id") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -12527,7 +12528,7 @@ type ProjectsLocationsOperationsCancelCall struct {
 // other methods to check whether the cancellation succeeded or whether the
 // operation completed despite cancellation. On successful cancellation, the
 // operation is not deleted; instead, it becomes an operation with an
-// Operation.error value with a google.rpc.Status.code of 1, corresponding to
+// Operation.error value with a google.rpc.Status.code of `1`, corresponding to
 // `Code.CANCELLED`.
 //
 // - name: The name of the operation resource to be cancelled.

@@ -115,7 +115,8 @@ func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, err
 	if err != nil {
 		return nil, err
 	}
-	s, err := New(client)
+	s := &Service{client: client, BasePath: basePath}
+	s.Projects = NewProjectsService(s)
 	if err != nil {
 		return nil, err
 	}
@@ -134,9 +135,7 @@ func New(client *http.Client) (*Service, error) {
 	if client == nil {
 		return nil, errors.New("client is nil")
 	}
-	s := &Service{client: client, BasePath: basePath}
-	s.Projects = NewProjectsService(s)
-	return s, nil
+	return NewService(context.Background(), option.WithHTTPClient(client))
 }
 
 type Service struct {
@@ -2192,8 +2191,7 @@ func (c *ProjectsLocationsServicesAlterLocationCall) Header() http.Header {
 
 func (c *ProjectsLocationsServicesAlterLocationCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudmetastorev2alphaaltermetadataresourcelocationrequest)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googlecloudmetastorev2alphaaltermetadataresourcelocationrequest)
 	if err != nil {
 		return nil, err
 	}
@@ -2296,8 +2294,7 @@ func (c *ProjectsLocationsServicesAlterTablePropertiesCall) Header() http.Header
 
 func (c *ProjectsLocationsServicesAlterTablePropertiesCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudmetastorev2alphaaltertablepropertiesrequest)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googlecloudmetastorev2alphaaltertablepropertiesrequest)
 	if err != nil {
 		return nil, err
 	}
@@ -2400,8 +2397,7 @@ func (c *ProjectsLocationsServicesCancelMigrationCall) Header() http.Header {
 
 func (c *ProjectsLocationsServicesCancelMigrationCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudmetastorev2alphacancelmigrationrequest)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googlecloudmetastorev2alphacancelmigrationrequest)
 	if err != nil {
 		return nil, err
 	}
@@ -2506,8 +2502,7 @@ func (c *ProjectsLocationsServicesCompleteMigrationCall) Header() http.Header {
 
 func (c *ProjectsLocationsServicesCompleteMigrationCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudmetastorev2alphacompletemigrationrequest)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googlecloudmetastorev2alphacompletemigrationrequest)
 	if err != nil {
 		return nil, err
 	}
@@ -2634,8 +2629,7 @@ func (c *ProjectsLocationsServicesCreateCall) Header() http.Header {
 
 func (c *ProjectsLocationsServicesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudmetastorev2alphaservice)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googlecloudmetastorev2alphaservice)
 	if err != nil {
 		return nil, err
 	}
@@ -2751,12 +2745,11 @@ func (c *ProjectsLocationsServicesDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsServicesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
-	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v2alpha/{+name}")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("DELETE", urls, body)
+	req, err := http.NewRequest("DELETE", urls, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -2851,8 +2844,7 @@ func (c *ProjectsLocationsServicesExportMetadataCall) Header() http.Header {
 
 func (c *ProjectsLocationsServicesExportMetadataCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudmetastorev2alphaexportmetadatarequest)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googlecloudmetastorev2alphaexportmetadatarequest)
 	if err != nil {
 		return nil, err
 	}
@@ -2966,12 +2958,11 @@ func (c *ProjectsLocationsServicesGetCall) doRequest(alt string) (*http.Response
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
-	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v2alpha/{+name}")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, body)
+	req, err := http.NewRequest("GET", urls, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -3066,8 +3057,7 @@ func (c *ProjectsLocationsServicesImportMetadataCall) Header() http.Header {
 
 func (c *ProjectsLocationsServicesImportMetadataCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudmetastorev2alphaimportmetadatarequest)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googlecloudmetastorev2alphaimportmetadatarequest)
 	if err != nil {
 		return nil, err
 	}
@@ -3216,12 +3206,11 @@ func (c *ProjectsLocationsServicesListCall) doRequest(alt string) (*http.Respons
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
-	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v2alpha/{+parent}/services")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, body)
+	req, err := http.NewRequest("GET", urls, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -3337,8 +3326,7 @@ func (c *ProjectsLocationsServicesMoveTableToDatabaseCall) Header() http.Header 
 
 func (c *ProjectsLocationsServicesMoveTableToDatabaseCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudmetastorev2alphamovetabletodatabaserequest)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googlecloudmetastorev2alphamovetabletodatabaserequest)
 	if err != nil {
 		return nil, err
 	}
@@ -3466,8 +3454,7 @@ func (c *ProjectsLocationsServicesPatchCall) Header() http.Header {
 
 func (c *ProjectsLocationsServicesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudmetastorev2alphaservice)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googlecloudmetastorev2alphaservice)
 	if err != nil {
 		return nil, err
 	}
@@ -3570,8 +3557,7 @@ func (c *ProjectsLocationsServicesQueryMetadataCall) Header() http.Header {
 
 func (c *ProjectsLocationsServicesQueryMetadataCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudmetastorev2alphaquerymetadatarequest)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googlecloudmetastorev2alphaquerymetadatarequest)
 	if err != nil {
 		return nil, err
 	}
@@ -3677,8 +3663,7 @@ func (c *ProjectsLocationsServicesRemoveIamPolicyCall) Header() http.Header {
 
 func (c *ProjectsLocationsServicesRemoveIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudmetastorev2alpharemoveiampolicyrequest)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googlecloudmetastorev2alpharemoveiampolicyrequest)
 	if err != nil {
 		return nil, err
 	}
@@ -3781,8 +3766,7 @@ func (c *ProjectsLocationsServicesRestoreCall) Header() http.Header {
 
 func (c *ProjectsLocationsServicesRestoreCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudmetastorev2alpharestoreservicerequest)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googlecloudmetastorev2alpharestoreservicerequest)
 	if err != nil {
 		return nil, err
 	}
@@ -3885,8 +3869,7 @@ func (c *ProjectsLocationsServicesStartMigrationCall) Header() http.Header {
 
 func (c *ProjectsLocationsServicesStartMigrationCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudmetastorev2alphastartmigrationrequest)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googlecloudmetastorev2alphastartmigrationrequest)
 	if err != nil {
 		return nil, err
 	}
@@ -4013,8 +3996,7 @@ func (c *ProjectsLocationsServicesBackupsCreateCall) Header() http.Header {
 
 func (c *ProjectsLocationsServicesBackupsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudmetastorev2alphabackup)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googlecloudmetastorev2alphabackup)
 	if err != nil {
 		return nil, err
 	}
@@ -4129,12 +4111,11 @@ func (c *ProjectsLocationsServicesBackupsDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsServicesBackupsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
-	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v2alpha/{+name}")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("DELETE", urls, body)
+	req, err := http.NewRequest("DELETE", urls, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -4240,12 +4221,11 @@ func (c *ProjectsLocationsServicesBackupsGetCall) doRequest(alt string) (*http.R
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
-	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v2alpha/{+name}")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, body)
+	req, err := http.NewRequest("GET", urls, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -4387,12 +4367,11 @@ func (c *ProjectsLocationsServicesBackupsListCall) doRequest(alt string) (*http.
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
-	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v2alpha/{+parent}/backups")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, body)
+	req, err := http.NewRequest("GET", urls, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -4521,12 +4500,11 @@ func (c *ProjectsLocationsServicesMigrationExecutionsDeleteCall) Header() http.H
 
 func (c *ProjectsLocationsServicesMigrationExecutionsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
-	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v2alpha/{+name}")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("DELETE", urls, body)
+	req, err := http.NewRequest("DELETE", urls, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -4632,12 +4610,11 @@ func (c *ProjectsLocationsServicesMigrationExecutionsGetCall) doRequest(alt stri
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
-	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v2alpha/{+name}")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, body)
+	req, err := http.NewRequest("GET", urls, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -4779,12 +4756,11 @@ func (c *ProjectsLocationsServicesMigrationExecutionsListCall) doRequest(alt str
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
-	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v2alpha/{+parent}/migrationExecutions")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, body)
+	req, err := http.NewRequest("GET", urls, nil)
 	if err != nil {
 		return nil, err
 	}

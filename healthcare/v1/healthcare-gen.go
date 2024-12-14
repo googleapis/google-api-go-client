@@ -16053,8 +16053,7 @@ func (c *ProjectsLocationsDatasetsFhirStoresApplyAdminConsentsCall) Header() htt
 
 func (c *ProjectsLocationsDatasetsFhirStoresApplyAdminConsentsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.applyadminconsentsrequest)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.applyadminconsentsrequest)
 	if err != nil {
 		return nil, err
 	}
@@ -16168,8 +16167,7 @@ func (c *ProjectsLocationsDatasetsFhirStoresApplyConsentsCall) Header() http.Hea
 
 func (c *ProjectsLocationsDatasetsFhirStoresApplyConsentsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.applyconsentsrequest)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.applyconsentsrequest)
 	if err != nil {
 		return nil, err
 	}
@@ -16599,12 +16597,11 @@ func (c *ProjectsLocationsDatasetsFhirStoresExplainDataAccessCall) doRequest(alt
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
-	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}:explainDataAccess")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, body)
+	req, err := http.NewRequest("GET", urls, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -18287,12 +18284,11 @@ func (c *ProjectsLocationsDatasetsFhirStoresFhirConsentEnforcementStatusCall) do
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
-	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}/$consent-enforcement-status")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, body)
+	req, err := http.NewRequest("GET", urls, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -18388,12 +18384,11 @@ func (c *ProjectsLocationsDatasetsFhirStoresFhirPatientConsentEnforcementStatusC
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
-	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}/$consent-enforcement-status")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, body)
+	req, err := http.NewRequest("GET", urls, nil)
 	if err != nil {
 		return nil, err
 	}

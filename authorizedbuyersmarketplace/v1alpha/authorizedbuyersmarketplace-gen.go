@@ -114,7 +114,9 @@ func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, err
 	if err != nil {
 		return nil, err
 	}
-	s, err := New(client)
+	s := &Service{client: client, BasePath: basePath}
+	s.Bidders = NewBiddersService(s)
+	s.Buyers = NewBuyersService(s)
 	if err != nil {
 		return nil, err
 	}
@@ -133,10 +135,7 @@ func New(client *http.Client) (*Service, error) {
 	if client == nil {
 		return nil, errors.New("client is nil")
 	}
-	s := &Service{client: client, BasePath: basePath}
-	s.Bidders = NewBiddersService(s)
-	s.Buyers = NewBuyersService(s)
-	return s, nil
+	return NewService(context.Background(), option.WithHTTPClient(client))
 }
 
 type Service struct {
@@ -2628,12 +2627,11 @@ func (c *BiddersAuctionPackagesListCall) doRequest(alt string) (*http.Response, 
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
-	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+parent}/auctionPackages")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, body)
+	req, err := http.NewRequest("GET", urls, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -2804,12 +2802,11 @@ func (c *BiddersFinalizedDealsListCall) doRequest(alt string) (*http.Response, e
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
-	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+parent}/finalizedDeals")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, body)
+	req, err := http.NewRequest("GET", urls, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -2934,12 +2931,11 @@ func (c *BuyersAuctionPackagesGetCall) doRequest(alt string) (*http.Response, er
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
-	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+name}")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, body)
+	req, err := http.NewRequest("GET", urls, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -3084,12 +3080,11 @@ func (c *BuyersAuctionPackagesListCall) doRequest(alt string) (*http.Response, e
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
-	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+parent}/auctionPackages")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, body)
+	req, err := http.NewRequest("GET", urls, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -3207,8 +3202,7 @@ func (c *BuyersAuctionPackagesSubscribeCall) Header() http.Header {
 
 func (c *BuyersAuctionPackagesSubscribeCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.subscribeauctionpackagerequest)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.subscribeauctionpackagerequest)
 	if err != nil {
 		return nil, err
 	}
@@ -3313,8 +3307,7 @@ func (c *BuyersAuctionPackagesSubscribeClientsCall) Header() http.Header {
 
 func (c *BuyersAuctionPackagesSubscribeClientsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.subscribeclientsrequest)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.subscribeclientsrequest)
 	if err != nil {
 		return nil, err
 	}
@@ -3417,8 +3410,7 @@ func (c *BuyersAuctionPackagesUnsubscribeCall) Header() http.Header {
 
 func (c *BuyersAuctionPackagesUnsubscribeCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.unsubscribeauctionpackagerequest)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.unsubscribeauctionpackagerequest)
 	if err != nil {
 		return nil, err
 	}
@@ -3521,8 +3513,7 @@ func (c *BuyersAuctionPackagesUnsubscribeClientsCall) Header() http.Header {
 
 func (c *BuyersAuctionPackagesUnsubscribeClientsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.unsubscribeclientsrequest)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.unsubscribeclientsrequest)
 	if err != nil {
 		return nil, err
 	}
@@ -3624,8 +3615,7 @@ func (c *BuyersClientsActivateCall) Header() http.Header {
 
 func (c *BuyersClientsActivateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.activateclientrequest)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.activateclientrequest)
 	if err != nil {
 		return nil, err
 	}
@@ -3725,8 +3715,7 @@ func (c *BuyersClientsCreateCall) Header() http.Header {
 
 func (c *BuyersClientsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.client)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.client)
 	if err != nil {
 		return nil, err
 	}
@@ -3828,8 +3817,7 @@ func (c *BuyersClientsDeactivateCall) Header() http.Header {
 
 func (c *BuyersClientsDeactivateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.deactivateclientrequest)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.deactivateclientrequest)
 	if err != nil {
 		return nil, err
 	}
@@ -3939,12 +3927,11 @@ func (c *BuyersClientsGetCall) doRequest(alt string) (*http.Response, error) {
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
-	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+name}")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, body)
+	req, err := http.NewRequest("GET", urls, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -4075,12 +4062,11 @@ func (c *BuyersClientsListCall) doRequest(alt string) (*http.Response, error) {
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
-	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+parent}/clients")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, body)
+	req, err := http.NewRequest("GET", urls, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -4210,8 +4196,7 @@ func (c *BuyersClientsPatchCall) Header() http.Header {
 
 func (c *BuyersClientsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.client)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.client)
 	if err != nil {
 		return nil, err
 	}
@@ -4315,8 +4300,7 @@ func (c *BuyersClientsUsersActivateCall) Header() http.Header {
 
 func (c *BuyersClientsUsersActivateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.activateclientuserrequest)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.activateclientuserrequest)
 	if err != nil {
 		return nil, err
 	}
@@ -4418,8 +4402,7 @@ func (c *BuyersClientsUsersCreateCall) Header() http.Header {
 
 func (c *BuyersClientsUsersCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.clientuser)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.clientuser)
 	if err != nil {
 		return nil, err
 	}
@@ -4523,8 +4506,7 @@ func (c *BuyersClientsUsersDeactivateCall) Header() http.Header {
 
 func (c *BuyersClientsUsersDeactivateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.deactivateclientuserrequest)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.deactivateclientuserrequest)
 	if err != nil {
 		return nil, err
 	}
@@ -4626,12 +4608,11 @@ func (c *BuyersClientsUsersDeleteCall) Header() http.Header {
 
 func (c *BuyersClientsUsersDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
-	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+name}")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("DELETE", urls, body)
+	req, err := http.NewRequest("DELETE", urls, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -4734,12 +4715,11 @@ func (c *BuyersClientsUsersGetCall) doRequest(alt string) (*http.Response, error
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
-	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+name}")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, body)
+	req, err := http.NewRequest("GET", urls, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -4858,12 +4838,11 @@ func (c *BuyersClientsUsersListCall) doRequest(alt string) (*http.Response, erro
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
-	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+parent}/users")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, body)
+	req, err := http.NewRequest("GET", urls, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -4978,8 +4957,7 @@ func (c *BuyersDataSegmentsActivateCall) Header() http.Header {
 
 func (c *BuyersDataSegmentsActivateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.activatedatasegmentrequest)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.activatedatasegmentrequest)
 	if err != nil {
 		return nil, err
 	}
@@ -5083,8 +5061,7 @@ func (c *BuyersDataSegmentsCreateCall) Header() http.Header {
 
 func (c *BuyersDataSegmentsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.datasegment)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.datasegment)
 	if err != nil {
 		return nil, err
 	}
@@ -5185,8 +5162,7 @@ func (c *BuyersDataSegmentsDeactivateCall) Header() http.Header {
 
 func (c *BuyersDataSegmentsDeactivateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.deactivatedatasegmentrequest)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.deactivatedatasegmentrequest)
 	if err != nil {
 		return nil, err
 	}
@@ -5297,12 +5273,11 @@ func (c *BuyersDataSegmentsGetCall) doRequest(alt string) (*http.Response, error
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
-	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+name}")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, body)
+	req, err := http.NewRequest("GET", urls, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -5420,12 +5395,11 @@ func (c *BuyersDataSegmentsListCall) doRequest(alt string) (*http.Response, erro
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
-	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+parent}/dataSegments")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, body)
+	req, err := http.NewRequest("GET", urls, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -5556,8 +5530,7 @@ func (c *BuyersDataSegmentsPatchCall) Header() http.Header {
 
 func (c *BuyersDataSegmentsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.datasegment)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.datasegment)
 	if err != nil {
 		return nil, err
 	}
@@ -5665,8 +5638,7 @@ func (c *BuyersFinalizedDealsAddCreativeCall) Header() http.Header {
 
 func (c *BuyersFinalizedDealsAddCreativeCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.addcreativerequest)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.addcreativerequest)
 	if err != nil {
 		return nil, err
 	}
@@ -5776,12 +5748,11 @@ func (c *BuyersFinalizedDealsGetCall) doRequest(alt string) (*http.Response, err
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
-	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+name}")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, body)
+	req, err := http.NewRequest("GET", urls, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -5930,12 +5901,11 @@ func (c *BuyersFinalizedDealsListCall) doRequest(alt string) (*http.Response, er
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
-	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+parent}/finalizedDeals")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, body)
+	req, err := http.NewRequest("GET", urls, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -6052,8 +6022,7 @@ func (c *BuyersFinalizedDealsPauseCall) Header() http.Header {
 
 func (c *BuyersFinalizedDealsPauseCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.pausefinalizeddealrequest)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.pausefinalizeddealrequest)
 	if err != nil {
 		return nil, err
 	}
@@ -6157,8 +6126,7 @@ func (c *BuyersFinalizedDealsResumeCall) Header() http.Header {
 
 func (c *BuyersFinalizedDealsResumeCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.resumefinalizeddealrequest)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.resumefinalizeddealrequest)
 	if err != nil {
 		return nil, err
 	}
@@ -6266,8 +6234,7 @@ func (c *BuyersFinalizedDealsSetReadyToServeCall) Header() http.Header {
 
 func (c *BuyersFinalizedDealsSetReadyToServeCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.setreadytoserverequest)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.setreadytoserverequest)
 	if err != nil {
 		return nil, err
 	}
@@ -6375,8 +6342,7 @@ func (c *BuyersProposalsAcceptCall) Header() http.Header {
 
 func (c *BuyersProposalsAcceptCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.acceptproposalrequest)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.acceptproposalrequest)
 	if err != nil {
 		return nil, err
 	}
@@ -6479,8 +6445,7 @@ func (c *BuyersProposalsAddNoteCall) Header() http.Header {
 
 func (c *BuyersProposalsAddNoteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.addnoterequest)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.addnoterequest)
 	if err != nil {
 		return nil, err
 	}
@@ -6589,8 +6554,7 @@ func (c *BuyersProposalsCancelNegotiationCall) Header() http.Header {
 
 func (c *BuyersProposalsCancelNegotiationCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.cancelnegotiationrequest)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.cancelnegotiationrequest)
 	if err != nil {
 		return nil, err
 	}
@@ -6702,12 +6666,11 @@ func (c *BuyersProposalsGetCall) doRequest(alt string) (*http.Response, error) {
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
-	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+name}")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, body)
+	req, err := http.NewRequest("GET", urls, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -6838,12 +6801,11 @@ func (c *BuyersProposalsListCall) doRequest(alt string) (*http.Response, error) 
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
-	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+parent}/proposals")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, body)
+	req, err := http.NewRequest("GET", urls, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -6980,8 +6942,7 @@ func (c *BuyersProposalsPatchCall) Header() http.Header {
 
 func (c *BuyersProposalsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.proposal)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.proposal)
 	if err != nil {
 		return nil, err
 	}
@@ -7087,8 +7048,7 @@ func (c *BuyersProposalsSendRfpCall) Header() http.Header {
 
 func (c *BuyersProposalsSendRfpCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.sendrfprequest)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.sendrfprequest)
 	if err != nil {
 		return nil, err
 	}
@@ -7189,8 +7149,7 @@ func (c *BuyersProposalsDealsBatchUpdateCall) Header() http.Header {
 
 func (c *BuyersProposalsDealsBatchUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.batchupdatedealsrequest)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.batchupdatedealsrequest)
 	if err != nil {
 		return nil, err
 	}
@@ -7301,12 +7260,11 @@ func (c *BuyersProposalsDealsGetCall) doRequest(alt string) (*http.Response, err
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
-	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+name}")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, body)
+	req, err := http.NewRequest("GET", urls, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -7427,12 +7385,11 @@ func (c *BuyersProposalsDealsListCall) doRequest(alt string) (*http.Response, er
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
-	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+parent}/deals")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, body)
+	req, err := http.NewRequest("GET", urls, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -7572,8 +7529,7 @@ func (c *BuyersProposalsDealsPatchCall) Header() http.Header {
 
 func (c *BuyersProposalsDealsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.deal)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.deal)
 	if err != nil {
 		return nil, err
 	}
@@ -7684,12 +7640,11 @@ func (c *BuyersPublisherProfilesGetCall) doRequest(alt string) (*http.Response, 
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
-	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+name}")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, body)
+	req, err := http.NewRequest("GET", urls, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -7820,12 +7775,11 @@ func (c *BuyersPublisherProfilesListCall) doRequest(alt string) (*http.Response,
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
-	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+parent}/publisherProfiles")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, body)
+	req, err := http.NewRequest("GET", urls, nil)
 	if err != nil {
 		return nil, err
 	}

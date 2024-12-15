@@ -1871,7 +1871,7 @@ type TerraformBlueprint struct {
 	GcsSource string `json:"gcsSource,omitempty"`
 	// GitSource: URI of a public Git repo.
 	GitSource *GitSource `json:"gitSource,omitempty"`
-	// InputValues: Input variable values for the Terraform blueprint.
+	// InputValues: Optional. Input variable values for the Terraform blueprint.
 	InputValues map[string]TerraformVariable `json:"inputValues,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "GcsSource") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -1893,7 +1893,8 @@ func (s TerraformBlueprint) MarshalJSON() ([]byte, error) {
 
 // TerraformError: Errors encountered during actuation using Terraform
 type TerraformError struct {
-	// Error: Original error response from underlying Google API, if available.
+	// Error: Output only. Original error response from underlying Google API, if
+	// available.
 	Error *Status `json:"error,omitempty"`
 	// ErrorDescription: A human-readable error description.
 	ErrorDescription string `json:"errorDescription,omitempty"`
@@ -1949,7 +1950,7 @@ func (s TerraformOutput) MarshalJSON() ([]byte, error) {
 
 // TerraformVariable: A Terraform input variable.
 type TerraformVariable struct {
-	// InputValue: Input variable value.
+	// InputValue: Optional. Input variable value.
 	InputValue interface{} `json:"inputValue,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "InputValue") to
 	// unconditionally include in API requests. By default, fields with empty or

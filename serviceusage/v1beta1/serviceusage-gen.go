@@ -1457,6 +1457,10 @@ func (s DisableServiceResponse) MarshalJSON() ([]byte, error) {
 // directive `suppress_warning` does not directly affect documentation and is
 // documented together with service config validation.
 type Documentation struct {
+	// AdditionalIamInfo: Optional information about the IAM configuration. This is
+	// typically used to link to documentation about a product's IAM roles and
+	// permissions.
+	AdditionalIamInfo string `json:"additionalIamInfo,omitempty"`
 	// DocumentationRootUrl: The URL to the root of documentation.
 	DocumentationRootUrl string `json:"documentationRootUrl,omitempty"`
 	// Overview: Declares a single overview page. For example: documentation:
@@ -1483,15 +1487,15 @@ type Documentation struct {
 	// plain text. It becomes the overview of the service displayed in Google Cloud
 	// Console. NOTE: This field is equivalent to the standard field `description`.
 	Summary string `json:"summary,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "DocumentationRootUrl") to
+	// ForceSendFields is a list of field names (e.g. "AdditionalIamInfo") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "DocumentationRootUrl") to include
-	// in API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. See
+	// NullFields is a list of field names (e.g. "AdditionalIamInfo") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }

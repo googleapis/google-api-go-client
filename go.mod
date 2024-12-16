@@ -3,9 +3,9 @@ module google.golang.org/api
 go 1.21
 
 require (
-	cloud.google.com/go/auth v0.12.1
+	cloud.google.com/go/auth v0.13.0
 	cloud.google.com/go/auth/oauth2adapt v0.2.6
-	cloud.google.com/go/compute/metadata v0.5.2
+	cloud.google.com/go/compute/metadata v0.6.0
 	github.com/google/go-cmp v0.6.0
 	github.com/google/s2a-go v0.1.8
 	github.com/google/uuid v1.6.0

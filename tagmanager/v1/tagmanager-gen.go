@@ -62,11 +62,13 @@ import (
 	"errors"
 	"fmt"
 	"io"
+	"log/slog"
 	"net/http"
 	"net/url"
 	"strconv"
 	"strings"
 
+	"github.com/googleapis/gax-go/v2/internallog"
 	googleapi "google.golang.org/api/googleapi"
 	internal "google.golang.org/api/internal"
 	gensupport "google.golang.org/api/internal/gensupport"
@@ -90,6 +92,7 @@ var _ = strings.Replace
 var _ = context.Canceled
 var _ = internaloption.WithDefaultEndpoint
 var _ = internal.Version
+var _ = internallog.New
 
 const apiId = "tagmanager:v1"
 const apiName = "tagmanager"
@@ -144,7 +147,7 @@ func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, err
 	if err != nil {
 		return nil, err
 	}
-	s := &Service{client: client, BasePath: basePath}
+	s := &Service{client: client, BasePath: basePath, logger: internaloption.GetLogger(opts)}
 	s.Accounts = NewAccountsService(s)
 	if err != nil {
 		return nil, err
@@ -169,6 +172,7 @@ func New(client *http.Client) (*Service, error) {
 
 type Service struct {
 	client    *http.Client
+	logger    *slog.Logger
 	BasePath  string // API endpoint base URL
 	UserAgent string // optional additional User-Agent fragment
 
@@ -1880,6 +1884,7 @@ func (c *AccountsGetCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"accountId": c.accountId,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "tagmanager.accounts.get", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -1914,9 +1919,11 @@ func (c *AccountsGetCall) Do(opts ...googleapi.CallOption) (*Account, error) {
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "tagmanager.accounts.get", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -1979,6 +1986,7 @@ func (c *AccountsListCall) doRequest(alt string) (*http.Response, error) {
 		return nil, err
 	}
 	req.Header = reqHeaders
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "tagmanager.accounts.list", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -2014,9 +2022,11 @@ func (c *AccountsListCall) Do(opts ...googleapi.CallOption) (*ListAccountsRespon
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "tagmanager.accounts.list", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -2087,6 +2097,7 @@ func (c *AccountsUpdateCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"accountId": c.accountId,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "tagmanager.accounts.update", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -2121,9 +2132,11 @@ func (c *AccountsUpdateCall) Do(opts ...googleapi.CallOption) (*Account, error) 
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "tagmanager.accounts.update", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -2187,6 +2200,7 @@ func (c *AccountsContainersCreateCall) doRequest(alt string) (*http.Response, er
 	googleapi.Expand(req.URL, map[string]string{
 		"accountId": c.accountId,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "tagmanager.accounts.containers.create", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -2221,9 +2235,11 @@ func (c *AccountsContainersCreateCall) Do(opts ...googleapi.CallOption) (*Contai
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "tagmanager.accounts.containers.create", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -2285,6 +2301,7 @@ func (c *AccountsContainersDeleteCall) doRequest(alt string) (*http.Response, er
 		"accountId":   c.accountId,
 		"containerId": c.containerId,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "tagmanager.accounts.containers.delete", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -2299,6 +2316,7 @@ func (c *AccountsContainersDeleteCall) Do(opts ...googleapi.CallOption) error {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return gensupport.WrapError(err)
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "tagmanager.accounts.containers.delete", "response", internallog.HTTPResponse(res, nil))
 	return nil
 }
 
@@ -2372,6 +2390,7 @@ func (c *AccountsContainersGetCall) doRequest(alt string) (*http.Response, error
 		"accountId":   c.accountId,
 		"containerId": c.containerId,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "tagmanager.accounts.containers.get", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -2406,9 +2425,11 @@ func (c *AccountsContainersGetCall) Do(opts ...googleapi.CallOption) (*Container
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "tagmanager.accounts.containers.get", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -2478,6 +2499,7 @@ func (c *AccountsContainersListCall) doRequest(alt string) (*http.Response, erro
 	googleapi.Expand(req.URL, map[string]string{
 		"accountId": c.accountId,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "tagmanager.accounts.containers.list", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -2513,9 +2535,11 @@ func (c *AccountsContainersListCall) Do(opts ...googleapi.CallOption) (*ListCont
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "tagmanager.accounts.containers.list", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -2590,6 +2614,7 @@ func (c *AccountsContainersUpdateCall) doRequest(alt string) (*http.Response, er
 		"accountId":   c.accountId,
 		"containerId": c.containerId,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "tagmanager.accounts.containers.update", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -2624,9 +2649,11 @@ func (c *AccountsContainersUpdateCall) Do(opts ...googleapi.CallOption) (*Contai
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "tagmanager.accounts.containers.update", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -2694,6 +2721,7 @@ func (c *AccountsContainersEnvironmentsCreateCall) doRequest(alt string) (*http.
 		"accountId":   c.accountId,
 		"containerId": c.containerId,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "tagmanager.accounts.containers.environments.create", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -2728,9 +2756,11 @@ func (c *AccountsContainersEnvironmentsCreateCall) Do(opts ...googleapi.CallOpti
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "tagmanager.accounts.containers.environments.create", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -2796,6 +2826,7 @@ func (c *AccountsContainersEnvironmentsDeleteCall) doRequest(alt string) (*http.
 		"containerId":   c.containerId,
 		"environmentId": c.environmentId,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "tagmanager.accounts.containers.environments.delete", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -2810,6 +2841,7 @@ func (c *AccountsContainersEnvironmentsDeleteCall) Do(opts ...googleapi.CallOpti
 	if err := googleapi.CheckResponse(res); err != nil {
 		return gensupport.WrapError(err)
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "tagmanager.accounts.containers.environments.delete", "response", internallog.HTTPResponse(res, nil))
 	return nil
 }
 
@@ -2887,6 +2919,7 @@ func (c *AccountsContainersEnvironmentsGetCall) doRequest(alt string) (*http.Res
 		"containerId":   c.containerId,
 		"environmentId": c.environmentId,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "tagmanager.accounts.containers.environments.get", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -2921,9 +2954,11 @@ func (c *AccountsContainersEnvironmentsGetCall) Do(opts ...googleapi.CallOption)
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "tagmanager.accounts.containers.environments.get", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -2997,6 +3032,7 @@ func (c *AccountsContainersEnvironmentsListCall) doRequest(alt string) (*http.Re
 		"accountId":   c.accountId,
 		"containerId": c.containerId,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "tagmanager.accounts.containers.environments.list", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -3032,9 +3068,11 @@ func (c *AccountsContainersEnvironmentsListCall) Do(opts ...googleapi.CallOption
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "tagmanager.accounts.containers.environments.list", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -3113,6 +3151,7 @@ func (c *AccountsContainersEnvironmentsUpdateCall) doRequest(alt string) (*http.
 		"containerId":   c.containerId,
 		"environmentId": c.environmentId,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "tagmanager.accounts.containers.environments.update", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -3147,9 +3186,11 @@ func (c *AccountsContainersEnvironmentsUpdateCall) Do(opts ...googleapi.CallOpti
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "tagmanager.accounts.containers.environments.update", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -3217,6 +3258,7 @@ func (c *AccountsContainersFoldersCreateCall) doRequest(alt string) (*http.Respo
 		"accountId":   c.accountId,
 		"containerId": c.containerId,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "tagmanager.accounts.containers.folders.create", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -3251,9 +3293,11 @@ func (c *AccountsContainersFoldersCreateCall) Do(opts ...googleapi.CallOption) (
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "tagmanager.accounts.containers.folders.create", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -3319,6 +3363,7 @@ func (c *AccountsContainersFoldersDeleteCall) doRequest(alt string) (*http.Respo
 		"containerId": c.containerId,
 		"folderId":    c.folderId,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "tagmanager.accounts.containers.folders.delete", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -3333,6 +3378,7 @@ func (c *AccountsContainersFoldersDeleteCall) Do(opts ...googleapi.CallOption) e
 	if err := googleapi.CheckResponse(res); err != nil {
 		return gensupport.WrapError(err)
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "tagmanager.accounts.containers.folders.delete", "response", internallog.HTTPResponse(res, nil))
 	return nil
 }
 
@@ -3410,6 +3456,7 @@ func (c *AccountsContainersFoldersGetCall) doRequest(alt string) (*http.Response
 		"containerId": c.containerId,
 		"folderId":    c.folderId,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "tagmanager.accounts.containers.folders.get", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -3444,9 +3491,11 @@ func (c *AccountsContainersFoldersGetCall) Do(opts ...googleapi.CallOption) (*Fo
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "tagmanager.accounts.containers.folders.get", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -3520,6 +3569,7 @@ func (c *AccountsContainersFoldersListCall) doRequest(alt string) (*http.Respons
 		"accountId":   c.accountId,
 		"containerId": c.containerId,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "tagmanager.accounts.containers.folders.list", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -3555,9 +3605,11 @@ func (c *AccountsContainersFoldersListCall) Do(opts ...googleapi.CallOption) (*L
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "tagmanager.accounts.containers.folders.list", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -3636,6 +3688,7 @@ func (c *AccountsContainersFoldersUpdateCall) doRequest(alt string) (*http.Respo
 		"containerId": c.containerId,
 		"folderId":    c.folderId,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "tagmanager.accounts.containers.folders.update", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -3670,9 +3723,11 @@ func (c *AccountsContainersFoldersUpdateCall) Do(opts ...googleapi.CallOption) (
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "tagmanager.accounts.containers.folders.update", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -3750,6 +3805,7 @@ func (c *AccountsContainersFoldersEntitiesListCall) doRequest(alt string) (*http
 		"containerId": c.containerId,
 		"folderId":    c.folderId,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "tagmanager.accounts.containers.folders.entities.list", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -3784,9 +3840,11 @@ func (c *AccountsContainersFoldersEntitiesListCall) Do(opts ...googleapi.CallOpt
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "tagmanager.accounts.containers.folders.entities.list", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -3879,6 +3937,7 @@ func (c *AccountsContainersMoveFoldersUpdateCall) doRequest(alt string) (*http.R
 		"containerId": c.containerId,
 		"folderId":    c.folderId,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "tagmanager.accounts.containers.move_folders.update", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -3893,6 +3952,7 @@ func (c *AccountsContainersMoveFoldersUpdateCall) Do(opts ...googleapi.CallOptio
 	if err := googleapi.CheckResponse(res); err != nil {
 		return gensupport.WrapError(err)
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "tagmanager.accounts.containers.move_folders.update", "response", internallog.HTTPResponse(res, nil))
 	return nil
 }
 
@@ -3964,6 +4024,7 @@ func (c *AccountsContainersReauthorizeEnvironmentsUpdateCall) doRequest(alt stri
 		"containerId":   c.containerId,
 		"environmentId": c.environmentId,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "tagmanager.accounts.containers.reauthorize_environments.update", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -3998,9 +4059,11 @@ func (c *AccountsContainersReauthorizeEnvironmentsUpdateCall) Do(opts ...googlea
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "tagmanager.accounts.containers.reauthorize_environments.update", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -4068,6 +4131,7 @@ func (c *AccountsContainersTagsCreateCall) doRequest(alt string) (*http.Response
 		"accountId":   c.accountId,
 		"containerId": c.containerId,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "tagmanager.accounts.containers.tags.create", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -4102,9 +4166,11 @@ func (c *AccountsContainersTagsCreateCall) Do(opts ...googleapi.CallOption) (*Ta
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "tagmanager.accounts.containers.tags.create", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -4170,6 +4236,7 @@ func (c *AccountsContainersTagsDeleteCall) doRequest(alt string) (*http.Response
 		"containerId": c.containerId,
 		"tagId":       c.tagId,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "tagmanager.accounts.containers.tags.delete", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -4184,6 +4251,7 @@ func (c *AccountsContainersTagsDeleteCall) Do(opts ...googleapi.CallOption) erro
 	if err := googleapi.CheckResponse(res); err != nil {
 		return gensupport.WrapError(err)
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "tagmanager.accounts.containers.tags.delete", "response", internallog.HTTPResponse(res, nil))
 	return nil
 }
 
@@ -4261,6 +4329,7 @@ func (c *AccountsContainersTagsGetCall) doRequest(alt string) (*http.Response, e
 		"containerId": c.containerId,
 		"tagId":       c.tagId,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "tagmanager.accounts.containers.tags.get", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -4295,9 +4364,11 @@ func (c *AccountsContainersTagsGetCall) Do(opts ...googleapi.CallOption) (*Tag, 
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "tagmanager.accounts.containers.tags.get", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -4371,6 +4442,7 @@ func (c *AccountsContainersTagsListCall) doRequest(alt string) (*http.Response, 
 		"accountId":   c.accountId,
 		"containerId": c.containerId,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "tagmanager.accounts.containers.tags.list", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -4406,9 +4478,11 @@ func (c *AccountsContainersTagsListCall) Do(opts ...googleapi.CallOption) (*List
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "tagmanager.accounts.containers.tags.list", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -4487,6 +4561,7 @@ func (c *AccountsContainersTagsUpdateCall) doRequest(alt string) (*http.Response
 		"containerId": c.containerId,
 		"tagId":       c.tagId,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "tagmanager.accounts.containers.tags.update", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -4521,9 +4596,11 @@ func (c *AccountsContainersTagsUpdateCall) Do(opts ...googleapi.CallOption) (*Ta
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "tagmanager.accounts.containers.tags.update", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -4591,6 +4668,7 @@ func (c *AccountsContainersTriggersCreateCall) doRequest(alt string) (*http.Resp
 		"accountId":   c.accountId,
 		"containerId": c.containerId,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "tagmanager.accounts.containers.triggers.create", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -4625,9 +4703,11 @@ func (c *AccountsContainersTriggersCreateCall) Do(opts ...googleapi.CallOption) 
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "tagmanager.accounts.containers.triggers.create", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -4693,6 +4773,7 @@ func (c *AccountsContainersTriggersDeleteCall) doRequest(alt string) (*http.Resp
 		"containerId": c.containerId,
 		"triggerId":   c.triggerId,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "tagmanager.accounts.containers.triggers.delete", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -4707,6 +4788,7 @@ func (c *AccountsContainersTriggersDeleteCall) Do(opts ...googleapi.CallOption) 
 	if err := googleapi.CheckResponse(res); err != nil {
 		return gensupport.WrapError(err)
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "tagmanager.accounts.containers.triggers.delete", "response", internallog.HTTPResponse(res, nil))
 	return nil
 }
 
@@ -4784,6 +4866,7 @@ func (c *AccountsContainersTriggersGetCall) doRequest(alt string) (*http.Respons
 		"containerId": c.containerId,
 		"triggerId":   c.triggerId,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "tagmanager.accounts.containers.triggers.get", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -4818,9 +4901,11 @@ func (c *AccountsContainersTriggersGetCall) Do(opts ...googleapi.CallOption) (*T
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "tagmanager.accounts.containers.triggers.get", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -4894,6 +4979,7 @@ func (c *AccountsContainersTriggersListCall) doRequest(alt string) (*http.Respon
 		"accountId":   c.accountId,
 		"containerId": c.containerId,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "tagmanager.accounts.containers.triggers.list", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -4929,9 +5015,11 @@ func (c *AccountsContainersTriggersListCall) Do(opts ...googleapi.CallOption) (*
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "tagmanager.accounts.containers.triggers.list", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -5010,6 +5098,7 @@ func (c *AccountsContainersTriggersUpdateCall) doRequest(alt string) (*http.Resp
 		"containerId": c.containerId,
 		"triggerId":   c.triggerId,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "tagmanager.accounts.containers.triggers.update", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -5044,9 +5133,11 @@ func (c *AccountsContainersTriggersUpdateCall) Do(opts ...googleapi.CallOption) 
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "tagmanager.accounts.containers.triggers.update", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -5114,6 +5205,7 @@ func (c *AccountsContainersVariablesCreateCall) doRequest(alt string) (*http.Res
 		"accountId":   c.accountId,
 		"containerId": c.containerId,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "tagmanager.accounts.containers.variables.create", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -5148,9 +5240,11 @@ func (c *AccountsContainersVariablesCreateCall) Do(opts ...googleapi.CallOption)
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "tagmanager.accounts.containers.variables.create", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -5216,6 +5310,7 @@ func (c *AccountsContainersVariablesDeleteCall) doRequest(alt string) (*http.Res
 		"containerId": c.containerId,
 		"variableId":  c.variableId,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "tagmanager.accounts.containers.variables.delete", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -5230,6 +5325,7 @@ func (c *AccountsContainersVariablesDeleteCall) Do(opts ...googleapi.CallOption)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return gensupport.WrapError(err)
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "tagmanager.accounts.containers.variables.delete", "response", internallog.HTTPResponse(res, nil))
 	return nil
 }
 
@@ -5307,6 +5403,7 @@ func (c *AccountsContainersVariablesGetCall) doRequest(alt string) (*http.Respon
 		"containerId": c.containerId,
 		"variableId":  c.variableId,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "tagmanager.accounts.containers.variables.get", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -5341,9 +5438,11 @@ func (c *AccountsContainersVariablesGetCall) Do(opts ...googleapi.CallOption) (*
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "tagmanager.accounts.containers.variables.get", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -5417,6 +5516,7 @@ func (c *AccountsContainersVariablesListCall) doRequest(alt string) (*http.Respo
 		"accountId":   c.accountId,
 		"containerId": c.containerId,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "tagmanager.accounts.containers.variables.list", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -5452,9 +5552,11 @@ func (c *AccountsContainersVariablesListCall) Do(opts ...googleapi.CallOption) (
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "tagmanager.accounts.containers.variables.list", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -5533,6 +5635,7 @@ func (c *AccountsContainersVariablesUpdateCall) doRequest(alt string) (*http.Res
 		"containerId": c.containerId,
 		"variableId":  c.variableId,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "tagmanager.accounts.containers.variables.update", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -5567,9 +5670,11 @@ func (c *AccountsContainersVariablesUpdateCall) Do(opts ...googleapi.CallOption)
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "tagmanager.accounts.containers.variables.update", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -5637,6 +5742,7 @@ func (c *AccountsContainersVersionsCreateCall) doRequest(alt string) (*http.Resp
 		"accountId":   c.accountId,
 		"containerId": c.containerId,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "tagmanager.accounts.containers.versions.create", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -5672,9 +5778,11 @@ func (c *AccountsContainersVersionsCreateCall) Do(opts ...googleapi.CallOption) 
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "tagmanager.accounts.containers.versions.create", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -5740,6 +5848,7 @@ func (c *AccountsContainersVersionsDeleteCall) doRequest(alt string) (*http.Resp
 		"containerId":        c.containerId,
 		"containerVersionId": c.containerVersionId,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "tagmanager.accounts.containers.versions.delete", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -5754,6 +5863,7 @@ func (c *AccountsContainersVersionsDeleteCall) Do(opts ...googleapi.CallOption) 
 	if err := googleapi.CheckResponse(res); err != nil {
 		return gensupport.WrapError(err)
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "tagmanager.accounts.containers.versions.delete", "response", internallog.HTTPResponse(res, nil))
 	return nil
 }
 
@@ -5832,6 +5942,7 @@ func (c *AccountsContainersVersionsGetCall) doRequest(alt string) (*http.Respons
 		"containerId":        c.containerId,
 		"containerVersionId": c.containerVersionId,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "tagmanager.accounts.containers.versions.get", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -5867,9 +5978,11 @@ func (c *AccountsContainersVersionsGetCall) Do(opts ...googleapi.CallOption) (*C
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "tagmanager.accounts.containers.versions.get", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -5957,6 +6070,7 @@ func (c *AccountsContainersVersionsListCall) doRequest(alt string) (*http.Respon
 		"accountId":   c.accountId,
 		"containerId": c.containerId,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "tagmanager.accounts.containers.versions.list", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -5992,9 +6106,11 @@ func (c *AccountsContainersVersionsListCall) Do(opts ...googleapi.CallOption) (*
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "tagmanager.accounts.containers.versions.list", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -6067,6 +6183,7 @@ func (c *AccountsContainersVersionsPublishCall) doRequest(alt string) (*http.Res
 		"containerId":        c.containerId,
 		"containerVersionId": c.containerVersionId,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "tagmanager.accounts.containers.versions.publish", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -6102,9 +6219,11 @@ func (c *AccountsContainersVersionsPublishCall) Do(opts ...googleapi.CallOption)
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "tagmanager.accounts.containers.versions.publish", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -6173,6 +6292,7 @@ func (c *AccountsContainersVersionsRestoreCall) doRequest(alt string) (*http.Res
 		"containerId":        c.containerId,
 		"containerVersionId": c.containerVersionId,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "tagmanager.accounts.containers.versions.restore", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -6208,9 +6328,11 @@ func (c *AccountsContainersVersionsRestoreCall) Do(opts ...googleapi.CallOption)
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "tagmanager.accounts.containers.versions.restore", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -6276,6 +6398,7 @@ func (c *AccountsContainersVersionsUndeleteCall) doRequest(alt string) (*http.Re
 		"containerId":        c.containerId,
 		"containerVersionId": c.containerVersionId,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "tagmanager.accounts.containers.versions.undelete", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -6311,9 +6434,11 @@ func (c *AccountsContainersVersionsUndeleteCall) Do(opts ...googleapi.CallOption
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "tagmanager.accounts.containers.versions.undelete", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -6392,6 +6517,7 @@ func (c *AccountsContainersVersionsUpdateCall) doRequest(alt string) (*http.Resp
 		"containerId":        c.containerId,
 		"containerVersionId": c.containerVersionId,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "tagmanager.accounts.containers.versions.update", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -6427,9 +6553,11 @@ func (c *AccountsContainersVersionsUpdateCall) Do(opts ...googleapi.CallOption) 
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "tagmanager.accounts.containers.versions.update", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -6493,6 +6621,7 @@ func (c *AccountsPermissionsCreateCall) doRequest(alt string) (*http.Response, e
 	googleapi.Expand(req.URL, map[string]string{
 		"accountId": c.accountId,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "tagmanager.accounts.permissions.create", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -6527,9 +6656,11 @@ func (c *AccountsPermissionsCreateCall) Do(opts ...googleapi.CallOption) (*UserA
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "tagmanager.accounts.permissions.create", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -6592,6 +6723,7 @@ func (c *AccountsPermissionsDeleteCall) doRequest(alt string) (*http.Response, e
 		"accountId":    c.accountId,
 		"permissionId": c.permissionId,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "tagmanager.accounts.permissions.delete", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -6606,6 +6738,7 @@ func (c *AccountsPermissionsDeleteCall) Do(opts ...googleapi.CallOption) error {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return gensupport.WrapError(err)
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "tagmanager.accounts.permissions.delete", "response", internallog.HTTPResponse(res, nil))
 	return nil
 }
 
@@ -6679,6 +6812,7 @@ func (c *AccountsPermissionsGetCall) doRequest(alt string) (*http.Response, erro
 		"accountId":    c.accountId,
 		"permissionId": c.permissionId,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "tagmanager.accounts.permissions.get", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -6713,9 +6847,11 @@ func (c *AccountsPermissionsGetCall) Do(opts ...googleapi.CallOption) (*UserAcce
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "tagmanager.accounts.permissions.get", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -6786,6 +6922,7 @@ func (c *AccountsPermissionsListCall) doRequest(alt string) (*http.Response, err
 	googleapi.Expand(req.URL, map[string]string{
 		"accountId": c.accountId,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "tagmanager.accounts.permissions.list", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -6821,9 +6958,11 @@ func (c *AccountsPermissionsListCall) Do(opts ...googleapi.CallOption) (*ListAcc
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "tagmanager.accounts.permissions.list", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -6891,6 +7030,7 @@ func (c *AccountsPermissionsUpdateCall) doRequest(alt string) (*http.Response, e
 		"accountId":    c.accountId,
 		"permissionId": c.permissionId,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "tagmanager.accounts.permissions.update", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -6925,8 +7065,10 @@ func (c *AccountsPermissionsUpdateCall) Do(opts ...googleapi.CallOption) (*UserA
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "tagmanager.accounts.permissions.update", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }

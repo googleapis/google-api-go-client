@@ -57,11 +57,13 @@ import (
 	"errors"
 	"fmt"
 	"io"
+	"log/slog"
 	"net/http"
 	"net/url"
 	"strconv"
 	"strings"
 
+	"github.com/googleapis/gax-go/v2/internallog"
 	googleapi "google.golang.org/api/googleapi"
 	internal "google.golang.org/api/internal"
 	gensupport "google.golang.org/api/internal/gensupport"
@@ -85,6 +87,7 @@ var _ = strings.Replace
 var _ = context.Canceled
 var _ = internaloption.WithDefaultEndpoint
 var _ = internal.Version
+var _ = internallog.New
 
 const apiId = "doubleclicksearch:v2"
 const apiName = "doubleclicksearch"
@@ -114,7 +117,7 @@ func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, err
 	if err != nil {
 		return nil, err
 	}
-	s := &Service{client: client, BasePath: basePath}
+	s := &Service{client: client, BasePath: basePath, logger: internaloption.GetLogger(opts)}
 	s.Conversion = NewConversionService(s)
 	s.Reports = NewReportsService(s)
 	s.SavedColumns = NewSavedColumnsService(s)
@@ -141,6 +144,7 @@ func New(client *http.Client) (*Service, error) {
 
 type Service struct {
 	client    *http.Client
+	logger    *slog.Logger
 	BasePath  string // API endpoint base URL
 	UserAgent string // optional additional User-Agent fragment
 
@@ -1012,6 +1016,7 @@ func (c *ConversionGetCall) doRequest(alt string) (*http.Response, error) {
 		"advertiserId":    strconv.FormatInt(c.advertiserId, 10),
 		"engineAccountId": strconv.FormatInt(c.engineAccountId, 10),
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "doubleclicksearch.conversion.get", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -1046,9 +1051,11 @@ func (c *ConversionGetCall) Do(opts ...googleapi.CallOption) (*ConversionList, e
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "doubleclicksearch.conversion.get", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -1177,6 +1184,7 @@ func (c *ConversionGetByCustomerIdCall) doRequest(alt string) (*http.Response, e
 	googleapi.Expand(req.URL, map[string]string{
 		"customerId": c.customerId,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "doubleclicksearch.conversion.getByCustomerId", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -1211,9 +1219,11 @@ func (c *ConversionGetByCustomerIdCall) Do(opts ...googleapi.CallOption) (*Conve
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "doubleclicksearch.conversion.getByCustomerId", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -1270,6 +1280,7 @@ func (c *ConversionInsertCall) doRequest(alt string) (*http.Response, error) {
 		return nil, err
 	}
 	req.Header = reqHeaders
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "doubleclicksearch.conversion.insert", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -1304,9 +1315,11 @@ func (c *ConversionInsertCall) Do(opts ...googleapi.CallOption) (*ConversionList
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "doubleclicksearch.conversion.insert", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -1363,6 +1376,7 @@ func (c *ConversionUpdateCall) doRequest(alt string) (*http.Response, error) {
 		return nil, err
 	}
 	req.Header = reqHeaders
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "doubleclicksearch.conversion.update", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -1397,9 +1411,11 @@ func (c *ConversionUpdateCall) Do(opts ...googleapi.CallOption) (*ConversionList
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "doubleclicksearch.conversion.update", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -1457,6 +1473,7 @@ func (c *ConversionUpdateAvailabilityCall) doRequest(alt string) (*http.Response
 		return nil, err
 	}
 	req.Header = reqHeaders
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "doubleclicksearch.conversion.updateAvailability", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -1492,9 +1509,11 @@ func (c *ConversionUpdateAvailabilityCall) Do(opts ...googleapi.CallOption) (*Up
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "doubleclicksearch.conversion.updateAvailability", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -1551,6 +1570,7 @@ func (c *ReportsGenerateCall) doRequest(alt string) (*http.Response, error) {
 		return nil, err
 	}
 	req.Header = reqHeaders
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "doubleclicksearch.reports.generate", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -1585,9 +1605,11 @@ func (c *ReportsGenerateCall) Do(opts ...googleapi.CallOption) (*Report, error) 
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "doubleclicksearch.reports.generate", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -1657,6 +1679,7 @@ func (c *ReportsGetCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"reportId": c.reportId,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "doubleclicksearch.reports.get", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -1691,9 +1714,11 @@ func (c *ReportsGetCall) Do(opts ...googleapi.CallOption) (*Report, error) {
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "doubleclicksearch.reports.get", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -1767,6 +1792,7 @@ func (c *ReportsGetFileCall) doRequest(alt string) (*http.Response, error) {
 		"reportId":       c.reportId,
 		"reportFragment": strconv.FormatInt(c.reportFragment, 10),
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "doubleclicksearch.reports.getFile", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -1797,6 +1823,7 @@ func (c *ReportsGetFileCall) Do(opts ...googleapi.CallOption) error {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return gensupport.WrapError(err)
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "doubleclicksearch.reports.getFile", "response", internallog.HTTPResponse(res, nil))
 	return nil
 }
 
@@ -1873,6 +1900,7 @@ func (c *ReportsGetIdMappingFileCall) doRequest(alt string) (*http.Response, err
 		"agencyId":     strconv.FormatInt(c.agencyId, 10),
 		"advertiserId": strconv.FormatInt(c.advertiserId, 10),
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "doubleclicksearch.reports.getIdMappingFile", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -1923,9 +1951,11 @@ func (c *ReportsGetIdMappingFileCall) Do(opts ...googleapi.CallOption) (*IdMappi
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "doubleclicksearch.reports.getIdMappingFile", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -1982,6 +2012,7 @@ func (c *ReportsRequestCall) doRequest(alt string) (*http.Response, error) {
 		return nil, err
 	}
 	req.Header = reqHeaders
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "doubleclicksearch.reports.request", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -2016,9 +2047,11 @@ func (c *ReportsRequestCall) Do(opts ...googleapi.CallOption) (*Report, error) {
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "doubleclicksearch.reports.request", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -2092,6 +2125,7 @@ func (c *SavedColumnsListCall) doRequest(alt string) (*http.Response, error) {
 		"agencyId":     strconv.FormatInt(c.agencyId, 10),
 		"advertiserId": strconv.FormatInt(c.advertiserId, 10),
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "doubleclicksearch.savedColumns.list", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -2127,8 +2161,10 @@ func (c *SavedColumnsListCall) Do(opts ...googleapi.CallOption) (*SavedColumnLis
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "doubleclicksearch.savedColumns.list", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }

@@ -57,11 +57,13 @@ import (
 	"errors"
 	"fmt"
 	"io"
+	"log/slog"
 	"net/http"
 	"net/url"
 	"strconv"
 	"strings"
 
+	"github.com/googleapis/gax-go/v2/internallog"
 	googleapi "google.golang.org/api/googleapi"
 	internal "google.golang.org/api/internal"
 	gensupport "google.golang.org/api/internal/gensupport"
@@ -85,6 +87,7 @@ var _ = strings.Replace
 var _ = context.Canceled
 var _ = internaloption.WithDefaultEndpoint
 var _ = internal.Version
+var _ = internallog.New
 
 const apiId = "playgrouping:v1alpha1"
 const apiName = "playgrouping"
@@ -103,7 +106,7 @@ func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, err
 	if err != nil {
 		return nil, err
 	}
-	s := &Service{client: client, BasePath: basePath}
+	s := &Service{client: client, BasePath: basePath, logger: internaloption.GetLogger(opts)}
 	s.Apps = NewAppsService(s)
 	if err != nil {
 		return nil, err
@@ -128,6 +131,7 @@ func New(client *http.Client) (*Service, error) {
 
 type Service struct {
 	client    *http.Client
+	logger    *slog.Logger
 	BasePath  string // API endpoint base URL
 	UserAgent string // optional additional User-Agent fragment
 
@@ -348,6 +352,7 @@ func (c *AppsTokensVerifyCall) doRequest(alt string) (*http.Response, error) {
 		"appPackage": c.appPackage,
 		"token":      c.token,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "playgrouping.apps.tokens.verify", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -383,9 +388,11 @@ func (c *AppsTokensVerifyCall) Do(opts ...googleapi.CallOption) (*VerifyTokenRes
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "playgrouping.apps.tokens.verify", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -456,6 +463,7 @@ func (c *AppsTokensTagsCreateOrUpdateCall) doRequest(alt string) (*http.Response
 		"appPackage": c.appPackage,
 		"token":      c.token,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "playgrouping.apps.tokens.tags.createOrUpdate", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -491,8 +499,10 @@ func (c *AppsTokensTagsCreateOrUpdateCall) Do(opts ...googleapi.CallOption) (*Cr
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "playgrouping.apps.tokens.tags.createOrUpdate", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }

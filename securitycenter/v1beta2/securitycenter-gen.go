@@ -57,11 +57,13 @@ import (
 	"errors"
 	"fmt"
 	"io"
+	"log/slog"
 	"net/http"
 	"net/url"
 	"strconv"
 	"strings"
 
+	"github.com/googleapis/gax-go/v2/internallog"
 	googleapi "google.golang.org/api/googleapi"
 	internal "google.golang.org/api/internal"
 	gensupport "google.golang.org/api/internal/gensupport"
@@ -85,6 +87,7 @@ var _ = strings.Replace
 var _ = context.Canceled
 var _ = internaloption.WithDefaultEndpoint
 var _ = internal.Version
+var _ = internallog.New
 
 const apiId = "securitycenter:v1beta2"
 const apiName = "securitycenter"
@@ -115,7 +118,7 @@ func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, err
 	if err != nil {
 		return nil, err
 	}
-	s := &Service{client: client, BasePath: basePath}
+	s := &Service{client: client, BasePath: basePath, logger: internaloption.GetLogger(opts)}
 	s.Folders = NewFoldersService(s)
 	s.Organizations = NewOrganizationsService(s)
 	s.Projects = NewProjectsService(s)
@@ -142,6 +145,7 @@ func New(client *http.Client) (*Service, error) {
 
 type Service struct {
 	client    *http.Client
+	logger    *slog.Logger
 	BasePath  string // API endpoint base URL
 	UserAgent string // optional additional User-Agent fragment
 
@@ -9505,6 +9509,7 @@ func (c *FoldersGetContainerThreatDetectionSettingsCall) doRequest(alt string) (
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "securitycenter.folders.getContainerThreatDetectionSettings", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -9540,9 +9545,11 @@ func (c *FoldersGetContainerThreatDetectionSettingsCall) Do(opts ...googleapi.Ca
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "securitycenter.folders.getContainerThreatDetectionSettings", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -9621,6 +9628,7 @@ func (c *FoldersGetEventThreatDetectionSettingsCall) doRequest(alt string) (*htt
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "securitycenter.folders.getEventThreatDetectionSettings", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -9656,9 +9664,11 @@ func (c *FoldersGetEventThreatDetectionSettingsCall) Do(opts ...googleapi.CallOp
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "securitycenter.folders.getEventThreatDetectionSettings", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -9739,6 +9749,7 @@ func (c *FoldersGetRapidVulnerabilityDetectionSettingsCall) doRequest(alt string
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "securitycenter.folders.getRapidVulnerabilityDetectionSettings", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -9774,9 +9785,11 @@ func (c *FoldersGetRapidVulnerabilityDetectionSettingsCall) Do(opts ...googleapi
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "securitycenter.folders.getRapidVulnerabilityDetectionSettings", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -9849,6 +9862,7 @@ func (c *FoldersGetSecurityCenterSettingsCall) doRequest(alt string) (*http.Resp
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "securitycenter.folders.getSecurityCenterSettings", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -9884,9 +9898,11 @@ func (c *FoldersGetSecurityCenterSettingsCall) Do(opts ...googleapi.CallOption) 
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "securitycenter.folders.getSecurityCenterSettings", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -9965,6 +9981,7 @@ func (c *FoldersGetSecurityHealthAnalyticsSettingsCall) doRequest(alt string) (*
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "securitycenter.folders.getSecurityHealthAnalyticsSettings", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -10000,9 +10017,11 @@ func (c *FoldersGetSecurityHealthAnalyticsSettingsCall) Do(opts ...googleapi.Cal
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "securitycenter.folders.getSecurityHealthAnalyticsSettings", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -10083,6 +10102,7 @@ func (c *FoldersGetVirtualMachineThreatDetectionSettingsCall) doRequest(alt stri
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "securitycenter.folders.getVirtualMachineThreatDetectionSettings", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -10118,9 +10138,11 @@ func (c *FoldersGetVirtualMachineThreatDetectionSettingsCall) Do(opts ...googlea
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "securitycenter.folders.getVirtualMachineThreatDetectionSettings", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -10199,6 +10221,7 @@ func (c *FoldersGetWebSecurityScannerSettingsCall) doRequest(alt string) (*http.
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "securitycenter.folders.getWebSecurityScannerSettings", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -10234,9 +10257,11 @@ func (c *FoldersGetWebSecurityScannerSettingsCall) Do(opts ...googleapi.CallOpti
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "securitycenter.folders.getWebSecurityScannerSettings", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -10314,6 +10339,7 @@ func (c *FoldersUpdateContainerThreatDetectionSettingsCall) doRequest(alt string
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "securitycenter.folders.updateContainerThreatDetectionSettings", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -10349,9 +10375,11 @@ func (c *FoldersUpdateContainerThreatDetectionSettingsCall) Do(opts ...googleapi
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "securitycenter.folders.updateContainerThreatDetectionSettings", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -10426,6 +10454,7 @@ func (c *FoldersUpdateEventThreatDetectionSettingsCall) doRequest(alt string) (*
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "securitycenter.folders.updateEventThreatDetectionSettings", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -10461,9 +10490,11 @@ func (c *FoldersUpdateEventThreatDetectionSettingsCall) Do(opts ...googleapi.Cal
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "securitycenter.folders.updateEventThreatDetectionSettings", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -10539,6 +10570,7 @@ func (c *FoldersUpdateRapidVulnerabilityDetectionSettingsCall) doRequest(alt str
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "securitycenter.folders.updateRapidVulnerabilityDetectionSettings", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -10574,9 +10606,11 @@ func (c *FoldersUpdateRapidVulnerabilityDetectionSettingsCall) Do(opts ...google
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "securitycenter.folders.updateRapidVulnerabilityDetectionSettings", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -10652,6 +10686,7 @@ func (c *FoldersUpdateSecurityHealthAnalyticsSettingsCall) doRequest(alt string)
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "securitycenter.folders.updateSecurityHealthAnalyticsSettings", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -10687,9 +10722,11 @@ func (c *FoldersUpdateSecurityHealthAnalyticsSettingsCall) Do(opts ...googleapi.
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "securitycenter.folders.updateSecurityHealthAnalyticsSettings", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -10765,6 +10802,7 @@ func (c *FoldersUpdateVirtualMachineThreatDetectionSettingsCall) doRequest(alt s
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "securitycenter.folders.updateVirtualMachineThreatDetectionSettings", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -10800,9 +10838,11 @@ func (c *FoldersUpdateVirtualMachineThreatDetectionSettingsCall) Do(opts ...goog
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "securitycenter.folders.updateVirtualMachineThreatDetectionSettings", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -10877,6 +10917,7 @@ func (c *FoldersUpdateWebSecurityScannerSettingsCall) doRequest(alt string) (*ht
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "securitycenter.folders.updateWebSecurityScannerSettings", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -10912,9 +10953,11 @@ func (c *FoldersUpdateWebSecurityScannerSettingsCall) Do(opts ...googleapi.CallO
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "securitycenter.folders.updateWebSecurityScannerSettings", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -11003,6 +11046,7 @@ func (c *FoldersContainerThreatDetectionSettingsCalculateCall) doRequest(alt str
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "securitycenter.folders.containerThreatDetectionSettings.calculate", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -11038,9 +11082,11 @@ func (c *FoldersContainerThreatDetectionSettingsCalculateCall) Do(opts ...google
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "securitycenter.folders.containerThreatDetectionSettings.calculate", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -11127,6 +11173,7 @@ func (c *FoldersEventThreatDetectionSettingsCalculateCall) doRequest(alt string)
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "securitycenter.folders.eventThreatDetectionSettings.calculate", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -11162,9 +11209,11 @@ func (c *FoldersEventThreatDetectionSettingsCalculateCall) Do(opts ...googleapi.
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "securitycenter.folders.eventThreatDetectionSettings.calculate", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -11244,6 +11293,7 @@ func (c *FoldersRapidVulnerabilityDetectionSettingsCalculateCall) doRequest(alt 
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "securitycenter.folders.rapidVulnerabilityDetectionSettings.calculate", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -11279,9 +11329,11 @@ func (c *FoldersRapidVulnerabilityDetectionSettingsCalculateCall) Do(opts ...goo
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "securitycenter.folders.rapidVulnerabilityDetectionSettings.calculate", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -11368,6 +11420,7 @@ func (c *FoldersSecurityHealthAnalyticsSettingsCalculateCall) doRequest(alt stri
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "securitycenter.folders.securityHealthAnalyticsSettings.calculate", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -11403,9 +11456,11 @@ func (c *FoldersSecurityHealthAnalyticsSettingsCalculateCall) Do(opts ...googlea
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "securitycenter.folders.securityHealthAnalyticsSettings.calculate", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -11493,6 +11548,7 @@ func (c *FoldersVirtualMachineThreatDetectionSettingsCalculateCall) doRequest(al
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "securitycenter.folders.virtualMachineThreatDetectionSettings.calculate", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -11528,9 +11584,11 @@ func (c *FoldersVirtualMachineThreatDetectionSettingsCalculateCall) Do(opts ...g
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "securitycenter.folders.virtualMachineThreatDetectionSettings.calculate", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -11617,6 +11675,7 @@ func (c *FoldersWebSecurityScannerSettingsCalculateCall) doRequest(alt string) (
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "securitycenter.folders.webSecurityScannerSettings.calculate", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -11652,9 +11711,11 @@ func (c *FoldersWebSecurityScannerSettingsCalculateCall) Do(opts ...googleapi.Ca
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "securitycenter.folders.webSecurityScannerSettings.calculate", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -11736,6 +11797,7 @@ func (c *OrganizationsGetContainerThreatDetectionSettingsCall) doRequest(alt str
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "securitycenter.organizations.getContainerThreatDetectionSettings", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -11771,9 +11833,11 @@ func (c *OrganizationsGetContainerThreatDetectionSettingsCall) Do(opts ...google
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "securitycenter.organizations.getContainerThreatDetectionSettings", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -11852,6 +11916,7 @@ func (c *OrganizationsGetEventThreatDetectionSettingsCall) doRequest(alt string)
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "securitycenter.organizations.getEventThreatDetectionSettings", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -11887,9 +11952,11 @@ func (c *OrganizationsGetEventThreatDetectionSettingsCall) Do(opts ...googleapi.
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "securitycenter.organizations.getEventThreatDetectionSettings", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -11970,6 +12037,7 @@ func (c *OrganizationsGetRapidVulnerabilityDetectionSettingsCall) doRequest(alt 
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "securitycenter.organizations.getRapidVulnerabilityDetectionSettings", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -12005,9 +12073,11 @@ func (c *OrganizationsGetRapidVulnerabilityDetectionSettingsCall) Do(opts ...goo
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "securitycenter.organizations.getRapidVulnerabilityDetectionSettings", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -12080,6 +12150,7 @@ func (c *OrganizationsGetSecurityCenterSettingsCall) doRequest(alt string) (*htt
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "securitycenter.organizations.getSecurityCenterSettings", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -12115,9 +12186,11 @@ func (c *OrganizationsGetSecurityCenterSettingsCall) Do(opts ...googleapi.CallOp
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "securitycenter.organizations.getSecurityCenterSettings", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -12196,6 +12269,7 @@ func (c *OrganizationsGetSecurityHealthAnalyticsSettingsCall) doRequest(alt stri
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "securitycenter.organizations.getSecurityHealthAnalyticsSettings", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -12231,9 +12305,11 @@ func (c *OrganizationsGetSecurityHealthAnalyticsSettingsCall) Do(opts ...googlea
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "securitycenter.organizations.getSecurityHealthAnalyticsSettings", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -12304,6 +12380,7 @@ func (c *OrganizationsGetSubscriptionCall) doRequest(alt string) (*http.Response
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "securitycenter.organizations.getSubscription", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -12338,9 +12415,11 @@ func (c *OrganizationsGetSubscriptionCall) Do(opts ...googleapi.CallOption) (*Su
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "securitycenter.organizations.getSubscription", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -12421,6 +12500,7 @@ func (c *OrganizationsGetVirtualMachineThreatDetectionSettingsCall) doRequest(al
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "securitycenter.organizations.getVirtualMachineThreatDetectionSettings", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -12456,9 +12536,11 @@ func (c *OrganizationsGetVirtualMachineThreatDetectionSettingsCall) Do(opts ...g
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "securitycenter.organizations.getVirtualMachineThreatDetectionSettings", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -12537,6 +12619,7 @@ func (c *OrganizationsGetWebSecurityScannerSettingsCall) doRequest(alt string) (
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "securitycenter.organizations.getWebSecurityScannerSettings", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -12572,9 +12655,11 @@ func (c *OrganizationsGetWebSecurityScannerSettingsCall) Do(opts ...googleapi.Ca
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "securitycenter.organizations.getWebSecurityScannerSettings", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -12652,6 +12737,7 @@ func (c *OrganizationsUpdateContainerThreatDetectionSettingsCall) doRequest(alt 
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "securitycenter.organizations.updateContainerThreatDetectionSettings", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -12687,9 +12773,11 @@ func (c *OrganizationsUpdateContainerThreatDetectionSettingsCall) Do(opts ...goo
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "securitycenter.organizations.updateContainerThreatDetectionSettings", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -12764,6 +12852,7 @@ func (c *OrganizationsUpdateEventThreatDetectionSettingsCall) doRequest(alt stri
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "securitycenter.organizations.updateEventThreatDetectionSettings", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -12799,9 +12888,11 @@ func (c *OrganizationsUpdateEventThreatDetectionSettingsCall) Do(opts ...googlea
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "securitycenter.organizations.updateEventThreatDetectionSettings", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -12877,6 +12968,7 @@ func (c *OrganizationsUpdateRapidVulnerabilityDetectionSettingsCall) doRequest(a
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "securitycenter.organizations.updateRapidVulnerabilityDetectionSettings", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -12912,9 +13004,11 @@ func (c *OrganizationsUpdateRapidVulnerabilityDetectionSettingsCall) Do(opts ...
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "securitycenter.organizations.updateRapidVulnerabilityDetectionSettings", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -12990,6 +13084,7 @@ func (c *OrganizationsUpdateSecurityHealthAnalyticsSettingsCall) doRequest(alt s
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "securitycenter.organizations.updateSecurityHealthAnalyticsSettings", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -13025,9 +13120,11 @@ func (c *OrganizationsUpdateSecurityHealthAnalyticsSettingsCall) Do(opts ...goog
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "securitycenter.organizations.updateSecurityHealthAnalyticsSettings", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -13103,6 +13200,7 @@ func (c *OrganizationsUpdateVirtualMachineThreatDetectionSettingsCall) doRequest
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "securitycenter.organizations.updateVirtualMachineThreatDetectionSettings", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -13138,9 +13236,11 @@ func (c *OrganizationsUpdateVirtualMachineThreatDetectionSettingsCall) Do(opts .
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "securitycenter.organizations.updateVirtualMachineThreatDetectionSettings", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -13215,6 +13315,7 @@ func (c *OrganizationsUpdateWebSecurityScannerSettingsCall) doRequest(alt string
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "securitycenter.organizations.updateWebSecurityScannerSettings", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -13250,9 +13351,11 @@ func (c *OrganizationsUpdateWebSecurityScannerSettingsCall) Do(opts ...googleapi
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "securitycenter.organizations.updateWebSecurityScannerSettings", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -13341,6 +13444,7 @@ func (c *OrganizationsContainerThreatDetectionSettingsCalculateCall) doRequest(a
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "securitycenter.organizations.containerThreatDetectionSettings.calculate", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -13376,9 +13480,11 @@ func (c *OrganizationsContainerThreatDetectionSettingsCalculateCall) Do(opts ...
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "securitycenter.organizations.containerThreatDetectionSettings.calculate", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -13465,6 +13571,7 @@ func (c *OrganizationsEventThreatDetectionSettingsCalculateCall) doRequest(alt s
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "securitycenter.organizations.eventThreatDetectionSettings.calculate", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -13500,9 +13607,11 @@ func (c *OrganizationsEventThreatDetectionSettingsCalculateCall) Do(opts ...goog
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "securitycenter.organizations.eventThreatDetectionSettings.calculate", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -13582,6 +13691,7 @@ func (c *OrganizationsRapidVulnerabilityDetectionSettingsCalculateCall) doReques
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "securitycenter.organizations.rapidVulnerabilityDetectionSettings.calculate", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -13617,9 +13727,11 @@ func (c *OrganizationsRapidVulnerabilityDetectionSettingsCalculateCall) Do(opts 
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "securitycenter.organizations.rapidVulnerabilityDetectionSettings.calculate", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -13706,6 +13818,7 @@ func (c *OrganizationsSecurityHealthAnalyticsSettingsCalculateCall) doRequest(al
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "securitycenter.organizations.securityHealthAnalyticsSettings.calculate", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -13741,9 +13854,11 @@ func (c *OrganizationsSecurityHealthAnalyticsSettingsCalculateCall) Do(opts ...g
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "securitycenter.organizations.securityHealthAnalyticsSettings.calculate", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -13831,6 +13946,7 @@ func (c *OrganizationsVirtualMachineThreatDetectionSettingsCalculateCall) doRequ
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "securitycenter.organizations.virtualMachineThreatDetectionSettings.calculate", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -13866,9 +13982,11 @@ func (c *OrganizationsVirtualMachineThreatDetectionSettingsCalculateCall) Do(opt
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "securitycenter.organizations.virtualMachineThreatDetectionSettings.calculate", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -13955,6 +14073,7 @@ func (c *OrganizationsWebSecurityScannerSettingsCalculateCall) doRequest(alt str
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "securitycenter.organizations.webSecurityScannerSettings.calculate", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -13990,9 +14109,11 @@ func (c *OrganizationsWebSecurityScannerSettingsCalculateCall) Do(opts ...google
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "securitycenter.organizations.webSecurityScannerSettings.calculate", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -14074,6 +14195,7 @@ func (c *ProjectsGetContainerThreatDetectionSettingsCall) doRequest(alt string) 
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "securitycenter.projects.getContainerThreatDetectionSettings", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -14109,9 +14231,11 @@ func (c *ProjectsGetContainerThreatDetectionSettingsCall) Do(opts ...googleapi.C
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "securitycenter.projects.getContainerThreatDetectionSettings", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -14190,6 +14314,7 @@ func (c *ProjectsGetEventThreatDetectionSettingsCall) doRequest(alt string) (*ht
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "securitycenter.projects.getEventThreatDetectionSettings", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -14225,9 +14350,11 @@ func (c *ProjectsGetEventThreatDetectionSettingsCall) Do(opts ...googleapi.CallO
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "securitycenter.projects.getEventThreatDetectionSettings", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -14308,6 +14435,7 @@ func (c *ProjectsGetRapidVulnerabilityDetectionSettingsCall) doRequest(alt strin
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "securitycenter.projects.getRapidVulnerabilityDetectionSettings", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -14343,9 +14471,11 @@ func (c *ProjectsGetRapidVulnerabilityDetectionSettingsCall) Do(opts ...googleap
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "securitycenter.projects.getRapidVulnerabilityDetectionSettings", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -14418,6 +14548,7 @@ func (c *ProjectsGetSecurityCenterSettingsCall) doRequest(alt string) (*http.Res
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "securitycenter.projects.getSecurityCenterSettings", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -14453,9 +14584,11 @@ func (c *ProjectsGetSecurityCenterSettingsCall) Do(opts ...googleapi.CallOption)
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "securitycenter.projects.getSecurityCenterSettings", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -14534,6 +14667,7 @@ func (c *ProjectsGetSecurityHealthAnalyticsSettingsCall) doRequest(alt string) (
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "securitycenter.projects.getSecurityHealthAnalyticsSettings", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -14569,9 +14703,11 @@ func (c *ProjectsGetSecurityHealthAnalyticsSettingsCall) Do(opts ...googleapi.Ca
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "securitycenter.projects.getSecurityHealthAnalyticsSettings", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -14652,6 +14788,7 @@ func (c *ProjectsGetVirtualMachineThreatDetectionSettingsCall) doRequest(alt str
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "securitycenter.projects.getVirtualMachineThreatDetectionSettings", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -14687,9 +14824,11 @@ func (c *ProjectsGetVirtualMachineThreatDetectionSettingsCall) Do(opts ...google
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "securitycenter.projects.getVirtualMachineThreatDetectionSettings", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -14768,6 +14907,7 @@ func (c *ProjectsGetWebSecurityScannerSettingsCall) doRequest(alt string) (*http
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "securitycenter.projects.getWebSecurityScannerSettings", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -14803,9 +14943,11 @@ func (c *ProjectsGetWebSecurityScannerSettingsCall) Do(opts ...googleapi.CallOpt
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "securitycenter.projects.getWebSecurityScannerSettings", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -14883,6 +15025,7 @@ func (c *ProjectsUpdateContainerThreatDetectionSettingsCall) doRequest(alt strin
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "securitycenter.projects.updateContainerThreatDetectionSettings", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -14918,9 +15061,11 @@ func (c *ProjectsUpdateContainerThreatDetectionSettingsCall) Do(opts ...googleap
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "securitycenter.projects.updateContainerThreatDetectionSettings", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -14995,6 +15140,7 @@ func (c *ProjectsUpdateEventThreatDetectionSettingsCall) doRequest(alt string) (
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "securitycenter.projects.updateEventThreatDetectionSettings", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -15030,9 +15176,11 @@ func (c *ProjectsUpdateEventThreatDetectionSettingsCall) Do(opts ...googleapi.Ca
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "securitycenter.projects.updateEventThreatDetectionSettings", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -15108,6 +15256,7 @@ func (c *ProjectsUpdateRapidVulnerabilityDetectionSettingsCall) doRequest(alt st
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "securitycenter.projects.updateRapidVulnerabilityDetectionSettings", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -15143,9 +15292,11 @@ func (c *ProjectsUpdateRapidVulnerabilityDetectionSettingsCall) Do(opts ...googl
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "securitycenter.projects.updateRapidVulnerabilityDetectionSettings", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -15221,6 +15372,7 @@ func (c *ProjectsUpdateSecurityHealthAnalyticsSettingsCall) doRequest(alt string
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "securitycenter.projects.updateSecurityHealthAnalyticsSettings", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -15256,9 +15408,11 @@ func (c *ProjectsUpdateSecurityHealthAnalyticsSettingsCall) Do(opts ...googleapi
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "securitycenter.projects.updateSecurityHealthAnalyticsSettings", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -15334,6 +15488,7 @@ func (c *ProjectsUpdateVirtualMachineThreatDetectionSettingsCall) doRequest(alt 
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "securitycenter.projects.updateVirtualMachineThreatDetectionSettings", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -15369,9 +15524,11 @@ func (c *ProjectsUpdateVirtualMachineThreatDetectionSettingsCall) Do(opts ...goo
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "securitycenter.projects.updateVirtualMachineThreatDetectionSettings", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -15446,6 +15603,7 @@ func (c *ProjectsUpdateWebSecurityScannerSettingsCall) doRequest(alt string) (*h
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "securitycenter.projects.updateWebSecurityScannerSettings", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -15481,9 +15639,11 @@ func (c *ProjectsUpdateWebSecurityScannerSettingsCall) Do(opts ...googleapi.Call
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "securitycenter.projects.updateWebSecurityScannerSettings", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -15572,6 +15732,7 @@ func (c *ProjectsContainerThreatDetectionSettingsCalculateCall) doRequest(alt st
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "securitycenter.projects.containerThreatDetectionSettings.calculate", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -15607,9 +15768,11 @@ func (c *ProjectsContainerThreatDetectionSettingsCalculateCall) Do(opts ...googl
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "securitycenter.projects.containerThreatDetectionSettings.calculate", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -15696,6 +15859,7 @@ func (c *ProjectsEventThreatDetectionSettingsCalculateCall) doRequest(alt string
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "securitycenter.projects.eventThreatDetectionSettings.calculate", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -15731,9 +15895,11 @@ func (c *ProjectsEventThreatDetectionSettingsCalculateCall) Do(opts ...googleapi
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "securitycenter.projects.eventThreatDetectionSettings.calculate", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -15815,6 +15981,7 @@ func (c *ProjectsLocationsClustersGetContainerThreatDetectionSettingsCall) doReq
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "securitycenter.projects.locations.clusters.getContainerThreatDetectionSettings", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -15850,9 +16017,11 @@ func (c *ProjectsLocationsClustersGetContainerThreatDetectionSettingsCall) Do(op
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "securitycenter.projects.locations.clusters.getContainerThreatDetectionSettings", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -15930,6 +16099,7 @@ func (c *ProjectsLocationsClustersUpdateContainerThreatDetectionSettingsCall) do
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "securitycenter.projects.locations.clusters.updateContainerThreatDetectionSettings", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -15965,9 +16135,11 @@ func (c *ProjectsLocationsClustersUpdateContainerThreatDetectionSettingsCall) Do
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "securitycenter.projects.locations.clusters.updateContainerThreatDetectionSettings", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -16056,6 +16228,7 @@ func (c *ProjectsLocationsClustersContainerThreatDetectionSettingsCalculateCall)
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "securitycenter.projects.locations.clusters.containerThreatDetectionSettings.calculate", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -16091,9 +16264,11 @@ func (c *ProjectsLocationsClustersContainerThreatDetectionSettingsCalculateCall)
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "securitycenter.projects.locations.clusters.containerThreatDetectionSettings.calculate", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -16173,6 +16348,7 @@ func (c *ProjectsRapidVulnerabilityDetectionSettingsCalculateCall) doRequest(alt
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "securitycenter.projects.rapidVulnerabilityDetectionSettings.calculate", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -16208,9 +16384,11 @@ func (c *ProjectsRapidVulnerabilityDetectionSettingsCalculateCall) Do(opts ...go
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "securitycenter.projects.rapidVulnerabilityDetectionSettings.calculate", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -16297,6 +16475,7 @@ func (c *ProjectsSecurityHealthAnalyticsSettingsCalculateCall) doRequest(alt str
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "securitycenter.projects.securityHealthAnalyticsSettings.calculate", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -16332,9 +16511,11 @@ func (c *ProjectsSecurityHealthAnalyticsSettingsCalculateCall) Do(opts ...google
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "securitycenter.projects.securityHealthAnalyticsSettings.calculate", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -16422,6 +16603,7 @@ func (c *ProjectsVirtualMachineThreatDetectionSettingsCalculateCall) doRequest(a
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "securitycenter.projects.virtualMachineThreatDetectionSettings.calculate", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -16457,9 +16639,11 @@ func (c *ProjectsVirtualMachineThreatDetectionSettingsCalculateCall) Do(opts ...
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "securitycenter.projects.virtualMachineThreatDetectionSettings.calculate", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -16546,6 +16730,7 @@ func (c *ProjectsWebSecurityScannerSettingsCalculateCall) doRequest(alt string) 
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "securitycenter.projects.webSecurityScannerSettings.calculate", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -16581,8 +16766,10 @@ func (c *ProjectsWebSecurityScannerSettingsCalculateCall) Do(opts ...googleapi.C
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "securitycenter.projects.webSecurityScannerSettings.calculate", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }

@@ -57,11 +57,13 @@ import (
 	"errors"
 	"fmt"
 	"io"
+	"log/slog"
 	"net/http"
 	"net/url"
 	"strconv"
 	"strings"
 
+	"github.com/googleapis/gax-go/v2/internallog"
 	googleapi "google.golang.org/api/googleapi"
 	internal "google.golang.org/api/internal"
 	gensupport "google.golang.org/api/internal/gensupport"
@@ -85,6 +87,7 @@ var _ = strings.Replace
 var _ = context.Canceled
 var _ = internaloption.WithDefaultEndpoint
 var _ = internal.Version
+var _ = internallog.New
 
 const apiId = "authorizedbuyersmarketplace:v1"
 const apiName = "authorizedbuyersmarketplace"
@@ -114,7 +117,7 @@ func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, err
 	if err != nil {
 		return nil, err
 	}
-	s := &Service{client: client, BasePath: basePath}
+	s := &Service{client: client, BasePath: basePath, logger: internaloption.GetLogger(opts)}
 	s.Bidders = NewBiddersService(s)
 	s.Buyers = NewBuyersService(s)
 	if err != nil {
@@ -140,6 +143,7 @@ func New(client *http.Client) (*Service, error) {
 
 type Service struct {
 	client    *http.Client
+	logger    *slog.Logger
 	BasePath  string // API endpoint base URL
 	UserAgent string // optional additional User-Agent fragment
 
@@ -2544,6 +2548,7 @@ func (c *BiddersAuctionPackagesListCall) doRequest(alt string) (*http.Response, 
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "authorizedbuyersmarketplace.bidders.auctionPackages.list", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -2579,9 +2584,11 @@ func (c *BiddersAuctionPackagesListCall) Do(opts ...googleapi.CallOption) (*List
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "authorizedbuyersmarketplace.bidders.auctionPackages.list", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -2719,6 +2726,7 @@ func (c *BiddersFinalizedDealsListCall) doRequest(alt string) (*http.Response, e
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "authorizedbuyersmarketplace.bidders.finalizedDeals.list", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -2754,9 +2762,11 @@ func (c *BiddersFinalizedDealsListCall) Do(opts ...googleapi.CallOption) (*ListF
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "authorizedbuyersmarketplace.bidders.finalizedDeals.list", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -2848,6 +2858,7 @@ func (c *BuyersAuctionPackagesGetCall) doRequest(alt string) (*http.Response, er
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "authorizedbuyersmarketplace.buyers.auctionPackages.get", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -2882,9 +2893,11 @@ func (c *BuyersAuctionPackagesGetCall) Do(opts ...googleapi.CallOption) (*Auctio
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "authorizedbuyersmarketplace.buyers.auctionPackages.get", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -2997,6 +3010,7 @@ func (c *BuyersAuctionPackagesListCall) doRequest(alt string) (*http.Response, e
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "authorizedbuyersmarketplace.buyers.auctionPackages.list", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -3032,9 +3046,11 @@ func (c *BuyersAuctionPackagesListCall) Do(opts ...googleapi.CallOption) (*ListA
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "authorizedbuyersmarketplace.buyers.auctionPackages.list", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -3123,6 +3139,7 @@ func (c *BuyersAuctionPackagesSubscribeCall) doRequest(alt string) (*http.Respon
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "authorizedbuyersmarketplace.buyers.auctionPackages.subscribe", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -3157,9 +3174,11 @@ func (c *BuyersAuctionPackagesSubscribeCall) Do(opts ...googleapi.CallOption) (*
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "authorizedbuyersmarketplace.buyers.auctionPackages.subscribe", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -3228,6 +3247,7 @@ func (c *BuyersAuctionPackagesSubscribeClientsCall) doRequest(alt string) (*http
 	googleapi.Expand(req.URL, map[string]string{
 		"auctionPackage": c.auctionPackage,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "authorizedbuyersmarketplace.buyers.auctionPackages.subscribeClients", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -3262,9 +3282,11 @@ func (c *BuyersAuctionPackagesSubscribeClientsCall) Do(opts ...googleapi.CallOpt
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "authorizedbuyersmarketplace.buyers.auctionPackages.subscribeClients", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -3331,6 +3353,7 @@ func (c *BuyersAuctionPackagesUnsubscribeCall) doRequest(alt string) (*http.Resp
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "authorizedbuyersmarketplace.buyers.auctionPackages.unsubscribe", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -3365,9 +3388,11 @@ func (c *BuyersAuctionPackagesUnsubscribeCall) Do(opts ...googleapi.CallOption) 
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "authorizedbuyersmarketplace.buyers.auctionPackages.unsubscribe", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -3434,6 +3459,7 @@ func (c *BuyersAuctionPackagesUnsubscribeClientsCall) doRequest(alt string) (*ht
 	googleapi.Expand(req.URL, map[string]string{
 		"auctionPackage": c.auctionPackage,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "authorizedbuyersmarketplace.buyers.auctionPackages.unsubscribeClients", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -3468,9 +3494,11 @@ func (c *BuyersAuctionPackagesUnsubscribeClientsCall) Do(opts ...googleapi.CallO
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "authorizedbuyersmarketplace.buyers.auctionPackages.unsubscribeClients", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -3536,6 +3564,7 @@ func (c *BuyersClientsActivateCall) doRequest(alt string) (*http.Response, error
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "authorizedbuyersmarketplace.buyers.clients.activate", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -3570,9 +3599,11 @@ func (c *BuyersClientsActivateCall) Do(opts ...googleapi.CallOption) (*Client, e
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "authorizedbuyersmarketplace.buyers.clients.activate", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -3636,6 +3667,7 @@ func (c *BuyersClientsCreateCall) doRequest(alt string) (*http.Response, error) 
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "authorizedbuyersmarketplace.buyers.clients.create", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -3670,9 +3702,11 @@ func (c *BuyersClientsCreateCall) Do(opts ...googleapi.CallOption) (*Client, err
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "authorizedbuyersmarketplace.buyers.clients.create", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -3738,6 +3772,7 @@ func (c *BuyersClientsDeactivateCall) doRequest(alt string) (*http.Response, err
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "authorizedbuyersmarketplace.buyers.clients.deactivate", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -3772,9 +3807,11 @@ func (c *BuyersClientsDeactivateCall) Do(opts ...googleapi.CallOption) (*Client,
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "authorizedbuyersmarketplace.buyers.clients.deactivate", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -3844,6 +3881,7 @@ func (c *BuyersClientsGetCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "authorizedbuyersmarketplace.buyers.clients.get", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -3878,9 +3916,11 @@ func (c *BuyersClientsGetCall) Do(opts ...googleapi.CallOption) (*Client, error)
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "authorizedbuyersmarketplace.buyers.clients.get", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -3979,6 +4019,7 @@ func (c *BuyersClientsListCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "authorizedbuyersmarketplace.buyers.clients.list", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -4014,9 +4055,11 @@ func (c *BuyersClientsListCall) Do(opts ...googleapi.CallOption) (*ListClientsRe
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "authorizedbuyersmarketplace.buyers.clients.list", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -4117,6 +4160,7 @@ func (c *BuyersClientsPatchCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "authorizedbuyersmarketplace.buyers.clients.patch", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -4151,9 +4195,11 @@ func (c *BuyersClientsPatchCall) Do(opts ...googleapi.CallOption) (*Client, erro
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "authorizedbuyersmarketplace.buyers.clients.patch", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -4221,6 +4267,7 @@ func (c *BuyersClientsUsersActivateCall) doRequest(alt string) (*http.Response, 
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "authorizedbuyersmarketplace.buyers.clients.users.activate", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -4255,9 +4302,11 @@ func (c *BuyersClientsUsersActivateCall) Do(opts ...googleapi.CallOption) (*Clie
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "authorizedbuyersmarketplace.buyers.clients.users.activate", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -4323,6 +4372,7 @@ func (c *BuyersClientsUsersCreateCall) doRequest(alt string) (*http.Response, er
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "authorizedbuyersmarketplace.buyers.clients.users.create", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -4357,9 +4407,11 @@ func (c *BuyersClientsUsersCreateCall) Do(opts ...googleapi.CallOption) (*Client
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "authorizedbuyersmarketplace.buyers.clients.users.create", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -4427,6 +4479,7 @@ func (c *BuyersClientsUsersDeactivateCall) doRequest(alt string) (*http.Response
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "authorizedbuyersmarketplace.buyers.clients.users.deactivate", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -4461,9 +4514,11 @@ func (c *BuyersClientsUsersDeactivateCall) Do(opts ...googleapi.CallOption) (*Cl
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "authorizedbuyersmarketplace.buyers.clients.users.deactivate", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -4525,6 +4580,7 @@ func (c *BuyersClientsUsersDeleteCall) doRequest(alt string) (*http.Response, er
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "authorizedbuyersmarketplace.buyers.clients.users.delete", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -4559,9 +4615,11 @@ func (c *BuyersClientsUsersDeleteCall) Do(opts ...googleapi.CallOption) (*Empty,
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "authorizedbuyersmarketplace.buyers.clients.users.delete", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -4632,6 +4690,7 @@ func (c *BuyersClientsUsersGetCall) doRequest(alt string) (*http.Response, error
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "authorizedbuyersmarketplace.buyers.clients.users.get", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -4666,9 +4725,11 @@ func (c *BuyersClientsUsersGetCall) Do(opts ...googleapi.CallOption) (*ClientUse
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "authorizedbuyersmarketplace.buyers.clients.users.get", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -4755,6 +4816,7 @@ func (c *BuyersClientsUsersListCall) doRequest(alt string) (*http.Response, erro
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "authorizedbuyersmarketplace.buyers.clients.users.list", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -4790,9 +4852,11 @@ func (c *BuyersClientsUsersListCall) Do(opts ...googleapi.CallOption) (*ListClie
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "authorizedbuyersmarketplace.buyers.clients.users.list", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -4885,6 +4949,7 @@ func (c *BuyersFinalizedDealsAddCreativeCall) doRequest(alt string) (*http.Respo
 	googleapi.Expand(req.URL, map[string]string{
 		"deal": c.deal,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "authorizedbuyersmarketplace.buyers.finalizedDeals.addCreative", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -4919,9 +4984,11 @@ func (c *BuyersFinalizedDealsAddCreativeCall) Do(opts ...googleapi.CallOption) (
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "authorizedbuyersmarketplace.buyers.finalizedDeals.addCreative", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -4991,6 +5058,7 @@ func (c *BuyersFinalizedDealsGetCall) doRequest(alt string) (*http.Response, err
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "authorizedbuyersmarketplace.buyers.finalizedDeals.get", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -5025,9 +5093,11 @@ func (c *BuyersFinalizedDealsGetCall) Do(opts ...googleapi.CallOption) (*Finaliz
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "authorizedbuyersmarketplace.buyers.finalizedDeals.get", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -5144,6 +5214,7 @@ func (c *BuyersFinalizedDealsListCall) doRequest(alt string) (*http.Response, er
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "authorizedbuyersmarketplace.buyers.finalizedDeals.list", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -5179,9 +5250,11 @@ func (c *BuyersFinalizedDealsListCall) Do(opts ...googleapi.CallOption) (*ListFi
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "authorizedbuyersmarketplace.buyers.finalizedDeals.list", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -5269,6 +5342,7 @@ func (c *BuyersFinalizedDealsPauseCall) doRequest(alt string) (*http.Response, e
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "authorizedbuyersmarketplace.buyers.finalizedDeals.pause", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -5303,9 +5377,11 @@ func (c *BuyersFinalizedDealsPauseCall) Do(opts ...googleapi.CallOption) (*Final
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "authorizedbuyersmarketplace.buyers.finalizedDeals.pause", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -5373,6 +5449,7 @@ func (c *BuyersFinalizedDealsResumeCall) doRequest(alt string) (*http.Response, 
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "authorizedbuyersmarketplace.buyers.finalizedDeals.resume", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -5407,9 +5484,11 @@ func (c *BuyersFinalizedDealsResumeCall) Do(opts ...googleapi.CallOption) (*Fina
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "authorizedbuyersmarketplace.buyers.finalizedDeals.resume", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -5481,6 +5560,7 @@ func (c *BuyersFinalizedDealsSetReadyToServeCall) doRequest(alt string) (*http.R
 	googleapi.Expand(req.URL, map[string]string{
 		"deal": c.deal,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "authorizedbuyersmarketplace.buyers.finalizedDeals.setReadyToServe", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -5515,9 +5595,11 @@ func (c *BuyersFinalizedDealsSetReadyToServeCall) Do(opts ...googleapi.CallOptio
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "authorizedbuyersmarketplace.buyers.finalizedDeals.setReadyToServe", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -5589,6 +5671,7 @@ func (c *BuyersProposalsAcceptCall) doRequest(alt string) (*http.Response, error
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "authorizedbuyersmarketplace.buyers.proposals.accept", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -5623,9 +5706,11 @@ func (c *BuyersProposalsAcceptCall) Do(opts ...googleapi.CallOption) (*Proposal,
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "authorizedbuyersmarketplace.buyers.proposals.accept", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -5692,6 +5777,7 @@ func (c *BuyersProposalsAddNoteCall) doRequest(alt string) (*http.Response, erro
 	googleapi.Expand(req.URL, map[string]string{
 		"proposal": c.proposal,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "authorizedbuyersmarketplace.buyers.proposals.addNote", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -5726,9 +5812,11 @@ func (c *BuyersProposalsAddNoteCall) Do(opts ...googleapi.CallOption) (*Proposal
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "authorizedbuyersmarketplace.buyers.proposals.addNote", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -5801,6 +5889,7 @@ func (c *BuyersProposalsCancelNegotiationCall) doRequest(alt string) (*http.Resp
 	googleapi.Expand(req.URL, map[string]string{
 		"proposal": c.proposal,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "authorizedbuyersmarketplace.buyers.proposals.cancelNegotiation", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -5835,9 +5924,11 @@ func (c *BuyersProposalsCancelNegotiationCall) Do(opts ...googleapi.CallOption) 
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "authorizedbuyersmarketplace.buyers.proposals.cancelNegotiation", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -5909,6 +6000,7 @@ func (c *BuyersProposalsGetCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "authorizedbuyersmarketplace.buyers.proposals.get", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -5943,9 +6035,11 @@ func (c *BuyersProposalsGetCall) Do(opts ...googleapi.CallOption) (*Proposal, er
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "authorizedbuyersmarketplace.buyers.proposals.get", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -6044,6 +6138,7 @@ func (c *BuyersProposalsListCall) doRequest(alt string) (*http.Response, error) 
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "authorizedbuyersmarketplace.buyers.proposals.list", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -6079,9 +6174,11 @@ func (c *BuyersProposalsListCall) Do(opts ...googleapi.CallOption) (*ListProposa
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "authorizedbuyersmarketplace.buyers.proposals.list", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -6189,6 +6286,7 @@ func (c *BuyersProposalsPatchCall) doRequest(alt string) (*http.Response, error)
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.nameid,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "authorizedbuyersmarketplace.buyers.proposals.patch", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -6223,9 +6321,11 @@ func (c *BuyersProposalsPatchCall) Do(opts ...googleapi.CallOption) (*Proposal, 
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "authorizedbuyersmarketplace.buyers.proposals.patch", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -6295,6 +6395,7 @@ func (c *BuyersProposalsSendRfpCall) doRequest(alt string) (*http.Response, erro
 	googleapi.Expand(req.URL, map[string]string{
 		"buyer": c.buyer,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "authorizedbuyersmarketplace.buyers.proposals.sendRfp", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -6329,9 +6430,11 @@ func (c *BuyersProposalsSendRfpCall) Do(opts ...googleapi.CallOption) (*Proposal
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "authorizedbuyersmarketplace.buyers.proposals.sendRfp", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -6396,6 +6499,7 @@ func (c *BuyersProposalsDealsBatchUpdateCall) doRequest(alt string) (*http.Respo
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "authorizedbuyersmarketplace.buyers.proposals.deals.batchUpdate", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -6431,9 +6535,11 @@ func (c *BuyersProposalsDealsBatchUpdateCall) Do(opts ...googleapi.CallOption) (
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "authorizedbuyersmarketplace.buyers.proposals.deals.batchUpdate", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -6503,6 +6609,7 @@ func (c *BuyersProposalsDealsGetCall) doRequest(alt string) (*http.Response, err
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "authorizedbuyersmarketplace.buyers.proposals.deals.get", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -6537,9 +6644,11 @@ func (c *BuyersProposalsDealsGetCall) Do(opts ...googleapi.CallOption) (*Deal, e
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "authorizedbuyersmarketplace.buyers.proposals.deals.get", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -6628,6 +6737,7 @@ func (c *BuyersProposalsDealsListCall) doRequest(alt string) (*http.Response, er
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "authorizedbuyersmarketplace.buyers.proposals.deals.list", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -6663,9 +6773,11 @@ func (c *BuyersProposalsDealsListCall) Do(opts ...googleapi.CallOption) (*ListDe
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "authorizedbuyersmarketplace.buyers.proposals.deals.list", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -6776,6 +6888,7 @@ func (c *BuyersProposalsDealsPatchCall) doRequest(alt string) (*http.Response, e
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.nameid,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "authorizedbuyersmarketplace.buyers.proposals.deals.patch", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -6810,9 +6923,11 @@ func (c *BuyersProposalsDealsPatchCall) Do(opts ...googleapi.CallOption) (*Deal,
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "authorizedbuyersmarketplace.buyers.proposals.deals.patch", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -6883,6 +6998,7 @@ func (c *BuyersPublisherProfilesGetCall) doRequest(alt string) (*http.Response, 
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "authorizedbuyersmarketplace.buyers.publisherProfiles.get", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -6918,9 +7034,11 @@ func (c *BuyersPublisherProfilesGetCall) Do(opts ...googleapi.CallOption) (*Publ
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "authorizedbuyersmarketplace.buyers.publisherProfiles.get", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -7018,6 +7136,7 @@ func (c *BuyersPublisherProfilesListCall) doRequest(alt string) (*http.Response,
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "authorizedbuyersmarketplace.buyers.publisherProfiles.list", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -7053,9 +7172,11 @@ func (c *BuyersPublisherProfilesListCall) Do(opts ...googleapi.CallOption) (*Lis
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "authorizedbuyersmarketplace.buyers.publisherProfiles.list", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 

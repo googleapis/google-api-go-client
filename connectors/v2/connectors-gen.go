@@ -57,11 +57,13 @@ import (
 	"errors"
 	"fmt"
 	"io"
+	"log/slog"
 	"net/http"
 	"net/url"
 	"strconv"
 	"strings"
 
+	"github.com/googleapis/gax-go/v2/internallog"
 	googleapi "google.golang.org/api/googleapi"
 	internal "google.golang.org/api/internal"
 	gensupport "google.golang.org/api/internal/gensupport"
@@ -85,6 +87,7 @@ var _ = strings.Replace
 var _ = context.Canceled
 var _ = internaloption.WithDefaultEndpoint
 var _ = internal.Version
+var _ = internallog.New
 
 const apiId = "connectors:v2"
 const apiName = "connectors"
@@ -115,7 +118,7 @@ func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, err
 	if err != nil {
 		return nil, err
 	}
-	s := &Service{client: client, BasePath: basePath}
+	s := &Service{client: client, BasePath: basePath, logger: internaloption.GetLogger(opts)}
 	s.Projects = NewProjectsService(s)
 	if err != nil {
 		return nil, err
@@ -140,6 +143,7 @@ func New(client *http.Client) (*Service, error) {
 
 type Service struct {
 	client    *http.Client
+	logger    *slog.Logger
 	BasePath  string // API endpoint base URL
 	UserAgent string // optional additional User-Agent fragment
 
@@ -2008,6 +2012,7 @@ func (c *ProjectsLocationsConnectionsCheckReadinessCall) doRequest(alt string) (
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "connectors.projects.locations.connections.checkReadiness", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -2043,9 +2048,11 @@ func (c *ProjectsLocationsConnectionsCheckReadinessCall) Do(opts ...googleapi.Ca
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "connectors.projects.locations.connections.checkReadiness", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -2119,6 +2126,7 @@ func (c *ProjectsLocationsConnectionsCheckStatusCall) doRequest(alt string) (*ht
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "connectors.projects.locations.connections.checkStatus", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -2154,9 +2162,11 @@ func (c *ProjectsLocationsConnectionsCheckStatusCall) Do(opts ...googleapi.CallO
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "connectors.projects.locations.connections.checkStatus", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -2221,6 +2231,7 @@ func (c *ProjectsLocationsConnectionsExchangeAuthCodeCall) doRequest(alt string)
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "connectors.projects.locations.connections.exchangeAuthCode", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -2256,9 +2267,11 @@ func (c *ProjectsLocationsConnectionsExchangeAuthCodeCall) Do(opts ...googleapi.
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "connectors.projects.locations.connections.exchangeAuthCode", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -2326,6 +2339,7 @@ func (c *ProjectsLocationsConnectionsExecuteSqlQueryCall) doRequest(alt string) 
 	googleapi.Expand(req.URL, map[string]string{
 		"connection": c.connection,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "connectors.projects.locations.connections.executeSqlQuery", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -2361,9 +2375,11 @@ func (c *ProjectsLocationsConnectionsExecuteSqlQueryCall) Do(opts ...googleapi.C
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "connectors.projects.locations.connections.executeSqlQuery", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -2429,6 +2445,7 @@ func (c *ProjectsLocationsConnectionsRefreshAccessTokenCall) doRequest(alt strin
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "connectors.projects.locations.connections.refreshAccessToken", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -2464,9 +2481,11 @@ func (c *ProjectsLocationsConnectionsRefreshAccessTokenCall) Do(opts ...googleap
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "connectors.projects.locations.connections.refreshAccessToken", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -2534,6 +2553,7 @@ func (c *ProjectsLocationsConnectionsActionsExecuteCall) doRequest(alt string) (
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "connectors.projects.locations.connections.actions.execute", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -2569,9 +2589,11 @@ func (c *ProjectsLocationsConnectionsActionsExecuteCall) Do(opts ...googleapi.Ca
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "connectors.projects.locations.connections.actions.execute", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -2643,6 +2665,7 @@ func (c *ProjectsLocationsConnectionsActionsGetCall) doRequest(alt string) (*htt
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "connectors.projects.locations.connections.actions.get", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -2677,9 +2700,11 @@ func (c *ProjectsLocationsConnectionsActionsGetCall) Do(opts ...googleapi.CallOp
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "connectors.projects.locations.connections.actions.get", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -2781,6 +2806,7 @@ func (c *ProjectsLocationsConnectionsActionsListCall) doRequest(alt string) (*ht
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "connectors.projects.locations.connections.actions.list", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -2816,9 +2842,11 @@ func (c *ProjectsLocationsConnectionsActionsListCall) Do(opts ...googleapi.CallO
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "connectors.projects.locations.connections.actions.list", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -2911,6 +2939,7 @@ func (c *ProjectsLocationsConnectionsEntityTypesGetCall) doRequest(alt string) (
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "connectors.projects.locations.connections.entityTypes.get", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -2945,9 +2974,11 @@ func (c *ProjectsLocationsConnectionsEntityTypesGetCall) Do(opts ...googleapi.Ca
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "connectors.projects.locations.connections.entityTypes.get", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -3050,6 +3081,7 @@ func (c *ProjectsLocationsConnectionsEntityTypesListCall) doRequest(alt string) 
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "connectors.projects.locations.connections.entityTypes.list", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -3085,9 +3117,11 @@ func (c *ProjectsLocationsConnectionsEntityTypesListCall) Do(opts ...googleapi.C
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "connectors.projects.locations.connections.entityTypes.list", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -3177,6 +3211,7 @@ func (c *ProjectsLocationsConnectionsEntityTypesEntitiesCreateCall) doRequest(al
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "connectors.projects.locations.connections.entityTypes.entities.create", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -3211,9 +3246,11 @@ func (c *ProjectsLocationsConnectionsEntityTypesEntitiesCreateCall) Do(opts ...g
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "connectors.projects.locations.connections.entityTypes.entities.create", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -3274,6 +3311,7 @@ func (c *ProjectsLocationsConnectionsEntityTypesEntitiesDeleteCall) doRequest(al
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "connectors.projects.locations.connections.entityTypes.entities.delete", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -3308,9 +3346,11 @@ func (c *ProjectsLocationsConnectionsEntityTypesEntitiesDeleteCall) Do(opts ...g
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "connectors.projects.locations.connections.entityTypes.entities.delete", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -3384,6 +3424,7 @@ func (c *ProjectsLocationsConnectionsEntityTypesEntitiesDeleteEntitiesWithCondit
 	googleapi.Expand(req.URL, map[string]string{
 		"entityType": c.entityType,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "connectors.projects.locations.connections.entityTypes.entities.deleteEntitiesWithConditions", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -3418,9 +3459,11 @@ func (c *ProjectsLocationsConnectionsEntityTypesEntitiesDeleteEntitiesWithCondit
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "connectors.projects.locations.connections.entityTypes.entities.deleteEntitiesWithConditions", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -3493,6 +3536,7 @@ func (c *ProjectsLocationsConnectionsEntityTypesEntitiesGetCall) doRequest(alt s
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "connectors.projects.locations.connections.entityTypes.entities.get", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -3527,9 +3571,11 @@ func (c *ProjectsLocationsConnectionsEntityTypesEntitiesGetCall) Do(opts ...goog
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "connectors.projects.locations.connections.entityTypes.entities.get", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -3640,6 +3686,7 @@ func (c *ProjectsLocationsConnectionsEntityTypesEntitiesListCall) doRequest(alt 
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "connectors.projects.locations.connections.entityTypes.entities.list", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -3675,9 +3722,11 @@ func (c *ProjectsLocationsConnectionsEntityTypesEntitiesListCall) Do(opts ...goo
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "connectors.projects.locations.connections.entityTypes.entities.list", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -3768,6 +3817,7 @@ func (c *ProjectsLocationsConnectionsEntityTypesEntitiesPatchCall) doRequest(alt
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "connectors.projects.locations.connections.entityTypes.entities.patch", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -3802,9 +3852,11 @@ func (c *ProjectsLocationsConnectionsEntityTypesEntitiesPatchCall) Do(opts ...go
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "connectors.projects.locations.connections.entityTypes.entities.patch", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -3884,6 +3936,7 @@ func (c *ProjectsLocationsConnectionsEntityTypesEntitiesUpdateEntitiesWithCondit
 	googleapi.Expand(req.URL, map[string]string{
 		"entityType": c.entityType,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "connectors.projects.locations.connections.entityTypes.entities.updateEntitiesWithConditions", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -3919,8 +3972,10 @@ func (c *ProjectsLocationsConnectionsEntityTypesEntitiesUpdateEntitiesWithCondit
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "connectors.projects.locations.connections.entityTypes.entities.updateEntitiesWithConditions", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }

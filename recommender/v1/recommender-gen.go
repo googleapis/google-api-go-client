@@ -57,11 +57,13 @@ import (
 	"errors"
 	"fmt"
 	"io"
+	"log/slog"
 	"net/http"
 	"net/url"
 	"strconv"
 	"strings"
 
+	"github.com/googleapis/gax-go/v2/internallog"
 	googleapi "google.golang.org/api/googleapi"
 	internal "google.golang.org/api/internal"
 	gensupport "google.golang.org/api/internal/gensupport"
@@ -85,6 +87,7 @@ var _ = strings.Replace
 var _ = context.Canceled
 var _ = internaloption.WithDefaultEndpoint
 var _ = internal.Version
+var _ = internallog.New
 
 const apiId = "recommender:v1"
 const apiName = "recommender"
@@ -115,7 +118,7 @@ func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, err
 	if err != nil {
 		return nil, err
 	}
-	s := &Service{client: client, BasePath: basePath}
+	s := &Service{client: client, BasePath: basePath, logger: internaloption.GetLogger(opts)}
 	s.BillingAccounts = NewBillingAccountsService(s)
 	s.Folders = NewFoldersService(s)
 	s.Organizations = NewOrganizationsService(s)
@@ -143,6 +146,7 @@ func New(client *http.Client) (*Service, error) {
 
 type Service struct {
 	client    *http.Client
+	logger    *slog.Logger
 	BasePath  string // API endpoint base URL
 	UserAgent string // optional additional User-Agent fragment
 
@@ -1490,6 +1494,7 @@ func (c *BillingAccountsLocationsInsightTypesGetConfigCall) doRequest(alt string
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "recommender.billingAccounts.locations.insightTypes.getConfig", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -1525,9 +1530,11 @@ func (c *BillingAccountsLocationsInsightTypesGetConfigCall) Do(opts ...googleapi
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "recommender.billingAccounts.locations.insightTypes.getConfig", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -1608,6 +1615,7 @@ func (c *BillingAccountsLocationsInsightTypesUpdateConfigCall) doRequest(alt str
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "recommender.billingAccounts.locations.insightTypes.updateConfig", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -1643,9 +1651,11 @@ func (c *BillingAccountsLocationsInsightTypesUpdateConfigCall) Do(opts ...google
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "recommender.billingAccounts.locations.insightTypes.updateConfig", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -1716,6 +1726,7 @@ func (c *BillingAccountsLocationsInsightTypesInsightsGetCall) doRequest(alt stri
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "recommender.billingAccounts.locations.insightTypes.insights.get", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -1751,9 +1762,11 @@ func (c *BillingAccountsLocationsInsightTypesInsightsGetCall) Do(opts ...googlea
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "recommender.billingAccounts.locations.insightTypes.insights.get", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -1871,6 +1884,7 @@ func (c *BillingAccountsLocationsInsightTypesInsightsListCall) doRequest(alt str
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "recommender.billingAccounts.locations.insightTypes.insights.list", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -1906,9 +1920,11 @@ func (c *BillingAccountsLocationsInsightTypesInsightsListCall) Do(opts ...google
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "recommender.billingAccounts.locations.insightTypes.insights.list", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -1997,6 +2013,7 @@ func (c *BillingAccountsLocationsInsightTypesInsightsMarkAcceptedCall) doRequest
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "recommender.billingAccounts.locations.insightTypes.insights.markAccepted", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -2032,9 +2049,11 @@ func (c *BillingAccountsLocationsInsightTypesInsightsMarkAcceptedCall) Do(opts .
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "recommender.billingAccounts.locations.insightTypes.insights.markAccepted", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -2113,6 +2132,7 @@ func (c *BillingAccountsLocationsRecommendersGetConfigCall) doRequest(alt string
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "recommender.billingAccounts.locations.recommenders.getConfig", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -2148,9 +2168,11 @@ func (c *BillingAccountsLocationsRecommendersGetConfigCall) Do(opts ...googleapi
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "recommender.billingAccounts.locations.recommenders.getConfig", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -2231,6 +2253,7 @@ func (c *BillingAccountsLocationsRecommendersUpdateConfigCall) doRequest(alt str
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "recommender.billingAccounts.locations.recommenders.updateConfig", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -2266,9 +2289,11 @@ func (c *BillingAccountsLocationsRecommendersUpdateConfigCall) Do(opts ...google
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "recommender.billingAccounts.locations.recommenders.updateConfig", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -2339,6 +2364,7 @@ func (c *BillingAccountsLocationsRecommendersRecommendationsGetCall) doRequest(a
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "recommender.billingAccounts.locations.recommenders.recommendations.get", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -2374,9 +2400,11 @@ func (c *BillingAccountsLocationsRecommendersRecommendationsGetCall) Do(opts ...
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "recommender.billingAccounts.locations.recommenders.recommendations.get", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -2493,6 +2521,7 @@ func (c *BillingAccountsLocationsRecommendersRecommendationsListCall) doRequest(
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "recommender.billingAccounts.locations.recommenders.recommendations.list", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -2528,9 +2557,11 @@ func (c *BillingAccountsLocationsRecommendersRecommendationsListCall) Do(opts ..
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "recommender.billingAccounts.locations.recommenders.recommendations.list", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -2621,6 +2652,7 @@ func (c *BillingAccountsLocationsRecommendersRecommendationsMarkClaimedCall) doR
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "recommender.billingAccounts.locations.recommenders.recommendations.markClaimed", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -2656,9 +2688,11 @@ func (c *BillingAccountsLocationsRecommendersRecommendationsMarkClaimedCall) Do(
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "recommender.billingAccounts.locations.recommenders.recommendations.markClaimed", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -2726,6 +2760,7 @@ func (c *BillingAccountsLocationsRecommendersRecommendationsMarkDismissedCall) d
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "recommender.billingAccounts.locations.recommenders.recommendations.markDismissed", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -2761,9 +2796,11 @@ func (c *BillingAccountsLocationsRecommendersRecommendationsMarkDismissedCall) D
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "recommender.billingAccounts.locations.recommenders.recommendations.markDismissed", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -2833,6 +2870,7 @@ func (c *BillingAccountsLocationsRecommendersRecommendationsMarkFailedCall) doRe
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "recommender.billingAccounts.locations.recommenders.recommendations.markFailed", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -2868,9 +2906,11 @@ func (c *BillingAccountsLocationsRecommendersRecommendationsMarkFailedCall) Do(o
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "recommender.billingAccounts.locations.recommenders.recommendations.markFailed", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -2940,6 +2980,7 @@ func (c *BillingAccountsLocationsRecommendersRecommendationsMarkSucceededCall) d
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "recommender.billingAccounts.locations.recommenders.recommendations.markSucceeded", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -2975,9 +3016,11 @@ func (c *BillingAccountsLocationsRecommendersRecommendationsMarkSucceededCall) D
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "recommender.billingAccounts.locations.recommenders.recommendations.markSucceeded", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -3048,6 +3091,7 @@ func (c *FoldersLocationsInsightTypesInsightsGetCall) doRequest(alt string) (*ht
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "recommender.folders.locations.insightTypes.insights.get", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -3083,9 +3127,11 @@ func (c *FoldersLocationsInsightTypesInsightsGetCall) Do(opts ...googleapi.CallO
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "recommender.folders.locations.insightTypes.insights.get", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -3203,6 +3249,7 @@ func (c *FoldersLocationsInsightTypesInsightsListCall) doRequest(alt string) (*h
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "recommender.folders.locations.insightTypes.insights.list", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -3238,9 +3285,11 @@ func (c *FoldersLocationsInsightTypesInsightsListCall) Do(opts ...googleapi.Call
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "recommender.folders.locations.insightTypes.insights.list", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -3329,6 +3378,7 @@ func (c *FoldersLocationsInsightTypesInsightsMarkAcceptedCall) doRequest(alt str
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "recommender.folders.locations.insightTypes.insights.markAccepted", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -3364,9 +3414,11 @@ func (c *FoldersLocationsInsightTypesInsightsMarkAcceptedCall) Do(opts ...google
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "recommender.folders.locations.insightTypes.insights.markAccepted", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -3437,6 +3489,7 @@ func (c *FoldersLocationsRecommendersRecommendationsGetCall) doRequest(alt strin
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "recommender.folders.locations.recommenders.recommendations.get", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -3472,9 +3525,11 @@ func (c *FoldersLocationsRecommendersRecommendationsGetCall) Do(opts ...googleap
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "recommender.folders.locations.recommenders.recommendations.get", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -3591,6 +3646,7 @@ func (c *FoldersLocationsRecommendersRecommendationsListCall) doRequest(alt stri
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "recommender.folders.locations.recommenders.recommendations.list", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -3626,9 +3682,11 @@ func (c *FoldersLocationsRecommendersRecommendationsListCall) Do(opts ...googlea
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "recommender.folders.locations.recommenders.recommendations.list", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -3719,6 +3777,7 @@ func (c *FoldersLocationsRecommendersRecommendationsMarkClaimedCall) doRequest(a
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "recommender.folders.locations.recommenders.recommendations.markClaimed", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -3754,9 +3813,11 @@ func (c *FoldersLocationsRecommendersRecommendationsMarkClaimedCall) Do(opts ...
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "recommender.folders.locations.recommenders.recommendations.markClaimed", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -3824,6 +3885,7 @@ func (c *FoldersLocationsRecommendersRecommendationsMarkDismissedCall) doRequest
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "recommender.folders.locations.recommenders.recommendations.markDismissed", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -3859,9 +3921,11 @@ func (c *FoldersLocationsRecommendersRecommendationsMarkDismissedCall) Do(opts .
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "recommender.folders.locations.recommenders.recommendations.markDismissed", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -3931,6 +3995,7 @@ func (c *FoldersLocationsRecommendersRecommendationsMarkFailedCall) doRequest(al
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "recommender.folders.locations.recommenders.recommendations.markFailed", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -3966,9 +4031,11 @@ func (c *FoldersLocationsRecommendersRecommendationsMarkFailedCall) Do(opts ...g
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "recommender.folders.locations.recommenders.recommendations.markFailed", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -4038,6 +4105,7 @@ func (c *FoldersLocationsRecommendersRecommendationsMarkSucceededCall) doRequest
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "recommender.folders.locations.recommenders.recommendations.markSucceeded", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -4073,9 +4141,11 @@ func (c *FoldersLocationsRecommendersRecommendationsMarkSucceededCall) Do(opts .
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "recommender.folders.locations.recommenders.recommendations.markSucceeded", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -4154,6 +4224,7 @@ func (c *OrganizationsLocationsInsightTypesGetConfigCall) doRequest(alt string) 
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "recommender.organizations.locations.insightTypes.getConfig", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -4189,9 +4260,11 @@ func (c *OrganizationsLocationsInsightTypesGetConfigCall) Do(opts ...googleapi.C
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "recommender.organizations.locations.insightTypes.getConfig", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -4272,6 +4345,7 @@ func (c *OrganizationsLocationsInsightTypesUpdateConfigCall) doRequest(alt strin
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "recommender.organizations.locations.insightTypes.updateConfig", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -4307,9 +4381,11 @@ func (c *OrganizationsLocationsInsightTypesUpdateConfigCall) Do(opts ...googleap
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "recommender.organizations.locations.insightTypes.updateConfig", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -4380,6 +4456,7 @@ func (c *OrganizationsLocationsInsightTypesInsightsGetCall) doRequest(alt string
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "recommender.organizations.locations.insightTypes.insights.get", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -4415,9 +4492,11 @@ func (c *OrganizationsLocationsInsightTypesInsightsGetCall) Do(opts ...googleapi
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "recommender.organizations.locations.insightTypes.insights.get", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -4535,6 +4614,7 @@ func (c *OrganizationsLocationsInsightTypesInsightsListCall) doRequest(alt strin
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "recommender.organizations.locations.insightTypes.insights.list", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -4570,9 +4650,11 @@ func (c *OrganizationsLocationsInsightTypesInsightsListCall) Do(opts ...googleap
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "recommender.organizations.locations.insightTypes.insights.list", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -4661,6 +4743,7 @@ func (c *OrganizationsLocationsInsightTypesInsightsMarkAcceptedCall) doRequest(a
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "recommender.organizations.locations.insightTypes.insights.markAccepted", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -4696,9 +4779,11 @@ func (c *OrganizationsLocationsInsightTypesInsightsMarkAcceptedCall) Do(opts ...
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "recommender.organizations.locations.insightTypes.insights.markAccepted", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -4777,6 +4862,7 @@ func (c *OrganizationsLocationsRecommendersGetConfigCall) doRequest(alt string) 
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "recommender.organizations.locations.recommenders.getConfig", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -4812,9 +4898,11 @@ func (c *OrganizationsLocationsRecommendersGetConfigCall) Do(opts ...googleapi.C
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "recommender.organizations.locations.recommenders.getConfig", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -4895,6 +4983,7 @@ func (c *OrganizationsLocationsRecommendersUpdateConfigCall) doRequest(alt strin
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "recommender.organizations.locations.recommenders.updateConfig", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -4930,9 +5019,11 @@ func (c *OrganizationsLocationsRecommendersUpdateConfigCall) Do(opts ...googleap
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "recommender.organizations.locations.recommenders.updateConfig", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -5003,6 +5094,7 @@ func (c *OrganizationsLocationsRecommendersRecommendationsGetCall) doRequest(alt
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "recommender.organizations.locations.recommenders.recommendations.get", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -5038,9 +5130,11 @@ func (c *OrganizationsLocationsRecommendersRecommendationsGetCall) Do(opts ...go
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "recommender.organizations.locations.recommenders.recommendations.get", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -5157,6 +5251,7 @@ func (c *OrganizationsLocationsRecommendersRecommendationsListCall) doRequest(al
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "recommender.organizations.locations.recommenders.recommendations.list", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -5192,9 +5287,11 @@ func (c *OrganizationsLocationsRecommendersRecommendationsListCall) Do(opts ...g
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "recommender.organizations.locations.recommenders.recommendations.list", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -5285,6 +5382,7 @@ func (c *OrganizationsLocationsRecommendersRecommendationsMarkClaimedCall) doReq
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "recommender.organizations.locations.recommenders.recommendations.markClaimed", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -5320,9 +5418,11 @@ func (c *OrganizationsLocationsRecommendersRecommendationsMarkClaimedCall) Do(op
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "recommender.organizations.locations.recommenders.recommendations.markClaimed", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -5390,6 +5490,7 @@ func (c *OrganizationsLocationsRecommendersRecommendationsMarkDismissedCall) doR
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "recommender.organizations.locations.recommenders.recommendations.markDismissed", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -5425,9 +5526,11 @@ func (c *OrganizationsLocationsRecommendersRecommendationsMarkDismissedCall) Do(
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "recommender.organizations.locations.recommenders.recommendations.markDismissed", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -5497,6 +5600,7 @@ func (c *OrganizationsLocationsRecommendersRecommendationsMarkFailedCall) doRequ
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "recommender.organizations.locations.recommenders.recommendations.markFailed", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -5532,9 +5636,11 @@ func (c *OrganizationsLocationsRecommendersRecommendationsMarkFailedCall) Do(opt
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "recommender.organizations.locations.recommenders.recommendations.markFailed", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -5604,6 +5710,7 @@ func (c *OrganizationsLocationsRecommendersRecommendationsMarkSucceededCall) doR
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "recommender.organizations.locations.recommenders.recommendations.markSucceeded", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -5639,9 +5746,11 @@ func (c *OrganizationsLocationsRecommendersRecommendationsMarkSucceededCall) Do(
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "recommender.organizations.locations.recommenders.recommendations.markSucceeded", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -5720,6 +5829,7 @@ func (c *ProjectsLocationsInsightTypesGetConfigCall) doRequest(alt string) (*htt
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "recommender.projects.locations.insightTypes.getConfig", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -5755,9 +5865,11 @@ func (c *ProjectsLocationsInsightTypesGetConfigCall) Do(opts ...googleapi.CallOp
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "recommender.projects.locations.insightTypes.getConfig", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -5838,6 +5950,7 @@ func (c *ProjectsLocationsInsightTypesUpdateConfigCall) doRequest(alt string) (*
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "recommender.projects.locations.insightTypes.updateConfig", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -5873,9 +5986,11 @@ func (c *ProjectsLocationsInsightTypesUpdateConfigCall) Do(opts ...googleapi.Cal
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "recommender.projects.locations.insightTypes.updateConfig", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -5946,6 +6061,7 @@ func (c *ProjectsLocationsInsightTypesInsightsGetCall) doRequest(alt string) (*h
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "recommender.projects.locations.insightTypes.insights.get", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -5981,9 +6097,11 @@ func (c *ProjectsLocationsInsightTypesInsightsGetCall) Do(opts ...googleapi.Call
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "recommender.projects.locations.insightTypes.insights.get", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -6101,6 +6219,7 @@ func (c *ProjectsLocationsInsightTypesInsightsListCall) doRequest(alt string) (*
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "recommender.projects.locations.insightTypes.insights.list", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -6136,9 +6255,11 @@ func (c *ProjectsLocationsInsightTypesInsightsListCall) Do(opts ...googleapi.Cal
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "recommender.projects.locations.insightTypes.insights.list", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -6227,6 +6348,7 @@ func (c *ProjectsLocationsInsightTypesInsightsMarkAcceptedCall) doRequest(alt st
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "recommender.projects.locations.insightTypes.insights.markAccepted", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -6262,9 +6384,11 @@ func (c *ProjectsLocationsInsightTypesInsightsMarkAcceptedCall) Do(opts ...googl
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "recommender.projects.locations.insightTypes.insights.markAccepted", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -6343,6 +6467,7 @@ func (c *ProjectsLocationsRecommendersGetConfigCall) doRequest(alt string) (*htt
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "recommender.projects.locations.recommenders.getConfig", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -6378,9 +6503,11 @@ func (c *ProjectsLocationsRecommendersGetConfigCall) Do(opts ...googleapi.CallOp
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "recommender.projects.locations.recommenders.getConfig", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -6461,6 +6588,7 @@ func (c *ProjectsLocationsRecommendersUpdateConfigCall) doRequest(alt string) (*
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "recommender.projects.locations.recommenders.updateConfig", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -6496,9 +6624,11 @@ func (c *ProjectsLocationsRecommendersUpdateConfigCall) Do(opts ...googleapi.Cal
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "recommender.projects.locations.recommenders.updateConfig", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -6569,6 +6699,7 @@ func (c *ProjectsLocationsRecommendersRecommendationsGetCall) doRequest(alt stri
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "recommender.projects.locations.recommenders.recommendations.get", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -6604,9 +6735,11 @@ func (c *ProjectsLocationsRecommendersRecommendationsGetCall) Do(opts ...googlea
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "recommender.projects.locations.recommenders.recommendations.get", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -6723,6 +6856,7 @@ func (c *ProjectsLocationsRecommendersRecommendationsListCall) doRequest(alt str
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "recommender.projects.locations.recommenders.recommendations.list", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -6758,9 +6892,11 @@ func (c *ProjectsLocationsRecommendersRecommendationsListCall) Do(opts ...google
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "recommender.projects.locations.recommenders.recommendations.list", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -6851,6 +6987,7 @@ func (c *ProjectsLocationsRecommendersRecommendationsMarkClaimedCall) doRequest(
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "recommender.projects.locations.recommenders.recommendations.markClaimed", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -6886,9 +7023,11 @@ func (c *ProjectsLocationsRecommendersRecommendationsMarkClaimedCall) Do(opts ..
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "recommender.projects.locations.recommenders.recommendations.markClaimed", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -6956,6 +7095,7 @@ func (c *ProjectsLocationsRecommendersRecommendationsMarkDismissedCall) doReques
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "recommender.projects.locations.recommenders.recommendations.markDismissed", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -6991,9 +7131,11 @@ func (c *ProjectsLocationsRecommendersRecommendationsMarkDismissedCall) Do(opts 
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "recommender.projects.locations.recommenders.recommendations.markDismissed", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -7063,6 +7205,7 @@ func (c *ProjectsLocationsRecommendersRecommendationsMarkFailedCall) doRequest(a
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "recommender.projects.locations.recommenders.recommendations.markFailed", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -7098,9 +7241,11 @@ func (c *ProjectsLocationsRecommendersRecommendationsMarkFailedCall) Do(opts ...
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "recommender.projects.locations.recommenders.recommendations.markFailed", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -7170,6 +7315,7 @@ func (c *ProjectsLocationsRecommendersRecommendationsMarkSucceededCall) doReques
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "recommender.projects.locations.recommenders.recommendations.markSucceeded", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -7205,8 +7351,10 @@ func (c *ProjectsLocationsRecommendersRecommendationsMarkSucceededCall) Do(opts 
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "recommender.projects.locations.recommenders.recommendations.markSucceeded", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }

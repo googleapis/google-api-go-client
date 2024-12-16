@@ -62,11 +62,13 @@ import (
 	"errors"
 	"fmt"
 	"io"
+	"log/slog"
 	"net/http"
 	"net/url"
 	"strconv"
 	"strings"
 
+	"github.com/googleapis/gax-go/v2/internallog"
 	googleapi "google.golang.org/api/googleapi"
 	internal "google.golang.org/api/internal"
 	gensupport "google.golang.org/api/internal/gensupport"
@@ -90,6 +92,7 @@ var _ = strings.Replace
 var _ = context.Canceled
 var _ = internaloption.WithDefaultEndpoint
 var _ = internal.Version
+var _ = internallog.New
 
 const apiId = "firebaseappcheck:v1beta"
 const apiName = "firebaseappcheck"
@@ -124,7 +127,7 @@ func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, err
 	if err != nil {
 		return nil, err
 	}
-	s := &Service{client: client, BasePath: basePath}
+	s := &Service{client: client, BasePath: basePath, logger: internaloption.GetLogger(opts)}
 	s.Jwks = NewJwksService(s)
 	s.OauthClients = NewOauthClientsService(s)
 	s.Projects = NewProjectsService(s)
@@ -151,6 +154,7 @@ func New(client *http.Client) (*Service, error) {
 
 type Service struct {
 	client    *http.Client
+	logger    *slog.Logger
 	BasePath  string // API endpoint base URL
 	UserAgent string // optional additional User-Agent fragment
 
@@ -1977,6 +1981,7 @@ func (c *JwksGetCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "firebaseappcheck.jwks.get", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -2012,9 +2017,11 @@ func (c *JwksGetCall) Do(opts ...googleapi.CallOption) (*GoogleFirebaseAppcheckV
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "firebaseappcheck.jwks.get", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -2092,6 +2099,7 @@ func (c *OauthClientsExchangeAppAttestAssertionCall) doRequest(alt string) (*htt
 	googleapi.Expand(req.URL, map[string]string{
 		"app": c.appid,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "firebaseappcheck.oauthClients.exchangeAppAttestAssertion", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -2127,9 +2135,11 @@ func (c *OauthClientsExchangeAppAttestAssertionCall) Do(opts ...googleapi.CallOp
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "firebaseappcheck.oauthClients.exchangeAppAttestAssertion", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -2210,6 +2220,7 @@ func (c *OauthClientsExchangeAppAttestAttestationCall) doRequest(alt string) (*h
 	googleapi.Expand(req.URL, map[string]string{
 		"app": c.appid,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "firebaseappcheck.oauthClients.exchangeAppAttestAttestation", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -2245,9 +2256,11 @@ func (c *OauthClientsExchangeAppAttestAttestationCall) Do(opts ...googleapi.Call
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "firebaseappcheck.oauthClients.exchangeAppAttestAttestation", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -2326,6 +2339,7 @@ func (c *OauthClientsExchangeDebugTokenCall) doRequest(alt string) (*http.Respon
 	googleapi.Expand(req.URL, map[string]string{
 		"app": c.appid,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "firebaseappcheck.oauthClients.exchangeDebugToken", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -2361,9 +2375,11 @@ func (c *OauthClientsExchangeDebugTokenCall) Do(opts ...googleapi.CallOption) (*
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "firebaseappcheck.oauthClients.exchangeDebugToken", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -2442,6 +2458,7 @@ func (c *OauthClientsGenerateAppAttestChallengeCall) doRequest(alt string) (*htt
 	googleapi.Expand(req.URL, map[string]string{
 		"app": c.appid,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "firebaseappcheck.oauthClients.generateAppAttestChallenge", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -2477,9 +2494,11 @@ func (c *OauthClientsGenerateAppAttestChallengeCall) Do(opts ...googleapi.CallOp
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "firebaseappcheck.oauthClients.generateAppAttestChallenge", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -2568,6 +2587,7 @@ func (c *ProjectsVerifyAppCheckTokenCall) doRequest(alt string) (*http.Response,
 	googleapi.Expand(req.URL, map[string]string{
 		"project": c.projectid,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "firebaseappcheck.projects.verifyAppCheckToken", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -2603,9 +2623,11 @@ func (c *ProjectsVerifyAppCheckTokenCall) Do(opts ...googleapi.CallOption) (*Goo
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "firebaseappcheck.projects.verifyAppCheckToken", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -2683,6 +2705,7 @@ func (c *ProjectsAppsExchangeAppAttestAssertionCall) doRequest(alt string) (*htt
 	googleapi.Expand(req.URL, map[string]string{
 		"app": c.appid,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "firebaseappcheck.projects.apps.exchangeAppAttestAssertion", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -2718,9 +2741,11 @@ func (c *ProjectsAppsExchangeAppAttestAssertionCall) Do(opts ...googleapi.CallOp
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "firebaseappcheck.projects.apps.exchangeAppAttestAssertion", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -2801,6 +2826,7 @@ func (c *ProjectsAppsExchangeAppAttestAttestationCall) doRequest(alt string) (*h
 	googleapi.Expand(req.URL, map[string]string{
 		"app": c.appid,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "firebaseappcheck.projects.apps.exchangeAppAttestAttestation", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -2836,9 +2862,11 @@ func (c *ProjectsAppsExchangeAppAttestAttestationCall) Do(opts ...googleapi.Call
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "firebaseappcheck.projects.apps.exchangeAppAttestAttestation", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -2907,6 +2935,7 @@ func (c *ProjectsAppsExchangeCustomTokenCall) doRequest(alt string) (*http.Respo
 	googleapi.Expand(req.URL, map[string]string{
 		"app": c.appid,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "firebaseappcheck.projects.apps.exchangeCustomToken", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -2942,9 +2971,11 @@ func (c *ProjectsAppsExchangeCustomTokenCall) Do(opts ...googleapi.CallOption) (
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "firebaseappcheck.projects.apps.exchangeCustomToken", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -3023,6 +3054,7 @@ func (c *ProjectsAppsExchangeDebugTokenCall) doRequest(alt string) (*http.Respon
 	googleapi.Expand(req.URL, map[string]string{
 		"app": c.appid,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "firebaseappcheck.projects.apps.exchangeDebugToken", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -3058,9 +3090,11 @@ func (c *ProjectsAppsExchangeDebugTokenCall) Do(opts ...googleapi.CallOption) (*
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "firebaseappcheck.projects.apps.exchangeDebugToken", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -3131,6 +3165,7 @@ func (c *ProjectsAppsExchangeDeviceCheckTokenCall) doRequest(alt string) (*http.
 	googleapi.Expand(req.URL, map[string]string{
 		"app": c.appid,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "firebaseappcheck.projects.apps.exchangeDeviceCheckToken", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -3166,9 +3201,11 @@ func (c *ProjectsAppsExchangeDeviceCheckTokenCall) Do(opts ...googleapi.CallOpti
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "firebaseappcheck.projects.apps.exchangeDeviceCheckToken", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -3239,6 +3276,7 @@ func (c *ProjectsAppsExchangePlayIntegrityTokenCall) doRequest(alt string) (*htt
 	googleapi.Expand(req.URL, map[string]string{
 		"app": c.appid,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "firebaseappcheck.projects.apps.exchangePlayIntegrityToken", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -3274,9 +3312,11 @@ func (c *ProjectsAppsExchangePlayIntegrityTokenCall) Do(opts ...googleapi.CallOp
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "firebaseappcheck.projects.apps.exchangePlayIntegrityToken", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -3347,6 +3387,7 @@ func (c *ProjectsAppsExchangeRecaptchaEnterpriseTokenCall) doRequest(alt string)
 	googleapi.Expand(req.URL, map[string]string{
 		"app": c.appid,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "firebaseappcheck.projects.apps.exchangeRecaptchaEnterpriseToken", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -3382,9 +3423,11 @@ func (c *ProjectsAppsExchangeRecaptchaEnterpriseTokenCall) Do(opts ...googleapi.
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "firebaseappcheck.projects.apps.exchangeRecaptchaEnterpriseToken", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -3454,6 +3497,7 @@ func (c *ProjectsAppsExchangeRecaptchaTokenCall) doRequest(alt string) (*http.Re
 	googleapi.Expand(req.URL, map[string]string{
 		"app": c.appid,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "firebaseappcheck.projects.apps.exchangeRecaptchaToken", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -3489,9 +3533,11 @@ func (c *ProjectsAppsExchangeRecaptchaTokenCall) Do(opts ...googleapi.CallOption
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "firebaseappcheck.projects.apps.exchangeRecaptchaToken", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -3561,6 +3607,7 @@ func (c *ProjectsAppsExchangeRecaptchaV3TokenCall) doRequest(alt string) (*http.
 	googleapi.Expand(req.URL, map[string]string{
 		"app": c.appid,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "firebaseappcheck.projects.apps.exchangeRecaptchaV3Token", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -3596,9 +3643,11 @@ func (c *ProjectsAppsExchangeRecaptchaV3TokenCall) Do(opts ...googleapi.CallOpti
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "firebaseappcheck.projects.apps.exchangeRecaptchaV3Token", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -3668,6 +3717,7 @@ func (c *ProjectsAppsExchangeSafetyNetTokenCall) doRequest(alt string) (*http.Re
 	googleapi.Expand(req.URL, map[string]string{
 		"app": c.appid,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "firebaseappcheck.projects.apps.exchangeSafetyNetToken", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -3703,9 +3753,11 @@ func (c *ProjectsAppsExchangeSafetyNetTokenCall) Do(opts ...googleapi.CallOption
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "firebaseappcheck.projects.apps.exchangeSafetyNetToken", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -3784,6 +3836,7 @@ func (c *ProjectsAppsGenerateAppAttestChallengeCall) doRequest(alt string) (*htt
 	googleapi.Expand(req.URL, map[string]string{
 		"app": c.appid,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "firebaseappcheck.projects.apps.generateAppAttestChallenge", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -3819,9 +3872,11 @@ func (c *ProjectsAppsGenerateAppAttestChallengeCall) Do(opts ...googleapi.CallOp
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "firebaseappcheck.projects.apps.generateAppAttestChallenge", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -3893,6 +3948,7 @@ func (c *ProjectsAppsGeneratePlayIntegrityChallengeCall) doRequest(alt string) (
 	googleapi.Expand(req.URL, map[string]string{
 		"app": c.appid,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "firebaseappcheck.projects.apps.generatePlayIntegrityChallenge", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -3928,9 +3984,11 @@ func (c *ProjectsAppsGeneratePlayIntegrityChallengeCall) Do(opts ...googleapi.Ca
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "firebaseappcheck.projects.apps.generatePlayIntegrityChallenge", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -4013,6 +4071,7 @@ func (c *ProjectsAppsAppAttestConfigBatchGetCall) doRequest(alt string) (*http.R
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "firebaseappcheck.projects.apps.appAttestConfig.batchGet", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -4048,9 +4107,11 @@ func (c *ProjectsAppsAppAttestConfigBatchGetCall) Do(opts ...googleapi.CallOptio
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "firebaseappcheck.projects.apps.appAttestConfig.batchGet", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -4121,6 +4182,7 @@ func (c *ProjectsAppsAppAttestConfigGetCall) doRequest(alt string) (*http.Respon
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "firebaseappcheck.projects.apps.appAttestConfig.get", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -4156,9 +4218,11 @@ func (c *ProjectsAppsAppAttestConfigGetCall) Do(opts ...googleapi.CallOption) (*
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "firebaseappcheck.projects.apps.appAttestConfig.get", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -4234,6 +4298,7 @@ func (c *ProjectsAppsAppAttestConfigPatchCall) doRequest(alt string) (*http.Resp
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "firebaseappcheck.projects.apps.appAttestConfig.patch", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -4269,9 +4334,11 @@ func (c *ProjectsAppsAppAttestConfigPatchCall) Do(opts ...googleapi.CallOption) 
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "firebaseappcheck.projects.apps.appAttestConfig.patch", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -4340,6 +4407,7 @@ func (c *ProjectsAppsDebugTokensCreateCall) doRequest(alt string) (*http.Respons
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "firebaseappcheck.projects.apps.debugTokens.create", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -4375,9 +4443,11 @@ func (c *ProjectsAppsDebugTokensCreateCall) Do(opts ...googleapi.CallOption) (*G
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "firebaseappcheck.projects.apps.debugTokens.create", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -4440,6 +4510,7 @@ func (c *ProjectsAppsDebugTokensDeleteCall) doRequest(alt string) (*http.Respons
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "firebaseappcheck.projects.apps.debugTokens.delete", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -4475,9 +4546,11 @@ func (c *ProjectsAppsDebugTokensDeleteCall) Do(opts ...googleapi.CallOption) (*G
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "firebaseappcheck.projects.apps.debugTokens.delete", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -4549,6 +4622,7 @@ func (c *ProjectsAppsDebugTokensGetCall) doRequest(alt string) (*http.Response, 
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "firebaseappcheck.projects.apps.debugTokens.get", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -4584,9 +4658,11 @@ func (c *ProjectsAppsDebugTokensGetCall) Do(opts ...googleapi.CallOption) (*Goog
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "firebaseappcheck.projects.apps.debugTokens.get", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -4680,6 +4756,7 @@ func (c *ProjectsAppsDebugTokensListCall) doRequest(alt string) (*http.Response,
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "firebaseappcheck.projects.apps.debugTokens.list", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -4715,9 +4792,11 @@ func (c *ProjectsAppsDebugTokensListCall) Do(opts ...googleapi.CallOption) (*Goo
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "firebaseappcheck.projects.apps.debugTokens.list", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -4813,6 +4892,7 @@ func (c *ProjectsAppsDebugTokensPatchCall) doRequest(alt string) (*http.Response
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "firebaseappcheck.projects.apps.debugTokens.patch", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -4848,9 +4928,11 @@ func (c *ProjectsAppsDebugTokensPatchCall) Do(opts ...googleapi.CallOption) (*Go
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "firebaseappcheck.projects.apps.debugTokens.patch", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -4934,6 +5016,7 @@ func (c *ProjectsAppsDeviceCheckConfigBatchGetCall) doRequest(alt string) (*http
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "firebaseappcheck.projects.apps.deviceCheckConfig.batchGet", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -4969,9 +5052,11 @@ func (c *ProjectsAppsDeviceCheckConfigBatchGetCall) Do(opts ...googleapi.CallOpt
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "firebaseappcheck.projects.apps.deviceCheckConfig.batchGet", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -5043,6 +5128,7 @@ func (c *ProjectsAppsDeviceCheckConfigGetCall) doRequest(alt string) (*http.Resp
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "firebaseappcheck.projects.apps.deviceCheckConfig.get", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -5078,9 +5164,11 @@ func (c *ProjectsAppsDeviceCheckConfigGetCall) Do(opts ...googleapi.CallOption) 
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "firebaseappcheck.projects.apps.deviceCheckConfig.get", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -5157,6 +5245,7 @@ func (c *ProjectsAppsDeviceCheckConfigPatchCall) doRequest(alt string) (*http.Re
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "firebaseappcheck.projects.apps.deviceCheckConfig.patch", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -5192,9 +5281,11 @@ func (c *ProjectsAppsDeviceCheckConfigPatchCall) Do(opts ...googleapi.CallOption
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "firebaseappcheck.projects.apps.deviceCheckConfig.patch", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -5277,6 +5368,7 @@ func (c *ProjectsAppsPlayIntegrityConfigBatchGetCall) doRequest(alt string) (*ht
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "firebaseappcheck.projects.apps.playIntegrityConfig.batchGet", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -5312,9 +5404,11 @@ func (c *ProjectsAppsPlayIntegrityConfigBatchGetCall) Do(opts ...googleapi.CallO
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "firebaseappcheck.projects.apps.playIntegrityConfig.batchGet", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -5386,6 +5480,7 @@ func (c *ProjectsAppsPlayIntegrityConfigGetCall) doRequest(alt string) (*http.Re
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "firebaseappcheck.projects.apps.playIntegrityConfig.get", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -5421,9 +5516,11 @@ func (c *ProjectsAppsPlayIntegrityConfigGetCall) Do(opts ...googleapi.CallOption
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "firebaseappcheck.projects.apps.playIntegrityConfig.get", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -5499,6 +5596,7 @@ func (c *ProjectsAppsPlayIntegrityConfigPatchCall) doRequest(alt string) (*http.
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "firebaseappcheck.projects.apps.playIntegrityConfig.patch", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -5534,9 +5632,11 @@ func (c *ProjectsAppsPlayIntegrityConfigPatchCall) Do(opts ...googleapi.CallOpti
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "firebaseappcheck.projects.apps.playIntegrityConfig.patch", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -5620,6 +5720,7 @@ func (c *ProjectsAppsRecaptchaConfigBatchGetCall) doRequest(alt string) (*http.R
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "firebaseappcheck.projects.apps.recaptchaConfig.batchGet", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -5655,9 +5756,11 @@ func (c *ProjectsAppsRecaptchaConfigBatchGetCall) Do(opts ...googleapi.CallOptio
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "firebaseappcheck.projects.apps.recaptchaConfig.batchGet", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -5729,6 +5832,7 @@ func (c *ProjectsAppsRecaptchaConfigGetCall) doRequest(alt string) (*http.Respon
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "firebaseappcheck.projects.apps.recaptchaConfig.get", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -5764,9 +5868,11 @@ func (c *ProjectsAppsRecaptchaConfigGetCall) Do(opts ...googleapi.CallOption) (*
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "firebaseappcheck.projects.apps.recaptchaConfig.get", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -5843,6 +5949,7 @@ func (c *ProjectsAppsRecaptchaConfigPatchCall) doRequest(alt string) (*http.Resp
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "firebaseappcheck.projects.apps.recaptchaConfig.patch", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -5878,9 +5985,11 @@ func (c *ProjectsAppsRecaptchaConfigPatchCall) Do(opts ...googleapi.CallOption) 
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "firebaseappcheck.projects.apps.recaptchaConfig.patch", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -5963,6 +6072,7 @@ func (c *ProjectsAppsRecaptchaEnterpriseConfigBatchGetCall) doRequest(alt string
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "firebaseappcheck.projects.apps.recaptchaEnterpriseConfig.batchGet", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -5998,9 +6108,11 @@ func (c *ProjectsAppsRecaptchaEnterpriseConfigBatchGetCall) Do(opts ...googleapi
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "firebaseappcheck.projects.apps.recaptchaEnterpriseConfig.batchGet", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -6072,6 +6184,7 @@ func (c *ProjectsAppsRecaptchaEnterpriseConfigGetCall) doRequest(alt string) (*h
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "firebaseappcheck.projects.apps.recaptchaEnterpriseConfig.get", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -6107,9 +6220,11 @@ func (c *ProjectsAppsRecaptchaEnterpriseConfigGetCall) Do(opts ...googleapi.Call
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "firebaseappcheck.projects.apps.recaptchaEnterpriseConfig.get", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -6185,6 +6300,7 @@ func (c *ProjectsAppsRecaptchaEnterpriseConfigPatchCall) doRequest(alt string) (
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "firebaseappcheck.projects.apps.recaptchaEnterpriseConfig.patch", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -6220,9 +6336,11 @@ func (c *ProjectsAppsRecaptchaEnterpriseConfigPatchCall) Do(opts ...googleapi.Ca
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "firebaseappcheck.projects.apps.recaptchaEnterpriseConfig.patch", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -6306,6 +6424,7 @@ func (c *ProjectsAppsRecaptchaV3ConfigBatchGetCall) doRequest(alt string) (*http
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "firebaseappcheck.projects.apps.recaptchaV3Config.batchGet", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -6341,9 +6460,11 @@ func (c *ProjectsAppsRecaptchaV3ConfigBatchGetCall) Do(opts ...googleapi.CallOpt
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "firebaseappcheck.projects.apps.recaptchaV3Config.batchGet", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -6415,6 +6536,7 @@ func (c *ProjectsAppsRecaptchaV3ConfigGetCall) doRequest(alt string) (*http.Resp
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "firebaseappcheck.projects.apps.recaptchaV3Config.get", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -6450,9 +6572,11 @@ func (c *ProjectsAppsRecaptchaV3ConfigGetCall) Do(opts ...googleapi.CallOption) 
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "firebaseappcheck.projects.apps.recaptchaV3Config.get", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -6529,6 +6653,7 @@ func (c *ProjectsAppsRecaptchaV3ConfigPatchCall) doRequest(alt string) (*http.Re
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "firebaseappcheck.projects.apps.recaptchaV3Config.patch", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -6564,9 +6689,11 @@ func (c *ProjectsAppsRecaptchaV3ConfigPatchCall) Do(opts ...googleapi.CallOption
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "firebaseappcheck.projects.apps.recaptchaV3Config.patch", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -6649,6 +6776,7 @@ func (c *ProjectsAppsSafetyNetConfigBatchGetCall) doRequest(alt string) (*http.R
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "firebaseappcheck.projects.apps.safetyNetConfig.batchGet", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -6684,9 +6812,11 @@ func (c *ProjectsAppsSafetyNetConfigBatchGetCall) Do(opts ...googleapi.CallOptio
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "firebaseappcheck.projects.apps.safetyNetConfig.batchGet", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -6757,6 +6887,7 @@ func (c *ProjectsAppsSafetyNetConfigGetCall) doRequest(alt string) (*http.Respon
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "firebaseappcheck.projects.apps.safetyNetConfig.get", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -6792,9 +6923,11 @@ func (c *ProjectsAppsSafetyNetConfigGetCall) Do(opts ...googleapi.CallOption) (*
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "firebaseappcheck.projects.apps.safetyNetConfig.get", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -6870,6 +7003,7 @@ func (c *ProjectsAppsSafetyNetConfigPatchCall) doRequest(alt string) (*http.Resp
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "firebaseappcheck.projects.apps.safetyNetConfig.patch", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -6905,9 +7039,11 @@ func (c *ProjectsAppsSafetyNetConfigPatchCall) Do(opts ...googleapi.CallOption) 
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "firebaseappcheck.projects.apps.safetyNetConfig.patch", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -6974,6 +7110,7 @@ func (c *ProjectsServicesBatchUpdateCall) doRequest(alt string) (*http.Response,
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "firebaseappcheck.projects.services.batchUpdate", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -7009,9 +7146,11 @@ func (c *ProjectsServicesBatchUpdateCall) Do(opts ...googleapi.CallOption) (*Goo
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "firebaseappcheck.projects.services.batchUpdate", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -7088,6 +7227,7 @@ func (c *ProjectsServicesGetCall) doRequest(alt string) (*http.Response, error) 
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "firebaseappcheck.projects.services.get", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -7123,9 +7263,11 @@ func (c *ProjectsServicesGetCall) Do(opts ...googleapi.CallOption) (*GoogleFireb
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "firebaseappcheck.projects.services.get", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -7219,6 +7361,7 @@ func (c *ProjectsServicesListCall) doRequest(alt string) (*http.Response, error)
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "firebaseappcheck.projects.services.list", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -7254,9 +7397,11 @@ func (c *ProjectsServicesListCall) Do(opts ...googleapi.CallOption) (*GoogleFire
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "firebaseappcheck.projects.services.list", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -7357,6 +7502,7 @@ func (c *ProjectsServicesPatchCall) doRequest(alt string) (*http.Response, error
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "firebaseappcheck.projects.services.patch", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -7392,9 +7538,11 @@ func (c *ProjectsServicesPatchCall) Do(opts ...googleapi.CallOption) (*GoogleFir
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "firebaseappcheck.projects.services.patch", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -7461,6 +7609,7 @@ func (c *ProjectsServicesResourcePoliciesBatchUpdateCall) doRequest(alt string) 
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "firebaseappcheck.projects.services.resourcePolicies.batchUpdate", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -7496,9 +7645,11 @@ func (c *ProjectsServicesResourcePoliciesBatchUpdateCall) Do(opts ...googleapi.C
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "firebaseappcheck.projects.services.resourcePolicies.batchUpdate", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -7567,6 +7718,7 @@ func (c *ProjectsServicesResourcePoliciesCreateCall) doRequest(alt string) (*htt
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "firebaseappcheck.projects.services.resourcePolicies.create", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -7602,9 +7754,11 @@ func (c *ProjectsServicesResourcePoliciesCreateCall) Do(opts ...googleapi.CallOp
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "firebaseappcheck.projects.services.resourcePolicies.create", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -7678,6 +7832,7 @@ func (c *ProjectsServicesResourcePoliciesDeleteCall) doRequest(alt string) (*htt
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "firebaseappcheck.projects.services.resourcePolicies.delete", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -7713,9 +7868,11 @@ func (c *ProjectsServicesResourcePoliciesDeleteCall) Do(opts ...googleapi.CallOp
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "firebaseappcheck.projects.services.resourcePolicies.delete", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -7790,6 +7947,7 @@ func (c *ProjectsServicesResourcePoliciesGetCall) doRequest(alt string) (*http.R
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "firebaseappcheck.projects.services.resourcePolicies.get", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -7825,9 +7983,11 @@ func (c *ProjectsServicesResourcePoliciesGetCall) Do(opts ...googleapi.CallOptio
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "firebaseappcheck.projects.services.resourcePolicies.get", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -7938,6 +8098,7 @@ func (c *ProjectsServicesResourcePoliciesListCall) doRequest(alt string) (*http.
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "firebaseappcheck.projects.services.resourcePolicies.list", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -7973,9 +8134,11 @@ func (c *ProjectsServicesResourcePoliciesListCall) Do(opts ...googleapi.CallOpti
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "firebaseappcheck.projects.services.resourcePolicies.list", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -8074,6 +8237,7 @@ func (c *ProjectsServicesResourcePoliciesPatchCall) doRequest(alt string) (*http
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "firebaseappcheck.projects.services.resourcePolicies.patch", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -8109,8 +8273,10 @@ func (c *ProjectsServicesResourcePoliciesPatchCall) Do(opts ...googleapi.CallOpt
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "firebaseappcheck.projects.services.resourcePolicies.patch", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }

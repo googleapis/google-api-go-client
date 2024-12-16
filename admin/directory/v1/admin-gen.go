@@ -62,11 +62,13 @@ import (
 	"errors"
 	"fmt"
 	"io"
+	"log/slog"
 	"net/http"
 	"net/url"
 	"strconv"
 	"strings"
 
+	"github.com/googleapis/gax-go/v2/internallog"
 	googleapi "google.golang.org/api/googleapi"
 	internal "google.golang.org/api/internal"
 	gensupport "google.golang.org/api/internal/gensupport"
@@ -90,6 +92,7 @@ var _ = strings.Replace
 var _ = context.Canceled
 var _ = internaloption.WithDefaultEndpoint
 var _ = internal.Version
+var _ = internallog.New
 
 const apiId = "admin:directory_v1"
 const apiName = "admin"
@@ -233,7 +236,7 @@ func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, err
 	if err != nil {
 		return nil, err
 	}
-	s := &Service{client: client, BasePath: basePath}
+	s := &Service{client: client, BasePath: basePath, logger: internaloption.GetLogger(opts)}
 	s.Asps = NewAspsService(s)
 	s.Channels = NewChannelsService(s)
 	s.Chromeosdevices = NewChromeosdevicesService(s)
@@ -277,6 +280,7 @@ func New(client *http.Client) (*Service, error) {
 
 type Service struct {
 	client    *http.Client
+	logger    *slog.Logger
 	BasePath  string // API endpoint base URL
 	UserAgent string // optional additional User-Agent fragment
 
@@ -5452,6 +5456,7 @@ func (c *AspsDeleteCall) doRequest(alt string) (*http.Response, error) {
 		"userKey": c.userKey,
 		"codeId":  strconv.FormatInt(c.codeId, 10),
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "directory.asps.delete", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -5466,6 +5471,7 @@ func (c *AspsDeleteCall) Do(opts ...googleapi.CallOption) error {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return gensupport.WrapError(err)
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "directory.asps.delete", "response", internallog.HTTPResponse(res, nil))
 	return nil
 }
 
@@ -5540,6 +5546,7 @@ func (c *AspsGetCall) doRequest(alt string) (*http.Response, error) {
 		"userKey": c.userKey,
 		"codeId":  strconv.FormatInt(c.codeId, 10),
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "directory.asps.get", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -5574,9 +5581,11 @@ func (c *AspsGetCall) Do(opts ...googleapi.CallOption) (*Asp, error) {
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "directory.asps.get", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -5647,6 +5656,7 @@ func (c *AspsListCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"userKey": c.userKey,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "directory.asps.list", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -5681,9 +5691,11 @@ func (c *AspsListCall) Do(opts ...googleapi.CallOption) (*Asps, error) {
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "directory.asps.list", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -5740,6 +5752,7 @@ func (c *ChannelsStopCall) doRequest(alt string) (*http.Response, error) {
 		return nil, err
 	}
 	req.Header = reqHeaders
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "admin.channels.stop", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -5754,6 +5767,7 @@ func (c *ChannelsStopCall) Do(opts ...googleapi.CallOption) error {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return gensupport.WrapError(err)
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "admin.channels.stop", "response", internallog.HTTPResponse(res, nil))
 	return nil
 }
 
@@ -5837,6 +5851,7 @@ func (c *ChromeosdevicesActionCall) doRequest(alt string) (*http.Response, error
 		"customerId": c.customerId,
 		"resourceId": c.resourceId,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "directory.chromeosdevices.action", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -5851,6 +5866,7 @@ func (c *ChromeosdevicesActionCall) Do(opts ...googleapi.CallOption) error {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return gensupport.WrapError(err)
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "directory.chromeosdevices.action", "response", internallog.HTTPResponse(res, nil))
 	return nil
 }
 
@@ -5944,6 +5960,7 @@ func (c *ChromeosdevicesGetCall) doRequest(alt string) (*http.Response, error) {
 		"customerId": c.customerId,
 		"deviceId":   c.deviceId,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "directory.chromeosdevices.get", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -5978,9 +5995,11 @@ func (c *ChromeosdevicesGetCall) Do(opts ...googleapi.CallOption) (*ChromeOsDevi
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "directory.chromeosdevices.get", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -6145,6 +6164,7 @@ func (c *ChromeosdevicesListCall) doRequest(alt string) (*http.Response, error) 
 	googleapi.Expand(req.URL, map[string]string{
 		"customerId": c.customerId,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "directory.chromeosdevices.list", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -6180,9 +6200,11 @@ func (c *ChromeosdevicesListCall) Do(opts ...googleapi.CallOption) (*ChromeOsDev
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "directory.chromeosdevices.list", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -6270,6 +6292,7 @@ func (c *ChromeosdevicesMoveDevicesToOuCall) doRequest(alt string) (*http.Respon
 	googleapi.Expand(req.URL, map[string]string{
 		"customerId": c.customerId,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "directory.chromeosdevices.moveDevicesToOu", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -6284,6 +6307,7 @@ func (c *ChromeosdevicesMoveDevicesToOuCall) Do(opts ...googleapi.CallOption) er
 	if err := googleapi.CheckResponse(res); err != nil {
 		return gensupport.WrapError(err)
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "directory.chromeosdevices.moveDevicesToOu", "response", internallog.HTTPResponse(res, nil))
 	return nil
 }
 
@@ -6374,6 +6398,7 @@ func (c *ChromeosdevicesPatchCall) doRequest(alt string) (*http.Response, error)
 		"customerId": c.customerId,
 		"deviceId":   c.deviceId,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "directory.chromeosdevices.patch", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -6408,9 +6433,11 @@ func (c *ChromeosdevicesPatchCall) Do(opts ...googleapi.CallOption) (*ChromeOsDe
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "directory.chromeosdevices.patch", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -6499,6 +6526,7 @@ func (c *ChromeosdevicesUpdateCall) doRequest(alt string) (*http.Response, error
 		"customerId": c.customerId,
 		"deviceId":   c.deviceId,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "directory.chromeosdevices.update", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -6533,9 +6561,11 @@ func (c *ChromeosdevicesUpdateCall) Do(opts ...googleapi.CallOption) (*ChromeOsD
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "directory.chromeosdevices.update", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -6602,6 +6632,7 @@ func (c *CustomerDevicesChromeosBatchChangeStatusCall) doRequest(alt string) (*h
 	googleapi.Expand(req.URL, map[string]string{
 		"customerId": c.customerId,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "admin.customer.devices.chromeos.batchChangeStatus", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -6637,9 +6668,11 @@ func (c *CustomerDevicesChromeosBatchChangeStatusCall) Do(opts ...googleapi.Call
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "admin.customer.devices.chromeos.batchChangeStatus", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -6707,6 +6740,7 @@ func (c *CustomerDevicesChromeosIssueCommandCall) doRequest(alt string) (*http.R
 		"customerId": c.customerId,
 		"deviceId":   c.deviceId,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "admin.customer.devices.chromeos.issueCommand", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -6742,9 +6776,11 @@ func (c *CustomerDevicesChromeosIssueCommandCall) Do(opts ...googleapi.CallOptio
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "admin.customer.devices.chromeos.issueCommand", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -6822,6 +6858,7 @@ func (c *CustomerDevicesChromeosCommandsGetCall) doRequest(alt string) (*http.Re
 		"deviceId":   c.deviceId,
 		"commandId":  strconv.FormatInt(c.commandId, 10),
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "admin.customer.devices.chromeos.commands.get", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -6857,9 +6894,11 @@ func (c *CustomerDevicesChromeosCommandsGetCall) Do(opts ...googleapi.CallOption
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "admin.customer.devices.chromeos.commands.get", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -6929,6 +6968,7 @@ func (c *CustomersGetCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"customerKey": c.customerKey,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "directory.customers.get", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -6963,9 +7003,11 @@ func (c *CustomersGetCall) Do(opts ...googleapi.CallOption) (*Customer, error) {
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "directory.customers.get", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -7029,6 +7071,7 @@ func (c *CustomersPatchCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"customerKey": c.customerKey,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "directory.customers.patch", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -7063,9 +7106,11 @@ func (c *CustomersPatchCall) Do(opts ...googleapi.CallOption) (*Customer, error)
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "directory.customers.patch", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -7129,6 +7174,7 @@ func (c *CustomersUpdateCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"customerKey": c.customerKey,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "directory.customers.update", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -7163,9 +7209,11 @@ func (c *CustomersUpdateCall) Do(opts ...googleapi.CallOption) (*Customer, error
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "directory.customers.update", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -7231,6 +7279,7 @@ func (c *CustomersChromePrintServersBatchCreatePrintServersCall) doRequest(alt s
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "admin.customers.chrome.printServers.batchCreatePrintServers", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -7266,9 +7315,11 @@ func (c *CustomersChromePrintServersBatchCreatePrintServersCall) Do(opts ...goog
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "admin.customers.chrome.printServers.batchCreatePrintServers", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -7335,6 +7386,7 @@ func (c *CustomersChromePrintServersBatchDeletePrintServersCall) doRequest(alt s
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "admin.customers.chrome.printServers.batchDeletePrintServers", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -7370,9 +7422,11 @@ func (c *CustomersChromePrintServersBatchDeletePrintServersCall) Do(opts ...goog
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "admin.customers.chrome.printServers.batchDeletePrintServers", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -7438,6 +7492,7 @@ func (c *CustomersChromePrintServersCreateCall) doRequest(alt string) (*http.Res
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "admin.customers.chrome.printServers.create", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -7472,9 +7527,11 @@ func (c *CustomersChromePrintServersCreateCall) Do(opts ...googleapi.CallOption)
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "admin.customers.chrome.printServers.create", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -7533,6 +7590,7 @@ func (c *CustomersChromePrintServersDeleteCall) doRequest(alt string) (*http.Res
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "admin.customers.chrome.printServers.delete", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -7567,9 +7625,11 @@ func (c *CustomersChromePrintServersDeleteCall) Do(opts ...googleapi.CallOption)
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "admin.customers.chrome.printServers.delete", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -7641,6 +7701,7 @@ func (c *CustomersChromePrintServersGetCall) doRequest(alt string) (*http.Respon
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "admin.customers.chrome.printServers.get", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -7675,9 +7736,11 @@ func (c *CustomersChromePrintServersGetCall) Do(opts ...googleapi.CallOption) (*
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "admin.customers.chrome.printServers.get", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -7795,6 +7858,7 @@ func (c *CustomersChromePrintServersListCall) doRequest(alt string) (*http.Respo
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "admin.customers.chrome.printServers.list", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -7830,9 +7894,11 @@ func (c *CustomersChromePrintServersListCall) Do(opts ...googleapi.CallOption) (
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "admin.customers.chrome.printServers.list", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -7926,6 +7992,7 @@ func (c *CustomersChromePrintServersPatchCall) doRequest(alt string) (*http.Resp
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "admin.customers.chrome.printServers.patch", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -7960,9 +8027,11 @@ func (c *CustomersChromePrintServersPatchCall) Do(opts ...googleapi.CallOption) 
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "admin.customers.chrome.printServers.patch", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -8026,6 +8095,7 @@ func (c *CustomersChromePrintersBatchCreatePrintersCall) doRequest(alt string) (
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "admin.customers.chrome.printers.batchCreatePrinters", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -8061,9 +8131,11 @@ func (c *CustomersChromePrintersBatchCreatePrintersCall) Do(opts ...googleapi.Ca
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "admin.customers.chrome.printers.batchCreatePrinters", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -8127,6 +8199,7 @@ func (c *CustomersChromePrintersBatchDeletePrintersCall) doRequest(alt string) (
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "admin.customers.chrome.printers.batchDeletePrinters", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -8162,9 +8235,11 @@ func (c *CustomersChromePrintersBatchDeletePrintersCall) Do(opts ...googleapi.Ca
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "admin.customers.chrome.printers.batchDeletePrinters", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -8228,6 +8303,7 @@ func (c *CustomersChromePrintersCreateCall) doRequest(alt string) (*http.Respons
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "admin.customers.chrome.printers.create", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -8262,9 +8338,11 @@ func (c *CustomersChromePrintersCreateCall) Do(opts ...googleapi.CallOption) (*P
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "admin.customers.chrome.printers.create", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -8323,6 +8401,7 @@ func (c *CustomersChromePrintersDeleteCall) doRequest(alt string) (*http.Respons
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "admin.customers.chrome.printers.delete", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -8357,9 +8436,11 @@ func (c *CustomersChromePrintersDeleteCall) Do(opts ...googleapi.CallOption) (*E
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "admin.customers.chrome.printers.delete", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -8430,6 +8511,7 @@ func (c *CustomersChromePrintersGetCall) doRequest(alt string) (*http.Response, 
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "admin.customers.chrome.printers.get", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -8464,9 +8546,11 @@ func (c *CustomersChromePrintersGetCall) Do(opts ...googleapi.CallOption) (*Prin
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "admin.customers.chrome.printers.get", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -8579,6 +8663,7 @@ func (c *CustomersChromePrintersListCall) doRequest(alt string) (*http.Response,
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "admin.customers.chrome.printers.list", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -8614,9 +8699,11 @@ func (c *CustomersChromePrintersListCall) Do(opts ...googleapi.CallOption) (*Lis
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "admin.customers.chrome.printers.list", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -8730,6 +8817,7 @@ func (c *CustomersChromePrintersListPrinterModelsCall) doRequest(alt string) (*h
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "admin.customers.chrome.printers.listPrinterModels", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -8765,9 +8853,11 @@ func (c *CustomersChromePrintersListPrinterModelsCall) Do(opts ...googleapi.Call
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "admin.customers.chrome.printers.listPrinterModels", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -8870,6 +8960,7 @@ func (c *CustomersChromePrintersPatchCall) doRequest(alt string) (*http.Response
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "admin.customers.chrome.printers.patch", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -8904,9 +8995,11 @@ func (c *CustomersChromePrintersPatchCall) Do(opts ...googleapi.CallOption) (*Pr
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "admin.customers.chrome.printers.patch", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -8968,6 +9061,7 @@ func (c *DomainAliasesDeleteCall) doRequest(alt string) (*http.Response, error) 
 		"customer":        c.customer,
 		"domainAliasName": c.domainAliasName,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "directory.domainAliases.delete", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -8982,6 +9076,7 @@ func (c *DomainAliasesDeleteCall) Do(opts ...googleapi.CallOption) error {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return gensupport.WrapError(err)
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "directory.domainAliases.delete", "response", internallog.HTTPResponse(res, nil))
 	return nil
 }
 
@@ -9061,6 +9156,7 @@ func (c *DomainAliasesGetCall) doRequest(alt string) (*http.Response, error) {
 		"customer":        c.customer,
 		"domainAliasName": c.domainAliasName,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "directory.domainAliases.get", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -9095,9 +9191,11 @@ func (c *DomainAliasesGetCall) Do(opts ...googleapi.CallOption) (*DomainAlias, e
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "directory.domainAliases.get", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -9161,6 +9259,7 @@ func (c *DomainAliasesInsertCall) doRequest(alt string) (*http.Response, error) 
 	googleapi.Expand(req.URL, map[string]string{
 		"customer": c.customer,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "directory.domainAliases.insert", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -9195,9 +9294,11 @@ func (c *DomainAliasesInsertCall) Do(opts ...googleapi.CallOption) (*DomainAlias
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "directory.domainAliases.insert", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -9280,6 +9381,7 @@ func (c *DomainAliasesListCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"customer": c.customer,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "directory.domainAliases.list", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -9314,9 +9416,11 @@ func (c *DomainAliasesListCall) Do(opts ...googleapi.CallOption) (*DomainAliases
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "directory.domainAliases.list", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -9378,6 +9482,7 @@ func (c *DomainsDeleteCall) doRequest(alt string) (*http.Response, error) {
 		"customer":   c.customer,
 		"domainName": c.domainName,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "directory.domains.delete", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -9392,6 +9497,7 @@ func (c *DomainsDeleteCall) Do(opts ...googleapi.CallOption) error {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return gensupport.WrapError(err)
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "directory.domains.delete", "response", internallog.HTTPResponse(res, nil))
 	return nil
 }
 
@@ -9471,6 +9577,7 @@ func (c *DomainsGetCall) doRequest(alt string) (*http.Response, error) {
 		"customer":   c.customer,
 		"domainName": c.domainName,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "directory.domains.get", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -9505,9 +9612,11 @@ func (c *DomainsGetCall) Do(opts ...googleapi.CallOption) (*Domains, error) {
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "directory.domains.get", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -9571,6 +9680,7 @@ func (c *DomainsInsertCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"customer": c.customer,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "directory.domains.insert", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -9605,9 +9715,11 @@ func (c *DomainsInsertCall) Do(opts ...googleapi.CallOption) (*Domains, error) {
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "directory.domains.insert", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -9683,6 +9795,7 @@ func (c *DomainsListCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"customer": c.customer,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "directory.domains.list", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -9717,9 +9830,11 @@ func (c *DomainsListCall) Do(opts ...googleapi.CallOption) (*Domains2, error) {
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "directory.domains.list", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -9778,6 +9893,7 @@ func (c *GroupsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"groupKey": c.groupKey,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "directory.groups.delete", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -9792,6 +9908,7 @@ func (c *GroupsDeleteCall) Do(opts ...googleapi.CallOption) error {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return gensupport.WrapError(err)
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "directory.groups.delete", "response", internallog.HTTPResponse(res, nil))
 	return nil
 }
 
@@ -9862,6 +9979,7 @@ func (c *GroupsGetCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"groupKey": c.groupKey,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "directory.groups.get", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -9896,9 +10014,11 @@ func (c *GroupsGetCall) Do(opts ...googleapi.CallOption) (*Group, error) {
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "directory.groups.get", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -9955,6 +10075,7 @@ func (c *GroupsInsertCall) doRequest(alt string) (*http.Response, error) {
 		return nil, err
 	}
 	req.Header = reqHeaders
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "directory.groups.insert", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -9989,9 +10110,11 @@ func (c *GroupsInsertCall) Do(opts ...googleapi.CallOption) (*Group, error) {
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "directory.groups.insert", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -10129,6 +10252,7 @@ func (c *GroupsListCall) doRequest(alt string) (*http.Response, error) {
 		return nil, err
 	}
 	req.Header = reqHeaders
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "directory.groups.list", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -10163,9 +10287,11 @@ func (c *GroupsListCall) Do(opts ...googleapi.CallOption) (*Groups, error) {
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "directory.groups.list", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -10252,6 +10378,7 @@ func (c *GroupsPatchCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"groupKey": c.groupKey,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "directory.groups.patch", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -10286,9 +10413,11 @@ func (c *GroupsPatchCall) Do(opts ...googleapi.CallOption) (*Group, error) {
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "directory.groups.patch", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -10353,6 +10482,7 @@ func (c *GroupsUpdateCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"groupKey": c.groupKey,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "directory.groups.update", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -10387,9 +10517,11 @@ func (c *GroupsUpdateCall) Do(opts ...googleapi.CallOption) (*Group, error) {
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "directory.groups.update", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -10452,6 +10584,7 @@ func (c *GroupsAliasesDeleteCall) doRequest(alt string) (*http.Response, error) 
 		"groupKey": c.groupKey,
 		"alias":    c.alias,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "directory.groups.aliases.delete", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -10466,6 +10599,7 @@ func (c *GroupsAliasesDeleteCall) Do(opts ...googleapi.CallOption) error {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return gensupport.WrapError(err)
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "directory.groups.aliases.delete", "response", internallog.HTTPResponse(res, nil))
 	return nil
 }
 
@@ -10530,6 +10664,7 @@ func (c *GroupsAliasesInsertCall) doRequest(alt string) (*http.Response, error) 
 	googleapi.Expand(req.URL, map[string]string{
 		"groupKey": c.groupKey,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "directory.groups.aliases.insert", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -10564,9 +10699,11 @@ func (c *GroupsAliasesInsertCall) Do(opts ...googleapi.CallOption) (*Alias, erro
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "directory.groups.aliases.insert", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -10637,6 +10774,7 @@ func (c *GroupsAliasesListCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"groupKey": c.groupKey,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "directory.groups.aliases.list", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -10671,9 +10809,11 @@ func (c *GroupsAliasesListCall) Do(opts ...googleapi.CallOption) (*Aliases, erro
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "directory.groups.aliases.list", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -10738,6 +10878,7 @@ func (c *MembersDeleteCall) doRequest(alt string) (*http.Response, error) {
 		"groupKey":  c.groupKey,
 		"memberKey": c.memberKey,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "directory.members.delete", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -10752,6 +10893,7 @@ func (c *MembersDeleteCall) Do(opts ...googleapi.CallOption) error {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return gensupport.WrapError(err)
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "directory.members.delete", "response", internallog.HTTPResponse(res, nil))
 	return nil
 }
 
@@ -10828,6 +10970,7 @@ func (c *MembersGetCall) doRequest(alt string) (*http.Response, error) {
 		"groupKey":  c.groupKey,
 		"memberKey": c.memberKey,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "directory.members.get", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -10862,9 +11005,11 @@ func (c *MembersGetCall) Do(opts ...googleapi.CallOption) (*Member, error) {
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "directory.members.get", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -10946,6 +11091,7 @@ func (c *MembersHasMemberCall) doRequest(alt string) (*http.Response, error) {
 		"groupKey":  c.groupKey,
 		"memberKey": c.memberKey,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "directory.members.hasMember", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -10981,9 +11127,11 @@ func (c *MembersHasMemberCall) Do(opts ...googleapi.CallOption) (*MembersHasMemb
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "directory.members.hasMember", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -11048,6 +11196,7 @@ func (c *MembersInsertCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"groupKey": c.groupKey,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "directory.members.insert", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -11082,9 +11231,11 @@ func (c *MembersInsertCall) Do(opts ...googleapi.CallOption) (*Member, error) {
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "directory.members.insert", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -11188,6 +11339,7 @@ func (c *MembersListCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"groupKey": c.groupKey,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "directory.members.list", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -11222,9 +11374,11 @@ func (c *MembersListCall) Do(opts ...googleapi.CallOption) (*Members, error) {
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "directory.members.list", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -11318,6 +11472,7 @@ func (c *MembersPatchCall) doRequest(alt string) (*http.Response, error) {
 		"groupKey":  c.groupKey,
 		"memberKey": c.memberKey,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "directory.members.patch", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -11352,9 +11507,11 @@ func (c *MembersPatchCall) Do(opts ...googleapi.CallOption) (*Member, error) {
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "directory.members.patch", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -11425,6 +11582,7 @@ func (c *MembersUpdateCall) doRequest(alt string) (*http.Response, error) {
 		"groupKey":  c.groupKey,
 		"memberKey": c.memberKey,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "directory.members.update", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -11459,9 +11617,11 @@ func (c *MembersUpdateCall) Do(opts ...googleapi.CallOption) (*Member, error) {
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "directory.members.update", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -11534,6 +11694,7 @@ func (c *MobiledevicesActionCall) doRequest(alt string) (*http.Response, error) 
 		"customerId": c.customerId,
 		"resourceId": c.resourceId,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "directory.mobiledevices.action", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -11548,6 +11709,7 @@ func (c *MobiledevicesActionCall) Do(opts ...googleapi.CallOption) error {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return gensupport.WrapError(err)
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "directory.mobiledevices.action", "response", internallog.HTTPResponse(res, nil))
 	return nil
 }
 
@@ -11613,6 +11775,7 @@ func (c *MobiledevicesDeleteCall) doRequest(alt string) (*http.Response, error) 
 		"customerId": c.customerId,
 		"resourceId": c.resourceId,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "directory.mobiledevices.delete", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -11627,6 +11790,7 @@ func (c *MobiledevicesDeleteCall) Do(opts ...googleapi.CallOption) error {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return gensupport.WrapError(err)
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "directory.mobiledevices.delete", "response", internallog.HTTPResponse(res, nil))
 	return nil
 }
 
@@ -11719,6 +11883,7 @@ func (c *MobiledevicesGetCall) doRequest(alt string) (*http.Response, error) {
 		"customerId": c.customerId,
 		"resourceId": c.resourceId,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "directory.mobiledevices.get", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -11753,9 +11918,11 @@ func (c *MobiledevicesGetCall) Do(opts ...googleapi.CallOption) (*MobileDevice, 
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "directory.mobiledevices.get", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -11903,6 +12070,7 @@ func (c *MobiledevicesListCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"customerId": c.customerId,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "directory.mobiledevices.list", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -11937,9 +12105,11 @@ func (c *MobiledevicesListCall) Do(opts ...googleapi.CallOption) (*MobileDevices
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "directory.mobiledevices.list", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -12026,6 +12196,7 @@ func (c *OrgunitsDeleteCall) doRequest(alt string) (*http.Response, error) {
 		"customerId":  c.customerId,
 		"orgUnitPath": c.orgUnitPath,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "directory.orgunits.delete", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -12040,6 +12211,7 @@ func (c *OrgunitsDeleteCall) Do(opts ...googleapi.CallOption) error {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return gensupport.WrapError(err)
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "directory.orgunits.delete", "response", internallog.HTTPResponse(res, nil))
 	return nil
 }
 
@@ -12117,6 +12289,7 @@ func (c *OrgunitsGetCall) doRequest(alt string) (*http.Response, error) {
 		"customerId":  c.customerId,
 		"orgUnitPath": c.orgUnitPath,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "directory.orgunits.get", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -12151,9 +12324,11 @@ func (c *OrgunitsGetCall) Do(opts ...googleapi.CallOption) (*OrgUnit, error) {
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "directory.orgunits.get", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -12220,6 +12395,7 @@ func (c *OrgunitsInsertCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"customerId": c.customerId,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "directory.orgunits.insert", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -12254,9 +12430,11 @@ func (c *OrgunitsInsertCall) Do(opts ...googleapi.CallOption) (*OrgUnit, error) 
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "directory.orgunits.insert", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -12352,6 +12530,7 @@ func (c *OrgunitsListCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"customerId": c.customerId,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "directory.orgunits.list", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -12386,9 +12565,11 @@ func (c *OrgunitsListCall) Do(opts ...googleapi.CallOption) (*OrgUnits, error) {
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "directory.orgunits.list", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -12461,6 +12642,7 @@ func (c *OrgunitsPatchCall) doRequest(alt string) (*http.Response, error) {
 		"customerId":  c.customerId,
 		"orgUnitPath": c.orgUnitPath,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "directory.orgunits.patch", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -12495,9 +12677,11 @@ func (c *OrgunitsPatchCall) Do(opts ...googleapi.CallOption) (*OrgUnit, error) {
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "directory.orgunits.patch", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -12569,6 +12753,7 @@ func (c *OrgunitsUpdateCall) doRequest(alt string) (*http.Response, error) {
 		"customerId":  c.customerId,
 		"orgUnitPath": c.orgUnitPath,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "directory.orgunits.update", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -12603,9 +12788,11 @@ func (c *OrgunitsUpdateCall) Do(opts ...googleapi.CallOption) (*OrgUnit, error) 
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "directory.orgunits.update", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -12681,6 +12868,7 @@ func (c *PrivilegesListCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"customer": c.customer,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "directory.privileges.list", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -12715,9 +12903,11 @@ func (c *PrivilegesListCall) Do(opts ...googleapi.CallOption) (*Privileges, erro
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "directory.privileges.list", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -12781,6 +12971,7 @@ func (c *ResourcesBuildingsDeleteCall) doRequest(alt string) (*http.Response, er
 		"customer":   c.customer,
 		"buildingId": c.buildingId,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "directory.resources.buildings.delete", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -12795,6 +12986,7 @@ func (c *ResourcesBuildingsDeleteCall) Do(opts ...googleapi.CallOption) error {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return gensupport.WrapError(err)
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "directory.resources.buildings.delete", "response", internallog.HTTPResponse(res, nil))
 	return nil
 }
 
@@ -12870,6 +13062,7 @@ func (c *ResourcesBuildingsGetCall) doRequest(alt string) (*http.Response, error
 		"customer":   c.customer,
 		"buildingId": c.buildingId,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "directory.resources.buildings.get", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -12904,9 +13097,11 @@ func (c *ResourcesBuildingsGetCall) Do(opts ...googleapi.CallOption) (*Building,
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "directory.resources.buildings.get", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -12994,6 +13189,7 @@ func (c *ResourcesBuildingsInsertCall) doRequest(alt string) (*http.Response, er
 	googleapi.Expand(req.URL, map[string]string{
 		"customer": c.customer,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "directory.resources.buildings.insert", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -13028,9 +13224,11 @@ func (c *ResourcesBuildingsInsertCall) Do(opts ...googleapi.CallOption) (*Buildi
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "directory.resources.buildings.insert", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -13116,6 +13314,7 @@ func (c *ResourcesBuildingsListCall) doRequest(alt string) (*http.Response, erro
 	googleapi.Expand(req.URL, map[string]string{
 		"customer": c.customer,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "directory.resources.buildings.list", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -13150,9 +13349,11 @@ func (c *ResourcesBuildingsListCall) Do(opts ...googleapi.CallOption) (*Building
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "directory.resources.buildings.list", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -13265,6 +13466,7 @@ func (c *ResourcesBuildingsPatchCall) doRequest(alt string) (*http.Response, err
 		"customer":   c.customer,
 		"buildingId": c.buildingId,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "directory.resources.buildings.patch", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -13299,9 +13501,11 @@ func (c *ResourcesBuildingsPatchCall) Do(opts ...googleapi.CallOption) (*Buildin
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "directory.resources.buildings.patch", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -13393,6 +13597,7 @@ func (c *ResourcesBuildingsUpdateCall) doRequest(alt string) (*http.Response, er
 		"customer":   c.customer,
 		"buildingId": c.buildingId,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "directory.resources.buildings.update", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -13427,9 +13632,11 @@ func (c *ResourcesBuildingsUpdateCall) Do(opts ...googleapi.CallOption) (*Buildi
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "directory.resources.buildings.update", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -13493,6 +13700,7 @@ func (c *ResourcesCalendarsDeleteCall) doRequest(alt string) (*http.Response, er
 		"customer":           c.customer,
 		"calendarResourceId": c.calendarResourceId,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "directory.resources.calendars.delete", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -13507,6 +13715,7 @@ func (c *ResourcesCalendarsDeleteCall) Do(opts ...googleapi.CallOption) error {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return gensupport.WrapError(err)
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "directory.resources.calendars.delete", "response", internallog.HTTPResponse(res, nil))
 	return nil
 }
 
@@ -13582,6 +13791,7 @@ func (c *ResourcesCalendarsGetCall) doRequest(alt string) (*http.Response, error
 		"customer":           c.customer,
 		"calendarResourceId": c.calendarResourceId,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "directory.resources.calendars.get", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -13617,9 +13827,11 @@ func (c *ResourcesCalendarsGetCall) Do(opts ...googleapi.CallOption) (*CalendarR
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "directory.resources.calendars.get", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -13685,6 +13897,7 @@ func (c *ResourcesCalendarsInsertCall) doRequest(alt string) (*http.Response, er
 	googleapi.Expand(req.URL, map[string]string{
 		"customer": c.customer,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "directory.resources.calendars.insert", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -13720,9 +13933,11 @@ func (c *ResourcesCalendarsInsertCall) Do(opts ...googleapi.CallOption) (*Calend
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "directory.resources.calendars.insert", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -13835,6 +14050,7 @@ func (c *ResourcesCalendarsListCall) doRequest(alt string) (*http.Response, erro
 	googleapi.Expand(req.URL, map[string]string{
 		"customer": c.customer,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "directory.resources.calendars.list", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -13870,9 +14086,11 @@ func (c *ResourcesCalendarsListCall) Do(opts ...googleapi.CallOption) (*Calendar
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "directory.resources.calendars.list", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -13963,6 +14181,7 @@ func (c *ResourcesCalendarsPatchCall) doRequest(alt string) (*http.Response, err
 		"customer":           c.customer,
 		"calendarResourceId": c.calendarResourceId,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "directory.resources.calendars.patch", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -13998,9 +14217,11 @@ func (c *ResourcesCalendarsPatchCall) Do(opts ...googleapi.CallOption) (*Calenda
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "directory.resources.calendars.patch", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -14072,6 +14293,7 @@ func (c *ResourcesCalendarsUpdateCall) doRequest(alt string) (*http.Response, er
 		"customer":           c.customer,
 		"calendarResourceId": c.calendarResourceId,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "directory.resources.calendars.update", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -14107,9 +14329,11 @@ func (c *ResourcesCalendarsUpdateCall) Do(opts ...googleapi.CallOption) (*Calend
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "directory.resources.calendars.update", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -14173,6 +14397,7 @@ func (c *ResourcesFeaturesDeleteCall) doRequest(alt string) (*http.Response, err
 		"customer":   c.customer,
 		"featureKey": c.featureKey,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "directory.resources.features.delete", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -14187,6 +14412,7 @@ func (c *ResourcesFeaturesDeleteCall) Do(opts ...googleapi.CallOption) error {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return gensupport.WrapError(err)
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "directory.resources.features.delete", "response", internallog.HTTPResponse(res, nil))
 	return nil
 }
 
@@ -14262,6 +14488,7 @@ func (c *ResourcesFeaturesGetCall) doRequest(alt string) (*http.Response, error)
 		"customer":   c.customer,
 		"featureKey": c.featureKey,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "directory.resources.features.get", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -14296,9 +14523,11 @@ func (c *ResourcesFeaturesGetCall) Do(opts ...googleapi.CallOption) (*Feature, e
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "directory.resources.features.get", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -14364,6 +14593,7 @@ func (c *ResourcesFeaturesInsertCall) doRequest(alt string) (*http.Response, err
 	googleapi.Expand(req.URL, map[string]string{
 		"customer": c.customer,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "directory.resources.features.insert", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -14398,9 +14628,11 @@ func (c *ResourcesFeaturesInsertCall) Do(opts ...googleapi.CallOption) (*Feature
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "directory.resources.features.insert", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -14486,6 +14718,7 @@ func (c *ResourcesFeaturesListCall) doRequest(alt string) (*http.Response, error
 	googleapi.Expand(req.URL, map[string]string{
 		"customer": c.customer,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "directory.resources.features.list", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -14520,9 +14753,11 @@ func (c *ResourcesFeaturesListCall) Do(opts ...googleapi.CallOption) (*Features,
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "directory.resources.features.list", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -14613,6 +14848,7 @@ func (c *ResourcesFeaturesPatchCall) doRequest(alt string) (*http.Response, erro
 		"customer":   c.customer,
 		"featureKey": c.featureKey,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "directory.resources.features.patch", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -14647,9 +14883,11 @@ func (c *ResourcesFeaturesPatchCall) Do(opts ...googleapi.CallOption) (*Feature,
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "directory.resources.features.patch", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -14719,6 +14957,7 @@ func (c *ResourcesFeaturesRenameCall) doRequest(alt string) (*http.Response, err
 		"customer": c.customer,
 		"oldName":  c.oldName,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "directory.resources.features.rename", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -14733,6 +14972,7 @@ func (c *ResourcesFeaturesRenameCall) Do(opts ...googleapi.CallOption) error {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return gensupport.WrapError(err)
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "directory.resources.features.rename", "response", internallog.HTTPResponse(res, nil))
 	return nil
 }
 
@@ -14802,6 +15042,7 @@ func (c *ResourcesFeaturesUpdateCall) doRequest(alt string) (*http.Response, err
 		"customer":   c.customer,
 		"featureKey": c.featureKey,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "directory.resources.features.update", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -14836,9 +15077,11 @@ func (c *ResourcesFeaturesUpdateCall) Do(opts ...googleapi.CallOption) (*Feature
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "directory.resources.features.update", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -14900,6 +15143,7 @@ func (c *RoleAssignmentsDeleteCall) doRequest(alt string) (*http.Response, error
 		"customer":         c.customer,
 		"roleAssignmentId": c.roleAssignmentId,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "directory.roleAssignments.delete", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -14914,6 +15158,7 @@ func (c *RoleAssignmentsDeleteCall) Do(opts ...googleapi.CallOption) error {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return gensupport.WrapError(err)
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "directory.roleAssignments.delete", "response", internallog.HTTPResponse(res, nil))
 	return nil
 }
 
@@ -14993,6 +15238,7 @@ func (c *RoleAssignmentsGetCall) doRequest(alt string) (*http.Response, error) {
 		"customer":         c.customer,
 		"roleAssignmentId": c.roleAssignmentId,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "directory.roleAssignments.get", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -15027,9 +15273,11 @@ func (c *RoleAssignmentsGetCall) Do(opts ...googleapi.CallOption) (*RoleAssignme
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "directory.roleAssignments.get", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -15093,6 +15341,7 @@ func (c *RoleAssignmentsInsertCall) doRequest(alt string) (*http.Response, error
 	googleapi.Expand(req.URL, map[string]string{
 		"customer": c.customer,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "directory.roleAssignments.insert", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -15127,9 +15376,11 @@ func (c *RoleAssignmentsInsertCall) Do(opts ...googleapi.CallOption) (*RoleAssig
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "directory.roleAssignments.insert", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -15245,6 +15496,7 @@ func (c *RoleAssignmentsListCall) doRequest(alt string) (*http.Response, error) 
 	googleapi.Expand(req.URL, map[string]string{
 		"customer": c.customer,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "directory.roleAssignments.list", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -15280,9 +15532,11 @@ func (c *RoleAssignmentsListCall) Do(opts ...googleapi.CallOption) (*RoleAssignm
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "directory.roleAssignments.list", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -15365,6 +15619,7 @@ func (c *RolesDeleteCall) doRequest(alt string) (*http.Response, error) {
 		"customer": c.customer,
 		"roleId":   c.roleId,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "directory.roles.delete", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -15379,6 +15634,7 @@ func (c *RolesDeleteCall) Do(opts ...googleapi.CallOption) error {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return gensupport.WrapError(err)
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "directory.roles.delete", "response", internallog.HTTPResponse(res, nil))
 	return nil
 }
 
@@ -15458,6 +15714,7 @@ func (c *RolesGetCall) doRequest(alt string) (*http.Response, error) {
 		"customer": c.customer,
 		"roleId":   c.roleId,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "directory.roles.get", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -15492,9 +15749,11 @@ func (c *RolesGetCall) Do(opts ...googleapi.CallOption) (*Role, error) {
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "directory.roles.get", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -15558,6 +15817,7 @@ func (c *RolesInsertCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"customer": c.customer,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "directory.roles.insert", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -15592,9 +15852,11 @@ func (c *RolesInsertCall) Do(opts ...googleapi.CallOption) (*Role, error) {
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "directory.roles.insert", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -15684,6 +15946,7 @@ func (c *RolesListCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"customer": c.customer,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "directory.roles.list", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -15718,9 +15981,11 @@ func (c *RolesListCall) Do(opts ...googleapi.CallOption) (*Roles, error) {
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "directory.roles.list", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -15809,6 +16074,7 @@ func (c *RolesPatchCall) doRequest(alt string) (*http.Response, error) {
 		"customer": c.customer,
 		"roleId":   c.roleId,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "directory.roles.patch", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -15843,9 +16109,11 @@ func (c *RolesPatchCall) Do(opts ...googleapi.CallOption) (*Role, error) {
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "directory.roles.patch", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -15913,6 +16181,7 @@ func (c *RolesUpdateCall) doRequest(alt string) (*http.Response, error) {
 		"customer": c.customer,
 		"roleId":   c.roleId,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "directory.roles.update", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -15947,9 +16216,11 @@ func (c *RolesUpdateCall) Do(opts ...googleapi.CallOption) (*Role, error) {
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "directory.roles.update", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -16011,6 +16282,7 @@ func (c *SchemasDeleteCall) doRequest(alt string) (*http.Response, error) {
 		"customerId": c.customerId,
 		"schemaKey":  c.schemaKey,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "directory.schemas.delete", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -16025,6 +16297,7 @@ func (c *SchemasDeleteCall) Do(opts ...googleapi.CallOption) error {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return gensupport.WrapError(err)
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "directory.schemas.delete", "response", internallog.HTTPResponse(res, nil))
 	return nil
 }
 
@@ -16104,6 +16377,7 @@ func (c *SchemasGetCall) doRequest(alt string) (*http.Response, error) {
 		"customerId": c.customerId,
 		"schemaKey":  c.schemaKey,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "directory.schemas.get", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -16138,9 +16412,11 @@ func (c *SchemasGetCall) Do(opts ...googleapi.CallOption) (*Schema, error) {
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "directory.schemas.get", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -16204,6 +16480,7 @@ func (c *SchemasInsertCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"customerId": c.customerId,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "directory.schemas.insert", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -16238,9 +16515,11 @@ func (c *SchemasInsertCall) Do(opts ...googleapi.CallOption) (*Schema, error) {
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "directory.schemas.insert", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -16316,6 +16595,7 @@ func (c *SchemasListCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"customerId": c.customerId,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "directory.schemas.list", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -16350,9 +16630,11 @@ func (c *SchemasListCall) Do(opts ...googleapi.CallOption) (*Schemas, error) {
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "directory.schemas.list", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -16420,6 +16702,7 @@ func (c *SchemasPatchCall) doRequest(alt string) (*http.Response, error) {
 		"customerId": c.customerId,
 		"schemaKey":  c.schemaKey,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "directory.schemas.patch", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -16454,9 +16737,11 @@ func (c *SchemasPatchCall) Do(opts ...googleapi.CallOption) (*Schema, error) {
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "directory.schemas.patch", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -16524,6 +16809,7 @@ func (c *SchemasUpdateCall) doRequest(alt string) (*http.Response, error) {
 		"customerId": c.customerId,
 		"schemaKey":  c.schemaKey,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "directory.schemas.update", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -16558,9 +16844,11 @@ func (c *SchemasUpdateCall) Do(opts ...googleapi.CallOption) (*Schema, error) {
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "directory.schemas.update", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -16623,6 +16911,7 @@ func (c *TokensDeleteCall) doRequest(alt string) (*http.Response, error) {
 		"userKey":  c.userKey,
 		"clientId": c.clientId,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "directory.tokens.delete", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -16637,6 +16926,7 @@ func (c *TokensDeleteCall) Do(opts ...googleapi.CallOption) error {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return gensupport.WrapError(err)
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "directory.tokens.delete", "response", internallog.HTTPResponse(res, nil))
 	return nil
 }
 
@@ -16711,6 +17001,7 @@ func (c *TokensGetCall) doRequest(alt string) (*http.Response, error) {
 		"userKey":  c.userKey,
 		"clientId": c.clientId,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "directory.tokens.get", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -16745,9 +17036,11 @@ func (c *TokensGetCall) Do(opts ...googleapi.CallOption) (*Token, error) {
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "directory.tokens.get", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -16819,6 +17112,7 @@ func (c *TokensListCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"userKey": c.userKey,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "directory.tokens.list", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -16853,9 +17147,11 @@ func (c *TokensListCall) Do(opts ...googleapi.CallOption) (*Tokens, error) {
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "directory.tokens.list", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -16914,6 +17210,7 @@ func (c *TwoStepVerificationTurnOffCall) doRequest(alt string) (*http.Response, 
 	googleapi.Expand(req.URL, map[string]string{
 		"userKey": c.userKey,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "directory.twoStepVerification.turnOff", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -16928,6 +17225,7 @@ func (c *TwoStepVerificationTurnOffCall) Do(opts ...googleapi.CallOption) error 
 	if err := googleapi.CheckResponse(res); err != nil {
 		return gensupport.WrapError(err)
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "directory.twoStepVerification.turnOff", "response", internallog.HTTPResponse(res, nil))
 	return nil
 }
 
@@ -16986,6 +17284,7 @@ func (c *UsersDeleteCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"userKey": c.userKey,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "directory.users.delete", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -17000,6 +17299,7 @@ func (c *UsersDeleteCall) Do(opts ...googleapi.CallOption) error {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return gensupport.WrapError(err)
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "directory.users.delete", "response", internallog.HTTPResponse(res, nil))
 	return nil
 }
 
@@ -17113,6 +17413,7 @@ func (c *UsersGetCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"userKey": c.userKey,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "directory.users.get", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -17147,9 +17448,11 @@ func (c *UsersGetCall) Do(opts ...googleapi.CallOption) (*User, error) {
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "directory.users.get", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -17223,6 +17526,7 @@ func (c *UsersInsertCall) doRequest(alt string) (*http.Response, error) {
 		return nil, err
 	}
 	req.Header = reqHeaders
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "directory.users.insert", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -17257,9 +17561,11 @@ func (c *UsersInsertCall) Do(opts ...googleapi.CallOption) (*User, error) {
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "directory.users.insert", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -17456,6 +17762,7 @@ func (c *UsersListCall) doRequest(alt string) (*http.Response, error) {
 		return nil, err
 	}
 	req.Header = reqHeaders
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "directory.users.list", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -17490,9 +17797,11 @@ func (c *UsersListCall) Do(opts ...googleapi.CallOption) (*Users, error) {
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "directory.users.list", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -17578,6 +17887,7 @@ func (c *UsersMakeAdminCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"userKey": c.userKey,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "directory.users.makeAdmin", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -17592,6 +17902,7 @@ func (c *UsersMakeAdminCall) Do(opts ...googleapi.CallOption) error {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return gensupport.WrapError(err)
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "directory.users.makeAdmin", "response", internallog.HTTPResponse(res, nil))
 	return nil
 }
 
@@ -17663,6 +17974,7 @@ func (c *UsersPatchCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"userKey": c.userKey,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "directory.users.patch", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -17697,9 +18009,11 @@ func (c *UsersPatchCall) Do(opts ...googleapi.CallOption) (*User, error) {
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "directory.users.patch", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -17759,6 +18073,7 @@ func (c *UsersSignOutCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"userKey": c.userKey,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "directory.users.signOut", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -17773,6 +18088,7 @@ func (c *UsersSignOutCall) Do(opts ...googleapi.CallOption) error {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return gensupport.WrapError(err)
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "directory.users.signOut", "response", internallog.HTTPResponse(res, nil))
 	return nil
 }
 
@@ -17836,6 +18152,7 @@ func (c *UsersUndeleteCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"userKey": c.userKey,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "directory.users.undelete", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -17850,6 +18167,7 @@ func (c *UsersUndeleteCall) Do(opts ...googleapi.CallOption) error {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return gensupport.WrapError(err)
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "directory.users.undelete", "response", internallog.HTTPResponse(res, nil))
 	return nil
 }
 
@@ -17921,6 +18239,7 @@ func (c *UsersUpdateCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"userKey": c.userKey,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "directory.users.update", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -17955,9 +18274,11 @@ func (c *UsersUpdateCall) Do(opts ...googleapi.CallOption) (*User, error) {
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "directory.users.update", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -18141,6 +18462,7 @@ func (c *UsersWatchCall) doRequest(alt string) (*http.Response, error) {
 		return nil, err
 	}
 	req.Header = reqHeaders
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "directory.users.watch", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -18175,9 +18497,11 @@ func (c *UsersWatchCall) Do(opts ...googleapi.CallOption) (*Channel, error) {
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "directory.users.watch", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -18240,6 +18564,7 @@ func (c *UsersAliasesDeleteCall) doRequest(alt string) (*http.Response, error) {
 		"userKey": c.userKey,
 		"alias":   c.alias,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "directory.users.aliases.delete", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -18254,6 +18579,7 @@ func (c *UsersAliasesDeleteCall) Do(opts ...googleapi.CallOption) error {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return gensupport.WrapError(err)
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "directory.users.aliases.delete", "response", internallog.HTTPResponse(res, nil))
 	return nil
 }
 
@@ -18318,6 +18644,7 @@ func (c *UsersAliasesInsertCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"userKey": c.userKey,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "directory.users.aliases.insert", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -18352,9 +18679,11 @@ func (c *UsersAliasesInsertCall) Do(opts ...googleapi.CallOption) (*Alias, error
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "directory.users.aliases.insert", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -18436,6 +18765,7 @@ func (c *UsersAliasesListCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"userKey": c.userKey,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "directory.users.aliases.list", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -18470,9 +18800,11 @@ func (c *UsersAliasesListCall) Do(opts ...googleapi.CallOption) (*Aliases, error
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "directory.users.aliases.list", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -18547,6 +18879,7 @@ func (c *UsersAliasesWatchCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"userKey": c.userKey,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "directory.users.aliases.watch", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -18581,9 +18914,11 @@ func (c *UsersAliasesWatchCall) Do(opts ...googleapi.CallOption) (*Channel, erro
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "directory.users.aliases.watch", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -18642,6 +18977,7 @@ func (c *UsersPhotosDeleteCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"userKey": c.userKey,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "directory.users.photos.delete", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -18656,6 +18992,7 @@ func (c *UsersPhotosDeleteCall) Do(opts ...googleapi.CallOption) error {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return gensupport.WrapError(err)
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "directory.users.photos.delete", "response", internallog.HTTPResponse(res, nil))
 	return nil
 }
 
@@ -18726,6 +19063,7 @@ func (c *UsersPhotosGetCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"userKey": c.userKey,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "directory.users.photos.get", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -18760,9 +19098,11 @@ func (c *UsersPhotosGetCall) Do(opts ...googleapi.CallOption) (*UserPhoto, error
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "directory.users.photos.get", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -18828,6 +19168,7 @@ func (c *UsersPhotosPatchCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"userKey": c.userKey,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "directory.users.photos.patch", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -18862,9 +19203,11 @@ func (c *UsersPhotosPatchCall) Do(opts ...googleapi.CallOption) (*UserPhoto, err
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "directory.users.photos.patch", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -18929,6 +19272,7 @@ func (c *UsersPhotosUpdateCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"userKey": c.userKey,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "directory.users.photos.update", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -18963,9 +19307,11 @@ func (c *UsersPhotosUpdateCall) Do(opts ...googleapi.CallOption) (*UserPhoto, er
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "directory.users.photos.update", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -19023,6 +19369,7 @@ func (c *VerificationCodesGenerateCall) doRequest(alt string) (*http.Response, e
 	googleapi.Expand(req.URL, map[string]string{
 		"userKey": c.userKey,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "directory.verificationCodes.generate", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -19037,6 +19384,7 @@ func (c *VerificationCodesGenerateCall) Do(opts ...googleapi.CallOption) error {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return gensupport.WrapError(err)
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "directory.verificationCodes.generate", "response", internallog.HTTPResponse(res, nil))
 	return nil
 }
 
@@ -19094,6 +19442,7 @@ func (c *VerificationCodesInvalidateCall) doRequest(alt string) (*http.Response,
 	googleapi.Expand(req.URL, map[string]string{
 		"userKey": c.userKey,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "directory.verificationCodes.invalidate", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -19108,6 +19457,7 @@ func (c *VerificationCodesInvalidateCall) Do(opts ...googleapi.CallOption) error
 	if err := googleapi.CheckResponse(res); err != nil {
 		return gensupport.WrapError(err)
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "directory.verificationCodes.invalidate", "response", internallog.HTTPResponse(res, nil))
 	return nil
 }
 
@@ -19179,6 +19529,7 @@ func (c *VerificationCodesListCall) doRequest(alt string) (*http.Response, error
 	googleapi.Expand(req.URL, map[string]string{
 		"userKey": c.userKey,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "directory.verificationCodes.list", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -19214,8 +19565,10 @@ func (c *VerificationCodesListCall) Do(opts ...googleapi.CallOption) (*Verificat
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "directory.verificationCodes.list", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }

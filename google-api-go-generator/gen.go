@@ -809,6 +809,7 @@ func (a *API) GenerateCode() ([]byte, error) {
 		"errors",
 		"fmt",
 		"io",
+		"log/slog",
 		"net/http",
 		"net/url",
 		"strconv",
@@ -820,6 +821,7 @@ func (a *API) GenerateCode() ([]byte, error) {
 	if a.Name == "storage" {
 		pn("  %q", "github.com/googleapis/gax-go/v2")
 	}
+	pn("  %q", "github.com/googleapis/gax-go/v2/internallog")
 	for _, imp := range []struct {
 		pkg   string
 		lname string
@@ -849,6 +851,7 @@ func (a *API) GenerateCode() ([]byte, error) {
 	pn("var _ = context.Canceled")
 	pn("var _ = internaloption.WithDefaultEndpoint")
 	pn("var _ = internal.Version")
+	pn("var _ = internallog.New")
 	if a.Name == "storage" {
 		pn("var _ = gax.Version")
 	}
@@ -895,7 +898,7 @@ func (a *API) GenerateCode() ([]byte, error) {
 
 	pn("client, endpoint, err := htransport.NewClient(ctx, opts...)")
 	pn("if err != nil { return nil, err }")
-	pn("s := &%s{client: client, BasePath: basePath}", service)
+	pn("s := &%s{client: client, BasePath: basePath, logger: internaloption.GetLogger(opts)}", service)
 	for _, res := range a.doc.Resources { // add top level resources.
 		pn("s.%s = New%s(s)", resourceGoField(res, nil), resourceGoType(res))
 	}
@@ -916,6 +919,7 @@ func (a *API) GenerateCode() ([]byte, error) {
 
 	pn("\ntype %s struct {", service)
 	pn(" client *http.Client")
+	pn(" logger *slog.Logger")
 	pn(" BasePath string // API endpoint base URL")
 	pn(" UserAgent string // optional additional User-Agent fragment")
 
@@ -1004,6 +1008,7 @@ func splitFileHeading(w io.Writer, pkg string) {
 	}{
 		{*gensupportPkg, "gensupport"},
 		{*googleapiPkg, "googleapi"},
+		{"github.com/googleapis/gax-go/v2/internallog", "internallog"},
 	} {
 		pn("  %s %q", imp.lname, imp.pkg)
 	}
@@ -2342,12 +2347,18 @@ func (meth *Method) generateCode() {
 		}
 		pn(`})`)
 	}
+	logBody := "nil"
+	if hasBody {
+		logBody = "body.Bytes()"
+	}
 	if meth.supportsMediaUpload() && meth.api.Name == "storage" {
+		pn(`c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", %q, "request", internallog.HTTPRequest(req, %s))`, meth.Id(), logBody)
 		pn("if c.retry != nil {")
 		pn("	return gensupport.SendRequestWithRetry(c.ctx_, c.s.client, req, c.retry)")
 		pn("}")
 		pn("return gensupport.SendRequest(c.ctx_, c.s.client, req)")
 	} else {
+		pn(`c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", %q, "request", internallog.HTTPRequest(req, %s))`, meth.Id(), logBody)
 		pn("return gensupport.SendRequest(c.ctx_, c.s.client, req)")
 	}
 	pn("}")
@@ -2426,6 +2437,7 @@ func (meth *Method) generateCode() {
 			pn("}")
 		}
 		if retTypeComma == "" {
+			pn(`c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", %q, "response", internallog.HTTPResponse(res, nil))`, meth.Id())
 			pn("return nil")
 		} else {
 			if meth.IsProtoStructResponse() {
@@ -2454,8 +2466,11 @@ func (meth *Method) generateCode() {
 				pn("if err := res.Body.Close(); err != nil { return nil, err }")
 				pn("if err := json.NewDecoder(bytes.NewReader(b.Bytes())).Decode(target); err != nil { return nil, err }")
 				pn("ret.Data = b.String()")
+				pn(`c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", %q, "response", internallog.HTTPResponse(res, b.Bytes()))`, meth.Id())
 			} else {
-				pn("if err := gensupport.DecodeResponse(target, res); err != nil { return nil, err }")
+				pn("b, err := gensupport.DecodeResponseBytes(target, res)")
+				pn("if err != nil { return nil, err }")
+				pn(`c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", %q, "response", internallog.HTTPResponse(res, b))`, meth.Id())
 			}
 			pn("return ret, nil")
 		}

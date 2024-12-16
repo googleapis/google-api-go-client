@@ -62,11 +62,13 @@ import (
 	"errors"
 	"fmt"
 	"io"
+	"log/slog"
 	"net/http"
 	"net/url"
 	"strconv"
 	"strings"
 
+	"github.com/googleapis/gax-go/v2/internallog"
 	googleapi "google.golang.org/api/googleapi"
 	internal "google.golang.org/api/internal"
 	gensupport "google.golang.org/api/internal/gensupport"
@@ -90,6 +92,7 @@ var _ = strings.Replace
 var _ = context.Canceled
 var _ = internaloption.WithDefaultEndpoint
 var _ = internal.Version
+var _ = internallog.New
 
 const apiId = "identitytoolkit:v1"
 const apiName = "identitytoolkit"
@@ -124,7 +127,7 @@ func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, err
 	if err != nil {
 		return nil, err
 	}
-	s := &Service{client: client, BasePath: basePath}
+	s := &Service{client: client, BasePath: basePath, logger: internaloption.GetLogger(opts)}
 	s.Accounts = NewAccountsService(s)
 	s.Projects = NewProjectsService(s)
 	s.V1 = NewV1Service(s)
@@ -151,6 +154,7 @@ func New(client *http.Client) (*Service, error) {
 
 type Service struct {
 	client    *http.Client
+	logger    *slog.Logger
 	BasePath  string // API endpoint base URL
 	UserAgent string // optional additional User-Agent fragment
 
@@ -3151,6 +3155,7 @@ func (c *AccountsCreateAuthUriCall) doRequest(alt string) (*http.Response, error
 		return nil, err
 	}
 	req.Header = reqHeaders
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "identitytoolkit.accounts.createAuthUri", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -3186,9 +3191,11 @@ func (c *AccountsCreateAuthUriCall) Do(opts ...googleapi.CallOption) (*GoogleClo
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "identitytoolkit.accounts.createAuthUri", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -3245,6 +3252,7 @@ func (c *AccountsDeleteCall) doRequest(alt string) (*http.Response, error) {
 		return nil, err
 	}
 	req.Header = reqHeaders
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "identitytoolkit.accounts.delete", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -3280,9 +3288,11 @@ func (c *AccountsDeleteCall) Do(opts ...googleapi.CallOption) (*GoogleCloudIdent
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "identitytoolkit.accounts.delete", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -3339,6 +3349,7 @@ func (c *AccountsIssueSamlResponseCall) doRequest(alt string) (*http.Response, e
 		return nil, err
 	}
 	req.Header = reqHeaders
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "identitytoolkit.accounts.issueSamlResponse", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -3374,9 +3385,11 @@ func (c *AccountsIssueSamlResponseCall) Do(opts ...googleapi.CallOption) (*Googl
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "identitytoolkit.accounts.issueSamlResponse", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -3436,6 +3449,7 @@ func (c *AccountsLookupCall) doRequest(alt string) (*http.Response, error) {
 		return nil, err
 	}
 	req.Header = reqHeaders
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "identitytoolkit.accounts.lookup", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -3471,9 +3485,11 @@ func (c *AccountsLookupCall) Do(opts ...googleapi.CallOption) (*GoogleCloudIdent
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "identitytoolkit.accounts.lookup", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -3533,6 +3549,7 @@ func (c *AccountsResetPasswordCall) doRequest(alt string) (*http.Response, error
 		return nil, err
 	}
 	req.Header = reqHeaders
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "identitytoolkit.accounts.resetPassword", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -3568,9 +3585,11 @@ func (c *AccountsResetPasswordCall) Do(opts ...googleapi.CallOption) (*GoogleClo
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "identitytoolkit.accounts.resetPassword", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -3629,6 +3648,7 @@ func (c *AccountsSendOobCodeCall) doRequest(alt string) (*http.Response, error) 
 		return nil, err
 	}
 	req.Header = reqHeaders
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "identitytoolkit.accounts.sendOobCode", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -3664,9 +3684,11 @@ func (c *AccountsSendOobCodeCall) Do(opts ...googleapi.CallOption) (*GoogleCloud
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "identitytoolkit.accounts.sendOobCode", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -3728,6 +3750,7 @@ func (c *AccountsSendVerificationCodeCall) doRequest(alt string) (*http.Response
 		return nil, err
 	}
 	req.Header = reqHeaders
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "identitytoolkit.accounts.sendVerificationCode", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -3763,9 +3786,11 @@ func (c *AccountsSendVerificationCodeCall) Do(opts ...googleapi.CallOption) (*Go
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "identitytoolkit.accounts.sendVerificationCode", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -3826,6 +3851,7 @@ func (c *AccountsSignInWithCustomTokenCall) doRequest(alt string) (*http.Respons
 		return nil, err
 	}
 	req.Header = reqHeaders
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "identitytoolkit.accounts.signInWithCustomToken", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -3861,9 +3887,11 @@ func (c *AccountsSignInWithCustomTokenCall) Do(opts ...googleapi.CallOption) (*G
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "identitytoolkit.accounts.signInWithCustomToken", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -3925,6 +3953,7 @@ func (c *AccountsSignInWithEmailLinkCall) doRequest(alt string) (*http.Response,
 		return nil, err
 	}
 	req.Header = reqHeaders
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "identitytoolkit.accounts.signInWithEmailLink", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -3960,9 +3989,11 @@ func (c *AccountsSignInWithEmailLinkCall) Do(opts ...googleapi.CallOption) (*Goo
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "identitytoolkit.accounts.signInWithEmailLink", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -4034,6 +4065,7 @@ func (c *AccountsSignInWithGameCenterCall) doRequest(alt string) (*http.Response
 		return nil, err
 	}
 	req.Header = reqHeaders
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "identitytoolkit.accounts.signInWithGameCenter", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -4069,9 +4101,11 @@ func (c *AccountsSignInWithGameCenterCall) Do(opts ...googleapi.CallOption) (*Go
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "identitytoolkit.accounts.signInWithGameCenter", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -4139,6 +4173,7 @@ func (c *AccountsSignInWithIdpCall) doRequest(alt string) (*http.Response, error
 		return nil, err
 	}
 	req.Header = reqHeaders
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "identitytoolkit.accounts.signInWithIdp", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -4174,9 +4209,11 @@ func (c *AccountsSignInWithIdpCall) Do(opts ...googleapi.CallOption) (*GoogleClo
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "identitytoolkit.accounts.signInWithIdp", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -4237,6 +4274,7 @@ func (c *AccountsSignInWithPasswordCall) doRequest(alt string) (*http.Response, 
 		return nil, err
 	}
 	req.Header = reqHeaders
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "identitytoolkit.accounts.signInWithPassword", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -4274,9 +4312,11 @@ func (c *AccountsSignInWithPasswordCall) Do(opts ...googleapi.CallOption) (*Goog
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "identitytoolkit.accounts.signInWithPassword", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -4340,6 +4380,7 @@ func (c *AccountsSignInWithPhoneNumberCall) doRequest(alt string) (*http.Respons
 		return nil, err
 	}
 	req.Header = reqHeaders
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "identitytoolkit.accounts.signInWithPhoneNumber", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -4375,9 +4416,11 @@ func (c *AccountsSignInWithPhoneNumberCall) Do(opts ...googleapi.CallOption) (*G
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "identitytoolkit.accounts.signInWithPhoneNumber", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -4440,6 +4483,7 @@ func (c *AccountsSignUpCall) doRequest(alt string) (*http.Response, error) {
 		return nil, err
 	}
 	req.Header = reqHeaders
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "identitytoolkit.accounts.signUp", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -4475,9 +4519,11 @@ func (c *AccountsSignUpCall) Do(opts ...googleapi.CallOption) (*GoogleCloudIdent
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "identitytoolkit.accounts.signUp", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -4536,6 +4582,7 @@ func (c *AccountsUpdateCall) doRequest(alt string) (*http.Response, error) {
 		return nil, err
 	}
 	req.Header = reqHeaders
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "identitytoolkit.accounts.update", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -4571,9 +4618,11 @@ func (c *AccountsUpdateCall) Do(opts ...googleapi.CallOption) (*GoogleCloudIdent
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "identitytoolkit.accounts.update", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -4637,6 +4686,7 @@ func (c *AccountsVerifyIosClientCall) doRequest(alt string) (*http.Response, err
 		return nil, err
 	}
 	req.Header = reqHeaders
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "identitytoolkit.accounts.verifyIosClient", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -4672,9 +4722,11 @@ func (c *AccountsVerifyIosClientCall) Do(opts ...googleapi.CallOption) (*GoogleC
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "identitytoolkit.accounts.verifyIosClient", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -4749,6 +4801,7 @@ func (c *ProjectsAccountsCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"targetProjectId": c.targetProjectId,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "identitytoolkit.projects.accounts", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -4784,9 +4837,11 @@ func (c *ProjectsAccountsCall) Do(opts ...googleapi.CallOption) (*GoogleCloudIde
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "identitytoolkit.projects.accounts", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -4852,6 +4907,7 @@ func (c *ProjectsCreateSessionCookieCall) doRequest(alt string) (*http.Response,
 	googleapi.Expand(req.URL, map[string]string{
 		"targetProjectId": c.targetProjectId,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "identitytoolkit.projects.createSessionCookie", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -4887,9 +4943,11 @@ func (c *ProjectsCreateSessionCookieCall) Do(opts ...googleapi.CallOption) (*Goo
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "identitytoolkit.projects.createSessionCookie", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -4954,6 +5012,7 @@ func (c *ProjectsQueryAccountsCall) doRequest(alt string) (*http.Response, error
 	googleapi.Expand(req.URL, map[string]string{
 		"targetProjectId": c.targetProjectId,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "identitytoolkit.projects.queryAccounts", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -4989,9 +5048,11 @@ func (c *ProjectsQueryAccountsCall) Do(opts ...googleapi.CallOption) (*GoogleClo
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "identitytoolkit.projects.queryAccounts", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -5060,6 +5121,7 @@ func (c *ProjectsAccountsBatchCreateCall) doRequest(alt string) (*http.Response,
 	googleapi.Expand(req.URL, map[string]string{
 		"targetProjectId": c.targetProjectId,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "identitytoolkit.projects.accounts.batchCreate", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -5095,9 +5157,11 @@ func (c *ProjectsAccountsBatchCreateCall) Do(opts ...googleapi.CallOption) (*Goo
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "identitytoolkit.projects.accounts.batchCreate", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -5167,6 +5231,7 @@ func (c *ProjectsAccountsBatchDeleteCall) doRequest(alt string) (*http.Response,
 	googleapi.Expand(req.URL, map[string]string{
 		"targetProjectId": c.targetProjectId,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "identitytoolkit.projects.accounts.batchDelete", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -5202,9 +5267,11 @@ func (c *ProjectsAccountsBatchDeleteCall) Do(opts ...googleapi.CallOption) (*Goo
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "identitytoolkit.projects.accounts.batchDelete", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -5311,6 +5378,7 @@ func (c *ProjectsAccountsBatchGetCall) doRequest(alt string) (*http.Response, er
 	googleapi.Expand(req.URL, map[string]string{
 		"targetProjectId": c.targetProjectId,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "identitytoolkit.projects.accounts.batchGet", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -5346,9 +5414,11 @@ func (c *ProjectsAccountsBatchGetCall) Do(opts ...googleapi.CallOption) (*Google
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "identitytoolkit.projects.accounts.batchGet", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -5435,6 +5505,7 @@ func (c *ProjectsAccountsDeleteCall) doRequest(alt string) (*http.Response, erro
 	googleapi.Expand(req.URL, map[string]string{
 		"targetProjectId": c.targetProjectId,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "identitytoolkit.projects.accounts.delete", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -5470,9 +5541,11 @@ func (c *ProjectsAccountsDeleteCall) Do(opts ...googleapi.CallOption) (*GoogleCl
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "identitytoolkit.projects.accounts.delete", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -5543,6 +5616,7 @@ func (c *ProjectsAccountsLookupCall) doRequest(alt string) (*http.Response, erro
 	googleapi.Expand(req.URL, map[string]string{
 		"targetProjectId": c.targetProjectId,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "identitytoolkit.projects.accounts.lookup", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -5578,9 +5652,11 @@ func (c *ProjectsAccountsLookupCall) Do(opts ...googleapi.CallOption) (*GoogleCl
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "identitytoolkit.projects.accounts.lookup", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -5645,6 +5721,7 @@ func (c *ProjectsAccountsQueryCall) doRequest(alt string) (*http.Response, error
 	googleapi.Expand(req.URL, map[string]string{
 		"targetProjectId": c.targetProjectId,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "identitytoolkit.projects.accounts.query", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -5680,9 +5757,11 @@ func (c *ProjectsAccountsQueryCall) Do(opts ...googleapi.CallOption) (*GoogleClo
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "identitytoolkit.projects.accounts.query", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -5751,6 +5830,7 @@ func (c *ProjectsAccountsSendOobCodeCall) doRequest(alt string) (*http.Response,
 	googleapi.Expand(req.URL, map[string]string{
 		"targetProjectId": c.targetProjectId,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "identitytoolkit.projects.accounts.sendOobCode", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -5786,9 +5866,11 @@ func (c *ProjectsAccountsSendOobCodeCall) Do(opts ...googleapi.CallOption) (*Goo
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "identitytoolkit.projects.accounts.sendOobCode", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -5858,6 +5940,7 @@ func (c *ProjectsAccountsUpdateCall) doRequest(alt string) (*http.Response, erro
 	googleapi.Expand(req.URL, map[string]string{
 		"targetProjectId": c.targetProjectId,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "identitytoolkit.projects.accounts.update", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -5893,9 +5976,11 @@ func (c *ProjectsAccountsUpdateCall) Do(opts ...googleapi.CallOption) (*GoogleCl
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "identitytoolkit.projects.accounts.update", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -5976,6 +6061,7 @@ func (c *ProjectsTenantsAccountsCall) doRequest(alt string) (*http.Response, err
 		"targetProjectId": c.targetProjectId,
 		"tenantId":        c.tenantId,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "identitytoolkit.projects.tenants.accounts", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -6011,9 +6097,11 @@ func (c *ProjectsTenantsAccountsCall) Do(opts ...googleapi.CallOption) (*GoogleC
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "identitytoolkit.projects.tenants.accounts", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -6084,6 +6172,7 @@ func (c *ProjectsTenantsCreateSessionCookieCall) doRequest(alt string) (*http.Re
 		"targetProjectId": c.targetProjectId,
 		"tenantId":        c.tenantId,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "identitytoolkit.projects.tenants.createSessionCookie", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -6119,9 +6208,11 @@ func (c *ProjectsTenantsCreateSessionCookieCall) Do(opts ...googleapi.CallOption
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "identitytoolkit.projects.tenants.createSessionCookie", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -6194,6 +6285,7 @@ func (c *ProjectsTenantsAccountsBatchCreateCall) doRequest(alt string) (*http.Re
 		"targetProjectId": c.targetProjectId,
 		"tenantId":        c.tenantId,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "identitytoolkit.projects.tenants.accounts.batchCreate", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -6229,9 +6321,11 @@ func (c *ProjectsTenantsAccountsBatchCreateCall) Do(opts ...googleapi.CallOption
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "identitytoolkit.projects.tenants.accounts.batchCreate", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -6307,6 +6401,7 @@ func (c *ProjectsTenantsAccountsBatchDeleteCall) doRequest(alt string) (*http.Re
 		"targetProjectId": c.targetProjectId,
 		"tenantId":        c.tenantId,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "identitytoolkit.projects.tenants.accounts.batchDelete", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -6342,9 +6437,11 @@ func (c *ProjectsTenantsAccountsBatchDeleteCall) Do(opts ...googleapi.CallOption
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "identitytoolkit.projects.tenants.accounts.batchDelete", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -6448,6 +6545,7 @@ func (c *ProjectsTenantsAccountsBatchGetCall) doRequest(alt string) (*http.Respo
 		"targetProjectId": c.targetProjectId,
 		"tenantId":        c.tenantId,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "identitytoolkit.projects.tenants.accounts.batchGet", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -6483,9 +6581,11 @@ func (c *ProjectsTenantsAccountsBatchGetCall) Do(opts ...googleapi.CallOption) (
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "identitytoolkit.projects.tenants.accounts.batchGet", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -6579,6 +6679,7 @@ func (c *ProjectsTenantsAccountsDeleteCall) doRequest(alt string) (*http.Respons
 		"targetProjectId": c.targetProjectId,
 		"tenantId":        c.tenantId,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "identitytoolkit.projects.tenants.accounts.delete", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -6614,9 +6715,11 @@ func (c *ProjectsTenantsAccountsDeleteCall) Do(opts ...googleapi.CallOption) (*G
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "identitytoolkit.projects.tenants.accounts.delete", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -6692,6 +6795,7 @@ func (c *ProjectsTenantsAccountsLookupCall) doRequest(alt string) (*http.Respons
 		"targetProjectId": c.targetProjectId,
 		"tenantId":        c.tenantId,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "identitytoolkit.projects.tenants.accounts.lookup", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -6727,9 +6831,11 @@ func (c *ProjectsTenantsAccountsLookupCall) Do(opts ...googleapi.CallOption) (*G
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "identitytoolkit.projects.tenants.accounts.lookup", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -6798,6 +6904,7 @@ func (c *ProjectsTenantsAccountsQueryCall) doRequest(alt string) (*http.Response
 		"targetProjectId": c.targetProjectId,
 		"tenantId":        c.tenantId,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "identitytoolkit.projects.tenants.accounts.query", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -6833,9 +6940,11 @@ func (c *ProjectsTenantsAccountsQueryCall) Do(opts ...googleapi.CallOption) (*Go
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "identitytoolkit.projects.tenants.accounts.query", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -6909,6 +7018,7 @@ func (c *ProjectsTenantsAccountsSendOobCodeCall) doRequest(alt string) (*http.Re
 		"targetProjectId": c.targetProjectId,
 		"tenantId":        c.tenantId,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "identitytoolkit.projects.tenants.accounts.sendOobCode", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -6944,9 +7054,11 @@ func (c *ProjectsTenantsAccountsSendOobCodeCall) Do(opts ...googleapi.CallOption
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "identitytoolkit.projects.tenants.accounts.sendOobCode", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -7022,6 +7134,7 @@ func (c *ProjectsTenantsAccountsUpdateCall) doRequest(alt string) (*http.Respons
 		"targetProjectId": c.targetProjectId,
 		"tenantId":        c.tenantId,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "identitytoolkit.projects.tenants.accounts.update", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -7057,9 +7170,11 @@ func (c *ProjectsTenantsAccountsUpdateCall) Do(opts ...googleapi.CallOption) (*G
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "identitytoolkit.projects.tenants.accounts.update", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -7191,6 +7306,7 @@ func (c *V1GetProjectsCall) doRequest(alt string) (*http.Response, error) {
 		return nil, err
 	}
 	req.Header = reqHeaders
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "identitytoolkit.getProjects", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -7226,9 +7342,11 @@ func (c *V1GetProjectsCall) Do(opts ...googleapi.CallOption) (*GoogleCloudIdenti
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "identitytoolkit.getProjects", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -7293,6 +7411,7 @@ func (c *V1GetPublicKeysCall) doRequest(alt string) (*http.Response, error) {
 		return nil, err
 	}
 	req.Header = reqHeaders
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "identitytoolkit.getPublicKeys", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -7307,6 +7426,7 @@ func (c *V1GetPublicKeysCall) Do(opts ...googleapi.CallOption) error {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return gensupport.WrapError(err)
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "identitytoolkit.getPublicKeys", "response", internallog.HTTPResponse(res, nil))
 	return nil
 }
 
@@ -7370,6 +7490,7 @@ func (c *V1GetRecaptchaParamsCall) doRequest(alt string) (*http.Response, error)
 		return nil, err
 	}
 	req.Header = reqHeaders
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "identitytoolkit.getRecaptchaParams", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -7405,9 +7526,11 @@ func (c *V1GetRecaptchaParamsCall) Do(opts ...googleapi.CallOption) (*GoogleClou
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "identitytoolkit.getRecaptchaParams", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -7472,6 +7595,7 @@ func (c *V1GetSessionCookiePublicKeysCall) doRequest(alt string) (*http.Response
 		return nil, err
 	}
 	req.Header = reqHeaders
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "identitytoolkit.getSessionCookiePublicKeys", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -7507,8 +7631,10 @@ func (c *V1GetSessionCookiePublicKeysCall) Do(opts ...googleapi.CallOption) (*Go
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "identitytoolkit.getSessionCookiePublicKeys", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }

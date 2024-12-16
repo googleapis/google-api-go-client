@@ -3150,6 +3150,8 @@ type MachineArchitectureDetails struct {
 	// CpuArchitecture: CPU architecture, e.g., "x64-based PC", "x86_64", "i686"
 	// etc.
 	CpuArchitecture string `json:"cpuArchitecture,omitempty"`
+	// CpuManufacturer: Optional. CPU manufacturer, e.g., "Intel", "AMD".
+	CpuManufacturer string `json:"cpuManufacturer,omitempty"`
 	// CpuName: CPU name, e.g., "Intel Xeon E5-2690", "AMD EPYC 7571" etc.
 	CpuName string `json:"cpuName,omitempty"`
 	// CpuSocketCount: Number of processor sockets allocated to the machine.
@@ -10358,7 +10360,7 @@ type ProjectsLocationsOperationsCancelCall struct {
 // other methods to check whether the cancellation succeeded or whether the
 // operation completed despite cancellation. On successful cancellation, the
 // operation is not deleted; instead, it becomes an operation with an
-// Operation.error value with a google.rpc.Status.code of 1, corresponding to
+// Operation.error value with a google.rpc.Status.code of `1`, corresponding to
 // `Code.CANCELLED`.
 //
 // - name: The name of the operation resource to be cancelled.

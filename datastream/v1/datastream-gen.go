@@ -460,7 +460,7 @@ type ConnectionProfile struct {
 	Labels map[string]string `json:"labels,omitempty"`
 	// MysqlProfile: MySQL ConnectionProfile configuration.
 	MysqlProfile *MysqlProfile `json:"mysqlProfile,omitempty"`
-	// Name: Output only. The resource's name.
+	// Name: Output only. Identifier. The resource's name.
 	Name string `json:"name,omitempty"`
 	// OracleProfile: Oracle ConnectionProfile configuration.
 	OracleProfile *OracleProfile `json:"oracleProfile,omitempty"`
@@ -1464,8 +1464,8 @@ type OperationMetadata struct {
 	EndTime string `json:"endTime,omitempty"`
 	// RequestedCancellation: Output only. Identifies whether the user has
 	// requested cancellation of the operation. Operations that have successfully
-	// been cancelled have Operation.error value with a google.rpc.Status.code of
-	// 1, corresponding to `Code.CANCELLED`.
+	// been cancelled have google.longrunning.Operation.error value with a
+	// google.rpc.Status.code of 1, corresponding to `Code.CANCELLED`.
 	RequestedCancellation bool `json:"requestedCancellation,omitempty"`
 	// StatusMessage: Output only. Human-readable status of the operation, if any.
 	StatusMessage string `json:"statusMessage,omitempty"`
@@ -1496,7 +1496,7 @@ func (s OperationMetadata) MarshalJSON() ([]byte, error) {
 }
 
 // OracleAsmConfig: Configuration for Oracle Automatic Storage Management (ASM)
-// connection.
+// connection. .
 type OracleAsmConfig struct {
 	// AsmService: Required. ASM service name for the Oracle ASM connection.
 	AsmService string `json:"asmService,omitempty"`
@@ -1506,7 +1506,7 @@ type OracleAsmConfig struct {
 	Hostname string `json:"hostname,omitempty"`
 	// OracleSslConfig: Optional. SSL configuration for the Oracle connection.
 	OracleSslConfig *OracleSslConfig `json:"oracleSslConfig,omitempty"`
-	// Password: Required. Password for the Oracle ASM connection.
+	// Password: Optional. Password for the Oracle ASM connection.
 	Password string `json:"password,omitempty"`
 	// Port: Required. Port for the Oracle ASM connection.
 	Port int64 `json:"port,omitempty"`
@@ -2005,7 +2005,7 @@ type PrivateConnection struct {
 	Error *Error `json:"error,omitempty"`
 	// Labels: Labels.
 	Labels map[string]string `json:"labels,omitempty"`
-	// Name: Output only. The resource's name.
+	// Name: Output only. Identifier. The resource's name.
 	Name string `json:"name,omitempty"`
 	// State: Output only. The state of the Private Connection.
 	//
@@ -2081,7 +2081,7 @@ type Route struct {
 	DisplayName string `json:"displayName,omitempty"`
 	// Labels: Labels.
 	Labels map[string]string `json:"labels,omitempty"`
-	// Name: Output only. The resource's name.
+	// Name: Output only. Identifier. The resource's name.
 	Name string `json:"name,omitempty"`
 	// UpdateTime: Output only. The update time of the resource.
 	UpdateTime string `json:"updateTime,omitempty"`
@@ -2246,6 +2246,8 @@ type SpecificStartPosition struct {
 	MysqlLogPosition *MysqlLogPosition `json:"mysqlLogPosition,omitempty"`
 	// OracleScnPosition: Oracle SCN to start replicating from.
 	OracleScnPosition *OracleScnPosition `json:"oracleScnPosition,omitempty"`
+	// SqlServerLsnPosition: SqlServer LSN to start replicating from.
+	SqlServerLsnPosition *SqlServerLsnPosition `json:"sqlServerLsnPosition,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "MysqlLogPosition") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -2301,6 +2303,28 @@ type SqlServerColumn struct {
 
 func (s SqlServerColumn) MarshalJSON() ([]byte, error) {
 	type NoMethod SqlServerColumn
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// SqlServerLsnPosition: SQL Server LSN position
+type SqlServerLsnPosition struct {
+	// Lsn: Required. Log sequence number (LSN) from where Logs will be read
+	Lsn string `json:"lsn,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Lsn") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Lsn") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s SqlServerLsnPosition) MarshalJSON() ([]byte, error) {
+	type NoMethod SqlServerLsnPosition
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -2596,7 +2620,7 @@ type Stream struct {
 	// LastRecoveryTime: Output only. If the stream was recovered, the time of the
 	// last recovery. Note: This field is currently experimental.
 	LastRecoveryTime string `json:"lastRecoveryTime,omitempty"`
-	// Name: Output only. The stream's name.
+	// Name: Output only. Identifier. The stream's name.
 	Name string `json:"name,omitempty"`
 	// SourceConfig: Required. Source connection profile configuration.
 	SourceConfig *SourceConfig `json:"sourceConfig,omitempty"`
@@ -2655,7 +2679,7 @@ type StreamObject struct {
 	DisplayName string `json:"displayName,omitempty"`
 	// Errors: Output only. Active errors on the object.
 	Errors []*Error `json:"errors,omitempty"`
-	// Name: Output only. The object resource's name.
+	// Name: Output only. Identifier. The object resource's name.
 	Name string `json:"name,omitempty"`
 	// SourceObject: The object identifier in the data source.
 	SourceObject *SourceObjectIdentifier `json:"sourceObject,omitempty"`
@@ -3856,7 +3880,7 @@ type ProjectsLocationsConnectionProfilesPatchCall struct {
 
 // Patch: Use this method to update the parameters of a connection profile.
 //
-// - name: Output only. The resource's name.
+// - name: Output only. Identifier. The resource's name.
 func (r *ProjectsLocationsConnectionProfilesService) Patch(name string, connectionprofile *ConnectionProfile) *ProjectsLocationsConnectionProfilesPatchCall {
 	c := &ProjectsLocationsConnectionProfilesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4005,7 +4029,7 @@ type ProjectsLocationsOperationsCancelCall struct {
 // other methods to check whether the cancellation succeeded or whether the
 // operation completed despite cancellation. On successful cancellation, the
 // operation is not deleted; instead, it becomes an operation with an
-// Operation.error value with a google.rpc.Status.code of 1, corresponding to
+// Operation.error value with a google.rpc.Status.code of `1`, corresponding to
 // `Code.CANCELLED`.
 //
 // - name: The name of the operation resource to be cancelled.
@@ -6037,7 +6061,7 @@ type ProjectsLocationsStreamsPatchCall struct {
 
 // Patch: Use this method to update the configuration of a stream.
 //
-// - name: Output only. The stream's name.
+// - name: Output only. Identifier. The stream's name.
 func (r *ProjectsLocationsStreamsService) Patch(name string, stream *Stream) *ProjectsLocationsStreamsPatchCall {
 	c := &ProjectsLocationsStreamsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name

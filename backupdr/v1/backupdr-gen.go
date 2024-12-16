@@ -176,6 +176,7 @@ func NewProjectsLocationsService(s *Service) *ProjectsLocationsService {
 	rs.BackupVaults = NewProjectsLocationsBackupVaultsService(s)
 	rs.ManagementServers = NewProjectsLocationsManagementServersService(s)
 	rs.Operations = NewProjectsLocationsOperationsService(s)
+	rs.ServiceConfig = NewProjectsLocationsServiceConfigService(s)
 	return rs
 }
 
@@ -191,6 +192,8 @@ type ProjectsLocationsService struct {
 	ManagementServers *ProjectsLocationsManagementServersService
 
 	Operations *ProjectsLocationsOperationsService
+
+	ServiceConfig *ProjectsLocationsServiceConfigService
 }
 
 func NewProjectsLocationsBackupPlanAssociationsService(s *Service) *ProjectsLocationsBackupPlanAssociationsService {
@@ -259,6 +262,15 @@ func NewProjectsLocationsOperationsService(s *Service) *ProjectsLocationsOperati
 }
 
 type ProjectsLocationsOperationsService struct {
+	s *Service
+}
+
+func NewProjectsLocationsServiceConfigService(s *Service) *ProjectsLocationsServiceConfigService {
+	rs := &ProjectsLocationsServiceConfigService{s: s}
+	return rs
+}
+
+type ProjectsLocationsServiceConfigService struct {
 	s *Service
 }
 
@@ -700,6 +712,10 @@ type Backup struct {
 	// ResourceSizeBytes: Output only. source resource size in bytes at the time of
 	// the backup.
 	ResourceSizeBytes int64 `json:"resourceSizeBytes,omitempty,string"`
+	// SatisfiesPzi: Optional. Output only. Reserved for future use.
+	SatisfiesPzi bool `json:"satisfiesPzi,omitempty"`
+	// SatisfiesPzs: Optional. Output only. Reserved for future use.
+	SatisfiesPzs bool `json:"satisfiesPzs,omitempty"`
 	// ServiceLocks: Output only. The list of BackupLocks taken by the service to
 	// prevent the deletion of the backup.
 	ServiceLocks []*BackupLock `json:"serviceLocks,omitempty"`
@@ -951,7 +967,7 @@ type BackupPlan struct {
 	Name string `json:"name,omitempty"`
 	// ResourceType: Required. The resource type to which the `BackupPlan` will be
 	// applied. Examples include, "compute.googleapis.com/Instance",
-	// "sqladmin.googleapis.com/Instance" and "storage.googleapis.com/Bucket".
+	// "sqladmin.googleapis.com/Instance", or "alloydb.googleapis.com/Cluster".
 	ResourceType string `json:"resourceType,omitempty"`
 	// State: Output only. The `State` for the `BackupPlan`.
 	//
@@ -994,8 +1010,8 @@ type BackupPlanAssociation struct {
 	BackupPlan string `json:"backupPlan,omitempty"`
 	// CreateTime: Output only. The time when the instance was created.
 	CreateTime string `json:"createTime,omitempty"`
-	// DataSource: Output only. Output Only. Resource name of data source which
-	// will be used as storage location for backups taken. Format :
+	// DataSource: Output only. Resource name of data source which will be used as
+	// storage location for backups taken. Format :
 	// projects/{project}/locations/{location}/backupVaults/{backupvault}/dataSource
 	// s/{datasource}
 	DataSource string `json:"dataSource,omitempty"`
@@ -1007,7 +1023,7 @@ type BackupPlanAssociation struct {
 	// Resource: Required. Immutable. Resource name of workload on which backupplan
 	// is applied
 	Resource string `json:"resource,omitempty"`
-	// ResourceType: Optional. Required. Resource type of workload on which
+	// ResourceType: Required. Immutable. Resource type of workload on which
 	// backupplan is applied
 	ResourceType string `json:"resourceType,omitempty"`
 	// RulesConfigInfo: Output only. The config info related to backup rules.
@@ -1053,7 +1069,7 @@ type BackupRule struct {
 	// 1 and maximum value is 90 for hourly backups. Minimum value is 1 and maximum
 	// value is 90 for daily backups. Minimum value is 7 and maximum value is 186
 	// for weekly backups. Minimum value is 30 and maximum value is 732 for monthly
-	// backups. Minimum value is 30 and maximum value is 36159 for yearly backups.
+	// backups. Minimum value is 365 and maximum value is 36159 for yearly backups.
 	BackupRetentionDays int64 `json:"backupRetentionDays,omitempty"`
 	// RuleId: Required. Immutable. The unique id of this `BackupRule`. The
 	// `rule_id` is unique per `BackupPlan`.The `rule_id` must start with a
@@ -1084,9 +1100,9 @@ func (s BackupRule) MarshalJSON() ([]byte, error) {
 // BackupVault: Message describing a BackupVault object.
 type BackupVault struct {
 	// AccessRestriction: Optional. Note: This field is added for future use case
-	// and will not be supported in the current release. Optional. Access
-	// restriction for the backup vault. Default value is WITHIN_ORGANIZATION if
-	// not provided during creation.
+	// and will not be supported in the current release. Access restriction for the
+	// backup vault. Default value is WITHIN_ORGANIZATION if not provided during
+	// creation.
 	//
 	// Possible values:
 	//   "ACCESS_RESTRICTION_UNSPECIFIED" - Access restriction not set. If user
@@ -1150,8 +1166,7 @@ type BackupVault struct {
 	// TotalStoredBytes: Output only. Total size of the storage used by all backup
 	// resources.
 	TotalStoredBytes int64 `json:"totalStoredBytes,omitempty,string"`
-	// Uid: Output only. Output only Immutable after resource creation until
-	// resource deletion.
+	// Uid: Output only. Immutable after resource creation until resource deletion.
 	Uid string `json:"uid,omitempty"`
 	// UpdateTime: Output only. The time when the instance was updated.
 	UpdateTime string `json:"updateTime,omitempty"`
@@ -2173,6 +2188,42 @@ func (s InitializeParams) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// InitializeServiceRequest: Request message for initializing the service.
+type InitializeServiceRequest struct {
+	// RequestId: Optional. An optional request ID to identify requests. Specify a
+	// unique request ID so that if you must retry your request, the server will
+	// know to ignore the request if it has already been completed. The server will
+	// guarantee that for at least 60 minutes since the first request. For example,
+	// consider a situation where you make an initial request and t he request
+	// times out. If you make the request again with the same request ID, the
+	// server can check if original operation with the same request ID was
+	// received, and if so, will ignore the second request. This prevents clients
+	// from accidentally creating duplicate commitments. The request ID must be a
+	// valid UUID with the exception that zero UUID is not supported
+	// (00000000-0000-0000-0000-000000000000).
+	RequestId string `json:"requestId,omitempty"`
+	// ResourceType: Required. The resource type to which the default service
+	// config will be applied. Examples include, "compute.googleapis.com/Instance"
+	// and "storage.googleapis.com/Bucket".
+	ResourceType string `json:"resourceType,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "RequestId") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "RequestId") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s InitializeServiceRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod InitializeServiceRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // InitiateBackupRequest: request message for InitiateBackup.
 type InitiateBackupRequest struct {
 	// BackupId: Required. Resource ID of the Backup resource.
@@ -2943,8 +2994,8 @@ type OperationMetadata struct {
 	EndTime string `json:"endTime,omitempty"`
 	// RequestedCancellation: Output only. Identifies whether the user has
 	// requested cancellation of the operation. Operations that have successfully
-	// been cancelled have Operation.error value with a google.rpc.Status.code of
-	// 1, corresponding to 'Code.CANCELLED'.
+	// been cancelled have google.longrunning.Operation.error value with a
+	// google.rpc.Status.code of 1, corresponding to 'Code.CANCELLED'.
 	RequestedCancellation bool `json:"requestedCancellation,omitempty"`
 	// StatusMessage: Output only. Human-readable status of the operation, if any.
 	StatusMessage string `json:"statusMessage,omitempty"`
@@ -3160,8 +3211,8 @@ func (s RestoreBackupResponse) MarshalJSON() ([]byte, error) {
 
 // RuleConfigInfo: Message for rules config info.
 type RuleConfigInfo struct {
-	// LastBackupError: Output only. Output Only. google.rpc.Status object to store
-	// the last backup error.
+	// LastBackupError: Output only. google.rpc.Status object to store the last
+	// backup error.
 	LastBackupError *Status `json:"lastBackupError,omitempty"`
 	// LastBackupState: Output only. The last backup state for rule.
 	//
@@ -3176,7 +3227,7 @@ type RuleConfigInfo struct {
 	// LastSuccessfulBackupConsistencyTime: Output only. The point in time when the
 	// last successful backup was captured from the source.
 	LastSuccessfulBackupConsistencyTime string `json:"lastSuccessfulBackupConsistencyTime,omitempty"`
-	// RuleId: Output only. Output Only. Backup Rule id fetched from backup plan.
+	// RuleId: Output only. Backup Rule id fetched from backup plan.
 	RuleId string `json:"ruleId,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "LastBackupError") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -8796,7 +8847,7 @@ type ProjectsLocationsOperationsCancelCall struct {
 // other methods to check whether the cancellation succeeded or whether the
 // operation completed despite cancellation. On successful cancellation, the
 // operation is not deleted; instead, it becomes an operation with an
-// Operation.error value with a google.rpc.Status.code of 1, corresponding to
+// Operation.error value with a google.rpc.Status.code of `1`, corresponding to
 // `Code.CANCELLED`.
 //
 // - name: The name of the operation resource to be cancelled.
@@ -9252,4 +9303,106 @@ func (c *ProjectsLocationsOperationsListCall) Pages(ctx context.Context, f func(
 		}
 		c.PageToken(x.NextPageToken)
 	}
+}
+
+type ProjectsLocationsServiceConfigInitializeCall struct {
+	s                        *Service
+	name                     string
+	initializeservicerequest *InitializeServiceRequest
+	urlParams_               gensupport.URLParams
+	ctx_                     context.Context
+	header_                  http.Header
+}
+
+// Initialize: Initializes the service related config for a project.
+//
+//   - name: The resource name of the serviceConfig used to initialize the
+//     service. Format:
+//     `projects/{project_id}/locations/{location}/serviceConfig`.
+func (r *ProjectsLocationsServiceConfigService) Initialize(name string, initializeservicerequest *InitializeServiceRequest) *ProjectsLocationsServiceConfigInitializeCall {
+	c := &ProjectsLocationsServiceConfigInitializeCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.initializeservicerequest = initializeservicerequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsServiceConfigInitializeCall) Fields(s ...googleapi.Field) *ProjectsLocationsServiceConfigInitializeCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsServiceConfigInitializeCall) Context(ctx context.Context) *ProjectsLocationsServiceConfigInitializeCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsServiceConfigInitializeCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsServiceConfigInitializeCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.initializeservicerequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}:initialize")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "backupdr.projects.locations.serviceConfig.initialize" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsServiceConfigInitializeCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
 }

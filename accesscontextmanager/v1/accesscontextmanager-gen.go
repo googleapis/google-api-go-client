@@ -1231,7 +1231,8 @@ type GcpUserAccessBinding struct {
 	// this binding's restrictions on a subset of applications. This field cannot
 	// be set if restricted_client_applications is set.
 	ScopedAccessSettings []*ScopedAccessSettings `json:"scopedAccessSettings,omitempty"`
-	// SessionSettings: Optional. GCSL policy for the group key.
+	// SessionSettings: Optional. The Google Cloud session length (GCSL) policy for
+	// the group key.
 	SessionSettings *SessionSettings `json:"sessionSettings,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
@@ -2156,28 +2157,29 @@ func (s ServicePerimeterConfig) MarshalJSON() ([]byte, error) {
 // face when their session expires, and other related settings.
 type SessionSettings struct {
 	// MaxInactivity: Optional. How long a user is allowed to take between actions
-	// before a new access token must be issued. Presently only set for Cloud Apps.
+	// before a new access token must be issued. Only set for Google Cloud apps.
 	MaxInactivity string `json:"maxInactivity,omitempty"`
 	// SessionLength: Optional. The session length. Setting this field to zero is
-	// equal to disabling. Session. Also can set infinite session by flipping the
+	// equal to disabling session. Also can set infinite session by flipping the
 	// enabled bit to false below. If use_oidc_max_age is true, for OIDC apps, the
 	// session length will be the minimum of this field and OIDC max_age param.
 	SessionLength string `json:"sessionLength,omitempty"`
-	// SessionLengthEnabled: Optional. Big red button to turn off GCSL. When false,
-	// all fields set above will be disregarded and the session length is basically
-	// infinite.
+	// SessionLengthEnabled: Optional. This field enables or disables Google Cloud
+	// session length. When false, all fields set above will be disregarded and the
+	// session length is basically infinite.
 	SessionLengthEnabled bool `json:"sessionLengthEnabled,omitempty"`
-	// SessionReauthMethod: Optional. Session method when users GCP session is up.
+	// SessionReauthMethod: Optional. Session method when user's Google Cloud
+	// session is up.
 	//
 	// Possible values:
-	//   "SESSION_REAUTH_METHOD_UNSPECIFIED" - If method undefined in API, we will
-	// use LOGIN by default.
-	//   "LOGIN" - The user will prompted to perform regular login. Users who are
-	// enrolled for two-step verification and haven't chosen to "Remember this
+	//   "SESSION_REAUTH_METHOD_UNSPECIFIED" - If method is undefined in the API,
+	// LOGIN will be used by default.
+	//   "LOGIN" - The user will be prompted to perform regular login. Users who
+	// are enrolled for two-step verification and haven't chosen "Remember this
 	// computer" will be prompted for their second factor.
-	//   "SECURITY_KEY" - The user will be prompted to autheticate using their
-	// security key. If no security key has been configured, then we will fallback
-	// to LOGIN.
+	//   "SECURITY_KEY" - The user will be prompted to authenticate using their
+	// security key. If no security key has been configured, then authentication
+	// will fallback to LOGIN.
 	//   "PASSWORD" - The user will be prompted for their password.
 	SessionReauthMethod string `json:"sessionReauthMethod,omitempty"`
 	// UseOidcMaxAge: Optional. Only useful for OIDC apps. When false, the OIDC

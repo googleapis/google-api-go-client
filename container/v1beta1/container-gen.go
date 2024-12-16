@@ -645,7 +645,8 @@ type Autopilot struct {
 	ConversionStatus *AutopilotConversionStatus `json:"conversionStatus,omitempty"`
 	// Enabled: Enable Autopilot
 	Enabled bool `json:"enabled,omitempty"`
-	// WorkloadPolicyConfig: Workload policy configuration for Autopilot.
+	// WorkloadPolicyConfig: WorkloadPolicyConfig is the configuration related to
+	// GCW workload policy
 	WorkloadPolicyConfig *WorkloadPolicyConfig `json:"workloadPolicyConfig,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "ConversionStatus") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -1638,8 +1639,8 @@ type ClusterUpdate struct {
 	// DesiredAuthenticatorGroupsConfig: AuthenticatorGroupsConfig specifies the
 	// config for the cluster security groups settings.
 	DesiredAuthenticatorGroupsConfig *AuthenticatorGroupsConfig `json:"desiredAuthenticatorGroupsConfig,omitempty"`
-	// DesiredAutopilotWorkloadPolicyConfig: The desired workload policy
-	// configuration for the autopilot cluster.
+	// DesiredAutopilotWorkloadPolicyConfig: WorkloadPolicyConfig is the
+	// configuration related to GCW workload policy
 	DesiredAutopilotWorkloadPolicyConfig *WorkloadPolicyConfig `json:"desiredAutopilotWorkloadPolicyConfig,omitempty"`
 	// DesiredBinaryAuthorization: The desired configuration options for the Binary
 	// Authorization feature.
@@ -4715,6 +4716,9 @@ type NodeConfig struct {
 	// (https://cloud.google.com/compute/docs/machine-types). If unspecified, the
 	// default machine type is `e2-medium`.
 	MachineType string `json:"machineType,omitempty"`
+	// MaxRunDuration: The maximum duration for the nodes to exist. If unspecified,
+	// the nodes can exist indefinitely.
+	MaxRunDuration string `json:"maxRunDuration,omitempty"`
 	// Metadata: The metadata key/value pairs assigned to instances in the cluster.
 	// Keys must conform to the regexp `[a-zA-Z0-9-_]+` and be less than 128 bytes
 	// in length. These are reflected as part of a URL in the metadata server.
@@ -7840,6 +7844,9 @@ type UpdateNodePoolRequest struct {
 	// Initiates an upgrade operation that migrates the nodes in the node pool to
 	// the specified machine type.
 	MachineType string `json:"machineType,omitempty"`
+	// MaxRunDuration: The maximum duration for the nodes to exist. If unspecified,
+	// the nodes can exist indefinitely.
+	MaxRunDuration string `json:"maxRunDuration,omitempty"`
 	// Name: The name (project, location, cluster, node pool) of the node pool to
 	// update. Specified in the format
 	// `projects/*/locations/*/clusters/*/nodePools/*`.
@@ -8574,8 +8581,8 @@ func (s WorkloadMetadataConfig) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// WorkloadPolicyConfig: WorkloadPolicyConfig is the configuration of workload
-// policy for autopilot clusters.
+// WorkloadPolicyConfig: WorkloadPolicyConfig is the configuration related to
+// GCW workload policy
 type WorkloadPolicyConfig struct {
 	// AllowNetAdmin: If true, workloads can use NET_ADMIN capability.
 	AllowNetAdmin bool `json:"allowNetAdmin,omitempty"`

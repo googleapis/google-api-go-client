@@ -1509,35 +1509,6 @@ type Empty struct {
 	googleapi.ServerResponse `json:"-"`
 }
 
-// FeatureConfigRef: Information of the FeatureConfig applied on the
-// MembershipFeature.
-type FeatureConfigRef struct {
-	// Config: Input only. Resource name of FeatureConfig, in the format:
-	// `projects/{project}/locations/global/featureConfigs/{feature_config}`.
-	Config string `json:"config,omitempty"`
-	// ConfigUpdateTime: Output only. When the FeatureConfig was last applied and
-	// copied to FeatureSpec.
-	ConfigUpdateTime string `json:"configUpdateTime,omitempty"`
-	// Uuid: Output only. An id that uniquely identify a FeatureConfig object.
-	Uuid string `json:"uuid,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "Config") to unconditionally
-	// include in API requests. By default, fields with empty or default values are
-	// omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
-	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Config") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
-	NullFields []string `json:"-"`
-}
-
-func (s FeatureConfigRef) MarshalJSON() ([]byte, error) {
-	type NoMethod FeatureConfigRef
-	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
-}
-
 // FeatureSpec: FeatureSpec contains user input per-feature spec information.
 type FeatureSpec struct {
 	// Cloudbuild: Cloudbuild-specific FeatureSpec.
@@ -2325,9 +2296,6 @@ type MembershipFeature struct {
 	CreateTime string `json:"createTime,omitempty"`
 	// DeleteTime: Output only. When the MembershipFeature resource was deleted.
 	DeleteTime string `json:"deleteTime,omitempty"`
-	// FeatureConfigRef: Reference information for a FeatureConfig applied on the
-	// MembershipFeature.
-	FeatureConfigRef *FeatureConfigRef `json:"featureConfigRef,omitempty"`
 	// Labels: GCP labels for this MembershipFeature.
 	Labels map[string]string `json:"labels,omitempty"`
 	// LifecycleState: Output only. Lifecycle information of the resource itself.
@@ -2338,7 +2306,7 @@ type MembershipFeature struct {
 	// eature}`. Note that `membershipFeatures` is shortened to `features` in the
 	// resource name. (see http://go/aip/122#collection-identifiers)
 	Name string `json:"name,omitempty"`
-	// Spec: Spec of this membershipFeature.
+	// Spec: Optional. Spec of this membershipFeature.
 	Spec *FeatureSpec `json:"spec,omitempty"`
 	// State: Output only. State of the this membershipFeature.
 	State *FeatureState `json:"state,omitempty"`
@@ -4377,7 +4345,7 @@ type ProjectsLocationsOperationsCancelCall struct {
 // other methods to check whether the cancellation succeeded or whether the
 // operation completed despite cancellation. On successful cancellation, the
 // operation is not deleted; instead, it becomes an operation with an
-// Operation.error value with a google.rpc.Status.code of 1, corresponding to
+// Operation.error value with a google.rpc.Status.code of `1`, corresponding to
 // `Code.CANCELLED`.
 //
 // - name: The name of the operation resource to be cancelled.

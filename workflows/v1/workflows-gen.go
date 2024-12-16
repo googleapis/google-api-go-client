@@ -595,6 +595,8 @@ type Workflow struct {
 	// example, this field will have error details if the execution data is
 	// unavailable due to revoked KMS key permissions.
 	StateError *StateError `json:"stateError,omitempty"`
+	// Tags: Optional. Input only. Immutable. Tags associated with this workflow.
+	Tags map[string]string `json:"tags,omitempty"`
 	// UpdateTime: Output only. The timestamp for when the workflow was last
 	// updated. This is a workflow-wide field and is not tied to a specific
 	// revision.

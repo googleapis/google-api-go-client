@@ -702,25 +702,20 @@ type Reservation struct {
 	// with a letter and must not end with a dash. Its maximum length is 64
 	// characters.
 	Name string `json:"name,omitempty"`
-	// OriginalPrimaryLocation: Optional. The original primary location of the
-	// reservation which is set only during its creation and remains unchanged
-	// afterwards. It can be used by the customer to answer questions about
-	// disaster recovery billing. The field is output only for customers and should
-	// not be specified, however, the `google.api.field_behavior` is not set to
-	// `OUTPUT_ONLY` since these fields are set in rerouted requests sent across
-	// regions.
+	// OriginalPrimaryLocation: Output only. The location where the reservation was
+	// originally created. This is set only during the failover reservation's
+	// creation. All billing charges for the failover reservation will be applied
+	// to this location.
 	OriginalPrimaryLocation string `json:"originalPrimaryLocation,omitempty"`
-	// PrimaryLocation: Optional. The primary location of the reservation. The
-	// field is only meaningful for a failover reservation that is used for managed
-	// disaster recovery. The field is output only for customers and should not be
-	// specified. However, the `google.api.field_behavior` is not set to
-	// `OUTPUT_ONLY` since these fields are set in rerouted requests sent across
-	// regions.
+	// PrimaryLocation: Output only. The current location of the reservation's
+	// primary replica. This field is only set for reservations using the managed
+	// disaster recovery feature.
 	PrimaryLocation string `json:"primaryLocation,omitempty"`
-	// SecondaryLocation: Optional. The secondary location of the reservation that
-	// is used for managed disaster recovery. Customers can set this in
-	// create/update reservation calls to create a failover reservation or convert
-	// a non-failover reservation to a failover reservation.
+	// SecondaryLocation: Optional. The current location of the reservation's
+	// secondary replica. This field is only set for reservations using the managed
+	// disaster recovery feature. Users can set this in create reservation calls to
+	// create a failover reservation or in update reservation calls to convert a
+	// non-failover reservation to a failover reservation(or vice versa).
 	SecondaryLocation string `json:"secondaryLocation,omitempty"`
 	// SlotCapacity: Baseline slots available to this reservation. A slot is a unit
 	// of computational power in BigQuery, and serves as the unit of parallelism.

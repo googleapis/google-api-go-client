@@ -115,7 +115,8 @@ func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, err
 	if err != nil {
 		return nil, err
 	}
-	s, err := New(client)
+	s := &Service{client: client, BasePath: basePath}
+	s.Projects = NewProjectsService(s)
 	if err != nil {
 		return nil, err
 	}
@@ -134,9 +135,7 @@ func New(client *http.Client) (*Service, error) {
 	if client == nil {
 		return nil, errors.New("client is nil")
 	}
-	s := &Service{client: client, BasePath: basePath}
-	s.Projects = NewProjectsService(s)
-	return s, nil
+	return NewService(context.Background(), option.WithHTTPClient(client))
 }
 
 type Service struct {
@@ -1486,7 +1485,7 @@ type CloudVmClusterProperties struct {
 	// StorageSizeGb: Output only. The storage allocation for the disk group, in
 	// gigabytes (GB).
 	StorageSizeGb int64 `json:"storageSizeGb,omitempty"`
-	// SystemVersion: Output only. Operating system version of the image.
+	// SystemVersion: Optional. Operating system version of the image.
 	SystemVersion string `json:"systemVersion,omitempty"`
 	// TimeZone: Optional. Time zone of VM Cluster to set. Defaults to UTC if not
 	// specified.
@@ -1886,6 +1885,7 @@ type Entitlement struct {
 	//   "ACCOUNT_NOT_LINKED" - Account not linked.
 	//   "ACCOUNT_NOT_ACTIVE" - Account is linked but not active.
 	//   "ACTIVE" - Entitlement and Account are active.
+	//   "ACCOUNT_SUSPENDED" - Account is suspended.
 	State string `json:"state,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "CloudAccountDetails") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -2751,9 +2751,10 @@ func (s TimeOfDay) MarshalJSON() ([]byte, error) {
 // TimeZone: Represents a time zone from the IANA Time Zone Database
 // (https://www.iana.org/time-zones).
 type TimeZone struct {
-	// Id: IANA Time Zone Database time zone, e.g. "America/New_York".
+	// Id: IANA Time Zone Database time zone. For example "America/New_York".
 	Id string `json:"id,omitempty"`
-	// Version: Optional. IANA Time Zone Database version number, e.g. "2019a".
+	// Version: Optional. IANA Time Zone Database version number. For example
+	// "2019a".
 	Version string `json:"version,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Id") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -2827,12 +2828,11 @@ func (c *ProjectsLocationsGetCall) doRequest(alt string) (*http.Response, error)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
-	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, body)
+	req, err := http.NewRequest("GET", urls, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -2958,12 +2958,11 @@ func (c *ProjectsLocationsListCall) doRequest(alt string) (*http.Response, error
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
-	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}/locations")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, body)
+	req, err := http.NewRequest("GET", urls, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -3116,12 +3115,11 @@ func (c *ProjectsLocationsAutonomousDatabaseBackupsListCall) doRequest(alt strin
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
-	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/autonomousDatabaseBackups")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, body)
+	req, err := http.NewRequest("GET", urls, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -3272,12 +3270,11 @@ func (c *ProjectsLocationsAutonomousDatabaseCharacterSetsListCall) doRequest(alt
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
-	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/autonomousDatabaseCharacterSets")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, body)
+	req, err := http.NewRequest("GET", urls, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -3414,8 +3411,7 @@ func (c *ProjectsLocationsAutonomousDatabasesCreateCall) Header() http.Header {
 
 func (c *ProjectsLocationsAutonomousDatabasesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.autonomousdatabase)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.autonomousdatabase)
 	if err != nil {
 		return nil, err
 	}
@@ -3527,12 +3523,11 @@ func (c *ProjectsLocationsAutonomousDatabasesDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsAutonomousDatabasesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
-	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("DELETE", urls, body)
+	req, err := http.NewRequest("DELETE", urls, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -3626,8 +3621,7 @@ func (c *ProjectsLocationsAutonomousDatabasesGenerateWalletCall) Header() http.H
 
 func (c *ProjectsLocationsAutonomousDatabasesGenerateWalletCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.generateautonomousdatabasewalletrequest)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.generateautonomousdatabasewalletrequest)
 	if err != nil {
 		return nil, err
 	}
@@ -3740,12 +3734,11 @@ func (c *ProjectsLocationsAutonomousDatabasesGetCall) doRequest(alt string) (*ht
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
-	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, body)
+	req, err := http.NewRequest("GET", urls, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -3878,12 +3871,11 @@ func (c *ProjectsLocationsAutonomousDatabasesListCall) doRequest(alt string) (*h
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
-	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/autonomousDatabases")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, body)
+	req, err := http.NewRequest("GET", urls, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -3999,8 +3991,7 @@ func (c *ProjectsLocationsAutonomousDatabasesRestoreCall) Header() http.Header {
 
 func (c *ProjectsLocationsAutonomousDatabasesRestoreCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.restoreautonomousdatabaserequest)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.restoreautonomousdatabaserequest)
 	if err != nil {
 		return nil, err
 	}
@@ -4128,12 +4119,11 @@ func (c *ProjectsLocationsAutonomousDbVersionsListCall) doRequest(alt string) (*
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
-	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/autonomousDbVersions")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, body)
+	req, err := http.NewRequest("GET", urls, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -4272,8 +4262,7 @@ func (c *ProjectsLocationsCloudExadataInfrastructuresCreateCall) Header() http.H
 
 func (c *ProjectsLocationsCloudExadataInfrastructuresCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.cloudexadatainfrastructure)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.cloudexadatainfrastructure)
 	if err != nil {
 		return nil, err
 	}
@@ -4394,12 +4383,11 @@ func (c *ProjectsLocationsCloudExadataInfrastructuresDeleteCall) Header() http.H
 
 func (c *ProjectsLocationsCloudExadataInfrastructuresDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
-	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("DELETE", urls, body)
+	req, err := http.NewRequest("DELETE", urls, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -4504,12 +4492,11 @@ func (c *ProjectsLocationsCloudExadataInfrastructuresGetCall) doRequest(alt stri
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
-	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, body)
+	req, err := http.NewRequest("GET", urls, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -4629,12 +4616,11 @@ func (c *ProjectsLocationsCloudExadataInfrastructuresListCall) doRequest(alt str
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
-	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/cloudExadataInfrastructures")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, body)
+	req, err := http.NewRequest("GET", urls, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -4775,12 +4761,11 @@ func (c *ProjectsLocationsCloudExadataInfrastructuresDbServersListCall) doReques
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
-	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/dbServers")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, body)
+	req, err := http.NewRequest("GET", urls, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -4917,8 +4902,7 @@ func (c *ProjectsLocationsCloudVmClustersCreateCall) Header() http.Header {
 
 func (c *ProjectsLocationsCloudVmClustersCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.cloudvmcluster)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.cloudvmcluster)
 	if err != nil {
 		return nil, err
 	}
@@ -5037,12 +5021,11 @@ func (c *ProjectsLocationsCloudVmClustersDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsCloudVmClustersDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
-	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("DELETE", urls, body)
+	req, err := http.NewRequest("DELETE", urls, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -5145,12 +5128,11 @@ func (c *ProjectsLocationsCloudVmClustersGetCall) doRequest(alt string) (*http.R
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
-	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, body)
+	req, err := http.NewRequest("GET", urls, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -5275,12 +5257,11 @@ func (c *ProjectsLocationsCloudVmClustersListCall) doRequest(alt string) (*http.
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
-	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/cloudVmClusters")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, body)
+	req, err := http.NewRequest("GET", urls, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -5420,12 +5401,11 @@ func (c *ProjectsLocationsCloudVmClustersDbNodesListCall) doRequest(alt string) 
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
-	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/dbNodes")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, body)
+	req, err := http.NewRequest("GET", urls, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -5567,12 +5547,11 @@ func (c *ProjectsLocationsDbSystemShapesListCall) doRequest(alt string) (*http.R
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
-	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/dbSystemShapes")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, body)
+	req, err := http.NewRequest("GET", urls, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -5712,12 +5691,11 @@ func (c *ProjectsLocationsEntitlementsListCall) doRequest(alt string) (*http.Res
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
-	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/entitlements")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, body)
+	req, err := http.NewRequest("GET", urls, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -5859,12 +5837,11 @@ func (c *ProjectsLocationsGiVersionsListCall) doRequest(alt string) (*http.Respo
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
-	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/giVersions")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, body)
+	req, err := http.NewRequest("GET", urls, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -5950,7 +5927,7 @@ type ProjectsLocationsOperationsCancelCall struct {
 // other methods to check whether the cancellation succeeded or whether the
 // operation completed despite cancellation. On successful cancellation, the
 // operation is not deleted; instead, it becomes an operation with an
-// Operation.error value with a google.rpc.Status.code of 1, corresponding to
+// Operation.error value with a google.rpc.Status.code of `1`, corresponding to
 // `Code.CANCELLED`.
 //
 // - name: The name of the operation resource to be cancelled.
@@ -5986,8 +5963,7 @@ func (c *ProjectsLocationsOperationsCancelCall) Header() http.Header {
 
 func (c *ProjectsLocationsOperationsCancelCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.canceloperationrequest)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.canceloperationrequest)
 	if err != nil {
 		return nil, err
 	}
@@ -6088,12 +6064,11 @@ func (c *ProjectsLocationsOperationsDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsOperationsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
-	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("DELETE", urls, body)
+	req, err := http.NewRequest("DELETE", urls, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -6197,12 +6172,11 @@ func (c *ProjectsLocationsOperationsGetCall) doRequest(alt string) (*http.Respon
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
-	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, body)
+	req, err := http.NewRequest("GET", urls, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -6325,12 +6299,11 @@ func (c *ProjectsLocationsOperationsListCall) doRequest(alt string) (*http.Respo
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
-	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}/operations")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, body)
+	req, err := http.NewRequest("GET", urls, nil)
 	if err != nil {
 		return nil, err
 	}

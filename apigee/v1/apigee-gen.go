@@ -7420,11 +7420,18 @@ type GoogleCloudApigeeV1Organization struct {
 	// (https://cloud.google.com/service-infrastructure/docs/service-networking/getting-started).
 	// Valid only when RuntimeType (#RuntimeType) is set to `CLOUD`. The value must
 	// be set before the creation of a runtime instance and can be updated only
-	// when there are no runtime instances. For example: `default`. Apigee also
-	// supports shared VPC (that is, the host network project is not the same as
-	// the one that is peering with Apigee). See Shared VPC overview
-	// (https://cloud.google.com/vpc/docs/shared-vpc). To use a shared VPC network,
-	// use the following format:
+	// when there are no runtime instances. For example: `default`. When changing
+	// authorizedNetwork, you must reconfigure VPC peering. After VPC peering with
+	// previous network is deleted, run the following command
+	// (https://cloud.google.com/sdk/gcloud/reference/services/vpc-peerings/delete):
+	// `gcloud services vpc-peerings delete --network=NETWORK`, where `NETWORK` is
+	// the name of the previous network. This will delete the previous Service
+	// Networking. Otherwise, you will get the following error: `The resource
+	// 'projects/...-tp' is already linked to another shared VPC host
+	// 'projects/...-tp`. Apigee also supports shared VPC (that is, the host
+	// network project is not the same as the one that is peering with Apigee). See
+	// Shared VPC overview (https://cloud.google.com/vpc/docs/shared-vpc). To use a
+	// shared VPC network, use the following format:
 	// `projects/{host-project-id}/{region}/networks/{network-name}`. For example:
 	// `projects/my-sharedvpc-host/global/networks/mynetwork` **Note:** Not
 	// supported for Apigee hybrid.

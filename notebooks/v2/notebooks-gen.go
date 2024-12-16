@@ -883,6 +883,9 @@ type Instance struct {
 	// DisableProxyAccess: Optional. If true, the notebook instance will not
 	// register with the proxy.
 	DisableProxyAccess bool `json:"disableProxyAccess,omitempty"`
+	// EnableThirdPartyIdentity: Optional. Flag that specifies that a notebook can
+	// be accessed with third party identity provider.
+	EnableThirdPartyIdentity bool `json:"enableThirdPartyIdentity,omitempty"`
 	// GceSetup: Optional. Compute Engine setup for the notebook. Uses
 	// notebook-defined fields.
 	GceSetup *GceSetup `json:"gceSetup,omitempty"`
@@ -4258,7 +4261,7 @@ type ProjectsLocationsOperationsCancelCall struct {
 // other methods to check whether the cancellation succeeded or whether the
 // operation completed despite cancellation. On successful cancellation, the
 // operation is not deleted; instead, it becomes an operation with an
-// Operation.error value with a google.rpc.Status.code of 1, corresponding to
+// Operation.error value with a google.rpc.Status.code of `1`, corresponding to
 // `Code.CANCELLED`.
 //
 // - name: The name of the operation resource to be cancelled.

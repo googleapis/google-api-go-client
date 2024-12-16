@@ -937,8 +937,7 @@ func (s ContinuousBackupSource) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// CsvExportOptions: Options for exporting data in CSV format. For now, we only
-// support a query to get the data that needs to be exported.
+// CsvExportOptions: Options for exporting data in CSV format.
 type CsvExportOptions struct {
 	// EscapeCharacter: Optional. Specifies the character that should appear before
 	// a data character that needs to be escaped. The default is the same as quote
@@ -953,7 +952,7 @@ type CsvExportOptions struct {
 	// data value is quoted. The default is double-quote. The value of this
 	// argument has to be a character in Hex ASCII Code.
 	QuoteCharacter string `json:"quoteCharacter,omitempty"`
-	// SelectQuery: Required. The select_query used to extract the data.
+	// SelectQuery: Required. The SELECT query used to extract the data.
 	SelectQuery string `json:"selectQuery,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "EscapeCharacter") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -1048,8 +1047,8 @@ type ExportClusterRequest struct {
 	// CsvExportOptions: Options for exporting data in CSV format. Required field
 	// to be set for CSV file type.
 	CsvExportOptions *CsvExportOptions `json:"csvExportOptions,omitempty"`
-	// Database: Required. Name of the database where the query will be executed.
-	// Note - Value provided should be the same as expected from `SELECT
+	// Database: Required. Name of the database where the export command will be
+	// executed. Note - Value provided should be the same as expected from `SELECT
 	// current_database();` and NOT as a resource reference.
 	Database string `json:"database,omitempty"`
 	// GcsDestination: Required. Option to export data to cloud storage.
@@ -1115,8 +1114,7 @@ func (s FailoverInstanceRequest) MarshalJSON() ([]byte, error) {
 // storage.
 type GcsDestination struct {
 	// Uri: Required. The path to the file in Google Cloud Storage where the export
-	// will be stored. The URI is in the form `gs://bucketName/fileName`. If the
-	// file already exists, the request succeeds, but the operation fails.
+	// will be stored. The URI is in the form `gs://bucketName/fileName`.
 	Uri string `json:"uri,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Uri") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -2093,8 +2091,8 @@ type OperationMetadata struct {
 	EndTime string `json:"endTime,omitempty"`
 	// RequestedCancellation: Output only. Identifies whether the user has
 	// requested cancellation of the operation. Operations that have successfully
-	// been cancelled have Operation.error value with a google.rpc.Status.code of
-	// 1, corresponding to `Code.CANCELLED`.
+	// been cancelled have google.longrunning.Operation.error value with a
+	// google.rpc.Status.code of 1, corresponding to `Code.CANCELLED`.
 	RequestedCancellation bool `json:"requestedCancellation,omitempty"`
 	// StatusMessage: Output only. Human-readable status of the operation, if any.
 	StatusMessage string `json:"statusMessage,omitempty"`
@@ -2433,6 +2431,33 @@ type RestoreClusterRequest struct {
 
 func (s RestoreClusterRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod RestoreClusterRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// RestoreFromCloudSQLRequest: Message for registering Restoring from CloudSQL
+// resource.
+type RestoreFromCloudSQLRequest struct {
+	// CloudsqlBackupRunSource: Cluster created from CloudSQL backup run.
+	CloudsqlBackupRunSource *CloudSQLBackupRunSource `json:"cloudsqlBackupRunSource,omitempty"`
+	// Cluster: Required. The resource being created
+	Cluster *Cluster `json:"cluster,omitempty"`
+	// ClusterId: Required. ID of the requesting object.
+	ClusterId string `json:"clusterId,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "CloudsqlBackupRunSource") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CloudsqlBackupRunSource") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s RestoreFromCloudSQLRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod RestoreFromCloudSQLRequest
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -3622,6 +3647,9 @@ type StorageDatabasecenterPartnerapiV1mainMachineConfiguration struct {
 	MemorySizeInBytes int64 `json:"memorySizeInBytes,omitempty,string"`
 	// ShardCount: Optional. Number of shards (if applicable).
 	ShardCount int64 `json:"shardCount,omitempty"`
+	// VcpuCount: Optional. The number of vCPUs. TODO(b/342344482, b/342346271) add
+	// proto validations again after bug fix.
+	VcpuCount float64 `json:"vcpuCount,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "CpuCount") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -3638,6 +3666,20 @@ type StorageDatabasecenterPartnerapiV1mainMachineConfiguration struct {
 func (s StorageDatabasecenterPartnerapiV1mainMachineConfiguration) MarshalJSON() ([]byte, error) {
 	type NoMethod StorageDatabasecenterPartnerapiV1mainMachineConfiguration
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+func (s *StorageDatabasecenterPartnerapiV1mainMachineConfiguration) UnmarshalJSON(data []byte) error {
+	type NoMethod StorageDatabasecenterPartnerapiV1mainMachineConfiguration
+	var s1 struct {
+		VcpuCount gensupport.JSONFloat64 `json:"vcpuCount"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.VcpuCount = float64(s1.VcpuCount)
+	return nil
 }
 
 type StorageDatabasecenterPartnerapiV1mainObservabilityMetricData struct {
@@ -6441,6 +6483,107 @@ func (c *ProjectsLocationsClustersRestoreCall) Do(opts ...googleapi.CallOption) 
 	return ret, nil
 }
 
+type ProjectsLocationsClustersRestoreFromCloudSQLCall struct {
+	s                          *Service
+	parent                     string
+	restorefromcloudsqlrequest *RestoreFromCloudSQLRequest
+	urlParams_                 gensupport.URLParams
+	ctx_                       context.Context
+	header_                    http.Header
+}
+
+// RestoreFromCloudSQL: Restores an AlloyDB cluster from a CloudSQL resource.
+//
+//   - parent: The location of the new cluster. For the required format, see the
+//     comment on Cluster.name field.
+func (r *ProjectsLocationsClustersService) RestoreFromCloudSQL(parent string, restorefromcloudsqlrequest *RestoreFromCloudSQLRequest) *ProjectsLocationsClustersRestoreFromCloudSQLCall {
+	c := &ProjectsLocationsClustersRestoreFromCloudSQLCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.restorefromcloudsqlrequest = restorefromcloudsqlrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsClustersRestoreFromCloudSQLCall) Fields(s ...googleapi.Field) *ProjectsLocationsClustersRestoreFromCloudSQLCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsClustersRestoreFromCloudSQLCall) Context(ctx context.Context) *ProjectsLocationsClustersRestoreFromCloudSQLCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsClustersRestoreFromCloudSQLCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsClustersRestoreFromCloudSQLCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.restorefromcloudsqlrequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta/{+parent}/clusters:restoreFromCloudSQL")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "alloydb.projects.locations.clusters.restoreFromCloudSQL" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsClustersRestoreFromCloudSQLCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+}
+
 type ProjectsLocationsClustersSwitchoverCall struct {
 	s                        *Service
 	name                     string
@@ -8621,7 +8764,7 @@ type ProjectsLocationsOperationsCancelCall struct {
 // other methods to check whether the cancellation succeeded or whether the
 // operation completed despite cancellation. On successful cancellation, the
 // operation is not deleted; instead, it becomes an operation with an
-// Operation.error value with a google.rpc.Status.code of 1, corresponding to
+// Operation.error value with a google.rpc.Status.code of `1`, corresponding to
 // `Code.CANCELLED`.
 //
 // - name: The name of the operation resource to be cancelled.

@@ -1361,6 +1361,10 @@ type DatabaseResourceHealthSignalData struct {
 	//   "SIGNAL_TYPE_DATA_EXPORT_TO_PUBLIC_CLOUD_STORAGE_BUCKET" - Detects if
 	// database instance data exported to a Cloud Storage bucket that is owned by
 	// the organization and is publicly accessible.
+	//   "SIGNAL_TYPE_WEAK_PASSWORD_HASH_ALGORITHM" - Detects if a database
+	// instance is using a weak password hash algorithm.
+	//   "SIGNAL_TYPE_NO_USER_PASSWORD_POLICY" - Detects if a database instance has
+	// no user password policy set.
 	SignalType string `json:"signalType,omitempty"`
 	// Possible values:
 	//   "STATE_UNSPECIFIED" - Unspecified state.
@@ -1790,6 +1794,10 @@ type DatabaseResourceRecommendationSignalData struct {
 	//   "SIGNAL_TYPE_DATA_EXPORT_TO_PUBLIC_CLOUD_STORAGE_BUCKET" - Detects if
 	// database instance data exported to a Cloud Storage bucket that is owned by
 	// the organization and is publicly accessible.
+	//   "SIGNAL_TYPE_WEAK_PASSWORD_HASH_ALGORITHM" - Detects if a database
+	// instance is using a weak password hash algorithm.
+	//   "SIGNAL_TYPE_NO_USER_PASSWORD_POLICY" - Detects if a database instance has
+	// no user password policy set.
 	SignalType string `json:"signalType,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AdditionalMetadata") to
 	// unconditionally include in API requests. By default, fields with empty or

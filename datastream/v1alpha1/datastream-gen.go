@@ -1222,8 +1222,8 @@ type OperationMetadata struct {
 	EndTime string `json:"endTime,omitempty"`
 	// RequestedCancellation: Output only. Identifies whether the user has
 	// requested cancellation of the operation. Operations that have successfully
-	// been cancelled have Operation.error value with a google.rpc.Status.code of
-	// 1, corresponding to `Code.CANCELLED`.
+	// been cancelled have google.longrunning.Operation.error value with a
+	// google.rpc.Status.code of 1, corresponding to `Code.CANCELLED`.
 	RequestedCancellation bool `json:"requestedCancellation,omitempty"`
 	// StatusMessage: Output only. Human-readable status of the operation, if any.
 	StatusMessage string `json:"statusMessage,omitempty"`
@@ -3097,7 +3097,7 @@ type ProjectsLocationsOperationsCancelCall struct {
 // other methods to check whether the cancellation succeeded or whether the
 // operation completed despite cancellation. On successful cancellation, the
 // operation is not deleted; instead, it becomes an operation with an
-// Operation.error value with a google.rpc.Status.code of 1, corresponding to
+// Operation.error value with a google.rpc.Status.code of `1`, corresponding to
 // `Code.CANCELLED`.
 //
 // - name: The name of the operation resource to be cancelled.

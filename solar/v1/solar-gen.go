@@ -221,7 +221,8 @@ type BuildingInsights struct {
 	//   "BASE" - Solar data is derived from enhanced satellite imagery processed
 	// at 0.25 m/pixel.
 	ImageryQuality string `json:"imageryQuality,omitempty"`
-	// Name: The resource name for the building, of the format `building/`.
+	// Name: The resource name for the building, of the format
+	// `buildings/{place_id}`.
 	Name string `json:"name,omitempty"`
 	// PostalCode: Postal code (e.g., US zip code) this building is contained by.
 	PostalCode string `json:"postalCode,omitempty"`

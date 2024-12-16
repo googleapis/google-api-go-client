@@ -251,6 +251,7 @@ type AcceleratorConfig struct {
 	//   "V4" - TPU v4.
 	//   "V5LITE_POD" - TPU v5lite pod.
 	//   "V5P" - TPU v5p
+	//   "V6E" - TPU v6e
 	Type string `json:"type,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Topology") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -3094,7 +3095,7 @@ type ProjectsLocationsOperationsCancelCall struct {
 // other methods to check whether the cancellation succeeded or whether the
 // operation completed despite cancellation. On successful cancellation, the
 // operation is not deleted; instead, it becomes an operation with an
-// Operation.error value with a google.rpc.Status.code of 1, corresponding to
+// Operation.error value with a google.rpc.Status.code of `1`, corresponding to
 // `Code.CANCELLED`.
 //
 // - name: The name of the operation resource to be cancelled.

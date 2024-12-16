@@ -1187,7 +1187,7 @@
       }
     }
   },
-  "revision": "20241205",
+  "revision": "20241211",
   "rootUrl": "https://config.googleapis.com/",
   "schemas": {
     "ApplyResults": {
@@ -2556,7 +2556,7 @@
           "additionalProperties": {
             "$ref": "TerraformVariable"
           },
-          "description": "Input variable values for the Terraform blueprint.",
+          "description": "Optional. Input variable values for the Terraform blueprint.",
           "type": "object"
         }
       },
@@ -2568,7 +2568,8 @@
       "properties": {
         "error": {
           "$ref": "Status",
-          "description": "Original error response from underlying Google API, if available."
+          "description": "Output only. Original error response from underlying Google API, if available.",
+          "readOnly": true
         },
         "errorDescription": {
           "description": "A human-readable error description.",
@@ -2606,7 +2607,7 @@
       "id": "TerraformVariable",
       "properties": {
         "inputValue": {
-          "description": "Input variable value.",
+          "description": "Optional. Input variable value.",
           "type": "any"
         }
       },

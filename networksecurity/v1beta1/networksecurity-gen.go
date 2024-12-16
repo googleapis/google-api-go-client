@@ -3240,7 +3240,8 @@ func (s MTLSPolicy) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// MirroringDeployment: Message describing MirroringDeployment object
+// MirroringDeployment: Message describing MirroringDeployment object NEXT ID:
+// 10
 type MirroringDeployment struct {
 	// CreateTime: Output only. [Output only] Create time stamp
 	CreateTime string `json:"createTime,omitempty"`

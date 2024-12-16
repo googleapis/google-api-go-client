@@ -158,24 +158,23 @@ const (
 	// View members in Google Chat conversations.
 	ChatMembershipsReadonlyScope = "https://www.googleapis.com/auth/chat.memberships.readonly"
 
-	// See, compose, send, update, and delete messages as well as their message
-	// content; add, see, and delete reactions to messages.
+	// See, compose, send, update, and delete messages and their associated
+	// attachments, and add, see, and delete reactions to messages.
 	ChatMessagesScope = "https://www.googleapis.com/auth/chat.messages"
 
 	// Compose and send messages in Google Chat
 	ChatMessagesCreateScope = "https://www.googleapis.com/auth/chat.messages.create"
 
-	// See, add, and delete reactions as well as their reaction content to messages
-	// in Google Chat
+	// See, add, and delete reactions to messages in Google Chat
 	ChatMessagesReactionsScope = "https://www.googleapis.com/auth/chat.messages.reactions"
 
 	// Add reactions to messages in Google Chat
 	ChatMessagesReactionsCreateScope = "https://www.googleapis.com/auth/chat.messages.reactions.create"
 
-	// View reactions as well as their reaction content to messages in Google Chat
+	// View reactions to messages in Google Chat
 	ChatMessagesReactionsReadonlyScope = "https://www.googleapis.com/auth/chat.messages.reactions.readonly"
 
-	// See messages as well as their reactions and message content in Google Chat
+	// See messages and their associated reactions and attachments in Google Chat
 	ChatMessagesReadonlyScope = "https://www.googleapis.com/auth/chat.messages.readonly"
 
 	// Create conversations and spaces and see or update metadata (including

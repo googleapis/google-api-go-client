@@ -545,6 +545,10 @@ func (s CheckRequest) MarshalJSON() ([]byte, error) {
 
 // CheckResponse: Response message for the Check method.
 type CheckResponse struct {
+	// DynamicMetadata: Optional response metadata that will be emitted as dynamic
+	// metadata to be consumed by the caller of ServiceController. For
+	// compatibility with the ext_authz interface.
+	DynamicMetadata googleapi.RawMessage `json:"dynamicMetadata,omitempty"`
 	// Headers: Returns a set of request contexts generated from the
 	// `CheckRequest`.
 	Headers map[string]string `json:"headers,omitempty"`
@@ -555,15 +559,15 @@ type CheckResponse struct {
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-	// ForceSendFields is a list of field names (e.g. "Headers") to unconditionally
-	// include in API requests. By default, fields with empty or default values are
-	// omitted from API requests. See
+	// ForceSendFields is a list of field names (e.g. "DynamicMetadata") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Headers") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
+	// NullFields is a list of field names (e.g. "DynamicMetadata") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }

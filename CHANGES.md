@@ -1,5 +1,19 @@
 # Changes
 
+## [0.212.0](https://github.com/googleapis/google-api-go-client/compare/v0.211.0...v0.212.0) (2024-12-16)
+
+
+### Features
+
+* Add logging support ([#2856](https://github.com/googleapis/google-api-go-client/issues/2856)) ([ccc9019](https://github.com/googleapis/google-api-go-client/commit/ccc90192db1009c57ef8c8b297d4eaf6447b364e))
+* **all:** Auto-regenerate discovery clients ([#2909](https://github.com/googleapis/google-api-go-client/issues/2909)) ([c3b4421](https://github.com/googleapis/google-api-go-client/commit/c3b44217696fecb737ed0b26a5a976a32e7bb5a2))
+* **all:** Auto-regenerate discovery clients ([#2912](https://github.com/googleapis/google-api-go-client/issues/2912)) ([f9e9be1](https://github.com/googleapis/google-api-go-client/commit/f9e9be15f3eb019a60451b16742971e6aa45a034))
+* **all:** Auto-regenerate discovery clients ([#2916](https://github.com/googleapis/google-api-go-client/issues/2916)) ([b46f348](https://github.com/googleapis/google-api-go-client/commit/b46f3480cca801a58da10cb5891430696ea318c6))
+* **all:** Auto-regenerate discovery clients ([#2919](https://github.com/googleapis/google-api-go-client/issues/2919)) ([5a3b270](https://github.com/googleapis/google-api-go-client/commit/5a3b2709b60c7abce3e5ec88c083915cef22b25c))
+* **all:** Auto-regenerate discovery clients ([#2920](https://github.com/googleapis/google-api-go-client/issues/2920)) ([ed29945](https://github.com/googleapis/google-api-go-client/commit/ed29945fc80a66af8fc58acdbb71136101206f20))
+* **all:** Auto-regenerate discovery clients ([#2922](https://github.com/googleapis/google-api-go-client/issues/2922)) ([4fd4833](https://github.com/googleapis/google-api-go-client/commit/4fd483396d900cd3ba7e8a6a2e2833248512ba75))
+* Pass through logging in options ([#2923](https://github.com/googleapis/google-api-go-client/issues/2923)) ([2884c4e](https://github.com/googleapis/google-api-go-client/commit/2884c4ee74b09f172c36d45579f44420d3091693))
+
 ## [0.211.0](https://github.com/googleapis/google-api-go-client/compare/v0.210.0...v0.211.0) (2024-12-10)
 
 

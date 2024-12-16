@@ -5077,7 +5077,7 @@ type ProjectsLocationsEnvironmentsWorkloadsListCall struct {
 
 // List: Lists workloads in a Cloud Composer environment. Workload is a unit
 // that runs a single Composer component. This method is supported for Cloud
-// Composer environments in versions composer-3.*.*-airflow-*.*.* and newer.
+// Composer environments in versions composer-2.*.*-airflow-*.*.* and newer.
 //
 //   - parent: The environment name to get workloads for, in the form:
 //     "projects/{projectId}/locations/{locationId}/environments/{environmentId}".

@@ -409,6 +409,10 @@ type Backup struct {
 	// `projects/{project_id}/locations/{location}/backupVaults/{backup_vault_id}/ba
 	// ckups/{backup_id}`.
 	Name string `json:"name,omitempty"`
+	// SatisfiesPzi: Output only. Reserved for future use
+	SatisfiesPzi bool `json:"satisfiesPzi,omitempty"`
+	// SatisfiesPzs: Output only. Reserved for future use
+	SatisfiesPzs bool `json:"satisfiesPzs,omitempty"`
 	// SourceSnapshot: If specified, backup will be created from the given
 	// snapshot. If not specified, there will be a new snapshot taken to initiate
 	// the backup creation. Format:
@@ -1937,6 +1941,10 @@ type StoragePool struct {
 	PsaRange string `json:"psaRange,omitempty"`
 	// ReplicaZone: Optional. Specifies the replica zone for regional storagePool.
 	ReplicaZone string `json:"replicaZone,omitempty"`
+	// SatisfiesPzi: Output only. Reserved for future use
+	SatisfiesPzi bool `json:"satisfiesPzi,omitempty"`
+	// SatisfiesPzs: Output only. Reserved for future use
+	SatisfiesPzs bool `json:"satisfiesPzs,omitempty"`
 	// ServiceLevel: Required. Service level of the storage pool
 	//
 	// Possible values:

@@ -57,11 +57,13 @@ import (
 	"errors"
 	"fmt"
 	"io"
+	"log/slog"
 	"net/http"
 	"net/url"
 	"strconv"
 	"strings"
 
+	"github.com/googleapis/gax-go/v2/internallog"
 	googleapi "google.golang.org/api/googleapi"
 	internal "google.golang.org/api/internal"
 	gensupport "google.golang.org/api/internal/gensupport"
@@ -85,6 +87,7 @@ var _ = strings.Replace
 var _ = context.Canceled
 var _ = internaloption.WithDefaultEndpoint
 var _ = internal.Version
+var _ = internallog.New
 
 const apiId = "firebasedataconnect:v1beta"
 const apiName = "firebasedataconnect"
@@ -115,7 +118,7 @@ func NewService(ctx context.Context, opts ...option.ClientOption) (*APIService, 
 	if err != nil {
 		return nil, err
 	}
-	s := &APIService{client: client, BasePath: basePath}
+	s := &APIService{client: client, BasePath: basePath, logger: internaloption.GetLogger(opts)}
 	s.Projects = NewProjectsService(s)
 	if err != nil {
 		return nil, err
@@ -140,6 +143,7 @@ func New(client *http.Client) (*APIService, error) {
 
 type APIService struct {
 	client    *http.Client
+	logger    *slog.Logger
 	BasePath  string // API endpoint base URL
 	UserAgent string // optional additional User-Agent fragment
 
@@ -1236,6 +1240,7 @@ func (c *ProjectsLocationsGetCall) doRequest(alt string) (*http.Response, error)
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "firebasedataconnect.projects.locations.get", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -1270,9 +1275,11 @@ func (c *ProjectsLocationsGetCall) Do(opts ...googleapi.CallOption) (*Location, 
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "firebasedataconnect.projects.locations.get", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -1366,6 +1373,7 @@ func (c *ProjectsLocationsListCall) doRequest(alt string) (*http.Response, error
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "firebasedataconnect.projects.locations.list", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -1401,9 +1409,11 @@ func (c *ProjectsLocationsListCall) Do(opts ...googleapi.CallOption) (*ListLocat
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "firebasedataconnect.projects.locations.list", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -1496,6 +1506,7 @@ func (c *ProjectsLocationsOperationsCancelCall) doRequest(alt string) (*http.Res
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "firebasedataconnect.projects.locations.operations.cancel", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -1530,9 +1541,11 @@ func (c *ProjectsLocationsOperationsCancelCall) Do(opts ...googleapi.CallOption)
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "firebasedataconnect.projects.locations.operations.cancel", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -1593,6 +1606,7 @@ func (c *ProjectsLocationsOperationsDeleteCall) doRequest(alt string) (*http.Res
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "firebasedataconnect.projects.locations.operations.delete", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -1627,9 +1641,11 @@ func (c *ProjectsLocationsOperationsDeleteCall) Do(opts ...googleapi.CallOption)
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "firebasedataconnect.projects.locations.operations.delete", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -1701,6 +1717,7 @@ func (c *ProjectsLocationsOperationsGetCall) doRequest(alt string) (*http.Respon
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "firebasedataconnect.projects.locations.operations.get", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -1735,9 +1752,11 @@ func (c *ProjectsLocationsOperationsGetCall) Do(opts ...googleapi.CallOption) (*
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "firebasedataconnect.projects.locations.operations.get", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -1828,6 +1847,7 @@ func (c *ProjectsLocationsOperationsListCall) doRequest(alt string) (*http.Respo
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "firebasedataconnect.projects.locations.operations.list", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -1863,9 +1883,11 @@ func (c *ProjectsLocationsOperationsListCall) Do(opts ...googleapi.CallOption) (
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "firebasedataconnect.projects.locations.operations.list", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -1981,6 +2003,7 @@ func (c *ProjectsLocationsServicesCreateCall) doRequest(alt string) (*http.Respo
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "firebasedataconnect.projects.locations.services.create", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -2015,9 +2038,11 @@ func (c *ProjectsLocationsServicesCreateCall) Do(opts ...googleapi.CallOption) (
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "firebasedataconnect.projects.locations.services.create", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -2123,6 +2148,7 @@ func (c *ProjectsLocationsServicesDeleteCall) doRequest(alt string) (*http.Respo
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "firebasedataconnect.projects.locations.services.delete", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -2157,9 +2183,11 @@ func (c *ProjectsLocationsServicesDeleteCall) Do(opts ...googleapi.CallOption) (
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "firebasedataconnect.projects.locations.services.delete", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -2227,6 +2255,7 @@ func (c *ProjectsLocationsServicesExecuteGraphqlCall) doRequest(alt string) (*ht
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "firebasedataconnect.projects.locations.services.executeGraphql", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -2262,9 +2291,11 @@ func (c *ProjectsLocationsServicesExecuteGraphqlCall) Do(opts ...googleapi.CallO
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "firebasedataconnect.projects.locations.services.executeGraphql", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -2332,6 +2363,7 @@ func (c *ProjectsLocationsServicesExecuteGraphqlReadCall) doRequest(alt string) 
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "firebasedataconnect.projects.locations.services.executeGraphqlRead", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -2367,9 +2399,11 @@ func (c *ProjectsLocationsServicesExecuteGraphqlReadCall) Do(opts ...googleapi.C
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "firebasedataconnect.projects.locations.services.executeGraphqlRead", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -2440,6 +2474,7 @@ func (c *ProjectsLocationsServicesGetCall) doRequest(alt string) (*http.Response
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "firebasedataconnect.projects.locations.services.get", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -2474,9 +2509,11 @@ func (c *ProjectsLocationsServicesGetCall) Do(opts ...googleapi.CallOption) (*Se
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "firebasedataconnect.projects.locations.services.get", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -2576,6 +2613,7 @@ func (c *ProjectsLocationsServicesListCall) doRequest(alt string) (*http.Respons
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "firebasedataconnect.projects.locations.services.list", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -2611,9 +2649,11 @@ func (c *ProjectsLocationsServicesListCall) Do(opts ...googleapi.CallOption) (*L
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "firebasedataconnect.projects.locations.services.list", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -2744,6 +2784,7 @@ func (c *ProjectsLocationsServicesPatchCall) doRequest(alt string) (*http.Respon
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "firebasedataconnect.projects.locations.services.patch", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -2778,9 +2819,11 @@ func (c *ProjectsLocationsServicesPatchCall) Do(opts ...googleapi.CallOption) (*
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "firebasedataconnect.projects.locations.services.patch", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -2878,6 +2921,7 @@ func (c *ProjectsLocationsServicesConnectorsCreateCall) doRequest(alt string) (*
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "firebasedataconnect.projects.locations.services.connectors.create", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -2912,9 +2956,11 @@ func (c *ProjectsLocationsServicesConnectorsCreateCall) Do(opts ...googleapi.Cal
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "firebasedataconnect.projects.locations.services.connectors.create", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -3020,6 +3066,7 @@ func (c *ProjectsLocationsServicesConnectorsDeleteCall) doRequest(alt string) (*
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "firebasedataconnect.projects.locations.services.connectors.delete", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -3054,9 +3101,11 @@ func (c *ProjectsLocationsServicesConnectorsDeleteCall) Do(opts ...googleapi.Cal
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "firebasedataconnect.projects.locations.services.connectors.delete", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -3123,6 +3172,7 @@ func (c *ProjectsLocationsServicesConnectorsExecuteMutationCall) doRequest(alt s
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "firebasedataconnect.projects.locations.services.connectors.executeMutation", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -3158,9 +3208,11 @@ func (c *ProjectsLocationsServicesConnectorsExecuteMutationCall) Do(opts ...goog
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "firebasedataconnect.projects.locations.services.connectors.executeMutation", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -3227,6 +3279,7 @@ func (c *ProjectsLocationsServicesConnectorsExecuteQueryCall) doRequest(alt stri
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "firebasedataconnect.projects.locations.services.connectors.executeQuery", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -3262,9 +3315,11 @@ func (c *ProjectsLocationsServicesConnectorsExecuteQueryCall) Do(opts ...googlea
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "firebasedataconnect.projects.locations.services.connectors.executeQuery", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -3336,6 +3391,7 @@ func (c *ProjectsLocationsServicesConnectorsGetCall) doRequest(alt string) (*htt
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "firebasedataconnect.projects.locations.services.connectors.get", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -3370,9 +3426,11 @@ func (c *ProjectsLocationsServicesConnectorsGetCall) Do(opts ...googleapi.CallOp
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "firebasedataconnect.projects.locations.services.connectors.get", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -3472,6 +3530,7 @@ func (c *ProjectsLocationsServicesConnectorsListCall) doRequest(alt string) (*ht
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "firebasedataconnect.projects.locations.services.connectors.list", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -3507,9 +3566,11 @@ func (c *ProjectsLocationsServicesConnectorsListCall) Do(opts ...googleapi.CallO
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "firebasedataconnect.projects.locations.services.connectors.list", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -3643,6 +3704,7 @@ func (c *ProjectsLocationsServicesConnectorsPatchCall) doRequest(alt string) (*h
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "firebasedataconnect.projects.locations.services.connectors.patch", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -3677,9 +3739,11 @@ func (c *ProjectsLocationsServicesConnectorsPatchCall) Do(opts ...googleapi.Call
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "firebasedataconnect.projects.locations.services.connectors.patch", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -3777,6 +3841,7 @@ func (c *ProjectsLocationsServicesSchemasCreateCall) doRequest(alt string) (*htt
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "firebasedataconnect.projects.locations.services.schemas.create", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -3811,9 +3876,11 @@ func (c *ProjectsLocationsServicesSchemasCreateCall) Do(opts ...googleapi.CallOp
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "firebasedataconnect.projects.locations.services.schemas.create", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -3920,6 +3987,7 @@ func (c *ProjectsLocationsServicesSchemasDeleteCall) doRequest(alt string) (*htt
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "firebasedataconnect.projects.locations.services.schemas.delete", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -3954,9 +4022,11 @@ func (c *ProjectsLocationsServicesSchemasDeleteCall) Do(opts ...googleapi.CallOp
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "firebasedataconnect.projects.locations.services.schemas.delete", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -4028,6 +4098,7 @@ func (c *ProjectsLocationsServicesSchemasGetCall) doRequest(alt string) (*http.R
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "firebasedataconnect.projects.locations.services.schemas.get", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -4062,9 +4133,11 @@ func (c *ProjectsLocationsServicesSchemasGetCall) Do(opts ...googleapi.CallOptio
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "firebasedataconnect.projects.locations.services.schemas.get", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -4165,6 +4238,7 @@ func (c *ProjectsLocationsServicesSchemasListCall) doRequest(alt string) (*http.
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "firebasedataconnect.projects.locations.services.schemas.list", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -4200,9 +4274,11 @@ func (c *ProjectsLocationsServicesSchemasListCall) Do(opts ...googleapi.CallOpti
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "firebasedataconnect.projects.locations.services.schemas.list", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -4332,6 +4408,7 @@ func (c *ProjectsLocationsServicesSchemasPatchCall) doRequest(alt string) (*http
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "firebasedataconnect.projects.locations.services.schemas.patch", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -4366,8 +4443,10 @@ func (c *ProjectsLocationsServicesSchemasPatchCall) Do(opts ...googleapi.CallOpt
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "firebasedataconnect.projects.locations.services.schemas.patch", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }

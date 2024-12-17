@@ -32258,6 +32258,7 @@ func (c *ProjectsLocationsAgentsPlaybooksExportCall) doRequest(alt string) (*htt
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "dialogflow.projects.locations.agents.playbooks.export", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -32293,9 +32294,11 @@ func (c *ProjectsLocationsAgentsPlaybooksExportCall) Do(opts ...googleapi.CallOp
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "dialogflow.projects.locations.agents.playbooks.export", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -32472,6 +32475,7 @@ func (c *ProjectsLocationsAgentsPlaybooksImportCall) doRequest(alt string) (*htt
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "dialogflow.projects.locations.agents.playbooks.import", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -32507,9 +32511,11 @@ func (c *ProjectsLocationsAgentsPlaybooksImportCall) Do(opts ...googleapi.CallOp
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "dialogflow.projects.locations.agents.playbooks.import", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -33877,6 +33883,7 @@ func (c *ProjectsLocationsAgentsPlaybooksVersionsRestoreCall) doRequest(alt stri
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "dialogflow.projects.locations.agents.playbooks.versions.restore", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -33912,9 +33919,11 @@ func (c *ProjectsLocationsAgentsPlaybooksVersionsRestoreCall) Do(opts ...googlea
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "dialogflow.projects.locations.agents.playbooks.versions.restore", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 

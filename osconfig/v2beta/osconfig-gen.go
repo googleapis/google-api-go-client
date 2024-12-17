@@ -57,11 +57,13 @@ import (
 	"errors"
 	"fmt"
 	"io"
+	"log/slog"
 	"net/http"
 	"net/url"
 	"strconv"
 	"strings"
 
+	"github.com/googleapis/gax-go/v2/internallog"
 	googleapi "google.golang.org/api/googleapi"
 	internal "google.golang.org/api/internal"
 	gensupport "google.golang.org/api/internal/gensupport"
@@ -85,6 +87,7 @@ var _ = strings.Replace
 var _ = context.Canceled
 var _ = internaloption.WithDefaultEndpoint
 var _ = internal.Version
+var _ = internallog.New
 
 const apiId = "osconfig:v2beta"
 const apiName = "osconfig"
@@ -115,7 +118,7 @@ func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, err
 	if err != nil {
 		return nil, err
 	}
-	s := &Service{client: client, BasePath: basePath}
+	s := &Service{client: client, BasePath: basePath, logger: internaloption.GetLogger(opts)}
 	s.Folders = NewFoldersService(s)
 	s.Organizations = NewOrganizationsService(s)
 	s.Projects = NewProjectsService(s)
@@ -142,6 +145,7 @@ func New(client *http.Client) (*Service, error) {
 
 type Service struct {
 	client    *http.Client
+	logger    *slog.Logger
 	BasePath  string // API endpoint base URL
 	UserAgent string // optional additional User-Agent fragment
 
@@ -2001,6 +2005,7 @@ func (c *FoldersLocationsGlobalPolicyOrchestratorsCreateCall) doRequest(alt stri
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "osconfig.folders.locations.global.policyOrchestrators.create", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -2035,9 +2040,11 @@ func (c *FoldersLocationsGlobalPolicyOrchestratorsCreateCall) Do(opts ...googlea
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "osconfig.folders.locations.global.policyOrchestrators.create", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -2121,6 +2128,7 @@ func (c *FoldersLocationsGlobalPolicyOrchestratorsDeleteCall) doRequest(alt stri
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "osconfig.folders.locations.global.policyOrchestrators.delete", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -2155,9 +2163,11 @@ func (c *FoldersLocationsGlobalPolicyOrchestratorsDeleteCall) Do(opts ...googlea
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "osconfig.folders.locations.global.policyOrchestrators.delete", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -2227,6 +2237,7 @@ func (c *FoldersLocationsGlobalPolicyOrchestratorsGetCall) doRequest(alt string)
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "osconfig.folders.locations.global.policyOrchestrators.get", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -2262,9 +2273,11 @@ func (c *FoldersLocationsGlobalPolicyOrchestratorsGetCall) Do(opts ...googleapi.
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "osconfig.folders.locations.global.policyOrchestrators.get", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -2362,6 +2375,7 @@ func (c *FoldersLocationsGlobalPolicyOrchestratorsListCall) doRequest(alt string
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "osconfig.folders.locations.global.policyOrchestrators.list", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -2397,9 +2411,11 @@ func (c *FoldersLocationsGlobalPolicyOrchestratorsListCall) Do(opts ...googleapi
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "osconfig.folders.locations.global.policyOrchestrators.list", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -2497,6 +2513,7 @@ func (c *FoldersLocationsGlobalPolicyOrchestratorsPatchCall) doRequest(alt strin
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "osconfig.folders.locations.global.policyOrchestrators.patch", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -2531,9 +2548,11 @@ func (c *FoldersLocationsGlobalPolicyOrchestratorsPatchCall) Do(opts ...googleap
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "osconfig.folders.locations.global.policyOrchestrators.patch", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -2605,6 +2624,7 @@ func (c *FoldersLocationsOperationsCancelCall) doRequest(alt string) (*http.Resp
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "osconfig.folders.locations.operations.cancel", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -2639,9 +2659,11 @@ func (c *FoldersLocationsOperationsCancelCall) Do(opts ...googleapi.CallOption) 
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "osconfig.folders.locations.operations.cancel", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -2702,6 +2724,7 @@ func (c *FoldersLocationsOperationsDeleteCall) doRequest(alt string) (*http.Resp
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "osconfig.folders.locations.operations.delete", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -2736,9 +2759,11 @@ func (c *FoldersLocationsOperationsDeleteCall) Do(opts ...googleapi.CallOption) 
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "osconfig.folders.locations.operations.delete", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -2810,6 +2835,7 @@ func (c *FoldersLocationsOperationsGetCall) doRequest(alt string) (*http.Respons
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "osconfig.folders.locations.operations.get", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -2844,9 +2870,11 @@ func (c *FoldersLocationsOperationsGetCall) Do(opts ...googleapi.CallOption) (*O
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "osconfig.folders.locations.operations.get", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -2937,6 +2965,7 @@ func (c *FoldersLocationsOperationsListCall) doRequest(alt string) (*http.Respon
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "osconfig.folders.locations.operations.list", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -2972,9 +3001,11 @@ func (c *FoldersLocationsOperationsListCall) Do(opts ...googleapi.CallOption) (*
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "osconfig.folders.locations.operations.list", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -3092,6 +3123,7 @@ func (c *OrganizationsLocationsGlobalPolicyOrchestratorsCreateCall) doRequest(al
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "osconfig.organizations.locations.global.policyOrchestrators.create", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -3126,9 +3158,11 @@ func (c *OrganizationsLocationsGlobalPolicyOrchestratorsCreateCall) Do(opts ...g
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "osconfig.organizations.locations.global.policyOrchestrators.create", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -3212,6 +3246,7 @@ func (c *OrganizationsLocationsGlobalPolicyOrchestratorsDeleteCall) doRequest(al
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "osconfig.organizations.locations.global.policyOrchestrators.delete", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -3246,9 +3281,11 @@ func (c *OrganizationsLocationsGlobalPolicyOrchestratorsDeleteCall) Do(opts ...g
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "osconfig.organizations.locations.global.policyOrchestrators.delete", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -3318,6 +3355,7 @@ func (c *OrganizationsLocationsGlobalPolicyOrchestratorsGetCall) doRequest(alt s
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "osconfig.organizations.locations.global.policyOrchestrators.get", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -3353,9 +3391,11 @@ func (c *OrganizationsLocationsGlobalPolicyOrchestratorsGetCall) Do(opts ...goog
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "osconfig.organizations.locations.global.policyOrchestrators.get", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -3454,6 +3494,7 @@ func (c *OrganizationsLocationsGlobalPolicyOrchestratorsListCall) doRequest(alt 
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "osconfig.organizations.locations.global.policyOrchestrators.list", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -3489,9 +3530,11 @@ func (c *OrganizationsLocationsGlobalPolicyOrchestratorsListCall) Do(opts ...goo
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "osconfig.organizations.locations.global.policyOrchestrators.list", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -3589,6 +3632,7 @@ func (c *OrganizationsLocationsGlobalPolicyOrchestratorsPatchCall) doRequest(alt
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "osconfig.organizations.locations.global.policyOrchestrators.patch", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -3623,9 +3667,11 @@ func (c *OrganizationsLocationsGlobalPolicyOrchestratorsPatchCall) Do(opts ...go
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "osconfig.organizations.locations.global.policyOrchestrators.patch", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -3697,6 +3743,7 @@ func (c *OrganizationsLocationsOperationsCancelCall) doRequest(alt string) (*htt
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "osconfig.organizations.locations.operations.cancel", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -3731,9 +3778,11 @@ func (c *OrganizationsLocationsOperationsCancelCall) Do(opts ...googleapi.CallOp
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "osconfig.organizations.locations.operations.cancel", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -3794,6 +3843,7 @@ func (c *OrganizationsLocationsOperationsDeleteCall) doRequest(alt string) (*htt
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "osconfig.organizations.locations.operations.delete", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -3828,9 +3878,11 @@ func (c *OrganizationsLocationsOperationsDeleteCall) Do(opts ...googleapi.CallOp
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "osconfig.organizations.locations.operations.delete", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -3902,6 +3954,7 @@ func (c *OrganizationsLocationsOperationsGetCall) doRequest(alt string) (*http.R
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "osconfig.organizations.locations.operations.get", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -3936,9 +3989,11 @@ func (c *OrganizationsLocationsOperationsGetCall) Do(opts ...googleapi.CallOptio
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "osconfig.organizations.locations.operations.get", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -4029,6 +4084,7 @@ func (c *OrganizationsLocationsOperationsListCall) doRequest(alt string) (*http.
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "osconfig.organizations.locations.operations.list", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -4064,9 +4120,11 @@ func (c *OrganizationsLocationsOperationsListCall) Do(opts ...googleapi.CallOpti
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "osconfig.organizations.locations.operations.list", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -4184,6 +4242,7 @@ func (c *ProjectsLocationsGlobalPolicyOrchestratorsCreateCall) doRequest(alt str
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "osconfig.projects.locations.global.policyOrchestrators.create", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -4218,9 +4277,11 @@ func (c *ProjectsLocationsGlobalPolicyOrchestratorsCreateCall) Do(opts ...google
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "osconfig.projects.locations.global.policyOrchestrators.create", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -4304,6 +4365,7 @@ func (c *ProjectsLocationsGlobalPolicyOrchestratorsDeleteCall) doRequest(alt str
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "osconfig.projects.locations.global.policyOrchestrators.delete", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -4338,9 +4400,11 @@ func (c *ProjectsLocationsGlobalPolicyOrchestratorsDeleteCall) Do(opts ...google
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "osconfig.projects.locations.global.policyOrchestrators.delete", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -4410,6 +4474,7 @@ func (c *ProjectsLocationsGlobalPolicyOrchestratorsGetCall) doRequest(alt string
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "osconfig.projects.locations.global.policyOrchestrators.get", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -4445,9 +4510,11 @@ func (c *ProjectsLocationsGlobalPolicyOrchestratorsGetCall) Do(opts ...googleapi
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "osconfig.projects.locations.global.policyOrchestrators.get", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -4546,6 +4613,7 @@ func (c *ProjectsLocationsGlobalPolicyOrchestratorsListCall) doRequest(alt strin
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "osconfig.projects.locations.global.policyOrchestrators.list", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -4581,9 +4649,11 @@ func (c *ProjectsLocationsGlobalPolicyOrchestratorsListCall) Do(opts ...googleap
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "osconfig.projects.locations.global.policyOrchestrators.list", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -4681,6 +4751,7 @@ func (c *ProjectsLocationsGlobalPolicyOrchestratorsPatchCall) doRequest(alt stri
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "osconfig.projects.locations.global.policyOrchestrators.patch", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -4715,9 +4786,11 @@ func (c *ProjectsLocationsGlobalPolicyOrchestratorsPatchCall) Do(opts ...googlea
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "osconfig.projects.locations.global.policyOrchestrators.patch", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -4789,6 +4862,7 @@ func (c *ProjectsLocationsOperationsCancelCall) doRequest(alt string) (*http.Res
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "osconfig.projects.locations.operations.cancel", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -4823,9 +4897,11 @@ func (c *ProjectsLocationsOperationsCancelCall) Do(opts ...googleapi.CallOption)
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "osconfig.projects.locations.operations.cancel", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -4886,6 +4962,7 @@ func (c *ProjectsLocationsOperationsDeleteCall) doRequest(alt string) (*http.Res
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "osconfig.projects.locations.operations.delete", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -4920,9 +4997,11 @@ func (c *ProjectsLocationsOperationsDeleteCall) Do(opts ...googleapi.CallOption)
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "osconfig.projects.locations.operations.delete", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -4994,6 +5073,7 @@ func (c *ProjectsLocationsOperationsGetCall) doRequest(alt string) (*http.Respon
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "osconfig.projects.locations.operations.get", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -5028,9 +5108,11 @@ func (c *ProjectsLocationsOperationsGetCall) Do(opts ...googleapi.CallOption) (*
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "osconfig.projects.locations.operations.get", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -5121,6 +5203,7 @@ func (c *ProjectsLocationsOperationsListCall) doRequest(alt string) (*http.Respo
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "osconfig.projects.locations.operations.list", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -5156,9 +5239,11 @@ func (c *ProjectsLocationsOperationsListCall) Do(opts ...googleapi.CallOption) (
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "osconfig.projects.locations.operations.list", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 

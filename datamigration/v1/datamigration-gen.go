@@ -4025,6 +4025,9 @@ func (s PromoteMigrationJobRequest) MarshalJSON() ([]byte, error) {
 type RestartMigrationJobRequest struct {
 	// ObjectsFilter: Optional. The object filter to apply to the migration job.
 	ObjectsFilter *MigrationJobObjectsConfig `json:"objectsFilter,omitempty"`
+	// RestartFailedObjects: Optional. If true, only failed objects will be
+	// restarted.
+	RestartFailedObjects bool `json:"restartFailedObjects,omitempty"`
 	// SkipValidation: Optional. Restart the migration job without running prior
 	// configuration verification. Defaults to `false`.
 	SkipValidation bool `json:"skipValidation,omitempty"`

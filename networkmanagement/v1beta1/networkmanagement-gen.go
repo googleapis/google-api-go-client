@@ -2512,31 +2512,43 @@ type RerunConnectivityTestRequest struct {
 // RouteInfo: For display only. Metadata associated with a Compute Engine
 // route.
 type RouteInfo struct {
-	// AdvertisedRouteNextHopUri: For advertised routes, the URI of their next hop,
+	// AdvertisedRouteNextHopUri: For ADVERTISED routes, the URI of their next hop,
 	// i.e. the URI of the hybrid endpoint (VPN tunnel, Interconnect attachment,
 	// NCC router appliance) the advertised prefix is advertised through, or URI of
-	// the source peered network.
+	// the source peered network. Deprecated in favor of the next_hop_uri field,
+	// not used in new tests.
 	AdvertisedRouteNextHopUri string `json:"advertisedRouteNextHopUri,omitempty"`
-	// AdvertisedRouteSourceRouterUri: For advertised dynamic routes, the URI of
+	// AdvertisedRouteSourceRouterUri: For ADVERTISED dynamic routes, the URI of
 	// the Cloud Router that advertised the corresponding IP prefix.
 	AdvertisedRouteSourceRouterUri string `json:"advertisedRouteSourceRouterUri,omitempty"`
 	// DestIpRange: Destination IP range of the route.
 	DestIpRange string `json:"destIpRange,omitempty"`
-	// DestPortRanges: Destination port ranges of the route. Policy based routes
+	// DestPortRanges: Destination port ranges of the route. POLICY_BASED routes
 	// only.
 	DestPortRanges []string `json:"destPortRanges,omitempty"`
 	// DisplayName: Name of a route.
 	DisplayName string `json:"displayName,omitempty"`
 	// InstanceTags: Instance tags of the route.
 	InstanceTags []string `json:"instanceTags,omitempty"`
-	// NccHubUri: URI of a NCC Hub. NCC_HUB routes only.
+	// NccHubRouteUri: For PEERING_SUBNET and PEERING_DYNAMIC routes that are
+	// advertised by NCC Hub, the URI of the corresponding route in NCC Hub's
+	// routing table.
+	NccHubRouteUri string `json:"nccHubRouteUri,omitempty"`
+	// NccHubUri: URI of the NCC Hub the route is advertised by. PEERING_SUBNET and
+	// PEERING_DYNAMIC routes that are advertised by NCC Hub only.
 	NccHubUri string `json:"nccHubUri,omitempty"`
-	// NccSpokeUri: URI of a NCC Spoke. NCC_HUB routes only.
+	// NccSpokeUri: URI of the destination NCC Spoke. PEERING_SUBNET and
+	// PEERING_DYNAMIC routes that are advertised by NCC Hub only.
 	NccSpokeUri string `json:"nccSpokeUri,omitempty"`
-	// NetworkUri: URI of a Compute Engine network. NETWORK routes only.
+	// NetworkUri: URI of a VPC network where route is located.
 	NetworkUri string `json:"networkUri,omitempty"`
-	// NextHop: Next hop of the route.
+	// NextHop: String type of the next hop of the route (for example, "VPN
+	// tunnel"). Deprecated in favor of the next_hop_type and next_hop_uri fields,
+	// not used in new tests.
 	NextHop string `json:"nextHop,omitempty"`
+	// NextHopNetworkUri: URI of a VPC network where the next hop resource is
+	// located.
+	NextHopNetworkUri string `json:"nextHopNetworkUri,omitempty"`
 	// NextHopType: Type of next hop.
 	//
 	// Possible values:
@@ -2544,7 +2556,9 @@ type RouteInfo struct {
 	//   "NEXT_HOP_IP" - Next hop is an IP address.
 	//   "NEXT_HOP_INSTANCE" - Next hop is a Compute Engine instance.
 	//   "NEXT_HOP_NETWORK" - Next hop is a VPC network gateway.
-	//   "NEXT_HOP_PEERING" - Next hop is a peering VPC.
+	//   "NEXT_HOP_PEERING" - Next hop is a peering VPC. This scenario only happens
+	// when the user doesn't have permissions to the project where the next hop
+	// resource is located.
 	//   "NEXT_HOP_INTERCONNECT" - Next hop is an interconnect.
 	//   "NEXT_HOP_VPN_TUNNEL" - Next hop is a VPN tunnel.
 	//   "NEXT_HOP_VPN_GATEWAY" - Next hop is a VPN gateway. This scenario only
@@ -2554,21 +2568,35 @@ type RouteInfo struct {
 	// gateway.
 	//   "NEXT_HOP_INTERNET_GATEWAY" - Next hop is an internet gateway.
 	//   "NEXT_HOP_BLACKHOLE" - Next hop is blackhole; that is, the next hop either
-	// does not exist or is not running.
+	// does not exist or is unusable.
 	//   "NEXT_HOP_ILB" - Next hop is the forwarding rule of an Internal Load
 	// Balancer.
 	//   "NEXT_HOP_ROUTER_APPLIANCE" - Next hop is a [router appliance
 	// instance](https://cloud.google.com/network-connectivity/docs/network-connecti
 	// vity-center/concepts/ra-overview).
-	//   "NEXT_HOP_NCC_HUB" - Next hop is an NCC hub.
+	//   "NEXT_HOP_NCC_HUB" - Next hop is an NCC hub. This scenario only happens
+	// when the user doesn't have permissions to the project where the next hop
+	// resource is located.
 	NextHopType string `json:"nextHopType,omitempty"`
+	// NextHopUri: URI of the next hop resource.
+	NextHopUri string `json:"nextHopUri,omitempty"`
+	// OriginatingRouteDisplayName: For PEERING_SUBNET, PEERING_STATIC and
+	// PEERING_DYNAMIC routes, the name of the originating SUBNET/STATIC/DYNAMIC
+	// route.
+	OriginatingRouteDisplayName string `json:"originatingRouteDisplayName,omitempty"`
+	// OriginatingRouteUri: For PEERING_SUBNET and PEERING_STATIC routes, the URI
+	// of the originating SUBNET/STATIC route.
+	OriginatingRouteUri string `json:"originatingRouteUri,omitempty"`
 	// Priority: Priority of the route.
 	Priority int64 `json:"priority,omitempty"`
-	// Protocols: Protocols of the route. Policy based routes only.
+	// Protocols: Protocols of the route. POLICY_BASED routes only.
 	Protocols []string `json:"protocols,omitempty"`
-	// Region: Region of the route (if applicable).
+	// Region: Region of the route. DYNAMIC, PEERING_DYNAMIC, POLICY_BASED and
+	// ADVERTISED routes only. If set for POLICY_BASED route, this is a region of
+	// VLAN attachments for Cloud Interconnect the route applies to.
 	Region string `json:"region,omitempty"`
-	// RouteScope: Indicates where route is applicable.
+	// RouteScope: Indicates where route is applicable. Deprecated, routes with
+	// NCC_HUB scope are not included in the trace in new tests.
 	//
 	// Possible values:
 	//   "ROUTE_SCOPE_UNSPECIFIED" - Unspecified scope. Default value.
@@ -2583,18 +2611,21 @@ type RouteInfo struct {
 	//   "STATIC" - Static route created by the user, including the default route
 	// to the internet.
 	//   "DYNAMIC" - Dynamic route exchanged between BGP peers.
-	//   "PEERING_SUBNET" - A subnet route received from peering network.
+	//   "PEERING_SUBNET" - A subnet route received from peering network or NCC
+	// Hub.
 	//   "PEERING_STATIC" - A static route received from peering network.
-	//   "PEERING_DYNAMIC" - A dynamic route received from peering network.
+	//   "PEERING_DYNAMIC" - A dynamic route received from peering network or NCC
+	// Hub.
 	//   "POLICY_BASED" - Policy based route.
 	//   "ADVERTISED" - Advertised route. Synthetic route which is used to
 	// transition from the StartFromPrivateNetwork state in Connectivity tests.
 	RouteType string `json:"routeType,omitempty"`
-	// SrcIpRange: Source IP address range of the route. Policy based routes only.
+	// SrcIpRange: Source IP address range of the route. POLICY_BASED routes only.
 	SrcIpRange string `json:"srcIpRange,omitempty"`
-	// SrcPortRanges: Source port ranges of the route. Policy based routes only.
+	// SrcPortRanges: Source port ranges of the route. POLICY_BASED routes only.
 	SrcPortRanges []string `json:"srcPortRanges,omitempty"`
-	// Uri: URI of a route (if applicable).
+	// Uri: URI of a route. SUBNET, STATIC, PEERING_SUBNET (only for peering
+	// network) and POLICY_BASED routes only.
 	Uri string `json:"uri,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AdvertisedRouteNextHopUri")
 	// to unconditionally include in API requests. By default, fields with empty or

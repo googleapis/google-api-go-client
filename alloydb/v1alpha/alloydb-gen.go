@@ -6590,6 +6590,7 @@ func (c *ProjectsLocationsClustersRestoreFromCloudSQLCall) doRequest(alt string)
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "alloydb.projects.locations.clusters.restoreFromCloudSQL", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -6624,9 +6625,11 @@ func (c *ProjectsLocationsClustersRestoreFromCloudSQLCall) Do(opts ...googleapi.
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "alloydb.projects.locations.clusters.restoreFromCloudSQL", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 

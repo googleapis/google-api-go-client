@@ -5125,6 +5125,7 @@ func (c *ProjectsLocationsVpcFlowLogsConfigsCreateCall) doRequest(alt string) (*
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "networkmanagement.projects.locations.vpcFlowLogsConfigs.create", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -5159,9 +5160,11 @@ func (c *ProjectsLocationsVpcFlowLogsConfigsCreateCall) Do(opts ...googleapi.Cal
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "networkmanagement.projects.locations.vpcFlowLogsConfigs.create", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -5221,6 +5224,7 @@ func (c *ProjectsLocationsVpcFlowLogsConfigsDeleteCall) doRequest(alt string) (*
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "networkmanagement.projects.locations.vpcFlowLogsConfigs.delete", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -5255,9 +5259,11 @@ func (c *ProjectsLocationsVpcFlowLogsConfigsDeleteCall) Do(opts ...googleapi.Cal
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "networkmanagement.projects.locations.vpcFlowLogsConfigs.delete", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -5329,6 +5335,7 @@ func (c *ProjectsLocationsVpcFlowLogsConfigsGetCall) doRequest(alt string) (*htt
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "networkmanagement.projects.locations.vpcFlowLogsConfigs.get", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -5364,9 +5371,11 @@ func (c *ProjectsLocationsVpcFlowLogsConfigsGetCall) Do(opts ...googleapi.CallOp
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "networkmanagement.projects.locations.vpcFlowLogsConfigs.get", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -5467,6 +5476,7 @@ func (c *ProjectsLocationsVpcFlowLogsConfigsListCall) doRequest(alt string) (*ht
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "networkmanagement.projects.locations.vpcFlowLogsConfigs.list", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -5502,9 +5512,11 @@ func (c *ProjectsLocationsVpcFlowLogsConfigsListCall) Do(opts ...googleapi.CallO
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "networkmanagement.projects.locations.vpcFlowLogsConfigs.list", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -5605,6 +5617,7 @@ func (c *ProjectsLocationsVpcFlowLogsConfigsPatchCall) doRequest(alt string) (*h
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "networkmanagement.projects.locations.vpcFlowLogsConfigs.patch", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -5639,8 +5652,10 @@ func (c *ProjectsLocationsVpcFlowLogsConfigsPatchCall) Do(opts ...googleapi.Call
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "networkmanagement.projects.locations.vpcFlowLogsConfigs.patch", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }

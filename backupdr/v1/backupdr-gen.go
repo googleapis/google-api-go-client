@@ -9367,6 +9367,7 @@ func (c *ProjectsLocationsServiceConfigInitializeCall) doRequest(alt string) (*h
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "backupdr.projects.locations.serviceConfig.initialize", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -9401,8 +9402,10 @@ func (c *ProjectsLocationsServiceConfigInitializeCall) Do(opts ...googleapi.Call
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "backupdr.projects.locations.serviceConfig.initialize", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }

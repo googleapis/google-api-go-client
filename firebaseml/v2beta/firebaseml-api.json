@@ -206,7 +206,7 @@
       }
     }
   },
-  "revision": "20241211",
+  "revision": "20241215",
   "rootUrl": "https://firebaseml.googleapis.com/",
   "schemas": {
     "Date": {
@@ -1169,6 +1169,10 @@
         "text": {
           "description": "Optional. Text part (can be code).",
           "type": "string"
+        },
+        "thought": {
+          "description": "Optional. Indicates if the part is thought from the model.",
+          "type": "boolean"
         },
         "videoMetadata": {
           "$ref": "GoogleCloudAiplatformV1beta1VideoMetadata",

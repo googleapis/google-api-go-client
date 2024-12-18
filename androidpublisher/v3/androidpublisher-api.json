@@ -4732,7 +4732,7 @@
       }
     }
   },
-  "revision": "20241125",
+  "revision": "20241216",
   "rootUrl": "https://androidpublisher.googleapis.com/",
   "schemas": {
     "Abi": {
@@ -5314,6 +5314,10 @@
         "priceChangeDetails": {
           "$ref": "SubscriptionItemPriceChangeDetails",
           "description": "The information of the last price change for the item since subscription signup."
+        },
+        "recurringPrice": {
+          "$ref": "Money",
+          "description": "The current recurring price of the auto renewing plan."
         }
       },
       "type": "object"

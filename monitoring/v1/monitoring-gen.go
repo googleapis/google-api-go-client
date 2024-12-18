@@ -842,6 +842,39 @@ func (s ColumnSettings) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// ColumnSortingOptions: Data structure to storing column's sort strategy
+type ColumnSortingOptions struct {
+	// Column: Optional. Column name to sort data by
+	Column string `json:"column,omitempty"`
+	// Direction: Optional. A sorting direction that determines ascending or
+	// descending order. This is a legacy field kept for backwards compatibility
+	// with table.
+	//
+	// Possible values:
+	//   "SORT_ORDER_UNSPECIFIED" - An unspecified sort order. This option is
+	// invalid when sorting is required.
+	//   "SORT_ORDER_NONE" - No sorting is applied.
+	//   "SORT_ORDER_ASCENDING" - The lowest-valued entries are selected first.
+	//   "SORT_ORDER_DESCENDING" - The highest-valued entries are selected first.
+	Direction string `json:"direction,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Column") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Column") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ColumnSortingOptions) MarshalJSON() ([]byte, error) {
+	type NoMethod ColumnSortingOptions
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // Dashboard: A Google Stackdriver dashboard. Dashboards define the content and
 // layout of pages in the Stackdriver web application.
 type Dashboard struct {
@@ -1025,6 +1058,9 @@ type DataSet struct {
 	// distribution is displayed as a color. This type is not currently available
 	// in the Stackdriver Monitoring application.
 	PlotType string `json:"plotType,omitempty"`
+	// Sort: Optional. A collection of sort options, affects the order of the data
+	// and legend.
+	Sort []*ColumnSortingOptions `json:"sort,omitempty"`
 	// TargetAxis: Optional. The target axis to use for plotting the metric.
 	//
 	// Possible values:

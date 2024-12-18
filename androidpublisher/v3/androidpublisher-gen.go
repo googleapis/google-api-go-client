@@ -1320,6 +1320,8 @@ type AutoRenewingPlan struct {
 	// PriceChangeDetails: The information of the last price change for the item
 	// since subscription signup.
 	PriceChangeDetails *SubscriptionItemPriceChangeDetails `json:"priceChangeDetails,omitempty"`
+	// RecurringPrice: The current recurring price of the auto renewing plan.
+	RecurringPrice *Money `json:"recurringPrice,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AutoRenewEnabled") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See

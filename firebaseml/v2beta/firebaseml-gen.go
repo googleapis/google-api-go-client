@@ -1420,6 +1420,8 @@ type GoogleCloudAiplatformV1beta1Part struct {
 	InlineData *GoogleCloudAiplatformV1beta1Blob `json:"inlineData,omitempty"`
 	// Text: Optional. Text part (can be code).
 	Text string `json:"text,omitempty"`
+	// Thought: Optional. Indicates if the part is thought from the model.
+	Thought bool `json:"thought,omitempty"`
 	// VideoMetadata: Optional. Video metadata. The metadata should only be
 	// specified while the video data is presented in inline_data or file_data.
 	VideoMetadata *GoogleCloudAiplatformV1beta1VideoMetadata `json:"videoMetadata,omitempty"`

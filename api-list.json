@@ -5544,6 +5544,21 @@
     },
     {
       "kind": "discovery#directoryItem",
+      "id": "safebrowsing:v5alpha1",
+      "name": "safebrowsing",
+      "version": "v5alpha1",
+      "title": "Safe Browsing API",
+      "description": "Enables client applications to check web resources (most commonly URLs) against Google-generated lists of unsafe web resources. The Safe Browsing APIs are for non-commercial use only. If you need to use APIs to detect malicious URLs for commercial purposes – meaning “for sale or revenue-generating purposes” – please refer to the Web Risk API.",
+      "discoveryRestUrl": "https://safebrowsing.googleapis.com/$discovery/rest?version=v5alpha1",
+      "icons": {
+        "x16": "http://www.google.com/images/icons/product/search-16.gif",
+        "x32": "http://www.google.com/images/icons/product/search-32.gif"
+      },
+      "documentationLink": "https://developers.google.com/safe-browsing/",
+      "preferred": true
+    },
+    {
+      "kind": "discovery#directoryItem",
       "id": "sasportal:v1alpha1",
       "name": "sasportal",
       "version": "v1alpha1",

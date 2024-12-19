@@ -6,7 +6,7 @@
 
 // Package chromemanagement provides access to the Chrome Management API.
 //
-// For product documentation, see: http://developers.google.com/chrome/management/
+// For product documentation, see: https://developers.google.com/chrome/management/
 //
 // # Library status
 //

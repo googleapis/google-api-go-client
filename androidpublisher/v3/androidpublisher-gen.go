@@ -1244,18 +1244,20 @@ func (s AssetSliceSet) MarshalJSON() ([]byte, error) {
 // at the end of its subscription period.
 type AutoRenewingBasePlanType struct {
 	// AccountHoldDuration: Optional. Account hold period of the subscription,
-	// specified in ISO 8601 format. Acceptable values must be in DAYS and in the
-	// range P0D (zero days) to P30D (30 days). If not specified, the default value
-	// is P30D (30 days).
+	// specified in ISO 8601 format. Acceptable values must be in days and between
+	// P0D and P60D. If not specified, the default value is P30D. The sum of
+	// gracePeriodDuration and accountHoldDuration must be between P30D and P60D
+	// days, inclusive.
 	AccountHoldDuration string `json:"accountHoldDuration,omitempty"`
 	// BillingPeriodDuration: Required. Immutable. Subscription period, specified
 	// in ISO 8601 format. For a list of acceptable billing periods, refer to the
 	// help center. The duration is immutable after the base plan is created.
 	BillingPeriodDuration string `json:"billingPeriodDuration,omitempty"`
 	// GracePeriodDuration: Grace period of the subscription, specified in ISO 8601
-	// format. Acceptable values are P0D (zero days), P3D (3 days), P7D (7 days),
-	// P14D (14 days), and P30D (30 days). If not specified, a default value will
-	// be used based on the recurring period duration.
+	// format. Acceptable values must be in days and between P0D and the lesser of
+	// 30D and base plan billing period. If not specified, a default value will be
+	// used based on the billing period. The sum of gracePeriodDuration and
+	// accountHoldDuration must be between P30D and P60D days, inclusive.
 	GracePeriodDuration string `json:"gracePeriodDuration,omitempty"`
 	// LegacyCompatible: Whether the renewing base plan is backward compatible. The
 	// backward compatible base plan is returned by the Google Play Billing Library
@@ -3628,9 +3630,10 @@ func (s InstallmentPlan) MarshalJSON() ([]byte, error) {
 // commits to a specified number of payments.
 type InstallmentsBasePlanType struct {
 	// AccountHoldDuration: Optional. Account hold period of the subscription,
-	// specified exclusively in days and in ISO 8601 format. Acceptable values are
-	// P0D (zero days) to P30D (30days). If not specified, the default value is
-	// P30D (30 days).
+	// specified in ISO 8601 format. Acceptable values must be in days and between
+	// P0D and P60D. If not specified, the default value is P30D. The sum of
+	// gracePeriodDuration and accountHoldDuration must be between P30D and P60D
+	// days, inclusive.
 	AccountHoldDuration string `json:"accountHoldDuration,omitempty"`
 	// BillingPeriodDuration: Required. Immutable. Subscription period, specified
 	// in ISO 8601 format. For a list of acceptable billing periods, refer to the
@@ -3640,9 +3643,10 @@ type InstallmentsBasePlanType struct {
 	// is committed to. It is immutable after the base plan is created.
 	CommittedPaymentsCount int64 `json:"committedPaymentsCount,omitempty"`
 	// GracePeriodDuration: Grace period of the subscription, specified in ISO 8601
-	// format. Acceptable values are P0D (zero days), P3D (3 days), P7D (7 days),
-	// P14D (14 days), and P30D (30 days). If not specified, a default value will
-	// be used based on the recurring period duration.
+	// format. Acceptable values must be in days and between P0D and the lesser of
+	// 30D and base plan billing period. If not specified, a default value will be
+	// used based on the billing period. The sum of gracePeriodDuration and
+	// accountHoldDuration must be between P30D and P60D days, inclusive.
 	GracePeriodDuration string `json:"gracePeriodDuration,omitempty"`
 	// ProrationMode: The proration mode for the base plan determines what happens
 	// when a user switches to this plan from another base plan. If unspecified,

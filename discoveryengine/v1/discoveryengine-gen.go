@@ -3775,6 +3775,9 @@ type GoogleCloudDiscoveryengineV1CmekConfig struct {
 	// `projects/{project}/locations/{location}/cmekConfig` or
 	// `projects/{project}/locations/{location}/cmekConfigs/{cmekConfig}`.
 	Name string `json:"name,omitempty"`
+	// SingleRegionKeys: Optional. Single-regional CMEKs that are required for some
+	// VAIS features.
+	SingleRegionKeys []*GoogleCloudDiscoveryengineV1SingleRegionKey `json:"singleRegionKeys,omitempty"`
 	// State: Output only. State of the CmekConfig.
 	//
 	// Possible values:
@@ -4739,6 +4742,9 @@ type GoogleCloudDiscoveryengineV1DataStore struct {
 	//   "MEDIA" - The media industry vertical.
 	//   "HEALTHCARE_FHIR" - The healthcare FHIR vertical.
 	IndustryVertical string `json:"industryVertical,omitempty"`
+	// IsInfobotFaqDataStore: Optional. If set, this DataStore is an Infobot FAQ
+	// DataStore.
+	IsInfobotFaqDataStore bool `json:"isInfobotFaqDataStore,omitempty"`
 	// KmsKeyName: Input only. The KMS key to be used to protect this DataStore at
 	// creation time. Must be set for requests that need to comply with CMEK Org
 	// Policy protections. If this field is set and processed successfully, the
@@ -5020,7 +5026,8 @@ type GoogleCloudDiscoveryengineV1Document struct {
 	// IndexStatus: Output only. The index status of the document. * If document is
 	// indexed successfully, the index_time field is populated. * Otherwise, if
 	// document is not indexed due to errors, the error_samples field is populated.
-	// * Otherwise, index_status is unset.
+	// * Otherwise, if document's index is in progress, the pending_message field
+	// is populated.
 	IndexStatus *GoogleCloudDiscoveryengineV1DocumentIndexStatus `json:"indexStatus,omitempty"`
 	// IndexTime: Output only. The last time the document was indexed. If this
 	// field is set, the document could be returned in search results. This field
@@ -5115,6 +5122,9 @@ type GoogleCloudDiscoveryengineV1DocumentIndexStatus struct {
 	// IndexTime: The time when the document was indexed. If this field is
 	// populated, it means the document has been indexed.
 	IndexTime string `json:"indexTime,omitempty"`
+	// PendingMessage: Immutable. The message indicates the document index is in
+	// progress. If this field is populated, the document index is pending.
+	PendingMessage string `json:"pendingMessage,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "ErrorSamples") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -5818,6 +5828,655 @@ type GoogleCloudDiscoveryengineV1GcsSource struct {
 
 func (s GoogleCloudDiscoveryengineV1GcsSource) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDiscoveryengineV1GcsSource
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1GenerateGroundedContentRequest: Top-level
+// message sent by the client for the `GenerateGroundedContent` method.
+type GoogleCloudDiscoveryengineV1GenerateGroundedContentRequest struct {
+	// Contents: Content of the current conversation with the model. For
+	// single-turn queries, this is a single instance. For multi-turn queries, this
+	// is a repeated field that contains conversation history + latest request.
+	Contents []*GoogleCloudDiscoveryengineV1GroundedGenerationContent `json:"contents,omitempty"`
+	// GenerationSpec: Content generation specification.
+	GenerationSpec *GoogleCloudDiscoveryengineV1GenerateGroundedContentRequestGenerationSpec `json:"generationSpec,omitempty"`
+	// GroundingSpec: Grounding specification.
+	GroundingSpec *GoogleCloudDiscoveryengineV1GenerateGroundedContentRequestGroundingSpec `json:"groundingSpec,omitempty"`
+	// SystemInstruction: Content of the system instruction for the current API.
+	// These instructions will take priority over any other prompt instructions if
+	// the selected model is supporting them.
+	SystemInstruction *GoogleCloudDiscoveryengineV1GroundedGenerationContent `json:"systemInstruction,omitempty"`
+	// UserLabels: The user labels applied to a resource must meet the following
+	// requirements: * Each resource can have multiple labels, up to a maximum of
+	// 64. * Each label must be a key-value pair. * Keys have a minimum length of 1
+	// character and a maximum length of 63 characters and cannot be empty. Values
+	// can be empty and have a maximum length of 63 characters. * Keys and values
+	// can contain only lowercase letters, numeric characters, underscores, and
+	// dashes. All characters must use UTF-8 encoding, and international characters
+	// are allowed. * The key portion of a label must be unique. However, you can
+	// use the same key with multiple resources. * Keys must start with a lowercase
+	// letter or international character. See Google Cloud Document
+	// (https://cloud.google.com/resource-manager/docs/creating-managing-labels#requirements)
+	// for more details.
+	UserLabels map[string]string `json:"userLabels,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Contents") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Contents") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1GenerateGroundedContentRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1GenerateGroundedContentRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1GenerateGroundedContentRequestDynamicRetrievalCon
+// figuration: Describes the options to customize dynamic retrieval.
+type GoogleCloudDiscoveryengineV1GenerateGroundedContentRequestDynamicRetrievalConfiguration struct {
+	// Predictor: Specification for the predictor for dynamic retrieval.
+	Predictor *GoogleCloudDiscoveryengineV1GenerateGroundedContentRequestDynamicRetrievalConfigurationDynamicRetrievalPredictor `json:"predictor,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Predictor") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Predictor") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1GenerateGroundedContentRequestDynamicRetrievalConfiguration) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1GenerateGroundedContentRequestDynamicRetrievalConfiguration
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1GenerateGroundedContentRequestDynamicRetrievalCon
+// figurationDynamicRetrievalPredictor: Describes the predictor settings for
+// dynamic retrieval.
+type GoogleCloudDiscoveryengineV1GenerateGroundedContentRequestDynamicRetrievalConfigurationDynamicRetrievalPredictor struct {
+	// Threshold: The value of the threshold. If the predictor will predict a value
+	// smaller than this, it would suppress grounding in the source.
+	Threshold float64 `json:"threshold,omitempty"`
+	// Version: The version of the predictor to be used in dynamic retrieval.
+	//
+	// Possible values:
+	//   "VERSION_UNSPECIFIED" - Automatically choose the best version of the
+	// retrieval predictor.
+	//   "V1_INDEPENDENT" - The V1 model which is evaluating each source
+	// independently.
+	Version string `json:"version,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Threshold") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Threshold") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1GenerateGroundedContentRequestDynamicRetrievalConfigurationDynamicRetrievalPredictor) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1GenerateGroundedContentRequestDynamicRetrievalConfigurationDynamicRetrievalPredictor
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+func (s *GoogleCloudDiscoveryengineV1GenerateGroundedContentRequestDynamicRetrievalConfigurationDynamicRetrievalPredictor) UnmarshalJSON(data []byte) error {
+	type NoMethod GoogleCloudDiscoveryengineV1GenerateGroundedContentRequestDynamicRetrievalConfigurationDynamicRetrievalPredictor
+	var s1 struct {
+		Threshold gensupport.JSONFloat64 `json:"threshold"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.Threshold = float64(s1.Threshold)
+	return nil
+}
+
+// GoogleCloudDiscoveryengineV1GenerateGroundedContentRequestGenerationSpec:
+// Content generation specification.
+type GoogleCloudDiscoveryengineV1GenerateGroundedContentRequestGenerationSpec struct {
+	// FrequencyPenalty: If specified, custom value for frequency penalty will be
+	// used.
+	FrequencyPenalty float64 `json:"frequencyPenalty,omitempty"`
+	// LanguageCode: Language code for content. Use language tags defined by BCP47
+	// (https://www.rfc-editor.org/rfc/bcp/bcp47.txt).
+	LanguageCode string `json:"languageCode,omitempty"`
+	// MaxOutputTokens: If specified, custom value for max output tokens will be
+	// used.
+	MaxOutputTokens int64 `json:"maxOutputTokens,omitempty"`
+	// ModelId: Specifies which Vertex model id to use for generation.
+	ModelId string `json:"modelId,omitempty"`
+	// PresencePenalty: If specified, custom value for presence penalty will be
+	// used.
+	PresencePenalty float64 `json:"presencePenalty,omitempty"`
+	// Seed: If specified, custom value for the seed will be used.
+	Seed int64 `json:"seed,omitempty"`
+	// Temperature: If specified, custom value for the temperature will be used.
+	Temperature float64 `json:"temperature,omitempty"`
+	// TopK: If specified, custom value for top-k sampling will be used.
+	TopK int64 `json:"topK,omitempty"`
+	// TopP: If specified, custom value for nucleus sampling will be used.
+	TopP float64 `json:"topP,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "FrequencyPenalty") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "FrequencyPenalty") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1GenerateGroundedContentRequestGenerationSpec) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1GenerateGroundedContentRequestGenerationSpec
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+func (s *GoogleCloudDiscoveryengineV1GenerateGroundedContentRequestGenerationSpec) UnmarshalJSON(data []byte) error {
+	type NoMethod GoogleCloudDiscoveryengineV1GenerateGroundedContentRequestGenerationSpec
+	var s1 struct {
+		FrequencyPenalty gensupport.JSONFloat64 `json:"frequencyPenalty"`
+		PresencePenalty  gensupport.JSONFloat64 `json:"presencePenalty"`
+		Temperature      gensupport.JSONFloat64 `json:"temperature"`
+		TopP             gensupport.JSONFloat64 `json:"topP"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.FrequencyPenalty = float64(s1.FrequencyPenalty)
+	s.PresencePenalty = float64(s1.PresencePenalty)
+	s.Temperature = float64(s1.Temperature)
+	s.TopP = float64(s1.TopP)
+	return nil
+}
+
+// GoogleCloudDiscoveryengineV1GenerateGroundedContentRequestGroundingSource:
+// Grounding source.
+type GoogleCloudDiscoveryengineV1GenerateGroundedContentRequestGroundingSource struct {
+	// GoogleSearchSource: If set, grounding is performed with Google Search.
+	GoogleSearchSource *GoogleCloudDiscoveryengineV1GenerateGroundedContentRequestGroundingSourceGoogleSearchSource `json:"googleSearchSource,omitempty"`
+	// InlineSource: If set, grounding is performed with inline content.
+	InlineSource *GoogleCloudDiscoveryengineV1GenerateGroundedContentRequestGroundingSourceInlineSource `json:"inlineSource,omitempty"`
+	// SearchSource: If set, grounding is performed with Vertex AI Search.
+	SearchSource *GoogleCloudDiscoveryengineV1GenerateGroundedContentRequestGroundingSourceSearchSource `json:"searchSource,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "GoogleSearchSource") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "GoogleSearchSource") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1GenerateGroundedContentRequestGroundingSource) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1GenerateGroundedContentRequestGroundingSource
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1GenerateGroundedContentRequestGroundingSourceGoog
+// leSearchSource: Google Search config parameters.
+type GoogleCloudDiscoveryengineV1GenerateGroundedContentRequestGroundingSourceGoogleSearchSource struct {
+	// DynamicRetrievalConfig: Optional. Specifies the dynamic retrieval
+	// configuration for the given source.
+	DynamicRetrievalConfig *GoogleCloudDiscoveryengineV1GenerateGroundedContentRequestDynamicRetrievalConfiguration `json:"dynamicRetrievalConfig,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "DynamicRetrievalConfig") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DynamicRetrievalConfig") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1GenerateGroundedContentRequestGroundingSourceGoogleSearchSource) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1GenerateGroundedContentRequestGroundingSourceGoogleSearchSource
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1GenerateGroundedContentRequestGroundingSourceInli
+// neSource: Message to be used for grounding based on inline content.
+type GoogleCloudDiscoveryengineV1GenerateGroundedContentRequestGroundingSourceInlineSource struct {
+	// Attributes: Attributes associated with the content. Common attributes
+	// include `source` (indicating where the content was sourced from) and
+	// `author` (indicating the author of the content).
+	Attributes map[string]string `json:"attributes,omitempty"`
+	// GroundingFacts: List of facts to be used for grounding.
+	GroundingFacts []*GoogleCloudDiscoveryengineV1GroundingFact `json:"groundingFacts,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Attributes") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Attributes") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1GenerateGroundedContentRequestGroundingSourceInlineSource) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1GenerateGroundedContentRequestGroundingSourceInlineSource
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1GenerateGroundedContentRequestGroundingSourceSear
+// chSource: Message to be used for grounding with Vertex AI Search.
+type GoogleCloudDiscoveryengineV1GenerateGroundedContentRequestGroundingSourceSearchSource struct {
+	// Filter: Filter expression to be applied to the search. The syntax is the
+	// same as SearchRequest.filter.
+	Filter string `json:"filter,omitempty"`
+	// MaxResultCount: Number of search results to return. The default value is 10.
+	// The maximumm allowed value is 10.
+	MaxResultCount int64 `json:"maxResultCount,omitempty"`
+	// SafeSearch: If set, safe search is enabled in Vertex AI Search requests.
+	SafeSearch bool `json:"safeSearch,omitempty"`
+	// ServingConfig: The resource name of the Engine to use. Format:
+	// `projects/{project}/locations/{location}/collections/{collection_id}/engines/
+	// {engine_id}/servingConfigs/{serving_config_id}`
+	ServingConfig string `json:"servingConfig,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Filter") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Filter") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1GenerateGroundedContentRequestGroundingSourceSearchSource) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1GenerateGroundedContentRequestGroundingSourceSearchSource
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1GenerateGroundedContentRequestGroundingSpec:
+// Grounding specification.
+type GoogleCloudDiscoveryengineV1GenerateGroundedContentRequestGroundingSpec struct {
+	// GroundingSources: Grounding sources.
+	GroundingSources []*GoogleCloudDiscoveryengineV1GenerateGroundedContentRequestGroundingSource `json:"groundingSources,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "GroundingSources") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "GroundingSources") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1GenerateGroundedContentRequestGroundingSpec) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1GenerateGroundedContentRequestGroundingSpec
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1GenerateGroundedContentResponse: Response for
+// the `GenerateGroundedContent` method.
+type GoogleCloudDiscoveryengineV1GenerateGroundedContentResponse struct {
+	// Candidates: Generated candidates.
+	Candidates []*GoogleCloudDiscoveryengineV1GenerateGroundedContentResponseCandidate `json:"candidates,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "Candidates") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Candidates") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1GenerateGroundedContentResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1GenerateGroundedContentResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1GenerateGroundedContentResponseCandidate: A
+// response candidate generated from the model.
+type GoogleCloudDiscoveryengineV1GenerateGroundedContentResponseCandidate struct {
+	// Content: Content of the candidate.
+	Content *GoogleCloudDiscoveryengineV1GroundedGenerationContent `json:"content,omitempty"`
+	// GroundingMetadata: Grounding metadata for the generated content.
+	GroundingMetadata *GoogleCloudDiscoveryengineV1GenerateGroundedContentResponseCandidateGroundingMetadata `json:"groundingMetadata,omitempty"`
+	// GroundingScore: The overall grounding score for the candidate, in the range
+	// of [0, 1].
+	GroundingScore float64 `json:"groundingScore,omitempty"`
+	// Index: Index of the candidate.
+	Index int64 `json:"index,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Content") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Content") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1GenerateGroundedContentResponseCandidate) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1GenerateGroundedContentResponseCandidate
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+func (s *GoogleCloudDiscoveryengineV1GenerateGroundedContentResponseCandidate) UnmarshalJSON(data []byte) error {
+	type NoMethod GoogleCloudDiscoveryengineV1GenerateGroundedContentResponseCandidate
+	var s1 struct {
+		GroundingScore gensupport.JSONFloat64 `json:"groundingScore"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.GroundingScore = float64(s1.GroundingScore)
+	return nil
+}
+
+// GoogleCloudDiscoveryengineV1GenerateGroundedContentResponseCandidateGrounding
+// Metadata: Citation for the generated content.
+type GoogleCloudDiscoveryengineV1GenerateGroundedContentResponseCandidateGroundingMetadata struct {
+	// GroundingSupport: GroundingSupport across all claims in the answer
+	// candidate. An support to a fact indicates that the claim is supported by the
+	// fact.
+	GroundingSupport []*GoogleCloudDiscoveryengineV1GenerateGroundedContentResponseCandidateGroundingMetadataGroundingSupport `json:"groundingSupport,omitempty"`
+	// RetrievalMetadata: Retrieval metadata to provide an understanding in the
+	// retrieval steps performed by the model. There can be multiple such messages
+	// which can correspond to different parts of the retrieval. This is a
+	// mechanism used to ensure transparency to our users.
+	RetrievalMetadata []*GoogleCloudDiscoveryengineV1GenerateGroundedContentResponseCandidateGroundingMetadataRetrievalMetadata `json:"retrievalMetadata,omitempty"`
+	// SearchEntryPoint: Google search entry for the following-up web searches.
+	SearchEntryPoint *GoogleCloudDiscoveryengineV1GenerateGroundedContentResponseCandidateGroundingMetadataSearchEntryPoint `json:"searchEntryPoint,omitempty"`
+	// SupportChunks: List of chunks to be attributed across all claims in the
+	// candidate. These are derived from the grounding sources supplied in the
+	// request.
+	SupportChunks []*GoogleCloudDiscoveryengineV1FactChunk `json:"supportChunks,omitempty"`
+	// WebSearchQueries: Web search queries for the following-up web search.
+	WebSearchQueries []string `json:"webSearchQueries,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "GroundingSupport") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "GroundingSupport") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1GenerateGroundedContentResponseCandidateGroundingMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1GenerateGroundedContentResponseCandidateGroundingMetadata
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1GenerateGroundedContentResponseCandidateGrounding
+// MetadataDynamicRetrievalMetadata: Describes the metadata about dynamic
+// retrieval.
+type GoogleCloudDiscoveryengineV1GenerateGroundedContentResponseCandidateGroundingMetadataDynamicRetrievalMetadata struct {
+	// PredictorMetadata: Metadata for the dynamic retrieval predictor.
+	PredictorMetadata *GoogleCloudDiscoveryengineV1GenerateGroundedContentResponseCandidateGroundingMetadataDynamicRetrievalPredictorMetadata `json:"predictorMetadata,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "PredictorMetadata") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "PredictorMetadata") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1GenerateGroundedContentResponseCandidateGroundingMetadataDynamicRetrievalMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1GenerateGroundedContentResponseCandidateGroundingMetadataDynamicRetrievalMetadata
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1GenerateGroundedContentResponseCandidateGrounding
+// MetadataDynamicRetrievalPredictorMetadata: Describes the metadata about the
+// dynamic retrieval predictor.
+type GoogleCloudDiscoveryengineV1GenerateGroundedContentResponseCandidateGroundingMetadataDynamicRetrievalPredictorMetadata struct {
+	// Prediction: The value of the predictor. This should be between [0, 1] where
+	// a value of 0 means that the query would not benefit from grounding, while a
+	// value of 1.0 means that the query would benefit the most. In between values
+	// allow to differentiate between different usefulness scores for grounding.
+	Prediction float64 `json:"prediction,omitempty"`
+	// Version: The version of the predictor which was used in dynamic retrieval.
+	//
+	// Possible values:
+	//   "VERSION_UNSPECIFIED" - Unspecified version, should never be used.
+	//   "V1_INDEPENDENT" - The V1 model which is evaluating each source
+	// independently.
+	Version string `json:"version,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Prediction") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Prediction") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1GenerateGroundedContentResponseCandidateGroundingMetadataDynamicRetrievalPredictorMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1GenerateGroundedContentResponseCandidateGroundingMetadataDynamicRetrievalPredictorMetadata
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+func (s *GoogleCloudDiscoveryengineV1GenerateGroundedContentResponseCandidateGroundingMetadataDynamicRetrievalPredictorMetadata) UnmarshalJSON(data []byte) error {
+	type NoMethod GoogleCloudDiscoveryengineV1GenerateGroundedContentResponseCandidateGroundingMetadataDynamicRetrievalPredictorMetadata
+	var s1 struct {
+		Prediction gensupport.JSONFloat64 `json:"prediction"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.Prediction = float64(s1.Prediction)
+	return nil
+}
+
+// GoogleCloudDiscoveryengineV1GenerateGroundedContentResponseCandidateGrounding
+// MetadataGroundingSupport: Grounding info for a claim in the candidate and
+// its support.
+type GoogleCloudDiscoveryengineV1GenerateGroundedContentResponseCandidateGroundingMetadataGroundingSupport struct {
+	// ClaimText: Text for the claim in the candidate. Always provided when a
+	// support is found.
+	ClaimText string `json:"claimText,omitempty"`
+	// SupportChunkIndices: A list of indices (into 'support_chunks') specifying
+	// the citations associated with the claim. For instance [1,3,4] means that
+	// support_chunks[1], support_chunks[3], support_chunks[4] are the chunks
+	// attributed to the claim.
+	SupportChunkIndices []int64 `json:"supportChunkIndices,omitempty"`
+	// SupportScore: A score in the range of [0, 1] describing how grounded is a
+	// specific claim in the support chunks indicated. Higher value means that the
+	// claim is better supported by the chunks.
+	SupportScore float64 `json:"supportScore,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ClaimText") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ClaimText") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1GenerateGroundedContentResponseCandidateGroundingMetadataGroundingSupport) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1GenerateGroundedContentResponseCandidateGroundingMetadataGroundingSupport
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+func (s *GoogleCloudDiscoveryengineV1GenerateGroundedContentResponseCandidateGroundingMetadataGroundingSupport) UnmarshalJSON(data []byte) error {
+	type NoMethod GoogleCloudDiscoveryengineV1GenerateGroundedContentResponseCandidateGroundingMetadataGroundingSupport
+	var s1 struct {
+		SupportScore gensupport.JSONFloat64 `json:"supportScore"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.SupportScore = float64(s1.SupportScore)
+	return nil
+}
+
+// GoogleCloudDiscoveryengineV1GenerateGroundedContentResponseCandidateGrounding
+// MetadataRetrievalMetadata: Describes the metadata associated with a
+// retrieval step.
+type GoogleCloudDiscoveryengineV1GenerateGroundedContentResponseCandidateGroundingMetadataRetrievalMetadata struct {
+	// DynamicRetrievalMetadata: Metadata for dynamic retrieval.
+	DynamicRetrievalMetadata *GoogleCloudDiscoveryengineV1GenerateGroundedContentResponseCandidateGroundingMetadataDynamicRetrievalMetadata `json:"dynamicRetrievalMetadata,omitempty"`
+	// Source: Describes the source to which the metadata is referring to.
+	//
+	// Possible values:
+	//   "SOURCE_UNSPECIFIED" - Unspecified source.
+	//   "VERTEX_AI_SEARCH" - Vertex AI search.
+	//   "GOOGLE_SEARCH" - Google Search.
+	//   "INLINE_CONTENT" - User inline provided content.
+	//   "GOOGLE_MAPS" - Google Maps.
+	Source string `json:"source,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "DynamicRetrievalMetadata")
+	// to unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DynamicRetrievalMetadata") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1GenerateGroundedContentResponseCandidateGroundingMetadataRetrievalMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1GenerateGroundedContentResponseCandidateGroundingMetadataRetrievalMetadata
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1GenerateGroundedContentResponseCandidateGrounding
+// MetadataSearchEntryPoint: Google search entry point.
+type GoogleCloudDiscoveryengineV1GenerateGroundedContentResponseCandidateGroundingMetadataSearchEntryPoint struct {
+	// RenderedContent: Web content snippet that can be embedded in a web page or
+	// an app webview.
+	RenderedContent string `json:"renderedContent,omitempty"`
+	// SdkBlob: Base64 encoded JSON representing array of tuple.
+	SdkBlob string `json:"sdkBlob,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "RenderedContent") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "RenderedContent") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1GenerateGroundedContentResponseCandidateGroundingMetadataSearchEntryPoint) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1GenerateGroundedContentResponseCandidateGroundingMetadataSearchEntryPoint
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1GroundedGenerationContent: Base structured
+// datatype containing multi-part content of a message.
+type GoogleCloudDiscoveryengineV1GroundedGenerationContent struct {
+	// Parts: Ordered `Parts` that constitute a single message.
+	Parts []*GoogleCloudDiscoveryengineV1GroundedGenerationContentPart `json:"parts,omitempty"`
+	// Role: Producer of the content. Must be either `user` or `model`. Intended to
+	// be used for multi-turn conversations. Otherwise, it can be left unset.
+	Role string `json:"role,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Parts") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Parts") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1GroundedGenerationContent) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1GroundedGenerationContent
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1GroundedGenerationContentPart: Single part of
+// content.
+type GoogleCloudDiscoveryengineV1GroundedGenerationContentPart struct {
+	// Text: Inline text.
+	Text string `json:"text,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Text") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Text") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1GroundedGenerationContentPart) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1GroundedGenerationContentPart
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -9438,6 +10097,32 @@ func (s GoogleCloudDiscoveryengineV1SessionTurn) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudDiscoveryengineV1SingleRegionKey: Metadata for single-regional
+// CMEKs.
+type GoogleCloudDiscoveryengineV1SingleRegionKey struct {
+	// KmsKey: Required. Single-regional kms key resource name which will be used
+	// to encrypt resources
+	// `projects/{project}/locations/{location}/keyRings/{keyRing}/cryptoKeys/{keyId
+	// }`.
+	KmsKey string `json:"kmsKey,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "KmsKey") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "KmsKey") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1SingleRegionKey) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1SingleRegionKey
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudDiscoveryengineV1SiteSearchEngine: SiteSearchEngine captures
 // DataStore level site search persisting configurations. It is a singleton
 // value per data store.
@@ -10270,6 +10955,38 @@ func (s GoogleCloudDiscoveryengineV1alphaAclConfig) MarshalJSON() ([]byte, error
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudDiscoveryengineV1alphaActionConfig: Informations to support
+// actions on the connector.
+type GoogleCloudDiscoveryengineV1alphaActionConfig struct {
+	// ActionParams: Required. Params needed to support actions in the format of
+	// (Key, Value) pairs. Required parameters for sources that support OAUTH, i.e.
+	// `gmail`, `google_calendar`, `jira`, `workday`, `salesforce`, `confluence`: *
+	// Key: `client_id` * Value: type STRING. The client id for the service
+	// provider to identify your application. * Key: `client_secret` * Value:type
+	// STRING. The client secret generated by the application's authorization
+	// server.
+	ActionParams googleapi.RawMessage `json:"actionParams,omitempty"`
+	// IsActionConfigured: Output only. The connector contains the necessary
+	// parameters and is configured to support actions.
+	IsActionConfigured bool `json:"isActionConfigured,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ActionParams") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ActionParams") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1alphaActionConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1alphaActionConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudDiscoveryengineV1alphaAdvancedSiteSearchConfig: Configuration
 // data for advance site search.
 type GoogleCloudDiscoveryengineV1alphaAdvancedSiteSearchConfig struct {
@@ -11034,6 +11751,9 @@ type GoogleCloudDiscoveryengineV1alphaCmekConfig struct {
 	// `projects/{project}/locations/{location}/cmekConfig` or
 	// `projects/{project}/locations/{location}/cmekConfigs/{cmekConfig}`.
 	Name string `json:"name,omitempty"`
+	// SingleRegionKeys: Optional. Single-regional CMEKs that are required for some
+	// VAIS features.
+	SingleRegionKeys []*GoogleCloudDiscoveryengineV1alphaSingleRegionKey `json:"singleRegionKeys,omitempty"`
 	// State: Output only. State of the CmekConfig.
 	//
 	// Possible values:
@@ -11062,6 +11782,47 @@ type GoogleCloudDiscoveryengineV1alphaCmekConfig struct {
 
 func (s GoogleCloudDiscoveryengineV1alphaCmekConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDiscoveryengineV1alphaCmekConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1alphaCollection: Collection is a container for
+// configuring resources and access to a set of DataStores.
+type GoogleCloudDiscoveryengineV1alphaCollection struct {
+	// CreateTime: Output only. Timestamp the Collection was created at.
+	CreateTime string `json:"createTime,omitempty"`
+	// DataConnector: Output only. The data connector, if present, manages the
+	// connection for data stores in the Collection. To set up the connector, use
+	// DataConnectorService.SetUpDataConnector method, which creates a new
+	// Collection while setting up the DataConnector singleton resource. Setting up
+	// connector on an existing Collection is not supported. This output only field
+	// contains a subset of the DataConnector fields, including `name`,
+	// `data_source`, `entities.entity_name` and `entities.data_store`. To get more
+	// details about a data connector, use the DataConnector.GetDataConnector
+	// method.
+	DataConnector *GoogleCloudDiscoveryengineV1alphaDataConnector `json:"dataConnector,omitempty"`
+	// DisplayName: Required. The Collection display name. This field must be a
+	// UTF-8 encoded string with a length limit of 128 characters. Otherwise, an
+	// INVALID_ARGUMENT error is returned.
+	DisplayName string `json:"displayName,omitempty"`
+	// Name: Immutable. The full resource name of the Collection. Format:
+	// `projects/{project}/locations/{location}/collections/{collection_id}`. This
+	// field must be a UTF-8 encoded string with a length limit of 1024 characters.
+	Name string `json:"name,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "CreateTime") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CreateTime") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1alphaCollection) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1alphaCollection
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -11145,6 +11906,135 @@ type GoogleCloudDiscoveryengineV1alphaConditionTimeRange struct {
 
 func (s GoogleCloudDiscoveryengineV1alphaConditionTimeRange) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDiscoveryengineV1alphaConditionTimeRange
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1alphaConnectorRun: A data sync run of
+// DataConnector. After DataConnector is successfully initialized, data syncs
+// are scheduled at DataConnector.refresh_interval. A ConnectorRun represents a
+// data sync either in the past or onging that the moment. //
+type GoogleCloudDiscoveryengineV1alphaConnectorRun struct {
+	// EndTime: Output only. The time when the connector run ended.
+	EndTime string `json:"endTime,omitempty"`
+	// EntityRuns: Output only. The details of the entities synced at the
+	// ConnectorRun. Each ConnectorRun consists of syncing one or more entities.
+	EntityRuns []*GoogleCloudDiscoveryengineV1alphaConnectorRunEntityRun `json:"entityRuns,omitempty"`
+	// Errors: Contains info about errors incurred during the sync. Only exist if
+	// running into an error state. Contains error code and error message. Use with
+	// the `state` field.
+	Errors []*GoogleRpcStatus `json:"errors,omitempty"`
+	// LatestPauseTime: Output only. The time when the connector run was most
+	// recently paused.
+	LatestPauseTime string `json:"latestPauseTime,omitempty"`
+	// Name: Output only. The full resource name of the Connector Run. Format:
+	// `projects/*/locations/*/collections/*/dataConnector/connectorRuns/*`. The
+	// `connector_run_id` is system-generated.
+	Name string `json:"name,omitempty"`
+	// StartTime: Output only. The time when the connector run started.
+	StartTime string `json:"startTime,omitempty"`
+	// State: Output only. The state of the sync run.
+	//
+	// Possible values:
+	//   "STATE_UNSPECIFIED" - Default value.
+	//   "RUNNING" - The data sync is ongoing.
+	//   "SUCCEEDED" - The data sync is finished.
+	//   "FAILED" - The data sync is failed.
+	//   "OVERRUN" - Data sync has been running longer than expected and is still
+	// running at the time the next run is supposed to start.
+	//   "CANCELLED" - Data sync was scheduled but has been cancelled.
+	//   "PENDING" - Data sync is about to start.
+	//   "WARNING" - The data sync completed with non-fatal errors.
+	State string `json:"state,omitempty"`
+	// StateUpdateTime: Timestamp at which the connector run sync state was last
+	// updated.
+	StateUpdateTime string `json:"stateUpdateTime,omitempty"`
+	// Trigger: Output only. The trigger for this ConnectorRun.
+	//
+	// Possible values:
+	//   "TRIGGER_UNSPECIFIED" - Default value.
+	//   "SCHEDULER" - ConnectorRun triggered by scheduler if connector has
+	// PERIODIC sync mode.
+	//   "INITIALIZATION" - ConnectorRun auto triggered by connector
+	// initialization.
+	//   "RESUME" - ConnectorRun auto triggered by resuming connector.
+	//   "MANUAL" - ConnectorRun triggered by user manually.
+	Trigger string `json:"trigger,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "EndTime") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "EndTime") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1alphaConnectorRun) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1alphaConnectorRun
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1alphaConnectorRunEntityRun: Represents an entity
+// that was synced in this ConnectorRun.
+type GoogleCloudDiscoveryengineV1alphaConnectorRunEntityRun struct {
+	// EntityName: The name of the source entity.
+	EntityName string `json:"entityName,omitempty"`
+	// ErrorRecordCount: The total number of documents failed at sync at any stage
+	// (extraction, indexing, etc).
+	ErrorRecordCount int64 `json:"errorRecordCount,omitempty,string"`
+	// Errors: The errors from the entity's sync run. Only exist if running into an
+	// error state. Contains error code and error message.
+	Errors []*GoogleRpcStatus `json:"errors,omitempty"`
+	// ExtractedRecordCount: The number of documents extracted from connector
+	// source, ready to be ingested to UCS.
+	ExtractedRecordCount int64 `json:"extractedRecordCount,omitempty,string"`
+	// IndexedRecordCount: The number of documents indexed.
+	IndexedRecordCount int64 `json:"indexedRecordCount,omitempty,string"`
+	// SourceApiRequestCount: The number of requests sent to 3p API.
+	SourceApiRequestCount int64 `json:"sourceApiRequestCount,omitempty,string"`
+	// State: The state of the entity's sync run.
+	//
+	// Possible values:
+	//   "STATE_UNSPECIFIED" - Default value.
+	//   "RUNNING" - The data sync is ongoing.
+	//   "SUCCEEDED" - The data sync is finished.
+	//   "FAILED" - The data sync is failed.
+	//   "OVERRUN" - Data sync has been running longer than expected and is still
+	// running at the time the next run is supposed to start.
+	//   "CANCELLED" - Data sync was scheduled but has been cancelled.
+	//   "PENDING" - Data sync is about to start.
+	//   "WARNING" - The data sync completed with non-fatal errors.
+	State string `json:"state,omitempty"`
+	// StateUpdateTime: Timestamp at which the entity sync state was last updated.
+	StateUpdateTime string `json:"stateUpdateTime,omitempty"`
+	// StatsUpdateTime: The timestamp for either extracted_documents_count,
+	// indexed_documents_count and error_documents_count was last updated.
+	StatsUpdateTime string `json:"statsUpdateTime,omitempty"`
+	// SyncType: Sync type of this run.
+	//
+	// Possible values:
+	//   "SYNC_TYPE_UNSPECIFIED" - Sync type unspecified.
+	//   "FULL" - Sync triggers full sync of all documents.
+	//   "INCREMENTAL" - Incremental sync of updated documents.
+	SyncType string `json:"syncType,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "EntityName") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "EntityName") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1alphaConnectorRunEntityRun) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1alphaConnectorRunEntityRun
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -11565,6 +12455,195 @@ func (s GoogleCloudDiscoveryengineV1alphaCustomFineTuningSpec) MarshalJSON() ([]
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudDiscoveryengineV1alphaDataConnector: Manages the connection to
+// external data sources for all data stores grouped under a Collection. It's a
+// singleton resource of Collection. The initialization is only supported
+// through SetUpDataConnector method, which will create a new Collection and
+// initialize its DataConnector. //
+type GoogleCloudDiscoveryengineV1alphaDataConnector struct {
+	// ActionConfig: Optional. Action configurations to make the connector support
+	// actions.
+	ActionConfig *GoogleCloudDiscoveryengineV1alphaActionConfig `json:"actionConfig,omitempty"`
+	// AutoRunDisabled: Indicates whether the connector is disabled for auto run.
+	// It can be used to pause periodical and real time sync.
+	AutoRunDisabled bool `json:"autoRunDisabled,omitempty"`
+	// BlockingReasons: Output only. User actions that must be completed before the
+	// connector can start syncing data.
+	//
+	// Possible values:
+	//   "BLOCKING_REASON_UNSPECIFIED" - Default value.
+	//   "ALLOWLIST_STATIC_IP" - Connector requires customer to allowlist static
+	// IPs.
+	//   "ALLOWLIST_IN_SERVICE_ATTACHMENT" - Connector requires customer to
+	// allowlist our project in their service attachment.
+	BlockingReasons []string `json:"blockingReasons,omitempty"`
+	// CreateTime: Output only. Timestamp the DataConnector was created at.
+	CreateTime string `json:"createTime,omitempty"`
+	// DataSource: Required. The name of the data source. Supported values:
+	// `salesforce`, `jira`, `confluence`, `bigquery`.
+	DataSource string `json:"dataSource,omitempty"`
+	// DestinationConfigs: Optional. Any target destinations used to connect to
+	// third-party services.
+	DestinationConfigs []*GoogleCloudDiscoveryengineV1alphaDestinationConfig `json:"destinationConfigs,omitempty"`
+	// Entities: List of entities from the connected data source to ingest.
+	Entities []*GoogleCloudDiscoveryengineV1alphaDataConnectorSourceEntity `json:"entities,omitempty"`
+	// Errors: Output only. The errors from initialization or from the latest
+	// connector run.
+	Errors []*GoogleRpcStatus `json:"errors,omitempty"`
+	// IdentityRefreshInterval: The refresh interval to sync the Access Control
+	// List information for the documents ingested by this connector. If not set,
+	// the access control list will be refreshed at the default interval of 30
+	// minutes. The identity refresh interval can be at least 30 minutes and at
+	// most 7 days.
+	IdentityRefreshInterval string `json:"identityRefreshInterval,omitempty"`
+	// IdentityScheduleConfig: The configuration for the identity data
+	// synchronization runs. This contains the refresh interval to sync the Access
+	// Control List information for the documents ingested by this connector.
+	IdentityScheduleConfig *GoogleCloudDiscoveryengineV1alphaIdentityScheduleConfig `json:"identityScheduleConfig,omitempty"`
+	// KmsKeyName: Input only. The KMS key to be used to protect the DataStores
+	// managed by this connector. Must be set for requests that need to comply with
+	// CMEK Org Policy protections. If this field is set and processed
+	// successfully, the DataStores created by this connector will be protected by
+	// the KMS key.
+	KmsKeyName string `json:"kmsKeyName,omitempty"`
+	// LastSyncTime: Output only. For periodic connectors only, the last time a
+	// data sync was completed.
+	LastSyncTime string `json:"lastSyncTime,omitempty"`
+	// LatestPauseTime: Output only. The most recent timestamp when this
+	// DataConnector was paused, affecting all functionalities such as data
+	// synchronization. Pausing a connector has the following effects: - All
+	// functionalities, including data synchronization, are halted. - Any ongoing
+	// data synchronization job will be canceled. - No future data synchronization
+	// runs will be scheduled nor can be triggered.
+	LatestPauseTime string `json:"latestPauseTime,omitempty"`
+	// Name: Output only. The full resource name of the Data Connector. Format:
+	// `projects/*/locations/*/collections/*/dataConnector`.
+	Name string `json:"name,omitempty"`
+	// NextSyncTime: The UTC time when the next data sync is expected to start for
+	// the Data Connector. Customers are only able to specify the hour and minute
+	// to schedule the data sync. This is utilized when the data connector has a
+	// refresh interval greater than 1 day.
+	NextSyncTime *GoogleTypeDateTime `json:"nextSyncTime,omitempty"`
+	// Params: Required. Params needed to access the source in the format of (Key,
+	// Value) pairs. Required parameters for all data sources: * Key:
+	// `instance_uri` * Value: type STRING. The uri to access the data source.
+	// Required parameters for sources that support OAUTH, i.e. `salesforce`: *
+	// Key: `client_id` * Value: type STRING. The client id for the third party
+	// service provider to identify your application. * Key: `client_secret` *
+	// Value:type STRING. The client secret generated by the third party
+	// authorization server. * Key: `access_token` * Value: type STRING. OAuth
+	// token for UCS to access to the protected resource. * Key: `refresh_token` *
+	// Value: type STRING. OAuth refresh token for UCS to obtain a new access token
+	// without user interaction. Required parameters for sources that support basic
+	// API token auth, i.e. `jira`, `confluence`: * Key: `user_account` * Value:
+	// type STRING. The username or email with the source. * Key: `api_token` *
+	// Value: type STRING. The API token generated for the source account, that is
+	// used for authenticating anywhere where you would have used a password.
+	// Example: ```json { "instance_uri": "https://xxx.atlassian.net",
+	// "user_account": "xxxx.xxx@xxx.com", "api_token": "test-token" } ``` Optional
+	// parameter to specify the authorization type to use for multiple
+	// authorization types support: * Key: `auth_type` * Value: type STRING. The
+	// authorization type for the data source. Supported values: `BASIC_AUTH`,
+	// `OAUTH`, `OAUTH_ACCESS_TOKEN`, `OAUTH_TWO_LEGGED`, `OAUTH_JWT_BEARER`,
+	// `OAUTH_PASSWORD_GRANT`, `JWT`, `API_TOKEN`, `FEDERATED_CREDENTIAL`.
+	Params googleapi.RawMessage `json:"params,omitempty"`
+	// PrivateConnectivityProjectId: Output only. The tenant project ID associated
+	// with private connectivity connectors. This project must be allowlisted by in
+	// order for the connector to function.
+	PrivateConnectivityProjectId string `json:"privateConnectivityProjectId,omitempty"`
+	// RefreshInterval: Required. The refresh interval for data sync. If duration
+	// is set to 0, the data will be synced in real time. The streaming feature is
+	// not supported yet. The minimum is 30 minutes and maximum is 7 days.
+	RefreshInterval string `json:"refreshInterval,omitempty"`
+	// State: Output only. State of the connector.
+	//
+	// Possible values:
+	//   "STATE_UNSPECIFIED" - Default value.
+	//   "CREATING" - The connector is being set up.
+	//   "ACTIVE" - The connector is successfully set up and awaiting next sync
+	// run.
+	//   "FAILED" - The connector is in error. The error details can be found in
+	// DataConnector.errors. If the error is unfixable, the DataConnector can be
+	// deleted by [CollectionService.DeleteCollection] API.
+	//   "RUNNING" - The connector is actively syncing records from the data
+	// source.
+	//   "WARNING" - The connector has completed a sync run, but encountered
+	// non-fatal errors.
+	State string `json:"state,omitempty"`
+	// StaticIpAddresses: Output only. The static IP addresses used by this
+	// connector.
+	StaticIpAddresses []string `json:"staticIpAddresses,omitempty"`
+	// StaticIpEnabled: Optional. Whether customer has enabled static IP addresses
+	// for this connector.
+	StaticIpEnabled bool `json:"staticIpEnabled,omitempty"`
+	// SyncMode: The data synchronization mode supported by the data connector.
+	//
+	// Possible values:
+	//   "PERIODIC" - The connector will sync data periodically based on the
+	// refresh_interval. Use it with auto_run_disabled to pause the periodic sync,
+	// or indicate a one-time sync.
+	SyncMode string `json:"syncMode,omitempty"`
+	// UpdateTime: Output only. Timestamp the DataConnector was last updated.
+	UpdateTime string `json:"updateTime,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ActionConfig") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ActionConfig") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1alphaDataConnector) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1alphaDataConnector
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1alphaDataConnectorSourceEntity: Represents an
+// entity in the data source. For example, the `Account` object in Salesforce.
+type GoogleCloudDiscoveryengineV1alphaDataConnectorSourceEntity struct {
+	// DataStore: Output only. The full resource name of the associated data store
+	// for the source entity. Format:
+	// `projects/*/locations/*/collections/*/dataStores/*`. When the connector is
+	// initialized by the DataConnectorService.SetUpDataConnector method, a
+	// DataStore is automatically created for each source entity.
+	DataStore string `json:"dataStore,omitempty"`
+	// EntityName: The name of the entity. Supported values by data source: *
+	// Salesforce: `Lead`, `Opportunity`, `Contact`, `Account`, `Case`, `Contract`,
+	// `Campaign` * Jira: `Issue` * Confluence: `Content`, `Space`
+	EntityName string `json:"entityName,omitempty"`
+	// KeyPropertyMappings: Attributes for indexing. Key: Field name. Value: The
+	// key property to map a field to, such as `title`, and `description`.
+	// Supported key properties: * `title`: The title for data record. This would
+	// be displayed on search results. * `description`: The description for data
+	// record. This would be displayed on search results.
+	KeyPropertyMappings map[string]string `json:"keyPropertyMappings,omitempty"`
+	// Params: The parameters for the entity to facilitate data ingestion. E.g. for
+	// BQ connectors: * Key: `document_id_column` * Value: type STRING. The value
+	// of the column id.
+	Params googleapi.RawMessage `json:"params,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "DataStore") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DataStore") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1alphaDataConnectorSourceEntity) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1alphaDataConnectorSourceEntity
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudDiscoveryengineV1alphaDataStore: DataStore captures global
 // settings and configs at the DataStore level.
 type GoogleCloudDiscoveryengineV1alphaDataStore struct {
@@ -11617,6 +12696,9 @@ type GoogleCloudDiscoveryengineV1alphaDataStore struct {
 	//   "MEDIA" - The media industry vertical.
 	//   "HEALTHCARE_FHIR" - The healthcare FHIR vertical.
 	IndustryVertical string `json:"industryVertical,omitempty"`
+	// IsInfobotFaqDataStore: Optional. If set, this DataStore is an Infobot FAQ
+	// DataStore.
+	IsInfobotFaqDataStore bool `json:"isInfobotFaqDataStore,omitempty"`
 	// KmsKeyName: Input only. The KMS key to be used to protect this DataStore at
 	// creation time. Must be set for requests that need to comply with CMEK Org
 	// Policy protections. If this field is set and processed successfully, the
@@ -11769,6 +12851,33 @@ type GoogleCloudDiscoveryengineV1alphaDedicatedCrawlRateTimeSeries struct {
 
 func (s GoogleCloudDiscoveryengineV1alphaDedicatedCrawlRateTimeSeries) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDiscoveryengineV1alphaDedicatedCrawlRateTimeSeries
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1alphaDeleteCollectionMetadata: Metadata related
+// to the progress of the CollectionService.UpdateCollection operation. This
+// will be returned by the google.longrunning.Operation.metadata field.
+type GoogleCloudDiscoveryengineV1alphaDeleteCollectionMetadata struct {
+	// CreateTime: Operation create time.
+	CreateTime string `json:"createTime,omitempty"`
+	// UpdateTime: Operation last update time. If the operation is done, this is
+	// also the finish time.
+	UpdateTime string `json:"updateTime,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "CreateTime") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CreateTime") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1alphaDeleteCollectionMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1alphaDeleteCollectionMetadata
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -11928,6 +13037,59 @@ type GoogleCloudDiscoveryengineV1alphaDeleteTargetSiteMetadata struct {
 
 func (s GoogleCloudDiscoveryengineV1alphaDeleteTargetSiteMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDiscoveryengineV1alphaDeleteTargetSiteMetadata
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1alphaDestinationConfig: Defines target endpoints
+// used to connect to third-party sources.
+type GoogleCloudDiscoveryengineV1alphaDestinationConfig struct {
+	// Destinations: Optional. The destinations for the corresponding key.
+	Destinations []*GoogleCloudDiscoveryengineV1alphaDestinationConfigDestination `json:"destinations,omitempty"`
+	// Key: Optional. Unique destination identifier that is supported by the
+	// connector.
+	Key string `json:"key,omitempty"`
+	// Params: Optional. Additional parameters for this destination config.
+	Params googleapi.RawMessage `json:"params,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Destinations") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Destinations") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1alphaDestinationConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1alphaDestinationConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1alphaDestinationConfigDestination: Defines a
+// target endpoint
+type GoogleCloudDiscoveryengineV1alphaDestinationConfigDestination struct {
+	// Host: Publicly routable host.
+	Host string `json:"host,omitempty"`
+	// Port: Optional. Target port number accepted by the destination.
+	Port int64 `json:"port,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Host") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Host") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1alphaDestinationConfigDestination) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1alphaDestinationConfigDestination
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -12994,6 +14156,33 @@ type GoogleCloudDiscoveryengineV1alphaGetUriPatternDocumentDataResponse struct {
 
 func (s GoogleCloudDiscoveryengineV1alphaGetUriPatternDocumentDataResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDiscoveryengineV1alphaGetUriPatternDocumentDataResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1alphaIdentityScheduleConfig: The configuration
+// for the identity data synchronization runs.
+type GoogleCloudDiscoveryengineV1alphaIdentityScheduleConfig struct {
+	// RefreshInterval: Optional. The refresh interval to sync the Access Control
+	// List information for the documents ingested by this connector. If not set,
+	// the access control list will be refreshed at the default interval of 30
+	// minutes. The identity refresh interval can be at least 30 minutes and at
+	// most 7 days.
+	RefreshInterval string `json:"refreshInterval,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "RefreshInterval") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "RefreshInterval") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1alphaIdentityScheduleConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1alphaIdentityScheduleConfig
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -15516,6 +16705,11 @@ func (s GoogleCloudDiscoveryengineV1alphaSessionTurn) MarshalJSON() ([]byte, err
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudDiscoveryengineV1alphaSetUpDataConnectorMetadata: Metadata for
+// DataConnectorService.SetUpDataConnector method.
+type GoogleCloudDiscoveryengineV1alphaSetUpDataConnectorMetadata struct {
+}
+
 // GoogleCloudDiscoveryengineV1alphaSetUriPatternDocumentDataMetadata: Metadata
 // related to the progress of the
 // SiteSearchEngineService.SetUriPatternDocumentData operation. This will be
@@ -15547,6 +16741,32 @@ func (s GoogleCloudDiscoveryengineV1alphaSetUriPatternDocumentDataMetadata) Mars
 // GoogleCloudDiscoveryengineV1alphaSetUriPatternDocumentDataResponse: Response
 // message for SiteSearchEngineService.SetUriPatternDocumentData method.
 type GoogleCloudDiscoveryengineV1alphaSetUriPatternDocumentDataResponse struct {
+}
+
+// GoogleCloudDiscoveryengineV1alphaSingleRegionKey: Metadata for
+// single-regional CMEKs.
+type GoogleCloudDiscoveryengineV1alphaSingleRegionKey struct {
+	// KmsKey: Required. Single-regional kms key resource name which will be used
+	// to encrypt resources
+	// `projects/{project}/locations/{location}/keyRings/{keyRing}/cryptoKeys/{keyId
+	// }`.
+	KmsKey string `json:"kmsKey,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "KmsKey") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "KmsKey") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1alphaSingleRegionKey) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1alphaSingleRegionKey
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDiscoveryengineV1alphaSiteVerificationInfo: Verification
@@ -15852,6 +17072,33 @@ func (s GoogleCloudDiscoveryengineV1alphaUpdateCmekConfigMetadata) MarshalJSON()
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudDiscoveryengineV1alphaUpdateCollectionMetadata: Metadata related
+// to the progress of the CollectionService.UpdateCollection operation. This
+// will be returned by the google.longrunning.Operation.metadata field.
+type GoogleCloudDiscoveryengineV1alphaUpdateCollectionMetadata struct {
+	// CreateTime: Operation create time.
+	CreateTime string `json:"createTime,omitempty"`
+	// UpdateTime: Operation last update time. If the operation is done, this is
+	// also the finish time.
+	UpdateTime string `json:"updateTime,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "CreateTime") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CreateTime") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1alphaUpdateCollectionMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1alphaUpdateCollectionMetadata
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudDiscoveryengineV1alphaUpdateSchemaMetadata: Metadata for
 // UpdateSchema LRO.
 type GoogleCloudDiscoveryengineV1alphaUpdateSchemaMetadata struct {
@@ -16085,6 +17332,9 @@ type GoogleCloudDiscoveryengineV1betaCmekConfig struct {
 	// `projects/{project}/locations/{location}/cmekConfig` or
 	// `projects/{project}/locations/{location}/cmekConfigs/{cmekConfig}`.
 	Name string `json:"name,omitempty"`
+	// SingleRegionKeys: Optional. Single-regional CMEKs that are required for some
+	// VAIS features.
+	SingleRegionKeys []*GoogleCloudDiscoveryengineV1betaSingleRegionKey `json:"singleRegionKeys,omitempty"`
 	// State: Output only. State of the CmekConfig.
 	//
 	// Possible values:
@@ -16611,6 +17861,9 @@ type GoogleCloudDiscoveryengineV1betaDataStore struct {
 	//   "MEDIA" - The media industry vertical.
 	//   "HEALTHCARE_FHIR" - The healthcare FHIR vertical.
 	IndustryVertical string `json:"industryVertical,omitempty"`
+	// IsInfobotFaqDataStore: Optional. If set, this DataStore is an Infobot FAQ
+	// DataStore.
+	IsInfobotFaqDataStore bool `json:"isInfobotFaqDataStore,omitempty"`
 	// KmsKeyName: Input only. The KMS key to be used to protect this DataStore at
 	// creation time. Must be set for requests that need to comply with CMEK Org
 	// Policy protections. If this field is set and processed successfully, the
@@ -19471,6 +20724,32 @@ func (s GoogleCloudDiscoveryengineV1betaSearchRequestSpellCorrectionSpec) Marsha
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudDiscoveryengineV1betaSingleRegionKey: Metadata for
+// single-regional CMEKs.
+type GoogleCloudDiscoveryengineV1betaSingleRegionKey struct {
+	// KmsKey: Required. Single-regional kms key resource name which will be used
+	// to encrypt resources
+	// `projects/{project}/locations/{location}/keyRings/{keyRing}/cryptoKeys/{keyId
+	// }`.
+	KmsKey string `json:"kmsKey,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "KmsKey") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "KmsKey") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1betaSingleRegionKey) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1betaSingleRegionKey
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudDiscoveryengineV1betaSiteVerificationInfo: Verification
 // information for target sites in advanced site search.
 type GoogleCloudDiscoveryengineV1betaSiteVerificationInfo struct {
@@ -20232,6 +21511,95 @@ func (s GoogleTypeDate) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GoogleTypeDateTime: Represents civil time (or occasionally physical time).
+// This type can represent a civil time in one of a few possible ways: * When
+// utc_offset is set and time_zone is unset: a civil time on a calendar day
+// with a particular offset from UTC. * When time_zone is set and utc_offset is
+// unset: a civil time on a calendar day in a particular time zone. * When
+// neither time_zone nor utc_offset is set: a civil time on a calendar day in
+// local time. The date is relative to the Proleptic Gregorian Calendar. If
+// year, month, or day are 0, the DateTime is considered not to have a specific
+// year, month, or day respectively. This type may also be used to represent a
+// physical time if all the date and time fields are set and either case of the
+// `time_offset` oneof is set. Consider using `Timestamp` message for physical
+// time instead. If your use case also would like to store the user's timezone,
+// that can be done in another field. This type is more flexible than some
+// applications may want. Make sure to document and validate your application's
+// limitations.
+type GoogleTypeDateTime struct {
+	// Day: Optional. Day of month. Must be from 1 to 31 and valid for the year and
+	// month, or 0 if specifying a datetime without a day.
+	Day int64 `json:"day,omitempty"`
+	// Hours: Optional. Hours of day in 24 hour format. Should be from 0 to 23,
+	// defaults to 0 (midnight). An API may choose to allow the value "24:00:00"
+	// for scenarios like business closing time.
+	Hours int64 `json:"hours,omitempty"`
+	// Minutes: Optional. Minutes of hour of day. Must be from 0 to 59, defaults to
+	// 0.
+	Minutes int64 `json:"minutes,omitempty"`
+	// Month: Optional. Month of year. Must be from 1 to 12, or 0 if specifying a
+	// datetime without a month.
+	Month int64 `json:"month,omitempty"`
+	// Nanos: Optional. Fractions of seconds in nanoseconds. Must be from 0 to
+	// 999,999,999, defaults to 0.
+	Nanos int64 `json:"nanos,omitempty"`
+	// Seconds: Optional. Seconds of minutes of the time. Must normally be from 0
+	// to 59, defaults to 0. An API may allow the value 60 if it allows
+	// leap-seconds.
+	Seconds int64 `json:"seconds,omitempty"`
+	// TimeZone: Time zone.
+	TimeZone *GoogleTypeTimeZone `json:"timeZone,omitempty"`
+	// UtcOffset: UTC offset. Must be whole seconds, between -18 hours and +18
+	// hours. For example, a UTC offset of -4:00 would be represented as { seconds:
+	// -14400 }.
+	UtcOffset string `json:"utcOffset,omitempty"`
+	// Year: Optional. Year of date. Must be from 1 to 9999, or 0 if specifying a
+	// datetime without a year.
+	Year int64 `json:"year,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Day") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Day") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleTypeDateTime) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleTypeDateTime
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleTypeTimeZone: Represents a time zone from the IANA Time Zone Database
+// (https://www.iana.org/time-zones).
+type GoogleTypeTimeZone struct {
+	// Id: IANA Time Zone Database time zone. For example "America/New_York".
+	Id string `json:"id,omitempty"`
+	// Version: Optional. IANA Time Zone Database version number. For example
+	// "2019a".
+	Version string `json:"version,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Id") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Id") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleTypeTimeZone) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleTypeTimeZone
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 type ProjectsProvisionCall struct {
 	s                                                   *Service
 	name                                                string
@@ -20337,6 +21705,111 @@ func (c *ProjectsProvisionCall) Do(opts ...googleapi.CallOption) (*GoogleLongrun
 		return nil, err
 	}
 	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "discoveryengine.projects.provision", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsGenerateGroundedContentCall struct {
+	s                                                          *Service
+	location                                                   string
+	googleclouddiscoveryenginev1generategroundedcontentrequest *GoogleCloudDiscoveryengineV1GenerateGroundedContentRequest
+	urlParams_                                                 gensupport.URLParams
+	ctx_                                                       context.Context
+	header_                                                    http.Header
+}
+
+// GenerateGroundedContent: Generates grounded content.
+//
+//   - location: Location resource. Format:
+//     `projects/{project}/locations/{location}`.
+func (r *ProjectsLocationsService) GenerateGroundedContent(location string, googleclouddiscoveryenginev1generategroundedcontentrequest *GoogleCloudDiscoveryengineV1GenerateGroundedContentRequest) *ProjectsLocationsGenerateGroundedContentCall {
+	c := &ProjectsLocationsGenerateGroundedContentCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.location = location
+	c.googleclouddiscoveryenginev1generategroundedcontentrequest = googleclouddiscoveryenginev1generategroundedcontentrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsGenerateGroundedContentCall) Fields(s ...googleapi.Field) *ProjectsLocationsGenerateGroundedContentCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsGenerateGroundedContentCall) Context(ctx context.Context) *ProjectsLocationsGenerateGroundedContentCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsGenerateGroundedContentCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsGenerateGroundedContentCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googleclouddiscoveryenginev1generategroundedcontentrequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+location}:generateGroundedContent")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"location": c.location,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "discoveryengine.projects.locations.generateGroundedContent", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "discoveryengine.projects.locations.generateGroundedContent" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudDiscoveryengineV1GenerateGroundedContentResponse.ServerResponse.H
+// eader or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsGenerateGroundedContentCall) Do(opts ...googleapi.CallOption) (*GoogleCloudDiscoveryengineV1GenerateGroundedContentResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudDiscoveryengineV1GenerateGroundedContentResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "discoveryengine.projects.locations.generateGroundedContent", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 

@@ -2422,6 +2422,10 @@ type GoogleCloudRunV2ServiceScaling struct {
 	// manual scaling mode. This number of instances is divided among all revisions
 	// with specified traffic based on the percent of traffic they are receiving.
 	ManualInstanceCount int64 `json:"manualInstanceCount,omitempty"`
+	// MaxInstanceCount: Optional. total max instances for the service. This number
+	// of instances is divided among all revisions with specified traffic based on
+	// the percent of traffic they are receiving.
+	MaxInstanceCount int64 `json:"maxInstanceCount,omitempty"`
 	// MinInstanceCount: Optional. total min instances for the service. This number
 	// of instances is divided among all revisions with specified traffic based on
 	// the percent of traffic they are receiving.

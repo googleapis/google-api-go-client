@@ -8176,6 +8176,9 @@ type Product struct {
 	// SubscriptionCost: Number of periods (months or years) and amount of payment
 	// per period for an item with an associated subscription contract.
 	SubscriptionCost *ProductSubscriptionCost `json:"subscriptionCost,omitempty"`
+	// SustainabilityIncentives: Optional. The list of sustainability incentive
+	// programs.
+	SustainabilityIncentives []*ProductSustainabilityIncentive `json:"sustainabilityIncentives,omitempty"`
 	// TargetCountry: Required. The CLDR territory code for the item's country of
 	// sale.
 	TargetCountry string `json:"targetCountry,omitempty"`
@@ -8974,6 +8977,58 @@ type ProductSubscriptionCost struct {
 func (s ProductSubscriptionCost) MarshalJSON() ([]byte, error) {
 	type NoMethod ProductSubscriptionCost
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ProductSustainabilityIncentive: Information regarding sustainability related
+// incentive programs such as rebates or tax relief.
+type ProductSustainabilityIncentive struct {
+	// Amount: Optional. The fixed amount of the incentive.
+	Amount *Price `json:"amount,omitempty"`
+	// Percentage: Optional. The percentage of the sale price that the incentive is
+	// applied to.
+	Percentage float64 `json:"percentage,omitempty"`
+	// Type: Required. Sustainability incentive program.
+	//
+	// Possible values:
+	//   "TYPE_UNSPECIFIED" - Unspecified or unknown sustainability incentive type.
+	//   "EV_TAX_CREDIT" - Program offering tax liability reductions for electric
+	// vehicles and, in some countries, plug-in hybrids. These reductions can be
+	// based on a specific amount or a percentage of the sale price.
+	//   "EV_PRICE_DISCOUNT" - A subsidy program, often called an environmental
+	// bonus, provides a purchase grant for electric vehicles and, in some
+	// countries, plug-in hybrids. The grant amount may be a fixed sum or a
+	// percentage of the sale price.
+	Type string `json:"type,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Amount") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Amount") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ProductSustainabilityIncentive) MarshalJSON() ([]byte, error) {
+	type NoMethod ProductSustainabilityIncentive
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+func (s *ProductSustainabilityIncentive) UnmarshalJSON(data []byte) error {
+	type NoMethod ProductSustainabilityIncentive
+	var s1 struct {
+		Percentage gensupport.JSONFloat64 `json:"percentage"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.Percentage = float64(s1.Percentage)
+	return nil
 }
 
 type ProductTax struct {

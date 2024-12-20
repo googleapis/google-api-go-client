@@ -4617,6 +4617,12 @@ type GoogleCloudApigeeV1Environment struct {
 	// is handled by Apigee. This type only works with the ARCHIVE deployment type
 	// and cannot be combined with the PROXY deployment type.
 	ApiProxyType string `json:"apiProxyType,omitempty"`
+	// ClientIpResolutionConfig: Optional. The algorithm to resolve IP. This will
+	// affect Analytics, API Security, and other features that use the client ip.
+	// To remove a client ip resolution config, update the field to an empty value.
+	// Example: '{ "clientIpResolutionConfig" = {} }' For more information, see:
+	// https://cloud.google.com/apigee/docs/api-platform/system-administration/client-ip-resolution.
+	ClientIpResolutionConfig *GoogleCloudApigeeV1EnvironmentClientIPResolutionConfig `json:"clientIpResolutionConfig,omitempty"`
 	// CreatedAt: Output only. Creation time of this environment as milliseconds
 	// since epoch.
 	CreatedAt int64 `json:"createdAt,omitempty,string"`
@@ -4708,6 +4714,57 @@ type GoogleCloudApigeeV1Environment struct {
 
 func (s GoogleCloudApigeeV1Environment) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudApigeeV1Environment
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudApigeeV1EnvironmentClientIPResolutionConfig: Configuration for
+// resolving the client ip.
+type GoogleCloudApigeeV1EnvironmentClientIPResolutionConfig struct {
+	// HeaderIndexAlgorithm: Resolves the client ip based on a custom header.
+	HeaderIndexAlgorithm *GoogleCloudApigeeV1EnvironmentClientIPResolutionConfigHeaderIndexAlgorithm `json:"headerIndexAlgorithm,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "HeaderIndexAlgorithm") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "HeaderIndexAlgorithm") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudApigeeV1EnvironmentClientIPResolutionConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudApigeeV1EnvironmentClientIPResolutionConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudApigeeV1EnvironmentClientIPResolutionConfigHeaderIndexAlgorithm:
+// Resolves the client ip based on a custom header.
+type GoogleCloudApigeeV1EnvironmentClientIPResolutionConfigHeaderIndexAlgorithm struct {
+	// IpHeaderIndex: Required. The index of the ip in the header. Positive indices
+	// 0, 1, 2, 3 chooses indices from the left (first ips) Negative indices -1,
+	// -2, -3 chooses indices from the right (last ips)
+	IpHeaderIndex int64 `json:"ipHeaderIndex,omitempty"`
+	// IpHeaderName: Required. The name of the header to extract the client ip
+	// from. We are currently only supporting the X-Forwarded-For header.
+	IpHeaderName string `json:"ipHeaderName,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "IpHeaderIndex") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "IpHeaderIndex") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudApigeeV1EnvironmentClientIPResolutionConfigHeaderIndexAlgorithm) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudApigeeV1EnvironmentClientIPResolutionConfigHeaderIndexAlgorithm
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 

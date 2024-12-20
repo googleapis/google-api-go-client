@@ -1599,10 +1599,12 @@ type StatusProto struct {
 	// Code: Numeric code drawn from the space specified below. Often, this is the
 	// canonical error space, and code is drawn from google3/util/task/codes.proto
 	Code int64 `json:"code,omitempty"`
-	// Message: Detail message
+	// Message: Detail message copybara:strip_begin(b/383363683)
+	// copybara:strip_end_and_replace optional string message = 3;
 	Message string `json:"message,omitempty"`
 	// MessageSet: message_set associates an arbitrary proto message with the
-	// status.
+	// status. copybara:strip_begin(b/383363683) copybara:strip_end_and_replace
+	// optional proto2.bridge.MessageSet message_set = 5;
 	MessageSet *MessageSet `json:"messageSet,omitempty"`
 	// Space: The following are usually only present when code != 0 Space to which
 	// this status belongs

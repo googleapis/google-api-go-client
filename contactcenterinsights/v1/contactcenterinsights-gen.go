@@ -1945,6 +1945,33 @@ func (s GoogleCloudContactcenterinsightsV1CreateAnalysisOperationMetadata) Marsh
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudContactcenterinsightsV1CreateIssueMetadata: Metadata for creating
+// an issue.
+type GoogleCloudContactcenterinsightsV1CreateIssueMetadata struct {
+	// CreateTime: Output only. The time the operation was created.
+	CreateTime string `json:"createTime,omitempty"`
+	// EndTime: Output only. The time the operation finished running.
+	EndTime string `json:"endTime,omitempty"`
+	// Request: The original request for creation.
+	Request *GoogleCloudContactcenterinsightsV1CreateIssueRequest `json:"request,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "CreateTime") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CreateTime") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudContactcenterinsightsV1CreateIssueMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudContactcenterinsightsV1CreateIssueMetadata
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudContactcenterinsightsV1CreateIssueModelMetadata: Metadata for
 // creating an issue model.
 type GoogleCloudContactcenterinsightsV1CreateIssueModelMetadata struct {
@@ -1994,6 +2021,31 @@ type GoogleCloudContactcenterinsightsV1CreateIssueModelRequest struct {
 
 func (s GoogleCloudContactcenterinsightsV1CreateIssueModelRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudContactcenterinsightsV1CreateIssueModelRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudContactcenterinsightsV1CreateIssueRequest: The request to create
+// an issue.
+type GoogleCloudContactcenterinsightsV1CreateIssueRequest struct {
+	// Issue: Required. The values for the new issue.
+	Issue *GoogleCloudContactcenterinsightsV1Issue `json:"issue,omitempty"`
+	// Parent: Required. The parent resource of the issue.
+	Parent string `json:"parent,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Issue") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Issue") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudContactcenterinsightsV1CreateIssueRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudContactcenterinsightsV1CreateIssueRequest
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -6717,6 +6769,33 @@ func (s GoogleCloudContactcenterinsightsV1alpha1CreateAnalysisOperationMetadata)
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudContactcenterinsightsV1alpha1CreateIssueMetadata: Metadata for
+// creating an issue.
+type GoogleCloudContactcenterinsightsV1alpha1CreateIssueMetadata struct {
+	// CreateTime: Output only. The time the operation was created.
+	CreateTime string `json:"createTime,omitempty"`
+	// EndTime: Output only. The time the operation finished running.
+	EndTime string `json:"endTime,omitempty"`
+	// Request: The original request for creation.
+	Request *GoogleCloudContactcenterinsightsV1alpha1CreateIssueRequest `json:"request,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "CreateTime") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CreateTime") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudContactcenterinsightsV1alpha1CreateIssueMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudContactcenterinsightsV1alpha1CreateIssueMetadata
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudContactcenterinsightsV1alpha1CreateIssueModelMetadata: Metadata
 // for creating an issue model.
 type GoogleCloudContactcenterinsightsV1alpha1CreateIssueModelMetadata struct {
@@ -6766,6 +6845,31 @@ type GoogleCloudContactcenterinsightsV1alpha1CreateIssueModelRequest struct {
 
 func (s GoogleCloudContactcenterinsightsV1alpha1CreateIssueModelRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudContactcenterinsightsV1alpha1CreateIssueModelRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudContactcenterinsightsV1alpha1CreateIssueRequest: The request to
+// create an issue.
+type GoogleCloudContactcenterinsightsV1alpha1CreateIssueRequest struct {
+	// Issue: Required. The values for the new issue.
+	Issue *GoogleCloudContactcenterinsightsV1alpha1Issue `json:"issue,omitempty"`
+	// Parent: Required. The parent resource of the issue.
+	Parent string `json:"parent,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Issue") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Issue") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudContactcenterinsightsV1alpha1CreateIssueRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudContactcenterinsightsV1alpha1CreateIssueRequest
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -8029,6 +8133,41 @@ func (s GoogleCloudContactcenterinsightsV1alpha1IntentMatchData) MarshalJSON() (
 // GoogleCloudContactcenterinsightsV1alpha1InterruptionData: The data for an
 // interruption annotation.
 type GoogleCloudContactcenterinsightsV1alpha1InterruptionData struct {
+}
+
+// GoogleCloudContactcenterinsightsV1alpha1Issue: The issue resource.
+type GoogleCloudContactcenterinsightsV1alpha1Issue struct {
+	// CreateTime: Output only. The time at which this issue was created.
+	CreateTime string `json:"createTime,omitempty"`
+	// DisplayDescription: Representative description of the issue.
+	DisplayDescription string `json:"displayDescription,omitempty"`
+	// DisplayName: The representative name for the issue.
+	DisplayName string `json:"displayName,omitempty"`
+	// Name: Immutable. The resource name of the issue. Format:
+	// projects/{project}/locations/{location}/issueModels/{issue_model}/issues/{iss
+	// ue}
+	Name string `json:"name,omitempty"`
+	// SampleUtterances: Output only. Resource names of the sample representative
+	// utterances that match to this issue.
+	SampleUtterances []string `json:"sampleUtterances,omitempty"`
+	// UpdateTime: Output only. The most recent time that this issue was updated.
+	UpdateTime string `json:"updateTime,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "CreateTime") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CreateTime") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudContactcenterinsightsV1alpha1Issue) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudContactcenterinsightsV1alpha1Issue
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudContactcenterinsightsV1alpha1IssueAssignment: Information about
@@ -14591,6 +14730,110 @@ func (c *ProjectsLocationsIssueModelsUndeployCall) Do(opts ...googleapi.CallOpti
 		return nil, err
 	}
 	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "contactcenterinsights.projects.locations.issueModels.undeploy", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsIssueModelsIssuesCreateCall struct {
+	s                                       *Service
+	parent                                  string
+	googlecloudcontactcenterinsightsv1issue *GoogleCloudContactcenterinsightsV1Issue
+	urlParams_                              gensupport.URLParams
+	ctx_                                    context.Context
+	header_                                 http.Header
+}
+
+// Create: Creates an issue.
+//
+// - parent: The parent resource of the issue.
+func (r *ProjectsLocationsIssueModelsIssuesService) Create(parent string, googlecloudcontactcenterinsightsv1issue *GoogleCloudContactcenterinsightsV1Issue) *ProjectsLocationsIssueModelsIssuesCreateCall {
+	c := &ProjectsLocationsIssueModelsIssuesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.googlecloudcontactcenterinsightsv1issue = googlecloudcontactcenterinsightsv1issue
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsIssueModelsIssuesCreateCall) Fields(s ...googleapi.Field) *ProjectsLocationsIssueModelsIssuesCreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsIssueModelsIssuesCreateCall) Context(ctx context.Context) *ProjectsLocationsIssueModelsIssuesCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsIssueModelsIssuesCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsIssueModelsIssuesCreateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googlecloudcontactcenterinsightsv1issue)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/issues")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "contactcenterinsights.projects.locations.issueModels.issues.create", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "contactcenterinsights.projects.locations.issueModels.issues.create" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleLongrunningOperation.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsIssueModelsIssuesCreateCall) Do(opts ...googleapi.CallOption) (*GoogleLongrunningOperation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleLongrunningOperation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "contactcenterinsights.projects.locations.issueModels.issues.create", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 

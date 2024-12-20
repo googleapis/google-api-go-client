@@ -206,7 +206,7 @@
       }
     }
   },
-  "revision": "20241215",
+  "revision": "20241217",
   "rootUrl": "https://firebaseml.googleapis.com/",
   "schemas": {
     "Date": {
@@ -1171,7 +1171,8 @@
           "type": "string"
         },
         "thought": {
-          "description": "Optional. Indicates if the part is thought from the model.",
+          "description": "Output only. Indicates if the part is thought from the model.",
+          "readOnly": true,
           "type": "boolean"
         },
         "videoMetadata": {

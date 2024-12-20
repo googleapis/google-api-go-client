@@ -8841,6 +8841,8 @@ type GoogleCloudDialogflowV2ConversationEvent struct {
 	ErrorStatus *GoogleRpcStatus `json:"errorStatus,omitempty"`
 	// NewMessagePayload: Payload of NEW_MESSAGE event.
 	NewMessagePayload *GoogleCloudDialogflowV2Message `json:"newMessagePayload,omitempty"`
+	// NewRecognitionResultPayload: Payload of NEW_RECOGNITION_RESULT event.
+	NewRecognitionResultPayload *GoogleCloudDialogflowV2StreamingRecognitionResult `json:"newRecognitionResultPayload,omitempty"`
 	// Type: The type of the event that this notification refers to.
 	//
 	// Possible values:
@@ -8855,6 +8857,10 @@ type GoogleCloudDialogflowV2ConversationEvent struct {
 	//   "NEW_MESSAGE" - An existing conversation has received a new message,
 	// either from API or telephony. It is configured in
 	// ConversationProfile.new_message_event_notification_config
+	//   "NEW_RECOGNITION_RESULT" - An existing conversation has received a new
+	// speech recognition result. This is mainly for delivering intermediate
+	// transcripts. The notification is configured in
+	// ConversationProfile.new_recognition_event_notification_config.
 	//   "UNRECOVERABLE_ERROR" - Unrecoverable error during a telephone call. In
 	// general non-recoverable errors only occur if something was misconfigured in
 	// the ConversationProfile corresponding to the call. After a non-recoverable
@@ -9077,6 +9083,12 @@ type GoogleCloudDialogflowV2ConversationProfile struct {
 	// NewMessageEventNotificationConfig: Configuration for publishing new message
 	// events. Event will be sent in format of ConversationEvent
 	NewMessageEventNotificationConfig *GoogleCloudDialogflowV2NotificationConfig `json:"newMessageEventNotificationConfig,omitempty"`
+	// NewRecognitionResultNotificationConfig: Optional. Configuration for
+	// publishing transcription intermediate results. Event will be sent in format
+	// of ConversationEvent. If configured, the following information will be
+	// populated as ConversationEvent Pub/Sub message attributes: -
+	// "participant_id" - "participant_role" - "message_id"
+	NewRecognitionResultNotificationConfig *GoogleCloudDialogflowV2NotificationConfig `json:"newRecognitionResultNotificationConfig,omitempty"`
 	// NotificationConfig: Configuration for publishing conversation lifecycle
 	// events.
 	NotificationConfig *GoogleCloudDialogflowV2NotificationConfig `json:"notificationConfig,omitempty"`
@@ -15291,6 +15303,154 @@ func (s GoogleCloudDialogflowV2SpeechToTextConfig) MarshalJSON() ([]byte, error)
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudDialogflowV2SpeechWordInfo: Information for a word recognized by
+// the speech recognizer.
+type GoogleCloudDialogflowV2SpeechWordInfo struct {
+	// Confidence: The Speech confidence between 0.0 and 1.0 for this word. A
+	// higher number indicates an estimated greater likelihood that the recognized
+	// word is correct. The default of 0.0 is a sentinel value indicating that
+	// confidence was not set. This field is not guaranteed to be fully stable over
+	// time for the same audio input. Users should also not rely on it to always be
+	// provided.
+	Confidence float64 `json:"confidence,omitempty"`
+	// EndOffset: Time offset relative to the beginning of the audio that
+	// corresponds to the end of the spoken word. This is an experimental feature
+	// and the accuracy of the time offset can vary.
+	EndOffset string `json:"endOffset,omitempty"`
+	// StartOffset: Time offset relative to the beginning of the audio that
+	// corresponds to the start of the spoken word. This is an experimental feature
+	// and the accuracy of the time offset can vary.
+	StartOffset string `json:"startOffset,omitempty"`
+	// Word: The word this info is for.
+	Word string `json:"word,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Confidence") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Confidence") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDialogflowV2SpeechWordInfo) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDialogflowV2SpeechWordInfo
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+func (s *GoogleCloudDialogflowV2SpeechWordInfo) UnmarshalJSON(data []byte) error {
+	type NoMethod GoogleCloudDialogflowV2SpeechWordInfo
+	var s1 struct {
+		Confidence gensupport.JSONFloat64 `json:"confidence"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.Confidence = float64(s1.Confidence)
+	return nil
+}
+
+// GoogleCloudDialogflowV2StreamingRecognitionResult: Contains a speech
+// recognition result corresponding to a portion of the audio that is currently
+// being processed or an indication that this is the end of the single
+// requested utterance. While end-user audio is being processed, Dialogflow
+// sends a series of results. Each result may contain a `transcript` value. A
+// transcript represents a portion of the utterance. While the recognizer is
+// processing audio, transcript values may be interim values or finalized
+// values. Once a transcript is finalized, the `is_final` value is set to true
+// and processing continues for the next transcript. If
+// `StreamingDetectIntentRequest.query_input.audio_config.single_utterance` was
+// true, and the recognizer has completed processing audio, the `message_type`
+// value is set to `END_OF_SINGLE_UTTERANCE and the following (last) result
+// contains the last finalized transcript. The complete end-user utterance is
+// determined by concatenating the finalized transcript values received for the
+// series of results. In the following example, single utterance is enabled. In
+// the case where single utterance is not enabled, result 7 would not occur.
+// ``` Num | transcript | message_type | is_final --- | -----------------------
+// | ----------------------- | -------- 1 | "tube" | TRANSCRIPT | false 2 | "to
+// be a" | TRANSCRIPT | false 3 | "to be" | TRANSCRIPT | false 4 | "to be or
+// not to be" | TRANSCRIPT | true 5 | "that's" | TRANSCRIPT | false 6 | "that
+// is | TRANSCRIPT | false 7 | unset | END_OF_SINGLE_UTTERANCE | unset 8 | "
+// that is the question" | TRANSCRIPT | true ``` Concatenating the finalized
+// transcripts with `is_final` set to true, the complete utterance becomes "to
+// be or not to be that is the question".
+type GoogleCloudDialogflowV2StreamingRecognitionResult struct {
+	// Confidence: The Speech confidence between 0.0 and 1.0 for the current
+	// portion of audio. A higher number indicates an estimated greater likelihood
+	// that the recognized words are correct. The default of 0.0 is a sentinel
+	// value indicating that confidence was not set. This field is typically only
+	// provided if `is_final` is true and you should not rely on it being accurate
+	// or even set.
+	Confidence float64 `json:"confidence,omitempty"`
+	// IsFinal: If `false`, the `StreamingRecognitionResult` represents an interim
+	// result that may change. If `true`, the recognizer will not return any
+	// further hypotheses about this piece of the audio. May only be populated for
+	// `message_type` = `TRANSCRIPT`.
+	IsFinal bool `json:"isFinal,omitempty"`
+	// LanguageCode: Detected language code for the transcript.
+	LanguageCode string `json:"languageCode,omitempty"`
+	// MessageType: Type of the result message.
+	//
+	// Possible values:
+	//   "MESSAGE_TYPE_UNSPECIFIED" - Not specified. Should never be used.
+	//   "TRANSCRIPT" - Message contains a (possibly partial) transcript.
+	//   "END_OF_SINGLE_UTTERANCE" - This event indicates that the server has
+	// detected the end of the user's speech utterance and expects no additional
+	// inputs. Therefore, the server will not process additional audio (although it
+	// may subsequently return additional results). The client should stop sending
+	// additional audio data, half-close the gRPC connection, and wait for any
+	// additional results until the server closes the gRPC connection. This message
+	// is only sent if `single_utterance` was set to `true`, and is not used
+	// otherwise.
+	MessageType string `json:"messageType,omitempty"`
+	// SpeechEndOffset: Time offset of the end of this Speech recognition result
+	// relative to the beginning of the audio. Only populated for `message_type` =
+	// `TRANSCRIPT`.
+	SpeechEndOffset string `json:"speechEndOffset,omitempty"`
+	// SpeechWordInfo: Word-specific information for the words recognized by Speech
+	// in transcript. Populated if and only if `message_type` = `TRANSCRIPT` and
+	// [InputAudioConfig.enable_word_info] is set.
+	SpeechWordInfo []*GoogleCloudDialogflowV2SpeechWordInfo `json:"speechWordInfo,omitempty"`
+	// Transcript: Transcript text representing the words that the user spoke.
+	// Populated if and only if `message_type` = `TRANSCRIPT`.
+	Transcript string `json:"transcript,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Confidence") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Confidence") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDialogflowV2StreamingRecognitionResult) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDialogflowV2StreamingRecognitionResult
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+func (s *GoogleCloudDialogflowV2StreamingRecognitionResult) UnmarshalJSON(data []byte) error {
+	type NoMethod GoogleCloudDialogflowV2StreamingRecognitionResult
+	var s1 struct {
+		Confidence gensupport.JSONFloat64 `json:"confidence"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.Confidence = float64(s1.Confidence)
+	return nil
+}
+
 // GoogleCloudDialogflowV2SuggestArticlesRequest: The request message for
 // Participants.SuggestArticles.
 type GoogleCloudDialogflowV2SuggestArticlesRequest struct {
@@ -16593,6 +16753,8 @@ type GoogleCloudDialogflowV2beta1ConversationEvent struct {
 	ErrorStatus *GoogleRpcStatus `json:"errorStatus,omitempty"`
 	// NewMessagePayload: Payload of NEW_MESSAGE event.
 	NewMessagePayload *GoogleCloudDialogflowV2beta1Message `json:"newMessagePayload,omitempty"`
+	// NewRecognitionResultPayload: Payload of NEW_RECOGNITION_RESULT event.
+	NewRecognitionResultPayload *GoogleCloudDialogflowV2beta1StreamingRecognitionResult `json:"newRecognitionResultPayload,omitempty"`
 	// Type: Required. The type of the event that this notification refers to.
 	//
 	// Possible values:
@@ -16607,6 +16769,10 @@ type GoogleCloudDialogflowV2beta1ConversationEvent struct {
 	//   "NEW_MESSAGE" - An existing conversation has received a new message,
 	// either from API or telephony. It is configured in
 	// ConversationProfile.new_message_event_notification_config
+	//   "NEW_RECOGNITION_RESULT" - An existing conversation has received a new
+	// speech recognition result. This is mainly for delivering intermediate
+	// transcripts. The notification is configured in
+	// ConversationProfile.new_recognition_event_notification_config.
 	//   "UNRECOVERABLE_ERROR" - Unrecoverable error during a telephone call. In
 	// general non-recoverable errors only occur if something was misconfigured in
 	// the ConversationProfile corresponding to the call. After a non-recoverable
@@ -19574,6 +19740,171 @@ func (s *GoogleCloudDialogflowV2beta1SmartReplyAnswer) UnmarshalJSON(data []byte
 	return nil
 }
 
+// GoogleCloudDialogflowV2beta1SpeechWordInfo: Information for a word
+// recognized by the speech recognizer.
+type GoogleCloudDialogflowV2beta1SpeechWordInfo struct {
+	// Confidence: The Speech confidence between 0.0 and 1.0 for this word. A
+	// higher number indicates an estimated greater likelihood that the recognized
+	// word is correct. The default of 0.0 is a sentinel value indicating that
+	// confidence was not set. This field is not guaranteed to be fully stable over
+	// time for the same audio input. Users should also not rely on it to always be
+	// provided.
+	Confidence float64 `json:"confidence,omitempty"`
+	// EndOffset: Time offset relative to the beginning of the audio that
+	// corresponds to the end of the spoken word. This is an experimental feature
+	// and the accuracy of the time offset can vary.
+	EndOffset string `json:"endOffset,omitempty"`
+	// StartOffset: Time offset relative to the beginning of the audio that
+	// corresponds to the start of the spoken word. This is an experimental feature
+	// and the accuracy of the time offset can vary.
+	StartOffset string `json:"startOffset,omitempty"`
+	// Word: The word this info is for.
+	Word string `json:"word,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Confidence") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Confidence") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDialogflowV2beta1SpeechWordInfo) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDialogflowV2beta1SpeechWordInfo
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+func (s *GoogleCloudDialogflowV2beta1SpeechWordInfo) UnmarshalJSON(data []byte) error {
+	type NoMethod GoogleCloudDialogflowV2beta1SpeechWordInfo
+	var s1 struct {
+		Confidence gensupport.JSONFloat64 `json:"confidence"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.Confidence = float64(s1.Confidence)
+	return nil
+}
+
+// GoogleCloudDialogflowV2beta1StreamingRecognitionResult: Contains a speech
+// recognition result corresponding to a portion of the audio that is currently
+// being processed or an indication that this is the end of the single
+// requested utterance. While end-user audio is being processed, Dialogflow
+// sends a series of results. Each result may contain a `transcript` value. A
+// transcript represents a portion of the utterance. While the recognizer is
+// processing audio, transcript values may be interim values or finalized
+// values. Once a transcript is finalized, the `is_final` value is set to true
+// and processing continues for the next transcript. If
+// `StreamingDetectIntentRequest.query_input.audio_config.single_utterance` was
+// true, and the recognizer has completed processing audio, the `message_type`
+// value is set to `END_OF_SINGLE_UTTERANCE and the following (last) result
+// contains the last finalized transcript. The complete end-user utterance is
+// determined by concatenating the finalized transcript values received for the
+// series of results. In the following example, single utterance is enabled. In
+// the case where single utterance is not enabled, result 7 would not occur.
+// ``` Num | transcript | message_type | is_final --- | -----------------------
+// | ----------------------- | -------- 1 | "tube" | TRANSCRIPT | false 2 | "to
+// be a" | TRANSCRIPT | false 3 | "to be" | TRANSCRIPT | false 4 | "to be or
+// not to be" | TRANSCRIPT | true 5 | "that's" | TRANSCRIPT | false 6 | "that
+// is | TRANSCRIPT | false 7 | unset | END_OF_SINGLE_UTTERANCE | unset 8 | "
+// that is the question" | TRANSCRIPT | true ``` Concatenating the finalized
+// transcripts with `is_final` set to true, the complete utterance becomes "to
+// be or not to be that is the question".
+type GoogleCloudDialogflowV2beta1StreamingRecognitionResult struct {
+	// Confidence: The Speech confidence between 0.0 and 1.0 for the current
+	// portion of audio. A higher number indicates an estimated greater likelihood
+	// that the recognized words are correct. The default of 0.0 is a sentinel
+	// value indicating that confidence was not set. This field is typically only
+	// provided if `is_final` is true and you should not rely on it being accurate
+	// or even set.
+	Confidence float64 `json:"confidence,omitempty"`
+	// DtmfDigits: DTMF digits. Populated if and only if `message_type` =
+	// `DTMF_DIGITS`.
+	DtmfDigits *GoogleCloudDialogflowV2beta1TelephonyDtmfEvents `json:"dtmfDigits,omitempty"`
+	// IsFinal: If `false`, the `StreamingRecognitionResult` represents an interim
+	// result that may change. If `true`, the recognizer will not return any
+	// further hypotheses about this piece of the audio. May only be populated for
+	// `message_type` = `TRANSCRIPT`.
+	IsFinal bool `json:"isFinal,omitempty"`
+	// LanguageCode: Detected language code for the transcript.
+	LanguageCode string `json:"languageCode,omitempty"`
+	// MessageType: Type of the result message.
+	//
+	// Possible values:
+	//   "MESSAGE_TYPE_UNSPECIFIED" - Not specified. Should never be used.
+	//   "TRANSCRIPT" - Message contains a (possibly partial) transcript.
+	//   "DTMF_DIGITS" - Message contains DTMF digits.
+	//   "END_OF_SINGLE_UTTERANCE" - This event indicates that the server has
+	// detected the end of the user's speech utterance and expects no additional
+	// speech. Therefore, the server will not process additional audio (although it
+	// may subsequently return additional results). The client should stop sending
+	// additional audio data, half-close the gRPC connection, and wait for any
+	// additional results until the server closes the gRPC connection. This message
+	// is only sent if `single_utterance` was set to `true`, and is not used
+	// otherwise.
+	//   "PARTIAL_DTMF_DIGITS" - Message contains DTMF digits. Before a message
+	// with DTMF_DIGITS is sent, a message with PARTIAL_DTMF_DIGITS may be sent
+	// with DTMF digits collected up to the time of sending, which represents an
+	// intermediate result.
+	MessageType string `json:"messageType,omitempty"`
+	// SpeechEndOffset: Time offset of the end of this Speech recognition result
+	// relative to the beginning of the audio. Only populated for `message_type` =
+	// `TRANSCRIPT`.
+	SpeechEndOffset string `json:"speechEndOffset,omitempty"`
+	// SpeechWordInfo: Word-specific information for the words recognized by Speech
+	// in transcript. Populated if and only if `message_type` = `TRANSCRIPT` and
+	// [InputAudioConfig.enable_word_info] is set.
+	SpeechWordInfo []*GoogleCloudDialogflowV2beta1SpeechWordInfo `json:"speechWordInfo,omitempty"`
+	// Stability: An estimate of the likelihood that the speech recognizer will not
+	// change its guess about this interim recognition result: * If the value is
+	// unspecified or 0.0, Dialogflow didn't compute the stability. In particular,
+	// Dialogflow will only provide stability for `TRANSCRIPT` results with
+	// `is_final = false`. * Otherwise, the value is in (0.0, 1.0] where 0.0 means
+	// completely unstable and 1.0 means completely stable.
+	Stability float64 `json:"stability,omitempty"`
+	// Transcript: Transcript text representing the words that the user spoke.
+	// Populated if and only if `message_type` = `TRANSCRIPT`.
+	Transcript string `json:"transcript,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Confidence") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Confidence") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDialogflowV2beta1StreamingRecognitionResult) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDialogflowV2beta1StreamingRecognitionResult
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+func (s *GoogleCloudDialogflowV2beta1StreamingRecognitionResult) UnmarshalJSON(data []byte) error {
+	type NoMethod GoogleCloudDialogflowV2beta1StreamingRecognitionResult
+	var s1 struct {
+		Confidence gensupport.JSONFloat64 `json:"confidence"`
+		Stability  gensupport.JSONFloat64 `json:"stability"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.Confidence = float64(s1.Confidence)
+	s.Stability = float64(s1.Stability)
+	return nil
+}
+
 // GoogleCloudDialogflowV2beta1SuggestArticlesResponse: The response message
 // for Participants.SuggestArticles.
 type GoogleCloudDialogflowV2beta1SuggestArticlesResponse struct {
@@ -19773,6 +20104,49 @@ type GoogleCloudDialogflowV2beta1SuggestionResult struct {
 
 func (s GoogleCloudDialogflowV2beta1SuggestionResult) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowV2beta1SuggestionResult
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDialogflowV2beta1TelephonyDtmfEvents: A wrapper of repeated
+// TelephonyDtmf digits.
+type GoogleCloudDialogflowV2beta1TelephonyDtmfEvents struct {
+	// DtmfEvents: A sequence of TelephonyDtmf digits.
+	//
+	// Possible values:
+	//   "TELEPHONY_DTMF_UNSPECIFIED" - Not specified. This value may be used to
+	// indicate an absent digit.
+	//   "DTMF_ONE" - Number: '1'.
+	//   "DTMF_TWO" - Number: '2'.
+	//   "DTMF_THREE" - Number: '3'.
+	//   "DTMF_FOUR" - Number: '4'.
+	//   "DTMF_FIVE" - Number: '5'.
+	//   "DTMF_SIX" - Number: '6'.
+	//   "DTMF_SEVEN" - Number: '7'.
+	//   "DTMF_EIGHT" - Number: '8'.
+	//   "DTMF_NINE" - Number: '9'.
+	//   "DTMF_ZERO" - Number: '0'.
+	//   "DTMF_A" - Letter: 'A'.
+	//   "DTMF_B" - Letter: 'B'.
+	//   "DTMF_C" - Letter: 'C'.
+	//   "DTMF_D" - Letter: 'D'.
+	//   "DTMF_STAR" - Asterisk/star: '*'.
+	//   "DTMF_POUND" - Pound/diamond/hash/square/gate/octothorpe: '#'.
+	DtmfEvents []string `json:"dtmfEvents,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "DtmfEvents") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DtmfEvents") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDialogflowV2beta1TelephonyDtmfEvents) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDialogflowV2beta1TelephonyDtmfEvents
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 

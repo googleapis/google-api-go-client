@@ -5005,6 +5005,8 @@ type OutputFile struct {
 	CsvOutputFile *CsvOutputFile `json:"csvOutputFile,omitempty"`
 	// FileSizeBytes: Output only. File size in bytes.
 	FileSizeBytes int64 `json:"fileSizeBytes,omitempty"`
+	// XlsxOutputFile: Output only. XLSX output file.
+	XlsxOutputFile *XlsxOutputFile `json:"xlsxOutputFile,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "CsvOutputFile") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -6492,6 +6494,30 @@ func (s SignedUri) MarshalJSON() ([]byte, error) {
 
 // SignedUriDestination: Signed URI destination configuration.
 type SignedUriDestination struct {
+	// FileFormat: Required. The file format to export.
+	//
+	// Possible values:
+	//   "FILE_FORMAT_UNSPECIFIED" - Unspecified file format will be treated as
+	// CSV.
+	//   "CSV" - CSV file format.
+	//   "XLSX" - XLSX file format which used in Excel.
+	FileFormat string `json:"fileFormat,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "FileFormat") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "FileFormat") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s SignedUriDestination) MarshalJSON() ([]byte, error) {
+	type NoMethod SignedUriDestination
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SignedUris: Contains a list of Signed URIs.
@@ -7567,6 +7593,28 @@ type VmwarePlatformDetails struct {
 
 func (s VmwarePlatformDetails) MarshalJSON() ([]byte, error) {
 	type NoMethod VmwarePlatformDetails
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// XlsxOutputFile: Contains a single output file of type XLSX.
+type XlsxOutputFile struct {
+	// SignedUri: Output only. Signed URI destination.
+	SignedUri *SignedUri `json:"signedUri,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "SignedUri") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "SignedUri") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s XlsxOutputFile) MarshalJSON() ([]byte, error) {
+	type NoMethod XlsxOutputFile
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 

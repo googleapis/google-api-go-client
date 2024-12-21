@@ -5087,9 +5087,9 @@ type GooglePrivacyDlpV2FileClusterSummary struct {
 	FileExtensionsSeen []*GooglePrivacyDlpV2FileExtensionInfo `json:"fileExtensionsSeen,omitempty"`
 	// FileStoreInfoTypeSummaries: InfoTypes detected in this cluster.
 	FileStoreInfoTypeSummaries []*GooglePrivacyDlpV2FileStoreInfoTypeSummary `json:"fileStoreInfoTypeSummaries,omitempty"`
-	// NoFilesExist: True if no files exist in this cluster. If the bucket had more
-	// files than could be listed, this will be false even if no files for this
-	// cluster were seen and file_extensions_seen is empty.
+	// NoFilesExist: True if no files exist in this cluster. If the file store had
+	// more files than could be listed, this will be false even if no files for
+	// this cluster were seen and file_extensions_seen is empty.
 	NoFilesExist bool `json:"noFilesExist,omitempty"`
 	// SensitivityScore: The sensitivity score of this cluster. The score will be
 	// SENSITIVITY_LOW if nothing has been scanned.
@@ -5267,7 +5267,7 @@ type GooglePrivacyDlpV2FileStoreDataProfile struct {
 	FullResource string `json:"fullResource,omitempty"`
 	// LastModifiedTime: The time the file store was last modified.
 	LastModifiedTime string `json:"lastModifiedTime,omitempty"`
-	// LocationType: The location type of the bucket (region, dual-region,
+	// LocationType: The location type of the file store (region, dual-region,
 	// multi-region, etc). If dual-region, expect data_storage_locations to be
 	// populated.
 	LocationType string `json:"locationType,omitempty"`

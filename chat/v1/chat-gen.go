@@ -1845,8 +1845,7 @@ type GoogleAppsCardV1Button struct {
 	Text string `json:"text,omitempty"`
 	// Type: Optional. The type of a button. If unset, button type defaults to
 	// `OUTLINED`. If the `color` field is set, the button type is forced to
-	// `FILLED` and any value set for this field is ignored. Google Chat apps
-	// (https://developers.google.com/workspace/chat):
+	// `FILLED` and any value set for this field is ignored.
 	//
 	// Possible values:
 	//   "TYPE_UNSPECIFIED" - Don't use. Unspecified.
@@ -2186,7 +2185,8 @@ func (s GoogleAppsCardV1CarouselCard) MarshalJSON() ([]byte, error) {
 }
 
 // GoogleAppsCardV1Chip: A text, icon, or text and icon chip that users can
-// click. Google Chat apps (https://developers.google.com/workspace/chat):
+// click. Google Workspace Add-ons and Chat apps
+// (https://developers.google.com/workspace/extend):
 type GoogleAppsCardV1Chip struct {
 	// AltText: The alternative text that's used for accessibility. Set descriptive
 	// text that lets users know what the chip does. For example, if a chip opens a
@@ -2226,8 +2226,8 @@ func (s GoogleAppsCardV1Chip) MarshalJSON() ([]byte, error) {
 }
 
 // GoogleAppsCardV1ChipList: A list of chips layed out horizontally, which can
-// either scroll horizontally or wrap to the next line. Google Chat apps
-// (https://developers.google.com/workspace/chat):
+// either scroll horizontally or wrap to the next line. Google Workspace
+// Add-ons and Chat apps (https://developers.google.com/workspace/extend):
 type GoogleAppsCardV1ChipList struct {
 	// Chips: An array of chips.
 	Chips []*GoogleAppsCardV1Chip `json:"chips,omitempty"`
@@ -2259,7 +2259,8 @@ func (s GoogleAppsCardV1ChipList) MarshalJSON() ([]byte, error) {
 }
 
 // GoogleAppsCardV1CollapseControl: Represent an expand and collapse control.
-// Google Chat apps (https://developers.google.com/workspace/chat):
+// Google Workspace Add-ons and Chat apps
+// (https://developers.google.com/workspace/extend):
 type GoogleAppsCardV1CollapseControl struct {
 	// CollapseButton: Optional. Define a customizable button to collapse the
 	// section. Both expand_button and collapse_button field must be set. Only one
@@ -2889,8 +2890,7 @@ type GoogleAppsCardV1OnClick struct {
 	OpenDynamicLinkAction *GoogleAppsCardV1Action `json:"openDynamicLinkAction,omitempty"`
 	// OpenLink: If specified, this `onClick` triggers an open link action.
 	OpenLink *GoogleAppsCardV1OpenLink `json:"openLink,omitempty"`
-	// OverflowMenu: If specified, this `onClick` opens an overflow menu. Google
-	// Chat apps (https://developers.google.com/workspace/chat):
+	// OverflowMenu: If specified, this `onClick` opens an overflow menu.
 	OverflowMenu *GoogleAppsCardV1OverflowMenu `json:"overflowMenu,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Action") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -2958,8 +2958,8 @@ func (s GoogleAppsCardV1OpenLink) MarshalJSON() ([]byte, error) {
 // or more actions that users can invoke. For example, showing non-primary
 // actions in a card. You can use this widget when actions don't fit in the
 // available space. To use, specify this widget in the `OnClick` action of
-// widgets that support it. For example, in a `Button`. Google Chat apps
-// (https://developers.google.com/workspace/chat):
+// widgets that support it. For example, in a `Button`. Google Workspace
+// Add-ons and Chat apps (https://developers.google.com/workspace/extend):
 type GoogleAppsCardV1OverflowMenu struct {
 	// Items: Required. The list of menu options.
 	Items []*GoogleAppsCardV1OverflowMenuItem `json:"items,omitempty"`
@@ -2982,8 +2982,8 @@ func (s GoogleAppsCardV1OverflowMenu) MarshalJSON() ([]byte, error) {
 }
 
 // GoogleAppsCardV1OverflowMenuItem: An option that users can invoke in an
-// overflow menu. Google Chat apps
-// (https://developers.google.com/workspace/chat):
+// overflow menu. Google Workspace Add-ons and Chat apps
+// (https://developers.google.com/workspace/extend):
 type GoogleAppsCardV1OverflowMenuItem struct {
 	// Disabled: Whether the menu option is disabled. Defaults to false.
 	Disabled bool `json:"disabled,omitempty"`
@@ -3056,8 +3056,7 @@ func (s GoogleAppsCardV1PlatformDataSource) MarshalJSON() ([]byte, error) {
 type GoogleAppsCardV1Section struct {
 	// CollapseControl: Optional. Define the expand and collapse button of the
 	// section. This button will be shown only if the section is collapsible. If
-	// this field isn't set, the default button is used. Google Chat apps
-	// (https://developers.google.com/workspace/chat):
+	// this field isn't set, the default button is used.
 	CollapseControl *GoogleAppsCardV1CollapseControl `json:"collapseControl,omitempty"`
 	// Collapsible: Indicates whether this section is collapsible. Collapsible
 	// sections hide some or all widgets, but users can expand the section to
@@ -3437,8 +3436,7 @@ type GoogleAppsCardV1TextParagraph struct {
 	// excess content is concealed behind a **show more** button. If the text is
 	// equal or shorter than the specified maximum number of lines, a **show more**
 	// button isn't displayed. The default value is 0, in which case all context is
-	// displayed. Negative values are ignored. Google Chat apps
-	// (https://developers.google.com/workspace/chat):
+	// displayed. Negative values are ignored.
 	MaxLines int64 `json:"maxLines,omitempty"`
 	// Text: The text that's shown in the widget.
 	Text string `json:"text,omitempty"`
@@ -3481,8 +3479,7 @@ type GoogleAppsCardV1Widget struct {
 	// chips. The first is a text chip and the second is an icon chip that opens a
 	// link: ``` "chipList": { "chips": [ { "text": "Edit", "disabled": true, }, {
 	// "icon": { "knownIcon": "INVITE", "altText": "check calendar" }, "onClick": {
-	// "openLink": { "url": "https://example.com/calendar" } } } ] } ``` Google
-	// Chat apps (https://developers.google.com/workspace/chat):
+	// "openLink": { "url": "https://example.com/calendar" } } } ] } ```
 	ChipList *GoogleAppsCardV1ChipList `json:"chipList,omitempty"`
 	// Columns: Displays up to 2 columns. To include more than 2 columns, or to use
 	// rows, use the `Grid` widget. For example, the following JSON creates 2
@@ -3593,8 +3590,7 @@ func (s GoogleAppsCardV1Widget) MarshalJSON() ([]byte, error) {
 type GoogleAppsCardV1Widgets struct {
 	// ButtonList: ButtonList widget.
 	ButtonList *GoogleAppsCardV1ButtonList `json:"buttonList,omitempty"`
-	// ChipList: ChipList widget. Google Chat apps
-	// (https://developers.google.com/workspace/chat):
+	// ChipList: ChipList widget.
 	ChipList *GoogleAppsCardV1ChipList `json:"chipList,omitempty"`
 	// DateTimePicker: DateTimePicker widget.
 	DateTimePicker *GoogleAppsCardV1DateTimePicker `json:"dateTimePicker,omitempty"`

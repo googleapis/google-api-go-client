@@ -1255,8 +1255,8 @@ func (s GcpUserAccessBinding) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GcpUserAccessBindingOperationMetadata: Metadata of GCP Access Binding Long
-// Running Operations.
+// GcpUserAccessBindingOperationMetadata: Metadata of Google Cloud Access
+// Binding Long Running Operations.
 type GcpUserAccessBindingOperationMetadata struct {
 }
 

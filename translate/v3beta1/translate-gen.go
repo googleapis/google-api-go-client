@@ -1321,24 +1321,31 @@ func (s TranslateDocumentResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// TranslateTextGlossaryConfig: Configures which glossary should be used for a
-// specific target language, and defines options for applying that glossary.
+// TranslateTextGlossaryConfig:
+// -----------------------------------------------------------------------------
+//
+//	Configures which glossary should be used for a specific target language,
+//
+// and defines options for applying that glossary.
 type TranslateTextGlossaryConfig struct {
+	// ContextualTranslationEnabled: Optional. If set to true, the glossary will be
+	// used for contextual translation.
+	ContextualTranslationEnabled bool `json:"contextualTranslationEnabled,omitempty"`
 	// Glossary: Required. Specifies the glossary used for this translation. Use
 	// this format: projects/*/locations/*/glossaries/*
 	Glossary string `json:"glossary,omitempty"`
 	// IgnoreCase: Optional. Indicates match is case-insensitive. Default value is
 	// false if missing.
 	IgnoreCase bool `json:"ignoreCase,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "Glossary") to
-	// unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
+	// ForceSendFields is a list of field names (e.g.
+	// "ContextualTranslationEnabled") to unconditionally include in API requests.
+	// By default, fields with empty or default values are omitted from API
+	// requests. See https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields
+	// for more details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Glossary") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
+	// NullFields is a list of field names (e.g. "ContextualTranslationEnabled") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -3310,7 +3317,7 @@ type ProjectsLocationsOperationsCancelCall struct {
 // other methods to check whether the cancellation succeeded or whether the
 // operation completed despite cancellation. On successful cancellation, the
 // operation is not deleted; instead, it becomes an operation with an
-// Operation.error value with a google.rpc.Status.code of 1, corresponding to
+// Operation.error value with a google.rpc.Status.code of `1`, corresponding to
 // `Code.CANCELLED`.
 //
 // - name: The name of the operation resource to be cancelled.

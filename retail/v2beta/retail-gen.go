@@ -3439,6 +3439,46 @@ func (s GoogleCloudRetailV2betaCatalogAttributeFacetConfigRerankConfig) MarshalJ
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudRetailV2betaCollectUserEventRequest: Request message for
+// CollectUserEvent method.
+type GoogleCloudRetailV2betaCollectUserEventRequest struct {
+	// Ets: The event timestamp in milliseconds. This prevents browser caching of
+	// otherwise identical get requests. The name is abbreviated to reduce the
+	// payload bytes.
+	Ets int64 `json:"ets,omitempty,string"`
+	// PrebuiltRule: The prebuilt rule name that can convert a specific type of
+	// raw_json. For example: "ga4_bq" rule for the GA4 user event schema.
+	PrebuiltRule string `json:"prebuiltRule,omitempty"`
+	// RawJson: An arbitrary serialized JSON string that contains necessary
+	// information that can comprise a user event. When this field is specified,
+	// the user_event field will be ignored. Note: line-delimited JSON is not
+	// supported, a single JSON only.
+	RawJson string `json:"rawJson,omitempty"`
+	// Uri: The URL including cgi-parameters but excluding the hash fragment with a
+	// length limit of 5,000 characters. This is often more useful than the referer
+	// URL, because many browsers only send the domain for 3rd party requests.
+	Uri string `json:"uri,omitempty"`
+	// UserEvent: Required. URL encoded UserEvent proto with a length limit of
+	// 2,000,000 characters.
+	UserEvent string `json:"userEvent,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Ets") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Ets") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudRetailV2betaCollectUserEventRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudRetailV2betaCollectUserEventRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudRetailV2betaColorInfo: The color information of a Product.
 type GoogleCloudRetailV2betaColorInfo struct {
 	// ColorFamilies: The standard color families. Strongly recommended to use the
@@ -16522,65 +16562,26 @@ func (c *ProjectsLocationsCatalogsServingConfigsSearchCall) Pages(ctx context.Co
 }
 
 type ProjectsLocationsCatalogsUserEventsCollectCall struct {
-	s            *Service
-	parent       string
-	urlParams_   gensupport.URLParams
-	ifNoneMatch_ string
-	ctx_         context.Context
-	header_      http.Header
+	s                                              *Service
+	parent                                         string
+	googlecloudretailv2betacollectusereventrequest *GoogleCloudRetailV2betaCollectUserEventRequest
+	urlParams_                                     gensupport.URLParams
+	ctx_                                           context.Context
+	header_                                        http.Header
 }
 
-// Collect: Writes a single user event from the browser. This uses a GET
-// request to due to browser restriction of POST-ing to a 3rd party domain.
-// This method is used only by the Retail API JavaScript pixel and Google Tag
-// Manager. Users should not call this method directly.
+// Collect: Writes a single user event from the browser. For larger user event
+// payload over 16 KB, the POST method should be used instead, otherwise a 400
+// Bad Request error is returned. This method is used only by the Retail API
+// JavaScript pixel and Google Tag Manager. Users should not call this method
+// directly.
 //
 //   - parent: The parent catalog name, such as
 //     `projects/1234/locations/global/catalogs/default_catalog`.
-func (r *ProjectsLocationsCatalogsUserEventsService) Collect(parent string) *ProjectsLocationsCatalogsUserEventsCollectCall {
+func (r *ProjectsLocationsCatalogsUserEventsService) Collect(parent string, googlecloudretailv2betacollectusereventrequest *GoogleCloudRetailV2betaCollectUserEventRequest) *ProjectsLocationsCatalogsUserEventsCollectCall {
 	c := &ProjectsLocationsCatalogsUserEventsCollectCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
-	return c
-}
-
-// Ets sets the optional parameter "ets": The event timestamp in milliseconds.
-// This prevents browser caching of otherwise identical get requests. The name
-// is abbreviated to reduce the payload bytes.
-func (c *ProjectsLocationsCatalogsUserEventsCollectCall) Ets(ets int64) *ProjectsLocationsCatalogsUserEventsCollectCall {
-	c.urlParams_.Set("ets", fmt.Sprint(ets))
-	return c
-}
-
-// PrebuiltRule sets the optional parameter "prebuiltRule": The prebuilt rule
-// name that can convert a specific type of raw_json. For example: "ga4_bq"
-// rule for the GA4 user event schema.
-func (c *ProjectsLocationsCatalogsUserEventsCollectCall) PrebuiltRule(prebuiltRule string) *ProjectsLocationsCatalogsUserEventsCollectCall {
-	c.urlParams_.Set("prebuiltRule", prebuiltRule)
-	return c
-}
-
-// RawJson sets the optional parameter "rawJson": An arbitrary serialized JSON
-// string that contains necessary information that can comprise a user event.
-// When this field is specified, the user_event field will be ignored. Note:
-// line-delimited JSON is not supported, a single JSON only.
-func (c *ProjectsLocationsCatalogsUserEventsCollectCall) RawJson(rawJson string) *ProjectsLocationsCatalogsUserEventsCollectCall {
-	c.urlParams_.Set("rawJson", rawJson)
-	return c
-}
-
-// Uri sets the optional parameter "uri": The URL including cgi-parameters but
-// excluding the hash fragment with a length limit of 5,000 characters. This is
-// often more useful than the referer URL, because many browsers only send the
-// domain for 3rd party requests.
-func (c *ProjectsLocationsCatalogsUserEventsCollectCall) Uri(uri string) *ProjectsLocationsCatalogsUserEventsCollectCall {
-	c.urlParams_.Set("uri", uri)
-	return c
-}
-
-// UserEvent sets the optional parameter "userEvent": Required. URL encoded
-// UserEvent proto with a length limit of 2,000,000 characters.
-func (c *ProjectsLocationsCatalogsUserEventsCollectCall) UserEvent(userEvent string) *ProjectsLocationsCatalogsUserEventsCollectCall {
-	c.urlParams_.Set("userEvent", userEvent)
+	c.googlecloudretailv2betacollectusereventrequest = googlecloudretailv2betacollectusereventrequest
 	return c
 }
 
@@ -16589,14 +16590,6 @@ func (c *ProjectsLocationsCatalogsUserEventsCollectCall) UserEvent(userEvent str
 // details.
 func (c *ProjectsLocationsCatalogsUserEventsCollectCall) Fields(s ...googleapi.Field) *ProjectsLocationsCatalogsUserEventsCollectCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// IfNoneMatch sets an optional parameter which makes the operation fail if the
-// object's ETag matches the given value. This is useful for getting updates
-// only after the object has changed since the last request.
-func (c *ProjectsLocationsCatalogsUserEventsCollectCall) IfNoneMatch(entityTag string) *ProjectsLocationsCatalogsUserEventsCollectCall {
-	c.ifNoneMatch_ = entityTag
 	return c
 }
 
@@ -16616,15 +16609,16 @@ func (c *ProjectsLocationsCatalogsUserEventsCollectCall) Header() http.Header {
 }
 
 func (c *ProjectsLocationsCatalogsUserEventsCollectCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
-	if c.ifNoneMatch_ != "" {
-		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googlecloudretailv2betacollectusereventrequest)
+	if err != nil {
+		return nil, err
 	}
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v2beta/{+parent}/userEvents:collect")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, nil)
+	req, err := http.NewRequest("POST", urls, body)
 	if err != nil {
 		return nil, err
 	}
@@ -16632,7 +16626,7 @@ func (c *ProjectsLocationsCatalogsUserEventsCollectCall) doRequest(alt string) (
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "retail.projects.locations.catalogs.userEvents.collect", "request", internallog.HTTPRequest(req, nil))
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "retail.projects.locations.catalogs.userEvents.collect", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 

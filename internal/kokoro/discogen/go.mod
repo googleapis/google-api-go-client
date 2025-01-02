@@ -1,8 +1,6 @@
 module google.golang.org/api/internal/kokoro/discogen
 
-go 1.21
-
-toolchain go1.21.13
+go 1.22
 
 require (
 	github.com/go-git/go-git/v5 v5.13.0

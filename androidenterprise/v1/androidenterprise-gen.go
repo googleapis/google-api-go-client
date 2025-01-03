@@ -992,11 +992,8 @@ func (s ConfigurationVariables) MarshalJSON() ([]byte, error) {
 
 // CreateEnrollmentTokenResponse: Response message for create enrollment token.
 type CreateEnrollmentTokenResponse struct {
-	// EnrollmentToken: Deprecated: Use token instead. This field will be removed
-	// in the future.
-	EnrollmentToken string `json:"enrollmentToken,omitempty"`
-	// Token: [Required] The created enrollment token.
-	Token *EnrollmentToken `json:"token,omitempty"`
+	// EnrollmentToken: [Required] The created enrollment token.
+	EnrollmentToken *EnrollmentToken `json:"enrollmentToken,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
@@ -4317,19 +4314,6 @@ type EnterprisesCreateEnrollmentTokenCall struct {
 func (r *EnterprisesService) CreateEnrollmentToken(enterpriseId string) *EnterprisesCreateEnrollmentTokenCall {
 	c := &EnterprisesCreateEnrollmentTokenCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.enterpriseId = enterpriseId
-	return c
-}
-
-// DeviceType sets the optional parameter "deviceType": Deprecated: Use
-// enrollment_token instead. this field will be removed in the future.
-//
-// Possible values:
-//
-//	"unknown" - This value is unused
-//	"dedicatedDevice" - This device is a dedicated device.
-//	"knowledgeWorker" - This device is required to have an authenticated user.
-func (c *EnterprisesCreateEnrollmentTokenCall) DeviceType(deviceType string) *EnterprisesCreateEnrollmentTokenCall {
-	c.urlParams_.Set("deviceType", deviceType)
 	return c
 }
 

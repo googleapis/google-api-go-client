@@ -4292,8 +4292,7 @@ func (s OfferDetails) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// OfferTag: Represents a custom tag specified for base plans and subscription
-// offers.
+// OfferTag: Represents a custom tag specified for a product offer.
 type OfferTag struct {
 	// Tag: Must conform with RFC-1034. That is, this string can only contain
 	// lower-case letters (a-z), numbers (0-9), and hyphens (-), and be at most 20

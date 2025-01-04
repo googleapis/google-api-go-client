@@ -8531,7 +8531,7 @@ func (s VideoSuggestions) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// VideoSuggestionsTagSuggestion: A single tag suggestion with it's relevance
+// VideoSuggestionsTagSuggestion: A single tag suggestion with its relevance
 // information.
 type VideoSuggestionsTagSuggestion struct {
 	// CategoryRestricts: A set of video categories for which the tag is relevant.

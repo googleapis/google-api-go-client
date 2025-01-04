@@ -1681,6 +1681,30 @@ func (s GoogleCloudAiplatformV1beta1Retrieval) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudAiplatformV1beta1RetrievalConfig: Retrieval config.
+type GoogleCloudAiplatformV1beta1RetrievalConfig struct {
+	// LanguageCode: The language code of the user.
+	LanguageCode string `json:"languageCode,omitempty"`
+	// LatLng: The location of the user.
+	LatLng *LatLng `json:"latLng,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "LanguageCode") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "LanguageCode") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudAiplatformV1beta1RetrievalConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudAiplatformV1beta1RetrievalConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudAiplatformV1beta1RetrievalMetadata: Metadata related to retrieval
 // in the grounding flow.
 type GoogleCloudAiplatformV1beta1RetrievalMetadata struct {
@@ -2093,6 +2117,8 @@ type GoogleCloudAiplatformV1beta1ToolCodeExecution struct {
 type GoogleCloudAiplatformV1beta1ToolConfig struct {
 	// FunctionCallingConfig: Optional. Function calling config.
 	FunctionCallingConfig *GoogleCloudAiplatformV1beta1FunctionCallingConfig `json:"functionCallingConfig,omitempty"`
+	// RetrievalConfig: Optional. Retrieval config.
+	RetrievalConfig *GoogleCloudAiplatformV1beta1RetrievalConfig `json:"retrievalConfig,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "FunctionCallingConfig") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -2265,6 +2291,50 @@ type GoogleCloudAiplatformV1beta1VoiceConfig struct {
 func (s GoogleCloudAiplatformV1beta1VoiceConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1beta1VoiceConfig
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// LatLng: An object that represents a latitude/longitude pair. This is
+// expressed as a pair of doubles to represent degrees latitude and degrees
+// longitude. Unless specified otherwise, this object must conform to the WGS84
+// standard. Values must be within normalized ranges.
+type LatLng struct {
+	// Latitude: The latitude in degrees. It must be in the range [-90.0, +90.0].
+	Latitude float64 `json:"latitude,omitempty"`
+	// Longitude: The longitude in degrees. It must be in the range [-180.0,
+	// +180.0].
+	Longitude float64 `json:"longitude,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Latitude") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Latitude") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s LatLng) MarshalJSON() ([]byte, error) {
+	type NoMethod LatLng
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+func (s *LatLng) UnmarshalJSON(data []byte) error {
+	type NoMethod LatLng
+	var s1 struct {
+		Latitude  gensupport.JSONFloat64 `json:"latitude"`
+		Longitude gensupport.JSONFloat64 `json:"longitude"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.Latitude = float64(s1.Latitude)
+	s.Longitude = float64(s1.Longitude)
+	return nil
 }
 
 // ModelOperationMetadata: This is returned in the longrunning operations for

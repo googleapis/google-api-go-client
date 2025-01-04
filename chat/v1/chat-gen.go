@@ -1665,6 +1665,10 @@ func (s FormAction) MarshalJSON() ([]byte, error) {
 // server. Google Workspace Add-ons and Chat apps
 // (https://developers.google.com/workspace/extend):
 type GoogleAppsCardV1Action struct {
+	// AllWidgetsAreRequired: Optional. If this is true, then all widgets are
+	// considered required by this action. Google Workspace Add-ons and Chat apps
+	// (https://developers.google.com/workspace/extend):
+	AllWidgetsAreRequired bool `json:"allWidgetsAreRequired,omitempty"`
 	// Function: A custom function to invoke when the containing element is clicked
 	// or otherwise activated. For example usage, see Read form data
 	// (https://developers.google.com/workspace/chat/read-form-data).
@@ -1718,15 +1722,21 @@ type GoogleAppsCardV1Action struct {
 	// (https://developers.google.com/workspace/add-ons/reference/rpc/google.apps.card.v1#loadindicator)
 	// to `SPINNER`.
 	PersistValues bool `json:"persistValues,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "Function") to
+	// RequiredWidgets: Optional. Fill this list with the names of widgets that
+	// this Action needs for a valid submission. If the widgets listed here don't
+	// have a value when this Action is invoked, the form submission is aborted.
+	// Google Workspace Add-ons and Chat apps
+	// (https://developers.google.com/workspace/extend):
+	RequiredWidgets []string `json:"requiredWidgets,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AllWidgetsAreRequired") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Function") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
+	// NullFields is a list of field names (e.g. "AllWidgetsAreRequired") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -2403,8 +2413,11 @@ func (s GoogleAppsCardV1Columns) MarshalJSON() ([]byte, error) {
 }
 
 // GoogleAppsCardV1DateTimePicker: Lets users input a date, a time, or both a
-// date and a time. For an example in Google Chat apps, see Let a user pick a
-// date and time
+// date and a time. Supports form submission validation. When
+// `Action.all_widgets_are_required` is set to `true` or this widget is
+// specified in `Action.required_widgets`, the submission action is blocked
+// unless a value is selected. For an example in Google Chat apps, see Let a
+// user pick a date and time
 // (https://developers.google.com/workspace/chat/design-interactive-card-dialog#let_a_user_pick_a_date_and_time).
 // Users can input text or use the picker to select dates and times. If users
 // input an invalid date or time, the picker shows an error that prompts users
@@ -3099,9 +3112,13 @@ func (s GoogleAppsCardV1Section) MarshalJSON() ([]byte, error) {
 }
 
 // GoogleAppsCardV1SelectionInput: A widget that creates one or more UI items
-// that users can select. For example, a dropdown menu or checkboxes. You can
-// use this widget to collect data that can be predicted or enumerated. For an
-// example in Google Chat apps, see Add selectable UI elements
+// that users can select. Supports form submission validation for `dropdown`
+// and `multiselect` menus only. When `Action.all_widgets_are_required` is set
+// to `true` or this widget is specified in `Action.required_widgets`, the
+// submission action is blocked unless a value is selected. For example, a
+// dropdown menu or checkboxes. You can use this widget to collect data that
+// can be predicted or enumerated. For an example in Google Chat apps, see Add
+// selectable UI elements
 // (/workspace/chat/design-interactive-card-dialog#add_selectable_ui_elements).
 // Chat apps can process the value of items that users select or input. For
 // details about working with form inputs, see Receive form data
@@ -3335,8 +3352,11 @@ func (s GoogleAppsCardV1SwitchControl) MarshalJSON() ([]byte, error) {
 }
 
 // GoogleAppsCardV1TextInput: A field in which users can enter text. Supports
-// suggestions and on-change actions. For an example in Google Chat apps, see
-// Add a field in which a user can enter text
+// suggestions and on-change actions. Supports form submission validation. When
+// `Action.all_widgets_are_required` is set to `true` or this widget is
+// specified in `Action.required_widgets`, the submission action is blocked
+// unless a value is entered. For an example in Google Chat apps, see Add a
+// field in which a user can enter text
 // (https://developers.google.com/workspace/chat/design-interactive-card-dialog#add_a_field_in_which_a_user_can_enter_text).
 // Chat apps receive and can process the value of entered text during form
 // input events. For details about working with form inputs, see Receive form
@@ -3398,6 +3418,10 @@ type GoogleAppsCardV1TextInput struct {
 	//   "MULTIPLE_LINE" - The text input field has a fixed height of multiple
 	// lines.
 	Type string `json:"type,omitempty"`
+	// Validation: Specify the input format validation necessary for this text
+	// field. Google Workspace Add-ons and Chat apps
+	// (https://developers.google.com/workspace/extend):
+	Validation *GoogleAppsCardV1Validation `json:"validation,omitempty"`
 	// Value: The value entered by a user, returned as part of a form input event.
 	// For details about working with form inputs, see Receive form data
 	// (https://developers.google.com/workspace/chat/read-form-data).
@@ -3455,6 +3479,44 @@ type GoogleAppsCardV1TextParagraph struct {
 
 func (s GoogleAppsCardV1TextParagraph) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAppsCardV1TextParagraph
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleAppsCardV1Validation: Represents the necessary data for validating the
+// widget it's attached to. Google Workspace Add-ons and Chat apps
+// (https://developers.google.com/workspace/extend):
+type GoogleAppsCardV1Validation struct {
+	// CharacterLimit: Specify the character limit for text input widgets. Note
+	// that this is only used for text input and is ignored for other widgets.
+	// Google Workspace Add-ons and Chat apps
+	// (https://developers.google.com/workspace/extend):
+	CharacterLimit int64 `json:"characterLimit,omitempty"`
+	// InputType: Specify the type of the input widgets. Google Workspace Add-ons
+	// and Chat apps (https://developers.google.com/workspace/extend):
+	//
+	// Possible values:
+	//   "INPUT_TYPE_UNSPECIFIED" - Unspecified type. Do not use.
+	//   "TEXT" - Regular text that accepts all characters.
+	//   "INTEGER" - An integer value.
+	//   "FLOAT" - A float value.
+	//   "EMAIL" - An email address.
+	//   "EMOJI_PICKER" - A emoji selected from system-provided emoji picker.
+	InputType string `json:"inputType,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "CharacterLimit") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CharacterLimit") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleAppsCardV1Validation) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleAppsCardV1Validation
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -5214,11 +5276,25 @@ type Space struct {
 	// PermissionSettings: Optional. Space permission settings for existing spaces.
 	// Input for updating exact space permission settings, where existing
 	// permission settings are replaced. Output lists current permission settings.
+	// Reading and updating permission settings supports: - In Developer Preview
+	// (https://developers.google.com/workspace/preview), App authentication
+	// (https://developers.google.com/workspace/chat/authenticate-authorize-chat-app)
+	// with administrator approval (https://support.google.com/a?p=chat-app-auth)
+	// with the `chat.app.spaces` scope. Only populated and settable when the Chat
+	// app created the space. - User authentication
+	// (https://developers.google.com/workspace/chat/authenticate-authorize-chat-user)
 	PermissionSettings *PermissionSettings `json:"permissionSettings,omitempty"`
 	// PredefinedPermissionSettings: Optional. Input only. Predefined space
 	// permission settings, input only when creating a space. If the field is not
 	// set, a collaboration space is created. After you create the space, settings
-	// are populated in the `PermissionSettings` field.
+	// are populated in the `PermissionSettings` field. Setting predefined
+	// permission settings supports: - In Developer Preview
+	// (https://developers.google.com/workspace/preview), App authentication
+	// (https://developers.google.com/workspace/chat/authenticate-authorize-chat-app)
+	// with administrator approval (https://support.google.com/a?p=chat-app-auth)
+	// with the `chat.app.spaces` or `chat.app.spaces.create` scopes. - User
+	// authentication
+	// (https://developers.google.com/workspace/chat/authenticate-authorize-chat-user)
 	//
 	// Possible values:
 	//   "PREDEFINED_PERMISSION_SETTINGS_UNSPECIFIED" - Unspecified. Don't use.

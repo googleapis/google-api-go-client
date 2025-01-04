@@ -1534,7 +1534,8 @@ type IosRoboTest struct {
 	AppIpa *FileReference `json:"appIpa,omitempty"`
 	// RoboScript: An optional Roboscript to customize the crawl. See
 	// https://firebase.google.com/docs/test-lab/android/robo-scripts-reference for
-	// more information about Roboscripts.
+	// more information about Roboscripts. The maximum allowed file size of the
+	// roboscript is 10MiB.
 	RoboScript *FileReference `json:"roboScript,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AppBundleId") to
 	// unconditionally include in API requests. By default, fields with empty or

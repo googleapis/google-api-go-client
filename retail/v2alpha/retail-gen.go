@@ -2521,7 +2521,10 @@ type GoogleCloudRetailV2alphaColorInfo struct {
 	// 128 characters. Otherwise, an INVALID_ARGUMENT error is returned. Google
 	// Merchant Center property color
 	// (https://support.google.com/merchants/answer/6324487). Schema.org property
-	// Product.color (https://schema.org/color).
+	// Product.color (https://schema.org/color). The colorFamilies field as a
+	// system attribute is not a required field but strongly recommended to be
+	// specified. Google Search models treat this field as more important than a
+	// custom product attribute when specified.
 	ColorFamilies []string `json:"colorFamilies,omitempty"`
 	// Colors: The color display names, which may be different from standard color
 	// family names, such as the color aliases used in the website frontend.

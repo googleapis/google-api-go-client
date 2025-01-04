@@ -451,6 +451,29 @@ func (s Binding) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// CommercialInfo: Commercial info metadata for this subscription.
+type CommercialInfo struct {
+	// CloudMarketplace: Output only. This is set when the subscription is
+	// commercialised via Cloud Marketplace.
+	CloudMarketplace *GoogleCloudMarketplaceInfo `json:"cloudMarketplace,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "CloudMarketplace") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CloudMarketplace") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s CommercialInfo) MarshalJSON() ([]byte, error) {
+	type NoMethod CommercialInfo
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // DataExchange: A data exchange is a container that lets you share data. Along
 // with the descriptive information about the data exchange, it contains
 // listings that reference shared datasets.
@@ -702,6 +725,29 @@ type GoogleCloudBigqueryDataexchangeV1beta1DestinationDatasetReference struct {
 
 func (s GoogleCloudBigqueryDataexchangeV1beta1DestinationDatasetReference) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudBigqueryDataexchangeV1beta1DestinationDatasetReference
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudMarketplaceInfo: Cloud Marketplace commercial metadata for this
+// subscription.
+type GoogleCloudMarketplaceInfo struct {
+	// Order: Resource name of the Marketplace Order.
+	Order string `json:"order,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Order") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Order") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudMarketplaceInfo) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudMarketplaceInfo
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -1208,6 +1254,10 @@ type SubscribeListingResponse struct {
 // particular set of published data. It contains references to associated
 // listings, data exchanges, and linked datasets.
 type Subscription struct {
+	// CommercialInfo: Output only. This is set if this is a commercial
+	// subscription i.e. if this subscription was created from subscribing to a
+	// commercial listing.
+	CommercialInfo *CommercialInfo `json:"commercialInfo,omitempty"`
 	// CreationTime: Output only. Timestamp when the subscription was created.
 	CreationTime string `json:"creationTime,omitempty"`
 	// DataExchange: Output only. Resource name of the source Data Exchange. e.g.
@@ -1257,15 +1307,15 @@ type Subscription struct {
 	State string `json:"state,omitempty"`
 	// SubscriberContact: Output only. Email of the subscriber.
 	SubscriberContact string `json:"subscriberContact,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "CreationTime") to
+	// ForceSendFields is a list of field names (e.g. "CommercialInfo") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "CreationTime") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
+	// NullFields is a list of field names (e.g. "CommercialInfo") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }

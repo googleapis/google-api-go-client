@@ -1455,7 +1455,7 @@ type GoogleMapsPlacesV1Place struct {
 	// RegularOpeningHours: The regular hours of operation. Note that if a place is
 	// always open (24 hours), the `close` field will not be set. Clients can rely
 	// on always open (24 hours) being represented as an `open` period containing
-	// day with value `0`, hour with value `0`, and minute with value `0`.
+	// `day` with value `0`, `hour` with value `0`, and `minute` with value `0`.
 	RegularOpeningHours *GoogleMapsPlacesV1PlaceOpeningHours `json:"regularOpeningHours,omitempty"`
 	// RegularSecondaryOpeningHours: Contains an array of entries for information
 	// about regular secondary hours of a business. Secondary hours are different

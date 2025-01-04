@@ -1080,6 +1080,112 @@ func (s GetPolicyOptions) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudBigqueryAnalyticshubV1ListingCommercialInfo: Commercial info
+// contains the information about the commercial data products associated with
+// the listing.
+type GoogleCloudBigqueryAnalyticshubV1ListingCommercialInfo struct {
+	// CloudMarketplace: Output only. Details of the Marketplace Data Product
+	// associated with the Listing.
+	CloudMarketplace *GoogleCloudBigqueryAnalyticshubV1ListingCommercialInfoGoogleCloudMarketplaceInfo `json:"cloudMarketplace,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "CloudMarketplace") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CloudMarketplace") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudBigqueryAnalyticshubV1ListingCommercialInfo) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudBigqueryAnalyticshubV1ListingCommercialInfo
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudBigqueryAnalyticshubV1ListingCommercialInfoGoogleCloudMarketplaceI
+// nfo: Specifies the details of the Marketplace Data Product associated with
+// the Listing.
+type GoogleCloudBigqueryAnalyticshubV1ListingCommercialInfoGoogleCloudMarketplaceInfo struct {
+	// CommercialState: Output only. Commercial state of the Marketplace Data
+	// Product.
+	//
+	// Possible values:
+	//   "COMMERCIAL_STATE_UNSPECIFIED" - Commercialization is incomplete and
+	// cannot be used.
+	//   "ONBOARDING" - Commercialization has been initialized.
+	//   "ACTIVE" - Commercialization is complete and available for use.
+	CommercialState string `json:"commercialState,omitempty"`
+	// Service: Output only. Resource name of the commercial service associated
+	// with the Marketplace Data Product. e.g. example.com
+	Service string `json:"service,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "CommercialState") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CommercialState") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudBigqueryAnalyticshubV1ListingCommercialInfoGoogleCloudMarketplaceInfo) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudBigqueryAnalyticshubV1ListingCommercialInfoGoogleCloudMarketplaceInfo
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudBigqueryAnalyticshubV1SubscriptionCommercialInfo: Commercial info
+// metadata for this subscription.
+type GoogleCloudBigqueryAnalyticshubV1SubscriptionCommercialInfo struct {
+	// CloudMarketplace: Output only. This is set when the subscription is
+	// commercialised via Cloud Marketplace.
+	CloudMarketplace *GoogleCloudBigqueryAnalyticshubV1SubscriptionCommercialInfoGoogleCloudMarketplaceInfo `json:"cloudMarketplace,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "CloudMarketplace") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CloudMarketplace") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudBigqueryAnalyticshubV1SubscriptionCommercialInfo) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudBigqueryAnalyticshubV1SubscriptionCommercialInfo
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudBigqueryAnalyticshubV1SubscriptionCommercialInfoGoogleCloudMarketp
+// laceInfo: Cloud Marketplace commercial metadata for this subscription.
+type GoogleCloudBigqueryAnalyticshubV1SubscriptionCommercialInfoGoogleCloudMarketplaceInfo struct {
+	// Order: Resource name of the Marketplace Order.
+	Order string `json:"order,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Order") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Order") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudBigqueryAnalyticshubV1SubscriptionCommercialInfoGoogleCloudMarketplaceInfo) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudBigqueryAnalyticshubV1SubscriptionCommercialInfoGoogleCloudMarketplaceInfo
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GooglePubsubV1Subscription: A subscription resource. If none of
 // `push_config`, `bigquery_config`, or `cloud_storage_config` is set, then the
 // subscriber will pull and ack messages using API methods. At most one of
@@ -1418,6 +1524,9 @@ type Listing struct {
 	//   "CATEGORY_TRANSPORTATION_AND_LOGISTICS"
 	//   "CATEGORY_TRAVEL_AND_TOURISM"
 	Categories []string `json:"categories,omitempty"`
+	// CommercialInfo: Output only. Commercial info contains the information about
+	// the commercial data products associated with the listing.
+	CommercialInfo *GoogleCloudBigqueryAnalyticshubV1ListingCommercialInfo `json:"commercialInfo,omitempty"`
 	// DataProvider: Optional. Details of the data provider who owns the source
 	// data.
 	DataProvider *DataProvider `json:"dataProvider,omitempty"`
@@ -2201,6 +2310,10 @@ func (s SubscribeListingResponse) MarshalJSON() ([]byte, error) {
 // particular set of published data. It contains references to associated
 // listings, data exchanges, and linked datasets.
 type Subscription struct {
+	// CommercialInfo: Output only. This is set if this is a commercial
+	// subscription i.e. if this subscription was created from subscribing to a
+	// commercial listing.
+	CommercialInfo *GoogleCloudBigqueryAnalyticshubV1SubscriptionCommercialInfo `json:"commercialInfo,omitempty"`
 	// CreationTime: Output only. Timestamp when the subscription was created.
 	CreationTime string `json:"creationTime,omitempty"`
 	// DataExchange: Output only. Resource name of the source Data Exchange. e.g.
@@ -2253,15 +2366,15 @@ type Subscription struct {
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-	// ForceSendFields is a list of field names (e.g. "CreationTime") to
+	// ForceSendFields is a list of field names (e.g. "CommercialInfo") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "CreationTime") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
+	// NullFields is a list of field names (e.g. "CommercialInfo") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }

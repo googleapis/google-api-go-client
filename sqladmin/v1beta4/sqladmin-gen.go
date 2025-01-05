@@ -3290,9 +3290,8 @@ type Operation struct {
 	Status string `json:"status,omitempty"`
 	// SubOperationType: Optional. The sub operation based on the operation type.
 	SubOperationType *SqlSubOperationType `json:"subOperationType,omitempty"`
-	// TargetId: Name of the database instance related to this operation.
-	TargetId   string `json:"targetId,omitempty"`
-	TargetLink string `json:"targetLink,omitempty"`
+	TargetId         string               `json:"targetId,omitempty"`
+	TargetLink       string               `json:"targetLink,omitempty"`
 	// TargetProject: The project ID of the target instance related to this
 	// operation.
 	TargetProject string `json:"targetProject,omitempty"`

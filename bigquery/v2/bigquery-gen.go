@@ -1627,8 +1627,9 @@ type Clustering struct {
 	// Fields: One or more fields on which data should be clustered. Only
 	// top-level, non-repeated, simple-type fields are supported. The ordering of
 	// the clustering fields should be prioritized from most to least important for
-	// filtering purposes. Additional information on limitations can be found here:
-	// https://cloud.google.com/bigquery/docs/creating-clustered-tables#limitations
+	// filtering purposes. For additional information, see Introduction to
+	// clustered tables
+	// (https://cloud.google.com/bigquery/docs/clustered-tables#limitations).
 	Fields []string `json:"fields,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Fields") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -3070,14 +3071,14 @@ func (s Expr) MarshalJSON() ([]byte, error) {
 
 // ExternalCatalogDatasetOptions: Options defining open source compatible
 // datasets living in the BigQuery catalog. Contains metadata of open source
-// database, schema or namespace represented by the current dataset.
+// database, schema, or namespace represented by the current dataset.
 type ExternalCatalogDatasetOptions struct {
 	// DefaultStorageLocationUri: Optional. The storage location URI for all tables
 	// in the dataset. Equivalent to hive metastore's database locationUri. Maximum
 	// length of 1024 characters.
 	DefaultStorageLocationUri string `json:"defaultStorageLocationUri,omitempty"`
 	// Parameters: Optional. A map of key value pairs defining the parameters and
-	// properties of the open source schema. Maximum size of 2Mib.
+	// properties of the open source schema. Maximum size of 2MiB.
 	Parameters map[string]string `json:"parameters,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "DefaultStorageLocationUri")
 	// to unconditionally include in API requests. By default, fields with empty or
@@ -3098,17 +3099,18 @@ func (s ExternalCatalogDatasetOptions) MarshalJSON() ([]byte, error) {
 }
 
 // ExternalCatalogTableOptions: Metadata about open source compatible table.
-// The fields contained in these options correspond to hive metastore's table
-// level properties.
+// The fields contained in these options correspond to Hive metastore's
+// table-level properties.
 type ExternalCatalogTableOptions struct {
-	// ConnectionId: Optional. The connection specifying the credentials to be used
-	// to read external storage, such as Azure Blob, Cloud Storage, or S3. The
-	// connection is needed to read the open source table from BigQuery Engine. The
-	// connection_id can have the form `..` or `projects//locations//connections/`.
+	// ConnectionId: Optional. A connection ID that specifies the credentials to be
+	// used to read external storage, such as Azure Blob, Cloud Storage, or Amazon
+	// S3. This connection is needed to read the open source table from BigQuery.
+	// The connection_id format must be either `..` or
+	// `projects//locations//connections/`.
 	ConnectionId string `json:"connectionId,omitempty"`
-	// Parameters: Optional. A map of key value pairs defining the parameters and
-	// properties of the open source table. Corresponds with hive meta store table
-	// parameters. Maximum size of 4Mib.
+	// Parameters: Optional. A map of the key-value pairs defining the parameters
+	// and properties of the open source table. Corresponds with Hive metastore
+	// table parameters. Maximum size of 4MiB.
 	Parameters map[string]string `json:"parameters,omitempty"`
 	// StorageDescriptor: Optional. A storage descriptor containing information
 	// about the physical storage of this table.
@@ -5284,7 +5286,7 @@ type JobStatistics2 struct {
 	// statement. * `INSERT`: `INSERT`
 	// (https://cloud.google.com/bigquery/docs/reference/standard-sql/dml-syntax#insert_statement)
 	// statement. * `UPDATE`: `UPDATE`
-	// (https://cloud.google.com/bigquery/docs/reference/standard-sql/query-syntax#update_statement)
+	// (https://cloud.google.com/bigquery/docs/reference/standard-sql/dml-syntax#update_statement)
 	// statement. * `DELETE`: `DELETE`
 	// (https://cloud.google.com/bigquery/docs/reference/standard-sql/data-manipulation-language)
 	// statement. * `MERGE`: `MERGE`
@@ -5293,7 +5295,7 @@ type JobStatistics2 struct {
 	// (https://cloud.google.com/bigquery/docs/reference/standard-sql/data-definition-language#create_table_statement)
 	// statement, without `AS SELECT`. * `CREATE_TABLE_AS_SELECT`: `CREATE TABLE AS
 	// SELECT`
-	// (https://cloud.google.com/bigquery/docs/reference/standard-sql/data-definition-language#query_statement)
+	// (https://cloud.google.com/bigquery/docs/reference/standard-sql/data-definition-language#create_table_statement)
 	// statement. * `CREATE_VIEW`: `CREATE VIEW`
 	// (https://cloud.google.com/bigquery/docs/reference/standard-sql/data-definition-language#create_view_statement)
 	// statement. * `CREATE_MODEL`: `CREATE MODEL`
@@ -5346,7 +5348,7 @@ type JobStatistics2 struct {
 	// statement. * `ALTER_MATERIALIZED_VIEW`: `ALTER MATERIALIZED VIEW`
 	// (https://cloud.google.com/bigquery/docs/reference/standard-sql/data-definition-language#alter_materialized_view_set_options_statement)
 	// statement. * `ALTER_SCHEMA`: `ALTER SCHEMA`
-	// (https://cloud.google.com/bigquery/docs/reference/standard-sql/data-definition-language#aalter_schema_set_options_statement)
+	// (https://cloud.google.com/bigquery/docs/reference/standard-sql/data-definition-language#alter_schema_set_options_statement)
 	// statement. * `SCRIPT`: `SCRIPT`
 	// (https://cloud.google.com/bigquery/docs/reference/standard-sql/procedural-language).
 	// * `TRUNCATE_TABLE`: `TRUNCATE TABLE`
@@ -5859,9 +5861,9 @@ type MaterializedView struct {
 	// truncated.
 	//   "BASE_TABLE_DATA_CHANGE" - View is invalidated because of a data change in
 	// one or more base tables. It could be any recent change if the
-	// [`max_staleness`](https://cloud.google.com/bigquery/docs/materialized-views-c
-	// reate#max_staleness) option is not set for the view, or otherwise any change
-	// outside of the staleness window.
+	// [`maxStaleness`](https://cloud.google.com/bigquery/docs/reference/rest/v2/tab
+	// les#Table.FIELDS.max_staleness) option is not set for the view, or otherwise
+	// any change outside of the staleness window.
 	//   "BASE_TABLE_PARTITION_EXPIRATION_CHANGE" - View is invalidated because a
 	// base table's partition expiration has changed.
 	//   "BASE_TABLE_EXPIRED_PARTITION" - View is invalidated because a base
@@ -6929,8 +6931,9 @@ type QueryRequest struct {
 	// must start with a letter and each label in the list must have a different
 	// key.
 	Labels map[string]string `json:"labels,omitempty"`
-	// Location: The geographic location where the job should run. See details at
-	// https://cloud.google.com/bigquery/docs/locations#specifying_your_location.
+	// Location: The geographic location where the job should run. For more
+	// information, see how to specify locations
+	// (https://cloud.google.com/bigquery/docs/locations#specify_locations).
 	Location string `json:"location,omitempty"`
 	// MaxResults: Optional. The maximum number of rows of data to return per page
 	// of results. Setting this flag to a small value such as 1000 and then paging
@@ -9625,7 +9628,7 @@ type TrainingOptions struct {
 	// DATA_SPLIT_EVAL_FRACTION rows (from smallest to largest) in the
 	// corresponding column are used as training data, and the rest are eval data.
 	// It respects the order in Orderable data types:
-	// https://cloud.google.com/bigquery/docs/reference/standard-sql/data-types#data-type-properties
+	// https://cloud.google.com/bigquery/docs/reference/standard-sql/data-types#data_type_properties
 	DataSplitColumn string `json:"dataSplitColumn,omitempty"`
 	// DataSplitEvalFraction: The fraction of evaluation data over the whole input
 	// data. The rest of data will be used as training data. The format should be
@@ -11291,11 +11294,11 @@ func (r *JobsService) Cancel(projectId string, jobId string) *JobsCancelCall {
 }
 
 // Location sets the optional parameter "location": The geographic location of
-// the job. You must specify the location to run the job for the following
-// scenarios: * If the location to run a job is not in the `us` or the `eu`
-// multi-regional location * If the job's location is in a single region (for
-// example, `us-central1`) For more information, see
-// https://cloud.google.com/bigquery/docs/locations#specifying_your_location.
+// the job. You must specify the location
+// (https://cloud.google.com/bigquery/docs/locations#specify_locations) to run
+// the job for the following scenarios: * If the location to run a job is not
+// in the `us` or the `eu` multi-regional location * If the job's location is
+// in a single region (for example, `us-central1`)
 func (c *JobsCancelCall) Location(location string) *JobsCancelCall {
 	c.urlParams_.Set("location", location)
 	return c
@@ -11408,8 +11411,8 @@ func (r *JobsService) Delete(projectId string, jobId string) *JobsDeleteCall {
 }
 
 // Location sets the optional parameter "location": The geographic location of
-// the job. Required. See details at:
-// https://cloud.google.com/bigquery/docs/locations#specifying_your_location.
+// the job. Required. For more information, see how to specify locations
+// (https://cloud.google.com/bigquery/docs/locations#specify_locations).
 func (c *JobsDeleteCall) Location(location string) *JobsDeleteCall {
 	c.urlParams_.Set("location", location)
 	return c
@@ -11499,8 +11502,8 @@ func (r *JobsService) Get(projectId string, jobId string) *JobsGetCall {
 // the job. You must specify the location to run the job for the following
 // scenarios: * If the location to run a job is not in the `us` or the `eu`
 // multi-regional location * If the job's location is in a single region (for
-// example, `us-central1`) For more information, see
-// https://cloud.google.com/bigquery/docs/locations#specifying_your_location.
+// example, `us-central1`) For more information, see how to specify locations
+// (https://cloud.google.com/bigquery/docs/locations#specify_locations).
 func (c *JobsGetCall) Location(location string) *JobsGetCall {
 	c.urlParams_.Set("location", location)
 	return c
@@ -11631,8 +11634,8 @@ func (c *JobsGetQueryResultsCall) FormatOptionsUseInt64Timestamp(formatOptionsUs
 // the job. You must specify the location to run the job for the following
 // scenarios: * If the location to run a job is not in the `us` or the `eu`
 // multi-regional location * If the job's location is in a single region (for
-// example, `us-central1`) For more information, see
-// https://cloud.google.com/bigquery/docs/locations#specifying_your_location.
+// example, `us-central1`) For more information, see how to specify locations
+// (https://cloud.google.com/bigquery/docs/locations#specify_locations).
 func (c *JobsGetQueryResultsCall) Location(location string) *JobsGetQueryResultsCall {
 	c.urlParams_.Set("location", location)
 	return c

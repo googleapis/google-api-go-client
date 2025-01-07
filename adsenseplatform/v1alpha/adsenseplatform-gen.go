@@ -127,6 +127,7 @@ func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, err
 		return nil, err
 	}
 	s := &Service{client: client, BasePath: basePath, logger: internaloption.GetLogger(opts)}
+	s.Accounts = NewAccountsService(s)
 	s.Platforms = NewPlatformsService(s)
 	if err != nil {
 		return nil, err
@@ -155,6 +156,8 @@ type Service struct {
 	BasePath  string // API endpoint base URL
 	UserAgent string // optional additional User-Agent fragment
 
+	Accounts *AccountsService
+
 	Platforms *PlatformsService
 }
 
@@ -163,6 +166,27 @@ func (s *Service) userAgent() string {
 		return googleapi.UserAgent
 	}
 	return googleapi.UserAgent + " " + s.UserAgent
+}
+
+func NewAccountsService(s *Service) *AccountsService {
+	rs := &AccountsService{s: s}
+	rs.Platforms = NewAccountsPlatformsService(s)
+	return rs
+}
+
+type AccountsService struct {
+	s *Service
+
+	Platforms *AccountsPlatformsService
+}
+
+func NewAccountsPlatformsService(s *Service) *AccountsPlatformsService {
+	rs := &AccountsPlatformsService{s: s}
+	return rs
+}
+
+type AccountsPlatformsService struct {
+	s *Service
 }
 
 func NewPlatformsService(s *Service) *PlatformsService {
@@ -476,6 +500,36 @@ func (s LookupAccountResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// Platform: Representation of a Transparent Platform.
+type Platform struct {
+	// DefaultPlatformGroup: Default platform group for the platform.
+	DefaultPlatformGroup string `json:"defaultPlatformGroup,omitempty"`
+	// Description: Output only. Description of the platform.
+	Description string `json:"description,omitempty"`
+	// Name: Identifier. Resource name of a platform. Format:
+	// accounts/{account}/platforms/{platform}
+	Name string `json:"name,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "DefaultPlatformGroup") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DefaultPlatformGroup") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s Platform) MarshalJSON() ([]byte, error) {
+	type NoMethod Platform
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // RequestSiteReviewResponse: Response definition for the site request review
 // rpc.
 type RequestSiteReviewResponse struct {
@@ -554,6 +608,116 @@ type TimeZone struct {
 func (s TimeZone) MarshalJSON() ([]byte, error) {
 	type NoMethod TimeZone
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+type AccountsPlatformsGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Gets a platform.
+//
+//   - name: The name of the platform to retrieve. Format:
+//     accounts/{account}/platforms/{platform}.
+func (r *AccountsPlatformsService) Get(name string) *AccountsPlatformsGetCall {
+	c := &AccountsPlatformsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *AccountsPlatformsGetCall) Fields(s ...googleapi.Field) *AccountsPlatformsGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *AccountsPlatformsGetCall) IfNoneMatch(entityTag string) *AccountsPlatformsGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *AccountsPlatformsGetCall) Context(ctx context.Context) *AccountsPlatformsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *AccountsPlatformsGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *AccountsPlatformsGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "adsenseplatform.accounts.platforms.get", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "adsenseplatform.accounts.platforms.get" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Platform.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *AccountsPlatformsGetCall) Do(opts ...googleapi.CallOption) (*Platform, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Platform{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "adsenseplatform.accounts.platforms.get", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
 }
 
 type PlatformsAccountsCloseCall struct {

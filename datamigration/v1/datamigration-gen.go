@@ -1080,6 +1080,7 @@ type ConnectionProfile struct {
 	//   "RDS" - Amazon RDS is the source instance provider.
 	//   "AURORA" - Amazon Aurora is the source instance provider.
 	//   "ALLOYDB" - AlloyDB for PostgreSQL is the source instance provider.
+	//   "AZURE_DATABASE" - Microsoft Azure Database for MySQL/PostgreSQL.
 	Provider string `json:"provider,omitempty"`
 	// Role: Optional. The connection profile role.
 	//
@@ -1088,6 +1089,10 @@ type ConnectionProfile struct {
 	//   "SOURCE" - The role is source.
 	//   "DESTINATION" - The role is destination.
 	Role string `json:"role,omitempty"`
+	// SatisfiesPzi: Output only. Zone Isolation compliance state of the resource.
+	SatisfiesPzi bool `json:"satisfiesPzi,omitempty"`
+	// SatisfiesPzs: Output only. Zone Separation compliance state of the resource.
+	SatisfiesPzs bool `json:"satisfiesPzs,omitempty"`
 	// Sqlserver: Connection profile for a SQL Server data source.
 	Sqlserver *SqlServerConnectionProfile `json:"sqlserver,omitempty"`
 	// State: The current connection profile state (e.g. DRAFT, READY, or FAILED).
@@ -1522,6 +1527,7 @@ type DatabaseType struct {
 	//   "RDS" - Amazon RDS is the source instance provider.
 	//   "AURORA" - Amazon Aurora is the source instance provider.
 	//   "ALLOYDB" - AlloyDB for PostgreSQL is the source instance provider.
+	//   "AZURE_DATABASE" - Microsoft Azure Database for MySQL/PostgreSQL.
 	Provider string `json:"provider,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Engine") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -3011,6 +3017,10 @@ type MigrationJob struct {
 	// ReverseSshConnectivity: The details needed to communicate to the source over
 	// Reverse SSH tunnel connectivity.
 	ReverseSshConnectivity *ReverseSshConnectivity `json:"reverseSshConnectivity,omitempty"`
+	// SatisfiesPzi: Output only. Zone Isolation compliance state of the resource.
+	SatisfiesPzi bool `json:"satisfiesPzi,omitempty"`
+	// SatisfiesPzs: Output only. Zone Separation compliance state of the resource.
+	SatisfiesPzs bool `json:"satisfiesPzs,omitempty"`
 	// Source: Required. The resource name (URI) of the source connection profile.
 	Source string `json:"source,omitempty"`
 	// SourceDatabase: The database engine type and provider of the source.
@@ -3909,6 +3919,10 @@ type PrivateConnection struct {
 	Labels map[string]string `json:"labels,omitempty"`
 	// Name: The name of the resource.
 	Name string `json:"name,omitempty"`
+	// SatisfiesPzi: Output only. Zone Isolation compliance state of the resource.
+	SatisfiesPzi bool `json:"satisfiesPzi,omitempty"`
+	// SatisfiesPzs: Output only. Zone Separation compliance state of the resource.
+	SatisfiesPzs bool `json:"satisfiesPzs,omitempty"`
 	// State: Output only. The state of the private connection.
 	//
 	// Possible values:
@@ -4521,7 +4535,7 @@ func (s SourceNumericFilter) MarshalJSON() ([]byte, error) {
 
 // SourceObjectConfig: Config for a single migration job object.
 type SourceObjectConfig struct {
-	// ObjectIdentifier: The object identifier.
+	// ObjectIdentifier: Optional. The object identifier.
 	ObjectIdentifier *SourceObjectIdentifier `json:"objectIdentifier,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "ObjectIdentifier") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -4543,8 +4557,8 @@ func (s SourceObjectConfig) MarshalJSON() ([]byte, error) {
 
 // SourceObjectIdentifier: An identifier for the Migration Job Object.
 type SourceObjectIdentifier struct {
-	// Database: The database name. This will be required only if the object uses a
-	// database name as part of its unique identifier.
+	// Database: Optional. The database name. This will be required only if the
+	// object uses a database name as part of its unique identifier.
 	Database string `json:"database,omitempty"`
 	// Type: Required. The type of the migration job object.
 	//
@@ -4574,7 +4588,7 @@ func (s SourceObjectIdentifier) MarshalJSON() ([]byte, error) {
 // SourceObjectsConfig: List of configurations for the source objects to be
 // migrated.
 type SourceObjectsConfig struct {
-	// ObjectConfigs: The list of the objects to be migrated.
+	// ObjectConfigs: Optional. The list of the objects to be migrated.
 	ObjectConfigs []*SourceObjectConfig `json:"objectConfigs,omitempty"`
 	// ObjectsSelectionType: Optional. The objects selection type of the migration
 	// job.

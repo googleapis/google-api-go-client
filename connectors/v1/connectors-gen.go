@@ -2163,8 +2163,6 @@ func (s EventSubscription) MarshalJSON() ([]byte, error) {
 type EventSubscriptionDestination struct {
 	// Endpoint: OPTION 1: Hit an endpoint when we receive an event.
 	Endpoint *EndPoint `json:"endpoint,omitempty"`
-	// Gsutil: OPTION 2: Write the event to Cloud Storage bucket.
-	Gsutil *GSUtil `json:"gsutil,omitempty"`
 	// ServiceAccount: Service account needed for runtime plane to trigger IP
 	// workflow.
 	ServiceAccount string `json:"serviceAccount,omitempty"`
@@ -2727,29 +2725,6 @@ type FieldComparison struct {
 
 func (s FieldComparison) MarshalJSON() ([]byte, error) {
 	type NoMethod FieldComparison
-	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
-}
-
-// GSUtil: GSUtil message includes details of the Destination Cloud Storage
-// bucket.
-type GSUtil struct {
-	// GsutilUri: Required. The URI of the Cloud Storage bucket.
-	GsutilUri string `json:"gsutilUri,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "GsutilUri") to
-	// unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
-	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "GsutilUri") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
-	NullFields []string `json:"-"`
-}
-
-func (s GSUtil) MarshalJSON() ([]byte, error) {
-	type NoMethod GSUtil
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 

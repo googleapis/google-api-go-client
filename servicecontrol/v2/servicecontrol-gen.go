@@ -377,11 +377,6 @@ type Auth struct {
 	// 'jsmith@example.com', 'iat': 1353601026, 'exp': 1353604926} SAML assertions
 	// are similarly specified, but with an identity provider dependent structure.
 	Claims googleapi.RawMessage `json:"claims,omitempty"`
-	// CredentialId: Identifies the client credential id used for authentication.
-	// credential_id is in the format of AUTH_METHOD:IDENTIFIER, e.g.
-	// "serviceaccount:XXXXX, apikey:XXXXX" where the format of the IDENTIFIER can
-	// vary for different AUTH_METHODs.
-	CredentialId string `json:"credentialId,omitempty"`
 	// Presenter: The authorized presenter of the credential. Reflects the optional
 	// Authorized Presenter (`azp`) claim within a JWT or the OAuth client id. For
 	// example, a Google Cloud Platform client id looks as follows:
@@ -1261,7 +1256,7 @@ type V2HttpRequest struct {
 	// "websocket"
 	Protocol string `json:"protocol,omitempty"`
 	// Referer: The referer URL of the request, as defined in HTTP/1.1 Header Field
-	// Definitions (http://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html).
+	// Definitions (https://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html).
 	Referer string `json:"referer,omitempty"`
 	// RemoteIp: The IP address (IPv4 or IPv6) of the client that issued the HTTP
 	// request. Examples: "192.168.1.1", "FE80::0202:B3FF:FE1E:8329".

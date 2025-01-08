@@ -1749,9 +1749,10 @@ func (c *TasksMoveCall) DestinationTasklist(destinationTasklist string) *TasksMo
 }
 
 // Parent sets the optional parameter "parent": New parent task identifier. If
-// the task is moved to the top level, this parameter is omitted. Assigned
-// tasks can not be set as parent task (have subtasks) or be moved under a
-// parent task (become subtasks).
+// the task is moved to the top level, this parameter is omitted. The task set
+// as parent must exist in the task list and can not be hidden. Assigned tasks
+// can not be set as parent task (have subtasks) or be moved under a parent
+// task (become subtasks).
 func (c *TasksMoveCall) Parent(parent string) *TasksMoveCall {
 	c.urlParams_.Set("parent", parent)
 	return c
@@ -1759,7 +1760,8 @@ func (c *TasksMoveCall) Parent(parent string) *TasksMoveCall {
 
 // Previous sets the optional parameter "previous": New previous sibling task
 // identifier. If the task is moved to the first position among its siblings,
-// this parameter is omitted.
+// this parameter is omitted. The task set as previous must exist in the task
+// list and can not be hidden.
 func (c *TasksMoveCall) Previous(previous string) *TasksMoveCall {
 	c.urlParams_.Set("previous", previous)
 	return c

@@ -1241,7 +1241,7 @@ func (s *ProductDimension) UnmarshalJSON(data []byte) error {
 type ProductInput struct {
 	// Attributes: Optional. A list of product attributes.
 	Attributes *Attributes `json:"attributes,omitempty"`
-	// Channel: Required. Immutable. The channel
+	// Channel: Immutable. The channel
 	// (https://support.google.com/merchants/answer/7361332) of the product.
 	//
 	// Possible values:

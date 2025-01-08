@@ -397,6 +397,112 @@ func (s AwsKinesis) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// AwsMsk: Ingestion settings for Amazon MSK.
+type AwsMsk struct {
+	// AwsRoleArn: Required. AWS role ARN to be used for Federated Identity
+	// authentication with Amazon MSK. Check the Pub/Sub docs for how to set up
+	// this role and the required permissions that need to be attached to it.
+	AwsRoleArn string `json:"awsRoleArn,omitempty"`
+	// ClusterArn: Required. The Amazon Resource Name (ARN) that uniquely
+	// identifies the cluster.
+	ClusterArn string `json:"clusterArn,omitempty"`
+	// GcpServiceAccount: Required. The GCP service account to be used for
+	// Federated Identity authentication with Amazon MSK (via a
+	// `AssumeRoleWithWebIdentity` call for the provided role). The `aws_role_arn`
+	// must be set up with `accounts.google.com:sub` equals to this service account
+	// number.
+	GcpServiceAccount string `json:"gcpServiceAccount,omitempty"`
+	// State: Output only. An output-only field that indicates the state of the
+	// Amazon MSK ingestion source.
+	//
+	// Possible values:
+	//   "STATE_UNSPECIFIED" - Default value. This value is unused.
+	//   "ACTIVE" - Ingestion is active.
+	//   "MSK_PERMISSION_DENIED" - Permission denied encountered while consuming
+	// data from Amazon MSK.
+	//   "PUBLISH_PERMISSION_DENIED" - Permission denied encountered while
+	// publishing to the topic.
+	//   "CLUSTER_NOT_FOUND" - The provided MSK cluster wasn't found.
+	//   "TOPIC_NOT_FOUND" - The provided topic wasn't found.
+	State string `json:"state,omitempty"`
+	// Topic: Required. The name of the topic in the Amazon MSK cluster that
+	// Pub/Sub will import from.
+	Topic string `json:"topic,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AwsRoleArn") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AwsRoleArn") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s AwsMsk) MarshalJSON() ([]byte, error) {
+	type NoMethod AwsMsk
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// AzureEventHubs: Ingestion settings for Azure Event Hubs.
+type AzureEventHubs struct {
+	// ClientId: Optional. The client id of the Azure application that is being
+	// used to authenticate Pub/Sub.
+	ClientId string `json:"clientId,omitempty"`
+	// EventHub: Optional. The name of the Event Hub.
+	EventHub string `json:"eventHub,omitempty"`
+	// GcpServiceAccount: Optional. The GCP service account to be used for
+	// Federated Identity authentication.
+	GcpServiceAccount string `json:"gcpServiceAccount,omitempty"`
+	// Namespace: Optional. The name of the Event Hubs namespace.
+	Namespace string `json:"namespace,omitempty"`
+	// ResourceGroup: Optional. Name of the resource group within the azure
+	// subscription.
+	ResourceGroup string `json:"resourceGroup,omitempty"`
+	// State: Output only. An output-only field that indicates the state of the
+	// Event Hubs ingestion source.
+	//
+	// Possible values:
+	//   "STATE_UNSPECIFIED" - Default value. This value is unused.
+	//   "ACTIVE" - Ingestion is active.
+	//   "EVENT_HUBS_PERMISSION_DENIED" - Permission denied encountered while
+	// consuming data from Event Hubs. This can happen when `client_id`, or
+	// `tenant_id` are invalid. Or the right permissions haven't been granted.
+	//   "PUBLISH_PERMISSION_DENIED" - Permission denied encountered while
+	// publishing to the topic.
+	//   "NAMESPACE_NOT_FOUND" - The provided Event Hubs namespace couldn't be
+	// found.
+	//   "EVENT_HUB_NOT_FOUND" - The provided Event Hub couldn't be found.
+	//   "SUBSCRIPTION_NOT_FOUND" - The provided Event Hubs subscription couldn't
+	// be found.
+	//   "RESOURCE_GROUP_NOT_FOUND" - The provided Event Hubs resource group
+	// couldn't be found.
+	State string `json:"state,omitempty"`
+	// SubscriptionId: Optional. The Azure subscription id.
+	SubscriptionId string `json:"subscriptionId,omitempty"`
+	// TenantId: Optional. The tenant id of the Azure application that is being
+	// used to authenticate Pub/Sub.
+	TenantId string `json:"tenantId,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ClientId") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ClientId") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s AzureEventHubs) MarshalJSON() ([]byte, error) {
+	type NoMethod AzureEventHubs
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // BigQueryConfig: Configuration for a BigQuery subscription.
 type BigQueryConfig struct {
 	// DropUnknownFields: Optional. When true and use_topic_schema is true, any
@@ -729,6 +835,56 @@ func (s CommitSchemaRequest) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// ConfluentCloud: Ingestion settings for Confluent Cloud.
+type ConfluentCloud struct {
+	// BootstrapServer: Required. The address of the bootstrap server. The format
+	// is url:port.
+	BootstrapServer string `json:"bootstrapServer,omitempty"`
+	// ClusterId: Required. The id of the cluster.
+	ClusterId string `json:"clusterId,omitempty"`
+	// GcpServiceAccount: Required. The GCP service account to be used for
+	// Federated Identity authentication with `identity_pool_id`.
+	GcpServiceAccount string `json:"gcpServiceAccount,omitempty"`
+	// IdentityPoolId: Required. The id of the identity pool to be used for
+	// Federated Identity authentication with Confluent Cloud. See
+	// https://docs.confluent.io/cloud/current/security/authenticate/workload-identities/identity-providers/oauth/identity-pools.html#add-oauth-identity-pools.
+	IdentityPoolId string `json:"identityPoolId,omitempty"`
+	// State: Output only. An output-only field that indicates the state of the
+	// Confluent Cloud ingestion source.
+	//
+	// Possible values:
+	//   "STATE_UNSPECIFIED" - Default value. This value is unused.
+	//   "ACTIVE" - Ingestion is active.
+	//   "CONFLUENT_CLOUD_PERMISSION_DENIED" - Permission denied encountered while
+	// consuming data from Confluent Cloud.
+	//   "PUBLISH_PERMISSION_DENIED" - Permission denied encountered while
+	// publishing to the topic.
+	//   "UNREACHABLE_BOOTSTRAP_SERVER" - The provided bootstrap server address is
+	// unreachable.
+	//   "CLUSTER_NOT_FOUND" - The provided cluster wasn't found.
+	//   "TOPIC_NOT_FOUND" - The provided topic wasn't found.
+	State string `json:"state,omitempty"`
+	// Topic: Required. The name of the topic in the Confluent Cloud cluster that
+	// Pub/Sub will import from.
+	Topic string `json:"topic,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "BootstrapServer") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "BootstrapServer") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ConfluentCloud) MarshalJSON() ([]byte, error) {
+	type NoMethod ConfluentCloud
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // CreateSnapshotRequest: Request for the `CreateSnapshot` method.
 type CreateSnapshotRequest struct {
 	// Labels: Optional. See Creating and managing labels
@@ -899,8 +1055,14 @@ func (s Expr) MarshalJSON() ([]byte, error) {
 type IngestionDataSourceSettings struct {
 	// AwsKinesis: Optional. Amazon Kinesis Data Streams.
 	AwsKinesis *AwsKinesis `json:"awsKinesis,omitempty"`
+	// AwsMsk: Optional. Amazon MSK.
+	AwsMsk *AwsMsk `json:"awsMsk,omitempty"`
+	// AzureEventHubs: Optional. Azure Event Hubs.
+	AzureEventHubs *AzureEventHubs `json:"azureEventHubs,omitempty"`
 	// CloudStorage: Optional. Cloud Storage.
 	CloudStorage *CloudStorage `json:"cloudStorage,omitempty"`
+	// ConfluentCloud: Optional. Confluent Cloud.
+	ConfluentCloud *ConfluentCloud `json:"confluentCloud,omitempty"`
 	// PlatformLogsSettings: Optional. Platform Logs settings. If unset, no
 	// Platform Logs will be generated.
 	PlatformLogsSettings *PlatformLogsSettings `json:"platformLogsSettings,omitempty"`

@@ -1339,7 +1339,8 @@ func (s GoogleAnalyticsAdminV1betaCustomMetric) MarshalJSON() ([]byte, error) {
 // GoogleAnalyticsAdminV1betaDataRetentionSettings: Settings values for data
 // retention. This is a singleton resource.
 type GoogleAnalyticsAdminV1betaDataRetentionSettings struct {
-	// EventDataRetention: The length of time that event-level data is retained.
+	// EventDataRetention: Required. The length of time that event-level data is
+	// retained.
 	//
 	// Possible values:
 	//   "RETENTION_DURATION_UNSPECIFIED" - Data retention time duration is not
@@ -1347,11 +1348,11 @@ type GoogleAnalyticsAdminV1betaDataRetentionSettings struct {
 	//   "TWO_MONTHS" - The data retention time duration is 2 months.
 	//   "FOURTEEN_MONTHS" - The data retention time duration is 14 months.
 	//   "TWENTY_SIX_MONTHS" - The data retention time duration is 26 months.
-	// Available to 360 properties only.
+	// Available to 360 properties only. Available for event data only.
 	//   "THIRTY_EIGHT_MONTHS" - The data retention time duration is 38 months.
-	// Available to 360 properties only.
+	// Available to 360 properties only. Available for event data only.
 	//   "FIFTY_MONTHS" - The data retention time duration is 50 months. Available
-	// to 360 properties only.
+	// to 360 properties only. Available for event data only.
 	EventDataRetention string `json:"eventDataRetention,omitempty"`
 	// Name: Output only. Resource name for this DataRetentionSetting resource.
 	// Format: properties/{property}/dataRetentionSettings
@@ -2488,9 +2489,12 @@ type GoogleAnalyticsAdminV1betaSearchChangeHistoryEventsRequest struct {
 	// time (inclusive).
 	LatestChangeTime string `json:"latestChangeTime,omitempty"`
 	// PageSize: Optional. The maximum number of ChangeHistoryEvent items to
-	// return. The service may return fewer than this value, even if there are
-	// additional pages. If unspecified, at most 50 items will be returned. The
-	// maximum value is 200 (higher values will be coerced to the maximum).
+	// return. If unspecified, at most 50 items will be returned. The maximum value
+	// is 200 (higher values will be coerced to the maximum). Note that the service
+	// may return a page with fewer items than this value specifies (potentially
+	// even zero), and that there still may be additional pages. If you want a
+	// particular number of items, you'll need to continue requesting additional
+	// pages using `page_token` until you get the needed number.
 	PageSize int64 `json:"pageSize,omitempty"`
 	// PageToken: Optional. A page token, received from a previous
 	// `SearchChangeHistoryEvents` call. Provide this to retrieve the subsequent
@@ -3556,7 +3560,8 @@ type AccountsSearchChangeHistoryEventsCall struct {
 }
 
 // SearchChangeHistoryEvents: Searches through all changes to an account or its
-// children given the specified set of filters.
+// children given the specified set of filters. Only returns the subset of
+// changes supported by the API. The UI may return additional changes.
 //
 //   - account: The account resource for which to return change history
 //     resources. Format: accounts/{account} Example: `accounts/100`.

@@ -892,6 +892,7 @@ type CpuMetric struct {
 	//   "A3_HIGHGPU_4G"
 	//   "A3_HIGHGPU_8G"
 	//   "A3_MEGAGPU_8G"
+	//   "A3_ULTRAGPU_8G"
 	//   "E2_STANDARD_2"
 	//   "E2_STANDARD_4"
 	//   "E2_STANDARD_8"
@@ -1410,6 +1411,7 @@ type GpuMetric struct {
 	//   "A3_HIGHGPU_4G"
 	//   "A3_HIGHGPU_8G"
 	//   "A3_MEGAGPU_8G"
+	//   "A3_ULTRAGPU_8G"
 	//   "E2_STANDARD_2"
 	//   "E2_STANDARD_4"
 	//   "E2_STANDARD_8"
@@ -1844,6 +1846,7 @@ type RamMetric struct {
 	//   "A3_HIGHGPU_4G"
 	//   "A3_HIGHGPU_8G"
 	//   "A3_MEGAGPU_8G"
+	//   "A3_ULTRAGPU_8G"
 	//   "E2_STANDARD_2"
 	//   "E2_STANDARD_4"
 	//   "E2_STANDARD_8"
@@ -3486,6 +3489,7 @@ type XPSImageModelServingSpecModelThroughputEstimation struct {
 	//   "NVIDIA_L4" - Nvidia L4 GPU.
 	//   "NVIDIA_H100_80GB" - Nvidia H100 80Gb GPU.
 	//   "NVIDIA_H100_MEGA_80GB" - Nvidia H100 80Gb GPU.
+	//   "NVIDIA_H200_141GB" - Nvidia H200 141Gb GPU.
 	//   "TPU_V2" - TPU v2 (JellyFish).
 	//   "TPU_V3" - TPU v3 (DragonFish).
 	//   "TPU_V4_POD" - TPU_v4 (PufferFish).

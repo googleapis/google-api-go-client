@@ -4552,6 +4552,9 @@ type GoogleCloudRetailV2Rule struct {
 	// terms. Group of terms will not be treated as synonyms with the specific
 	// term.
 	OnewaySynonymsAction *GoogleCloudRetailV2RuleOnewaySynonymsAction `json:"onewaySynonymsAction,omitempty"`
+	// PinAction: Pins one or more specified products to a specific position in the
+	// results.
+	PinAction *GoogleCloudRetailV2RulePinAction `json:"pinAction,omitempty"`
 	// RedirectAction: Redirects a shopper to a specific page.
 	RedirectAction *GoogleCloudRetailV2RuleRedirectAction `json:"redirectAction,omitempty"`
 	// RemoveFacetAction: Remove an attribute as a facet in the request (if
@@ -4818,6 +4821,47 @@ type GoogleCloudRetailV2RuleOnewaySynonymsAction struct {
 
 func (s GoogleCloudRetailV2RuleOnewaySynonymsAction) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRetailV2RuleOnewaySynonymsAction
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudRetailV2RulePinAction: Pins one or more specified products to a
+// specific position in the results. * Rule Condition: Must specify non-empty
+// Condition.query_terms (for search only) or Condition.page_categories (for
+// browse only), but can't specify both. * Action Input: mapping of
+// `[pin_position, product_id]` pairs (pin position uses 1-based indexing). *
+// Action Result: Will pin products with matching ids to the position specified
+// in the final result order. Example: Suppose the query is `shoes`, the
+// Condition.query_terms is `shoes` and the pin_map has `{1, "pid1"}`, then
+// product with `pid1` will be pinned to the top position in the final results.
+// If multiple PinActions are matched to a single request the actions will be
+// processed from most to least recently updated. Pins to positions larger than
+// the max allowed page size of 120 are not allowed.
+type GoogleCloudRetailV2RulePinAction struct {
+	// PinMap: Required. A map of positions to product_ids. Partial matches per
+	// action are allowed, if a certain position in the map is already filled that
+	// `[position, product_id]` pair will be ignored but the rest may still be
+	// applied. This case will only occur if multiple pin actions are matched to a
+	// single request, as the map guarantees that pin positions are unique within
+	// the same action. Duplicate product_ids are not permitted within a single pin
+	// map. The max size of this map is 120, equivalent to the max request page
+	// size
+	// (https://cloud.google.com/retail/docs/reference/rest/v2/projects.locations.catalogs.placements/search#request-body).
+	PinMap map[string]string `json:"pinMap,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "PinMap") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "PinMap") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudRetailV2RulePinAction) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudRetailV2RulePinAction
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 

@@ -422,13 +422,17 @@ type AuctionPackage struct {
 	// Creator: Output only. The buyer that created this auction package. Format:
 	// `buyers/{buyerAccountId}`
 	Creator string `json:"creator,omitempty"`
+	// DealOwnerSeatId: Output only. If set, this field contains the DSP specific
+	// seat id set by the media planner account that is considered the owner of
+	// this deal. The seat ID is in the calling DSP's namespace.
+	DealOwnerSeatId string `json:"dealOwnerSeatId,omitempty"`
 	// Description: Output only. A description of the auction package.
 	Description string `json:"description,omitempty"`
 	// DisplayName: The display_name assigned to the auction package.
 	DisplayName string `json:"displayName,omitempty"`
-	// EligibleSeatIds: Output only. If set, this field contains the list of DSP
-	// specific seat ids set by media planners that are eligible to transact on
-	// this deal. The seat ID is in the calling DSP's namespace.
+	// EligibleSeatIds: Output only. If set, this field identifies a seat that the
+	// media planner selected as the owner of this auction package. This is a seat
+	// ID in the DSP's namespace that was provided to the media planner.
 	EligibleSeatIds []string `json:"eligibleSeatIds,omitempty"`
 	// Name: Immutable. The unique identifier for the auction package. Format:
 	// `buyers/{accountId}/auctionPackages/{auctionPackageId}` The

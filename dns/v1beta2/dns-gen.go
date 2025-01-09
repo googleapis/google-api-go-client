@@ -1680,6 +1680,8 @@ type Policy struct {
 	// this resource for the user's convenience. Has no effect on the policy's
 	// function.
 	Description string `json:"description,omitempty"`
+	// Dns64Config: Configurations related to DNS64 for this Policy.
+	Dns64Config *PolicyDns64Config `json:"dns64Config,omitempty"`
 	// EnableInboundForwarding: Allows networks bound to this policy to receive DNS
 	// queries sent by VMs or applications over VPN connections. When enabled, a
 	// virtual IP address is allocated from each of the subnetworks that are bound
@@ -1776,6 +1778,51 @@ type PolicyAlternativeNameServerConfigTargetNameServer struct {
 
 func (s PolicyAlternativeNameServerConfigTargetNameServer) MarshalJSON() ([]byte, error) {
 	type NoMethod PolicyAlternativeNameServerConfigTargetNameServer
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// PolicyDns64Config: DNS64 policies
+type PolicyDns64Config struct {
+	Kind string `json:"kind,omitempty"`
+	// Scope: The scope to which DNS64 config will be applied to.
+	Scope *PolicyDns64ConfigScope `json:"scope,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Kind") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Kind") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s PolicyDns64Config) MarshalJSON() ([]byte, error) {
+	type NoMethod PolicyDns64Config
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+type PolicyDns64ConfigScope struct {
+	// AllQueries: Controls whether DNS64 is enabled globally at the network level.
+	AllQueries bool   `json:"allQueries,omitempty"`
+	Kind       string `json:"kind,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AllQueries") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AllQueries") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s PolicyDns64ConfigScope) MarshalJSON() ([]byte, error) {
+	type NoMethod PolicyDns64ConfigScope
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 

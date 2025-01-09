@@ -427,11 +427,12 @@ func (s Binding) MarshalJSON() ([]byte, error) {
 }
 
 // BoostConfig: A boost configuration is a set of resources that a workstation
-// can use to increase its performance. If a boost configuration is specified,
-// when starting a workstation, users can choose to use a VM provisioned under
-// the boost config by passing the boost config id in the start request. If no
-// boost config id is provided in the start request, the system will choose a
-// VM from the pool provisioned under the default config.
+// can use to increase its performance. If you specify a boost configuration,
+// upon startup, workstation users can choose to use a VM provisioned under the
+// boost config by passing the boost config ID in the start request. If the
+// workstation user does not provide a boost config ID in the start request,
+// the system will choose a VM from the pool provisioned under the default
+// config.
 type BoostConfig struct {
 	// Accelerators: Optional. A list of the type and count of accelerator cards
 	// attached to the boost instance. Defaults to `none`.
@@ -459,7 +460,7 @@ type BoostConfig struct {
 	// nested virtualization can only be enabled on boost configurations that
 	// specify a machine_type in the N1 or N2 machine series.
 	EnableNestedVirtualization bool `json:"enableNestedVirtualization,omitempty"`
-	// Id: Required. The id to be used for the boost configuration.
+	// Id: Required. The ID to be used for the boost configuration.
 	Id string `json:"id,omitempty"`
 	// MachineType: Optional. The type of machine that boosted VM instances will
 	// use—for example, `e2-standard-4`. For more information about machine types
@@ -804,6 +805,32 @@ func (s GceInstance) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GceInstanceHost: The Compute Engine instance host.
+type GceInstanceHost struct {
+	// Id: Optional. Output only. The ID of the Compute Engine instance.
+	Id string `json:"id,omitempty"`
+	// Name: Optional. Output only. The name of the Compute Engine instance.
+	Name string `json:"name,omitempty"`
+	// Zone: Optional. Output only. The zone of the Compute Engine instance.
+	Zone string `json:"zone,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Id") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Id") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GceInstanceHost) MarshalJSON() ([]byte, error) {
+	type NoMethod GceInstanceHost
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GcePersistentDisk: An EphemeralDirectory is backed by a Compute Engine
 // persistent disk.
 type GcePersistentDisk struct {
@@ -1027,6 +1054,13 @@ type HttpOptions struct {
 	// responsibility of the destination server in the workstation to validate the
 	// request.
 	AllowedUnauthenticatedCorsPreflightRequests bool `json:"allowedUnauthenticatedCorsPreflightRequests,omitempty"`
+	// DisableLocalhostReplacement: Optional. By default, the workstations service
+	// replaces references to localhost, 127.0.0.1, and 0.0.0.0 with the
+	// workstation's hostname in http responses from the workstation so that
+	// applications under development run properly on the workstation. This may
+	// intefere with some applications, and so this option allows that behavior to
+	// be disabled.
+	DisableLocalhostReplacement bool `json:"disableLocalhostReplacement,omitempty"`
 	// ForceSendFields is a list of field names (e.g.
 	// "AllowedUnauthenticatedCorsPreflightRequests") to unconditionally include in
 	// API requests. By default, fields with empty or default values are omitted
@@ -1311,6 +1345,8 @@ func (s OperationMetadata) MarshalJSON() ([]byte, error) {
 }
 
 // PersistentDirectory: A directory to persist across workstation sessions.
+// Updates to this field will not update existing workstations and will only
+// take effect on new workstations.
 type PersistentDirectory struct {
 	// GcePd: A PersistentDirectory backed by a Compute Engine persistent disk.
 	GcePd *GceRegionalPersistentDisk `json:"gcePd,omitempty"`
@@ -1513,6 +1549,28 @@ type ReadinessCheck struct {
 
 func (s ReadinessCheck) MarshalJSON() ([]byte, error) {
 	type NoMethod ReadinessCheck
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// RuntimeHost: Runtime host for the workstation.
+type RuntimeHost struct {
+	// GceInstanceHost: Specifies a Compute Engine instance as the host.
+	GceInstanceHost *GceInstanceHost `json:"gceInstanceHost,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "GceInstanceHost") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "GceInstanceHost") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s RuntimeHost) MarshalJSON() ([]byte, error) {
+	type NoMethod RuntimeHost
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -1727,6 +1785,9 @@ type Workstation struct {
 	// Reconciling: Output only. Indicates whether this workstation is currently
 	// being updated to match its intended state.
 	Reconciling bool `json:"reconciling,omitempty"`
+	// RuntimeHost: Optional. Output only. Runtime host for the workstation when in
+	// STATE_RUNNING.
+	RuntimeHost *RuntimeHost `json:"runtimeHost,omitempty"`
 	// SatisfiesPzi: Output only. Reserved for future use.
 	SatisfiesPzi bool `json:"satisfiesPzi,omitempty"`
 	// SatisfiesPzs: Output only. Reserved for future use.

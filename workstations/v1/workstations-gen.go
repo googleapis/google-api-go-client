@@ -427,11 +427,12 @@ func (s Binding) MarshalJSON() ([]byte, error) {
 }
 
 // BoostConfig: A boost configuration is a set of resources that a workstation
-// can use to increase its performance. If a boost configuration is specified,
-// when starting a workstation, users can choose to use a VM provisioned under
-// the boost config by passing the boost config id in the start request. If no
-// boost config id is provided in the start request, the system will choose a
-// VM from the pool provisioned under the default config.
+// can use to increase its performance. If you specify a boost configuration,
+// upon startup, workstation users can choose to use a VM provisioned under the
+// boost config by passing the boost config ID in the start request. If the
+// workstation user does not provide a boost config ID in the start request,
+// the system will choose a VM from the pool provisioned under the default
+// config.
 type BoostConfig struct {
 	// Accelerators: Optional. A list of the type and count of accelerator cards
 	// attached to the boost instance. Defaults to `none`.
@@ -459,7 +460,7 @@ type BoostConfig struct {
 	// nested virtualization can only be enabled on boost configurations that
 	// specify a machine_type in the N1 or N2 machine series.
 	EnableNestedVirtualization bool `json:"enableNestedVirtualization,omitempty"`
-	// Id: Required. The id to be used for the boost configuration.
+	// Id: Required. The ID to be used for the boost configuration.
 	Id string `json:"id,omitempty"`
 	// MachineType: Optional. The type of machine that boosted VM instances will
 	// use—for example, `e2-standard-4`. For more information about machine types
@@ -801,6 +802,32 @@ type GceInstance struct {
 
 func (s GceInstance) MarshalJSON() ([]byte, error) {
 	type NoMethod GceInstance
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GceInstanceHost: The Compute Engine instance host.
+type GceInstanceHost struct {
+	// Id: Optional. Output only. The ID of the Compute Engine instance.
+	Id string `json:"id,omitempty"`
+	// Name: Optional. Output only. The name of the Compute Engine instance.
+	Name string `json:"name,omitempty"`
+	// Zone: Optional. Output only. The zone of the Compute Engine instance.
+	Zone string `json:"zone,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Id") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Id") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GceInstanceHost) MarshalJSON() ([]byte, error) {
+	type NoMethod GceInstanceHost
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -1346,6 +1373,8 @@ func (s OperationMetadata) MarshalJSON() ([]byte, error) {
 }
 
 // PersistentDirectory: A directory to persist across workstation sessions.
+// Updates to this field will not update existing workstations and will only
+// take effect on new workstations.
 type PersistentDirectory struct {
 	// GcePd: A PersistentDirectory backed by a Compute Engine persistent disk.
 	GcePd *GceRegionalPersistentDisk `json:"gcePd,omitempty"`
@@ -1551,6 +1580,28 @@ func (s ReadinessCheck) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// RuntimeHost: Runtime host for the workstation.
+type RuntimeHost struct {
+	// GceInstanceHost: Specifies a Compute Engine instance as the host.
+	GceInstanceHost *GceInstanceHost `json:"gceInstanceHost,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "GceInstanceHost") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "GceInstanceHost") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s RuntimeHost) MarshalJSON() ([]byte, error) {
+	type NoMethod RuntimeHost
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // SetIamPolicyRequest: Request message for `SetIamPolicy` method.
 type SetIamPolicyRequest struct {
 	// Policy: REQUIRED: The complete policy to be applied to the `resource`. The
@@ -1582,21 +1633,24 @@ func (s SetIamPolicyRequest) MarshalJSON() ([]byte, error) {
 
 // StartWorkstationRequest: Request message for StartWorkstation.
 type StartWorkstationRequest struct {
+	// BoostConfig: Optional. If set, the workstation starts using the boost
+	// configuration with the specified ID.
+	BoostConfig string `json:"boostConfig,omitempty"`
 	// Etag: Optional. If set, the request will be rejected if the latest version
 	// of the workstation on the server does not have this ETag.
 	Etag string `json:"etag,omitempty"`
 	// ValidateOnly: Optional. If set, validate the request and preview the review,
 	// but do not actually apply it.
 	ValidateOnly bool `json:"validateOnly,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "Etag") to unconditionally
-	// include in API requests. By default, fields with empty or default values are
-	// omitted from API requests. See
+	// ForceSendFields is a list of field names (e.g. "BoostConfig") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Etag") to include in API requests
-	// with the JSON null value. By default, fields with empty values are omitted
-	// from API requests. See
+	// NullFields is a list of field names (e.g. "BoostConfig") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -1756,6 +1810,12 @@ type Workstation struct {
 	// Reconciling: Output only. Indicates whether this workstation is currently
 	// being updated to match its intended state.
 	Reconciling bool `json:"reconciling,omitempty"`
+	// RuntimeHost: Optional. Output only. Runtime host for the workstation when in
+	// STATE_RUNNING.
+	RuntimeHost *RuntimeHost `json:"runtimeHost,omitempty"`
+	// SourceWorkstation: Optional. The source workstation from which this
+	// workstation's persistent directories were cloned on creation.
+	SourceWorkstation string `json:"sourceWorkstation,omitempty"`
 	// StartTime: Output only. Time when this workstation was most recently
 	// successfully started, regardless of the workstation's initial state.
 	StartTime string `json:"startTime,omitempty"`

@@ -442,7 +442,9 @@ type Backup struct {
 	// process of being deleted.
 	State string `json:"state,omitempty"`
 	// StateReason: Output only. Human-readable description of why the backup is in
-	// the current `state`.
+	// the current `state`. This field is only meant for human readability and
+	// should not be used programmatically as this field is not guaranteed to be
+	// consistent.
 	StateReason string `json:"stateReason,omitempty"`
 	// Uid: Output only. Server generated global unique identifier of UUID4
 	// (https://en.wikipedia.org/wiki/Universally_unique_identifier)
@@ -586,7 +588,9 @@ type BackupPlan struct {
 	//   "DELETING" - The BackupPlan is in the process of being deleted.
 	State string `json:"state,omitempty"`
 	// StateReason: Output only. Human-readable description of why BackupPlan is in
-	// the current `state`
+	// the current `state`. This field is only meant for human readability and
+	// should not be used programmatically as this field is not guaranteed to be
+	// consistent.
 	StateReason string `json:"stateReason,omitempty"`
 	// Uid: Output only. Server generated global unique identifier of UUID
 	// (https://en.wikipedia.org/wiki/Universally_unique_identifier) format.
@@ -1817,7 +1821,9 @@ type Restore struct {
 	// validated.
 	State string `json:"state,omitempty"`
 	// StateReason: Output only. Human-readable description of why the Restore is
-	// in its current state.
+	// in its current state. This field is only meant for human readability and
+	// should not be used programmatically as this field is not guaranteed to be
+	// consistent.
 	StateReason string `json:"stateReason,omitempty"`
 	// Uid: Output only. Server generated global unique identifier of UUID
 	// (https://en.wikipedia.org/wiki/Universally_unique_identifier) format.
@@ -2065,7 +2071,9 @@ type RestorePlan struct {
 	//   "DELETING" - The RestorePlan is in the process of being deleted.
 	State string `json:"state,omitempty"`
 	// StateReason: Output only. Human-readable description of why RestorePlan is
-	// in the current `state`
+	// in the current `state`. This field is only meant for human readability and
+	// should not be used programmatically as this field is not guaranteed to be
+	// consistent.
 	StateReason string `json:"stateReason,omitempty"`
 	// Uid: Output only. Server generated global unique identifier of UUID
 	// (https://en.wikipedia.org/wiki/Universally_unique_identifier) format.
@@ -2531,7 +2539,9 @@ type VolumeBackup struct {
 	// in the process of being deleted.
 	State string `json:"state,omitempty"`
 	// StateMessage: Output only. A human readable message explaining why the
-	// VolumeBackup is in its current state.
+	// VolumeBackup is in its current state. This field is only meant for human
+	// consumption and should not be used programmatically as this field is not
+	// guaranteed to be consistent.
 	StateMessage string `json:"stateMessage,omitempty"`
 	// StorageBytes: Output only. The aggregate size of the underlying artifacts
 	// associated with this VolumeBackup in the backup storage. This may change

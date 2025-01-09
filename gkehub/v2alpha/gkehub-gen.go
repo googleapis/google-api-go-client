@@ -529,38 +529,39 @@ func (s ConfigManagementBinauthzVersion) MarshalJSON() ([]byte, error) {
 
 // ConfigManagementConfigSync: Configuration for Config Sync
 type ConfigManagementConfigSync struct {
-	// AllowVerticalScale: Set to true to allow the vertical scaling. Defaults to
-	// false which disallows vertical scaling. This field is deprecated.
+	// AllowVerticalScale: Optional. Set to true to allow the vertical scaling.
+	// Defaults to false which disallows vertical scaling. This field is
+	// deprecated.
 	AllowVerticalScale bool `json:"allowVerticalScale,omitempty"`
-	// Enabled: Enables the installation of ConfigSync. If set to true, ConfigSync
-	// resources will be created and the other ConfigSync fields will be applied if
-	// exist. If set to false, all other ConfigSync fields will be ignored,
-	// ConfigSync resources will be deleted. If omitted, ConfigSync resources will
-	// be managed depends on the presence of the git or oci field.
+	// Enabled: Optional. Enables the installation of ConfigSync. If set to true,
+	// ConfigSync resources will be created and the other ConfigSync fields will be
+	// applied if exist. If set to false, all other ConfigSync fields will be
+	// ignored, ConfigSync resources will be deleted. If omitted, ConfigSync
+	// resources will be managed depends on the presence of the git or oci field.
 	Enabled bool `json:"enabled,omitempty"`
-	// Git: Git repo configuration for the cluster.
+	// Git: Optional. Git repo configuration for the cluster.
 	Git *ConfigManagementGitConfig `json:"git,omitempty"`
-	// MetricsGcpServiceAccountEmail: The Email of the Google Cloud Service Account
-	// (GSA) used for exporting Config Sync metrics to Cloud Monitoring and Cloud
-	// Monarch when Workload Identity is enabled. The GSA should have the
-	// Monitoring Metric Writer (roles/monitoring.metricWriter) IAM role. The
-	// Kubernetes ServiceAccount `default` in the namespace
+	// MetricsGcpServiceAccountEmail: Optional. The Email of the Google Cloud
+	// Service Account (GSA) used for exporting Config Sync metrics to Cloud
+	// Monitoring and Cloud Monarch when Workload Identity is enabled. The GSA
+	// should have the Monitoring Metric Writer (roles/monitoring.metricWriter) IAM
+	// role. The Kubernetes ServiceAccount `default` in the namespace
 	// `config-management-monitoring` should be bound to the GSA. Deprecated: If
 	// Workload Identity Federation for GKE is enabled, Google Cloud Service
 	// Account is no longer needed for exporting Config Sync metrics:
 	// https://cloud.google.com/kubernetes-engine/enterprise/config-sync/docs/how-to/monitor-config-sync-cloud-monitoring#custom-monitoring.
 	MetricsGcpServiceAccountEmail string `json:"metricsGcpServiceAccountEmail,omitempty"`
-	// Oci: OCI repo configuration for the cluster.
+	// Oci: Optional. OCI repo configuration for the cluster.
 	Oci *ConfigManagementOciConfig `json:"oci,omitempty"`
-	// PreventDrift: Set to true to enable the Config Sync admission webhook to
-	// prevent drifts. If set to `false`, disables the Config Sync admission
-	// webhook and does not prevent drifts.
+	// PreventDrift: Optional. Set to true to enable the Config Sync admission
+	// webhook to prevent drifts. If set to `false`, disables the Config Sync
+	// admission webhook and does not prevent drifts.
 	PreventDrift bool `json:"preventDrift,omitempty"`
-	// SourceFormat: Specifies whether the Config Sync Repo is in "hierarchical" or
-	// "unstructured" mode.
+	// SourceFormat: Optional. Specifies whether the Config Sync Repo is in
+	// "hierarchical" or "unstructured" mode.
 	SourceFormat string `json:"sourceFormat,omitempty"`
-	// StopSyncing: Set to true to stop syncing configs for a single cluster.
-	// Default to false.
+	// StopSyncing: Optional. Set to true to stop syncing configs for a single
+	// cluster. Default to false.
 	StopSyncing bool `json:"stopSyncing,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AllowVerticalScale") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -708,8 +709,8 @@ func (s ConfigManagementConfigSyncError) MarshalJSON() ([]byte, error) {
 
 // ConfigManagementConfigSyncState: State information for ConfigSync.
 type ConfigManagementConfigSyncState struct {
-	// ClusterLevelStopSyncingState: Whether syncing resources to the cluster is
-	// stopped at the cluster level.
+	// ClusterLevelStopSyncingState: Output only. Whether syncing resources to the
+	// cluster is stopped at the cluster level.
 	//
 	// Possible values:
 	//   "STOP_SYNCING_STATE_UNSPECIFIED" - State cannot be determined
@@ -723,12 +724,12 @@ type ConfigManagementConfigSyncState struct {
 	// CrCount: Output only. The number of RootSync and RepoSync CRs in the
 	// cluster.
 	CrCount int64 `json:"crCount,omitempty"`
-	// DeploymentState: Information about the deployment of ConfigSync, including
-	// the version. of the various Pods deployed
+	// DeploymentState: Output only. Information about the deployment of
+	// ConfigSync, including the version. of the various Pods deployed
 	DeploymentState *ConfigManagementConfigSyncDeploymentState `json:"deploymentState,omitempty"`
-	// Errors: Errors pertaining to the installation of Config Sync.
+	// Errors: Output only. Errors pertaining to the installation of Config Sync.
 	Errors []*ConfigManagementConfigSyncError `json:"errors,omitempty"`
-	// ReposyncCrd: The state of the Reposync CRD
+	// ReposyncCrd: Output only. The state of the Reposync CRD
 	//
 	// Possible values:
 	//   "CRD_STATE_UNSPECIFIED" - CRD's state cannot be determined
@@ -738,7 +739,7 @@ type ConfigManagementConfigSyncState struct {
 	// cleaning up)
 	//   "INSTALLING" - CRD is installing
 	ReposyncCrd string `json:"reposyncCrd,omitempty"`
-	// RootsyncCrd: The state of the RootSync CRD
+	// RootsyncCrd: Output only. The state of the RootSync CRD
 	//
 	// Possible values:
 	//   "CRD_STATE_UNSPECIFIED" - CRD's state cannot be determined
@@ -748,8 +749,8 @@ type ConfigManagementConfigSyncState struct {
 	// cleaning up)
 	//   "INSTALLING" - CRD is installing
 	RootsyncCrd string `json:"rootsyncCrd,omitempty"`
-	// State: The state of CS This field summarizes the other fields in this
-	// message.
+	// State: Output only. The state of CS This field summarizes the other fields
+	// in this message.
 	//
 	// Possible values:
 	//   "STATE_UNSPECIFIED" - CS's state cannot be determined.
@@ -759,9 +760,10 @@ type ConfigManagementConfigSyncState struct {
 	//   "CONFIG_SYNC_ERROR" - CS encounters errors.
 	//   "CONFIG_SYNC_PENDING" - CS is installing or terminating.
 	State string `json:"state,omitempty"`
-	// SyncState: The state of ConfigSync's process to sync configs to a cluster.
+	// SyncState: Output only. The state of ConfigSync's process to sync configs to
+	// a cluster.
 	SyncState *ConfigManagementSyncState `json:"syncState,omitempty"`
-	// Version: The version of ConfigSync deployed.
+	// Version: Output only. The version of ConfigSync deployed.
 	Version *ConfigManagementConfigSyncVersion `json:"version,omitempty"`
 	// ForceSendFields is a list of field names (e.g.
 	// "ClusterLevelStopSyncingState") to unconditionally include in API requests.
@@ -902,26 +904,30 @@ func (s ConfigManagementGatekeeperDeploymentState) MarshalJSON() ([]byte, error)
 
 // ConfigManagementGitConfig: Git repo configuration for a single cluster.
 type ConfigManagementGitConfig struct {
-	// GcpServiceAccountEmail: The Google Cloud Service Account Email used for auth
-	// when secret_type is gcpServiceAccount.
+	// GcpServiceAccountEmail: Optional. The Google Cloud Service Account Email
+	// used for auth when secret_type is gcpServiceAccount.
 	GcpServiceAccountEmail string `json:"gcpServiceAccountEmail,omitempty"`
-	// HttpsProxy: URL for the HTTPS proxy to be used when communicating with the
-	// Git repo.
+	// HttpsProxy: Optional. URL for the HTTPS proxy to be used when communicating
+	// with the Git repo.
 	HttpsProxy string `json:"httpsProxy,omitempty"`
-	// PolicyDir: The path within the Git repository that represents the top level
-	// of the repo to sync. Default: the root directory of the repository.
+	// PolicyDir: Optional. The path within the Git repository that represents the
+	// top level of the repo to sync. Default: the root directory of the
+	// repository.
 	PolicyDir string `json:"policyDir,omitempty"`
-	// SecretType: Type of secret configured for access to the Git repo. Must be
-	// one of ssh, cookiefile, gcenode, token, gcpserviceaccount or none. The
-	// validation of this is case-sensitive. Required.
+	// SecretType: Required. Type of secret configured for access to the Git repo.
+	// Must be one of ssh, cookiefile, gcenode, token, gcpserviceaccount or none.
+	// The validation of this is case-sensitive. Required.
 	SecretType string `json:"secretType,omitempty"`
-	// SyncBranch: The branch of the repository to sync from. Default: master.
+	// SyncBranch: Optional. The branch of the repository to sync from. Default:
+	// master.
 	SyncBranch string `json:"syncBranch,omitempty"`
-	// SyncRepo: The URL of the Git repository to use as the source of truth.
+	// SyncRepo: Optional. The URL of the Git repository to use as the source of
+	// truth.
 	SyncRepo string `json:"syncRepo,omitempty"`
-	// SyncRev: Git revision (tag or hash) to check out. Default HEAD.
+	// SyncRev: Optional. Git revision (tag or hash) to check out. Default HEAD.
 	SyncRev string `json:"syncRev,omitempty"`
-	// SyncWaitSecs: Period in seconds between consecutive syncs. Default: 15.
+	// SyncWaitSecs: Optional. Period in seconds between consecutive syncs.
+	// Default: 15.
 	SyncWaitSecs int64 `json:"syncWaitSecs,omitempty,string"`
 	// ForceSendFields is a list of field names (e.g. "GcpServiceAccountEmail") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -1109,18 +1115,20 @@ func (s ConfigManagementInstallError) MarshalJSON() ([]byte, error) {
 
 // ConfigManagementOciConfig: OCI repo configuration for a single cluster.
 type ConfigManagementOciConfig struct {
-	// GcpServiceAccountEmail: The Google Cloud Service Account Email used for auth
-	// when secret_type is gcpServiceAccount.
+	// GcpServiceAccountEmail: Optional. The Google Cloud Service Account Email
+	// used for auth when secret_type is gcpServiceAccount.
 	GcpServiceAccountEmail string `json:"gcpServiceAccountEmail,omitempty"`
-	// PolicyDir: The absolute path of the directory that contains the local
-	// resources. Default: the root directory of the image.
+	// PolicyDir: Optional. The absolute path of the directory that contains the
+	// local resources. Default: the root directory of the image.
 	PolicyDir string `json:"policyDir,omitempty"`
-	// SecretType: Type of secret configured for access to the Git repo.
+	// SecretType: Optional. Type of secret configured for access to the Git repo.
 	SecretType string `json:"secretType,omitempty"`
-	// SyncRepo: The OCI image repository URL for the package to sync from. e.g.
+	// SyncRepo: Optional. The OCI image repository URL for the package to sync
+	// from. e.g.
 	// `LOCATION-docker.pkg.dev/PROJECT_ID/REPOSITORY_NAME/PACKAGE_NAME`.
 	SyncRepo string `json:"syncRepo,omitempty"`
-	// SyncWaitSecs: Period in seconds between consecutive syncs. Default: 15.
+	// SyncWaitSecs: Optional. Period in seconds between consecutive syncs.
+	// Default: 15.
 	SyncWaitSecs int64 `json:"syncWaitSecs,omitempty,string"`
 	// ForceSendFields is a list of field names (e.g. "GcpServiceAccountEmail") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -1334,10 +1342,10 @@ func (s ConfigManagementPolicyControllerVersion) MarshalJSON() ([]byte, error) {
 // ConfigManagementSpec: **Anthos Config Management**: Configuration for a
 // single cluster. Intended to parallel the ConfigManagement CR.
 type ConfigManagementSpec struct {
-	// Binauthz: Binauthz conifguration for the cluster. Deprecated: This field
-	// will be ignored and should not be set.
+	// Binauthz: Optional. Binauthz conifguration for the cluster. Deprecated: This
+	// field will be ignored and should not be set.
 	Binauthz *ConfigManagementBinauthzConfig `json:"binauthz,omitempty"`
-	// Cluster: The user-specified cluster name used by Config Sync
+	// Cluster: Optional. The user-specified cluster name used by Config Sync
 	// cluster-name-selector annotation or ClusterSelector, for applying configs to
 	// only a subset of clusters. Omit this field if the cluster's fleet membership
 	// name is used by Config Sync cluster-name-selector annotation or
@@ -1345,14 +1353,14 @@ type ConfigManagementSpec struct {
 	// membership name is used by Config Sync cluster-name-selector annotation or
 	// ClusterSelector.
 	Cluster string `json:"cluster,omitempty"`
-	// ConfigSync: Config Sync configuration for the cluster.
+	// ConfigSync: Optional. Config Sync configuration for the cluster.
 	ConfigSync *ConfigManagementConfigSync `json:"configSync,omitempty"`
-	// HierarchyController: Hierarchy Controller configuration for the cluster.
-	// Deprecated: Configuring Hierarchy Controller through the configmanagement
-	// feature is no longer recommended. Use
+	// HierarchyController: Optional. Hierarchy Controller configuration for the
+	// cluster. Deprecated: Configuring Hierarchy Controller through the
+	// configmanagement feature is no longer recommended. Use
 	// https://github.com/kubernetes-sigs/hierarchical-namespaces instead.
 	HierarchyController *ConfigManagementHierarchyControllerConfig `json:"hierarchyController,omitempty"`
-	// Management: Enables automatic Feature management.
+	// Management: Optional. Enables automatic Feature management.
 	//
 	// Possible values:
 	//   "MANAGEMENT_UNSPECIFIED" - Unspecified
@@ -1360,11 +1368,11 @@ type ConfigManagementSpec struct {
 	//   "MANAGEMENT_MANUAL" - User will manually manage the Feature for the
 	// cluster.
 	Management string `json:"management,omitempty"`
-	// PolicyController: Policy Controller configuration for the cluster.
+	// PolicyController: Optional. Policy Controller configuration for the cluster.
 	// Deprecated: Configuring Policy Controller through the configmanagement
 	// feature is no longer recommended. Use the policycontroller feature instead.
 	PolicyController *ConfigManagementPolicyController `json:"policyController,omitempty"`
-	// Version: Version of ACM installed.
+	// Version: Optional. Version of ACM installed.
 	Version string `json:"version,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Binauthz") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -1387,23 +1395,23 @@ func (s ConfigManagementSpec) MarshalJSON() ([]byte, error) {
 // ConfigManagementState: **Anthos Config Management**: State for a single
 // cluster.
 type ConfigManagementState struct {
-	// BinauthzState: Binauthz status.
+	// BinauthzState: Output only. Binauthz status.
 	BinauthzState *ConfigManagementBinauthzState `json:"binauthzState,omitempty"`
-	// ClusterName: This field is set to the `cluster_name` field of the Membership
-	// Spec if it is not empty. Otherwise, it is set to the cluster's fleet
-	// membership name.
+	// ClusterName: Output only. This field is set to the `cluster_name` field of
+	// the Membership Spec if it is not empty. Otherwise, it is set to the
+	// cluster's fleet membership name.
 	ClusterName string `json:"clusterName,omitempty"`
-	// ConfigSyncState: Current sync status.
+	// ConfigSyncState: Output only. Current sync status.
 	ConfigSyncState *ConfigManagementConfigSyncState `json:"configSyncState,omitempty"`
-	// HierarchyControllerState: Hierarchy Controller status.
+	// HierarchyControllerState: Output only. Hierarchy Controller status.
 	HierarchyControllerState *ConfigManagementHierarchyControllerState `json:"hierarchyControllerState,omitempty"`
-	// MembershipSpec: Membership configuration in the cluster. This represents the
-	// actual state in the cluster, while the MembershipSpec in the FeatureSpec
-	// represents the intended state.
+	// MembershipSpec: Output only. Membership configuration in the cluster. This
+	// represents the actual state in the cluster, while the MembershipSpec in the
+	// FeatureSpec represents the intended state.
 	MembershipSpec *ConfigManagementSpec `json:"membershipSpec,omitempty"`
-	// OperatorState: Current install status of ACM's Operator.
+	// OperatorState: Output only. Current install status of ACM's Operator.
 	OperatorState *ConfigManagementOperatorState `json:"operatorState,omitempty"`
-	// PolicyControllerState: PolicyController status.
+	// PolicyControllerState: Output only. PolicyController status.
 	PolicyControllerState *ConfigManagementPolicyControllerState `json:"policyControllerState,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "BinauthzState") to
 	// unconditionally include in API requests. By default, fields with empty or

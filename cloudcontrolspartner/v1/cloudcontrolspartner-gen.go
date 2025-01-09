@@ -532,7 +532,7 @@ type EkmMetadata struct {
 	//   "FORTANIX" - EKM Partner Fortanix
 	//   "FUTUREX" - EKM Partner FutureX
 	//   "THALES" - EKM Partner Thales
-	//   "VIRTRU" - EKM Partner Virtu
+	//   "VIRTRU" - This enum value is never used.
 	EkmSolution string `json:"ekmSolution,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "EkmEndpointUri") to
 	// unconditionally include in API requests. By default, fields with empty or

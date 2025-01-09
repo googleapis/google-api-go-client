@@ -1675,6 +1675,28 @@ func (s GoogleCloudDiscoveryengineLoggingSourceLocation) MarshalJSON() ([]byte, 
 // GoogleCloudDiscoveryengineV1AdvancedSiteSearchConfig: Configuration data for
 // advance site search.
 type GoogleCloudDiscoveryengineV1AdvancedSiteSearchConfig struct {
+	// DisableAutomaticRefresh: If set true, automatic refresh is disabled for the
+	// DataStore.
+	DisableAutomaticRefresh bool `json:"disableAutomaticRefresh,omitempty"`
+	// DisableInitialIndex: If set true, initial indexing is disabled for the
+	// DataStore.
+	DisableInitialIndex bool `json:"disableInitialIndex,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "DisableAutomaticRefresh") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DisableAutomaticRefresh") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1AdvancedSiteSearchConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1AdvancedSiteSearchConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDiscoveryengineV1BatchCreateTargetSiteMetadata: Metadata related
@@ -1942,8 +1964,8 @@ func (s GoogleCloudDiscoveryengineV1Control) MarshalJSON() ([]byte, error) {
 // GoogleCloudDiscoveryengineV1ControlBoostAction: Adjusts order of products in
 // returned list.
 type GoogleCloudDiscoveryengineV1ControlBoostAction struct {
-	// Boost: Required. Strength of the boost, which should be in [-1, 1]. Negative
-	// boost means demotion. Default is 0.0 (No-op).
+	// Boost: Strength of the boost, which should be in [-1, 1]. Negative boost
+	// means demotion. Default is 0.0 (No-op).
 	Boost float64 `json:"boost,omitempty"`
 	// DataStore: Required. Specifies which data store's documents can be boosted
 	// by this control. Full data store name e.g.
@@ -1955,6 +1977,9 @@ type GoogleCloudDiscoveryengineV1ControlBoostAction struct {
 	// documentation: https://cloud.google.com/retail/docs/filter-and-order Maximum
 	// length is 5000 characters. Otherwise an INVALID ARGUMENT error is thrown.
 	Filter string `json:"filter,omitempty"`
+	// FixedBoost: Optional. Strength of the boost, which should be in [-1, 1].
+	// Negative boost means demotion. Default is 0.0 (No-op).
+	FixedBoost float64 `json:"fixedBoost,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Boost") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
 	// omitted from API requests. See
@@ -1976,7 +2001,8 @@ func (s GoogleCloudDiscoveryengineV1ControlBoostAction) MarshalJSON() ([]byte, e
 func (s *GoogleCloudDiscoveryengineV1ControlBoostAction) UnmarshalJSON(data []byte) error {
 	type NoMethod GoogleCloudDiscoveryengineV1ControlBoostAction
 	var s1 struct {
-		Boost gensupport.JSONFloat64 `json:"boost"`
+		Boost      gensupport.JSONFloat64 `json:"boost"`
+		FixedBoost gensupport.JSONFloat64 `json:"fixedBoost"`
 		*NoMethod
 	}
 	s1.NoMethod = (*NoMethod)(s)
@@ -1984,6 +2010,7 @@ func (s *GoogleCloudDiscoveryengineV1ControlBoostAction) UnmarshalJSON(data []by
 		return err
 	}
 	s.Boost = float64(s1.Boost)
+	s.FixedBoost = float64(s1.FixedBoost)
 	return nil
 }
 
@@ -2415,6 +2442,34 @@ type GoogleCloudDiscoveryengineV1DeleteEngineMetadata struct {
 
 func (s GoogleCloudDiscoveryengineV1DeleteEngineMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDiscoveryengineV1DeleteEngineMetadata
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1DeleteIdentityMappingStoreMetadata: Metadata
+// related to the progress of the
+// IdentityMappingStoreService.DeleteIdentityMappingStore operation. This will
+// be returned by the google.longrunning.Operation.metadata field.
+type GoogleCloudDiscoveryengineV1DeleteIdentityMappingStoreMetadata struct {
+	// CreateTime: Operation create time.
+	CreateTime string `json:"createTime,omitempty"`
+	// UpdateTime: Operation last update time. If the operation is done, this is
+	// also the finish time.
+	UpdateTime string `json:"updateTime,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "CreateTime") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CreateTime") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1DeleteIdentityMappingStoreMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1DeleteIdentityMappingStoreMetadata
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -3888,7 +3943,7 @@ type GoogleCloudDiscoveryengineV1ServingConfig struct {
 	// RankingExpression: The ranking expression controls the customized ranking on
 	// retrieval documents. To leverage this, document embedding is required. The
 	// ranking expression setting in ServingConfig applies to all search requests
-	// served by the serving config. However, if SearchRequest.ranking_expression
+	// served by the serving config. However, if `SearchRequest.ranking_expression`
 	// is specified, it overrides the ServingConfig ranking expression. The ranking
 	// expression is a single function or multiple functions that are joined by
 	// "+". * ranking_expression = function, { " + ", function }; Supported
@@ -4103,7 +4158,7 @@ func (s GoogleCloudDiscoveryengineV1SiteVerificationInfo) MarshalJSON() ([]byte,
 // GoogleCloudDiscoveryengineV1TargetSite: A target site for the
 // SiteSearchEngine.
 type GoogleCloudDiscoveryengineV1TargetSite struct {
-	// ExactMatch: Input only. If set to false, a uri_pattern is generated to
+	// ExactMatch: Immutable. If set to false, a uri_pattern is generated to
 	// include all pages whose address contains the provided_uri_pattern. If set to
 	// true, an uri_pattern is generated to try to be an exact match of the
 	// provided_uri_pattern or just the specific page if the provided_uri_pattern
@@ -4544,6 +4599,8 @@ type GoogleCloudDiscoveryengineV1alphaAnswer struct {
 	References []*GoogleCloudDiscoveryengineV1alphaAnswerReference `json:"references,omitempty"`
 	// RelatedQuestions: Suggested related questions.
 	RelatedQuestions []string `json:"relatedQuestions,omitempty"`
+	// SafetyRatings: Optional. Safety ratings.
+	SafetyRatings []*GoogleCloudDiscoveryengineV1alphaSafetyRating `json:"safetyRatings,omitempty"`
 	// State: The state of the answer generation.
 	//
 	// Possible values:
@@ -5274,8 +5331,8 @@ type GoogleCloudDiscoveryengineV1alphaCollection struct {
 	// connector on an existing Collection is not supported. This output only field
 	// contains a subset of the DataConnector fields, including `name`,
 	// `data_source`, `entities.entity_name` and `entities.data_store`. To get more
-	// details about a data connector, use the DataConnector.GetDataConnector
-	// method.
+	// details about a data connector, use the
+	// DataConnectorService.GetDataConnector method.
 	DataConnector *GoogleCloudDiscoveryengineV1alphaDataConnector `json:"dataConnector,omitempty"`
 	// DisplayName: Required. The Collection display name. This field must be a
 	// UTF-8 encoded string with a length limit of 128 characters. Otherwise, an
@@ -5593,8 +5650,8 @@ func (s GoogleCloudDiscoveryengineV1alphaControl) MarshalJSON() ([]byte, error) 
 // GoogleCloudDiscoveryengineV1alphaControlBoostAction: Adjusts order of
 // products in returned list.
 type GoogleCloudDiscoveryengineV1alphaControlBoostAction struct {
-	// Boost: Required. Strength of the boost, which should be in [-1, 1]. Negative
-	// boost means demotion. Default is 0.0 (No-op).
+	// Boost: Strength of the boost, which should be in [-1, 1]. Negative boost
+	// means demotion. Default is 0.0 (No-op).
 	Boost float64 `json:"boost,omitempty"`
 	// DataStore: Required. Specifies which data store's documents can be boosted
 	// by this control. Full data store name e.g.
@@ -5606,6 +5663,9 @@ type GoogleCloudDiscoveryengineV1alphaControlBoostAction struct {
 	// documentation: https://cloud.google.com/retail/docs/filter-and-order Maximum
 	// length is 5000 characters. Otherwise an INVALID ARGUMENT error is thrown.
 	Filter string `json:"filter,omitempty"`
+	// FixedBoost: Optional. Strength of the boost, which should be in [-1, 1].
+	// Negative boost means demotion. Default is 0.0 (No-op).
+	FixedBoost float64 `json:"fixedBoost,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Boost") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
 	// omitted from API requests. See
@@ -5627,7 +5687,8 @@ func (s GoogleCloudDiscoveryengineV1alphaControlBoostAction) MarshalJSON() ([]by
 func (s *GoogleCloudDiscoveryengineV1alphaControlBoostAction) UnmarshalJSON(data []byte) error {
 	type NoMethod GoogleCloudDiscoveryengineV1alphaControlBoostAction
 	var s1 struct {
-		Boost gensupport.JSONFloat64 `json:"boost"`
+		Boost      gensupport.JSONFloat64 `json:"boost"`
+		FixedBoost gensupport.JSONFloat64 `json:"fixedBoost"`
 		*NoMethod
 	}
 	s1.NoMethod = (*NoMethod)(s)
@@ -5635,6 +5696,7 @@ func (s *GoogleCloudDiscoveryengineV1alphaControlBoostAction) UnmarshalJSON(data
 		return err
 	}
 	s.Boost = float64(s1.Boost)
+	s.FixedBoost = float64(s1.FixedBoost)
 	return nil
 }
 
@@ -5935,8 +5997,8 @@ func (s GoogleCloudDiscoveryengineV1alphaCustomFineTuningSpec) MarshalJSON() ([]
 // GoogleCloudDiscoveryengineV1alphaDataConnector: Manages the connection to
 // external data sources for all data stores grouped under a Collection. It's a
 // singleton resource of Collection. The initialization is only supported
-// through SetUpDataConnector method, which will create a new Collection and
-// initialize its DataConnector. //
+// through DataConnectorService.SetUpDataConnector method, which will create a
+// new Collection and initialize its DataConnector.
 type GoogleCloudDiscoveryengineV1alphaDataConnector struct {
 	// ActionConfig: Optional. Action configurations to make the connector support
 	// actions.
@@ -6409,6 +6471,34 @@ type GoogleCloudDiscoveryengineV1alphaDeleteEngineMetadata struct {
 
 func (s GoogleCloudDiscoveryengineV1alphaDeleteEngineMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDiscoveryengineV1alphaDeleteEngineMetadata
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1alphaDeleteIdentityMappingStoreMetadata:
+// Metadata related to the progress of the
+// IdentityMappingStoreService.DeleteIdentityMappingStore operation. This will
+// be returned by the google.longrunning.Operation.metadata field.
+type GoogleCloudDiscoveryengineV1alphaDeleteIdentityMappingStoreMetadata struct {
+	// CreateTime: Operation create time.
+	CreateTime string `json:"createTime,omitempty"`
+	// UpdateTime: Operation last update time. If the operation is done, this is
+	// also the finish time.
+	UpdateTime string `json:"updateTime,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "CreateTime") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CreateTime") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1alphaDeleteIdentityMappingStoreMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1alphaDeleteIdentityMappingStoreMetadata
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -7639,21 +7729,26 @@ func (s GoogleCloudDiscoveryengineV1alphaGetUriPatternDocumentDataResponse) Mars
 // GoogleCloudDiscoveryengineV1alphaIdentityScheduleConfig: The configuration
 // for the identity data synchronization runs.
 type GoogleCloudDiscoveryengineV1alphaIdentityScheduleConfig struct {
+	// NextSyncTime: Optional. The UTC time when the next data sync is expected to
+	// start for the Data Connector. Customers are only able to specify the hour
+	// and minute to schedule the data sync. This is utilized when the data
+	// connector has a refresh interval greater than 1 day.
+	NextSyncTime *GoogleTypeDateTime `json:"nextSyncTime,omitempty"`
 	// RefreshInterval: Optional. The refresh interval to sync the Access Control
 	// List information for the documents ingested by this connector. If not set,
 	// the access control list will be refreshed at the default interval of 30
 	// minutes. The identity refresh interval can be at least 30 minutes and at
 	// most 7 days.
 	RefreshInterval string `json:"refreshInterval,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "RefreshInterval") to
+	// ForceSendFields is a list of field names (e.g. "NextSyncTime") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "RefreshInterval") to include in
-	// API requests with the JSON null value. By default, fields with empty values
-	// are omitted from API requests. See
+	// NullFields is a list of field names (e.g. "NextSyncTime") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -8865,6 +8960,140 @@ func (s GoogleCloudDiscoveryengineV1alphaRecrawlUrisResponseFailureInfoFailureRe
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudDiscoveryengineV1alphaRemoveDedicatedCrawlRateMetadata: Metadata
+// related to the progress of the
+// CrawlRateManagementService.RemoveDedicatedCrawlRate operation. This will be
+// returned by the google.longrunning.Operation.metadata field.
+type GoogleCloudDiscoveryengineV1alphaRemoveDedicatedCrawlRateMetadata struct {
+	// CreateTime: Operation create time.
+	CreateTime string `json:"createTime,omitempty"`
+	// UpdateTime: Operation last update time. If the operation is done, this is
+	// also the finish time.
+	UpdateTime string `json:"updateTime,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "CreateTime") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CreateTime") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1alphaRemoveDedicatedCrawlRateMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1alphaRemoveDedicatedCrawlRateMetadata
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1alphaRemoveDedicatedCrawlRateResponse: Response
+// message for CrawlRateManagementService.RemoveDedicatedCrawlRate method. It
+// simply returns the state of the response, and an error message if the state
+// is FAILED.
+type GoogleCloudDiscoveryengineV1alphaRemoveDedicatedCrawlRateResponse struct {
+	// Error: Errors from service when handling the request.
+	Error *GoogleRpcStatus `json:"error,omitempty"`
+	// State: Output only. The state of the response.
+	//
+	// Possible values:
+	//   "STATE_UNSPECIFIED" - The state is unspecified.
+	//   "SUCCEEDED" - The state is successful.
+	//   "FAILED" - The state is failed.
+	State string `json:"state,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Error") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Error") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1alphaRemoveDedicatedCrawlRateResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1alphaRemoveDedicatedCrawlRateResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1alphaSafetyRating: Safety rating corresponding
+// to the generated content.
+type GoogleCloudDiscoveryengineV1alphaSafetyRating struct {
+	// Blocked: Output only. Indicates whether the content was filtered out because
+	// of this rating.
+	Blocked bool `json:"blocked,omitempty"`
+	// Category: Output only. Harm category.
+	//
+	// Possible values:
+	//   "HARM_CATEGORY_UNSPECIFIED" - The harm category is unspecified.
+	//   "HARM_CATEGORY_HATE_SPEECH" - The harm category is hate speech.
+	//   "HARM_CATEGORY_DANGEROUS_CONTENT" - The harm category is dangerous
+	// content.
+	//   "HARM_CATEGORY_HARASSMENT" - The harm category is harassment.
+	//   "HARM_CATEGORY_SEXUALLY_EXPLICIT" - The harm category is sexually explicit
+	// content.
+	//   "HARM_CATEGORY_CIVIC_INTEGRITY" - The harm category is civic integrity.
+	Category string `json:"category,omitempty"`
+	// Probability: Output only. Harm probability levels in the content.
+	//
+	// Possible values:
+	//   "HARM_PROBABILITY_UNSPECIFIED" - Harm probability unspecified.
+	//   "NEGLIGIBLE" - Negligible level of harm.
+	//   "LOW" - Low level of harm.
+	//   "MEDIUM" - Medium level of harm.
+	//   "HIGH" - High level of harm.
+	Probability string `json:"probability,omitempty"`
+	// ProbabilityScore: Output only. Harm probability score.
+	ProbabilityScore float64 `json:"probabilityScore,omitempty"`
+	// Severity: Output only. Harm severity levels in the content.
+	//
+	// Possible values:
+	//   "HARM_SEVERITY_UNSPECIFIED" - Harm severity unspecified.
+	//   "HARM_SEVERITY_NEGLIGIBLE" - Negligible level of harm severity.
+	//   "HARM_SEVERITY_LOW" - Low level of harm severity.
+	//   "HARM_SEVERITY_MEDIUM" - Medium level of harm severity.
+	//   "HARM_SEVERITY_HIGH" - High level of harm severity.
+	Severity string `json:"severity,omitempty"`
+	// SeverityScore: Output only. Harm severity score.
+	SeverityScore float64 `json:"severityScore,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Blocked") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Blocked") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1alphaSafetyRating) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1alphaSafetyRating
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+func (s *GoogleCloudDiscoveryengineV1alphaSafetyRating) UnmarshalJSON(data []byte) error {
+	type NoMethod GoogleCloudDiscoveryengineV1alphaSafetyRating
+	var s1 struct {
+		ProbabilityScore gensupport.JSONFloat64 `json:"probabilityScore"`
+		SeverityScore    gensupport.JSONFloat64 `json:"severityScore"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.ProbabilityScore = float64(s1.ProbabilityScore)
+	s.SeverityScore = float64(s1.SeverityScore)
+	return nil
+}
+
 // GoogleCloudDiscoveryengineV1alphaSchema: Defines the structure and layout of
 // a type of document data.
 type GoogleCloudDiscoveryengineV1alphaSchema struct {
@@ -9908,10 +10137,10 @@ func (s GoogleCloudDiscoveryengineV1alphaSearchRequestImageQuery) MarshalJSON() 
 // for search requests.
 type GoogleCloudDiscoveryengineV1alphaSearchRequestNaturalLanguageQueryUnderstandingSpec struct {
 	// FilterExtractionCondition: The condition under which filter extraction
-	// should occur. Default to Condition.DISABLED.
+	// should occur. Server behavior defaults to `DISABLED`.
 	//
 	// Possible values:
-	//   "CONDITION_UNSPECIFIED" - Server behavior defaults to Condition.DISABLED.
+	//   "CONDITION_UNSPECIFIED" - Server behavior defaults to `DISABLED`.
 	//   "DISABLED" - Disables NL filter extraction.
 	//   "ENABLED" - Enables NL filter extraction.
 	FilterExtractionCondition string `json:"filterExtractionCondition,omitempty"`
@@ -10182,6 +10411,66 @@ func (s GoogleCloudDiscoveryengineV1alphaSessionTurn) MarshalJSON() ([]byte, err
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudDiscoveryengineV1alphaSetDedicatedCrawlRateMetadata: Metadata
+// related to the progress of the
+// CrawlRateManagementService.SetDedicatedCrawlRate operation. This will be
+// returned by the google.longrunning.Operation.metadata field.
+type GoogleCloudDiscoveryengineV1alphaSetDedicatedCrawlRateMetadata struct {
+	// CreateTime: Operation create time.
+	CreateTime string `json:"createTime,omitempty"`
+	// UpdateTime: Operation last update time. If the operation is done, this is
+	// also the finish time.
+	UpdateTime string `json:"updateTime,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "CreateTime") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CreateTime") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1alphaSetDedicatedCrawlRateMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1alphaSetDedicatedCrawlRateMetadata
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1alphaSetDedicatedCrawlRateResponse: Response
+// message for CrawlRateManagementService.SetDedicatedCrawlRate method. It
+// simply returns the state of the response, and an error message if the state
+// is FAILED.
+type GoogleCloudDiscoveryengineV1alphaSetDedicatedCrawlRateResponse struct {
+	// Error: Errors from service when handling the request.
+	Error *GoogleRpcStatus `json:"error,omitempty"`
+	// State: Output only. The state of the response.
+	//
+	// Possible values:
+	//   "STATE_UNSPECIFIED" - The state is unspecified.
+	//   "SUCCEEDED" - The state is successful.
+	//   "FAILED" - The state is failed.
+	State string `json:"state,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Error") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Error") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1alphaSetDedicatedCrawlRateResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1alphaSetDedicatedCrawlRateResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudDiscoveryengineV1alphaSetUpDataConnectorMetadata: Metadata for
 // DataConnectorService.SetUpDataConnector method.
 type GoogleCloudDiscoveryengineV1alphaSetUpDataConnectorMetadata struct {
@@ -10311,7 +10600,7 @@ func (s GoogleCloudDiscoveryengineV1alphaSitemap) MarshalJSON() ([]byte, error) 
 // GoogleCloudDiscoveryengineV1alphaTargetSite: A target site for the
 // SiteSearchEngine.
 type GoogleCloudDiscoveryengineV1alphaTargetSite struct {
-	// ExactMatch: Input only. If set to false, a uri_pattern is generated to
+	// ExactMatch: Immutable. If set to false, a uri_pattern is generated to
 	// include all pages whose address contains the provided_uri_pattern. If set to
 	// true, an uri_pattern is generated to try to be an exact match of the
 	// provided_uri_pattern or just the specific page if the provided_uri_pattern
@@ -11052,6 +11341,28 @@ func (s GoogleCloudDiscoveryengineV1betaAdvancedCompleteQueryResponseRecentSearc
 // GoogleCloudDiscoveryengineV1betaAdvancedSiteSearchConfig: Configuration data
 // for advance site search.
 type GoogleCloudDiscoveryengineV1betaAdvancedSiteSearchConfig struct {
+	// DisableAutomaticRefresh: If set true, automatic refresh is disabled for the
+	// DataStore.
+	DisableAutomaticRefresh bool `json:"disableAutomaticRefresh,omitempty"`
+	// DisableInitialIndex: If set true, initial indexing is disabled for the
+	// DataStore.
+	DisableInitialIndex bool `json:"disableInitialIndex,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "DisableAutomaticRefresh") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DisableAutomaticRefresh") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1betaAdvancedSiteSearchConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1betaAdvancedSiteSearchConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDiscoveryengineV1betaAlloyDbSource: AlloyDB source import data
@@ -11150,6 +11461,8 @@ type GoogleCloudDiscoveryengineV1betaAnswer struct {
 	References []*GoogleCloudDiscoveryengineV1betaAnswerReference `json:"references,omitempty"`
 	// RelatedQuestions: Suggested related questions.
 	RelatedQuestions []string `json:"relatedQuestions,omitempty"`
+	// SafetyRatings: Optional. Safety ratings.
+	SafetyRatings []*GoogleCloudDiscoveryengineV1betaSafetyRating `json:"safetyRatings,omitempty"`
 	// State: The state of the answer generation.
 	//
 	// Possible values:
@@ -11654,6 +11967,9 @@ type GoogleCloudDiscoveryengineV1betaAnswerQueryRequestSafetySpec struct {
 	// Enable: Enable the safety filtering on the answer response. It is false by
 	// default.
 	Enable bool `json:"enable,omitempty"`
+	// SafetySettings: Optional. Safety settings. This settings are effective only
+	// when the safety_spec.enable is true.
+	SafetySettings []*GoogleCloudDiscoveryengineV1betaAnswerQueryRequestSafetySpecSafetySetting `json:"safetySettings,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Enable") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
 	// omitted from API requests. See
@@ -11669,6 +11985,49 @@ type GoogleCloudDiscoveryengineV1betaAnswerQueryRequestSafetySpec struct {
 
 func (s GoogleCloudDiscoveryengineV1betaAnswerQueryRequestSafetySpec) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDiscoveryengineV1betaAnswerQueryRequestSafetySpec
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1betaAnswerQueryRequestSafetySpecSafetySetting:
+// Safety settings.
+type GoogleCloudDiscoveryengineV1betaAnswerQueryRequestSafetySpecSafetySetting struct {
+	// Category: Required. Harm category.
+	//
+	// Possible values:
+	//   "HARM_CATEGORY_UNSPECIFIED" - The harm category is unspecified.
+	//   "HARM_CATEGORY_HATE_SPEECH" - The harm category is hate speech.
+	//   "HARM_CATEGORY_DANGEROUS_CONTENT" - The harm category is dangerous
+	// content.
+	//   "HARM_CATEGORY_HARASSMENT" - The harm category is harassment.
+	//   "HARM_CATEGORY_SEXUALLY_EXPLICIT" - The harm category is sexually explicit
+	// content.
+	//   "HARM_CATEGORY_CIVIC_INTEGRITY" - The harm category is civic integrity.
+	Category string `json:"category,omitempty"`
+	// Threshold: Required. The harm block threshold.
+	//
+	// Possible values:
+	//   "HARM_BLOCK_THRESHOLD_UNSPECIFIED" - Unspecified harm block threshold.
+	//   "BLOCK_LOW_AND_ABOVE" - Block low threshold and above (i.e. block more).
+	//   "BLOCK_MEDIUM_AND_ABOVE" - Block medium threshold and above.
+	//   "BLOCK_ONLY_HIGH" - Block only high threshold (i.e. block less).
+	//   "BLOCK_NONE" - Block none.
+	//   "OFF" - Turn off the safety filter.
+	Threshold string `json:"threshold,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Category") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Category") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1betaAnswerQueryRequestSafetySpecSafetySetting) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1betaAnswerQueryRequestSafetySpecSafetySetting
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -13618,8 +13977,8 @@ func (s GoogleCloudDiscoveryengineV1betaControl) MarshalJSON() ([]byte, error) {
 // GoogleCloudDiscoveryengineV1betaControlBoostAction: Adjusts order of
 // products in returned list.
 type GoogleCloudDiscoveryengineV1betaControlBoostAction struct {
-	// Boost: Required. Strength of the boost, which should be in [-1, 1]. Negative
-	// boost means demotion. Default is 0.0 (No-op).
+	// Boost: Strength of the boost, which should be in [-1, 1]. Negative boost
+	// means demotion. Default is 0.0 (No-op).
 	Boost float64 `json:"boost,omitempty"`
 	// DataStore: Required. Specifies which data store's documents can be boosted
 	// by this control. Full data store name e.g.
@@ -13631,6 +13990,9 @@ type GoogleCloudDiscoveryengineV1betaControlBoostAction struct {
 	// documentation: https://cloud.google.com/retail/docs/filter-and-order Maximum
 	// length is 5000 characters. Otherwise an INVALID ARGUMENT error is thrown.
 	Filter string `json:"filter,omitempty"`
+	// FixedBoost: Optional. Strength of the boost, which should be in [-1, 1].
+	// Negative boost means demotion. Default is 0.0 (No-op).
+	FixedBoost float64 `json:"fixedBoost,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Boost") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
 	// omitted from API requests. See
@@ -13652,7 +14014,8 @@ func (s GoogleCloudDiscoveryengineV1betaControlBoostAction) MarshalJSON() ([]byt
 func (s *GoogleCloudDiscoveryengineV1betaControlBoostAction) UnmarshalJSON(data []byte) error {
 	type NoMethod GoogleCloudDiscoveryengineV1betaControlBoostAction
 	var s1 struct {
-		Boost gensupport.JSONFloat64 `json:"boost"`
+		Boost      gensupport.JSONFloat64 `json:"boost"`
+		FixedBoost gensupport.JSONFloat64 `json:"fixedBoost"`
 		*NoMethod
 	}
 	s1.NoMethod = (*NoMethod)(s)
@@ -13660,6 +14023,7 @@ func (s *GoogleCloudDiscoveryengineV1betaControlBoostAction) UnmarshalJSON(data 
 		return err
 	}
 	s.Boost = float64(s1.Boost)
+	s.FixedBoost = float64(s1.FixedBoost)
 	return nil
 }
 
@@ -14462,6 +14826,34 @@ func (s GoogleCloudDiscoveryengineV1betaDeleteEngineMetadata) MarshalJSON() ([]b
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudDiscoveryengineV1betaDeleteIdentityMappingStoreMetadata: Metadata
+// related to the progress of the
+// IdentityMappingStoreService.DeleteIdentityMappingStore operation. This will
+// be returned by the google.longrunning.Operation.metadata field.
+type GoogleCloudDiscoveryengineV1betaDeleteIdentityMappingStoreMetadata struct {
+	// CreateTime: Operation create time.
+	CreateTime string `json:"createTime,omitempty"`
+	// UpdateTime: Operation last update time. If the operation is done, this is
+	// also the finish time.
+	UpdateTime string `json:"updateTime,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "CreateTime") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CreateTime") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1betaDeleteIdentityMappingStoreMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1betaDeleteIdentityMappingStoreMetadata
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudDiscoveryengineV1betaDeleteSchemaMetadata: Metadata for
 // DeleteSchema LRO.
 type GoogleCloudDiscoveryengineV1betaDeleteSchemaMetadata struct {
@@ -14590,7 +14982,7 @@ type GoogleCloudDiscoveryengineV1betaDocument struct {
 	// derived data that are not in the original input document.
 	DerivedStructData googleapi.RawMessage `json:"derivedStructData,omitempty"`
 	// Id: Immutable. The identifier of the document. Id should conform to RFC-1034
-	// (https://tools.ietf.org/html/rfc1034) standard with a length limit of 63
+	// (https://tools.ietf.org/html/rfc1034) standard with a length limit of 128
 	// characters.
 	Id string `json:"id,omitempty"`
 	// IndexStatus: Output only. The index status of the document. * If document is
@@ -17202,7 +17594,7 @@ func (s GoogleCloudDiscoveryengineV1betaListEnginesResponse) MarshalJSON() ([]by
 // GoogleCloudDiscoveryengineV1betaListEvaluationResultsResponse: Response
 // message for EvaluationService.ListEvaluationResults method.
 type GoogleCloudDiscoveryengineV1betaListEvaluationResultsResponse struct {
-	// EvaluationResults: The EvaluationResults.
+	// EvaluationResults: The evaluation results for the SampleQuerys.
 	EvaluationResults []*GoogleCloudDiscoveryengineV1betaListEvaluationResultsResponseEvaluationResult `json:"evaluationResults,omitempty"`
 	// NextPageToken: A token that can be sent as
 	// ListEvaluationResultsRequest.page_token to retrieve the next page. If this
@@ -18401,7 +18793,8 @@ func (s GoogleCloudDiscoveryengineV1betaRecommendResponseRecommendationResult) M
 // GoogleCloudDiscoveryengineV1betaRecrawlUrisRequest: Request message for
 // SiteSearchEngineService.RecrawlUris method.
 type GoogleCloudDiscoveryengineV1betaRecrawlUrisRequest struct {
-	// SiteCredential: Optional. Full resource name of the SiteCredential, such as
+	// SiteCredential: Optional. Full resource name of the `SiteCredential`, such
+	// as
 	// `projects/*/locations/*/collections/*/dataStores/*/siteSearchEngine/siteCrede
 	// ntials/*`. Only set to crawl private URIs.
 	SiteCredential string `json:"siteCredential,omitempty"`
@@ -18484,6 +18877,80 @@ func (s GoogleCloudDiscoveryengineV1betaReplyReference) MarshalJSON() ([]byte, e
 // GoogleCloudDiscoveryengineV1betaResumeEngineRequest: Request for resuming
 // training of an engine.
 type GoogleCloudDiscoveryengineV1betaResumeEngineRequest struct {
+}
+
+// GoogleCloudDiscoveryengineV1betaSafetyRating: Safety rating corresponding to
+// the generated content.
+type GoogleCloudDiscoveryengineV1betaSafetyRating struct {
+	// Blocked: Output only. Indicates whether the content was filtered out because
+	// of this rating.
+	Blocked bool `json:"blocked,omitempty"`
+	// Category: Output only. Harm category.
+	//
+	// Possible values:
+	//   "HARM_CATEGORY_UNSPECIFIED" - The harm category is unspecified.
+	//   "HARM_CATEGORY_HATE_SPEECH" - The harm category is hate speech.
+	//   "HARM_CATEGORY_DANGEROUS_CONTENT" - The harm category is dangerous
+	// content.
+	//   "HARM_CATEGORY_HARASSMENT" - The harm category is harassment.
+	//   "HARM_CATEGORY_SEXUALLY_EXPLICIT" - The harm category is sexually explicit
+	// content.
+	//   "HARM_CATEGORY_CIVIC_INTEGRITY" - The harm category is civic integrity.
+	Category string `json:"category,omitempty"`
+	// Probability: Output only. Harm probability levels in the content.
+	//
+	// Possible values:
+	//   "HARM_PROBABILITY_UNSPECIFIED" - Harm probability unspecified.
+	//   "NEGLIGIBLE" - Negligible level of harm.
+	//   "LOW" - Low level of harm.
+	//   "MEDIUM" - Medium level of harm.
+	//   "HIGH" - High level of harm.
+	Probability string `json:"probability,omitempty"`
+	// ProbabilityScore: Output only. Harm probability score.
+	ProbabilityScore float64 `json:"probabilityScore,omitempty"`
+	// Severity: Output only. Harm severity levels in the content.
+	//
+	// Possible values:
+	//   "HARM_SEVERITY_UNSPECIFIED" - Harm severity unspecified.
+	//   "HARM_SEVERITY_NEGLIGIBLE" - Negligible level of harm severity.
+	//   "HARM_SEVERITY_LOW" - Low level of harm severity.
+	//   "HARM_SEVERITY_MEDIUM" - Medium level of harm severity.
+	//   "HARM_SEVERITY_HIGH" - High level of harm severity.
+	Severity string `json:"severity,omitempty"`
+	// SeverityScore: Output only. Harm severity score.
+	SeverityScore float64 `json:"severityScore,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Blocked") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Blocked") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1betaSafetyRating) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1betaSafetyRating
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+func (s *GoogleCloudDiscoveryengineV1betaSafetyRating) UnmarshalJSON(data []byte) error {
+	type NoMethod GoogleCloudDiscoveryengineV1betaSafetyRating
+	var s1 struct {
+		ProbabilityScore gensupport.JSONFloat64 `json:"probabilityScore"`
+		SeverityScore    gensupport.JSONFloat64 `json:"severityScore"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.ProbabilityScore = float64(s1.ProbabilityScore)
+	s.SeverityScore = float64(s1.SeverityScore)
+	return nil
 }
 
 // GoogleCloudDiscoveryengineV1betaSampleQuery: Sample Query captures metadata
@@ -19709,10 +20176,10 @@ func (s GoogleCloudDiscoveryengineV1betaSearchRequestImageQuery) MarshalJSON() (
 // for search requests.
 type GoogleCloudDiscoveryengineV1betaSearchRequestNaturalLanguageQueryUnderstandingSpec struct {
 	// FilterExtractionCondition: The condition under which filter extraction
-	// should occur. Default to Condition.DISABLED.
+	// should occur. Server behavior defaults to `DISABLED`.
 	//
 	// Possible values:
-	//   "CONDITION_UNSPECIFIED" - Server behavior defaults to Condition.DISABLED.
+	//   "CONDITION_UNSPECIFIED" - Server behavior defaults to `DISABLED`.
 	//   "DISABLED" - Disables NL filter extraction.
 	//   "ENABLED" - Enables NL filter extraction.
 	FilterExtractionCondition string `json:"filterExtractionCondition,omitempty"`
@@ -20847,7 +21314,7 @@ type GoogleCloudDiscoveryengineV1betaServingConfig struct {
 	// RankingExpression: The ranking expression controls the customized ranking on
 	// retrieval documents. To leverage this, document embedding is required. The
 	// ranking expression setting in ServingConfig applies to all search requests
-	// served by the serving config. However, if SearchRequest.ranking_expression
+	// served by the serving config. However, if `SearchRequest.ranking_expression`
 	// is specified, it overrides the ServingConfig ranking expression. The ranking
 	// expression is a single function or multiple functions that are joined by
 	// "+". * ranking_expression = function, { " + ", function }; Supported
@@ -21270,7 +21737,7 @@ func (s GoogleCloudDiscoveryengineV1betaSuggestionDenyListEntry) MarshalJSON() (
 // GoogleCloudDiscoveryengineV1betaTargetSite: A target site for the
 // SiteSearchEngine.
 type GoogleCloudDiscoveryengineV1betaTargetSite struct {
-	// ExactMatch: Input only. If set to false, a uri_pattern is generated to
+	// ExactMatch: Immutable. If set to false, a uri_pattern is generated to
 	// include all pages whose address contains the provided_uri_pattern. If set to
 	// true, an uri_pattern is generated to try to be an exact match of the
 	// provided_uri_pattern or just the specific page if the provided_uri_pattern
@@ -24062,7 +24529,7 @@ func (r *ProjectsLocationsCollectionsDataStoresBranchesDocumentsService) Create(
 // whether or not it exists, a `PERMISSION_DENIED` error is returned. This
 // field must be unique among all Documents with the same parent. Otherwise, an
 // `ALREADY_EXISTS` error is returned. This field must conform to RFC-1034
-// (https://tools.ietf.org/html/rfc1034) standard with a length limit of 63
+// (https://tools.ietf.org/html/rfc1034) standard with a length limit of 128
 // characters. Otherwise, an `INVALID_ARGUMENT` error is returned.
 func (c *ProjectsLocationsCollectionsDataStoresBranchesDocumentsCreateCall) DocumentId(documentId string) *ProjectsLocationsCollectionsDataStoresBranchesDocumentsCreateCall {
 	c.urlParams_.Set("documentId", documentId)
@@ -38436,7 +38903,7 @@ func (r *ProjectsLocationsDataStoresBranchesDocumentsService) Create(parent stri
 // whether or not it exists, a `PERMISSION_DENIED` error is returned. This
 // field must be unique among all Documents with the same parent. Otherwise, an
 // `ALREADY_EXISTS` error is returned. This field must conform to RFC-1034
-// (https://tools.ietf.org/html/rfc1034) standard with a length limit of 63
+// (https://tools.ietf.org/html/rfc1034) standard with a length limit of 128
 // characters. Otherwise, an `INVALID_ARGUMENT` error is returned.
 func (c *ProjectsLocationsDataStoresBranchesDocumentsCreateCall) DocumentId(documentId string) *ProjectsLocationsDataStoresBranchesDocumentsCreateCall {
 	c.urlParams_.Set("documentId", documentId)
@@ -46492,8 +46959,9 @@ type ProjectsLocationsEvaluationsListResultsCall struct {
 //
 //   - evaluation: The evaluation resource name, such as
 //     `projects/{project}/locations/{location}/evaluations/{evaluation}`. If the
-//     caller does not have permission to list EvaluationResult under this
-//     evaluation, regardless of whether or not this evaluation set exists, a
+//     caller does not have permission to list
+//     ListEvaluationResultsResponse.EvaluationResult under this evaluation,
+//     regardless of whether or not this evaluation set exists, a
 //     `PERMISSION_DENIED` error is returned.
 func (r *ProjectsLocationsEvaluationsService) ListResults(evaluation string) *ProjectsLocationsEvaluationsListResultsCall {
 	c := &ProjectsLocationsEvaluationsListResultsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -46502,9 +46970,10 @@ func (r *ProjectsLocationsEvaluationsService) ListResults(evaluation string) *Pr
 }
 
 // PageSize sets the optional parameter "pageSize": Maximum number of
-// EvaluationResult to return. If unspecified, defaults to 100. The maximum
-// allowed value is 1000. Values above 1000 will be coerced to 1000. If this
-// field is negative, an `INVALID_ARGUMENT` error is returned.
+// ListEvaluationResultsResponse.EvaluationResult to return. If unspecified,
+// defaults to 100. The maximum allowed value is 1000. Values above 1000 will
+// be coerced to 1000. If this field is negative, an `INVALID_ARGUMENT` error
+// is returned.
 func (c *ProjectsLocationsEvaluationsListResultsCall) PageSize(pageSize int64) *ProjectsLocationsEvaluationsListResultsCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c

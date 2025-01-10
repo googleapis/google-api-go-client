@@ -7600,11 +7600,11 @@ type ServicesProjectsGlobalNetworksDnsZonesGetCall struct {
 //
 //   - name: The network that the consumer is using to connect with services.
 //     Must be in the form of
-//     services/{service}/projects/{project}/global/networks/{network}/zones/{zone
-//     Name} Where {service} is the peering service that is managing connectivity
-//     for the service producer's organization. For Google services that support
-//     this {project} is the project number, as in '12345' {network} is the
-//     network name. {zoneName} is the DNS zone name.
+//     services/{service}/projects/{project}/global/networks/{network}/dnsZones/{z
+//     oneName} Where {service} is the peering service that is managing
+//     connectivity for the service producer's organization. For Google services
+//     that support this {project} is the project number, as in '12345' {network}
+//     is the network name. {zoneName} is the DNS zone name.
 func (r *ServicesProjectsGlobalNetworksDnsZonesService) Get(name string) *ServicesProjectsGlobalNetworksDnsZonesGetCall {
 	c := &ServicesProjectsGlobalNetworksDnsZonesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name

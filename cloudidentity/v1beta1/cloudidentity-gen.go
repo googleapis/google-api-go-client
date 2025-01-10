@@ -2432,9 +2432,9 @@ type Group struct {
 	DynamicGroupMetadata *DynamicGroupMetadata `json:"dynamicGroupMetadata,omitempty"`
 	// GroupKey: Required. The `EntityKey` of the `Group`.
 	GroupKey *EntityKey `json:"groupKey,omitempty"`
-	// Labels: Required. One or more label entries that apply to the Group.
-	// Currently supported labels contain a key with an empty value. Google Groups
-	// are the default type of group and have a label with a key of
+	// Labels: Required. One or more label entries that apply to the Group. Labels
+	// contain a key with an empty value. Google Groups are the default type of
+	// group and have a label with a key of
 	// `cloudidentity.googleapis.com/groups.discussion_forum` and an empty value.
 	// Existing Google Groups can have an additional label with a key of
 	// `cloudidentity.googleapis.com/groups.security` and an empty value added to
@@ -2442,7 +2442,10 @@ type Group struct {
 	// once added.** Dynamic groups have a label with a key of
 	// `cloudidentity.googleapis.com/groups.dynamic`. Identity-mapped groups for
 	// Cloud Search have a label with a key of `system/groups/external` and an
-	// empty value.
+	// empty value. (Beta) Google Groups can be locked
+	// (https://support.google.com/a?p=locked-groups). To lock a group, add a label
+	// with a key of `cloudidentity.googleapis.com/groups.locked` and an empty
+	// value. Doing so locks the group. To unlock the group, remove this label.
 	Labels map[string]string `json:"labels,omitempty"`
 	// Name: Output only. The resource name
 	// (https://cloud.google.com/apis/design/resource_names) of the `Group`. Shall

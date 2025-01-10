@@ -4744,7 +4744,7 @@ type QueryPlan struct {
 	// starting with the plan root. Each PlanNode's `id` corresponds to its index
 	// in `plan_nodes`.
 	PlanNodes []*PlanNode `json:"planNodes,omitempty"`
-	// QueryAdvice: Optional. The advices/recommendations for a query. Currently
+	// QueryAdvice: Optional. The advise/recommendations for a query. Currently
 	// this field will be serving index recommendations for a query.
 	QueryAdvice *QueryAdvisorResult `json:"queryAdvice,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "PlanNodes") to
@@ -6323,7 +6323,7 @@ type UpdateDatabaseDdlRequest struct {
 	OperationId string `json:"operationId,omitempty"`
 	// ProtoDescriptors: Optional. Proto descriptors used by CREATE/ALTER PROTO
 	// BUNDLE statements. Contains a protobuf-serialized
-	// google.protobuf.FileDescriptorSet
+	// google.protobufFileDescriptorSet
 	// (https://github.com/protocolbuffers/protobuf/blob/main/src/google/protobuf/descriptor.proto).
 	// To generate it, install (https://grpc.io/docs/protoc-installation/) and run
 	// `protoc` with --include_imports and --descriptor_set_out. For example, to
@@ -7513,7 +7513,7 @@ type ProjectsInstanceConfigsOperationsCancelCall struct {
 // other methods to check whether the cancellation succeeded or whether the
 // operation completed despite cancellation. On successful cancellation, the
 // operation is not deleted; instead, it becomes an operation with an
-// Operation.error value with a google.rpc.Status.code of 1, corresponding to
+// Operation.error value with a google.rpc.Status.code of `1`, corresponding to
 // `Code.CANCELLED`.
 //
 // - name: The name of the operation resource to be cancelled.
@@ -7981,7 +7981,7 @@ type ProjectsInstanceConfigsSsdCachesOperationsCancelCall struct {
 // other methods to check whether the cancellation succeeded or whether the
 // operation completed despite cancellation. On successful cancellation, the
 // operation is not deleted; instead, it becomes an operation with an
-// Operation.error value with a google.rpc.Status.code of 1, corresponding to
+// Operation.error value with a google.rpc.Status.code of `1`, corresponding to
 // `Code.CANCELLED`.
 //
 // - name: The name of the operation resource to be cancelled.
@@ -10878,7 +10878,7 @@ type ProjectsInstancesBackupsOperationsCancelCall struct {
 // other methods to check whether the cancellation succeeded or whether the
 // operation completed despite cancellation. On successful cancellation, the
 // operation is not deleted; instead, it becomes an operation with an
-// Operation.error value with a google.rpc.Status.code of 1, corresponding to
+// Operation.error value with a google.rpc.Status.code of `1`, corresponding to
 // `Code.CANCELLED`.
 //
 // - name: The name of the operation resource to be cancelled.
@@ -14245,7 +14245,7 @@ type ProjectsInstancesDatabasesOperationsCancelCall struct {
 // other methods to check whether the cancellation succeeded or whether the
 // operation completed despite cancellation. On successful cancellation, the
 // operation is not deleted; instead, it becomes an operation with an
-// Operation.error value with a google.rpc.Status.code of 1, corresponding to
+// Operation.error value with a google.rpc.Status.code of `1`, corresponding to
 // `Code.CANCELLED`.
 //
 // - name: The name of the operation resource to be cancelled.
@@ -17347,7 +17347,7 @@ type ProjectsInstancesInstancePartitionsOperationsCancelCall struct {
 // other methods to check whether the cancellation succeeded or whether the
 // operation completed despite cancellation. On successful cancellation, the
 // operation is not deleted; instead, it becomes an operation with an
-// Operation.error value with a google.rpc.Status.code of 1, corresponding to
+// Operation.error value with a google.rpc.Status.code of `1`, corresponding to
 // `Code.CANCELLED`.
 //
 // - name: The name of the operation resource to be cancelled.
@@ -17815,7 +17815,7 @@ type ProjectsInstancesOperationsCancelCall struct {
 // other methods to check whether the cancellation succeeded or whether the
 // operation completed despite cancellation. On successful cancellation, the
 // operation is not deleted; instead, it becomes an operation with an
-// Operation.error value with a google.rpc.Status.code of 1, corresponding to
+// Operation.error value with a google.rpc.Status.code of `1`, corresponding to
 // `Code.CANCELLED`.
 //
 // - name: The name of the operation resource to be cancelled.

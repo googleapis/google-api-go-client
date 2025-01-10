@@ -3250,7 +3250,7 @@ type WorkforcePool struct {
 	// ExpireTime: Output only. Time after which the workforce pool will be
 	// permanently purged and cannot be recovered.
 	ExpireTime string `json:"expireTime,omitempty"`
-	// Name: Output only. The resource name of the pool. Format:
+	// Name: Identifier. The resource name of the pool. Format:
 	// `locations/{location}/workforcePools/{workforce_pool_id}`
 	Name string `json:"name,omitempty"`
 	// Parent: Immutable. The resource name of the parent. Format:
@@ -3378,7 +3378,7 @@ type WorkforcePoolProvider struct {
 	// users can't get the desired claims in authentication credentials. Currently
 	// this configuration is only supported with OIDC protocol.
 	ExtraAttributesOauth2Client *GoogleIamAdminV1WorkforcePoolProviderExtraAttributesOAuth2Client `json:"extraAttributesOauth2Client,omitempty"`
-	// Name: Output only. The resource name of the provider. Format:
+	// Name: Identifier. The resource name of the provider. Format:
 	// `locations/{location}/workforcePools/{workforce_pool_id}/providers/{provider_
 	// id}`
 	Name string `json:"name,omitempty"`
@@ -3428,7 +3428,9 @@ type WorkforcePoolProviderKey struct {
 	ExpireTime string `json:"expireTime,omitempty"`
 	// KeyData: Immutable. Public half of the asymmetric key.
 	KeyData *KeyData `json:"keyData,omitempty"`
-	// Name: Output only. The resource name of the key.
+	// Name: Identifier. The resource name of the key. Format:
+	// `locations/{location}/workforcePools/{workforce_pool_id}/providers/{provider_
+	// id}/keys/{key_id}`
 	Name string `json:"name,omitempty"`
 	// State: Output only. The state of the key.
 	//
@@ -4493,7 +4495,7 @@ type LocationsWorkforcePoolsPatchCall struct {
 
 // Patch: Updates an existing WorkforcePool.
 //
-//   - name: Output only. The resource name of the pool. Format:
+//   - name: Identifier. The resource name of the pool. Format:
 //     `locations/{location}/workforcePools/{workforce_pool_id}`.
 func (r *LocationsWorkforcePoolsService) Patch(name string, workforcepool *WorkforcePool) *LocationsWorkforcePoolsPatchCall {
 	c := &LocationsWorkforcePoolsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -5520,7 +5522,7 @@ type LocationsWorkforcePoolsProvidersPatchCall struct {
 
 // Patch: Updates an existing WorkforcePoolProvider.
 //
-//   - name: Output only. The resource name of the provider. Format:
+//   - name: Identifier. The resource name of the provider. Format:
 //     `locations/{location}/workforcePools/{workforce_pool_id}/providers/{provide
 //     r_id}`.
 func (r *LocationsWorkforcePoolsProvidersService) Patch(name string, workforcepoolprovider *WorkforcePoolProvider) *LocationsWorkforcePoolsProvidersPatchCall {

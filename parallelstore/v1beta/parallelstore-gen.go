@@ -360,9 +360,6 @@ type Instance struct {
 	CapacityGib int64 `json:"capacityGib,omitempty,string"`
 	// CreateTime: Output only. The time when the instance was created.
 	CreateTime string `json:"createTime,omitempty"`
-	// DaosVersion: Output only. The version of DAOS software running in the
-	// instance.
-	DaosVersion string `json:"daosVersion,omitempty"`
 	// DeploymentType: Optional. The deployment type of the instance. Allowed
 	// values are: * `SCRATCH`: the instance is a scratch instance. * `PERSISTENT`:
 	// the instance is a persistent instance.
@@ -432,6 +429,8 @@ type Instance struct {
 	//   "DELETING" - The instance is being deleted.
 	//   "FAILED" - The instance is not usable.
 	//   "UPGRADING" - The instance is being upgraded.
+	//   "REPAIRING" - The instance is being repaired. This should only be used by
+	// instances using the `PERSISTENT` deployment type.
 	State string `json:"state,omitempty"`
 	// UpdateTime: Output only. The time when the instance was updated.
 	UpdateTime string `json:"updateTime,omitempty"`

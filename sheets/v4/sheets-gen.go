@@ -4345,7 +4345,7 @@ func (s DeleteDimensionGroupResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// DeleteDimensionRequest: Deletes the dimensions from the sheet.
+// DeleteDimensionRequest:  Deletes the dimensions from the sheet.
 type DeleteDimensionRequest struct {
 	// Range: The dimensions to delete from the sheet.
 	Range *DimensionRange `json:"range,omitempty"`

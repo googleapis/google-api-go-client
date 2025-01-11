@@ -722,7 +722,7 @@ func (s AutomationEvent) MarshalJSON() ([]byte, error) {
 // information to select the resources to which an Automation is going to be
 // applied.
 type AutomationResourceSelector struct {
-	// Targets: Contains attributes about a target.
+	// Targets: Optional. Contains attributes about a target.
 	Targets []*TargetAttribute `json:"targets,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Targets") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -1071,10 +1071,10 @@ func (s Binding) MarshalJSON() ([]byte, error) {
 
 // BuildArtifact: Description of an a image to use during Skaffold rendering.
 type BuildArtifact struct {
-	// Image: Image name in Skaffold configuration.
+	// Image: Optional. Image name in Skaffold configuration.
 	Image string `json:"image,omitempty"`
-	// Tag: Image tag to use. This will generally be the full path to an image,
-	// such as "gcr.io/my-project/busybox:1.2.3" or
+	// Tag: Optional. Image tag to use. This will generally be the full path to an
+	// image, such as "gcr.io/my-project/busybox:1.2.3" or
 	// "gcr.io/my-project/busybox@sha256:abc123".
 	Tag string `json:"tag,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Image") to unconditionally
@@ -1097,11 +1097,12 @@ func (s BuildArtifact) MarshalJSON() ([]byte, error) {
 
 // Canary: Canary represents the canary deployment strategy.
 type Canary struct {
-	// CanaryDeployment: Configures the progressive based deployment for a Target.
+	// CanaryDeployment: Optional. Configures the progressive based deployment for
+	// a Target.
 	CanaryDeployment *CanaryDeployment `json:"canaryDeployment,omitempty"`
-	// CustomCanaryDeployment: Configures the progressive based deployment for a
-	// Target, but allows customizing at the phase level where a phase represents
-	// each of the percentage deployments.
+	// CustomCanaryDeployment: Optional. Configures the progressive based
+	// deployment for a Target, but allows customizing at the phase level where a
+	// phase represents each of the percentage deployments.
 	CustomCanaryDeployment *CustomCanaryDeployment `json:"customCanaryDeployment,omitempty"`
 	// RuntimeConfig: Optional. Runtime specific configurations for the deployment
 	// strategy. The runtime configuration is used to determine how Cloud Deploy
@@ -1140,7 +1141,8 @@ type CanaryDeployment struct {
 	// Predeploy: Optional. Configuration for the predeploy job of the first phase.
 	// If this is not configured, there will be no predeploy job for this phase.
 	Predeploy *Predeploy `json:"predeploy,omitempty"`
-	// Verify: Whether to run verify tests after each percentage deployment.
+	// Verify: Optional. Whether to run verify tests after each percentage
+	// deployment.
 	Verify bool `json:"verify,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Percentages") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -1230,10 +1232,10 @@ func (s ChildRolloutJobs) MarshalJSON() ([]byte, error) {
 
 // CloudRunConfig: CloudRunConfig contains the Cloud Run runtime configuration.
 type CloudRunConfig struct {
-	// AutomaticTrafficControl: Whether Cloud Deploy should update the traffic
-	// stanza in a Cloud Run Service on the user's behalf to facilitate traffic
-	// splitting. This is required to be true for CanaryDeployments, but optional
-	// for CustomCanaryDeployments.
+	// AutomaticTrafficControl: Optional. Whether Cloud Deploy should update the
+	// traffic stanza in a Cloud Run Service on the user's behalf to facilitate
+	// traffic splitting. This is required to be true for CanaryDeployments, but
+	// optional for CustomCanaryDeployments.
 	AutomaticTrafficControl bool `json:"automaticTrafficControl,omitempty"`
 	// CanaryRevisionTags: Optional. A list of tags that are added to the canary
 	// revision while the canary phase is in progress.
@@ -1546,8 +1548,8 @@ type CustomTargetType struct {
 	Annotations map[string]string `json:"annotations,omitempty"`
 	// CreateTime: Output only. Time at which the `CustomTargetType` was created.
 	CreateTime string `json:"createTime,omitempty"`
-	// CustomActions: Configures render and deploy for the `CustomTargetType` using
-	// Skaffold custom actions.
+	// CustomActions: Optional. Configures render and deploy for the
+	// `CustomTargetType` using Skaffold custom actions.
 	CustomActions *CustomTargetSkaffoldActions `json:"customActions,omitempty"`
 	// CustomTargetTypeId: Output only. Resource id of the `CustomTargetType`.
 	CustomTargetTypeId string `json:"customTargetTypeId,omitempty"`
@@ -1567,7 +1569,7 @@ type CustomTargetType struct {
 	// of 64 labels. Both keys and values are additionally constrained to be <= 128
 	// bytes.
 	Labels map[string]string `json:"labels,omitempty"`
-	// Name: Optional. Name of the `CustomTargetType`. Format is
+	// Name: Identifier. Name of the `CustomTargetType`. Format is
 	// `projects/{project}/locations/{location}/customTargetTypes/{customTargetType}
 	// `. The `customTargetType` component must match
 	// `[a-z]([a-z0-9-]{0,61}[a-z0-9])?`
@@ -1713,16 +1715,16 @@ func (s DefaultPool) MarshalJSON() ([]byte, error) {
 // `DeliveryPipeline` defines a pipeline through which a Skaffold configuration
 // can progress.
 type DeliveryPipeline struct {
-	// Annotations: User annotations. These attributes can only be set and used by
-	// the user, and not by Cloud Deploy.
+	// Annotations: Optional. User annotations. These attributes can only be set
+	// and used by the user, and not by Cloud Deploy.
 	Annotations map[string]string `json:"annotations,omitempty"`
 	// Condition: Output only. Information around the state of the Delivery
 	// Pipeline.
 	Condition *PipelineCondition `json:"condition,omitempty"`
 	// CreateTime: Output only. Time at which the pipeline was created.
 	CreateTime string `json:"createTime,omitempty"`
-	// Description: Description of the `DeliveryPipeline`. Max length is 255
-	// characters.
+	// Description: Optional. Description of the `DeliveryPipeline`. Max length is
+	// 255 characters.
 	Description string `json:"description,omitempty"`
 	// Etag: This checksum is computed by the server based on the value of other
 	// fields, and may be sent on update and delete requests to ensure the client
@@ -1737,16 +1739,16 @@ type DeliveryPipeline struct {
 	// labels. Both keys and values are additionally constrained to be <= 128
 	// bytes.
 	Labels map[string]string `json:"labels,omitempty"`
-	// Name: Optional. Name of the `DeliveryPipeline`. Format is
+	// Name: Identifier. Name of the `DeliveryPipeline`. Format is
 	// `projects/{project}/locations/{location}/deliveryPipelines/{deliveryPipeline}
 	// `. The `deliveryPipeline` component must match
 	// `[a-z]([a-z0-9-]{0,61}[a-z0-9])?`
 	Name string `json:"name,omitempty"`
-	// SerialPipeline: SerialPipeline defines a sequential set of stages for a
-	// `DeliveryPipeline`.
+	// SerialPipeline: Optional. SerialPipeline defines a sequential set of stages
+	// for a `DeliveryPipeline`.
 	SerialPipeline *SerialPipeline `json:"serialPipeline,omitempty"`
-	// Suspended: When suspended, no new releases or rollouts can be created, but
-	// in-progress ones will complete.
+	// Suspended: Optional. When suspended, no new releases or rollouts can be
+	// created, but in-progress ones will complete.
 	Suspended bool `json:"suspended,omitempty"`
 	// Uid: Output only. Unique identifier of the `DeliveryPipeline`.
 	Uid string `json:"uid,omitempty"`
@@ -1776,9 +1778,9 @@ func (s DeliveryPipeline) MarshalJSON() ([]byte, error) {
 // DeliveryPipelineAttribute: Contains criteria for selecting
 // DeliveryPipelines.
 type DeliveryPipelineAttribute struct {
-	// Id: ID of the `DeliveryPipeline`. The value of this field could be one of
-	// the following: * The last segment of a pipeline name * "*", all delivery
-	// pipelines in a location
+	// Id: Optional. ID of the `DeliveryPipeline`. The value of this field could be
+	// one of the following: * The last segment of a pipeline name * "*", all
+	// delivery pipelines in a location
 	Id string `json:"id,omitempty"`
 	// Labels: DeliveryPipeline labels.
 	Labels map[string]string `json:"labels,omitempty"`
@@ -1989,22 +1991,22 @@ func (s DeployParameters) MarshalJSON() ([]byte, error) {
 // `DeployPolicy` inhibits manual or automation-driven actions within a
 // Delivery Pipeline or Target.
 type DeployPolicy struct {
-	// Annotations: User annotations. These attributes can only be set and used by
-	// the user, and not by Cloud Deploy. Annotations must meet the following
-	// constraints: * Annotations are key/value pairs. * Valid annotation keys have
-	// two segments: an optional prefix and name, separated by a slash (`/`). * The
-	// name segment is required and must be 63 characters or less, beginning and
-	// ending with an alphanumeric character (`[a-z0-9A-Z]`) with dashes (`-`),
-	// underscores (`_`), dots (`.`), and alphanumerics between. * The prefix is
-	// optional. If specified, the prefix must be a DNS subdomain: a series of DNS
-	// labels separated by dots(`.`), not longer than 253 characters in total,
-	// followed by a slash (`/`). See
+	// Annotations: Optional. User annotations. These attributes can only be set
+	// and used by the user, and not by Cloud Deploy. Annotations must meet the
+	// following constraints: * Annotations are key/value pairs. * Valid annotation
+	// keys have two segments: an optional prefix and name, separated by a slash
+	// (`/`). * The name segment is required and must be 63 characters or less,
+	// beginning and ending with an alphanumeric character (`[a-z0-9A-Z]`) with
+	// dashes (`-`), underscores (`_`), dots (`.`), and alphanumerics between. *
+	// The prefix is optional. If specified, the prefix must be a DNS subdomain: a
+	// series of DNS labels separated by dots(`.`), not longer than 253 characters
+	// in total, followed by a slash (`/`). See
 	// https://kubernetes.io/docs/concepts/overview/working-with-objects/annotations/#syntax-and-character-set
 	// for more details.
 	Annotations map[string]string `json:"annotations,omitempty"`
 	// CreateTime: Output only. Time at which the deploy policy was created.
 	CreateTime string `json:"createTime,omitempty"`
-	// Description: Description of the `DeployPolicy`. Max length is 255
+	// Description: Optional. Description of the `DeployPolicy`. Max length is 255
 	// characters.
 	Description string `json:"description,omitempty"`
 	// Etag: The weak etag of the `Automation` resource. This checksum is computed
@@ -2032,8 +2034,8 @@ type DeployPolicy struct {
 	// policy applies. For example, if there are two selectors and the action being
 	// attempted matches one of them, the policy will apply to that action.
 	Selectors []*DeployPolicyResourceSelector `json:"selectors,omitempty"`
-	// Suspended: When suspended, the policy will not prevent actions from
-	// occurring, even if the action violates the policy.
+	// Suspended: Optional. When suspended, the policy will not prevent actions
+	// from occurring, even if the action violates the policy.
 	Suspended bool `json:"suspended,omitempty"`
 	// Uid: Output only. Unique identifier of the `DeployPolicy`.
 	Uid string `json:"uid,omitempty"`
@@ -2403,6 +2405,10 @@ type GkeCluster struct {
 	// Cluster: Optional. Information specifying a GKE Cluster. Format is
 	// `projects/{project_id}/locations/{location_id}/clusters/{cluster_id}`.
 	Cluster string `json:"cluster,omitempty"`
+	// DnsEndpoint: Optional. If set, the cluster will be accessed using the DNS
+	// endpoint. Note that both `dns_endpoint` and `internal_ip` cannot be set to
+	// true.
+	DnsEndpoint bool `json:"dnsEndpoint,omitempty"`
 	// InternalIp: Optional. If true, `cluster` is accessed using the private IP
 	// address of the control plane endpoint. Otherwise, the default IP address of
 	// the control plane endpoint is used. The default IP address is the private IP
@@ -2410,6 +2416,7 @@ type GkeCluster struct {
 	// address otherwise. Only specify this option when `cluster` is a private GKE
 	// cluster
 	// (https://cloud.google.com/kubernetes-engine/docs/concepts/private-cluster-concept).
+	// Note that `internal_ip` and `dns_endpoint` cannot both be set to true.
 	InternalIp bool `json:"internalIp,omitempty"`
 	// ProxyUrl: Optional. If set, used to configure a proxy
 	// (https://kubernetes.io/docs/concepts/configuration/organize-cluster-access-kubeconfig/#proxy)
@@ -2541,7 +2548,7 @@ type JobRun struct {
 	Etag string `json:"etag,omitempty"`
 	// JobId: Output only. ID of the `Rollout` job this `JobRun` corresponds to.
 	JobId string `json:"jobId,omitempty"`
-	// Name: Optional. Name of the `JobRun`. Format is
+	// Name: Identifier. Name of the `JobRun`. Format is
 	// `projects/{project}/locations/{location}/deliveryPipelines/{deliveryPipeline}
 	// /releases/{releases}/rollouts/{rollouts}/jobRuns/{uuid}`.
 	Name string `json:"name,omitempty"`
@@ -2645,9 +2652,10 @@ func (s JobRunNotificationEvent) MarshalJSON() ([]byte, error) {
 // KubernetesConfig: KubernetesConfig contains the Kubernetes runtime
 // configuration.
 type KubernetesConfig struct {
-	// GatewayServiceMesh: Kubernetes Gateway API service mesh configuration.
+	// GatewayServiceMesh: Optional. Kubernetes Gateway API service mesh
+	// configuration.
 	GatewayServiceMesh *GatewayServiceMesh `json:"gatewayServiceMesh,omitempty"`
-	// ServiceNetworking: Kubernetes Service networking configuration.
+	// ServiceNetworking: Optional. Kubernetes Service networking configuration.
 	ServiceNetworking *ServiceNetworking `json:"serviceNetworking,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "GatewayServiceMesh") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -3291,11 +3299,11 @@ type PhaseConfig struct {
 	// Predeploy: Optional. Configuration for the predeploy job of this phase. If
 	// this is not configured, there will be no predeploy job for this phase.
 	Predeploy *Predeploy `json:"predeploy,omitempty"`
-	// Profiles: Skaffold profiles to use when rendering the manifest for this
-	// phase. These are in addition to the profiles list specified in the
+	// Profiles: Optional. Skaffold profiles to use when rendering the manifest for
+	// this phase. These are in addition to the profiles list specified in the
 	// `DeliveryPipeline` stage.
 	Profiles []string `json:"profiles,omitempty"`
-	// Verify: Whether to run verify tests after the deployment.
+	// Verify: Optional. Whether to run verify tests after the deployment.
 	Verify bool `json:"verify,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Percentage") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -3465,7 +3473,7 @@ func (s Policy) MarshalJSON() ([]byte, error) {
 
 // PolicyRule: Deploy Policy rule.
 type PolicyRule struct {
-	// RolloutRestriction: Rollout restrictions.
+	// RolloutRestriction: Optional. Rollout restrictions.
 	RolloutRestriction *RolloutRestriction `json:"rolloutRestriction,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "RolloutRestriction") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -3828,12 +3836,13 @@ func (s PromoteReleaseRule) MarshalJSON() ([]byte, error) {
 type Release struct {
 	// Abandoned: Output only. Indicates whether this is an abandoned release.
 	Abandoned bool `json:"abandoned,omitempty"`
-	// Annotations: User annotations. These attributes can only be set and used by
-	// the user, and not by Cloud Deploy. See
+	// Annotations: Optional. User annotations. These attributes can only be set
+	// and used by the user, and not by Cloud Deploy. See
 	// https://google.aip.dev/128#annotations for more details such as format and
 	// size limitations.
 	Annotations map[string]string `json:"annotations,omitempty"`
-	// BuildArtifacts: List of artifacts to pass through to Skaffold command.
+	// BuildArtifacts: Optional. List of artifacts to pass through to Skaffold
+	// command.
 	BuildArtifacts []*BuildArtifact `json:"buildArtifacts,omitempty"`
 	// Condition: Output only. Information around the state of the Release.
 	Condition *ReleaseCondition `json:"condition,omitempty"`
@@ -3848,7 +3857,8 @@ type Release struct {
 	// DeployParameters: Optional. The deploy parameters to use for all targets in
 	// this release.
 	DeployParameters map[string]string `json:"deployParameters,omitempty"`
-	// Description: Description of the `Release`. Max length is 255 characters.
+	// Description: Optional. Description of the `Release`. Max length is 255
+	// characters.
 	Description string `json:"description,omitempty"`
 	// Etag: This checksum is computed by the server based on the value of other
 	// fields, and may be sent on update and delete requests to ensure the client
@@ -3863,7 +3873,7 @@ type Release struct {
 	// labels. Both keys and values are additionally constrained to be <= 128
 	// bytes.
 	Labels map[string]string `json:"labels,omitempty"`
-	// Name: Optional. Name of the `Release`. Format is
+	// Name: Identifier. Name of the `Release`. Format is
 	// `projects/{project}/locations/{location}/deliveryPipelines/{deliveryPipeline}
 	// /releases/{release}`. The `release` component must match
 	// `[a-z]([a-z0-9-]{0,61}[a-z0-9])?`
@@ -3881,11 +3891,11 @@ type Release struct {
 	// failed.
 	//   "IN_PROGRESS" - Rendering has started and is not complete.
 	RenderState string `json:"renderState,omitempty"`
-	// SkaffoldConfigPath: Filepath of the Skaffold config inside of the config
-	// URI.
+	// SkaffoldConfigPath: Optional. Filepath of the Skaffold config inside of the
+	// config URI.
 	SkaffoldConfigPath string `json:"skaffoldConfigPath,omitempty"`
-	// SkaffoldConfigUri: Cloud Storage URI of tar.gz archive containing Skaffold
-	// configuration.
+	// SkaffoldConfigUri: Optional. Cloud Storage URI of tar.gz archive containing
+	// Skaffold configuration.
 	SkaffoldConfigUri string `json:"skaffoldConfigUri,omitempty"`
 	// SkaffoldVersion: Optional. The Skaffold version to use when operating on
 	// this release, such as "1.20.0". Not all versions are valid; Cloud Deploy
@@ -4536,8 +4546,8 @@ type Rollout struct {
 	// ActiveRepairAutomationRun: Output only. The AutomationRun actively repairing
 	// the rollout.
 	ActiveRepairAutomationRun string `json:"activeRepairAutomationRun,omitempty"`
-	// Annotations: User annotations. These attributes can only be set and used by
-	// the user, and not by Cloud Deploy. See
+	// Annotations: Optional. User annotations. These attributes can only be set
+	// and used by the user, and not by Cloud Deploy. See
 	// https://google.aip.dev/128#annotations for more details such as format and
 	// size limitations.
 	Annotations map[string]string `json:"annotations,omitempty"`
@@ -4589,8 +4599,8 @@ type Rollout struct {
 	// object that is used to deploy the Rollout. Format is
 	// `projects/{project}/locations/{location}/builds/{build}`.
 	DeployingBuild string `json:"deployingBuild,omitempty"`
-	// Description: Description of the `Rollout` for user purposes. Max length is
-	// 255 characters.
+	// Description: Optional. Description of the `Rollout` for user purposes. Max
+	// length is 255 characters.
 	Description string `json:"description,omitempty"`
 	// EnqueueTime: Output only. Time at which the `Rollout` was enqueued.
 	EnqueueTime string `json:"enqueueTime,omitempty"`
@@ -4612,7 +4622,7 @@ type Rollout struct {
 	Labels map[string]string `json:"labels,omitempty"`
 	// Metadata: Output only. Metadata contains information about the rollout.
 	Metadata *Metadata `json:"metadata,omitempty"`
-	// Name: Optional. Name of the `Rollout`. Format is
+	// Name: Identifier. Name of the `Rollout`. Format is
 	// `projects/{project}/locations/{location}/deliveryPipelines/{deliveryPipeline}
 	// /releases/{release}/rollouts/{rollout}`. The `rollout` component must match
 	// `[a-z]([a-z0-9-]{0,61}[a-z0-9])?`
@@ -4871,9 +4881,9 @@ func (s RouteDestinations) MarshalJSON() ([]byte, error) {
 // RuntimeConfig: RuntimeConfig contains the runtime specific configurations
 // for a deployment strategy.
 type RuntimeConfig struct {
-	// CloudRun: Cloud Run runtime configuration.
+	// CloudRun: Optional. Cloud Run runtime configuration.
 	CloudRun *CloudRunConfig `json:"cloudRun,omitempty"`
-	// Kubernetes: Kubernetes runtime configuration.
+	// Kubernetes: Optional. Kubernetes runtime configuration.
 	Kubernetes *KubernetesConfig `json:"kubernetes,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "CloudRun") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -4896,8 +4906,8 @@ func (s RuntimeConfig) MarshalJSON() ([]byte, error) {
 // SerialPipeline: SerialPipeline defines a sequential set of stages for a
 // `DeliveryPipeline`.
 type SerialPipeline struct {
-	// Stages: Each stage specifies configuration for a `Target`. The ordering of
-	// this list defines the promotion flow.
+	// Stages: Optional. Each stage specifies configuration for a `Target`. The
+	// ordering of this list defines the promotion flow.
 	Stages []*Stage `json:"stages,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Stages") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -5068,13 +5078,13 @@ type SkaffoldModules struct {
 	// Configs: Optional. The Skaffold Config modules to use from the specified
 	// source.
 	Configs []string `json:"configs,omitempty"`
-	// Git: Remote git repository containing the Skaffold Config modules.
+	// Git: Optional. Remote git repository containing the Skaffold Config modules.
 	Git *SkaffoldGitSource `json:"git,omitempty"`
-	// GoogleCloudBuildRepo: Cloud Build V2 repository containing the Skaffold
-	// Config modules.
+	// GoogleCloudBuildRepo: Optional. Cloud Build V2 repository containing the
+	// Skaffold Config modules.
 	GoogleCloudBuildRepo *SkaffoldGCBRepoSource `json:"googleCloudBuildRepo,omitempty"`
-	// GoogleCloudStorage: Cloud Storage bucket containing the Skaffold Config
-	// modules.
+	// GoogleCloudStorage: Optional. Cloud Storage bucket containing the Skaffold
+	// Config modules.
 	GoogleCloudStorage *SkaffoldGCSSource `json:"googleCloudStorage,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Configs") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -5172,14 +5182,14 @@ type Stage struct {
 	// DeployParameters: Optional. The deploy parameters to use for the target in
 	// this stage.
 	DeployParameters []*DeployParameters `json:"deployParameters,omitempty"`
-	// Profiles: Skaffold profiles to use when rendering the manifest for this
-	// stage's `Target`.
+	// Profiles: Optional. Skaffold profiles to use when rendering the manifest for
+	// this stage's `Target`.
 	Profiles []string `json:"profiles,omitempty"`
 	// Strategy: Optional. The strategy to use for a `Rollout` to this stage.
 	Strategy *Strategy `json:"strategy,omitempty"`
-	// TargetId: The target_id to which this stage points. This field refers
-	// exclusively to the last segment of a target name. For example, this field
-	// would just be `my-target` (rather than
+	// TargetId: Optional. The target_id to which this stage points. This field
+	// refers exclusively to the last segment of a target name. For example, this
+	// field would just be `my-target` (rather than
 	// `projects/project/locations/location/targets/my-target`). The location of
 	// the `Target` is inferred to be the same as the location of the
 	// `DeliveryPipeline` that contains this `Stage`.
@@ -5210,7 +5220,7 @@ type Standard struct {
 	// Predeploy: Optional. Configuration for the predeploy job. If this is not
 	// configured, predeploy job will not be present.
 	Predeploy *Predeploy `json:"predeploy,omitempty"`
-	// Verify: Whether to verify a deployment.
+	// Verify: Optional. Whether to verify a deployment.
 	Verify bool `json:"verify,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Postdeploy") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -5266,11 +5276,11 @@ func (s Status) MarshalJSON() ([]byte, error) {
 
 // Strategy: Strategy contains deployment strategy information.
 type Strategy struct {
-	// Canary: Canary deployment strategy provides progressive percentage based
-	// deployments to a Target.
+	// Canary: Optional. Canary deployment strategy provides progressive percentage
+	// based deployments to a Target.
 	Canary *Canary `json:"canary,omitempty"`
-	// Standard: Standard deployment strategy executes a single deploy and allows
-	// verifying the deployment.
+	// Standard: Optional. Standard deployment strategy executes a single deploy
+	// and allows verifying the deployment.
 	Standard *Standard `json:"standard,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Canary") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -5322,8 +5332,8 @@ type Target struct {
 	// of other fields, and may be sent on update and delete requests to ensure the
 	// client has an up-to-date value before proceeding.
 	Etag string `json:"etag,omitempty"`
-	// ExecutionConfigs: Configurations for all execution that relates to this
-	// `Target`. Each `ExecutionEnvironmentUsage` value may only be used in a
+	// ExecutionConfigs: Optional. Configurations for all execution that relates to
+	// this `Target`. Each `ExecutionEnvironmentUsage` value may only be used in a
 	// single configuration; using the same value multiple times is an error. When
 	// one or more configurations are specified, they must include the `RENDER` and
 	// `DEPLOY` `ExecutionEnvironmentUsage` values. When no configurations are
@@ -5342,7 +5352,7 @@ type Target struct {
 	Labels map[string]string `json:"labels,omitempty"`
 	// MultiTarget: Optional. Information specifying a multiTarget.
 	MultiTarget *MultiTarget `json:"multiTarget,omitempty"`
-	// Name: Optional. Name of the `Target`. Format is
+	// Name: Identifier. Name of the `Target`. Format is
 	// `projects/{project}/locations/{location}/targets/{target}`. The `target`
 	// component must match `[a-z]([a-z0-9-]{0,61}[a-z0-9])?`
 	Name string `json:"name,omitempty"`
@@ -5413,8 +5423,8 @@ func (s TargetArtifact) MarshalJSON() ([]byte, error) {
 // TargetAttribute: Contains criteria for selecting Targets. This could be used
 // to select targets for a Deploy Policy or for an Automation.
 type TargetAttribute struct {
-	// Id: ID of the `Target`. The value of this field could be one of the
-	// following: * The last segment of a target name * "*", all targets in a
+	// Id: Optional. ID of the `Target`. The value of this field could be one of
+	// the following: * The last segment of a target name * "*", all targets in a
 	// location
 	Id string `json:"id,omitempty"`
 	// Labels: Target labels.
@@ -7038,7 +7048,7 @@ type ProjectsLocationsCustomTargetTypesPatchCall struct {
 
 // Patch: Updates a single CustomTargetType.
 //
-//   - name: Optional. Name of the `CustomTargetType`. Format is
+//   - name: Identifier. Name of the `CustomTargetType`. Format is
 //     `projects/{project}/locations/{location}/customTargetTypes/{customTargetTyp
 //     e}`. The `customTargetType` component must match
 //     `[a-z]([a-z0-9-]{0,61}[a-z0-9])?`.
@@ -7981,7 +7991,7 @@ type ProjectsLocationsDeliveryPipelinesPatchCall struct {
 
 // Patch: Updates the parameters of a single DeliveryPipeline.
 //
-//   - name: Optional. Name of the `DeliveryPipeline`. Format is
+//   - name: Identifier. Name of the `DeliveryPipeline`. Format is
 //     `projects/{project}/locations/{location}/deliveryPipelines/{deliveryPipelin
 //     e}`. The `deliveryPipeline` component must match
 //     `[a-z]([a-z0-9-]{0,61}[a-z0-9])?`.
@@ -11778,6 +11788,135 @@ func (c *ProjectsLocationsDeployPoliciesGetCall) Do(opts ...googleapi.CallOption
 	return ret, nil
 }
 
+type ProjectsLocationsDeployPoliciesGetIamPolicyCall struct {
+	s            *Service
+	resource     string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// GetIamPolicy: Gets the access control policy for a resource. Returns an
+// empty policy if the resource exists and does not have a policy set.
+//
+//   - resource: REQUIRED: The resource for which the policy is being requested.
+//     See Resource names (https://cloud.google.com/apis/design/resource_names)
+//     for the appropriate value for this field.
+func (r *ProjectsLocationsDeployPoliciesService) GetIamPolicy(resource string) *ProjectsLocationsDeployPoliciesGetIamPolicyCall {
+	c := &ProjectsLocationsDeployPoliciesGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.resource = resource
+	return c
+}
+
+// OptionsRequestedPolicyVersion sets the optional parameter
+// "options.requestedPolicyVersion": The maximum policy version that will be
+// used to format the policy. Valid values are 0, 1, and 3. Requests specifying
+// an invalid value will be rejected. Requests for policies with any
+// conditional role bindings must specify version 3. Policies with no
+// conditional role bindings may specify any valid value or leave the field
+// unset. The policy in the response might use the policy version that you
+// specified, or it might use a lower policy version. For example, if you
+// specify version 3, but the policy has no conditional role bindings, the
+// response uses version 1. To learn which resources support conditions in
+// their IAM policies, see the IAM documentation
+// (https://cloud.google.com/iam/help/conditions/resource-policies).
+func (c *ProjectsLocationsDeployPoliciesGetIamPolicyCall) OptionsRequestedPolicyVersion(optionsRequestedPolicyVersion int64) *ProjectsLocationsDeployPoliciesGetIamPolicyCall {
+	c.urlParams_.Set("options.requestedPolicyVersion", fmt.Sprint(optionsRequestedPolicyVersion))
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsDeployPoliciesGetIamPolicyCall) Fields(s ...googleapi.Field) *ProjectsLocationsDeployPoliciesGetIamPolicyCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsDeployPoliciesGetIamPolicyCall) IfNoneMatch(entityTag string) *ProjectsLocationsDeployPoliciesGetIamPolicyCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsDeployPoliciesGetIamPolicyCall) Context(ctx context.Context) *ProjectsLocationsDeployPoliciesGetIamPolicyCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsDeployPoliciesGetIamPolicyCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsDeployPoliciesGetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+resource}:getIamPolicy")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"resource": c.resource,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "clouddeploy.projects.locations.deployPolicies.getIamPolicy", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "clouddeploy.projects.locations.deployPolicies.getIamPolicy" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Policy.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsDeployPoliciesGetIamPolicyCall) Do(opts ...googleapi.CallOption) (*Policy, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Policy{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "clouddeploy.projects.locations.deployPolicies.getIamPolicy", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
 type ProjectsLocationsDeployPoliciesListCall struct {
 	s            *Service
 	parent       string
@@ -12088,6 +12227,113 @@ func (c *ProjectsLocationsDeployPoliciesPatchCall) Do(opts ...googleapi.CallOpti
 		return nil, err
 	}
 	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "clouddeploy.projects.locations.deployPolicies.patch", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsDeployPoliciesSetIamPolicyCall struct {
+	s                   *Service
+	resource            string
+	setiampolicyrequest *SetIamPolicyRequest
+	urlParams_          gensupport.URLParams
+	ctx_                context.Context
+	header_             http.Header
+}
+
+// SetIamPolicy: Sets the access control policy on the specified resource.
+// Replaces any existing policy. Can return `NOT_FOUND`, `INVALID_ARGUMENT`,
+// and `PERMISSION_DENIED` errors.
+//
+//   - resource: REQUIRED: The resource for which the policy is being specified.
+//     See Resource names (https://cloud.google.com/apis/design/resource_names)
+//     for the appropriate value for this field.
+func (r *ProjectsLocationsDeployPoliciesService) SetIamPolicy(resource string, setiampolicyrequest *SetIamPolicyRequest) *ProjectsLocationsDeployPoliciesSetIamPolicyCall {
+	c := &ProjectsLocationsDeployPoliciesSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.resource = resource
+	c.setiampolicyrequest = setiampolicyrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsDeployPoliciesSetIamPolicyCall) Fields(s ...googleapi.Field) *ProjectsLocationsDeployPoliciesSetIamPolicyCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsDeployPoliciesSetIamPolicyCall) Context(ctx context.Context) *ProjectsLocationsDeployPoliciesSetIamPolicyCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsDeployPoliciesSetIamPolicyCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsDeployPoliciesSetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.setiampolicyrequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+resource}:setIamPolicy")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"resource": c.resource,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "clouddeploy.projects.locations.deployPolicies.setIamPolicy", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "clouddeploy.projects.locations.deployPolicies.setIamPolicy" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Policy.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsDeployPoliciesSetIamPolicyCall) Do(opts ...googleapi.CallOption) (*Policy, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Policy{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "clouddeploy.projects.locations.deployPolicies.setIamPolicy", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -13251,7 +13497,7 @@ type ProjectsLocationsTargetsPatchCall struct {
 
 // Patch: Updates the parameters of a single Target.
 //
-//   - name: Optional. Name of the `Target`. Format is
+//   - name: Identifier. Name of the `Target`. Format is
 //     `projects/{project}/locations/{location}/targets/{target}`. The `target`
 //     component must match `[a-z]([a-z0-9-]{0,61}[a-z0-9])?`.
 func (r *ProjectsLocationsTargetsService) Patch(name string, target *Target) *ProjectsLocationsTargetsPatchCall {

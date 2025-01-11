@@ -690,6 +690,59 @@ func (s BigTableIODetails) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// BoundedTrie: The message type used for encoding metrics of type bounded
+// trie.
+type BoundedTrie struct {
+	// Bound: The maximum number of elements to store before truncation.
+	Bound int64 `json:"bound,omitempty"`
+	// Root: A compact representation of all the elements in this trie.
+	Root *BoundedTrieNode `json:"root,omitempty"`
+	// Singleton: A more efficient representation for metrics consisting of a
+	// single value.
+	Singleton []string `json:"singleton,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Bound") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Bound") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s BoundedTrie) MarshalJSON() ([]byte, error) {
+	type NoMethod BoundedTrie
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// BoundedTrieNode: A single node in a BoundedTrie.
+type BoundedTrieNode struct {
+	// Children: Children of this node. Must be empty if truncated is true.
+	Children map[string]BoundedTrieNode `json:"children,omitempty"`
+	// Truncated: Whether this node has been truncated. A truncated leaf represents
+	// possibly many children with the same prefix.
+	Truncated bool `json:"truncated,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Children") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Children") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s BoundedTrieNode) MarshalJSON() ([]byte, error) {
+	type NoMethod BoundedTrieNode
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // BucketOptions: `BucketOptions` describes the bucket boundaries used in the
 // histogram.
 type BucketOptions struct {
@@ -1051,10 +1104,12 @@ func (s CounterStructuredNameAndMetadata) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// CounterUpdate: An update to a Counter sent from a worker.
+// CounterUpdate: An update to a Counter sent from a worker. Next ID: 17
 type CounterUpdate struct {
 	// Boolean: Boolean value for And, Or.
 	Boolean bool `json:"boolean,omitempty"`
+	// BoundedTrie: Bounded trie data
+	BoundedTrie *BoundedTrie `json:"boundedTrie,omitempty"`
 	// Cumulative: True if this counter is reported as the total cumulative
 	// aggregate value accumulated since the worker started working on this
 	// WorkItem. By default this is false, indicating that this counter is reported
@@ -3571,7 +3626,7 @@ func (s MetricStructuredName) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// MetricUpdate: Describes the state of a metric.
+// MetricUpdate: Describes the state of a metric. Next ID: 14
 type MetricUpdate struct {
 	// Cumulative: True if this metric is reported as the total cumulative
 	// aggregate value accumulated since the worker started working on this
@@ -3611,9 +3666,12 @@ type MetricUpdate struct {
 	Scalar interface{} `json:"scalar,omitempty"`
 	// Set: Worker-computed aggregate value for the "Set" aggregation kind. The
 	// only possible value type is a list of Values whose type can be Long, Double,
-	// or String, according to the metric's type. All Values in the list must be of
-	// the same type.
+	// String, or BoundedTrie according to the metric's type. All Values in the
+	// list must be of the same type.
 	Set interface{} `json:"set,omitempty"`
+	// Trie: Worker-computed aggregate value for the "Trie" aggregation kind. The
+	// only possible value type is a BoundedTrieNode.
+	Trie interface{} `json:"trie,omitempty"`
 	// UpdateTime: Timestamp associated with the metric value. Optional when
 	// workers are reporting work progress; it will be filled in responses from the
 	// metrics API.

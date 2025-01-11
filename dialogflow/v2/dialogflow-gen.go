@@ -8735,6 +8735,8 @@ type GoogleCloudDialogflowV2Conversation struct {
 	PhoneNumber *GoogleCloudDialogflowV2ConversationPhoneNumber `json:"phoneNumber,omitempty"`
 	// StartTime: Output only. The time the conversation was started.
 	StartTime string `json:"startTime,omitempty"`
+	// TelephonyConnectionInfo: Output only. The telephony connection information.
+	TelephonyConnectionInfo *GoogleCloudDialogflowV2ConversationTelephonyConnectionInfo `json:"telephonyConnectionInfo,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
@@ -9031,15 +9033,17 @@ func (s GoogleCloudDialogflowV2ConversationModelEvaluation) MarshalJSON() ([]byt
 // for telephony integration. It allows for connecting a particular
 // conversation over telephony.
 type GoogleCloudDialogflowV2ConversationPhoneNumber struct {
+	// CountryCode: Output only. Desired country code for the phone number.
+	CountryCode int64 `json:"countryCode,omitempty"`
 	// PhoneNumber: Output only. The phone number to connect to this conversation.
 	PhoneNumber string `json:"phoneNumber,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "PhoneNumber") to
+	// ForceSendFields is a list of field names (e.g. "CountryCode") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "PhoneNumber") to include in API
+	// NullFields is a list of field names (e.g. "CountryCode") to include in API
 	// requests with the JSON null value. By default, fields with empty values are
 	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
@@ -9125,6 +9129,89 @@ type GoogleCloudDialogflowV2ConversationProfile struct {
 
 func (s GoogleCloudDialogflowV2ConversationProfile) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowV2ConversationProfile
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDialogflowV2ConversationTelephonyConnectionInfo: The information
+// about phone calls connected via phone gateway to the conversation.
+type GoogleCloudDialogflowV2ConversationTelephonyConnectionInfo struct {
+	// DialedNumber: Output only. The number dialed to connect this call in E.164
+	// format.
+	DialedNumber string `json:"dialedNumber,omitempty"`
+	// ExtraMimeContents: Output only. The mime content from the initial SIP
+	// INVITE.
+	ExtraMimeContents []*GoogleCloudDialogflowV2ConversationTelephonyConnectionInfoMimeContent `json:"extraMimeContents,omitempty"`
+	// Sdp: Optional. SDP of the call. It's initially the SDP answer to the
+	// endpoint, but maybe later updated for the purpose of making the link active,
+	// etc.
+	Sdp string `json:"sdp,omitempty"`
+	// SipHeaders: Output only. The SIP headers from the initial SIP INVITE.
+	SipHeaders []*GoogleCloudDialogflowV2ConversationTelephonyConnectionInfoSipHeader `json:"sipHeaders,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "DialedNumber") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DialedNumber") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDialogflowV2ConversationTelephonyConnectionInfo) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDialogflowV2ConversationTelephonyConnectionInfo
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDialogflowV2ConversationTelephonyConnectionInfoMimeContent: The
+// mime content from the initial SIP INVITE.
+type GoogleCloudDialogflowV2ConversationTelephonyConnectionInfoMimeContent struct {
+	// Content: Optional. The content payload.
+	Content string `json:"content,omitempty"`
+	// MimeType: Optional. The mime type of the content.
+	MimeType string `json:"mimeType,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Content") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Content") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDialogflowV2ConversationTelephonyConnectionInfoMimeContent) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDialogflowV2ConversationTelephonyConnectionInfoMimeContent
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDialogflowV2ConversationTelephonyConnectionInfoSipHeader: The SIP
+// headers from the initial SIP INVITE.
+type GoogleCloudDialogflowV2ConversationTelephonyConnectionInfoSipHeader struct {
+	// Name: Optional. The name of the header.
+	Name string `json:"name,omitempty"`
+	// Value: Optional. The value of the header.
+	Value string `json:"value,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Name") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Name") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDialogflowV2ConversationTelephonyConnectionInfoSipHeader) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDialogflowV2ConversationTelephonyConnectionInfoSipHeader
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 

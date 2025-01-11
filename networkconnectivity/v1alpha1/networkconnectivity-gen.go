@@ -640,7 +640,7 @@ func (s Hub) MarshalJSON() ([]byte, error) {
 
 // InternalRange: The internal range resource for IPAM operations within a VPC
 // network. Used to represent a private address range along with behavioral
-// characterstics of that range (its usage and peering behavior). Networking
+// characteristics of that range (its usage and peering behavior). Networking
 // resources can link to this range if they are created as belonging to it.
 type InternalRange struct {
 	// CreateTime: Time when the internal range was created.
@@ -3509,7 +3509,7 @@ type ProjectsLocationsOperationsCancelCall struct {
 // other methods to check whether the cancellation succeeded or whether the
 // operation completed despite cancellation. On successful cancellation, the
 // operation is not deleted; instead, it becomes an operation with an
-// Operation.error value with a google.rpc.Status.code of 1, corresponding to
+// Operation.error value with a google.rpc.Status.code of `1`, corresponding to
 // `Code.CANCELLED`.
 //
 // - name: The name of the operation resource to be cancelled.

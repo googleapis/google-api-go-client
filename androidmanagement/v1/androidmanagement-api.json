@@ -1142,7 +1142,7 @@
           "parameterOrder": [],
           "parameters": {
             "adminEmail": {
-              "description": "Optional. Email address used to prefill the admin field of the enterprise signup form. This value is a hint only and can be altered by the user.",
+              "description": "Optional. Email address used to prefill the admin field of the enterprise signup form. This value is a hint only and can be altered by the user. If allowedDomains is non-empty then this must belong to one of the allowedDomains.",
               "location": "query",
               "type": "string"
             },
@@ -1174,7 +1174,7 @@
       }
     }
   },
-  "revision": "20250106",
+  "revision": "20250109",
   "rootUrl": "https://androidmanagement.googleapis.com/",
   "schemas": {
     "AdbShellCommandEvent": {

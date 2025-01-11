@@ -627,10 +627,16 @@ type Attack struct {
 	// Classification: Type of attack, for example, 'SYN-flood', 'NTP-udp', or
 	// 'CHARGEN-udp'.
 	Classification string `json:"classification,omitempty"`
-	// VolumeBps: Total BPS (bytes per second) volume of attack.
+	// VolumeBps: Total BPS (bytes per second) volume of attack. Deprecated - refer
+	// to volume_bps_long instead.
 	VolumeBps int64 `json:"volumeBps,omitempty"`
-	// VolumePps: Total PPS (packets per second) volume of attack.
+	// VolumeBpsLong: Total BPS (bytes per second) volume of attack.
+	VolumeBpsLong int64 `json:"volumeBpsLong,omitempty,string"`
+	// VolumePps: Total PPS (packets per second) volume of attack. Deprecated -
+	// refer to volume_pps_long instead.
 	VolumePps int64 `json:"volumePps,omitempty"`
+	// VolumePpsLong: Total PPS (packets per second) volume of attack.
+	VolumePpsLong int64 `json:"volumePpsLong,omitempty,string"`
 	// ForceSendFields is a list of field names (e.g. "Classification") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -3768,10 +3774,16 @@ type GoogleCloudSecuritycenterV2Attack struct {
 	// Classification: Type of attack, for example, 'SYN-flood', 'NTP-udp', or
 	// 'CHARGEN-udp'.
 	Classification string `json:"classification,omitempty"`
-	// VolumeBps: Total BPS (bytes per second) volume of attack.
+	// VolumeBps: Total BPS (bytes per second) volume of attack. Deprecated - refer
+	// to volume_bps_long instead.
 	VolumeBps int64 `json:"volumeBps,omitempty"`
-	// VolumePps: Total PPS (packets per second) volume of attack.
+	// VolumeBpsLong: Total BPS (bytes per second) volume of attack.
+	VolumeBpsLong int64 `json:"volumeBpsLong,omitempty,string"`
+	// VolumePps: Total PPS (packets per second) volume of attack. Deprecated -
+	// refer to volume_pps_long instead.
 	VolumePps int64 `json:"volumePps,omitempty"`
+	// VolumePpsLong: Total PPS (packets per second) volume of attack.
+	VolumePpsLong int64 `json:"volumePpsLong,omitempty,string"`
 	// ForceSendFields is a list of field names (e.g. "Classification") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See

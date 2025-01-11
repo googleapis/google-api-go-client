@@ -1388,6 +1388,8 @@ type FirewallInfo struct {
 	// rules
 	// specifications](https://cloud.google.com/firewall/docs/firewalls#specificatio
 	// ns)
+	//   "ANALYSIS_SKIPPED" - Firewall analysis was skipped due to executing
+	// Connectivity Test in the BypassFirewallChecks mode
 	FirewallRuleType string `json:"firewallRuleType,omitempty"`
 	// NetworkUri: The URI of the VPC network that the firewall rule is associated
 	// with. This field is not applicable to hierarchical firewall policy rules.

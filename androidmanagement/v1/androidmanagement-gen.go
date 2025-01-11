@@ -10670,7 +10670,8 @@ func (r *SignupUrlsService) Create() *SignupUrlsCreateCall {
 
 // AdminEmail sets the optional parameter "adminEmail": Email address used to
 // prefill the admin field of the enterprise signup form. This value is a hint
-// only and can be altered by the user.
+// only and can be altered by the user. If allowedDomains is non-empty then
+// this must belong to one of the allowedDomains.
 func (c *SignupUrlsCreateCall) AdminEmail(adminEmail string) *SignupUrlsCreateCall {
 	c.urlParams_.Set("adminEmail", adminEmail)
 	return c

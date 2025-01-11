@@ -677,6 +677,12 @@ type GoogleCloudDialogflowCxV3Agent struct {
 	Name string `json:"name,omitempty"`
 	// PersonalizationSettings: Optional. Settings for end user personalization.
 	PersonalizationSettings *GoogleCloudDialogflowCxV3AgentPersonalizationSettings `json:"personalizationSettings,omitempty"`
+	// SatisfiesPzi: Optional. Output only. A read only boolean field reflecting
+	// Zone Isolation status of the agent.
+	SatisfiesPzi bool `json:"satisfiesPzi,omitempty"`
+	// SatisfiesPzs: Optional. Output only. A read only boolean field reflecting
+	// Zone Separation status of the agent.
+	SatisfiesPzs bool `json:"satisfiesPzs,omitempty"`
 	// SecuritySettings: Name of the SecuritySettings reference for the agent.
 	// Format: `projects//locations//securitySettings/`.
 	SecuritySettings string `json:"securitySettings,omitempty"`

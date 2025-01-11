@@ -1868,6 +1868,11 @@ type PostgresqlProfile struct {
 	Password string `json:"password,omitempty"`
 	// Port: Port for the PostgreSQL connection, default value is 5432.
 	Port int64 `json:"port,omitempty"`
+	// SslConfig: Optional. SSL configuration for the PostgreSQL connection. In
+	// case PostgresqlSslConfig is not set, the connection will use the default SSL
+	// mode, which is `prefer` (i.e. this mode will only use encryption if enabled
+	// from database side, otherwise will use unencrypted communication)
+	SslConfig *PostgresqlSslConfig `json:"sslConfig,omitempty"`
 	// Username: Required. Username for the PostgreSQL connection.
 	Username string `json:"username,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Database") to
@@ -1965,6 +1970,33 @@ type PostgresqlSourceConfig struct {
 
 func (s PostgresqlSourceConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod PostgresqlSourceConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// PostgresqlSslConfig: PostgreSQL SSL configuration information.
+type PostgresqlSslConfig struct {
+	// ServerAndClientVerification: If this field is set, the communication will be
+	// encrypted with TLS encryption and both the server identity and the client
+	// identity will be authenticated.
+	ServerAndClientVerification *ServerAndClientVerification `json:"serverAndClientVerification,omitempty"`
+	// ServerVerification:  If this field is set, the communication will be
+	// encrypted with TLS encryption and the server identity will be authenticated.
+	ServerVerification *ServerVerification `json:"serverVerification,omitempty"`
+	// ForceSendFields is a list of field names (e.g.
+	// "ServerAndClientVerification") to unconditionally include in API requests.
+	// By default, fields with empty or default values are omitted from API
+	// requests. See https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields
+	// for more details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ServerAndClientVerification") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s PostgresqlSslConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod PostgresqlSslConfig
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -2128,6 +2160,67 @@ type RunStreamRequest struct {
 
 func (s RunStreamRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod RunStreamRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ServerAndClientVerification: Message represents the option where Datastream
+// will enforce the encryption and authenticate the server identity as well as
+// the client identity. ca_certificate, client_certificate and client_key must
+// be set if user selects this option.
+type ServerAndClientVerification struct {
+	// CaCertificate: Required. Input only. PEM-encoded server root CA certificate.
+	CaCertificate string `json:"caCertificate,omitempty"`
+	// ClientCertificate: Required. Input only. PEM-encoded certificate used by the
+	// source database to authenticate the client identity (i.e., the Datastream's
+	// identity). This certificate is signed by either a root certificate trusted
+	// by the server or one or more intermediate certificates (which is stored with
+	// the leaf certificate) to link the this certificate to the trusted root
+	// certificate.
+	ClientCertificate string `json:"clientCertificate,omitempty"`
+	// ClientKey: Required. Input only. PEM-encoded private key associated with the
+	// client certificate. This value will be used during the SSL/TLS handshake,
+	// allowing the PostgreSQL server to authenticate the client's identity, i.e.
+	// identity of the Datastream.
+	ClientKey string `json:"clientKey,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "CaCertificate") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CaCertificate") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ServerAndClientVerification) MarshalJSON() ([]byte, error) {
+	type NoMethod ServerAndClientVerification
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ServerVerification: Message represents the option where Datastream will
+// enforce the encryption and authenticate the server identity. ca_certificate
+// must be set if user selects this option.
+type ServerVerification struct {
+	// CaCertificate: Required. Input only. PEM-encoded server root CA certificate.
+	CaCertificate string `json:"caCertificate,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "CaCertificate") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CaCertificate") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ServerVerification) MarshalJSON() ([]byte, error) {
+	type NoMethod ServerVerification
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 

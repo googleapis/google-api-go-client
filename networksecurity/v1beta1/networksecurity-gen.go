@@ -2053,10 +2053,14 @@ func (s HttpHeaderMatch) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// InterceptDeployment: Message describing InterceptDeployment object
+// InterceptDeployment: Message describing InterceptDeployment object NEXT ID:
+// 10
 type InterceptDeployment struct {
 	// CreateTime: Output only. [Output only] Create time stamp
 	CreateTime string `json:"createTime,omitempty"`
+	// Description: Optional. User-provided description of the deployment. Used as
+	// additional context for the deployment.
+	Description string `json:"description,omitempty"`
 	// ForwardingRule: Required. Immutable. The regional load balancer which the
 	// intercepted traffic should be forwarded to. Format is:
 	// projects/{project}/regions/{region}/forwardingRules/{forwardingRule}
@@ -2112,12 +2116,16 @@ func (s InterceptDeployment) MarshalJSON() ([]byte, error) {
 }
 
 // InterceptDeploymentGroup: Message describing InterceptDeploymentGroup object
+// NEXT ID: 10
 type InterceptDeploymentGroup struct {
 	// ConnectedEndpointGroups: Output only. The list of Intercept Endpoint Groups
 	// that are connected to this resource.
 	ConnectedEndpointGroups []*InterceptDeploymentGroupConnectedEndpointGroup `json:"connectedEndpointGroups,omitempty"`
 	// CreateTime: Output only. [Output only] Create time stamp
 	CreateTime string `json:"createTime,omitempty"`
+	// Description: Optional. User-provided description of the deployment group.
+	// Used as additional context for the deployment group.
+	Description string `json:"description,omitempty"`
 	// Labels: Optional. Labels as key value pairs
 	Labels map[string]string `json:"labels,omitempty"`
 	// Name: Immutable. Identifier. Then name of the InterceptDeploymentGroup.

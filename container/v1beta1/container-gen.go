@@ -1678,6 +1678,9 @@ type ClusterUpdate struct {
 	// DesiredDefaultSnatStatus: The desired status of whether to disable default
 	// sNAT for this cluster.
 	DesiredDefaultSnatStatus *DefaultSnatStatus `json:"desiredDefaultSnatStatus,omitempty"`
+	// DesiredDisableL4LbFirewallReconciliation: Enable/Disable L4 LB VPC firewall
+	// reconciliation for the cluster.
+	DesiredDisableL4LbFirewallReconciliation bool `json:"desiredDisableL4LbFirewallReconciliation,omitempty"`
 	// DesiredDnsConfig: DNSConfig contains clusterDNS config for this cluster.
 	DesiredDnsConfig *DNSConfig `json:"desiredDnsConfig,omitempty"`
 	// DesiredEnableCiliumClusterwideNetworkPolicy: Enable/Disable Cilium
@@ -4393,6 +4396,9 @@ type NetworkConfig struct {
 	// When disabled is set to false, default IP masquerade rules will be applied
 	// to the nodes to prevent sNAT on cluster internal traffic.
 	DefaultSnatStatus *DefaultSnatStatus `json:"defaultSnatStatus,omitempty"`
+	// DisableL4LbFirewallReconciliation: Disable L4 load balancer VPC firewalls to
+	// enable firewall policies.
+	DisableL4LbFirewallReconciliation bool `json:"disableL4LbFirewallReconciliation,omitempty"`
 	// DnsConfig: DNSConfig contains clusterDNS config for this cluster.
 	DnsConfig *DNSConfig `json:"dnsConfig,omitempty"`
 	// EnableCiliumClusterwideNetworkPolicy: Whether CiliumClusterWideNetworkPolicy
@@ -8045,6 +8051,17 @@ type UpgradeInfoEvent struct {
 	Description string `json:"description,omitempty"`
 	// EndTime: The time when the operation ended.
 	EndTime string `json:"endTime,omitempty"`
+	// EventType: The type of the event.
+	//
+	// Possible values:
+	//   "EVENT_TYPE_UNSPECIFIED" - EVENT_TYPE_UNSPECIFIED indicates the event type
+	// is unspecified.
+	//   "END_OF_SUPPORT" - END_OF_SUPPORT indicates GKE version reaches end of
+	// support, check standard_support_end_time and extended_support_end_time for
+	// more details.
+	EventType string `json:"eventType,omitempty"`
+	// ExtendedSupportEndTime: The end of extended support timestamp.
+	ExtendedSupportEndTime string `json:"extendedSupportEndTime,omitempty"`
 	// Operation: The operation associated with this upgrade.
 	Operation string `json:"operation,omitempty"`
 	// Resource: Optional relative path to the resource. For example in node pool
@@ -8058,6 +8075,8 @@ type UpgradeInfoEvent struct {
 	//   "MASTER" - Master / control plane
 	//   "NODE_POOL" - Node pool
 	ResourceType string `json:"resourceType,omitempty"`
+	// StandardSupportEndTime: The end of standard support timestamp.
+	StandardSupportEndTime string `json:"standardSupportEndTime,omitempty"`
 	// StartTime: The time when the operation was started.
 	StartTime string `json:"startTime,omitempty"`
 	// State: Output only. The state of the upgrade.

@@ -4058,6 +4058,12 @@ type GoogleCloudDialogflowCxV3beta1Agent struct {
 	Name string `json:"name,omitempty"`
 	// PersonalizationSettings: Optional. Settings for end user personalization.
 	PersonalizationSettings *GoogleCloudDialogflowCxV3beta1AgentPersonalizationSettings `json:"personalizationSettings,omitempty"`
+	// SatisfiesPzi: Optional. Output only. A read only boolean field reflecting
+	// Zone Isolation status of the agent.
+	SatisfiesPzi bool `json:"satisfiesPzi,omitempty"`
+	// SatisfiesPzs: Optional. Output only. A read only boolean field reflecting
+	// Zone Separation status of the agent.
+	SatisfiesPzs bool `json:"satisfiesPzs,omitempty"`
 	// SecuritySettings: Name of the SecuritySettings reference for the agent.
 	// Format: `projects//locations//securitySettings/`.
 	SecuritySettings string `json:"securitySettings,omitempty"`
@@ -10307,6 +10313,9 @@ type GoogleCloudDialogflowCxV3beta1Playbook struct {
 	// current playbook in the instructions. If not provided explicitly, they are
 	// will be implied using the tool being referenced in goal and steps.
 	ReferencedTools []string `json:"referencedTools,omitempty"`
+	// SpeechSettings: Optional. Playbook level Settings for speech to text
+	// detection.
+	SpeechSettings *GoogleCloudDialogflowCxV3beta1AdvancedSettingsSpeechSettings `json:"speechSettings,omitempty"`
 	// TokenCount: Output only. Estimated number of tokes current playbook takes
 	// when sent to the LLM.
 	TokenCount int64 `json:"tokenCount,omitempty,string"`

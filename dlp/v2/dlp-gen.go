@@ -2707,7 +2707,7 @@ func (s GooglePrivacyDlpV2CryptoKey) MarshalJSON() ([]byte, error) {
 // https://cloud.google.com/sensitive-data-protection/docs/pseudonymization to
 // learn more. Note: We recommend using CryptoDeterministicConfig for all use
 // cases which do not require preserving the input alphabet space and size,
-// plus warrant referential integrity.
+// plus warrant referential integrity. FPE incurs significant latency costs.
 type GooglePrivacyDlpV2CryptoReplaceFfxFpeConfig struct {
 	// CommonAlphabet: Common alphabets.
 	//
@@ -4949,14 +4949,26 @@ func (s GooglePrivacyDlpV2ExclusionRule) MarshalJSON() ([]byte, error) {
 // GooglePrivacyDlpV2Export: If set, the detailed data profiles will be
 // persisted to the location of your choice whenever updated.
 type GooglePrivacyDlpV2Export struct {
-	// ProfileTable: Store all table and column profiles in an existing table or a
-	// new table in an existing dataset. Each re-generation will result in new rows
-	// in BigQuery. Data is inserted using streaming insert
+	// ProfileTable: Store all profiles to BigQuery. * The system will create a new
+	// dataset and table for you if none are are provided. The dataset will be
+	// named `sensitive_data_protection_discovery` and table will be named
+	// `discovery_profiles`. This table will be placed in the same project as the
+	// container project running the scan. The configuration will be updated with
+	// the fields set after the first profile is generated and the dataset and
+	// table are created. * See Analyze data profiles stored in BigQuery
+	// (https://cloud.google.com/sensitive-data-protection/docs/analyze-data-profiles)
+	// * See Sample queries for your BigQuery table
+	// (https://cloud.google.com/sensitive-data-protection/docs/analyze-data-profiles#sample_sql_queries).
+	// * Data is inserted using streaming insert
 	// (https://cloud.google.com/blog/products/bigquery/life-of-a-bigquery-streaming-insert)
 	// and so data may be in the buffer for a period of time after the profile has
-	// finished. The Pub/Sub notification is sent before the streaming buffer is
+	// finished. * The Pub/Sub notification is sent before the streaming buffer is
 	// guaranteed to be written, so data may not be instantly visible to queries by
-	// the time your topic receives the Pub/Sub notification.
+	// the time your topic receives the Pub/Sub notification. * The best practice
+	// is to use the same table for an entire organization so that you can take
+	// advantage of the provided Looker reports. If you use VPC Service Controls to
+	// define security perimeters, then you must use a separate table for each
+	// boundary.
 	ProfileTable *GooglePrivacyDlpV2BigQueryTable `json:"profileTable,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "ProfileTable") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -8072,7 +8084,9 @@ type GooglePrivacyDlpV2PrimitiveTransformation struct {
 	CryptoDeterministicConfig *GooglePrivacyDlpV2CryptoDeterministicConfig `json:"cryptoDeterministicConfig,omitempty"`
 	// CryptoHashConfig: Crypto
 	CryptoHashConfig *GooglePrivacyDlpV2CryptoHashConfig `json:"cryptoHashConfig,omitempty"`
-	// CryptoReplaceFfxFpeConfig: Ffx-Fpe
+	// CryptoReplaceFfxFpeConfig: Ffx-Fpe. Strongly discouraged, consider using
+	// CryptoDeterministicConfig instead. Fpe is computationally expensive
+	// incurring latency costs.
 	CryptoReplaceFfxFpeConfig *GooglePrivacyDlpV2CryptoReplaceFfxFpeConfig `json:"cryptoReplaceFfxFpeConfig,omitempty"`
 	// DateShiftConfig: Date Shift
 	DateShiftConfig *GooglePrivacyDlpV2DateShiftConfig `json:"dateShiftConfig,omitempty"`

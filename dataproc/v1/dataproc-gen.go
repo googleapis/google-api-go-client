@@ -1779,6 +1779,9 @@ type ClusterStatus struct {
 	//   "STOPPED" - The cluster is currently stopped. It is not ready for use.
 	//   "STARTING" - The cluster is being started. It is not ready for use.
 	//   "REPAIRING" - The cluster is being repaired. It is not ready for use.
+	//   "SCHEDULED" - Cluster creation is currently waiting for resources to be
+	// available. Once all resources are available, it will transition to CREATING
+	// and then RUNNING.
 	State string `json:"state,omitempty"`
 	// StateStartTime: Output only. Time when this state was entered (see JSON
 	// representation of Timestamp
@@ -2003,13 +2006,13 @@ func (s DiagnoseClusterResults) MarshalJSON() ([]byte, error) {
 type DiskConfig struct {
 	// BootDiskProvisionedIops: Optional. Indicates how many IOPS to provision for
 	// the disk. This sets the number of I/O operations per second that the disk
-	// can handle. Note: This field is only supported if boot_disk_type is
+	// can handle. This field is supported only if boot_disk_type is
 	// hyperdisk-balanced.
 	BootDiskProvisionedIops int64 `json:"bootDiskProvisionedIops,omitempty,string"`
 	// BootDiskProvisionedThroughput: Optional. Indicates how much throughput to
 	// provision for the disk. This sets the number of throughput mb per second
-	// that the disk can handle. Values must be greater than or equal to 1. Note:
-	// This field is only supported if boot_disk_type is hyperdisk-balanced.
+	// that the disk can handle. Values must be greater than or equal to 1. This
+	// field is supported only if boot_disk_type is hyperdisk-balanced.
 	BootDiskProvisionedThroughput int64 `json:"bootDiskProvisionedThroughput,omitempty,string"`
 	// BootDiskSizeGb: Optional. Size in GB of the boot disk (default is 500GB).
 	BootDiskSizeGb int64 `json:"bootDiskSizeGb,omitempty"`
@@ -6926,7 +6929,6 @@ type SoftwareConfig struct {
 	//   "HIVE_WEBHCAT" - The Hive Web HCatalog (the REST service for accessing
 	// HCatalog).
 	//   "HUDI" - Hudi.
-	//   "ICEBERG" - Iceberg.
 	//   "JUPYTER" - The Jupyter Notebook.
 	//   "PRESTO" - The Presto query engine.
 	//   "TRINO" - The Trino query engine.

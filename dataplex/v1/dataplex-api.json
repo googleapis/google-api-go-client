@@ -712,7 +712,7 @@
                   "type": "string"
                 },
                 "orderBy": {
-                  "description": "Optional. Specifies the ordering of results. Supported values are: * relevance (default) * last_modified_timestamp * last_modified_timestamp asc",
+                  "description": "Optional. Specifies the ordering of results. Supported values are: relevance (default) last_modified_timestamp last_modified_timestamp asc",
                   "location": "query",
                   "type": "string"
                 },
@@ -6244,7 +6244,7 @@
       }
     }
   },
-  "revision": "20241206",
+  "revision": "20250107",
   "rootUrl": "https://dataplex.googleapis.com/",
   "schemas": {
     "Empty": {

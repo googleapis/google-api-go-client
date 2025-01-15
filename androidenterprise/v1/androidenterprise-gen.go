@@ -4603,9 +4603,23 @@ func (r *EnterprisesService) GenerateSignupUrl() *EnterprisesGenerateSignupUrlCa
 
 // AdminEmail sets the optional parameter "adminEmail": Email address used to
 // prefill the admin field of the enterprise signup form. This value is a hint
-// only and can be altered by the user.
+// only and can be altered by the user. If `allowedDomains` is non-empty then
+// this must belong to one of the `allowedDomains`.
 func (c *EnterprisesGenerateSignupUrlCall) AdminEmail(adminEmail string) *EnterprisesGenerateSignupUrlCall {
 	c.urlParams_.Set("adminEmail", adminEmail)
+	return c
+}
+
+// AllowedDomains sets the optional parameter "allowedDomains": A list of
+// domains that are permitted for the admin email. The IT admin cannot enter an
+// email address with a domain name that is not in this list. Subdomains of
+// domains in this list are not allowed but can be allowed by adding a second
+// entry which has `*.` prefixed to the domain name (e.g. *.example.com). If
+// the field is not present or is an empty list then the IT admin is free to
+// use any valid domain name. Personal email domains are always allowed, but
+// will result in the creation of a managed Google Play Accounts enterprise.
+func (c *EnterprisesGenerateSignupUrlCall) AllowedDomains(allowedDomains ...string) *EnterprisesGenerateSignupUrlCall {
+	c.urlParams_.SetMulti("allowedDomains", append([]string{}, allowedDomains...))
 	return c
 }
 

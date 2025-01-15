@@ -513,7 +513,7 @@ func (s ComposerWorkloadStatus) MarshalJSON() ([]byte, error) {
 
 // DagProcessorResource: Configuration for resources used by Airflow DAG
 // processors. This field is supported for Cloud Composer environments in
-// versions composer-3.*.*-airflow-*.*.* and newer.
+// versions composer-3-airflow-*.*.*-build.* and newer.
 type DagProcessorResource struct {
 	// Count: Optional. The number of DAG processors. If not provided or set to 0,
 	// a single DAG processor instance will be created.
@@ -1445,7 +1445,7 @@ type NodeConfig struct {
 	// overlap, IPs from this range will not be accessible in the user's VPC
 	// network. Cannot be updated. If not specified, the default value of
 	// '100.64.128.0/20' is used. This field is supported for Cloud Composer
-	// environments in versions composer-3.*.*-airflow-*.*.* and newer.
+	// environments in versions composer-3-airflow-*.*.*-build.* and newer.
 	ComposerInternalIpv4CidrBlock string `json:"composerInternalIpv4CidrBlock,omitempty"`
 	// ComposerNetworkAttachment: Optional. Network Attachment that Cloud Composer
 	// environment is connected to, which provides connectivity with a user's VPC
@@ -1456,7 +1456,7 @@ type NodeConfig struct {
 	// be provided in format
 	// projects/{project}/regions/{region}/networkAttachments/{networkAttachment}.
 	// This field is supported for Cloud Composer environments in versions
-	// composer-3.*.*-airflow-*.*.* and newer.
+	// composer-3-airflow-*.*.*-build.* and newer.
 	ComposerNetworkAttachment string `json:"composerNetworkAttachment,omitempty"`
 	// DiskSizeGb: Optional. The disk size in GB used for node VMs. Minimum size is
 	// 30GB. If unspecified, defaults to 100GB. Cannot be updated. This field is
@@ -1787,7 +1787,7 @@ type PrivateEnvironmentConfig struct {
 	// `NodeConfig.network` and `NodeConfig.subnetwork` fields or
 	// `NodeConfig.composer_network_attachment` field are specified). If `false`,
 	// the builds also have access to the internet. This field is supported for
-	// Cloud Composer environments in versions composer-3.*.*-airflow-*.*.* and
+	// Cloud Composer environments in versions composer-3-airflow-*.*.*-build.* and
 	// newer.
 	EnablePrivateBuildsOnly bool `json:"enablePrivateBuildsOnly,omitempty"`
 	// EnablePrivateEnvironment: Optional. If `true`, a Private IP Cloud Composer
@@ -2061,7 +2061,7 @@ type SoftwareConfig struct {
 	// WebServerPluginsMode: Optional. Whether or not the web server uses custom
 	// plugins. If unspecified, the field defaults to `PLUGINS_ENABLED`. This field
 	// is supported for Cloud Composer environments in versions
-	// composer-3.*.*-airflow-*.*.* and newer.
+	// composer-3-airflow-*.*.*-build.* and newer.
 	//
 	// Possible values:
 	//   "WEB_SERVER_PLUGINS_MODE_UNSPECIFIED" - Default mode.
@@ -2490,7 +2490,7 @@ func (s *WorkerResource) UnmarshalJSON(data []byte) error {
 type WorkloadsConfig struct {
 	// DagProcessor: Optional. Resources used by Airflow DAG processors. This field
 	// is supported for Cloud Composer environments in versions
-	// composer-3.*.*-airflow-*.*.* and newer.
+	// composer-3-airflow-*.*.*-build.* and newer.
 	DagProcessor *DagProcessorResource `json:"dagProcessor,omitempty"`
 	// Scheduler: Optional. Resources used by Airflow schedulers.
 	Scheduler *SchedulerResource `json:"scheduler,omitempty"`
@@ -4141,7 +4141,7 @@ type ProjectsLocationsEnvironmentsUserWorkloadsConfigMapsCreateCall struct {
 }
 
 // Create: Creates a user workloads ConfigMap. This method is supported for
-// Cloud Composer environments in versions composer-3.*.*-airflow-*.*.* and
+// Cloud Composer environments in versions composer-3-airflow-*.*.*-build.* and
 // newer.
 //
 //   - parent: The environment name to create a ConfigMap for, in the form:
@@ -4247,7 +4247,7 @@ type ProjectsLocationsEnvironmentsUserWorkloadsConfigMapsDeleteCall struct {
 }
 
 // Delete: Deletes a user workloads ConfigMap. This method is supported for
-// Cloud Composer environments in versions composer-3.*.*-airflow-*.*.* and
+// Cloud Composer environments in versions composer-3-airflow-*.*.*-build.* and
 // newer.
 //
 //   - name: The ConfigMap to delete, in the form:
@@ -4349,7 +4349,7 @@ type ProjectsLocationsEnvironmentsUserWorkloadsConfigMapsGetCall struct {
 }
 
 // Get: Gets an existing user workloads ConfigMap. This method is supported for
-// Cloud Composer environments in versions composer-3.*.*-airflow-*.*.* and
+// Cloud Composer environments in versions composer-3-airflow-*.*.*-build.* and
 // newer.
 //
 //   - name: The resource name of the ConfigMap to get, in the form:
@@ -4463,7 +4463,8 @@ type ProjectsLocationsEnvironmentsUserWorkloadsConfigMapsListCall struct {
 }
 
 // List: Lists user workloads ConfigMaps. This method is supported for Cloud
-// Composer environments in versions composer-3.*.*-airflow-*.*.* and newer.
+// Composer environments in versions composer-3-airflow-*.*.*-build.* and
+// newer.
 //
 //   - parent: List ConfigMaps in the given environment, in the form:
 //     "projects/{projectId}/locations/{locationId}/environments/{environmentId}".
@@ -4610,7 +4611,7 @@ type ProjectsLocationsEnvironmentsUserWorkloadsConfigMapsUpdateCall struct {
 }
 
 // Update: Updates a user workloads ConfigMap. This method is supported for
-// Cloud Composer environments in versions composer-3.*.*-airflow-*.*.* and
+// Cloud Composer environments in versions composer-3-airflow-*.*.*-build.* and
 // newer.
 //
 //   - name: Identifier. The resource name of the ConfigMap, in the form:
@@ -4718,7 +4719,8 @@ type ProjectsLocationsEnvironmentsUserWorkloadsSecretsCreateCall struct {
 }
 
 // Create: Creates a user workloads Secret. This method is supported for Cloud
-// Composer environments in versions composer-3.*.*-airflow-*.*.* and newer.
+// Composer environments in versions composer-3-airflow-*.*.*-build.* and
+// newer.
 //
 //   - parent: The environment name to create a Secret for, in the form:
 //     "projects/{projectId}/locations/{locationId}/environments/{environmentId}".
@@ -4823,7 +4825,8 @@ type ProjectsLocationsEnvironmentsUserWorkloadsSecretsDeleteCall struct {
 }
 
 // Delete: Deletes a user workloads Secret. This method is supported for Cloud
-// Composer environments in versions composer-3.*.*-airflow-*.*.* and newer.
+// Composer environments in versions composer-3-airflow-*.*.*-build.* and
+// newer.
 //
 //   - name: The Secret to delete, in the form:
 //     "projects/{projectId}/locations/{locationId}/environments/{environmentId}/u
@@ -4925,7 +4928,7 @@ type ProjectsLocationsEnvironmentsUserWorkloadsSecretsGetCall struct {
 
 // Get: Gets an existing user workloads Secret. Values of the "data" field in
 // the response are cleared. This method is supported for Cloud Composer
-// environments in versions composer-3.*.*-airflow-*.*.* and newer.
+// environments in versions composer-3-airflow-*.*.*-build.* and newer.
 //
 //   - name: The resource name of the Secret to get, in the form:
 //     "projects/{projectId}/locations/{locationId}/environments/{environmentId}/u
@@ -5038,7 +5041,8 @@ type ProjectsLocationsEnvironmentsUserWorkloadsSecretsListCall struct {
 }
 
 // List: Lists user workloads Secrets. This method is supported for Cloud
-// Composer environments in versions composer-3.*.*-airflow-*.*.* and newer.
+// Composer environments in versions composer-3-airflow-*.*.*-build.* and
+// newer.
 //
 //   - parent: List Secrets in the given environment, in the form:
 //     "projects/{projectId}/locations/{locationId}/environments/{environmentId}".
@@ -5185,7 +5189,8 @@ type ProjectsLocationsEnvironmentsUserWorkloadsSecretsUpdateCall struct {
 }
 
 // Update: Updates a user workloads Secret. This method is supported for Cloud
-// Composer environments in versions composer-3.*.*-airflow-*.*.* and newer.
+// Composer environments in versions composer-3-airflow-*.*.*-build.* and
+// newer.
 //
 //   - name: Identifier. The resource name of the Secret, in the form:
 //     "projects/{projectId}/locations/{locationId}/environments/{environmentId}/u

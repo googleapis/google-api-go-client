@@ -766,6 +766,7 @@ type GoogleChromeManagementV1BrowserVersion struct {
 	//   "DEV" - Dev release channel.
 	//   "BETA" - Beta release channel.
 	//   "STABLE" - Stable release channel.
+	//   "LTS" - Long-term support release channel.
 	Channel string `json:"channel,omitempty"`
 	// Count: Output only. Count grouped by device_system and major version
 	Count int64 `json:"count,omitempty,string"`

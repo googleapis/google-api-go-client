@@ -175,6 +175,53 @@
                 "https://www.googleapis.com/auth/adsense.readonly"
               ]
             }
+          },
+          "resources": {
+            "childAccounts": {
+              "resources": {
+                "sites": {
+                  "methods": {
+                    "list": {
+                      "description": "Lists Platform Child Sites for a specified Platform Child Account.",
+                      "flatPath": "v1alpha/accounts/{accountsId}/platforms/{platformsId}/childAccounts/{childAccountsId}/sites",
+                      "httpMethod": "GET",
+                      "id": "adsenseplatform.accounts.platforms.childAccounts.sites.list",
+                      "parameterOrder": [
+                        "parent"
+                      ],
+                      "parameters": {
+                        "pageSize": {
+                          "description": "Optional. The maximum number of children to include in the response, used for paging. If unspecified, at most 10000 platforms will be returned. The maximum value is 10000; values above 10000 will be coerced to 10000.",
+                          "format": "int32",
+                          "location": "query",
+                          "type": "integer"
+                        },
+                        "pageToken": {
+                          "description": "Optional. A page token, received from a previous `ListPlatformChildren` call. Provide this to retrieve the subsequent page. When paginating, all other parameters provided to `ListPlatformChildren` must match the call that provided the page token.",
+                          "location": "query",
+                          "type": "string"
+                        },
+                        "parent": {
+                          "description": "Required. The name of the platform to retrieve. Format: accounts/{account}/platforms/{platform}/childAccounts/{child_publisher_code}",
+                          "location": "path",
+                          "pattern": "^accounts/[^/]+/platforms/[^/]+/childAccounts/[^/]+$",
+                          "required": true,
+                          "type": "string"
+                        }
+                      },
+                      "path": "v1alpha/{+parent}/sites",
+                      "response": {
+                        "$ref": "ListPlatformChildSitesResponse"
+                      },
+                      "scopes": [
+                        "https://www.googleapis.com/auth/adsense",
+                        "https://www.googleapis.com/auth/adsense.readonly"
+                      ]
+                    }
+                  }
+                }
+              }
+            }
           }
         }
       }
@@ -517,7 +564,7 @@
       }
     }
   },
-  "revision": "20250108",
+  "revision": "20250114",
   "rootUrl": "https://adsenseplatform.googleapis.com/",
   "schemas": {
     "Account": {
@@ -699,6 +746,24 @@
       },
       "type": "object"
     },
+    "ListPlatformChildSitesResponse": {
+      "description": "Response definition for the list platform child sites rpc.",
+      "id": "ListPlatformChildSitesResponse",
+      "properties": {
+        "nextPageToken": {
+          "description": "Continuation token used to page through platforms. To retrieve the next page of the results, set the next request's \"page_token\" value to this.",
+          "type": "string"
+        },
+        "platformChildSites": {
+          "description": "The platform child sites returned in this list response.",
+          "items": {
+            "$ref": "PlatformChildSite"
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
     "ListPlatformsResponse": {
       "description": "Response definition for the platform list rpc.",
       "id": "ListPlatformsResponse",
@@ -761,6 +826,26 @@
         },
         "name": {
           "description": "Identifier. Resource name of a platform. Format: accounts/{account}/platforms/{platform}",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "PlatformChildSite": {
+      "description": "Representation of a Transparent Platform Child Site.",
+      "id": "PlatformChildSite",
+      "properties": {
+        "domain": {
+          "description": "Output only. Domain URL of the Platform Child Site. Part of the PlatformChildSite name.",
+          "readOnly": true,
+          "type": "string"
+        },
+        "name": {
+          "description": "Identifier. Format: accounts/{account}/platforms/{platform}/childAccounts/{child}/sites/{platformChildSite}",
+          "type": "string"
+        },
+        "platformGroup": {
+          "description": "Resource name of the Platform Group of the Platform Child Site.",
           "type": "string"
         }
       },

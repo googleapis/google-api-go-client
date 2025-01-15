@@ -9518,8 +9518,8 @@ func (r *ProjectsLocationsService) SearchEntries(name string) *ProjectsLocations
 }
 
 // OrderBy sets the optional parameter "orderBy": Specifies the ordering of
-// results. Supported values are: * relevance (default) *
-// last_modified_timestamp * last_modified_timestamp asc
+// results. Supported values are: relevance (default) last_modified_timestamp
+// last_modified_timestamp asc
 func (c *ProjectsLocationsSearchEntriesCall) OrderBy(orderBy string) *ProjectsLocationsSearchEntriesCall {
 	c.urlParams_.Set("orderBy", orderBy)
 	return c

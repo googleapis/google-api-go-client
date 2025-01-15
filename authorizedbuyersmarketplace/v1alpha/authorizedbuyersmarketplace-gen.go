@@ -1861,7 +1861,7 @@ func (s PrivateAuctionTerms) MarshalJSON() ([]byte, error) {
 }
 
 // PrivateData: Buyers are allowed to store certain types of private data in a
-// proposal or deal.
+// proposal.
 type PrivateData struct {
 	// ReferenceId: A buyer specified reference ID. This can be queried in the list
 	// operations (max-length: 1024 unicode code units).
@@ -7009,8 +7009,8 @@ type BuyersProposalsPatchCall struct {
 // fields specified in the UpdateProposalRequest.update_mask will be updated;
 // Fields noted as 'Immutable' or 'Output only' yet specified in the
 // UpdateProposalRequest.update_mask will be ignored and left unchanged.
-// Updating a private auction proposal is not allowed and will result in an
-// error.
+// Updating a private auction proposal is only allowed for buyer private data,
+// all other fields are immutable.
 //
 //   - name: Immutable. The name of the proposal serving as a unique identifier.
 //     Format: buyers/{accountId}/proposals/{proposalId}.

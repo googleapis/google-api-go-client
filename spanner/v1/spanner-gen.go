@@ -1852,14 +1852,17 @@ type CrontabSpec struct {
 	CreationWindow string `json:"creationWindow,omitempty"`
 	// Text: Required. Textual representation of the crontab. User can customize
 	// the backup frequency and the backup version time using the cron expression.
-	// The version time must be in UTC timzeone. The backup will contain an
-	// externally consistent copy of the database at the version time. Allowed
-	// frequencies are 12 hour, 1 day, 1 week and 1 month. Examples of valid cron
-	// specifications: * `0 2/12 * * * ` : every 12 hours at (2, 14) hours past
-	// midnight in UTC. * `0 2,14 * * * ` : every 12 hours at (2,14) hours past
-	// midnight in UTC. * `0 2 * * * ` : once a day at 2 past midnight in UTC. * `0
-	// 2 * * 0 ` : once a week every Sunday at 2 past midnight in UTC. * `0 2 8 * *
-	// ` : once a month on 8th day at 2 past midnight in UTC.
+	// The version time must be in UTC timezone. The backup will contain an
+	// externally consistent copy of the database at the version time. Full backups
+	// must be scheduled a minimum of 12 hours apart and incremental backups must
+	// be scheduled a minimum of 4 hours apart. Examples of valid cron
+	// specifications: * `0 2/12 * * *` : every 12 hours at (2, 14) hours past
+	// midnight in UTC. * `0 2,14 * * *` : every 12 hours at (2,14) hours past
+	// midnight in UTC. * `0 */4 * * *` : (incremental backups only) every 4 hours
+	// at (0, 4, 8, 12, 16, 20) hours past midnight in UTC. * `0 2 * * *` : once a
+	// day at 2 past midnight in UTC. * `0 2 * * 0` : once a week every Sunday at 2
+	// past midnight in UTC. * `0 2 8 * *` : once a month on 8th day at 2 past
+	// midnight in UTC.
 	Text string `json:"text,omitempty"`
 	// TimeZone: Output only. The time zone of the times in `CrontabSpec.text`.
 	// Currently only UTC is supported.
@@ -2283,6 +2286,15 @@ func (s ExcludeReplicas) MarshalJSON() ([]byte, error) {
 
 // ExecuteBatchDmlRequest: The request for ExecuteBatchDml.
 type ExecuteBatchDmlRequest struct {
+	// LastStatements: Optional. If set to true, this request marks the end of the
+	// transaction. The transaction should be committed or aborted after these
+	// statements execute, and attempts to execute any other requests against this
+	// transaction (including reads and queries) will be rejected. Setting this
+	// option may cause some error reporting to be deferred until commit time (e.g.
+	// validation of unique constraints). Given this, successful execution of
+	// statements should not be assumed until a subsequent Commit call completes
+	// successfully.
+	LastStatements bool `json:"lastStatements,omitempty"`
 	// RequestOptions: Common options for this request.
 	RequestOptions *RequestOptions `json:"requestOptions,omitempty"`
 	// Seqno: Required. A per-transaction sequence number used to identify this
@@ -2304,13 +2316,13 @@ type ExecuteBatchDmlRequest struct {
 	// supported. The caller must either supply an existing transaction ID or begin
 	// a new transaction.
 	Transaction *TransactionSelector `json:"transaction,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "RequestOptions") to
+	// ForceSendFields is a list of field names (e.g. "LastStatements") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "RequestOptions") to include in
+	// NullFields is a list of field names (e.g. "LastStatements") to include in
 	// API requests with the JSON null value. By default, fields with empty values
 	// are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
@@ -2383,6 +2395,15 @@ type ExecuteSqlRequest struct {
 	DataBoostEnabled bool `json:"dataBoostEnabled,omitempty"`
 	// DirectedReadOptions: Directed read options for this request.
 	DirectedReadOptions *DirectedReadOptions `json:"directedReadOptions,omitempty"`
+	// LastStatement: Optional. If set to true, this statement marks the end of the
+	// transaction. The transaction should be committed or aborted after this
+	// statement executes, and attempts to execute any other requests against this
+	// transaction (including reads and queries) will be rejected. For DML
+	// statements, setting this option may cause some error reporting to be
+	// deferred until commit time (e.g. validation of unique constraints). Given
+	// this, successful execution of a DML statement should not be assumed until a
+	// subsequent Commit call completes successfully.
+	LastStatement bool `json:"lastStatement,omitempty"`
 	// ParamTypes: It is not always possible for Cloud Spanner to infer the right
 	// SQL type from a JSON value. For example, values of type `BYTES` and values
 	// of type `STRING` both appear in params as JSON strings. In these cases,
@@ -2821,23 +2842,23 @@ type Instance struct {
 	Config string `json:"config,omitempty"`
 	// CreateTime: Output only. The time at which the instance was created.
 	CreateTime string `json:"createTime,omitempty"`
-	// DefaultBackupScheduleType: Optional. Controls the default backup behavior
-	// for new databases within the instance. Note that `AUTOMATIC` is not
-	// permitted for free instances, as backups and backup schedules are not
-	// allowed for free instances. In the `GetInstance` or `ListInstances`
-	// response, if the value of default_backup_schedule_type is unset or NONE, no
-	// default backup schedule will be created for new databases within the
-	// instance.
+	// DefaultBackupScheduleType: Optional. Controls the default backup schedule
+	// behavior for new databases within the instance. By default, a backup
+	// schedule is created automatically when a new database is created in a new
+	// instance. Note that the `AUTOMATIC` value isn't permitted for free
+	// instances, as backups and backup schedules aren't supported for free
+	// instances. In the `GetInstance` or `ListInstances` response, if the value of
+	// `default_backup_schedule_type` isn't set, or set to `NONE`, Spanner doesn't
+	// create a default backup schedule for new databases in the instance.
 	//
 	// Possible values:
 	//   "DEFAULT_BACKUP_SCHEDULE_TYPE_UNSPECIFIED" - Not specified.
-	//   "NONE" - No default backup schedule will be created automatically on
-	// creation of a database within the instance.
-	//   "AUTOMATIC" - A default backup schedule will be created automatically on
-	// creation of a database within the instance. Once created, the default backup
-	// schedule can be edited or deleted just like any other backup schedule.
-	// Currently, the default backup schedule creates a full backup every 24 hours
-	// and retains the backup for a period of 7 days.
+	//   "NONE" - A default backup schedule isn't created automatically when a new
+	// database is created in the instance.
+	//   "AUTOMATIC" - A default backup schedule is created automatically when a
+	// new database is created in the instance. The default backup schedule creates
+	// a full backup every 24 hours. These full backups are retained for 7 days.
+	// You can edit or delete the default backup schedule once it's created.
 	DefaultBackupScheduleType string `json:"defaultBackupScheduleType,omitempty"`
 	// DisplayName: Required. The descriptive name for this instance as it appears
 	// in UIs. Must be unique per project and between 4 and 30 characters in
@@ -6235,6 +6256,9 @@ type Type struct {
 	// this type should be treated as PostgreSQL JSONB values. Currently this
 	// annotation is always needed for JSON when a client interacts with
 	// PostgreSQL-enabled Spanner databases.
+	//   "PG_OID" - PostgreSQL compatible OID type. This annotation can be used by
+	// a client interacting with PostgreSQL-enabled Spanner database to specify
+	// that a value should be treated using the semantics of the OID type.
 	TypeAnnotation string `json:"typeAnnotation,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "ArrayElementType") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -6323,7 +6347,7 @@ type UpdateDatabaseDdlRequest struct {
 	OperationId string `json:"operationId,omitempty"`
 	// ProtoDescriptors: Optional. Proto descriptors used by CREATE/ALTER PROTO
 	// BUNDLE statements. Contains a protobuf-serialized
-	// google.protobufFileDescriptorSet
+	// google.protobuf.FileDescriptorSet
 	// (https://github.com/protocolbuffers/protobuf/blob/main/src/google/protobuf/descriptor.proto).
 	// To generate it, install (https://grpc.io/docs/protoc-installation/) and run
 	// `protoc` with --include_imports and --descriptor_set_out. For example, to
@@ -15476,7 +15500,9 @@ type ProjectsInstancesDatabasesSessionsExecuteSqlCall struct {
 // return `ABORTED`. If this occurs, the application should restart the
 // transaction from the beginning. See Transaction for more details. Larger
 // result sets can be fetched in streaming fashion by calling
-// ExecuteStreamingSql instead.
+// ExecuteStreamingSql instead. The query string can be SQL or Graph Query
+// Language (GQL)
+// (https://cloud.google.com/spanner/docs/reference/standard-sql/graph-intro).
 //
 // - session: The session in which the SQL query should be performed.
 func (r *ProjectsInstancesDatabasesSessionsService) ExecuteSql(session string, executesqlrequest *ExecuteSqlRequest) *ProjectsInstancesDatabasesSessionsExecuteSqlCall {
@@ -15582,7 +15608,9 @@ type ProjectsInstancesDatabasesSessionsExecuteStreamingSqlCall struct {
 // ExecuteStreamingSql: Like ExecuteSql, except returns the result set as a
 // stream. Unlike ExecuteSql, there is no limit on the size of the returned
 // result set. However, no individual row in the result set can exceed 100 MiB,
-// and no column value can exceed 10 MiB.
+// and no column value can exceed 10 MiB. The query string can be SQL or Graph
+// Query Language (GQL)
+// (https://cloud.google.com/spanner/docs/reference/standard-sql/graph-intro).
 //
 // - session: The session in which the SQL query should be performed.
 func (r *ProjectsInstancesDatabasesSessionsService) ExecuteStreamingSql(session string, executesqlrequest *ExecuteSqlRequest) *ProjectsInstancesDatabasesSessionsExecuteStreamingSqlCall {

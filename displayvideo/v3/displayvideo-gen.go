@@ -9755,7 +9755,8 @@ func (s InsertionOrderBudgetSegment) MarshalJSON() ([]byte, error) {
 // IntegralAdScience: Details of Integral Ad Science settings.
 type IntegralAdScience struct {
 	// CustomSegmentId: The custom segment ID provided by Integral Ad Science. The
-	// ID must be between `1000001` and `1999999`, inclusive.
+	// ID must be between `1000001` and `1999999` or `3000001` and `3999999`,
+	// inclusive.
 	CustomSegmentId googleapi.Int64s `json:"customSegmentId,omitempty"`
 	// DisplayViewability: Display Viewability section (applicable to display line
 	// items only).

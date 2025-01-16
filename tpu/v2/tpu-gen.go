@@ -250,8 +250,8 @@ type AcceleratorConfig struct {
 	//   "V3" - TPU v3.
 	//   "V4" - TPU v4.
 	//   "V5LITE_POD" - TPU v5lite pod.
-	//   "V5P" - TPU v5p
-	//   "V6E" - TPU v6e
+	//   "V5P" - TPU v5p.
+	//   "V6E" - TPU v6e.
 	Type string `json:"type,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Topology") to
 	// unconditionally include in API requests. By default, fields with empty or

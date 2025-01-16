@@ -13257,7 +13257,8 @@ type CoursesTopicsCreateCall struct {
 // Create: Creates a topic. This method returns the following error codes: *
 // `PERMISSION_DENIED` if the requesting user is not permitted to access the
 // requested course, create a topic in the requested course, or for access
-// errors. * `INVALID_ARGUMENT` if the request is malformed. * `NOT_FOUND` if
+// errors. * `INVALID_ARGUMENT` if the request is malformed. * `ALREADY_EXISTS`
+// if there exists a topic in the course with the same name. * `NOT_FOUND` if
 // the requested course does not exist.
 //
 //   - courseId: Identifier of the course. This identifier can be either the
@@ -13742,7 +13743,8 @@ type CoursesTopicsPatchCall struct {
 // Patch: Updates one or more fields of a topic. This method returns the
 // following error codes: * `PERMISSION_DENIED` if the requesting developer
 // project did not create the corresponding topic or for access errors. *
-// `INVALID_ARGUMENT` if the request is malformed. * `NOT_FOUND` if the
+// `INVALID_ARGUMENT` if the request is malformed. * `FAILED_PRECONDITION` if
+// there exists a topic in the course with the same name. * `NOT_FOUND` if the
 // requested course or topic does not exist
 //
 //   - courseId: Identifier of the course. This identifier can be either the

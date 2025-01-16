@@ -339,6 +339,32 @@ func TestCheckResponse(t *testing.T) {
 	}
 }
 
+func TestCheckResponseWithBody(t *testing.T) {
+	for _, test := range checkResponseTests {
+		res := test.in
+		var body []byte
+		if test.bodyText != "" {
+			body = []byte(test.bodyText)
+		}
+		g := CheckResponseWithBody(res, body)
+		if !reflect.DeepEqual(g, test.want) {
+			t.Errorf("CheckResponse: got %v, want %v", g, test.want)
+			gotJSON, err := json.Marshal(g)
+			if err != nil {
+				t.Error(err)
+			}
+			wantJSON, err := json.Marshal(test.want)
+			if err != nil {
+				t.Error(err)
+			}
+			t.Errorf("json(got):  %q\njson(want): %q", string(gotJSON), string(wantJSON))
+		}
+		if g != nil && g.Error() != test.errText {
+			t.Errorf("CheckResponse: unexpected error message.\nGot:  %q\nwant: %q", g, test.errText)
+		}
+	}
+}
+
 type VariantPoint struct {
 	Type        string
 	Coordinates []float64

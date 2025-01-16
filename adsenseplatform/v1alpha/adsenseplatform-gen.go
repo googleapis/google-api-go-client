@@ -183,6 +183,7 @@ type AccountsService struct {
 func NewAccountsPlatformsService(s *Service) *AccountsPlatformsService {
 	rs := &AccountsPlatformsService{s: s}
 	rs.ChildAccounts = NewAccountsPlatformsChildAccountsService(s)
+	rs.Groups = NewAccountsPlatformsGroupsService(s)
 	return rs
 }
 
@@ -190,6 +191,8 @@ type AccountsPlatformsService struct {
 	s *Service
 
 	ChildAccounts *AccountsPlatformsChildAccountsService
+
+	Groups *AccountsPlatformsGroupsService
 }
 
 func NewAccountsPlatformsChildAccountsService(s *Service) *AccountsPlatformsChildAccountsService {
@@ -210,6 +213,15 @@ func NewAccountsPlatformsChildAccountsSitesService(s *Service) *AccountsPlatform
 }
 
 type AccountsPlatformsChildAccountsSitesService struct {
+	s *Service
+}
+
+func NewAccountsPlatformsGroupsService(s *Service) *AccountsPlatformsGroupsService {
+	rs := &AccountsPlatformsGroupsService{s: s}
+	return rs
+}
+
+type AccountsPlatformsGroupsService struct {
 	s *Service
 }
 
@@ -368,6 +380,68 @@ type CloseAccountResponse struct {
 	googleapi.ServerResponse `json:"-"`
 }
 
+// Decimal: A representation of a decimal value, such as 2.5. Clients may
+// convert values into language-native decimal formats, such as Java's
+// BigDecimal
+// (https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/math/BigDecimal.html)
+// or Python's decimal.Decimal
+// (https://docs.python.org/3/library/decimal.html).
+type Decimal struct {
+	// Value: The decimal value, as a string. The string representation consists of
+	// an optional sign, `+` (`U+002B`) or `-` (`U+002D`), followed by a sequence
+	// of zero or more decimal digits ("the integer"), optionally followed by a
+	// fraction, optionally followed by an exponent. An empty string **should** be
+	// interpreted as `0`. The fraction consists of a decimal point followed by
+	// zero or more decimal digits. The string must contain at least one digit in
+	// either the integer or the fraction. The number formed by the sign, the
+	// integer and the fraction is referred to as the significand. The exponent
+	// consists of the character `e` (`U+0065`) or `E` (`U+0045`) followed by one
+	// or more decimal digits. Services **should** normalize decimal values before
+	// storing them by: - Removing an explicitly-provided `+` sign (`+2.5` ->
+	// `2.5`). - Replacing a zero-length integer value with `0` (`.5` -> `0.5`). -
+	// Coercing the exponent character to upper-case, with explicit sign (`2.5e8`
+	// -> `2.5E+8`). - Removing an explicitly-provided zero exponent (`2.5E0` ->
+	// `2.5`). Services **may** perform additional normalization based on its own
+	// needs and the internal decimal implementation selected, such as shifting the
+	// decimal point and exponent value together (example: `2.5E-1` <-> `0.25`).
+	// Additionally, services **may** preserve trailing zeroes in the fraction to
+	// indicate increased precision, but are not required to do so. Note that only
+	// the `.` character is supported to divide the integer and the fraction; `,`
+	// **should not** be supported regardless of locale. Additionally, thousand
+	// separators **should not** be supported. If a service does support them,
+	// values **must** be normalized. The ENBF grammar is: DecimalString = '' |
+	// [Sign] Significand [Exponent]; Sign = '+' | '-'; Significand = Digits '.' |
+	// [Digits] '.' Digits; Exponent = ('e' | 'E') [Sign] Digits; Digits = { '0' |
+	// '1' | '2' | '3' | '4' | '5' | '6' | '7' | '8' | '9' }; Services **should**
+	// clearly document the range of supported values, the maximum supported
+	// precision (total number of digits), and, if applicable, the scale (number of
+	// digits after the decimal point), as well as how it behaves when receiving
+	// out-of-bounds values. Services **may** choose to accept values passed as
+	// input even when the value has a higher precision or scale than the service
+	// supports, and **should** round the value to fit the supported scale.
+	// Alternatively, the service **may** error with `400 Bad Request`
+	// (`INVALID_ARGUMENT` in gRPC) if precision would be lost. Services **should**
+	// error with `400 Bad Request` (`INVALID_ARGUMENT` in gRPC) if the service
+	// receives a value outside of the supported range.
+	Value string `json:"value,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Value") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Value") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s Decimal) MarshalJSON() ([]byte, error) {
+	type NoMethod Decimal
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // Empty: A generic empty message that you can re-use to avoid defining
 // duplicated empty messages in your APIs. A typical example is to use it as
 // the request or the response type of an API method. For instance: service Foo
@@ -496,6 +570,36 @@ type ListPlatformChildSitesResponse struct {
 
 func (s ListPlatformChildSitesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListPlatformChildSitesResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ListPlatformGroupsResponse: Response definition for the platform groups list
+// rpc.
+type ListPlatformGroupsResponse struct {
+	// NextPageToken: Continuation token used to page through platforms. To
+	// retrieve the next page of the results, set the next request's "page_token"
+	// value to this.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+	// PlatformGroups: The platform groups returned in this list response.
+	PlatformGroups []*PlatformGroup `json:"platformGroups,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "NextPageToken") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ListPlatformGroupsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ListPlatformGroupsResponse
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -640,6 +744,34 @@ type PlatformChildSite struct {
 
 func (s PlatformChildSite) MarshalJSON() ([]byte, error) {
 	type NoMethod PlatformChildSite
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// PlatformGroup: Representation of a Transparent Platform Group.
+type PlatformGroup struct {
+	// Description: Output only. Description of the PlatformGroup.
+	Description string `json:"description,omitempty"`
+	// Name: Identifier. Format:
+	// accounts/{account}/platforms/{platform}/groups/{platform_group}
+	Name string `json:"name,omitempty"`
+	// RevshareMillipercent: The revenue share of the PlatformGroup, in
+	// millipercent (e.g. 15000 = 15%).
+	RevshareMillipercent *Decimal `json:"revshareMillipercent,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Description") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Description") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s PlatformGroup) MarshalJSON() ([]byte, error) {
+	type NoMethod PlatformGroup
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -1116,6 +1248,156 @@ func (c *AccountsPlatformsChildAccountsSitesListCall) Do(opts ...googleapi.CallO
 // A non-nil error returned from f will halt the iteration.
 // The provided context supersedes any context provided to the Context method.
 func (c *AccountsPlatformsChildAccountsSitesListCall) Pages(ctx context.Context, f func(*ListPlatformChildSitesResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+type AccountsPlatformsGroupsListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists Platform Groups for a specified Platform.
+//
+//   - parent: The name of the platform to retrieve. Format:
+//     accounts/{account}/platforms/{platform}.
+func (r *AccountsPlatformsGroupsService) List(parent string) *AccountsPlatformsGroupsListCall {
+	c := &AccountsPlatformsGroupsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The maximum number of
+// groups to include in the response, used for paging. If unspecified, at most
+// 10000 groups will be returned. The maximum value is 10000; values above
+// 10000 will be coerced to 10000.
+func (c *AccountsPlatformsGroupsListCall) PageSize(pageSize int64) *AccountsPlatformsGroupsListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": A page token, received
+// from a previous `ListPlatformGroups` call. Provide this to retrieve the
+// subsequent page. When paginating, all other parameters provided to
+// `ListPlatformGroups` must match the call that provided the page token.
+func (c *AccountsPlatformsGroupsListCall) PageToken(pageToken string) *AccountsPlatformsGroupsListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *AccountsPlatformsGroupsListCall) Fields(s ...googleapi.Field) *AccountsPlatformsGroupsListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *AccountsPlatformsGroupsListCall) IfNoneMatch(entityTag string) *AccountsPlatformsGroupsListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *AccountsPlatformsGroupsListCall) Context(ctx context.Context) *AccountsPlatformsGroupsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *AccountsPlatformsGroupsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *AccountsPlatformsGroupsListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+parent}/groups")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "adsenseplatform.accounts.platforms.groups.list", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "adsenseplatform.accounts.platforms.groups.list" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *ListPlatformGroupsResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *AccountsPlatformsGroupsListCall) Do(opts ...googleapi.CallOption) (*ListPlatformGroupsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ListPlatformGroupsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "adsenseplatform.accounts.platforms.groups.list", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *AccountsPlatformsGroupsListCall) Pages(ctx context.Context, f func(*ListPlatformGroupsResponse) error) error {
 	c.ctx_ = ctx
 	defer c.PageToken(c.urlParams_.Get("pageToken"))
 	for {

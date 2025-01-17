@@ -119,6 +119,7 @@ func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, err
 	}
 	s := &Service{client: client, BasePath: basePath, logger: internaloption.GetLogger(opts)}
 	s.Devices = NewDevicesService(s)
+	s.EnrollmentTokens = NewEnrollmentTokensService(s)
 	s.Enterprises = NewEnterprisesService(s)
 	s.Entitlements = NewEntitlementsService(s)
 	s.Grouplicenses = NewGrouplicensesService(s)
@@ -162,6 +163,8 @@ type Service struct {
 	UserAgent string // optional additional User-Agent fragment
 
 	Devices *DevicesService
+
+	EnrollmentTokens *EnrollmentTokensService
 
 	Enterprises *EnterprisesService
 
@@ -207,6 +210,15 @@ func NewDevicesService(s *Service) *DevicesService {
 }
 
 type DevicesService struct {
+	s *Service
+}
+
+func NewEnrollmentTokensService(s *Service) *EnrollmentTokensService {
+	rs := &EnrollmentTokensService{s: s}
+	return rs
+}
+
+type EnrollmentTokensService struct {
 	s *Service
 }
 
@@ -4093,6 +4105,113 @@ func (c *DevicesUpdateCall) Do(opts ...googleapi.CallOption) (*Device, error) {
 	return ret, nil
 }
 
+type EnrollmentTokensCreateCall struct {
+	s               *Service
+	enterpriseId    string
+	enrollmenttoken *EnrollmentToken
+	urlParams_      gensupport.URLParams
+	ctx_            context.Context
+	header_         http.Header
+}
+
+// Create: Returns a token for device enrollment. The DPC can encode this token
+// within the QR/NFC/zero-touch enrollment payload or fetch it before calling
+// the on-device API to authenticate the user. The token can be generated for
+// each device or reused across multiple devices.
+//
+// - enterpriseId: The ID of the enterprise.
+func (r *EnrollmentTokensService) Create(enterpriseId string, enrollmenttoken *EnrollmentToken) *EnrollmentTokensCreateCall {
+	c := &EnrollmentTokensCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.enterpriseId = enterpriseId
+	c.enrollmenttoken = enrollmenttoken
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *EnrollmentTokensCreateCall) Fields(s ...googleapi.Field) *EnrollmentTokensCreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *EnrollmentTokensCreateCall) Context(ctx context.Context) *EnrollmentTokensCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *EnrollmentTokensCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *EnrollmentTokensCreateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.enrollmenttoken)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "androidenterprise/v1/enterprises/{enterpriseId}/enrollmentTokens")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"enterpriseId": c.enterpriseId,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "androidenterprise.enrollmentTokens.create", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "androidenterprise.enrollmentTokens.create" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *EnrollmentToken.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *EnrollmentTokensCreateCall) Do(opts ...googleapi.CallOption) (*EnrollmentToken, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &EnrollmentToken{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "androidenterprise.enrollmentTokens.create", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
 type EnterprisesAcknowledgeNotificationSetCall struct {
 	s          *Service
 	urlParams_ gensupport.URLParams
@@ -4272,113 +4391,6 @@ func (c *EnterprisesCompleteSignupCall) Do(opts ...googleapi.CallOption) (*Enter
 		return nil, err
 	}
 	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "androidenterprise.enterprises.completeSignup", "response", internallog.HTTPResponse(res, b))
-	return ret, nil
-}
-
-type EnterprisesCreateEnrollmentTokenCall struct {
-	s               *Service
-	enterpriseId    string
-	enrollmenttoken *EnrollmentToken
-	urlParams_      gensupport.URLParams
-	ctx_            context.Context
-	header_         http.Header
-}
-
-// CreateEnrollmentToken: Returns a token for device enrollment. The DPC can
-// encode this token within the QR/NFC/zero-touch enrollment payload or fetch
-// it before calling the on-device API to authenticate the user. The token can
-// be generated for each device or reused across multiple devices.
-//
-// - enterpriseId: The ID of the enterprise.
-func (r *EnterprisesService) CreateEnrollmentToken(enterpriseId string, enrollmenttoken *EnrollmentToken) *EnterprisesCreateEnrollmentTokenCall {
-	c := &EnterprisesCreateEnrollmentTokenCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.enterpriseId = enterpriseId
-	c.enrollmenttoken = enrollmenttoken
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
-// details.
-func (c *EnterprisesCreateEnrollmentTokenCall) Fields(s ...googleapi.Field) *EnterprisesCreateEnrollmentTokenCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// Context sets the context to be used in this call's Do method.
-func (c *EnterprisesCreateEnrollmentTokenCall) Context(ctx context.Context) *EnterprisesCreateEnrollmentTokenCall {
-	c.ctx_ = ctx
-	return c
-}
-
-// Header returns a http.Header that can be modified by the caller to add
-// headers to the request.
-func (c *EnterprisesCreateEnrollmentTokenCall) Header() http.Header {
-	if c.header_ == nil {
-		c.header_ = make(http.Header)
-	}
-	return c.header_
-}
-
-func (c *EnterprisesCreateEnrollmentTokenCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.enrollmenttoken)
-	if err != nil {
-		return nil, err
-	}
-	c.urlParams_.Set("alt", alt)
-	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "androidenterprise/v1/enterprises/{enterpriseId}/createEnrollmentToken")
-	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("POST", urls, body)
-	if err != nil {
-		return nil, err
-	}
-	req.Header = reqHeaders
-	googleapi.Expand(req.URL, map[string]string{
-		"enterpriseId": c.enterpriseId,
-	})
-	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "androidenterprise.enterprises.createEnrollmentToken", "request", internallog.HTTPRequest(req, body.Bytes()))
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
-}
-
-// Do executes the "androidenterprise.enterprises.createEnrollmentToken" call.
-// Any non-2xx status code is an error. Response headers are in either
-// *EnrollmentToken.ServerResponse.Header or (if a response was returned at
-// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
-// check whether the returned error was because http.StatusNotModified was
-// returned.
-func (c *EnterprisesCreateEnrollmentTokenCall) Do(opts ...googleapi.CallOption) (*EnrollmentToken, error) {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if res != nil && res.StatusCode == http.StatusNotModified {
-		if res.Body != nil {
-			res.Body.Close()
-		}
-		return nil, gensupport.WrapError(&googleapi.Error{
-			Code:   res.StatusCode,
-			Header: res.Header,
-		})
-	}
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, gensupport.WrapError(err)
-	}
-	ret := &EnrollmentToken{
-		ServerResponse: googleapi.ServerResponse{
-			Header:         res.Header,
-			HTTPStatusCode: res.StatusCode,
-		},
-	}
-	target := &ret
-	b, err := gensupport.DecodeResponseBytes(target, res)
-	if err != nil {
-		return nil, err
-	}
-	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "androidenterprise.enterprises.createEnrollmentToken", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 

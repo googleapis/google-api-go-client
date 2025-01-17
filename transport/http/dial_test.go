@@ -11,6 +11,9 @@ import (
 )
 
 func TestNewClient(t *testing.T) {
+	if testing.Short() {
+		t.Skip("skipping integration test")
+	}
 	client, endpoint, err := NewClient(context.Background())
 
 	if err != nil {

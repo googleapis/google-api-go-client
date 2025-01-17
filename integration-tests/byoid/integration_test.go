@@ -215,7 +215,7 @@ type executableConfig struct {
 	Command       string `json:"command,omitempty"`
 	TimeoutMillis int    `json:"timeout_millis,omitempty"`
 	OutputFile    string `json:"output_file,omitempty"`
-}
+}``
 
 // Tests to make sure File based external credentials continues to work.
 func TestFileBasedCredentials(t *testing.T) {

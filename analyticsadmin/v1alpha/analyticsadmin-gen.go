@@ -3068,6 +3068,21 @@ type GoogleAnalyticsAdminV1alphaDataRetentionSettings struct {
 	// ResetUserDataOnNewActivity: If true, reset the retention period for the user
 	// identifier with every event from that user.
 	ResetUserDataOnNewActivity bool `json:"resetUserDataOnNewActivity,omitempty"`
+	// UserDataRetention: Required. The length of time that user-level data is
+	// retained.
+	//
+	// Possible values:
+	//   "RETENTION_DURATION_UNSPECIFIED" - Data retention time duration is not
+	// specified.
+	//   "TWO_MONTHS" - The data retention time duration is 2 months.
+	//   "FOURTEEN_MONTHS" - The data retention time duration is 14 months.
+	//   "TWENTY_SIX_MONTHS" - The data retention time duration is 26 months.
+	// Available to 360 properties only. Available for event data only.
+	//   "THIRTY_EIGHT_MONTHS" - The data retention time duration is 38 months.
+	// Available to 360 properties only. Available for event data only.
+	//   "FIFTY_MONTHS" - The data retention time duration is 50 months. Available
+	// to 360 properties only. Available for event data only.
+	UserDataRetention string `json:"userDataRetention,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`

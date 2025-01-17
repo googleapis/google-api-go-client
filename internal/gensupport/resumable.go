@@ -257,7 +257,7 @@ func (rx *ResumableUpload) Upload(ctx context.Context) (resp *http.Response, err
 			}
 
 			if resp != nil && resp.Body != nil {
-				io.Copy(io.Discard, resp.CloseBody)
+				io.Copy(io.Discard, resp.Body)
 				resp.Body.Close()
 			}
 			resp, err = rx.transferChunk(rCtx)

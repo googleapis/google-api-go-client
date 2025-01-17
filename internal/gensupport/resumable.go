@@ -256,6 +256,10 @@ func (rx *ResumableUpload) Upload(ctx context.Context) (resp *http.Response, err
 				rCtx, cancel = context.WithTimeout(ctx, rx.ChunkTransferTimeout)
 			}
 
+			if resp != nil && resp.Body != nil {
+				io.Copy(io.Discard, resp.CloseBody)
+				resp.Body.Close()
+			}
 			resp, err = rx.transferChunk(rCtx)
 
 			var status int
@@ -282,15 +286,11 @@ func (rx *ResumableUpload) Upload(ctx context.Context) (resp *http.Response, err
 
 			rx.attempts++
 			pause = bo.Pause()
-			if resp != nil && resp.Body != nil {
-				resp.Body.Close()
-			}
 		}
 
 		// If the chunk was uploaded successfully, but there's still
 		// more to go, upload the next chunk without any delay.
 		if statusResumeIncomplete(resp) {
-			resp.Body.Close()
 			continue
 		}
 

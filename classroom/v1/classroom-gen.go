@@ -103,6 +103,13 @@ const mtlsBasePath = "https://classroom.mtls.googleapis.com/"
 
 // OAuth2 scopes used by this API.
 const (
+	// See and update its own attachments to posts in Google Classroom
+	ClassroomAddonsStudentScope = "https://www.googleapis.com/auth/classroom.addons.student"
+
+	// See, create, and update its own attachments to posts in classes you teach in
+	// Google Classroom
+	ClassroomAddonsTeacherScope = "https://www.googleapis.com/auth/classroom.addons.teacher"
+
 	// View and manage announcements in Google Classroom
 	ClassroomAnnouncementsScope = "https://www.googleapis.com/auth/classroom.announcements"
 
@@ -177,6 +184,8 @@ const (
 // NewService creates a new Service.
 func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, error) {
 	scopesOption := internaloption.WithDefaultScopes(
+		"https://www.googleapis.com/auth/classroom.addons.student",
+		"https://www.googleapis.com/auth/classroom.addons.teacher",
 		"https://www.googleapis.com/auth/classroom.announcements",
 		"https://www.googleapis.com/auth/classroom.announcements.readonly",
 		"https://www.googleapis.com/auth/classroom.courses",

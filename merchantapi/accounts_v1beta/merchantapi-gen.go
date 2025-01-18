@@ -801,7 +801,7 @@ type CreateUserRequest struct {
 	// Parent: Required. The resource name of the account for which a user will be
 	// created. Format: `accounts/{account}`
 	Parent string `json:"parent,omitempty"`
-	// User: Required. The user to create.
+	// User: Optional. The user to create.
 	User *User `json:"user,omitempty"`
 	// UserId: Required. The email address of the user (for example,
 	// `john.doe@gmail.com`).
@@ -1723,6 +1723,9 @@ type OnlineReturnPolicy struct {
 	// ReturnShippingFee: The return shipping fee. Should be set only when customer
 	// need to download and print the return label.
 	ReturnShippingFee *ReturnShippingFee `json:"returnShippingFee,omitempty"`
+	// SeasonalOverrides: Optional. Overrides to the general policy for orders
+	// placed during a specific set of time intervals.
+	SeasonalOverrides []*SeasonalOverride `json:"seasonalOverrides,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
@@ -2418,6 +2421,36 @@ type Row struct {
 
 func (s Row) MarshalJSON() ([]byte, error) {
 	type NoMethod Row
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// SeasonalOverride: Next: 5
+type SeasonalOverride struct {
+	// Begin: Required. Defines the date range when this seasonal override applies.
+	// Both begin and end are inclusive and should be in date decimal format,
+	// example 20250115. The dates of the seasonal overrides should not overlap.
+	Begin *Date `json:"begin,omitempty"`
+	// End: Required. seasonal override end date (inclusive).
+	End *Date `json:"end,omitempty"`
+	// Label: Required. Display name of this seasonal override in Merchant Center.
+	Label string `json:"label,omitempty"`
+	// Policy: Required. The return policy for the given date range.
+	Policy *Policy `json:"policy,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Begin") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Begin") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s SeasonalOverride) MarshalJSON() ([]byte, error) {
+	type NoMethod SeasonalOverride
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 

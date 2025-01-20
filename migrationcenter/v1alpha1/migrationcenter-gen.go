@@ -7267,8 +7267,8 @@ type VirtualMachinePreferences struct {
 	// discount. While not supported in the v1 API, this value is converted to
 	// UNSPECIFIED in conversions to the v1 API.
 	CommitmentPlan string `json:"commitmentPlan,omitempty"`
-	// ComputeEnginePreferences: Compute Engine preferences concern insights and
-	// recommendations for Compute Engine target.
+	// ComputeEnginePreferences: Optional. Compute Engine preferences concern
+	// insights and recommendations for Compute Engine target.
 	ComputeEnginePreferences *ComputeEnginePreferences `json:"computeEnginePreferences,omitempty"`
 	// NetworkCostParameters: Optional. Parameters that affect network cost
 	// estimations. If not set, default values will be used for the parameters.

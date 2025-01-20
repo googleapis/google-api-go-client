@@ -1461,6 +1461,35 @@
             },
             "databases": {
               "methods": {
+                "addSplitPoints": {
+                  "description": "Adds split points to specified tables, indexes of a database.",
+                  "flatPath": "v1/projects/{projectsId}/instances/{instancesId}/databases/{databasesId}:addSplitPoints",
+                  "httpMethod": "POST",
+                  "id": "spanner.projects.instances.databases.addSplitPoints",
+                  "parameterOrder": [
+                    "database"
+                  ],
+                  "parameters": {
+                    "database": {
+                      "description": "Required. The database on whose tables/indexes split points are to be added. Values are of the form `projects//instances//databases/`.",
+                      "location": "path",
+                      "pattern": "^projects/[^/]+/instances/[^/]+/databases/[^/]+$",
+                      "required": true,
+                      "type": "string"
+                    }
+                  },
+                  "path": "v1/{+database}:addSplitPoints",
+                  "request": {
+                    "$ref": "AddSplitPointsRequest"
+                  },
+                  "response": {
+                    "$ref": "AddSplitPointsResponse"
+                  },
+                  "scopes": [
+                    "https://www.googleapis.com/auth/cloud-platform",
+                    "https://www.googleapis.com/auth/spanner.admin"
+                  ]
+                },
                 "changequorum": {
                   "description": "`ChangeQuorum` is strictly restricted to databases that use dual-region instance configurations. Initiates a background operation to change the quorum of a database from dual-region mode to single-region mode or vice versa. The returned long-running operation has a name of the format `projects//instances//databases//operations/` and can be used to track execution of the `ChangeQuorum`. The metadata field type is ChangeQuorumMetadata. Authorization requires `spanner.databases.changequorum` permission on the resource database.",
                   "flatPath": "v1/projects/{projectsId}/instances/{instancesId}/databases/{databasesId}:changequorum",
@@ -3319,9 +3348,33 @@
       }
     }
   },
-  "revision": "20241220",
+  "revision": "20250113",
   "rootUrl": "https://spanner.googleapis.com/",
   "schemas": {
+    "AddSplitPointsRequest": {
+      "description": "The request for AddSplitPoints.",
+      "id": "AddSplitPointsRequest",
+      "properties": {
+        "initiator": {
+          "description": "Optional. A user-supplied tag associated with the split points. For example, \"intital_data_load\", \"special_event_1\". Defaults to \"CloudAddSplitPointsAPI\" if not specified. The length of the tag must not exceed 50 characters,else will be trimmed. Only valid UTF8 characters are allowed.",
+          "type": "string"
+        },
+        "splitPoints": {
+          "description": "Required. The split points to add.",
+          "items": {
+            "$ref": "SplitPoints"
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "AddSplitPointsResponse": {
+      "description": "The response for AddSplitPoints.",
+      "id": "AddSplitPointsResponse",
+      "properties": {},
+      "type": "object"
+    },
     "AsymmetricAutoscalingOption": {
       "description": "AsymmetricAutoscalingOption specifies the scaling of replicas identified by the given selection.",
       "id": "AsymmetricAutoscalingOption",
@@ -5261,6 +5314,20 @@
       },
       "type": "object"
     },
+    "Key": {
+      "description": "A split key.",
+      "id": "Key",
+      "properties": {
+        "keyParts": {
+          "description": "Required. The column values making up the split key.",
+          "items": {
+            "type": "any"
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
     "KeyRange": {
       "description": "KeyRange represents a range of rows in a table or index. A range has a start key and an end key. These keys can be open or closed, indicating if the range includes rows with that key. Keys are represented by lists, where the ith value in the list corresponds to the ith component of the table or index primary key. Individual values are encoded as described here. For example, consider the following table definition: CREATE TABLE UserEvents ( UserName STRING(MAX), EventDate STRING(10) ) PRIMARY KEY(UserName, EventDate); The following keys name rows in this table: \"Bob\", \"2014-09-23\" Since the `UserEvents` table's `PRIMARY KEY` clause names two columns, each `UserEvents` key has two elements; the first is the `UserName`, and the second is the `EventDate`. Key ranges with multiple components are interpreted lexicographically by component using the table or index key's declared sort order. For example, the following range returns all events for user `\"Bob\"` that occurred in the year 2015: \"start_closed\": [\"Bob\", \"2015-01-01\"] \"end_closed\": [\"Bob\", \"2015-12-31\"] Start and end keys can omit trailing key components. This affects the inclusion and exclusion of rows that exactly match the provided key components: if the key is closed, then rows that exactly match the provided components are included; if the key is open, then rows that exactly match are not included. For example, the following range includes all events for `\"Bob\"` that occurred during and after the year 2000: \"start_closed\": [\"Bob\", \"2000-01-01\"] \"end_closed\": [\"Bob\"] The next example retrieves all events for `\"Bob\"`: \"start_closed\": [\"Bob\"] \"end_closed\": [\"Bob\"] To retrieve events before the year 2000: \"start_closed\": [\"Bob\"] \"end_open\": [\"Bob\", \"2000-01-01\"] The following range includes all rows in the table: \"start_closed\": [] \"end_closed\": [] This range returns all users whose `UserName` begins with any character from A to C: \"start_closed\": [\"A\"] \"end_open\": [\"D\"] This range returns all users whose `UserName` begins with B: \"start_closed\": [\"B\"] \"end_open\": [\"C\"] Key ranges honor column sort order. For example, suppose a table is defined as follows: CREATE TABLE DescendingSortedTable { Key INT64, ... ) PRIMARY KEY(Key DESC); The following range retrieves all rows with key values between 1 and 100 inclusive: \"start_closed\": [\"100\"] \"end_closed\": [\"1\"] Note that 100 is passed as the start, and 1 is passed as the end, because `Key` is a descending column in the schema.",
       "id": "KeyRange",
@@ -6886,6 +6953,33 @@
       "properties": {
         "servingLocation": {
           "description": "Required. The location of the serving region, e.g. \"us-central1\". The location must be one of the regions within the dual-region instance configuration of your database. The list of valid locations is available using the GetInstanceConfig API. This should only be used if you plan to change quorum to the single-region quorum type.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "SplitPoints": {
+      "description": "The split points of a table/index.",
+      "id": "SplitPoints",
+      "properties": {
+        "expireTime": {
+          "description": "Optional. The expiration timestamp of the split points. A timestamp in the past means immediate expiration. The maximum value can be 30 days in the future. Defaults to 10 days in the future if not specified.",
+          "format": "google-datetime",
+          "type": "string"
+        },
+        "index": {
+          "description": "The index to split. If specified, the `table` field must refer to the index's base table.",
+          "type": "string"
+        },
+        "keys": {
+          "description": "Required. The list of split keys, i.e., the split boundaries.",
+          "items": {
+            "$ref": "Key"
+          },
+          "type": "array"
+        },
+        "table": {
+          "description": "The table to split.",
           "type": "string"
         }
       },

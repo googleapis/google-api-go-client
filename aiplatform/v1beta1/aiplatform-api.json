@@ -21964,7 +21964,7 @@
       }
     }
   },
-  "revision": "20250107",
+  "revision": "20250114",
   "rootUrl": "https://aiplatform.googleapis.com/",
   "schemas": {
     "CloudAiLargeModelsVisionGenerateVideoResponse": {
@@ -47674,6 +47674,14 @@
       "description": "Tuning data statistics for Supervised Tuning.",
       "id": "GoogleCloudAiplatformV1beta1SupervisedTuningDataStats",
       "properties": {
+        "droppedExampleReasons": {
+          "description": "Output only. For each index in `truncated_example_indices`, the user-facing reason why the example was dropped. Must not include example itself.",
+          "items": {
+            "type": "string"
+          },
+          "readOnly": true,
+          "type": "array"
+        },
         "totalBillableCharacterCount": {
           "deprecated": true,
           "description": "Output only. Number of billable characters in the tuning dataset.",
@@ -47688,8 +47696,9 @@
           "type": "string"
         },
         "totalTruncatedExampleCount": {
-          "description": "The number of examples in the dataset that have been truncated by any amount.",
+          "description": "Output only. The number of examples in the dataset that have been dropped. An example can be dropped for reasons including: too many tokens, contains an invalid image, contains too many images, etc.",
           "format": "int64",
+          "readOnly": true,
           "type": "string"
         },
         "totalTuningCharacterCount": {
@@ -47699,11 +47708,12 @@
           "type": "string"
         },
         "truncatedExampleIndices": {
-          "description": "A partial sample of the indices (starting from 1) of the truncated examples.",
+          "description": "Output only. A partial sample of the indices (starting from 1) of the dropped examples.",
           "items": {
             "format": "int64",
             "type": "string"
           },
+          "readOnly": true,
           "type": "array"
         },
         "tuningDatasetExampleCount": {

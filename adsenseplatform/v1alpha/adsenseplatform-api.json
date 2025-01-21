@@ -217,6 +217,40 @@
                         "https://www.googleapis.com/auth/adsense",
                         "https://www.googleapis.com/auth/adsense.readonly"
                       ]
+                    },
+                    "patch": {
+                      "description": "Update a Platform Child Site.",
+                      "flatPath": "v1alpha/accounts/{accountsId}/platforms/{platformsId}/childAccounts/{childAccountsId}/sites/{sitesId}",
+                      "httpMethod": "PATCH",
+                      "id": "adsenseplatform.accounts.platforms.childAccounts.sites.patch",
+                      "parameterOrder": [
+                        "name"
+                      ],
+                      "parameters": {
+                        "name": {
+                          "description": "Identifier. Format: accounts/{account}/platforms/{platform}/childAccounts/{child}/sites/{platformChildSite}",
+                          "location": "path",
+                          "pattern": "^accounts/[^/]+/platforms/[^/]+/childAccounts/[^/]+/sites/[^/]+$",
+                          "required": true,
+                          "type": "string"
+                        },
+                        "updateMask": {
+                          "description": "Optional. The list of fields to update - currently only supports updating the `platform_group` field.",
+                          "format": "google-fieldmask",
+                          "location": "query",
+                          "type": "string"
+                        }
+                      },
+                      "path": "v1alpha/{+name}",
+                      "request": {
+                        "$ref": "PlatformChildSite"
+                      },
+                      "response": {
+                        "$ref": "PlatformChildSite"
+                      },
+                      "scopes": [
+                        "https://www.googleapis.com/auth/adsense"
+                      ]
                     }
                   }
                 }
@@ -605,7 +639,7 @@
       }
     }
   },
-  "revision": "20250115",
+  "revision": "20250120",
   "rootUrl": "https://adsenseplatform.googleapis.com/",
   "schemas": {
     "Account": {

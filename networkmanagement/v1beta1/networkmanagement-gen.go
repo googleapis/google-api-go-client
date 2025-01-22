@@ -1141,6 +1141,8 @@ type Empty struct {
 
 // Endpoint: Source or destination of the Connectivity Test.
 type Endpoint struct {
+	// AlloyDbInstance: An AlloyDB Instance (https://cloud.google.com/alloydb) URI.
+	AlloyDbInstance string `json:"alloyDbInstance,omitempty"`
 	// AppEngineVersion: An App Engine (https://cloud.google.com/appengine)
 	// [service
 	// version](https://cloud.google.com/appengine/docs/admin-api/reference/rest/v1/
@@ -1238,13 +1240,13 @@ type Endpoint struct {
 	// RedisInstance: A Redis Instance
 	// (https://cloud.google.com/memorystore/docs/redis) URI.
 	RedisInstance string `json:"redisInstance,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "AppEngineVersion") to
+	// ForceSendFields is a list of field names (e.g. "AlloyDbInstance") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "AppEngineVersion") to include in
+	// NullFields is a list of field names (e.g. "AlloyDbInstance") to include in
 	// API requests with the JSON null value. By default, fields with empty values
 	// are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.

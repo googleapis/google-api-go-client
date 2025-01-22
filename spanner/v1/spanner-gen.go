@@ -421,6 +421,40 @@ type ScansService struct {
 	s *Service
 }
 
+// AddSplitPointsRequest: The request for AddSplitPoints.
+type AddSplitPointsRequest struct {
+	// Initiator: Optional. A user-supplied tag associated with the split points.
+	// For example, "intital_data_load", "special_event_1". Defaults to
+	// "CloudAddSplitPointsAPI" if not specified. The length of the tag must not
+	// exceed 50 characters,else will be trimmed. Only valid UTF8 characters are
+	// allowed.
+	Initiator string `json:"initiator,omitempty"`
+	// SplitPoints: Required. The split points to add.
+	SplitPoints []*SplitPoints `json:"splitPoints,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Initiator") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Initiator") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s AddSplitPointsRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod AddSplitPointsRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// AddSplitPointsResponse: The response for AddSplitPoints.
+type AddSplitPointsResponse struct {
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+}
+
 // AsymmetricAutoscalingOption: AsymmetricAutoscalingOption specifies the
 // scaling of replicas identified by the given selection.
 type AsymmetricAutoscalingOption struct {
@@ -3239,6 +3273,28 @@ func (s InstanceReplicaSelection) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// Key: A split key.
+type Key struct {
+	// KeyParts: Required. The column values making up the split key.
+	KeyParts []interface{} `json:"keyParts,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "KeyParts") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "KeyParts") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s Key) MarshalJSON() ([]byte, error) {
+	type NoMethod Key
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // KeyRange: KeyRange represents a range of rows in a table or index. A range
 // has a start key and an end key. These keys can be open or closed, indicating
 // if the range includes rows with that key. Keys are represented by lists,
@@ -5715,6 +5771,37 @@ type SingleRegionQuorum struct {
 
 func (s SingleRegionQuorum) MarshalJSON() ([]byte, error) {
 	type NoMethod SingleRegionQuorum
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// SplitPoints: The split points of a table/index.
+type SplitPoints struct {
+	// ExpireTime: Optional. The expiration timestamp of the split points. A
+	// timestamp in the past means immediate expiration. The maximum value can be
+	// 30 days in the future. Defaults to 10 days in the future if not specified.
+	ExpireTime string `json:"expireTime,omitempty"`
+	// Index: The index to split. If specified, the `table` field must refer to the
+	// index's base table.
+	Index string `json:"index,omitempty"`
+	// Keys: Required. The list of split keys, i.e., the split boundaries.
+	Keys []*Key `json:"keys,omitempty"`
+	// Table: The table to split.
+	Table string `json:"table,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ExpireTime") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ExpireTime") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s SplitPoints) MarshalJSON() ([]byte, error) {
+	type NoMethod SplitPoints
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -11539,6 +11626,112 @@ func (c *ProjectsInstancesDatabaseOperationsListCall) Pages(ctx context.Context,
 		}
 		c.PageToken(x.NextPageToken)
 	}
+}
+
+type ProjectsInstancesDatabasesAddSplitPointsCall struct {
+	s                     *Service
+	database              string
+	addsplitpointsrequest *AddSplitPointsRequest
+	urlParams_            gensupport.URLParams
+	ctx_                  context.Context
+	header_               http.Header
+}
+
+// AddSplitPoints: Adds split points to specified tables, indexes of a
+// database.
+//
+//   - database: The database on whose tables/indexes split points are to be
+//     added. Values are of the form `projects//instances//databases/`.
+func (r *ProjectsInstancesDatabasesService) AddSplitPoints(database string, addsplitpointsrequest *AddSplitPointsRequest) *ProjectsInstancesDatabasesAddSplitPointsCall {
+	c := &ProjectsInstancesDatabasesAddSplitPointsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.database = database
+	c.addsplitpointsrequest = addsplitpointsrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsInstancesDatabasesAddSplitPointsCall) Fields(s ...googleapi.Field) *ProjectsInstancesDatabasesAddSplitPointsCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsInstancesDatabasesAddSplitPointsCall) Context(ctx context.Context) *ProjectsInstancesDatabasesAddSplitPointsCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsInstancesDatabasesAddSplitPointsCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsInstancesDatabasesAddSplitPointsCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.addsplitpointsrequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+database}:addSplitPoints")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"database": c.database,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "spanner.projects.instances.databases.addSplitPoints", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "spanner.projects.instances.databases.addSplitPoints" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *AddSplitPointsResponse.ServerResponse.Header or (if a response was returned
+// at all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *ProjectsInstancesDatabasesAddSplitPointsCall) Do(opts ...googleapi.CallOption) (*AddSplitPointsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &AddSplitPointsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "spanner.projects.instances.databases.addSplitPoints", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
 }
 
 type ProjectsInstancesDatabasesChangequorumCall struct {

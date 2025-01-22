@@ -529,10 +529,6 @@ func (s ConfigManagementBinauthzVersion) MarshalJSON() ([]byte, error) {
 
 // ConfigManagementConfigSync: Configuration for Config Sync
 type ConfigManagementConfigSync struct {
-	// AllowVerticalScale: Optional. Set to true to allow the vertical scaling.
-	// Defaults to false which disallows vertical scaling. This field is
-	// deprecated.
-	AllowVerticalScale bool `json:"allowVerticalScale,omitempty"`
 	// Enabled: Optional. Enables the installation of ConfigSync. If set to true,
 	// ConfigSync resources will be created and the other ConfigSync fields will be
 	// applied if exist. If set to false, all other ConfigSync fields will be
@@ -563,15 +559,15 @@ type ConfigManagementConfigSync struct {
 	// StopSyncing: Optional. Set to true to stop syncing configs for a single
 	// cluster. Default to false.
 	StopSyncing bool `json:"stopSyncing,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "AllowVerticalScale") to
-	// unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
+	// ForceSendFields is a list of field names (e.g. "Enabled") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "AllowVerticalScale") to include
-	// in API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. See
+	// NullFields is a list of field names (e.g. "Enabled") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -915,13 +911,13 @@ type ConfigManagementGitConfig struct {
 	// repository.
 	PolicyDir string `json:"policyDir,omitempty"`
 	// SecretType: Required. Type of secret configured for access to the Git repo.
-	// Must be one of ssh, cookiefile, gcenode, token, gcpserviceaccount or none.
-	// The validation of this is case-sensitive. Required.
+	// Must be one of ssh, cookiefile, gcenode, token, gcpserviceaccount, githubapp
+	// or none. The validation of this is case-sensitive.
 	SecretType string `json:"secretType,omitempty"`
 	// SyncBranch: Optional. The branch of the repository to sync from. Default:
 	// master.
 	SyncBranch string `json:"syncBranch,omitempty"`
-	// SyncRepo: Optional. The URL of the Git repository to use as the source of
+	// SyncRepo: Required. The URL of the Git repository to use as the source of
 	// truth.
 	SyncRepo string `json:"syncRepo,omitempty"`
 	// SyncRev: Optional. Git revision (tag or hash) to check out. Default HEAD.
@@ -1121,9 +1117,11 @@ type ConfigManagementOciConfig struct {
 	// PolicyDir: Optional. The absolute path of the directory that contains the
 	// local resources. Default: the root directory of the image.
 	PolicyDir string `json:"policyDir,omitempty"`
-	// SecretType: Optional. Type of secret configured for access to the Git repo.
+	// SecretType: Required. Type of secret configured for access to the OCI repo.
+	// Must be one of gcenode, gcpserviceaccount, k8sserviceaccount or none. The
+	// validation of this is case-sensitive.
 	SecretType string `json:"secretType,omitempty"`
-	// SyncRepo: Optional. The OCI image repository URL for the package to sync
+	// SyncRepo: Required. The OCI image repository URL for the package to sync
 	// from. e.g.
 	// `LOCATION-docker.pkg.dev/PROJECT_ID/REPOSITORY_NAME/PACKAGE_NAME`.
 	SyncRepo string `json:"syncRepo,omitempty"`

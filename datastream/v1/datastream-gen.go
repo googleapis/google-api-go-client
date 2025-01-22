@@ -2177,10 +2177,11 @@ type ServerAndClientVerification struct {
 	// the leaf certificate) to link the this certificate to the trusted root
 	// certificate.
 	ClientCertificate string `json:"clientCertificate,omitempty"`
-	// ClientKey: Required. Input only. PEM-encoded private key associated with the
+	// ClientKey: Optional. Input only. PEM-encoded private key associated with the
 	// client certificate. This value will be used during the SSL/TLS handshake,
 	// allowing the PostgreSQL server to authenticate the client's identity, i.e.
-	// identity of the Datastream.
+	// identity of the Datastream. Mutually exclusive with the
+	// `secret_manager_stored_client_key` field.
 	ClientKey string `json:"clientKey,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "CaCertificate") to
 	// unconditionally include in API requests. By default, fields with empty or

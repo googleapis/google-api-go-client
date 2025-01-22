@@ -1187,6 +1187,7 @@ type GoogleMapsPlacesV1FuelOptionsFuelPrice struct {
 	// Possible values:
 	//   "FUEL_TYPE_UNSPECIFIED" - Unspecified fuel type.
 	//   "DIESEL" - Diesel fuel.
+	//   "DIESEL_PLUS" - Diesel plus fuel.
 	//   "REGULAR_UNLEADED" - Regular unleaded.
 	//   "MIDGRADE" - Midgrade.
 	//   "PREMIUM" - Premium.
@@ -1198,9 +1199,10 @@ type GoogleMapsPlacesV1FuelOptionsFuelPrice struct {
 	//   "SP98" - SP 98.
 	//   "SP99" - SP 99.
 	//   "SP100" - SP 100.
-	//   "LPG" - LPG.
+	//   "LPG" - Liquefied Petroleum Gas.
 	//   "E80" - E 80.
 	//   "E85" - E 85.
+	//   "E100" - E 100.
 	//   "METHANE" - Methane.
 	//   "BIO_DIESEL" - Bio-diesel.
 	//   "TRUCK_DIESEL" - Truck diesel.

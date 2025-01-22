@@ -2957,7 +2957,7 @@ type GoogleCloudDataplexV1DataQualityRuleResult struct {
 	// is only valid for row-level type rules.Evaluated count can be configured to
 	// either include all rows (default) - with null rows automatically failing
 	// rule evaluation, or exclude null rows from the evaluated_count, by setting
-	// ignore_nulls = true.
+	// ignore_nulls = true.This field is not set for rule SqlAssertion.
 	EvaluatedCount int64 `json:"evaluatedCount,omitempty,string"`
 	// FailingRowsQuery: The query to find rows that did not pass this rule.This
 	// field is only valid for row-level type rules.
@@ -2969,8 +2969,7 @@ type GoogleCloudDataplexV1DataQualityRuleResult struct {
 	PassRatio float64 `json:"passRatio,omitempty"`
 	// Passed: Whether the rule passed or failed.
 	Passed bool `json:"passed,omitempty"`
-	// PassedCount: The number of rows which passed a rule evaluation.This field is
-	// only valid for row-level type rules.
+	// PassedCount: This field is not set for rule SqlAssertion.
 	PassedCount int64 `json:"passedCount,omitempty,string"`
 	// Rule: The rule specified in the DataQualitySpec, as is.
 	Rule *GoogleCloudDataplexV1DataQualityRule `json:"rule,omitempty"`
@@ -3458,11 +3457,17 @@ func (s *GoogleCloudDataplexV1DataQualitySpecPostScanActionsScoreThresholdTrigge
 }
 
 // GoogleCloudDataplexV1DataScan: Represents a user-visible job which provides
-// the insights for the related data source.For example: Data Quality:
+// the insights for the related data source.For example: Data quality:
 // generates queries based on the rules and runs against the data to get data
-// quality check results. Data Profile: analyzes the data in table(s) and
-// generates insights about the structure, content and relationships (such as
-// null percent, cardinality, min/max/mean, etc).
+// quality check results. For more information, see Auto data quality overview
+// (https://cloud.google.com/dataplex/docs/auto-data-quality-overview). Data
+// profile: analyzes the data in tables and generates insights about the
+// structure, content and relationships (such as null percent, cardinality,
+// min/max/mean, etc). For more information, see About data profiling
+// (https://cloud.google.com/dataplex/docs/data-profiling-overview). Data
+// discovery: scans data in Cloud Storage buckets to extract and then catalog
+// metadata. For more information, see Discover and catalog Cloud Storage data
+// (https://cloud.google.com/bigquery/docs/automatic-discovery).
 type GoogleCloudDataplexV1DataScan struct {
 	// CreateTime: Output only. The time when the scan was created.
 	CreateTime string `json:"createTime,omitempty"`
@@ -4435,7 +4440,10 @@ type GoogleCloudDataplexV1Entry struct {
 	// projects/{project_id_or_number}/locations/{location_id}/entryGroups/{entry_gr
 	// oup_id}/entries/{entry_id}.
 	Name string `json:"name,omitempty"`
-	// ParentEntry: Optional. Immutable. The resource name of the parent entry.
+	// ParentEntry: Optional. Immutable. The resource name of the parent entry, in
+	// the format
+	// projects/{project_id_or_number}/locations/{location_id}/entryGroups/{entry_gr
+	// oup_id}/entries/{entry_id}.
 	ParentEntry string `json:"parentEntry,omitempty"`
 	// UpdateTime: Output only. The time when the entry was last updated in
 	// Dataplex.

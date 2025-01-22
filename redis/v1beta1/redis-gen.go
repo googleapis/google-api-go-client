@@ -632,6 +632,11 @@ func (s CertificateAuthority) MarshalJSON() ([]byte, error) {
 
 // Cluster: A cluster instance.
 type Cluster struct {
+	// AsyncClusterEndpointsDeletionEnabled: Optional. If true, cluster endpoints
+	// that are created and registered by customers can be deleted asynchronously.
+	// That is, such a cluster endpoint can be de-registered before the forwarding
+	// rules in the cluster endpoint are deleted.
+	AsyncClusterEndpointsDeletionEnabled bool `json:"asyncClusterEndpointsDeletionEnabled,omitempty"`
 	// AuthorizationMode: Optional. The authorization mode of the Redis cluster. If
 	// not provided, auth feature is disabled for the cluster.
 	//
@@ -749,16 +754,18 @@ type Cluster struct {
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-	// ForceSendFields is a list of field names (e.g. "AuthorizationMode") to
-	// unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
+	// ForceSendFields is a list of field names (e.g.
+	// "AsyncClusterEndpointsDeletionEnabled") to unconditionally include in API
+	// requests. By default, fields with empty or default values are omitted from
+	// API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "AuthorizationMode") to include in
-	// API requests with the JSON null value. By default, fields with empty values
-	// are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	// NullFields is a list of field names (e.g.
+	// "AsyncClusterEndpointsDeletionEnabled") to include in API requests with the
+	// JSON null value. By default, fields with empty values are omitted from API
+	// requests. See https://pkg.go.dev/google.golang.org/api#hdr-NullFields for
+	// more details.
 	NullFields []string `json:"-"`
 }
 
@@ -2983,6 +2990,8 @@ type ObservabilityMetricData struct {
 	//   "STORAGE_UTILIZATION" - Storage utilization for a resource. The value is a
 	// fraction between 0.0 and 1.0 (may momentarily exceed 1.0 in some cases).
 	//   "STORAGE_USED_BYTES" - Sotrage used by a resource.
+	//   "NODE_COUNT" - Node count for a resource. It represents the number of
+	// nodes units in a bigtable/spanner instance.
 	MetricType string `json:"metricType,omitempty"`
 	// ObservationTime: Required. The time the metric value was observed.
 	ObservationTime string `json:"observationTime,omitempty"`
@@ -5762,7 +5771,7 @@ func (c *ProjectsLocationsClustersPatchCall) RequestId(requestId string) *Projec
 // UpdateMask sets the optional parameter "updateMask": Required. Mask of
 // fields to update. At least one path must be supplied in this field. The
 // elements of the repeated paths field may only include these fields from
-// Cluster: * `size_gb` * `replica_count`
+// Cluster: * `size_gb` * `replica_count` * `cluster_endpoints`
 func (c *ProjectsLocationsClustersPatchCall) UpdateMask(updateMask string) *ProjectsLocationsClustersPatchCall {
 	c.urlParams_.Set("updateMask", updateMask)
 	return c

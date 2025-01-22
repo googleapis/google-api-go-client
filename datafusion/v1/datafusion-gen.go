@@ -657,8 +657,8 @@ type Instance struct {
 	// NetworkConfig: Optional. Network configuration options. These are required
 	// when a private Data Fusion instance is to be created.
 	NetworkConfig *NetworkConfig `json:"networkConfig,omitempty"`
-	// Options: Map of additional options used to configure the behavior of Data
-	// Fusion instance.
+	// Options: Optional. Map of additional options used to configure the behavior
+	// of Data Fusion instance.
 	Options map[string]string `json:"options,omitempty"`
 	// P4ServiceAccount: Output only. Service agent for the customer project.
 	P4ServiceAccount string `json:"p4ServiceAccount,omitempty"`
@@ -1096,8 +1096,8 @@ type OperationMetadata struct {
 	EndTime string `json:"endTime,omitempty"`
 	// RequestedCancellation: Identifies whether the user has requested
 	// cancellation of the operation. Operations that have successfully been
-	// cancelled have Operation.error value with a google.rpc.Status.code of 1,
-	// corresponding to `Code.CANCELLED`.
+	// cancelled have google.longrunning.Operation.error value with a
+	// google.rpc.Status.code of 1, corresponding to `Code.CANCELLED`.
 	RequestedCancellation bool `json:"requestedCancellation,omitempty"`
 	// StatusDetail: Human-readable status of the operation if any.
 	StatusDetail string `json:"statusDetail,omitempty"`

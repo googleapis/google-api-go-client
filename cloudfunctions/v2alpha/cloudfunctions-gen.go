@@ -407,9 +407,13 @@ type BuildConfig struct {
 	Build string `json:"build,omitempty"`
 	// DockerRegistry: Docker Registry to use for this deployment. This
 	// configuration is only applicable to 1st Gen functions, 2nd Gen functions can
-	// only use Artifact Registry. If unspecified, it defaults to
-	// `ARTIFACT_REGISTRY`. If `docker_repository` field is specified, this field
-	// should either be left unspecified or set to `ARTIFACT_REGISTRY`.
+	// only use Artifact Registry. Deprecated: Container Registry option will no
+	// longer be available after March 2025:
+	// https://cloud.google.com/artifact-registry/docs/transition/transition-from-gcr
+	// Please use Artifact Registry instead, which is the default choice. If
+	// unspecified, it defaults to `ARTIFACT_REGISTRY`. If `docker_repository`
+	// field is specified, this field should either be left unspecified or set to
+	// `ARTIFACT_REGISTRY`.
 	//
 	// Possible values:
 	//   "DOCKER_REGISTRY_UNSPECIFIED" - Unspecified.
@@ -524,6 +528,10 @@ type Date struct {
 func (s Date) MarshalJSON() ([]byte, error) {
 	type NoMethod Date
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// DetachFunctionRequest: Request for the `DetachFunction` method.
+type DetachFunctionRequest struct {
 }
 
 // EventFilter: Filters events based on exact matches on the CloudEvents
@@ -2553,6 +2561,109 @@ func (c *ProjectsLocationsFunctionsDeleteCall) Do(opts ...googleapi.CallOption) 
 		return nil, err
 	}
 	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "cloudfunctions.projects.locations.functions.delete", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsFunctionsDetachFunctionCall struct {
+	s                     *Service
+	name                  string
+	detachfunctionrequest *DetachFunctionRequest
+	urlParams_            gensupport.URLParams
+	ctx_                  context.Context
+	header_               http.Header
+}
+
+// DetachFunction: Detaches 2nd Gen function to Cloud Run function.
+//
+// - name: The name of the function for which should be detached.
+func (r *ProjectsLocationsFunctionsService) DetachFunction(name string, detachfunctionrequest *DetachFunctionRequest) *ProjectsLocationsFunctionsDetachFunctionCall {
+	c := &ProjectsLocationsFunctionsDetachFunctionCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.detachfunctionrequest = detachfunctionrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsFunctionsDetachFunctionCall) Fields(s ...googleapi.Field) *ProjectsLocationsFunctionsDetachFunctionCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsFunctionsDetachFunctionCall) Context(ctx context.Context) *ProjectsLocationsFunctionsDetachFunctionCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsFunctionsDetachFunctionCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsFunctionsDetachFunctionCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.detachfunctionrequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2alpha/{+name}:detachFunction")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "cloudfunctions.projects.locations.functions.detachFunction", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "cloudfunctions.projects.locations.functions.detachFunction" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsFunctionsDetachFunctionCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "cloudfunctions.projects.locations.functions.detachFunction", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 

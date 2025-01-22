@@ -1395,6 +1395,8 @@ type MountOption struct {
 	ExportFull string `json:"exportFull,omitempty"`
 	// Instructions: Instructions for mounting
 	Instructions string `json:"instructions,omitempty"`
+	// IpAddress: Output only. IP Address.
+	IpAddress string `json:"ipAddress,omitempty"`
 	// Protocol: Protocol to mount with.
 	//
 	// Possible values:

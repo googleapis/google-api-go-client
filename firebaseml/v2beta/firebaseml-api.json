@@ -206,7 +206,7 @@
       }
     }
   },
-  "revision": "20241231",
+  "revision": "20250119",
   "rootUrl": "https://firebaseml.googleapis.com/",
   "schemas": {
     "Date": {
@@ -238,6 +238,10 @@
         "data": {
           "description": "Required. Raw bytes.",
           "format": "byte",
+          "type": "string"
+        },
+        "displayName": {
+          "description": "Optional. Display name of the blob. Used to provide a label or filename to distinguish blobs. This field is only returned in PromptMessage for prompt management. It is not currently used in the Gemini GenerateContent calls.",
           "type": "string"
         },
         "mimeType": {
@@ -535,6 +539,10 @@
       "description": "URI based data.",
       "id": "GoogleCloudAiplatformV1beta1FileData",
       "properties": {
+        "displayName": {
+          "description": "Optional. Display name of the file data. Used to provide a label or filename to distinguish file datas. This field is only returned in PromptMessage for prompt management. It is not currently used in the Gemini GenerateContent calls.",
+          "type": "string"
+        },
         "fileUri": {
           "description": "Required. URI.",
           "type": "string"
@@ -700,6 +708,12 @@
           "readOnly": true,
           "type": "array"
         },
+        "createTime": {
+          "description": "Output only. Timestamp when the request is made to the server.",
+          "format": "google-datetime",
+          "readOnly": true,
+          "type": "string"
+        },
         "modelVersion": {
           "description": "Output only. The model version used to generate the response.",
           "readOnly": true,
@@ -709,6 +723,11 @@
           "$ref": "GoogleCloudAiplatformV1beta1GenerateContentResponsePromptFeedback",
           "description": "Output only. Content filter results for a prompt sent in the request. Note: Sent only in the first stream chunk. Only happens when no candidates were generated due to content violations.",
           "readOnly": true
+        },
+        "responseId": {
+          "description": "Output only. response_id is used to identify each response. It is the encoding of the event_id.",
+          "readOnly": true,
+          "type": "string"
         },
         "usageMetadata": {
           "$ref": "GoogleCloudAiplatformV1beta1GenerateContentResponseUsageMetadata",

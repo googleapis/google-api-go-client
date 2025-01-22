@@ -633,9 +633,10 @@ type CheckError struct {
 	// backend server is unavailable.
 	//   "SECURITY_POLICY_BACKEND_UNAVAILABLE" - NOTE: for customers in the scope
 	// of Beta/GA of https://cloud.google.com/vpc-service-controls, this error is
-	// no longer returned. If the security backend is unavailable, rpc UNAVAILABLE
-	// status will be returned instead. It should be ignored and should not be used
-	// to reject client requests.
+	// no longer returned. If the security backend is unavailable: For Fail open
+	// requests, error is ignored and request is allowed. For Fail close requests,
+	// rpc UNAVAILABLE status will be returned instead. It should be ignored and
+	// should not be used to reject client requests.
 	//   "LOCATION_POLICY_BACKEND_UNAVAILABLE" - Backend server for evaluating
 	// location policy is unavailable.
 	//   "INJECTED_ERROR" - Part of the project of fault injection:

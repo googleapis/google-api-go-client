@@ -732,7 +732,7 @@
       }
     }
   },
-  "revision": "20241204",
+  "revision": "20250117",
   "rootUrl": "https://datafusion.googleapis.com/",
   "schemas": {
     "Accelerator": {
@@ -1052,7 +1052,7 @@
           "additionalProperties": {
             "type": "string"
           },
-          "description": "Map of additional options used to configure the behavior of Data Fusion instance.",
+          "description": "Optional. Map of additional options used to configure the behavior of Data Fusion instance.",
           "type": "object"
         },
         "p4ServiceAccount": {
@@ -1422,7 +1422,7 @@
           "type": "string"
         },
         "requestedCancellation": {
-          "description": "Identifies whether the user has requested cancellation of the operation. Operations that have successfully been cancelled have Operation.error value with a google.rpc.Status.code of 1, corresponding to `Code.CANCELLED`.",
+          "description": "Identifies whether the user has requested cancellation of the operation. Operations that have successfully been cancelled have google.longrunning.Operation.error value with a google.rpc.Status.code of 1, corresponding to `Code.CANCELLED`.",
           "type": "boolean"
         },
         "statusDetail": {

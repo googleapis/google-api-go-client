@@ -40,6 +40,7 @@ func TestDefaultApply(t *testing.T) {
 		WithDefaultScopes("a"),
 		WithDefaultUniverseDomain("foo.com"),
 		WithDefaultAudience("audience"),
+		AllowHardBoundTokens("MTLS_S2A"),
 	}
 	var got internal.DialSettings
 	for _, opt := range opts {
@@ -52,6 +53,7 @@ func TestDefaultApply(t *testing.T) {
 		DefaultUniverseDomain:   "foo.com",
 		DefaultAudience:         "audience",
 		DefaultMTLSEndpoint:     "http://mtls.example.com:445",
+		AllowHardBoundTokens:    []string{"MTLS_S2A"},
 	}
 	ignore := []cmp.Option{
 		cmpopts.IgnoreUnexported(grpc.ClientConn{}),

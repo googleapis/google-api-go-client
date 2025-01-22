@@ -186,6 +186,21 @@ func (w enableJwtWithScope) Apply(o *internal.DialSettings) {
 	o.EnableJwtWithScope = bool(w)
 }
 
+// AllowHardBoundTokens returns a ClientOption that allows libraries to request a hard-bound token.
+//
+// It should only be used internally by generated clients.
+// This is an EXPERIMENTAL API and may be changed or removed in the future.
+func AllowHardBoundTokens(protocol ...string) option.ClientOption {
+	return allowHardBoundTokens(protocol)
+}
+
+type allowHardBoundTokens []string
+
+func (a allowHardBoundTokens) Apply(o *internal.DialSettings) {
+	o.AllowHardBoundTokens = make([]string, len(a))
+	copy(o.AllowHardBoundTokens, a)
+}
+
 // WithCredentials returns a client option to specify credentials which will be used to authenticate API calls.
 // This credential takes precedence over all other credential options.
 func WithCredentials(creds *google.Credentials) option.ClientOption {

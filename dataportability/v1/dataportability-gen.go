@@ -231,6 +231,9 @@ const (
 	// use of Google services
 	DataportabilitySavedCollectionsScope = "https://www.googleapis.com/auth/dataportability.saved.collections"
 
+	// Move a copy of your comments on Google Search
+	DataportabilitySearchUgcCommentsScope = "https://www.googleapis.com/auth/dataportability.search_ugc.comments"
+
 	// Move a copy of your media reviews on Google Search
 	DataportabilitySearchUgcMediaReviewsAndStarsScope = "https://www.googleapis.com/auth/dataportability.search_ugc.media.reviews_and_stars"
 
@@ -353,6 +356,7 @@ func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, err
 		"https://www.googleapis.com/auth/dataportability.play.subscriptions",
 		"https://www.googleapis.com/auth/dataportability.play.usersettings",
 		"https://www.googleapis.com/auth/dataportability.saved.collections",
+		"https://www.googleapis.com/auth/dataportability.search_ugc.comments",
 		"https://www.googleapis.com/auth/dataportability.search_ugc.media.reviews_and_stars",
 		"https://www.googleapis.com/auth/dataportability.search_ugc.media.streaming_video_providers",
 		"https://www.googleapis.com/auth/dataportability.search_ugc.media.thumbs",

@@ -4526,6 +4526,7 @@ type GoogleCloudDiscoveryengineV1WorkspaceConfig struct {
 	//   "GOOGLE_CHAT" - Workspace Data Store contains Chat data
 	//   "GOOGLE_GROUPS" - Workspace Data Store contains Groups data
 	//   "GOOGLE_KEEP" - Workspace Data Store contains Keep data
+	//   "GOOGLE_PEOPLE" - Workspace Data Store contains People data
 	Type string `json:"type,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "DasherCustomerId") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -4637,6 +4638,8 @@ type GoogleCloudDiscoveryengineV1alphaAdvancedCompleteQueryRequest struct {
 	// dataStores. * `search-history` is the default model for site search
 	// dataStores.
 	QueryModel string `json:"queryModel,omitempty"`
+	// SuggestionTypeSpecs: Optional. Specification of each suggestion type.
+	SuggestionTypeSpecs []*GoogleCloudDiscoveryengineV1alphaAdvancedCompleteQueryRequestSuggestionTypeSpec `json:"suggestionTypeSpecs,omitempty"`
 	// SuggestionTypes: Optional. Suggestion types to return. If empty or
 	// unspecified, query suggestions are returned. Only one suggestion type is
 	// supported at the moment.
@@ -4752,6 +4755,40 @@ func (s *GoogleCloudDiscoveryengineV1alphaAdvancedCompleteQueryRequestBoostSpecC
 	}
 	s.Boost = float64(s1.Boost)
 	return nil
+}
+
+// GoogleCloudDiscoveryengineV1alphaAdvancedCompleteQueryRequestSuggestionTypeSp
+// ec: Specification of each suggestion type.
+type GoogleCloudDiscoveryengineV1alphaAdvancedCompleteQueryRequestSuggestionTypeSpec struct {
+	// MaxSuggestions: Optional. Maximum number of suggestions to return for each
+	// suggestion type.
+	MaxSuggestions int64 `json:"maxSuggestions,omitempty"`
+	// SuggestionType: Optional. Suggestion type.
+	//
+	// Possible values:
+	//   "SUGGESTION_TYPE_UNSPECIFIED" - Default value.
+	//   "QUERY" - Returns query suggestions.
+	//   "PEOPLE" - Returns people suggestions.
+	//   "CONTENT" - Returns content suggestions.
+	//   "RECENT_SEARCH" - Returns recent search suggestions.
+	//   "GOOGLE_WORKSPACE" - Returns Google Workspace suggestions.
+	SuggestionType string `json:"suggestionType,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "MaxSuggestions") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "MaxSuggestions") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1alphaAdvancedCompleteQueryRequestSuggestionTypeSpec) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1alphaAdvancedCompleteQueryRequestSuggestionTypeSpec
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDiscoveryengineV1alphaAdvancedCompleteQueryResponse: Response
@@ -5204,6 +5241,8 @@ type GoogleCloudDiscoveryengineV1alphaAnswerQueryRequest struct {
 	// calling ConversationalSearchService.GetAnswer or
 	// ConversationalSearchService.GetSession method.
 	AsynchronousMode bool `json:"asynchronousMode,omitempty"`
+	// EndUserSpec: Optional. End user specification.
+	EndUserSpec *GoogleCloudDiscoveryengineV1alphaAnswerQueryRequestEndUserSpec `json:"endUserSpec,omitempty"`
 	// GroundingSpec: Optional. Grounding specification.
 	GroundingSpec *GoogleCloudDiscoveryengineV1alphaAnswerQueryRequestGroundingSpec `json:"groundingSpec,omitempty"`
 	// Query: Required. Current user query.
@@ -5367,6 +5406,101 @@ type GoogleCloudDiscoveryengineV1alphaAnswerQueryRequestAnswerGenerationSpecProm
 
 func (s GoogleCloudDiscoveryengineV1alphaAnswerQueryRequestAnswerGenerationSpecPromptSpec) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDiscoveryengineV1alphaAnswerQueryRequestAnswerGenerationSpecPromptSpec
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1alphaAnswerQueryRequestEndUserSpec: End user
+// specification.
+type GoogleCloudDiscoveryengineV1alphaAnswerQueryRequestEndUserSpec struct {
+	// EndUserMetadata: Optional. End user metadata.
+	EndUserMetadata []*GoogleCloudDiscoveryengineV1alphaAnswerQueryRequestEndUserSpecEndUserMetaData `json:"endUserMetadata,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "EndUserMetadata") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "EndUserMetadata") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1alphaAnswerQueryRequestEndUserSpec) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1alphaAnswerQueryRequestEndUserSpec
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1alphaAnswerQueryRequestEndUserSpecEndUserMetaData
+// : End user metadata.
+type GoogleCloudDiscoveryengineV1alphaAnswerQueryRequestEndUserSpecEndUserMetaData struct {
+	// ChunkInfo: Chunk information.
+	ChunkInfo *GoogleCloudDiscoveryengineV1alphaAnswerQueryRequestEndUserSpecEndUserMetaDataChunkInfo `json:"chunkInfo,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ChunkInfo") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ChunkInfo") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1alphaAnswerQueryRequestEndUserSpecEndUserMetaData) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1alphaAnswerQueryRequestEndUserSpecEndUserMetaData
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1alphaAnswerQueryRequestEndUserSpecEndUserMetaData
+// ChunkInfo: Chunk information.
+type GoogleCloudDiscoveryengineV1alphaAnswerQueryRequestEndUserSpecEndUserMetaDataChunkInfo struct {
+	// Content: Chunk textual content. It is limited to 8000 characters.
+	Content string `json:"content,omitempty"`
+	// DocumentMetadata: Metadata of the document from the current chunk.
+	DocumentMetadata *GoogleCloudDiscoveryengineV1alphaAnswerQueryRequestEndUserSpecEndUserMetaDataChunkInfoDocumentMetadata `json:"documentMetadata,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Content") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Content") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1alphaAnswerQueryRequestEndUserSpecEndUserMetaDataChunkInfo) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1alphaAnswerQueryRequestEndUserSpecEndUserMetaDataChunkInfo
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1alphaAnswerQueryRequestEndUserSpecEndUserMetaData
+// ChunkInfoDocumentMetadata: Document metadata contains the information of the
+// document of the current chunk.
+type GoogleCloudDiscoveryengineV1alphaAnswerQueryRequestEndUserSpecEndUserMetaDataChunkInfoDocumentMetadata struct {
+	// Title: Title of the document.
+	Title string `json:"title,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Title") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Title") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1alphaAnswerQueryRequestEndUserSpecEndUserMetaDataChunkInfoDocumentMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1alphaAnswerQueryRequestEndUserSpecEndUserMetaDataChunkInfoDocumentMetadata
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -8592,10 +8726,12 @@ type GoogleCloudDiscoveryengineV1alphaDataConnector struct {
 	// Name: Output only. The full resource name of the Data Connector. Format:
 	// `projects/*/locations/*/collections/*/dataConnector`.
 	Name string `json:"name,omitempty"`
-	// NextSyncTime: The UTC time when the next data sync is expected to start for
-	// the Data Connector. Customers are only able to specify the hour and minute
-	// to schedule the data sync. This is utilized when the data connector has a
-	// refresh interval greater than 1 day.
+	// NextSyncTime: Defines the scheduled time for the next data synchronization.
+	// This field requires hour , minute, and time_zone from the IANA Time Zone
+	// Database (https://www.iana.org/time-zones). This is utilized when the data
+	// connector has a refresh interval greater than 1 day. When the hours or
+	// minutes are not specified, we will assume a sync time of 0:00. The user must
+	// provide a time zone to avoid ambiguity.
 	NextSyncTime *GoogleTypeDateTime `json:"nextSyncTime,omitempty"`
 	// Params: Required. Params needed to access the source in the format of (Key,
 	// Value) pairs. Required parameters for all data sources: * Key:
@@ -18666,6 +18802,7 @@ type GoogleCloudDiscoveryengineV1alphaWorkspaceConfig struct {
 	//   "GOOGLE_CHAT" - Workspace Data Store contains Chat data
 	//   "GOOGLE_GROUPS" - Workspace Data Store contains Groups data
 	//   "GOOGLE_KEEP" - Workspace Data Store contains Keep data
+	//   "GOOGLE_PEOPLE" - Workspace Data Store contains People data
 	Type string `json:"type,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "DasherCustomerId") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -22620,6 +22757,7 @@ type GoogleCloudDiscoveryengineV1betaWorkspaceConfig struct {
 	//   "GOOGLE_CHAT" - Workspace Data Store contains Chat data
 	//   "GOOGLE_GROUPS" - Workspace Data Store contains Groups data
 	//   "GOOGLE_KEEP" - Workspace Data Store contains Keep data
+	//   "GOOGLE_PEOPLE" - Workspace Data Store contains People data
 	Type string `json:"type,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "DasherCustomerId") to
 	// unconditionally include in API requests. By default, fields with empty or

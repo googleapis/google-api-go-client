@@ -106,11 +106,50 @@ const (
 	// using Google Calendar
 	CalendarScope = "https://www.googleapis.com/auth/calendar"
 
+	// See and change the sharing permissions of Google calendars you own
+	CalendarAclsScope = "https://www.googleapis.com/auth/calendar.acls"
+
+	// See the sharing permissions of Google calendars you own
+	CalendarAclsReadonlyScope = "https://www.googleapis.com/auth/calendar.acls.readonly"
+
+	// Make secondary Google calendars, and see, create, change, and delete events
+	// on them
+	CalendarAppCreatedScope = "https://www.googleapis.com/auth/calendar.app.created"
+
+	// See, add, and remove Google calendars you’re subscribed to
+	CalendarCalendarlistScope = "https://www.googleapis.com/auth/calendar.calendarlist"
+
+	// See the list of Google calendars you’re subscribed to
+	CalendarCalendarlistReadonlyScope = "https://www.googleapis.com/auth/calendar.calendarlist.readonly"
+
+	// See and change the properties of Google calendars you have access to, and
+	// create secondary calendars
+	CalendarCalendarsScope = "https://www.googleapis.com/auth/calendar.calendars"
+
+	// See the title, description, default time zone, and other properties of
+	// Google calendars you have access to
+	CalendarCalendarsReadonlyScope = "https://www.googleapis.com/auth/calendar.calendars.readonly"
+
 	// View and edit events on all your calendars
 	CalendarEventsScope = "https://www.googleapis.com/auth/calendar.events"
 
+	// See the availability on Google calendars you have access to
+	CalendarEventsFreebusyScope = "https://www.googleapis.com/auth/calendar.events.freebusy"
+
+	// See, create, change, and delete events on Google calendars you own
+	CalendarEventsOwnedScope = "https://www.googleapis.com/auth/calendar.events.owned"
+
+	// See the events on Google calendars you own
+	CalendarEventsOwnedReadonlyScope = "https://www.googleapis.com/auth/calendar.events.owned.readonly"
+
+	// See the events on public calendars
+	CalendarEventsPublicReadonlyScope = "https://www.googleapis.com/auth/calendar.events.public.readonly"
+
 	// View events on all your calendars
 	CalendarEventsReadonlyScope = "https://www.googleapis.com/auth/calendar.events.readonly"
+
+	// View your availability in your calendars
+	CalendarFreebusyScope = "https://www.googleapis.com/auth/calendar.freebusy"
 
 	// See and download any calendar you can access using your Google Calendar
 	CalendarReadonlyScope = "https://www.googleapis.com/auth/calendar.readonly"
@@ -123,8 +162,20 @@ const (
 func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, error) {
 	scopesOption := internaloption.WithDefaultScopes(
 		"https://www.googleapis.com/auth/calendar",
+		"https://www.googleapis.com/auth/calendar.acls",
+		"https://www.googleapis.com/auth/calendar.acls.readonly",
+		"https://www.googleapis.com/auth/calendar.app.created",
+		"https://www.googleapis.com/auth/calendar.calendarlist",
+		"https://www.googleapis.com/auth/calendar.calendarlist.readonly",
+		"https://www.googleapis.com/auth/calendar.calendars",
+		"https://www.googleapis.com/auth/calendar.calendars.readonly",
 		"https://www.googleapis.com/auth/calendar.events",
+		"https://www.googleapis.com/auth/calendar.events.freebusy",
+		"https://www.googleapis.com/auth/calendar.events.owned",
+		"https://www.googleapis.com/auth/calendar.events.owned.readonly",
+		"https://www.googleapis.com/auth/calendar.events.public.readonly",
 		"https://www.googleapis.com/auth/calendar.events.readonly",
+		"https://www.googleapis.com/auth/calendar.freebusy",
 		"https://www.googleapis.com/auth/calendar.readonly",
 		"https://www.googleapis.com/auth/calendar.settings.readonly",
 	)
@@ -318,10 +369,10 @@ type AclRule struct {
 	// appear to users with reader access, but event details will be hidden.
 	// - "writer" - Provides read and write access to the calendar. Private events
 	// will appear to users with writer access, and event details will be visible.
-	//
+	// Provides read access to the calendar's ACLs.
 	// - "owner" - Provides ownership of the calendar. This role has all of the
-	// permissions of the writer role with the additional ability to see and
-	// manipulate ACLs.
+	// permissions of the writer role with the additional ability to manipulate
+	// ACLs.
 	Role string `json:"role,omitempty"`
 	// Scope: The extent to which calendar access is granted by this ACL rule.
 	Scope *AclRuleScope `json:"scope,omitempty"`

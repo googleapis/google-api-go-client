@@ -337,6 +337,37 @@
         }
       }
     },
+    "enrollmentTokens": {
+      "methods": {
+        "create": {
+          "description": "Returns a token for device enrollment. The DPC can encode this token within the QR/NFC/zero-touch enrollment payload or fetch it before calling the on-device API to authenticate the user. The token can be generated for each device or reused across multiple devices.",
+          "flatPath": "androidenterprise/v1/enterprises/{enterpriseId}/enrollmentTokens",
+          "httpMethod": "POST",
+          "id": "androidenterprise.enrollmentTokens.create",
+          "parameterOrder": [
+            "enterpriseId"
+          ],
+          "parameters": {
+            "enterpriseId": {
+              "description": "Required. The ID of the enterprise.",
+              "location": "path",
+              "required": true,
+              "type": "string"
+            }
+          },
+          "path": "androidenterprise/v1/enterprises/{enterpriseId}/enrollmentTokens",
+          "request": {
+            "$ref": "EnrollmentToken"
+          },
+          "response": {
+            "$ref": "EnrollmentToken"
+          },
+          "scopes": [
+            "https://www.googleapis.com/auth/androidenterprise"
+          ]
+        }
+      }
+    },
     "enterprises": {
       "methods": {
         "acknowledgeNotificationSet": {
@@ -378,33 +409,6 @@
           "path": "androidenterprise/v1/enterprises/completeSignup",
           "response": {
             "$ref": "Enterprise"
-          },
-          "scopes": [
-            "https://www.googleapis.com/auth/androidenterprise"
-          ]
-        },
-        "createEnrollmentToken": {
-          "description": "Returns a token for device enrollment. The DPC can encode this token within the QR/NFC/zero-touch enrollment payload or fetch it before calling the on-device API to authenticate the user. The token can be generated for each device or reused across multiple devices.",
-          "flatPath": "androidenterprise/v1/enterprises/{enterpriseId}/createEnrollmentToken",
-          "httpMethod": "POST",
-          "id": "androidenterprise.enterprises.createEnrollmentToken",
-          "parameterOrder": [
-            "enterpriseId"
-          ],
-          "parameters": {
-            "enterpriseId": {
-              "description": "Required. The ID of the enterprise.",
-              "location": "path",
-              "required": true,
-              "type": "string"
-            }
-          },
-          "path": "androidenterprise/v1/enterprises/{enterpriseId}/createEnrollmentToken",
-          "request": {
-            "$ref": "EnrollmentToken"
-          },
-          "response": {
-            "$ref": "EnrollmentToken"
           },
           "scopes": [
             "https://www.googleapis.com/auth/androidenterprise"
@@ -472,8 +476,14 @@
           "parameterOrder": [],
           "parameters": {
             "adminEmail": {
-              "description": "Optional. Email address used to prefill the admin field of the enterprise signup form. This value is a hint only and can be altered by the user.",
+              "description": "Optional. Email address used to prefill the admin field of the enterprise signup form. This value is a hint only and can be altered by the user. If `allowedDomains` is non-empty then this must belong to one of the `allowedDomains`.",
               "location": "query",
+              "type": "string"
+            },
+            "allowedDomains": {
+              "description": "Optional. A list of domains that are permitted for the admin email. The IT admin cannot enter an email address with a domain name that is not in this list. Subdomains of domains in this list are not allowed but can be allowed by adding a second entry which has `*.` prefixed to the domain name (e.g. *.example.com). If the field is not present or is an empty list then the IT admin is free to use any valid domain name. Personal email domains are always allowed, but will result in the creation of a managed Google Play Accounts enterprise.",
+              "location": "query",
+              "repeated": true,
               "type": "string"
             },
             "callbackUrl": {
@@ -2642,7 +2652,7 @@
       }
     }
   },
-  "revision": "20250102",
+  "revision": "20250115",
   "rootUrl": "https://androidenterprise.googleapis.com/",
   "schemas": {
     "Administrator": {

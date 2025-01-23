@@ -368,6 +368,8 @@ type Backup struct {
 	ClusterUid string `json:"clusterUid,omitempty"`
 	// CreateTime: Output only. The time when the backup was created.
 	CreateTime string `json:"createTime,omitempty"`
+	// EncryptionInfo: Output only. Encryption information of the backup.
+	EncryptionInfo *EncryptionInfo `json:"encryptionInfo,omitempty"`
 	// EngineVersion: Output only. redis-7.2, valkey-7.5
 	EngineVersion string `json:"engineVersion,omitempty"`
 	// ExpireTime: Output only. The time when the backup will expire.
@@ -459,6 +461,9 @@ type BackupCollection struct {
 	Cluster string `json:"cluster,omitempty"`
 	// ClusterUid: Output only. The cluster uid of the backup collection.
 	ClusterUid string `json:"clusterUid,omitempty"`
+	// KmsKey: Output only. The KMS key used to encrypt the backups under this
+	// backup collection.
+	KmsKey string `json:"kmsKey,omitempty"`
 	// Name: Identifier. Full resource path of the backup collection.
 	Name string `json:"name,omitempty"`
 	// Uid: Output only. System assigned unique identifier of the backup
@@ -627,6 +632,11 @@ func (s CertificateAuthority) MarshalJSON() ([]byte, error) {
 
 // Cluster: A cluster instance.
 type Cluster struct {
+	// AsyncClusterEndpointsDeletionEnabled: Optional. If true, cluster endpoints
+	// that are created and registered by customers can be deleted asynchronously.
+	// That is, such a cluster endpoint can be de-registered before the forwarding
+	// rules in the cluster endpoint are deleted.
+	AsyncClusterEndpointsDeletionEnabled bool `json:"asyncClusterEndpointsDeletionEnabled,omitempty"`
 	// AuthorizationMode: Optional. The authorization mode of the Redis cluster. If
 	// not provided, auth feature is disabled for the cluster.
 	//
@@ -656,10 +666,16 @@ type Cluster struct {
 	// for Redis clients to connect to the cluster. Currently only one discovery
 	// endpoint is supported.
 	DiscoveryEndpoints []*DiscoveryEndpoint `json:"discoveryEndpoints,omitempty"`
+	// EncryptionInfo: Output only. Encryption information of the data at rest of
+	// the cluster.
+	EncryptionInfo *EncryptionInfo `json:"encryptionInfo,omitempty"`
 	// GcsSource: Optional. Backups stored in Cloud Storage buckets. The Cloud
 	// Storage buckets need to be the same region as the clusters. Read permission
 	// is required to import from the provided Cloud Storage objects.
 	GcsSource *GcsBackupSource `json:"gcsSource,omitempty"`
+	// KmsKey: Optional. The KMS key used to encrypt the at-rest data of the
+	// cluster.
+	KmsKey string `json:"kmsKey,omitempty"`
 	// MaintenancePolicy: Optional. ClusterMaintenancePolicy determines when to
 	// allow or deny updates.
 	MaintenancePolicy *ClusterMaintenancePolicy `json:"maintenancePolicy,omitempty"`
@@ -738,16 +754,18 @@ type Cluster struct {
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-	// ForceSendFields is a list of field names (e.g. "AuthorizationMode") to
-	// unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
+	// ForceSendFields is a list of field names (e.g.
+	// "AsyncClusterEndpointsDeletionEnabled") to unconditionally include in API
+	// requests. By default, fields with empty or default values are omitted from
+	// API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "AuthorizationMode") to include in
-	// API requests with the JSON null value. By default, fields with empty values
-	// are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	// NullFields is a list of field names (e.g.
+	// "AsyncClusterEndpointsDeletionEnabled") to include in API requests with the
+	// JSON null value. By default, fields with empty values are omitted from API
+	// requests. See https://pkg.go.dev/google.golang.org/api#hdr-NullFields for
+	// more details.
 	NullFields []string `json:"-"`
 }
 
@@ -1855,6 +1873,58 @@ type Empty struct {
 	googleapi.ServerResponse `json:"-"`
 }
 
+// EncryptionInfo: EncryptionInfo describes the encryption information of a
+// cluster or a backup.
+type EncryptionInfo struct {
+	// EncryptionType: Output only. Type of encryption.
+	//
+	// Possible values:
+	//   "TYPE_UNSPECIFIED" - Encryption type not specified. Defaults to
+	// GOOGLE_DEFAULT_ENCRYPTION.
+	//   "GOOGLE_DEFAULT_ENCRYPTION" - The data is encrypted at rest with a key
+	// that is fully managed by Google. No key version will be populated. This is
+	// the default state.
+	//   "CUSTOMER_MANAGED_ENCRYPTION" - The data is encrypted at rest with a key
+	// that is managed by the customer. KMS key versions will be populated.
+	EncryptionType string `json:"encryptionType,omitempty"`
+	// KmsKeyPrimaryState: Output only. The state of the primary version of the KMS
+	// key perceived by the system. This field is not populated in backups.
+	//
+	// Possible values:
+	//   "KMS_KEY_STATE_UNSPECIFIED" - The default value. This value is unused.
+	//   "ENABLED" - The KMS key is enabled and correctly configured.
+	//   "PERMISSION_DENIED" - Permission denied on the KMS key.
+	//   "DISABLED" - The KMS key is disabled.
+	//   "DESTROYED" - The KMS key is destroyed.
+	//   "DESTROY_SCHEDULED" - The KMS key is scheduled to be destroyed.
+	//   "EKM_KEY_UNREACHABLE_DETECTED" - The EKM key is unreachable.
+	//   "BILLING_DISABLED" - Billing is disabled for the project.
+	//   "UNKNOWN_FAILURE" - All other unknown failures.
+	KmsKeyPrimaryState string `json:"kmsKeyPrimaryState,omitempty"`
+	// KmsKeyVersions: Output only. KMS key versions that are being used to protect
+	// the data at-rest.
+	KmsKeyVersions []string `json:"kmsKeyVersions,omitempty"`
+	// LastUpdateTime: Output only. The most recent time when the encryption info
+	// was updated.
+	LastUpdateTime string `json:"lastUpdateTime,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "EncryptionType") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "EncryptionType") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s EncryptionInfo) MarshalJSON() ([]byte, error) {
+	type NoMethod EncryptionInfo
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // Entitlement: Proto representing the access that a user has to a specific
 // feature/service. NextId: 3.
 type Entitlement struct {
@@ -2686,8 +2756,8 @@ func (s Location) MarshalJSON() ([]byte, error) {
 // MachineConfiguration: MachineConfiguration describes the configuration of a
 // machine specific to Database Resource.
 type MachineConfiguration struct {
-	// CpuCount: The number of CPUs. TODO(b/342344482, b/342346271) add proto
-	// validations again after bug fix.
+	// CpuCount: The number of CPUs. Deprecated. Use vcpu_count instead.
+	// TODO(b/342344482, b/342346271) add proto validations again after bug fix.
 	CpuCount int64 `json:"cpuCount,omitempty"`
 	// MemorySizeInBytes: Memory size in bytes. TODO(b/342344482, b/342346271) add
 	// proto validations again after bug fix.
@@ -2916,6 +2986,8 @@ type ObservabilityMetricData struct {
 	//   "STORAGE_UTILIZATION" - Storage utilization for a resource. The value is a
 	// fraction between 0.0 and 1.0 (may momentarily exceed 1.0 in some cases).
 	//   "STORAGE_USED_BYTES" - Sotrage used by a resource.
+	//   "NODE_COUNT" - Node count for a resource. It represents the number of
+	// nodes units in a bigtable/spanner instance.
 	MetricType string `json:"metricType,omitempty"`
 	// ObservationTime: Required. The time the metric value was observed.
 	ObservationTime string `json:"observationTime,omitempty"`
@@ -5695,7 +5767,7 @@ func (c *ProjectsLocationsClustersPatchCall) RequestId(requestId string) *Projec
 // UpdateMask sets the optional parameter "updateMask": Required. Mask of
 // fields to update. At least one path must be supplied in this field. The
 // elements of the repeated paths field may only include these fields from
-// Cluster: * `size_gb` * `replica_count`
+// Cluster: * `size_gb` * `replica_count` * `cluster_endpoints`
 func (c *ProjectsLocationsClustersPatchCall) UpdateMask(updateMask string) *ProjectsLocationsClustersPatchCall {
 	c.urlParams_.Set("updateMask", updateMask)
 	return c

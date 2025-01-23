@@ -1880,16 +1880,17 @@ func (s NetworkConfig) MarshalJSON() ([]byte, error) {
 // are ephemereal, they can change during update, failover, autohealing and
 // resize operations.
 type Node struct {
-	// Id: The identifier of the VM e.g. "test-read-0601-407e52be-ms3l".
+	// Id: Output only. The identifier of the VM e.g.
+	// "test-read-0601-407e52be-ms3l".
 	Id string `json:"id,omitempty"`
-	// Ip: The private IP address of the VM e.g. "10.57.0.34".
+	// Ip: Output only. The private IP address of the VM e.g. "10.57.0.34".
 	Ip string `json:"ip,omitempty"`
-	// State: Determined by state of the compute VM and postgres-service health.
-	// Compute VM state can have values listed in
+	// State: Output only. Determined by state of the compute VM and
+	// postgres-service health. Compute VM state can have values listed in
 	// https://cloud.google.com/compute/docs/instances/instance-life-cycle and
 	// postgres-service health can have values: HEALTHY and UNHEALTHY.
 	State string `json:"state,omitempty"`
-	// ZoneId: The Compute Engine zone of the VM e.g. "us-central1-b".
+	// ZoneId: Output only. The Compute Engine zone of the VM e.g. "us-central1-b".
 	ZoneId string `json:"zoneId,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Id") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -2964,6 +2965,10 @@ type StorageDatabasecenterPartnerapiV1mainDatabaseResourceHealthSignalData struc
 	//   "SIGNAL_TYPE_DATA_EXPORT_TO_PUBLIC_CLOUD_STORAGE_BUCKET" - Detects if
 	// database instance data exported to a Cloud Storage bucket that is owned by
 	// the organization and is publicly accessible.
+	//   "SIGNAL_TYPE_WEAK_PASSWORD_HASH_ALGORITHM" - Detects if a database
+	// instance is using a weak password hash algorithm.
+	//   "SIGNAL_TYPE_NO_USER_PASSWORD_POLICY" - Detects if a database instance has
+	// no user password policy set.
 	SignalType string `json:"signalType,omitempty"`
 	// Possible values:
 	//   "STATE_UNSPECIFIED" - Unspecified state.
@@ -3393,6 +3398,10 @@ type StorageDatabasecenterPartnerapiV1mainDatabaseResourceRecommendationSignalDa
 	//   "SIGNAL_TYPE_DATA_EXPORT_TO_PUBLIC_CLOUD_STORAGE_BUCKET" - Detects if
 	// database instance data exported to a Cloud Storage bucket that is owned by
 	// the organization and is publicly accessible.
+	//   "SIGNAL_TYPE_WEAK_PASSWORD_HASH_ALGORITHM" - Detects if a database
+	// instance is using a weak password hash algorithm.
+	//   "SIGNAL_TYPE_NO_USER_PASSWORD_POLICY" - Detects if a database instance has
+	// no user password policy set.
 	SignalType string `json:"signalType,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AdditionalMetadata") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -3487,8 +3496,8 @@ func (s StorageDatabasecenterPartnerapiV1mainInternalResourceMetadata) MarshalJS
 // MachineConfiguration describes the configuration of a machine specific to
 // Database Resource.
 type StorageDatabasecenterPartnerapiV1mainMachineConfiguration struct {
-	// CpuCount: The number of CPUs. TODO(b/342344482, b/342346271) add proto
-	// validations again after bug fix.
+	// CpuCount: The number of CPUs. Deprecated. Use vcpu_count instead.
+	// TODO(b/342344482, b/342346271) add proto validations again after bug fix.
 	CpuCount int64 `json:"cpuCount,omitempty"`
 	// MemorySizeInBytes: Memory size in bytes. TODO(b/342344482, b/342346271) add
 	// proto validations again after bug fix.

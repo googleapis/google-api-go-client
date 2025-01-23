@@ -758,7 +758,8 @@ type Instance struct {
 	ConsumerNetwork string `json:"consumerNetwork,omitempty"`
 	// CreateTime: Output only. The time when the Looker instance provisioning was
 	// first requested.
-	CreateTime   string        `json:"createTime,omitempty"`
+	CreateTime string `json:"createTime,omitempty"`
+	// CustomDomain: Custom domain configuration for the instance.
 	CustomDomain *CustomDomain `json:"customDomain,omitempty"`
 	// DenyMaintenancePeriod: Maintenance denial period for this instance.
 	DenyMaintenancePeriod *DenyMaintenancePeriod `json:"denyMaintenancePeriod,omitempty"`

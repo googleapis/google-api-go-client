@@ -5942,8 +5942,9 @@ func (c *ProjectsLocationsTerraformVersionsListCall) OrderBy(orderBy string) *Pr
 }
 
 // PageSize sets the optional parameter "pageSize": When requesting a page of
-// resources, 'page_size' specifies number of resources to return. If
-// unspecified, at most 500 will be returned. The maximum value is 1000.
+// terraform versions, 'page_size' specifies number of terraform versions to
+// return. If unspecified, at most 500 will be returned. The maximum value is
+// 1000.
 func (c *ProjectsLocationsTerraformVersionsListCall) PageSize(pageSize int64) *ProjectsLocationsTerraformVersionsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
@@ -5951,7 +5952,7 @@ func (c *ProjectsLocationsTerraformVersionsListCall) PageSize(pageSize int64) *P
 
 // PageToken sets the optional parameter "pageToken": Token returned by
 // previous call to 'ListTerraformVersions' which specifies the position in the
-// list from where to continue listing the resources.
+// list from where to continue listing the terraform versions.
 func (c *ProjectsLocationsTerraformVersionsListCall) PageToken(pageToken string) *ProjectsLocationsTerraformVersionsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c

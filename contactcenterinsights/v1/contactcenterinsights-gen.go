@@ -504,7 +504,8 @@ type GoogleCloudContactcenterinsightsV1AnalysisRule struct {
 	AnnotatorSelector *GoogleCloudContactcenterinsightsV1AnnotatorSelector `json:"annotatorSelector,omitempty"`
 	// ConversationFilter: Filter for the conversations that should apply this
 	// analysis rule. An empty filter means this analysis rule applies to all
-	// conversations.
+	// conversations. Refer to
+	// https://cloud.google.com/contact-center/insights/docs/filtering for details.
 	ConversationFilter string `json:"conversationFilter,omitempty"`
 	// CreateTime: Output only. The time at which this analysis rule was created.
 	CreateTime string `json:"createTime,omitempty"`
@@ -3515,7 +3516,8 @@ func (s GoogleCloudContactcenterinsightsV1IssueModel) MarshalJSON() ([]byte, err
 // input data used to create the issue model.
 type GoogleCloudContactcenterinsightsV1IssueModelInputDataConfig struct {
 	// Filter: A filter to reduce the conversations used for training the model to
-	// a specific subset.
+	// a specific subset. Refer to
+	// https://cloud.google.com/contact-center/insights/docs/filtering for details.
 	Filter string `json:"filter,omitempty"`
 	// Medium: Medium of conversations used in training data. This field is being
 	// deprecated. To specify the medium to be used in training a new issue model,
@@ -4741,6 +4743,25 @@ func (s GoogleCloudContactcenterinsightsV1QaScorecardRevision) MarshalJSON() ([]
 // GoogleCloudContactcenterinsightsV1QueryMetricsMetadata: The metadata from
 // querying metrics.
 type GoogleCloudContactcenterinsightsV1QueryMetricsMetadata struct {
+	// ResultIsTruncated: Whether the result rows were truncated because the result
+	// row size is too large to materialize.
+	ResultIsTruncated bool `json:"resultIsTruncated,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ResultIsTruncated") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ResultIsTruncated") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudContactcenterinsightsV1QueryMetricsMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudContactcenterinsightsV1QueryMetricsMetadata
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudContactcenterinsightsV1QueryMetricsRequest: The request for
@@ -5610,7 +5631,9 @@ type GoogleCloudContactcenterinsightsV1View struct {
 	Name string `json:"name,omitempty"`
 	// UpdateTime: Output only. The most recent time at which the view was updated.
 	UpdateTime string `json:"updateTime,omitempty"`
-	// Value: String with specific view properties, must be non-empty.
+	// Value: A filter to reduce conversation results to a specific subset. Refer
+	// to https://cloud.google.com/contact-center/insights/docs/filtering for
+	// details.
 	Value string `json:"value,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
@@ -8299,7 +8322,8 @@ func (s GoogleCloudContactcenterinsightsV1alpha1IssueModel) MarshalJSON() ([]byt
 // for the input data used to create the issue model.
 type GoogleCloudContactcenterinsightsV1alpha1IssueModelInputDataConfig struct {
 	// Filter: A filter to reduce the conversations used for training the model to
-	// a specific subset.
+	// a specific subset. Refer to
+	// https://cloud.google.com/contact-center/insights/docs/filtering for details.
 	Filter string `json:"filter,omitempty"`
 	// Medium: Medium of conversations used in training data. This field is being
 	// deprecated. To specify the medium to be used in training a new issue model,
@@ -8800,6 +8824,25 @@ func (s *GoogleCloudContactcenterinsightsV1alpha1QaScorecardResultScoreSource) U
 // GoogleCloudContactcenterinsightsV1alpha1QueryMetricsMetadata: The metadata
 // from querying metrics.
 type GoogleCloudContactcenterinsightsV1alpha1QueryMetricsMetadata struct {
+	// ResultIsTruncated: Whether the result rows were truncated because the result
+	// row size is too large to materialize.
+	ResultIsTruncated bool `json:"resultIsTruncated,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ResultIsTruncated") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ResultIsTruncated") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudContactcenterinsightsV1alpha1QueryMetricsMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudContactcenterinsightsV1alpha1QueryMetricsMetadata
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudContactcenterinsightsV1alpha1QueryMetricsResponse: The response

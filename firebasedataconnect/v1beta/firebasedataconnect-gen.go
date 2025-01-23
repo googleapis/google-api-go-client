@@ -953,8 +953,21 @@ type PostgreSql struct {
 	CloudSql *CloudSqlInstance `json:"cloudSql,omitempty"`
 	// Database: Required. Name of the PostgreSQL database.
 	Database string `json:"database,omitempty"`
+	// SchemaMigration: Optional. Configure how to perform Postgresql schema
+	// migration.
+	//
+	// Possible values:
+	//   "SQL_SCHEMA_MIGRATION_UNSPECIFIED" - Unspecified SQL schema migration.
+	//   "MIGRATE_COMPATIBLE" - Connect to the SQL database and identify any
+	// missing SQL resources used in the given Firebase Data Connect Schema.
+	// Automatically create necessary SQL resources (SQL table, column, etc) before
+	// deploying the schema. During migration steps, the SQL Schema must comply
+	// with the previous before_deploy setting in case the migration is
+	// interrupted. Therefore, the previous before_deploy setting must not be
+	// `schema_validation=STRICT`.
+	SchemaMigration string `json:"schemaMigration,omitempty"`
 	// SchemaValidation: Optional. Configure how much Postgresql schema validation
-	// to perform. Default to `STRICT` if not specified.
+	// to perform.
 	//
 	// Possible values:
 	//   "SQL_SCHEMA_VALIDATION_UNSPECIFIED" - Unspecified SQL schema validation.

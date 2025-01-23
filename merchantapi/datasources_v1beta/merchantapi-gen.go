@@ -219,29 +219,29 @@ type DataSource struct {
 	// automatically build your product data. This type of data source can be
 	// enabled or disabled through the Accounts bundle.
 	Input string `json:"input,omitempty"`
-	// LocalInventoryDataSource: Required. The local inventory
+	// LocalInventoryDataSource: The local inventory
 	// (https://support.google.com/merchants/answer/7023001) data source.
 	LocalInventoryDataSource *LocalInventoryDataSource `json:"localInventoryDataSource,omitempty"`
-	// MerchantReviewDataSource: Required. The merchant review
+	// MerchantReviewDataSource: The merchant review
 	// (https://support.google.com/merchants/answer/7045996) data source.
 	MerchantReviewDataSource *MerchantReviewDataSource `json:"merchantReviewDataSource,omitempty"`
 	// Name: Identifier. The name of the data source. Format:
 	// `{datasource.name=accounts/{account}/dataSources/{datasource}}`
 	Name string `json:"name,omitempty"`
-	// PrimaryProductDataSource: Required. The primary data source
+	// PrimaryProductDataSource: The primary data source
 	// (https://support.google.com/merchants/answer/7439058) for local and online
 	// products.
 	PrimaryProductDataSource *PrimaryProductDataSource `json:"primaryProductDataSource,omitempty"`
-	// ProductReviewDataSource: Required. The product review
+	// ProductReviewDataSource: The product review
 	// (https://support.google.com/merchants/answer/7045996) data source.
 	ProductReviewDataSource *ProductReviewDataSource `json:"productReviewDataSource,omitempty"`
-	// PromotionDataSource: Required. The promotion
+	// PromotionDataSource: The promotion
 	// (https://support.google.com/merchants/answer/2906014) data source.
 	PromotionDataSource *PromotionDataSource `json:"promotionDataSource,omitempty"`
-	// RegionalInventoryDataSource: Required. The regional inventory
+	// RegionalInventoryDataSource: The regional inventory
 	// (https://support.google.com/merchants/answer/7439058) data source.
 	RegionalInventoryDataSource *RegionalInventoryDataSource `json:"regionalInventoryDataSource,omitempty"`
-	// SupplementalProductDataSource: Required. The supplemental data source
+	// SupplementalProductDataSource: The supplemental data source
 	// (https://support.google.com/merchants/answer/7439058) for local and online
 	// products.
 	SupplementalProductDataSource *SupplementalProductDataSource `json:"supplementalProductDataSource,omitempty"`

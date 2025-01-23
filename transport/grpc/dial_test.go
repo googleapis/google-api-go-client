@@ -156,6 +156,9 @@ func TestCheckDirectPathEndPoint(t *testing.T) {
 }
 
 func TestLogDirectPathMisconfigAttrempDirectPathNotSet(t *testing.T) {
+	if testing.Short() {
+		t.Skip("skipping integration test")
+	}
 	o := &internal.DialSettings{}
 	o.EnableDirectPathXds = true
 
@@ -200,6 +203,9 @@ func TestLogDirectPathMisconfigWrongCredential(t *testing.T) {
 }
 
 func TestLogDirectPathMisconfigNotOnGCE(t *testing.T) {
+	if testing.Short() {
+		t.Skip("skipping integration test")
+	}
 	o := &internal.DialSettings{}
 	o.EnableDirectPath = true
 	o.EnableDirectPathXds = true

@@ -300,6 +300,14 @@ func (c *WebfontsListCall) Capability(capability ...string) *WebfontsListCall {
 	return c
 }
 
+// Category sets the optional parameter "category": Filters by
+// Webfont.category, if category is found in Webfont.categories. If not set,
+// returns all families.
+func (c *WebfontsListCall) Category(category string) *WebfontsListCall {
+	c.urlParams_.Set("category", category)
+	return c
+}
+
 // Family sets the optional parameter "family": Filters by Webfont.family,
 // using literal match. If not set, returns all families
 func (c *WebfontsListCall) Family(family ...string) *WebfontsListCall {

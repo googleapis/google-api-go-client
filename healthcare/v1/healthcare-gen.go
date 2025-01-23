@@ -5654,7 +5654,7 @@ func (s SchematizedData) MarshalJSON() ([]byte, error) {
 // SearchResourcesRequest: Request to search the resources in the specified
 // FHIR store.
 type SearchResourcesRequest struct {
-	// ResourceType: Required. The FHIR resource type to search, such as Patient or
+	// ResourceType: Optional. The FHIR resource type to search, such as Patient or
 	// Observation. For a complete list, see the FHIR Resource Index (DSTU2
 	// (http://hl7.org/implement/standards/fhir/DSTU2/resourcelist.html), STU3
 	// (http://hl7.org/implement/standards/fhir/STU3/resourcelist.html), R4
@@ -18991,8 +18991,8 @@ func (r *ProjectsLocationsDatasetsFhirStoresFhirService) ResourceValidate(parent
 	return c
 }
 
-// Profile sets the optional parameter "profile": Required. The canonical URL
-// of a profile that this resource should be validated against. For example, to
+// Profile sets the optional parameter "profile": The canonical URL of a
+// profile that this resource should be validated against. For example, to
 // validate a Patient resource against the US Core Patient profile this
 // parameter would be
 // `http://hl7.org/fhir/us/core/StructureDefinition/us-core-patient`. A
@@ -20260,8 +20260,8 @@ type ProjectsLocationsDatasetsFhirStoresFhirSearchTypeCall struct {
 // (https://cloud.google.com/healthcare/docs/how-tos/fhir-advanced-search).
 //
 //   - parent: Name of the FHIR store to retrieve resources from.
-//   - resourceType: The FHIR resource type to search, such as Patient or
-//     Observation. For a complete list, see the FHIR Resource Index (DSTU2
+//   - resourceType: Optional. The FHIR resource type to search, such as Patient
+//     or Observation. For a complete list, see the FHIR Resource Index (DSTU2
 //     (http://hl7.org/implement/standards/fhir/DSTU2/resourcelist.html), STU3
 //     (http://hl7.org/implement/standards/fhir/STU3/resourcelist.html), R4
 //     (http://hl7.org/implement/standards/fhir/R4/resourcelist.html)).

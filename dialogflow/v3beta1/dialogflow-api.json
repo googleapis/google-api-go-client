@@ -5272,7 +5272,7 @@
       }
     }
   },
-  "revision": "20241216",
+  "revision": "20250116",
   "rootUrl": "https://dialogflow.googleapis.com/",
   "schemas": {
     "GoogleCloudDialogflowCxV3AdvancedSettings": {
@@ -7778,6 +7778,16 @@
         "personalizationSettings": {
           "$ref": "GoogleCloudDialogflowCxV3beta1AgentPersonalizationSettings",
           "description": "Optional. Settings for end user personalization."
+        },
+        "satisfiesPzi": {
+          "description": "Optional. Output only. A read only boolean field reflecting Zone Isolation status of the agent.",
+          "readOnly": true,
+          "type": "boolean"
+        },
+        "satisfiesPzs": {
+          "description": "Optional. Output only. A read only boolean field reflecting Zone Separation status of the agent.",
+          "readOnly": true,
+          "type": "boolean"
         },
         "securitySettings": {
           "description": "Name of the SecuritySettings reference for the agent. Format: `projects//locations//securitySettings/`.",
@@ -12142,7 +12152,7 @@
           "type": "string"
         },
         "goal": {
-          "description": "Required. High level description of the goal the playbook intend to accomplish.",
+          "description": "Required. High level description of the goal the playbook intend to accomplish. A goal should be concise since it's visible to other playbooks that may reference this playbook.",
           "type": "string"
         },
         "inputParameterDefinitions": {
@@ -12193,6 +12203,10 @@
             "type": "string"
           },
           "type": "array"
+        },
+        "speechSettings": {
+          "$ref": "GoogleCloudDialogflowCxV3beta1AdvancedSettingsSpeechSettings",
+          "description": "Optional. Playbook level Settings for speech to text detection."
         },
         "tokenCount": {
           "description": "Output only. Estimated number of tokes current playbook takes when sent to the LLM.",
@@ -12299,6 +12313,10 @@
       "description": "Message of the Instruction of the playbook.",
       "id": "GoogleCloudDialogflowCxV3beta1PlaybookInstruction",
       "properties": {
+        "guidelines": {
+          "description": "General guidelines for the playbook. These are unstructured instructions that are not directly part of the goal, e.g. \"Always be polite\". It's valid for this text to be long and used instead of steps altogether.",
+          "type": "string"
+        },
         "steps": {
           "description": "Ordered list of step by step execution instructions to accomplish target goal.",
           "items": {

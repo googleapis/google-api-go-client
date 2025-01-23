@@ -4058,6 +4058,12 @@ type GoogleCloudDialogflowCxV3beta1Agent struct {
 	Name string `json:"name,omitempty"`
 	// PersonalizationSettings: Optional. Settings for end user personalization.
 	PersonalizationSettings *GoogleCloudDialogflowCxV3beta1AgentPersonalizationSettings `json:"personalizationSettings,omitempty"`
+	// SatisfiesPzi: Optional. Output only. A read only boolean field reflecting
+	// Zone Isolation status of the agent.
+	SatisfiesPzi bool `json:"satisfiesPzi,omitempty"`
+	// SatisfiesPzs: Optional. Output only. A read only boolean field reflecting
+	// Zone Separation status of the agent.
+	SatisfiesPzs bool `json:"satisfiesPzs,omitempty"`
 	// SecuritySettings: Name of the SecuritySettings reference for the agent.
 	// Format: `projects//locations//securitySettings/`.
 	SecuritySettings string `json:"securitySettings,omitempty"`
@@ -10282,7 +10288,8 @@ type GoogleCloudDialogflowCxV3beta1Playbook struct {
 	// within an agent.
 	DisplayName string `json:"displayName,omitempty"`
 	// Goal: Required. High level description of the goal the playbook intend to
-	// accomplish.
+	// accomplish. A goal should be concise since it's visible to other playbooks
+	// that may reference this playbook.
 	Goal string `json:"goal,omitempty"`
 	// InputParameterDefinitions: Optional. Defined structured input parameters for
 	// this playbook.
@@ -10307,6 +10314,9 @@ type GoogleCloudDialogflowCxV3beta1Playbook struct {
 	// current playbook in the instructions. If not provided explicitly, they are
 	// will be implied using the tool being referenced in goal and steps.
 	ReferencedTools []string `json:"referencedTools,omitempty"`
+	// SpeechSettings: Optional. Playbook level Settings for speech to text
+	// detection.
+	SpeechSettings *GoogleCloudDialogflowCxV3beta1AdvancedSettingsSpeechSettings `json:"speechSettings,omitempty"`
 	// TokenCount: Output only. Estimated number of tokes current playbook takes
 	// when sent to the LLM.
 	TokenCount int64 `json:"tokenCount,omitempty,string"`
@@ -10433,16 +10443,21 @@ func (s GoogleCloudDialogflowCxV3beta1PlaybookInput) MarshalJSON() ([]byte, erro
 // GoogleCloudDialogflowCxV3beta1PlaybookInstruction: Message of the
 // Instruction of the playbook.
 type GoogleCloudDialogflowCxV3beta1PlaybookInstruction struct {
+	// Guidelines: General guidelines for the playbook. These are unstructured
+	// instructions that are not directly part of the goal, e.g. "Always be
+	// polite". It's valid for this text to be long and used instead of steps
+	// altogether.
+	Guidelines string `json:"guidelines,omitempty"`
 	// Steps: Ordered list of step by step execution instructions to accomplish
 	// target goal.
 	Steps []*GoogleCloudDialogflowCxV3beta1PlaybookStep `json:"steps,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "Steps") to unconditionally
-	// include in API requests. By default, fields with empty or default values are
-	// omitted from API requests. See
+	// ForceSendFields is a list of field names (e.g. "Guidelines") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Steps") to include in API
+	// NullFields is a list of field names (e.g. "Guidelines") to include in API
 	// requests with the JSON null value. By default, fields with empty values are
 	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.

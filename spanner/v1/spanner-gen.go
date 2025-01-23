@@ -421,6 +421,40 @@ type ScansService struct {
 	s *Service
 }
 
+// AddSplitPointsRequest: The request for AddSplitPoints.
+type AddSplitPointsRequest struct {
+	// Initiator: Optional. A user-supplied tag associated with the split points.
+	// For example, "intital_data_load", "special_event_1". Defaults to
+	// "CloudAddSplitPointsAPI" if not specified. The length of the tag must not
+	// exceed 50 characters,else will be trimmed. Only valid UTF8 characters are
+	// allowed.
+	Initiator string `json:"initiator,omitempty"`
+	// SplitPoints: Required. The split points to add.
+	SplitPoints []*SplitPoints `json:"splitPoints,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Initiator") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Initiator") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s AddSplitPointsRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod AddSplitPointsRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// AddSplitPointsResponse: The response for AddSplitPoints.
+type AddSplitPointsResponse struct {
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+}
+
 // AsymmetricAutoscalingOption: AsymmetricAutoscalingOption specifies the
 // scaling of replicas identified by the given selection.
 type AsymmetricAutoscalingOption struct {
@@ -1852,14 +1886,17 @@ type CrontabSpec struct {
 	CreationWindow string `json:"creationWindow,omitempty"`
 	// Text: Required. Textual representation of the crontab. User can customize
 	// the backup frequency and the backup version time using the cron expression.
-	// The version time must be in UTC timzeone. The backup will contain an
-	// externally consistent copy of the database at the version time. Allowed
-	// frequencies are 12 hour, 1 day, 1 week and 1 month. Examples of valid cron
-	// specifications: * `0 2/12 * * * ` : every 12 hours at (2, 14) hours past
-	// midnight in UTC. * `0 2,14 * * * ` : every 12 hours at (2,14) hours past
-	// midnight in UTC. * `0 2 * * * ` : once a day at 2 past midnight in UTC. * `0
-	// 2 * * 0 ` : once a week every Sunday at 2 past midnight in UTC. * `0 2 8 * *
-	// ` : once a month on 8th day at 2 past midnight in UTC.
+	// The version time must be in UTC timezone. The backup will contain an
+	// externally consistent copy of the database at the version time. Full backups
+	// must be scheduled a minimum of 12 hours apart and incremental backups must
+	// be scheduled a minimum of 4 hours apart. Examples of valid cron
+	// specifications: * `0 2/12 * * *` : every 12 hours at (2, 14) hours past
+	// midnight in UTC. * `0 2,14 * * *` : every 12 hours at (2,14) hours past
+	// midnight in UTC. * `0 */4 * * *` : (incremental backups only) every 4 hours
+	// at (0, 4, 8, 12, 16, 20) hours past midnight in UTC. * `0 2 * * *` : once a
+	// day at 2 past midnight in UTC. * `0 2 * * 0` : once a week every Sunday at 2
+	// past midnight in UTC. * `0 2 8 * *` : once a month on 8th day at 2 past
+	// midnight in UTC.
 	Text string `json:"text,omitempty"`
 	// TimeZone: Output only. The time zone of the times in `CrontabSpec.text`.
 	// Currently only UTC is supported.
@@ -2283,6 +2320,15 @@ func (s ExcludeReplicas) MarshalJSON() ([]byte, error) {
 
 // ExecuteBatchDmlRequest: The request for ExecuteBatchDml.
 type ExecuteBatchDmlRequest struct {
+	// LastStatements: Optional. If set to true, this request marks the end of the
+	// transaction. The transaction should be committed or aborted after these
+	// statements execute, and attempts to execute any other requests against this
+	// transaction (including reads and queries) will be rejected. Setting this
+	// option may cause some error reporting to be deferred until commit time (e.g.
+	// validation of unique constraints). Given this, successful execution of
+	// statements should not be assumed until a subsequent Commit call completes
+	// successfully.
+	LastStatements bool `json:"lastStatements,omitempty"`
 	// RequestOptions: Common options for this request.
 	RequestOptions *RequestOptions `json:"requestOptions,omitempty"`
 	// Seqno: Required. A per-transaction sequence number used to identify this
@@ -2304,13 +2350,13 @@ type ExecuteBatchDmlRequest struct {
 	// supported. The caller must either supply an existing transaction ID or begin
 	// a new transaction.
 	Transaction *TransactionSelector `json:"transaction,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "RequestOptions") to
+	// ForceSendFields is a list of field names (e.g. "LastStatements") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "RequestOptions") to include in
+	// NullFields is a list of field names (e.g. "LastStatements") to include in
 	// API requests with the JSON null value. By default, fields with empty values
 	// are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
@@ -2383,6 +2429,15 @@ type ExecuteSqlRequest struct {
 	DataBoostEnabled bool `json:"dataBoostEnabled,omitempty"`
 	// DirectedReadOptions: Directed read options for this request.
 	DirectedReadOptions *DirectedReadOptions `json:"directedReadOptions,omitempty"`
+	// LastStatement: Optional. If set to true, this statement marks the end of the
+	// transaction. The transaction should be committed or aborted after this
+	// statement executes, and attempts to execute any other requests against this
+	// transaction (including reads and queries) will be rejected. For DML
+	// statements, setting this option may cause some error reporting to be
+	// deferred until commit time (e.g. validation of unique constraints). Given
+	// this, successful execution of a DML statement should not be assumed until a
+	// subsequent Commit call completes successfully.
+	LastStatement bool `json:"lastStatement,omitempty"`
 	// ParamTypes: It is not always possible for Cloud Spanner to infer the right
 	// SQL type from a JSON value. For example, values of type `BYTES` and values
 	// of type `STRING` both appear in params as JSON strings. In these cases,
@@ -2821,23 +2876,23 @@ type Instance struct {
 	Config string `json:"config,omitempty"`
 	// CreateTime: Output only. The time at which the instance was created.
 	CreateTime string `json:"createTime,omitempty"`
-	// DefaultBackupScheduleType: Optional. Controls the default backup behavior
-	// for new databases within the instance. Note that `AUTOMATIC` is not
-	// permitted for free instances, as backups and backup schedules are not
-	// allowed for free instances. In the `GetInstance` or `ListInstances`
-	// response, if the value of default_backup_schedule_type is unset or NONE, no
-	// default backup schedule will be created for new databases within the
-	// instance.
+	// DefaultBackupScheduleType: Optional. Controls the default backup schedule
+	// behavior for new databases within the instance. By default, a backup
+	// schedule is created automatically when a new database is created in a new
+	// instance. Note that the `AUTOMATIC` value isn't permitted for free
+	// instances, as backups and backup schedules aren't supported for free
+	// instances. In the `GetInstance` or `ListInstances` response, if the value of
+	// `default_backup_schedule_type` isn't set, or set to `NONE`, Spanner doesn't
+	// create a default backup schedule for new databases in the instance.
 	//
 	// Possible values:
 	//   "DEFAULT_BACKUP_SCHEDULE_TYPE_UNSPECIFIED" - Not specified.
-	//   "NONE" - No default backup schedule will be created automatically on
-	// creation of a database within the instance.
-	//   "AUTOMATIC" - A default backup schedule will be created automatically on
-	// creation of a database within the instance. Once created, the default backup
-	// schedule can be edited or deleted just like any other backup schedule.
-	// Currently, the default backup schedule creates a full backup every 24 hours
-	// and retains the backup for a period of 7 days.
+	//   "NONE" - A default backup schedule isn't created automatically when a new
+	// database is created in the instance.
+	//   "AUTOMATIC" - A default backup schedule is created automatically when a
+	// new database is created in the instance. The default backup schedule creates
+	// a full backup every 24 hours. These full backups are retained for 7 days.
+	// You can edit or delete the default backup schedule once it's created.
 	DefaultBackupScheduleType string `json:"defaultBackupScheduleType,omitempty"`
 	// DisplayName: Required. The descriptive name for this instance as it appears
 	// in UIs. Must be unique per project and between 4 and 30 characters in
@@ -3215,6 +3270,28 @@ type InstanceReplicaSelection struct {
 
 func (s InstanceReplicaSelection) MarshalJSON() ([]byte, error) {
 	type NoMethod InstanceReplicaSelection
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// Key: A split key.
+type Key struct {
+	// KeyParts: Required. The column values making up the split key.
+	KeyParts []interface{} `json:"keyParts,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "KeyParts") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "KeyParts") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s Key) MarshalJSON() ([]byte, error) {
+	type NoMethod Key
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -4744,7 +4821,7 @@ type QueryPlan struct {
 	// starting with the plan root. Each PlanNode's `id` corresponds to its index
 	// in `plan_nodes`.
 	PlanNodes []*PlanNode `json:"planNodes,omitempty"`
-	// QueryAdvice: Optional. The advices/recommendations for a query. Currently
+	// QueryAdvice: Optional. The advise/recommendations for a query. Currently
 	// this field will be serving index recommendations for a query.
 	QueryAdvice *QueryAdvisorResult `json:"queryAdvice,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "PlanNodes") to
@@ -5697,6 +5774,37 @@ func (s SingleRegionQuorum) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// SplitPoints: The split points of a table/index.
+type SplitPoints struct {
+	// ExpireTime: Optional. The expiration timestamp of the split points. A
+	// timestamp in the past means immediate expiration. The maximum value can be
+	// 30 days in the future. Defaults to 10 days in the future if not specified.
+	ExpireTime string `json:"expireTime,omitempty"`
+	// Index: The index to split. If specified, the `table` field must refer to the
+	// index's base table.
+	Index string `json:"index,omitempty"`
+	// Keys: Required. The list of split keys, i.e., the split boundaries.
+	Keys []*Key `json:"keys,omitempty"`
+	// Table: The table to split.
+	Table string `json:"table,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ExpireTime") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ExpireTime") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s SplitPoints) MarshalJSON() ([]byte, error) {
+	type NoMethod SplitPoints
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // Statement: A single DML statement.
 type Statement struct {
 	// ParamTypes: It is not always possible for Cloud Spanner to infer the right
@@ -6235,6 +6343,9 @@ type Type struct {
 	// this type should be treated as PostgreSQL JSONB values. Currently this
 	// annotation is always needed for JSON when a client interacts with
 	// PostgreSQL-enabled Spanner databases.
+	//   "PG_OID" - PostgreSQL compatible OID type. This annotation can be used by
+	// a client interacting with PostgreSQL-enabled Spanner database to specify
+	// that a value should be treated using the semantics of the OID type.
 	TypeAnnotation string `json:"typeAnnotation,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "ArrayElementType") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -7513,7 +7624,7 @@ type ProjectsInstanceConfigsOperationsCancelCall struct {
 // other methods to check whether the cancellation succeeded or whether the
 // operation completed despite cancellation. On successful cancellation, the
 // operation is not deleted; instead, it becomes an operation with an
-// Operation.error value with a google.rpc.Status.code of 1, corresponding to
+// Operation.error value with a google.rpc.Status.code of `1`, corresponding to
 // `Code.CANCELLED`.
 //
 // - name: The name of the operation resource to be cancelled.
@@ -7981,7 +8092,7 @@ type ProjectsInstanceConfigsSsdCachesOperationsCancelCall struct {
 // other methods to check whether the cancellation succeeded or whether the
 // operation completed despite cancellation. On successful cancellation, the
 // operation is not deleted; instead, it becomes an operation with an
-// Operation.error value with a google.rpc.Status.code of 1, corresponding to
+// Operation.error value with a google.rpc.Status.code of `1`, corresponding to
 // `Code.CANCELLED`.
 //
 // - name: The name of the operation resource to be cancelled.
@@ -10878,7 +10989,7 @@ type ProjectsInstancesBackupsOperationsCancelCall struct {
 // other methods to check whether the cancellation succeeded or whether the
 // operation completed despite cancellation. On successful cancellation, the
 // operation is not deleted; instead, it becomes an operation with an
-// Operation.error value with a google.rpc.Status.code of 1, corresponding to
+// Operation.error value with a google.rpc.Status.code of `1`, corresponding to
 // `Code.CANCELLED`.
 //
 // - name: The name of the operation resource to be cancelled.
@@ -11515,6 +11626,112 @@ func (c *ProjectsInstancesDatabaseOperationsListCall) Pages(ctx context.Context,
 		}
 		c.PageToken(x.NextPageToken)
 	}
+}
+
+type ProjectsInstancesDatabasesAddSplitPointsCall struct {
+	s                     *Service
+	database              string
+	addsplitpointsrequest *AddSplitPointsRequest
+	urlParams_            gensupport.URLParams
+	ctx_                  context.Context
+	header_               http.Header
+}
+
+// AddSplitPoints: Adds split points to specified tables, indexes of a
+// database.
+//
+//   - database: The database on whose tables/indexes split points are to be
+//     added. Values are of the form `projects//instances//databases/`.
+func (r *ProjectsInstancesDatabasesService) AddSplitPoints(database string, addsplitpointsrequest *AddSplitPointsRequest) *ProjectsInstancesDatabasesAddSplitPointsCall {
+	c := &ProjectsInstancesDatabasesAddSplitPointsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.database = database
+	c.addsplitpointsrequest = addsplitpointsrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsInstancesDatabasesAddSplitPointsCall) Fields(s ...googleapi.Field) *ProjectsInstancesDatabasesAddSplitPointsCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsInstancesDatabasesAddSplitPointsCall) Context(ctx context.Context) *ProjectsInstancesDatabasesAddSplitPointsCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsInstancesDatabasesAddSplitPointsCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsInstancesDatabasesAddSplitPointsCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.addsplitpointsrequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+database}:addSplitPoints")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"database": c.database,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "spanner.projects.instances.databases.addSplitPoints", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "spanner.projects.instances.databases.addSplitPoints" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *AddSplitPointsResponse.ServerResponse.Header or (if a response was returned
+// at all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *ProjectsInstancesDatabasesAddSplitPointsCall) Do(opts ...googleapi.CallOption) (*AddSplitPointsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &AddSplitPointsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "spanner.projects.instances.databases.addSplitPoints", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
 }
 
 type ProjectsInstancesDatabasesChangequorumCall struct {
@@ -14245,7 +14462,7 @@ type ProjectsInstancesDatabasesOperationsCancelCall struct {
 // other methods to check whether the cancellation succeeded or whether the
 // operation completed despite cancellation. On successful cancellation, the
 // operation is not deleted; instead, it becomes an operation with an
-// Operation.error value with a google.rpc.Status.code of 1, corresponding to
+// Operation.error value with a google.rpc.Status.code of `1`, corresponding to
 // `Code.CANCELLED`.
 //
 // - name: The name of the operation resource to be cancelled.
@@ -15476,7 +15693,9 @@ type ProjectsInstancesDatabasesSessionsExecuteSqlCall struct {
 // return `ABORTED`. If this occurs, the application should restart the
 // transaction from the beginning. See Transaction for more details. Larger
 // result sets can be fetched in streaming fashion by calling
-// ExecuteStreamingSql instead.
+// ExecuteStreamingSql instead. The query string can be SQL or Graph Query
+// Language (GQL)
+// (https://cloud.google.com/spanner/docs/reference/standard-sql/graph-intro).
 //
 // - session: The session in which the SQL query should be performed.
 func (r *ProjectsInstancesDatabasesSessionsService) ExecuteSql(session string, executesqlrequest *ExecuteSqlRequest) *ProjectsInstancesDatabasesSessionsExecuteSqlCall {
@@ -15582,7 +15801,9 @@ type ProjectsInstancesDatabasesSessionsExecuteStreamingSqlCall struct {
 // ExecuteStreamingSql: Like ExecuteSql, except returns the result set as a
 // stream. Unlike ExecuteSql, there is no limit on the size of the returned
 // result set. However, no individual row in the result set can exceed 100 MiB,
-// and no column value can exceed 10 MiB.
+// and no column value can exceed 10 MiB. The query string can be SQL or Graph
+// Query Language (GQL)
+// (https://cloud.google.com/spanner/docs/reference/standard-sql/graph-intro).
 //
 // - session: The session in which the SQL query should be performed.
 func (r *ProjectsInstancesDatabasesSessionsService) ExecuteStreamingSql(session string, executesqlrequest *ExecuteSqlRequest) *ProjectsInstancesDatabasesSessionsExecuteStreamingSqlCall {
@@ -17347,7 +17568,7 @@ type ProjectsInstancesInstancePartitionsOperationsCancelCall struct {
 // other methods to check whether the cancellation succeeded or whether the
 // operation completed despite cancellation. On successful cancellation, the
 // operation is not deleted; instead, it becomes an operation with an
-// Operation.error value with a google.rpc.Status.code of 1, corresponding to
+// Operation.error value with a google.rpc.Status.code of `1`, corresponding to
 // `Code.CANCELLED`.
 //
 // - name: The name of the operation resource to be cancelled.
@@ -17815,7 +18036,7 @@ type ProjectsInstancesOperationsCancelCall struct {
 // other methods to check whether the cancellation succeeded or whether the
 // operation completed despite cancellation. On successful cancellation, the
 // operation is not deleted; instead, it becomes an operation with an
-// Operation.error value with a google.rpc.Status.code of 1, corresponding to
+// Operation.error value with a google.rpc.Status.code of `1`, corresponding to
 // `Code.CANCELLED`.
 //
 // - name: The name of the operation resource to be cancelled.

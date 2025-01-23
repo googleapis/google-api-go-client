@@ -5049,7 +5049,7 @@ type SqlCondition struct {
 	// filter the input by time. A filter will automatically be applied to filter
 	// the input so that the query receives all rows received since the last time
 	// the query was run.For example, the following query extracts all log entries
-	// containing an HTTP request:SELECT timestamp, log_name, severity,
+	// containing an HTTP request: SELECT timestamp, log_name, severity,
 	// http_request, resource, labels FROM my-project.global._Default._AllLogs
 	// WHERE http_request IS NOT NULL
 	Query string `json:"query,omitempty"`
@@ -9287,6 +9287,21 @@ type ProjectsMetricDescriptorsListCall struct {
 func (r *ProjectsMetricDescriptorsService) List(name string) *ProjectsMetricDescriptorsListCall {
 	c := &ProjectsMetricDescriptorsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
+	return c
+}
+
+// ActiveOnly sets the optional parameter "activeOnly": If true, only metrics
+// and monitored resource types that have recent data (within roughly 25 hours)
+// will be included in the response. - If a metric descriptor enumerates
+// monitored resource types, only the monitored resource types for which the
+// metric type has recent data will be included in the returned metric
+// descriptor, and if none of them have recent data, the metric descriptor will
+// not be returned. - If a metric descriptor does not enumerate the compatible
+// monitored resource types, it will be returned only if the metric type has
+// recent data for some monitored resource type. The returned descriptor will
+// not enumerate any monitored resource types.
+func (c *ProjectsMetricDescriptorsListCall) ActiveOnly(activeOnly bool) *ProjectsMetricDescriptorsListCall {
+	c.urlParams_.Set("activeOnly", fmt.Sprint(activeOnly))
 	return c
 }
 

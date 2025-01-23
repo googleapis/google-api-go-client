@@ -640,7 +640,7 @@ func (s Hub) MarshalJSON() ([]byte, error) {
 
 // InternalRange: The internal range resource for IPAM operations within a VPC
 // network. Used to represent a private address range along with behavioral
-// characterstics of that range (its usage and peering behavior). Networking
+// characteristics of that range (its usage and peering behavior). Networking
 // resources can link to this range if they are created as belonging to it.
 type InternalRange struct {
 	// CreateTime: Time when the internal range was created.
@@ -657,8 +657,7 @@ type InternalRange struct {
 	IpCidrRange string `json:"ipCidrRange,omitempty"`
 	// Labels: User-defined labels.
 	Labels map[string]string `json:"labels,omitempty"`
-	// Migration: Optional. Must be present if usage is set to FOR_MIGRATION. This
-	// field is for internal use.
+	// Migration: Optional. Must be present if usage is set to FOR_MIGRATION.
 	Migration *Migration `json:"migration,omitempty"`
 	// Name: Immutable. The name of an internal range. Format:
 	// projects/{project}/locations/{location}/internalRanges/{internal_range} See:
@@ -735,7 +734,7 @@ type InternalRange struct {
 	//   "FOR_MIGRATION" - Ranges created FOR_MIGRATION can be used to lock a CIDR
 	// range between a source and target subnet. If usage is set to FOR_MIGRATION
 	// the peering value has to be set to FOR_SELF or default to FOR_SELF when
-	// unset. This value is for internal use.
+	// unset.
 	Usage string `json:"usage,omitempty"`
 	// Users: Output only. The list of resources that refer to this internal range.
 	// Resources that use the internal range for their range allocation are
@@ -3509,7 +3508,7 @@ type ProjectsLocationsOperationsCancelCall struct {
 // other methods to check whether the cancellation succeeded or whether the
 // operation completed despite cancellation. On successful cancellation, the
 // operation is not deleted; instead, it becomes an operation with an
-// Operation.error value with a google.rpc.Status.code of 1, corresponding to
+// Operation.error value with a google.rpc.Status.code of `1`, corresponding to
 // `Code.CANCELLED`.
 //
 // - name: The name of the operation resource to be cancelled.

@@ -244,6 +244,11 @@ func (s Date) MarshalJSON() ([]byte, error) {
 type GoogleCloudAiplatformV1beta1Blob struct {
 	// Data: Required. Raw bytes.
 	Data string `json:"data,omitempty"`
+	// DisplayName: Optional. Display name of the blob. Used to provide a label or
+	// filename to distinguish blobs. This field is only returned in PromptMessage
+	// for prompt management. It is not currently used in the Gemini
+	// GenerateContent calls.
+	DisplayName string `json:"displayName,omitempty"`
 	// MimeType: Required. The IANA standard MIME type of the source data.
 	MimeType string `json:"mimeType,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Data") to unconditionally
@@ -612,17 +617,22 @@ func (s GoogleCloudAiplatformV1beta1ExecutableCode) MarshalJSON() ([]byte, error
 
 // GoogleCloudAiplatformV1beta1FileData: URI based data.
 type GoogleCloudAiplatformV1beta1FileData struct {
+	// DisplayName: Optional. Display name of the file data. Used to provide a
+	// label or filename to distinguish file datas. This field is only returned in
+	// PromptMessage for prompt management. It is not currently used in the Gemini
+	// GenerateContent calls.
+	DisplayName string `json:"displayName,omitempty"`
 	// FileUri: Required. URI.
 	FileUri string `json:"fileUri,omitempty"`
 	// MimeType: Required. The IANA standard MIME type of the source data.
 	MimeType string `json:"mimeType,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "FileUri") to unconditionally
-	// include in API requests. By default, fields with empty or default values are
-	// omitted from API requests. See
+	// ForceSendFields is a list of field names (e.g. "DisplayName") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "FileUri") to include in API
+	// NullFields is a list of field names (e.g. "DisplayName") to include in API
 	// requests with the JSON null value. By default, fields with empty values are
 	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
@@ -841,12 +851,17 @@ func (s GoogleCloudAiplatformV1beta1GenerateContentRequest) MarshalJSON() ([]byt
 type GoogleCloudAiplatformV1beta1GenerateContentResponse struct {
 	// Candidates: Output only. Generated candidates.
 	Candidates []*GoogleCloudAiplatformV1beta1Candidate `json:"candidates,omitempty"`
+	// CreateTime: Output only. Timestamp when the request is made to the server.
+	CreateTime string `json:"createTime,omitempty"`
 	// ModelVersion: Output only. The model version used to generate the response.
 	ModelVersion string `json:"modelVersion,omitempty"`
 	// PromptFeedback: Output only. Content filter results for a prompt sent in the
 	// request. Note: Sent only in the first stream chunk. Only happens when no
 	// candidates were generated due to content violations.
 	PromptFeedback *GoogleCloudAiplatformV1beta1GenerateContentResponsePromptFeedback `json:"promptFeedback,omitempty"`
+	// ResponseId: Output only. response_id is used to identify each response. It
+	// is the encoding of the event_id.
+	ResponseId string `json:"responseId,omitempty"`
 	// UsageMetadata: Usage metadata about the response(s).
 	UsageMetadata *GoogleCloudAiplatformV1beta1GenerateContentResponseUsageMetadata `json:"usageMetadata,omitempty"`
 
@@ -997,6 +1012,9 @@ type GoogleCloudAiplatformV1beta1GenerationConfig struct {
 	StopSequences []string `json:"stopSequences,omitempty"`
 	// Temperature: Optional. Controls the randomness of predictions.
 	Temperature float64 `json:"temperature,omitempty"`
+	// ThinkingConfig: Optional. Config for thinking features. An error will be
+	// returned if this field is set for models that don't support thinking.
+	ThinkingConfig *GoogleCloudAiplatformV1beta1GenerationConfigThinkingConfig `json:"thinkingConfig,omitempty"`
 	// TopK: Optional. If specified, top-k sampling will be used.
 	TopK float64 `json:"topK,omitempty"`
 	// TopP: Optional. If specified, nucleus sampling will be used.
@@ -1117,6 +1135,30 @@ type GoogleCloudAiplatformV1beta1GenerationConfigRoutingConfigManualRoutingMode 
 
 func (s GoogleCloudAiplatformV1beta1GenerationConfigRoutingConfigManualRoutingMode) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1beta1GenerationConfigRoutingConfigManualRoutingMode
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudAiplatformV1beta1GenerationConfigThinkingConfig: Config for
+// thinking features.
+type GoogleCloudAiplatformV1beta1GenerationConfigThinkingConfig struct {
+	// IncludeThoughts: Optional. Indicates whether to include thoughts in the
+	// response. If true, thoughts are returned only when available.
+	IncludeThoughts bool `json:"includeThoughts,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "IncludeThoughts") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "IncludeThoughts") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudAiplatformV1beta1GenerationConfigThinkingConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudAiplatformV1beta1GenerationConfigThinkingConfig
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 

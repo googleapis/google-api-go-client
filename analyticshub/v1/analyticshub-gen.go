@@ -2087,17 +2087,21 @@ type RevokeSubscriptionResponse struct {
 
 // SelectedResource: Resource in this dataset that is selectively shared.
 type SelectedResource struct {
+	// Routine: Optional. Format: For routine:
+	// `projects/{projectId}/datasets/{datasetId}/routines/{routineId}`
+	// Example:"projects/test_project/datasets/test_dataset/routines/test_routine"
+	Routine string `json:"routine,omitempty"`
 	// Table: Optional. Format: For table:
 	// `projects/{projectId}/datasets/{datasetId}/tables/{tableId}`
 	// Example:"projects/test_project/datasets/test_dataset/tables/test_table"
 	Table string `json:"table,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "Table") to unconditionally
+	// ForceSendFields is a list of field names (e.g. "Routine") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
 	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Table") to include in API
+	// NullFields is a list of field names (e.g. "Routine") to include in API
 	// requests with the JSON null value. By default, fields with empty values are
 	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.

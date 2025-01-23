@@ -1,5 +1,35 @@
 # Changes
 
+## [0.218.0](https://github.com/googleapis/google-api-go-client/compare/v0.217.0...v0.218.0) (2025-01-22)
+
+
+### Features
+
+* Add error helper that does not read the response body ([#2964](https://github.com/googleapis/google-api-go-client/issues/2964)) ([9e749c4](https://github.com/googleapis/google-api-go-client/commit/9e749c4155022ced228d0989315f21b40b43af5c))
+* **all:** Auto-regenerate discovery clients ([#2963](https://github.com/googleapis/google-api-go-client/issues/2963)) ([0bf19b3](https://github.com/googleapis/google-api-go-client/commit/0bf19b3736d5fc9b329e2fc73f7b45c79911373f))
+* **all:** Auto-regenerate discovery clients ([#2967](https://github.com/googleapis/google-api-go-client/issues/2967)) ([a978c49](https://github.com/googleapis/google-api-go-client/commit/a978c49382816b1011c2f5eaeaee5e0ff7741f94))
+* **all:** Auto-regenerate discovery clients ([#2969](https://github.com/googleapis/google-api-go-client/issues/2969)) ([a8aed4d](https://github.com/googleapis/google-api-go-client/commit/a8aed4dd688bcbc6e44b43211c58e5e09bb772e5))
+* **all:** Auto-regenerate discovery clients ([#2970](https://github.com/googleapis/google-api-go-client/issues/2970)) ([607d371](https://github.com/googleapis/google-api-go-client/commit/607d371e04db7b53fb6d6327bb4ac770dac7d772))
+* **all:** Auto-regenerate discovery clients ([#2972](https://github.com/googleapis/google-api-go-client/issues/2972)) ([0f4ee9d](https://github.com/googleapis/google-api-go-client/commit/0f4ee9d9b0f08d935da8bc5c8169e24b462307a3))
+* **all:** Auto-regenerate discovery clients ([#2973](https://github.com/googleapis/google-api-go-client/issues/2973)) ([e143e5c](https://github.com/googleapis/google-api-go-client/commit/e143e5cadc749d877a27ba41b5b954fca3195776))
+* **all:** Auto-regenerate discovery clients ([#2974](https://github.com/googleapis/google-api-go-client/issues/2974)) ([0d0bcdf](https://github.com/googleapis/google-api-go-client/commit/0d0bcdffc9017f5647b78b1405940c330578b3a1))
+
+
+### Bug Fixes
+
+* **internal/gensupport:** Close resp body only on discarding resp (resumableupload) ([#2966](https://github.com/googleapis/google-api-go-client/issues/2966)) ([840d496](https://github.com/googleapis/google-api-go-client/commit/840d49666b8c5e8ca1c07880cb6be2f0b78fbd6d))
+
+## [0.217.0](https://github.com/googleapis/google-api-go-client/compare/v0.216.0...v0.217.0) (2025-01-15)
+
+
+### Features
+
+* **all:** Auto-regenerate discovery clients ([#2955](https://github.com/googleapis/google-api-go-client/issues/2955)) ([dfbc111](https://github.com/googleapis/google-api-go-client/commit/dfbc111165fd6cf7d9c2b13c47f2168dea5a1c9e))
+* **all:** Auto-regenerate discovery clients ([#2957](https://github.com/googleapis/google-api-go-client/issues/2957)) ([473d170](https://github.com/googleapis/google-api-go-client/commit/473d170a67e34ee3d21290465cd382f361c1591e))
+* **all:** Auto-regenerate discovery clients ([#2958](https://github.com/googleapis/google-api-go-client/issues/2958)) ([972ede2](https://github.com/googleapis/google-api-go-client/commit/972ede23d0b6f75f70e8bbc9d9924fc4be24fa6e))
+* **all:** Auto-regenerate discovery clients ([#2960](https://github.com/googleapis/google-api-go-client/issues/2960)) ([18f18fc](https://github.com/googleapis/google-api-go-client/commit/18f18fc95e8bce658b37885a31701e0e700d0fbc))
+* **all:** Auto-regenerate discovery clients ([#2962](https://github.com/googleapis/google-api-go-client/issues/2962)) ([5085dcf](https://github.com/googleapis/google-api-go-client/commit/5085dcfd8bdf85c96592513e669998f803ef0407))
+
 ## [0.216.0](https://github.com/googleapis/google-api-go-client/compare/v0.215.0...v0.216.0) (2025-01-09)
 
 

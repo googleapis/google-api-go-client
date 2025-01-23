@@ -103,6 +103,13 @@ const mtlsBasePath = "https://classroom.mtls.googleapis.com/"
 
 // OAuth2 scopes used by this API.
 const (
+	// See and update its own attachments to posts in Google Classroom
+	ClassroomAddonsStudentScope = "https://www.googleapis.com/auth/classroom.addons.student"
+
+	// See, create, and update its own attachments to posts in classes you teach in
+	// Google Classroom
+	ClassroomAddonsTeacherScope = "https://www.googleapis.com/auth/classroom.addons.teacher"
+
 	// View and manage announcements in Google Classroom
 	ClassroomAnnouncementsScope = "https://www.googleapis.com/auth/classroom.announcements"
 
@@ -177,6 +184,8 @@ const (
 // NewService creates a new Service.
 func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, error) {
 	scopesOption := internaloption.WithDefaultScopes(
+		"https://www.googleapis.com/auth/classroom.addons.student",
+		"https://www.googleapis.com/auth/classroom.addons.teacher",
 		"https://www.googleapis.com/auth/classroom.announcements",
 		"https://www.googleapis.com/auth/classroom.announcements.readonly",
 		"https://www.googleapis.com/auth/classroom.courses",
@@ -13257,7 +13266,8 @@ type CoursesTopicsCreateCall struct {
 // Create: Creates a topic. This method returns the following error codes: *
 // `PERMISSION_DENIED` if the requesting user is not permitted to access the
 // requested course, create a topic in the requested course, or for access
-// errors. * `INVALID_ARGUMENT` if the request is malformed. * `NOT_FOUND` if
+// errors. * `INVALID_ARGUMENT` if the request is malformed. * `ALREADY_EXISTS`
+// if there exists a topic in the course with the same name. * `NOT_FOUND` if
 // the requested course does not exist.
 //
 //   - courseId: Identifier of the course. This identifier can be either the
@@ -13742,7 +13752,8 @@ type CoursesTopicsPatchCall struct {
 // Patch: Updates one or more fields of a topic. This method returns the
 // following error codes: * `PERMISSION_DENIED` if the requesting developer
 // project did not create the corresponding topic or for access errors. *
-// `INVALID_ARGUMENT` if the request is malformed. * `NOT_FOUND` if the
+// `INVALID_ARGUMENT` if the request is malformed. * `FAILED_PRECONDITION` if
+// there exists a topic in the course with the same name. * `NOT_FOUND` if the
 // requested course or topic does not exist
 //
 //   - courseId: Identifier of the course. This identifier can be either the

@@ -1381,7 +1381,8 @@ func (s CopyLogEntriesMetadata) MarshalJSON() ([]byte, error) {
 
 // CopyLogEntriesRequest: The parameters to CopyLogEntries.
 type CopyLogEntriesRequest struct {
-	// Destination: Required. Destination to which to copy log entries.
+	// Destination: Required. Destination to which to copy log entries. For
+	// example: "storage.googleapis.com/GCS_BUCKET"
 	Destination string `json:"destination,omitempty"`
 	// Filter: Optional. A filter specifying which log entries to copy. The filter
 	// must be no more than 20k characters. An empty filter matches all log

@@ -231,7 +231,7 @@ type VoicesService struct {
 // AdvancedVoiceOptions: Used for advanced voice options.
 type AdvancedVoiceOptions struct {
 	// LowLatencyJourneySynthesis: Only for Journey voices. If false, the synthesis
-	// will be context aware and have higher latency.
+	// is context aware and has a higher latency.
 	LowLatencyJourneySynthesis bool `json:"lowLatencyJourneySynthesis,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "LowLatencyJourneySynthesis")
 	// to unconditionally include in API requests. By default, fields with empty or
@@ -261,16 +261,16 @@ type AudioConfig struct {
 	//   "LINEAR16" - Uncompressed 16-bit signed little-endian samples (Linear
 	// PCM). Audio content returned as LINEAR16 also contains a WAV header.
 	//   "MP3" - MP3 audio at 32kbps.
-	//   "OGG_OPUS" - Opus encoded audio wrapped in an ogg container. The result
-	// will be a file which can be played natively on Android, and in browsers (at
-	// least Chrome and Firefox). The quality of the encoding is considerably
-	// higher than MP3 while using approximately the same bitrate.
+	//   "OGG_OPUS" - Opus encoded audio wrapped in an ogg container. The result is
+	// a file which can be played natively on Android, and in browsers (at least
+	// Chrome and Firefox). The quality of the encoding is considerably higher than
+	// MP3 while using approximately the same bitrate.
 	//   "MULAW" - 8-bit samples that compand 14-bit audio samples using G.711
 	// PCMU/mu-law. Audio content returned as MULAW also contains a WAV header.
 	//   "ALAW" - 8-bit samples that compand 14-bit audio samples using G.711
 	// PCMU/A-law. Audio content returned as ALAW also contains a WAV header.
 	//   "PCM" - Uncompressed 16-bit signed little-endian samples (Linear PCM).
-	// Note that as opposed to LINEAR16, audio will not be wrapped in a WAV (or any
+	// Note that as opposed to LINEAR16, audio won't be wrapped in a WAV (or any
 	// other) header.
 	AudioEncoding string `json:"audioEncoding,omitempty"`
 	// EffectsProfileId: Optional. Input only. An identifier which selects 'audio
@@ -351,14 +351,14 @@ type CustomPronunciationParams struct {
 	//
 	// Possible values:
 	//   "PHONETIC_ENCODING_UNSPECIFIED" - Not specified.
-	//   "PHONETIC_ENCODING_IPA" - IPA. (e.g. apple -> ˈæpəl )
+	//   "PHONETIC_ENCODING_IPA" - IPA, such as apple -> ˈæpəl.
 	// https://en.wikipedia.org/wiki/International_Phonetic_Alphabet
-	//   "PHONETIC_ENCODING_X_SAMPA" - X-SAMPA (e.g. apple -> "{p@l" )
+	//   "PHONETIC_ENCODING_X_SAMPA" - X-SAMPA, such as apple -> "{p@l".
 	// https://en.wikipedia.org/wiki/X-SAMPA
 	PhoneticEncoding string `json:"phoneticEncoding,omitempty"`
-	// Phrase: The phrase to which the customization will be applied. The phrase
-	// can be multiple words (in the case of proper nouns etc), but should not span
-	// to a whole sentence.
+	// Phrase: The phrase to which the customization is applied. The phrase can be
+	// multiple words, such as proper nouns, but shouldn't span the length of the
+	// sentence.
 	Phrase string `json:"phrase,omitempty"`
 	// Pronunciation: The pronunciation of the phrase. This must be in the phonetic
 	// encoding specified above.
@@ -383,7 +383,7 @@ func (s CustomPronunciationParams) MarshalJSON() ([]byte, error) {
 
 // CustomPronunciations: A collection of pronunciation customizations.
 type CustomPronunciations struct {
-	// Pronunciations: The pronunciation customizations to be applied.
+	// Pronunciations: The pronunciation customizations are applied.
 	Pronunciations []*CustomPronunciationParams `json:"pronunciations,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Pronunciations") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -650,14 +650,14 @@ func (s Status) MarshalJSON() ([]byte, error) {
 // `ssml` must be supplied. Supplying both or neither returns
 // google.rpc.Code.INVALID_ARGUMENT. The input size is limited to 5000 bytes.
 type SynthesisInput struct {
-	// CustomPronunciations: Optional. The pronunciation customizations to be
-	// applied to the input. If this is set, the input will be synthesized using
-	// the given pronunciation customizations. The initial support will be for
-	// EFIGS (English, French, Italian, German, Spanish) languages, as provided in
-	// VoiceSelectionParams. Journey and Instant Clone voices are not supported
-	// yet. In order to customize the pronunciation of a phrase, there must be an
-	// exact match of the phrase in the input types. If using SSML, the phrase must
-	// not be inside a phoneme tag (entirely or partially).
+	// CustomPronunciations: Optional. The pronunciation customizations are applied
+	// to the input. If this is set, the input is synthesized using the given
+	// pronunciation customizations. The initial support is for English, French,
+	// Italian, German, and Spanish (EFIGS) languages, as provided in
+	// VoiceSelectionParams. Journey and Instant Clone voices aren't supported. In
+	// order to customize the pronunciation of a phrase, there must be an exact
+	// match of the phrase in the input types. If using SSML, the phrase must not
+	// be inside a phoneme tag.
 	CustomPronunciations *CustomPronunciations `json:"customPronunciations,omitempty"`
 	// MultiSpeakerMarkup: The multi-speaker input to be synthesized. Only
 	// applicable for multi-speaker synthesis.
@@ -821,7 +821,7 @@ func (s SynthesizeSpeechResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// Turn: A Multi-speaker turn.
+// Turn: A multi-speaker turn.
 type Turn struct {
 	// Speaker: Required. The speaker of the turn, for example, 'O' or 'Q'. Please
 	// refer to documentation for available speakers.
@@ -948,7 +948,7 @@ type VoiceSelectionParams struct {
 	//   "NEUTRAL" - A gender-neutral voice. This voice is not yet supported.
 	SsmlGender string `json:"ssmlGender,omitempty"`
 	// VoiceClone: Optional. The configuration for a voice clone. If
-	// [VoiceCloneParams.voice_clone_key] is set, the service will choose the voice
+	// [VoiceCloneParams.voice_clone_key] is set, the service chooses the voice
 	// clone matching the specified configuration.
 	VoiceClone *VoiceCloneParams `json:"voiceClone,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "CustomVoice") to

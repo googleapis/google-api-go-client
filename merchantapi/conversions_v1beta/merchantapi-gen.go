@@ -183,8 +183,6 @@ type AttributionSettings struct {
 	// AttributionLookbackWindowDays: Required. Lookback windows (in days) used for
 	// attribution in this source. Supported values are 7, 30, 40.
 	AttributionLookbackWindowDays int64 `json:"attributionLookbackWindowDays,omitempty"`
-	// AttributionModel: Required. Attribution model.
-	//
 	// Possible values:
 	//   "ATTRIBUTION_MODEL_UNSPECIFIED" - Unspecified model.
 	//   "CROSS_CHANNEL_LAST_CLICK" - Cross-channel Last Click model.

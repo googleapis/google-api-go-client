@@ -250,8 +250,8 @@ type AcceleratorConfig struct {
 	//   "V3" - TPU v3.
 	//   "V4" - TPU v4.
 	//   "V5LITE_POD" - TPU v5lite pod.
-	//   "V5P" - TPU v5p
-	//   "V6E" - TPU v6e
+	//   "V5P" - TPU v5p.
+	//   "V6E" - TPU v6e.
 	Type string `json:"type,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Topology") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -973,8 +973,15 @@ type Node struct {
 	MultisliceNode bool `json:"multisliceNode,omitempty"`
 	// Name: Output only. Immutable. The name of the TPU.
 	Name string `json:"name,omitempty"`
-	// NetworkConfig: Network configurations for the TPU node.
+	// NetworkConfig: Network configurations for the TPU node. network_config and
+	// network_configs are mutually exclusive, you can only specify one of them. If
+	// both are specified, an error will be returned.
 	NetworkConfig *NetworkConfig `json:"networkConfig,omitempty"`
+	// NetworkConfigs: Optional. Repeated network configurations for the TPU node.
+	// This field is used to specify multiple networks configs for the TPU node.
+	// network_config and network_configs are mutually exclusive, you can only
+	// specify one of them. If both are specified, an error will be returned.
+	NetworkConfigs []*NetworkConfig `json:"networkConfigs,omitempty"`
 	// NetworkEndpoints: Output only. The network endpoints where TPU workers can
 	// be accessed and sent work. It is recommended that runtime clients of the
 	// node reach out to the 0th entry in this map first.

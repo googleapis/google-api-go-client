@@ -276,7 +276,7 @@ type ProjectsPoliciesService struct {
 
 // GoogleCloudOrgpolicyV2AlternatePolicySpec: Similar to PolicySpec but with an
 // extra 'launch' field for launch reference. The PolicySpec here is specific
-// for dry-run/darklaunch.
+// for dry-run.
 type GoogleCloudOrgpolicyV2AlternatePolicySpec struct {
 	// Launch: Reference to the launch that will be used while audit logging and to
 	// control the launch. Should be set only in the alternate policy.
@@ -310,19 +310,19 @@ func (s GoogleCloudOrgpolicyV2AlternatePolicySpec) MarshalJSON() ([]byte, error)
 // policy that includes constraints at different locations in the
 // organization's resource hierarchy. Policies are inherited down the resource
 // hierarchy from higher levels, but can also be overridden. For details about
-// the inheritance rules please read about `policies`. Constraints have a
-// default behavior determined by the `constraint_default` field, which is the
-// enforcement behavior that is used in the absence of a policy being defined
-// or inherited for the resource in question.
+// the inheritance rules, see `Policy`. Constraints have a default behavior
+// determined by the `constraint_default` field, which is the enforcement
+// behavior that is used in the absence of a policy being defined or inherited
+// for the resource in question.
 type GoogleCloudOrgpolicyV2Constraint struct {
-	// BooleanConstraint: Defines this constraint as being a BooleanConstraint.
+	// BooleanConstraint: Defines this constraint as being a boolean constraint.
 	BooleanConstraint *GoogleCloudOrgpolicyV2ConstraintBooleanConstraint `json:"booleanConstraint,omitempty"`
 	// ConstraintDefault: The evaluation behavior of this constraint in the absence
 	// of a policy.
 	//
 	// Possible values:
 	//   "CONSTRAINT_DEFAULT_UNSPECIFIED" - This is only used for distinguishing
-	// unset values and should never be used.
+	// unset values and should never be used. Results in an error.
 	//   "ALLOW" - Indicate that all values are allowed for list constraints.
 	// Indicate that enforcement is off for boolean constraints.
 	//   "DENY" - Indicate that all values are denied for list constraints.
@@ -333,7 +333,7 @@ type GoogleCloudOrgpolicyV2Constraint struct {
 	Description string `json:"description,omitempty"`
 	// DisplayName: The human readable name. Mutable.
 	DisplayName string `json:"displayName,omitempty"`
-	// ListConstraint: Defines this constraint as being a ListConstraint.
+	// ListConstraint: Defines this constraint as being a list constraint.
 	ListConstraint *GoogleCloudOrgpolicyV2ConstraintListConstraint `json:"listConstraint,omitempty"`
 	// Name: Immutable. The resource name of the constraint. Must be in one of the
 	// following forms: * `projects/{project_number}/constraints/{constraint_name}`
@@ -364,13 +364,13 @@ func (s GoogleCloudOrgpolicyV2Constraint) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudOrgpolicyV2ConstraintBooleanConstraint: A constraint that is
-// either enforced or not. For example, a constraint
-// `constraints/compute.disableSerialPortAccess`. If it is enforced on a VM
-// instance, serial port connections will not be opened to that instance.
+// GoogleCloudOrgpolicyV2ConstraintBooleanConstraint: A constraint type is
+// enforced or not enforced, which is configured in the `PolicyRule`. If
+// `customConstraintDefinition` is defined, this constraint is a managed
+// constraint.
 type GoogleCloudOrgpolicyV2ConstraintBooleanConstraint struct {
-	// CustomConstraintDefinition: Custom constraint definition. This is set only
-	// for Managed Constraints
+	// CustomConstraintDefinition: Custom constraint definition. Defines this as a
+	// managed constraint.
 	CustomConstraintDefinition *GoogleCloudOrgpolicyV2ConstraintCustomConstraintDefinition `json:"customConstraintDefinition,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "CustomConstraintDefinition")
 	// to unconditionally include in API requests. By default, fields with empty or
@@ -390,14 +390,14 @@ func (s GoogleCloudOrgpolicyV2ConstraintBooleanConstraint) MarshalJSON() ([]byte
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudOrgpolicyV2ConstraintCustomConstraintDefinition: Currently used
-// for Managed Constraints. This represents a subset of fields missing from
-// Constraint proto that are required to describe CustomConstraint
+// GoogleCloudOrgpolicyV2ConstraintCustomConstraintDefinition: Custom
+// constraint definition. Defines this as a managed constraint.
 type GoogleCloudOrgpolicyV2ConstraintCustomConstraintDefinition struct {
 	// ActionType: Allow or deny type.
 	//
 	// Possible values:
-	//   "ACTION_TYPE_UNSPECIFIED" - Unspecified. Results in an error.
+	//   "ACTION_TYPE_UNSPECIFIED" - This is only used for distinguishing unset
+	// values and should never be used. Results in an error.
 	//   "ALLOW" - Allowed action type.
 	//   "DENY" - Deny action type.
 	ActionType string `json:"actionType,omitempty"`
@@ -409,16 +409,17 @@ type GoogleCloudOrgpolicyV2ConstraintCustomConstraintDefinition struct {
 	// MethodTypes: All the operations being applied for this constraint.
 	//
 	// Possible values:
-	//   "METHOD_TYPE_UNSPECIFIED" - Unspecified. Results in an error.
+	//   "METHOD_TYPE_UNSPECIFIED" - This is only used for distinguishing unset
+	// values and should never be used. Results in an error.
 	//   "CREATE" - Constraint applied when creating the resource.
 	//   "UPDATE" - Constraint applied when updating the resource.
-	//   "DELETE" - Constraint applied when deleting the resource. Not supported
-	// yet.
+	//   "DELETE" - Constraint applied when deleting the resource. Not currently
+	// supported.
 	//   "REMOVE_GRANT" - Constraint applied when removing an IAM grant.
 	//   "GOVERN_TAGS" - Constraint applied when enforcing forced tagging.
 	MethodTypes []string `json:"methodTypes,omitempty"`
-	// Parameters: Stores Structure of parameters used by Constraint condition. Key
-	// of map represents name of the parameter.
+	// Parameters: Stores the structure of `Parameters` used by the constraint
+	// condition. The key of `map` represents the name of the parameter.
 	Parameters map[string]GoogleCloudOrgpolicyV2ConstraintCustomConstraintDefinitionParameter `json:"parameters,omitempty"`
 	// ResourceTypes: The resource instance type on which this policy applies.
 	// Format will be of the form : `/` Example: *
@@ -448,11 +449,12 @@ type GoogleCloudOrgpolicyV2ConstraintCustomConstraintDefinitionParameter struct 
 	// DefaultValue: Sets the value of the parameter in an assignment if no value
 	// is given.
 	DefaultValue interface{} `json:"defaultValue,omitempty"`
-	// Item: Determines the parameter’s value structure. For example, LIST can be
-	// specified by defining type : LIST, and item type as : STRING.
+	// Item: Determines the parameter's value structure. For example, `LIST` can be
+	// specified by defining `type: LIST`, and `item: STRING`.
 	//
 	// Possible values:
-	//   "TYPE_UNSPECIFIED" - Unspecified. Results in an error.
+	//   "TYPE_UNSPECIFIED" - This is only used for distinguishing unset values and
+	// should never be used. Results in an error.
 	//   "LIST" - List parameter type.
 	//   "STRING" - String parameter type.
 	//   "BOOLEAN" - Boolean parameter type.
@@ -463,7 +465,8 @@ type GoogleCloudOrgpolicyV2ConstraintCustomConstraintDefinitionParameter struct 
 	// Type: Type of the parameter.
 	//
 	// Possible values:
-	//   "TYPE_UNSPECIFIED" - Unspecified. Results in an error.
+	//   "TYPE_UNSPECIFIED" - This is only used for distinguishing unset values and
+	// should never be used. Results in an error.
 	//   "LIST" - List parameter type.
 	//   "STRING" - String parameter type.
 	//   "BOOLEAN" - Boolean parameter type.
@@ -491,7 +494,7 @@ func (s GoogleCloudOrgpolicyV2ConstraintCustomConstraintDefinitionParameter) Mar
 }
 
 // GoogleCloudOrgpolicyV2ConstraintCustomConstraintDefinitionParameterMetadata:
-// Defines Medata structure.
+// Defines Metadata structure.
 type GoogleCloudOrgpolicyV2ConstraintCustomConstraintDefinitionParameterMetadata struct {
 	// Description: Detailed description of what this `parameter` is and use of it.
 	// Mutable.
@@ -514,9 +517,9 @@ func (s GoogleCloudOrgpolicyV2ConstraintCustomConstraintDefinitionParameterMetad
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudOrgpolicyV2ConstraintListConstraint: A constraint that allows or
-// disallows a list of string values, which are configured by an Organization
-// Policy administrator with a policy.
+// GoogleCloudOrgpolicyV2ConstraintListConstraint: A constraint type that
+// allows or disallows a list of string values, which are configured in the
+// `PolicyRule`.
 type GoogleCloudOrgpolicyV2ConstraintListConstraint struct {
 	// SupportsIn: Indicates whether values grouped into categories can be used in
 	// `Policy.allowed_values` and `Policy.denied_values`. For example,
@@ -554,11 +557,13 @@ type GoogleCloudOrgpolicyV2CustomConstraint struct {
 	// ActionType: Allow or deny type.
 	//
 	// Possible values:
-	//   "ACTION_TYPE_UNSPECIFIED" - Unspecified. Results in an error.
+	//   "ACTION_TYPE_UNSPECIFIED" - This is only used for distinguishing unset
+	// values and should never be used. Results in an error.
 	//   "ALLOW" - Allowed action type.
 	//   "DENY" - Deny action type.
 	ActionType string `json:"actionType,omitempty"`
-	// Condition: Org policy condition/expression. For example:
+	// Condition: A Common Expression Language (CEL) condition which is used in the
+	// evaluation of the constraint. For example:
 	// `resource.instanceName.matches("[production|test]_.*_(\d)+")` or,
 	// `resource.management.auto_upgrade == true` The max length of the condition
 	// is 1000 characters.
@@ -572,11 +577,12 @@ type GoogleCloudOrgpolicyV2CustomConstraint struct {
 	// MethodTypes: All the operations being applied for this constraint.
 	//
 	// Possible values:
-	//   "METHOD_TYPE_UNSPECIFIED" - Unspecified. Results in an error.
+	//   "METHOD_TYPE_UNSPECIFIED" - This is only used for distinguishing unset
+	// values and should never be used. Results in an error.
 	//   "CREATE" - Constraint applied when creating the resource.
 	//   "UPDATE" - Constraint applied when updating the resource.
-	//   "DELETE" - Constraint applied when deleting the resource. Not supported
-	// yet.
+	//   "DELETE" - Constraint applied when deleting the resource. Not currently
+	// supported.
 	//   "REMOVE_GRANT" - Constraint applied when removing an IAM grant.
 	//   "GOVERN_TAGS" - Constraint applied when enforcing forced tagging.
 	MethodTypes []string `json:"methodTypes,omitempty"`
@@ -593,7 +599,7 @@ type GoogleCloudOrgpolicyV2CustomConstraint struct {
 	ResourceTypes []string `json:"resourceTypes,omitempty"`
 	// UpdateTime: Output only. The last time this custom constraint was updated.
 	// This represents the last time that the `CreateCustomConstraint` or
-	// `UpdateCustomConstraint` RPC was called
+	// `UpdateCustomConstraint` methods were called.
 	UpdateTime string `json:"updateTime,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
@@ -647,11 +653,11 @@ func (s GoogleCloudOrgpolicyV2ListConstraintsResponse) MarshalJSON() ([]byte, er
 }
 
 // GoogleCloudOrgpolicyV2ListCustomConstraintsResponse: The response returned
-// from the ListCustomConstraints method. It will be empty if no custom
-// constraints are set on the organization resource.
+// from the ListCustomConstraints method. It will be empty if no custom or
+// managed constraints are set on the organization resource.
 type GoogleCloudOrgpolicyV2ListCustomConstraintsResponse struct {
-	// CustomConstraints: All custom constraints that exist on the organization
-	// resource. It will be empty if no custom constraints are set.
+	// CustomConstraints: All custom and managed constraints that exist on the
+	// organization resource. It will be empty if no custom constraints are set.
 	CustomConstraints []*GoogleCloudOrgpolicyV2CustomConstraint `json:"customConstraints,omitempty"`
 	// NextPageToken: Page token used to retrieve the next page. This is currently
 	// not used, but the server may at any point start supplying a valid token.
@@ -733,7 +739,7 @@ type GoogleCloudOrgpolicyV2Policy struct {
 	// name for API requests, but responses will return the name using the
 	// equivalent project number.
 	Name string `json:"name,omitempty"`
-	// Spec: Basic information about the Organization Policy.
+	// Spec: Basic information about the organization policy.
 	Spec *GoogleCloudOrgpolicyV2PolicySpec `json:"spec,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
@@ -833,11 +839,11 @@ type GoogleCloudOrgpolicyV2PolicySpecPolicyRule struct {
 	// configuration is acceptable. This field can be set only in policies for
 	// boolean constraints.
 	Enforce bool `json:"enforce,omitempty"`
-	// Parameters: Optional. Required for GMCs if parameters defined in
-	// constraints. Pass parameter values when policy enforcement is enabled.
-	// Ensure that parameter value types match those defined in the constraint
-	// definition. For example: { "allowedLocations" : ["us-east1", "us-west1"],
-	// "allowAll" : true }
+	// Parameters: Optional. Required for managed constraints if parameters are
+	// defined. Passes parameter values when policy enforcement is enabled. Ensure
+	// that parameter value types match those defined in the constraint definition.
+	// For example: { "allowedLocations" : ["us-east1", "us-west1"], "allowAll" :
+	// true }
 	Parameters googleapi.RawMessage `json:"parameters,omitempty"`
 	// Values: List of values to be used for this policy rule. This field can be
 	// set only in policies for list constraints.
@@ -2192,11 +2198,12 @@ type OrganizationsCustomConstraintsGetCall struct {
 	header_      http.Header
 }
 
-// Get: Gets a custom constraint. Returns a `google.rpc.Status` with
-// `google.rpc.Code.NOT_FOUND` if the custom constraint does not exist.
+// Get: Gets a custom or managed constraint. Returns a `google.rpc.Status` with
+// `google.rpc.Code.NOT_FOUND` if the custom or managed constraint does not
+// exist.
 //
-//   - name: Resource name of the custom constraint. See the custom constraint
-//     entry for naming requirements.
+//   - name: Resource name of the custom or managed constraint. See the custom
+//     constraint entry for naming requirements.
 func (r *OrganizationsCustomConstraintsService) Get(name string) *OrganizationsCustomConstraintsGetCall {
 	c := &OrganizationsCustomConstraintsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name

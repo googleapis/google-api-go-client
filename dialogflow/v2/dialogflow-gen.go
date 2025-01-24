@@ -1401,6 +1401,17 @@ type GoogleCloudDialogflowCxV3DataStoreConnection struct {
 	//   "STRUCTURED" - A data store that contains structured data (for example
 	// FAQ).
 	DataStoreType string `json:"dataStoreType,omitempty"`
+	// DocumentProcessingMode: The document processing mode for the data store
+	// connection. Should only be set for PUBLIC_WEB and UNSTRUCTURED data stores.
+	// If not set it is considered as DOCUMENTS, as this is the legacy mode.
+	//
+	// Possible values:
+	//   "DOCUMENT_PROCESSING_MODE_UNSPECIFIED" - Not specified. This should be set
+	// for STRUCTURED type data stores. Due to legacy reasons this is considered as
+	// DOCUMENTS for STRUCTURED and PUBLIC_WEB data stores.
+	//   "DOCUMENTS" - Documents are processed as documents.
+	//   "CHUNKS" - Documents are converted to chunks.
+	DocumentProcessingMode string `json:"documentProcessingMode,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "DataStore") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -4682,6 +4693,17 @@ type GoogleCloudDialogflowCxV3beta1DataStoreConnection struct {
 	//   "STRUCTURED" - A data store that contains structured data (for example
 	// FAQ).
 	DataStoreType string `json:"dataStoreType,omitempty"`
+	// DocumentProcessingMode: The document processing mode for the data store
+	// connection. Should only be set for PUBLIC_WEB and UNSTRUCTURED data stores.
+	// If not set it is considered as DOCUMENTS, as this is the legacy mode.
+	//
+	// Possible values:
+	//   "DOCUMENT_PROCESSING_MODE_UNSPECIFIED" - Not specified. This should be set
+	// for STRUCTURED type data stores. Due to legacy reasons this is considered as
+	// DOCUMENTS for STRUCTURED and PUBLIC_WEB data stores.
+	//   "DOCUMENTS" - Documents are processed as documents.
+	//   "CHUNKS" - Documents are converted to chunks.
+	DocumentProcessingMode string `json:"documentProcessingMode,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "DataStore") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -7864,6 +7886,8 @@ func (s GoogleCloudDialogflowV2AgentAssistantRecord) MarshalJSON() ([]byte, erro
 type GoogleCloudDialogflowV2AnalyzeContentRequest struct {
 	// AssistQueryParams: Parameters for a human assist query.
 	AssistQueryParams *GoogleCloudDialogflowV2AssistQueryParameters `json:"assistQueryParams,omitempty"`
+	// AudioInput: The natural language speech audio to be processed.
+	AudioInput *GoogleCloudDialogflowV2AudioInput `json:"audioInput,omitempty"`
 	// CxParameters: Additional parameters to be put into Dialogflow CX session
 	// parameters. To remove a parameter from the session, clients should
 	// explicitly set the parameter value to null. Note: this field should only be
@@ -8193,6 +8217,34 @@ type GoogleCloudDialogflowV2AssistQueryParameters struct {
 
 func (s GoogleCloudDialogflowV2AssistQueryParameters) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowV2AssistQueryParameters
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDialogflowV2AudioInput: Represents the natural language speech
+// audio to be processed.
+type GoogleCloudDialogflowV2AudioInput struct {
+	// Audio: Required. The natural language speech audio to be processed. A single
+	// request can contain up to 2 minutes of speech audio data. The transcribed
+	// text cannot contain more than 256 bytes for virtual agent interactions.
+	Audio string `json:"audio,omitempty"`
+	// Config: Required. Instructs the speech recognizer how to process the speech
+	// audio.
+	Config *GoogleCloudDialogflowV2InputAudioConfig `json:"config,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Audio") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Audio") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDialogflowV2AudioInput) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDialogflowV2AudioInput
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -8557,6 +8609,8 @@ type GoogleCloudDialogflowV2ClearSuggestionFeatureConfigOperationMetadata struct
 	//   "ARTICLE_SUGGESTION" - Run article suggestion model for chat.
 	//   "FAQ" - Run FAQ model for chat.
 	//   "SMART_REPLY" - Run smart reply model for chat.
+	//   "CONVERSATION_SUMMARIZATION" - Run conversation summarization model for
+	// chat.
 	//   "KNOWLEDGE_SEARCH" - Run knowledge search with text input from agent or
 	// text generated query.
 	//   "KNOWLEDGE_ASSIST" - Run knowledge assist with automatic query generation.
@@ -8601,6 +8655,8 @@ type GoogleCloudDialogflowV2ClearSuggestionFeatureConfigRequest struct {
 	//   "ARTICLE_SUGGESTION" - Run article suggestion model for chat.
 	//   "FAQ" - Run FAQ model for chat.
 	//   "SMART_REPLY" - Run smart reply model for chat.
+	//   "CONVERSATION_SUMMARIZATION" - Run conversation summarization model for
+	// chat.
 	//   "KNOWLEDGE_SEARCH" - Run knowledge search with text input from agent or
 	// text generated query.
 	//   "KNOWLEDGE_ASSIST" - Run knowledge assist with automatic query generation.
@@ -15003,6 +15059,8 @@ type GoogleCloudDialogflowV2SetSuggestionFeatureConfigOperationMetadata struct {
 	//   "ARTICLE_SUGGESTION" - Run article suggestion model for chat.
 	//   "FAQ" - Run FAQ model for chat.
 	//   "SMART_REPLY" - Run smart reply model for chat.
+	//   "CONVERSATION_SUMMARIZATION" - Run conversation summarization model for
+	// chat.
 	//   "KNOWLEDGE_SEARCH" - Run knowledge search with text input from agent or
 	// text generated query.
 	//   "KNOWLEDGE_ASSIST" - Run knowledge assist with automatic query generation.
@@ -15919,6 +15977,8 @@ type GoogleCloudDialogflowV2SuggestionFeature struct {
 	//   "ARTICLE_SUGGESTION" - Run article suggestion model for chat.
 	//   "FAQ" - Run FAQ model for chat.
 	//   "SMART_REPLY" - Run smart reply model for chat.
+	//   "CONVERSATION_SUMMARIZATION" - Run conversation summarization model for
+	// chat.
 	//   "KNOWLEDGE_SEARCH" - Run knowledge search with text input from agent or
 	// text generated query.
 	//   "KNOWLEDGE_ASSIST" - Run knowledge assist with automatic query generation.

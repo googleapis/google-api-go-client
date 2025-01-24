@@ -1704,6 +1704,17 @@ type GoogleCloudDialogflowCxV3DataStoreConnection struct {
 	//   "STRUCTURED" - A data store that contains structured data (for example
 	// FAQ).
 	DataStoreType string `json:"dataStoreType,omitempty"`
+	// DocumentProcessingMode: The document processing mode for the data store
+	// connection. Should only be set for PUBLIC_WEB and UNSTRUCTURED data stores.
+	// If not set it is considered as DOCUMENTS, as this is the legacy mode.
+	//
+	// Possible values:
+	//   "DOCUMENT_PROCESSING_MODE_UNSPECIFIED" - Not specified. This should be set
+	// for STRUCTURED type data stores. Due to legacy reasons this is considered as
+	// DOCUMENTS for STRUCTURED and PUBLIC_WEB data stores.
+	//   "DOCUMENTS" - Documents are processed as documents.
+	//   "CHUNKS" - Documents are converted to chunks.
+	DocumentProcessingMode string `json:"documentProcessingMode,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "DataStore") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -6171,9 +6182,7 @@ type GoogleCloudDialogflowCxV3QueryResult struct {
 	// message, including but not limited to `name` and `display_name`.
 	CurrentPage *GoogleCloudDialogflowCxV3Page `json:"currentPage,omitempty"`
 	// DataStoreConnectionSignals: Optional. Data store connection feature output
-	// signals. Filled only when data stores are involved in serving the query and
-	// DetectIntentRequest.populate_data_store_connection_signals is set to true in
-	// the request.
+	// signals. Filled only when data stores are involved in serving the query.
 	DataStoreConnectionSignals *GoogleCloudDialogflowCxV3DataStoreConnectionSignals `json:"dataStoreConnectionSignals,omitempty"`
 	// DiagnosticInfo: The free-form diagnostic info. For example, this field could
 	// contain webhook call latency. The fields of this data can change without
@@ -9255,6 +9264,17 @@ type GoogleCloudDialogflowCxV3beta1DataStoreConnection struct {
 	//   "STRUCTURED" - A data store that contains structured data (for example
 	// FAQ).
 	DataStoreType string `json:"dataStoreType,omitempty"`
+	// DocumentProcessingMode: The document processing mode for the data store
+	// connection. Should only be set for PUBLIC_WEB and UNSTRUCTURED data stores.
+	// If not set it is considered as DOCUMENTS, as this is the legacy mode.
+	//
+	// Possible values:
+	//   "DOCUMENT_PROCESSING_MODE_UNSPECIFIED" - Not specified. This should be set
+	// for STRUCTURED type data stores. Due to legacy reasons this is considered as
+	// DOCUMENTS for STRUCTURED and PUBLIC_WEB data stores.
+	//   "DOCUMENTS" - Documents are processed as documents.
+	//   "CHUNKS" - Documents are converted to chunks.
+	DocumentProcessingMode string `json:"documentProcessingMode,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "DataStore") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -12338,6 +12358,8 @@ type GoogleCloudDialogflowV2ClearSuggestionFeatureConfigOperationMetadata struct
 	//   "ARTICLE_SUGGESTION" - Run article suggestion model for chat.
 	//   "FAQ" - Run FAQ model for chat.
 	//   "SMART_REPLY" - Run smart reply model for chat.
+	//   "CONVERSATION_SUMMARIZATION" - Run conversation summarization model for
+	// chat.
 	//   "KNOWLEDGE_SEARCH" - Run knowledge search with text input from agent or
 	// text generated query.
 	//   "KNOWLEDGE_ASSIST" - Run knowledge assist with automatic query generation.
@@ -14875,6 +14897,8 @@ type GoogleCloudDialogflowV2SetSuggestionFeatureConfigOperationMetadata struct {
 	//   "ARTICLE_SUGGESTION" - Run article suggestion model for chat.
 	//   "FAQ" - Run FAQ model for chat.
 	//   "SMART_REPLY" - Run smart reply model for chat.
+	//   "CONVERSATION_SUMMARIZATION" - Run conversation summarization model for
+	// chat.
 	//   "KNOWLEDGE_SEARCH" - Run knowledge search with text input from agent or
 	// text generated query.
 	//   "KNOWLEDGE_ASSIST" - Run knowledge assist with automatic query generation.

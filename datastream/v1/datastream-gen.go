@@ -468,6 +468,10 @@ type ConnectionProfile struct {
 	PostgresqlProfile *PostgresqlProfile `json:"postgresqlProfile,omitempty"`
 	// PrivateConnectivity: Private connectivity.
 	PrivateConnectivity *PrivateConnectivity `json:"privateConnectivity,omitempty"`
+	// SatisfiesPzi: Output only. Reserved for future use.
+	SatisfiesPzi bool `json:"satisfiesPzi,omitempty"`
+	// SatisfiesPzs: Output only. Reserved for future use.
+	SatisfiesPzs bool `json:"satisfiesPzs,omitempty"`
 	// SqlServerProfile: SQLServer Connection Profile configuration.
 	SqlServerProfile *SqlServerProfile `json:"sqlServerProfile,omitempty"`
 	// StaticServiceIpConnectivity: Static Service IP connectivity.
@@ -1345,17 +1349,18 @@ type MysqlSslConfig struct {
 	// CaCertificateSet: Output only. Indicates whether the ca_certificate field is
 	// set.
 	CaCertificateSet bool `json:"caCertificateSet,omitempty"`
-	// ClientCertificate: Input only. PEM-encoded certificate that will be used by
-	// the replica to authenticate against the source database server. If this
-	// field is used then the 'client_key' and the 'ca_certificate' fields are
-	// mandatory.
+	// ClientCertificate: Optional. Input only. PEM-encoded certificate that will
+	// be used by the replica to authenticate against the source database server.
+	// If this field is used then the 'client_key' and the 'ca_certificate' fields
+	// are mandatory.
 	ClientCertificate string `json:"clientCertificate,omitempty"`
 	// ClientCertificateSet: Output only. Indicates whether the client_certificate
 	// field is set.
 	ClientCertificateSet bool `json:"clientCertificateSet,omitempty"`
-	// ClientKey: Input only. PEM-encoded private key associated with the Client
-	// Certificate. If this field is used then the 'client_certificate' and the
-	// 'ca_certificate' fields are mandatory.
+	// ClientKey: Optional. Input only. PEM-encoded private key associated with the
+	// Client Certificate. If this field is used then the 'client_certificate' and
+	// the 'ca_certificate' fields are mandatory. Mutually exclusive with the
+	// `secret_manager_stored_client_key` field.
 	ClientKey string `json:"clientKey,omitempty"`
 	// ClientKeySet: Output only. Indicates whether the client_key field is set.
 	ClientKeySet bool `json:"clientKeySet,omitempty"`
@@ -2039,6 +2044,10 @@ type PrivateConnection struct {
 	Labels map[string]string `json:"labels,omitempty"`
 	// Name: Output only. Identifier. The resource's name.
 	Name string `json:"name,omitempty"`
+	// SatisfiesPzi: Output only. Reserved for future use.
+	SatisfiesPzi bool `json:"satisfiesPzi,omitempty"`
+	// SatisfiesPzs: Output only. Reserved for future use.
+	SatisfiesPzs bool `json:"satisfiesPzs,omitempty"`
 	// State: Output only. The state of the Private Connection.
 	//
 	// Possible values:
@@ -2716,6 +2725,10 @@ type Stream struct {
 	LastRecoveryTime string `json:"lastRecoveryTime,omitempty"`
 	// Name: Output only. Identifier. The stream's name.
 	Name string `json:"name,omitempty"`
+	// SatisfiesPzi: Output only. Reserved for future use.
+	SatisfiesPzi bool `json:"satisfiesPzi,omitempty"`
+	// SatisfiesPzs: Output only. Reserved for future use.
+	SatisfiesPzs bool `json:"satisfiesPzs,omitempty"`
 	// SourceConfig: Required. Source connection profile configuration.
 	SourceConfig *SourceConfig `json:"sourceConfig,omitempty"`
 	// State: The state of the stream.

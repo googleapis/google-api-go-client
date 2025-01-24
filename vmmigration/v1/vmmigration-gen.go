@@ -3814,6 +3814,8 @@ type VmCapabilities struct {
 	// use NVMe PD or local SSD.
 	//   "OS_CAPABILITY_GVNIC_NETWORK_INTERFACE" - gVNIC virtual NIC driver
 	// supported.
+	//   "OS_CAPABILITY_IDPF_NETWORK_INTERFACE" - IDPF virtual NIC driver
+	// supported.
 	OsCapabilities []string `json:"osCapabilities,omitempty"`
 	// ForceSendFields is a list of field names (e.g.
 	// "LastOsCapabilitiesUpdateTime") to unconditionally include in API requests.

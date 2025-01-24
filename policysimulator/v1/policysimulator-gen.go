@@ -420,7 +420,7 @@ type ProjectsLocationsReplaysResultsService struct {
 
 // GoogleCloudOrgpolicyV2AlternatePolicySpec: Similar to PolicySpec but with an
 // extra 'launch' field for launch reference. The PolicySpec here is specific
-// for dry-run/darklaunch.
+// for dry-run.
 type GoogleCloudOrgpolicyV2AlternatePolicySpec struct {
 	// Launch: Reference to the launch that will be used while audit logging and to
 	// control the launch. Should be set only in the alternate policy.
@@ -454,11 +454,13 @@ type GoogleCloudOrgpolicyV2CustomConstraint struct {
 	// ActionType: Allow or deny type.
 	//
 	// Possible values:
-	//   "ACTION_TYPE_UNSPECIFIED" - Unspecified. Results in an error.
+	//   "ACTION_TYPE_UNSPECIFIED" - This is only used for distinguishing unset
+	// values and should never be used. Results in an error.
 	//   "ALLOW" - Allowed action type.
 	//   "DENY" - Deny action type.
 	ActionType string `json:"actionType,omitempty"`
-	// Condition: Org policy condition/expression. For example:
+	// Condition: A Common Expression Language (CEL) condition which is used in the
+	// evaluation of the constraint. For example:
 	// `resource.instanceName.matches("[production|test]_.*_(\d)+")` or,
 	// `resource.management.auto_upgrade == true` The max length of the condition
 	// is 1000 characters.
@@ -472,11 +474,12 @@ type GoogleCloudOrgpolicyV2CustomConstraint struct {
 	// MethodTypes: All the operations being applied for this constraint.
 	//
 	// Possible values:
-	//   "METHOD_TYPE_UNSPECIFIED" - Unspecified. Results in an error.
+	//   "METHOD_TYPE_UNSPECIFIED" - This is only used for distinguishing unset
+	// values and should never be used. Results in an error.
 	//   "CREATE" - Constraint applied when creating the resource.
 	//   "UPDATE" - Constraint applied when updating the resource.
-	//   "DELETE" - Constraint applied when deleting the resource. Not supported
-	// yet.
+	//   "DELETE" - Constraint applied when deleting the resource. Not currently
+	// supported.
 	//   "REMOVE_GRANT" - Constraint applied when removing an IAM grant.
 	//   "GOVERN_TAGS" - Constraint applied when enforcing forced tagging.
 	MethodTypes []string `json:"methodTypes,omitempty"`
@@ -493,7 +496,7 @@ type GoogleCloudOrgpolicyV2CustomConstraint struct {
 	ResourceTypes []string `json:"resourceTypes,omitempty"`
 	// UpdateTime: Output only. The last time this custom constraint was updated.
 	// This represents the last time that the `CreateCustomConstraint` or
-	// `UpdateCustomConstraint` RPC was called
+	// `UpdateCustomConstraint` methods were called.
 	UpdateTime string `json:"updateTime,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "ActionType") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -538,7 +541,7 @@ type GoogleCloudOrgpolicyV2Policy struct {
 	// name for API requests, but responses will return the name using the
 	// equivalent project number.
 	Name string `json:"name,omitempty"`
-	// Spec: Basic information about the Organization Policy.
+	// Spec: Basic information about the organization policy.
 	Spec *GoogleCloudOrgpolicyV2PolicySpec `json:"spec,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Alternate") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -635,11 +638,11 @@ type GoogleCloudOrgpolicyV2PolicySpecPolicyRule struct {
 	// configuration is acceptable. This field can be set only in policies for
 	// boolean constraints.
 	Enforce bool `json:"enforce,omitempty"`
-	// Parameters: Optional. Required for GMCs if parameters defined in
-	// constraints. Pass parameter values when policy enforcement is enabled.
-	// Ensure that parameter value types match those defined in the constraint
-	// definition. For example: { "allowedLocations" : ["us-east1", "us-west1"],
-	// "allowAll" : true }
+	// Parameters: Optional. Required for managed constraints if parameters are
+	// defined. Passes parameter values when policy enforcement is enabled. Ensure
+	// that parameter value types match those defined in the constraint definition.
+	// For example: { "allowedLocations" : ["us-east1", "us-west1"], "allowAll" :
+	// true }
 	Parameters googleapi.RawMessage `json:"parameters,omitempty"`
 	// Values: List of values to be used for this policy rule. This field can be
 	// set only in policies for list constraints.

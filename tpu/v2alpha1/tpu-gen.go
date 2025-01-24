@@ -1473,7 +1473,8 @@ func (s QueueingPolicy) MarshalJSON() ([]byte, error) {
 type Reservation struct {
 	// Name: The reservation name with the format:
 	// projects/{projectID}/locations/{location}/reservations/{reservationID}
-	Name     string    `json:"name,omitempty"`
+	Name string `json:"name,omitempty"`
+	// Standard: A standard reservation.
 	Standard *Standard `json:"standard,omitempty"`
 	// State: Output only. The state of the Reservation.
 	//
@@ -1661,7 +1662,10 @@ func (s SimulateMaintenanceEventRequest) MarshalJSON() ([]byte, error) {
 type Spot struct {
 }
 
+// Standard: Details of a standard reservation.
 type Standard struct {
+	// CapacityUnits: Capacity units this reservation is measured in.
+	//
 	// Possible values:
 	//   "CAPACITY_UNITS_UNSPECIFIED" - The capacity units is not known/set.
 	//   "CORES" - The capacity unit is set to CORES.
@@ -1673,7 +1677,8 @@ type Standard struct {
 	ResourceType string `json:"resourceType,omitempty"`
 	// Size: The size of the reservation, in the units specified in the
 	// 'capacity_units' field.
-	Size  int64  `json:"size,omitempty"`
+	Size int64 `json:"size,omitempty"`
+	// Usage: The current usage of the reservation.
 	Usage *Usage `json:"usage,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "CapacityUnits") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -1851,6 +1856,7 @@ func (s UpcomingMaintenance) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// Usage: Usage details of a reservation.
 type Usage struct {
 	// Total: The real-time value of usage within the reservation, with the unit
 	// specified in field capacity_units.
@@ -4788,7 +4794,7 @@ func (r *ProjectsLocationsReservationsService) List(parent string) *ProjectsLoca
 }
 
 // PageSize sets the optional parameter "pageSize": The maximum number of items
-// to return.
+// to return. Defaults to 0 if not specified, which means no limit.
 func (c *ProjectsLocationsReservationsListCall) PageSize(pageSize int64) *ProjectsLocationsReservationsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c

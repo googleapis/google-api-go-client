@@ -1934,7 +1934,10 @@ type OauthClient struct {
 	// to request during OAuth flows. The following scopes are supported: *
 	// `https://www.googleapis.com/auth/cloud-platform`: See, edit, configure, and
 	// delete your Google Cloud data and see the email address for your Google
-	// Account.
+	// Account. * `openid`: The OAuth client can associate you with your personal
+	// information on Google Cloud. * `email`: The OAuth client can read a
+	// federated identity's email address. * `groups`: The OAuth client can read a
+	// federated identity's groups.
 	AllowedScopes []string `json:"allowedScopes,omitempty"`
 	// ClientId: Output only. The system-generated OauthClient id.
 	ClientId string `json:"clientId,omitempty"`

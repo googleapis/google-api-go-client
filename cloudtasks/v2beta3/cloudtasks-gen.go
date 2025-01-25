@@ -1692,6 +1692,12 @@ type RetryConfig struct {
 	// attempts. This field has the same meaning as task_retry_limit in
 	// queue.yaml/xml
 	// (https://cloud.google.com/appengine/docs/standard/python/config/queueref#retry_parameters).
+	// Note: Cloud Tasks stops retrying only when `max_attempts` and
+	// `max_retry_duration` are both satisfied. When the task has been attempted
+	// `max_attempts` times and when the `max_retry_duration` time has passed, no
+	// further attempts are made, and the task is deleted. If you want your task to
+	// retry infinitely, you must set `max_attempts` to -1 and `max_retry_duration`
+	// to 0.
 	MaxAttempts int64 `json:"maxAttempts,omitempty"`
 	// MaxBackoff: A task will be scheduled for retry between min_backoff and
 	// max_backoff duration after it fails, if the queue's RetryConfig specifies

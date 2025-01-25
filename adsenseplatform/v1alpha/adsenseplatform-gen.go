@@ -723,8 +723,8 @@ type PlatformChildSite struct {
 	// PlatformChildSite name.
 	Domain string `json:"domain,omitempty"`
 	// Name: Identifier. Format:
-	// accounts/{account}/platforms/{platform}/childAccounts/{child}/sites/{platform
-	// ChildSite}
+	// accounts/{account}/platforms/{platform}/childAccounts/{child_account}/sites/{
+	// platform_child_site}
 	Name string `json:"name,omitempty"`
 	// PlatformGroup: Resource name of the Platform Group of the Platform Child
 	// Site.
@@ -1128,9 +1128,9 @@ type AccountsPlatformsChildAccountsSitesListCall struct {
 
 // List: Lists Platform Child Sites for a specified Platform Child Account.
 //
-//   - parent: The name of the platform to retrieve. Format:
-//     accounts/{account}/platforms/{platform}/childAccounts/{child_publisher_code
-//     }.
+//   - parent: The name of the child account under the given platform which owns
+//     the platform child sites. Format:
+//     accounts/{account}/platforms/{platform}/childAccounts/{child_account}.
 func (r *AccountsPlatformsChildAccountsSitesService) List(parent string) *AccountsPlatformsChildAccountsSitesListCall {
 	c := &AccountsPlatformsChildAccountsSitesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -1280,8 +1280,8 @@ type AccountsPlatformsChildAccountsSitesPatchCall struct {
 // Patch: Update a Platform Child Site.
 //
 //   - name: Identifier. Format:
-//     accounts/{account}/platforms/{platform}/childAccounts/{child}/sites/{platfo
-//     rmChildSite}.
+//     accounts/{account}/platforms/{platform}/childAccounts/{child_account}/sites
+//     /{platform_child_site}.
 func (r *AccountsPlatformsChildAccountsSitesService) Patch(name string, platformchildsite *PlatformChildSite) *AccountsPlatformsChildAccountsSitesPatchCall {
 	c := &AccountsPlatformsChildAccountsSitesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name

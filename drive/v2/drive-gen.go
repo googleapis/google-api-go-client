@@ -3075,7 +3075,7 @@ type Revision struct {
 	// can only be modified for Docs Editors files.
 	Published bool `json:"published,omitempty"`
 	// PublishedLink: Output only. A link to the published revision. This is only
-	// populated for Google Sites files.
+	// populated for Docs Editors files.
 	PublishedLink string `json:"publishedLink,omitempty"`
 	// PublishedOutsideDomain: Whether this revision is published outside the
 	// domain. This is only populated and can only be modified for Docs Editors

@@ -941,6 +941,8 @@ type ColumnEntity struct {
 	Collation string `json:"collation,omitempty"`
 	// Comment: Comment associated with the column.
 	Comment string `json:"comment,omitempty"`
+	// Computed: Is the column a computed column.
+	Computed bool `json:"computed,omitempty"`
 	// CustomFeatures: Custom engine specific features.
 	CustomFeatures googleapi.RawMessage `json:"customFeatures,omitempty"`
 	// DataType: Column data type.

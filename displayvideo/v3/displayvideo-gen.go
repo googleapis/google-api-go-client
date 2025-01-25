@@ -2886,7 +2886,7 @@ func (s AssignedUserRole) MarshalJSON() ([]byte, error) {
 // `TARGETING_TYPE_AUDIENCE_GROUP`. The relation between each group is UNION,
 // except for excluded_first_and_third_party_audience_group and
 // excluded_google_audience_group, of which COMPLEMENT is used as an
-// INTERSECTION with other groups.
+// INTERSECTION with other groups. NEXT_ID: 9
 type AudienceGroupAssignedTargetingOptionDetails struct {
 	// ExcludedFirstAndThirdPartyAudienceGroup: The first and third party audience
 	// ids and recencies of the excluded first and third party audience group. Used

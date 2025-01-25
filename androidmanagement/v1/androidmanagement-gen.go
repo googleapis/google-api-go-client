@@ -4753,7 +4753,7 @@ type Policy struct {
 	// user is never allowed to add or remove users.
 	AddUserDisabled bool `json:"addUserDisabled,omitempty"`
 	// AdjustVolumeDisabled: Whether adjusting the master volume is disabled. Also
-	// mutes the device.
+	// mutes the device. The setting has effect only on fully managed devices.
 	AdjustVolumeDisabled bool `json:"adjustVolumeDisabled,omitempty"`
 	// AdvancedSecurityOverrides: Advanced security settings. In most cases,
 	// setting these is not needed.
@@ -5179,7 +5179,8 @@ type Policy struct {
 	SafeBootDisabled bool `json:"safeBootDisabled,omitempty"`
 	// ScreenCaptureDisabled: Whether screen capture is disabled.
 	ScreenCaptureDisabled bool `json:"screenCaptureDisabled,omitempty"`
-	// SetUserIconDisabled: Whether changing the user icon is disabled.
+	// SetUserIconDisabled: Whether changing the user icon is disabled. The setting
+	// has effect only on fully managed devices.
 	SetUserIconDisabled bool `json:"setUserIconDisabled,omitempty"`
 	// SetWallpaperDisabled: Whether changing the wallpaper is disabled.
 	SetWallpaperDisabled bool `json:"setWallpaperDisabled,omitempty"`

@@ -206,7 +206,7 @@
       }
     }
   },
-  "revision": "20250120",
+  "revision": "20250122",
   "rootUrl": "https://firebaseml.googleapis.com/",
   "schemas": {
     "Date": {
@@ -475,6 +475,14 @@
       "description": "Response message for PredictionService.CountTokens.",
       "id": "GoogleCloudAiplatformV1beta1CountTokensResponse",
       "properties": {
+        "promptTokensDetails": {
+          "description": "Output only. List of modalities that were processed in the request input.",
+          "items": {
+            "$ref": "GoogleCloudAiplatformV1beta1ModalityTokenCount"
+          },
+          "readOnly": true,
+          "type": "array"
+        },
         "totalBillableCharacters": {
           "description": "The total number of billable characters counted across all instances from the request.",
           "format": "int32",
@@ -779,6 +787,14 @@
       "description": "Usage metadata about response(s).",
       "id": "GoogleCloudAiplatformV1beta1GenerateContentResponseUsageMetadata",
       "properties": {
+        "cacheTokensDetails": {
+          "description": "Output only. List of modalities of the cached content in the request input.",
+          "items": {
+            "$ref": "GoogleCloudAiplatformV1beta1ModalityTokenCount"
+          },
+          "readOnly": true,
+          "type": "array"
+        },
         "cachedContentTokenCount": {
           "description": "Output only. Number of tokens in the cached part in the input (the cached content).",
           "format": "int32",
@@ -790,10 +806,26 @@
           "format": "int32",
           "type": "integer"
         },
+        "candidatesTokensDetails": {
+          "description": "Output only. List of modalities that were returned in the response.",
+          "items": {
+            "$ref": "GoogleCloudAiplatformV1beta1ModalityTokenCount"
+          },
+          "readOnly": true,
+          "type": "array"
+        },
         "promptTokenCount": {
           "description": "Number of tokens in the request. When `cached_content` is set, this is still the total effective prompt size meaning this includes the number of tokens in the cached content.",
           "format": "int32",
           "type": "integer"
+        },
+        "promptTokensDetails": {
+          "description": "Output only. List of modalities that were processed in the request input.",
+          "items": {
+            "$ref": "GoogleCloudAiplatformV1beta1ModalityTokenCount"
+          },
+          "readOnly": true,
+          "type": "array"
         },
         "totalTokenCount": {
           "description": "Total token count for prompt and response candidates.",
@@ -1168,6 +1200,38 @@
             "$ref": "GoogleCloudAiplatformV1beta1LogprobsResultCandidate"
           },
           "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudAiplatformV1beta1ModalityTokenCount": {
+      "description": "Represents token counting info for a single modality.",
+      "id": "GoogleCloudAiplatformV1beta1ModalityTokenCount",
+      "properties": {
+        "modality": {
+          "description": "The modality associated with this token count.",
+          "enum": [
+            "MODALITY_UNSPECIFIED",
+            "TEXT",
+            "IMAGE",
+            "VIDEO",
+            "AUDIO",
+            "DOCUMENT"
+          ],
+          "enumDescriptions": [
+            "Unspecified modality.",
+            "Plain text.",
+            "Image.",
+            "Video.",
+            "Audio.",
+            "Document, e.g. PDF."
+          ],
+          "type": "string"
+        },
+        "tokenCount": {
+          "description": "Number of tokens.",
+          "format": "int32",
+          "type": "integer"
         }
       },
       "type": "object"

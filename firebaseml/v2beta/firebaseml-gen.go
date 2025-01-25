@@ -512,6 +512,9 @@ func (s GoogleCloudAiplatformV1beta1CountTokensRequest) MarshalJSON() ([]byte, e
 // GoogleCloudAiplatformV1beta1CountTokensResponse: Response message for
 // PredictionService.CountTokens.
 type GoogleCloudAiplatformV1beta1CountTokensResponse struct {
+	// PromptTokensDetails: Output only. List of modalities that were processed in
+	// the request input.
+	PromptTokensDetails []*GoogleCloudAiplatformV1beta1ModalityTokenCount `json:"promptTokensDetails,omitempty"`
 	// TotalBillableCharacters: The total number of billable characters counted
 	// across all instances from the request.
 	TotalBillableCharacters int64 `json:"totalBillableCharacters,omitempty"`
@@ -521,15 +524,15 @@ type GoogleCloudAiplatformV1beta1CountTokensResponse struct {
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-	// ForceSendFields is a list of field names (e.g. "TotalBillableCharacters") to
+	// ForceSendFields is a list of field names (e.g. "PromptTokensDetails") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "TotalBillableCharacters") to
-	// include in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. See
+	// NullFields is a list of field names (e.g. "PromptTokensDetails") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -923,26 +926,35 @@ func (s GoogleCloudAiplatformV1beta1GenerateContentResponsePromptFeedback) Marsh
 // GoogleCloudAiplatformV1beta1GenerateContentResponseUsageMetadata: Usage
 // metadata about response(s).
 type GoogleCloudAiplatformV1beta1GenerateContentResponseUsageMetadata struct {
+	// CacheTokensDetails: Output only. List of modalities of the cached content in
+	// the request input.
+	CacheTokensDetails []*GoogleCloudAiplatformV1beta1ModalityTokenCount `json:"cacheTokensDetails,omitempty"`
 	// CachedContentTokenCount: Output only. Number of tokens in the cached part in
 	// the input (the cached content).
 	CachedContentTokenCount int64 `json:"cachedContentTokenCount,omitempty"`
 	// CandidatesTokenCount: Number of tokens in the response(s).
 	CandidatesTokenCount int64 `json:"candidatesTokenCount,omitempty"`
+	// CandidatesTokensDetails: Output only. List of modalities that were returned
+	// in the response.
+	CandidatesTokensDetails []*GoogleCloudAiplatformV1beta1ModalityTokenCount `json:"candidatesTokensDetails,omitempty"`
 	// PromptTokenCount: Number of tokens in the request. When `cached_content` is
 	// set, this is still the total effective prompt size meaning this includes the
 	// number of tokens in the cached content.
 	PromptTokenCount int64 `json:"promptTokenCount,omitempty"`
+	// PromptTokensDetails: Output only. List of modalities that were processed in
+	// the request input.
+	PromptTokensDetails []*GoogleCloudAiplatformV1beta1ModalityTokenCount `json:"promptTokensDetails,omitempty"`
 	// TotalTokenCount: Total token count for prompt and response candidates.
 	TotalTokenCount int64 `json:"totalTokenCount,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "CachedContentTokenCount") to
+	// ForceSendFields is a list of field names (e.g. "CacheTokensDetails") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "CachedContentTokenCount") to
-	// include in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. See
+	// NullFields is a list of field names (e.g. "CacheTokensDetails") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -1432,6 +1444,39 @@ type GoogleCloudAiplatformV1beta1LogprobsResultTopCandidates struct {
 
 func (s GoogleCloudAiplatformV1beta1LogprobsResultTopCandidates) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1beta1LogprobsResultTopCandidates
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudAiplatformV1beta1ModalityTokenCount: Represents token counting
+// info for a single modality.
+type GoogleCloudAiplatformV1beta1ModalityTokenCount struct {
+	// Modality: The modality associated with this token count.
+	//
+	// Possible values:
+	//   "MODALITY_UNSPECIFIED" - Unspecified modality.
+	//   "TEXT" - Plain text.
+	//   "IMAGE" - Image.
+	//   "VIDEO" - Video.
+	//   "AUDIO" - Audio.
+	//   "DOCUMENT" - Document, e.g. PDF.
+	Modality string `json:"modality,omitempty"`
+	// TokenCount: Number of tokens.
+	TokenCount int64 `json:"tokenCount,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Modality") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Modality") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudAiplatformV1beta1ModalityTokenCount) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudAiplatformV1beta1ModalityTokenCount
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 

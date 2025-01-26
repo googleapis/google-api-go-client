@@ -4136,12 +4136,12 @@ type GooglePrivacyDlpV2DiscoveryCloudStorageConditions struct {
 	// Possible values:
 	//   "CLOUD_STORAGE_BUCKET_ATTRIBUTE_UNSPECIFIED" - Unused.
 	//   "ALL_SUPPORTED_BUCKETS" - Scan buckets regardless of the attribute.
-	//   "AUTOCLASS_DISABLED" - Buckets with autoclass disabled
-	// (https://cloud.google.com/storage/docs/autoclass). Only one of
-	// AUTOCLASS_DISABLED or AUTOCLASS_ENABLED should be set.
-	//   "AUTOCLASS_ENABLED" - Buckets with autoclass enabled
-	// (https://cloud.google.com/storage/docs/autoclass). Only one of
-	// AUTOCLASS_DISABLED or AUTOCLASS_ENABLED should be set. Scanning
+	//   "AUTOCLASS_DISABLED" - Buckets with
+	// [Autoclass](https://cloud.google.com/storage/docs/autoclass) disabled. Only
+	// one of AUTOCLASS_DISABLED or AUTOCLASS_ENABLED should be set.
+	//   "AUTOCLASS_ENABLED" - Buckets with
+	// [Autoclass](https://cloud.google.com/storage/docs/autoclass) enabled. Only
+	// one of AUTOCLASS_DISABLED or AUTOCLASS_ENABLED should be set. Scanning
 	// Autoclass-enabled buckets can affect object storage classes.
 	IncludedBucketAttributes []string `json:"includedBucketAttributes,omitempty"`
 	// IncludedObjectAttributes: Required. Only objects with the specified
@@ -4953,10 +4953,11 @@ type GooglePrivacyDlpV2Export struct {
 	// dataset and table for you if none are are provided. The dataset will be
 	// named `sensitive_data_protection_discovery` and table will be named
 	// `discovery_profiles`. This table will be placed in the same project as the
-	// container project running the scan. The configuration will be updated with
-	// the fields set after the first profile is generated and the dataset and
-	// table are created. * See Analyze data profiles stored in BigQuery
-	// (https://cloud.google.com/sensitive-data-protection/docs/analyze-data-profiles)
+	// container project running the scan. After the first profile is generated and
+	// the dataset and table are created, the discovery scan configuration will be
+	// updated with the dataset and table names. * See Analyze data profiles stored
+	// in BigQuery
+	// (https://cloud.google.com/sensitive-data-protection/docs/analyze-data-profiles).
 	// * See Sample queries for your BigQuery table
 	// (https://cloud.google.com/sensitive-data-protection/docs/analyze-data-profiles#sample_sql_queries).
 	// * Data is inserted using streaming insert
@@ -4966,9 +4967,10 @@ type GooglePrivacyDlpV2Export struct {
 	// guaranteed to be written, so data may not be instantly visible to queries by
 	// the time your topic receives the Pub/Sub notification. * The best practice
 	// is to use the same table for an entire organization so that you can take
-	// advantage of the provided Looker reports. If you use VPC Service Controls to
-	// define security perimeters, then you must use a separate table for each
-	// boundary.
+	// advantage of the provided Looker reports
+	// (https://cloud.google.com/sensitive-data-protection/docs/analyze-data-profiles#use_a_premade_report).
+	// If you use VPC Service Controls to define security perimeters, then you must
+	// use a separate table for each boundary.
 	ProfileTable *GooglePrivacyDlpV2BigQueryTable `json:"profileTable,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "ProfileTable") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -6094,7 +6096,7 @@ type GooglePrivacyDlpV2InfoTypeDescription struct {
 	Description string `json:"description,omitempty"`
 	// DisplayName: Human readable form of the infoType name.
 	DisplayName string `json:"displayName,omitempty"`
-	// Example: A sample true positive for this infoType.
+	// Example: A sample that is a true positive for this infoType.
 	Example string `json:"example,omitempty"`
 	// Name: Internal name of the infoType.
 	Name string `json:"name,omitempty"`

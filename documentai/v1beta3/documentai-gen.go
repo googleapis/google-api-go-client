@@ -6237,6 +6237,12 @@ func (s GoogleCloudDocumentaiV1beta3ProcessOptionsIndividualPageSelector) Marsha
 type GoogleCloudDocumentaiV1beta3ProcessOptionsLayoutConfig struct {
 	// ChunkingConfig: Optional. Config for chunking in layout parser processor.
 	ChunkingConfig *GoogleCloudDocumentaiV1beta3ProcessOptionsLayoutConfigChunkingConfig `json:"chunkingConfig,omitempty"`
+	// ReturnBoundingBoxes: Optional. Whether to include bounding boxes in layout
+	// parser processor response.
+	ReturnBoundingBoxes bool `json:"returnBoundingBoxes,omitempty"`
+	// ReturnImages: Optional. Whether to include images in layout parser processor
+	// response.
+	ReturnImages bool `json:"returnImages,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "ChunkingConfig") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See

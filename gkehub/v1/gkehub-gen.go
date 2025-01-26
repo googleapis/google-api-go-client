@@ -5403,6 +5403,7 @@ type ServiceMeshCondition struct {
 	//   "CNI_INSTALLATION_FAILED" - CNI installation failed error code
 	//   "CNI_POD_UNSCHEDULABLE" - CNI pod unschedulable error code
 	//   "CLUSTER_HAS_ZERO_NODES" - Cluster has zero node code
+	//   "CANONICAL_SERVICE_ERROR" - Failure to reconcile CanonicalServices
 	//   "UNSUPPORTED_MULTIPLE_CONTROL_PLANES" - Multiple control planes
 	// unsupported error code
 	//   "VPCSC_GA_SUPPORTED" - VPC-SC GA is supported for this control plane.

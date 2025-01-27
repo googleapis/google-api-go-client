@@ -486,7 +486,8 @@ type GoogleChromeManagementV1AppUsageData struct {
 	// Possible values:
 	//   "TELEMETRY_APPLICATION_TYPE_UNSPECIFIED" - Application type unknown.
 	//   "APPLICATION_TYPE_ARC" - Application type arc (Android app).
-	//   "APPLICATION_TYPE_BUILT_IN" - Application type built-in.
+	//   "APPLICATION_TYPE_BUILT_IN" - Deprecated. This vaule is no longer used.
+	// Application type built-in.
 	//   "APPLICATION_TYPE_CROSTINI" - Application type Linux (via Crostini).
 	//   "APPLICATION_TYPE_CHROME_APP" - Application type Chrome app.
 	//   "APPLICATION_TYPE_WEB" - Application type web.
@@ -2981,7 +2982,8 @@ type GoogleChromeManagementV1TelemetryAppInstallEvent struct {
 	// Possible values:
 	//   "TELEMETRY_APPLICATION_TYPE_UNSPECIFIED" - Application type unknown.
 	//   "APPLICATION_TYPE_ARC" - Application type arc (Android app).
-	//   "APPLICATION_TYPE_BUILT_IN" - Application type built-in.
+	//   "APPLICATION_TYPE_BUILT_IN" - Deprecated. This vaule is no longer used.
+	// Application type built-in.
 	//   "APPLICATION_TYPE_CROSTINI" - Application type Linux (via Crostini).
 	//   "APPLICATION_TYPE_CHROME_APP" - Application type Chrome app.
 	//   "APPLICATION_TYPE_WEB" - Application type web.
@@ -3113,7 +3115,8 @@ type GoogleChromeManagementV1TelemetryAppLaunchEvent struct {
 	// Possible values:
 	//   "TELEMETRY_APPLICATION_TYPE_UNSPECIFIED" - Application type unknown.
 	//   "APPLICATION_TYPE_ARC" - Application type arc (Android app).
-	//   "APPLICATION_TYPE_BUILT_IN" - Application type built-in.
+	//   "APPLICATION_TYPE_BUILT_IN" - Deprecated. This vaule is no longer used.
+	// Application type built-in.
 	//   "APPLICATION_TYPE_CROSTINI" - Application type Linux (via Crostini).
 	//   "APPLICATION_TYPE_CHROME_APP" - Application type Chrome app.
 	//   "APPLICATION_TYPE_WEB" - Application type web.
@@ -3159,7 +3162,8 @@ type GoogleChromeManagementV1TelemetryAppUninstallEvent struct {
 	// Possible values:
 	//   "TELEMETRY_APPLICATION_TYPE_UNSPECIFIED" - Application type unknown.
 	//   "APPLICATION_TYPE_ARC" - Application type arc (Android app).
-	//   "APPLICATION_TYPE_BUILT_IN" - Application type built-in.
+	//   "APPLICATION_TYPE_BUILT_IN" - Deprecated. This vaule is no longer used.
+	// Application type built-in.
 	//   "APPLICATION_TYPE_CROSTINI" - Application type Linux (via Crostini).
 	//   "APPLICATION_TYPE_CHROME_APP" - Application type Chrome app.
 	//   "APPLICATION_TYPE_WEB" - Application type web.

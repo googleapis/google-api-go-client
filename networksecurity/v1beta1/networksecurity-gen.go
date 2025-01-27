@@ -3381,6 +3381,9 @@ func (s MirroringDeploymentGroupConnectedEndpointGroup) MarshalJSON() ([]byte, e
 
 // MirroringEndpointGroup: Message describing MirroringEndpointGroup object.
 type MirroringEndpointGroup struct {
+	// Associations: Output only. List of Mirroring Endpoint Group Associations
+	// that are associated to this endpoint group.
+	Associations []*MirroringEndpointGroupAssociationDetails `json:"associations,omitempty"`
 	// CreateTime: Output only. [Output only] Create time stamp
 	CreateTime string `json:"createTime,omitempty"`
 	// Labels: Optional. Labels as key value pairs
@@ -3417,13 +3420,13 @@ type MirroringEndpointGroup struct {
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-	// ForceSendFields is a list of field names (e.g. "CreateTime") to
+	// ForceSendFields is a list of field names (e.g. "Associations") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "CreateTime") to include in API
+	// NullFields is a list of field names (e.g. "Associations") to include in API
 	// requests with the JSON null value. By default, fields with empty values are
 	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
@@ -3496,6 +3499,53 @@ type MirroringEndpointGroupAssociation struct {
 
 func (s MirroringEndpointGroupAssociation) MarshalJSON() ([]byte, error) {
 	type NoMethod MirroringEndpointGroupAssociation
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// MirroringEndpointGroupAssociationDetails: This is a subset of the
+// MirroringEndpointGroupAssociation message, containing fields to be used by
+// the consumer.
+type MirroringEndpointGroupAssociationDetails struct {
+	// Name: Output only. The resource name of the
+	// MirroringEndpointGroupAssociation. Format:
+	// projects/{project}/locations/{location}/mirroringEndpointGroupAssociations/{m
+	// irroringEndpointGroupAssociation}
+	Name string `json:"name,omitempty"`
+	// Network: Output only. The VPC network associated. Format:
+	// projects/{project}/global/networks/{name}.
+	Network string `json:"network,omitempty"`
+	// State: Output only. Current state of the association.
+	//
+	// Possible values:
+	//   "STATE_UNSPECIFIED" - Not set.
+	//   "ACTIVE" - Ready.
+	//   "CREATING" - Being created.
+	//   "DELETING" - Being deleted.
+	//   "CLOSED" - Mirroring is disabled due to an operation on another resource.
+	//   "OUT_OF_SYNC" - The underlying data plane is out of sync with the
+	// association. The association is not expected to be usable. This state can
+	// result in undefined behavior. See the `locations_details` field for more
+	// details.
+	//   "DELETE_FAILED" - An attempt to delete the association has failed. This is
+	// a terminal state and the association is not expected to be usable as some of
+	// its resources have been deleted. The only permitted operation is to retry
+	// deleting the association.
+	State string `json:"state,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Name") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Name") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s MirroringEndpointGroupAssociationDetails) MarshalJSON() ([]byte, error) {
+	type NoMethod MirroringEndpointGroupAssociationDetails
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 

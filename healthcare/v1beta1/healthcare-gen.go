@@ -1802,8 +1802,8 @@ type ConsentConfig struct {
 	// ConsentHeaderHandling: Optional. Different options to configure the
 	// behaviour of the server when handling the `X-Consent-Scope` header.
 	ConsentHeaderHandling *ConsentHeaderHandling `json:"consentHeaderHandling,omitempty"`
-	// EnforcedAdminConsents: The versioned names of the enforced admin Consent
-	// resource(s), in the format
+	// EnforcedAdminConsents: Output only. The versioned names of the enforced
+	// admin Consent resource(s), in the format
 	// `projects/{project_id}/locations/{location}/datasets/{dataset_id}/fhirStores/
 	// {fhir_store_id}/fhir/Consent/{resource_id}/_history/{version_id}`. For FHIR
 	// stores with `disable_resource_versioning=true`, the format is

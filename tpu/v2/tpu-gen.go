@@ -826,7 +826,8 @@ func (s Location) MarshalJSON() ([]byte, error) {
 // instead of node_id.
 type MultisliceParams struct {
 	// NodeCount: Required. Number of nodes with this spec. The system will attempt
-	// to provison "node_count" nodes as part of the request. This needs to be > 1.
+	// to provision "node_count" nodes as part of the request. This needs to be >
+	// 1.
 	NodeCount int64 `json:"nodeCount,omitempty"`
 	// NodeIdPrefix: Optional. Prefix of node_ids in case of multislice request.
 	// Should follow the `^[A-Za-z0-9_.~+%-]+$` regex format. If node_count = 3 and

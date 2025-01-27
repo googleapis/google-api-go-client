@@ -175,6 +175,7 @@ func NewProjectsLocationsService(s *Service) *ProjectsLocationsService {
 	rs.Jobs = NewProjectsLocationsJobsService(s)
 	rs.Operations = NewProjectsLocationsOperationsService(s)
 	rs.Services = NewProjectsLocationsServicesService(s)
+	rs.WorkerPools = NewProjectsLocationsWorkerPoolsService(s)
 	return rs
 }
 
@@ -188,6 +189,8 @@ type ProjectsLocationsService struct {
 	Operations *ProjectsLocationsOperationsService
 
 	Services *ProjectsLocationsServicesService
+
+	WorkerPools *ProjectsLocationsWorkerPoolsService
 }
 
 func NewProjectsLocationsBuildsService(s *Service) *ProjectsLocationsBuildsService {
@@ -262,6 +265,27 @@ type ProjectsLocationsServicesRevisionsService struct {
 	s *Service
 }
 
+func NewProjectsLocationsWorkerPoolsService(s *Service) *ProjectsLocationsWorkerPoolsService {
+	rs := &ProjectsLocationsWorkerPoolsService{s: s}
+	rs.Revisions = NewProjectsLocationsWorkerPoolsRevisionsService(s)
+	return rs
+}
+
+type ProjectsLocationsWorkerPoolsService struct {
+	s *Service
+
+	Revisions *ProjectsLocationsWorkerPoolsRevisionsService
+}
+
+func NewProjectsLocationsWorkerPoolsRevisionsService(s *Service) *ProjectsLocationsWorkerPoolsRevisionsService {
+	rs := &ProjectsLocationsWorkerPoolsRevisionsService{s: s}
+	return rs
+}
+
+type ProjectsLocationsWorkerPoolsRevisionsService struct {
+	s *Service
+}
+
 // GoogleCloudRunV2BinaryAuthorization: Settings for Binary Authorization
 // feature.
 type GoogleCloudRunV2BinaryAuthorization struct {
@@ -294,10 +318,87 @@ func (s GoogleCloudRunV2BinaryAuthorization) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudRunV2BuildConfig: Describes the Build step of the function that
+// builds a container from the given source.
+type GoogleCloudRunV2BuildConfig struct {
+	// BaseImage: Optional. The base image used to build the function.
+	BaseImage string `json:"baseImage,omitempty"`
+	// EnableAutomaticUpdates: Optional. Sets whether the function will receive
+	// automatic base image updates.
+	EnableAutomaticUpdates bool `json:"enableAutomaticUpdates,omitempty"`
+	// EnvironmentVariables: Optional. User-provided build-time environment
+	// variables for the function
+	EnvironmentVariables map[string]string `json:"environmentVariables,omitempty"`
+	// FunctionTarget: Optional. The name of the function (as defined in source
+	// code) that will be executed. Defaults to the resource name suffix, if not
+	// specified. For backward compatibility, if function with given name is not
+	// found, then the system will try to use function named "function".
+	FunctionTarget string `json:"functionTarget,omitempty"`
+	// ImageUri: Optional. Artifact Registry URI to store the built image.
+	ImageUri string `json:"imageUri,omitempty"`
+	// Name: Output only. The Cloud Build name of the latest successful deployment
+	// of the function.
+	Name string `json:"name,omitempty"`
+	// ServiceAccount: Optional. Service account to be used for building the
+	// container. The format of this field is
+	// `projects/{projectId}/serviceAccounts/{serviceAccountEmail}`.
+	ServiceAccount string `json:"serviceAccount,omitempty"`
+	// SourceLocation: The Cloud Storage bucket URI where the function source code
+	// is located.
+	SourceLocation string `json:"sourceLocation,omitempty"`
+	// WorkerPool: Optional. Name of the Cloud Build Custom Worker Pool that should
+	// be used to build the Cloud Run function. The format of this field is
+	// `projects/{project}/locations/{region}/workerPools/{workerPool}` where
+	// {project} and {region} are the project id and region respectively where the
+	// worker pool is defined and {workerPool} is the short name of the worker
+	// pool.
+	WorkerPool string `json:"workerPool,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "BaseImage") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "BaseImage") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudRunV2BuildConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudRunV2BuildConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudRunV2BuildInfo: Build information of the image.
+type GoogleCloudRunV2BuildInfo struct {
+	// FunctionTarget: Output only. Entry point of the function when the image is a
+	// Cloud Run function.
+	FunctionTarget string `json:"functionTarget,omitempty"`
+	// SourceLocation: Output only. Source code location of the image.
+	SourceLocation string `json:"sourceLocation,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "FunctionTarget") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "FunctionTarget") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudRunV2BuildInfo) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudRunV2BuildInfo
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudRunV2BuildpacksBuild: Build the source using Buildpacks.
 type GoogleCloudRunV2BuildpacksBuild struct {
-	// BaseImage: Optional. The base image used to opt into automatic base image
-	// updates.
+	// BaseImage: Optional. The base image to use for the build.
 	BaseImage string `json:"baseImage,omitempty"`
 	// CacheImageUri: Optional. cache_image_uri is the GCR/AR URL where the cache
 	// image will be stored. cache_image_uri is optional and omitting it will
@@ -518,6 +619,12 @@ type GoogleCloudRunV2Container struct {
 	// Args: Arguments to the entrypoint. The docker image's CMD is used if this is
 	// not provided.
 	Args []string `json:"args,omitempty"`
+	// BaseImageUri: Base image for this container. Only supported for services. If
+	// set. it indicates that the service is enrolled into automatic base image
+	// update.
+	BaseImageUri string `json:"baseImageUri,omitempty"`
+	// BuildInfo: Output only. The build info of the container image.
+	BuildInfo *GoogleCloudRunV2BuildInfo `json:"buildInfo,omitempty"`
 	// Command: Entrypoint array. Not executed within a shell. The docker image's
 	// ENTRYPOINT is used if this is not provided.
 	Command []string `json:"command,omitempty"`
@@ -750,6 +857,8 @@ type GoogleCloudRunV2Execution struct {
 	// by the execution controller. It is not guaranteed to be set in
 	// happens-before order across separate operations.
 	CreateTime string `json:"createTime,omitempty"`
+	// Creator: Output only. Email address of the authenticated creator.
+	Creator string `json:"creator,omitempty"`
 	// DeleteTime: Output only. For a deleted resource, the deletion time. It is
 	// only populated as a response to a Delete request.
 	DeleteTime string `json:"deleteTime,omitempty"`
@@ -2192,6 +2301,8 @@ type GoogleCloudRunV2Service struct {
 	// BinaryAuthorization: Optional. Settings for the Binary Authorization
 	// feature.
 	BinaryAuthorization *GoogleCloudRunV2BinaryAuthorization `json:"binaryAuthorization,omitempty"`
+	// BuildConfig: Optional. Configuration for building a Cloud Run function.
+	BuildConfig *GoogleCloudRunV2BuildConfig `json:"buildConfig,omitempty"`
 	// Client: Arbitrary identifier for the API client.
 	Client string `json:"client,omitempty"`
 	// ClientVersion: Arbitrary version identifier for the API client.
@@ -3121,6 +3232,10 @@ func (s GoogleDevtoolsCloudbuildV1ArtifactObjects) MarshalJSON() ([]byte, error)
 // GoogleDevtoolsCloudbuildV1Artifacts: Artifacts produced by a build that
 // should be uploaded upon successful completion of all build steps.
 type GoogleDevtoolsCloudbuildV1Artifacts struct {
+	// GoModules: Optional. A list of Go modules to be uploaded to Artifact
+	// Registry upon successful completion of all build steps. If any objects fail
+	// to be pushed, the build is marked FAILURE.
+	GoModules []*GoogleDevtoolsCloudbuildV1GoModule `json:"goModules,omitempty"`
 	// Images: A list of images to be pushed upon the successful completion of all
 	// build steps. The images will be pushed using the builder service account's
 	// credentials. The digests of the pushed images will be stored in the Build
@@ -3152,13 +3267,13 @@ type GoogleDevtoolsCloudbuildV1Artifacts struct {
 	// account credentials will be used to perform the upload. If any objects fail
 	// to be pushed, the build is marked FAILURE.
 	PythonPackages []*GoogleDevtoolsCloudbuildV1PythonPackage `json:"pythonPackages,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "Images") to unconditionally
-	// include in API requests. By default, fields with empty or default values are
-	// omitted from API requests. See
+	// ForceSendFields is a list of field names (e.g. "GoModules") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Images") to include in API
+	// NullFields is a list of field names (e.g. "GoModules") to include in API
 	// requests with the JSON null value. By default, fields with empty values are
 	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
@@ -3394,6 +3509,10 @@ type GoogleDevtoolsCloudbuildV1BuildOptions struct {
 	// string operations to the substitutions. NOTE: this is always enabled for
 	// triggered builds and cannot be overridden in the build configuration file.
 	DynamicSubstitutions bool `json:"dynamicSubstitutions,omitempty"`
+	// EnableStructuredLogging: Optional. Option to specify whether structured
+	// logging is enabled. If true, JSON-formatted logs are parsed as structured
+	// logs.
+	EnableStructuredLogging bool `json:"enableStructuredLogging,omitempty"`
 	// Env: A list of global environment variable definitions that will exist for
 	// all build steps in this build. If a variable is defined in both globally and
 	// in a build step, the variable will use the build step value. The elements
@@ -3457,6 +3576,8 @@ type GoogleDevtoolsCloudbuildV1BuildOptions struct {
 	//   "NONE" - No hash requested.
 	//   "SHA256" - Use a sha256 hash.
 	//   "MD5" - Use a md5 hash.
+	//   "GO_MODULE_H1" - Dirhash of a Go module's source code which is then
+	// hex-encoded.
 	//   "SHA512" - Use a sha512 hash.
 	SourceProvenanceHash []string `json:"sourceProvenanceHash,omitempty"`
 	// SubstitutionOption: Option to specify behavior when there is an error in the
@@ -3820,6 +3941,49 @@ func (s GoogleDevtoolsCloudbuildV1GitSource) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GoogleDevtoolsCloudbuildV1GoModule: Go module to upload to Artifact Registry
+// upon successful completion of all build steps. A module refers to all
+// dependencies in a go.mod file.
+type GoogleDevtoolsCloudbuildV1GoModule struct {
+	// ModulePath: Optional. The Go module's "module path". e.g. example.com/foo/v2
+	ModulePath string `json:"modulePath,omitempty"`
+	// ModuleVersion: Optional. The Go module's semantic version in the form
+	// vX.Y.Z. e.g. v0.1.1 Pre-release identifiers can also be added by appending a
+	// dash and dot separated ASCII alphanumeric characters and hyphens. e.g.
+	// v0.2.3-alpha.x.12m.5
+	ModuleVersion string `json:"moduleVersion,omitempty"`
+	// RepositoryLocation: Optional. Location of the Artifact Registry repository.
+	// i.e. us-east1 Defaults to the build’s location.
+	RepositoryLocation string `json:"repositoryLocation,omitempty"`
+	// RepositoryName: Optional. Artifact Registry repository name. Specified Go
+	// modules will be zipped and uploaded to Artifact Registry with this location
+	// as a prefix. e.g. my-go-repo
+	RepositoryName string `json:"repositoryName,omitempty"`
+	// RepositoryProjectId: Optional. Project ID of the Artifact Registry
+	// repository. Defaults to the build project.
+	RepositoryProjectId string `json:"repositoryProjectId,omitempty"`
+	// SourcePath: Optional. Source path of the go.mod file in the build's
+	// workspace. If not specified, this will default to the current directory.
+	// e.g. ~/code/go/mypackage
+	SourcePath string `json:"sourcePath,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ModulePath") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ModulePath") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleDevtoolsCloudbuildV1GoModule) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleDevtoolsCloudbuildV1GoModule
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GoogleDevtoolsCloudbuildV1Hash: Container message for hash values.
 type GoogleDevtoolsCloudbuildV1Hash struct {
 	// Type: The type of hash that was performed.
@@ -3828,6 +3992,8 @@ type GoogleDevtoolsCloudbuildV1Hash struct {
 	//   "NONE" - No hash requested.
 	//   "SHA256" - Use a sha256 hash.
 	//   "MD5" - Use a md5 hash.
+	//   "GO_MODULE_H1" - Dirhash of a Go module's source code which is then
+	// hex-encoded.
 	//   "SHA512" - Use a sha512 hash.
 	Type string `json:"type,omitempty"`
 	// Value: The hash value.
@@ -4097,6 +4263,9 @@ type GoogleDevtoolsCloudbuildV1Results struct {
 	// is stored. Note that the `$BUILDER_OUTPUT` variable is read-only and can't
 	// be substituted.
 	BuildStepOutputs []string `json:"buildStepOutputs,omitempty"`
+	// GoModules: Optional. Go module artifacts uploaded to Artifact Registry at
+	// the end of the build.
+	GoModules []*GoogleDevtoolsCloudbuildV1UploadedGoModule `json:"goModules,omitempty"`
 	// Images: Container images that were built as a part of the build.
 	Images []*GoogleDevtoolsCloudbuildV1BuiltImage `json:"images,omitempty"`
 	// MavenArtifacts: Maven artifacts uploaded to Artifact Registry at the end of
@@ -4395,6 +4564,34 @@ type GoogleDevtoolsCloudbuildV1TimeSpan struct {
 
 func (s GoogleDevtoolsCloudbuildV1TimeSpan) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleDevtoolsCloudbuildV1TimeSpan
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleDevtoolsCloudbuildV1UploadedGoModule: A Go module artifact uploaded to
+// Artifact Registry using the GoModule directive.
+type GoogleDevtoolsCloudbuildV1UploadedGoModule struct {
+	// FileHashes: Hash types and values of the Go Module Artifact.
+	FileHashes *GoogleDevtoolsCloudbuildV1FileHashes `json:"fileHashes,omitempty"`
+	// PushTiming: Output only. Stores timing information for pushing the specified
+	// artifact.
+	PushTiming *GoogleDevtoolsCloudbuildV1TimeSpan `json:"pushTiming,omitempty"`
+	// Uri: URI of the uploaded artifact.
+	Uri string `json:"uri,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "FileHashes") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "FileHashes") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleDevtoolsCloudbuildV1UploadedGoModule) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleDevtoolsCloudbuildV1UploadedGoModule
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -5093,10 +5290,13 @@ type Proto2BridgeMessageSet struct {
 type UtilStatusProto struct {
 	// CanonicalCode: The canonical error code (see codes.proto) that most closely
 	// corresponds to this status. This may be missing, and in the common case of
-	// the generic space, it definitely will be.
+	// the generic space, it definitely will be. copybara:strip_begin(b/383363683)
+	// copybara:strip_end_and_replace optional int32 canonical_code = 6;
 	CanonicalCode int64 `json:"canonicalCode,omitempty"`
 	// Code: Numeric code drawn from the space specified below. Often, this is the
 	// canonical error space, and code is drawn from google3/util/task/codes.proto
+	// copybara:strip_begin(b/383363683) copybara:strip_end_and_replace optional
+	// int32 code = 1;
 	Code int64 `json:"code,omitempty"`
 	// Message: Detail message copybara:strip_begin(b/383363683)
 	// copybara:strip_end_and_replace optional string message = 3;
@@ -5106,7 +5306,8 @@ type UtilStatusProto struct {
 	// optional proto2.bridge.MessageSet message_set = 5;
 	MessageSet *Proto2BridgeMessageSet `json:"messageSet,omitempty"`
 	// Space: The following are usually only present when code != 0 Space to which
-	// this status belongs
+	// this status belongs copybara:strip_begin(b/383363683)
+	// copybara:strip_end_and_replace optional string space = 2;
 	Space string `json:"space,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "CanonicalCode") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -9584,6 +9785,388 @@ func (c *ProjectsLocationsServicesRevisionsListCall) Do(opts ...googleapi.CallOp
 // A non-nil error returned from f will halt the iteration.
 // The provided context supersedes any context provided to the Context method.
 func (c *ProjectsLocationsServicesRevisionsListCall) Pages(ctx context.Context, f func(*GoogleCloudRunV2ListRevisionsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+type ProjectsLocationsWorkerPoolsRevisionsDeleteCall struct {
+	s          *Service
+	name       string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Delete: Deletes a Revision.
+//
+//   - name: The name of the Revision to delete. Format:
+//     projects/{project}/locations/{location}/services/{service}/revisions/{revis
+//     ion}.
+func (r *ProjectsLocationsWorkerPoolsRevisionsService) Delete(name string) *ProjectsLocationsWorkerPoolsRevisionsDeleteCall {
+	c := &ProjectsLocationsWorkerPoolsRevisionsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Etag sets the optional parameter "etag": A system-generated fingerprint for
+// this version of the resource. This may be used to detect modification
+// conflict during updates.
+func (c *ProjectsLocationsWorkerPoolsRevisionsDeleteCall) Etag(etag string) *ProjectsLocationsWorkerPoolsRevisionsDeleteCall {
+	c.urlParams_.Set("etag", etag)
+	return c
+}
+
+// ValidateOnly sets the optional parameter "validateOnly": Indicates that the
+// request should be validated without actually deleting any resources.
+func (c *ProjectsLocationsWorkerPoolsRevisionsDeleteCall) ValidateOnly(validateOnly bool) *ProjectsLocationsWorkerPoolsRevisionsDeleteCall {
+	c.urlParams_.Set("validateOnly", fmt.Sprint(validateOnly))
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsWorkerPoolsRevisionsDeleteCall) Fields(s ...googleapi.Field) *ProjectsLocationsWorkerPoolsRevisionsDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsWorkerPoolsRevisionsDeleteCall) Context(ctx context.Context) *ProjectsLocationsWorkerPoolsRevisionsDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsWorkerPoolsRevisionsDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsWorkerPoolsRevisionsDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("DELETE", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "run.projects.locations.workerPools.revisions.delete", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "run.projects.locations.workerPools.revisions.delete" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleLongrunningOperation.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsWorkerPoolsRevisionsDeleteCall) Do(opts ...googleapi.CallOption) (*GoogleLongrunningOperation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleLongrunningOperation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "run.projects.locations.workerPools.revisions.delete", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsWorkerPoolsRevisionsGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Gets information about a Revision.
+//
+//   - name: The full name of the Revision. Format:
+//     projects/{project}/locations/{location}/services/{service}/revisions/{revis
+//     ion}.
+func (r *ProjectsLocationsWorkerPoolsRevisionsService) Get(name string) *ProjectsLocationsWorkerPoolsRevisionsGetCall {
+	c := &ProjectsLocationsWorkerPoolsRevisionsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsWorkerPoolsRevisionsGetCall) Fields(s ...googleapi.Field) *ProjectsLocationsWorkerPoolsRevisionsGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsWorkerPoolsRevisionsGetCall) IfNoneMatch(entityTag string) *ProjectsLocationsWorkerPoolsRevisionsGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsWorkerPoolsRevisionsGetCall) Context(ctx context.Context) *ProjectsLocationsWorkerPoolsRevisionsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsWorkerPoolsRevisionsGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsWorkerPoolsRevisionsGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "run.projects.locations.workerPools.revisions.get", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "run.projects.locations.workerPools.revisions.get" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudRunV2Revision.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsWorkerPoolsRevisionsGetCall) Do(opts ...googleapi.CallOption) (*GoogleCloudRunV2Revision, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudRunV2Revision{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "run.projects.locations.workerPools.revisions.get", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsWorkerPoolsRevisionsListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists Revisions from a given Service, or from a given location.
+// Results are sorted by creation time, descending.
+//
+//   - parent: The Service from which the Revisions should be listed. To list all
+//     Revisions across Services, use "-" instead of Service name. Format:
+//     projects/{project}/locations/{location}/services/{service}.
+func (r *ProjectsLocationsWorkerPoolsRevisionsService) List(parent string) *ProjectsLocationsWorkerPoolsRevisionsListCall {
+	c := &ProjectsLocationsWorkerPoolsRevisionsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": Maximum number of revisions
+// to return in this call.
+func (c *ProjectsLocationsWorkerPoolsRevisionsListCall) PageSize(pageSize int64) *ProjectsLocationsWorkerPoolsRevisionsListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": A page token received
+// from a previous call to ListRevisions. All other parameters must match.
+func (c *ProjectsLocationsWorkerPoolsRevisionsListCall) PageToken(pageToken string) *ProjectsLocationsWorkerPoolsRevisionsListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// ShowDeleted sets the optional parameter "showDeleted": If true, returns
+// deleted (but unexpired) resources along with active ones.
+func (c *ProjectsLocationsWorkerPoolsRevisionsListCall) ShowDeleted(showDeleted bool) *ProjectsLocationsWorkerPoolsRevisionsListCall {
+	c.urlParams_.Set("showDeleted", fmt.Sprint(showDeleted))
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsWorkerPoolsRevisionsListCall) Fields(s ...googleapi.Field) *ProjectsLocationsWorkerPoolsRevisionsListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsWorkerPoolsRevisionsListCall) IfNoneMatch(entityTag string) *ProjectsLocationsWorkerPoolsRevisionsListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsWorkerPoolsRevisionsListCall) Context(ctx context.Context) *ProjectsLocationsWorkerPoolsRevisionsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsWorkerPoolsRevisionsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsWorkerPoolsRevisionsListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+parent}/revisions")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "run.projects.locations.workerPools.revisions.list", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "run.projects.locations.workerPools.revisions.list" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudRunV2ListRevisionsResponse.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsWorkerPoolsRevisionsListCall) Do(opts ...googleapi.CallOption) (*GoogleCloudRunV2ListRevisionsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudRunV2ListRevisionsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "run.projects.locations.workerPools.revisions.list", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsLocationsWorkerPoolsRevisionsListCall) Pages(ctx context.Context, f func(*GoogleCloudRunV2ListRevisionsResponse) error) error {
 	c.ctx_ = ctx
 	defer c.PageToken(c.urlParams_.Get("pageToken"))
 	for {

@@ -871,8 +871,6 @@ type Advertiser struct {
 	// AdvertiserId: Output only. The unique ID of the advertiser. Assigned by the
 	// system.
 	AdvertiserId int64 `json:"advertiserId,omitempty,string"`
-	// BillingConfig: Required. Billing related settings of the advertiser.
-	BillingConfig *AdvertiserBillingConfig `json:"billingConfig,omitempty"`
 	// CreativeConfig: Required. Creative related settings of the advertiser.
 	CreativeConfig *AdvertiserCreativeConfig `json:"creativeConfig,omitempty"`
 	// DataAccessConfig: Settings that control how advertiser data may be accessed.
@@ -968,29 +966,6 @@ type AdvertiserAdServerConfig struct {
 
 func (s AdvertiserAdServerConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod AdvertiserAdServerConfig
-	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
-}
-
-// AdvertiserBillingConfig: Billing related settings of an advertiser.
-type AdvertiserBillingConfig struct {
-	// BillingProfileId: Required. The ID of a billing profile assigned to the
-	// advertiser.
-	BillingProfileId int64 `json:"billingProfileId,omitempty,string"`
-	// ForceSendFields is a list of field names (e.g. "BillingProfileId") to
-	// unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
-	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "BillingProfileId") to include in
-	// API requests with the JSON null value. By default, fields with empty values
-	// are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
-	NullFields []string `json:"-"`
-}
-
-func (s AdvertiserBillingConfig) MarshalJSON() ([]byte, error) {
-	type NoMethod AdvertiserBillingConfig
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -2024,14 +1999,8 @@ func (s AssignedUserRole) MarshalJSON() ([]byte, error) {
 // `TARGETING_TYPE_AUDIENCE_GROUP`. The relation between each group is UNION,
 // except for excluded_first_and_third_party_audience_group and
 // excluded_google_audience_group, of which COMPLEMENT is used as an
-// INTERSECTION with other groups.
+// INTERSECTION with other groups. NEXT_ID: 9
 type AudienceGroupAssignedTargetingOptionDetails struct {
-	// ExcludedFirstAndThirdPartyAudienceGroup: The first and third party audience
-	// ids and recencies of the excluded first and third party audience group. Used
-	// for negative targeting. The COMPLEMENT of the UNION of this group and other
-	// excluded audience groups is used as an INTERSECTION to any positive audience
-	// targeting. All items are logically ‘OR’ of each other.
-	ExcludedFirstAndThirdPartyAudienceGroup *FirstAndThirdPartyAudienceGroup `json:"excludedFirstAndThirdPartyAudienceGroup,omitempty"`
 	// ExcludedGoogleAudienceGroup: The Google audience ids of the excluded Google
 	// audience group. Used for negative targeting. The COMPLEMENT of the UNION of
 	// this group and other excluded audience groups is used as an INTERSECTION to
@@ -2045,28 +2014,19 @@ type AudienceGroupAssignedTargetingOptionDetails struct {
 	// IncludedCustomListGroup: The custom list ids of the included custom list
 	// group. Contains custom list ids only.
 	IncludedCustomListGroup *CustomListGroup `json:"includedCustomListGroup,omitempty"`
-	// IncludedFirstAndThirdPartyAudienceGroups: The first and third party audience
-	// ids and recencies of included first and third party audience groups. Each
-	// first and third party audience group contains first and third party audience
-	// ids only. The relation between each first and third party audience group is
-	// INTERSECTION, and the result is UNION'ed with other audience groups.
-	// Repeated groups with same settings will be ignored.
-	IncludedFirstAndThirdPartyAudienceGroups []*FirstAndThirdPartyAudienceGroup `json:"includedFirstAndThirdPartyAudienceGroups,omitempty"`
 	// IncludedGoogleAudienceGroup: The Google audience ids of the included Google
 	// audience group. Contains Google audience ids only.
 	IncludedGoogleAudienceGroup *GoogleAudienceGroup `json:"includedGoogleAudienceGroup,omitempty"`
 	// ForceSendFields is a list of field names (e.g.
-	// "ExcludedFirstAndThirdPartyAudienceGroup") to unconditionally include in API
-	// requests. By default, fields with empty or default values are omitted from
-	// API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
-	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g.
-	// "ExcludedFirstAndThirdPartyAudienceGroup") to include in API requests with
-	// the JSON null value. By default, fields with empty values are omitted from
-	// API requests. See https://pkg.go.dev/google.golang.org/api#hdr-NullFields
+	// "ExcludedGoogleAudienceGroup") to unconditionally include in API requests.
+	// By default, fields with empty or default values are omitted from API
+	// requests. See https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields
 	// for more details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ExcludedGoogleAudienceGroup") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
@@ -3304,6 +3264,18 @@ type BusinessChainTargetingOptionDetails struct {
 	//   "GEO_REGION_TYPE_NEIGHBORHOOD" - The geographic region is a neighborhood.
 	//   "GEO_REGION_TYPE_UNIVERSITY" - The geographic region is a university.
 	//   "GEO_REGION_TYPE_DISTRICT" - The geographic region is a district.
+	//   "GEO_REGION_TYPE_NATIONAL_PARK" - The geographic region is a national
+	// park.
+	//   "GEO_REGION_TYPE_BARRIO" - The geographic region is a barrio.
+	//   "GEO_REGION_TYPE_SUB_WARD" - The geographic region is a sub ward.
+	//   "GEO_REGION_TYPE_MUNICIPALITY_DISTRICT" - The geographic region is a
+	// municipality district.
+	//   "GEO_REGION_TYPE_SUB_DISTRICT" - The geographic region is a sub district.
+	//   "GEO_REGION_TYPE_QUARTER" - The geographic region is a quarter.
+	//   "GEO_REGION_TYPE_DIVISION" - The geographic region is a division.
+	//   "GEO_REGION_TYPE_COMMUNE" - The geographic region is a commune.
+	//   "GEO_REGION_TYPE_COLLOQUIAL_AREA" - The geographic region is a colloquial
+	// area.
 	GeoRegionType string `json:"geoRegionType,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "BusinessChain") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -7000,95 +6972,6 @@ func (s ExitEvent) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// FirstAndThirdPartyAudienceGroup: Details of first and third party audience
-// group. All first and third party audience targeting settings are logically
-// ‘OR’ of each other.
-type FirstAndThirdPartyAudienceGroup struct {
-	// Settings: Required. All first and third party audience targeting settings in
-	// first and third party audience group. Repeated settings with same id are not
-	// allowed.
-	Settings []*FirstAndThirdPartyAudienceTargetingSetting `json:"settings,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "Settings") to
-	// unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
-	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Settings") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
-	NullFields []string `json:"-"`
-}
-
-func (s FirstAndThirdPartyAudienceGroup) MarshalJSON() ([]byte, error) {
-	type NoMethod FirstAndThirdPartyAudienceGroup
-	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
-}
-
-// FirstAndThirdPartyAudienceTargetingSetting: Details of first and third party
-// audience targeting setting.
-type FirstAndThirdPartyAudienceTargetingSetting struct {
-	// FirstAndThirdPartyAudienceId: Required. First and third party audience id of
-	// the first and third party audience targeting setting. This id is
-	// first_and_third_party_audience_id.
-	FirstAndThirdPartyAudienceId int64 `json:"firstAndThirdPartyAudienceId,omitempty,string"`
-	// Recency: The recency of the first and third party audience targeting
-	// setting. Only applicable to first party audiences, otherwise will be
-	// ignored. For more info, refer to
-	// https://support.google.com/displayvideo/answer/2949947#recency When
-	// unspecified, no recency limit will be used.
-	//
-	// Possible values:
-	//   "RECENCY_NO_LIMIT" - No limit of recency.
-	//   "RECENCY_1_MINUTE" - Recency is 1 minute.
-	//   "RECENCY_5_MINUTES" - Recency is 5 minutes.
-	//   "RECENCY_10_MINUTES" - Recency is 10 minutes.
-	//   "RECENCY_15_MINUTES" - Recency is 15 minutes.
-	//   "RECENCY_30_MINUTES" - Recency is 30 minutes.
-	//   "RECENCY_1_HOUR" - Recency is 1 hour.
-	//   "RECENCY_2_HOURS" - Recency is 2 hours.
-	//   "RECENCY_3_HOURS" - Recency is 3 hours.
-	//   "RECENCY_6_HOURS" - Recency is 6 hours.
-	//   "RECENCY_12_HOURS" - Recency is 12 hours.
-	//   "RECENCY_1_DAY" - Recency is 1 day.
-	//   "RECENCY_2_DAYS" - Recency is 2 days.
-	//   "RECENCY_3_DAYS" - Recency is 3 days.
-	//   "RECENCY_5_DAYS" - Recency is 5 days.
-	//   "RECENCY_7_DAYS" - Recency is 7 days.
-	//   "RECENCY_10_DAYS" - Recency is 10 days.
-	//   "RECENCY_14_DAYS" - Recency is 14 days.
-	//   "RECENCY_15_DAYS" - Recency is 15 days.
-	//   "RECENCY_21_DAYS" - Recency is 21 days.
-	//   "RECENCY_28_DAYS" - Recency is 28 days.
-	//   "RECENCY_30_DAYS" - Recency is 30 days.
-	//   "RECENCY_40_DAYS" - Recency is 40 days.
-	//   "RECENCY_45_DAYS" - Recency is 45 days.
-	//   "RECENCY_60_DAYS" - Recency is 60 days.
-	//   "RECENCY_90_DAYS" - Recency is 90 days.
-	//   "RECENCY_120_DAYS" - Recency is 120 days.
-	//   "RECENCY_180_DAYS" - Recency is 180 days.
-	//   "RECENCY_270_DAYS" - Recency is 270 days.
-	//   "RECENCY_365_DAYS" - Recency is 365 days.
-	Recency string `json:"recency,omitempty"`
-	// ForceSendFields is a list of field names (e.g.
-	// "FirstAndThirdPartyAudienceId") to unconditionally include in API requests.
-	// By default, fields with empty or default values are omitted from API
-	// requests. See https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields
-	// for more details.
-	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "FirstAndThirdPartyAudienceId") to
-	// include in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
-	NullFields []string `json:"-"`
-}
-
-func (s FirstAndThirdPartyAudienceTargetingSetting) MarshalJSON() ([]byte, error) {
-	type NoMethod FirstAndThirdPartyAudienceTargetingSetting
-	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
-}
-
 // FixedBidStrategy: A strategy that uses a fixed bidding price.
 type FixedBidStrategy struct {
 	// BidAmountMicros: The fixed bid amount, in micros of the advertiser's
@@ -7501,6 +7384,18 @@ type GeoRegionAssignedTargetingOptionDetails struct {
 	//   "GEO_REGION_TYPE_NEIGHBORHOOD" - The geographic region is a neighborhood.
 	//   "GEO_REGION_TYPE_UNIVERSITY" - The geographic region is a university.
 	//   "GEO_REGION_TYPE_DISTRICT" - The geographic region is a district.
+	//   "GEO_REGION_TYPE_NATIONAL_PARK" - The geographic region is a national
+	// park.
+	//   "GEO_REGION_TYPE_BARRIO" - The geographic region is a barrio.
+	//   "GEO_REGION_TYPE_SUB_WARD" - The geographic region is a sub ward.
+	//   "GEO_REGION_TYPE_MUNICIPALITY_DISTRICT" - The geographic region is a
+	// municipality district.
+	//   "GEO_REGION_TYPE_SUB_DISTRICT" - The geographic region is a sub district.
+	//   "GEO_REGION_TYPE_QUARTER" - The geographic region is a quarter.
+	//   "GEO_REGION_TYPE_DIVISION" - The geographic region is a division.
+	//   "GEO_REGION_TYPE_COMMUNE" - The geographic region is a commune.
+	//   "GEO_REGION_TYPE_COLLOQUIAL_AREA" - The geographic region is a colloquial
+	// area.
 	GeoRegionType string `json:"geoRegionType,omitempty"`
 	// Negative: Indicates if this option is being negatively targeted.
 	Negative bool `json:"negative,omitempty"`
@@ -7594,6 +7489,18 @@ type GeoRegionTargetingOptionDetails struct {
 	//   "GEO_REGION_TYPE_NEIGHBORHOOD" - The geographic region is a neighborhood.
 	//   "GEO_REGION_TYPE_UNIVERSITY" - The geographic region is a university.
 	//   "GEO_REGION_TYPE_DISTRICT" - The geographic region is a district.
+	//   "GEO_REGION_TYPE_NATIONAL_PARK" - The geographic region is a national
+	// park.
+	//   "GEO_REGION_TYPE_BARRIO" - The geographic region is a barrio.
+	//   "GEO_REGION_TYPE_SUB_WARD" - The geographic region is a sub ward.
+	//   "GEO_REGION_TYPE_MUNICIPALITY_DISTRICT" - The geographic region is a
+	// municipality district.
+	//   "GEO_REGION_TYPE_SUB_DISTRICT" - The geographic region is a sub district.
+	//   "GEO_REGION_TYPE_QUARTER" - The geographic region is a quarter.
+	//   "GEO_REGION_TYPE_DIVISION" - The geographic region is a division.
+	//   "GEO_REGION_TYPE_COMMUNE" - The geographic region is a commune.
+	//   "GEO_REGION_TYPE_COLLOQUIAL_AREA" - The geographic region is a colloquial
+	// area.
 	GeoRegionType string `json:"geoRegionType,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "DisplayName") to
 	// unconditionally include in API requests. By default, fields with empty or

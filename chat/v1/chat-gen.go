@@ -1663,11 +1663,11 @@ func (s FormAction) MarshalJSON() ([]byte, error) {
 // GoogleAppsCardV1Action: An action that describes the behavior when the form
 // is submitted. For example, you can invoke an Apps Script script to handle
 // the form. If the action is triggered, the form values are sent to the
-// server. Google Workspace Add-ons and Chat apps
+// server. Google Workspace add-ons and Chat apps
 // (https://developers.google.com/workspace/extend):
 type GoogleAppsCardV1Action struct {
 	// AllWidgetsAreRequired: Optional. If this is true, then all widgets are
-	// considered required by this action. Google Workspace Add-ons and Chat apps
+	// considered required by this action. Google Workspace add-ons and Chat apps
 	// (https://developers.google.com/workspace/extend):
 	AllWidgetsAreRequired bool `json:"allWidgetsAreRequired,omitempty"`
 	// Function: A custom function to invoke when the containing element is clicked
@@ -1726,7 +1726,7 @@ type GoogleAppsCardV1Action struct {
 	// RequiredWidgets: Optional. Fill this list with the names of widgets that
 	// this Action needs for a valid submission. If the widgets listed here don't
 	// have a value when this Action is invoked, the form submission is aborted.
-	// Google Workspace Add-ons and Chat apps
+	// Google Workspace add-ons and Chat apps
 	// (https://developers.google.com/workspace/extend):
 	RequiredWidgets []string `json:"requiredWidgets,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AllWidgetsAreRequired") to
@@ -1753,7 +1753,7 @@ func (s GoogleAppsCardV1Action) MarshalJSON() ([]byte, error) {
 // method = snooze()`, passing the snooze type and snooze time in the list of
 // string parameters. To learn more, see `CommonEventObject`
 // (https://developers.google.com/workspace/chat/api/reference/rest/v1/Event#commoneventobject).
-// Google Workspace Add-ons and Chat apps
+// Google Workspace add-ons and Chat apps
 // (https://developers.google.com/workspace/extend):
 type GoogleAppsCardV1ActionParameter struct {
 	// Key: The name of the parameter for the action script.
@@ -1779,7 +1779,7 @@ func (s GoogleAppsCardV1ActionParameter) MarshalJSON() ([]byte, error) {
 }
 
 // GoogleAppsCardV1BorderStyle: The style options for the border of a card or
-// widget, including the border type and color. Google Workspace Add-ons and
+// widget, including the border type and color. Google Workspace add-ons and
 // Chat apps (https://developers.google.com/workspace/extend):
 type GoogleAppsCardV1BorderStyle struct {
 	// CornerRadius: The corner radius for the border.
@@ -1822,7 +1822,7 @@ func (s GoogleAppsCardV1BorderStyle) MarshalJSON() ([]byte, error) {
 // click. For an example in Google Chat apps, see Add a button
 // (https://developers.google.com/workspace/chat/design-interactive-card-dialog#add_a_button).
 // To make an image a clickable button, specify an `Image` (not an
-// `ImageComponent`) and set an `onClick` action. Google Workspace Add-ons and
+// `ImageComponent`) and set an `onClick` action. Google Workspace add-ons and
 // Chat apps (https://developers.google.com/workspace/extend):
 type GoogleAppsCardV1Button struct {
 	// AltText: The alternative text that's used for accessibility. Set descriptive
@@ -1895,7 +1895,7 @@ func (s GoogleAppsCardV1Button) MarshalJSON() ([]byte, error) {
 // GoogleAppsCardV1ButtonList: A list of buttons layed out horizontally. For an
 // example in Google Chat apps, see Add a button
 // (https://developers.google.com/workspace/chat/design-interactive-card-dialog#add_a_button).
-// Google Workspace Add-ons and Chat apps
+// Google Workspace add-ons and Chat apps
 // (https://developers.google.com/workspace/extend):
 type GoogleAppsCardV1ButtonList struct {
 	// Buttons: An array of buttons.
@@ -1919,18 +1919,18 @@ func (s GoogleAppsCardV1ButtonList) MarshalJSON() ([]byte, error) {
 }
 
 // GoogleAppsCardV1Card: A card interface displayed in a Google Chat message or
-// Google Workspace Add-on. Cards support a defined layout, interactive UI
+// Google Workspace add-on. Cards support a defined layout, interactive UI
 // elements like buttons, and rich media like images. Use cards to present
 // detailed information, gather information from users, and guide users to take
 // a next step. Card builder (https://addons.gsuite.google.com/uikit/builder)
 // To learn how to build cards, see the following documentation: * For Google
 // Chat apps, see Design the components of a card or dialog
 // (https://developers.google.com/workspace/chat/design-components-card-dialog).
-// * For Google Workspace Add-ons, see Card-based interfaces
+// * For Google Workspace add-ons, see Card-based interfaces
 // (https://developers.google.com/apps-script/add-ons/concepts/cards). Note:
 // You can add up to 100 widgets per card. Any widgets beyond this limit are
 // ignored. This limit applies to both card messages and dialogs in Google Chat
-// apps, and to cards in Google Workspace Add-ons. **Example: Card message for
+// apps, and to cards in Google Workspace add-ons. **Example: Card message for
 // a Google Chat app** !Example contact card
 // (https://developers.google.com/workspace/chat/images/card_api_reference.png)
 // To create the sample card message in Google Chat, use the following JSON:
@@ -1950,7 +1950,7 @@ func (s GoogleAppsCardV1ButtonList) MarshalJSON() ([]byte, error) {
 // } ] } ```
 type GoogleAppsCardV1Card struct {
 	// CardActions: The card's actions. Actions are added to the card's toolbar
-	// menu. Google Workspace Add-ons
+	// menu. Google Workspace add-ons
 	// (https://developers.google.com/workspace/add-ons): For example, the
 	// following JSON constructs a card action menu with `Settings` and `Send
 	// Feedback` options: ``` "card_actions": [ { "actionLabel": "Settings",
@@ -1959,8 +1959,8 @@ type GoogleAppsCardV1Card struct {
 	// "LoadIndicator.SPINNER" } } }, { "actionLabel": "Send Feedback", "onClick":
 	// { "openLink": { "url": "https://example.com/feedback" } } } ] ```
 	CardActions []*GoogleAppsCardV1CardAction `json:"cardActions,omitempty"`
-	// DisplayStyle: In Google Workspace Add-ons, sets the display properties of
-	// the `peekCardHeader`. Google Workspace Add-ons
+	// DisplayStyle: In Google Workspace add-ons, sets the display properties of
+	// the `peekCardHeader`. Google Workspace add-ons
 	// (https://developers.google.com/workspace/add-ons):
 	//
 	// Possible values:
@@ -1978,18 +1978,18 @@ type GoogleAppsCardV1Card struct {
 	// (https://developers.google.com/workspace/chat/dialogs), but not card
 	// messages
 	// (https://developers.google.com/workspace/chat/create-messages#create).
-	// Google Workspace Add-ons and Chat apps
+	// Google Workspace add-ons and Chat apps
 	// (https://developers.google.com/workspace/extend):
 	FixedFooter *GoogleAppsCardV1CardFixedFooter `json:"fixedFooter,omitempty"`
 	// Header: The header of the card. A header usually contains a leading image
 	// and a title. Headers always appear at the top of a card.
 	Header *GoogleAppsCardV1CardHeader `json:"header,omitempty"`
 	// Name: Name of the card. Used as a card identifier in card navigation. Google
-	// Workspace Add-ons (https://developers.google.com/workspace/add-ons):
+	// Workspace add-ons (https://developers.google.com/workspace/add-ons):
 	Name string `json:"name,omitempty"`
 	// PeekCardHeader: When displaying contextual content, the peek card header
 	// acts as a placeholder so that the user can navigate forward between the
-	// homepage cards and the contextual cards. Google Workspace Add-ons
+	// homepage cards and the contextual cards. Google Workspace add-ons
 	// (https://developers.google.com/workspace/add-ons):
 	PeekCardHeader *GoogleAppsCardV1CardHeader `json:"peekCardHeader,omitempty"`
 	// SectionDividerStyle: The divider style between the header, sections and
@@ -2028,7 +2028,7 @@ func (s GoogleAppsCardV1Card) MarshalJSON() ([]byte, error) {
 // GoogleAppsCardV1CardAction: A card action is the action associated with the
 // card. For example, an invoice card might include actions such as delete
 // invoice, email invoice, or open the invoice in a browser. Google Workspace
-// Add-ons (https://developers.google.com/workspace/add-ons):
+// add-ons (https://developers.google.com/workspace/add-ons):
 type GoogleAppsCardV1CardAction struct {
 	// ActionLabel: The label that displays as the action menu item.
 	ActionLabel string `json:"actionLabel,omitempty"`
@@ -2061,7 +2061,7 @@ func (s GoogleAppsCardV1CardAction) MarshalJSON() ([]byte, error) {
 // (https://developers.google.com/workspace/chat/create-messages#create). For
 // an example in Google Chat apps, see Add a persistent footer
 // (https://developers.google.com/workspace/chat/design-components-card-dialog#add_a_persistent_footer).
-// Google Workspace Add-ons and Chat apps
+// Google Workspace add-ons and Chat apps
 // (https://developers.google.com/workspace/extend):
 type GoogleAppsCardV1CardFixedFooter struct {
 	// PrimaryButton: The primary button of the fixed footer. The button must be a
@@ -2092,13 +2092,13 @@ func (s GoogleAppsCardV1CardFixedFooter) MarshalJSON() ([]byte, error) {
 // GoogleAppsCardV1CardHeader: Represents a card header. For an example in
 // Google Chat apps, see Add a header
 // (https://developers.google.com/workspace/chat/design-components-card-dialog#add_a_header).
-// Google Workspace Add-ons and Chat apps
+// Google Workspace add-ons and Chat apps
 // (https://developers.google.com/workspace/extend):
 type GoogleAppsCardV1CardHeader struct {
 	// ImageAltText: The alternative text of this image that's used for
 	// accessibility.
 	ImageAltText string `json:"imageAltText,omitempty"`
-	// ImageType: The shape used to crop the image. Google Workspace Add-ons and
+	// ImageType: The shape used to crop the image. Google Workspace add-ons and
 	// Chat apps (https://developers.google.com/workspace/extend):
 	//
 	// Possible values:
@@ -2196,7 +2196,7 @@ func (s GoogleAppsCardV1CarouselCard) MarshalJSON() ([]byte, error) {
 }
 
 // GoogleAppsCardV1Chip: A text, icon, or text and icon chip that users can
-// click. Google Workspace Add-ons and Chat apps
+// click. Google Workspace add-ons and Chat apps
 // (https://developers.google.com/workspace/extend):
 type GoogleAppsCardV1Chip struct {
 	// AltText: The alternative text that's used for accessibility. Set descriptive
@@ -2238,7 +2238,7 @@ func (s GoogleAppsCardV1Chip) MarshalJSON() ([]byte, error) {
 
 // GoogleAppsCardV1ChipList: A list of chips layed out horizontally, which can
 // either scroll horizontally or wrap to the next line. Google Workspace
-// Add-ons and Chat apps (https://developers.google.com/workspace/extend):
+// add-ons and Chat apps (https://developers.google.com/workspace/extend):
 type GoogleAppsCardV1ChipList struct {
 	// Chips: An array of chips.
 	Chips []*GoogleAppsCardV1Chip `json:"chips,omitempty"`
@@ -2270,7 +2270,7 @@ func (s GoogleAppsCardV1ChipList) MarshalJSON() ([]byte, error) {
 }
 
 // GoogleAppsCardV1CollapseControl: Represent an expand and collapse control.
-// Google Workspace Add-ons and Chat apps
+// Google Workspace add-ons and Chat apps
 // (https://developers.google.com/workspace/extend):
 type GoogleAppsCardV1CollapseControl struct {
 	// CollapseButton: Optional. Define a customizable button to collapse the
@@ -2314,7 +2314,7 @@ func (s GoogleAppsCardV1CollapseControl) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleAppsCardV1Column: A column. Google Workspace Add-ons and Chat apps
+// GoogleAppsCardV1Column: A column. Google Workspace add-ons and Chat apps
 // (https://developers.google.com/workspace/extend)
 type GoogleAppsCardV1Column struct {
 	// HorizontalAlignment: Specifies whether widgets align to the left, right, or
@@ -2386,7 +2386,7 @@ func (s GoogleAppsCardV1Column) MarshalJSON() ([]byte, error) {
 // * On iOS devices, the second column wraps if the screen width is less than
 // or equal to 300 pt. * On Android devices, the second column wraps if the
 // screen width is less than or equal to 320 dp. To include more than two
-// columns, or to use rows, use the `Grid` widget. Google Workspace Add-ons and
+// columns, or to use rows, use the `Grid` widget. Google Workspace add-ons and
 // Chat apps (https://developers.google.com/workspace/extend): The add-on UIs
 // that support columns include: * The dialog displayed when users open the
 // add-on from an email draft. * The dialog displayed when users open the
@@ -2422,7 +2422,7 @@ func (s GoogleAppsCardV1Columns) MarshalJSON() ([]byte, error) {
 // (https://developers.google.com/workspace/chat/design-interactive-card-dialog#let_a_user_pick_a_date_and_time).
 // Users can input text or use the picker to select dates and times. If users
 // input an invalid date or time, the picker shows an error that prompts users
-// to input the information correctly. Google Workspace Add-ons and Chat apps
+// to input the information correctly. Google Workspace add-ons and Chat apps
 // (https://developers.google.com/workspace/extend):
 type GoogleAppsCardV1DateTimePicker struct {
 	// Label: The text that prompts users to input a date, a time, or a date and
@@ -2480,7 +2480,7 @@ func (s GoogleAppsCardV1DateTimePicker) MarshalJSON() ([]byte, error) {
 // text, a selection widget, or a button after the text. For an example in
 // Google Chat apps, see Display text with decorative text
 // (https://developers.google.com/workspace/chat/add-text-image-card-dialog#display_text_with_decorative_elements).
-// Google Workspace Add-ons and Chat apps
+// Google Workspace add-ons and Chat apps
 // (https://developers.google.com/workspace/extend):
 type GoogleAppsCardV1DecoratedText struct {
 	// BottomLabel: The text that appears below `text`. Always wraps.
@@ -2506,7 +2506,7 @@ type GoogleAppsCardV1DecoratedText struct {
 	// Text: Required. The primary text. Supports simple formatting. For more
 	// information about formatting text, see Formatting text in Google Chat apps
 	// (https://developers.google.com/workspace/chat/format-messages#card-formatting)
-	// and Formatting text in Google Workspace Add-ons
+	// and Formatting text in Google Workspace add-ons
 	// (https://developers.google.com/apps-script/add-ons/concepts/widgets#text_formatting).
 	Text string `json:"text,omitempty"`
 	// TopLabel: The text that appears above `text`. Always truncates.
@@ -2537,7 +2537,7 @@ func (s GoogleAppsCardV1DecoratedText) MarshalJSON() ([]byte, error) {
 // line. For an example in Google Chat apps, see Add a horizontal divider
 // between widgets
 // (https://developers.google.com/workspace/chat/format-structure-card-dialog#add_a_horizontal_divider_between_widgets).
-// Google Workspace Add-ons and Chat apps
+// Google Workspace add-ons and Chat apps
 // (https://developers.google.com/workspace/extend): For example, the following
 // JSON creates a divider: ``` "divider": {} ```
 type GoogleAppsCardV1Divider struct {
@@ -2551,7 +2551,7 @@ type GoogleAppsCardV1Divider struct {
 // A grid supports any number of columns and items. The number of rows is
 // determined by items divided by columns. A grid with 10 items and 2 columns
 // has 5 rows. A grid with 11 items and 2 columns has 6 rows. Google Workspace
-// Add-ons and Chat apps (https://developers.google.com/workspace/extend): For
+// add-ons and Chat apps (https://developers.google.com/workspace/extend): For
 // example, the following JSON creates a 2 column grid with a single item: ```
 // "grid": { "title": "A fine collection of items", "columnCount": 2,
 // "borderStyle": { "type": "STROKE", "cornerRadius": 4 }, "items": [ {
@@ -2593,7 +2593,7 @@ func (s GoogleAppsCardV1Grid) MarshalJSON() ([]byte, error) {
 }
 
 // GoogleAppsCardV1GridItem: Represents an item in a grid layout. Items can
-// contain text, an image, or both text and an image. Google Workspace Add-ons
+// contain text, an image, or both text and an image. Google Workspace add-ons
 // and Chat apps (https://developers.google.com/workspace/extend):
 type GoogleAppsCardV1GridItem struct {
 	// Id: A user-specified identifier for this grid item. This identifier is
@@ -2639,7 +2639,7 @@ func (s GoogleAppsCardV1GridItem) MarshalJSON() ([]byte, error) {
 // (https://developers.google.com/workspace/chat/format-messages#builtinicons)
 // and custom
 // (https://developers.google.com/workspace/chat/format-messages#customicons)
-// icons. Google Workspace Add-ons and Chat apps
+// icons. Google Workspace add-ons and Chat apps
 // (https://developers.google.com/workspace/extend):
 type GoogleAppsCardV1Icon struct {
 	// AltText: Optional. A description of the icon used for accessibility. If
@@ -2698,7 +2698,7 @@ func (s GoogleAppsCardV1Icon) MarshalJSON() ([]byte, error) {
 // GoogleAppsCardV1Image: An image that is specified by a URL and can have an
 // `onClick` action. For an example, see Add an image
 // (https://developers.google.com/workspace/chat/add-text-image-card-dialog#add_an_image).
-// Google Workspace Add-ons and Chat apps
+// Google Workspace add-ons and Chat apps
 // (https://developers.google.com/workspace/extend):
 type GoogleAppsCardV1Image struct {
 	// AltText: The alternative text of this image that's used for accessibility.
@@ -2728,7 +2728,7 @@ func (s GoogleAppsCardV1Image) MarshalJSON() ([]byte, error) {
 }
 
 // GoogleAppsCardV1ImageComponent: Represents an image. Google Workspace
-// Add-ons and Chat apps (https://developers.google.com/workspace/extend):
+// add-ons and Chat apps (https://developers.google.com/workspace/extend):
 type GoogleAppsCardV1ImageComponent struct {
 	// AltText: The accessibility label for the image.
 	AltText string `json:"altText,omitempty"`
@@ -2757,7 +2757,7 @@ func (s GoogleAppsCardV1ImageComponent) MarshalJSON() ([]byte, error) {
 }
 
 // GoogleAppsCardV1ImageCropStyle: Represents the crop style applied to an
-// image. Google Workspace Add-ons and Chat apps
+// image. Google Workspace add-ons and Chat apps
 // (https://developers.google.com/workspace/extend): For example, here's how to
 // apply a 16:9 aspect ratio: ``` cropStyle { "type": "RECTANGLE_CUSTOM",
 // "aspectRatio": 16/9 } ```
@@ -2888,19 +2888,19 @@ func (s GoogleAppsCardV1NestedWidget) MarshalJSON() ([]byte, error) {
 }
 
 // GoogleAppsCardV1OnClick: Represents how to respond when users click an
-// interactive element on a card, such as a button. Google Workspace Add-ons
+// interactive element on a card, such as a button. Google Workspace add-ons
 // and Chat apps (https://developers.google.com/workspace/extend):
 type GoogleAppsCardV1OnClick struct {
 	// Action: If specified, an action is triggered by this `onClick`.
 	Action *GoogleAppsCardV1Action `json:"action,omitempty"`
 	// Card: A new card is pushed to the card stack after clicking if specified.
-	// Google Workspace Add-ons (https://developers.google.com/workspace/add-ons):
+	// Google Workspace add-ons (https://developers.google.com/workspace/add-ons):
 	Card *GoogleAppsCardV1Card `json:"card,omitempty"`
 	// OpenDynamicLinkAction: An add-on triggers this action when the action needs
 	// to open a link. This differs from the `open_link` above in that this needs
 	// to talk to server to get the link. Thus some preparation work is required
 	// for web client to do before the open link action response comes back. Google
-	// Workspace Add-ons (https://developers.google.com/workspace/add-ons):
+	// Workspace add-ons (https://developers.google.com/workspace/add-ons):
 	OpenDynamicLinkAction *GoogleAppsCardV1Action `json:"openDynamicLinkAction,omitempty"`
 	// OpenLink: If specified, this `onClick` triggers an open link action.
 	OpenLink *GoogleAppsCardV1OpenLink `json:"openLink,omitempty"`
@@ -2925,11 +2925,11 @@ func (s GoogleAppsCardV1OnClick) MarshalJSON() ([]byte, error) {
 }
 
 // GoogleAppsCardV1OpenLink: Represents an `onClick` event that opens a
-// hyperlink. Google Workspace Add-ons and Chat apps
+// hyperlink. Google Workspace add-ons and Chat apps
 // (https://developers.google.com/workspace/extend):
 type GoogleAppsCardV1OpenLink struct {
 	// OnClose: Whether the client forgets about a link after opening it, or
-	// observes it until the window closes. Google Workspace Add-ons
+	// observes it until the window closes. Google Workspace add-ons
 	// (https://developers.google.com/workspace/add-ons):
 	//
 	// Possible values:
@@ -2940,7 +2940,7 @@ type GoogleAppsCardV1OpenLink struct {
 	// rpc/google.apps.card.v1#openas), the child window acts as a modal dialog and
 	// the parent card is blocked until the child window closes.
 	OnClose string `json:"onClose,omitempty"`
-	// OpenAs: How to open a link. Google Workspace Add-ons
+	// OpenAs: How to open a link. Google Workspace add-ons
 	// (https://developers.google.com/workspace/add-ons):
 	//
 	// Possible values:
@@ -2973,7 +2973,7 @@ func (s GoogleAppsCardV1OpenLink) MarshalJSON() ([]byte, error) {
 // actions in a card. You can use this widget when actions don't fit in the
 // available space. To use, specify this widget in the `OnClick` action of
 // widgets that support it. For example, in a `Button`. Google Workspace
-// Add-ons and Chat apps (https://developers.google.com/workspace/extend):
+// add-ons and Chat apps (https://developers.google.com/workspace/extend):
 type GoogleAppsCardV1OverflowMenu struct {
 	// Items: Required. The list of menu options.
 	Items []*GoogleAppsCardV1OverflowMenuItem `json:"items,omitempty"`
@@ -2996,7 +2996,7 @@ func (s GoogleAppsCardV1OverflowMenu) MarshalJSON() ([]byte, error) {
 }
 
 // GoogleAppsCardV1OverflowMenuItem: An option that users can invoke in an
-// overflow menu. Google Workspace Add-ons and Chat apps
+// overflow menu. Google Workspace add-ons and Chat apps
 // (https://developers.google.com/workspace/extend):
 type GoogleAppsCardV1OverflowMenuItem struct {
 	// Disabled: Whether the menu option is disabled. Defaults to false.
@@ -3066,7 +3066,7 @@ func (s GoogleAppsCardV1PlatformDataSource) MarshalJSON() ([]byte, error) {
 
 // GoogleAppsCardV1Section: A section contains a collection of widgets that are
 // rendered vertically in the order that they're specified. Google Workspace
-// Add-ons and Chat apps (https://developers.google.com/workspace/extend):
+// add-ons and Chat apps (https://developers.google.com/workspace/extend):
 type GoogleAppsCardV1Section struct {
 	// CollapseControl: Optional. Define the expand and collapse button of the
 	// section. This button will be shown only if the section is collapsible. If
@@ -3082,7 +3082,7 @@ type GoogleAppsCardV1Section struct {
 	// formatted text. For more information about formatting text, see Formatting
 	// text in Google Chat apps
 	// (https://developers.google.com/workspace/chat/format-messages#card-formatting)
-	// and Formatting text in Google Workspace Add-ons
+	// and Formatting text in Google Workspace add-ons
 	// (https://developers.google.com/apps-script/add-ons/concepts/widgets#text_formatting).
 	Header string `json:"header,omitempty"`
 	// UncollapsibleWidgetsCount: The number of uncollapsible widgets which remain
@@ -3125,7 +3125,7 @@ func (s GoogleAppsCardV1Section) MarshalJSON() ([]byte, error) {
 // details about working with form inputs, see Receive form data
 // (https://developers.google.com/workspace/chat/read-form-data). To collect
 // undefined or abstract data from users, use the TextInput widget. Google
-// Workspace Add-ons and Chat apps
+// Workspace add-ons and Chat apps
 // (https://developers.google.com/workspace/extend):
 type GoogleAppsCardV1SelectionInput struct {
 	// ExternalDataSource: An external data source, such as a relational database.
@@ -3174,7 +3174,7 @@ type GoogleAppsCardV1SelectionInput struct {
 	//   "SWITCH" - A set of switches. Users can turn on one or more switches.
 	//   "DROPDOWN" - A dropdown menu. Users can select one item from the menu.
 	//   "MULTI_SELECT" - A menu with a text box. Users can type and select one or
-	// more items. For Google Workspace Add-ons, you must populate items using a
+	// more items. For Google Workspace add-ons, you must populate items using a
 	// static array of `SelectionItem` objects. For Google Chat apps, you can also
 	// populate items using a dynamic data source and autosuggest items as users
 	// type in the menu. For example, users can start typing the name of a Google
@@ -3186,7 +3186,7 @@ type GoogleAppsCardV1SelectionInput struct {
 	// Workspace. For examples of how to implement multiselect menus for Chat apps,
 	// see [Add a multiselect
 	// menu](https://developers.google.com/workspace/chat/design-interactive-card-di
-	// alog#multiselect-menu). [Google Workspace Add-ons and Chat
+	// alog#multiselect-menu). [Google Workspace add-ons and Chat
 	// apps](https://developers.google.com/workspace/extend):
 	Type string `json:"type,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "ExternalDataSource") to
@@ -3209,7 +3209,7 @@ func (s GoogleAppsCardV1SelectionInput) MarshalJSON() ([]byte, error) {
 
 // GoogleAppsCardV1SelectionItem: An item that users can select in a selection
 // input, such as a checkbox or switch. Supports up to 100 items. Google
-// Workspace Add-ons and Chat apps
+// Workspace add-ons and Chat apps
 // (https://developers.google.com/workspace/extend):
 type GoogleAppsCardV1SelectionItem struct {
 	// BottomText: For multiselect menus, a text description or label that's
@@ -3250,7 +3250,7 @@ func (s GoogleAppsCardV1SelectionItem) MarshalJSON() ([]byte, error) {
 }
 
 // GoogleAppsCardV1SuggestionItem: One suggested value that users can enter in
-// a text input field. Google Workspace Add-ons and Chat apps
+// a text input field. Google Workspace add-ons and Chat apps
 // (https://developers.google.com/workspace/extend):
 type GoogleAppsCardV1SuggestionItem struct {
 	// Text: The value of a suggested input to a text input field. This is
@@ -3284,7 +3284,7 @@ func (s GoogleAppsCardV1SuggestionItem) MarshalJSON() ([]byte, error) {
 // to JavaScript, some users might enter `javascript` and others `java script`.
 // Suggesting `JavaScript` can standardize how users interact with your app.
 // When specified, `TextInput.type` is always `SINGLE_LINE`, even if it's set
-// to `MULTIPLE_LINE`. Google Workspace Add-ons and Chat apps
+// to `MULTIPLE_LINE`. Google Workspace add-ons and Chat apps
 // (https://developers.google.com/workspace/extend):
 type GoogleAppsCardV1Suggestions struct {
 	// Items: A list of suggestions used for autocomplete recommendations in text
@@ -3309,12 +3309,12 @@ func (s GoogleAppsCardV1Suggestions) MarshalJSON() ([]byte, error) {
 }
 
 // GoogleAppsCardV1SwitchControl: Either a toggle-style switch or a checkbox
-// inside a `decoratedText` widget. Google Workspace Add-ons and Chat apps
+// inside a `decoratedText` widget. Google Workspace add-ons and Chat apps
 // (https://developers.google.com/workspace/extend): Only supported in the
 // `decoratedText` widget.
 type GoogleAppsCardV1SwitchControl struct {
 	// ControlType: How the switch appears in the user interface. Google Workspace
-	// Add-ons and Chat apps (https://developers.google.com/workspace/extend):
+	// add-ons and Chat apps (https://developers.google.com/workspace/extend):
 	//
 	// Possible values:
 	//   "SWITCH" - A toggle-style switch.
@@ -3364,14 +3364,14 @@ func (s GoogleAppsCardV1SwitchControl) MarshalJSON() ([]byte, error) {
 // data (https://developers.google.com/workspace/chat/read-form-data). When you
 // need to collect undefined or abstract data from users, use a text input. To
 // collect defined or enumerated data from users, use the SelectionInput
-// widget. Google Workspace Add-ons and Chat apps
+// widget. Google Workspace add-ons and Chat apps
 // (https://developers.google.com/workspace/extend):
 type GoogleAppsCardV1TextInput struct {
 	// AutoCompleteAction: Optional. Specify what action to take when the text
 	// input field provides suggestions to users who interact with it. If
 	// unspecified, the suggestions are set by `initialSuggestions` and are
 	// processed by the client. If specified, the app takes the action specified
-	// here, such as running a custom function. Google Workspace Add-ons
+	// here, such as running a custom function. Google Workspace add-ons
 	// (https://developers.google.com/workspace/add-ons):
 	AutoCompleteAction *GoogleAppsCardV1Action `json:"autoCompleteAction,omitempty"`
 	// HintText: Text that appears below the text input field meant to assist users
@@ -3388,7 +3388,7 @@ type GoogleAppsCardV1TextInput struct {
 	// referring to JavaScript, some users might enter `javascript` and others
 	// `java script`. Suggesting `JavaScript` can standardize how users interact
 	// with your app. When specified, `TextInput.type` is always `SINGLE_LINE`,
-	// even if it's set to `MULTIPLE_LINE`. Google Workspace Add-ons and Chat apps
+	// even if it's set to `MULTIPLE_LINE`. Google Workspace add-ons and Chat apps
 	// (https://developers.google.com/workspace/extend):
 	InitialSuggestions *GoogleAppsCardV1Suggestions `json:"initialSuggestions,omitempty"`
 	// Label: The text that appears above the text input field in the user
@@ -3420,7 +3420,7 @@ type GoogleAppsCardV1TextInput struct {
 	// lines.
 	Type string `json:"type,omitempty"`
 	// Validation: Specify the input format validation necessary for this text
-	// field. Google Workspace Add-ons and Chat apps
+	// field. Google Workspace add-ons and Chat apps
 	// (https://developers.google.com/workspace/extend):
 	Validation *GoogleAppsCardV1Validation `json:"validation,omitempty"`
 	// Value: The value entered by a user, returned as part of a form input event.
@@ -3451,9 +3451,9 @@ func (s GoogleAppsCardV1TextInput) MarshalJSON() ([]byte, error) {
 // For more information about formatting text, see Formatting text in Google
 // Chat apps
 // (https://developers.google.com/workspace/chat/format-messages#card-formatting)
-// and Formatting text in Google Workspace Add-ons
+// and Formatting text in Google Workspace add-ons
 // (https://developers.google.com/apps-script/add-ons/concepts/widgets#text_formatting).
-// Google Workspace Add-ons and Chat apps
+// Google Workspace add-ons and Chat apps
 // (https://developers.google.com/workspace/extend):
 type GoogleAppsCardV1TextParagraph struct {
 	// MaxLines: The maximum number of lines of text that are displayed in the
@@ -3484,15 +3484,15 @@ func (s GoogleAppsCardV1TextParagraph) MarshalJSON() ([]byte, error) {
 }
 
 // GoogleAppsCardV1Validation: Represents the necessary data for validating the
-// widget it's attached to. Google Workspace Add-ons and Chat apps
+// widget it's attached to. Google Workspace add-ons and Chat apps
 // (https://developers.google.com/workspace/extend):
 type GoogleAppsCardV1Validation struct {
 	// CharacterLimit: Specify the character limit for text input widgets. Note
 	// that this is only used for text input and is ignored for other widgets.
-	// Google Workspace Add-ons and Chat apps
+	// Google Workspace add-ons and Chat apps
 	// (https://developers.google.com/workspace/extend):
 	CharacterLimit int64 `json:"characterLimit,omitempty"`
-	// InputType: Specify the type of the input widgets. Google Workspace Add-ons
+	// InputType: Specify the type of the input widgets. Google Workspace add-ons
 	// and Chat apps (https://developers.google.com/workspace/extend):
 	//
 	// Possible values:
@@ -3574,7 +3574,7 @@ type GoogleAppsCardV1Widget struct {
 	// of columns and items. The number of rows is determined by the upper bounds
 	// of the number items divided by the number of columns. A grid with 10 items
 	// and 2 columns has 5 rows. A grid with 11 items and 2 columns has 6 rows.
-	// Google Workspace Add-ons and Chat apps
+	// Google Workspace add-ons and Chat apps
 	// (https://developers.google.com/workspace/extend): For example, the following
 	// JSON creates a 2 column grid with a single item: ``` "grid": { "title": "A
 	// fine collection of items", "columnCount": 2, "borderStyle": { "type":
@@ -3624,7 +3624,7 @@ type GoogleAppsCardV1Widget struct {
 	// text. For more information about formatting text, see Formatting text in
 	// Google Chat apps
 	// (https://developers.google.com/workspace/chat/format-messages#card-formatting)
-	// and Formatting text in Google Workspace Add-ons
+	// and Formatting text in Google Workspace add-ons
 	// (https://developers.google.com/apps-script/add-ons/concepts/widgets#text_formatting).
 	// For example, the following JSON creates a bolded text: ``` "textParagraph":
 	// { "text": " *bold text*" } ```
@@ -3648,7 +3648,7 @@ func (s GoogleAppsCardV1Widget) MarshalJSON() ([]byte, error) {
 }
 
 // GoogleAppsCardV1Widgets: The supported widgets that you can include in a
-// column. Google Workspace Add-ons and Chat apps
+// column. Google Workspace add-ons and Chat apps
 // (https://developers.google.com/workspace/extend)
 type GoogleAppsCardV1Widgets struct {
 	// ButtonList: ButtonList widget.

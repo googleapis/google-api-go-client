@@ -11959,7 +11959,7 @@ type OrganizationsSourcesTestIamPermissionsCall struct {
 	header_                   http.Header
 }
 
-// TestIamPermissions: Returns the permissions that a caller has on the
+// TestIamPermissions:  Returns the permissions that a caller has on the
 // specified source.
 //
 //   - resource: REQUIRED: The resource for which the policy detail is being

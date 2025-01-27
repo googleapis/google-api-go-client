@@ -1432,8 +1432,9 @@ func (s GoogleCloudRetailV2CompleteQueryResponse) MarshalJSON() ([]byte, error) 
 }
 
 // GoogleCloudRetailV2CompleteQueryResponseAttributeResult: Resource that
-// represents attribute results. The list of suggestions for the attribute.
+// represents attribute results.
 type GoogleCloudRetailV2CompleteQueryResponseAttributeResult struct {
+	// Suggestions: The list of suggestions for the attribute.
 	Suggestions []string `json:"suggestions,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Suggestions") to
 	// unconditionally include in API requests. By default, fields with empty or

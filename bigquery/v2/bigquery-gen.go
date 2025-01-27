@@ -5904,6 +5904,9 @@ func (s MaterializedView) MarshalJSON() ([]byte, error) {
 type MaterializedViewDefinition struct {
 	// AllowNonIncrementalDefinition: Optional. This option declares the intention
 	// to construct a materialized view that isn't refreshed incrementally.
+	// Non-incremental materialized views support an expanded range of SQL queries.
+	// The `allow_non_incremental_definition` option can't be changed after the
+	// materialized view is created.
 	AllowNonIncrementalDefinition bool `json:"allowNonIncrementalDefinition,omitempty"`
 	// EnableRefresh: Optional. Enable automatic refresh of the materialized view
 	// when the base table is updated. The default value is "true".
@@ -7024,9 +7027,15 @@ func (s QueryRequest) MarshalJSON() ([]byte, error) {
 type QueryResponse struct {
 	// CacheHit: Whether the query result was fetched from the query cache.
 	CacheHit bool `json:"cacheHit,omitempty"`
+	// CreationTime: Output only. Creation time of this query, in milliseconds
+	// since the epoch. This field will be present on all queries.
+	CreationTime int64 `json:"creationTime,omitempty,string"`
 	// DmlStats: Output only. Detailed statistics for DML statements INSERT,
 	// UPDATE, DELETE, MERGE or TRUNCATE.
 	DmlStats *DmlStatistics `json:"dmlStats,omitempty"`
+	// EndTime: Output only. End time of this query, in milliseconds since the
+	// epoch. This field will be present whenever a query job is in the DONE state.
+	EndTime int64 `json:"endTime,omitempty,string"`
 	// Errors: Output only. The first errors or warnings encountered during the
 	// running of the job. The final message includes the number of errors that
 	// caused the process to stop. Errors here do not necessarily mean that the job
@@ -7053,6 +7062,10 @@ type QueryResponse struct {
 	JobReference *JobReference `json:"jobReference,omitempty"`
 	// Kind: The resource type.
 	Kind string `json:"kind,omitempty"`
+	// Location: Output only. The geographic location of the query. For more
+	// information about BigQuery locations, see:
+	// https://cloud.google.com/bigquery/docs/locations
+	Location string `json:"location,omitempty"`
 	// NumDmlAffectedRows: Output only. The number of rows affected by a DML
 	// statement. Present only for DML statements INSERT, UPDATE or DELETE.
 	NumDmlAffectedRows int64 `json:"numDmlAffectedRows,omitempty,string"`
@@ -7076,6 +7089,15 @@ type QueryResponse struct {
 	// SessionInfo: Output only. Information of the session if this job is part of
 	// one.
 	SessionInfo *SessionInfo `json:"sessionInfo,omitempty"`
+	// StartTime: Output only. Start time of this query, in milliseconds since the
+	// epoch. This field will be present when the query job transitions from the
+	// PENDING state to either RUNNING or DONE.
+	StartTime int64 `json:"startTime,omitempty,string"`
+	// TotalBytesBilled: Output only. If the project is configured to use on-demand
+	// pricing, then this field contains the total bytes billed for the job. If the
+	// project is configured to use flat-rate pricing, then you are not billed for
+	// bytes and this field is informational only.
+	TotalBytesBilled int64 `json:"totalBytesBilled,omitempty,string"`
 	// TotalBytesProcessed: The total number of bytes processed for this query. If
 	// this query was a dry run, this is the number of bytes that would be
 	// processed if the query were run.
@@ -7083,6 +7105,8 @@ type QueryResponse struct {
 	// TotalRows: The total number of rows in the complete query result set, which
 	// can be more than the number of rows in this single page of results.
 	TotalRows uint64 `json:"totalRows,omitempty,string"`
+	// TotalSlotMs: Output only. Number of slot ms the user is actually billed for.
+	TotalSlotMs int64 `json:"totalSlotMs,omitempty,string"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`

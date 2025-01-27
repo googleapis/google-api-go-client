@@ -2886,7 +2886,7 @@ func (s AssignedUserRole) MarshalJSON() ([]byte, error) {
 // `TARGETING_TYPE_AUDIENCE_GROUP`. The relation between each group is UNION,
 // except for excluded_first_and_third_party_audience_group and
 // excluded_google_audience_group, of which COMPLEMENT is used as an
-// INTERSECTION with other groups.
+// INTERSECTION with other groups. NEXT_ID: 9
 type AudienceGroupAssignedTargetingOptionDetails struct {
 	// ExcludedFirstAndThirdPartyAudienceGroup: The first and third party audience
 	// ids and recencies of the excluded first and third party audience group. Used
@@ -4233,6 +4233,18 @@ type BusinessChainTargetingOptionDetails struct {
 	//   "GEO_REGION_TYPE_NEIGHBORHOOD" - The geographic region is a neighborhood.
 	//   "GEO_REGION_TYPE_UNIVERSITY" - The geographic region is a university.
 	//   "GEO_REGION_TYPE_DISTRICT" - The geographic region is a district.
+	//   "GEO_REGION_TYPE_NATIONAL_PARK" - The geographic region is a national
+	// park.
+	//   "GEO_REGION_TYPE_BARRIO" - The geographic region is a barrio.
+	//   "GEO_REGION_TYPE_SUB_WARD" - The geographic region is a sub ward.
+	//   "GEO_REGION_TYPE_MUNICIPALITY_DISTRICT" - The geographic region is a
+	// municipality district.
+	//   "GEO_REGION_TYPE_SUB_DISTRICT" - The geographic region is a sub district.
+	//   "GEO_REGION_TYPE_QUARTER" - The geographic region is a quarter.
+	//   "GEO_REGION_TYPE_DIVISION" - The geographic region is a division.
+	//   "GEO_REGION_TYPE_COMMUNE" - The geographic region is a commune.
+	//   "GEO_REGION_TYPE_COLLOQUIAL_AREA" - The geographic region is a colloquial
+	// area.
 	GeoRegionType string `json:"geoRegionType,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "BusinessChain") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -8900,6 +8912,18 @@ type GeoRegionAssignedTargetingOptionDetails struct {
 	//   "GEO_REGION_TYPE_NEIGHBORHOOD" - The geographic region is a neighborhood.
 	//   "GEO_REGION_TYPE_UNIVERSITY" - The geographic region is a university.
 	//   "GEO_REGION_TYPE_DISTRICT" - The geographic region is a district.
+	//   "GEO_REGION_TYPE_NATIONAL_PARK" - The geographic region is a national
+	// park.
+	//   "GEO_REGION_TYPE_BARRIO" - The geographic region is a barrio.
+	//   "GEO_REGION_TYPE_SUB_WARD" - The geographic region is a sub ward.
+	//   "GEO_REGION_TYPE_MUNICIPALITY_DISTRICT" - The geographic region is a
+	// municipality district.
+	//   "GEO_REGION_TYPE_SUB_DISTRICT" - The geographic region is a sub district.
+	//   "GEO_REGION_TYPE_QUARTER" - The geographic region is a quarter.
+	//   "GEO_REGION_TYPE_DIVISION" - The geographic region is a division.
+	//   "GEO_REGION_TYPE_COMMUNE" - The geographic region is a commune.
+	//   "GEO_REGION_TYPE_COLLOQUIAL_AREA" - The geographic region is a colloquial
+	// area.
 	GeoRegionType string `json:"geoRegionType,omitempty"`
 	// Negative: Indicates if this option is being negatively targeted.
 	Negative bool `json:"negative,omitempty"`
@@ -8993,6 +9017,18 @@ type GeoRegionTargetingOptionDetails struct {
 	//   "GEO_REGION_TYPE_NEIGHBORHOOD" - The geographic region is a neighborhood.
 	//   "GEO_REGION_TYPE_UNIVERSITY" - The geographic region is a university.
 	//   "GEO_REGION_TYPE_DISTRICT" - The geographic region is a district.
+	//   "GEO_REGION_TYPE_NATIONAL_PARK" - The geographic region is a national
+	// park.
+	//   "GEO_REGION_TYPE_BARRIO" - The geographic region is a barrio.
+	//   "GEO_REGION_TYPE_SUB_WARD" - The geographic region is a sub ward.
+	//   "GEO_REGION_TYPE_MUNICIPALITY_DISTRICT" - The geographic region is a
+	// municipality district.
+	//   "GEO_REGION_TYPE_SUB_DISTRICT" - The geographic region is a sub district.
+	//   "GEO_REGION_TYPE_QUARTER" - The geographic region is a quarter.
+	//   "GEO_REGION_TYPE_DIVISION" - The geographic region is a division.
+	//   "GEO_REGION_TYPE_COMMUNE" - The geographic region is a commune.
+	//   "GEO_REGION_TYPE_COLLOQUIAL_AREA" - The geographic region is a colloquial
+	// area.
 	GeoRegionType string `json:"geoRegionType,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "DisplayName") to
 	// unconditionally include in API requests. By default, fields with empty or

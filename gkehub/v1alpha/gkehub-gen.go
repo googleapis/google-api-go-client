@@ -322,57 +322,6 @@ type ProjectsLocationsScopesRbacrolebindingsService struct {
 	s *Service
 }
 
-// AnthosObservabilityFeatureSpec: **Anthos Observability**: Spec
-type AnthosObservabilityFeatureSpec struct {
-	// DefaultMembershipSpec: Default membership spec for unconfigured memberships
-	DefaultMembershipSpec *AnthosObservabilityMembershipSpec `json:"defaultMembershipSpec,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "DefaultMembershipSpec") to
-	// unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
-	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "DefaultMembershipSpec") to
-	// include in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
-	NullFields []string `json:"-"`
-}
-
-func (s AnthosObservabilityFeatureSpec) MarshalJSON() ([]byte, error) {
-	type NoMethod AnthosObservabilityFeatureSpec
-	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
-}
-
-// AnthosObservabilityMembershipSpec: **Anthosobservability**: Per-Membership
-// Feature spec.
-type AnthosObservabilityMembershipSpec struct {
-	// DoNotOptimizeMetrics: Use full of metrics rather than optimized metrics. See
-	// https://cloud.google.com/anthos/clusters/docs/on-prem/1.8/concepts/logging-and-monitoring#optimized_metrics_default_metrics
-	DoNotOptimizeMetrics bool `json:"doNotOptimizeMetrics,omitempty"`
-	// EnableStackdriverOnApplications: Enable collecting and reporting metrics and
-	// logs from user apps.
-	EnableStackdriverOnApplications bool `json:"enableStackdriverOnApplications,omitempty"`
-	// Version: the version of stackdriver operator used by this feature
-	Version string `json:"version,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "DoNotOptimizeMetrics") to
-	// unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
-	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "DoNotOptimizeMetrics") to include
-	// in API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
-	NullFields []string `json:"-"`
-}
-
-func (s AnthosObservabilityMembershipSpec) MarshalJSON() ([]byte, error) {
-	type NoMethod AnthosObservabilityMembershipSpec
-	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
-}
-
 // AppDevExperienceFeatureSpec: Spec for App Dev Experience Feature.
 type AppDevExperienceFeatureSpec struct {
 }
@@ -1166,8 +1115,6 @@ func (s ClusterUpgradeUpgradeStatus) MarshalJSON() ([]byte, error) {
 // CommonFeatureSpec: CommonFeatureSpec contains Fleet-wide configuration
 // information
 type CommonFeatureSpec struct {
-	// Anthosobservability: Anthos Observability spec
-	Anthosobservability *AnthosObservabilityFeatureSpec `json:"anthosobservability,omitempty"`
 	// Appdevexperience: Appdevexperience specific spec.
 	Appdevexperience *AppDevExperienceFeatureSpec `json:"appdevexperience,omitempty"`
 	// Cloudauditlogging: Cloud Audit Logging-specific spec.
@@ -1184,15 +1131,15 @@ type CommonFeatureSpec struct {
 	Namespaceactuation *NamespaceActuationFeatureSpec `json:"namespaceactuation,omitempty"`
 	// Workloadcertificate: Workload Certificate spec.
 	Workloadcertificate *FeatureSpec `json:"workloadcertificate,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "Anthosobservability") to
+	// ForceSendFields is a list of field names (e.g. "Appdevexperience") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Anthosobservability") to include
-	// in API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. See
+	// NullFields is a list of field names (e.g. "Appdevexperience") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -4411,8 +4358,6 @@ func (s MembershipEndpoint) MarshalJSON() ([]byte, error) {
 // MembershipFeatureSpec: MembershipFeatureSpec contains configuration
 // information for a single Membership.
 type MembershipFeatureSpec struct {
-	// Anthosobservability: Anthos Observability-specific spec
-	Anthosobservability *AnthosObservabilityMembershipSpec `json:"anthosobservability,omitempty"`
 	// Cloudbuild: Cloud Build-specific spec
 	Cloudbuild *CloudBuildMembershipSpec `json:"cloudbuild,omitempty"`
 	// Configmanagement: Config Management-specific spec.
@@ -4434,15 +4379,15 @@ type MembershipFeatureSpec struct {
 	Policycontroller *PolicyControllerMembershipSpec `json:"policycontroller,omitempty"`
 	// Workloadcertificate: Workload Certificate spec.
 	Workloadcertificate *MembershipSpec `json:"workloadcertificate,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "Anthosobservability") to
+	// ForceSendFields is a list of field names (e.g. "Cloudbuild") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Anthosobservability") to include
-	// in API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. See
+	// NullFields is a list of field names (e.g. "Cloudbuild") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -6005,6 +5950,7 @@ type ServiceMeshCondition struct {
 	//   "CNI_INSTALLATION_FAILED" - CNI installation failed error code
 	//   "CNI_POD_UNSCHEDULABLE" - CNI pod unschedulable error code
 	//   "CLUSTER_HAS_ZERO_NODES" - Cluster has zero node code
+	//   "CANONICAL_SERVICE_ERROR" - Failure to reconcile CanonicalServices
 	//   "UNSUPPORTED_MULTIPLE_CONTROL_PLANES" - Multiple control planes
 	// unsupported error code
 	//   "VPCSC_GA_SUPPORTED" - VPC-SC GA is supported for this control plane.

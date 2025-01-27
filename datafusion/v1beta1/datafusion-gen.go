@@ -683,6 +683,8 @@ type Instance struct {
 	// underlying resources such as Compute Engine VMs. The character '=' is not
 	// allowed to be used within the labels.
 	Labels map[string]string `json:"labels,omitempty"`
+	// MaintenanceEvents: Output only. The maintenance events for this instance.
+	MaintenanceEvents []*MaintenanceEvent `json:"maintenanceEvents,omitempty"`
 	// MaintenancePolicy: Optional. Configure the maintenance policy for this
 	// instance.
 	MaintenancePolicy *MaintenancePolicy `json:"maintenancePolicy,omitempty"`
@@ -987,6 +989,43 @@ type Location struct {
 
 func (s Location) MarshalJSON() ([]byte, error) {
 	type NoMethod Location
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// MaintenanceEvent: Represents a maintenance event.
+type MaintenanceEvent struct {
+	// EndTime: Output only. The end time of the maintenance event provided in RFC
+	// 3339 (https://www.ietf.org/rfc/rfc3339.txt) format. Example:
+	// "2024-01-02T12:04:06-06:00" This field will be empty if the maintenance
+	// event is not yet complete.
+	EndTime string `json:"endTime,omitempty"`
+	// StartTime: Output only. The start time of the maintenance event provided in
+	// RFC 3339 (https://www.ietf.org/rfc/rfc3339.txt) format. Example:
+	// "2024-01-01T12:04:06-04:00"
+	StartTime string `json:"startTime,omitempty"`
+	// State: Output only. The state of the maintenance event.
+	//
+	// Possible values:
+	//   "STATE_UNSPECIFIED" - The state of the maintenance event is unspecified.
+	//   "SCHEDULED" - The maintenance is scheduled but has not started.
+	//   "STARTED" - The maintenance has been started.
+	//   "COMPLETED" - The maintenance has been completed.
+	State string `json:"state,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "EndTime") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "EndTime") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s MaintenanceEvent) MarshalJSON() ([]byte, error) {
+	type NoMethod MaintenanceEvent
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 

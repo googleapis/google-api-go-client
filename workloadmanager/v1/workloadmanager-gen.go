@@ -1171,6 +1171,8 @@ type SapDiscovery struct {
 	SystemId string `json:"systemId,omitempty"`
 	// UpdateTime: Required. Unix timestamp this system has been updated last.
 	UpdateTime string `json:"updateTime,omitempty"`
+	// UseDrReconciliation: Optional. Whether to use DR reconciliation or not.
+	UseDrReconciliation bool `json:"useDrReconciliation,omitempty"`
 	// WorkloadProperties: Optional. The properties of the workload.
 	WorkloadProperties *SapDiscoveryWorkloadProperties `json:"workloadProperties,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "ApplicationLayer") to
@@ -1297,12 +1299,17 @@ type SapDiscoveryComponentDatabaseProperties struct {
 	//   "HANA" - SAP HANA
 	//   "MAX_DB" - SAP MAX_DB
 	//   "DB2" - IBM DB2
+	//   "ORACLE" - Oracle Database
+	//   "SQLSERVER" - Microsoft SQL Server
+	//   "ASE" - SAP Sybase ASE
 	DatabaseType string `json:"databaseType,omitempty"`
 	// DatabaseVersion: Optional. The version of the database software running in
 	// the system.
 	DatabaseVersion string `json:"databaseVersion,omitempty"`
 	// InstanceNumber: Optional. Instance number of the SAP instance.
 	InstanceNumber string `json:"instanceNumber,omitempty"`
+	// LandscapeId: Optional. Landscape ID from the HANA nameserver.
+	LandscapeId string `json:"landscapeId,omitempty"`
 	// PrimaryInstanceUri: Required. URI of the recognized primary instance of the
 	// database.
 	PrimaryInstanceUri string `json:"primaryInstanceUri,omitempty"`

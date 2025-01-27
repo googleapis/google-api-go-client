@@ -717,6 +717,9 @@ type Asset struct {
 	InsightList *InsightList `json:"insightList,omitempty"`
 	// Labels: Labels as key value pairs.
 	Labels map[string]string `json:"labels,omitempty"`
+	// MachineDetails: Output only. Asset information specific for virtual
+	// machines.
+	MachineDetails *MachineDetails `json:"machineDetails,omitempty"`
 	// Name: Output only. The full name of the asset.
 	Name string `json:"name,omitempty"`
 	// PerformanceData: Performance data for the asset.
@@ -774,6 +777,9 @@ type AssetFrame struct {
 	DatabaseDetails *DatabaseDetails `json:"databaseDetails,omitempty"`
 	// Labels: Labels as key value pairs.
 	Labels map[string]string `json:"labels,omitempty"`
+	// MachineDetails: Asset information specific for virtual and physical
+	// machines.
+	MachineDetails *MachineDetails `json:"machineDetails,omitempty"`
 	// PerformanceSamples: Asset performance data samples. Samples that are from
 	// more than 40 days ago or after tomorrow are ignored.
 	PerformanceSamples []*PerformanceSample `json:"performanceSamples,omitempty"`
@@ -4216,6 +4222,166 @@ type Location struct {
 
 func (s Location) MarshalJSON() ([]byte, error) {
 	type NoMethod Location
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// MachineArchitectureDetails: Details of the machine architecture.
+type MachineArchitectureDetails struct {
+	// Bios: BIOS Details.
+	Bios *BiosDetails `json:"bios,omitempty"`
+	// CpuArchitecture: CPU architecture, e.g., "x64-based PC", "x86_64", "i686"
+	// etc.
+	CpuArchitecture string `json:"cpuArchitecture,omitempty"`
+	// CpuName: CPU name, e.g., "Intel Xeon E5-2690", "AMD EPYC 7571" etc.
+	CpuName string `json:"cpuName,omitempty"`
+	// CpuSocketCount: Number of processor sockets allocated to the machine.
+	CpuSocketCount int64 `json:"cpuSocketCount,omitempty"`
+	// FirmwareType: Firmware type.
+	//
+	// Possible values:
+	//   "FIRMWARE_TYPE_UNSPECIFIED" - Unspecified or unknown.
+	//   "BIOS" - BIOS firmware.
+	//   "EFI" - EFI firmware.
+	FirmwareType string `json:"firmwareType,omitempty"`
+	// Hyperthreading: CPU hyper-threading support.
+	//
+	// Possible values:
+	//   "CPU_HYPER_THREADING_UNSPECIFIED" - Unspecified or unknown.
+	//   "DISABLED" - Hyper-threading is disabled.
+	//   "ENABLED" - Hyper-threading is enabled.
+	Hyperthreading string `json:"hyperthreading,omitempty"`
+	// Vendor: Hardware vendor.
+	Vendor string `json:"vendor,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Bios") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Bios") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s MachineArchitectureDetails) MarshalJSON() ([]byte, error) {
+	type NoMethod MachineArchitectureDetails
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// MachineDetails: Details of a machine.
+type MachineDetails struct {
+	// Architecture: Architecture details (vendor, CPU architecture).
+	Architecture *MachineArchitectureDetails `json:"architecture,omitempty"`
+	// CoreCount: Number of logical CPU cores in the machine. Must be non-negative.
+	CoreCount int64 `json:"coreCount,omitempty"`
+	// CreateTime: Machine creation time.
+	CreateTime string `json:"createTime,omitempty"`
+	// Disks: Disk details.
+	Disks *MachineDiskDetails `json:"disks,omitempty"`
+	// GuestOs: Guest OS information.
+	GuestOs *GuestOsDetails `json:"guestOs,omitempty"`
+	// MachineName: Machine name.
+	MachineName string `json:"machineName,omitempty"`
+	// MemoryMb: The amount of memory in the machine. Must be non-negative.
+	MemoryMb int64 `json:"memoryMb,omitempty"`
+	// Network: Network details.
+	Network *MachineNetworkDetails `json:"network,omitempty"`
+	// Platform: Platform specific information.
+	Platform *PlatformDetails `json:"platform,omitempty"`
+	// PowerState: Power state of the machine.
+	//
+	// Possible values:
+	//   "POWER_STATE_UNSPECIFIED" - Power state is unknown.
+	//   "PENDING" - The machine is preparing to enter the ACTIVE state. An
+	// instance may enter the PENDING state when it launches for the first time, or
+	// when it is started after being in the SUSPENDED state.
+	//   "ACTIVE" - The machine is active.
+	//   "SUSPENDING" - The machine is being turned off.
+	//   "SUSPENDED" - The machine is off.
+	//   "DELETING" - The machine is being deleted from the hosting platform.
+	//   "DELETED" - The machine is deleted from the hosting platform.
+	PowerState string `json:"powerState,omitempty"`
+	// Uuid: Machine unique identifier.
+	Uuid string `json:"uuid,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Architecture") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Architecture") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s MachineDetails) MarshalJSON() ([]byte, error) {
+	type NoMethod MachineDetails
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// MachineDiskDetails: Details of machine disks.
+type MachineDiskDetails struct {
+	// Disks: List of disks.
+	Disks *DiskEntryList `json:"disks,omitempty"`
+	// RawScanResult: Raw disk scan result. This field is intended for human
+	// inspection. The format of this field may be lsblk output or any another raw
+	// output. The exact format may change without notice and should not be relied
+	// upon.
+	RawScanResult string `json:"rawScanResult,omitempty"`
+	// TotalCapacityBytes: Disk total Capacity.
+	TotalCapacityBytes int64 `json:"totalCapacityBytes,omitempty,string"`
+	// TotalFreeBytes: Total disk free space.
+	TotalFreeBytes int64 `json:"totalFreeBytes,omitempty,string"`
+	// ForceSendFields is a list of field names (e.g. "Disks") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Disks") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s MachineDiskDetails) MarshalJSON() ([]byte, error) {
+	type NoMethod MachineDiskDetails
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// MachineNetworkDetails: Details of network adapters and settings.
+type MachineNetworkDetails struct {
+	// DefaultGateway: Default gateway address.
+	DefaultGateway string `json:"defaultGateway,omitempty"`
+	// NetworkAdapters: List of network adapters.
+	NetworkAdapters *NetworkAdapterList `json:"networkAdapters,omitempty"`
+	// PrimaryIpAddress: The primary IP address of the machine.
+	PrimaryIpAddress string `json:"primaryIpAddress,omitempty"`
+	// PrimaryMacAddress: MAC address of the machine. This property is used to
+	// uniqly identify the machine.
+	PrimaryMacAddress string `json:"primaryMacAddress,omitempty"`
+	// PublicIpAddress: The public IP address of the machine.
+	PublicIpAddress string `json:"publicIpAddress,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "DefaultGateway") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DefaultGateway") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s MachineNetworkDetails) MarshalJSON() ([]byte, error) {
+	type NoMethod MachineNetworkDetails
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 

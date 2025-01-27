@@ -465,17 +465,18 @@ func (s *AutoscalingConfig) UnmarshalJSON(data []byte) error {
 // AuxiliaryVersionConfig: Configuration information for the auxiliary service
 // versions.
 type AuxiliaryVersionConfig struct {
-	// ConfigOverrides: A mapping of Hive metastore configuration key-value pairs
-	// to apply to the auxiliary Hive metastore (configured in hive-site.xml) in
-	// addition to the primary version's overrides. If keys are present in both the
-	// auxiliary version's overrides and the primary version's overrides, the value
-	// from the auxiliary version's overrides takes precedence.
+	// ConfigOverrides: Optional. A mapping of Hive metastore configuration
+	// key-value pairs to apply to the auxiliary Hive metastore (configured in
+	// hive-site.xml) in addition to the primary version's overrides. If keys are
+	// present in both the auxiliary version's overrides and the primary version's
+	// overrides, the value from the auxiliary version's overrides takes
+	// precedence.
 	ConfigOverrides map[string]string `json:"configOverrides,omitempty"`
 	// NetworkConfig: Output only. The network configuration contains the endpoint
 	// URI(s) of the auxiliary Hive metastore service.
 	NetworkConfig *NetworkConfig `json:"networkConfig,omitempty"`
-	// Version: The Hive metastore version of the auxiliary service. It must be
-	// less than the primary Hive metastore service's version.
+	// Version: Optional. The Hive metastore version of the auxiliary service. It
+	// must be less than the primary Hive metastore service's version.
 	Version string `json:"version,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "ConfigOverrides") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -532,11 +533,12 @@ func (s BackendMetastore) MarshalJSON() ([]byte, error) {
 type Backup struct {
 	// CreateTime: Output only. The time when the backup was started.
 	CreateTime string `json:"createTime,omitempty"`
-	// Description: The description of the backup.
+	// Description: Optional. The description of the backup.
 	Description string `json:"description,omitempty"`
 	// EndTime: Output only. The time when the backup finished creating.
 	EndTime string `json:"endTime,omitempty"`
-	// Name: Immutable. The relative resource name of the backup, in the following
+	// Name: Immutable. Identifier. The relative resource name of the backup, in
+	// the following
 	// form:projects/{project_number}/locations/{location_id}/services/{service_id}/
 	// backups/{backup_id}
 	Name string `json:"name,omitempty"`
@@ -1001,10 +1003,10 @@ type DatabaseDump struct {
 	//   "DATABASE_TYPE_UNSPECIFIED" - The type of the source database is unknown.
 	//   "MYSQL" - The type of the source database is MySQL.
 	DatabaseType string `json:"databaseType,omitempty"`
-	// GcsUri: A Cloud Storage object or folder URI that specifies the source from
-	// which to import metadata. It must begin with gs://.
+	// GcsUri: Optional. A Cloud Storage object or folder URI that specifies the
+	// source from which to import metadata. It must begin with gs://.
 	GcsUri string `json:"gcsUri,omitempty"`
-	// SourceDatabase: The name of the source database.
+	// SourceDatabase: Optional. The name of the source database.
 	SourceDatabase string `json:"sourceDatabase,omitempty"`
 	// Type: Optional. The type of the database dump. If unspecified, defaults to
 	// MYSQL.
@@ -1035,9 +1037,9 @@ func (s DatabaseDump) MarshalJSON() ([]byte, error) {
 // DataplexConfig: Specifies how metastore metadata should be integrated with
 // the Dataplex service.
 type DataplexConfig struct {
-	// LakeResources: A reference to the Lake resources that this metastore service
-	// is attached to. The key is the lake resource name. Example:
-	// projects/{project_number}/locations/{location_id}/lakes/{lake_id}.
+	// LakeResources: Optional. A reference to the Lake resources that this
+	// metastore service is attached to. The key is the lake resource name.
+	// Example: projects/{project_number}/locations/{location_id}/lakes/{lake_id}.
 	LakeResources map[string]Lake `json:"lakeResources,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "LakeResources") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -1068,8 +1070,8 @@ type Empty struct {
 
 // EncryptionConfig: Encryption settings for the service.
 type EncryptionConfig struct {
-	// KmsKey: The fully qualified customer provided Cloud KMS key name to use for
-	// customer data encryption, in the following
+	// KmsKey: Optional. The fully qualified customer provided Cloud KMS key name
+	// to use for customer data encryption, in the following
 	// format:projects/{project_number}/locations/{location_id}/keyRings/{key_ring_i
 	// d}/cryptoKeys/{crypto_key_id}.
 	KmsKey string `json:"kmsKey,omitempty"`
@@ -1272,23 +1274,23 @@ func (s Federation) MarshalJSON() ([]byte, error) {
 // HiveMetastoreConfig: Specifies configuration information specific to running
 // Hive metastore software as the metastore service.
 type HiveMetastoreConfig struct {
-	// AuxiliaryVersions: A mapping of Hive metastore version to the auxiliary
-	// version configuration. When specified, a secondary Hive metastore service is
-	// created along with the primary service. All auxiliary versions must be less
-	// than the service's primary version. The key is the auxiliary service name
-	// and it must match the regular expression a-z?. This means that the first
-	// character must be a lowercase letter, and all the following characters must
-	// be hyphens, lowercase letters, or digits, except the last character, which
-	// cannot be a hyphen.
+	// AuxiliaryVersions: Optional. A mapping of Hive metastore version to the
+	// auxiliary version configuration. When specified, a secondary Hive metastore
+	// service is created along with the primary service. All auxiliary versions
+	// must be less than the service's primary version. The key is the auxiliary
+	// service name and it must match the regular expression a-z?. This means that
+	// the first character must be a lowercase letter, and all the following
+	// characters must be hyphens, lowercase letters, or digits, except the last
+	// character, which cannot be a hyphen.
 	AuxiliaryVersions map[string]AuxiliaryVersionConfig `json:"auxiliaryVersions,omitempty"`
-	// ConfigOverrides: A mapping of Hive metastore configuration key-value pairs
-	// to apply to the Hive metastore (configured in hive-site.xml). The mappings
-	// override system defaults (some keys cannot be overridden). These overrides
-	// are also applied to auxiliary versions and can be further customized in the
-	// auxiliary version's AuxiliaryVersionConfig.
+	// ConfigOverrides: Optional. A mapping of Hive metastore configuration
+	// key-value pairs to apply to the Hive metastore (configured in
+	// hive-site.xml). The mappings override system defaults (some keys cannot be
+	// overridden). These overrides are also applied to auxiliary versions and can
+	// be further customized in the auxiliary version's AuxiliaryVersionConfig.
 	ConfigOverrides map[string]string `json:"configOverrides,omitempty"`
-	// EndpointProtocol: The protocol to use for the metastore service endpoint. If
-	// unspecified, defaults to THRIFT.
+	// EndpointProtocol: Optional. The protocol to use for the metastore service
+	// endpoint. If unspecified, defaults to THRIFT.
 	//
 	// Possible values:
 	//   "ENDPOINT_PROTOCOL_UNSPECIFIED" - The protocol is not set.
@@ -1297,9 +1299,9 @@ type HiveMetastoreConfig struct {
 	//   "GRPC" - Use the modernized gRPC protocol for the metastore service
 	// endpoint.
 	EndpointProtocol string `json:"endpointProtocol,omitempty"`
-	// KerberosConfig: Information used to configure the Hive metastore service as
-	// a service principal in a Kerberos realm. To disable Kerberos, use the
-	// UpdateService method and specify this field's path
+	// KerberosConfig: Optional. Information used to configure the Hive metastore
+	// service as a service principal in a Kerberos realm. To disable Kerberos, use
+	// the UpdateService method and specify this field's path
 	// (hive_metastore_config.kerberos_config) in the request's update_mask while
 	// omitting this field from the request's service.
 	KerberosConfig *KerberosConfig `json:"kerberosConfig,omitempty"`
@@ -1351,15 +1353,15 @@ func (s HiveMetastoreVersion) MarshalJSON() ([]byte, error) {
 
 // KerberosConfig: Configuration information for a Kerberos principal.
 type KerberosConfig struct {
-	// Keytab: A Kerberos keytab file that can be used to authenticate a service
-	// principal with a Kerberos Key Distribution Center (KDC).
+	// Keytab: Optional. A Kerberos keytab file that can be used to authenticate a
+	// service principal with a Kerberos Key Distribution Center (KDC).
 	Keytab *Secret `json:"keytab,omitempty"`
-	// Krb5ConfigGcsUri: A Cloud Storage URI that specifies the path to a krb5.conf
-	// file. It is of the form gs://{bucket_name}/path/to/krb5.conf, although the
-	// file does not need to be named krb5.conf explicitly.
+	// Krb5ConfigGcsUri: Optional. A Cloud Storage URI that specifies the path to a
+	// krb5.conf file. It is of the form gs://{bucket_name}/path/to/krb5.conf,
+	// although the file does not need to be named krb5.conf explicitly.
 	Krb5ConfigGcsUri string `json:"krb5ConfigGcsUri,omitempty"`
-	// Principal: A Kerberos principal that exists in the both the keytab the KDC
-	// to authenticate as. A typical principal is of the form
+	// Principal: Optional. A Kerberos principal that exists in the both the keytab
+	// the KDC to authenticate as. A typical principal is of the form
 	// primary/instance@REALM, but there is no exact format.
 	Principal string `json:"principal,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Keytab") to unconditionally
@@ -1760,7 +1762,7 @@ func (s LocationMetadata) MarshalJSON() ([]byte, error) {
 // MaintenanceWindow: Maintenance window. This specifies when Dataproc
 // Metastore may perform system maintenance operation to the service.
 type MaintenanceWindow struct {
-	// DayOfWeek: The day of week, when the window starts.
+	// DayOfWeek: Optional. The day of week, when the window starts.
 	//
 	// Possible values:
 	//   "DAY_OF_WEEK_UNSPECIFIED" - The day of the week is unspecified.
@@ -1772,7 +1774,7 @@ type MaintenanceWindow struct {
 	//   "SATURDAY" - Saturday
 	//   "SUNDAY" - Sunday
 	DayOfWeek string `json:"dayOfWeek,omitempty"`
-	// HourOfDay: The hour of day (0-23) when the window starts.
+	// HourOfDay: Optional. The hour of day (0-23) when the window starts.
 	HourOfDay int64 `json:"hourOfDay,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "DayOfWeek") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -1843,11 +1845,12 @@ type MetadataImport struct {
 	// DatabaseDump: Immutable. A database dump from a pre-existing metastore's
 	// database.
 	DatabaseDump *DatabaseDump `json:"databaseDump,omitempty"`
-	// Description: The description of the metadata import.
+	// Description: Optional. The description of the metadata import.
 	Description string `json:"description,omitempty"`
 	// EndTime: Output only. The time when the metadata import finished.
 	EndTime string `json:"endTime,omitempty"`
-	// Name: Immutable. The relative resource name of the metadata import, of the
+	// Name: Immutable. Identifier. The relative resource name of the metadata
+	// import, of the
 	// form:projects/{project_number}/locations/{location_id}/services/{service_id}/
 	// metadataImports/{metadata_import_id}.
 	Name string `json:"name,omitempty"`
@@ -1890,7 +1893,7 @@ type MetadataIntegration struct {
 	// DataCatalogConfig: Optional. The integration config for the Data Catalog
 	// service.
 	DataCatalogConfig *DataCatalogConfig `json:"dataCatalogConfig,omitempty"`
-	// DataplexConfig: The integration config for the Dataplex service.
+	// DataplexConfig: Optional. The integration config for the Dataplex service.
 	DataplexConfig *DataplexConfig `json:"dataplexConfig,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "DataCatalogConfig") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -2089,8 +2092,8 @@ type NetworkConfig struct {
 	// Consumers: Immutable. The consumer-side network configuration for the
 	// Dataproc Metastore instance.
 	Consumers []*Consumer `json:"consumers,omitempty"`
-	// CustomRoutesEnabled: Enables custom routes to be imported and exported for
-	// the Dataproc Metastore service's peered VPC network.
+	// CustomRoutesEnabled: Optional. Enables custom routes to be imported and
+	// exported for the Dataproc Metastore service's peered VPC network.
 	CustomRoutesEnabled bool `json:"customRoutesEnabled,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Consumers") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -2604,8 +2607,8 @@ func (s ScheduledBackup) MarshalJSON() ([]byte, error) {
 
 // Secret: A securely stored value.
 type Secret struct {
-	// CloudSecret: The relative resource name of a Secret Manager secret version,
-	// in the following
+	// CloudSecret: Optional. The relative resource name of a Secret Manager secret
+	// version, in the following
 	// form:projects/{project_number}/secrets/{secret_id}/versions/{version_id}.
 	CloudSecret string `json:"cloudSecret,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "CloudSecret") to
@@ -2655,10 +2658,10 @@ type Service struct {
 	HiveMetastoreConfig *HiveMetastoreConfig `json:"hiveMetastoreConfig,omitempty"`
 	// Labels: User-defined labels for the metastore service.
 	Labels map[string]string `json:"labels,omitempty"`
-	// MaintenanceWindow: The one hour maintenance window of the metastore service.
-	// This specifies when the service can be restarted for maintenance purposes in
-	// UTC time. Maintenance window is not needed for services with the SPANNER
-	// database type.
+	// MaintenanceWindow: Optional. The one hour maintenance window of the
+	// metastore service. This specifies when the service can be restarted for
+	// maintenance purposes in UTC time. Maintenance window is not needed for
+	// services with the SPANNER database type.
 	MaintenanceWindow *MaintenanceWindow `json:"maintenanceWindow,omitempty"`
 	// MetadataIntegration: Optional. The setting that defines how metastore
 	// metadata should be integrated with external services and systems.
@@ -2669,8 +2672,8 @@ type Service struct {
 	// MultiRegionConfig: Optional. Specifies the multi-region configuration
 	// information for the Hive metastore service.
 	MultiRegionConfig *MultiRegionConfig `json:"multiRegionConfig,omitempty"`
-	// Name: Immutable. The relative resource name of the metastore service, in the
-	// following
+	// Name: Immutable. Identifier. The relative resource name of the metastore
+	// service, in the following
 	// format:projects/{project_number}/locations/{location_id}/services/{service_id
 	// }.
 	Name string `json:"name,omitempty"`
@@ -2678,10 +2681,11 @@ type Service struct {
 	// the instance can be accessed. It is specified in the following
 	// form:projects/{project_number}/global/networks/{network_id}.
 	Network string `json:"network,omitempty"`
-	// NetworkConfig: The configuration specifying the network settings for the
-	// Dataproc Metastore service.
+	// NetworkConfig: Optional. The configuration specifying the network settings
+	// for the Dataproc Metastore service.
 	NetworkConfig *NetworkConfig `json:"networkConfig,omitempty"`
-	// Port: The TCP port at which the metastore service is reached. Default: 9083.
+	// Port: Optional. The TCP port at which the metastore service is reached.
+	// Default: 9083.
 	Port int64 `json:"port,omitempty"`
 	// ReleaseChannel: Immutable. The release channel of the service. If
 	// unspecified, defaults to STABLE.
@@ -2694,7 +2698,7 @@ type Service struct {
 	//   "STABLE" - The STABLE release channel contains features that are
 	// considered stable and have been validated for production use.
 	ReleaseChannel string `json:"releaseChannel,omitempty"`
-	// ScalingConfig: Scaling configuration of the metastore service.
+	// ScalingConfig: Optional. Scaling configuration of the metastore service.
 	ScalingConfig *ScalingConfig `json:"scalingConfig,omitempty"`
 	// ScheduledBackup: Optional. The configuration of scheduled backup for the
 	// metastore service.
@@ -2722,10 +2726,10 @@ type Service struct {
 	// StateMessage: Output only. Additional information about the current state of
 	// the metastore service, if available.
 	StateMessage string `json:"stateMessage,omitempty"`
-	// TelemetryConfig: The configuration specifying telemetry settings for the
-	// Dataproc Metastore service. If unspecified defaults to JSON.
+	// TelemetryConfig: Optional. The configuration specifying telemetry settings
+	// for the Dataproc Metastore service. If unspecified defaults to JSON.
 	TelemetryConfig *TelemetryConfig `json:"telemetryConfig,omitempty"`
-	// Tier: The tier of the service.
+	// Tier: Optional. The tier of the service.
 	//
 	// Possible values:
 	//   "TIER_UNSPECIFIED" - The tier is not set.
@@ -2859,7 +2863,8 @@ func (s Status) MarshalJSON() ([]byte, error) {
 
 // TelemetryConfig: Telemetry Configuration for the Dataproc Metastore service.
 type TelemetryConfig struct {
-	// LogFormat: The output format of the Dataproc Metastore service's logs.
+	// LogFormat: Optional. The output format of the Dataproc Metastore service's
+	// logs.
 	//
 	// Possible values:
 	//   "LOG_FORMAT_UNSPECIFIED" - The LOG_FORMAT is not set.
@@ -5972,8 +5977,8 @@ type ProjectsLocationsServicesPatchCall struct {
 
 // Patch: Updates the parameters of a single service.
 //
-//   - name: Immutable. The relative resource name of the metastore service, in
-//     the following
+//   - name: Immutable. Identifier. The relative resource name of the metastore
+//     service, in the following
 //     format:projects/{project_number}/locations/{location_id}/services/{service_
 //     id}.
 func (r *ProjectsLocationsServicesService) Patch(name string, service *Service) *ProjectsLocationsServicesPatchCall {
@@ -8722,7 +8727,8 @@ type ProjectsLocationsServicesMetadataImportsPatchCall struct {
 // Patch: Updates a single import. Only the description field of MetadataImport
 // is supported to be updated.
 //
-//   - name: Immutable. The relative resource name of the metadata import, of the
+//   - name: Immutable. Identifier. The relative resource name of the metadata
+//     import, of the
 //     form:projects/{project_number}/locations/{location_id}/services/{service_id
 //     }/metadataImports/{metadata_import_id}.
 func (r *ProjectsLocationsServicesMetadataImportsService) Patch(name string, metadataimport *MetadataImport) *ProjectsLocationsServicesMetadataImportsPatchCall {

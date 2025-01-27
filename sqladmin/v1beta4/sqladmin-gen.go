@@ -922,6 +922,8 @@ type ConnectSettings struct {
 	//   "GOOGLE_MANAGED_INTERNAL_CA" - Google-managed self-signed internal CA.
 	//   "GOOGLE_MANAGED_CAS_CA" - Google-managed regional CA part of root CA
 	// hierarchy hosted on Google Cloud's Certificate Authority Service (CAS).
+	//   "CUSTOMER_MANAGED_CAS_CA" - Customer-managed CA hosted on Google Cloud's
+	// Certificate Authority Service (CAS).
 	ServerCaMode string `json:"serverCaMode,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
@@ -3889,6 +3891,7 @@ type Settings struct {
 	//   "PD_HDD" - An HDD data disk.
 	//   "OBSOLETE_LOCAL_SSD" - This field is deprecated and will be removed from a
 	// future version of the API.
+	//   "HYPERDISK_BALANCED" - A Hyperdisk Balanced data disk.
 	DataDiskType string `json:"dataDiskType,omitempty"`
 	// DatabaseFlags: The database flags passed to the instance at startup.
 	DatabaseFlags []*DatabaseFlags `json:"databaseFlags,omitempty"`
@@ -3947,6 +3950,9 @@ type Settings struct {
 	//   "PACKAGE" - The instance is billed at a monthly flat rate.
 	//   "PER_USE" - The instance is billed per usage.
 	PricingPlan string `json:"pricingPlan,omitempty"`
+	// ReplicationLagMaxSeconds: Optional. Configuration value for recreation of
+	// replica after certain replication lag
+	ReplicationLagMaxSeconds int64 `json:"replicationLagMaxSeconds,omitempty"`
 	// ReplicationType: The type of replication this instance uses. This can be
 	// either `ASYNCHRONOUS` or `SYNCHRONOUS`. (Deprecated) This property was only
 	// applicable to First Generation instances.

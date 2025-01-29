@@ -107,6 +107,13 @@ const (
 	// managed by your organization
 	ChromeManagementAppdetailsReadonlyScope = "https://www.googleapis.com/auth/chrome.management.appdetails.readonly"
 
+	// See, edit, delete, and take other necessary actions on Chrome browser
+	// profiles managed by your organization
+	ChromeManagementProfilesScope = "https://www.googleapis.com/auth/chrome.management.profiles"
+
+	// See Chrome browser profiles managed by your organization
+	ChromeManagementProfilesReadonlyScope = "https://www.googleapis.com/auth/chrome.management.profiles.readonly"
+
 	// See reports about devices and Chrome browsers managed within your
 	// organization
 	ChromeManagementReportsReadonlyScope = "https://www.googleapis.com/auth/chrome.management.reports.readonly"
@@ -120,6 +127,8 @@ const (
 func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, error) {
 	scopesOption := internaloption.WithDefaultScopes(
 		"https://www.googleapis.com/auth/chrome.management.appdetails.readonly",
+		"https://www.googleapis.com/auth/chrome.management.profiles",
+		"https://www.googleapis.com/auth/chrome.management.profiles.readonly",
 		"https://www.googleapis.com/auth/chrome.management.reports.readonly",
 		"https://www.googleapis.com/auth/chrome.management.telemetry.readonly",
 	)

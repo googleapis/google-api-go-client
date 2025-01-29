@@ -481,6 +481,32 @@ func (s AddAccountService) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// AddUser: Instruction for adding a user to the account during creation.
+type AddUser struct {
+	// User: Optional. Details about the user to be added. At the moment, only
+	// access rights may be specified.
+	User *User `json:"user,omitempty"`
+	// UserId: Required. The email address of the user (for example,
+	// `john.doe@gmail.com`).
+	UserId string `json:"userId,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "User") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "User") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s AddUser) MarshalJSON() ([]byte, error) {
+	type NoMethod AddUser
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // Address: Shipping address of the warehouse.
 type Address struct {
 	// AdministrativeArea: Required. Top-level administrative subdivision of the
@@ -776,7 +802,11 @@ type CreateAndConfigureAccountRequest struct {
 	// standalone account through this method. Additional `account_management` or
 	// `product_management` services may be provided.
 	Service []*AddAccountService `json:"service,omitempty"`
-	// Users: Optional. Users to be added to the account.
+	// User: Optional. Users to be added to the account.
+	User []*AddUser `json:"user,omitempty"`
+	// Users: Optional. Users to be added to the account. This field is deprecated
+	// and will not exist after the API evolves out of beta. Use the `user` field
+	// instead.
 	Users []*CreateUserRequest `json:"users,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Account") to unconditionally
 	// include in API requests. By default, fields with empty or default values are

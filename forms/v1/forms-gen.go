@@ -805,17 +805,29 @@ func (s *FormResponse) UnmarshalJSON(data []byte) error {
 
 // FormSettings: A form's settings.
 type FormSettings struct {
+	// EmailCollectionType: Optional. Kind of email collection configured in the
+	// form.
+	//
+	// Possible values:
+	//   "EMAIL_COLLECTION_TYPE_UNSPECIFIED" - Default value. The default for forms
+	// owned by Google Workspace users is VERIFIED. For forms owned by other types
+	// of Google accounts, the default is DO_NO_COLLECT.
+	//   "DO_NOT_COLLECT" - Email Field is not collected for the user.
+	//   "VERIFIED" - Email Field is collected automatically from the logged in
+	// user.
+	//   "RESPONDER_INPUT" - Email Field needs to be manually filled.
+	EmailCollectionType string `json:"emailCollectionType,omitempty"`
 	// QuizSettings: Settings related to quiz forms and grading.
 	QuizSettings *QuizSettings `json:"quizSettings,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "QuizSettings") to
+	// ForceSendFields is a list of field names (e.g. "EmailCollectionType") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "QuizSettings") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
+	// NullFields is a list of field names (e.g. "EmailCollectionType") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }

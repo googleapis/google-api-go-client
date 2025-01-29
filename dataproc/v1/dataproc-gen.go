@@ -6473,7 +6473,7 @@ type Session struct {
 	// (https://www.ietf.org/rfc/rfc1035.txt). No more than 32 labels can be
 	// associated with a session.
 	Labels map[string]string `json:"labels,omitempty"`
-	// Name: Required. The resource name of the session.
+	// Name: Identifier. The resource name of the session.
 	Name string `json:"name,omitempty"`
 	// RuntimeConfig: Optional. Runtime configuration for the session execution.
 	RuntimeConfig *RuntimeConfig `json:"runtimeConfig,omitempty"`

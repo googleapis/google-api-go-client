@@ -540,6 +540,17 @@ type Application struct {
 	//   "USER_DISABLED" - Application has been disabled by the user.
 	//   "SYSTEM_DISABLED" - Application has been disabled by the system.
 	ServingStatus string `json:"servingStatus,omitempty"`
+	// SslPolicy: The SSL policy that will be applied to the application. If set to
+	// Modern it will restrict traffic with TLS < 1.2 and allow only Modern Ciphers
+	// suite
+	//
+	// Possible values:
+	//   "SSL_POLICY_UNSPECIFIED" - Required by linter. Will work same as DEFAULT
+	//   "DEFAULT" - DEFAULT is to allow all TLS versions and cipher suites
+	// supported by App Engine
+	//   "MODERN" - MODERN is to allow only TLS 1.2 and TLS 1.3 along with Modern
+	// cipher suites only
+	SslPolicy string `json:"sslPolicy,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`

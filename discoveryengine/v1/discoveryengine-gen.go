@@ -3954,6 +3954,7 @@ type GoogleCloudDiscoveryengineV1CmekConfig struct {
 	//   "KEY_ISSUE" - The CmekConfig is unavailable, most likely due to the KMS
 	// Key being revoked.
 	//   "DELETING" - The CmekConfig is deleting.
+	//   "DELETE_FAILED" - The CmekConfig deletion process failed.
 	//   "UNUSABLE" - The CmekConfig is not usable, most likely due to some
 	// internal issue.
 	//   "ACTIVE_ROTATING" - The KMS key version is being rotated.
@@ -4904,6 +4905,9 @@ type GoogleCloudDiscoveryengineV1DataStore struct {
 	// DocumentProcessingConfig: Configuration for Document understanding and
 	// enrichment.
 	DocumentProcessingConfig *GoogleCloudDiscoveryengineV1DocumentProcessingConfig `json:"documentProcessingConfig,omitempty"`
+	// HealthcareFhirConfig: Optional. Configuration for `HEALTHCARE_FHIR`
+	// vertical.
+	HealthcareFhirConfig *GoogleCloudDiscoveryengineV1HealthcareFhirConfig `json:"healthcareFhirConfig,omitempty"`
 	// IndustryVertical: Immutable. The industry vertical that the data store
 	// registers.
 	//
@@ -6706,6 +6710,67 @@ func (s GoogleCloudDiscoveryengineV1GroundingFact) MarshalJSON() ([]byte, error)
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudDiscoveryengineV1HealthcareFhirConfig: Config to data store for
+// `HEALTHCARE_FHIR` vertical.
+type GoogleCloudDiscoveryengineV1HealthcareFhirConfig struct {
+	// EnableConfigurableSchema: Whether to enable configurable schema for
+	// `HEALTHCARE_FHIR` vertical. If set to `true`, the predefined healthcare fhir
+	// schema can be extended for more customized searching and filtering.
+	EnableConfigurableSchema bool `json:"enableConfigurableSchema,omitempty"`
+	// EnableStaticIndexingForBatchIngestion: Whether to enable static indexing for
+	// `HEALTHCARE_FHIR` batch ingestion. If set to `true`, the batch ingestion
+	// will be processed in a static indexing mode which is slower but more capable
+	// of handling larger volume.
+	EnableStaticIndexingForBatchIngestion bool `json:"enableStaticIndexingForBatchIngestion,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "EnableConfigurableSchema")
+	// to unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "EnableConfigurableSchema") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1HealthcareFhirConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1HealthcareFhirConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1IdentityMappingEntryOperationMetadata:
+// IdentityMappingEntry LongRunningOperation metadata for
+// [IdentityMappingStoreService.ImportIdentityMappings] and
+// [IdentityMappingStoreService.PurgeIdentityMappings]
+type GoogleCloudDiscoveryengineV1IdentityMappingEntryOperationMetadata struct {
+	// FailureCount: The number of IdentityMappingEntries that failed to be
+	// processed.
+	FailureCount int64 `json:"failureCount,omitempty,string"`
+	// SuccessCount: The number of IdentityMappingEntries that were successfully
+	// processed.
+	SuccessCount int64 `json:"successCount,omitempty,string"`
+	// TotalCount: The total number of IdentityMappingEntries that were processed.
+	TotalCount int64 `json:"totalCount,omitempty,string"`
+	// ForceSendFields is a list of field names (e.g. "FailureCount") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "FailureCount") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1IdentityMappingEntryOperationMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1IdentityMappingEntryOperationMetadata
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudDiscoveryengineV1ImportCompletionSuggestionsMetadata: Metadata
 // related to the progress of the ImportCompletionSuggestions operation. This
 // will be returned by the google.longrunning.Operation.metadata field.
@@ -7014,6 +7079,29 @@ type GoogleCloudDiscoveryengineV1ImportErrorConfig struct {
 
 func (s GoogleCloudDiscoveryengineV1ImportErrorConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDiscoveryengineV1ImportErrorConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1ImportIdentityMappingsResponse: Response message
+// for IdentityMappingStoreService.ImportIdentityMappings
+type GoogleCloudDiscoveryengineV1ImportIdentityMappingsResponse struct {
+	// ErrorSamples: A sample of errors encountered while processing the request.
+	ErrorSamples []*GoogleRpcStatus `json:"errorSamples,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ErrorSamples") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ErrorSamples") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1ImportIdentityMappingsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1ImportIdentityMappingsResponse
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -8762,8 +8850,9 @@ type GoogleCloudDiscoveryengineV1SearchRequest struct {
 	// SpellCorrectionSpec: The spell correction specification that specifies the
 	// mode under which spell correction takes effect.
 	SpellCorrectionSpec *GoogleCloudDiscoveryengineV1SearchRequestSpellCorrectionSpec `json:"spellCorrectionSpec,omitempty"`
-	// UserInfo: Information about the end user. Highly recommended for analytics.
-	// UserInfo.user_agent is used to deduce `device_type` for analytics.
+	// UserInfo: Information about the end user. Highly recommended for analytics
+	// and personalization. UserInfo.user_agent is used to deduce `device_type` for
+	// analytics.
 	UserInfo *GoogleCloudDiscoveryengineV1UserInfo `json:"userInfo,omitempty"`
 	// UserLabels: The user labels applied to a resource must meet the following
 	// requirements: * Each resource can have multiple labels, up to a maximum of
@@ -12046,6 +12135,7 @@ type GoogleCloudDiscoveryengineV1alphaCmekConfig struct {
 	//   "KEY_ISSUE" - The CmekConfig is unavailable, most likely due to the KMS
 	// Key being revoked.
 	//   "DELETING" - The CmekConfig is deleting.
+	//   "DELETE_FAILED" - The CmekConfig deletion process failed.
 	//   "UNUSABLE" - The CmekConfig is not usable, most likely due to some
 	// internal issue.
 	//   "ACTIVE_ROTATING" - The KMS key version is being rotated.
@@ -12859,6 +12949,10 @@ type GoogleCloudDiscoveryengineV1alphaDataConnector struct {
 	// source.
 	//   "WARNING" - The connector has completed a sync run, but encountered
 	// non-fatal errors.
+	//   "INITIALIZATION_FAILED" - Connector initialization failed. Potential
+	// causes include runtime errors or issues in the asynchronous pipeline,
+	// preventing the request from reaching downstream services (except for some
+	// connector types).
 	State string `json:"state,omitempty"`
 	// StaticIpAddresses: Output only. The static IP addresses used by this
 	// connector.
@@ -12974,6 +13068,9 @@ type GoogleCloudDiscoveryengineV1alphaDataStore struct {
 	// DocumentProcessingConfig: Configuration for Document understanding and
 	// enrichment.
 	DocumentProcessingConfig *GoogleCloudDiscoveryengineV1alphaDocumentProcessingConfig `json:"documentProcessingConfig,omitempty"`
+	// HealthcareFhirConfig: Optional. Configuration for `HEALTHCARE_FHIR`
+	// vertical.
+	HealthcareFhirConfig *GoogleCloudDiscoveryengineV1alphaHealthcareFhirConfig `json:"healthcareFhirConfig,omitempty"`
 	// IdpConfig: Output only. Data store level identity provider config.
 	IdpConfig *GoogleCloudDiscoveryengineV1alphaIdpConfig `json:"idpConfig,omitempty"`
 	// IndustryVertical: Immutable. The industry vertical that the data store
@@ -14477,6 +14574,67 @@ func (s GoogleCloudDiscoveryengineV1alphaGetUriPatternDocumentDataResponse) Mars
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudDiscoveryengineV1alphaHealthcareFhirConfig: Config to data store
+// for `HEALTHCARE_FHIR` vertical.
+type GoogleCloudDiscoveryengineV1alphaHealthcareFhirConfig struct {
+	// EnableConfigurableSchema: Whether to enable configurable schema for
+	// `HEALTHCARE_FHIR` vertical. If set to `true`, the predefined healthcare fhir
+	// schema can be extended for more customized searching and filtering.
+	EnableConfigurableSchema bool `json:"enableConfigurableSchema,omitempty"`
+	// EnableStaticIndexingForBatchIngestion: Whether to enable static indexing for
+	// `HEALTHCARE_FHIR` batch ingestion. If set to `true`, the batch ingestion
+	// will be processed in a static indexing mode which is slower but more capable
+	// of handling larger volume.
+	EnableStaticIndexingForBatchIngestion bool `json:"enableStaticIndexingForBatchIngestion,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "EnableConfigurableSchema")
+	// to unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "EnableConfigurableSchema") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1alphaHealthcareFhirConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1alphaHealthcareFhirConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1alphaIdentityMappingEntryOperationMetadata:
+// IdentityMappingEntry LongRunningOperation metadata for
+// [IdentityMappingStoreService.ImportIdentityMappings] and
+// [IdentityMappingStoreService.PurgeIdentityMappings]
+type GoogleCloudDiscoveryengineV1alphaIdentityMappingEntryOperationMetadata struct {
+	// FailureCount: The number of IdentityMappingEntries that failed to be
+	// processed.
+	FailureCount int64 `json:"failureCount,omitempty,string"`
+	// SuccessCount: The number of IdentityMappingEntries that were successfully
+	// processed.
+	SuccessCount int64 `json:"successCount,omitempty,string"`
+	// TotalCount: The total number of IdentityMappingEntries that were processed.
+	TotalCount int64 `json:"totalCount,omitempty,string"`
+	// ForceSendFields is a list of field names (e.g. "FailureCount") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "FailureCount") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1alphaIdentityMappingEntryOperationMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1alphaIdentityMappingEntryOperationMetadata
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudDiscoveryengineV1alphaIdentityScheduleConfig: The configuration
 // for the identity data synchronization runs.
 type GoogleCloudDiscoveryengineV1alphaIdentityScheduleConfig struct {
@@ -14705,6 +14863,29 @@ type GoogleCloudDiscoveryengineV1alphaImportErrorConfig struct {
 
 func (s GoogleCloudDiscoveryengineV1alphaImportErrorConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDiscoveryengineV1alphaImportErrorConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1alphaImportIdentityMappingsResponse: Response
+// message for IdentityMappingStoreService.ImportIdentityMappings
+type GoogleCloudDiscoveryengineV1alphaImportIdentityMappingsResponse struct {
+	// ErrorSamples: A sample of errors encountered while processing the request.
+	ErrorSamples []*GoogleRpcStatus `json:"errorSamples,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ErrorSamples") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ErrorSamples") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1alphaImportIdentityMappingsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1alphaImportIdentityMappingsResponse
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -15588,6 +15769,10 @@ type GoogleCloudDiscoveryengineV1alphaRecrawlUrisMetadata struct {
 	// InvalidUrisCount: Total number of unique URIs in the request that have
 	// invalid format.
 	InvalidUrisCount int64 `json:"invalidUrisCount,omitempty"`
+	// NoindexUris: URIs that have no index meta tag. Sample limited to 1000.
+	NoindexUris []string `json:"noindexUris,omitempty"`
+	// NoindexUrisCount: Total number of URIs that have no index meta tag.
+	NoindexUrisCount int64 `json:"noindexUrisCount,omitempty"`
 	// PendingCount: Total number of URIs that have yet to be crawled.
 	PendingCount int64 `json:"pendingCount,omitempty"`
 	// QuotaExceededCount: Total number of URIs that were rejected due to
@@ -16100,8 +16285,9 @@ type GoogleCloudDiscoveryengineV1alphaSearchRequest struct {
 	// SpellCorrectionSpec: The spell correction specification that specifies the
 	// mode under which spell correction takes effect.
 	SpellCorrectionSpec *GoogleCloudDiscoveryengineV1alphaSearchRequestSpellCorrectionSpec `json:"spellCorrectionSpec,omitempty"`
-	// UserInfo: Information about the end user. Highly recommended for analytics.
-	// UserInfo.user_agent is used to deduce `device_type` for analytics.
+	// UserInfo: Information about the end user. Highly recommended for analytics
+	// and personalization. UserInfo.user_agent is used to deduce `device_type` for
+	// analytics.
 	UserInfo *GoogleCloudDiscoveryengineV1alphaUserInfo `json:"userInfo,omitempty"`
 	// UserLabels: The user labels applied to a resource must meet the following
 	// requirements: * Each resource can have multiple labels, up to a maximum of
@@ -17884,6 +18070,7 @@ type GoogleCloudDiscoveryengineV1betaCmekConfig struct {
 	//   "KEY_ISSUE" - The CmekConfig is unavailable, most likely due to the KMS
 	// Key being revoked.
 	//   "DELETING" - The CmekConfig is deleting.
+	//   "DELETE_FAILED" - The CmekConfig deletion process failed.
 	//   "UNUSABLE" - The CmekConfig is not usable, most likely due to some
 	// internal issue.
 	//   "ACTIVE_ROTATING" - The KMS key version is being rotated.
@@ -18396,6 +18583,9 @@ type GoogleCloudDiscoveryengineV1betaDataStore struct {
 	// DocumentProcessingConfig: Configuration for Document understanding and
 	// enrichment.
 	DocumentProcessingConfig *GoogleCloudDiscoveryengineV1betaDocumentProcessingConfig `json:"documentProcessingConfig,omitempty"`
+	// HealthcareFhirConfig: Optional. Configuration for `HEALTHCARE_FHIR`
+	// vertical.
+	HealthcareFhirConfig *GoogleCloudDiscoveryengineV1betaHealthcareFhirConfig `json:"healthcareFhirConfig,omitempty"`
 	// IndustryVertical: Immutable. The industry vertical that the data store
 	// registers.
 	//
@@ -19317,6 +19507,67 @@ func (s GoogleCloudDiscoveryengineV1betaFetchSitemapsResponseSitemapMetadata) Ma
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudDiscoveryengineV1betaHealthcareFhirConfig: Config to data store
+// for `HEALTHCARE_FHIR` vertical.
+type GoogleCloudDiscoveryengineV1betaHealthcareFhirConfig struct {
+	// EnableConfigurableSchema: Whether to enable configurable schema for
+	// `HEALTHCARE_FHIR` vertical. If set to `true`, the predefined healthcare fhir
+	// schema can be extended for more customized searching and filtering.
+	EnableConfigurableSchema bool `json:"enableConfigurableSchema,omitempty"`
+	// EnableStaticIndexingForBatchIngestion: Whether to enable static indexing for
+	// `HEALTHCARE_FHIR` batch ingestion. If set to `true`, the batch ingestion
+	// will be processed in a static indexing mode which is slower but more capable
+	// of handling larger volume.
+	EnableStaticIndexingForBatchIngestion bool `json:"enableStaticIndexingForBatchIngestion,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "EnableConfigurableSchema")
+	// to unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "EnableConfigurableSchema") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1betaHealthcareFhirConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1betaHealthcareFhirConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1betaIdentityMappingEntryOperationMetadata:
+// IdentityMappingEntry LongRunningOperation metadata for
+// [IdentityMappingStoreService.ImportIdentityMappings] and
+// [IdentityMappingStoreService.PurgeIdentityMappings]
+type GoogleCloudDiscoveryengineV1betaIdentityMappingEntryOperationMetadata struct {
+	// FailureCount: The number of IdentityMappingEntries that failed to be
+	// processed.
+	FailureCount int64 `json:"failureCount,omitempty,string"`
+	// SuccessCount: The number of IdentityMappingEntries that were successfully
+	// processed.
+	SuccessCount int64 `json:"successCount,omitempty,string"`
+	// TotalCount: The total number of IdentityMappingEntries that were processed.
+	TotalCount int64 `json:"totalCount,omitempty,string"`
+	// ForceSendFields is a list of field names (e.g. "FailureCount") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "FailureCount") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1betaIdentityMappingEntryOperationMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1betaIdentityMappingEntryOperationMetadata
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudDiscoveryengineV1betaImportCompletionSuggestionsMetadata:
 // Metadata related to the progress of the ImportCompletionSuggestions
 // operation. This will be returned by the
@@ -19460,6 +19711,29 @@ type GoogleCloudDiscoveryengineV1betaImportErrorConfig struct {
 
 func (s GoogleCloudDiscoveryengineV1betaImportErrorConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDiscoveryengineV1betaImportErrorConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1betaImportIdentityMappingsResponse: Response
+// message for IdentityMappingStoreService.ImportIdentityMappings
+type GoogleCloudDiscoveryengineV1betaImportIdentityMappingsResponse struct {
+	// ErrorSamples: A sample of errors encountered while processing the request.
+	ErrorSamples []*GoogleRpcStatus `json:"errorSamples,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ErrorSamples") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ErrorSamples") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1betaImportIdentityMappingsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1betaImportIdentityMappingsResponse
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -20310,8 +20584,9 @@ type GoogleCloudDiscoveryengineV1betaSearchRequest struct {
 	// SpellCorrectionSpec: The spell correction specification that specifies the
 	// mode under which spell correction takes effect.
 	SpellCorrectionSpec *GoogleCloudDiscoveryengineV1betaSearchRequestSpellCorrectionSpec `json:"spellCorrectionSpec,omitempty"`
-	// UserInfo: Information about the end user. Highly recommended for analytics.
-	// UserInfo.user_agent is used to deduce `device_type` for analytics.
+	// UserInfo: Information about the end user. Highly recommended for analytics
+	// and personalization. UserInfo.user_agent is used to deduce `device_type` for
+	// analytics.
 	UserInfo *GoogleCloudDiscoveryengineV1betaUserInfo `json:"userInfo,omitempty"`
 	// UserLabels: The user labels applied to a resource must meet the following
 	// requirements: * Each resource can have multiple labels, up to a maximum of

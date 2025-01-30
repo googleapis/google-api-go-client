@@ -6371,7 +6371,7 @@
       }
     }
   },
-  "revision": "20250121",
+  "revision": "20250125",
   "rootUrl": "https://discoveryengine.googleapis.com/",
   "schemas": {
     "GoogleApiDistribution": {
@@ -8511,6 +8511,7 @@
             "ACTIVE",
             "KEY_ISSUE",
             "DELETING",
+            "DELETE_FAILED",
             "UNUSABLE",
             "ACTIVE_ROTATING"
           ],
@@ -8520,6 +8521,7 @@
             "The CmekConfig can be used with DataStores.",
             "The CmekConfig is unavailable, most likely due to the KMS Key being revoked.",
             "The CmekConfig is deleting.",
+            "The CmekConfig deletion process failed.",
             "The CmekConfig is not usable, most likely due to some internal issue.",
             "The KMS key version is being rotated."
           ],
@@ -9222,6 +9224,10 @@
         "documentProcessingConfig": {
           "$ref": "GoogleCloudDiscoveryengineV1DocumentProcessingConfig",
           "description": "Configuration for Document understanding and enrichment."
+        },
+        "healthcareFhirConfig": {
+          "$ref": "GoogleCloudDiscoveryengineV1HealthcareFhirConfig",
+          "description": "Optional. Configuration for `HEALTHCARE_FHIR` vertical."
         },
         "industryVertical": {
           "description": "Immutable. The industry vertical that the data store registers.",
@@ -10462,6 +10468,43 @@
       },
       "type": "object"
     },
+    "GoogleCloudDiscoveryengineV1HealthcareFhirConfig": {
+      "description": "Config to data store for `HEALTHCARE_FHIR` vertical.",
+      "id": "GoogleCloudDiscoveryengineV1HealthcareFhirConfig",
+      "properties": {
+        "enableConfigurableSchema": {
+          "description": "Whether to enable configurable schema for `HEALTHCARE_FHIR` vertical. If set to `true`, the predefined healthcare fhir schema can be extended for more customized searching and filtering.",
+          "type": "boolean"
+        },
+        "enableStaticIndexingForBatchIngestion": {
+          "description": "Whether to enable static indexing for `HEALTHCARE_FHIR` batch ingestion. If set to `true`, the batch ingestion will be processed in a static indexing mode which is slower but more capable of handling larger volume.",
+          "type": "boolean"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudDiscoveryengineV1IdentityMappingEntryOperationMetadata": {
+      "description": "IdentityMappingEntry LongRunningOperation metadata for [IdentityMappingStoreService.ImportIdentityMappings] and [IdentityMappingStoreService.PurgeIdentityMappings]",
+      "id": "GoogleCloudDiscoveryengineV1IdentityMappingEntryOperationMetadata",
+      "properties": {
+        "failureCount": {
+          "description": "The number of IdentityMappingEntries that failed to be processed.",
+          "format": "int64",
+          "type": "string"
+        },
+        "successCount": {
+          "description": "The number of IdentityMappingEntries that were successfully processed.",
+          "format": "int64",
+          "type": "string"
+        },
+        "totalCount": {
+          "description": "The total number of IdentityMappingEntries that were processed.",
+          "format": "int64",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
     "GoogleCloudDiscoveryengineV1ImportCompletionSuggestionsMetadata": {
       "description": "Metadata related to the progress of the ImportCompletionSuggestions operation. This will be returned by the google.longrunning.Operation.metadata field.",
       "id": "GoogleCloudDiscoveryengineV1ImportCompletionSuggestionsMetadata",
@@ -10693,6 +10736,20 @@
         "gcsPrefix": {
           "description": "Cloud Storage prefix for import errors. This must be an empty, existing Cloud Storage directory. Import errors are written to sharded files in this directory, one per line, as a JSON-encoded `google.rpc.Status` message.",
           "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudDiscoveryengineV1ImportIdentityMappingsResponse": {
+      "description": "Response message for IdentityMappingStoreService.ImportIdentityMappings",
+      "id": "GoogleCloudDiscoveryengineV1ImportIdentityMappingsResponse",
+      "properties": {
+        "errorSamples": {
+          "description": "A sample of errors encountered while processing the request.",
+          "items": {
+            "$ref": "GoogleRpcStatus"
+          },
+          "type": "array"
         }
       },
       "type": "object"
@@ -11884,7 +11941,7 @@
         },
         "userInfo": {
           "$ref": "GoogleCloudDiscoveryengineV1UserInfo",
-          "description": "Information about the end user. Highly recommended for analytics. UserInfo.user_agent is used to deduce `device_type` for analytics."
+          "description": "Information about the end user. Highly recommended for analytics and personalization. UserInfo.user_agent is used to deduce `device_type` for analytics."
         },
         "userLabels": {
           "additionalProperties": {
@@ -14174,6 +14231,7 @@
             "ACTIVE",
             "KEY_ISSUE",
             "DELETING",
+            "DELETE_FAILED",
             "UNUSABLE",
             "ACTIVE_ROTATING"
           ],
@@ -14183,6 +14241,7 @@
             "The CmekConfig can be used with DataStores.",
             "The CmekConfig is unavailable, most likely due to the KMS Key being revoked.",
             "The CmekConfig is deleting.",
+            "The CmekConfig deletion process failed.",
             "The CmekConfig is not usable, most likely due to some internal issue.",
             "The KMS key version is being rotated."
           ],
@@ -14857,7 +14916,8 @@
             "ACTIVE",
             "FAILED",
             "RUNNING",
-            "WARNING"
+            "WARNING",
+            "INITIALIZATION_FAILED"
           ],
           "enumDescriptions": [
             "Default value.",
@@ -14865,7 +14925,8 @@
             "The connector is successfully set up and awaiting next sync run.",
             "The connector is in error. The error details can be found in DataConnector.errors. If the error is unfixable, the DataConnector can be deleted by [CollectionService.DeleteCollection] API.",
             "The connector is actively syncing records from the data source.",
-            "The connector has completed a sync run, but encountered non-fatal errors."
+            "The connector has completed a sync run, but encountered non-fatal errors.",
+            "Connector initialization failed. Potential causes include runtime errors or issues in the asynchronous pipeline, preventing the request from reaching downstream services (except for some connector types)."
           ],
           "readOnly": true,
           "type": "string"
@@ -14990,6 +15051,10 @@
         "documentProcessingConfig": {
           "$ref": "GoogleCloudDiscoveryengineV1alphaDocumentProcessingConfig",
           "description": "Configuration for Document understanding and enrichment."
+        },
+        "healthcareFhirConfig": {
+          "$ref": "GoogleCloudDiscoveryengineV1alphaHealthcareFhirConfig",
+          "description": "Optional. Configuration for `HEALTHCARE_FHIR` vertical."
         },
         "idpConfig": {
           "$ref": "GoogleCloudDiscoveryengineV1alphaIdpConfig",
@@ -16089,6 +16154,43 @@
       },
       "type": "object"
     },
+    "GoogleCloudDiscoveryengineV1alphaHealthcareFhirConfig": {
+      "description": "Config to data store for `HEALTHCARE_FHIR` vertical.",
+      "id": "GoogleCloudDiscoveryengineV1alphaHealthcareFhirConfig",
+      "properties": {
+        "enableConfigurableSchema": {
+          "description": "Whether to enable configurable schema for `HEALTHCARE_FHIR` vertical. If set to `true`, the predefined healthcare fhir schema can be extended for more customized searching and filtering.",
+          "type": "boolean"
+        },
+        "enableStaticIndexingForBatchIngestion": {
+          "description": "Whether to enable static indexing for `HEALTHCARE_FHIR` batch ingestion. If set to `true`, the batch ingestion will be processed in a static indexing mode which is slower but more capable of handling larger volume.",
+          "type": "boolean"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudDiscoveryengineV1alphaIdentityMappingEntryOperationMetadata": {
+      "description": "IdentityMappingEntry LongRunningOperation metadata for [IdentityMappingStoreService.ImportIdentityMappings] and [IdentityMappingStoreService.PurgeIdentityMappings]",
+      "id": "GoogleCloudDiscoveryengineV1alphaIdentityMappingEntryOperationMetadata",
+      "properties": {
+        "failureCount": {
+          "description": "The number of IdentityMappingEntries that failed to be processed.",
+          "format": "int64",
+          "type": "string"
+        },
+        "successCount": {
+          "description": "The number of IdentityMappingEntries that were successfully processed.",
+          "format": "int64",
+          "type": "string"
+        },
+        "totalCount": {
+          "description": "The total number of IdentityMappingEntries that were processed.",
+          "format": "int64",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
     "GoogleCloudDiscoveryengineV1alphaIdentityScheduleConfig": {
       "description": "The configuration for the identity data synchronization runs.",
       "id": "GoogleCloudDiscoveryengineV1alphaIdentityScheduleConfig",
@@ -16243,6 +16345,20 @@
         "gcsPrefix": {
           "description": "Cloud Storage prefix for import errors. This must be an empty, existing Cloud Storage directory. Import errors are written to sharded files in this directory, one per line, as a JSON-encoded `google.rpc.Status` message.",
           "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudDiscoveryengineV1alphaImportIdentityMappingsResponse": {
+      "description": "Response message for IdentityMappingStoreService.ImportIdentityMappings",
+      "id": "GoogleCloudDiscoveryengineV1alphaImportIdentityMappingsResponse",
+      "properties": {
+        "errorSamples": {
+          "description": "A sample of errors encountered while processing the request.",
+          "items": {
+            "$ref": "GoogleRpcStatus"
+          },
+          "type": "array"
         }
       },
       "type": "object"
@@ -16892,6 +17008,18 @@
           "format": "int32",
           "type": "integer"
         },
+        "noindexUris": {
+          "description": "URIs that have no index meta tag. Sample limited to 1000.",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "noindexUrisCount": {
+          "description": "Total number of URIs that have no index meta tag.",
+          "format": "int32",
+          "type": "integer"
+        },
         "pendingCount": {
           "description": "Total number of URIs that have yet to be crawled.",
           "format": "int32",
@@ -17332,7 +17460,7 @@
         },
         "userInfo": {
           "$ref": "GoogleCloudDiscoveryengineV1alphaUserInfo",
-          "description": "Information about the end user. Highly recommended for analytics. UserInfo.user_agent is used to deduce `device_type` for analytics."
+          "description": "Information about the end user. Highly recommended for analytics and personalization. UserInfo.user_agent is used to deduce `device_type` for analytics."
         },
         "userLabels": {
           "additionalProperties": {
@@ -18497,6 +18625,7 @@
             "ACTIVE",
             "KEY_ISSUE",
             "DELETING",
+            "DELETE_FAILED",
             "UNUSABLE",
             "ACTIVE_ROTATING"
           ],
@@ -18506,6 +18635,7 @@
             "The CmekConfig can be used with DataStores.",
             "The CmekConfig is unavailable, most likely due to the KMS Key being revoked.",
             "The CmekConfig is deleting.",
+            "The CmekConfig deletion process failed.",
             "The CmekConfig is not usable, most likely due to some internal issue.",
             "The KMS key version is being rotated."
           ],
@@ -18883,6 +19013,10 @@
         "documentProcessingConfig": {
           "$ref": "GoogleCloudDiscoveryengineV1betaDocumentProcessingConfig",
           "description": "Configuration for Document understanding and enrichment."
+        },
+        "healthcareFhirConfig": {
+          "$ref": "GoogleCloudDiscoveryengineV1betaHealthcareFhirConfig",
+          "description": "Optional. Configuration for `HEALTHCARE_FHIR` vertical."
         },
         "industryVertical": {
           "description": "Immutable. The industry vertical that the data store registers.",
@@ -19555,6 +19689,43 @@
       },
       "type": "object"
     },
+    "GoogleCloudDiscoveryengineV1betaHealthcareFhirConfig": {
+      "description": "Config to data store for `HEALTHCARE_FHIR` vertical.",
+      "id": "GoogleCloudDiscoveryengineV1betaHealthcareFhirConfig",
+      "properties": {
+        "enableConfigurableSchema": {
+          "description": "Whether to enable configurable schema for `HEALTHCARE_FHIR` vertical. If set to `true`, the predefined healthcare fhir schema can be extended for more customized searching and filtering.",
+          "type": "boolean"
+        },
+        "enableStaticIndexingForBatchIngestion": {
+          "description": "Whether to enable static indexing for `HEALTHCARE_FHIR` batch ingestion. If set to `true`, the batch ingestion will be processed in a static indexing mode which is slower but more capable of handling larger volume.",
+          "type": "boolean"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudDiscoveryengineV1betaIdentityMappingEntryOperationMetadata": {
+      "description": "IdentityMappingEntry LongRunningOperation metadata for [IdentityMappingStoreService.ImportIdentityMappings] and [IdentityMappingStoreService.PurgeIdentityMappings]",
+      "id": "GoogleCloudDiscoveryengineV1betaIdentityMappingEntryOperationMetadata",
+      "properties": {
+        "failureCount": {
+          "description": "The number of IdentityMappingEntries that failed to be processed.",
+          "format": "int64",
+          "type": "string"
+        },
+        "successCount": {
+          "description": "The number of IdentityMappingEntries that were successfully processed.",
+          "format": "int64",
+          "type": "string"
+        },
+        "totalCount": {
+          "description": "The total number of IdentityMappingEntries that were processed.",
+          "format": "int64",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
     "GoogleCloudDiscoveryengineV1betaImportCompletionSuggestionsMetadata": {
       "description": "Metadata related to the progress of the ImportCompletionSuggestions operation. This will be returned by the google.longrunning.Operation.metadata field.",
       "id": "GoogleCloudDiscoveryengineV1betaImportCompletionSuggestionsMetadata",
@@ -19657,6 +19828,20 @@
         "gcsPrefix": {
           "description": "Cloud Storage prefix for import errors. This must be an empty, existing Cloud Storage directory. Import errors are written to sharded files in this directory, one per line, as a JSON-encoded `google.rpc.Status` message.",
           "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudDiscoveryengineV1betaImportIdentityMappingsResponse": {
+      "description": "Response message for IdentityMappingStoreService.ImportIdentityMappings",
+      "id": "GoogleCloudDiscoveryengineV1betaImportIdentityMappingsResponse",
+      "properties": {
+        "errorSamples": {
+          "description": "A sample of errors encountered while processing the request.",
+          "items": {
+            "$ref": "GoogleRpcStatus"
+          },
+          "type": "array"
         }
       },
       "type": "object"
@@ -20299,7 +20484,7 @@
         },
         "userInfo": {
           "$ref": "GoogleCloudDiscoveryengineV1betaUserInfo",
-          "description": "Information about the end user. Highly recommended for analytics. UserInfo.user_agent is used to deduce `device_type` for analytics."
+          "description": "Information about the end user. Highly recommended for analytics and personalization. UserInfo.user_agent is used to deduce `device_type` for analytics."
         },
         "userLabels": {
           "additionalProperties": {

@@ -891,8 +891,6 @@ func (s DestinationDataset) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// DestinationDatasetReference: Contains the reference that identifies a
-// destination bigquery dataset.
 type DestinationDatasetReference struct {
 	// DatasetId: Required. A unique ID for this dataset, without the project name.
 	// The ID must contain only letters (a-z, A-Z), numbers (0-9), or underscores

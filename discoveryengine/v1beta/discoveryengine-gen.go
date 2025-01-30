@@ -1781,6 +1781,7 @@ type GoogleCloudDiscoveryengineV1CmekConfig struct {
 	//   "KEY_ISSUE" - The CmekConfig is unavailable, most likely due to the KMS
 	// Key being revoked.
 	//   "DELETING" - The CmekConfig is deleting.
+	//   "DELETE_FAILED" - The CmekConfig deletion process failed.
 	//   "UNUSABLE" - The CmekConfig is not usable, most likely due to some
 	// internal issue.
 	//   "ACTIVE_ROTATING" - The KMS key version is being rotated.
@@ -2261,6 +2262,9 @@ type GoogleCloudDiscoveryengineV1DataStore struct {
 	// DocumentProcessingConfig: Configuration for Document understanding and
 	// enrichment.
 	DocumentProcessingConfig *GoogleCloudDiscoveryengineV1DocumentProcessingConfig `json:"documentProcessingConfig,omitempty"`
+	// HealthcareFhirConfig: Optional. Configuration for `HEALTHCARE_FHIR`
+	// vertical.
+	HealthcareFhirConfig *GoogleCloudDiscoveryengineV1HealthcareFhirConfig `json:"healthcareFhirConfig,omitempty"`
 	// IndustryVertical: Immutable. The industry vertical that the data store
 	// registers.
 	//
@@ -2997,6 +3001,67 @@ func (s GoogleCloudDiscoveryengineV1EngineSearchEngineConfig) MarshalJSON() ([]b
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudDiscoveryengineV1HealthcareFhirConfig: Config to data store for
+// `HEALTHCARE_FHIR` vertical.
+type GoogleCloudDiscoveryengineV1HealthcareFhirConfig struct {
+	// EnableConfigurableSchema: Whether to enable configurable schema for
+	// `HEALTHCARE_FHIR` vertical. If set to `true`, the predefined healthcare fhir
+	// schema can be extended for more customized searching and filtering.
+	EnableConfigurableSchema bool `json:"enableConfigurableSchema,omitempty"`
+	// EnableStaticIndexingForBatchIngestion: Whether to enable static indexing for
+	// `HEALTHCARE_FHIR` batch ingestion. If set to `true`, the batch ingestion
+	// will be processed in a static indexing mode which is slower but more capable
+	// of handling larger volume.
+	EnableStaticIndexingForBatchIngestion bool `json:"enableStaticIndexingForBatchIngestion,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "EnableConfigurableSchema")
+	// to unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "EnableConfigurableSchema") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1HealthcareFhirConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1HealthcareFhirConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1IdentityMappingEntryOperationMetadata:
+// IdentityMappingEntry LongRunningOperation metadata for
+// [IdentityMappingStoreService.ImportIdentityMappings] and
+// [IdentityMappingStoreService.PurgeIdentityMappings]
+type GoogleCloudDiscoveryengineV1IdentityMappingEntryOperationMetadata struct {
+	// FailureCount: The number of IdentityMappingEntries that failed to be
+	// processed.
+	FailureCount int64 `json:"failureCount,omitempty,string"`
+	// SuccessCount: The number of IdentityMappingEntries that were successfully
+	// processed.
+	SuccessCount int64 `json:"successCount,omitempty,string"`
+	// TotalCount: The total number of IdentityMappingEntries that were processed.
+	TotalCount int64 `json:"totalCount,omitempty,string"`
+	// ForceSendFields is a list of field names (e.g. "FailureCount") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "FailureCount") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1IdentityMappingEntryOperationMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1IdentityMappingEntryOperationMetadata
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudDiscoveryengineV1ImportCompletionSuggestionsMetadata: Metadata
 // related to the progress of the ImportCompletionSuggestions operation. This
 // will be returned by the google.longrunning.Operation.metadata field.
@@ -3139,6 +3204,29 @@ type GoogleCloudDiscoveryengineV1ImportErrorConfig struct {
 
 func (s GoogleCloudDiscoveryengineV1ImportErrorConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDiscoveryengineV1ImportErrorConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1ImportIdentityMappingsResponse: Response message
+// for IdentityMappingStoreService.ImportIdentityMappings
+type GoogleCloudDiscoveryengineV1ImportIdentityMappingsResponse struct {
+	// ErrorSamples: A sample of errors encountered while processing the request.
+	ErrorSamples []*GoogleRpcStatus `json:"errorSamples,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ErrorSamples") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ErrorSamples") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1ImportIdentityMappingsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1ImportIdentityMappingsResponse
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -5298,6 +5386,7 @@ type GoogleCloudDiscoveryengineV1alphaCmekConfig struct {
 	//   "KEY_ISSUE" - The CmekConfig is unavailable, most likely due to the KMS
 	// Key being revoked.
 	//   "DELETING" - The CmekConfig is deleting.
+	//   "DELETE_FAILED" - The CmekConfig deletion process failed.
 	//   "UNUSABLE" - The CmekConfig is not usable, most likely due to some
 	// internal issue.
 	//   "ACTIVE_ROTATING" - The KMS key version is being rotated.
@@ -6111,6 +6200,10 @@ type GoogleCloudDiscoveryengineV1alphaDataConnector struct {
 	// source.
 	//   "WARNING" - The connector has completed a sync run, but encountered
 	// non-fatal errors.
+	//   "INITIALIZATION_FAILED" - Connector initialization failed. Potential
+	// causes include runtime errors or issues in the asynchronous pipeline,
+	// preventing the request from reaching downstream services (except for some
+	// connector types).
 	State string `json:"state,omitempty"`
 	// StaticIpAddresses: Output only. The static IP addresses used by this
 	// connector.
@@ -6226,6 +6319,9 @@ type GoogleCloudDiscoveryengineV1alphaDataStore struct {
 	// DocumentProcessingConfig: Configuration for Document understanding and
 	// enrichment.
 	DocumentProcessingConfig *GoogleCloudDiscoveryengineV1alphaDocumentProcessingConfig `json:"documentProcessingConfig,omitempty"`
+	// HealthcareFhirConfig: Optional. Configuration for `HEALTHCARE_FHIR`
+	// vertical.
+	HealthcareFhirConfig *GoogleCloudDiscoveryengineV1alphaHealthcareFhirConfig `json:"healthcareFhirConfig,omitempty"`
 	// IdpConfig: Output only. Data store level identity provider config.
 	IdpConfig *GoogleCloudDiscoveryengineV1alphaIdpConfig `json:"idpConfig,omitempty"`
 	// IndustryVertical: Immutable. The industry vertical that the data store
@@ -7729,6 +7825,67 @@ func (s GoogleCloudDiscoveryengineV1alphaGetUriPatternDocumentDataResponse) Mars
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudDiscoveryengineV1alphaHealthcareFhirConfig: Config to data store
+// for `HEALTHCARE_FHIR` vertical.
+type GoogleCloudDiscoveryengineV1alphaHealthcareFhirConfig struct {
+	// EnableConfigurableSchema: Whether to enable configurable schema for
+	// `HEALTHCARE_FHIR` vertical. If set to `true`, the predefined healthcare fhir
+	// schema can be extended for more customized searching and filtering.
+	EnableConfigurableSchema bool `json:"enableConfigurableSchema,omitempty"`
+	// EnableStaticIndexingForBatchIngestion: Whether to enable static indexing for
+	// `HEALTHCARE_FHIR` batch ingestion. If set to `true`, the batch ingestion
+	// will be processed in a static indexing mode which is slower but more capable
+	// of handling larger volume.
+	EnableStaticIndexingForBatchIngestion bool `json:"enableStaticIndexingForBatchIngestion,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "EnableConfigurableSchema")
+	// to unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "EnableConfigurableSchema") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1alphaHealthcareFhirConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1alphaHealthcareFhirConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1alphaIdentityMappingEntryOperationMetadata:
+// IdentityMappingEntry LongRunningOperation metadata for
+// [IdentityMappingStoreService.ImportIdentityMappings] and
+// [IdentityMappingStoreService.PurgeIdentityMappings]
+type GoogleCloudDiscoveryengineV1alphaIdentityMappingEntryOperationMetadata struct {
+	// FailureCount: The number of IdentityMappingEntries that failed to be
+	// processed.
+	FailureCount int64 `json:"failureCount,omitempty,string"`
+	// SuccessCount: The number of IdentityMappingEntries that were successfully
+	// processed.
+	SuccessCount int64 `json:"successCount,omitempty,string"`
+	// TotalCount: The total number of IdentityMappingEntries that were processed.
+	TotalCount int64 `json:"totalCount,omitempty,string"`
+	// ForceSendFields is a list of field names (e.g. "FailureCount") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "FailureCount") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1alphaIdentityMappingEntryOperationMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1alphaIdentityMappingEntryOperationMetadata
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudDiscoveryengineV1alphaIdentityScheduleConfig: The configuration
 // for the identity data synchronization runs.
 type GoogleCloudDiscoveryengineV1alphaIdentityScheduleConfig struct {
@@ -7957,6 +8114,29 @@ type GoogleCloudDiscoveryengineV1alphaImportErrorConfig struct {
 
 func (s GoogleCloudDiscoveryengineV1alphaImportErrorConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDiscoveryengineV1alphaImportErrorConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1alphaImportIdentityMappingsResponse: Response
+// message for IdentityMappingStoreService.ImportIdentityMappings
+type GoogleCloudDiscoveryengineV1alphaImportIdentityMappingsResponse struct {
+	// ErrorSamples: A sample of errors encountered while processing the request.
+	ErrorSamples []*GoogleRpcStatus `json:"errorSamples,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ErrorSamples") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ErrorSamples") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1alphaImportIdentityMappingsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1alphaImportIdentityMappingsResponse
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -8840,6 +9020,10 @@ type GoogleCloudDiscoveryengineV1alphaRecrawlUrisMetadata struct {
 	// InvalidUrisCount: Total number of unique URIs in the request that have
 	// invalid format.
 	InvalidUrisCount int64 `json:"invalidUrisCount,omitempty"`
+	// NoindexUris: URIs that have no index meta tag. Sample limited to 1000.
+	NoindexUris []string `json:"noindexUris,omitempty"`
+	// NoindexUrisCount: Total number of URIs that have no index meta tag.
+	NoindexUrisCount int64 `json:"noindexUrisCount,omitempty"`
 	// PendingCount: Total number of URIs that have yet to be crawled.
 	PendingCount int64 `json:"pendingCount,omitempty"`
 	// QuotaExceededCount: Total number of URIs that were rejected due to
@@ -9352,8 +9536,9 @@ type GoogleCloudDiscoveryengineV1alphaSearchRequest struct {
 	// SpellCorrectionSpec: The spell correction specification that specifies the
 	// mode under which spell correction takes effect.
 	SpellCorrectionSpec *GoogleCloudDiscoveryengineV1alphaSearchRequestSpellCorrectionSpec `json:"spellCorrectionSpec,omitempty"`
-	// UserInfo: Information about the end user. Highly recommended for analytics.
-	// UserInfo.user_agent is used to deduce `device_type` for analytics.
+	// UserInfo: Information about the end user. Highly recommended for analytics
+	// and personalization. UserInfo.user_agent is used to deduce `device_type` for
+	// analytics.
 	UserInfo *GoogleCloudDiscoveryengineV1alphaUserInfo `json:"userInfo,omitempty"`
 	// UserLabels: The user labels applied to a resource must meet the following
 	// requirements: * Each resource can have multiple labels, up to a maximum of
@@ -13787,6 +13972,7 @@ type GoogleCloudDiscoveryengineV1betaCmekConfig struct {
 	//   "KEY_ISSUE" - The CmekConfig is unavailable, most likely due to the KMS
 	// Key being revoked.
 	//   "DELETING" - The CmekConfig is deleting.
+	//   "DELETE_FAILED" - The CmekConfig deletion process failed.
 	//   "UNUSABLE" - The CmekConfig is not usable, most likely due to some
 	// internal issue.
 	//   "ACTIVE_ROTATING" - The KMS key version is being rotated.
@@ -14772,6 +14958,9 @@ type GoogleCloudDiscoveryengineV1betaDataStore struct {
 	// DocumentProcessingConfig: Configuration for Document understanding and
 	// enrichment.
 	DocumentProcessingConfig *GoogleCloudDiscoveryengineV1betaDocumentProcessingConfig `json:"documentProcessingConfig,omitempty"`
+	// HealthcareFhirConfig: Optional. Configuration for `HEALTHCARE_FHIR`
+	// vertical.
+	HealthcareFhirConfig *GoogleCloudDiscoveryengineV1betaHealthcareFhirConfig `json:"healthcareFhirConfig,omitempty"`
 	// IndustryVertical: Immutable. The industry vertical that the data store
 	// registers.
 	//
@@ -16829,6 +17018,140 @@ func (s GoogleCloudDiscoveryengineV1betaGroundingFact) MarshalJSON() ([]byte, er
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudDiscoveryengineV1betaHealthcareFhirConfig: Config to data store
+// for `HEALTHCARE_FHIR` vertical.
+type GoogleCloudDiscoveryengineV1betaHealthcareFhirConfig struct {
+	// EnableConfigurableSchema: Whether to enable configurable schema for
+	// `HEALTHCARE_FHIR` vertical. If set to `true`, the predefined healthcare fhir
+	// schema can be extended for more customized searching and filtering.
+	EnableConfigurableSchema bool `json:"enableConfigurableSchema,omitempty"`
+	// EnableStaticIndexingForBatchIngestion: Whether to enable static indexing for
+	// `HEALTHCARE_FHIR` batch ingestion. If set to `true`, the batch ingestion
+	// will be processed in a static indexing mode which is slower but more capable
+	// of handling larger volume.
+	EnableStaticIndexingForBatchIngestion bool `json:"enableStaticIndexingForBatchIngestion,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "EnableConfigurableSchema")
+	// to unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "EnableConfigurableSchema") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1betaHealthcareFhirConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1betaHealthcareFhirConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1betaIdentityMappingEntry: Identity Mapping Entry
+// that maps an external identity to an internal identity.
+type GoogleCloudDiscoveryengineV1betaIdentityMappingEntry struct {
+	// ExternalIdentity: Required. Identity outside the customer identity provider.
+	// The length limit of external identity will be of 100 characters.
+	ExternalIdentity string `json:"externalIdentity,omitempty"`
+	// GroupId: Group identifier. For Google Workspace user account, group_id
+	// should be the google workspace group email. For non-google identity
+	// provider, group_id is the mapped group identifier configured during the
+	// workforcepool config.
+	GroupId string `json:"groupId,omitempty"`
+	// UserId: User identifier. For Google Workspace user account, user_id should
+	// be the google workspace user email. For non-google identity provider,
+	// user_id is the mapped user identifier configured during the workforcepool
+	// config.
+	UserId string `json:"userId,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ExternalIdentity") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ExternalIdentity") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1betaIdentityMappingEntry) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1betaIdentityMappingEntry
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1betaIdentityMappingEntryOperationMetadata:
+// IdentityMappingEntry LongRunningOperation metadata for
+// [IdentityMappingStoreService.ImportIdentityMappings] and
+// [IdentityMappingStoreService.PurgeIdentityMappings]
+type GoogleCloudDiscoveryengineV1betaIdentityMappingEntryOperationMetadata struct {
+	// FailureCount: The number of IdentityMappingEntries that failed to be
+	// processed.
+	FailureCount int64 `json:"failureCount,omitempty,string"`
+	// SuccessCount: The number of IdentityMappingEntries that were successfully
+	// processed.
+	SuccessCount int64 `json:"successCount,omitempty,string"`
+	// TotalCount: The total number of IdentityMappingEntries that were processed.
+	TotalCount int64 `json:"totalCount,omitempty,string"`
+	// ForceSendFields is a list of field names (e.g. "FailureCount") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "FailureCount") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1betaIdentityMappingEntryOperationMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1betaIdentityMappingEntryOperationMetadata
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1betaIdentityMappingStore: Identity Mapping Store
+// which contains Identity Mapping Entries.
+type GoogleCloudDiscoveryengineV1betaIdentityMappingStore struct {
+	// CmekConfig: Output only. CMEK-related information for the Identity Mapping
+	// Store.
+	CmekConfig *GoogleCloudDiscoveryengineV1betaCmekConfig `json:"cmekConfig,omitempty"`
+	// KmsKeyName: Input only. The KMS key to be used to protect this Identity
+	// Mapping Store at creation time. Must be set for requests that need to comply
+	// with CMEK Org Policy protections. If this field is set and processed
+	// successfully, the Identity Mapping Store will be protected by the KMS key,
+	// as indicated in the cmek_config field.
+	KmsKeyName string `json:"kmsKeyName,omitempty"`
+	// Name: Immutable. The full resource name of the identity mapping store.
+	// Format:
+	// `projects/{project}/locations/{location}/identityMappingStores/{identity_mapp
+	// ing_store}`. This field must be a UTF-8 encoded string with a length limit
+	// of 1024 characters.
+	Name string `json:"name,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "CmekConfig") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CmekConfig") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1betaIdentityMappingStore) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1betaIdentityMappingStore
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudDiscoveryengineV1betaImportCompletionSuggestionsMetadata:
 // Metadata related to the progress of the ImportCompletionSuggestions
 // operation. This will be returned by the
@@ -17138,6 +17461,76 @@ type GoogleCloudDiscoveryengineV1betaImportErrorConfig struct {
 
 func (s GoogleCloudDiscoveryengineV1betaImportErrorConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDiscoveryengineV1betaImportErrorConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1betaImportIdentityMappingsRequest: Request
+// message for IdentityMappingStoreService.ImportIdentityMappings
+type GoogleCloudDiscoveryengineV1betaImportIdentityMappingsRequest struct {
+	// InlineSource: The inline source to import identity mapping entries from.
+	InlineSource *GoogleCloudDiscoveryengineV1betaImportIdentityMappingsRequestInlineSource `json:"inlineSource,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "InlineSource") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "InlineSource") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1betaImportIdentityMappingsRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1betaImportIdentityMappingsRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1betaImportIdentityMappingsRequestInlineSource:
+// The inline source to import identity mapping entries from.
+type GoogleCloudDiscoveryengineV1betaImportIdentityMappingsRequestInlineSource struct {
+	// IdentityMappingEntries: A maximum of 10000 entries can be imported at one
+	// time
+	IdentityMappingEntries []*GoogleCloudDiscoveryengineV1betaIdentityMappingEntry `json:"identityMappingEntries,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "IdentityMappingEntries") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "IdentityMappingEntries") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1betaImportIdentityMappingsRequestInlineSource) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1betaImportIdentityMappingsRequestInlineSource
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1betaImportIdentityMappingsResponse: Response
+// message for IdentityMappingStoreService.ImportIdentityMappings
+type GoogleCloudDiscoveryengineV1betaImportIdentityMappingsResponse struct {
+	// ErrorSamples: A sample of errors encountered while processing the request.
+	ErrorSamples []*GoogleRpcStatus `json:"errorSamples,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ErrorSamples") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ErrorSamples") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1betaImportIdentityMappingsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1betaImportIdentityMappingsResponse
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -17820,6 +18213,64 @@ func (s GoogleCloudDiscoveryengineV1betaListEvaluationsResponse) MarshalJSON() (
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudDiscoveryengineV1betaListIdentityMappingStoresResponse: Response
+// message for IdentityMappingStoreService.ListIdentityMappingStores
+type GoogleCloudDiscoveryengineV1betaListIdentityMappingStoresResponse struct {
+	// IdentityMappingStores: The Identity Mapping Stores.
+	IdentityMappingStores []*GoogleCloudDiscoveryengineV1betaIdentityMappingStore `json:"identityMappingStores,omitempty"`
+	// NextPageToken: A token that can be sent as `page_token` to retrieve the next
+	// page. If this field is omitted, there are no subsequent pages.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "IdentityMappingStores") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "IdentityMappingStores") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1betaListIdentityMappingStoresResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1betaListIdentityMappingStoresResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1betaListIdentityMappingsResponse: Response
+// message for IdentityMappingStoreService.ListIdentityMappings
+type GoogleCloudDiscoveryengineV1betaListIdentityMappingsResponse struct {
+	// IdentityMappingEntries: The Identity Mapping Entries.
+	IdentityMappingEntries []*GoogleCloudDiscoveryengineV1betaIdentityMappingEntry `json:"identityMappingEntries,omitempty"`
+	// NextPageToken: A token that can be sent as `page_token` to retrieve the next
+	// page. If this field is omitted, there are no subsequent pages.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "IdentityMappingEntries") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "IdentityMappingEntries") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1betaListIdentityMappingsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1betaListIdentityMappingsResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudDiscoveryengineV1betaListSampleQueriesResponse: Response message
 // for SampleQueryService.ListSampleQueries method.
 type GoogleCloudDiscoveryengineV1betaListSampleQueriesResponse struct {
@@ -18425,6 +18876,67 @@ type GoogleCloudDiscoveryengineV1betaPurgeErrorConfig struct {
 
 func (s GoogleCloudDiscoveryengineV1betaPurgeErrorConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDiscoveryengineV1betaPurgeErrorConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1betaPurgeIdentityMappingsRequest: Request
+// message for IdentityMappingStoreService.PurgeIdentityMappings
+type GoogleCloudDiscoveryengineV1betaPurgeIdentityMappingsRequest struct {
+	// Filter: Filter matching identity mappings to purge. The eligible field for
+	// filtering is: * `update_time`: in ISO 8601 "zulu" format. * `external_id`
+	// Examples: * Deleting all identity mappings updated in a time range:
+	// `update_time > "2012-04-23T18:25:43.511Z" AND update_time <
+	// "2012-04-23T18:30:43.511Z" * Deleting all identity mappings for a given
+	// external_id: `external_id = "id1" * Deleting all identity mappings inside
+	// an identity mapping store: `*` The filtering fields are assumed to have an
+	// implicit AND. Should not be used with source. An error will be thrown, if
+	// both are provided.
+	Filter string `json:"filter,omitempty"`
+	// Force: Actually performs the purge. If `force` is set to false, return the
+	// expected purge count without deleting any identity mappings. This field is
+	// only supported for purge with filter. For input source this field is ignored
+	// and data will be purged regardless of the value of this field.
+	Force bool `json:"force,omitempty"`
+	// InlineSource: The inline source to purge identity mapping entries from.
+	InlineSource *GoogleCloudDiscoveryengineV1betaPurgeIdentityMappingsRequestInlineSource `json:"inlineSource,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Filter") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Filter") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1betaPurgeIdentityMappingsRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1betaPurgeIdentityMappingsRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1betaPurgeIdentityMappingsRequestInlineSource:
+// The inline source to purge identity mapping entries from.
+type GoogleCloudDiscoveryengineV1betaPurgeIdentityMappingsRequestInlineSource struct {
+	// IdentityMappingEntries: A maximum of 10000 entries can be purged at one time
+	IdentityMappingEntries []*GoogleCloudDiscoveryengineV1betaIdentityMappingEntry `json:"identityMappingEntries,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "IdentityMappingEntries") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "IdentityMappingEntries") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1betaPurgeIdentityMappingsRequestInlineSource) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1betaPurgeIdentityMappingsRequestInlineSource
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -19531,8 +20043,9 @@ type GoogleCloudDiscoveryengineV1betaSearchRequest struct {
 	// SpellCorrectionSpec: The spell correction specification that specifies the
 	// mode under which spell correction takes effect.
 	SpellCorrectionSpec *GoogleCloudDiscoveryengineV1betaSearchRequestSpellCorrectionSpec `json:"spellCorrectionSpec,omitempty"`
-	// UserInfo: Information about the end user. Highly recommended for analytics.
-	// UserInfo.user_agent is used to deduce `device_type` for analytics.
+	// UserInfo: Information about the end user. Highly recommended for analytics
+	// and personalization. UserInfo.user_agent is used to deduce `device_type` for
+	// analytics.
 	UserInfo *GoogleCloudDiscoveryengineV1betaUserInfo `json:"userInfo,omitempty"`
 	// UserLabels: The user labels applied to a resource must meet the following
 	// requirements: * Each resource can have multiple labels, up to a maximum of
@@ -47496,6 +48009,864 @@ func (c *ProjectsLocationsGroundingConfigsCheckCall) Do(opts ...googleapi.CallOp
 		return nil, err
 	}
 	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "discoveryengine.projects.locations.groundingConfigs.check", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsIdentityMappingStoresCreateCall struct {
+	s                                                    *Service
+	parent                                               string
+	googleclouddiscoveryenginev1betaidentitymappingstore *GoogleCloudDiscoveryengineV1betaIdentityMappingStore
+	urlParams_                                           gensupport.URLParams
+	ctx_                                                 context.Context
+	header_                                              http.Header
+}
+
+// Create: Creates a new Identity Mapping Store.
+//
+//   - parent: The parent collection resource name, such as
+//     `projects/{project}/locations/{location}`.
+func (r *ProjectsLocationsIdentityMappingStoresService) Create(parent string, googleclouddiscoveryenginev1betaidentitymappingstore *GoogleCloudDiscoveryengineV1betaIdentityMappingStore) *ProjectsLocationsIdentityMappingStoresCreateCall {
+	c := &ProjectsLocationsIdentityMappingStoresCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.googleclouddiscoveryenginev1betaidentitymappingstore = googleclouddiscoveryenginev1betaidentitymappingstore
+	return c
+}
+
+// CmekConfigName sets the optional parameter "cmekConfigName": Resource name
+// of the CmekConfig to use for protecting this Identity Mapping Store.
+func (c *ProjectsLocationsIdentityMappingStoresCreateCall) CmekConfigName(cmekConfigName string) *ProjectsLocationsIdentityMappingStoresCreateCall {
+	c.urlParams_.Set("cmekConfigName", cmekConfigName)
+	return c
+}
+
+// DisableCmek sets the optional parameter "disableCmek": Identity Mapping
+// Store without CMEK protections. If a default CmekConfig is set for the
+// project, setting this field will override the default CmekConfig as well.
+func (c *ProjectsLocationsIdentityMappingStoresCreateCall) DisableCmek(disableCmek bool) *ProjectsLocationsIdentityMappingStoresCreateCall {
+	c.urlParams_.Set("disableCmek", fmt.Sprint(disableCmek))
+	return c
+}
+
+// IdentityMappingStoreId sets the optional parameter "identityMappingStoreId":
+// Required. The ID of the Identity Mapping Store to create. The ID must
+// contain only letters (a-z, A-Z), numbers (0-9), underscores (_), and hyphens
+// (-). The maximum length is 63 characters.
+func (c *ProjectsLocationsIdentityMappingStoresCreateCall) IdentityMappingStoreId(identityMappingStoreId string) *ProjectsLocationsIdentityMappingStoresCreateCall {
+	c.urlParams_.Set("identityMappingStoreId", identityMappingStoreId)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsIdentityMappingStoresCreateCall) Fields(s ...googleapi.Field) *ProjectsLocationsIdentityMappingStoresCreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsIdentityMappingStoresCreateCall) Context(ctx context.Context) *ProjectsLocationsIdentityMappingStoresCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsIdentityMappingStoresCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsIdentityMappingStoresCreateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googleclouddiscoveryenginev1betaidentitymappingstore)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta/{+parent}/identityMappingStores")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "discoveryengine.projects.locations.identityMappingStores.create", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "discoveryengine.projects.locations.identityMappingStores.create" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudDiscoveryengineV1betaIdentityMappingStore.ServerResponse.Header
+// or (if a response was returned at all) in error.(*googleapi.Error).Header.
+// Use googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsIdentityMappingStoresCreateCall) Do(opts ...googleapi.CallOption) (*GoogleCloudDiscoveryengineV1betaIdentityMappingStore, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudDiscoveryengineV1betaIdentityMappingStore{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "discoveryengine.projects.locations.identityMappingStores.create", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsIdentityMappingStoresDeleteCall struct {
+	s          *Service
+	name       string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Delete: Deletes the Identity Mapping Store.
+//
+//   - name: The name of the Identity Mapping Store to delete. Format:
+//     `projects/{project}/locations/{location}/identityMappingStores/{identityMap
+//     pingStore}`.
+func (r *ProjectsLocationsIdentityMappingStoresService) Delete(name string) *ProjectsLocationsIdentityMappingStoresDeleteCall {
+	c := &ProjectsLocationsIdentityMappingStoresDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsIdentityMappingStoresDeleteCall) Fields(s ...googleapi.Field) *ProjectsLocationsIdentityMappingStoresDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsIdentityMappingStoresDeleteCall) Context(ctx context.Context) *ProjectsLocationsIdentityMappingStoresDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsIdentityMappingStoresDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsIdentityMappingStoresDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("DELETE", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "discoveryengine.projects.locations.identityMappingStores.delete", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "discoveryengine.projects.locations.identityMappingStores.delete" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleLongrunningOperation.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsIdentityMappingStoresDeleteCall) Do(opts ...googleapi.CallOption) (*GoogleLongrunningOperation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleLongrunningOperation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "discoveryengine.projects.locations.identityMappingStores.delete", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsIdentityMappingStoresGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Gets the Identity Mapping Store.
+//
+//   - name: The name of the Identity Mapping Store to get. Format:
+//     `projects/{project}/locations/{location}/identityMappingStores/{identityMap
+//     pingStore}`.
+func (r *ProjectsLocationsIdentityMappingStoresService) Get(name string) *ProjectsLocationsIdentityMappingStoresGetCall {
+	c := &ProjectsLocationsIdentityMappingStoresGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsIdentityMappingStoresGetCall) Fields(s ...googleapi.Field) *ProjectsLocationsIdentityMappingStoresGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsIdentityMappingStoresGetCall) IfNoneMatch(entityTag string) *ProjectsLocationsIdentityMappingStoresGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsIdentityMappingStoresGetCall) Context(ctx context.Context) *ProjectsLocationsIdentityMappingStoresGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsIdentityMappingStoresGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsIdentityMappingStoresGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "discoveryengine.projects.locations.identityMappingStores.get", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "discoveryengine.projects.locations.identityMappingStores.get" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudDiscoveryengineV1betaIdentityMappingStore.ServerResponse.Header
+// or (if a response was returned at all) in error.(*googleapi.Error).Header.
+// Use googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsIdentityMappingStoresGetCall) Do(opts ...googleapi.CallOption) (*GoogleCloudDiscoveryengineV1betaIdentityMappingStore, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudDiscoveryengineV1betaIdentityMappingStore{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "discoveryengine.projects.locations.identityMappingStores.get", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsIdentityMappingStoresImportIdentityMappingsCall struct {
+	s                                                             *Service
+	identityMappingStore                                          string
+	googleclouddiscoveryenginev1betaimportidentitymappingsrequest *GoogleCloudDiscoveryengineV1betaImportIdentityMappingsRequest
+	urlParams_                                                    gensupport.URLParams
+	ctx_                                                          context.Context
+	header_                                                       http.Header
+}
+
+// ImportIdentityMappings: Imports a list of Identity Mapping Entries to an
+// Identity Mapping Store.
+//
+//   - identityMappingStore: The name of the Identity Mapping Store to import
+//     Identity Mapping Entries to. Format:
+//     `projects/{project}/locations/{location}/identityMappingStores/{identityMap
+//     pingStore}`.
+func (r *ProjectsLocationsIdentityMappingStoresService) ImportIdentityMappings(identityMappingStore string, googleclouddiscoveryenginev1betaimportidentitymappingsrequest *GoogleCloudDiscoveryengineV1betaImportIdentityMappingsRequest) *ProjectsLocationsIdentityMappingStoresImportIdentityMappingsCall {
+	c := &ProjectsLocationsIdentityMappingStoresImportIdentityMappingsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.identityMappingStore = identityMappingStore
+	c.googleclouddiscoveryenginev1betaimportidentitymappingsrequest = googleclouddiscoveryenginev1betaimportidentitymappingsrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsIdentityMappingStoresImportIdentityMappingsCall) Fields(s ...googleapi.Field) *ProjectsLocationsIdentityMappingStoresImportIdentityMappingsCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsIdentityMappingStoresImportIdentityMappingsCall) Context(ctx context.Context) *ProjectsLocationsIdentityMappingStoresImportIdentityMappingsCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsIdentityMappingStoresImportIdentityMappingsCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsIdentityMappingStoresImportIdentityMappingsCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googleclouddiscoveryenginev1betaimportidentitymappingsrequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta/{+identityMappingStore}:importIdentityMappings")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"identityMappingStore": c.identityMappingStore,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "discoveryengine.projects.locations.identityMappingStores.importIdentityMappings", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "discoveryengine.projects.locations.identityMappingStores.importIdentityMappings" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleLongrunningOperation.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsIdentityMappingStoresImportIdentityMappingsCall) Do(opts ...googleapi.CallOption) (*GoogleLongrunningOperation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleLongrunningOperation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "discoveryengine.projects.locations.identityMappingStores.importIdentityMappings", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsIdentityMappingStoresListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists all Identity Mapping Stores.
+//
+//   - parent: The parent of the Identity Mapping Stores to list. Format:
+//     `projects/{project}/locations/{location}`.
+func (r *ProjectsLocationsIdentityMappingStoresService) List(parent string) *ProjectsLocationsIdentityMappingStoresListCall {
+	c := &ProjectsLocationsIdentityMappingStoresListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": Maximum number of
+// IdentityMappingStores to return. If unspecified, defaults to 100. The
+// maximum allowed value is 1000. Values above 1000 will be coerced to 1000.
+func (c *ProjectsLocationsIdentityMappingStoresListCall) PageSize(pageSize int64) *ProjectsLocationsIdentityMappingStoresListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": A page token, received
+// from a previous `ListIdentityMappingStores` call. Provide this to retrieve
+// the subsequent page. When paginating, all other parameters provided to
+// `ListIdentityMappingStores` must match the call that provided the page
+// token.
+func (c *ProjectsLocationsIdentityMappingStoresListCall) PageToken(pageToken string) *ProjectsLocationsIdentityMappingStoresListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsIdentityMappingStoresListCall) Fields(s ...googleapi.Field) *ProjectsLocationsIdentityMappingStoresListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsIdentityMappingStoresListCall) IfNoneMatch(entityTag string) *ProjectsLocationsIdentityMappingStoresListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsIdentityMappingStoresListCall) Context(ctx context.Context) *ProjectsLocationsIdentityMappingStoresListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsIdentityMappingStoresListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsIdentityMappingStoresListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta/{+parent}/identityMappingStores")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "discoveryengine.projects.locations.identityMappingStores.list", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "discoveryengine.projects.locations.identityMappingStores.list" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudDiscoveryengineV1betaListIdentityMappingStoresResponse.ServerResp
+// onse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsIdentityMappingStoresListCall) Do(opts ...googleapi.CallOption) (*GoogleCloudDiscoveryengineV1betaListIdentityMappingStoresResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudDiscoveryengineV1betaListIdentityMappingStoresResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "discoveryengine.projects.locations.identityMappingStores.list", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsLocationsIdentityMappingStoresListCall) Pages(ctx context.Context, f func(*GoogleCloudDiscoveryengineV1betaListIdentityMappingStoresResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+type ProjectsLocationsIdentityMappingStoresListIdentityMappingsCall struct {
+	s                    *Service
+	identityMappingStore string
+	urlParams_           gensupport.URLParams
+	ifNoneMatch_         string
+	ctx_                 context.Context
+	header_              http.Header
+}
+
+// ListIdentityMappings: Lists Identity Mappings in an Identity Mapping Store.
+//
+//   - identityMappingStore: The name of the Identity Mapping Store to list
+//     Identity Mapping Entries in. Format:
+//     `projects/{project}/locations/{location}/identityMappingStores/{identityMap
+//     pingStore}`.
+func (r *ProjectsLocationsIdentityMappingStoresService) ListIdentityMappings(identityMappingStore string) *ProjectsLocationsIdentityMappingStoresListIdentityMappingsCall {
+	c := &ProjectsLocationsIdentityMappingStoresListIdentityMappingsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.identityMappingStore = identityMappingStore
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": Maximum number of
+// IdentityMappings to return. If unspecified, defaults to 2000. The maximum
+// allowed value is 10000. Values above 10000 will be coerced to 10000.
+func (c *ProjectsLocationsIdentityMappingStoresListIdentityMappingsCall) PageSize(pageSize int64) *ProjectsLocationsIdentityMappingStoresListIdentityMappingsCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": A page token, received
+// from a previous `ListIdentityMappings` call. Provide this to retrieve the
+// subsequent page. When paginating, all other parameters provided to
+// `ListIdentityMappings` must match the call that provided the page token.
+func (c *ProjectsLocationsIdentityMappingStoresListIdentityMappingsCall) PageToken(pageToken string) *ProjectsLocationsIdentityMappingStoresListIdentityMappingsCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsIdentityMappingStoresListIdentityMappingsCall) Fields(s ...googleapi.Field) *ProjectsLocationsIdentityMappingStoresListIdentityMappingsCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsIdentityMappingStoresListIdentityMappingsCall) IfNoneMatch(entityTag string) *ProjectsLocationsIdentityMappingStoresListIdentityMappingsCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsIdentityMappingStoresListIdentityMappingsCall) Context(ctx context.Context) *ProjectsLocationsIdentityMappingStoresListIdentityMappingsCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsIdentityMappingStoresListIdentityMappingsCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsIdentityMappingStoresListIdentityMappingsCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta/{+identityMappingStore}:listIdentityMappings")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"identityMappingStore": c.identityMappingStore,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "discoveryengine.projects.locations.identityMappingStores.listIdentityMappings", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "discoveryengine.projects.locations.identityMappingStores.listIdentityMappings" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudDiscoveryengineV1betaListIdentityMappingsResponse.ServerResponse.
+// Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsIdentityMappingStoresListIdentityMappingsCall) Do(opts ...googleapi.CallOption) (*GoogleCloudDiscoveryengineV1betaListIdentityMappingsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudDiscoveryengineV1betaListIdentityMappingsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "discoveryengine.projects.locations.identityMappingStores.listIdentityMappings", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsLocationsIdentityMappingStoresListIdentityMappingsCall) Pages(ctx context.Context, f func(*GoogleCloudDiscoveryengineV1betaListIdentityMappingsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+type ProjectsLocationsIdentityMappingStoresPurgeIdentityMappingsCall struct {
+	s                                                            *Service
+	identityMappingStore                                         string
+	googleclouddiscoveryenginev1betapurgeidentitymappingsrequest *GoogleCloudDiscoveryengineV1betaPurgeIdentityMappingsRequest
+	urlParams_                                                   gensupport.URLParams
+	ctx_                                                         context.Context
+	header_                                                      http.Header
+}
+
+// PurgeIdentityMappings: Purges specified or all Identity Mapping Entries from
+// an Identity Mapping Store.
+//
+//   - identityMappingStore: The name of the Identity Mapping Store to purge
+//     Identity Mapping Entries from. Format:
+//     `projects/{project}/locations/{location}/identityMappingStores/{identityMap
+//     pingStore}`.
+func (r *ProjectsLocationsIdentityMappingStoresService) PurgeIdentityMappings(identityMappingStore string, googleclouddiscoveryenginev1betapurgeidentitymappingsrequest *GoogleCloudDiscoveryengineV1betaPurgeIdentityMappingsRequest) *ProjectsLocationsIdentityMappingStoresPurgeIdentityMappingsCall {
+	c := &ProjectsLocationsIdentityMappingStoresPurgeIdentityMappingsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.identityMappingStore = identityMappingStore
+	c.googleclouddiscoveryenginev1betapurgeidentitymappingsrequest = googleclouddiscoveryenginev1betapurgeidentitymappingsrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsIdentityMappingStoresPurgeIdentityMappingsCall) Fields(s ...googleapi.Field) *ProjectsLocationsIdentityMappingStoresPurgeIdentityMappingsCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsIdentityMappingStoresPurgeIdentityMappingsCall) Context(ctx context.Context) *ProjectsLocationsIdentityMappingStoresPurgeIdentityMappingsCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsIdentityMappingStoresPurgeIdentityMappingsCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsIdentityMappingStoresPurgeIdentityMappingsCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googleclouddiscoveryenginev1betapurgeidentitymappingsrequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta/{+identityMappingStore}:purgeIdentityMappings")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"identityMappingStore": c.identityMappingStore,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "discoveryengine.projects.locations.identityMappingStores.purgeIdentityMappings", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "discoveryengine.projects.locations.identityMappingStores.purgeIdentityMappings" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleLongrunningOperation.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsIdentityMappingStoresPurgeIdentityMappingsCall) Do(opts ...googleapi.CallOption) (*GoogleLongrunningOperation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleLongrunningOperation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "discoveryengine.projects.locations.identityMappingStores.purgeIdentityMappings", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 

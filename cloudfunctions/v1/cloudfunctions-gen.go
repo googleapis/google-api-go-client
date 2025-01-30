@@ -1261,10 +1261,10 @@ type Retry struct {
 type SecretEnvVar struct {
 	// Key: Name of the environment variable.
 	Key string `json:"key,omitempty"`
-	// ProjectId: Project identifier (preferrably project number but can also be
-	// the project ID) of the project that contains the secret. If not set, it will
-	// be populated with the function's project assuming that the secret exists in
-	// the same project as of the function.
+	// ProjectId: Project identifier (preferably project number but can also be the
+	// project ID) of the project that contains the secret. If not set, it will be
+	// populated with the function's project assuming that the secret exists in the
+	// same project as of the function.
 	ProjectId string `json:"projectId,omitempty"`
 	// Secret: Name of the secret in secret manager (not the full resource name).
 	Secret string `json:"secret,omitempty"`

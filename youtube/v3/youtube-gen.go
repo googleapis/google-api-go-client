@@ -2107,6 +2107,9 @@ func (s ChannelStatistics) MarshalJSON() ([]byte, error) {
 
 // ChannelStatus: JSON template for the status part of a channel.
 type ChannelStatus struct {
+	// IsChannelMonetizationEnabled: Whether the channel is considered ypp
+	// monetization enabled. See go/yppornot for more details.
+	IsChannelMonetizationEnabled bool `json:"isChannelMonetizationEnabled,omitempty"`
 	// IsLinked: If true, then the user is linked to either a YouTube username or
 	// G+ account. Otherwise, the user doesn't have a public YouTube identity.
 	IsLinked bool `json:"isLinked,omitempty"`
@@ -2128,15 +2131,15 @@ type ChannelStatus struct {
 	//   "private"
 	PrivacyStatus           string `json:"privacyStatus,omitempty"`
 	SelfDeclaredMadeForKids bool   `json:"selfDeclaredMadeForKids,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "IsLinked") to
-	// unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
+	// ForceSendFields is a list of field names (e.g.
+	// "IsChannelMonetizationEnabled") to unconditionally include in API requests.
+	// By default, fields with empty or default values are omitted from API
+	// requests. See https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields
+	// for more details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "IsLinked") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
+	// NullFields is a list of field names (e.g. "IsChannelMonetizationEnabled") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }

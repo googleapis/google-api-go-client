@@ -744,7 +744,7 @@ func (s DriveExportOptions) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// DriveOptions: Additional options for Drive search
+// DriveOptions: Additional options for Drive search.
 type DriveOptions struct {
 	// ClientSideEncryptedOption: Set whether the results include only content
 	// encrypted with Google Workspace Client-side encryption

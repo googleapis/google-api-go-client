@@ -2548,7 +2548,7 @@ type JobRun struct {
 	Etag string `json:"etag,omitempty"`
 	// JobId: Output only. ID of the `Rollout` job this `JobRun` corresponds to.
 	JobId string `json:"jobId,omitempty"`
-	// Name: Identifier. Name of the `JobRun`. Format is
+	// Name: Output only. Name of the `JobRun`. Format is
 	// `projects/{project}/locations/{location}/deliveryPipelines/{deliveryPipeline}
 	// /releases/{releases}/rollouts/{rollouts}/jobRuns/{uuid}`.
 	Name string `json:"name,omitempty"`

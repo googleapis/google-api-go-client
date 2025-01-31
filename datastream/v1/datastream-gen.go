@@ -1252,7 +1252,7 @@ func (s MysqlObjectIdentifier) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// MysqlProfile: MySQL database profile. Next ID: 7.
+// MysqlProfile: MySQL database profile.
 type MysqlProfile struct {
 	// Hostname: Required. Hostname for the MySQL connection.
 	Hostname string `json:"hostname,omitempty"`
@@ -1501,7 +1501,7 @@ func (s OperationMetadata) MarshalJSON() ([]byte, error) {
 }
 
 // OracleAsmConfig: Configuration for Oracle Automatic Storage Management (ASM)
-// connection. .
+// connection.
 type OracleAsmConfig struct {
 	// AsmService: Required. ASM service name for the Oracle ASM connection.
 	AsmService string `json:"asmService,omitempty"`
@@ -1602,7 +1602,7 @@ func (s OracleObjectIdentifier) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// OracleProfile: Oracle database profile. Next ID: 10.
+// OracleProfile: Oracle database profile.
 type OracleProfile struct {
 	// ConnectionAttributes: Connection string attributes
 	ConnectionAttributes map[string]string `json:"connectionAttributes,omitempty"`
@@ -2455,7 +2455,7 @@ func (s SqlServerObjectIdentifier) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// SqlServerProfile: SQLServer database profile. Next ID: 8.
+// SqlServerProfile: SQLServer database profile.
 type SqlServerProfile struct {
 	// Database: Required. Database for the SQLServer connection.
 	Database string `json:"database,omitempty"`

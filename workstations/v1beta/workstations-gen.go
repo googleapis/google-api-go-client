@@ -1752,8 +1752,15 @@ type Workstation struct {
 	// BoostConfigs: Output only. List of available boost configuration IDs that
 	// this workstation can be boosted up to.
 	BoostConfigs []*WorkstationBoostConfig `json:"boostConfigs,omitempty"`
+	// Conditions: Output only. Status conditions describing the workstation's
+	// current state.
+	Conditions []*Status `json:"conditions,omitempty"`
 	// CreateTime: Output only. Time when this workstation was created.
 	CreateTime string `json:"createTime,omitempty"`
+	// Degraded: Output only. Whether this workstation is in degraded mode, in
+	// which case it may require user action to restore full functionality. Details
+	// can be found in conditions.
+	Degraded bool `json:"degraded,omitempty"`
 	// DeleteTime: Output only. Time when this workstation was soft-deleted.
 	DeleteTime string `json:"deleteTime,omitempty"`
 	// DisplayName: Optional. Human-readable name for this workstation.

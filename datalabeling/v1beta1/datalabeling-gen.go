@@ -1735,7 +1735,7 @@ func (s GoogleCloudDatalabelingV1beta1CreateDatasetRequest) MarshalJSON() ([]byt
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudDatalabelingV1beta1CreateEvaluationJobRequest: Request message
+// GoogleCloudDatalabelingV1beta1CreateEvaluationJobRequest:  Request message
 // for CreateEvaluationJob.
 type GoogleCloudDatalabelingV1beta1CreateEvaluationJobRequest struct {
 	// Job: Required. The evaluation job to create.
@@ -3193,7 +3193,7 @@ func (s GoogleCloudDatalabelingV1beta1LabelImagePolylineOperationMetadata) Marsh
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudDatalabelingV1beta1LabelImageRequest: Request message for
+// GoogleCloudDatalabelingV1beta1LabelImageRequest:  Request message for
 // starting an image labeling task.
 type GoogleCloudDatalabelingV1beta1LabelImageRequest struct {
 	// BasicConfig: Required. Basic human annotation config.
@@ -3534,7 +3534,7 @@ func (s GoogleCloudDatalabelingV1beta1LabelVideoObjectTrackingOperationMetadata)
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudDatalabelingV1beta1LabelVideoRequest: Request message for
+// GoogleCloudDatalabelingV1beta1LabelVideoRequest:  Request message for
 // LabelVideo.
 type GoogleCloudDatalabelingV1beta1LabelVideoRequest struct {
 	// BasicConfig: Required. Basic human annotation config.
@@ -6747,7 +6747,7 @@ type ProjectsDatasetsCreateCall struct {
 	header_                                            http.Header
 }
 
-// Create: Creates dataset. If success return a Dataset resource.
+// Create:  Creates dataset. If success return a Dataset resource.
 //
 // - parent: Dataset resource parent, format: projects/{project_id}.
 func (r *ProjectsDatasetsService) Create(parent string, googleclouddatalabelingv1beta1createdatasetrequest *GoogleCloudDatalabelingV1beta1CreateDatasetRequest) *ProjectsDatasetsCreateCall {
@@ -8441,7 +8441,7 @@ type ProjectsDatasetsAnnotatedDatasetsFeedbackThreadsGetCall struct {
 	header_      http.Header
 }
 
-// Get: Get a FeedbackThread object.
+// Get:  Get a FeedbackThread object.
 //
 //   - name: Name of the feedback. Format:
 //     'projects/{project_id}/datasets/{dataset_id}/annotatedDatasets/{annotated_d
@@ -9439,7 +9439,7 @@ type ProjectsDatasetsEvaluationsGetCall struct {
 	header_      http.Header
 }
 
-// Get: Gets an evaluation by resource name (to search, use
+// Get:  Gets an evaluation by resource name (to search, use
 // projects.evaluations.search).
 //
 //   - name: Name of the evaluation. Format: "projects/{project_id}/datasets/
@@ -9680,7 +9680,7 @@ type ProjectsDatasetsImageLabelCall struct {
 	header_                                         http.Header
 }
 
-// Label: Starts a labeling task for image. The type of image labeling task is
+// Label:  Starts a labeling task for image. The type of image labeling task is
 // configured by feature in the request.
 //
 //   - parent: Name of the dataset to request labeling task, format:
@@ -9998,7 +9998,7 @@ type ProjectsEvaluationJobsCreateCall struct {
 	header_                                                  http.Header
 }
 
-// Create: Creates an evaluation job.
+// Create:  Creates an evaluation job.
 //
 // - parent: Evaluation job resource parent. Format: "projects/{project_id}".
 func (r *ProjectsEvaluationJobsService) Create(parent string, googleclouddatalabelingv1beta1createevaluationjobrequest *GoogleCloudDatalabelingV1beta1CreateEvaluationJobRequest) *ProjectsEvaluationJobsCreateCall {

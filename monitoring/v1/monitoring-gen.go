@@ -2355,6 +2355,10 @@ type Scorecard struct {
 	// BlankView: Will cause the Scorecard to show only the value, with no
 	// indicator to its value relative to its thresholds.
 	BlankView *Empty `json:"blankView,omitempty"`
+	// Breakdowns: Optional. The collection of breakdowns to be applied to the
+	// dataset. A breakdown is a way to slice the data. For example, you can break
+	// down the data by region.
+	Breakdowns []*Breakdown `json:"breakdowns,omitempty"`
 	// Dimensions: Optional. A dimension is a structured label, class, or category
 	// for a set of measurements in your data.
 	Dimensions []*Dimension `json:"dimensions,omitempty"`

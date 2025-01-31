@@ -176,6 +176,7 @@ func NewProjectsLocationsService(s *Service) *ProjectsLocationsService {
 	rs.BackupVaults = NewProjectsLocationsBackupVaultsService(s)
 	rs.ManagementServers = NewProjectsLocationsManagementServersService(s)
 	rs.Operations = NewProjectsLocationsOperationsService(s)
+	rs.ResourceBackupConfigs = NewProjectsLocationsResourceBackupConfigsService(s)
 	rs.ServiceConfig = NewProjectsLocationsServiceConfigService(s)
 	return rs
 }
@@ -192,6 +193,8 @@ type ProjectsLocationsService struct {
 	ManagementServers *ProjectsLocationsManagementServersService
 
 	Operations *ProjectsLocationsOperationsService
+
+	ResourceBackupConfigs *ProjectsLocationsResourceBackupConfigsService
 
 	ServiceConfig *ProjectsLocationsServiceConfigService
 }
@@ -262,6 +265,15 @@ func NewProjectsLocationsOperationsService(s *Service) *ProjectsLocationsOperati
 }
 
 type ProjectsLocationsOperationsService struct {
+	s *Service
+}
+
+func NewProjectsLocationsResourceBackupConfigsService(s *Service) *ProjectsLocationsResourceBackupConfigsService {
+	rs := &ProjectsLocationsResourceBackupConfigsService{s: s}
+	return rs
+}
+
+type ProjectsLocationsResourceBackupConfigsService struct {
 	s *Service
 }
 
@@ -858,6 +870,86 @@ func (s BackupApplianceLockInfo) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// BackupConfigDetails: BackupConfigDetails has information about how the
+// resource is configured for backups and about the most recent backup taken
+// for this configuration.
+type BackupConfigDetails struct {
+	// ApplicableResource: Output only. The full resource name
+	// (https://cloud.google.com/asset-inventory/docs/resource-name-format) of the
+	// resource that is applicable for the backup configuration. Example:
+	// "//compute.googleapis.com/projects/{project}/zones/{zone}/instances/{instance
+	// }"
+	ApplicableResource string `json:"applicableResource,omitempty"`
+	// BackupConfigSource: Output only. The full resource name of the backup config
+	// source resource. For example,
+	// "//backupdr.googleapis.com/v1/projects/{project}/locations/{region}/backupPla
+	// ns/{backupplanId}" or
+	// "//compute.googleapis.com/projects/{project}/locations/{region}/resourcePolic
+	// ies/{resourcePolicyId}".
+	BackupConfigSource string `json:"backupConfigSource,omitempty"`
+	// BackupConfigSourceDisplayName: Output only. The display name of the backup
+	// config source resource.
+	BackupConfigSourceDisplayName string `json:"backupConfigSourceDisplayName,omitempty"`
+	// BackupDrPlanConfig: Backup and DR's Backup Plan specific data.
+	BackupDrPlanConfig *BackupDrPlanConfig `json:"backupDrPlanConfig,omitempty"`
+	// BackupDrTemplateConfig: Backup and DR's Template specific data.
+	BackupDrTemplateConfig *BackupDrTemplateConfig `json:"backupDrTemplateConfig,omitempty"`
+	// BackupLocations: The locations where the backups are to be stored.
+	BackupLocations []*BackupLocation `json:"backupLocations,omitempty"`
+	// BackupVault: Output only. The full resource name
+	// (https://cloud.google.com/asset-inventory/docs/resource-name-format) of the
+	// backup vault that will store the backups generated through this backup
+	// configuration. Example:
+	// "//backupdr.googleapis.com/v1/projects/{project}/locations/{region}/backupVau
+	// lts/{backupvaultId}"
+	BackupVault string `json:"backupVault,omitempty"`
+	// LatestSuccessfulBackupTime: Output only. Timestamp of the latest successful
+	// backup created via this backup configuration.
+	LatestSuccessfulBackupTime string `json:"latestSuccessfulBackupTime,omitempty"`
+	// PitrSettings: Output only. Point in time recovery settings of the backup
+	// configuration resource.
+	PitrSettings *PitrSettings `json:"pitrSettings,omitempty"`
+	// State: Output only. The state of the backup config resource.
+	//
+	// Possible values:
+	//   "STATE_UNSPECIFIED" - Backup config state not set.
+	//   "ACTIVE" - The config is in an active state protecting the resource
+	//   "INACTIVE" - The config is currently not protecting the resource. Either
+	// because it is disabled or the owning project has been deleted without
+	// cleanup of the actual resource.
+	//   "ERROR" - The config still exists but because of some error state it is
+	// not protecting the resource. Like the source project is deleted. For eg.
+	// PlanAssociation, BackupPlan is deleted.
+	State string `json:"state,omitempty"`
+	// Type: Output only. The type of the backup config resource.
+	//
+	// Possible values:
+	//   "TYPE_UNSPECIFIED" - Backup config type is unspecified.
+	//   "CLOUD_SQL_INSTANCE_BACKUP_CONFIG" - Backup config is Cloud SQL instance's
+	// automated backup config.
+	//   "COMPUTE_ENGINE_RESOURCE_POLICY" - Backup config is Compute Engine
+	// Resource Policy.
+	//   "BACKUPDR_BACKUP_PLAN" - Backup config is Backup and DR's Backup Plan.
+	//   "BACKUPDR_TEMPLATE" - Backup config is Backup and DR's Template.
+	Type string `json:"type,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ApplicableResource") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ApplicableResource") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s BackupConfigDetails) MarshalJSON() ([]byte, error) {
+	type NoMethod BackupConfigDetails
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // BackupConfigInfo: BackupConfigInfo has information about how the resource is
 // configured for Backup and about the most recent backup to this vault.
 type BackupConfigInfo struct {
@@ -898,6 +990,114 @@ type BackupConfigInfo struct {
 
 func (s BackupConfigInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod BackupConfigInfo
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// BackupDrPlanConfig: BackupDrPlanConfig has additional information about
+// Backup and DR's Plan backup configuration.
+type BackupDrPlanConfig struct {
+	// BackupDrPlanRules: Backup rules of the backup plan resource.
+	BackupDrPlanRules []*BackupDrPlanRule `json:"backupDrPlanRules,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "BackupDrPlanRules") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "BackupDrPlanRules") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s BackupDrPlanConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod BackupDrPlanConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// BackupDrPlanRule: BackupDrPlanRule has rule specific information of the
+// backup plan resource.
+type BackupDrPlanRule struct {
+	// LastSuccessfulBackupTime: Output only. Timestamp of the latest successful
+	// backup created via this backup rule.
+	LastSuccessfulBackupTime string `json:"lastSuccessfulBackupTime,omitempty"`
+	// RuleId: Output only. Unique Id of the backup rule.
+	RuleId string `json:"ruleId,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "LastSuccessfulBackupTime")
+	// to unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "LastSuccessfulBackupTime") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s BackupDrPlanRule) MarshalJSON() ([]byte, error) {
+	type NoMethod BackupDrPlanRule
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// BackupDrTemplateConfig: BackupDrTemplateConfig has additional information
+// about Backup and DR's Template backup configuration.
+type BackupDrTemplateConfig struct {
+	// FirstPartyManagementUri: Output only. The URI of the BackupDr template
+	// resource for the first party identity users.
+	FirstPartyManagementUri string `json:"firstPartyManagementUri,omitempty"`
+	// ThirdPartyManagementUri: Output only. The URI of the BackupDr template
+	// resource for the third party identity users.
+	ThirdPartyManagementUri string `json:"thirdPartyManagementUri,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "FirstPartyManagementUri") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "FirstPartyManagementUri") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s BackupDrTemplateConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod BackupDrTemplateConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// BackupLocation: BackupLocation represents a cloud location where a backup
+// can be stored.
+type BackupLocation struct {
+	// LocationId: Output only. The id of the cloud location. Example:
+	// "us-central1"
+	LocationId string `json:"locationId,omitempty"`
+	// Type: Output only. The type of the location.
+	//
+	// Possible values:
+	//   "TYPE_UNSPECIFIED" - Location type is unspecified.
+	//   "ZONAL" - Location type is zonal.
+	//   "REGIONAL" - Location type is regional.
+	//   "MULTI_REGIONAL" - Location type is multi regional.
+	Type string `json:"type,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "LocationId") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "LocationId") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s BackupLocation) MarshalJSON() ([]byte, error) {
+	type NoMethod BackupLocation
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -2581,6 +2781,35 @@ func (s ListOperationsResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// ListResourceBackupConfigsResponse: Response for ListResourceBackupConfigs.
+type ListResourceBackupConfigsResponse struct {
+	// NextPageToken: A token identifying a page of results the server should
+	// return.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+	// ResourceBackupConfigs: The list of ResourceBackupConfigs for the specified
+	// scope.
+	ResourceBackupConfigs []*ResourceBackupConfig `json:"resourceBackupConfigs,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "NextPageToken") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ListResourceBackupConfigsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ListResourceBackupConfigsResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // Location: A resource that represents a Google Cloud location.
 type Location struct {
 	// DisplayName: The friendly name for this location, typically a nearby city
@@ -3022,6 +3251,29 @@ func (s OperationMetadata) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// PitrSettings: Point in time recovery settings of the backup configuration
+// resource.
+type PitrSettings struct {
+	// RetentionDays: Output only. Number of days to retain the backup.
+	RetentionDays int64 `json:"retentionDays,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "RetentionDays") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "RetentionDays") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s PitrSettings) MarshalJSON() ([]byte, error) {
+	type NoMethod PitrSettings
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // Policy: An Identity and Access Management (IAM) policy, which specifies
 // access controls for Google Cloud resources. A `Policy` is a collection of
 // `bindings`. A `binding` binds one or more `members`, or principals, to a
@@ -3143,6 +3395,62 @@ type RemoveDataSourceRequest struct {
 
 func (s RemoveDataSourceRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod RemoveDataSourceRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ResourceBackupConfig: ResourceBackupConfig represents a resource along with
+// its backup configurations.
+type ResourceBackupConfig struct {
+	// BackupConfigsDetails: Backup configurations applying to the target resource,
+	// including those targeting its related/child resources. For example, backup
+	// configuration applicable to Compute Engine disks will be populated in this
+	// field for a Compute Engine VM which has the disk associated.
+	BackupConfigsDetails []*BackupConfigDetails `json:"backupConfigsDetails,omitempty"`
+	// BackupConfigured: Output only. Whether the target resource is configured for
+	// backup. This is true if the backup_configs_details is not empty.
+	BackupConfigured bool `json:"backupConfigured,omitempty"`
+	// Name: Identifier. The resource name of the ResourceBackupConfig. Format:
+	// projects/{project}/locations/{location}/resourceBackupConfigs/{uid}
+	Name string `json:"name,omitempty"`
+	// TargetResource: Output only. The full resource name
+	// (https://cloud.google.com/asset-inventory/docs/resource-name-format) of the
+	// cloud resource that this configuration applies to. Supported resource types
+	// are ResourceBackupConfig.ResourceType.
+	TargetResource string `json:"targetResource,omitempty"`
+	// TargetResourceDisplayName: Output only. The human friendly name of the
+	// target resource.
+	TargetResourceDisplayName string `json:"targetResourceDisplayName,omitempty"`
+	// TargetResourceLabels: Labels associated with the target resource.
+	TargetResourceLabels map[string]string `json:"targetResourceLabels,omitempty"`
+	// TargetResourceType: Output only. The type of the target resource.
+	//
+	// Possible values:
+	//   "RESOURCE_TYPE_UNSPECIFIED" - Resource type not set.
+	//   "CLOUD_SQL_INSTANCE" - Cloud SQL instance.
+	//   "COMPUTE_ENGINE_VM" - Compute Engine VM.
+	TargetResourceType string `json:"targetResourceType,omitempty"`
+	// Uid: Output only. The unique identifier of the resource backup config.
+	Uid string `json:"uid,omitempty"`
+	// Vaulted: Output only. Whether the target resource is protected by a backup
+	// vault. This is true if the backup_configs_details is not empty and any of
+	// the ResourceBackupConfig.backup_configs_details has a backup configuration
+	// with BackupConfigDetails.backup_vault set. set.
+	Vaulted bool `json:"vaulted,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "BackupConfigsDetails") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "BackupConfigsDetails") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ResourceBackupConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod ResourceBackupConfig
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -9288,6 +9596,168 @@ func (c *ProjectsLocationsOperationsListCall) Do(opts ...googleapi.CallOption) (
 // A non-nil error returned from f will halt the iteration.
 // The provided context supersedes any context provided to the Context method.
 func (c *ProjectsLocationsOperationsListCall) Pages(ctx context.Context, f func(*ListOperationsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+type ProjectsLocationsResourceBackupConfigsListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists ResourceBackupConfigs.
+//
+//   - parent: The project and location for which to retrieve resource backup
+//     configs. Format: 'projects/{project_id}/locations/{location}'. In Cloud
+//     Backup and DR, locations map to Google Cloud regions, for example
+//     **us-central1**.
+func (r *ProjectsLocationsResourceBackupConfigsService) List(parent string) *ProjectsLocationsResourceBackupConfigsListCall {
+	c := &ProjectsLocationsResourceBackupConfigsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// Filter sets the optional parameter "filter": Filtering results.
+func (c *ProjectsLocationsResourceBackupConfigsListCall) Filter(filter string) *ProjectsLocationsResourceBackupConfigsListCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// OrderBy sets the optional parameter "orderBy": Hint for how to order the
+// results.
+func (c *ProjectsLocationsResourceBackupConfigsListCall) OrderBy(orderBy string) *ProjectsLocationsResourceBackupConfigsListCall {
+	c.urlParams_.Set("orderBy", orderBy)
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": Requested page size. Server
+// may return fewer items than requested. If unspecified, server will pick an
+// appropriate default.
+func (c *ProjectsLocationsResourceBackupConfigsListCall) PageSize(pageSize int64) *ProjectsLocationsResourceBackupConfigsListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": A token identifying a
+// page of results the server should return.
+func (c *ProjectsLocationsResourceBackupConfigsListCall) PageToken(pageToken string) *ProjectsLocationsResourceBackupConfigsListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsResourceBackupConfigsListCall) Fields(s ...googleapi.Field) *ProjectsLocationsResourceBackupConfigsListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsResourceBackupConfigsListCall) IfNoneMatch(entityTag string) *ProjectsLocationsResourceBackupConfigsListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsResourceBackupConfigsListCall) Context(ctx context.Context) *ProjectsLocationsResourceBackupConfigsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsResourceBackupConfigsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsResourceBackupConfigsListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/resourceBackupConfigs")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "backupdr.projects.locations.resourceBackupConfigs.list", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "backupdr.projects.locations.resourceBackupConfigs.list" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *ListResourceBackupConfigsResponse.ServerResponse.Header or (if a response
+// was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsResourceBackupConfigsListCall) Do(opts ...googleapi.CallOption) (*ListResourceBackupConfigsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ListResourceBackupConfigsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "backupdr.projects.locations.resourceBackupConfigs.list", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsLocationsResourceBackupConfigsListCall) Pages(ctx context.Context, f func(*ListResourceBackupConfigsResponse) error) error {
 	c.ctx_ = ctx
 	defer c.PageToken(c.urlParams_.Get("pageToken"))
 	for {

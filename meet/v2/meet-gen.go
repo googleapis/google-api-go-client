@@ -37,7 +37,7 @@
 // By default, all available scopes (see "Constants") are used to authenticate.
 // To restrict scopes, use [google.golang.org/api/option.WithScopes]:
 //
-//	meetService, err := meet.NewService(ctx, option.WithScopes(meet.MeetingsSpaceReadonlyScope))
+//	meetService, err := meet.NewService(ctx, option.WithScopes(meet.MeetingsSpaceSettingsScope))
 //
 // To use an API key for authentication (note: some APIs do not support API
 // keys), use [google.golang.org/api/option.WithAPIKey]:
@@ -109,6 +109,9 @@ const (
 
 	// Read information about any of your Google Meet conferences
 	MeetingsSpaceReadonlyScope = "https://www.googleapis.com/auth/meetings.space.readonly"
+
+	// Edit, and see settings for all of your Google Meet calls.
+	MeetingsSpaceSettingsScope = "https://www.googleapis.com/auth/meetings.space.settings"
 )
 
 // NewService creates a new Service.
@@ -116,6 +119,7 @@ func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, err
 	scopesOption := internaloption.WithDefaultScopes(
 		"https://www.googleapis.com/auth/meetings.space.created",
 		"https://www.googleapis.com/auth/meetings.space.readonly",
+		"https://www.googleapis.com/auth/meetings.space.settings",
 	)
 	// NOTE: prepend, so we don't override user-specified scopes.
 	opts = append([]option.ClientOption{scopesOption}, opts...)

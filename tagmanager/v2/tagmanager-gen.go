@@ -1418,6 +1418,9 @@ func (s FolderEntities) MarshalJSON() ([]byte, error) {
 // GalleryReference: Represents the link between a custom template and an entry
 // on the Community Template Gallery site.
 type GalleryReference struct {
+	// GalleryTemplateId: ID for the gallery template that is generated once during
+	// first sync and travels with the template redirects.
+	GalleryTemplateId string `json:"galleryTemplateId,omitempty"`
 	// Host: The name of the host for the community gallery template.
 	Host string `json:"host,omitempty"`
 	// IsModified: If a user has manually edited the community gallery template.
@@ -1435,15 +1438,15 @@ type GalleryReference struct {
 	TemplateDeveloperId string `json:"templateDeveloperId,omitempty"`
 	// Version: The version of the community gallery template.
 	Version string `json:"version,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "Host") to unconditionally
-	// include in API requests. By default, fields with empty or default values are
-	// omitted from API requests. See
+	// ForceSendFields is a list of field names (e.g. "GalleryTemplateId") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Host") to include in API requests
-	// with the JSON null value. By default, fields with empty values are omitted
-	// from API requests. See
+	// NullFields is a list of field names (e.g. "GalleryTemplateId") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }

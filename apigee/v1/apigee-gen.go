@@ -321,6 +321,7 @@ type OrganizationsApiproductsRateplansService struct {
 
 func NewOrganizationsApisService(s *Service) *OrganizationsApisService {
 	rs := &OrganizationsApisService{s: s}
+	rs.Debugsessions = NewOrganizationsApisDebugsessionsService(s)
 	rs.Deployments = NewOrganizationsApisDeploymentsService(s)
 	rs.Keyvaluemaps = NewOrganizationsApisKeyvaluemapsService(s)
 	rs.Revisions = NewOrganizationsApisRevisionsService(s)
@@ -330,11 +331,22 @@ func NewOrganizationsApisService(s *Service) *OrganizationsApisService {
 type OrganizationsApisService struct {
 	s *Service
 
+	Debugsessions *OrganizationsApisDebugsessionsService
+
 	Deployments *OrganizationsApisDeploymentsService
 
 	Keyvaluemaps *OrganizationsApisKeyvaluemapsService
 
 	Revisions *OrganizationsApisRevisionsService
+}
+
+func NewOrganizationsApisDebugsessionsService(s *Service) *OrganizationsApisDebugsessionsService {
+	rs := &OrganizationsApisDebugsessionsService{s: s}
+	return rs
+}
+
+type OrganizationsApisDebugsessionsService struct {
+	s *Service
 }
 
 func NewOrganizationsApisDeploymentsService(s *Service) *OrganizationsApisDeploymentsService {
@@ -2804,13 +2816,13 @@ func (s GoogleCloudApigeeV1BatchComputeSecurityAssessmentResultsRequest) Marshal
 }
 
 // GoogleCloudApigeeV1BatchComputeSecurityAssessmentResultsRequestIncludeAll:
-// Message for include_all option.
+// Message for include_all_resources option.
 type GoogleCloudApigeeV1BatchComputeSecurityAssessmentResultsRequestIncludeAll struct {
 }
 
 // GoogleCloudApigeeV1BatchComputeSecurityAssessmentResultsRequestResourceArray:
 //
-//	An array of resource messages.
+//	Message for the array of resources. For Apigee, the proxies are resources.
 type GoogleCloudApigeeV1BatchComputeSecurityAssessmentResultsRequestResourceArray struct {
 	// Resources: Required. The array of resources. For Apigee, the proxies are
 	// resources.
@@ -5955,6 +5967,37 @@ type GoogleCloudApigeeV1ListApiCategoriesResponse struct {
 
 func (s GoogleCloudApigeeV1ListApiCategoriesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudApigeeV1ListApiCategoriesResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudApigeeV1ListApiDebugSessionsResponse: Response for
+// ListApiDebugSessions.
+type GoogleCloudApigeeV1ListApiDebugSessionsResponse struct {
+	// NextPageToken: Page token that you can include in a
+	// ListApiDebugSessionsRequest to retrieve the next page. If omitted, no
+	// subsequent pages exist.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+	// Sessions: Session info that includes debug session ID and the first
+	// transaction creation timestamp.
+	Sessions []*GoogleCloudApigeeV1Session `json:"sessions,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "NextPageToken") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudApigeeV1ListApiDebugSessionsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudApigeeV1ListApiDebugSessionsResponse
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -9649,8 +9692,6 @@ type GoogleCloudApigeeV1SecurityAssessmentResultScoringResult struct {
 	FailedAssessmentPerWeight map[string]int64 `json:"failedAssessmentPerWeight,omitempty"`
 	// Score: The security score of the assessment.
 	Score int64 `json:"score,omitempty"`
-	// Severity: The severity of the assessment.
-	//
 	// Possible values:
 	//   "SEVERITY_UNSPECIFIED" - Severity is not defined.
 	//   "LOW" - Severity is low.
@@ -16690,6 +16731,153 @@ func (c *OrganizationsApisPatchCall) Do(opts ...googleapi.CallOption) (*GoogleCl
 	}
 	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "apigee.organizations.apis.patch", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
+}
+
+type OrganizationsApisDebugsessionsListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists debug sessions that are currently active in the given API Proxy.
+//
+//   - parent: The name of the API Proxy for which to list debug sessions. Must
+//     be of the form: `organizations/{organization}/apis/{api}`.
+func (r *OrganizationsApisDebugsessionsService) List(parent string) *OrganizationsApisDebugsessionsListCall {
+	c := &OrganizationsApisDebugsessionsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": Maximum number of debug
+// sessions to return. The page size defaults to 25.
+func (c *OrganizationsApisDebugsessionsListCall) PageSize(pageSize int64) *OrganizationsApisDebugsessionsListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": Page token, returned from
+// a previous ListApiDebugSessions call, that you can use to retrieve the next
+// page.
+func (c *OrganizationsApisDebugsessionsListCall) PageToken(pageToken string) *OrganizationsApisDebugsessionsListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *OrganizationsApisDebugsessionsListCall) Fields(s ...googleapi.Field) *OrganizationsApisDebugsessionsListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *OrganizationsApisDebugsessionsListCall) IfNoneMatch(entityTag string) *OrganizationsApisDebugsessionsListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *OrganizationsApisDebugsessionsListCall) Context(ctx context.Context) *OrganizationsApisDebugsessionsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *OrganizationsApisDebugsessionsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *OrganizationsApisDebugsessionsListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/debugsessions")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "apigee.organizations.apis.debugsessions.list", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "apigee.organizations.apis.debugsessions.list" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudApigeeV1ListApiDebugSessionsResponse.ServerResponse.Header or
+// (if a response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *OrganizationsApisDebugsessionsListCall) Do(opts ...googleapi.CallOption) (*GoogleCloudApigeeV1ListApiDebugSessionsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudApigeeV1ListApiDebugSessionsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "apigee.organizations.apis.debugsessions.list", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *OrganizationsApisDebugsessionsListCall) Pages(ctx context.Context, f func(*GoogleCloudApigeeV1ListApiDebugSessionsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
 }
 
 type OrganizationsApisDeploymentsListCall struct {

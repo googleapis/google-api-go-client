@@ -2537,6 +2537,8 @@ type VolumeBackup struct {
 	//   "FAILED" - The volume backup operation has failed.
 	//   "DELETING" - This VolumeBackup resource (and its associated artifacts) is
 	// in the process of being deleted.
+	//   "CLEANED_UP" - The underlying artifacts of a volume backup (eg: persistent
+	// disk snapshots) are deleted.
 	State string `json:"state,omitempty"`
 	// StateMessage: Output only. A human readable message explaining why the
 	// VolumeBackup is in its current state. This field is only meant for human

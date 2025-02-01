@@ -802,6 +802,11 @@ type CertificateAuthority struct {
 	// UpdateTime: Output only. The time at which this CertificateAuthority was
 	// last updated.
 	UpdateTime string `json:"updateTime,omitempty"`
+	// UserDefinedAccessUrls: Optional. User-defined URLs for accessing content
+	// published by this CertificateAuthority, including the CA certificate and the
+	// PEM-encoded CRLs. The service does not publish content to these URLs. It is
+	// up to the user to mirror content to these URLs.
+	UserDefinedAccessUrls *UserDefinedAccessUrls `json:"userDefinedAccessUrls,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
@@ -2832,6 +2837,35 @@ type UndeleteCertificateAuthorityRequest struct {
 
 func (s UndeleteCertificateAuthorityRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod UndeleteCertificateAuthorityRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// UserDefinedAccessUrls: User-defined URLs for accessing content published by
+// this CertificateAuthority.
+type UserDefinedAccessUrls struct {
+	// AiaIssuingCertificateUrls: Optional. A list of URLs where the issuer CA
+	// certificate may be downloaded, which appears in the "Authority Information
+	// Access" extension in the certificate.
+	AiaIssuingCertificateUrls []string `json:"aiaIssuingCertificateUrls,omitempty"`
+	// CrlAccessUrls: Optional. A list of URLs where to obtain CRL information,
+	// i.e. the DistributionPoint.fullName described by
+	// https://tools.ietf.org/html/rfc5280#section-4.2.1.13
+	CrlAccessUrls []string `json:"crlAccessUrls,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AiaIssuingCertificateUrls")
+	// to unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AiaIssuingCertificateUrls") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s UserDefinedAccessUrls) MarshalJSON() ([]byte, error) {
+	type NoMethod UserDefinedAccessUrls
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 

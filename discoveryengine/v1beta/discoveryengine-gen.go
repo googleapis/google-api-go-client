@@ -1981,6 +1981,9 @@ type GoogleCloudDiscoveryengineV1ControlBoostAction struct {
 	// FixedBoost: Optional. Strength of the boost, which should be in [-1, 1].
 	// Negative boost means demotion. Default is 0.0 (No-op).
 	FixedBoost float64 `json:"fixedBoost,omitempty"`
+	// InterpolationBoostSpec: Optional. Complex specification for custom ranking
+	// based on customer defined attribute value.
+	InterpolationBoostSpec *GoogleCloudDiscoveryengineV1ControlBoostActionInterpolationBoostSpec `json:"interpolationBoostSpec,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Boost") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
 	// omitted from API requests. See
@@ -2012,6 +2015,107 @@ func (s *GoogleCloudDiscoveryengineV1ControlBoostAction) UnmarshalJSON(data []by
 	}
 	s.Boost = float64(s1.Boost)
 	s.FixedBoost = float64(s1.FixedBoost)
+	return nil
+}
+
+// GoogleCloudDiscoveryengineV1ControlBoostActionInterpolationBoostSpec:
+// Specification for custom ranking based on customer specified attribute
+// value. It provides more controls for customized ranking than the simple
+// (condition, boost) combination above.
+type GoogleCloudDiscoveryengineV1ControlBoostActionInterpolationBoostSpec struct {
+	// AttributeType: Optional. The attribute type to be used to determine the
+	// boost amount. The attribute value can be derived from the field value of the
+	// specified field_name. In the case of numerical it is straightforward i.e.
+	// attribute_value = numerical_field_value. In the case of freshness however,
+	// attribute_value = (time.now() - datetime_field_value).
+	//
+	// Possible values:
+	//   "ATTRIBUTE_TYPE_UNSPECIFIED" - Unspecified AttributeType.
+	//   "NUMERICAL" - The value of the numerical field will be used to dynamically
+	// update the boost amount. In this case, the attribute_value (the x value) of
+	// the control point will be the actual value of the numerical field for which
+	// the boost_amount is specified.
+	//   "FRESHNESS" - For the freshness use case the attribute value will be the
+	// duration between the current time and the date in the datetime field
+	// specified. The value must be formatted as an XSD `dayTimeDuration` value (a
+	// restricted subset of an ISO 8601 duration value). The pattern for this is:
+	// `nDnM]`. For example, `5D`, `3DT12H30M`, `T24H`.
+	AttributeType string `json:"attributeType,omitempty"`
+	// ControlPoints: Optional. The control points used to define the curve. The
+	// monotonic function (defined through the interpolation_type above) passes
+	// through the control points listed here.
+	ControlPoints []*GoogleCloudDiscoveryengineV1ControlBoostActionInterpolationBoostSpecControlPoint `json:"controlPoints,omitempty"`
+	// FieldName: Optional. The name of the field whose value will be used to
+	// determine the boost amount.
+	FieldName string `json:"fieldName,omitempty"`
+	// InterpolationType: Optional. The interpolation type to be applied to connect
+	// the control points listed below.
+	//
+	// Possible values:
+	//   "INTERPOLATION_TYPE_UNSPECIFIED" - Interpolation type is unspecified. In
+	// this case, it defaults to Linear.
+	//   "LINEAR" - Piecewise linear interpolation will be applied.
+	InterpolationType string `json:"interpolationType,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AttributeType") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AttributeType") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1ControlBoostActionInterpolationBoostSpec) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1ControlBoostActionInterpolationBoostSpec
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1ControlBoostActionInterpolationBoostSpecControlPo
+// int: The control points used to define the curve. The curve defined through
+// these control points can only be monotonically increasing or
+// decreasing(constant values are acceptable).
+type GoogleCloudDiscoveryengineV1ControlBoostActionInterpolationBoostSpecControlPoint struct {
+	// AttributeValue: Optional. Can be one of: 1. The numerical field value. 2.
+	// The duration spec for freshness: The value must be formatted as an XSD
+	// `dayTimeDuration` value (a restricted subset of an ISO 8601 duration value).
+	// The pattern for this is: `nDnM]`.
+	AttributeValue string `json:"attributeValue,omitempty"`
+	// BoostAmount: Optional. The value between -1 to 1 by which to boost the score
+	// if the attribute_value evaluates to the value specified above.
+	BoostAmount float64 `json:"boostAmount,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AttributeValue") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AttributeValue") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1ControlBoostActionInterpolationBoostSpecControlPoint) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1ControlBoostActionInterpolationBoostSpecControlPoint
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+func (s *GoogleCloudDiscoveryengineV1ControlBoostActionInterpolationBoostSpecControlPoint) UnmarshalJSON(data []byte) error {
+	type NoMethod GoogleCloudDiscoveryengineV1ControlBoostActionInterpolationBoostSpecControlPoint
+	var s1 struct {
+		BoostAmount gensupport.JSONFloat64 `json:"boostAmount"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.BoostAmount = float64(s1.BoostAmount)
 	return nil
 }
 
@@ -2392,6 +2496,33 @@ type GoogleCloudDiscoveryengineV1DataStoreServingConfigDataStore struct {
 
 func (s GoogleCloudDiscoveryengineV1DataStoreServingConfigDataStore) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDiscoveryengineV1DataStoreServingConfigDataStore
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1DeleteCmekConfigMetadata: Metadata related to
+// the progress of the CmekConfigService.DeleteCmekConfig operation. This will
+// be returned by the google.longrunning.Operation.metadata field.
+type GoogleCloudDiscoveryengineV1DeleteCmekConfigMetadata struct {
+	// CreateTime: Operation create time.
+	CreateTime string `json:"createTime,omitempty"`
+	// UpdateTime: Operation last update time. If the operation is done, this is
+	// also the finish time.
+	UpdateTime string `json:"updateTime,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "CreateTime") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CreateTime") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1DeleteCmekConfigMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1DeleteCmekConfigMetadata
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -5756,6 +5887,9 @@ type GoogleCloudDiscoveryengineV1alphaControlBoostAction struct {
 	// FixedBoost: Optional. Strength of the boost, which should be in [-1, 1].
 	// Negative boost means demotion. Default is 0.0 (No-op).
 	FixedBoost float64 `json:"fixedBoost,omitempty"`
+	// InterpolationBoostSpec: Optional. Complex specification for custom ranking
+	// based on customer defined attribute value.
+	InterpolationBoostSpec *GoogleCloudDiscoveryengineV1alphaControlBoostActionInterpolationBoostSpec `json:"interpolationBoostSpec,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Boost") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
 	// omitted from API requests. See
@@ -5787,6 +5921,107 @@ func (s *GoogleCloudDiscoveryengineV1alphaControlBoostAction) UnmarshalJSON(data
 	}
 	s.Boost = float64(s1.Boost)
 	s.FixedBoost = float64(s1.FixedBoost)
+	return nil
+}
+
+// GoogleCloudDiscoveryengineV1alphaControlBoostActionInterpolationBoostSpec:
+// Specification for custom ranking based on customer specified attribute
+// value. It provides more controls for customized ranking than the simple
+// (condition, boost) combination above.
+type GoogleCloudDiscoveryengineV1alphaControlBoostActionInterpolationBoostSpec struct {
+	// AttributeType: Optional. The attribute type to be used to determine the
+	// boost amount. The attribute value can be derived from the field value of the
+	// specified field_name. In the case of numerical it is straightforward i.e.
+	// attribute_value = numerical_field_value. In the case of freshness however,
+	// attribute_value = (time.now() - datetime_field_value).
+	//
+	// Possible values:
+	//   "ATTRIBUTE_TYPE_UNSPECIFIED" - Unspecified AttributeType.
+	//   "NUMERICAL" - The value of the numerical field will be used to dynamically
+	// update the boost amount. In this case, the attribute_value (the x value) of
+	// the control point will be the actual value of the numerical field for which
+	// the boost_amount is specified.
+	//   "FRESHNESS" - For the freshness use case the attribute value will be the
+	// duration between the current time and the date in the datetime field
+	// specified. The value must be formatted as an XSD `dayTimeDuration` value (a
+	// restricted subset of an ISO 8601 duration value). The pattern for this is:
+	// `nDnM]`. For example, `5D`, `3DT12H30M`, `T24H`.
+	AttributeType string `json:"attributeType,omitempty"`
+	// ControlPoints: Optional. The control points used to define the curve. The
+	// monotonic function (defined through the interpolation_type above) passes
+	// through the control points listed here.
+	ControlPoints []*GoogleCloudDiscoveryengineV1alphaControlBoostActionInterpolationBoostSpecControlPoint `json:"controlPoints,omitempty"`
+	// FieldName: Optional. The name of the field whose value will be used to
+	// determine the boost amount.
+	FieldName string `json:"fieldName,omitempty"`
+	// InterpolationType: Optional. The interpolation type to be applied to connect
+	// the control points listed below.
+	//
+	// Possible values:
+	//   "INTERPOLATION_TYPE_UNSPECIFIED" - Interpolation type is unspecified. In
+	// this case, it defaults to Linear.
+	//   "LINEAR" - Piecewise linear interpolation will be applied.
+	InterpolationType string `json:"interpolationType,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AttributeType") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AttributeType") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1alphaControlBoostActionInterpolationBoostSpec) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1alphaControlBoostActionInterpolationBoostSpec
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1alphaControlBoostActionInterpolationBoostSpecCont
+// rolPoint: The control points used to define the curve. The curve defined
+// through these control points can only be monotonically increasing or
+// decreasing(constant values are acceptable).
+type GoogleCloudDiscoveryengineV1alphaControlBoostActionInterpolationBoostSpecControlPoint struct {
+	// AttributeValue: Optional. Can be one of: 1. The numerical field value. 2.
+	// The duration spec for freshness: The value must be formatted as an XSD
+	// `dayTimeDuration` value (a restricted subset of an ISO 8601 duration value).
+	// The pattern for this is: `nDnM]`.
+	AttributeValue string `json:"attributeValue,omitempty"`
+	// BoostAmount: Optional. The value between -1 to 1 by which to boost the score
+	// if the attribute_value evaluates to the value specified above.
+	BoostAmount float64 `json:"boostAmount,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AttributeValue") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AttributeValue") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1alphaControlBoostActionInterpolationBoostSpecControlPoint) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1alphaControlBoostActionInterpolationBoostSpecControlPoint
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+func (s *GoogleCloudDiscoveryengineV1alphaControlBoostActionInterpolationBoostSpecControlPoint) UnmarshalJSON(data []byte) error {
+	type NoMethod GoogleCloudDiscoveryengineV1alphaControlBoostActionInterpolationBoostSpecControlPoint
+	var s1 struct {
+		BoostAmount gensupport.JSONFloat64 `json:"boostAmount"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.BoostAmount = float64(s1.BoostAmount)
 	return nil
 }
 
@@ -6489,6 +6724,33 @@ type GoogleCloudDiscoveryengineV1alphaDedicatedCrawlRateTimeSeries struct {
 
 func (s GoogleCloudDiscoveryengineV1alphaDedicatedCrawlRateTimeSeries) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDiscoveryengineV1alphaDedicatedCrawlRateTimeSeries
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1alphaDeleteCmekConfigMetadata: Metadata related
+// to the progress of the CmekConfigService.DeleteCmekConfig operation. This
+// will be returned by the google.longrunning.Operation.metadata field.
+type GoogleCloudDiscoveryengineV1alphaDeleteCmekConfigMetadata struct {
+	// CreateTime: Operation create time.
+	CreateTime string `json:"createTime,omitempty"`
+	// UpdateTime: Operation last update time. If the operation is done, this is
+	// also the finish time.
+	UpdateTime string `json:"updateTime,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "CreateTime") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CreateTime") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1alphaDeleteCmekConfigMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1alphaDeleteCmekConfigMetadata
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -13688,7 +13950,11 @@ type GoogleCloudDiscoveryengineV1betaCheckGroundingResponseClaim struct {
 	// regardless of whether citations or anti-citations are found.
 	ClaimText string `json:"claimText,omitempty"`
 	// EndPos: Position indicating the end of the claim in the answer candidate,
-	// exclusive.
+	// exclusive, in bytes. Note that this is not measured in characters and,
+	// therefore, must be rendered as such. For example, if the claim text contains
+	// non-ASCII characters, the start and end positions vary when measured in
+	// characters (programming-language-dependent) and when measured in bytes
+	// (programming-language-independent).
 	EndPos int64 `json:"endPos,omitempty"`
 	// GroundingCheckRequired: Indicates that this claim required grounding check.
 	// When the system decided this claim doesn't require attribution/grounding
@@ -13696,7 +13962,12 @@ type GoogleCloudDiscoveryengineV1betaCheckGroundingResponseClaim struct {
 	// done for the claim and therefore citation_indices should not be returned.
 	GroundingCheckRequired bool `json:"groundingCheckRequired,omitempty"`
 	// StartPos: Position indicating the start of the claim in the answer
-	// candidate, measured in bytes.
+	// candidate, measured in bytes. Note that this is not measured in characters
+	// and, therefore, must be rendered in the user interface keeping in mind that
+	// some characters may take more than one byte. For example, if the claim text
+	// contains non-ASCII characters, the start and end positions vary when
+	// measured in characters (programming-language-dependent) and when measured in
+	// bytes (programming-language-independent).
 	StartPos int64 `json:"startPos,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "CitationIndices") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -14317,6 +14588,9 @@ type GoogleCloudDiscoveryengineV1betaControlBoostAction struct {
 	// FixedBoost: Optional. Strength of the boost, which should be in [-1, 1].
 	// Negative boost means demotion. Default is 0.0 (No-op).
 	FixedBoost float64 `json:"fixedBoost,omitempty"`
+	// InterpolationBoostSpec: Optional. Complex specification for custom ranking
+	// based on customer defined attribute value.
+	InterpolationBoostSpec *GoogleCloudDiscoveryengineV1betaControlBoostActionInterpolationBoostSpec `json:"interpolationBoostSpec,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Boost") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
 	// omitted from API requests. See
@@ -14348,6 +14622,107 @@ func (s *GoogleCloudDiscoveryengineV1betaControlBoostAction) UnmarshalJSON(data 
 	}
 	s.Boost = float64(s1.Boost)
 	s.FixedBoost = float64(s1.FixedBoost)
+	return nil
+}
+
+// GoogleCloudDiscoveryengineV1betaControlBoostActionInterpolationBoostSpec:
+// Specification for custom ranking based on customer specified attribute
+// value. It provides more controls for customized ranking than the simple
+// (condition, boost) combination above.
+type GoogleCloudDiscoveryengineV1betaControlBoostActionInterpolationBoostSpec struct {
+	// AttributeType: Optional. The attribute type to be used to determine the
+	// boost amount. The attribute value can be derived from the field value of the
+	// specified field_name. In the case of numerical it is straightforward i.e.
+	// attribute_value = numerical_field_value. In the case of freshness however,
+	// attribute_value = (time.now() - datetime_field_value).
+	//
+	// Possible values:
+	//   "ATTRIBUTE_TYPE_UNSPECIFIED" - Unspecified AttributeType.
+	//   "NUMERICAL" - The value of the numerical field will be used to dynamically
+	// update the boost amount. In this case, the attribute_value (the x value) of
+	// the control point will be the actual value of the numerical field for which
+	// the boost_amount is specified.
+	//   "FRESHNESS" - For the freshness use case the attribute value will be the
+	// duration between the current time and the date in the datetime field
+	// specified. The value must be formatted as an XSD `dayTimeDuration` value (a
+	// restricted subset of an ISO 8601 duration value). The pattern for this is:
+	// `nDnM]`. For example, `5D`, `3DT12H30M`, `T24H`.
+	AttributeType string `json:"attributeType,omitempty"`
+	// ControlPoints: Optional. The control points used to define the curve. The
+	// monotonic function (defined through the interpolation_type above) passes
+	// through the control points listed here.
+	ControlPoints []*GoogleCloudDiscoveryengineV1betaControlBoostActionInterpolationBoostSpecControlPoint `json:"controlPoints,omitempty"`
+	// FieldName: Optional. The name of the field whose value will be used to
+	// determine the boost amount.
+	FieldName string `json:"fieldName,omitempty"`
+	// InterpolationType: Optional. The interpolation type to be applied to connect
+	// the control points listed below.
+	//
+	// Possible values:
+	//   "INTERPOLATION_TYPE_UNSPECIFIED" - Interpolation type is unspecified. In
+	// this case, it defaults to Linear.
+	//   "LINEAR" - Piecewise linear interpolation will be applied.
+	InterpolationType string `json:"interpolationType,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AttributeType") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AttributeType") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1betaControlBoostActionInterpolationBoostSpec) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1betaControlBoostActionInterpolationBoostSpec
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1betaControlBoostActionInterpolationBoostSpecContr
+// olPoint: The control points used to define the curve. The curve defined
+// through these control points can only be monotonically increasing or
+// decreasing(constant values are acceptable).
+type GoogleCloudDiscoveryengineV1betaControlBoostActionInterpolationBoostSpecControlPoint struct {
+	// AttributeValue: Optional. Can be one of: 1. The numerical field value. 2.
+	// The duration spec for freshness: The value must be formatted as an XSD
+	// `dayTimeDuration` value (a restricted subset of an ISO 8601 duration value).
+	// The pattern for this is: `nDnM]`.
+	AttributeValue string `json:"attributeValue,omitempty"`
+	// BoostAmount: Optional. The value between -1 to 1 by which to boost the score
+	// if the attribute_value evaluates to the value specified above.
+	BoostAmount float64 `json:"boostAmount,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AttributeValue") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AttributeValue") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1betaControlBoostActionInterpolationBoostSpecControlPoint) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1betaControlBoostActionInterpolationBoostSpecControlPoint
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+func (s *GoogleCloudDiscoveryengineV1betaControlBoostActionInterpolationBoostSpecControlPoint) UnmarshalJSON(data []byte) error {
+	type NoMethod GoogleCloudDiscoveryengineV1betaControlBoostActionInterpolationBoostSpecControlPoint
+	var s1 struct {
+		BoostAmount gensupport.JSONFloat64 `json:"boostAmount"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.BoostAmount = float64(s1.BoostAmount)
 	return nil
 }
 

@@ -497,6 +497,31 @@
           "resources": {
             "cmekConfigs": {
               "methods": {
+                "delete": {
+                  "description": "De-provisions a CmekConfig.",
+                  "flatPath": "v1alpha/projects/{projectsId}/locations/{locationsId}/cmekConfigs/{cmekConfigsId}",
+                  "httpMethod": "DELETE",
+                  "id": "discoveryengine.projects.locations.cmekConfigs.delete",
+                  "parameterOrder": [
+                    "name"
+                  ],
+                  "parameters": {
+                    "name": {
+                      "description": "Required. The resource name of the CmekConfig to delete, such as `projects/{project}/locations/{location}/cmekConfigs/{cmek_config}`.",
+                      "location": "path",
+                      "pattern": "^projects/[^/]+/locations/[^/]+/cmekConfigs/[^/]+$",
+                      "required": true,
+                      "type": "string"
+                    }
+                  },
+                  "path": "v1alpha/{+name}",
+                  "response": {
+                    "$ref": "GoogleLongrunningOperation"
+                  },
+                  "scopes": [
+                    "https://www.googleapis.com/auth/cloud-platform"
+                  ]
+                },
                 "get": {
                   "description": "Gets the CmekConfig.",
                   "flatPath": "v1alpha/projects/{projectsId}/locations/{locationsId}/cmekConfigs/{cmekConfigsId}",
@@ -8775,7 +8800,7 @@
       }
     }
   },
-  "revision": "20250125",
+  "revision": "20250130",
   "rootUrl": "https://discoveryengine.googleapis.com/",
   "schemas": {
     "GoogleApiDistribution": {
@@ -9422,6 +9447,70 @@
           "description": "Optional. Strength of the boost, which should be in [-1, 1]. Negative boost means demotion. Default is 0.0 (No-op).",
           "format": "float",
           "type": "number"
+        },
+        "interpolationBoostSpec": {
+          "$ref": "GoogleCloudDiscoveryengineV1ControlBoostActionInterpolationBoostSpec",
+          "description": "Optional. Complex specification for custom ranking based on customer defined attribute value."
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudDiscoveryengineV1ControlBoostActionInterpolationBoostSpec": {
+      "description": "Specification for custom ranking based on customer specified attribute value. It provides more controls for customized ranking than the simple (condition, boost) combination above.",
+      "id": "GoogleCloudDiscoveryengineV1ControlBoostActionInterpolationBoostSpec",
+      "properties": {
+        "attributeType": {
+          "description": "Optional. The attribute type to be used to determine the boost amount. The attribute value can be derived from the field value of the specified field_name. In the case of numerical it is straightforward i.e. attribute_value = numerical_field_value. In the case of freshness however, attribute_value = (time.now() - datetime_field_value).",
+          "enum": [
+            "ATTRIBUTE_TYPE_UNSPECIFIED",
+            "NUMERICAL",
+            "FRESHNESS"
+          ],
+          "enumDescriptions": [
+            "Unspecified AttributeType.",
+            "The value of the numerical field will be used to dynamically update the boost amount. In this case, the attribute_value (the x value) of the control point will be the actual value of the numerical field for which the boost_amount is specified.",
+            "For the freshness use case the attribute value will be the duration between the current time and the date in the datetime field specified. The value must be formatted as an XSD `dayTimeDuration` value (a restricted subset of an ISO 8601 duration value). The pattern for this is: `nDnM]`. For example, `5D`, `3DT12H30M`, `T24H`."
+          ],
+          "type": "string"
+        },
+        "controlPoints": {
+          "description": "Optional. The control points used to define the curve. The monotonic function (defined through the interpolation_type above) passes through the control points listed here.",
+          "items": {
+            "$ref": "GoogleCloudDiscoveryengineV1ControlBoostActionInterpolationBoostSpecControlPoint"
+          },
+          "type": "array"
+        },
+        "fieldName": {
+          "description": "Optional. The name of the field whose value will be used to determine the boost amount.",
+          "type": "string"
+        },
+        "interpolationType": {
+          "description": "Optional. The interpolation type to be applied to connect the control points listed below.",
+          "enum": [
+            "INTERPOLATION_TYPE_UNSPECIFIED",
+            "LINEAR"
+          ],
+          "enumDescriptions": [
+            "Interpolation type is unspecified. In this case, it defaults to Linear.",
+            "Piecewise linear interpolation will be applied."
+          ],
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudDiscoveryengineV1ControlBoostActionInterpolationBoostSpecControlPoint": {
+      "description": "The control points used to define the curve. The curve defined through these control points can only be monotonically increasing or decreasing(constant values are acceptable).",
+      "id": "GoogleCloudDiscoveryengineV1ControlBoostActionInterpolationBoostSpecControlPoint",
+      "properties": {
+        "attributeValue": {
+          "description": "Optional. Can be one of: 1. The numerical field value. 2. The duration spec for freshness: The value must be formatted as an XSD `dayTimeDuration` value (a restricted subset of an ISO 8601 duration value). The pattern for this is: `nDnM]`.",
+          "type": "string"
+        },
+        "boostAmount": {
+          "description": "Optional. The value between -1 to 1 by which to boost the score if the attribute_value evaluates to the value specified above.",
+          "format": "float",
+          "type": "number"
         }
       },
       "type": "object"
@@ -9716,6 +9805,23 @@
         "disabledForServing": {
           "description": "If set true, the DataStore will not be available for serving search requests.",
           "type": "boolean"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudDiscoveryengineV1DeleteCmekConfigMetadata": {
+      "description": "Metadata related to the progress of the CmekConfigService.DeleteCmekConfig operation. This will be returned by the google.longrunning.Operation.metadata field.",
+      "id": "GoogleCloudDiscoveryengineV1DeleteCmekConfigMetadata",
+      "properties": {
+        "createTime": {
+          "description": "Operation create time.",
+          "format": "google-datetime",
+          "type": "string"
+        },
+        "updateTime": {
+          "description": "Operation last update time. If the operation is done, this is also the finish time.",
+          "format": "google-datetime",
+          "type": "string"
         }
       },
       "type": "object"
@@ -13146,7 +13252,7 @@
           "type": "string"
         },
         "endPos": {
-          "description": "Position indicating the end of the claim in the answer candidate, exclusive.",
+          "description": "Position indicating the end of the claim in the answer candidate, exclusive, in bytes. Note that this is not measured in characters and, therefore, must be rendered as such. For example, if the claim text contains non-ASCII characters, the start and end positions vary when measured in characters (programming-language-dependent) and when measured in bytes (programming-language-independent).",
           "format": "int32",
           "type": "integer"
         },
@@ -13155,7 +13261,7 @@
           "type": "boolean"
         },
         "startPos": {
-          "description": "Position indicating the start of the claim in the answer candidate, measured in bytes.",
+          "description": "Position indicating the start of the claim in the answer candidate, measured in bytes. Note that this is not measured in characters and, therefore, must be rendered in the user interface keeping in mind that some characters may take more than one byte. For example, if the claim text contains non-ASCII characters, the start and end positions vary when measured in characters (programming-language-dependent) and when measured in bytes (programming-language-independent).",
           "format": "int32",
           "type": "integer"
         }
@@ -13913,6 +14019,70 @@
         },
         "fixedBoost": {
           "description": "Optional. Strength of the boost, which should be in [-1, 1]. Negative boost means demotion. Default is 0.0 (No-op).",
+          "format": "float",
+          "type": "number"
+        },
+        "interpolationBoostSpec": {
+          "$ref": "GoogleCloudDiscoveryengineV1alphaControlBoostActionInterpolationBoostSpec",
+          "description": "Optional. Complex specification for custom ranking based on customer defined attribute value."
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudDiscoveryengineV1alphaControlBoostActionInterpolationBoostSpec": {
+      "description": "Specification for custom ranking based on customer specified attribute value. It provides more controls for customized ranking than the simple (condition, boost) combination above.",
+      "id": "GoogleCloudDiscoveryengineV1alphaControlBoostActionInterpolationBoostSpec",
+      "properties": {
+        "attributeType": {
+          "description": "Optional. The attribute type to be used to determine the boost amount. The attribute value can be derived from the field value of the specified field_name. In the case of numerical it is straightforward i.e. attribute_value = numerical_field_value. In the case of freshness however, attribute_value = (time.now() - datetime_field_value).",
+          "enum": [
+            "ATTRIBUTE_TYPE_UNSPECIFIED",
+            "NUMERICAL",
+            "FRESHNESS"
+          ],
+          "enumDescriptions": [
+            "Unspecified AttributeType.",
+            "The value of the numerical field will be used to dynamically update the boost amount. In this case, the attribute_value (the x value) of the control point will be the actual value of the numerical field for which the boost_amount is specified.",
+            "For the freshness use case the attribute value will be the duration between the current time and the date in the datetime field specified. The value must be formatted as an XSD `dayTimeDuration` value (a restricted subset of an ISO 8601 duration value). The pattern for this is: `nDnM]`. For example, `5D`, `3DT12H30M`, `T24H`."
+          ],
+          "type": "string"
+        },
+        "controlPoints": {
+          "description": "Optional. The control points used to define the curve. The monotonic function (defined through the interpolation_type above) passes through the control points listed here.",
+          "items": {
+            "$ref": "GoogleCloudDiscoveryengineV1alphaControlBoostActionInterpolationBoostSpecControlPoint"
+          },
+          "type": "array"
+        },
+        "fieldName": {
+          "description": "Optional. The name of the field whose value will be used to determine the boost amount.",
+          "type": "string"
+        },
+        "interpolationType": {
+          "description": "Optional. The interpolation type to be applied to connect the control points listed below.",
+          "enum": [
+            "INTERPOLATION_TYPE_UNSPECIFIED",
+            "LINEAR"
+          ],
+          "enumDescriptions": [
+            "Interpolation type is unspecified. In this case, it defaults to Linear.",
+            "Piecewise linear interpolation will be applied."
+          ],
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudDiscoveryengineV1alphaControlBoostActionInterpolationBoostSpecControlPoint": {
+      "description": "The control points used to define the curve. The curve defined through these control points can only be monotonically increasing or decreasing(constant values are acceptable).",
+      "id": "GoogleCloudDiscoveryengineV1alphaControlBoostActionInterpolationBoostSpecControlPoint",
+      "properties": {
+        "attributeValue": {
+          "description": "Optional. Can be one of: 1. The numerical field value. 2. The duration spec for freshness: The value must be formatted as an XSD `dayTimeDuration` value (a restricted subset of an ISO 8601 duration value). The pattern for this is: `nDnM]`.",
+          "type": "string"
+        },
+        "boostAmount": {
+          "description": "Optional. The value between -1 to 1 by which to boost the score if the attribute_value evaluates to the value specified above.",
           "format": "float",
           "type": "number"
         }
@@ -14748,6 +14918,23 @@
         "userTriggeredCrawlRate": {
           "$ref": "GoogleCloudDiscoveryengineV1alphaCrawlRateTimeSeries",
           "description": "Vertex AI's dedicated crawl rate time series of user triggered crawl, which is the crawl rate of Google-CloudVertexBot when dedicate crawl is set, and user triggered crawl rate is for deterministic use cases like crawling urls or sitemaps specified by users."
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudDiscoveryengineV1alphaDeleteCmekConfigMetadata": {
+      "description": "Metadata related to the progress of the CmekConfigService.DeleteCmekConfig operation. This will be returned by the google.longrunning.Operation.metadata field.",
+      "id": "GoogleCloudDiscoveryengineV1alphaDeleteCmekConfigMetadata",
+      "properties": {
+        "createTime": {
+          "description": "Operation create time.",
+          "format": "google-datetime",
+          "type": "string"
+        },
+        "updateTime": {
+          "description": "Operation last update time. If the operation is done, this is also the finish time.",
+          "format": "google-datetime",
+          "type": "string"
         }
       },
       "type": "object"
@@ -21880,6 +22067,70 @@
         },
         "fixedBoost": {
           "description": "Optional. Strength of the boost, which should be in [-1, 1]. Negative boost means demotion. Default is 0.0 (No-op).",
+          "format": "float",
+          "type": "number"
+        },
+        "interpolationBoostSpec": {
+          "$ref": "GoogleCloudDiscoveryengineV1betaControlBoostActionInterpolationBoostSpec",
+          "description": "Optional. Complex specification for custom ranking based on customer defined attribute value."
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudDiscoveryengineV1betaControlBoostActionInterpolationBoostSpec": {
+      "description": "Specification for custom ranking based on customer specified attribute value. It provides more controls for customized ranking than the simple (condition, boost) combination above.",
+      "id": "GoogleCloudDiscoveryengineV1betaControlBoostActionInterpolationBoostSpec",
+      "properties": {
+        "attributeType": {
+          "description": "Optional. The attribute type to be used to determine the boost amount. The attribute value can be derived from the field value of the specified field_name. In the case of numerical it is straightforward i.e. attribute_value = numerical_field_value. In the case of freshness however, attribute_value = (time.now() - datetime_field_value).",
+          "enum": [
+            "ATTRIBUTE_TYPE_UNSPECIFIED",
+            "NUMERICAL",
+            "FRESHNESS"
+          ],
+          "enumDescriptions": [
+            "Unspecified AttributeType.",
+            "The value of the numerical field will be used to dynamically update the boost amount. In this case, the attribute_value (the x value) of the control point will be the actual value of the numerical field for which the boost_amount is specified.",
+            "For the freshness use case the attribute value will be the duration between the current time and the date in the datetime field specified. The value must be formatted as an XSD `dayTimeDuration` value (a restricted subset of an ISO 8601 duration value). The pattern for this is: `nDnM]`. For example, `5D`, `3DT12H30M`, `T24H`."
+          ],
+          "type": "string"
+        },
+        "controlPoints": {
+          "description": "Optional. The control points used to define the curve. The monotonic function (defined through the interpolation_type above) passes through the control points listed here.",
+          "items": {
+            "$ref": "GoogleCloudDiscoveryengineV1betaControlBoostActionInterpolationBoostSpecControlPoint"
+          },
+          "type": "array"
+        },
+        "fieldName": {
+          "description": "Optional. The name of the field whose value will be used to determine the boost amount.",
+          "type": "string"
+        },
+        "interpolationType": {
+          "description": "Optional. The interpolation type to be applied to connect the control points listed below.",
+          "enum": [
+            "INTERPOLATION_TYPE_UNSPECIFIED",
+            "LINEAR"
+          ],
+          "enumDescriptions": [
+            "Interpolation type is unspecified. In this case, it defaults to Linear.",
+            "Piecewise linear interpolation will be applied."
+          ],
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudDiscoveryengineV1betaControlBoostActionInterpolationBoostSpecControlPoint": {
+      "description": "The control points used to define the curve. The curve defined through these control points can only be monotonically increasing or decreasing(constant values are acceptable).",
+      "id": "GoogleCloudDiscoveryengineV1betaControlBoostActionInterpolationBoostSpecControlPoint",
+      "properties": {
+        "attributeValue": {
+          "description": "Optional. Can be one of: 1. The numerical field value. 2. The duration spec for freshness: The value must be formatted as an XSD `dayTimeDuration` value (a restricted subset of an ISO 8601 duration value). The pattern for this is: `nDnM]`.",
+          "type": "string"
+        },
+        "boostAmount": {
+          "description": "Optional. The value between -1 to 1 by which to boost the score if the attribute_value evaluates to the value specified above.",
           "format": "float",
           "type": "number"
         }

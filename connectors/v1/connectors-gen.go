@@ -2163,6 +2163,8 @@ func (s EventSubscription) MarshalJSON() ([]byte, error) {
 type EventSubscriptionDestination struct {
 	// Endpoint: OPTION 1: Hit an endpoint when we receive an event.
 	Endpoint *EndPoint `json:"endpoint,omitempty"`
+	// Pubsub: OPTION 3: Write the event to Pub/Sub topic.
+	Pubsub *PubSub `json:"pubsub,omitempty"`
 	// ServiceAccount: Service account needed for runtime plane to trigger IP
 	// workflow.
 	ServiceAccount string `json:"serviceAccount,omitempty"`
@@ -4345,9 +4347,14 @@ type PartnerMetadata struct {
 	ConfirmPartnerRequirements bool `json:"confirmPartnerRequirements,omitempty"`
 	// DemoUri: Required. Public URL for the demo video.
 	DemoUri string `json:"demoUri,omitempty"`
+	// HasDynamicSpecUri: Output only. Has dynamic open api spec uri.
+	HasDynamicSpecUri bool `json:"hasDynamicSpecUri,omitempty"`
 	// IntegrationTemplates: Required. Integration example templates for the custom
 	// connector.
 	IntegrationTemplates string `json:"integrationTemplates,omitempty"`
+	// LocalSpecPath: Output only. Local spec path. Required if
+	// has_dynamic_spec_uri is true.
+	LocalSpecPath string `json:"localSpecPath,omitempty"`
 	// MarketplaceProduct: Optional. Marketplace product name.
 	MarketplaceProduct string `json:"marketplaceProduct,omitempty"`
 	// MarketplaceProductId: Required. Marketplace product ID.
@@ -4598,6 +4605,35 @@ type ProvisionedResource struct {
 
 func (s ProvisionedResource) MarshalJSON() ([]byte, error) {
 	type NoMethod ProvisionedResource
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// PubSub: Pub/Sub message includes details of the Destination Pub/Sub topic.
+type PubSub struct {
+	// Attributes: Optional. Pub/Sub message attributes to be added to the Pub/Sub
+	// message.
+	Attributes map[string]string `json:"attributes,omitempty"`
+	// ConfigVariables: Optional. Configuration for configuring the trigger
+	ConfigVariables []*ConfigVariable `json:"configVariables,omitempty"`
+	// ProjectId: Required. The project id which has the Pub/Sub topic.
+	ProjectId string `json:"projectId,omitempty"`
+	// TopicId: Required. The topic id of the Pub/Sub topic.
+	TopicId string `json:"topicId,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Attributes") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Attributes") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s PubSub) MarshalJSON() ([]byte, error) {
+	type NoMethod PubSub
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 

@@ -2264,6 +2264,7 @@ type GoogleCloudContactcenterinsightsV1Dimension struct {
 	// Possible values:
 	//   "DIMENSION_KEY_UNSPECIFIED" - The key of the dimension is unspecified.
 	//   "ISSUE" - The dimension is keyed by issues.
+	//   "ISSUE_NAME" - The dimension is keyed by issue names.
 	//   "AGENT" - The dimension is keyed by agents.
 	//   "AGENT_TEAM" - The dimension is keyed by agent teams.
 	//   "QA_QUESTION_ID" - The dimension is keyed by QaQuestionIds. Note that: We
@@ -7105,6 +7106,7 @@ type GoogleCloudContactcenterinsightsV1alpha1Dimension struct {
 	// Possible values:
 	//   "DIMENSION_KEY_UNSPECIFIED" - The key of the dimension is unspecified.
 	//   "ISSUE" - The dimension is keyed by issues.
+	//   "ISSUE_NAME" - The dimension is keyed by issue names.
 	//   "AGENT" - The dimension is keyed by agents.
 	//   "AGENT_TEAM" - The dimension is keyed by agent teams.
 	//   "QA_QUESTION_ID" - The dimension is keyed by QaQuestionIds. Note that: We

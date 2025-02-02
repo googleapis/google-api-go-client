@@ -679,6 +679,10 @@ type Backup struct {
 	// ordering of backups in the chain can be determined by ordering the backup
 	// `version_time`.
 	IncrementalBackupChainId string `json:"incrementalBackupChainId,omitempty"`
+	// InstancePartitions: Output only. The instance partition(s) storing the
+	// backup. This is the same as the list of the instance partition(s) that the
+	// database had footprint in at the backup's `version_time`.
+	InstancePartitions []*BackupInstancePartition `json:"instancePartitions,omitempty"`
 	// MaxExpireTime: Output only. The max allowed expiration time of the backup,
 	// with microseconds granularity. A backup's expiration time can be configured
 	// in multiple APIs: CreateBackup, UpdateBackup, CopyBackup. When updating or
@@ -785,12 +789,35 @@ func (s BackupInfo) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// BackupInstancePartition: Instance partition information for the backup.
+type BackupInstancePartition struct {
+	// InstancePartition: A unique identifier for the instance partition. Values
+	// are of the form `projects//instances//instancePartitions/`
+	InstancePartition string `json:"instancePartition,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "InstancePartition") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "InstancePartition") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s BackupInstancePartition) MarshalJSON() ([]byte, error) {
+	type NoMethod BackupInstancePartition
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // BackupSchedule: BackupSchedule expresses the automated backup creation
 // specification for a Spanner database.
 type BackupSchedule struct {
-	// EncryptionConfig: Optional. The encryption configuration that will be used
-	// to encrypt the backup. If this field is not specified, the backup will use
-	// the same encryption configuration as the database.
+	// EncryptionConfig: Optional. The encryption configuration that is used to
+	// encrypt the backup. If this field is not specified, the backup uses the same
+	// encryption configuration as the database.
 	EncryptionConfig *CreateBackupEncryptionConfig `json:"encryptionConfig,omitempty"`
 	// FullBackupSpec: The schedule creates only full backups.
 	FullBackupSpec *FullBackupSpec `json:"fullBackupSpec,omitempty"`
@@ -1874,12 +1901,12 @@ func (s CreateSessionRequest) MarshalJSON() ([]byte, error) {
 }
 
 // CrontabSpec: CrontabSpec can be used to specify the version time and
-// frequency at which the backup should be created.
+// frequency at which the backup is created.
 type CrontabSpec struct {
-	// CreationWindow: Output only. Schedule backups will contain an externally
+	// CreationWindow: Output only. Scheduled backups contain an externally
 	// consistent copy of the database at the version time specified in
-	// `schedule_spec.cron_spec`. However, Spanner may not initiate the creation of
-	// the scheduled backups at that version time. Spanner will initiate the
+	// `schedule_spec.cron_spec`. However, Spanner might not initiate the creation
+	// of the scheduled backups at that version time. Spanner initiates the
 	// creation of scheduled backups within the time window bounded by the
 	// version_time specified in `schedule_spec.cron_spec` and version_time +
 	// `creation_window`.
@@ -1891,7 +1918,7 @@ type CrontabSpec struct {
 	// must be scheduled a minimum of 12 hours apart and incremental backups must
 	// be scheduled a minimum of 4 hours apart. Examples of valid cron
 	// specifications: * `0 2/12 * * *` : every 12 hours at (2, 14) hours past
-	// midnight in UTC. * `0 2,14 * * *` : every 12 hours at (2,14) hours past
+	// midnight in UTC. * `0 2,14 * * *` : every 12 hours at (2, 14) hours past
 	// midnight in UTC. * `0 */4 * * *` : (incremental backups only) every 4 hours
 	// at (0, 4, 8, 12, 16, 20) hours past midnight in UTC. * `0 2 * * *` : once a
 	// day at 2 past midnight in UTC. * `0 2 * * 0` : once a week every Sunday at 2
@@ -1899,7 +1926,7 @@ type CrontabSpec struct {
 	// midnight in UTC.
 	Text string `json:"text,omitempty"`
 	// TimeZone: Output only. The time zone of the times in `CrontabSpec.text`.
-	// Currently only UTC is supported.
+	// Currently, only UTC is supported.
 	TimeZone string `json:"timeZone,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "CreationWindow") to
 	// unconditionally include in API requests. By default, fields with empty or

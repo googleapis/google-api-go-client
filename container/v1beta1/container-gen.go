@@ -3676,9 +3676,15 @@ type LinuxNodeConfig struct {
 	// Sysctls: The Linux kernel parameters to be applied to the nodes and all pods
 	// running on the nodes. The following parameters are supported.
 	// net.core.busy_poll net.core.busy_read net.core.netdev_max_backlog
-	// net.core.rmem_max net.core.wmem_default net.core.wmem_max
-	// net.core.optmem_max net.core.somaxconn net.ipv4.tcp_rmem net.ipv4.tcp_wmem
-	// net.ipv4.tcp_tw_reuse kernel.shmmni kernel.shmmax kernel.shmall
+	// net.core.rmem_max net.core.rmem_default net.core.wmem_default
+	// net.core.wmem_max net.core.optmem_max net.core.somaxconn net.ipv4.tcp_rmem
+	// net.ipv4.tcp_wmem net.ipv4.tcp_tw_reuse net.netfilter.nf_conntrack_max
+	// net.netfilter.nf_conntrack_buckets
+	// net.netfilter.nf_conntrack_tcp_timeout_close_wait
+	// net.netfilter.nf_conntrack_tcp_timeout_time_wait
+	// net.netfilter.nf_conntrack_tcp_timeout_established
+	// net.netfilter.nf_conntrack_acct kernel.shmmni kernel.shmmax kernel.shmall
+	// vm.max_map_count
 	Sysctls map[string]string `json:"sysctls,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "CgroupMode") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -4866,6 +4872,31 @@ func (s NodeConfigDefaults) MarshalJSON() ([]byte, error) {
 
 // NodeKubeletConfig: Node kubelet configs.
 type NodeKubeletConfig struct {
+	// AllowedUnsafeSysctls: Optional. Defines a comma-separated allowlist of
+	// unsafe sysctls or sysctl patterns (ending in `*`). The unsafe namespaced
+	// sysctl groups are `kernel.shm*`, `kernel.msg*`, `kernel.sem`, `fs.mqueue.*`,
+	// and `net.*`. Leaving this allowlist empty means they cannot be set on Pods.
+	// To allow certain sysctls or sysctl patterns to be set on Pods, list them
+	// separated by commas. For example: `kernel.msg*,net.ipv4.route.min_pmtu`. See
+	// https://kubernetes.io/docs/tasks/administer-cluster/sysctl-cluster/ for more
+	// details.
+	AllowedUnsafeSysctls []string `json:"allowedUnsafeSysctls,omitempty"`
+	// ContainerLogMaxFiles: Optional. Defines the maximum number of container log
+	// files that can be present for a container. See
+	// https://kubernetes.io/docs/concepts/cluster-administration/logging/#log-rotation
+	// The value must be an integer between 2 and 10, inclusive. The default value
+	// is 5 if unspecified.
+	ContainerLogMaxFiles int64 `json:"containerLogMaxFiles,omitempty"`
+	// ContainerLogMaxSize: Optional. Defines the maximum size of the container log
+	// file before it is rotated. See
+	// https://kubernetes.io/docs/concepts/cluster-administration/logging/#log-rotation
+	// Valid format is positive number + unit, e.g. 100Ki, 10Mi. Valid units are
+	// Ki, Mi, Gi. The value must be between 10Mi and 500Mi, inclusive. Note that
+	// the total container log size (container_log_max_size *
+	// container_log_max_files) cannot exceed 1% of the total storage of the node,
+	// to avoid disk pressure caused by log files. The default value is 10Mi if
+	// unspecified.
+	ContainerLogMaxSize string `json:"containerLogMaxSize,omitempty"`
 	// CpuCfsQuota: Enable CPU CFS quota enforcement for containers that specify
 	// CPU limits. This option is enabled by default which makes kubelet use CFS
 	// quota (https://www.kernel.org/doc/Documentation/scheduler/sched-bwc.txt) to
@@ -4886,6 +4917,34 @@ type NodeKubeletConfig struct {
 	// resource characteristics to be granted increased CPU affinity and
 	// exclusivity on the node. The default value is 'none' if unspecified.
 	CpuManagerPolicy string `json:"cpuManagerPolicy,omitempty"`
+	// ImageGcHighThresholdPercent: Optional. Defines the percent of disk usage
+	// after which image garbage collection is always run. The percent is
+	// calculated as this field value out of 100. The value must be between 10 and
+	// 85, inclusive and greater than image_gc_low_threshold_percent. The default
+	// value is 85 if unspecified.
+	ImageGcHighThresholdPercent int64 `json:"imageGcHighThresholdPercent,omitempty"`
+	// ImageGcLowThresholdPercent: Optional. Defines the percent of disk usage
+	// before which image garbage collection is never run. Lowest disk usage to
+	// garbage collect to. The percent is calculated as this field value out of
+	// 100. The value must be between 10 and 85, inclusive and smaller than
+	// image_gc_high_threshold_percent. The default value is 80 if unspecified.
+	ImageGcLowThresholdPercent int64 `json:"imageGcLowThresholdPercent,omitempty"`
+	// ImageMaximumGcAge: Optional. Defines the maximum age an image can be unused
+	// before it is garbage collected. The string must be a sequence of decimal
+	// numbers, each with optional fraction and a unit suffix, such as "300s",
+	// "1.5h", and "2h45m". Valid time units are "ns", "us" (or "µs"), "ms", "s",
+	// "m", "h". The value must be a positive duration greater than
+	// image_minimum_gc_age or "0s". The default value is "0s" if unspecified,
+	// which disables this field, meaning images won't be garbage collected based
+	// on being unused for too long.
+	ImageMaximumGcAge string `json:"imageMaximumGcAge,omitempty"`
+	// ImageMinimumGcAge: Optional. Defines the minimum age for an unused image
+	// before it is garbage collected. The string must be a sequence of decimal
+	// numbers, each with optional fraction and a unit suffix, such as "300s",
+	// "1.5h", and "2h45m". Valid time units are "ns", "us" (or "µs"), "ms", "s",
+	// "m", "h". The value must be a positive duration less than or equal to 2
+	// minutes. The default value is "2m0s" if unspecified.
+	ImageMinimumGcAge string `json:"imageMinimumGcAge,omitempty"`
 	// InsecureKubeletReadonlyPortEnabled: Enable or disable Kubelet read only
 	// port.
 	InsecureKubeletReadonlyPortEnabled bool `json:"insecureKubeletReadonlyPortEnabled,omitempty"`
@@ -4894,15 +4953,15 @@ type NodeKubeletConfig struct {
 	// Controls the maximum number of processes allowed to run in a pod. The value
 	// must be greater than or equal to 1024 and less than 4194304.
 	PodPidsLimit int64 `json:"podPidsLimit,omitempty,string"`
-	// ForceSendFields is a list of field names (e.g. "CpuCfsQuota") to
+	// ForceSendFields is a list of field names (e.g. "AllowedUnsafeSysctls") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "CpuCfsQuota") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
+	// NullFields is a list of field names (e.g. "AllowedUnsafeSysctls") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }

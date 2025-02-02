@@ -1490,7 +1490,7 @@ type DemoteMasterMySqlReplicaConfiguration struct {
 	// ClientCertificate: PEM representation of the replica's x509 certificate.
 	ClientCertificate string `json:"clientCertificate,omitempty"`
 	// ClientKey: PEM representation of the replica's private key. The
-	// corresponsing public key is encoded in the client's certificate. The format
+	// corresponding public key is encoded in the client's certificate. The format
 	// of the replica's private key can be either PKCS #1 or PKCS #8.
 	ClientKey string `json:"clientKey,omitempty"`
 	// Kind: This is always `sql#demoteMasterMysqlReplicaConfiguration`.
@@ -3044,7 +3044,7 @@ type MySqlReplicaConfiguration struct {
 	// ClientCertificate: PEM representation of the replica's x509 certificate.
 	ClientCertificate string `json:"clientCertificate,omitempty"`
 	// ClientKey: PEM representation of the replica's private key. The
-	// corresponsing public key is encoded in the client's certificate.
+	// corresponding public key is encoded in the client's certificate.
 	ClientKey string `json:"clientKey,omitempty"`
 	// ConnectRetryInterval: Seconds to wait between connect retries. MySQL's
 	// default is 60 seconds.
@@ -3116,7 +3116,7 @@ type OnPremisesConfiguration struct {
 	// ClientCertificate: PEM representation of the replica's x509 certificate.
 	ClientCertificate string `json:"clientCertificate,omitempty"`
 	// ClientKey: PEM representation of the replica's private key. The
-	// corresponsing public key is encoded in the client's certificate.
+	// corresponding public key is encoded in the client's certificate.
 	ClientKey string `json:"clientKey,omitempty"`
 	// DumpFilePath: The dump file to create the Cloud SQL replica.
 	DumpFilePath string `json:"dumpFilePath,omitempty"`
@@ -3274,6 +3274,7 @@ type Operation struct {
 	// instance.
 	//   "ADVANCED_BACKUP" - Creates a backup for an Advanced BackupTier Cloud SQL
 	// instance.
+	//   "MANAGE_BACKUP" - Changes the BackupTier of a Cloud SQL instance.
 	OperationType string `json:"operationType,omitempty"`
 	// SelfLink: The URI of this resource.
 	SelfLink string `json:"selfLink,omitempty"`

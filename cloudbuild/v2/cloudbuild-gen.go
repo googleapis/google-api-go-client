@@ -4171,7 +4171,7 @@ func (r *ProjectsLocationsConnectionsService) ProcessWebhook(parent string, http
 }
 
 // WebhookKey sets the optional parameter "webhookKey": Arbitrary additional
-// key to find the maching repository for a webhook event if needed.
+// key to find the matching repository for a webhook event if needed.
 func (c *ProjectsLocationsConnectionsProcessWebhookCall) WebhookKey(webhookKey string) *ProjectsLocationsConnectionsProcessWebhookCall {
 	c.urlParams_.Set("webhookKey", webhookKey)
 	return c

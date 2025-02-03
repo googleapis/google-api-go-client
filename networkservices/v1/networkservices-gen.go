@@ -1258,9 +1258,9 @@ type GrpcRoute struct {
 	// Description: Optional. A free-text description of the resource. Max length
 	// 1024 characters.
 	Description string `json:"description,omitempty"`
-	// Etag: Optional. Output only. Etag of the resource. If this is provided, it
-	// must match the server's etag. If the provided etag does not match the
-	// server's etag, the request will fail with a 409 ABORTED error.
+	// Etag: Optional. Etag of the resource. If this is provided, it must match the
+	// server's etag. If the provided etag does not match the server's etag, the
+	// request will fail with a 409 ABORTED error.
 	Etag string `json:"etag,omitempty"`
 	// Gateways: Optional. Gateways defines a list of gateways this GrpcRoute is
 	// attached to, as one of the routing rules to route the requests served by the
@@ -1692,9 +1692,9 @@ type HttpRoute struct {
 	// Description: Optional. A free-text description of the resource. Max length
 	// 1024 characters.
 	Description string `json:"description,omitempty"`
-	// Etag: Optional. Output only. Etag of the resource. If this is provided, it
-	// must match the server's etag. If the provided etag does not match the
-	// server's etag, the request will fail with a 409 ABORTED error.
+	// Etag: Optional. Etag of the resource. If this is provided, it must match the
+	// server's etag. If the provided etag does not match the server's etag, the
+	// request will fail with a 409 ABORTED error.
 	Etag string `json:"etag,omitempty"`
 	// Gateways: Optional. Gateways defines a list of gateways this HttpRoute is
 	// attached to, as one of the routing rules to route the requests served by the
@@ -3734,9 +3734,9 @@ type TcpRoute struct {
 	// Description: Optional. A free-text description of the resource. Max length
 	// 1024 characters.
 	Description string `json:"description,omitempty"`
-	// Etag: Optional. Output only. Etag of the resource. If this is provided, it
-	// must match the server's etag. If the provided etag does not match the
-	// server's etag, the request will fail with a 409 ABORTED error.
+	// Etag: Optional. Etag of the resource. If this is provided, it must match the
+	// server's etag. If the provided etag does not match the server's etag, the
+	// request will fail with a 409 ABORTED error.
 	Etag string `json:"etag,omitempty"`
 	// Gateways: Optional. Gateways defines a list of gateways this TcpRoute is
 	// attached to, as one of the routing rules to route the requests served by the
@@ -3971,9 +3971,9 @@ type TlsRoute struct {
 	// Description: Optional. A free-text description of the resource. Max length
 	// 1024 characters.
 	Description string `json:"description,omitempty"`
-	// Etag: Optional. Output only. Etag of the resource. If this is provided, it
-	// must match the server's etag. If the provided etag does not match the
-	// server's etag, the request will fail with a 409 ABORTED error.
+	// Etag: Optional. Etag of the resource. If this is provided, it must match the
+	// server's etag. If the provided etag does not match the server's etag, the
+	// request will fail with a 409 ABORTED error.
 	Etag string `json:"etag,omitempty"`
 	// Gateways: Optional. Gateways defines a list of gateways this TlsRoute is
 	// attached to, as one of the routing rules to route the requests served by the
@@ -4078,8 +4078,7 @@ func (s TlsRouteRouteDestination) MarshalJSON() ([]byte, error) {
 }
 
 // TlsRouteRouteMatch: RouteMatch defines the predicate used to match requests
-// to a given action. Multiple match types are "AND"ed for evaluation. If no
-// routeMatch field is specified, this rule will unconditionally match traffic.
+// to a given action. Multiple match types are "AND"ed for evaluation.
 type TlsRouteRouteMatch struct {
 	// Alpn: Optional. ALPN (Application-Layer Protocol Negotiation) to match
 	// against. Examples: "http/1.1", "h2". At least one of sni_host and alpn is
@@ -4116,7 +4115,8 @@ type TlsRouteRouteRule struct {
 	// Action: Required. The detailed rule defining how to route matched traffic.
 	Action *TlsRouteRouteAction `json:"action,omitempty"`
 	// Matches: Required. RouteMatch defines the predicate used to match requests
-	// to a given action. Multiple match types are "OR"ed for evaluation.
+	// to a given action. Multiple match types are "OR"ed for evaluation. Atleast
+	// one RouteMatch must be supplied.
 	Matches []*TlsRouteRouteMatch `json:"matches,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Action") to unconditionally
 	// include in API requests. By default, fields with empty or default values are

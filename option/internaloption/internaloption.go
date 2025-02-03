@@ -187,6 +187,17 @@ func (w enableJwtWithScope) Apply(o *internal.DialSettings) {
 }
 
 // AllowHardBoundTokens returns a ClientOption that allows libraries to request a hard-bound token.
+// Obtaining hard-bound tokens requires the connection to be established using either
+// DirectPath or mutual TLS (mTLS) with S2A.
+//
+// The AllowHardBoundTokens option accepts the following values (or a combination thereof):
+//
+//   - "MTLS_S2A": Allows obtaining hard-bound tokens when the connection uses mutual TLS with S2A.
+//   - "ALTS":     Allows obtaining hard-bound tokens when the connection uses ALTS.
+//
+// For example, to allow obtaining hard-bound tokens with either MTLS_S2A or ALTS, you would
+// provide both values (e.g., {"MTLS_S2A","ALTS"}).  If no value is provided, hard-bound tokens
+// will not be requested.
 //
 // It should only be used internally by generated clients.
 // This is an EXPERIMENTAL API and may be changed or removed in the future.

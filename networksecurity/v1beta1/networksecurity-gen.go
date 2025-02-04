@@ -3253,6 +3253,9 @@ func (s MTLSPolicy) MarshalJSON() ([]byte, error) {
 type MirroringDeployment struct {
 	// CreateTime: Output only. [Output only] Create time stamp
 	CreateTime string `json:"createTime,omitempty"`
+	// Description: Optional. User-provided description of the deployment. Used as
+	// additional context for the deployment.
+	Description string `json:"description,omitempty"`
 	// ForwardingRule: Required. Immutable. The regional load balancer which the
 	// mirrored traffic should be forwarded to. Format is:
 	// projects/{project}/regions/{region}/forwardingRules/{forwardingRule}
@@ -3315,6 +3318,9 @@ type MirroringDeploymentGroup struct {
 	ConnectedEndpointGroups []*MirroringDeploymentGroupConnectedEndpointGroup `json:"connectedEndpointGroups,omitempty"`
 	// CreateTime: Output only. [Output only] Create time stamp
 	CreateTime string `json:"createTime,omitempty"`
+	// Description: Optional. User-provided description of the deployment group.
+	// Used as additional context for the deployment group.
+	Description string `json:"description,omitempty"`
 	// Labels: Optional. Labels as key value pairs
 	Labels map[string]string `json:"labels,omitempty"`
 	// Name: Immutable. Identifier. Then name of the MirroringDeploymentGroup.
@@ -3386,6 +3392,9 @@ type MirroringEndpointGroup struct {
 	Associations []*MirroringEndpointGroupAssociationDetails `json:"associations,omitempty"`
 	// CreateTime: Output only. [Output only] Create time stamp
 	CreateTime string `json:"createTime,omitempty"`
+	// Description: Optional. User-provided description of the endpoint group. Used
+	// as additional context for the endpoint group.
+	Description string `json:"description,omitempty"`
 	// Labels: Optional. Labels as key value pairs
 	Labels map[string]string `json:"labels,omitempty"`
 	// MirroringDeploymentGroup: Required. Immutable. The Mirroring Deployment
@@ -3802,6 +3811,9 @@ type SecurityProfileGroup struct {
 	// CustomMirroringProfile: Optional. Reference to a SecurityProfile with the
 	// CustomMirroring configuration.
 	CustomMirroringProfile string `json:"customMirroringProfile,omitempty"`
+	// DataPathId: Output only. Identifier used by the data-path. Unique within
+	// {container, location}.
+	DataPathId uint64 `json:"dataPathId,omitempty,string"`
 	// Description: Optional. An optional description of the profile group. Max
 	// length 2048 characters.
 	Description string `json:"description,omitempty"`

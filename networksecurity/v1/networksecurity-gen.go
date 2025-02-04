@@ -2792,6 +2792,9 @@ type SecurityProfileGroup struct {
 	// CustomMirroringProfile: Optional. Reference to a SecurityProfile with the
 	// CustomMirroring configuration.
 	CustomMirroringProfile string `json:"customMirroringProfile,omitempty"`
+	// DataPathId: Output only. Identifier used by the data-path. Unique within
+	// {container, location}.
+	DataPathId uint64 `json:"dataPathId,omitempty,string"`
 	// Description: Optional. An optional description of the profile group. Max
 	// length 2048 characters.
 	Description string `json:"description,omitempty"`

@@ -2,8 +2,6 @@ module google.golang.org/api
 
 go 1.22.7
 
-toolchain go1.22.11
-
 require (
 	cloud.google.com/go/auth v0.14.1
 	cloud.google.com/go/auth/oauth2adapt v0.2.7

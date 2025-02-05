@@ -8711,9 +8711,10 @@ func (r *ProjectsInstancesTablesService) Patch(name string, table *Table) *Proje
 // relative to the `table` field, not to the request message. The wildcard (*)
 // path is currently not supported. Currently UpdateTable is only supported for
 // the following fields: * `change_stream_config` *
-// `change_stream_config.retention_period` * `deletion_protection` If
-// `column_families` is set in `update_mask`, it will return an UNIMPLEMENTED
-// error.
+// `change_stream_config.retention_period` * `deletion_protection` *
+// `automated_backup_policy` * `automated_backup_policy.retention_period` *
+// `automated_backup_policy.frequency` If `column_families` is set in
+// `update_mask`, it will return an UNIMPLEMENTED error.
 func (c *ProjectsInstancesTablesPatchCall) UpdateMask(updateMask string) *ProjectsInstancesTablesPatchCall {
 	c.urlParams_.Set("updateMask", updateMask)
 	return c

@@ -2330,7 +2330,7 @@ func (meth *Method) generateCode() {
 		bodyArg = "newBody"
 	}
 	pn(`urls += "?" + c.urlParams_.Encode()`)
-	pn("req, err := http.NewRequest(%q, urls, %s)", httpMethod, bodyArg)
+	pn("req, err := http.NewRequestWithContext(c.ctx_, %q, urls, %s)", httpMethod, bodyArg)
 	pn("if err != nil { return nil, err }")
 	pn("req.Header = reqHeaders")
 	if meth.supportsMediaUpload() {

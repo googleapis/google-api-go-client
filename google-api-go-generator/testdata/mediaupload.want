@@ -355,7 +355,7 @@ func (c *CaptionsInsertCall) doRequest(alt string) (*http.Response, error) {
 	newBody, getBody, cleanup := c.mediaInfo_.UploadRequest(reqHeaders, body)
 	defer cleanup()
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("POST", urls, newBody)
+	req, err := http.NewRequestWithContext(c.ctx_, "POST", urls, newBody)
 	if err != nil {
 		return nil, err
 	}

@@ -233,7 +233,7 @@ func (c *AtlasGetMapCall) doRequest(alt string) (*http.Response, error) {
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "map")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, nil)
+	req, err := http.NewRequestWithContext(c.ctx_, "GET", urls, nil)
 	if err != nil {
 		return nil, err
 	}

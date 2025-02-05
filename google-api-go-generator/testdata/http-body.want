@@ -343,7 +343,7 @@ func (c *ProjectsLocationsDatasetsFhirStoresFhirCreateResourceCall) doRequest(al
 	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+parent}/fhir/{+type}")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("POST", urls, body)
+	req, err := http.NewRequestWithContext(c.ctx_, "POST", urls, body)
 	if err != nil {
 		return nil, err
 	}
@@ -441,7 +441,7 @@ func (c *ProjectsLocationsDatasetsFhirStoresFhirReadCall) doRequest(alt string) 
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+name}")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, nil)
+	req, err := http.NewRequestWithContext(c.ctx_, "GET", urls, nil)
 	if err != nil {
 		return nil, err
 	}

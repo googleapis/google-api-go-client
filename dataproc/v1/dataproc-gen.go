@@ -2682,6 +2682,10 @@ type GceClusterConfig struct {
 	// ReservationAffinity: Optional. Reservation Affinity for consuming Zonal
 	// reservation.
 	ReservationAffinity *ReservationAffinity `json:"reservationAffinity,omitempty"`
+	// ResourceManagerTags: Optional. Resource manager tags to add to all instances
+	// (see Resource manager tags resources
+	// (https://cloud.google.com/resource-manager/docs/tags/tags-creating-and-managing)).
+	ResourceManagerTags map[string]string `json:"resourceManagerTags,omitempty"`
 	// ServiceAccount: Optional. The Dataproc service account
 	// (https://cloud.google.com/dataproc/docs/concepts/configuring-clusters/service-accounts#service_accounts_in_dataproc)
 	// (also see VM Data Plane identity

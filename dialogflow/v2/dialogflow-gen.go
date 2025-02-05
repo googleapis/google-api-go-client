@@ -3888,7 +3888,7 @@ func (s GoogleCloudDialogflowCxV3WebhookGenericWebService) MarshalJSON() ([]byte
 type GoogleCloudDialogflowCxV3WebhookGenericWebServiceOAuthConfig struct {
 	// ClientId: Required. The client ID provided by the 3rd party platform.
 	ClientId string `json:"clientId,omitempty"`
-	// ClientSecret: Required. The client secret provided by the 3rd party
+	// ClientSecret: Optional. The client secret provided by the 3rd party
 	// platform.
 	ClientSecret string `json:"clientSecret,omitempty"`
 	// Scopes: Optional. The OAuth scopes to grant.
@@ -7262,7 +7262,7 @@ func (s GoogleCloudDialogflowCxV3beta1WebhookGenericWebService) MarshalJSON() ([
 type GoogleCloudDialogflowCxV3beta1WebhookGenericWebServiceOAuthConfig struct {
 	// ClientId: Required. The client ID provided by the 3rd party platform.
 	ClientId string `json:"clientId,omitempty"`
-	// ClientSecret: Required. The client secret provided by the 3rd party
+	// ClientSecret: Optional. The client secret provided by the 3rd party
 	// platform.
 	ClientSecret string `json:"clientSecret,omitempty"`
 	// Scopes: Optional. The OAuth scopes to grant.
@@ -29813,9 +29813,12 @@ func (r *ProjectsAnswerRecordsService) List(parent string) *ProjectsAnswerRecord
 }
 
 // Filter sets the optional parameter "filter": Filters to restrict results to
-// specific answer records. Marked deprecated as it hasn't been, and isn't
-// currently, supported. For more information about filtering, see API
-// Filtering (https://aip.dev/160).
+// specific answer records. The expression has the following syntax: [AND ] ...
+// The following fields and operators are supported: * conversation_id with
+// equals(=) operator Examples: * "conversation_id=bar" matches answer records
+// in the projects/foo/locations/global/conversations/bar conversation
+// (assuming the parent is projects/foo/locations/global). For more information
+// about filtering, see API Filtering (https://aip.dev/160).
 func (c *ProjectsAnswerRecordsListCall) Filter(filter string) *ProjectsAnswerRecordsListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
@@ -44014,9 +44017,12 @@ func (r *ProjectsLocationsAnswerRecordsService) List(parent string) *ProjectsLoc
 }
 
 // Filter sets the optional parameter "filter": Filters to restrict results to
-// specific answer records. Marked deprecated as it hasn't been, and isn't
-// currently, supported. For more information about filtering, see API
-// Filtering (https://aip.dev/160).
+// specific answer records. The expression has the following syntax: [AND ] ...
+// The following fields and operators are supported: * conversation_id with
+// equals(=) operator Examples: * "conversation_id=bar" matches answer records
+// in the projects/foo/locations/global/conversations/bar conversation
+// (assuming the parent is projects/foo/locations/global). For more information
+// about filtering, see API Filtering (https://aip.dev/160).
 func (c *ProjectsLocationsAnswerRecordsListCall) Filter(filter string) *ProjectsLocationsAnswerRecordsListCall {
 	c.urlParams_.Set("filter", filter)
 	return c

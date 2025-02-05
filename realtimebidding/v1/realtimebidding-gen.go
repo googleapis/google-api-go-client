@@ -602,8 +602,8 @@ type Bidder struct {
 	// requests from these nonguaranteed deals will always be sent. When false, bid
 	// requests will be subject to regular pretargeting configurations.
 	// Programmatic Guaranteed deals will always be sent to the bidder, regardless
-	// of the value for this flag. Auction packages are not impacted by this value
-	// and are subject to the regular pretargeting configurations.
+	// of the value for this option. Auction packages are not impacted by this
+	// value and are subject to the regular pretargeting configurations.
 	BypassNonguaranteedDealsPretargeting bool `json:"bypassNonguaranteedDealsPretargeting,omitempty"`
 	// CookieMatchingNetworkId: Output only. The buyer's network ID used for cookie
 	// matching. This ID corresponds to the `google_nid` parameter in the URL used

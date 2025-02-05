@@ -1561,6 +1561,11 @@ type ExperimentalFeatures struct {
 	// be generated. This feature will be enabled by default 1 month after
 	// launching the feature in preview packages.
 	RestAsyncIoEnabled bool `json:"restAsyncIoEnabled,omitempty"`
+	// UnversionedPackageDisabled: Disables generation of an unversioned Python
+	// package for this client library. This means that the module names will need
+	// to be versioned in import statements. For example `import
+	// google.cloud.library_v2` instead of `import google.cloud.library`.
+	UnversionedPackageDisabled bool `json:"unversionedPackageDisabled,omitempty"`
 	// ForceSendFields is a list of field names (e.g.
 	// "ProtobufPythonicTypesEnabled") to unconditionally include in API requests.
 	// By default, fields with empty or default values are omitted from API
@@ -3571,18 +3576,25 @@ func (s SecondaryIpRange) MarshalJSON() ([]byte, error) {
 // SelectiveGapicGeneration: This message is used to configure the generation
 // of a subset of the RPCs in a service for client libraries.
 type SelectiveGapicGeneration struct {
+	// GenerateOmittedAsInternal: Setting this to true indicates to the client
+	// generators that methods that would be excluded from the generation should
+	// instead be generated in a way that indicates these methods should not be
+	// consumed by end users. How this is expressed is up to individual language
+	// implementations to decide. Some examples may be: added annotations,
+	// obfuscated identifiers, or other language idiomatic patterns.
+	GenerateOmittedAsInternal bool `json:"generateOmittedAsInternal,omitempty"`
 	// Methods: An allowlist of the fully qualified names of RPCs that should be
 	// included on public client surfaces.
 	Methods []string `json:"methods,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "Methods") to unconditionally
-	// include in API requests. By default, fields with empty or default values are
-	// omitted from API requests. See
+	// ForceSendFields is a list of field names (e.g. "GenerateOmittedAsInternal")
+	// to unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Methods") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
+	// NullFields is a list of field names (e.g. "GenerateOmittedAsInternal") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }

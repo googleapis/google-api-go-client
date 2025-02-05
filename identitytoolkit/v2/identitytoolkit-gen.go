@@ -577,12 +577,17 @@ type GoogleCloudIdentitytoolkitAdminV2Config struct {
 	// Client: Options related to how clients making requests on behalf of a
 	// project should be configured.
 	Client *GoogleCloudIdentitytoolkitAdminV2ClientConfig `json:"client,omitempty"`
+	// DefaultHostingSite: Output only. Default Firebase hosting site name
+	DefaultHostingSite string `json:"defaultHostingSite,omitempty"`
 	// EmailPrivacyConfig: Configuration for settings related to email privacy and
 	// public visibility.
 	EmailPrivacyConfig *GoogleCloudIdentitytoolkitAdminV2EmailPrivacyConfig `json:"emailPrivacyConfig,omitempty"`
 	// Mfa: Configuration for this project's multi-factor authentication, including
 	// whether it is active and what factors can be used for the second factor
 	Mfa *GoogleCloudIdentitytoolkitAdminV2MultiFactorAuthConfig `json:"mfa,omitempty"`
+	// MobileLinksConfig: Configuration for settings related to univeral links
+	// (iOS) and app links (Android).
+	MobileLinksConfig *GoogleCloudIdentitytoolkitAdminV2MobileLinksConfig `json:"mobileLinksConfig,omitempty"`
 	// Monitoring: Configuration related to monitoring project activity.
 	Monitoring *GoogleCloudIdentitytoolkitAdminV2MonitoringConfig `json:"monitoring,omitempty"`
 	// MultiTenant: Configuration related to multi-tenant functionality.
@@ -1228,6 +1233,37 @@ type GoogleCloudIdentitytoolkitAdminV2ListTenantsResponse struct {
 
 func (s GoogleCloudIdentitytoolkitAdminV2ListTenantsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudIdentitytoolkitAdminV2ListTenantsResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudIdentitytoolkitAdminV2MobileLinksConfig: Configuration mobile
+// links.
+type GoogleCloudIdentitytoolkitAdminV2MobileLinksConfig struct {
+	// Domain: Open code in app domain to use for app links and universal links.
+	//
+	// Possible values:
+	//   "DOMAIN_UNSPECIFIED" - Default value. The default domain is the Firebase
+	// Dynamic Link domain before the FDL deprecation and the hosting domain after
+	// the FDL deprecation.
+	//   "FIREBASE_DYNAMIC_LINK_DOMAIN" - Use Firebase Dynamic Link domain as app
+	// link domain. Default value.
+	//   "HOSTING_DOMAIN" - Use hosting domain as app link domain.
+	Domain string `json:"domain,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Domain") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Domain") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudIdentitytoolkitAdminV2MobileLinksConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudIdentitytoolkitAdminV2MobileLinksConfig
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -2134,6 +2170,9 @@ type GoogleCloudIdentitytoolkitAdminV2Tenant struct {
 	Inheritance *GoogleCloudIdentitytoolkitAdminV2Inheritance `json:"inheritance,omitempty"`
 	// MfaConfig: The tenant-level configuration of MFA options.
 	MfaConfig *GoogleCloudIdentitytoolkitAdminV2MultiFactorAuthConfig `json:"mfaConfig,omitempty"`
+	// MobileLinksConfig: Optional. Deprecated. Never launched. Configuration for
+	// settings related to univeral links (iOS) and app links (Android).
+	MobileLinksConfig *GoogleCloudIdentitytoolkitAdminV2MobileLinksConfig `json:"mobileLinksConfig,omitempty"`
 	// Monitoring: Configuration related to monitoring project activity.
 	Monitoring *GoogleCloudIdentitytoolkitAdminV2MonitoringConfig `json:"monitoring,omitempty"`
 	// Name: Output only. Resource name of a tenant. For example:

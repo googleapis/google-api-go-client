@@ -1333,6 +1333,8 @@ type ImpactedDestination struct {
 	// listings](https://support.google.com/merchants/answer/9825611).
 	//   "FREE_LOCAL_VEHICLE_LISTINGS" - [Free local vehicle
 	// listings](https://support.google.com/merchants/answer/11544533).
+	//   "YOUTUBE_AFFILIATE" - [Youtube
+	// Affiliate](https://support.google.com/youtube/answer/13376398).
 	//   "YOUTUBE_SHOPPING" - [YouTube
 	// Shopping](https://support.google.com/merchants/answer/13478370).
 	//   "CLOUD_RETAIL" - [Cloud
@@ -2089,6 +2091,8 @@ type ProductChange struct {
 	// listings](https://support.google.com/merchants/answer/9825611).
 	//   "FREE_LOCAL_VEHICLE_LISTINGS" - [Free local vehicle
 	// listings](https://support.google.com/merchants/answer/11544533).
+	//   "YOUTUBE_AFFILIATE" - [Youtube
+	// Affiliate](https://support.google.com/youtube/answer/13376398).
 	//   "YOUTUBE_SHOPPING" - [YouTube
 	// Shopping](https://support.google.com/merchants/answer/13478370).
 	//   "CLOUD_RETAIL" - [Cloud
@@ -3501,7 +3505,12 @@ type AccountsListCall struct {
 // listing the sub-accounts of an MCA, but all accounts the calling user has
 // access to including other MCAs, linked accounts, standalone accounts and so
 // on. If no filter is provided, then it returns accounts the user is directly
-// added to.
+// added to. This method is eventually consistent, meaning changes such as
+// creating, updating an account or a change of relationships between accounts
+// may not show up in the results immediately. Instead, these changes propagate
+// over a short period, after which the updated information can match the
+// associated predicates. That means, that searching by account name might not
+// return a recently changed account even though it satisfies the predicate.
 func (r *AccountsService) List() *AccountsListCall {
 	c := &AccountsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	return c

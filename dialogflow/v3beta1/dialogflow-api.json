@@ -5185,7 +5185,7 @@
       }
     }
   },
-  "revision": "20250121",
+  "revision": "20250130",
   "rootUrl": "https://dialogflow.googleapis.com/",
   "schemas": {
     "GoogleCloudDialogflowCxV3AdvancedSettings": {
@@ -7271,7 +7271,7 @@
           "type": "string"
         },
         "clientSecret": {
-          "description": "Required. The client secret provided by the 3rd party platform.",
+          "description": "Optional. The client secret provided by the 3rd party platform.",
           "type": "string"
         },
         "scopes": {
@@ -14536,7 +14536,7 @@
           "type": "string"
         },
         "clientSecret": {
-          "description": "Required. The client secret provided by the 3rd party platform.",
+          "description": "Optional. The client secret provided by the 3rd party platform.",
           "type": "string"
         },
         "scopes": {

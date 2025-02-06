@@ -2645,8 +2645,7 @@
               ],
               "parameters": {
                 "filter": {
-                  "deprecated": true,
-                  "description": "Optional. Filters to restrict results to specific answer records. For more information about filtering, see [API Filtering](https://aip.dev/160).",
+                  "description": "Optional. Filters to restrict results to specific answer records. The expression has the following syntax: [AND ] ... The following fields and operators are supported: * conversation_id with equals(=) operator Examples: * \"conversation_id=bar\" matches answer records in the projects/foo/locations/global/conversations/bar conversation (assuming the parent is projects/foo/locations/global). For more information about filtering, see [API Filtering](https://aip.dev/160).",
                   "location": "query",
                   "type": "string"
                 },
@@ -6294,8 +6293,7 @@
                   ],
                   "parameters": {
                     "filter": {
-                      "deprecated": true,
-                      "description": "Optional. Filters to restrict results to specific answer records. For more information about filtering, see [API Filtering](https://aip.dev/160).",
+                      "description": "Optional. Filters to restrict results to specific answer records. The expression has the following syntax: [AND ] ... The following fields and operators are supported: * conversation_id with equals(=) operator Examples: * \"conversation_id=bar\" matches answer records in the projects/foo/locations/global/conversations/bar conversation (assuming the parent is projects/foo/locations/global). For more information about filtering, see [API Filtering](https://aip.dev/160).",
                       "location": "query",
                       "type": "string"
                     },
@@ -8239,7 +8237,7 @@
       }
     }
   },
-  "revision": "20250121",
+  "revision": "20250130",
   "rootUrl": "https://dialogflow.googleapis.com/",
   "schemas": {
     "GoogleCloudDialogflowCxV3AdvancedSettings": {
@@ -10325,7 +10323,7 @@
           "type": "string"
         },
         "clientSecret": {
-          "description": "Required. The client secret provided by the 3rd party platform.",
+          "description": "Optional. The client secret provided by the 3rd party platform.",
           "type": "string"
         },
         "scopes": {
@@ -12700,7 +12698,7 @@
           "type": "string"
         },
         "clientSecret": {
-          "description": "Required. The client secret provided by the 3rd party platform.",
+          "description": "Optional. The client secret provided by the 3rd party platform.",
           "type": "string"
         },
         "scopes": {

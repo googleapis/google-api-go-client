@@ -620,7 +620,7 @@ type GoogleCloudRunV2Container struct {
 	// not provided.
 	Args []string `json:"args,omitempty"`
 	// BaseImageUri: Base image for this container. Only supported for services. If
-	// set. it indicates that the service is enrolled into automatic base image
+	// set, it indicates that the service is enrolled into automatic base image
 	// update.
 	BaseImageUri string `json:"baseImageUri,omitempty"`
 	// BuildInfo: Output only. The build info of the container image.
@@ -3559,6 +3559,9 @@ type GoogleDevtoolsCloudbuildV1BuildOptions struct {
 	// (https://cloud.google.com/build/docs/private-pools/run-builds-in-private-pool)
 	// for more information.
 	Pool *GoogleDevtoolsCloudbuildV1PoolOption `json:"pool,omitempty"`
+	// PubsubTopic: Optional. Option to specify the Pub/Sub topic to receive build
+	// status updates.
+	PubsubTopic string `json:"pubsubTopic,omitempty"`
 	// RequestedVerifyOption: Requested verifiability options.
 	//
 	// Possible values:

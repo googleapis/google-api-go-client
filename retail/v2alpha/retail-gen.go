@@ -7683,9 +7683,12 @@ func (s GoogleCloudRetailV2alphaSearchRequestSpellCorrectionSpec) MarshalJSON() 
 // GoogleCloudRetailV2alphaSearchRequestTileNavigationSpec: This field
 // specifies tile navigation related parameters.
 type GoogleCloudRetailV2alphaSearchRequestTileNavigationSpec struct {
-	// AppliedTiles: This field specifies the tiles which are already clicked in
-	// client side. NOTE: This field is not being used for filtering search
-	// products. Client side should also put all the applied tiles in
+	// AppliedTiles: This optional field specifies the tiles which are already
+	// clicked in client side. While the feature works without this field set,
+	// particularly for an initial query, it is highly recommended to set this
+	// field because it can improve the quality of the search response and removes
+	// possible duplicate tiles. NOTE: This field is not being used for filtering
+	// search products. Client side should also put all the applied tiles in
 	// SearchRequest.filter.
 	AppliedTiles []*GoogleCloudRetailV2alphaTile `json:"appliedTiles,omitempty"`
 	// TileNavigationRequested: This field specifies whether the customer would

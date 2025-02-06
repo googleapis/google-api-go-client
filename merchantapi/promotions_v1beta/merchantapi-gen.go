@@ -216,9 +216,12 @@ type Attributes struct {
 	//   "FREE_GIFT" - Free gift with description only.
 	//   "FREE_GIFT_WITH_VALUE" - Free gift with monetary value.
 	//   "FREE_GIFT_WITH_ITEM_ID" - Free gift with item ID.
-	//   "FREE_SHIPPING_STANDARD" - Standard free shipping coupon value type.
+	//   "FREE_SHIPPING_STANDARD" - Standard free shipping coupon value type. Only
+	// available for online promotions.
 	//   "FREE_SHIPPING_OVERNIGHT" - Overnight free shipping coupon value type.
-	//   "FREE_SHIPPING_TWO_DAY" - Two day free shipping coupon value type.
+	// Only available for online promotions.
+	//   "FREE_SHIPPING_TWO_DAY" - Two day free shipping coupon value type. Only
+	// available for online promotions.
 	CouponValueType string `json:"couponValueType,omitempty"`
 	// FreeGiftDescription: Optional. Free gift description
 	// (https://support.google.com/merchants/answer/13847245?ref_topic=13773355&sjid=17642868584668136159-NC)
@@ -482,6 +485,8 @@ type DestinationStatus struct {
 	// listings](https://support.google.com/merchants/answer/9825611).
 	//   "FREE_LOCAL_VEHICLE_LISTINGS" - [Free local vehicle
 	// listings](https://support.google.com/merchants/answer/11544533).
+	//   "YOUTUBE_AFFILIATE" - [Youtube
+	// Affiliate](https://support.google.com/youtube/answer/13376398).
 	//   "YOUTUBE_SHOPPING" - [YouTube
 	// Shopping](https://support.google.com/merchants/answer/13478370).
 	//   "CLOUD_RETAIL" - [Cloud
@@ -624,6 +629,8 @@ type ItemLevelIssue struct {
 	// listings](https://support.google.com/merchants/answer/9825611).
 	//   "FREE_LOCAL_VEHICLE_LISTINGS" - [Free local vehicle
 	// listings](https://support.google.com/merchants/answer/11544533).
+	//   "YOUTUBE_AFFILIATE" - [Youtube
+	// Affiliate](https://support.google.com/youtube/answer/13376398).
 	//   "YOUTUBE_SHOPPING" - [YouTube
 	// Shopping](https://support.google.com/merchants/answer/13478370).
 	//   "CLOUD_RETAIL" - [Cloud
@@ -756,6 +763,8 @@ type ProductChange struct {
 	// listings](https://support.google.com/merchants/answer/9825611).
 	//   "FREE_LOCAL_VEHICLE_LISTINGS" - [Free local vehicle
 	// listings](https://support.google.com/merchants/answer/11544533).
+	//   "YOUTUBE_AFFILIATE" - [Youtube
+	// Affiliate](https://support.google.com/youtube/answer/13376398).
 	//   "YOUTUBE_SHOPPING" - [YouTube
 	// Shopping](https://support.google.com/merchants/answer/13478370).
 	//   "CLOUD_RETAIL" - [Cloud

@@ -1388,11 +1388,15 @@ type DeprecatedEvent struct {
 	// (https://developers.google.com/workspace/chat/dialogs), like data entered on
 	// a card.
 	Common *CommonEventObject `json:"common,omitempty"`
-	// ConfigCompleteRedirectUrl: For `MESSAGE` interaction events, the URL that
-	// users must be redirected to after they complete an authorization or
-	// configuration flow outside of Google Chat. For more information, see Connect
-	// a Chat app with other services and tools
+	// ConfigCompleteRedirectUrl: This URL is populated for `MESSAGE` and
+	// `ADDED_TO_SPACE` interaction events. After completing an authorization or
+	// configuration flow outside of Google Chat, users must be redirected to this
+	// URL to signal to Google Chat that the authorization or configuration flow
+	// was successful. For more information, see Connect a Chat app with other
+	// services and tools
 	// (https://developers.google.com/workspace/chat/connect-web-services-tools).
+	// In Developer Preview (https://developers.google.com/workspace/preview), this
+	// URL is also populated for `APP_COMMAND` interaction events.
 	ConfigCompleteRedirectUrl string `json:"configCompleteRedirectUrl,omitempty"`
 	// DialogEventType: The type of dialog
 	// (https://developers.google.com/workspace/chat/dialogs) interaction event

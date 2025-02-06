@@ -11971,6 +11971,7 @@ func (c *HybridIssuersListCall) Header() http.Header {
 }
 
 func (c *HybridIssuersListCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
@@ -11979,7 +11980,12 @@ func (c *HybridIssuersListCall) doRequest(alt string) (*http.Response, error) {
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, nil)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("GET", urls, nil)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "GET", urls, nil)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -12080,6 +12086,7 @@ func (c *OrganizationsCreateCall) Header() http.Header {
 }
 
 func (c *OrganizationsCreateCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googlecloudapigeev1organization)
 	if err != nil {
@@ -12089,7 +12096,12 @@ func (c *OrganizationsCreateCall) doRequest(alt string) (*http.Response, error) 
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/organizations")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("POST", urls, body)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("POST", urls, body)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "POST", urls, body)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -12212,12 +12224,18 @@ func (c *OrganizationsDeleteCall) Header() http.Header {
 }
 
 func (c *OrganizationsDeleteCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("DELETE", urls, nil)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("DELETE", urls, nil)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "DELETE", urls, nil)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -12322,6 +12340,7 @@ func (c *OrganizationsGetCall) Header() http.Header {
 }
 
 func (c *OrganizationsGetCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
@@ -12330,7 +12349,12 @@ func (c *OrganizationsGetCall) doRequest(alt string) (*http.Response, error) {
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, nil)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("GET", urls, nil)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "GET", urls, nil)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -12435,6 +12459,7 @@ func (c *OrganizationsGetControlPlaneAccessCall) Header() http.Header {
 }
 
 func (c *OrganizationsGetControlPlaneAccessCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
@@ -12443,7 +12468,12 @@ func (c *OrganizationsGetControlPlaneAccessCall) doRequest(alt string) (*http.Re
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, nil)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("GET", urls, nil)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "GET", urls, nil)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -12571,6 +12601,7 @@ func (c *OrganizationsGetDeployedIngressConfigCall) Header() http.Header {
 }
 
 func (c *OrganizationsGetDeployedIngressConfigCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
@@ -12579,7 +12610,12 @@ func (c *OrganizationsGetDeployedIngressConfigCall) doRequest(alt string) (*http
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, nil)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("GET", urls, nil)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "GET", urls, nil)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -12683,6 +12719,7 @@ func (c *OrganizationsGetProjectMappingCall) Header() http.Header {
 }
 
 func (c *OrganizationsGetProjectMappingCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
@@ -12691,7 +12728,12 @@ func (c *OrganizationsGetProjectMappingCall) doRequest(alt string) (*http.Respon
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}:getProjectMapping")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, nil)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("GET", urls, nil)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "GET", urls, nil)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -12794,6 +12836,7 @@ func (c *OrganizationsGetRuntimeConfigCall) Header() http.Header {
 }
 
 func (c *OrganizationsGetRuntimeConfigCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
@@ -12802,7 +12845,12 @@ func (c *OrganizationsGetRuntimeConfigCall) doRequest(alt string) (*http.Respons
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, nil)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("GET", urls, nil)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "GET", urls, nil)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -12906,6 +12954,7 @@ func (c *OrganizationsGetSecuritySettingsCall) Header() http.Header {
 }
 
 func (c *OrganizationsGetSecuritySettingsCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
@@ -12914,7 +12963,12 @@ func (c *OrganizationsGetSecuritySettingsCall) doRequest(alt string) (*http.Resp
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, nil)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("GET", urls, nil)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "GET", urls, nil)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -13019,6 +13073,7 @@ func (c *OrganizationsGetSyncAuthorizationCall) Header() http.Header {
 }
 
 func (c *OrganizationsGetSyncAuthorizationCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googlecloudapigeev1getsyncauthorizationrequest)
 	if err != nil {
@@ -13028,7 +13083,12 @@ func (c *OrganizationsGetSyncAuthorizationCall) doRequest(alt string) (*http.Res
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}:getSyncAuthorization")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("POST", urls, body)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("POST", urls, body)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "POST", urls, body)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -13132,6 +13192,7 @@ func (c *OrganizationsListCall) Header() http.Header {
 }
 
 func (c *OrganizationsListCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
@@ -13140,7 +13201,12 @@ func (c *OrganizationsListCall) doRequest(alt string) (*http.Response, error) {
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, nil)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("GET", urls, nil)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "GET", urls, nil)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -13237,6 +13303,7 @@ func (c *OrganizationsSetAddonsCall) Header() http.Header {
 }
 
 func (c *OrganizationsSetAddonsCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googlecloudapigeev1setaddonsrequest)
 	if err != nil {
@@ -13246,7 +13313,12 @@ func (c *OrganizationsSetAddonsCall) doRequest(alt string) (*http.Response, erro
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+org}:setAddons")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("POST", urls, body)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("POST", urls, body)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "POST", urls, body)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -13351,6 +13423,7 @@ func (c *OrganizationsSetSyncAuthorizationCall) Header() http.Header {
 }
 
 func (c *OrganizationsSetSyncAuthorizationCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googlecloudapigeev1syncauthorization)
 	if err != nil {
@@ -13360,7 +13433,12 @@ func (c *OrganizationsSetSyncAuthorizationCall) doRequest(alt string) (*http.Res
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}:setSyncAuthorization")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("POST", urls, body)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("POST", urls, body)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "POST", urls, body)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -13457,6 +13535,7 @@ func (c *OrganizationsUpdateCall) Header() http.Header {
 }
 
 func (c *OrganizationsUpdateCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googlecloudapigeev1organization)
 	if err != nil {
@@ -13466,7 +13545,12 @@ func (c *OrganizationsUpdateCall) doRequest(alt string) (*http.Response, error) 
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("PUT", urls, body)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("PUT", urls, body)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "PUT", urls, body)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -13574,6 +13658,7 @@ func (c *OrganizationsUpdateControlPlaneAccessCall) Header() http.Header {
 }
 
 func (c *OrganizationsUpdateControlPlaneAccessCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googlecloudapigeev1controlplaneaccess)
 	if err != nil {
@@ -13583,7 +13668,12 @@ func (c *OrganizationsUpdateControlPlaneAccessCall) doRequest(alt string) (*http
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("PATCH", urls, body)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("PATCH", urls, body)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "PATCH", urls, body)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -13687,6 +13777,7 @@ func (c *OrganizationsUpdateSecuritySettingsCall) Header() http.Header {
 }
 
 func (c *OrganizationsUpdateSecuritySettingsCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googlecloudapigeev1securitysettings)
 	if err != nil {
@@ -13696,7 +13787,12 @@ func (c *OrganizationsUpdateSecuritySettingsCall) doRequest(alt string) (*http.R
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("PATCH", urls, body)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("PATCH", urls, body)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "PATCH", urls, body)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -13792,6 +13888,7 @@ func (c *OrganizationsAnalyticsDatastoresCreateCall) Header() http.Header {
 }
 
 func (c *OrganizationsAnalyticsDatastoresCreateCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googlecloudapigeev1datastore)
 	if err != nil {
@@ -13801,7 +13898,12 @@ func (c *OrganizationsAnalyticsDatastoresCreateCall) doRequest(alt string) (*htt
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/analytics/datastores")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("POST", urls, body)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("POST", urls, body)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "POST", urls, body)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -13895,12 +13997,18 @@ func (c *OrganizationsAnalyticsDatastoresDeleteCall) Header() http.Header {
 }
 
 func (c *OrganizationsAnalyticsDatastoresDeleteCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("DELETE", urls, nil)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("DELETE", urls, nil)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "DELETE", urls, nil)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -14003,6 +14111,7 @@ func (c *OrganizationsAnalyticsDatastoresGetCall) Header() http.Header {
 }
 
 func (c *OrganizationsAnalyticsDatastoresGetCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
@@ -14011,7 +14120,12 @@ func (c *OrganizationsAnalyticsDatastoresGetCall) doRequest(alt string) (*http.R
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, nil)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("GET", urls, nil)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "GET", urls, nil)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -14121,6 +14235,7 @@ func (c *OrganizationsAnalyticsDatastoresListCall) Header() http.Header {
 }
 
 func (c *OrganizationsAnalyticsDatastoresListCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
@@ -14129,7 +14244,12 @@ func (c *OrganizationsAnalyticsDatastoresListCall) doRequest(alt string) (*http.
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/analytics/datastores")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, nil)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("GET", urls, nil)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "GET", urls, nil)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -14227,6 +14347,7 @@ func (c *OrganizationsAnalyticsDatastoresTestCall) Header() http.Header {
 }
 
 func (c *OrganizationsAnalyticsDatastoresTestCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googlecloudapigeev1datastore)
 	if err != nil {
@@ -14236,7 +14357,12 @@ func (c *OrganizationsAnalyticsDatastoresTestCall) doRequest(alt string) (*http.
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/analytics/datastores:test")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("POST", urls, body)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("POST", urls, body)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "POST", urls, body)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -14332,6 +14458,7 @@ func (c *OrganizationsAnalyticsDatastoresUpdateCall) Header() http.Header {
 }
 
 func (c *OrganizationsAnalyticsDatastoresUpdateCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googlecloudapigeev1datastore)
 	if err != nil {
@@ -14341,7 +14468,12 @@ func (c *OrganizationsAnalyticsDatastoresUpdateCall) doRequest(alt string) (*htt
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("PUT", urls, body)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("PUT", urls, body)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "PUT", urls, body)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -14446,6 +14578,7 @@ func (c *OrganizationsApiproductsAttributesCall) Header() http.Header {
 }
 
 func (c *OrganizationsApiproductsAttributesCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googlecloudapigeev1attributes)
 	if err != nil {
@@ -14455,7 +14588,12 @@ func (c *OrganizationsApiproductsAttributesCall) doRequest(alt string) (*http.Re
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}/attributes")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("POST", urls, body)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("POST", urls, body)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "POST", urls, body)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -14567,6 +14705,7 @@ func (c *OrganizationsApiproductsCreateCall) Header() http.Header {
 }
 
 func (c *OrganizationsApiproductsCreateCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googlecloudapigeev1apiproduct)
 	if err != nil {
@@ -14576,7 +14715,12 @@ func (c *OrganizationsApiproductsCreateCall) doRequest(alt string) (*http.Respon
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/apiproducts")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("POST", urls, body)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("POST", urls, body)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "POST", urls, body)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -14677,12 +14821,18 @@ func (c *OrganizationsApiproductsDeleteCall) Header() http.Header {
 }
 
 func (c *OrganizationsApiproductsDeleteCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("DELETE", urls, nil)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("DELETE", urls, nil)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "DELETE", urls, nil)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -14789,6 +14939,7 @@ func (c *OrganizationsApiproductsGetCall) Header() http.Header {
 }
 
 func (c *OrganizationsApiproductsGetCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
@@ -14797,7 +14948,12 @@ func (c *OrganizationsApiproductsGetCall) doRequest(alt string) (*http.Response,
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, nil)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("GET", urls, nil)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "GET", urls, nil)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -14941,6 +15097,7 @@ func (c *OrganizationsApiproductsListCall) Header() http.Header {
 }
 
 func (c *OrganizationsApiproductsListCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
@@ -14949,7 +15106,12 @@ func (c *OrganizationsApiproductsListCall) doRequest(alt string) (*http.Response
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/apiproducts")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, nil)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("GET", urls, nil)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "GET", urls, nil)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -15050,6 +15212,7 @@ func (c *OrganizationsApiproductsUpdateCall) Header() http.Header {
 }
 
 func (c *OrganizationsApiproductsUpdateCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googlecloudapigeev1apiproduct)
 	if err != nil {
@@ -15059,7 +15222,12 @@ func (c *OrganizationsApiproductsUpdateCall) doRequest(alt string) (*http.Respon
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("PUT", urls, body)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("PUT", urls, body)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "PUT", urls, body)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -15154,12 +15322,18 @@ func (c *OrganizationsApiproductsAttributesDeleteCall) Header() http.Header {
 }
 
 func (c *OrganizationsApiproductsAttributesDeleteCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("DELETE", urls, nil)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("DELETE", urls, nil)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "DELETE", urls, nil)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -15263,6 +15437,7 @@ func (c *OrganizationsApiproductsAttributesGetCall) Header() http.Header {
 }
 
 func (c *OrganizationsApiproductsAttributesGetCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
@@ -15271,7 +15446,12 @@ func (c *OrganizationsApiproductsAttributesGetCall) doRequest(alt string) (*http
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, nil)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("GET", urls, nil)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "GET", urls, nil)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -15374,6 +15554,7 @@ func (c *OrganizationsApiproductsAttributesListCall) Header() http.Header {
 }
 
 func (c *OrganizationsApiproductsAttributesListCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
@@ -15382,7 +15563,12 @@ func (c *OrganizationsApiproductsAttributesListCall) doRequest(alt string) (*htt
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/attributes")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, nil)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("GET", urls, nil)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "GET", urls, nil)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -15484,6 +15670,7 @@ func (c *OrganizationsApiproductsAttributesUpdateApiProductAttributeCall) Header
 }
 
 func (c *OrganizationsApiproductsAttributesUpdateApiProductAttributeCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googlecloudapigeev1attribute)
 	if err != nil {
@@ -15493,7 +15680,12 @@ func (c *OrganizationsApiproductsAttributesUpdateApiProductAttributeCall) doRequ
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("POST", urls, body)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("POST", urls, body)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "POST", urls, body)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -15598,6 +15790,7 @@ func (c *OrganizationsApiproductsRateplansCreateCall) Header() http.Header {
 }
 
 func (c *OrganizationsApiproductsRateplansCreateCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googlecloudapigeev1rateplan)
 	if err != nil {
@@ -15607,7 +15800,12 @@ func (c *OrganizationsApiproductsRateplansCreateCall) doRequest(alt string) (*ht
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/rateplans")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("POST", urls, body)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("POST", urls, body)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "POST", urls, body)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -15701,12 +15899,18 @@ func (c *OrganizationsApiproductsRateplansDeleteCall) Header() http.Header {
 }
 
 func (c *OrganizationsApiproductsRateplansDeleteCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("DELETE", urls, nil)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("DELETE", urls, nil)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "DELETE", urls, nil)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -15809,6 +16013,7 @@ func (c *OrganizationsApiproductsRateplansGetCall) Header() http.Header {
 }
 
 func (c *OrganizationsApiproductsRateplansGetCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
@@ -15817,7 +16022,12 @@ func (c *OrganizationsApiproductsRateplansGetCall) doRequest(alt string) (*http.
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, nil)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("GET", urls, nil)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "GET", urls, nil)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -15973,6 +16183,7 @@ func (c *OrganizationsApiproductsRateplansListCall) Header() http.Header {
 }
 
 func (c *OrganizationsApiproductsRateplansListCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
@@ -15981,7 +16192,12 @@ func (c *OrganizationsApiproductsRateplansListCall) doRequest(alt string) (*http
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/rateplans")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, nil)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("GET", urls, nil)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "GET", urls, nil)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -16077,6 +16293,7 @@ func (c *OrganizationsApiproductsRateplansUpdateCall) Header() http.Header {
 }
 
 func (c *OrganizationsApiproductsRateplansUpdateCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googlecloudapigeev1rateplan)
 	if err != nil {
@@ -16086,7 +16303,12 @@ func (c *OrganizationsApiproductsRateplansUpdateCall) doRequest(alt string) (*ht
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("PUT", urls, body)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("PUT", urls, body)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "PUT", urls, body)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -16221,6 +16443,7 @@ func (c *OrganizationsApisCreateCall) Header() http.Header {
 }
 
 func (c *OrganizationsApisCreateCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googleapihttpbody)
 	if err != nil {
@@ -16230,7 +16453,12 @@ func (c *OrganizationsApisCreateCall) doRequest(alt string) (*http.Response, err
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/apis")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("POST", urls, body)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("POST", urls, body)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "POST", urls, body)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -16326,12 +16554,18 @@ func (c *OrganizationsApisDeleteCall) Header() http.Header {
 }
 
 func (c *OrganizationsApisDeleteCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("DELETE", urls, nil)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("DELETE", urls, nil)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "DELETE", urls, nil)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -16434,6 +16668,7 @@ func (c *OrganizationsApisGetCall) Header() http.Header {
 }
 
 func (c *OrganizationsApisGetCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
@@ -16442,7 +16677,12 @@ func (c *OrganizationsApisGetCall) doRequest(alt string) (*http.Response, error)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, nil)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("GET", urls, nil)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "GET", urls, nil)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -16561,6 +16801,7 @@ func (c *OrganizationsApisListCall) Header() http.Header {
 }
 
 func (c *OrganizationsApisListCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
@@ -16569,7 +16810,12 @@ func (c *OrganizationsApisListCall) doRequest(alt string) (*http.Response, error
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/apis")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, nil)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("GET", urls, nil)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "GET", urls, nil)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -16672,6 +16918,7 @@ func (c *OrganizationsApisPatchCall) Header() http.Header {
 }
 
 func (c *OrganizationsApisPatchCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googlecloudapigeev1apiproxy)
 	if err != nil {
@@ -16681,7 +16928,12 @@ func (c *OrganizationsApisPatchCall) doRequest(alt string) (*http.Response, erro
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("PATCH", urls, body)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("PATCH", urls, body)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "PATCH", urls, body)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -16799,6 +17051,7 @@ func (c *OrganizationsApisDebugsessionsListCall) Header() http.Header {
 }
 
 func (c *OrganizationsApisDebugsessionsListCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
@@ -16807,7 +17060,12 @@ func (c *OrganizationsApisDebugsessionsListCall) doRequest(alt string) (*http.Re
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/debugsessions")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, nil)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("GET", urls, nil)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "GET", urls, nil)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -16931,6 +17189,7 @@ func (c *OrganizationsApisDeploymentsListCall) Header() http.Header {
 }
 
 func (c *OrganizationsApisDeploymentsListCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
@@ -16939,7 +17198,12 @@ func (c *OrganizationsApisDeploymentsListCall) doRequest(alt string) (*http.Resp
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/deployments")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, nil)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("GET", urls, nil)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "GET", urls, nil)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -17035,6 +17299,7 @@ func (c *OrganizationsApisKeyvaluemapsCreateCall) Header() http.Header {
 }
 
 func (c *OrganizationsApisKeyvaluemapsCreateCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googlecloudapigeev1keyvaluemap)
 	if err != nil {
@@ -17044,7 +17309,12 @@ func (c *OrganizationsApisKeyvaluemapsCreateCall) doRequest(alt string) (*http.R
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/keyvaluemaps")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("POST", urls, body)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("POST", urls, body)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "POST", urls, body)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -17138,12 +17408,18 @@ func (c *OrganizationsApisKeyvaluemapsDeleteCall) Header() http.Header {
 }
 
 func (c *OrganizationsApisKeyvaluemapsDeleteCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("DELETE", urls, nil)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("DELETE", urls, nil)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "DELETE", urls, nil)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -17244,6 +17520,7 @@ func (c *OrganizationsApisKeyvaluemapsEntriesCreateCall) Header() http.Header {
 }
 
 func (c *OrganizationsApisKeyvaluemapsEntriesCreateCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googlecloudapigeev1keyvalueentry)
 	if err != nil {
@@ -17253,7 +17530,12 @@ func (c *OrganizationsApisKeyvaluemapsEntriesCreateCall) doRequest(alt string) (
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/entries")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("POST", urls, body)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("POST", urls, body)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "POST", urls, body)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -17356,12 +17638,18 @@ func (c *OrganizationsApisKeyvaluemapsEntriesDeleteCall) Header() http.Header {
 }
 
 func (c *OrganizationsApisKeyvaluemapsEntriesDeleteCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("DELETE", urls, nil)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("DELETE", urls, nil)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "DELETE", urls, nil)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -17471,6 +17759,7 @@ func (c *OrganizationsApisKeyvaluemapsEntriesGetCall) Header() http.Header {
 }
 
 func (c *OrganizationsApisKeyvaluemapsEntriesGetCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
@@ -17479,7 +17768,12 @@ func (c *OrganizationsApisKeyvaluemapsEntriesGetCall) doRequest(alt string) (*ht
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, nil)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("GET", urls, nil)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "GET", urls, nil)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -17602,6 +17896,7 @@ func (c *OrganizationsApisKeyvaluemapsEntriesListCall) Header() http.Header {
 }
 
 func (c *OrganizationsApisKeyvaluemapsEntriesListCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
@@ -17610,7 +17905,12 @@ func (c *OrganizationsApisKeyvaluemapsEntriesListCall) doRequest(alt string) (*h
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/entries")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, nil)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("GET", urls, nil)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "GET", urls, nil)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -17731,6 +18031,7 @@ func (c *OrganizationsApisKeyvaluemapsEntriesUpdateCall) Header() http.Header {
 }
 
 func (c *OrganizationsApisKeyvaluemapsEntriesUpdateCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googlecloudapigeev1keyvalueentry)
 	if err != nil {
@@ -17740,7 +18041,12 @@ func (c *OrganizationsApisKeyvaluemapsEntriesUpdateCall) doRequest(alt string) (
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("PUT", urls, body)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("PUT", urls, body)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "PUT", urls, body)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -17836,12 +18142,18 @@ func (c *OrganizationsApisRevisionsDeleteCall) Header() http.Header {
 }
 
 func (c *OrganizationsApisRevisionsDeleteCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("DELETE", urls, nil)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("DELETE", urls, nil)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "DELETE", urls, nil)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -17958,6 +18270,7 @@ func (c *OrganizationsApisRevisionsGetCall) Header() http.Header {
 }
 
 func (c *OrganizationsApisRevisionsGetCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
@@ -17966,7 +18279,12 @@ func (c *OrganizationsApisRevisionsGetCall) doRequest(alt string) (*http.Respons
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, nil)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("GET", urls, nil)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "GET", urls, nil)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -18075,6 +18393,7 @@ func (c *OrganizationsApisRevisionsUpdateApiProxyRevisionCall) Header() http.Hea
 }
 
 func (c *OrganizationsApisRevisionsUpdateApiProxyRevisionCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googleapihttpbody)
 	if err != nil {
@@ -18084,7 +18403,12 @@ func (c *OrganizationsApisRevisionsUpdateApiProxyRevisionCall) doRequest(alt str
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("POST", urls, body)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("POST", urls, body)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "POST", urls, body)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -18188,6 +18512,7 @@ func (c *OrganizationsApisRevisionsDeploymentsListCall) Header() http.Header {
 }
 
 func (c *OrganizationsApisRevisionsDeploymentsListCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
@@ -18196,7 +18521,12 @@ func (c *OrganizationsApisRevisionsDeploymentsListCall) doRequest(alt string) (*
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/deployments")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, nil)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("GET", urls, nil)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "GET", urls, nil)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -18294,6 +18624,7 @@ func (c *OrganizationsAppgroupsCreateCall) Header() http.Header {
 }
 
 func (c *OrganizationsAppgroupsCreateCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googlecloudapigeev1appgroup)
 	if err != nil {
@@ -18303,7 +18634,12 @@ func (c *OrganizationsAppgroupsCreateCall) doRequest(alt string) (*http.Response
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/appgroups")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("POST", urls, body)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("POST", urls, body)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "POST", urls, body)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -18402,12 +18738,18 @@ func (c *OrganizationsAppgroupsDeleteCall) Header() http.Header {
 }
 
 func (c *OrganizationsAppgroupsDeleteCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("DELETE", urls, nil)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("DELETE", urls, nil)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "DELETE", urls, nil)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -18511,6 +18853,7 @@ func (c *OrganizationsAppgroupsGetCall) Header() http.Header {
 }
 
 func (c *OrganizationsAppgroupsGetCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
@@ -18519,7 +18862,12 @@ func (c *OrganizationsAppgroupsGetCall) doRequest(alt string) (*http.Response, e
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, nil)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("GET", urls, nil)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "GET", urls, nil)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -18649,6 +18997,7 @@ func (c *OrganizationsAppgroupsListCall) Header() http.Header {
 }
 
 func (c *OrganizationsAppgroupsListCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
@@ -18657,7 +19006,12 @@ func (c *OrganizationsAppgroupsListCall) doRequest(alt string) (*http.Response, 
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/appgroups")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, nil)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("GET", urls, nil)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "GET", urls, nil)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -18785,6 +19139,7 @@ func (c *OrganizationsAppgroupsUpdateCall) Header() http.Header {
 }
 
 func (c *OrganizationsAppgroupsUpdateCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googlecloudapigeev1appgroup)
 	if err != nil {
@@ -18794,7 +19149,12 @@ func (c *OrganizationsAppgroupsUpdateCall) doRequest(alt string) (*http.Response
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("PUT", urls, body)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("PUT", urls, body)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "PUT", urls, body)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -18894,6 +19254,7 @@ func (c *OrganizationsAppgroupsAppsCreateCall) Header() http.Header {
 }
 
 func (c *OrganizationsAppgroupsAppsCreateCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googlecloudapigeev1appgroupapp)
 	if err != nil {
@@ -18903,7 +19264,12 @@ func (c *OrganizationsAppgroupsAppsCreateCall) doRequest(alt string) (*http.Resp
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/apps")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("POST", urls, body)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("POST", urls, body)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "POST", urls, body)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -19000,12 +19366,18 @@ func (c *OrganizationsAppgroupsAppsDeleteCall) Header() http.Header {
 }
 
 func (c *OrganizationsAppgroupsAppsDeleteCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("DELETE", urls, nil)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("DELETE", urls, nil)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "DELETE", urls, nil)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -19108,6 +19480,7 @@ func (c *OrganizationsAppgroupsAppsGetCall) Header() http.Header {
 }
 
 func (c *OrganizationsAppgroupsAppsGetCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
@@ -19116,7 +19489,12 @@ func (c *OrganizationsAppgroupsAppsGetCall) doRequest(alt string) (*http.Respons
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, nil)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("GET", urls, nil)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "GET", urls, nil)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -19238,6 +19616,7 @@ func (c *OrganizationsAppgroupsAppsListCall) Header() http.Header {
 }
 
 func (c *OrganizationsAppgroupsAppsListCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
@@ -19246,7 +19625,12 @@ func (c *OrganizationsAppgroupsAppsListCall) doRequest(alt string) (*http.Respon
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/apps")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, nil)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("GET", urls, nil)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "GET", urls, nil)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -19379,6 +19763,7 @@ func (c *OrganizationsAppgroupsAppsUpdateCall) Header() http.Header {
 }
 
 func (c *OrganizationsAppgroupsAppsUpdateCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googlecloudapigeev1appgroupapp)
 	if err != nil {
@@ -19388,7 +19773,12 @@ func (c *OrganizationsAppgroupsAppsUpdateCall) doRequest(alt string) (*http.Resp
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("PUT", urls, body)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("PUT", urls, body)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "PUT", urls, body)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -19495,6 +19885,7 @@ func (c *OrganizationsAppgroupsAppsKeysCreateCall) Header() http.Header {
 }
 
 func (c *OrganizationsAppgroupsAppsKeysCreateCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googlecloudapigeev1appgroupappkey)
 	if err != nil {
@@ -19504,7 +19895,12 @@ func (c *OrganizationsAppgroupsAppsKeysCreateCall) doRequest(alt string) (*http.
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/keys")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("POST", urls, body)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("POST", urls, body)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "POST", urls, body)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -19601,12 +19997,18 @@ func (c *OrganizationsAppgroupsAppsKeysDeleteCall) Header() http.Header {
 }
 
 func (c *OrganizationsAppgroupsAppsKeysDeleteCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("DELETE", urls, nil)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("DELETE", urls, nil)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "DELETE", urls, nil)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -19711,6 +20113,7 @@ func (c *OrganizationsAppgroupsAppsKeysGetCall) Header() http.Header {
 }
 
 func (c *OrganizationsAppgroupsAppsKeysGetCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
@@ -19719,7 +20122,12 @@ func (c *OrganizationsAppgroupsAppsKeysGetCall) doRequest(alt string) (*http.Res
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, nil)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("GET", urls, nil)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "GET", urls, nil)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -19822,6 +20230,7 @@ func (c *OrganizationsAppgroupsAppsKeysUpdateAppGroupAppKeyCall) Header() http.H
 }
 
 func (c *OrganizationsAppgroupsAppsKeysUpdateAppGroupAppKeyCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googlecloudapigeev1updateappgroupappkeyrequest)
 	if err != nil {
@@ -19831,7 +20240,12 @@ func (c *OrganizationsAppgroupsAppsKeysUpdateAppGroupAppKeyCall) doRequest(alt s
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("POST", urls, body)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("POST", urls, body)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "POST", urls, body)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -19930,12 +20344,18 @@ func (c *OrganizationsAppgroupsAppsKeysApiproductsDeleteCall) Header() http.Head
 }
 
 func (c *OrganizationsAppgroupsAppsKeysApiproductsDeleteCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("DELETE", urls, nil)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("DELETE", urls, nil)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "DELETE", urls, nil)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -20045,12 +20465,18 @@ func (c *OrganizationsAppgroupsAppsKeysApiproductsUpdateAppGroupAppKeyApiProduct
 }
 
 func (c *OrganizationsAppgroupsAppsKeysApiproductsUpdateAppGroupAppKeyApiProductCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("POST", urls, nil)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("POST", urls, nil)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "POST", urls, nil)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -20152,6 +20578,7 @@ func (c *OrganizationsAppsGetCall) Header() http.Header {
 }
 
 func (c *OrganizationsAppsGetCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
@@ -20160,7 +20587,12 @@ func (c *OrganizationsAppsGetCall) doRequest(alt string) (*http.Response, error)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, nil)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("GET", urls, nil)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "GET", urls, nil)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -20354,6 +20786,7 @@ func (c *OrganizationsAppsListCall) Header() http.Header {
 }
 
 func (c *OrganizationsAppsListCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
@@ -20362,7 +20795,12 @@ func (c *OrganizationsAppsListCall) doRequest(alt string) (*http.Response, error
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/apps")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, nil)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("GET", urls, nil)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "GET", urls, nil)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -20488,6 +20926,7 @@ func (c *OrganizationsDatacollectorsCreateCall) Header() http.Header {
 }
 
 func (c *OrganizationsDatacollectorsCreateCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googlecloudapigeev1datacollector)
 	if err != nil {
@@ -20497,7 +20936,12 @@ func (c *OrganizationsDatacollectorsCreateCall) doRequest(alt string) (*http.Res
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/datacollectors")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("POST", urls, body)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("POST", urls, body)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "POST", urls, body)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -20591,12 +21035,18 @@ func (c *OrganizationsDatacollectorsDeleteCall) Header() http.Header {
 }
 
 func (c *OrganizationsDatacollectorsDeleteCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("DELETE", urls, nil)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("DELETE", urls, nil)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "DELETE", urls, nil)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -20699,6 +21149,7 @@ func (c *OrganizationsDatacollectorsGetCall) Header() http.Header {
 }
 
 func (c *OrganizationsDatacollectorsGetCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
@@ -20707,7 +21158,12 @@ func (c *OrganizationsDatacollectorsGetCall) doRequest(alt string) (*http.Respon
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, nil)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("GET", urls, nil)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "GET", urls, nil)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -20825,6 +21281,7 @@ func (c *OrganizationsDatacollectorsListCall) Header() http.Header {
 }
 
 func (c *OrganizationsDatacollectorsListCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
@@ -20833,7 +21290,12 @@ func (c *OrganizationsDatacollectorsListCall) doRequest(alt string) (*http.Respo
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/datacollectors")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, nil)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("GET", urls, nil)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "GET", urls, nil)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -20957,6 +21419,7 @@ func (c *OrganizationsDatacollectorsPatchCall) Header() http.Header {
 }
 
 func (c *OrganizationsDatacollectorsPatchCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googlecloudapigeev1datacollector)
 	if err != nil {
@@ -20966,7 +21429,12 @@ func (c *OrganizationsDatacollectorsPatchCall) doRequest(alt string) (*http.Resp
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("PATCH", urls, body)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("PATCH", urls, body)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "PATCH", urls, body)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -21078,6 +21546,7 @@ func (c *OrganizationsDeploymentsListCall) Header() http.Header {
 }
 
 func (c *OrganizationsDeploymentsListCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
@@ -21086,7 +21555,12 @@ func (c *OrganizationsDeploymentsListCall) doRequest(alt string) (*http.Response
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/deployments")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, nil)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("GET", urls, nil)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "GET", urls, nil)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -21192,6 +21666,7 @@ func (c *OrganizationsDevelopersAttributesCall) Header() http.Header {
 }
 
 func (c *OrganizationsDevelopersAttributesCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googlecloudapigeev1attributes)
 	if err != nil {
@@ -21201,7 +21676,12 @@ func (c *OrganizationsDevelopersAttributesCall) doRequest(alt string) (*http.Res
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/attributes")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("POST", urls, body)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("POST", urls, body)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "POST", urls, body)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -21299,6 +21779,7 @@ func (c *OrganizationsDevelopersCreateCall) Header() http.Header {
 }
 
 func (c *OrganizationsDevelopersCreateCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googlecloudapigeev1developer)
 	if err != nil {
@@ -21308,7 +21789,12 @@ func (c *OrganizationsDevelopersCreateCall) doRequest(alt string) (*http.Respons
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/developers")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("POST", urls, body)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("POST", urls, body)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "POST", urls, body)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -21409,12 +21895,18 @@ func (c *OrganizationsDevelopersDeleteCall) Header() http.Header {
 }
 
 func (c *OrganizationsDevelopersDeleteCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("DELETE", urls, nil)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("DELETE", urls, nil)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "DELETE", urls, nil)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -21526,6 +22018,7 @@ func (c *OrganizationsDevelopersGetCall) Header() http.Header {
 }
 
 func (c *OrganizationsDevelopersGetCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
@@ -21534,7 +22027,12 @@ func (c *OrganizationsDevelopersGetCall) doRequest(alt string) (*http.Response, 
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, nil)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("GET", urls, nil)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "GET", urls, nil)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -21637,6 +22135,7 @@ func (c *OrganizationsDevelopersGetBalanceCall) Header() http.Header {
 }
 
 func (c *OrganizationsDevelopersGetBalanceCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
@@ -21645,7 +22144,12 @@ func (c *OrganizationsDevelopersGetBalanceCall) doRequest(alt string) (*http.Res
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, nil)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("GET", urls, nil)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "GET", urls, nil)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -21750,6 +22254,7 @@ func (c *OrganizationsDevelopersGetMonetizationConfigCall) Header() http.Header 
 }
 
 func (c *OrganizationsDevelopersGetMonetizationConfigCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
@@ -21758,7 +22263,12 @@ func (c *OrganizationsDevelopersGetMonetizationConfigCall) doRequest(alt string)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, nil)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("GET", urls, nil)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "GET", urls, nil)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -21914,6 +22424,7 @@ func (c *OrganizationsDevelopersListCall) Header() http.Header {
 }
 
 func (c *OrganizationsDevelopersListCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
@@ -21922,7 +22433,12 @@ func (c *OrganizationsDevelopersListCall) doRequest(alt string) (*http.Response,
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/developers")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, nil)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("GET", urls, nil)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "GET", urls, nil)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -22031,12 +22547,18 @@ func (c *OrganizationsDevelopersSetDeveloperStatusCall) Header() http.Header {
 }
 
 func (c *OrganizationsDevelopersSetDeveloperStatusCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("POST", urls, nil)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("POST", urls, nil)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "POST", urls, nil)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -22140,6 +22662,7 @@ func (c *OrganizationsDevelopersUpdateCall) Header() http.Header {
 }
 
 func (c *OrganizationsDevelopersUpdateCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googlecloudapigeev1developer)
 	if err != nil {
@@ -22149,7 +22672,12 @@ func (c *OrganizationsDevelopersUpdateCall) doRequest(alt string) (*http.Respons
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("PUT", urls, body)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("PUT", urls, body)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "PUT", urls, body)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -22247,6 +22775,7 @@ func (c *OrganizationsDevelopersUpdateMonetizationConfigCall) Header() http.Head
 }
 
 func (c *OrganizationsDevelopersUpdateMonetizationConfigCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googlecloudapigeev1developermonetizationconfig)
 	if err != nil {
@@ -22256,7 +22785,12 @@ func (c *OrganizationsDevelopersUpdateMonetizationConfigCall) doRequest(alt stri
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("PUT", urls, body)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("PUT", urls, body)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "PUT", urls, body)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -22353,6 +22887,7 @@ func (c *OrganizationsDevelopersAppsAttributesCall) Header() http.Header {
 }
 
 func (c *OrganizationsDevelopersAppsAttributesCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googlecloudapigeev1attributes)
 	if err != nil {
@@ -22362,7 +22897,12 @@ func (c *OrganizationsDevelopersAppsAttributesCall) doRequest(alt string) (*http
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}/attributes")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("POST", urls, body)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("POST", urls, body)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "POST", urls, body)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -22463,6 +23003,7 @@ func (c *OrganizationsDevelopersAppsCreateCall) Header() http.Header {
 }
 
 func (c *OrganizationsDevelopersAppsCreateCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googlecloudapigeev1developerapp)
 	if err != nil {
@@ -22472,7 +23013,12 @@ func (c *OrganizationsDevelopersAppsCreateCall) doRequest(alt string) (*http.Res
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/apps")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("POST", urls, body)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("POST", urls, body)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "POST", urls, body)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -22569,12 +23115,18 @@ func (c *OrganizationsDevelopersAppsDeleteCall) Header() http.Header {
 }
 
 func (c *OrganizationsDevelopersAppsDeleteCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("DELETE", urls, nil)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("DELETE", urls, nil)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "DELETE", urls, nil)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -22700,6 +23252,7 @@ func (c *OrganizationsDevelopersAppsGenerateKeyPairOrUpdateDeveloperAppStatusCal
 }
 
 func (c *OrganizationsDevelopersAppsGenerateKeyPairOrUpdateDeveloperAppStatusCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googlecloudapigeev1developerapp)
 	if err != nil {
@@ -22709,7 +23262,12 @@ func (c *OrganizationsDevelopersAppsGenerateKeyPairOrUpdateDeveloperAppStatusCal
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("POST", urls, body)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("POST", urls, body)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "POST", urls, body)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -22830,6 +23388,7 @@ func (c *OrganizationsDevelopersAppsGetCall) Header() http.Header {
 }
 
 func (c *OrganizationsDevelopersAppsGetCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
@@ -22838,7 +23397,12 @@ func (c *OrganizationsDevelopersAppsGetCall) doRequest(alt string) (*http.Respon
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, nil)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("GET", urls, nil)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "GET", urls, nil)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -22980,6 +23544,7 @@ func (c *OrganizationsDevelopersAppsListCall) Header() http.Header {
 }
 
 func (c *OrganizationsDevelopersAppsListCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
@@ -22988,7 +23553,12 @@ func (c *OrganizationsDevelopersAppsListCall) doRequest(alt string) (*http.Respo
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/apps")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, nil)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("GET", urls, nil)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "GET", urls, nil)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -23093,6 +23663,7 @@ func (c *OrganizationsDevelopersAppsUpdateCall) Header() http.Header {
 }
 
 func (c *OrganizationsDevelopersAppsUpdateCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googlecloudapigeev1developerapp)
 	if err != nil {
@@ -23102,7 +23673,12 @@ func (c *OrganizationsDevelopersAppsUpdateCall) doRequest(alt string) (*http.Res
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("PUT", urls, body)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("PUT", urls, body)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "PUT", urls, body)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -23198,12 +23774,18 @@ func (c *OrganizationsDevelopersAppsAttributesDeleteCall) Header() http.Header {
 }
 
 func (c *OrganizationsDevelopersAppsAttributesDeleteCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("DELETE", urls, nil)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("DELETE", urls, nil)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "DELETE", urls, nil)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -23308,6 +23890,7 @@ func (c *OrganizationsDevelopersAppsAttributesGetCall) Header() http.Header {
 }
 
 func (c *OrganizationsDevelopersAppsAttributesGetCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
@@ -23316,7 +23899,12 @@ func (c *OrganizationsDevelopersAppsAttributesGetCall) doRequest(alt string) (*h
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, nil)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("GET", urls, nil)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "GET", urls, nil)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -23419,6 +24007,7 @@ func (c *OrganizationsDevelopersAppsAttributesListCall) Header() http.Header {
 }
 
 func (c *OrganizationsDevelopersAppsAttributesListCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
@@ -23427,7 +24016,12 @@ func (c *OrganizationsDevelopersAppsAttributesListCall) doRequest(alt string) (*
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/attributes")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, nil)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("GET", urls, nil)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "GET", urls, nil)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -23531,6 +24125,7 @@ func (c *OrganizationsDevelopersAppsAttributesUpdateDeveloperAppAttributeCall) H
 }
 
 func (c *OrganizationsDevelopersAppsAttributesUpdateDeveloperAppAttributeCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googlecloudapigeev1attribute)
 	if err != nil {
@@ -23540,7 +24135,12 @@ func (c *OrganizationsDevelopersAppsAttributesUpdateDeveloperAppAttributeCall) d
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("POST", urls, body)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("POST", urls, body)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "POST", urls, body)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -23649,6 +24249,7 @@ func (c *OrganizationsDevelopersAppsKeysCreateCall) Header() http.Header {
 }
 
 func (c *OrganizationsDevelopersAppsKeysCreateCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googlecloudapigeev1developerappkey)
 	if err != nil {
@@ -23658,7 +24259,12 @@ func (c *OrganizationsDevelopersAppsKeysCreateCall) doRequest(alt string) (*http
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/keys")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("POST", urls, body)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("POST", urls, body)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "POST", urls, body)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -23759,12 +24365,18 @@ func (c *OrganizationsDevelopersAppsKeysDeleteCall) Header() http.Header {
 }
 
 func (c *OrganizationsDevelopersAppsKeysDeleteCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("DELETE", urls, nil)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("DELETE", urls, nil)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "DELETE", urls, nil)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -23869,6 +24481,7 @@ func (c *OrganizationsDevelopersAppsKeysGetCall) Header() http.Header {
 }
 
 func (c *OrganizationsDevelopersAppsKeysGetCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
@@ -23877,7 +24490,12 @@ func (c *OrganizationsDevelopersAppsKeysGetCall) doRequest(alt string) (*http.Re
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, nil)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("GET", urls, nil)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "GET", urls, nil)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -23979,6 +24597,7 @@ func (c *OrganizationsDevelopersAppsKeysReplaceDeveloperAppKeyCall) Header() htt
 }
 
 func (c *OrganizationsDevelopersAppsKeysReplaceDeveloperAppKeyCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googlecloudapigeev1developerappkey)
 	if err != nil {
@@ -23988,7 +24607,12 @@ func (c *OrganizationsDevelopersAppsKeysReplaceDeveloperAppKeyCall) doRequest(al
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("PUT", urls, body)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("PUT", urls, body)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "PUT", urls, body)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -24099,6 +24723,7 @@ func (c *OrganizationsDevelopersAppsKeysUpdateDeveloperAppKeyCall) Header() http
 }
 
 func (c *OrganizationsDevelopersAppsKeysUpdateDeveloperAppKeyCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googlecloudapigeev1developerappkey)
 	if err != nil {
@@ -24108,7 +24733,12 @@ func (c *OrganizationsDevelopersAppsKeysUpdateDeveloperAppKeyCall) doRequest(alt
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("POST", urls, body)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("POST", urls, body)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "POST", urls, body)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -24207,12 +24837,18 @@ func (c *OrganizationsDevelopersAppsKeysApiproductsDeleteCall) Header() http.Hea
 }
 
 func (c *OrganizationsDevelopersAppsKeysApiproductsDeleteCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("DELETE", urls, nil)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("DELETE", urls, nil)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "DELETE", urls, nil)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -24320,12 +24956,18 @@ func (c *OrganizationsDevelopersAppsKeysApiproductsUpdateDeveloperAppKeyApiProdu
 }
 
 func (c *OrganizationsDevelopersAppsKeysApiproductsUpdateDeveloperAppKeyApiProductCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("POST", urls, nil)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("POST", urls, nil)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "POST", urls, nil)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -24434,6 +25076,7 @@ func (c *OrganizationsDevelopersAppsKeysCreateCreateCall) Header() http.Header {
 }
 
 func (c *OrganizationsDevelopersAppsKeysCreateCreateCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googlecloudapigeev1developerappkey)
 	if err != nil {
@@ -24443,7 +25086,12 @@ func (c *OrganizationsDevelopersAppsKeysCreateCreateCall) doRequest(alt string) 
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/keys/create")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("POST", urls, body)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("POST", urls, body)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "POST", urls, body)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -24538,12 +25186,18 @@ func (c *OrganizationsDevelopersAttributesDeleteCall) Header() http.Header {
 }
 
 func (c *OrganizationsDevelopersAttributesDeleteCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("DELETE", urls, nil)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("DELETE", urls, nil)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "DELETE", urls, nil)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -24647,6 +25301,7 @@ func (c *OrganizationsDevelopersAttributesGetCall) Header() http.Header {
 }
 
 func (c *OrganizationsDevelopersAttributesGetCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
@@ -24655,7 +25310,12 @@ func (c *OrganizationsDevelopersAttributesGetCall) doRequest(alt string) (*http.
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, nil)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("GET", urls, nil)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "GET", urls, nil)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -24759,6 +25419,7 @@ func (c *OrganizationsDevelopersAttributesListCall) Header() http.Header {
 }
 
 func (c *OrganizationsDevelopersAttributesListCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
@@ -24767,7 +25428,12 @@ func (c *OrganizationsDevelopersAttributesListCall) doRequest(alt string) (*http
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/attributes")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, nil)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("GET", urls, nil)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "GET", urls, nil)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -24870,6 +25536,7 @@ func (c *OrganizationsDevelopersAttributesUpdateDeveloperAttributeCall) Header()
 }
 
 func (c *OrganizationsDevelopersAttributesUpdateDeveloperAttributeCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googlecloudapigeev1attribute)
 	if err != nil {
@@ -24879,7 +25546,12 @@ func (c *OrganizationsDevelopersAttributesUpdateDeveloperAttributeCall) doReques
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("POST", urls, body)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("POST", urls, body)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "POST", urls, body)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -24976,6 +25648,7 @@ func (c *OrganizationsDevelopersBalanceAdjustCall) Header() http.Header {
 }
 
 func (c *OrganizationsDevelopersBalanceAdjustCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googlecloudapigeev1adjustdeveloperbalancerequest)
 	if err != nil {
@@ -24985,7 +25658,12 @@ func (c *OrganizationsDevelopersBalanceAdjustCall) doRequest(alt string) (*http.
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}:adjust")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("POST", urls, body)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("POST", urls, body)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "POST", urls, body)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -25081,6 +25759,7 @@ func (c *OrganizationsDevelopersBalanceCreditCall) Header() http.Header {
 }
 
 func (c *OrganizationsDevelopersBalanceCreditCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googlecloudapigeev1creditdeveloperbalancerequest)
 	if err != nil {
@@ -25090,7 +25769,12 @@ func (c *OrganizationsDevelopersBalanceCreditCall) doRequest(alt string) (*http.
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}:credit")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("POST", urls, body)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("POST", urls, body)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "POST", urls, body)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -25187,6 +25871,7 @@ func (c *OrganizationsDevelopersSubscriptionsCreateCall) Header() http.Header {
 }
 
 func (c *OrganizationsDevelopersSubscriptionsCreateCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googlecloudapigeev1developersubscription)
 	if err != nil {
@@ -25196,7 +25881,12 @@ func (c *OrganizationsDevelopersSubscriptionsCreateCall) doRequest(alt string) (
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/subscriptions")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("POST", urls, body)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("POST", urls, body)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "POST", urls, body)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -25294,6 +25984,7 @@ func (c *OrganizationsDevelopersSubscriptionsExpireCall) Header() http.Header {
 }
 
 func (c *OrganizationsDevelopersSubscriptionsExpireCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googlecloudapigeev1expiredevelopersubscriptionrequest)
 	if err != nil {
@@ -25303,7 +25994,12 @@ func (c *OrganizationsDevelopersSubscriptionsExpireCall) doRequest(alt string) (
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}:expire")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("POST", urls, body)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("POST", urls, body)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "POST", urls, body)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -25408,6 +26104,7 @@ func (c *OrganizationsDevelopersSubscriptionsGetCall) Header() http.Header {
 }
 
 func (c *OrganizationsDevelopersSubscriptionsGetCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
@@ -25416,7 +26113,12 @@ func (c *OrganizationsDevelopersSubscriptionsGetCall) doRequest(alt string) (*ht
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, nil)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("GET", urls, nil)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "GET", urls, nil)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -25537,6 +26239,7 @@ func (c *OrganizationsDevelopersSubscriptionsListCall) Header() http.Header {
 }
 
 func (c *OrganizationsDevelopersSubscriptionsListCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
@@ -25545,7 +26248,12 @@ func (c *OrganizationsDevelopersSubscriptionsListCall) doRequest(alt string) (*h
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/subscriptions")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, nil)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("GET", urls, nil)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "GET", urls, nil)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -25650,6 +26358,7 @@ func (c *OrganizationsEndpointAttachmentsCreateCall) Header() http.Header {
 }
 
 func (c *OrganizationsEndpointAttachmentsCreateCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googlecloudapigeev1endpointattachment)
 	if err != nil {
@@ -25659,7 +26368,12 @@ func (c *OrganizationsEndpointAttachmentsCreateCall) doRequest(alt string) (*htt
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/endpointAttachments")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("POST", urls, body)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("POST", urls, body)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "POST", urls, body)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -25753,12 +26467,18 @@ func (c *OrganizationsEndpointAttachmentsDeleteCall) Header() http.Header {
 }
 
 func (c *OrganizationsEndpointAttachmentsDeleteCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("DELETE", urls, nil)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("DELETE", urls, nil)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "DELETE", urls, nil)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -25861,6 +26581,7 @@ func (c *OrganizationsEndpointAttachmentsGetCall) Header() http.Header {
 }
 
 func (c *OrganizationsEndpointAttachmentsGetCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
@@ -25869,7 +26590,12 @@ func (c *OrganizationsEndpointAttachmentsGetCall) doRequest(alt string) (*http.R
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, nil)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("GET", urls, nil)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "GET", urls, nil)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -25988,6 +26714,7 @@ func (c *OrganizationsEndpointAttachmentsListCall) Header() http.Header {
 }
 
 func (c *OrganizationsEndpointAttachmentsListCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
@@ -25996,7 +26723,12 @@ func (c *OrganizationsEndpointAttachmentsListCall) doRequest(alt string) (*http.
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/endpointAttachments")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, nil)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("GET", urls, nil)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "GET", urls, nil)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -26120,6 +26852,7 @@ func (c *OrganizationsEnvgroupsCreateCall) Header() http.Header {
 }
 
 func (c *OrganizationsEnvgroupsCreateCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googlecloudapigeev1environmentgroup)
 	if err != nil {
@@ -26129,7 +26862,12 @@ func (c *OrganizationsEnvgroupsCreateCall) doRequest(alt string) (*http.Response
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/envgroups")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("POST", urls, body)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("POST", urls, body)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "POST", urls, body)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -26223,12 +26961,18 @@ func (c *OrganizationsEnvgroupsDeleteCall) Header() http.Header {
 }
 
 func (c *OrganizationsEnvgroupsDeleteCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("DELETE", urls, nil)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("DELETE", urls, nil)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "DELETE", urls, nil)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -26331,6 +27075,7 @@ func (c *OrganizationsEnvgroupsGetCall) Header() http.Header {
 }
 
 func (c *OrganizationsEnvgroupsGetCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
@@ -26339,7 +27084,12 @@ func (c *OrganizationsEnvgroupsGetCall) doRequest(alt string) (*http.Response, e
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, nil)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("GET", urls, nil)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "GET", urls, nil)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -26468,6 +27218,7 @@ func (c *OrganizationsEnvgroupsGetDeployedIngressConfigCall) Header() http.Heade
 }
 
 func (c *OrganizationsEnvgroupsGetDeployedIngressConfigCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
@@ -26476,7 +27227,12 @@ func (c *OrganizationsEnvgroupsGetDeployedIngressConfigCall) doRequest(alt strin
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, nil)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("GET", urls, nil)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "GET", urls, nil)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -26594,6 +27350,7 @@ func (c *OrganizationsEnvgroupsListCall) Header() http.Header {
 }
 
 func (c *OrganizationsEnvgroupsListCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
@@ -26602,7 +27359,12 @@ func (c *OrganizationsEnvgroupsListCall) doRequest(alt string) (*http.Response, 
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/envgroups")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, nil)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("GET", urls, nil)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "GET", urls, nil)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -26726,6 +27488,7 @@ func (c *OrganizationsEnvgroupsPatchCall) Header() http.Header {
 }
 
 func (c *OrganizationsEnvgroupsPatchCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googlecloudapigeev1environmentgroup)
 	if err != nil {
@@ -26735,7 +27498,12 @@ func (c *OrganizationsEnvgroupsPatchCall) doRequest(alt string) (*http.Response,
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("PATCH", urls, body)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("PATCH", urls, body)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "PATCH", urls, body)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -26831,6 +27599,7 @@ func (c *OrganizationsEnvgroupsAttachmentsCreateCall) Header() http.Header {
 }
 
 func (c *OrganizationsEnvgroupsAttachmentsCreateCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googlecloudapigeev1environmentgroupattachment)
 	if err != nil {
@@ -26840,7 +27609,12 @@ func (c *OrganizationsEnvgroupsAttachmentsCreateCall) doRequest(alt string) (*ht
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/attachments")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("POST", urls, body)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("POST", urls, body)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "POST", urls, body)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -26935,12 +27709,18 @@ func (c *OrganizationsEnvgroupsAttachmentsDeleteCall) Header() http.Header {
 }
 
 func (c *OrganizationsEnvgroupsAttachmentsDeleteCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("DELETE", urls, nil)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("DELETE", urls, nil)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "DELETE", urls, nil)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -27043,6 +27823,7 @@ func (c *OrganizationsEnvgroupsAttachmentsGetCall) Header() http.Header {
 }
 
 func (c *OrganizationsEnvgroupsAttachmentsGetCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
@@ -27051,7 +27832,12 @@ func (c *OrganizationsEnvgroupsAttachmentsGetCall) doRequest(alt string) (*http.
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, nil)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("GET", urls, nil)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "GET", urls, nil)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -27169,6 +27955,7 @@ func (c *OrganizationsEnvgroupsAttachmentsListCall) Header() http.Header {
 }
 
 func (c *OrganizationsEnvgroupsAttachmentsListCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
@@ -27177,7 +27964,12 @@ func (c *OrganizationsEnvgroupsAttachmentsListCall) doRequest(alt string) (*http
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/attachments")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, nil)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("GET", urls, nil)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "GET", urls, nil)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -27300,6 +28092,7 @@ func (c *OrganizationsEnvironmentsCreateCall) Header() http.Header {
 }
 
 func (c *OrganizationsEnvironmentsCreateCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googlecloudapigeev1environment)
 	if err != nil {
@@ -27309,7 +28102,12 @@ func (c *OrganizationsEnvironmentsCreateCall) doRequest(alt string) (*http.Respo
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/environments")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("POST", urls, body)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("POST", urls, body)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "POST", urls, body)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -27406,12 +28204,18 @@ func (c *OrganizationsEnvironmentsDeleteCall) Header() http.Header {
 }
 
 func (c *OrganizationsEnvironmentsDeleteCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("DELETE", urls, nil)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("DELETE", urls, nil)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "DELETE", urls, nil)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -27514,6 +28318,7 @@ func (c *OrganizationsEnvironmentsGetCall) Header() http.Header {
 }
 
 func (c *OrganizationsEnvironmentsGetCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
@@ -27522,7 +28327,12 @@ func (c *OrganizationsEnvironmentsGetCall) doRequest(alt string) (*http.Response
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, nil)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("GET", urls, nil)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "GET", urls, nil)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -27625,6 +28435,7 @@ func (c *OrganizationsEnvironmentsGetAddonsConfigCall) Header() http.Header {
 }
 
 func (c *OrganizationsEnvironmentsGetAddonsConfigCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
@@ -27633,7 +28444,12 @@ func (c *OrganizationsEnvironmentsGetAddonsConfigCall) doRequest(alt string) (*h
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, nil)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("GET", urls, nil)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "GET", urls, nil)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -27739,6 +28555,7 @@ func (c *OrganizationsEnvironmentsGetApiSecurityRuntimeConfigCall) Header() http
 }
 
 func (c *OrganizationsEnvironmentsGetApiSecurityRuntimeConfigCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
@@ -27747,7 +28564,12 @@ func (c *OrganizationsEnvironmentsGetApiSecurityRuntimeConfigCall) doRequest(alt
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, nil)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("GET", urls, nil)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "GET", urls, nil)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -27850,6 +28672,7 @@ func (c *OrganizationsEnvironmentsGetDebugmaskCall) Header() http.Header {
 }
 
 func (c *OrganizationsEnvironmentsGetDebugmaskCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
@@ -27858,7 +28681,12 @@ func (c *OrganizationsEnvironmentsGetDebugmaskCall) doRequest(alt string) (*http
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, nil)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("GET", urls, nil)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "GET", urls, nil)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -27962,6 +28790,7 @@ func (c *OrganizationsEnvironmentsGetDeployedConfigCall) Header() http.Header {
 }
 
 func (c *OrganizationsEnvironmentsGetDeployedConfigCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
@@ -27970,7 +28799,12 @@ func (c *OrganizationsEnvironmentsGetDeployedConfigCall) doRequest(alt string) (
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, nil)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("GET", urls, nil)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "GET", urls, nil)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -28095,6 +28929,7 @@ func (c *OrganizationsEnvironmentsGetIamPolicyCall) Header() http.Header {
 }
 
 func (c *OrganizationsEnvironmentsGetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
@@ -28103,7 +28938,12 @@ func (c *OrganizationsEnvironmentsGetIamPolicyCall) doRequest(alt string) (*http
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+resource}:getIamPolicy")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, nil)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("GET", urls, nil)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "GET", urls, nil)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -28207,6 +29047,7 @@ func (c *OrganizationsEnvironmentsGetSecurityActionsConfigCall) Header() http.He
 }
 
 func (c *OrganizationsEnvironmentsGetSecurityActionsConfigCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
@@ -28215,7 +29056,12 @@ func (c *OrganizationsEnvironmentsGetSecurityActionsConfigCall) doRequest(alt st
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, nil)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("GET", urls, nil)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "GET", urls, nil)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -28318,6 +29164,7 @@ func (c *OrganizationsEnvironmentsGetTraceConfigCall) Header() http.Header {
 }
 
 func (c *OrganizationsEnvironmentsGetTraceConfigCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
@@ -28326,7 +29173,12 @@ func (c *OrganizationsEnvironmentsGetTraceConfigCall) doRequest(alt string) (*ht
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, nil)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("GET", urls, nil)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "GET", urls, nil)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -28430,6 +29282,7 @@ func (c *OrganizationsEnvironmentsModifyEnvironmentCall) Header() http.Header {
 }
 
 func (c *OrganizationsEnvironmentsModifyEnvironmentCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googlecloudapigeev1environment)
 	if err != nil {
@@ -28439,7 +29292,12 @@ func (c *OrganizationsEnvironmentsModifyEnvironmentCall) doRequest(alt string) (
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("PATCH", urls, body)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("PATCH", urls, body)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "PATCH", urls, body)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -28541,6 +29399,7 @@ func (c *OrganizationsEnvironmentsSetIamPolicyCall) Header() http.Header {
 }
 
 func (c *OrganizationsEnvironmentsSetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googleiamv1setiampolicyrequest)
 	if err != nil {
@@ -28550,7 +29409,12 @@ func (c *OrganizationsEnvironmentsSetIamPolicyCall) doRequest(alt string) (*http
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+resource}:setIamPolicy")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("POST", urls, body)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("POST", urls, body)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "POST", urls, body)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -28646,12 +29510,18 @@ func (c *OrganizationsEnvironmentsSubscribeCall) Header() http.Header {
 }
 
 func (c *OrganizationsEnvironmentsSubscribeCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}:subscribe")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("POST", urls, nil)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("POST", urls, nil)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "POST", urls, nil)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -28752,6 +29622,7 @@ func (c *OrganizationsEnvironmentsTestIamPermissionsCall) Header() http.Header {
 }
 
 func (c *OrganizationsEnvironmentsTestIamPermissionsCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googleiamv1testiampermissionsrequest)
 	if err != nil {
@@ -28761,7 +29632,12 @@ func (c *OrganizationsEnvironmentsTestIamPermissionsCall) doRequest(alt string) 
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+resource}:testIamPermissions")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("POST", urls, body)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("POST", urls, body)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "POST", urls, body)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -28857,6 +29733,7 @@ func (c *OrganizationsEnvironmentsUnsubscribeCall) Header() http.Header {
 }
 
 func (c *OrganizationsEnvironmentsUnsubscribeCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googlecloudapigeev1subscription)
 	if err != nil {
@@ -28866,7 +29743,12 @@ func (c *OrganizationsEnvironmentsUnsubscribeCall) doRequest(alt string) (*http.
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}:unsubscribe")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("POST", urls, body)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("POST", urls, body)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "POST", urls, body)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -28967,6 +29849,7 @@ func (c *OrganizationsEnvironmentsUpdateCall) Header() http.Header {
 }
 
 func (c *OrganizationsEnvironmentsUpdateCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googlecloudapigeev1environment)
 	if err != nil {
@@ -28976,7 +29859,12 @@ func (c *OrganizationsEnvironmentsUpdateCall) doRequest(alt string) (*http.Respo
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("PUT", urls, body)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("PUT", urls, body)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "PUT", urls, body)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -29088,6 +29976,7 @@ func (c *OrganizationsEnvironmentsUpdateDebugmaskCall) Header() http.Header {
 }
 
 func (c *OrganizationsEnvironmentsUpdateDebugmaskCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googlecloudapigeev1debugmask)
 	if err != nil {
@@ -29097,7 +29986,12 @@ func (c *OrganizationsEnvironmentsUpdateDebugmaskCall) doRequest(alt string) (*h
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("PATCH", urls, body)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("PATCH", urls, body)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "PATCH", urls, body)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -29198,6 +30092,7 @@ func (c *OrganizationsEnvironmentsUpdateEnvironmentCall) Header() http.Header {
 }
 
 func (c *OrganizationsEnvironmentsUpdateEnvironmentCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googlecloudapigeev1environment)
 	if err != nil {
@@ -29207,7 +30102,12 @@ func (c *OrganizationsEnvironmentsUpdateEnvironmentCall) doRequest(alt string) (
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("POST", urls, body)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("POST", urls, body)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "POST", urls, body)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -29313,6 +30213,7 @@ func (c *OrganizationsEnvironmentsUpdateSecurityActionsConfigCall) Header() http
 }
 
 func (c *OrganizationsEnvironmentsUpdateSecurityActionsConfigCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googlecloudapigeev1securityactionsconfig)
 	if err != nil {
@@ -29322,7 +30223,12 @@ func (c *OrganizationsEnvironmentsUpdateSecurityActionsConfigCall) doRequest(alt
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("PATCH", urls, body)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("PATCH", urls, body)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "PATCH", urls, body)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -29428,6 +30334,7 @@ func (c *OrganizationsEnvironmentsUpdateTraceConfigCall) Header() http.Header {
 }
 
 func (c *OrganizationsEnvironmentsUpdateTraceConfigCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googlecloudapigeev1traceconfig)
 	if err != nil {
@@ -29437,7 +30344,12 @@ func (c *OrganizationsEnvironmentsUpdateTraceConfigCall) doRequest(alt string) (
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("PATCH", urls, body)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("PATCH", urls, body)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "PATCH", urls, body)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -29533,6 +30445,7 @@ func (c *OrganizationsEnvironmentsAddonsConfigSetAddonEnablementCall) Header() h
 }
 
 func (c *OrganizationsEnvironmentsAddonsConfigSetAddonEnablementCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googlecloudapigeev1setaddonenablementrequest)
 	if err != nil {
@@ -29542,7 +30455,12 @@ func (c *OrganizationsEnvironmentsAddonsConfigSetAddonEnablementCall) doRequest(
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}:setAddonEnablement")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("POST", urls, body)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("POST", urls, body)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "POST", urls, body)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -29663,6 +30581,7 @@ func (c *OrganizationsEnvironmentsAnalyticsAdminGetSchemav2Call) Header() http.H
 }
 
 func (c *OrganizationsEnvironmentsAnalyticsAdminGetSchemav2Call) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
@@ -29671,7 +30590,12 @@ func (c *OrganizationsEnvironmentsAnalyticsAdminGetSchemav2Call) doRequest(alt s
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, nil)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("GET", urls, nil)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "GET", urls, nil)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -29770,6 +30694,7 @@ func (c *OrganizationsEnvironmentsAnalyticsExportsCreateCall) Header() http.Head
 }
 
 func (c *OrganizationsEnvironmentsAnalyticsExportsCreateCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googlecloudapigeev1exportrequest)
 	if err != nil {
@@ -29779,7 +30704,12 @@ func (c *OrganizationsEnvironmentsAnalyticsExportsCreateCall) doRequest(alt stri
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/analytics/exports")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("POST", urls, body)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("POST", urls, body)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "POST", urls, body)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -29884,6 +30814,7 @@ func (c *OrganizationsEnvironmentsAnalyticsExportsGetCall) Header() http.Header 
 }
 
 func (c *OrganizationsEnvironmentsAnalyticsExportsGetCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
@@ -29892,7 +30823,12 @@ func (c *OrganizationsEnvironmentsAnalyticsExportsGetCall) doRequest(alt string)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, nil)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("GET", urls, nil)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "GET", urls, nil)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -29996,6 +30932,7 @@ func (c *OrganizationsEnvironmentsAnalyticsExportsListCall) Header() http.Header
 }
 
 func (c *OrganizationsEnvironmentsAnalyticsExportsListCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
@@ -30004,7 +30941,12 @@ func (c *OrganizationsEnvironmentsAnalyticsExportsListCall) doRequest(alt string
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/analytics/exports")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, nil)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("GET", urls, nil)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "GET", urls, nil)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -30107,6 +31049,7 @@ func (c *OrganizationsEnvironmentsApisDeploymentsListCall) Header() http.Header 
 }
 
 func (c *OrganizationsEnvironmentsApisDeploymentsListCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
@@ -30115,7 +31058,12 @@ func (c *OrganizationsEnvironmentsApisDeploymentsListCall) doRequest(alt string)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/deployments")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, nil)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("GET", urls, nil)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "GET", urls, nil)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -30255,12 +31203,18 @@ func (c *OrganizationsEnvironmentsApisRevisionsDeployCall) Header() http.Header 
 }
 
 func (c *OrganizationsEnvironmentsApisRevisionsDeployCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}/deployments")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("POST", urls, nil)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("POST", urls, nil)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "POST", urls, nil)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -30365,6 +31319,7 @@ func (c *OrganizationsEnvironmentsApisRevisionsGetDeploymentsCall) Header() http
 }
 
 func (c *OrganizationsEnvironmentsApisRevisionsGetDeploymentsCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
@@ -30373,7 +31328,12 @@ func (c *OrganizationsEnvironmentsApisRevisionsGetDeploymentsCall) doRequest(alt
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}/deployments")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, nil)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("GET", urls, nil)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "GET", urls, nil)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -30488,12 +31448,18 @@ func (c *OrganizationsEnvironmentsApisRevisionsUndeployCall) Header() http.Heade
 }
 
 func (c *OrganizationsEnvironmentsApisRevisionsUndeployCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}/deployments")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("DELETE", urls, nil)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("DELETE", urls, nil)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "DELETE", urls, nil)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -30599,6 +31565,7 @@ func (c *OrganizationsEnvironmentsApisRevisionsDebugsessionsCreateCall) Header()
 }
 
 func (c *OrganizationsEnvironmentsApisRevisionsDebugsessionsCreateCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googlecloudapigeev1debugsession)
 	if err != nil {
@@ -30608,7 +31575,12 @@ func (c *OrganizationsEnvironmentsApisRevisionsDebugsessionsCreateCall) doReques
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/debugsessions")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("POST", urls, body)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("POST", urls, body)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "POST", urls, body)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -30705,12 +31677,18 @@ func (c *OrganizationsEnvironmentsApisRevisionsDebugsessionsDeleteDataCall) Head
 }
 
 func (c *OrganizationsEnvironmentsApisRevisionsDebugsessionsDeleteDataCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}/data")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("DELETE", urls, nil)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("DELETE", urls, nil)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "DELETE", urls, nil)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -30814,6 +31792,7 @@ func (c *OrganizationsEnvironmentsApisRevisionsDebugsessionsGetCall) Header() ht
 }
 
 func (c *OrganizationsEnvironmentsApisRevisionsDebugsessionsGetCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
@@ -30822,7 +31801,12 @@ func (c *OrganizationsEnvironmentsApisRevisionsDebugsessionsGetCall) doRequest(a
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, nil)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("GET", urls, nil)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "GET", urls, nil)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -30943,6 +31927,7 @@ func (c *OrganizationsEnvironmentsApisRevisionsDebugsessionsListCall) Header() h
 }
 
 func (c *OrganizationsEnvironmentsApisRevisionsDebugsessionsListCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
@@ -30951,7 +31936,12 @@ func (c *OrganizationsEnvironmentsApisRevisionsDebugsessionsListCall) doRequest(
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/debugsessions")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, nil)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("GET", urls, nil)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "GET", urls, nil)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -31076,6 +32066,7 @@ func (c *OrganizationsEnvironmentsApisRevisionsDebugsessionsDataGetCall) Header(
 }
 
 func (c *OrganizationsEnvironmentsApisRevisionsDebugsessionsDataGetCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
@@ -31084,7 +32075,12 @@ func (c *OrganizationsEnvironmentsApisRevisionsDebugsessionsDataGetCall) doReque
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, nil)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("GET", urls, nil)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "GET", urls, nil)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -31197,12 +32193,18 @@ func (c *OrganizationsEnvironmentsApisRevisionsDeploymentsGenerateDeployChangeRe
 }
 
 func (c *OrganizationsEnvironmentsApisRevisionsDeploymentsGenerateDeployChangeReportCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}/deployments:generateDeployChangeReport")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("POST", urls, nil)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("POST", urls, nil)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "POST", urls, nil)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -31307,12 +32309,18 @@ func (c *OrganizationsEnvironmentsApisRevisionsDeploymentsGenerateUndeployChange
 }
 
 func (c *OrganizationsEnvironmentsApisRevisionsDeploymentsGenerateUndeployChangeReportCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}/deployments:generateUndeployChangeReport")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("POST", urls, nil)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("POST", urls, nil)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "POST", urls, nil)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -31407,6 +32415,7 @@ func (c *OrganizationsEnvironmentsArchiveDeploymentsCreateCall) Header() http.He
 }
 
 func (c *OrganizationsEnvironmentsArchiveDeploymentsCreateCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googlecloudapigeev1archivedeployment)
 	if err != nil {
@@ -31416,7 +32425,12 @@ func (c *OrganizationsEnvironmentsArchiveDeploymentsCreateCall) doRequest(alt st
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/archiveDeployments")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("POST", urls, body)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("POST", urls, body)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "POST", urls, body)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -31510,12 +32524,18 @@ func (c *OrganizationsEnvironmentsArchiveDeploymentsDeleteCall) Header() http.He
 }
 
 func (c *OrganizationsEnvironmentsArchiveDeploymentsDeleteCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("DELETE", urls, nil)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("DELETE", urls, nil)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "DELETE", urls, nil)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -31613,6 +32633,7 @@ func (c *OrganizationsEnvironmentsArchiveDeploymentsGenerateDownloadUrlCall) Hea
 }
 
 func (c *OrganizationsEnvironmentsArchiveDeploymentsGenerateDownloadUrlCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googlecloudapigeev1generatedownloadurlrequest)
 	if err != nil {
@@ -31622,7 +32643,12 @@ func (c *OrganizationsEnvironmentsArchiveDeploymentsGenerateDownloadUrlCall) doR
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}:generateDownloadUrl")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("POST", urls, body)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("POST", urls, body)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "POST", urls, body)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -31728,6 +32754,7 @@ func (c *OrganizationsEnvironmentsArchiveDeploymentsGenerateUploadUrlCall) Heade
 }
 
 func (c *OrganizationsEnvironmentsArchiveDeploymentsGenerateUploadUrlCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googlecloudapigeev1generateuploadurlrequest)
 	if err != nil {
@@ -31737,7 +32764,12 @@ func (c *OrganizationsEnvironmentsArchiveDeploymentsGenerateUploadUrlCall) doReq
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/archiveDeployments:generateUploadUrl")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("POST", urls, body)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("POST", urls, body)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "POST", urls, body)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -31840,6 +32872,7 @@ func (c *OrganizationsEnvironmentsArchiveDeploymentsGetCall) Header() http.Heade
 }
 
 func (c *OrganizationsEnvironmentsArchiveDeploymentsGetCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
@@ -31848,7 +32881,12 @@ func (c *OrganizationsEnvironmentsArchiveDeploymentsGetCall) doRequest(alt strin
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, nil)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("GET", urls, nil)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "GET", urls, nil)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -31975,6 +33013,7 @@ func (c *OrganizationsEnvironmentsArchiveDeploymentsListCall) Header() http.Head
 }
 
 func (c *OrganizationsEnvironmentsArchiveDeploymentsListCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
@@ -31983,7 +33022,12 @@ func (c *OrganizationsEnvironmentsArchiveDeploymentsListCall) doRequest(alt stri
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/archiveDeployments")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, nil)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("GET", urls, nil)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "GET", urls, nil)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -32108,6 +33152,7 @@ func (c *OrganizationsEnvironmentsArchiveDeploymentsPatchCall) Header() http.Hea
 }
 
 func (c *OrganizationsEnvironmentsArchiveDeploymentsPatchCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googlecloudapigeev1archivedeployment)
 	if err != nil {
@@ -32117,7 +33162,12 @@ func (c *OrganizationsEnvironmentsArchiveDeploymentsPatchCall) doRequest(alt str
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("PATCH", urls, body)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("PATCH", urls, body)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "PATCH", urls, body)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -32212,12 +33262,18 @@ func (c *OrganizationsEnvironmentsCachesDeleteCall) Header() http.Header {
 }
 
 func (c *OrganizationsEnvironmentsCachesDeleteCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("DELETE", urls, nil)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("DELETE", urls, nil)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "DELETE", urls, nil)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -32322,6 +33378,7 @@ func (c *OrganizationsEnvironmentsDeploymentsGetCall) Header() http.Header {
 }
 
 func (c *OrganizationsEnvironmentsDeploymentsGetCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
@@ -32330,7 +33387,12 @@ func (c *OrganizationsEnvironmentsDeploymentsGetCall) doRequest(alt string) (*ht
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, nil)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("GET", urls, nil)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "GET", urls, nil)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -32455,6 +33517,7 @@ func (c *OrganizationsEnvironmentsDeploymentsGetIamPolicyCall) Header() http.Hea
 }
 
 func (c *OrganizationsEnvironmentsDeploymentsGetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
@@ -32463,7 +33526,12 @@ func (c *OrganizationsEnvironmentsDeploymentsGetIamPolicyCall) doRequest(alt str
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+resource}:getIamPolicy")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, nil)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("GET", urls, nil)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "GET", urls, nil)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -32576,6 +33644,7 @@ func (c *OrganizationsEnvironmentsDeploymentsListCall) Header() http.Header {
 }
 
 func (c *OrganizationsEnvironmentsDeploymentsListCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
@@ -32584,7 +33653,12 @@ func (c *OrganizationsEnvironmentsDeploymentsListCall) doRequest(alt string) (*h
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/deployments")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, nil)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("GET", urls, nil)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "GET", urls, nil)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -32686,6 +33760,7 @@ func (c *OrganizationsEnvironmentsDeploymentsSetIamPolicyCall) Header() http.Hea
 }
 
 func (c *OrganizationsEnvironmentsDeploymentsSetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googleiamv1setiampolicyrequest)
 	if err != nil {
@@ -32695,7 +33770,12 @@ func (c *OrganizationsEnvironmentsDeploymentsSetIamPolicyCall) doRequest(alt str
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+resource}:setIamPolicy")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("POST", urls, body)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("POST", urls, body)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "POST", urls, body)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -32796,6 +33876,7 @@ func (c *OrganizationsEnvironmentsDeploymentsTestIamPermissionsCall) Header() ht
 }
 
 func (c *OrganizationsEnvironmentsDeploymentsTestIamPermissionsCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googleiamv1testiampermissionsrequest)
 	if err != nil {
@@ -32805,7 +33886,12 @@ func (c *OrganizationsEnvironmentsDeploymentsTestIamPermissionsCall) doRequest(a
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+resource}:testIamPermissions")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("POST", urls, body)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("POST", urls, body)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "POST", urls, body)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -32902,6 +33988,7 @@ func (c *OrganizationsEnvironmentsFlowhooksAttachSharedFlowToFlowHookCall) Heade
 }
 
 func (c *OrganizationsEnvironmentsFlowhooksAttachSharedFlowToFlowHookCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googlecloudapigeev1flowhook)
 	if err != nil {
@@ -32911,7 +33998,12 @@ func (c *OrganizationsEnvironmentsFlowhooksAttachSharedFlowToFlowHookCall) doReq
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("PUT", urls, body)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("PUT", urls, body)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "PUT", urls, body)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -33005,12 +34097,18 @@ func (c *OrganizationsEnvironmentsFlowhooksDetachSharedFlowFromFlowHookCall) Hea
 }
 
 func (c *OrganizationsEnvironmentsFlowhooksDetachSharedFlowFromFlowHookCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("DELETE", urls, nil)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("DELETE", urls, nil)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "DELETE", urls, nil)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -33115,6 +34213,7 @@ func (c *OrganizationsEnvironmentsFlowhooksGetCall) Header() http.Header {
 }
 
 func (c *OrganizationsEnvironmentsFlowhooksGetCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
@@ -33123,7 +34222,12 @@ func (c *OrganizationsEnvironmentsFlowhooksGetCall) doRequest(alt string) (*http
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, nil)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("GET", urls, nil)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "GET", urls, nil)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -33230,6 +34334,7 @@ func (c *OrganizationsEnvironmentsKeystoresCreateCall) Header() http.Header {
 }
 
 func (c *OrganizationsEnvironmentsKeystoresCreateCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googlecloudapigeev1keystore)
 	if err != nil {
@@ -33239,7 +34344,12 @@ func (c *OrganizationsEnvironmentsKeystoresCreateCall) doRequest(alt string) (*h
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/keystores")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("POST", urls, body)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("POST", urls, body)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "POST", urls, body)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -33333,12 +34443,18 @@ func (c *OrganizationsEnvironmentsKeystoresDeleteCall) Header() http.Header {
 }
 
 func (c *OrganizationsEnvironmentsKeystoresDeleteCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("DELETE", urls, nil)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("DELETE", urls, nil)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "DELETE", urls, nil)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -33441,6 +34557,7 @@ func (c *OrganizationsEnvironmentsKeystoresGetCall) Header() http.Header {
 }
 
 func (c *OrganizationsEnvironmentsKeystoresGetCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
@@ -33449,7 +34566,12 @@ func (c *OrganizationsEnvironmentsKeystoresGetCall) doRequest(alt string) (*http
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, nil)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("GET", urls, nil)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "GET", urls, nil)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -33599,6 +34721,7 @@ func (c *OrganizationsEnvironmentsKeystoresAliasesCreateCall) Header() http.Head
 }
 
 func (c *OrganizationsEnvironmentsKeystoresAliasesCreateCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googleapihttpbody)
 	if err != nil {
@@ -33608,7 +34731,12 @@ func (c *OrganizationsEnvironmentsKeystoresAliasesCreateCall) doRequest(alt stri
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/aliases")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("POST", urls, body)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("POST", urls, body)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "POST", urls, body)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -33713,6 +34841,7 @@ func (c *OrganizationsEnvironmentsKeystoresAliasesCsrCall) Header() http.Header 
 }
 
 func (c *OrganizationsEnvironmentsKeystoresAliasesCsrCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
@@ -33721,7 +34850,12 @@ func (c *OrganizationsEnvironmentsKeystoresAliasesCsrCall) doRequest(alt string)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}/csr")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, nil)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("GET", urls, nil)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "GET", urls, nil)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -33816,12 +34950,18 @@ func (c *OrganizationsEnvironmentsKeystoresAliasesDeleteCall) Header() http.Head
 }
 
 func (c *OrganizationsEnvironmentsKeystoresAliasesDeleteCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("DELETE", urls, nil)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("DELETE", urls, nil)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "DELETE", urls, nil)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -33925,6 +35065,7 @@ func (c *OrganizationsEnvironmentsKeystoresAliasesGetCall) Header() http.Header 
 }
 
 func (c *OrganizationsEnvironmentsKeystoresAliasesGetCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
@@ -33933,7 +35074,12 @@ func (c *OrganizationsEnvironmentsKeystoresAliasesGetCall) doRequest(alt string)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, nil)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("GET", urls, nil)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "GET", urls, nil)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -34037,6 +35183,7 @@ func (c *OrganizationsEnvironmentsKeystoresAliasesGetCertificateCall) Header() h
 }
 
 func (c *OrganizationsEnvironmentsKeystoresAliasesGetCertificateCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
@@ -34045,7 +35192,12 @@ func (c *OrganizationsEnvironmentsKeystoresAliasesGetCertificateCall) doRequest(
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}/certificate")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, nil)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("GET", urls, nil)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "GET", urls, nil)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -34160,6 +35312,7 @@ func (c *OrganizationsEnvironmentsKeystoresAliasesUpdateCall) Header() http.Head
 }
 
 func (c *OrganizationsEnvironmentsKeystoresAliasesUpdateCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googleapihttpbody)
 	if err != nil {
@@ -34169,7 +35322,12 @@ func (c *OrganizationsEnvironmentsKeystoresAliasesUpdateCall) doRequest(alt stri
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("PUT", urls, body)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("PUT", urls, body)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "PUT", urls, body)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -34266,6 +35424,7 @@ func (c *OrganizationsEnvironmentsKeyvaluemapsCreateCall) Header() http.Header {
 }
 
 func (c *OrganizationsEnvironmentsKeyvaluemapsCreateCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googlecloudapigeev1keyvaluemap)
 	if err != nil {
@@ -34275,7 +35434,12 @@ func (c *OrganizationsEnvironmentsKeyvaluemapsCreateCall) doRequest(alt string) 
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/keyvaluemaps")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("POST", urls, body)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("POST", urls, body)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "POST", urls, body)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -34370,12 +35534,18 @@ func (c *OrganizationsEnvironmentsKeyvaluemapsDeleteCall) Header() http.Header {
 }
 
 func (c *OrganizationsEnvironmentsKeyvaluemapsDeleteCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("DELETE", urls, nil)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("DELETE", urls, nil)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "DELETE", urls, nil)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -34476,6 +35646,7 @@ func (c *OrganizationsEnvironmentsKeyvaluemapsEntriesCreateCall) Header() http.H
 }
 
 func (c *OrganizationsEnvironmentsKeyvaluemapsEntriesCreateCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googlecloudapigeev1keyvalueentry)
 	if err != nil {
@@ -34485,7 +35656,12 @@ func (c *OrganizationsEnvironmentsKeyvaluemapsEntriesCreateCall) doRequest(alt s
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/entries")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("POST", urls, body)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("POST", urls, body)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "POST", urls, body)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -34588,12 +35764,18 @@ func (c *OrganizationsEnvironmentsKeyvaluemapsEntriesDeleteCall) Header() http.H
 }
 
 func (c *OrganizationsEnvironmentsKeyvaluemapsEntriesDeleteCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("DELETE", urls, nil)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("DELETE", urls, nil)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "DELETE", urls, nil)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -34703,6 +35885,7 @@ func (c *OrganizationsEnvironmentsKeyvaluemapsEntriesGetCall) Header() http.Head
 }
 
 func (c *OrganizationsEnvironmentsKeyvaluemapsEntriesGetCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
@@ -34711,7 +35894,12 @@ func (c *OrganizationsEnvironmentsKeyvaluemapsEntriesGetCall) doRequest(alt stri
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, nil)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("GET", urls, nil)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "GET", urls, nil)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -34834,6 +36022,7 @@ func (c *OrganizationsEnvironmentsKeyvaluemapsEntriesListCall) Header() http.Hea
 }
 
 func (c *OrganizationsEnvironmentsKeyvaluemapsEntriesListCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
@@ -34842,7 +36031,12 @@ func (c *OrganizationsEnvironmentsKeyvaluemapsEntriesListCall) doRequest(alt str
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/entries")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, nil)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("GET", urls, nil)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "GET", urls, nil)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -34963,6 +36157,7 @@ func (c *OrganizationsEnvironmentsKeyvaluemapsEntriesUpdateCall) Header() http.H
 }
 
 func (c *OrganizationsEnvironmentsKeyvaluemapsEntriesUpdateCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googlecloudapigeev1keyvalueentry)
 	if err != nil {
@@ -34972,7 +36167,12 @@ func (c *OrganizationsEnvironmentsKeyvaluemapsEntriesUpdateCall) doRequest(alt s
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("PUT", urls, body)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("PUT", urls, body)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "PUT", urls, body)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -35192,6 +36392,7 @@ func (c *OrganizationsEnvironmentsOptimizedStatsGetCall) Header() http.Header {
 }
 
 func (c *OrganizationsEnvironmentsOptimizedStatsGetCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
@@ -35200,7 +36401,12 @@ func (c *OrganizationsEnvironmentsOptimizedStatsGetCall) doRequest(alt string) (
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, nil)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("GET", urls, nil)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "GET", urls, nil)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -35299,6 +36505,7 @@ func (c *OrganizationsEnvironmentsQueriesCreateCall) Header() http.Header {
 }
 
 func (c *OrganizationsEnvironmentsQueriesCreateCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googlecloudapigeev1query)
 	if err != nil {
@@ -35308,7 +36515,12 @@ func (c *OrganizationsEnvironmentsQueriesCreateCall) doRequest(alt string) (*htt
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/queries")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("POST", urls, body)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("POST", urls, body)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "POST", urls, body)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -35413,6 +36625,7 @@ func (c *OrganizationsEnvironmentsQueriesGetCall) Header() http.Header {
 }
 
 func (c *OrganizationsEnvironmentsQueriesGetCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
@@ -35421,7 +36634,12 @@ func (c *OrganizationsEnvironmentsQueriesGetCall) doRequest(alt string) (*http.R
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, nil)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("GET", urls, nil)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "GET", urls, nil)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -35528,6 +36746,7 @@ func (c *OrganizationsEnvironmentsQueriesGetResultCall) Header() http.Header {
 }
 
 func (c *OrganizationsEnvironmentsQueriesGetResultCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
@@ -35536,7 +36755,12 @@ func (c *OrganizationsEnvironmentsQueriesGetResultCall) doRequest(alt string) (*
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, nil)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("GET", urls, nil)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "GET", urls, nil)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -35641,6 +36865,7 @@ func (c *OrganizationsEnvironmentsQueriesGetResulturlCall) Header() http.Header 
 }
 
 func (c *OrganizationsEnvironmentsQueriesGetResulturlCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
@@ -35649,7 +36874,12 @@ func (c *OrganizationsEnvironmentsQueriesGetResulturlCall) doRequest(alt string)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, nil)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("GET", urls, nil)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "GET", urls, nil)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -35797,6 +37027,7 @@ func (c *OrganizationsEnvironmentsQueriesListCall) Header() http.Header {
 }
 
 func (c *OrganizationsEnvironmentsQueriesListCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
@@ -35805,7 +37036,12 @@ func (c *OrganizationsEnvironmentsQueriesListCall) doRequest(alt string) (*http.
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/queries")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, nil)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("GET", urls, nil)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "GET", urls, nil)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -35901,6 +37137,7 @@ func (c *OrganizationsEnvironmentsReferencesCreateCall) Header() http.Header {
 }
 
 func (c *OrganizationsEnvironmentsReferencesCreateCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googlecloudapigeev1reference)
 	if err != nil {
@@ -35910,7 +37147,12 @@ func (c *OrganizationsEnvironmentsReferencesCreateCall) doRequest(alt string) (*
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/references")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("POST", urls, body)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("POST", urls, body)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "POST", urls, body)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -36005,12 +37247,18 @@ func (c *OrganizationsEnvironmentsReferencesDeleteCall) Header() http.Header {
 }
 
 func (c *OrganizationsEnvironmentsReferencesDeleteCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("DELETE", urls, nil)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("DELETE", urls, nil)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "DELETE", urls, nil)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -36113,6 +37361,7 @@ func (c *OrganizationsEnvironmentsReferencesGetCall) Header() http.Header {
 }
 
 func (c *OrganizationsEnvironmentsReferencesGetCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
@@ -36121,7 +37370,12 @@ func (c *OrganizationsEnvironmentsReferencesGetCall) doRequest(alt string) (*htt
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, nil)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("GET", urls, nil)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "GET", urls, nil)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -36219,6 +37473,7 @@ func (c *OrganizationsEnvironmentsReferencesUpdateCall) Header() http.Header {
 }
 
 func (c *OrganizationsEnvironmentsReferencesUpdateCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googlecloudapigeev1reference)
 	if err != nil {
@@ -36228,7 +37483,12 @@ func (c *OrganizationsEnvironmentsReferencesUpdateCall) doRequest(alt string) (*
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("PUT", urls, body)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("PUT", urls, body)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "PUT", urls, body)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -36342,6 +37602,7 @@ func (c *OrganizationsEnvironmentsResourcefilesCreateCall) Header() http.Header 
 }
 
 func (c *OrganizationsEnvironmentsResourcefilesCreateCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googleapihttpbody)
 	if err != nil {
@@ -36351,7 +37612,12 @@ func (c *OrganizationsEnvironmentsResourcefilesCreateCall) doRequest(alt string)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/resourcefiles")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("POST", urls, body)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("POST", urls, body)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "POST", urls, body)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -36454,12 +37720,18 @@ func (c *OrganizationsEnvironmentsResourcefilesDeleteCall) Header() http.Header 
 }
 
 func (c *OrganizationsEnvironmentsResourcefilesDeleteCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/resourcefiles/{type}/{name}")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("DELETE", urls, nil)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("DELETE", urls, nil)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "DELETE", urls, nil)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -36573,6 +37845,7 @@ func (c *OrganizationsEnvironmentsResourcefilesGetCall) Header() http.Header {
 }
 
 func (c *OrganizationsEnvironmentsResourcefilesGetCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
@@ -36581,7 +37854,12 @@ func (c *OrganizationsEnvironmentsResourcefilesGetCall) doRequest(alt string) (*
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/resourcefiles/{type}/{name}")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, nil)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("GET", urls, nil)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "GET", urls, nil)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -36695,6 +37973,7 @@ func (c *OrganizationsEnvironmentsResourcefilesListCall) Header() http.Header {
 }
 
 func (c *OrganizationsEnvironmentsResourcefilesListCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
@@ -36703,7 +37982,12 @@ func (c *OrganizationsEnvironmentsResourcefilesListCall) doRequest(alt string) (
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/resourcefiles")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, nil)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("GET", urls, nil)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "GET", urls, nil)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -36811,6 +38095,7 @@ func (c *OrganizationsEnvironmentsResourcefilesListEnvironmentResourcesCall) Hea
 }
 
 func (c *OrganizationsEnvironmentsResourcefilesListEnvironmentResourcesCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
@@ -36819,7 +38104,12 @@ func (c *OrganizationsEnvironmentsResourcefilesListEnvironmentResourcesCall) doR
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/resourcefiles/{type}")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, nil)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("GET", urls, nil)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "GET", urls, nil)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -36926,6 +38216,7 @@ func (c *OrganizationsEnvironmentsResourcefilesUpdateCall) Header() http.Header 
 }
 
 func (c *OrganizationsEnvironmentsResourcefilesUpdateCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googleapihttpbody)
 	if err != nil {
@@ -36935,7 +38226,12 @@ func (c *OrganizationsEnvironmentsResourcefilesUpdateCall) doRequest(alt string)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/resourcefiles/{type}/{name}")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("PUT", urls, body)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("PUT", urls, body)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "PUT", urls, body)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -37042,6 +38338,7 @@ func (c *OrganizationsEnvironmentsSecurityActionsCreateCall) Header() http.Heade
 }
 
 func (c *OrganizationsEnvironmentsSecurityActionsCreateCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googlecloudapigeev1securityaction)
 	if err != nil {
@@ -37051,7 +38348,12 @@ func (c *OrganizationsEnvironmentsSecurityActionsCreateCall) doRequest(alt strin
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/securityActions")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("POST", urls, body)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("POST", urls, body)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "POST", urls, body)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -37150,6 +38452,7 @@ func (c *OrganizationsEnvironmentsSecurityActionsDisableCall) Header() http.Head
 }
 
 func (c *OrganizationsEnvironmentsSecurityActionsDisableCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googlecloudapigeev1disablesecurityactionrequest)
 	if err != nil {
@@ -37159,7 +38462,12 @@ func (c *OrganizationsEnvironmentsSecurityActionsDisableCall) doRequest(alt stri
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}:disable")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("POST", urls, body)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("POST", urls, body)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "POST", urls, body)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -37258,6 +38566,7 @@ func (c *OrganizationsEnvironmentsSecurityActionsEnableCall) Header() http.Heade
 }
 
 func (c *OrganizationsEnvironmentsSecurityActionsEnableCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googlecloudapigeev1enablesecurityactionrequest)
 	if err != nil {
@@ -37267,7 +38576,12 @@ func (c *OrganizationsEnvironmentsSecurityActionsEnableCall) doRequest(alt strin
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}:enable")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("POST", urls, body)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("POST", urls, body)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "POST", urls, body)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -37370,6 +38684,7 @@ func (c *OrganizationsEnvironmentsSecurityActionsGetCall) Header() http.Header {
 }
 
 func (c *OrganizationsEnvironmentsSecurityActionsGetCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
@@ -37378,7 +38693,12 @@ func (c *OrganizationsEnvironmentsSecurityActionsGetCall) doRequest(alt string) 
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, nil)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("GET", urls, nil)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "GET", urls, nil)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -37509,6 +38829,7 @@ func (c *OrganizationsEnvironmentsSecurityActionsListCall) Header() http.Header 
 }
 
 func (c *OrganizationsEnvironmentsSecurityActionsListCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
@@ -37517,7 +38838,12 @@ func (c *OrganizationsEnvironmentsSecurityActionsListCall) doRequest(alt string)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/securityActions")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, nil)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("GET", urls, nil)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "GET", urls, nil)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -37637,6 +38963,7 @@ func (c *OrganizationsEnvironmentsSecurityIncidentsBatchUpdateCall) Header() htt
 }
 
 func (c *OrganizationsEnvironmentsSecurityIncidentsBatchUpdateCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googlecloudapigeev1batchupdatesecurityincidentsrequest)
 	if err != nil {
@@ -37646,7 +38973,12 @@ func (c *OrganizationsEnvironmentsSecurityIncidentsBatchUpdateCall) doRequest(al
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/securityIncidents:batchUpdate")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("POST", urls, body)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("POST", urls, body)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "POST", urls, body)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -37754,6 +39086,7 @@ func (c *OrganizationsEnvironmentsSecurityIncidentsGetCall) Header() http.Header
 }
 
 func (c *OrganizationsEnvironmentsSecurityIncidentsGetCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
@@ -37762,7 +39095,12 @@ func (c *OrganizationsEnvironmentsSecurityIncidentsGetCall) doRequest(alt string
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, nil)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("GET", urls, nil)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "GET", urls, nil)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -37891,6 +39229,7 @@ func (c *OrganizationsEnvironmentsSecurityIncidentsListCall) Header() http.Heade
 }
 
 func (c *OrganizationsEnvironmentsSecurityIncidentsListCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
@@ -37899,7 +39238,12 @@ func (c *OrganizationsEnvironmentsSecurityIncidentsListCall) doRequest(alt strin
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/securityIncidents")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, nil)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("GET", urls, nil)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "GET", urls, nil)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -38028,6 +39372,7 @@ func (c *OrganizationsEnvironmentsSecurityIncidentsPatchCall) Header() http.Head
 }
 
 func (c *OrganizationsEnvironmentsSecurityIncidentsPatchCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googlecloudapigeev1securityincident)
 	if err != nil {
@@ -38037,7 +39382,12 @@ func (c *OrganizationsEnvironmentsSecurityIncidentsPatchCall) doRequest(alt stri
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("PATCH", urls, body)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("PATCH", urls, body)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "PATCH", urls, body)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -38136,6 +39486,7 @@ func (c *OrganizationsEnvironmentsSecurityReportsCreateCall) Header() http.Heade
 }
 
 func (c *OrganizationsEnvironmentsSecurityReportsCreateCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googlecloudapigeev1securityreportquery)
 	if err != nil {
@@ -38145,7 +39496,12 @@ func (c *OrganizationsEnvironmentsSecurityReportsCreateCall) doRequest(alt strin
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/securityReports")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("POST", urls, body)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("POST", urls, body)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "POST", urls, body)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -38250,6 +39606,7 @@ func (c *OrganizationsEnvironmentsSecurityReportsGetCall) Header() http.Header {
 }
 
 func (c *OrganizationsEnvironmentsSecurityReportsGetCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
@@ -38258,7 +39615,12 @@ func (c *OrganizationsEnvironmentsSecurityReportsGetCall) doRequest(alt string) 
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, nil)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("GET", urls, nil)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "GET", urls, nil)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -38365,6 +39727,7 @@ func (c *OrganizationsEnvironmentsSecurityReportsGetResultCall) Header() http.He
 }
 
 func (c *OrganizationsEnvironmentsSecurityReportsGetResultCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
@@ -38373,7 +39736,12 @@ func (c *OrganizationsEnvironmentsSecurityReportsGetResultCall) doRequest(alt st
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, nil)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("GET", urls, nil)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "GET", urls, nil)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -38478,6 +39846,7 @@ func (c *OrganizationsEnvironmentsSecurityReportsGetResultViewCall) Header() htt
 }
 
 func (c *OrganizationsEnvironmentsSecurityReportsGetResultViewCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
@@ -38486,7 +39855,12 @@ func (c *OrganizationsEnvironmentsSecurityReportsGetResultViewCall) doRequest(al
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, nil)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("GET", urls, nil)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "GET", urls, nil)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -38640,6 +40014,7 @@ func (c *OrganizationsEnvironmentsSecurityReportsListCall) Header() http.Header 
 }
 
 func (c *OrganizationsEnvironmentsSecurityReportsListCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
@@ -38648,7 +40023,12 @@ func (c *OrganizationsEnvironmentsSecurityReportsListCall) doRequest(alt string)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/securityReports")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, nil)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("GET", urls, nil)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "GET", urls, nil)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -38764,6 +40144,7 @@ func (c *OrganizationsEnvironmentsSecurityStatsQueryTabularStatsCall) Header() h
 }
 
 func (c *OrganizationsEnvironmentsSecurityStatsQueryTabularStatsCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googlecloudapigeev1querytabularstatsrequest)
 	if err != nil {
@@ -38773,7 +40154,12 @@ func (c *OrganizationsEnvironmentsSecurityStatsQueryTabularStatsCall) doRequest(
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+orgenv}/securityStats:queryTabularStats")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("POST", urls, body)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("POST", urls, body)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "POST", urls, body)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -38890,6 +40276,7 @@ func (c *OrganizationsEnvironmentsSecurityStatsQueryTimeSeriesStatsCall) Header(
 }
 
 func (c *OrganizationsEnvironmentsSecurityStatsQueryTimeSeriesStatsCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googlecloudapigeev1querytimeseriesstatsrequest)
 	if err != nil {
@@ -38899,7 +40286,12 @@ func (c *OrganizationsEnvironmentsSecurityStatsQueryTimeSeriesStatsCall) doReque
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+orgenv}/securityStats:queryTimeSeriesStats")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("POST", urls, body)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("POST", urls, body)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "POST", urls, body)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -39023,6 +40415,7 @@ func (c *OrganizationsEnvironmentsSharedflowsDeploymentsListCall) Header() http.
 }
 
 func (c *OrganizationsEnvironmentsSharedflowsDeploymentsListCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
@@ -39031,7 +40424,12 @@ func (c *OrganizationsEnvironmentsSharedflowsDeploymentsListCall) doRequest(alt 
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/deployments")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, nil)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("GET", urls, nil)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "GET", urls, nil)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -39153,12 +40551,18 @@ func (c *OrganizationsEnvironmentsSharedflowsRevisionsDeployCall) Header() http.
 }
 
 func (c *OrganizationsEnvironmentsSharedflowsRevisionsDeployCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}/deployments")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("POST", urls, nil)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("POST", urls, nil)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "POST", urls, nil)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -39264,6 +40668,7 @@ func (c *OrganizationsEnvironmentsSharedflowsRevisionsGetDeploymentsCall) Header
 }
 
 func (c *OrganizationsEnvironmentsSharedflowsRevisionsGetDeploymentsCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
@@ -39272,7 +40677,12 @@ func (c *OrganizationsEnvironmentsSharedflowsRevisionsGetDeploymentsCall) doRequ
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}/deployments")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, nil)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("GET", urls, nil)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "GET", urls, nil)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -39374,12 +40784,18 @@ func (c *OrganizationsEnvironmentsSharedflowsRevisionsUndeployCall) Header() htt
 }
 
 func (c *OrganizationsEnvironmentsSharedflowsRevisionsUndeployCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}/deployments")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("DELETE", urls, nil)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("DELETE", urls, nil)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "DELETE", urls, nil)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -39603,6 +41019,7 @@ func (c *OrganizationsEnvironmentsStatsGetCall) Header() http.Header {
 }
 
 func (c *OrganizationsEnvironmentsStatsGetCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
@@ -39611,7 +41028,12 @@ func (c *OrganizationsEnvironmentsStatsGetCall) doRequest(alt string) (*http.Res
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, nil)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("GET", urls, nil)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "GET", urls, nil)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -39714,6 +41136,7 @@ func (c *OrganizationsEnvironmentsTargetserversCreateCall) Header() http.Header 
 }
 
 func (c *OrganizationsEnvironmentsTargetserversCreateCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googlecloudapigeev1targetserver)
 	if err != nil {
@@ -39723,7 +41146,12 @@ func (c *OrganizationsEnvironmentsTargetserversCreateCall) doRequest(alt string)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/targetservers")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("POST", urls, body)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("POST", urls, body)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "POST", urls, body)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -39818,12 +41246,18 @@ func (c *OrganizationsEnvironmentsTargetserversDeleteCall) Header() http.Header 
 }
 
 func (c *OrganizationsEnvironmentsTargetserversDeleteCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("DELETE", urls, nil)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("DELETE", urls, nil)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "DELETE", urls, nil)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -39926,6 +41360,7 @@ func (c *OrganizationsEnvironmentsTargetserversGetCall) Header() http.Header {
 }
 
 func (c *OrganizationsEnvironmentsTargetserversGetCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
@@ -39934,7 +41369,12 @@ func (c *OrganizationsEnvironmentsTargetserversGetCall) doRequest(alt string) (*
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, nil)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("GET", urls, nil)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "GET", urls, nil)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -40032,6 +41472,7 @@ func (c *OrganizationsEnvironmentsTargetserversUpdateCall) Header() http.Header 
 }
 
 func (c *OrganizationsEnvironmentsTargetserversUpdateCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googlecloudapigeev1targetserver)
 	if err != nil {
@@ -40041,7 +41482,12 @@ func (c *OrganizationsEnvironmentsTargetserversUpdateCall) doRequest(alt string)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("PUT", urls, body)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("PUT", urls, body)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "PUT", urls, body)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -40141,6 +41587,7 @@ func (c *OrganizationsEnvironmentsTraceConfigOverridesCreateCall) Header() http.
 }
 
 func (c *OrganizationsEnvironmentsTraceConfigOverridesCreateCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googlecloudapigeev1traceconfigoverride)
 	if err != nil {
@@ -40150,7 +41597,12 @@ func (c *OrganizationsEnvironmentsTraceConfigOverridesCreateCall) doRequest(alt 
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/overrides")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("POST", urls, body)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("POST", urls, body)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "POST", urls, body)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -40245,12 +41697,18 @@ func (c *OrganizationsEnvironmentsTraceConfigOverridesDeleteCall) Header() http.
 }
 
 func (c *OrganizationsEnvironmentsTraceConfigOverridesDeleteCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("DELETE", urls, nil)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("DELETE", urls, nil)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "DELETE", urls, nil)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -40354,6 +41812,7 @@ func (c *OrganizationsEnvironmentsTraceConfigOverridesGetCall) Header() http.Hea
 }
 
 func (c *OrganizationsEnvironmentsTraceConfigOverridesGetCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
@@ -40362,7 +41821,12 @@ func (c *OrganizationsEnvironmentsTraceConfigOverridesGetCall) doRequest(alt str
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, nil)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("GET", urls, nil)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "GET", urls, nil)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -40485,6 +41949,7 @@ func (c *OrganizationsEnvironmentsTraceConfigOverridesListCall) Header() http.He
 }
 
 func (c *OrganizationsEnvironmentsTraceConfigOverridesListCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
@@ -40493,7 +41958,12 @@ func (c *OrganizationsEnvironmentsTraceConfigOverridesListCall) doRequest(alt st
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/overrides")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, nil)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("GET", urls, nil)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "GET", urls, nil)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -40621,6 +42091,7 @@ func (c *OrganizationsEnvironmentsTraceConfigOverridesPatchCall) Header() http.H
 }
 
 func (c *OrganizationsEnvironmentsTraceConfigOverridesPatchCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googlecloudapigeev1traceconfigoverride)
 	if err != nil {
@@ -40630,7 +42101,12 @@ func (c *OrganizationsEnvironmentsTraceConfigOverridesPatchCall) doRequest(alt s
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("PATCH", urls, body)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("PATCH", urls, body)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "PATCH", urls, body)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -40729,6 +42205,7 @@ func (c *OrganizationsHostQueriesCreateCall) Header() http.Header {
 }
 
 func (c *OrganizationsHostQueriesCreateCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googlecloudapigeev1query)
 	if err != nil {
@@ -40738,7 +42215,12 @@ func (c *OrganizationsHostQueriesCreateCall) doRequest(alt string) (*http.Respon
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/hostQueries")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("POST", urls, body)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("POST", urls, body)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "POST", urls, body)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -40843,6 +42325,7 @@ func (c *OrganizationsHostQueriesGetCall) Header() http.Header {
 }
 
 func (c *OrganizationsHostQueriesGetCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
@@ -40851,7 +42334,12 @@ func (c *OrganizationsHostQueriesGetCall) doRequest(alt string) (*http.Response,
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, nil)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("GET", urls, nil)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "GET", urls, nil)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -40958,6 +42446,7 @@ func (c *OrganizationsHostQueriesGetResultCall) Header() http.Header {
 }
 
 func (c *OrganizationsHostQueriesGetResultCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
@@ -40966,7 +42455,12 @@ func (c *OrganizationsHostQueriesGetResultCall) doRequest(alt string) (*http.Res
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, nil)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("GET", urls, nil)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "GET", urls, nil)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -41069,6 +42563,7 @@ func (c *OrganizationsHostQueriesGetResultViewCall) Header() http.Header {
 }
 
 func (c *OrganizationsHostQueriesGetResultViewCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
@@ -41077,7 +42572,12 @@ func (c *OrganizationsHostQueriesGetResultViewCall) doRequest(alt string) (*http
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, nil)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("GET", urls, nil)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "GET", urls, nil)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -41232,6 +42732,7 @@ func (c *OrganizationsHostQueriesListCall) Header() http.Header {
 }
 
 func (c *OrganizationsHostQueriesListCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
@@ -41240,7 +42741,12 @@ func (c *OrganizationsHostQueriesListCall) doRequest(alt string) (*http.Response
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/hostQueries")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, nil)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("GET", urls, nil)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "GET", urls, nil)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -41339,6 +42845,7 @@ func (c *OrganizationsHostSecurityReportsCreateCall) Header() http.Header {
 }
 
 func (c *OrganizationsHostSecurityReportsCreateCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googlecloudapigeev1securityreportquery)
 	if err != nil {
@@ -41348,7 +42855,12 @@ func (c *OrganizationsHostSecurityReportsCreateCall) doRequest(alt string) (*htt
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/hostSecurityReports")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("POST", urls, body)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("POST", urls, body)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "POST", urls, body)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -41453,6 +42965,7 @@ func (c *OrganizationsHostSecurityReportsGetCall) Header() http.Header {
 }
 
 func (c *OrganizationsHostSecurityReportsGetCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
@@ -41461,7 +42974,12 @@ func (c *OrganizationsHostSecurityReportsGetCall) doRequest(alt string) (*http.R
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, nil)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("GET", urls, nil)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "GET", urls, nil)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -41568,6 +43086,7 @@ func (c *OrganizationsHostSecurityReportsGetResultCall) Header() http.Header {
 }
 
 func (c *OrganizationsHostSecurityReportsGetResultCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
@@ -41576,7 +43095,12 @@ func (c *OrganizationsHostSecurityReportsGetResultCall) doRequest(alt string) (*
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, nil)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("GET", urls, nil)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "GET", urls, nil)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -41680,6 +43204,7 @@ func (c *OrganizationsHostSecurityReportsGetResultViewCall) Header() http.Header
 }
 
 func (c *OrganizationsHostSecurityReportsGetResultViewCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
@@ -41688,7 +43213,12 @@ func (c *OrganizationsHostSecurityReportsGetResultViewCall) doRequest(alt string
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, nil)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("GET", urls, nil)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "GET", urls, nil)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -41849,6 +43379,7 @@ func (c *OrganizationsHostSecurityReportsListCall) Header() http.Header {
 }
 
 func (c *OrganizationsHostSecurityReportsListCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
@@ -41857,7 +43388,12 @@ func (c *OrganizationsHostSecurityReportsListCall) doRequest(alt string) (*http.
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/hostSecurityReports")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, nil)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("GET", urls, nil)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "GET", urls, nil)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -42092,6 +43628,7 @@ func (c *OrganizationsHostStatsGetCall) Header() http.Header {
 }
 
 func (c *OrganizationsHostStatsGetCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
@@ -42100,7 +43637,12 @@ func (c *OrganizationsHostStatsGetCall) doRequest(alt string) (*http.Response, e
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, nil)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("GET", urls, nil)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "GET", urls, nil)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -42198,6 +43740,7 @@ func (c *OrganizationsInstancesCreateCall) Header() http.Header {
 }
 
 func (c *OrganizationsInstancesCreateCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googlecloudapigeev1instance)
 	if err != nil {
@@ -42207,7 +43750,12 @@ func (c *OrganizationsInstancesCreateCall) doRequest(alt string) (*http.Response
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/instances")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("POST", urls, body)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("POST", urls, body)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "POST", urls, body)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -42303,12 +43851,18 @@ func (c *OrganizationsInstancesDeleteCall) Header() http.Header {
 }
 
 func (c *OrganizationsInstancesDeleteCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("DELETE", urls, nil)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("DELETE", urls, nil)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "DELETE", urls, nil)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -42412,6 +43966,7 @@ func (c *OrganizationsInstancesGetCall) Header() http.Header {
 }
 
 func (c *OrganizationsInstancesGetCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
@@ -42420,7 +43975,12 @@ func (c *OrganizationsInstancesGetCall) doRequest(alt string) (*http.Response, e
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, nil)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("GET", urls, nil)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "GET", urls, nil)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -42539,6 +44099,7 @@ func (c *OrganizationsInstancesListCall) Header() http.Header {
 }
 
 func (c *OrganizationsInstancesListCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
@@ -42547,7 +44108,12 @@ func (c *OrganizationsInstancesListCall) doRequest(alt string) (*http.Response, 
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/instances")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, nil)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("GET", urls, nil)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "GET", urls, nil)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -42673,6 +44239,7 @@ func (c *OrganizationsInstancesPatchCall) Header() http.Header {
 }
 
 func (c *OrganizationsInstancesPatchCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googlecloudapigeev1instance)
 	if err != nil {
@@ -42682,7 +44249,12 @@ func (c *OrganizationsInstancesPatchCall) doRequest(alt string) (*http.Response,
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("PATCH", urls, body)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("PATCH", urls, body)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "PATCH", urls, body)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -42779,6 +44351,7 @@ func (c *OrganizationsInstancesReportStatusCall) Header() http.Header {
 }
 
 func (c *OrganizationsInstancesReportStatusCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googlecloudapigeev1reportinstancestatusrequest)
 	if err != nil {
@@ -42788,7 +44361,12 @@ func (c *OrganizationsInstancesReportStatusCall) doRequest(alt string) (*http.Re
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+instance}:reportStatus")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("POST", urls, body)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("POST", urls, body)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "POST", urls, body)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -42885,6 +44463,7 @@ func (c *OrganizationsInstancesAttachmentsCreateCall) Header() http.Header {
 }
 
 func (c *OrganizationsInstancesAttachmentsCreateCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googlecloudapigeev1instanceattachment)
 	if err != nil {
@@ -42894,7 +44473,12 @@ func (c *OrganizationsInstancesAttachmentsCreateCall) doRequest(alt string) (*ht
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/attachments")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("POST", urls, body)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("POST", urls, body)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "POST", urls, body)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -42988,12 +44572,18 @@ func (c *OrganizationsInstancesAttachmentsDeleteCall) Header() http.Header {
 }
 
 func (c *OrganizationsInstancesAttachmentsDeleteCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("DELETE", urls, nil)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("DELETE", urls, nil)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "DELETE", urls, nil)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -43096,6 +44686,7 @@ func (c *OrganizationsInstancesAttachmentsGetCall) Header() http.Header {
 }
 
 func (c *OrganizationsInstancesAttachmentsGetCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
@@ -43104,7 +44695,12 @@ func (c *OrganizationsInstancesAttachmentsGetCall) doRequest(alt string) (*http.
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, nil)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("GET", urls, nil)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "GET", urls, nil)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -43223,6 +44819,7 @@ func (c *OrganizationsInstancesAttachmentsListCall) Header() http.Header {
 }
 
 func (c *OrganizationsInstancesAttachmentsListCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
@@ -43231,7 +44828,12 @@ func (c *OrganizationsInstancesAttachmentsListCall) doRequest(alt string) (*http
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/attachments")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, nil)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("GET", urls, nil)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "GET", urls, nil)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -43348,6 +44950,7 @@ func (c *OrganizationsInstancesCanaryevaluationsCreateCall) Header() http.Header
 }
 
 func (c *OrganizationsInstancesCanaryevaluationsCreateCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googlecloudapigeev1canaryevaluation)
 	if err != nil {
@@ -43357,7 +44960,12 @@ func (c *OrganizationsInstancesCanaryevaluationsCreateCall) doRequest(alt string
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/canaryevaluations")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("POST", urls, body)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("POST", urls, body)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "POST", urls, body)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -43460,6 +45068,7 @@ func (c *OrganizationsInstancesCanaryevaluationsGetCall) Header() http.Header {
 }
 
 func (c *OrganizationsInstancesCanaryevaluationsGetCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
@@ -43468,7 +45077,12 @@ func (c *OrganizationsInstancesCanaryevaluationsGetCall) doRequest(alt string) (
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, nil)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("GET", urls, nil)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "GET", urls, nil)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -43566,6 +45180,7 @@ func (c *OrganizationsInstancesNatAddressesActivateCall) Header() http.Header {
 }
 
 func (c *OrganizationsInstancesNatAddressesActivateCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googlecloudapigeev1activatenataddressrequest)
 	if err != nil {
@@ -43575,7 +45190,12 @@ func (c *OrganizationsInstancesNatAddressesActivateCall) doRequest(alt string) (
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}:activate")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("POST", urls, body)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("POST", urls, body)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "POST", urls, body)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -43675,6 +45295,7 @@ func (c *OrganizationsInstancesNatAddressesCreateCall) Header() http.Header {
 }
 
 func (c *OrganizationsInstancesNatAddressesCreateCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googlecloudapigeev1nataddress)
 	if err != nil {
@@ -43684,7 +45305,12 @@ func (c *OrganizationsInstancesNatAddressesCreateCall) doRequest(alt string) (*h
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/natAddresses")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("POST", urls, body)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("POST", urls, body)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "POST", urls, body)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -43781,12 +45407,18 @@ func (c *OrganizationsInstancesNatAddressesDeleteCall) Header() http.Header {
 }
 
 func (c *OrganizationsInstancesNatAddressesDeleteCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("DELETE", urls, nil)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("DELETE", urls, nil)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "DELETE", urls, nil)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -43891,6 +45523,7 @@ func (c *OrganizationsInstancesNatAddressesGetCall) Header() http.Header {
 }
 
 func (c *OrganizationsInstancesNatAddressesGetCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
@@ -43899,7 +45532,12 @@ func (c *OrganizationsInstancesNatAddressesGetCall) doRequest(alt string) (*http
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, nil)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("GET", urls, nil)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "GET", urls, nil)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -44018,6 +45656,7 @@ func (c *OrganizationsInstancesNatAddressesListCall) Header() http.Header {
 }
 
 func (c *OrganizationsInstancesNatAddressesListCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
@@ -44026,7 +45665,12 @@ func (c *OrganizationsInstancesNatAddressesListCall) doRequest(alt string) (*htt
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/natAddresses")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, nil)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("GET", urls, nil)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "GET", urls, nil)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -44143,6 +45787,7 @@ func (c *OrganizationsKeyvaluemapsCreateCall) Header() http.Header {
 }
 
 func (c *OrganizationsKeyvaluemapsCreateCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googlecloudapigeev1keyvaluemap)
 	if err != nil {
@@ -44152,7 +45797,12 @@ func (c *OrganizationsKeyvaluemapsCreateCall) doRequest(alt string) (*http.Respo
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/keyvaluemaps")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("POST", urls, body)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("POST", urls, body)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "POST", urls, body)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -44246,12 +45896,18 @@ func (c *OrganizationsKeyvaluemapsDeleteCall) Header() http.Header {
 }
 
 func (c *OrganizationsKeyvaluemapsDeleteCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("DELETE", urls, nil)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("DELETE", urls, nil)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "DELETE", urls, nil)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -44352,6 +46008,7 @@ func (c *OrganizationsKeyvaluemapsEntriesCreateCall) Header() http.Header {
 }
 
 func (c *OrganizationsKeyvaluemapsEntriesCreateCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googlecloudapigeev1keyvalueentry)
 	if err != nil {
@@ -44361,7 +46018,12 @@ func (c *OrganizationsKeyvaluemapsEntriesCreateCall) doRequest(alt string) (*htt
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/entries")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("POST", urls, body)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("POST", urls, body)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "POST", urls, body)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -44464,12 +46126,18 @@ func (c *OrganizationsKeyvaluemapsEntriesDeleteCall) Header() http.Header {
 }
 
 func (c *OrganizationsKeyvaluemapsEntriesDeleteCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("DELETE", urls, nil)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("DELETE", urls, nil)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "DELETE", urls, nil)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -44579,6 +46247,7 @@ func (c *OrganizationsKeyvaluemapsEntriesGetCall) Header() http.Header {
 }
 
 func (c *OrganizationsKeyvaluemapsEntriesGetCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
@@ -44587,7 +46256,12 @@ func (c *OrganizationsKeyvaluemapsEntriesGetCall) doRequest(alt string) (*http.R
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, nil)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("GET", urls, nil)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "GET", urls, nil)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -44710,6 +46384,7 @@ func (c *OrganizationsKeyvaluemapsEntriesListCall) Header() http.Header {
 }
 
 func (c *OrganizationsKeyvaluemapsEntriesListCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
@@ -44718,7 +46393,12 @@ func (c *OrganizationsKeyvaluemapsEntriesListCall) doRequest(alt string) (*http.
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/entries")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, nil)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("GET", urls, nil)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "GET", urls, nil)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -44839,6 +46519,7 @@ func (c *OrganizationsKeyvaluemapsEntriesUpdateCall) Header() http.Header {
 }
 
 func (c *OrganizationsKeyvaluemapsEntriesUpdateCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googlecloudapigeev1keyvalueentry)
 	if err != nil {
@@ -44848,7 +46529,12 @@ func (c *OrganizationsKeyvaluemapsEntriesUpdateCall) doRequest(alt string) (*htt
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("PUT", urls, body)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("PUT", urls, body)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "PUT", urls, body)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -44952,6 +46638,7 @@ func (c *OrganizationsOperationsGetCall) Header() http.Header {
 }
 
 func (c *OrganizationsOperationsGetCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
@@ -44960,7 +46647,12 @@ func (c *OrganizationsOperationsGetCall) doRequest(alt string) (*http.Response, 
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, nil)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("GET", urls, nil)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "GET", urls, nil)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -45083,6 +46775,7 @@ func (c *OrganizationsOperationsListCall) Header() http.Header {
 }
 
 func (c *OrganizationsOperationsListCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
@@ -45091,7 +46784,12 @@ func (c *OrganizationsOperationsListCall) doRequest(alt string) (*http.Response,
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}/operations")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, nil)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("GET", urls, nil)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "GET", urls, nil)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -45323,6 +47021,7 @@ func (c *OrganizationsOptimizedHostStatsGetCall) Header() http.Header {
 }
 
 func (c *OrganizationsOptimizedHostStatsGetCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
@@ -45331,7 +47030,12 @@ func (c *OrganizationsOptimizedHostStatsGetCall) doRequest(alt string) (*http.Re
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, nil)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("GET", urls, nil)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "GET", urls, nil)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -45433,6 +47137,7 @@ func (c *OrganizationsReportsCreateCall) Header() http.Header {
 }
 
 func (c *OrganizationsReportsCreateCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googlecloudapigeev1customreport)
 	if err != nil {
@@ -45442,7 +47147,12 @@ func (c *OrganizationsReportsCreateCall) doRequest(alt string) (*http.Response, 
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/reports")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("POST", urls, body)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("POST", urls, body)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "POST", urls, body)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -45536,12 +47246,18 @@ func (c *OrganizationsReportsDeleteCall) Header() http.Header {
 }
 
 func (c *OrganizationsReportsDeleteCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("DELETE", urls, nil)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("DELETE", urls, nil)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "DELETE", urls, nil)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -45644,6 +47360,7 @@ func (c *OrganizationsReportsGetCall) Header() http.Header {
 }
 
 func (c *OrganizationsReportsGetCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
@@ -45652,7 +47369,12 @@ func (c *OrganizationsReportsGetCall) doRequest(alt string) (*http.Response, err
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, nil)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("GET", urls, nil)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "GET", urls, nil)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -45762,6 +47484,7 @@ func (c *OrganizationsReportsListCall) Header() http.Header {
 }
 
 func (c *OrganizationsReportsListCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
@@ -45770,7 +47493,12 @@ func (c *OrganizationsReportsListCall) doRequest(alt string) (*http.Response, er
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/reports")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, nil)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("GET", urls, nil)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "GET", urls, nil)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -45866,6 +47594,7 @@ func (c *OrganizationsReportsUpdateCall) Header() http.Header {
 }
 
 func (c *OrganizationsReportsUpdateCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googlecloudapigeev1customreport)
 	if err != nil {
@@ -45875,7 +47604,12 @@ func (c *OrganizationsReportsUpdateCall) doRequest(alt string) (*http.Response, 
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("PUT", urls, body)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("PUT", urls, body)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "PUT", urls, body)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -45971,6 +47705,7 @@ func (c *OrganizationsSecurityAssessmentResultsBatchComputeCall) Header() http.H
 }
 
 func (c *OrganizationsSecurityAssessmentResultsBatchComputeCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googlecloudapigeev1batchcomputesecurityassessmentresultsrequest)
 	if err != nil {
@@ -45980,7 +47715,12 @@ func (c *OrganizationsSecurityAssessmentResultsBatchComputeCall) doRequest(alt s
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}:batchCompute")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("POST", urls, body)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("POST", urls, body)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "POST", urls, body)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -46105,6 +47845,7 @@ func (c *OrganizationsSecurityProfilesCreateCall) Header() http.Header {
 }
 
 func (c *OrganizationsSecurityProfilesCreateCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googlecloudapigeev1securityprofile)
 	if err != nil {
@@ -46114,7 +47855,12 @@ func (c *OrganizationsSecurityProfilesCreateCall) doRequest(alt string) (*http.R
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/securityProfiles")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("POST", urls, body)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("POST", urls, body)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "POST", urls, body)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -46208,12 +47954,18 @@ func (c *OrganizationsSecurityProfilesDeleteCall) Header() http.Header {
 }
 
 func (c *OrganizationsSecurityProfilesDeleteCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("DELETE", urls, nil)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("DELETE", urls, nil)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "DELETE", urls, nil)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -46320,6 +48072,7 @@ func (c *OrganizationsSecurityProfilesGetCall) Header() http.Header {
 }
 
 func (c *OrganizationsSecurityProfilesGetCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
@@ -46328,7 +48081,12 @@ func (c *OrganizationsSecurityProfilesGetCall) doRequest(alt string) (*http.Resp
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, nil)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("GET", urls, nil)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "GET", urls, nil)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -46448,6 +48206,7 @@ func (c *OrganizationsSecurityProfilesListCall) Header() http.Header {
 }
 
 func (c *OrganizationsSecurityProfilesListCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
@@ -46456,7 +48215,12 @@ func (c *OrganizationsSecurityProfilesListCall) doRequest(alt string) (*http.Res
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/securityProfiles")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, nil)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("GET", urls, nil)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "GET", urls, nil)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -46597,6 +48361,7 @@ func (c *OrganizationsSecurityProfilesListRevisionsCall) Header() http.Header {
 }
 
 func (c *OrganizationsSecurityProfilesListRevisionsCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
@@ -46605,7 +48370,12 @@ func (c *OrganizationsSecurityProfilesListRevisionsCall) doRequest(alt string) (
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}:listRevisions")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, nil)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("GET", urls, nil)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "GET", urls, nil)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -46729,6 +48499,7 @@ func (c *OrganizationsSecurityProfilesPatchCall) Header() http.Header {
 }
 
 func (c *OrganizationsSecurityProfilesPatchCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googlecloudapigeev1securityprofile)
 	if err != nil {
@@ -46738,7 +48509,12 @@ func (c *OrganizationsSecurityProfilesPatchCall) doRequest(alt string) (*http.Re
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("PATCH", urls, body)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("PATCH", urls, body)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "PATCH", urls, body)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -46836,6 +48612,7 @@ func (c *OrganizationsSecurityProfilesEnvironmentsComputeEnvironmentScoresCall) 
 }
 
 func (c *OrganizationsSecurityProfilesEnvironmentsComputeEnvironmentScoresCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googlecloudapigeev1computeenvironmentscoresrequest)
 	if err != nil {
@@ -46845,7 +48622,12 @@ func (c *OrganizationsSecurityProfilesEnvironmentsComputeEnvironmentScoresCall) 
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+profileEnvironment}:computeEnvironmentScores")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("POST", urls, body)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("POST", urls, body)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "POST", urls, body)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -46963,6 +48745,7 @@ func (c *OrganizationsSecurityProfilesEnvironmentsCreateCall) Header() http.Head
 }
 
 func (c *OrganizationsSecurityProfilesEnvironmentsCreateCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googlecloudapigeev1securityprofileenvironmentassociation)
 	if err != nil {
@@ -46972,7 +48755,12 @@ func (c *OrganizationsSecurityProfilesEnvironmentsCreateCall) doRequest(alt stri
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/environments")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("POST", urls, body)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("POST", urls, body)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "POST", urls, body)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -47067,12 +48855,18 @@ func (c *OrganizationsSecurityProfilesEnvironmentsDeleteCall) Header() http.Head
 }
 
 func (c *OrganizationsSecurityProfilesEnvironmentsDeleteCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("DELETE", urls, nil)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("DELETE", urls, nil)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "DELETE", urls, nil)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -47174,6 +48968,7 @@ func (c *OrganizationsSecurityProfilesV2CreateCall) Header() http.Header {
 }
 
 func (c *OrganizationsSecurityProfilesV2CreateCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googlecloudapigeev1securityprofilev2)
 	if err != nil {
@@ -47183,7 +48978,12 @@ func (c *OrganizationsSecurityProfilesV2CreateCall) doRequest(alt string) (*http
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/securityProfilesV2")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("POST", urls, body)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("POST", urls, body)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "POST", urls, body)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -47277,12 +49077,18 @@ func (c *OrganizationsSecurityProfilesV2DeleteCall) Header() http.Header {
 }
 
 func (c *OrganizationsSecurityProfilesV2DeleteCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("DELETE", urls, nil)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("DELETE", urls, nil)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "DELETE", urls, nil)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -47385,6 +49191,7 @@ func (c *OrganizationsSecurityProfilesV2GetCall) Header() http.Header {
 }
 
 func (c *OrganizationsSecurityProfilesV2GetCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
@@ -47393,7 +49200,12 @@ func (c *OrganizationsSecurityProfilesV2GetCall) doRequest(alt string) (*http.Re
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, nil)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("GET", urls, nil)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "GET", urls, nil)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -47511,6 +49323,7 @@ func (c *OrganizationsSecurityProfilesV2ListCall) Header() http.Header {
 }
 
 func (c *OrganizationsSecurityProfilesV2ListCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
@@ -47519,7 +49332,12 @@ func (c *OrganizationsSecurityProfilesV2ListCall) doRequest(alt string) (*http.R
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/securityProfilesV2")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, nil)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("GET", urls, nil)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "GET", urls, nil)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -47644,6 +49462,7 @@ func (c *OrganizationsSecurityProfilesV2PatchCall) Header() http.Header {
 }
 
 func (c *OrganizationsSecurityProfilesV2PatchCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googlecloudapigeev1securityprofilev2)
 	if err != nil {
@@ -47653,7 +49472,12 @@ func (c *OrganizationsSecurityProfilesV2PatchCall) doRequest(alt string) (*http.
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("PATCH", urls, body)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("PATCH", urls, body)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "PATCH", urls, body)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -47767,6 +49591,7 @@ func (c *OrganizationsSharedflowsCreateCall) Header() http.Header {
 }
 
 func (c *OrganizationsSharedflowsCreateCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googleapihttpbody)
 	if err != nil {
@@ -47776,7 +49601,12 @@ func (c *OrganizationsSharedflowsCreateCall) doRequest(alt string) (*http.Respon
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/sharedflows")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("POST", urls, body)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("POST", urls, body)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "POST", urls, body)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -47871,12 +49701,18 @@ func (c *OrganizationsSharedflowsDeleteCall) Header() http.Header {
 }
 
 func (c *OrganizationsSharedflowsDeleteCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("DELETE", urls, nil)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("DELETE", urls, nil)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "DELETE", urls, nil)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -47979,6 +49815,7 @@ func (c *OrganizationsSharedflowsGetCall) Header() http.Header {
 }
 
 func (c *OrganizationsSharedflowsGetCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
@@ -47987,7 +49824,12 @@ func (c *OrganizationsSharedflowsGetCall) doRequest(alt string) (*http.Response,
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, nil)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("GET", urls, nil)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "GET", urls, nil)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -48104,6 +49946,7 @@ func (c *OrganizationsSharedflowsListCall) Header() http.Header {
 }
 
 func (c *OrganizationsSharedflowsListCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
@@ -48112,7 +49955,12 @@ func (c *OrganizationsSharedflowsListCall) doRequest(alt string) (*http.Response
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/sharedflows")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, nil)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("GET", urls, nil)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "GET", urls, nil)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -48215,6 +50063,7 @@ func (c *OrganizationsSharedflowsDeploymentsListCall) Header() http.Header {
 }
 
 func (c *OrganizationsSharedflowsDeploymentsListCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
@@ -48223,7 +50072,12 @@ func (c *OrganizationsSharedflowsDeploymentsListCall) doRequest(alt string) (*ht
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/deployments")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, nil)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("GET", urls, nil)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "GET", urls, nil)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -48319,12 +50173,18 @@ func (c *OrganizationsSharedflowsRevisionsDeleteCall) Header() http.Header {
 }
 
 func (c *OrganizationsSharedflowsRevisionsDeleteCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("DELETE", urls, nil)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("DELETE", urls, nil)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "DELETE", urls, nil)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -48442,6 +50302,7 @@ func (c *OrganizationsSharedflowsRevisionsGetCall) Header() http.Header {
 }
 
 func (c *OrganizationsSharedflowsRevisionsGetCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
@@ -48450,7 +50311,12 @@ func (c *OrganizationsSharedflowsRevisionsGetCall) doRequest(alt string) (*http.
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, nil)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("GET", urls, nil)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "GET", urls, nil)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -48559,6 +50425,7 @@ func (c *OrganizationsSharedflowsRevisionsUpdateSharedFlowRevisionCall) Header()
 }
 
 func (c *OrganizationsSharedflowsRevisionsUpdateSharedFlowRevisionCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googleapihttpbody)
 	if err != nil {
@@ -48568,7 +50435,12 @@ func (c *OrganizationsSharedflowsRevisionsUpdateSharedFlowRevisionCall) doReques
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("POST", urls, body)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("POST", urls, body)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "POST", urls, body)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -48672,6 +50544,7 @@ func (c *OrganizationsSharedflowsRevisionsDeploymentsListCall) Header() http.Hea
 }
 
 func (c *OrganizationsSharedflowsRevisionsDeploymentsListCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
@@ -48680,7 +50553,12 @@ func (c *OrganizationsSharedflowsRevisionsDeploymentsListCall) doRequest(alt str
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/deployments")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, nil)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("GET", urls, nil)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "GET", urls, nil)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -48776,6 +50654,7 @@ func (c *OrganizationsSitesApicategoriesCreateCall) Header() http.Header {
 }
 
 func (c *OrganizationsSitesApicategoriesCreateCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googlecloudapigeev1apicategory)
 	if err != nil {
@@ -48785,7 +50664,12 @@ func (c *OrganizationsSitesApicategoriesCreateCall) doRequest(alt string) (*http
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/apicategories")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("POST", urls, body)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("POST", urls, body)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "POST", urls, body)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -48879,12 +50763,18 @@ func (c *OrganizationsSitesApicategoriesDeleteCall) Header() http.Header {
 }
 
 func (c *OrganizationsSitesApicategoriesDeleteCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("DELETE", urls, nil)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("DELETE", urls, nil)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "DELETE", urls, nil)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -48987,6 +50877,7 @@ func (c *OrganizationsSitesApicategoriesGetCall) Header() http.Header {
 }
 
 func (c *OrganizationsSitesApicategoriesGetCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
@@ -48995,7 +50886,12 @@ func (c *OrganizationsSitesApicategoriesGetCall) doRequest(alt string) (*http.Re
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, nil)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("GET", urls, nil)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "GET", urls, nil)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -49098,6 +50994,7 @@ func (c *OrganizationsSitesApicategoriesListCall) Header() http.Header {
 }
 
 func (c *OrganizationsSitesApicategoriesListCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
@@ -49106,7 +51003,12 @@ func (c *OrganizationsSitesApicategoriesListCall) doRequest(alt string) (*http.R
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/apicategories")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, nil)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("GET", urls, nil)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "GET", urls, nil)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -49202,6 +51104,7 @@ func (c *OrganizationsSitesApicategoriesPatchCall) Header() http.Header {
 }
 
 func (c *OrganizationsSitesApicategoriesPatchCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googlecloudapigeev1apicategory)
 	if err != nil {
@@ -49211,7 +51114,12 @@ func (c *OrganizationsSitesApicategoriesPatchCall) doRequest(alt string) (*http.
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("PATCH", urls, body)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("PATCH", urls, body)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "PATCH", urls, body)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -49307,6 +51215,7 @@ func (c *OrganizationsSitesApidocsCreateCall) Header() http.Header {
 }
 
 func (c *OrganizationsSitesApidocsCreateCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googlecloudapigeev1apidoc)
 	if err != nil {
@@ -49316,7 +51225,12 @@ func (c *OrganizationsSitesApidocsCreateCall) doRequest(alt string) (*http.Respo
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/apidocs")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("POST", urls, body)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("POST", urls, body)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "POST", urls, body)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -49410,12 +51324,18 @@ func (c *OrganizationsSitesApidocsDeleteCall) Header() http.Header {
 }
 
 func (c *OrganizationsSitesApidocsDeleteCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("DELETE", urls, nil)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("DELETE", urls, nil)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "DELETE", urls, nil)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -49518,6 +51438,7 @@ func (c *OrganizationsSitesApidocsGetCall) Header() http.Header {
 }
 
 func (c *OrganizationsSitesApidocsGetCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
@@ -49526,7 +51447,12 @@ func (c *OrganizationsSitesApidocsGetCall) doRequest(alt string) (*http.Response
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, nil)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("GET", urls, nil)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "GET", urls, nil)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -49630,6 +51556,7 @@ func (c *OrganizationsSitesApidocsGetDocumentationCall) Header() http.Header {
 }
 
 func (c *OrganizationsSitesApidocsGetDocumentationCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
@@ -49638,7 +51565,12 @@ func (c *OrganizationsSitesApidocsGetDocumentationCall) doRequest(alt string) (*
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, nil)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("GET", urls, nil)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "GET", urls, nil)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -49758,6 +51690,7 @@ func (c *OrganizationsSitesApidocsListCall) Header() http.Header {
 }
 
 func (c *OrganizationsSitesApidocsListCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
@@ -49766,7 +51699,12 @@ func (c *OrganizationsSitesApidocsListCall) doRequest(alt string) (*http.Respons
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/apidocs")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, nil)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("GET", urls, nil)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "GET", urls, nil)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -49883,6 +51821,7 @@ func (c *OrganizationsSitesApidocsUpdateCall) Header() http.Header {
 }
 
 func (c *OrganizationsSitesApidocsUpdateCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googlecloudapigeev1apidoc)
 	if err != nil {
@@ -49892,7 +51831,12 @@ func (c *OrganizationsSitesApidocsUpdateCall) doRequest(alt string) (*http.Respo
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("PUT", urls, body)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("PUT", urls, body)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "PUT", urls, body)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -49991,6 +51935,7 @@ func (c *OrganizationsSitesApidocsUpdateDocumentationCall) Header() http.Header 
 }
 
 func (c *OrganizationsSitesApidocsUpdateDocumentationCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googlecloudapigeev1apidocdocumentation)
 	if err != nil {
@@ -50000,7 +51945,12 @@ func (c *OrganizationsSitesApidocsUpdateDocumentationCall) doRequest(alt string)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("PATCH", urls, body)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("PATCH", urls, body)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "PATCH", urls, body)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -50098,6 +52048,7 @@ func (c *ProjectsProvisionOrganizationCall) Header() http.Header {
 }
 
 func (c *ProjectsProvisionOrganizationCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googlecloudapigeev1provisionorganizationrequest)
 	if err != nil {
@@ -50107,7 +52058,12 @@ func (c *ProjectsProvisionOrganizationCall) doRequest(alt string) (*http.Respons
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+project}:provisionOrganization")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("POST", urls, body)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("POST", urls, body)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "POST", urls, body)
+	}
 	if err != nil {
 		return nil, err
 	}

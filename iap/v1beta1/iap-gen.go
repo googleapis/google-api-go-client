@@ -583,6 +583,7 @@ func (c *V1beta1GetIamPolicyCall) Header() http.Header {
 }
 
 func (c *V1beta1GetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.getiampolicyrequest)
 	if err != nil {
@@ -592,7 +593,12 @@ func (c *V1beta1GetIamPolicyCall) doRequest(alt string) (*http.Response, error) 
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+resource}:getIamPolicy")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("POST", urls, body)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("POST", urls, body)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "POST", urls, body)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -691,6 +697,7 @@ func (c *V1beta1SetIamPolicyCall) Header() http.Header {
 }
 
 func (c *V1beta1SetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.setiampolicyrequest)
 	if err != nil {
@@ -700,7 +707,12 @@ func (c *V1beta1SetIamPolicyCall) doRequest(alt string) (*http.Response, error) 
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+resource}:setIamPolicy")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("POST", urls, body)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("POST", urls, body)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "POST", urls, body)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -802,6 +814,7 @@ func (c *V1beta1TestIamPermissionsCall) Header() http.Header {
 }
 
 func (c *V1beta1TestIamPermissionsCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.testiampermissionsrequest)
 	if err != nil {
@@ -811,7 +824,12 @@ func (c *V1beta1TestIamPermissionsCall) doRequest(alt string) (*http.Response, e
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+resource}:testIamPermissions")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("POST", urls, body)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("POST", urls, body)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "POST", urls, body)
+	}
 	if err != nil {
 		return nil, err
 	}

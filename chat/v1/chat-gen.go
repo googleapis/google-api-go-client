@@ -1388,11 +1388,15 @@ type DeprecatedEvent struct {
 	// (https://developers.google.com/workspace/chat/dialogs), like data entered on
 	// a card.
 	Common *CommonEventObject `json:"common,omitempty"`
-	// ConfigCompleteRedirectUrl: For `MESSAGE` interaction events, the URL that
-	// users must be redirected to after they complete an authorization or
-	// configuration flow outside of Google Chat. For more information, see Connect
-	// a Chat app with other services and tools
+	// ConfigCompleteRedirectUrl: This URL is populated for `MESSAGE` and
+	// `ADDED_TO_SPACE` interaction events. After completing an authorization or
+	// configuration flow outside of Google Chat, users must be redirected to this
+	// URL to signal to Google Chat that the authorization or configuration flow
+	// was successful. For more information, see Connect a Chat app with other
+	// services and tools
 	// (https://developers.google.com/workspace/chat/connect-web-services-tools).
+	// In Developer Preview (https://developers.google.com/workspace/preview), this
+	// URL is also populated for `APP_COMMAND` interaction events.
 	ConfigCompleteRedirectUrl string `json:"configCompleteRedirectUrl,omitempty"`
 	// DialogEventType: The type of dialog
 	// (https://developers.google.com/workspace/chat/dialogs) interaction event
@@ -6117,6 +6121,7 @@ func (c *MediaDownloadCall) Header() http.Header {
 }
 
 func (c *MediaDownloadCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
@@ -6125,7 +6130,12 @@ func (c *MediaDownloadCall) doRequest(alt string) (*http.Response, error) {
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/media/{+resourceName}")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, nil)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("GET", urls, nil)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "GET", urls, nil)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -6282,6 +6292,7 @@ func (c *MediaUploadCall) Header() http.Header {
 }
 
 func (c *MediaUploadCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.uploadattachmentrequest)
 	if err != nil {
@@ -6297,7 +6308,12 @@ func (c *MediaUploadCall) doRequest(alt string) (*http.Response, error) {
 	newBody, getBody, cleanup := c.mediaInfo_.UploadRequest(reqHeaders, body)
 	defer cleanup()
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("POST", urls, newBody)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("POST", urls, newBody)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "POST", urls, newBody)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -6416,6 +6432,7 @@ func (c *SpacesCompleteImportCall) Header() http.Header {
 }
 
 func (c *SpacesCompleteImportCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.completeimportspacerequest)
 	if err != nil {
@@ -6425,7 +6442,12 @@ func (c *SpacesCompleteImportCall) doRequest(alt string) (*http.Response, error)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}:completeImport")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("POST", urls, body)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("POST", urls, body)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "POST", urls, body)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -6544,6 +6566,7 @@ func (c *SpacesCreateCall) Header() http.Header {
 }
 
 func (c *SpacesCreateCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.space)
 	if err != nil {
@@ -6553,7 +6576,12 @@ func (c *SpacesCreateCall) doRequest(alt string) (*http.Response, error) {
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/spaces")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("POST", urls, body)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("POST", urls, body)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "POST", urls, body)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -6667,12 +6695,18 @@ func (c *SpacesDeleteCall) Header() http.Header {
 }
 
 func (c *SpacesDeleteCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("DELETE", urls, nil)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("DELETE", urls, nil)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "DELETE", urls, nil)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -6801,6 +6835,7 @@ func (c *SpacesFindDirectMessageCall) Header() http.Header {
 }
 
 func (c *SpacesFindDirectMessageCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
@@ -6809,7 +6844,12 @@ func (c *SpacesFindDirectMessageCall) doRequest(alt string) (*http.Response, err
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/spaces:findDirectMessage")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, nil)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("GET", urls, nil)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "GET", urls, nil)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -6929,6 +6969,7 @@ func (c *SpacesGetCall) Header() http.Header {
 }
 
 func (c *SpacesGetCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
@@ -6937,7 +6978,12 @@ func (c *SpacesGetCall) doRequest(alt string) (*http.Response, error) {
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, nil)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("GET", urls, nil)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "GET", urls, nil)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -7080,6 +7126,7 @@ func (c *SpacesListCall) Header() http.Header {
 }
 
 func (c *SpacesListCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
@@ -7088,7 +7135,12 @@ func (c *SpacesListCall) doRequest(alt string) (*http.Response, error) {
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/spaces")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, nil)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("GET", urls, nil)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "GET", urls, nil)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -7282,6 +7334,7 @@ func (c *SpacesPatchCall) Header() http.Header {
 }
 
 func (c *SpacesPatchCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.space)
 	if err != nil {
@@ -7291,7 +7344,12 @@ func (c *SpacesPatchCall) doRequest(alt string) (*http.Response, error) {
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("PATCH", urls, body)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("PATCH", urls, body)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "PATCH", urls, body)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -7485,6 +7543,7 @@ func (c *SpacesSearchCall) Header() http.Header {
 }
 
 func (c *SpacesSearchCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
@@ -7493,7 +7552,12 @@ func (c *SpacesSearchCall) doRequest(alt string) (*http.Response, error) {
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/spaces:search")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, nil)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("GET", urls, nil)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "GET", urls, nil)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -7640,6 +7704,7 @@ func (c *SpacesSetupCall) Header() http.Header {
 }
 
 func (c *SpacesSetupCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.setupspacerequest)
 	if err != nil {
@@ -7649,7 +7714,12 @@ func (c *SpacesSetupCall) doRequest(alt string) (*http.Response, error) {
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/spaces:setup")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("POST", urls, body)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("POST", urls, body)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "POST", urls, body)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -7776,6 +7846,7 @@ func (c *SpacesMembersCreateCall) Header() http.Header {
 }
 
 func (c *SpacesMembersCreateCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.membership)
 	if err != nil {
@@ -7785,7 +7856,12 @@ func (c *SpacesMembersCreateCall) doRequest(alt string) (*http.Response, error) 
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/members")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("POST", urls, body)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("POST", urls, body)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "POST", urls, body)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -7911,12 +7987,18 @@ func (c *SpacesMembersDeleteCall) Header() http.Header {
 }
 
 func (c *SpacesMembersDeleteCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("DELETE", urls, nil)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("DELETE", urls, nil)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "DELETE", urls, nil)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -8048,6 +8130,7 @@ func (c *SpacesMembersGetCall) Header() http.Header {
 }
 
 func (c *SpacesMembersGetCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
@@ -8056,7 +8139,12 @@ func (c *SpacesMembersGetCall) doRequest(alt string) (*http.Response, error) {
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, nil)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("GET", urls, nil)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "GET", urls, nil)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -8251,6 +8339,7 @@ func (c *SpacesMembersListCall) Header() http.Header {
 }
 
 func (c *SpacesMembersListCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
@@ -8259,7 +8348,12 @@ func (c *SpacesMembersListCall) doRequest(alt string) (*http.Response, error) {
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/members")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, nil)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("GET", urls, nil)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "GET", urls, nil)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -8407,6 +8501,7 @@ func (c *SpacesMembersPatchCall) Header() http.Header {
 }
 
 func (c *SpacesMembersPatchCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.membership)
 	if err != nil {
@@ -8416,7 +8511,12 @@ func (c *SpacesMembersPatchCall) doRequest(alt string) (*http.Response, error) {
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("PATCH", urls, body)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("PATCH", urls, body)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "PATCH", urls, body)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -8596,6 +8696,7 @@ func (c *SpacesMessagesCreateCall) Header() http.Header {
 }
 
 func (c *SpacesMessagesCreateCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.message)
 	if err != nil {
@@ -8605,7 +8706,12 @@ func (c *SpacesMessagesCreateCall) doRequest(alt string) (*http.Response, error)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/messages")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("POST", urls, body)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("POST", urls, body)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "POST", urls, body)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -8721,12 +8827,18 @@ func (c *SpacesMessagesDeleteCall) Header() http.Header {
 }
 
 func (c *SpacesMessagesDeleteCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("DELETE", urls, nil)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("DELETE", urls, nil)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "DELETE", urls, nil)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -8839,6 +8951,7 @@ func (c *SpacesMessagesGetCall) Header() http.Header {
 }
 
 func (c *SpacesMessagesGetCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
@@ -8847,7 +8960,12 @@ func (c *SpacesMessagesGetCall) doRequest(alt string) (*http.Response, error) {
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, nil)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("GET", urls, nil)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "GET", urls, nil)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -9016,6 +9134,7 @@ func (c *SpacesMessagesListCall) Header() http.Header {
 }
 
 func (c *SpacesMessagesListCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
@@ -9024,7 +9143,12 @@ func (c *SpacesMessagesListCall) doRequest(alt string) (*http.Response, error) {
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/messages")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, nil)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("GET", urls, nil)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "GET", urls, nil)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -9185,6 +9309,7 @@ func (c *SpacesMessagesPatchCall) Header() http.Header {
 }
 
 func (c *SpacesMessagesPatchCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.message)
 	if err != nil {
@@ -9194,7 +9319,12 @@ func (c *SpacesMessagesPatchCall) doRequest(alt string) (*http.Response, error) 
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("PATCH", urls, body)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("PATCH", urls, body)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "PATCH", urls, body)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -9333,6 +9463,7 @@ func (c *SpacesMessagesUpdateCall) Header() http.Header {
 }
 
 func (c *SpacesMessagesUpdateCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.message)
 	if err != nil {
@@ -9342,7 +9473,12 @@ func (c *SpacesMessagesUpdateCall) doRequest(alt string) (*http.Response, error)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("PUT", urls, body)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("PUT", urls, body)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "PUT", urls, body)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -9450,6 +9586,7 @@ func (c *SpacesMessagesAttachmentsGetCall) Header() http.Header {
 }
 
 func (c *SpacesMessagesAttachmentsGetCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
@@ -9458,7 +9595,12 @@ func (c *SpacesMessagesAttachmentsGetCall) doRequest(alt string) (*http.Response
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, nil)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("GET", urls, nil)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "GET", urls, nil)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -9557,6 +9699,7 @@ func (c *SpacesMessagesReactionsCreateCall) Header() http.Header {
 }
 
 func (c *SpacesMessagesReactionsCreateCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.reaction)
 	if err != nil {
@@ -9566,7 +9709,12 @@ func (c *SpacesMessagesReactionsCreateCall) doRequest(alt string) (*http.Respons
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/reactions")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("POST", urls, body)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("POST", urls, body)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "POST", urls, body)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -9662,12 +9810,18 @@ func (c *SpacesMessagesReactionsDeleteCall) Header() http.Header {
 }
 
 func (c *SpacesMessagesReactionsDeleteCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("DELETE", urls, nil)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("DELETE", urls, nil)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "DELETE", urls, nil)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -9819,6 +9973,7 @@ func (c *SpacesMessagesReactionsListCall) Header() http.Header {
 }
 
 func (c *SpacesMessagesReactionsListCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
@@ -9827,7 +9982,12 @@ func (c *SpacesMessagesReactionsListCall) doRequest(alt string) (*http.Response,
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/reactions")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, nil)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("GET", urls, nil)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "GET", urls, nil)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -9962,6 +10122,7 @@ func (c *SpacesSpaceEventsGetCall) Header() http.Header {
 }
 
 func (c *SpacesSpaceEventsGetCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
@@ -9970,7 +10131,12 @@ func (c *SpacesSpaceEventsGetCall) doRequest(alt string) (*http.Response, error)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, nil)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("GET", urls, nil)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "GET", urls, nil)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -10135,6 +10301,7 @@ func (c *SpacesSpaceEventsListCall) Header() http.Header {
 }
 
 func (c *SpacesSpaceEventsListCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
@@ -10143,7 +10310,12 @@ func (c *SpacesSpaceEventsListCall) doRequest(alt string) (*http.Response, error
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/spaceEvents")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, nil)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("GET", urls, nil)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "GET", urls, nil)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -10278,6 +10450,7 @@ func (c *UsersSpacesGetSpaceReadStateCall) Header() http.Header {
 }
 
 func (c *UsersSpacesGetSpaceReadStateCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
@@ -10286,7 +10459,12 @@ func (c *UsersSpacesGetSpaceReadStateCall) doRequest(alt string) (*http.Response
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, nil)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("GET", urls, nil)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "GET", urls, nil)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -10400,6 +10578,7 @@ func (c *UsersSpacesUpdateSpaceReadStateCall) Header() http.Header {
 }
 
 func (c *UsersSpacesUpdateSpaceReadStateCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.spacereadstate)
 	if err != nil {
@@ -10409,7 +10588,12 @@ func (c *UsersSpacesUpdateSpaceReadStateCall) doRequest(alt string) (*http.Respo
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("PATCH", urls, body)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("PATCH", urls, body)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "PATCH", urls, body)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -10523,6 +10707,7 @@ func (c *UsersSpacesThreadsGetThreadReadStateCall) Header() http.Header {
 }
 
 func (c *UsersSpacesThreadsGetThreadReadStateCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
@@ -10531,7 +10716,12 @@ func (c *UsersSpacesThreadsGetThreadReadStateCall) doRequest(alt string) (*http.
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, nil)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("GET", urls, nil)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "GET", urls, nil)
+	}
 	if err != nil {
 		return nil, err
 	}

@@ -298,6 +298,8 @@ type ProductChange struct {
 	// listings](https://support.google.com/merchants/answer/9825611).
 	//   "FREE_LOCAL_VEHICLE_LISTINGS" - [Free local vehicle
 	// listings](https://support.google.com/merchants/answer/11544533).
+	//   "YOUTUBE_AFFILIATE" - [Youtube
+	// Affiliate](https://support.google.com/youtube/answer/13376398).
 	//   "YOUTUBE_SHOPPING" - [YouTube
 	// Shopping](https://support.google.com/merchants/answer/13478370).
 	//   "CLOUD_RETAIL" - [Cloud
@@ -435,6 +437,7 @@ func (c *AccountsNotificationsubscriptionsCreateCall) Header() http.Header {
 }
 
 func (c *AccountsNotificationsubscriptionsCreateCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.notificationsubscription)
 	if err != nil {
@@ -444,7 +447,12 @@ func (c *AccountsNotificationsubscriptionsCreateCall) doRequest(alt string) (*ht
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "notifications/v1beta/{+parent}/notificationsubscriptions")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("POST", urls, body)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("POST", urls, body)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "POST", urls, body)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -537,12 +545,18 @@ func (c *AccountsNotificationsubscriptionsDeleteCall) Header() http.Header {
 }
 
 func (c *AccountsNotificationsubscriptionsDeleteCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "notifications/v1beta/{+name}")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("DELETE", urls, nil)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("DELETE", urls, nil)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "DELETE", urls, nil)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -643,6 +657,7 @@ func (c *AccountsNotificationsubscriptionsGetCall) Header() http.Header {
 }
 
 func (c *AccountsNotificationsubscriptionsGetCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
@@ -651,7 +666,12 @@ func (c *AccountsNotificationsubscriptionsGetCall) doRequest(alt string) (*http.
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "notifications/v1beta/{+name}")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, nil)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("GET", urls, nil)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "GET", urls, nil)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -771,6 +791,7 @@ func (c *AccountsNotificationsubscriptionsListCall) Header() http.Header {
 }
 
 func (c *AccountsNotificationsubscriptionsListCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
@@ -779,7 +800,12 @@ func (c *AccountsNotificationsubscriptionsListCall) doRequest(alt string) (*http
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "notifications/v1beta/{+parent}/notificationsubscriptions")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, nil)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("GET", urls, nil)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "GET", urls, nil)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -906,6 +932,7 @@ func (c *AccountsNotificationsubscriptionsPatchCall) Header() http.Header {
 }
 
 func (c *AccountsNotificationsubscriptionsPatchCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.notificationsubscription)
 	if err != nil {
@@ -915,7 +942,12 @@ func (c *AccountsNotificationsubscriptionsPatchCall) doRequest(alt string) (*htt
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "notifications/v1beta/{+name}")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("PATCH", urls, body)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("PATCH", urls, body)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "PATCH", urls, body)
+	}
 	if err != nil {
 		return nil, err
 	}

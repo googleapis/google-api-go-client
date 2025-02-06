@@ -1681,14 +1681,7 @@ type GooglePlayDeveloperReportingV1beta1QueryExcessiveWakeupRateMetricSetRequest
 	// timezone is `America/Los_Angeles`.
 	TimelineSpec *GooglePlayDeveloperReportingV1beta1TimelineSpec `json:"timelineSpec,omitempty"`
 	// UserCohort: User view to select. The output data will correspond to the
-	// selected view. **Supported values:** * `OS_PUBLIC` To select data from all
-	// publicly released Android versions. This is the default. Supports all the
-	// above dimensions. * `APP_TESTERS` To select data from users who have opted
-	// in to be testers. Supports all the above dimensions. * `OS_BETA` To select
-	// data from beta android versions only, excluding data from released android
-	// versions. Only the following dimensions are supported: * `versionCode`
-	// (int64): version of the app that was running on the user's device. *
-	// `osBuild` (string): OS build of the user's device, e.g., "T1B2.220916.004".
+	// selected view. The only supported value is `OS_PUBLIC`.
 	//
 	// Possible values:
 	//   "USER_COHORT_UNSPECIFIED" - Unspecified User cohort. This will
@@ -1822,14 +1815,7 @@ type GooglePlayDeveloperReportingV1beta1QuerySlowRenderingRateMetricSetRequest s
 	// timezone is `America/Los_Angeles`.
 	TimelineSpec *GooglePlayDeveloperReportingV1beta1TimelineSpec `json:"timelineSpec,omitempty"`
 	// UserCohort: User view to select. The output data will correspond to the
-	// selected view. **Supported values:** * `OS_PUBLIC` To select data from all
-	// publicly released Android versions. This is the default. Supports all the
-	// above dimensions. * `APP_TESTERS` To select data from users who have opted
-	// in to be testers. Supports all the above dimensions. * `OS_BETA` To select
-	// data from beta Android versions only, excluding data from released Android
-	// versions. Only the following dimensions are supported: * `versionCode`
-	// (int64): version of the app that was running on the user's device. *
-	// `osBuild` (string): OS build of the user's device, e.g., "T1B2.220916.004".
+	// selected view. The only supported value is `OS_PUBLIC`.
 	//
 	// Possible values:
 	//   "USER_COHORT_UNSPECIFIED" - Unspecified User cohort. This will
@@ -1953,14 +1939,7 @@ type GooglePlayDeveloperReportingV1beta1QuerySlowStartRateMetricSetRequest struc
 	// timezone is `America/Los_Angeles`.
 	TimelineSpec *GooglePlayDeveloperReportingV1beta1TimelineSpec `json:"timelineSpec,omitempty"`
 	// UserCohort: User view to select. The output data will correspond to the
-	// selected view. **Supported values:** * `OS_PUBLIC` To select data from all
-	// publicly released Android versions. This is the default. Supports all the
-	// above dimensions. * `APP_TESTERS` To select data from users who have opted
-	// in to be testers. Supports all the above dimensions. * `OS_BETA` To select
-	// data from beta Android versions only, excluding data from released Android
-	// versions. Only the following dimensions are supported: * `versionCode`
-	// (int64): version of the app that was running on the user's device. *
-	// `osBuild` (string): OS build of the user's device, e.g., "T1B2.220916.004".
+	// selected view. The only supported value is `OS_PUBLIC`.
 	//
 	// Possible values:
 	//   "USER_COHORT_UNSPECIFIED" - Unspecified User cohort. This will
@@ -2086,14 +2065,7 @@ type GooglePlayDeveloperReportingV1beta1QueryStuckBackgroundWakelockRateMetricSe
 	// timezone is `America/Los_Angeles`.
 	TimelineSpec *GooglePlayDeveloperReportingV1beta1TimelineSpec `json:"timelineSpec,omitempty"`
 	// UserCohort: User view to select. The output data will correspond to the
-	// selected view. **Supported values:** * `OS_PUBLIC` To select data from all
-	// publicly released Android versions. This is the default. Supports all the
-	// above dimensions. * `APP_TESTERS` To select data from users who have opted
-	// in to be testers. Supports all the above dimensions. * `OS_BETA` To select
-	// data from beta android versions only, excluding data from released android
-	// versions. Only the following dimensions are supported: * `versionCode`
-	// (int64): version of the app that was running on the user's device. *
-	// `osBuild` (string): OS build of the user's device, e.g., "T1B2.220916.004".
+	// selected view. The only supported value is `OS_PUBLIC`.
 	//
 	// Possible values:
 	//   "USER_COHORT_UNSPECIFIED" - Unspecified User cohort. This will
@@ -2855,6 +2827,7 @@ func (c *AnomaliesListCall) Header() http.Header {
 }
 
 func (c *AnomaliesListCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
@@ -2863,7 +2836,12 @@ func (c *AnomaliesListCall) doRequest(alt string) (*http.Response, error) {
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+parent}/anomalies")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, nil)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("GET", urls, nil)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "GET", urls, nil)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -2987,6 +2965,7 @@ func (c *AppsFetchReleaseFilterOptionsCall) Header() http.Header {
 }
 
 func (c *AppsFetchReleaseFilterOptionsCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
@@ -2995,7 +2974,12 @@ func (c *AppsFetchReleaseFilterOptionsCall) doRequest(alt string) (*http.Respons
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+name}:fetchReleaseFilterOptions")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, nil)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("GET", urls, nil)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "GET", urls, nil)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -3111,6 +3095,7 @@ func (c *AppsSearchCall) Header() http.Header {
 }
 
 func (c *AppsSearchCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
@@ -3119,7 +3104,12 @@ func (c *AppsSearchCall) doRequest(alt string) (*http.Response, error) {
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/apps:search")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, nil)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("GET", urls, nil)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "GET", urls, nil)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -3239,6 +3229,7 @@ func (c *VitalsAnrrateGetCall) Header() http.Header {
 }
 
 func (c *VitalsAnrrateGetCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
@@ -3247,7 +3238,12 @@ func (c *VitalsAnrrateGetCall) doRequest(alt string) (*http.Response, error) {
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+name}")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, nil)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("GET", urls, nil)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "GET", urls, nil)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -3342,6 +3338,7 @@ func (c *VitalsAnrrateQueryCall) Header() http.Header {
 }
 
 func (c *VitalsAnrrateQueryCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googleplaydeveloperreportingv1beta1queryanrratemetricsetrequest)
 	if err != nil {
@@ -3351,7 +3348,12 @@ func (c *VitalsAnrrateQueryCall) doRequest(alt string) (*http.Response, error) {
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+name}:query")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("POST", urls, body)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("POST", urls, body)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "POST", urls, body)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -3474,6 +3476,7 @@ func (c *VitalsCrashrateGetCall) Header() http.Header {
 }
 
 func (c *VitalsCrashrateGetCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
@@ -3482,7 +3485,12 @@ func (c *VitalsCrashrateGetCall) doRequest(alt string) (*http.Response, error) {
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+name}")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, nil)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("GET", urls, nil)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "GET", urls, nil)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -3577,6 +3585,7 @@ func (c *VitalsCrashrateQueryCall) Header() http.Header {
 }
 
 func (c *VitalsCrashrateQueryCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googleplaydeveloperreportingv1beta1querycrashratemetricsetrequest)
 	if err != nil {
@@ -3586,7 +3595,12 @@ func (c *VitalsCrashrateQueryCall) doRequest(alt string) (*http.Response, error)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+name}:query")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("POST", urls, body)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("POST", urls, body)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "POST", urls, body)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -3710,6 +3724,7 @@ func (c *VitalsErrorsCountsGetCall) Header() http.Header {
 }
 
 func (c *VitalsErrorsCountsGetCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
@@ -3718,7 +3733,12 @@ func (c *VitalsErrorsCountsGetCall) doRequest(alt string) (*http.Response, error
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+name}")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, nil)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("GET", urls, nil)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "GET", urls, nil)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -3815,6 +3835,7 @@ func (c *VitalsErrorsCountsQueryCall) Header() http.Header {
 }
 
 func (c *VitalsErrorsCountsQueryCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googleplaydeveloperreportingv1beta1queryerrorcountmetricsetrequest)
 	if err != nil {
@@ -3824,7 +3845,12 @@ func (c *VitalsErrorsCountsQueryCall) doRequest(alt string) (*http.Response, err
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+name}:query")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("POST", urls, body)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("POST", urls, body)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "POST", urls, body)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -4190,6 +4216,7 @@ func (c *VitalsErrorsIssuesSearchCall) Header() http.Header {
 }
 
 func (c *VitalsErrorsIssuesSearchCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
@@ -4198,7 +4225,12 @@ func (c *VitalsErrorsIssuesSearchCall) doRequest(alt string) (*http.Response, er
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+parent}/errorIssues:search")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, nil)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("GET", urls, nil)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "GET", urls, nil)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -4548,6 +4580,7 @@ func (c *VitalsErrorsReportsSearchCall) Header() http.Header {
 }
 
 func (c *VitalsErrorsReportsSearchCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
@@ -4556,7 +4589,12 @@ func (c *VitalsErrorsReportsSearchCall) doRequest(alt string) (*http.Response, e
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+parent}/errorReports:search")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, nil)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("GET", urls, nil)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "GET", urls, nil)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -4679,6 +4717,7 @@ func (c *VitalsExcessivewakeuprateGetCall) Header() http.Header {
 }
 
 func (c *VitalsExcessivewakeuprateGetCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
@@ -4687,7 +4726,12 @@ func (c *VitalsExcessivewakeuprateGetCall) doRequest(alt string) (*http.Response
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+name}")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, nil)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("GET", urls, nil)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "GET", urls, nil)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -4782,6 +4826,7 @@ func (c *VitalsExcessivewakeuprateQueryCall) Header() http.Header {
 }
 
 func (c *VitalsExcessivewakeuprateQueryCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googleplaydeveloperreportingv1beta1queryexcessivewakeupratemetricsetrequest)
 	if err != nil {
@@ -4791,7 +4836,12 @@ func (c *VitalsExcessivewakeuprateQueryCall) doRequest(alt string) (*http.Respon
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+name}:query")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("POST", urls, body)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("POST", urls, body)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "POST", urls, body)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -4916,6 +4966,7 @@ func (c *VitalsSlowrenderingrateGetCall) Header() http.Header {
 }
 
 func (c *VitalsSlowrenderingrateGetCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
@@ -4924,7 +4975,12 @@ func (c *VitalsSlowrenderingrateGetCall) doRequest(alt string) (*http.Response, 
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+name}")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, nil)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("GET", urls, nil)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "GET", urls, nil)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -5019,6 +5075,7 @@ func (c *VitalsSlowrenderingrateQueryCall) Header() http.Header {
 }
 
 func (c *VitalsSlowrenderingrateQueryCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googleplaydeveloperreportingv1beta1queryslowrenderingratemetricsetrequest)
 	if err != nil {
@@ -5028,7 +5085,12 @@ func (c *VitalsSlowrenderingrateQueryCall) doRequest(alt string) (*http.Response
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+name}:query")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("POST", urls, body)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("POST", urls, body)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "POST", urls, body)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -5153,6 +5215,7 @@ func (c *VitalsSlowstartrateGetCall) Header() http.Header {
 }
 
 func (c *VitalsSlowstartrateGetCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
@@ -5161,7 +5224,12 @@ func (c *VitalsSlowstartrateGetCall) doRequest(alt string) (*http.Response, erro
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+name}")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, nil)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("GET", urls, nil)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "GET", urls, nil)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -5256,6 +5324,7 @@ func (c *VitalsSlowstartrateQueryCall) Header() http.Header {
 }
 
 func (c *VitalsSlowstartrateQueryCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googleplaydeveloperreportingv1beta1queryslowstartratemetricsetrequest)
 	if err != nil {
@@ -5265,7 +5334,12 @@ func (c *VitalsSlowstartrateQueryCall) doRequest(alt string) (*http.Response, er
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+name}:query")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("POST", urls, body)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("POST", urls, body)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "POST", urls, body)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -5391,6 +5465,7 @@ func (c *VitalsStuckbackgroundwakelockrateGetCall) Header() http.Header {
 }
 
 func (c *VitalsStuckbackgroundwakelockrateGetCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
@@ -5399,7 +5474,12 @@ func (c *VitalsStuckbackgroundwakelockrateGetCall) doRequest(alt string) (*http.
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+name}")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, nil)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("GET", urls, nil)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "GET", urls, nil)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -5495,6 +5575,7 @@ func (c *VitalsStuckbackgroundwakelockrateQueryCall) Header() http.Header {
 }
 
 func (c *VitalsStuckbackgroundwakelockrateQueryCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googleplaydeveloperreportingv1beta1querystuckbackgroundwakelockratemetricsetrequest)
 	if err != nil {
@@ -5504,7 +5585,12 @@ func (c *VitalsStuckbackgroundwakelockrateQueryCall) doRequest(alt string) (*htt
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+name}:query")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("POST", urls, body)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("POST", urls, body)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "POST", urls, body)
+	}
 	if err != nil {
 		return nil, err
 	}

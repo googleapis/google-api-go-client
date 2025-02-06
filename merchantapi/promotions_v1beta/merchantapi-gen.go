@@ -216,9 +216,12 @@ type Attributes struct {
 	//   "FREE_GIFT" - Free gift with description only.
 	//   "FREE_GIFT_WITH_VALUE" - Free gift with monetary value.
 	//   "FREE_GIFT_WITH_ITEM_ID" - Free gift with item ID.
-	//   "FREE_SHIPPING_STANDARD" - Standard free shipping coupon value type.
+	//   "FREE_SHIPPING_STANDARD" - Standard free shipping coupon value type. Only
+	// available for online promotions.
 	//   "FREE_SHIPPING_OVERNIGHT" - Overnight free shipping coupon value type.
-	//   "FREE_SHIPPING_TWO_DAY" - Two day free shipping coupon value type.
+	// Only available for online promotions.
+	//   "FREE_SHIPPING_TWO_DAY" - Two day free shipping coupon value type. Only
+	// available for online promotions.
 	CouponValueType string `json:"couponValueType,omitempty"`
 	// FreeGiftDescription: Optional. Free gift description
 	// (https://support.google.com/merchants/answer/13847245?ref_topic=13773355&sjid=17642868584668136159-NC)
@@ -355,11 +358,16 @@ type Attributes struct {
 	//   "YOUTUBE_SHOPPING" - [YouTube
 	// Shopping](https://support.google.com/merchants/answer/12362804).
 	//   "YOUTUBE_SHOPPING_CHECKOUT" - Youtube shopping checkout.
-	//   "YOUTUBE_AFFILIATE" - Youtube affiliate.
-	//   "FREE_VEHICLE_LISTINGS" - Free vehicle listings.
-	//   "VEHICLE_ADS" - Vehicle ads.
-	//   "CLOUD_RETAIL" - Cloud retail.
-	//   "LOCAL_CLOUD_RETAIL" - Local cloud retail.
+	//   "YOUTUBE_AFFILIATE" - [Youtube
+	// Affiliate](https://support.google.com/youtube/answer/13376398).
+	//   "FREE_VEHICLE_LISTINGS" - [Free vehicle
+	// listings](https://support.google.com/merchants/answer/11189169).
+	//   "VEHICLE_ADS" - [Vehicle
+	// ads](https://support.google.com/merchants/answer/11189169).
+	//   "CLOUD_RETAIL" - [Cloud
+	// retail](https://cloud.google.com/solutions/retail).
+	//   "LOCAL_CLOUD_RETAIL" - [Local cloud
+	// retail](https://cloud.google.com/solutions/retail).
 	PromotionDestinations []string `json:"promotionDestinations,omitempty"`
 	// PromotionDisplayTimePeriod: Optional. `TimePeriod` representation of the
 	// promotion's display dates. This attribute specifies the date and time frame
@@ -482,6 +490,8 @@ type DestinationStatus struct {
 	// listings](https://support.google.com/merchants/answer/9825611).
 	//   "FREE_LOCAL_VEHICLE_LISTINGS" - [Free local vehicle
 	// listings](https://support.google.com/merchants/answer/11544533).
+	//   "YOUTUBE_AFFILIATE" - [Youtube
+	// Affiliate](https://support.google.com/youtube/answer/13376398).
 	//   "YOUTUBE_SHOPPING" - [YouTube
 	// Shopping](https://support.google.com/merchants/answer/13478370).
 	//   "CLOUD_RETAIL" - [Cloud
@@ -624,6 +634,8 @@ type ItemLevelIssue struct {
 	// listings](https://support.google.com/merchants/answer/9825611).
 	//   "FREE_LOCAL_VEHICLE_LISTINGS" - [Free local vehicle
 	// listings](https://support.google.com/merchants/answer/11544533).
+	//   "YOUTUBE_AFFILIATE" - [Youtube
+	// Affiliate](https://support.google.com/youtube/answer/13376398).
 	//   "YOUTUBE_SHOPPING" - [YouTube
 	// Shopping](https://support.google.com/merchants/answer/13478370).
 	//   "CLOUD_RETAIL" - [Cloud
@@ -756,6 +768,8 @@ type ProductChange struct {
 	// listings](https://support.google.com/merchants/answer/9825611).
 	//   "FREE_LOCAL_VEHICLE_LISTINGS" - [Free local vehicle
 	// listings](https://support.google.com/merchants/answer/11544533).
+	//   "YOUTUBE_AFFILIATE" - [Youtube
+	// Affiliate](https://support.google.com/youtube/answer/13376398).
 	//   "YOUTUBE_SHOPPING" - [YouTube
 	// Shopping](https://support.google.com/merchants/answer/13478370).
 	//   "CLOUD_RETAIL" - [Cloud
@@ -1009,6 +1023,7 @@ func (c *AccountsPromotionsGetCall) Header() http.Header {
 }
 
 func (c *AccountsPromotionsGetCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
@@ -1017,7 +1032,12 @@ func (c *AccountsPromotionsGetCall) doRequest(alt string) (*http.Response, error
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "promotions/v1beta/{+name}")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, nil)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("GET", urls, nil)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "GET", urls, nil)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -1113,6 +1133,7 @@ func (c *AccountsPromotionsInsertCall) Header() http.Header {
 }
 
 func (c *AccountsPromotionsInsertCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.insertpromotionrequest)
 	if err != nil {
@@ -1122,7 +1143,12 @@ func (c *AccountsPromotionsInsertCall) doRequest(alt string) (*http.Response, er
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "promotions/v1beta/{+parent}/promotions:insert")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("POST", urls, body)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("POST", urls, body)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "POST", urls, body)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -1246,6 +1272,7 @@ func (c *AccountsPromotionsListCall) Header() http.Header {
 }
 
 func (c *AccountsPromotionsListCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
@@ -1254,7 +1281,12 @@ func (c *AccountsPromotionsListCall) doRequest(alt string) (*http.Response, erro
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "promotions/v1beta/{+parent}/promotions")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, nil)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("GET", urls, nil)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "GET", urls, nil)
+	}
 	if err != nil {
 		return nil, err
 	}

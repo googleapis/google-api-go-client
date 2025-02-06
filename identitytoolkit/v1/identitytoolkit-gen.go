@@ -810,11 +810,7 @@ type GoogleCloudIdentitytoolkitV1GetAccountInfoRequest struct {
 	// `name@domain.tld`. The email should also match the RFC 822
 	// (https://tools.ietf.org/html/rfc822) addr-spec production. Should only be
 	// specified by authenticated requests from a developer.
-	Email []string `json:"email,omitempty"`
-	// FederatedUserId: The federated user identifier of one or more accounts to
-	// fetch. Should only be specified by authenticated requests bearing a Google
-	// OAuth 2.0 credential with proper permissions
-	// (https://cloud.google.com/identity-platform/docs/access-control).
+	Email           []string                                               `json:"email,omitempty"`
 	FederatedUserId []*GoogleCloudIdentitytoolkitV1FederatedUserIdentifier `json:"federatedUserId,omitempty"`
 	// IdToken: The Identity Platform ID token of the account to fetch. Require to
 	// be specified for requests from end users.
@@ -954,6 +950,11 @@ type GoogleCloudIdentitytoolkitV1GetOobCodeRequest struct {
 	// VERIFY_AND_CHANGE_EMAIL and VERIFY_EMAIL requests unless return_oob_link is
 	// set to true.
 	IdToken string `json:"idToken,omitempty"`
+	// LinkDomain: Optional. In order to ensure that the url used can be easily
+	// opened in iOS or Android, we create a Hosting link '/__/auth/links'. This
+	// optional field contains the domain to use when constructing a Hosting link.
+	// If not set, '.firebaseapp.com' domain will be used.
+	LinkDomain string `json:"linkDomain,omitempty"`
 	// NewEmail: The email address the account is being updated to. Required only
 	// for VERIFY_AND_CHANGE_EMAIL requests.
 	NewEmail string `json:"newEmail,omitempty"`
@@ -1184,8 +1185,6 @@ type GoogleCloudIdentitytoolkitV1IdpConfig struct {
 	// ExperimentPercent: Percent of users who will be prompted/redirected
 	// federated login for this IdP
 	ExperimentPercent int64 `json:"experimentPercent,omitempty"`
-	// Provider: Name of the identity provider.
-	//
 	// Possible values:
 	//   "PROVIDER_UNSPECIFIED"
 	//   "MSLIVE" - Microsoft Live as identity provider.
@@ -1452,8 +1451,6 @@ func (s GoogleCloudIdentitytoolkitV1ProviderUserInfo) MarshalJSON() ([]byte, err
 // GoogleCloudIdentitytoolkitV1QueryUserInfoRequest: Request message for
 // QueryUserInfo.
 type GoogleCloudIdentitytoolkitV1QueryUserInfoRequest struct {
-	// Expression: Query conditions used to filter results. If more than one is
-	// passed, only the first SqlExpression is evaluated.
 	Expression []*GoogleCloudIdentitytoolkitV1SqlExpression `json:"expression,omitempty"`
 	// Limit: The maximum number of accounts to return with an upper limit of
 	// __500__. Defaults to _500_. Only valid when `return_user_info` is set to
@@ -1462,9 +1459,6 @@ type GoogleCloudIdentitytoolkitV1QueryUserInfoRequest struct {
 	// Offset: The number of accounts to skip from the beginning of matching
 	// records. Only valid when `return_user_info` is set to `true`.
 	Offset int64 `json:"offset,omitempty,string"`
-	// Order: The order for sorting query result. Defaults to __ascending__ order.
-	// Only valid when `return_user_info` is set to `true`.
-	//
 	// Possible values:
 	//   "ORDER_UNSPECIFIED" - Order is not specified.
 	//   "ASC" - Sort on ascending order.
@@ -1474,10 +1468,6 @@ type GoogleCloudIdentitytoolkitV1QueryUserInfoRequest struct {
 	// the query. If `false`, only the __count__ of accounts matching the query
 	// will be returned. Defaults to `true`.
 	ReturnUserInfo bool `json:"returnUserInfo,omitempty"`
-	// SortBy: The field to use for sorting user accounts. Defaults to `USER_ID`.
-	// Note: when `phone_number` is specified in `expression`, the result ignores
-	// the sorting. Only valid when `return_user_info` is set to `true`.
-	//
 	// Possible values:
 	//   "SORT_BY_FIELD_UNSPECIFIED" - Sort field is not specified.
 	//   "USER_ID" - Sort result by userId.
@@ -1758,8 +1748,6 @@ type GoogleCloudIdentitytoolkitV1SetAccountInfoRequest struct {
 	// (https://cloud.google.com/identity-platform/docs/access-control).
 	CustomAttributes       string `json:"customAttributes,omitempty"`
 	DelegatedProjectNumber int64  `json:"delegatedProjectNumber,omitempty,string"`
-	// DeleteAttribute: The account's attributes to be deleted.
-	//
 	// Possible values:
 	//   "USER_ATTRIBUTE_NAME_UNSPECIFIED" - User attribute name is not specified.
 	//   "EMAIL" - User attribute key name is email.
@@ -2802,8 +2790,6 @@ type GoogleCloudIdentitytoolkitV1UploadAccountRequest struct {
 	// cpu_mem_cost help tune the resources needed to hash a password, and should
 	// be tuned as processor speeds and memory technologies advance.
 	Parallelization int64 `json:"parallelization,omitempty"`
-	// PasswordHashOrder: Password and salt order when verify password.
-	//
 	// Possible values:
 	//   "UNSPECIFIED_ORDER" - The order is not specified.
 	//   "SALT_AND_PASSWORD" - The order is salt first, and then password.
@@ -3141,6 +3127,7 @@ func (c *AccountsCreateAuthUriCall) Header() http.Header {
 }
 
 func (c *AccountsCreateAuthUriCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googlecloudidentitytoolkitv1createauthurirequest)
 	if err != nil {
@@ -3150,7 +3137,12 @@ func (c *AccountsCreateAuthUriCall) doRequest(alt string) (*http.Response, error
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/accounts:createAuthUri")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("POST", urls, body)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("POST", urls, body)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "POST", urls, body)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -3238,6 +3230,7 @@ func (c *AccountsDeleteCall) Header() http.Header {
 }
 
 func (c *AccountsDeleteCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googlecloudidentitytoolkitv1deleteaccountrequest)
 	if err != nil {
@@ -3247,7 +3240,12 @@ func (c *AccountsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/accounts:delete")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("POST", urls, body)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("POST", urls, body)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "POST", urls, body)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -3335,6 +3333,7 @@ func (c *AccountsIssueSamlResponseCall) Header() http.Header {
 }
 
 func (c *AccountsIssueSamlResponseCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googlecloudidentitytoolkitv1issuesamlresponserequest)
 	if err != nil {
@@ -3344,7 +3343,12 @@ func (c *AccountsIssueSamlResponseCall) doRequest(alt string) (*http.Response, e
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/accounts:issueSamlResponse")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("POST", urls, body)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("POST", urls, body)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "POST", urls, body)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -3435,6 +3439,7 @@ func (c *AccountsLookupCall) Header() http.Header {
 }
 
 func (c *AccountsLookupCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googlecloudidentitytoolkitv1getaccountinforequest)
 	if err != nil {
@@ -3444,7 +3449,12 @@ func (c *AccountsLookupCall) doRequest(alt string) (*http.Response, error) {
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/accounts:lookup")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("POST", urls, body)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("POST", urls, body)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "POST", urls, body)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -3535,6 +3545,7 @@ func (c *AccountsResetPasswordCall) Header() http.Header {
 }
 
 func (c *AccountsResetPasswordCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googlecloudidentitytoolkitv1resetpasswordrequest)
 	if err != nil {
@@ -3544,7 +3555,12 @@ func (c *AccountsResetPasswordCall) doRequest(alt string) (*http.Response, error
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/accounts:resetPassword")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("POST", urls, body)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("POST", urls, body)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "POST", urls, body)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -3634,6 +3650,7 @@ func (c *AccountsSendOobCodeCall) Header() http.Header {
 }
 
 func (c *AccountsSendOobCodeCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googlecloudidentitytoolkitv1getoobcoderequest)
 	if err != nil {
@@ -3643,7 +3660,12 @@ func (c *AccountsSendOobCodeCall) doRequest(alt string) (*http.Response, error) 
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/accounts:sendOobCode")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("POST", urls, body)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("POST", urls, body)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "POST", urls, body)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -3736,6 +3758,7 @@ func (c *AccountsSendVerificationCodeCall) Header() http.Header {
 }
 
 func (c *AccountsSendVerificationCodeCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googlecloudidentitytoolkitv1sendverificationcoderequest)
 	if err != nil {
@@ -3745,7 +3768,12 @@ func (c *AccountsSendVerificationCodeCall) doRequest(alt string) (*http.Response
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/accounts:sendVerificationCode")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("POST", urls, body)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("POST", urls, body)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "POST", urls, body)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -3837,6 +3865,7 @@ func (c *AccountsSignInWithCustomTokenCall) Header() http.Header {
 }
 
 func (c *AccountsSignInWithCustomTokenCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googlecloudidentitytoolkitv1signinwithcustomtokenrequest)
 	if err != nil {
@@ -3846,7 +3875,12 @@ func (c *AccountsSignInWithCustomTokenCall) doRequest(alt string) (*http.Respons
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/accounts:signInWithCustomToken")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("POST", urls, body)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("POST", urls, body)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "POST", urls, body)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -3939,6 +3973,7 @@ func (c *AccountsSignInWithEmailLinkCall) Header() http.Header {
 }
 
 func (c *AccountsSignInWithEmailLinkCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googlecloudidentitytoolkitv1signinwithemaillinkrequest)
 	if err != nil {
@@ -3948,7 +3983,12 @@ func (c *AccountsSignInWithEmailLinkCall) doRequest(alt string) (*http.Response,
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/accounts:signInWithEmailLink")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("POST", urls, body)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("POST", urls, body)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "POST", urls, body)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -4051,6 +4091,7 @@ func (c *AccountsSignInWithGameCenterCall) Header() http.Header {
 }
 
 func (c *AccountsSignInWithGameCenterCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googlecloudidentitytoolkitv1signinwithgamecenterrequest)
 	if err != nil {
@@ -4060,7 +4101,12 @@ func (c *AccountsSignInWithGameCenterCall) doRequest(alt string) (*http.Response
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/accounts:signInWithGameCenter")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("POST", urls, body)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("POST", urls, body)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "POST", urls, body)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -4159,6 +4205,7 @@ func (c *AccountsSignInWithIdpCall) Header() http.Header {
 }
 
 func (c *AccountsSignInWithIdpCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googlecloudidentitytoolkitv1signinwithidprequest)
 	if err != nil {
@@ -4168,7 +4215,12 @@ func (c *AccountsSignInWithIdpCall) doRequest(alt string) (*http.Response, error
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/accounts:signInWithIdp")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("POST", urls, body)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("POST", urls, body)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "POST", urls, body)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -4260,6 +4312,7 @@ func (c *AccountsSignInWithPasswordCall) Header() http.Header {
 }
 
 func (c *AccountsSignInWithPasswordCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googlecloudidentitytoolkitv1signinwithpasswordrequest)
 	if err != nil {
@@ -4269,7 +4322,12 @@ func (c *AccountsSignInWithPasswordCall) doRequest(alt string) (*http.Response, 
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/accounts:signInWithPassword")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("POST", urls, body)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("POST", urls, body)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "POST", urls, body)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -4366,6 +4424,7 @@ func (c *AccountsSignInWithPhoneNumberCall) Header() http.Header {
 }
 
 func (c *AccountsSignInWithPhoneNumberCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googlecloudidentitytoolkitv1signinwithphonenumberrequest)
 	if err != nil {
@@ -4375,7 +4434,12 @@ func (c *AccountsSignInWithPhoneNumberCall) doRequest(alt string) (*http.Respons
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/accounts:signInWithPhoneNumber")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("POST", urls, body)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("POST", urls, body)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "POST", urls, body)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -4469,6 +4533,7 @@ func (c *AccountsSignUpCall) Header() http.Header {
 }
 
 func (c *AccountsSignUpCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googlecloudidentitytoolkitv1signuprequest)
 	if err != nil {
@@ -4478,7 +4543,12 @@ func (c *AccountsSignUpCall) doRequest(alt string) (*http.Response, error) {
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/accounts:signUp")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("POST", urls, body)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("POST", urls, body)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "POST", urls, body)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -4568,6 +4638,7 @@ func (c *AccountsUpdateCall) Header() http.Header {
 }
 
 func (c *AccountsUpdateCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googlecloudidentitytoolkitv1setaccountinforequest)
 	if err != nil {
@@ -4577,7 +4648,12 @@ func (c *AccountsUpdateCall) doRequest(alt string) (*http.Response, error) {
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/accounts:update")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("POST", urls, body)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("POST", urls, body)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "POST", urls, body)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -4672,6 +4748,7 @@ func (c *AccountsVerifyIosClientCall) Header() http.Header {
 }
 
 func (c *AccountsVerifyIosClientCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googlecloudidentitytoolkitv1verifyiosclientrequest)
 	if err != nil {
@@ -4681,7 +4758,12 @@ func (c *AccountsVerifyIosClientCall) doRequest(alt string) (*http.Response, err
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/accounts:verifyIosClient")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("POST", urls, body)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("POST", urls, body)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "POST", urls, body)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -4784,6 +4866,7 @@ func (c *ProjectsAccountsCall) Header() http.Header {
 }
 
 func (c *ProjectsAccountsCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googlecloudidentitytoolkitv1signuprequest)
 	if err != nil {
@@ -4793,7 +4876,12 @@ func (c *ProjectsAccountsCall) doRequest(alt string) (*http.Response, error) {
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/projects/{+targetProjectId}/accounts")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("POST", urls, body)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("POST", urls, body)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "POST", urls, body)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -4890,6 +4978,7 @@ func (c *ProjectsCreateSessionCookieCall) Header() http.Header {
 }
 
 func (c *ProjectsCreateSessionCookieCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googlecloudidentitytoolkitv1createsessioncookierequest)
 	if err != nil {
@@ -4899,7 +4988,12 @@ func (c *ProjectsCreateSessionCookieCall) doRequest(alt string) (*http.Response,
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/projects/{+targetProjectId}:createSessionCookie")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("POST", urls, body)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("POST", urls, body)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "POST", urls, body)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -4995,6 +5089,7 @@ func (c *ProjectsQueryAccountsCall) Header() http.Header {
 }
 
 func (c *ProjectsQueryAccountsCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googlecloudidentitytoolkitv1queryuserinforequest)
 	if err != nil {
@@ -5004,7 +5099,12 @@ func (c *ProjectsQueryAccountsCall) doRequest(alt string) (*http.Response, error
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/projects/{+targetProjectId}:queryAccounts")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("POST", urls, body)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("POST", urls, body)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "POST", urls, body)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -5104,6 +5204,7 @@ func (c *ProjectsAccountsBatchCreateCall) Header() http.Header {
 }
 
 func (c *ProjectsAccountsBatchCreateCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googlecloudidentitytoolkitv1uploadaccountrequest)
 	if err != nil {
@@ -5113,7 +5214,12 @@ func (c *ProjectsAccountsBatchCreateCall) doRequest(alt string) (*http.Response,
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/projects/{+targetProjectId}/accounts:batchCreate")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("POST", urls, body)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("POST", urls, body)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "POST", urls, body)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -5214,6 +5320,7 @@ func (c *ProjectsAccountsBatchDeleteCall) Header() http.Header {
 }
 
 func (c *ProjectsAccountsBatchDeleteCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googlecloudidentitytoolkitv1batchdeleteaccountsrequest)
 	if err != nil {
@@ -5223,7 +5330,12 @@ func (c *ProjectsAccountsBatchDeleteCall) doRequest(alt string) (*http.Response,
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/projects/{+targetProjectId}/accounts:batchDelete")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("POST", urls, body)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("POST", urls, body)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "POST", urls, body)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -5362,6 +5474,7 @@ func (c *ProjectsAccountsBatchGetCall) Header() http.Header {
 }
 
 func (c *ProjectsAccountsBatchGetCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
@@ -5370,7 +5483,12 @@ func (c *ProjectsAccountsBatchGetCall) doRequest(alt string) (*http.Response, er
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/projects/{+targetProjectId}/accounts:batchGet")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, nil)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("GET", urls, nil)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "GET", urls, nil)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -5488,6 +5606,7 @@ func (c *ProjectsAccountsDeleteCall) Header() http.Header {
 }
 
 func (c *ProjectsAccountsDeleteCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googlecloudidentitytoolkitv1deleteaccountrequest)
 	if err != nil {
@@ -5497,7 +5616,12 @@ func (c *ProjectsAccountsDeleteCall) doRequest(alt string) (*http.Response, erro
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/projects/{+targetProjectId}/accounts:delete")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("POST", urls, body)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("POST", urls, body)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "POST", urls, body)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -5599,6 +5723,7 @@ func (c *ProjectsAccountsLookupCall) Header() http.Header {
 }
 
 func (c *ProjectsAccountsLookupCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googlecloudidentitytoolkitv1getaccountinforequest)
 	if err != nil {
@@ -5608,7 +5733,12 @@ func (c *ProjectsAccountsLookupCall) doRequest(alt string) (*http.Response, erro
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/projects/{+targetProjectId}/accounts:lookup")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("POST", urls, body)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("POST", urls, body)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "POST", urls, body)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -5704,6 +5834,7 @@ func (c *ProjectsAccountsQueryCall) Header() http.Header {
 }
 
 func (c *ProjectsAccountsQueryCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googlecloudidentitytoolkitv1queryuserinforequest)
 	if err != nil {
@@ -5713,7 +5844,12 @@ func (c *ProjectsAccountsQueryCall) doRequest(alt string) (*http.Response, error
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/projects/{+targetProjectId}/accounts:query")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("POST", urls, body)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("POST", urls, body)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "POST", urls, body)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -5813,6 +5949,7 @@ func (c *ProjectsAccountsSendOobCodeCall) Header() http.Header {
 }
 
 func (c *ProjectsAccountsSendOobCodeCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googlecloudidentitytoolkitv1getoobcoderequest)
 	if err != nil {
@@ -5822,7 +5959,12 @@ func (c *ProjectsAccountsSendOobCodeCall) doRequest(alt string) (*http.Response,
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/projects/{+targetProjectId}/accounts:sendOobCode")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("POST", urls, body)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("POST", urls, body)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "POST", urls, body)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -5923,6 +6065,7 @@ func (c *ProjectsAccountsUpdateCall) Header() http.Header {
 }
 
 func (c *ProjectsAccountsUpdateCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googlecloudidentitytoolkitv1setaccountinforequest)
 	if err != nil {
@@ -5932,7 +6075,12 @@ func (c *ProjectsAccountsUpdateCall) doRequest(alt string) (*http.Response, erro
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/projects/{+targetProjectId}/accounts:update")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("POST", urls, body)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("POST", urls, body)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "POST", urls, body)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -6043,6 +6191,7 @@ func (c *ProjectsTenantsAccountsCall) Header() http.Header {
 }
 
 func (c *ProjectsTenantsAccountsCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googlecloudidentitytoolkitv1signuprequest)
 	if err != nil {
@@ -6052,7 +6201,12 @@ func (c *ProjectsTenantsAccountsCall) doRequest(alt string) (*http.Response, err
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/projects/{+targetProjectId}/tenants/{+tenantId}/accounts")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("POST", urls, body)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("POST", urls, body)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "POST", urls, body)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -6154,6 +6308,7 @@ func (c *ProjectsTenantsCreateSessionCookieCall) Header() http.Header {
 }
 
 func (c *ProjectsTenantsCreateSessionCookieCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googlecloudidentitytoolkitv1createsessioncookierequest)
 	if err != nil {
@@ -6163,7 +6318,12 @@ func (c *ProjectsTenantsCreateSessionCookieCall) doRequest(alt string) (*http.Re
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/projects/{+targetProjectId}/tenants/{+tenantId}:createSessionCookie")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("POST", urls, body)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("POST", urls, body)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "POST", urls, body)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -6267,6 +6427,7 @@ func (c *ProjectsTenantsAccountsBatchCreateCall) Header() http.Header {
 }
 
 func (c *ProjectsTenantsAccountsBatchCreateCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googlecloudidentitytoolkitv1uploadaccountrequest)
 	if err != nil {
@@ -6276,7 +6437,12 @@ func (c *ProjectsTenantsAccountsBatchCreateCall) doRequest(alt string) (*http.Re
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/projects/{+targetProjectId}/tenants/{+tenantId}/accounts:batchCreate")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("POST", urls, body)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("POST", urls, body)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "POST", urls, body)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -6383,6 +6549,7 @@ func (c *ProjectsTenantsAccountsBatchDeleteCall) Header() http.Header {
 }
 
 func (c *ProjectsTenantsAccountsBatchDeleteCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googlecloudidentitytoolkitv1batchdeleteaccountsrequest)
 	if err != nil {
@@ -6392,7 +6559,12 @@ func (c *ProjectsTenantsAccountsBatchDeleteCall) doRequest(alt string) (*http.Re
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/projects/{+targetProjectId}/tenants/{+tenantId}/accounts:batchDelete")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("POST", urls, body)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("POST", urls, body)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "POST", urls, body)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -6528,6 +6700,7 @@ func (c *ProjectsTenantsAccountsBatchGetCall) Header() http.Header {
 }
 
 func (c *ProjectsTenantsAccountsBatchGetCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
@@ -6536,7 +6709,12 @@ func (c *ProjectsTenantsAccountsBatchGetCall) doRequest(alt string) (*http.Respo
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/projects/{+targetProjectId}/tenants/{+tenantId}/accounts:batchGet")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, nil)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("GET", urls, nil)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "GET", urls, nil)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -6661,6 +6839,7 @@ func (c *ProjectsTenantsAccountsDeleteCall) Header() http.Header {
 }
 
 func (c *ProjectsTenantsAccountsDeleteCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googlecloudidentitytoolkitv1deleteaccountrequest)
 	if err != nil {
@@ -6670,7 +6849,12 @@ func (c *ProjectsTenantsAccountsDeleteCall) doRequest(alt string) (*http.Respons
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/projects/{+targetProjectId}/tenants/{+tenantId}/accounts:delete")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("POST", urls, body)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("POST", urls, body)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "POST", urls, body)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -6777,6 +6961,7 @@ func (c *ProjectsTenantsAccountsLookupCall) Header() http.Header {
 }
 
 func (c *ProjectsTenantsAccountsLookupCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googlecloudidentitytoolkitv1getaccountinforequest)
 	if err != nil {
@@ -6786,7 +6971,12 @@ func (c *ProjectsTenantsAccountsLookupCall) doRequest(alt string) (*http.Respons
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/projects/{+targetProjectId}/tenants/{+tenantId}/accounts:lookup")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("POST", urls, body)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("POST", urls, body)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "POST", urls, body)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -6886,6 +7076,7 @@ func (c *ProjectsTenantsAccountsQueryCall) Header() http.Header {
 }
 
 func (c *ProjectsTenantsAccountsQueryCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googlecloudidentitytoolkitv1queryuserinforequest)
 	if err != nil {
@@ -6895,7 +7086,12 @@ func (c *ProjectsTenantsAccountsQueryCall) doRequest(alt string) (*http.Response
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/projects/{+targetProjectId}/tenants/{+tenantId}/accounts:query")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("POST", urls, body)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("POST", urls, body)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "POST", urls, body)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -7000,6 +7196,7 @@ func (c *ProjectsTenantsAccountsSendOobCodeCall) Header() http.Header {
 }
 
 func (c *ProjectsTenantsAccountsSendOobCodeCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googlecloudidentitytoolkitv1getoobcoderequest)
 	if err != nil {
@@ -7009,7 +7206,12 @@ func (c *ProjectsTenantsAccountsSendOobCodeCall) doRequest(alt string) (*http.Re
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/projects/{+targetProjectId}/tenants/{+tenantId}/accounts:sendOobCode")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("POST", urls, body)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("POST", urls, body)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "POST", urls, body)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -7116,6 +7318,7 @@ func (c *ProjectsTenantsAccountsUpdateCall) Header() http.Header {
 }
 
 func (c *ProjectsTenantsAccountsUpdateCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googlecloudidentitytoolkitv1setaccountinforequest)
 	if err != nil {
@@ -7125,7 +7328,12 @@ func (c *ProjectsTenantsAccountsUpdateCall) doRequest(alt string) (*http.Respons
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/projects/{+targetProjectId}/tenants/{+tenantId}/accounts:update")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("POST", urls, body)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("POST", urls, body)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "POST", urls, body)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -7293,6 +7501,7 @@ func (c *V1GetProjectsCall) Header() http.Header {
 }
 
 func (c *V1GetProjectsCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
@@ -7301,7 +7510,12 @@ func (c *V1GetProjectsCall) doRequest(alt string) (*http.Response, error) {
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/projects")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, nil)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("GET", urls, nil)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "GET", urls, nil)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -7398,6 +7612,7 @@ func (c *V1GetPublicKeysCall) Header() http.Header {
 }
 
 func (c *V1GetPublicKeysCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
@@ -7406,7 +7621,12 @@ func (c *V1GetPublicKeysCall) doRequest(alt string) (*http.Response, error) {
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/publicKeys")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, nil)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("GET", urls, nil)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "GET", urls, nil)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -7477,6 +7697,7 @@ func (c *V1GetRecaptchaParamsCall) Header() http.Header {
 }
 
 func (c *V1GetRecaptchaParamsCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
@@ -7485,7 +7706,12 @@ func (c *V1GetRecaptchaParamsCall) doRequest(alt string) (*http.Response, error)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/recaptchaParams")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, nil)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("GET", urls, nil)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "GET", urls, nil)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -7582,6 +7808,7 @@ func (c *V1GetSessionCookiePublicKeysCall) Header() http.Header {
 }
 
 func (c *V1GetSessionCookiePublicKeysCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
@@ -7590,7 +7817,12 @@ func (c *V1GetSessionCookiePublicKeysCall) doRequest(alt string) (*http.Response
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/sessionCookiePublicKeys")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, nil)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("GET", urls, nil)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "GET", urls, nil)
+	}
 	if err != nil {
 		return nil, err
 	}

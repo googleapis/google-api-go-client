@@ -751,6 +751,7 @@ func (c *ProjectsLogServicesListCall) Header() http.Header {
 }
 
 func (c *ProjectsLogServicesListCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_, "x-goog-api-version", "v1_20240501")
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
@@ -759,7 +760,12 @@ func (c *ProjectsLogServicesListCall) doRequest(alt string) (*http.Response, err
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta3/projects/{projectsId}/logServices")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequestWithContext(c.ctx_, "GET", urls, nil)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("GET", urls, nil)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "GET", urls, nil)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -936,6 +942,7 @@ func (c *ProjectsLogServicesIndexesListCall) Header() http.Header {
 }
 
 func (c *ProjectsLogServicesIndexesListCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_, "x-goog-api-version", "v1_20240501")
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
@@ -944,7 +951,12 @@ func (c *ProjectsLogServicesIndexesListCall) doRequest(alt string) (*http.Respon
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta3/projects/{projectsId}/logServices/{logServicesId}/indexes")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequestWithContext(c.ctx_, "GET", urls, nil)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("GET", urls, nil)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "GET", urls, nil)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -1065,6 +1077,7 @@ func (c *ProjectsLogServicesSinksCreateCall) Header() http.Header {
 }
 
 func (c *ProjectsLogServicesSinksCreateCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_, "x-goog-api-version", "v1_20240501")
 	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.logsink)
 	if err != nil {
@@ -1074,7 +1087,12 @@ func (c *ProjectsLogServicesSinksCreateCall) doRequest(alt string) (*http.Respon
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta3/projects/{projectsId}/logServices/{logServicesId}/sinks")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequestWithContext(c.ctx_, "POST", urls, body)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("POST", urls, body)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "POST", urls, body)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -1173,12 +1191,18 @@ func (c *ProjectsLogServicesSinksDeleteCall) Header() http.Header {
 }
 
 func (c *ProjectsLogServicesSinksDeleteCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_, "x-goog-api-version", "v1_20240501")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta3/projects/{projectsId}/logServices/{logServicesId}/sinks/{sinksId}")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequestWithContext(c.ctx_, "DELETE", urls, nil)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("DELETE", urls, nil)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "DELETE", urls, nil)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -1287,6 +1311,7 @@ func (c *ProjectsLogServicesSinksGetCall) Header() http.Header {
 }
 
 func (c *ProjectsLogServicesSinksGetCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_, "x-goog-api-version", "v1_20240501")
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
@@ -1295,7 +1320,12 @@ func (c *ProjectsLogServicesSinksGetCall) doRequest(alt string) (*http.Response,
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta3/projects/{projectsId}/logServices/{logServicesId}/sinks/{sinksId}")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequestWithContext(c.ctx_, "GET", urls, nil)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("GET", urls, nil)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "GET", urls, nil)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -1402,6 +1432,7 @@ func (c *ProjectsLogServicesSinksListCall) Header() http.Header {
 }
 
 func (c *ProjectsLogServicesSinksListCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_, "x-goog-api-version", "v1_20240501")
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
@@ -1410,7 +1441,12 @@ func (c *ProjectsLogServicesSinksListCall) doRequest(alt string) (*http.Response
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta3/projects/{projectsId}/logServices/{logServicesId}/sinks")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequestWithContext(c.ctx_, "GET", urls, nil)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("GET", urls, nil)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "GET", urls, nil)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -1512,6 +1548,7 @@ func (c *ProjectsLogServicesSinksUpdateCall) Header() http.Header {
 }
 
 func (c *ProjectsLogServicesSinksUpdateCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_, "x-goog-api-version", "v1_20240501")
 	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.logsink)
 	if err != nil {
@@ -1521,7 +1558,12 @@ func (c *ProjectsLogServicesSinksUpdateCall) doRequest(alt string) (*http.Respon
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta3/projects/{projectsId}/logServices/{logServicesId}/sinks/{sinksId}")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequestWithContext(c.ctx_, "PUT", urls, body)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("PUT", urls, body)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "PUT", urls, body)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -1619,12 +1661,18 @@ func (c *ProjectsLogsDeleteCall) Header() http.Header {
 }
 
 func (c *ProjectsLogsDeleteCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_, "x-goog-api-version", "v1_20240501")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta3/projects/{projectsId}/logs/{logsId}")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequestWithContext(c.ctx_, "DELETE", urls, nil)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("DELETE", urls, nil)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "DELETE", urls, nil)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -1767,6 +1815,7 @@ func (c *ProjectsLogsListCall) Header() http.Header {
 }
 
 func (c *ProjectsLogsListCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_, "x-goog-api-version", "v1_20240501")
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
@@ -1775,7 +1824,12 @@ func (c *ProjectsLogsListCall) doRequest(alt string) (*http.Response, error) {
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta3/projects/{projectsId}/logs")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequestWithContext(c.ctx_, "GET", urls, nil)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("GET", urls, nil)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "GET", urls, nil)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -1901,6 +1955,7 @@ func (c *ProjectsLogsEntriesWriteCall) Header() http.Header {
 }
 
 func (c *ProjectsLogsEntriesWriteCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_, "x-goog-api-version", "v1_20240501")
 	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.writelogentriesrequest)
 	if err != nil {
@@ -1910,7 +1965,12 @@ func (c *ProjectsLogsEntriesWriteCall) doRequest(alt string) (*http.Response, er
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta3/projects/{projectsId}/logs/{logsId}/entries:write")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequestWithContext(c.ctx_, "POST", urls, body)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("POST", urls, body)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "POST", urls, body)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -2009,6 +2069,7 @@ func (c *ProjectsLogsSinksCreateCall) Header() http.Header {
 }
 
 func (c *ProjectsLogsSinksCreateCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_, "x-goog-api-version", "v1_20240501")
 	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.logsink)
 	if err != nil {
@@ -2018,7 +2079,12 @@ func (c *ProjectsLogsSinksCreateCall) doRequest(alt string) (*http.Response, err
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta3/projects/{projectsId}/logs/{logsId}/sinks")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequestWithContext(c.ctx_, "POST", urls, body)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("POST", urls, body)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "POST", urls, body)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -2117,12 +2183,18 @@ func (c *ProjectsLogsSinksDeleteCall) Header() http.Header {
 }
 
 func (c *ProjectsLogsSinksDeleteCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_, "x-goog-api-version", "v1_20240501")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta3/projects/{projectsId}/logs/{logsId}/sinks/{sinksId}")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequestWithContext(c.ctx_, "DELETE", urls, nil)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("DELETE", urls, nil)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "DELETE", urls, nil)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -2231,6 +2303,7 @@ func (c *ProjectsLogsSinksGetCall) Header() http.Header {
 }
 
 func (c *ProjectsLogsSinksGetCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_, "x-goog-api-version", "v1_20240501")
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
@@ -2239,7 +2312,12 @@ func (c *ProjectsLogsSinksGetCall) doRequest(alt string) (*http.Response, error)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta3/projects/{projectsId}/logs/{logsId}/sinks/{sinksId}")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequestWithContext(c.ctx_, "GET", urls, nil)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("GET", urls, nil)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "GET", urls, nil)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -2345,6 +2423,7 @@ func (c *ProjectsLogsSinksListCall) Header() http.Header {
 }
 
 func (c *ProjectsLogsSinksListCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_, "x-goog-api-version", "v1_20240501")
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
@@ -2353,7 +2432,12 @@ func (c *ProjectsLogsSinksListCall) doRequest(alt string) (*http.Response, error
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta3/projects/{projectsId}/logs/{logsId}/sinks")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequestWithContext(c.ctx_, "GET", urls, nil)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("GET", urls, nil)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "GET", urls, nil)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -2455,6 +2539,7 @@ func (c *ProjectsLogsSinksUpdateCall) Header() http.Header {
 }
 
 func (c *ProjectsLogsSinksUpdateCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_, "x-goog-api-version", "v1_20240501")
 	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.logsink)
 	if err != nil {
@@ -2464,7 +2549,12 @@ func (c *ProjectsLogsSinksUpdateCall) doRequest(alt string) (*http.Response, err
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta3/projects/{projectsId}/logs/{logsId}/sinks/{sinksId}")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequestWithContext(c.ctx_, "PUT", urls, body)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("PUT", urls, body)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "PUT", urls, body)
+	}
 	if err != nil {
 		return nil, err
 	}

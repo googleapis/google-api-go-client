@@ -1455,7 +1455,7 @@ func (c *ProjectsLocationsGetCall) doRequest(alt string) (*http.Response, error)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, nil)
+	req, err := http.NewRequestWithContext(c.ctx_, "GET", urls, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -1588,7 +1588,7 @@ func (c *ProjectsLocationsListCall) doRequest(alt string) (*http.Response, error
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}/locations")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, nil)
+	req, err := http.NewRequestWithContext(c.ctx_, "GET", urls, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -1716,7 +1716,7 @@ func (c *ProjectsLocationsSecretsAddVersionCall) doRequest(alt string) (*http.Re
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}:addVersion")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("POST", urls, body)
+	req, err := http.NewRequestWithContext(c.ctx_, "POST", urls, body)
 	if err != nil {
 		return nil, err
 	}
@@ -1829,7 +1829,7 @@ func (c *ProjectsLocationsSecretsCreateCall) doRequest(alt string) (*http.Respon
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/secrets")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("POST", urls, body)
+	req, err := http.NewRequestWithContext(c.ctx_, "POST", urls, body)
 	if err != nil {
 		return nil, err
 	}
@@ -1935,7 +1935,7 @@ func (c *ProjectsLocationsSecretsDeleteCall) doRequest(alt string) (*http.Respon
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("DELETE", urls, nil)
+	req, err := http.NewRequestWithContext(c.ctx_, "DELETE", urls, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -2045,7 +2045,7 @@ func (c *ProjectsLocationsSecretsGetCall) doRequest(alt string) (*http.Response,
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, nil)
+	req, err := http.NewRequestWithContext(c.ctx_, "GET", urls, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -2174,7 +2174,7 @@ func (c *ProjectsLocationsSecretsGetIamPolicyCall) doRequest(alt string) (*http.
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+resource}:getIamPolicy")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, nil)
+	req, err := http.NewRequestWithContext(c.ctx_, "GET", urls, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -2309,7 +2309,7 @@ func (c *ProjectsLocationsSecretsListCall) doRequest(alt string) (*http.Response
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/secrets")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, nil)
+	req, err := http.NewRequestWithContext(c.ctx_, "GET", urls, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -2442,7 +2442,7 @@ func (c *ProjectsLocationsSecretsPatchCall) doRequest(alt string) (*http.Respons
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("PATCH", urls, body)
+	req, err := http.NewRequestWithContext(c.ctx_, "PATCH", urls, body)
 	if err != nil {
 		return nil, err
 	}
@@ -2549,7 +2549,7 @@ func (c *ProjectsLocationsSecretsSetIamPolicyCall) doRequest(alt string) (*http.
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+resource}:setIamPolicy")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("POST", urls, body)
+	req, err := http.NewRequestWithContext(c.ctx_, "POST", urls, body)
 	if err != nil {
 		return nil, err
 	}
@@ -2659,7 +2659,7 @@ func (c *ProjectsLocationsSecretsTestIamPermissionsCall) doRequest(alt string) (
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+resource}:testIamPermissions")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("POST", urls, body)
+	req, err := http.NewRequestWithContext(c.ctx_, "POST", urls, body)
 	if err != nil {
 		return nil, err
 	}
@@ -2776,7 +2776,7 @@ func (c *ProjectsLocationsSecretsVersionsAccessCall) doRequest(alt string) (*htt
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}:access")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, nil)
+	req, err := http.NewRequestWithContext(c.ctx_, "GET", urls, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -2883,7 +2883,7 @@ func (c *ProjectsLocationsSecretsVersionsDestroyCall) doRequest(alt string) (*ht
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}:destroy")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("POST", urls, body)
+	req, err := http.NewRequestWithContext(c.ctx_, "POST", urls, body)
 	if err != nil {
 		return nil, err
 	}
@@ -2989,7 +2989,7 @@ func (c *ProjectsLocationsSecretsVersionsDisableCall) doRequest(alt string) (*ht
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}:disable")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("POST", urls, body)
+	req, err := http.NewRequestWithContext(c.ctx_, "POST", urls, body)
 	if err != nil {
 		return nil, err
 	}
@@ -3095,7 +3095,7 @@ func (c *ProjectsLocationsSecretsVersionsEnableCall) doRequest(alt string) (*htt
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}:enable")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("POST", urls, body)
+	req, err := http.NewRequestWithContext(c.ctx_, "POST", urls, body)
 	if err != nil {
 		return nil, err
 	}
@@ -3211,7 +3211,7 @@ func (c *ProjectsLocationsSecretsVersionsGetCall) doRequest(alt string) (*http.R
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, nil)
+	req, err := http.NewRequestWithContext(c.ctx_, "GET", urls, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -3348,7 +3348,7 @@ func (c *ProjectsLocationsSecretsVersionsListCall) doRequest(alt string) (*http.
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/versions")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, nil)
+	req, err := http.NewRequestWithContext(c.ctx_, "GET", urls, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -3476,7 +3476,7 @@ func (c *ProjectsSecretsAddVersionCall) doRequest(alt string) (*http.Response, e
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}:addVersion")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("POST", urls, body)
+	req, err := http.NewRequestWithContext(c.ctx_, "POST", urls, body)
 	if err != nil {
 		return nil, err
 	}
@@ -3589,7 +3589,7 @@ func (c *ProjectsSecretsCreateCall) doRequest(alt string) (*http.Response, error
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/secrets")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("POST", urls, body)
+	req, err := http.NewRequestWithContext(c.ctx_, "POST", urls, body)
 	if err != nil {
 		return nil, err
 	}
@@ -3695,7 +3695,7 @@ func (c *ProjectsSecretsDeleteCall) doRequest(alt string) (*http.Response, error
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("DELETE", urls, nil)
+	req, err := http.NewRequestWithContext(c.ctx_, "DELETE", urls, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -3805,7 +3805,7 @@ func (c *ProjectsSecretsGetCall) doRequest(alt string) (*http.Response, error) {
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, nil)
+	req, err := http.NewRequestWithContext(c.ctx_, "GET", urls, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -3934,7 +3934,7 @@ func (c *ProjectsSecretsGetIamPolicyCall) doRequest(alt string) (*http.Response,
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+resource}:getIamPolicy")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, nil)
+	req, err := http.NewRequestWithContext(c.ctx_, "GET", urls, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -4069,7 +4069,7 @@ func (c *ProjectsSecretsListCall) doRequest(alt string) (*http.Response, error) 
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/secrets")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, nil)
+	req, err := http.NewRequestWithContext(c.ctx_, "GET", urls, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -4202,7 +4202,7 @@ func (c *ProjectsSecretsPatchCall) doRequest(alt string) (*http.Response, error)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("PATCH", urls, body)
+	req, err := http.NewRequestWithContext(c.ctx_, "PATCH", urls, body)
 	if err != nil {
 		return nil, err
 	}
@@ -4309,7 +4309,7 @@ func (c *ProjectsSecretsSetIamPolicyCall) doRequest(alt string) (*http.Response,
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+resource}:setIamPolicy")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("POST", urls, body)
+	req, err := http.NewRequestWithContext(c.ctx_, "POST", urls, body)
 	if err != nil {
 		return nil, err
 	}
@@ -4419,7 +4419,7 @@ func (c *ProjectsSecretsTestIamPermissionsCall) doRequest(alt string) (*http.Res
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+resource}:testIamPermissions")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("POST", urls, body)
+	req, err := http.NewRequestWithContext(c.ctx_, "POST", urls, body)
 	if err != nil {
 		return nil, err
 	}
@@ -4536,7 +4536,7 @@ func (c *ProjectsSecretsVersionsAccessCall) doRequest(alt string) (*http.Respons
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}:access")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, nil)
+	req, err := http.NewRequestWithContext(c.ctx_, "GET", urls, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -4643,7 +4643,7 @@ func (c *ProjectsSecretsVersionsDestroyCall) doRequest(alt string) (*http.Respon
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}:destroy")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("POST", urls, body)
+	req, err := http.NewRequestWithContext(c.ctx_, "POST", urls, body)
 	if err != nil {
 		return nil, err
 	}
@@ -4749,7 +4749,7 @@ func (c *ProjectsSecretsVersionsDisableCall) doRequest(alt string) (*http.Respon
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}:disable")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("POST", urls, body)
+	req, err := http.NewRequestWithContext(c.ctx_, "POST", urls, body)
 	if err != nil {
 		return nil, err
 	}
@@ -4855,7 +4855,7 @@ func (c *ProjectsSecretsVersionsEnableCall) doRequest(alt string) (*http.Respons
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}:enable")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("POST", urls, body)
+	req, err := http.NewRequestWithContext(c.ctx_, "POST", urls, body)
 	if err != nil {
 		return nil, err
 	}
@@ -4971,7 +4971,7 @@ func (c *ProjectsSecretsVersionsGetCall) doRequest(alt string) (*http.Response, 
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, nil)
+	req, err := http.NewRequestWithContext(c.ctx_, "GET", urls, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -5108,7 +5108,7 @@ func (c *ProjectsSecretsVersionsListCall) doRequest(alt string) (*http.Response,
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/versions")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, nil)
+	req, err := http.NewRequestWithContext(c.ctx_, "GET", urls, nil)
 	if err != nil {
 		return nil, err
 	}

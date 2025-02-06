@@ -451,6 +451,8 @@ type MerchantReviewDestinationStatus struct {
 	// listings](https://support.google.com/merchants/answer/9825611).
 	//   "FREE_LOCAL_VEHICLE_LISTINGS" - [Free local vehicle
 	// listings](https://support.google.com/merchants/answer/11544533).
+	//   "YOUTUBE_AFFILIATE" - [Youtube
+	// Affiliate](https://support.google.com/youtube/answer/13376398).
 	//   "YOUTUBE_SHOPPING" - [YouTube
 	// Shopping](https://support.google.com/merchants/answer/13478370).
 	//   "CLOUD_RETAIL" - [Cloud
@@ -522,6 +524,8 @@ type MerchantReviewItemLevelIssue struct {
 	// listings](https://support.google.com/merchants/answer/9825611).
 	//   "FREE_LOCAL_VEHICLE_LISTINGS" - [Free local vehicle
 	// listings](https://support.google.com/merchants/answer/11544533).
+	//   "YOUTUBE_AFFILIATE" - [Youtube
+	// Affiliate](https://support.google.com/youtube/answer/13376398).
 	//   "YOUTUBE_SHOPPING" - [YouTube
 	// Shopping](https://support.google.com/merchants/answer/13478370).
 	//   "CLOUD_RETAIL" - [Cloud
@@ -632,6 +636,8 @@ type ProductChange struct {
 	// listings](https://support.google.com/merchants/answer/9825611).
 	//   "FREE_LOCAL_VEHICLE_LISTINGS" - [Free local vehicle
 	// listings](https://support.google.com/merchants/answer/11544533).
+	//   "YOUTUBE_AFFILIATE" - [Youtube
+	// Affiliate](https://support.google.com/youtube/answer/13376398).
 	//   "YOUTUBE_SHOPPING" - [YouTube
 	// Shopping](https://support.google.com/merchants/answer/13478370).
 	//   "CLOUD_RETAIL" - [Cloud
@@ -862,6 +868,8 @@ type ProductReviewDestinationStatus struct {
 	// listings](https://support.google.com/merchants/answer/9825611).
 	//   "FREE_LOCAL_VEHICLE_LISTINGS" - [Free local vehicle
 	// listings](https://support.google.com/merchants/answer/11544533).
+	//   "YOUTUBE_AFFILIATE" - [Youtube
+	// Affiliate](https://support.google.com/youtube/answer/13376398).
 	//   "YOUTUBE_SHOPPING" - [YouTube
 	// Shopping](https://support.google.com/merchants/answer/13478370).
 	//   "CLOUD_RETAIL" - [Cloud
@@ -933,6 +941,8 @@ type ProductReviewItemLevelIssue struct {
 	// listings](https://support.google.com/merchants/answer/9825611).
 	//   "FREE_LOCAL_VEHICLE_LISTINGS" - [Free local vehicle
 	// listings](https://support.google.com/merchants/answer/11544533).
+	//   "YOUTUBE_AFFILIATE" - [Youtube
+	// Affiliate](https://support.google.com/youtube/answer/13376398).
 	//   "YOUTUBE_SHOPPING" - [YouTube
 	// Shopping](https://support.google.com/merchants/answer/13478370).
 	//   "CLOUD_RETAIL" - [Cloud
@@ -1130,12 +1140,18 @@ func (c *AccountsMerchantReviewsDeleteCall) Header() http.Header {
 }
 
 func (c *AccountsMerchantReviewsDeleteCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "reviews/v1beta/{+name}")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("DELETE", urls, nil)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("DELETE", urls, nil)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "DELETE", urls, nil)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -1237,6 +1253,7 @@ func (c *AccountsMerchantReviewsGetCall) Header() http.Header {
 }
 
 func (c *AccountsMerchantReviewsGetCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
@@ -1245,7 +1262,12 @@ func (c *AccountsMerchantReviewsGetCall) doRequest(alt string) (*http.Response, 
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "reviews/v1beta/{+name}")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, nil)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("GET", urls, nil)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "GET", urls, nil)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -1350,6 +1372,7 @@ func (c *AccountsMerchantReviewsInsertCall) Header() http.Header {
 }
 
 func (c *AccountsMerchantReviewsInsertCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.merchantreview)
 	if err != nil {
@@ -1359,7 +1382,12 @@ func (c *AccountsMerchantReviewsInsertCall) doRequest(alt string) (*http.Respons
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "reviews/v1beta/{+parent}/merchantReviews:insert")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("POST", urls, body)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("POST", urls, body)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "POST", urls, body)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -1479,6 +1507,7 @@ func (c *AccountsMerchantReviewsListCall) Header() http.Header {
 }
 
 func (c *AccountsMerchantReviewsListCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
@@ -1487,7 +1516,12 @@ func (c *AccountsMerchantReviewsListCall) doRequest(alt string) (*http.Response,
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "reviews/v1beta/{+parent}/merchantReviews")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, nil)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("GET", urls, nil)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "GET", urls, nil)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -1602,12 +1636,18 @@ func (c *AccountsProductReviewsDeleteCall) Header() http.Header {
 }
 
 func (c *AccountsProductReviewsDeleteCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "reviews/v1beta/{+name}")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("DELETE", urls, nil)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("DELETE", urls, nil)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "DELETE", urls, nil)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -1709,6 +1749,7 @@ func (c *AccountsProductReviewsGetCall) Header() http.Header {
 }
 
 func (c *AccountsProductReviewsGetCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
@@ -1717,7 +1758,12 @@ func (c *AccountsProductReviewsGetCall) doRequest(alt string) (*http.Response, e
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "reviews/v1beta/{+name}")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, nil)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("GET", urls, nil)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "GET", urls, nil)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -1819,6 +1865,7 @@ func (c *AccountsProductReviewsInsertCall) Header() http.Header {
 }
 
 func (c *AccountsProductReviewsInsertCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.productreview)
 	if err != nil {
@@ -1828,7 +1875,12 @@ func (c *AccountsProductReviewsInsertCall) doRequest(alt string) (*http.Response
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "reviews/v1beta/{+parent}/productReviews:insert")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("POST", urls, body)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("POST", urls, body)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "POST", urls, body)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -1946,6 +1998,7 @@ func (c *AccountsProductReviewsListCall) Header() http.Header {
 }
 
 func (c *AccountsProductReviewsListCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
@@ -1954,7 +2007,12 @@ func (c *AccountsProductReviewsListCall) doRequest(alt string) (*http.Response, 
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "reviews/v1beta/{+parent}/productReviews")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, nil)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("GET", urls, nil)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "GET", urls, nil)
+	}
 	if err != nil {
 		return nil, err
 	}

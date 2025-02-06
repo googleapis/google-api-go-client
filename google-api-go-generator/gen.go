@@ -2272,6 +2272,7 @@ func (meth *Method) generateCode() {
 		(meth.supportsMediaUpload() && args.bodyArg() == nil) {
 		contentType = `"application/json"`
 	}
+	pn("var err error")
 	apiVersion := meth.m.APIVersion
 	if apiVersion == "" {
 		pn(`reqHeaders := gensupport.SetHeaders(c.s.userAgent(), %s, c.header_)`, contentType)
@@ -2286,7 +2287,7 @@ func (meth *Method) generateCode() {
 	var hasBody bool
 	if meth.IsRawRequest() {
 		pn("body := bytes.NewBuffer(nil)")
-		pn("_, err := body.ReadFrom(c.body_)")
+		pn("_, err = body.ReadFrom(c.body_)")
 		pn("if err != nil { return nil, err }")
 		hasBody = true
 	} else if meth.IsProtoStructRequest() {
@@ -2330,7 +2331,12 @@ func (meth *Method) generateCode() {
 		bodyArg = "newBody"
 	}
 	pn(`urls += "?" + c.urlParams_.Encode()`)
-	pn("req, err := http.NewRequestWithContext(c.ctx_, %q, urls, %s)", httpMethod, bodyArg)
+	pn("var req *http.Request")
+	pn("if c.ctx_ == nil {")
+	pn("  req, err = http.NewRequest(%q, urls, %s)", httpMethod, bodyArg)
+	pn("} else {")
+	pn("  req, err = http.NewRequestWithContext(c.ctx_, %q, urls, %s)", httpMethod, bodyArg)
+	pn("}")
 	pn("if err != nil { return nil, err }")
 	pn("req.Header = reqHeaders")
 	if meth.supportsMediaUpload() {

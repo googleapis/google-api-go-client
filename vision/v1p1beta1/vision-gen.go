@@ -11025,6 +11025,7 @@ func (c *FilesAnnotateCall) Header() http.Header {
 }
 
 func (c *FilesAnnotateCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googlecloudvisionv1p1beta1batchannotatefilesrequest)
 	if err != nil {
@@ -11034,7 +11035,12 @@ func (c *FilesAnnotateCall) doRequest(alt string) (*http.Response, error) {
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1p1beta1/files:annotate")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("POST", urls, body)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("POST", urls, body)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "POST", urls, body)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -11127,6 +11133,7 @@ func (c *FilesAsyncBatchAnnotateCall) Header() http.Header {
 }
 
 func (c *FilesAsyncBatchAnnotateCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googlecloudvisionv1p1beta1asyncbatchannotatefilesrequest)
 	if err != nil {
@@ -11136,7 +11143,12 @@ func (c *FilesAsyncBatchAnnotateCall) doRequest(alt string) (*http.Response, err
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1p1beta1/files:asyncBatchAnnotate")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("POST", urls, body)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("POST", urls, body)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "POST", urls, body)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -11223,6 +11235,7 @@ func (c *ImagesAnnotateCall) Header() http.Header {
 }
 
 func (c *ImagesAnnotateCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googlecloudvisionv1p1beta1batchannotateimagesrequest)
 	if err != nil {
@@ -11232,7 +11245,12 @@ func (c *ImagesAnnotateCall) doRequest(alt string) (*http.Response, error) {
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1p1beta1/images:annotate")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("POST", urls, body)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("POST", urls, body)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "POST", urls, body)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -11326,6 +11344,7 @@ func (c *ImagesAsyncBatchAnnotateCall) Header() http.Header {
 }
 
 func (c *ImagesAsyncBatchAnnotateCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googlecloudvisionv1p1beta1asyncbatchannotateimagesrequest)
 	if err != nil {
@@ -11335,7 +11354,12 @@ func (c *ImagesAsyncBatchAnnotateCall) doRequest(alt string) (*http.Response, er
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1p1beta1/images:asyncBatchAnnotate")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("POST", urls, body)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("POST", urls, body)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "POST", urls, body)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -11435,6 +11459,7 @@ func (c *ProjectsFilesAnnotateCall) Header() http.Header {
 }
 
 func (c *ProjectsFilesAnnotateCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googlecloudvisionv1p1beta1batchannotatefilesrequest)
 	if err != nil {
@@ -11444,7 +11469,12 @@ func (c *ProjectsFilesAnnotateCall) doRequest(alt string) (*http.Response, error
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1p1beta1/{+parent}/files:annotate")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("POST", urls, body)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("POST", urls, body)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "POST", urls, body)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -11548,6 +11578,7 @@ func (c *ProjectsFilesAsyncBatchAnnotateCall) Header() http.Header {
 }
 
 func (c *ProjectsFilesAsyncBatchAnnotateCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googlecloudvisionv1p1beta1asyncbatchannotatefilesrequest)
 	if err != nil {
@@ -11557,7 +11588,12 @@ func (c *ProjectsFilesAsyncBatchAnnotateCall) doRequest(alt string) (*http.Respo
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1p1beta1/{+parent}/files:asyncBatchAnnotate")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("POST", urls, body)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("POST", urls, body)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "POST", urls, body)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -11655,6 +11691,7 @@ func (c *ProjectsImagesAnnotateCall) Header() http.Header {
 }
 
 func (c *ProjectsImagesAnnotateCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googlecloudvisionv1p1beta1batchannotateimagesrequest)
 	if err != nil {
@@ -11664,7 +11701,12 @@ func (c *ProjectsImagesAnnotateCall) doRequest(alt string) (*http.Response, erro
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1p1beta1/{+parent}/images:annotate")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("POST", urls, body)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("POST", urls, body)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "POST", urls, body)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -11769,6 +11811,7 @@ func (c *ProjectsImagesAsyncBatchAnnotateCall) Header() http.Header {
 }
 
 func (c *ProjectsImagesAsyncBatchAnnotateCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googlecloudvisionv1p1beta1asyncbatchannotateimagesrequest)
 	if err != nil {
@@ -11778,7 +11821,12 @@ func (c *ProjectsImagesAsyncBatchAnnotateCall) doRequest(alt string) (*http.Resp
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1p1beta1/{+parent}/images:asyncBatchAnnotate")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("POST", urls, body)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("POST", urls, body)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "POST", urls, body)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -11881,6 +11929,7 @@ func (c *ProjectsLocationsFilesAnnotateCall) Header() http.Header {
 }
 
 func (c *ProjectsLocationsFilesAnnotateCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googlecloudvisionv1p1beta1batchannotatefilesrequest)
 	if err != nil {
@@ -11890,7 +11939,12 @@ func (c *ProjectsLocationsFilesAnnotateCall) doRequest(alt string) (*http.Respon
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1p1beta1/{+parent}/files:annotate")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("POST", urls, body)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("POST", urls, body)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "POST", urls, body)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -11994,6 +12048,7 @@ func (c *ProjectsLocationsFilesAsyncBatchAnnotateCall) Header() http.Header {
 }
 
 func (c *ProjectsLocationsFilesAsyncBatchAnnotateCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googlecloudvisionv1p1beta1asyncbatchannotatefilesrequest)
 	if err != nil {
@@ -12003,7 +12058,12 @@ func (c *ProjectsLocationsFilesAsyncBatchAnnotateCall) doRequest(alt string) (*h
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1p1beta1/{+parent}/files:asyncBatchAnnotate")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("POST", urls, body)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("POST", urls, body)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "POST", urls, body)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -12101,6 +12161,7 @@ func (c *ProjectsLocationsImagesAnnotateCall) Header() http.Header {
 }
 
 func (c *ProjectsLocationsImagesAnnotateCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googlecloudvisionv1p1beta1batchannotateimagesrequest)
 	if err != nil {
@@ -12110,7 +12171,12 @@ func (c *ProjectsLocationsImagesAnnotateCall) doRequest(alt string) (*http.Respo
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1p1beta1/{+parent}/images:annotate")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("POST", urls, body)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("POST", urls, body)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "POST", urls, body)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -12215,6 +12281,7 @@ func (c *ProjectsLocationsImagesAsyncBatchAnnotateCall) Header() http.Header {
 }
 
 func (c *ProjectsLocationsImagesAsyncBatchAnnotateCall) doRequest(alt string) (*http.Response, error) {
+	var err error
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googlecloudvisionv1p1beta1asyncbatchannotateimagesrequest)
 	if err != nil {
@@ -12224,7 +12291,12 @@ func (c *ProjectsLocationsImagesAsyncBatchAnnotateCall) doRequest(alt string) (*
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1p1beta1/{+parent}/images:asyncBatchAnnotate")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("POST", urls, body)
+	var req *http.Request
+	if c.ctx_ == nil {
+		req, err = http.NewRequest("POST", urls, body)
+	} else {
+		req, err = http.NewRequestWithContext(c.ctx_, "POST", urls, body)
+	}
 	if err != nil {
 		return nil, err
 	}

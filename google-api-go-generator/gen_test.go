@@ -111,6 +111,9 @@ func TestAPIs(t *testing.T) {
 				}
 				// NOTE: update golden files with `go test -update_golden`
 				t.Errorf("Output for API %s differs: diff -u %s %s", name, goldenFileName(name), tf.Name())
+				if diff := cmp.Diff(string(want), string(clean)); diff != "" {
+					t.Errorf("got(-),want(+):\n %s", diff)
+				}
 			}
 		})
 	}

@@ -358,11 +358,16 @@ type Attributes struct {
 	//   "YOUTUBE_SHOPPING" - [YouTube
 	// Shopping](https://support.google.com/merchants/answer/12362804).
 	//   "YOUTUBE_SHOPPING_CHECKOUT" - Youtube shopping checkout.
-	//   "YOUTUBE_AFFILIATE" - Youtube affiliate.
-	//   "FREE_VEHICLE_LISTINGS" - Free vehicle listings.
-	//   "VEHICLE_ADS" - Vehicle ads.
-	//   "CLOUD_RETAIL" - Cloud retail.
-	//   "LOCAL_CLOUD_RETAIL" - Local cloud retail.
+	//   "YOUTUBE_AFFILIATE" - [Youtube
+	// Affiliate](https://support.google.com/youtube/answer/13376398).
+	//   "FREE_VEHICLE_LISTINGS" - [Free vehicle
+	// listings](https://support.google.com/merchants/answer/11189169).
+	//   "VEHICLE_ADS" - [Vehicle
+	// ads](https://support.google.com/merchants/answer/11189169).
+	//   "CLOUD_RETAIL" - [Cloud
+	// retail](https://cloud.google.com/solutions/retail).
+	//   "LOCAL_CLOUD_RETAIL" - [Local cloud
+	// retail](https://cloud.google.com/solutions/retail).
 	PromotionDestinations []string `json:"promotionDestinations,omitempty"`
 	// PromotionDisplayTimePeriod: Optional. `TimePeriod` representation of the
 	// promotion's display dates. This attribute specifies the date and time frame

@@ -673,7 +673,7 @@ type AutopilotCompatibilityIssue struct {
 	ConstraintType string `json:"constraintType,omitempty"`
 	// Description: The description of the issue.
 	Description string `json:"description,omitempty"`
-	// DocumentationUrl: A URL to a public documnetation, which addresses resolving
+	// DocumentationUrl: A URL to a public documentation, which addresses resolving
 	// this issue.
 	DocumentationUrl string `json:"documentationUrl,omitempty"`
 	// IncompatibilityType: The incompatibility type of this issue.
@@ -1053,7 +1053,7 @@ func (s CancelOperationRequest) MarshalJSON() ([]byte, error) {
 // certificate.
 type CertificateAuthorityDomainConfig struct {
 	// Fqdns: List of fully qualified domain names (FQDN). Specifying port is
-	// supported. Wilcards are NOT supported. Examples: - my.customdomain.com -
+	// supported. Wildcards are NOT supported. Examples: - my.customdomain.com -
 	// 10.0.1.2:5000
 	Fqdns []string `json:"fqdns,omitempty"`
 	// GcpSecretManagerCertificateConfig: Google Secret Manager (GCP) certificate
@@ -2989,7 +2989,7 @@ func (s GcsFuseCsiDriverConfig) MarshalJSON() ([]byte, error) {
 }
 
 // GetJSONWebKeysResponse: GetJSONWebKeysResponse is a valid JSON Web Key Set
-// as specififed in rfc 7517
+// as specified in rfc 7517
 type GetJSONWebKeysResponse struct {
 	// CacheHeader: For HTTP requests, this field is automatically extracted into
 	// the Cache-Control HTTP header.
@@ -4191,7 +4191,7 @@ type MasterAuthorizedNetworksConfig struct {
 	CidrBlocks []*CidrBlock `json:"cidrBlocks,omitempty"`
 	// Enabled: Whether or not master authorized networks is enabled.
 	Enabled bool `json:"enabled,omitempty"`
-	// GcpPublicCidrsAccessEnabled: Whether master is accessbile via Google Compute
+	// GcpPublicCidrsAccessEnabled: Whether master is accessible via Google Compute
 	// Engine Public IP addresses.
 	GcpPublicCidrsAccessEnabled bool `json:"gcpPublicCidrsAccessEnabled,omitempty"`
 	// PrivateEndpointEnforcementEnabled: Whether master authorized networks is
@@ -4432,9 +4432,9 @@ type NetworkConfig struct {
 	//   "IN_TRANSIT_ENCRYPTION_INTER_NODE_TRANSPARENT" - Data in-transit is
 	// encrypted using inter-node transparent encryption.
 	InTransitEncryptionConfig string `json:"inTransitEncryptionConfig,omitempty"`
-	// Network: Output only. The relative name of the Google Compute Engine
-	// network(https://cloud.google.com/compute/docs/networks-and-firewalls#networks
-	// ) to which the cluster is connected. Example:
+	// Network: Output only. The relative name of the Google Compute Engine network
+	// (https://cloud.google.com/compute/docs/networks-and-firewalls#networks) to
+	// which the cluster is connected. Example:
 	// projects/my-project/global/networks/my-network
 	Network string `json:"network,omitempty"`
 	// NetworkPerformanceConfig: Network bandwidth tier configuration.
@@ -4709,7 +4709,7 @@ type NodeConfig struct {
 	// https://cloud.google.com/compute/docs/disks/local-ssd for more information.
 	LocalSsdCount int64 `json:"localSsdCount,omitempty"`
 	// LocalSsdEncryptionMode: Specifies which method should be used for encrypting
-	// the Local SSDs attahced to the node.
+	// the Local SSDs attached to the node.
 	//
 	// Possible values:
 	//   "LOCAL_SSD_ENCRYPTION_MODE_UNSPECIFIED" - The given node will be encrypted
@@ -8664,6 +8664,9 @@ func (s WorkloadMetadataConfig) MarshalJSON() ([]byte, error) {
 type WorkloadPolicyConfig struct {
 	// AllowNetAdmin: If true, workloads can use NET_ADMIN capability.
 	AllowNetAdmin bool `json:"allowNetAdmin,omitempty"`
+	// AutopilotCompatibilityAuditingEnabled: If true, enables the GCW Auditor that
+	// audits workloads on standard clusters.
+	AutopilotCompatibilityAuditingEnabled bool `json:"autopilotCompatibilityAuditingEnabled,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AllowNetAdmin") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See

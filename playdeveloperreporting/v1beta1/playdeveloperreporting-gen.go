@@ -1681,14 +1681,7 @@ type GooglePlayDeveloperReportingV1beta1QueryExcessiveWakeupRateMetricSetRequest
 	// timezone is `America/Los_Angeles`.
 	TimelineSpec *GooglePlayDeveloperReportingV1beta1TimelineSpec `json:"timelineSpec,omitempty"`
 	// UserCohort: User view to select. The output data will correspond to the
-	// selected view. **Supported values:** * `OS_PUBLIC` To select data from all
-	// publicly released Android versions. This is the default. Supports all the
-	// above dimensions. * `APP_TESTERS` To select data from users who have opted
-	// in to be testers. Supports all the above dimensions. * `OS_BETA` To select
-	// data from beta android versions only, excluding data from released android
-	// versions. Only the following dimensions are supported: * `versionCode`
-	// (int64): version of the app that was running on the user's device. *
-	// `osBuild` (string): OS build of the user's device, e.g., "T1B2.220916.004".
+	// selected view. The only supported value is `OS_PUBLIC`.
 	//
 	// Possible values:
 	//   "USER_COHORT_UNSPECIFIED" - Unspecified User cohort. This will
@@ -1822,14 +1815,7 @@ type GooglePlayDeveloperReportingV1beta1QuerySlowRenderingRateMetricSetRequest s
 	// timezone is `America/Los_Angeles`.
 	TimelineSpec *GooglePlayDeveloperReportingV1beta1TimelineSpec `json:"timelineSpec,omitempty"`
 	// UserCohort: User view to select. The output data will correspond to the
-	// selected view. **Supported values:** * `OS_PUBLIC` To select data from all
-	// publicly released Android versions. This is the default. Supports all the
-	// above dimensions. * `APP_TESTERS` To select data from users who have opted
-	// in to be testers. Supports all the above dimensions. * `OS_BETA` To select
-	// data from beta Android versions only, excluding data from released Android
-	// versions. Only the following dimensions are supported: * `versionCode`
-	// (int64): version of the app that was running on the user's device. *
-	// `osBuild` (string): OS build of the user's device, e.g., "T1B2.220916.004".
+	// selected view. The only supported value is `OS_PUBLIC`.
 	//
 	// Possible values:
 	//   "USER_COHORT_UNSPECIFIED" - Unspecified User cohort. This will
@@ -1953,14 +1939,7 @@ type GooglePlayDeveloperReportingV1beta1QuerySlowStartRateMetricSetRequest struc
 	// timezone is `America/Los_Angeles`.
 	TimelineSpec *GooglePlayDeveloperReportingV1beta1TimelineSpec `json:"timelineSpec,omitempty"`
 	// UserCohort: User view to select. The output data will correspond to the
-	// selected view. **Supported values:** * `OS_PUBLIC` To select data from all
-	// publicly released Android versions. This is the default. Supports all the
-	// above dimensions. * `APP_TESTERS` To select data from users who have opted
-	// in to be testers. Supports all the above dimensions. * `OS_BETA` To select
-	// data from beta Android versions only, excluding data from released Android
-	// versions. Only the following dimensions are supported: * `versionCode`
-	// (int64): version of the app that was running on the user's device. *
-	// `osBuild` (string): OS build of the user's device, e.g., "T1B2.220916.004".
+	// selected view. The only supported value is `OS_PUBLIC`.
 	//
 	// Possible values:
 	//   "USER_COHORT_UNSPECIFIED" - Unspecified User cohort. This will
@@ -2086,14 +2065,7 @@ type GooglePlayDeveloperReportingV1beta1QueryStuckBackgroundWakelockRateMetricSe
 	// timezone is `America/Los_Angeles`.
 	TimelineSpec *GooglePlayDeveloperReportingV1beta1TimelineSpec `json:"timelineSpec,omitempty"`
 	// UserCohort: User view to select. The output data will correspond to the
-	// selected view. **Supported values:** * `OS_PUBLIC` To select data from all
-	// publicly released Android versions. This is the default. Supports all the
-	// above dimensions. * `APP_TESTERS` To select data from users who have opted
-	// in to be testers. Supports all the above dimensions. * `OS_BETA` To select
-	// data from beta android versions only, excluding data from released android
-	// versions. Only the following dimensions are supported: * `versionCode`
-	// (int64): version of the app that was running on the user's device. *
-	// `osBuild` (string): OS build of the user's device, e.g., "T1B2.220916.004".
+	// selected view. The only supported value is `OS_PUBLIC`.
 	//
 	// Possible values:
 	//   "USER_COHORT_UNSPECIFIED" - Unspecified User cohort. This will

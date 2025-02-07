@@ -203,7 +203,7 @@
       }
     }
   },
-  "revision": "20250203",
+  "revision": "20250204",
   "rootUrl": "https://merchantapi.googleapis.com/",
   "schemas": {
     "Attributes": {
@@ -407,11 +407,11 @@
               "[Free local product listings](https://support.google.com/merchants/answer/9825611).",
               "[YouTube Shopping](https://support.google.com/merchants/answer/12362804).",
               "Youtube shopping checkout.",
-              "Youtube affiliate.",
-              "Free vehicle listings.",
-              "Vehicle ads.",
-              "Cloud retail.",
-              "Local cloud retail."
+              "[Youtube Affiliate](https://support.google.com/youtube/answer/13376398).",
+              "[Free vehicle listings](https://support.google.com/merchants/answer/11189169).",
+              "[Vehicle ads](https://support.google.com/merchants/answer/11189169).",
+              "[Cloud retail](https://cloud.google.com/solutions/retail).",
+              "[Local cloud retail](https://cloud.google.com/solutions/retail)."
             ],
             "type": "string"
           },

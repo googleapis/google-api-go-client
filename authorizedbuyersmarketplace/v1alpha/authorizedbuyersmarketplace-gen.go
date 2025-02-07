@@ -781,7 +781,7 @@ func (s CriteriaTargeting) MarshalJSON() ([]byte, error) {
 // targeted by curators or media planners in the deals or auction packages UI.
 // Curation of inventory is done by curators on external platforms.
 type DataSegment struct {
-	// CpmFee: Optional. This will be charged when other accounts use this data
+	// CpmFee: Required. This will be charged when other accounts use this data
 	// segment. For example, when other accounts add this data segment to a deal or
 	// auction package. Once set, the currency code cannot be changed.
 	CpmFee *Money `json:"cpmFee,omitempty"`

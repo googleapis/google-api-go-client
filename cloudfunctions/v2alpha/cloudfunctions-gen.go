@@ -964,7 +964,7 @@ type GoogleCloudFunctionsV2alphaStage struct {
 	//
 	// Possible values:
 	//   "NAME_UNSPECIFIED" - Not specified. Invalid name.
-	//   "ARTIFACT_REGISTRY" - Artifact Regsitry Stage
+	//   "ARTIFACT_REGISTRY" - Artifact Registry Stage
 	//   "BUILD" - Build Stage
 	//   "SERVICE" - Service Stage
 	//   "TRIGGER" - Trigger Stage
@@ -3177,7 +3177,7 @@ func (c *ProjectsLocationsFunctionsListCall) Filter(filter string) *ProjectsLoca
 
 // OrderBy sets the optional parameter "orderBy": The sorting order of the
 // resources returned. Value should be a comma separated list of fields. The
-// default sorting oder is ascending. See https://google.aip.dev/132#ordering.
+// default sorting order is ascending. See https://google.aip.dev/132#ordering.
 func (c *ProjectsLocationsFunctionsListCall) OrderBy(orderBy string) *ProjectsLocationsFunctionsListCall {
 	c.urlParams_.Set("orderBy", orderBy)
 	return c

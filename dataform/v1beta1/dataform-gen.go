@@ -429,7 +429,9 @@ type CodeCompilationConfig struct {
 	// DefaultLocation: Optional. The default BigQuery location to use. Defaults to
 	// "US". See the BigQuery docs for a full list of locations:
 	// https://cloud.google.com/bigquery/docs/locations.
-	DefaultLocation               string                  `json:"defaultLocation,omitempty"`
+	DefaultLocation string `json:"defaultLocation,omitempty"`
+	// DefaultNotebookRuntimeOptions: Optional. The default notebook runtime
+	// options.
 	DefaultNotebookRuntimeOptions *NotebookRuntimeOptions `json:"defaultNotebookRuntimeOptions,omitempty"`
 	// DefaultSchema: Optional. The default schema (BigQuery dataset ID).
 	DefaultSchema string `json:"defaultSchema,omitempty"`
@@ -568,8 +570,8 @@ func (s CommitMetadata) MarshalJSON() ([]byte, error) {
 type CommitRepositoryChangesRequest struct {
 	// CommitMetadata: Required. The changes to commit to the repository.
 	CommitMetadata *CommitMetadata `json:"commitMetadata,omitempty"`
-	// FileOperations: A map to the path of the file to the operation. The path is
-	// the full file path including filename, from repository root.
+	// FileOperations: Optional. A map to the path of the file to the operation.
+	// The path is the full file path including filename, from repository root.
 	FileOperations map[string]FileOperation `json:"fileOperations,omitempty"`
 	// RequiredHeadCommitSha: Optional. The commit SHA which must be the
 	// repository's current HEAD before applying this commit; otherwise this
@@ -843,8 +845,8 @@ func (s Config) MarshalJSON() ([]byte, error) {
 
 // DataEncryptionState: Describes encryption state of a resource.
 type DataEncryptionState struct {
-	// KmsKeyVersionName: The KMS key version name with which data of a resource is
-	// encrypted.
+	// KmsKeyVersionName: Required. The KMS key version name with which data of a
+	// resource is encrypted.
 	KmsKeyVersionName string `json:"kmsKeyVersionName,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "KmsKeyVersionName") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -1685,6 +1687,7 @@ type MoveFileResponse struct {
 	googleapi.ServerResponse `json:"-"`
 }
 
+// Notebook: Represents a notebook.
 type Notebook struct {
 	// Contents: The contents of the notebook.
 	Contents string `json:"contents,omitempty"`
@@ -1739,6 +1742,8 @@ func (s NotebookAction) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// NotebookRuntimeOptions: Configures various aspects of Dataform notebook
+// runtime.
 type NotebookRuntimeOptions struct {
 	// GcsOutputBucket: Optional. The Google Cloud Storage location to upload the
 	// result to. Format: `gs://bucket-name`.
@@ -2434,7 +2439,7 @@ type ScheduledExecutionRecord struct {
 	// ErrorStatus: The error status encountered upon this attempt to create the
 	// workflow invocation, if the attempt was unsuccessful.
 	ErrorStatus *Status `json:"errorStatus,omitempty"`
-	// ExecutionTime: The timestamp of this execution attempt.
+	// ExecutionTime: Output only. The timestamp of this execution attempt.
 	ExecutionTime string `json:"executionTime,omitempty"`
 	// WorkflowInvocation: The name of the created workflow invocation, if one was
 	// successfully created. Must be in the format
@@ -2468,7 +2473,7 @@ type ScheduledReleaseRecord struct {
 	// ErrorStatus: The error status encountered upon this attempt to create the
 	// compilation result, if the attempt was unsuccessful.
 	ErrorStatus *Status `json:"errorStatus,omitempty"`
-	// ReleaseTime: The timestamp of this release attempt.
+	// ReleaseTime: Output only. The timestamp of this release attempt.
 	ReleaseTime string `json:"releaseTime,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "CompilationResult") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -2631,11 +2636,12 @@ func (s Status) MarshalJSON() ([]byte, error) {
 // Target: Represents an action identifier. If the action writes output, the
 // output will be written to the referenced database object.
 type Target struct {
-	// Database: The action's database (Google Cloud project ID) .
+	// Database: Optional. The action's database (Google Cloud project ID) .
 	Database string `json:"database,omitempty"`
-	// Name: The action's name, within `database` and `schema`.
+	// Name: Optional. The action's name, within `database` and `schema`.
 	Name string `json:"name,omitempty"`
-	// Schema: The action's schema (BigQuery dataset ID), within `database`.
+	// Schema: Optional. The action's schema (BigQuery dataset ID), within
+	// `database`.
 	Schema string `json:"schema,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Database") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -2713,7 +2719,7 @@ type UncommittedFileChange struct {
 	// Path: The file's full path including filename, relative to the workspace
 	// root.
 	Path string `json:"path,omitempty"`
-	// State: Indicates the status of the file.
+	// State: Output only. Indicates the status of the file.
 	//
 	// Possible values:
 	//   "STATE_UNSPECIFIED" - Default value. This value is unused.

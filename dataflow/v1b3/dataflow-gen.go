@@ -4806,6 +4806,7 @@ type SDKInfo struct {
 	//   "JAVA" - Java.
 	//   "PYTHON" - Python.
 	//   "GO" - Go.
+	//   "YAML" - YAML.
 	Language string `json:"language,omitempty"`
 	// Version: Optional. The SDK version.
 	Version string `json:"version,omitempty"`
@@ -6553,6 +6554,8 @@ type TemplateMetadata struct {
 	// SupportsExactlyOnce: Optional. Indicates if the streaming template supports
 	// exactly once mode.
 	SupportsExactlyOnce bool `json:"supportsExactlyOnce,omitempty"`
+	// YamlDefinition: Optional. For future use.
+	YamlDefinition string `json:"yamlDefinition,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "DefaultStreamingMode") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See

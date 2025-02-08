@@ -1203,6 +1203,28 @@ func (s MysqlDatabase) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// MysqlGtidPosition: MySQL GTID position
+type MysqlGtidPosition struct {
+	// GtidSet: Required. The gtid set to start replication from.
+	GtidSet string `json:"gtidSet,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "GtidSet") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "GtidSet") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s MysqlGtidPosition) MarshalJSON() ([]byte, error) {
+	type NoMethod MysqlGtidPosition
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // MysqlLogPosition: MySQL log position
 type MysqlLogPosition struct {
 	// LogFile: Required. The binary log file name.
@@ -2345,19 +2367,21 @@ func (s SourceObjectIdentifier) MarshalJSON() ([]byte, error) {
 // SpecificStartPosition: CDC strategy to start replicating from a specific
 // position in the source.
 type SpecificStartPosition struct {
+	// MysqlGtidPosition: MySQL GTID set to start replicating from.
+	MysqlGtidPosition *MysqlGtidPosition `json:"mysqlGtidPosition,omitempty"`
 	// MysqlLogPosition: MySQL specific log position to start replicating from.
 	MysqlLogPosition *MysqlLogPosition `json:"mysqlLogPosition,omitempty"`
 	// OracleScnPosition: Oracle SCN to start replicating from.
 	OracleScnPosition *OracleScnPosition `json:"oracleScnPosition,omitempty"`
 	// SqlServerLsnPosition: SqlServer LSN to start replicating from.
 	SqlServerLsnPosition *SqlServerLsnPosition `json:"sqlServerLsnPosition,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "MysqlLogPosition") to
+	// ForceSendFields is a list of field names (e.g. "MysqlGtidPosition") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "MysqlLogPosition") to include in
+	// NullFields is a list of field names (e.g. "MysqlGtidPosition") to include in
 	// API requests with the JSON null value. By default, fields with empty values
 	// are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.

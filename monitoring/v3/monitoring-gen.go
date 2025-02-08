@@ -11203,9 +11203,9 @@ func (r *ProjectsSnoozesService) List(parent string) *ProjectsSnoozesListCall {
 
 // Filter sets the optional parameter "filter": Optional filter to restrict
 // results to the given criteria. The following fields are supported.
-// interval.start_time interval.end_timeFor example: ``` interval.start_time >
+// interval.start_time interval.end_timeFor example: interval.start_time >
 // "2022-03-11T00:00:00-08:00" AND interval.end_time <
-// "2022-03-12T00:00:00-08:00" ```
+// "2022-03-12T00:00:00-08:00"
 func (c *ProjectsSnoozesListCall) Filter(filter string) *ProjectsSnoozesListCall {
 	c.urlParams_.Set("filter", filter)
 	return c

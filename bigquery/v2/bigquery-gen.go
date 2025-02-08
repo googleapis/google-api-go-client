@@ -863,6 +863,33 @@ func (s AvroOptions) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// BatchDeleteRowAccessPoliciesRequest: Request message for the
+// BatchDeleteRowAccessPoliciesRequest method.
+type BatchDeleteRowAccessPoliciesRequest struct {
+	// Force: If set to true, it deletes the row access policy even if it's the
+	// last row access policy on the table and the deletion will widen the access
+	// rather narrowing it.
+	Force bool `json:"force,omitempty"`
+	// PolicyIds: Required. Policy IDs of the row access policies.
+	PolicyIds []string `json:"policyIds,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Force") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Force") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s BatchDeleteRowAccessPoliciesRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod BatchDeleteRowAccessPoliciesRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // BiEngineReason: Reason why BI Engine didn't accelerate the query (or
 // sub-query).
 type BiEngineReason struct {
@@ -4819,6 +4846,12 @@ type JobConfigurationQuery struct {
 	// complete the job successfully. Creation, truncation and append actions occur
 	// as one atomic update upon job completion.
 	WriteDisposition string `json:"writeDisposition,omitempty"`
+	// WriteIncrementalResults: Optional. This is only supported for a SELECT query
+	// using a temporary table. If set, the query is allowed to write results
+	// incrementally to the temporary result table. This may incur a performance
+	// penalty. This option cannot be used with Legacy SQL. This feature is not yet
+	// available.
+	WriteIncrementalResults bool `json:"writeIncrementalResults,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AllowLargeResults") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -7006,6 +7039,11 @@ type QueryRequest struct {
 	//
 	// Default: true
 	UseQueryCache *bool `json:"useQueryCache,omitempty"`
+	// WriteIncrementalResults: Optional. This is only supported for SELECT query.
+	// If set, the query is allowed to write results incrementally to the temporary
+	// result table. This may incur a performance penalty. This option cannot be
+	// used with Legacy SQL. This feature is not yet available.
+	WriteIncrementalResults bool `json:"writeIncrementalResults,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "ConnectionProperties") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -7684,12 +7722,33 @@ type RowAccessPolicy struct {
 	// date_field = CAST('2019-9-27' as DATE) nullable_field is not NULL
 	// numeric_field BETWEEN 1.0 AND 5.0
 	FilterPredicate string `json:"filterPredicate,omitempty"`
+	// Grantees: Optional. Input only. The optional list of iam_member users or
+	// groups that specifies the initial members that the row-level access policy
+	// should be created with. grantees types: - "user:alice@example.com": An email
+	// address that represents a specific Google account. -
+	// "serviceAccount:my-other-app@appspot.gserviceaccount.com": An email address
+	// that represents a service account. - "group:admins@example.com": An email
+	// address that represents a Google group. - "domain:example.com":The Google
+	// Workspace domain (primary) that represents all the users of that domain. -
+	// "allAuthenticatedUsers": A special identifier that represents all service
+	// accounts and all users on the internet who have authenticated with a Google
+	// Account. This identifier includes accounts that aren't connected to a Google
+	// Workspace or Cloud Identity domain, such as personal Gmail accounts. Users
+	// who aren't authenticated, such as anonymous visitors, aren't included. -
+	// "allUsers":A special identifier that represents anyone who is on the
+	// internet, including authenticated and unauthenticated users. Because
+	// BigQuery requires authentication before a user can access the service,
+	// allUsers includes only authenticated users.
+	Grantees []string `json:"grantees,omitempty"`
 	// LastModifiedTime: Output only. The time when this row access policy was last
 	// modified, in milliseconds since the epoch.
 	LastModifiedTime string `json:"lastModifiedTime,omitempty"`
 	// RowAccessPolicyReference: Required. Reference describing the ID of this row
 	// access policy.
 	RowAccessPolicyReference *RowAccessPolicyReference `json:"rowAccessPolicyReference,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
 	// ForceSendFields is a list of field names (e.g. "CreationTime") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -8406,6 +8465,75 @@ type StorageDescriptor struct {
 
 func (s StorageDescriptor) MarshalJSON() ([]byte, error) {
 	type NoMethod StorageDescriptor
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// StoredColumnsUnusedReason: If the stored column was not used, explain why.
+type StoredColumnsUnusedReason struct {
+	// Code: Specifies the high-level reason for the unused scenario, each reason
+	// must have a code associated.
+	//
+	// Possible values:
+	//   "CODE_UNSPECIFIED" - Default value.
+	//   "STORED_COLUMNS_COVER_INSUFFICIENT" - If stored columns do not fully cover
+	// the columns.
+	//   "BASE_TABLE_HAS_RLS" - If the base table has RLS (Row Level Security).
+	//   "BASE_TABLE_HAS_CLS" - If the base table has CLS (Column Level Security).
+	//   "UNSUPPORTED_PREFILTER" - If the provided prefilter is not supported.
+	//   "INTERNAL_ERROR" - If an internal error is preventing stored columns from
+	// being used.
+	//   "OTHER_REASON" - Indicates that the reason stored columns cannot be used
+	// in the query is not covered by any of the other StoredColumnsUnusedReason
+	// options.
+	Code string `json:"code,omitempty"`
+	// Message: Specifies the detailed description for the scenario.
+	Message string `json:"message,omitempty"`
+	// UncoveredColumns: Specifies which columns were not covered by the stored
+	// columns for the specified code up to 20 columns. This is populated when the
+	// code is STORED_COLUMNS_COVER_INSUFFICIENT and BASE_TABLE_HAS_CLS.
+	UncoveredColumns []string `json:"uncoveredColumns,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Code") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Code") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s StoredColumnsUnusedReason) MarshalJSON() ([]byte, error) {
+	type NoMethod StoredColumnsUnusedReason
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// StoredColumnsUsage: Indicates the stored columns usage in the query.
+type StoredColumnsUsage struct {
+	// BaseTable: Specifies the base table.
+	BaseTable *TableReference `json:"baseTable,omitempty"`
+	// IsQueryAccelerated: Specifies whether the query was accelerated with stored
+	// columns.
+	IsQueryAccelerated bool `json:"isQueryAccelerated,omitempty"`
+	// StoredColumnsUnusedReasons: If stored columns were not used, explain why.
+	StoredColumnsUnusedReasons []*StoredColumnsUnusedReason `json:"storedColumnsUnusedReasons,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "BaseTable") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "BaseTable") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s StoredColumnsUsage) MarshalJSON() ([]byte, error) {
+	type NoMethod StoredColumnsUsage
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -9702,6 +9830,13 @@ type TrainingOptions struct {
 	// FitIntercept: Whether the model should include intercept during model
 	// training.
 	FitIntercept bool `json:"fitIntercept,omitempty"`
+	// ForecastLimitLowerBound: The forecast limit lower bound that was used during
+	// ARIMA model training with limits. To see more details of the algorithm:
+	// https://otexts.com/fpp2/limits.html
+	ForecastLimitLowerBound float64 `json:"forecastLimitLowerBound,omitempty"`
+	// ForecastLimitUpperBound: The forecast limit upper bound that was used during
+	// ARIMA model training with limits.
+	ForecastLimitUpperBound float64 `json:"forecastLimitUpperBound,omitempty"`
 	// HiddenUnits: Hidden units for dnn models.
 	HiddenUnits googleapi.Int64s `json:"hiddenUnits,omitempty"`
 	// HolidayRegion: The geographical region based on which the holidays are
@@ -10125,6 +10260,8 @@ func (s *TrainingOptions) UnmarshalJSON(data []byte) error {
 		ColsampleBytree           gensupport.JSONFloat64 `json:"colsampleBytree"`
 		DataSplitEvalFraction     gensupport.JSONFloat64 `json:"dataSplitEvalFraction"`
 		Dropout                   gensupport.JSONFloat64 `json:"dropout"`
+		ForecastLimitLowerBound   gensupport.JSONFloat64 `json:"forecastLimitLowerBound"`
+		ForecastLimitUpperBound   gensupport.JSONFloat64 `json:"forecastLimitUpperBound"`
 		InitialLearnRate          gensupport.JSONFloat64 `json:"initialLearnRate"`
 		L1RegActivation           gensupport.JSONFloat64 `json:"l1RegActivation"`
 		L1Regularization          gensupport.JSONFloat64 `json:"l1Regularization"`
@@ -10149,6 +10286,8 @@ func (s *TrainingOptions) UnmarshalJSON(data []byte) error {
 	s.ColsampleBytree = float64(s1.ColsampleBytree)
 	s.DataSplitEvalFraction = float64(s1.DataSplitEvalFraction)
 	s.Dropout = float64(s1.Dropout)
+	s.ForecastLimitLowerBound = float64(s1.ForecastLimitLowerBound)
+	s.ForecastLimitUpperBound = float64(s1.ForecastLimitUpperBound)
 	s.InitialLearnRate = float64(s1.InitialLearnRate)
 	s.L1RegActivation = float64(s1.L1RegActivation)
 	s.L1Regularization = float64(s1.L1Regularization)
@@ -10344,6 +10483,9 @@ type VectorSearchStatistics struct {
 	// of the query did not use vector indexes.
 	//   "FULLY_USED" - The entire vector search query used vector indexes.
 	IndexUsageMode string `json:"indexUsageMode,omitempty"`
+	// StoredColumnsUsages: Specifies the usage of stored columns in the query when
+	// stored columns are used in the query.
+	StoredColumnsUsages []*StoredColumnsUsage `json:"storedColumnsUsages,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "IndexUnusedReasons") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -13818,6 +13960,308 @@ func (c *RoutinesUpdateCall) Do(opts ...googleapi.CallOption) (*Routine, error) 
 	return ret, nil
 }
 
+type RowAccessPoliciesBatchDeleteCall struct {
+	s                                   *Service
+	projectId                           string
+	datasetId                           string
+	tableId                             string
+	batchdeleterowaccesspoliciesrequest *BatchDeleteRowAccessPoliciesRequest
+	urlParams_                          gensupport.URLParams
+	ctx_                                context.Context
+	header_                             http.Header
+}
+
+// BatchDelete: Deletes provided row access policies.
+//
+// - datasetId: Dataset ID of the table to delete the row access policies.
+// - projectId: Project ID of the table to delete the row access policies.
+// - tableId: Table ID of the table to delete the row access policies.
+func (r *RowAccessPoliciesService) BatchDelete(projectId string, datasetId string, tableId string, batchdeleterowaccesspoliciesrequest *BatchDeleteRowAccessPoliciesRequest) *RowAccessPoliciesBatchDeleteCall {
+	c := &RowAccessPoliciesBatchDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.projectId = projectId
+	c.datasetId = datasetId
+	c.tableId = tableId
+	c.batchdeleterowaccesspoliciesrequest = batchdeleterowaccesspoliciesrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *RowAccessPoliciesBatchDeleteCall) Fields(s ...googleapi.Field) *RowAccessPoliciesBatchDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *RowAccessPoliciesBatchDeleteCall) Context(ctx context.Context) *RowAccessPoliciesBatchDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *RowAccessPoliciesBatchDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *RowAccessPoliciesBatchDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.batchdeleterowaccesspoliciesrequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "projects/{+projectId}/datasets/{+datasetId}/tables/{+tableId}/rowAccessPolicies:batchDelete")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"projectId": c.projectId,
+		"datasetId": c.datasetId,
+		"tableId":   c.tableId,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "bigquery.rowAccessPolicies.batchDelete", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "bigquery.rowAccessPolicies.batchDelete" call.
+func (c *RowAccessPoliciesBatchDeleteCall) Do(opts ...googleapi.CallOption) error {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if err != nil {
+		return err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return gensupport.WrapError(err)
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "bigquery.rowAccessPolicies.batchDelete", "response", internallog.HTTPResponse(res, nil))
+	return nil
+}
+
+type RowAccessPoliciesDeleteCall struct {
+	s          *Service
+	projectId  string
+	datasetId  string
+	tableId    string
+	policyId   string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Delete: Deletes a row access policy.
+//
+// - datasetId: Dataset ID of the table to delete the row access policy.
+// - policyId: Policy ID of the row access policy.
+// - projectId: Project ID of the table to delete the row access policy.
+// - tableId: Table ID of the table to delete the row access policy.
+func (r *RowAccessPoliciesService) Delete(projectId string, datasetId string, tableId string, policyId string) *RowAccessPoliciesDeleteCall {
+	c := &RowAccessPoliciesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.projectId = projectId
+	c.datasetId = datasetId
+	c.tableId = tableId
+	c.policyId = policyId
+	return c
+}
+
+// Force sets the optional parameter "force": If set to true, it deletes the
+// row access policy even if it's the last row access policy on the table and
+// the deletion will widen the access rather narrowing it.
+func (c *RowAccessPoliciesDeleteCall) Force(force bool) *RowAccessPoliciesDeleteCall {
+	c.urlParams_.Set("force", fmt.Sprint(force))
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *RowAccessPoliciesDeleteCall) Fields(s ...googleapi.Field) *RowAccessPoliciesDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *RowAccessPoliciesDeleteCall) Context(ctx context.Context) *RowAccessPoliciesDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *RowAccessPoliciesDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *RowAccessPoliciesDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "projects/{+projectId}/datasets/{+datasetId}/tables/{+tableId}/rowAccessPolicies/{+policyId}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("DELETE", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"projectId": c.projectId,
+		"datasetId": c.datasetId,
+		"tableId":   c.tableId,
+		"policyId":  c.policyId,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "bigquery.rowAccessPolicies.delete", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "bigquery.rowAccessPolicies.delete" call.
+func (c *RowAccessPoliciesDeleteCall) Do(opts ...googleapi.CallOption) error {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if err != nil {
+		return err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return gensupport.WrapError(err)
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "bigquery.rowAccessPolicies.delete", "response", internallog.HTTPResponse(res, nil))
+	return nil
+}
+
+type RowAccessPoliciesGetCall struct {
+	s            *Service
+	projectId    string
+	datasetId    string
+	tableId      string
+	policyId     string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Gets the specified row access policy by policy ID.
+//
+// - datasetId: Dataset ID of the table to get the row access policy.
+// - policyId: Policy ID of the row access policy.
+// - projectId: Project ID of the table to get the row access policy.
+// - tableId: Table ID of the table to get the row access policy.
+func (r *RowAccessPoliciesService) Get(projectId string, datasetId string, tableId string, policyId string) *RowAccessPoliciesGetCall {
+	c := &RowAccessPoliciesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.projectId = projectId
+	c.datasetId = datasetId
+	c.tableId = tableId
+	c.policyId = policyId
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *RowAccessPoliciesGetCall) Fields(s ...googleapi.Field) *RowAccessPoliciesGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *RowAccessPoliciesGetCall) IfNoneMatch(entityTag string) *RowAccessPoliciesGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *RowAccessPoliciesGetCall) Context(ctx context.Context) *RowAccessPoliciesGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *RowAccessPoliciesGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *RowAccessPoliciesGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "projects/{+projectId}/datasets/{+datasetId}/tables/{+tableId}/rowAccessPolicies/{+policyId}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"projectId": c.projectId,
+		"datasetId": c.datasetId,
+		"tableId":   c.tableId,
+		"policyId":  c.policyId,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "bigquery.rowAccessPolicies.get", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "bigquery.rowAccessPolicies.get" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *RowAccessPolicy.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *RowAccessPoliciesGetCall) Do(opts ...googleapi.CallOption) (*RowAccessPolicy, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &RowAccessPolicy{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "bigquery.rowAccessPolicies.get", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
 type RowAccessPoliciesGetIamPolicyCall struct {
 	s                   *Service
 	resource            string
@@ -13921,6 +14365,118 @@ func (c *RowAccessPoliciesGetIamPolicyCall) Do(opts ...googleapi.CallOption) (*P
 		return nil, err
 	}
 	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "bigquery.rowAccessPolicies.getIamPolicy", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type RowAccessPoliciesInsertCall struct {
+	s               *Service
+	projectId       string
+	datasetId       string
+	tableId         string
+	rowaccesspolicy *RowAccessPolicy
+	urlParams_      gensupport.URLParams
+	ctx_            context.Context
+	header_         http.Header
+}
+
+// Insert: Creates a row access policy.
+//
+// - datasetId: Dataset ID of the table to get the row access policy.
+// - projectId: Project ID of the table to get the row access policy.
+// - tableId: Table ID of the table to get the row access policy.
+func (r *RowAccessPoliciesService) Insert(projectId string, datasetId string, tableId string, rowaccesspolicy *RowAccessPolicy) *RowAccessPoliciesInsertCall {
+	c := &RowAccessPoliciesInsertCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.projectId = projectId
+	c.datasetId = datasetId
+	c.tableId = tableId
+	c.rowaccesspolicy = rowaccesspolicy
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *RowAccessPoliciesInsertCall) Fields(s ...googleapi.Field) *RowAccessPoliciesInsertCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *RowAccessPoliciesInsertCall) Context(ctx context.Context) *RowAccessPoliciesInsertCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *RowAccessPoliciesInsertCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *RowAccessPoliciesInsertCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.rowaccesspolicy)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "projects/{+projectId}/datasets/{+datasetId}/tables/{+tableId}/rowAccessPolicies")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"projectId": c.projectId,
+		"datasetId": c.datasetId,
+		"tableId":   c.tableId,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "bigquery.rowAccessPolicies.insert", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "bigquery.rowAccessPolicies.insert" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *RowAccessPolicy.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *RowAccessPoliciesInsertCall) Do(opts ...googleapi.CallOption) (*RowAccessPolicy, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &RowAccessPolicy{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "bigquery.rowAccessPolicies.insert", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -14186,6 +14742,122 @@ func (c *RowAccessPoliciesTestIamPermissionsCall) Do(opts ...googleapi.CallOptio
 		return nil, err
 	}
 	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "bigquery.rowAccessPolicies.testIamPermissions", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type RowAccessPoliciesUpdateCall struct {
+	s               *Service
+	projectId       string
+	datasetId       string
+	tableId         string
+	policyId        string
+	rowaccesspolicy *RowAccessPolicy
+	urlParams_      gensupport.URLParams
+	ctx_            context.Context
+	header_         http.Header
+}
+
+// Update: Updates a row access policy.
+//
+// - datasetId: Dataset ID of the table to get the row access policy.
+// - policyId: Policy ID of the row access policy.
+// - projectId: Project ID of the table to get the row access policy.
+// - tableId: Table ID of the table to get the row access policy.
+func (r *RowAccessPoliciesService) Update(projectId string, datasetId string, tableId string, policyId string, rowaccesspolicy *RowAccessPolicy) *RowAccessPoliciesUpdateCall {
+	c := &RowAccessPoliciesUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.projectId = projectId
+	c.datasetId = datasetId
+	c.tableId = tableId
+	c.policyId = policyId
+	c.rowaccesspolicy = rowaccesspolicy
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *RowAccessPoliciesUpdateCall) Fields(s ...googleapi.Field) *RowAccessPoliciesUpdateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *RowAccessPoliciesUpdateCall) Context(ctx context.Context) *RowAccessPoliciesUpdateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *RowAccessPoliciesUpdateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *RowAccessPoliciesUpdateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.rowaccesspolicy)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "projects/{+projectId}/datasets/{+datasetId}/tables/{+tableId}/rowAccessPolicies/{+policyId}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PUT", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"projectId": c.projectId,
+		"datasetId": c.datasetId,
+		"tableId":   c.tableId,
+		"policyId":  c.policyId,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "bigquery.rowAccessPolicies.update", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "bigquery.rowAccessPolicies.update" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *RowAccessPolicy.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *RowAccessPoliciesUpdateCall) Do(opts ...googleapi.CallOption) (*RowAccessPolicy, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &RowAccessPolicy{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "bigquery.rowAccessPolicies.update", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 

@@ -648,6 +648,32 @@ func (s Api) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// Aspect: Aspect represents Generic aspect. It is used to configure an aspect
+// without making direct changes to service.proto
+type Aspect struct {
+	// Kind: The type of this aspect configuration.
+	Kind string `json:"kind,omitempty"`
+	// Spec: Content of the configuration. The underlying schema should be defined
+	// by Aspect owners as protobuf message under `apiserving/configaspects/proto`.
+	Spec googleapi.RawMessage `json:"spec,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Kind") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Kind") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s Aspect) MarshalJSON() ([]byte, error) {
+	type NoMethod Aspect
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // AuthProvider: Configuration for an authentication provider, including
 // support for JSON Web Token (JWT)
 // (https://tools.ietf.org/html/draft-ietf-oauth-json-web-token-32).
@@ -4319,6 +4345,11 @@ type Service struct {
 	// normalization process. It is an error to specify an API interface here which
 	// cannot be resolved against the associated IDL files.
 	Apis []*Api `json:"apis,omitempty"`
+	// Aspects: Configuration aspects. This is a repeated field to allow multiple
+	// aspects to be configured. The kind field in each ConfigAspect specifies the
+	// type of aspect. The spec field contains the configuration for that aspect.
+	// The schema for the spec field is defined by the backend service owners.
+	Aspects []*Aspect `json:"aspects,omitempty"`
 	// Authentication: Auth configuration.
 	Authentication *Authentication `json:"authentication,omitempty"`
 	// Backend: API backend configuration.

@@ -701,7 +701,7 @@ type GoogleCloudRecaptchaenterpriseV1Event struct {
 	//   "ENABLED" - Enable Fraud Prevention for this assessment, if Fraud
 	// Prevention is enabled in the Google Cloud console.
 	//   "DISABLED" - Disable Fraud Prevention for this assessment, regardless of
-	// Google Cloud console settings.
+	// the Google Cloud console settings.
 	FraudPrevention string `json:"fraudPrevention,omitempty"`
 	// HashedAccountId: Optional. Deprecated: use `user_info.account_id` instead.
 	// Unique stable hashed user identifier for the request. The identifier must be
@@ -709,8 +709,12 @@ type GoogleCloudRecaptchaenterpriseV1Event struct {
 	HashedAccountId string `json:"hashedAccountId,omitempty"`
 	// Headers: Optional. HTTP header information about the request.
 	Headers []string `json:"headers,omitempty"`
-	// Ja3: Optional. JA3 fingerprint for SSL clients.
+	// Ja3: Optional. JA3 fingerprint for SSL clients. To learn how to compute this
+	// fingerprint, please refer to https://github.com/salesforce/ja3.
 	Ja3 string `json:"ja3,omitempty"`
+	// Ja4: Optional. JA4 fingerprint for SSL clients. To learn how to compute this
+	// fingerprint, please refer to https://github.com/FoxIO-LLC/ja4.
+	Ja4 string `json:"ja4,omitempty"`
 	// RequestedUri: Optional. The URI resource the user requested that triggered
 	// an assessment.
 	RequestedUri string `json:"requestedUri,omitempty"`

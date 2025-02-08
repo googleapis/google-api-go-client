@@ -5029,8 +5029,6 @@ type CustomBiddingAlgorithm struct {
 	// specified or is unknown in this version.
 	//   "SCRIPT_BASED" - Algorithm generated through customer-uploaded custom
 	// bidding script files.
-	//   "ADS_DATA_HUB_BASED" - Algorithm created through Ads Data Hub product.
-	//   "GOAL_BUILDER_BASED" - Algorithm created through goal builder in DV3 UI.
 	CustomBiddingAlgorithmType string `json:"customBiddingAlgorithmType,omitempty"`
 	// DisplayName: Required. The display name of the custom bidding algorithm.
 	// Must be UTF-8 encoded with a maximum size of 240 bytes.

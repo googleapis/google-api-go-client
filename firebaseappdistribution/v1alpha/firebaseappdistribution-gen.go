@@ -1001,6 +1001,8 @@ type GoogleFirebaseAppdistroV1alphaGetUploadStatusResponse struct {
 	//   "AAB_DEVELOPER_ACCOUNT_NOT_LINKED"
 	//   "AAB_NO_APP_WITH_GIVEN_PACKAGE_NAME_IN_ACCOUNT"
 	//   "AAB_UPLOAD_ERROR"
+	//   "APP_NOT_FOUND" - Happens if the Firebase app no longer exists by the time
+	// of extraction
 	ErrorCode string `json:"errorCode,omitempty"`
 	// Message: Any additional context for the given upload status (e.g. error
 	// message) Meant to be displayed to the client

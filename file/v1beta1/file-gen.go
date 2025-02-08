@@ -1649,10 +1649,10 @@ type PerformanceConfig struct {
 	// with an `InvalidArgument` error.
 	FixedIops *FixedIOPS `json:"fixedIops,omitempty"`
 	// IopsPerTb: Provision IOPS dynamically based on the capacity of the instance.
-	// Provisioned read IOPS will be calculated by multiplying the capacity of the
+	// Provisioned IOPS will be calculated by multiplying the capacity of the
 	// instance in TiB by the `iops_per_tb` value. For example, for a 2 TiB
-	// instance with an `iops_per_tb` value of 17000 the provisioned read IOPS will
-	// be 34000. If the calculated value is outside the supported range for the
+	// instance with an `iops_per_tb` value of 17000 the provisioned IOPS will be
+	// 34000. If the calculated value is outside the supported range for the
 	// instance's capacity during instance creation, instance creation will fail
 	// with an `InvalidArgument` error. Similarly, if an instance capacity update
 	// would result in a value outside the supported range, the update will fail

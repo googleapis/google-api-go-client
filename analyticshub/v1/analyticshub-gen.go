@@ -476,8 +476,8 @@ func (s BigQueryConfig) MarshalJSON() ([]byte, error) {
 // A Linked dataset is an opaque, read-only BigQuery dataset that serves as a
 // _symbolic link_ to a shared dataset.
 type BigQueryDatasetSource struct {
-	// Dataset: Resource name of the dataset source for this listing. e.g.
-	// `projects/myproject/datasets/123`
+	// Dataset: Optional. Resource name of the dataset source for this listing.
+	// e.g. `projects/myproject/datasets/123`
 	Dataset string `json:"dataset,omitempty"`
 	// RestrictedExportPolicy: Optional. If set, restricted export policy will be
 	// propagated and enforced on the linked dataset.
@@ -1267,6 +1267,10 @@ type GooglePubsubV1Subscription struct {
 	// a `Seek` can be done. Defaults to 7 days. Cannot be more than 31 days or
 	// less than 10 minutes.
 	MessageRetentionDuration string `json:"messageRetentionDuration,omitempty"`
+	// MessageTransforms: Optional. Transforms to be applied to messages before
+	// they are delivered to subscribers. Transforms are applied in the order
+	// specified.
+	MessageTransforms []*MessageTransform `json:"messageTransforms,omitempty"`
 	// Name: Required. Name of the subscription. Format is
 	// `projects/{project}/subscriptions/{sub}`.
 	Name string `json:"name,omitempty"`
@@ -1320,6 +1324,42 @@ type GooglePubsubV1Subscription struct {
 
 func (s GooglePubsubV1Subscription) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePubsubV1Subscription
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// JavaScriptUDF: User-defined JavaScript function that can transform or filter
+// a Pub/Sub message.
+type JavaScriptUDF struct {
+	// Code: Required. JavaScript code that contains a function `function_name`
+	// with the below signature: ``` /** * Transforms a Pub/Sub message. * @return
+	// {(Object)>|null)} - To * filter a message, return `null`. To transform a
+	// message return a map * with the following keys: * - (required) 'data' :
+	// {string} * - (optional) 'attributes' : {Object} * Returning empty
+	// `attributes` will remove all attributes from the * message. * * @param
+	// {(Object)>} Pub/Sub * message. Keys: * - (required) 'data' : {string} * -
+	// (required) 'attributes' : {Object} * * @param {Object} metadata - Pub/Sub
+	// message metadata. * Keys: * - (required) 'message_id' : {string} * -
+	// (optional) 'publish_time': {string} YYYY-MM-DDTHH:MM:SSZ format * -
+	// (optional) 'ordering_key': {string} */ function (message, metadata) { } ```
+	Code string `json:"code,omitempty"`
+	// FunctionName: Required. Name of the JavasScript function that should applied
+	// to Pub/Sub messages.
+	FunctionName string `json:"functionName,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Code") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Code") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s JavaScriptUDF) MarshalJSON() ([]byte, error) {
+	type NoMethod JavaScriptUDF
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -1607,6 +1647,34 @@ type Listing struct {
 
 func (s Listing) MarshalJSON() ([]byte, error) {
 	type NoMethod Listing
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// MessageTransform: All supported message transforms types.
+type MessageTransform struct {
+	// Enabled: Optional. If set to true, the transform is enabled. If false, the
+	// transform is disabled and will not be applied to messages. Defaults to
+	// `true`.
+	Enabled bool `json:"enabled,omitempty"`
+	// JavascriptUdf: Optional. JavaScript User Defined Function. If multiple
+	// JavaScriptUDF's are specified on a resource, each must have a unique
+	// `function_name`.
+	JavascriptUdf *JavaScriptUDF `json:"javascriptUdf,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Enabled") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Enabled") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s MessageTransform) MarshalJSON() ([]byte, error) {
+	type NoMethod MessageTransform
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 

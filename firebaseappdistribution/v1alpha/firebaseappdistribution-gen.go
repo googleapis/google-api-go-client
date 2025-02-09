@@ -454,19 +454,17 @@ func (s GoogleFirebaseAppdistroV1alphaAabCertificate) MarshalJSON() ([]byte, err
 // GoogleFirebaseAppdistroV1alphaAiInstructions: Instructions for AI driven
 // test
 type GoogleFirebaseAppdistroV1alphaAiInstructions struct {
-	// AppDescription: Optional. Describes the app to give the AI some context
-	AppDescription string `json:"appDescription,omitempty"`
 	// Steps: Required. Steps to be accomplished by the AI
 	Steps []*GoogleFirebaseAppdistroV1alphaAiStep `json:"steps,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "AppDescription") to
-	// unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
+	// ForceSendFields is a list of field names (e.g. "Steps") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "AppDescription") to include in
-	// API requests with the JSON null value. By default, fields with empty values
-	// are omitted from API requests. See
+	// NullFields is a list of field names (e.g. "Steps") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }

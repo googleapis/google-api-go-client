@@ -776,7 +776,7 @@
       }
     }
   },
-  "revision": "20250206",
+  "revision": "20250207",
   "rootUrl": "https://firebaseappdistribution.googleapis.com/",
   "schemas": {
     "AndroidxCrawlerOutputPoint": {
@@ -907,11 +907,6 @@
       "description": "Instructions for AI driven test",
       "id": "GoogleFirebaseAppdistroV1alphaAiInstructions",
       "properties": {
-        "appDescription": {
-          "deprecated": true,
-          "description": "Optional. Describes the app to give the AI some context",
-          "type": "string"
-        },
         "steps": {
           "description": "Required. Steps to be accomplished by the AI",
           "items": {

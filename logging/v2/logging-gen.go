@@ -934,6 +934,82 @@ type V2Service struct {
 	s *Service
 }
 
+// AuditConfig: Specifies the audit configuration for a service. The
+// configuration determines which permission types are logged, and what
+// identities, if any, are exempted from logging. An AuditConfig must have one
+// or more AuditLogConfigs.If there are AuditConfigs for both allServices and a
+// specific service, the union of the two AuditConfigs is used for that
+// service: the log_types specified in each AuditConfig are enabled, and the
+// exempted_members in each AuditLogConfig are exempted.Example Policy with
+// multiple AuditConfigs: { "audit_configs": [ { "service": "allServices",
+// "audit_log_configs": [ { "log_type": "DATA_READ", "exempted_members": [
+// "user:jose@example.com" ] }, { "log_type": "DATA_WRITE" }, { "log_type":
+// "ADMIN_READ" } ] }, { "service": "sampleservice.googleapis.com",
+// "audit_log_configs": [ { "log_type": "DATA_READ" }, { "log_type":
+// "DATA_WRITE", "exempted_members": [ "user:aliya@example.com" ] } ] } ] } For
+// sampleservice, this policy enables DATA_READ, DATA_WRITE and ADMIN_READ
+// logging. It also exempts jose@example.com from DATA_READ logging, and
+// aliya@example.com from DATA_WRITE logging.
+type AuditConfig struct {
+	// AuditLogConfigs: The configuration for logging of each type of permission.
+	AuditLogConfigs []*AuditLogConfig `json:"auditLogConfigs,omitempty"`
+	// Service: Specifies a service that will be enabled for audit logging. For
+	// example, storage.googleapis.com, cloudsql.googleapis.com. allServices is a
+	// special value that covers all services.
+	Service string `json:"service,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AuditLogConfigs") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AuditLogConfigs") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s AuditConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod AuditConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// AuditLogConfig: Provides the configuration for logging a type of
+// permissions. Example: { "audit_log_configs": [ { "log_type": "DATA_READ",
+// "exempted_members": [ "user:jose@example.com" ] }, { "log_type":
+// "DATA_WRITE" } ] } This enables 'DATA_READ' and 'DATA_WRITE' logging, while
+// exempting jose@example.com from DATA_READ logging.
+type AuditLogConfig struct {
+	// ExemptedMembers: Specifies the identities that do not cause logging for this
+	// type of permission. Follows the same format of Binding.members.
+	ExemptedMembers []string `json:"exemptedMembers,omitempty"`
+	// LogType: The log type that this config enables.
+	//
+	// Possible values:
+	//   "LOG_TYPE_UNSPECIFIED" - Default case. Should never be this.
+	//   "ADMIN_READ" - Admin reads. Example: CloudIAM getIamPolicy
+	//   "DATA_WRITE" - Data writes. Example: CloudSQL Users create
+	//   "DATA_READ" - Data reads. Example: CloudSQL Users list
+	LogType string `json:"logType,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ExemptedMembers") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ExemptedMembers") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s AuditLogConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod AuditLogConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // BigQueryDataset: Describes a BigQuery dataset that was created by a link.
 type BigQueryDataset struct {
 	// DatasetId: Output only. The full resource name of the BigQuery dataset. The
@@ -3873,6 +3949,8 @@ func (s OpsAnalyticsQuery) MarshalJSON() ([]byte, error) {
 // version: 3 For a description of IAM and its features, see the IAM
 // documentation (https://cloud.google.com/iam/docs/).
 type Policy struct {
+	// AuditConfigs: Specifies cloud audit logging configuration for this policy.
+	AuditConfigs []*AuditConfig `json:"auditConfigs,omitempty"`
 	// Bindings: Associates a list of members, or principals, with a role.
 	// Optionally, may specify a condition that determines how and when the
 	// bindings are applied. Each of the bindings must contain at least one
@@ -3913,13 +3991,13 @@ type Policy struct {
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-	// ForceSendFields is a list of field names (e.g. "Bindings") to
+	// ForceSendFields is a list of field names (e.g. "AuditConfigs") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Bindings") to include in API
+	// NullFields is a list of field names (e.g. "AuditConfigs") to include in API
 	// requests with the JSON null value. By default, fields with empty values are
 	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
@@ -7214,7 +7292,7 @@ func (r *BillingAccountsLocationsBucketsViewsService) Create(parent string, logv
 
 // ViewId sets the optional parameter "viewId": Required. A client-assigned
 // identifier such as "my-view". Identifiers are limited to 100 characters and
-// can include only letters, digits, underscores, and hyphens.
+// can include only letters, digits, underscores, hyphens, and periods.
 func (c *BillingAccountsLocationsBucketsViewsCreateCall) ViewId(viewId string) *BillingAccountsLocationsBucketsViewsCreateCall {
 	c.urlParams_.Set("viewId", viewId)
 	return c
@@ -13959,7 +14037,7 @@ func (r *FoldersLocationsBucketsViewsService) Create(parent string, logview *Log
 
 // ViewId sets the optional parameter "viewId": Required. A client-assigned
 // identifier such as "my-view". Identifiers are limited to 100 characters and
-// can include only letters, digits, underscores, and hyphens.
+// can include only letters, digits, underscores, hyphens, and periods.
 func (c *FoldersLocationsBucketsViewsCreateCall) ViewId(viewId string) *FoldersLocationsBucketsViewsCreateCall {
 	c.urlParams_.Set("viewId", viewId)
 	return c
@@ -19642,7 +19720,7 @@ func (r *LocationsBucketsViewsService) Create(parent string, logview *LogView) *
 
 // ViewId sets the optional parameter "viewId": Required. A client-assigned
 // identifier such as "my-view". Identifiers are limited to 100 characters and
-// can include only letters, digits, underscores, and hyphens.
+// can include only letters, digits, underscores, hyphens, and periods.
 func (c *LocationsBucketsViewsCreateCall) ViewId(viewId string) *LocationsBucketsViewsCreateCall {
 	c.urlParams_.Set("viewId", viewId)
 	return c
@@ -24170,7 +24248,7 @@ func (r *OrganizationsLocationsBucketsViewsService) Create(parent string, logvie
 
 // ViewId sets the optional parameter "viewId": Required. A client-assigned
 // identifier such as "my-view". Identifiers are limited to 100 characters and
-// can include only letters, digits, underscores, and hyphens.
+// can include only letters, digits, underscores, hyphens, and periods.
 func (c *OrganizationsLocationsBucketsViewsCreateCall) ViewId(viewId string) *OrganizationsLocationsBucketsViewsCreateCall {
 	c.urlParams_.Set("viewId", viewId)
 	return c
@@ -30690,7 +30768,7 @@ func (r *ProjectsLocationsBucketsViewsService) Create(parent string, logview *Lo
 
 // ViewId sets the optional parameter "viewId": Required. A client-assigned
 // identifier such as "my-view". Identifiers are limited to 100 characters and
-// can include only letters, digits, underscores, and hyphens.
+// can include only letters, digits, underscores, hyphens, and periods.
 func (c *ProjectsLocationsBucketsViewsCreateCall) ViewId(viewId string) *ProjectsLocationsBucketsViewsCreateCall {
 	c.urlParams_.Set("viewId", viewId)
 	return c

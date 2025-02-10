@@ -1236,12 +1236,13 @@ func (s CloneAddressGroupItemsRequest) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// CustomInterceptProfile: CustomInterceptProfile defines the Packet Intercept
-// Endpoint Group used to intercept traffic to a third-party firewall in a
-// Firewall rule.
+// CustomInterceptProfile: CustomInterceptProfile defines in-band integration
+// behavior (intercept). It is used by firewall rules with an
+// APPLY_SECURITY_PROFILE_GROUP action.
 type CustomInterceptProfile struct {
-	// InterceptEndpointGroup: Required. The InterceptEndpointGroup to which
-	// traffic associated with the SP should be mirrored.
+	// InterceptEndpointGroup: Required. The target InterceptEndpointGroup. When a
+	// firewall rule with this security profile attached matches a packet, the
+	// packet will be intercepted to the location-local target in this group.
 	InterceptEndpointGroup string `json:"interceptEndpointGroup,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "InterceptEndpointGroup") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -1261,11 +1262,13 @@ func (s CustomInterceptProfile) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// CustomMirroringProfile: CustomMirroringProfile defines an action for
-// mirroring traffic to a collector's EndpointGroup
+// CustomMirroringProfile: CustomMirroringProfile defines out-of-band
+// integration behavior (mirroring). It is used by mirroring rules with a
+// MIRROR action.
 type CustomMirroringProfile struct {
-	// MirroringEndpointGroup: Required. The MirroringEndpointGroup to which
-	// traffic associated with the SP should be mirrored.
+	// MirroringEndpointGroup: Required. The target MirroringEndpointGroup. When a
+	// mirroring rule with this security profile attached matches a packet, a
+	// replica will be mirrored to the location-local target in this group.
 	MirroringEndpointGroup string `json:"mirroringEndpointGroup,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "MirroringEndpointGroup") to
 	// unconditionally include in API requests. By default, fields with empty or

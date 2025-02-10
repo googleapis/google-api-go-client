@@ -2514,7 +2514,9 @@ func (s RunQueryRequest) MarshalJSON() ([]byte, error) {
 
 // RunQueryResponse: The response for Datastore.RunQuery.
 type RunQueryResponse struct {
-	// Batch: A batch of query results (always present).
+	// Batch: A batch of query results. This is always present unless running a
+	// query under explain-only mode: RunQueryRequest.explain_options was provided
+	// and ExplainOptions.analyze was set to false.
 	Batch *QueryResultBatch `json:"batch,omitempty"`
 	// ExplainMetrics: Query explain metrics. This is only present when the
 	// RunQueryRequest.explain_options is provided, and it is sent only once with

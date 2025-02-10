@@ -188,7 +188,7 @@ func (w enableJwtWithScope) Apply(o *internal.DialSettings) {
 
 // AllowHardBoundTokens returns a ClientOption that allows libraries to request a hard-bound token.
 // Obtaining hard-bound tokens requires the connection to be established using either Application
-// Layer Transport Security (ALTS) or mutual TLS (mTLS) with S2A. For more information on ALTS, 
+// Layer Transport Security (ALTS) or mutual TLS (mTLS) with S2A. For more information on ALTS,
 // see: https://cloud.google.com/docs/security/encryption-in-transit/application-layer-transport-security
 //
 // The AllowHardBoundTokens option accepts the following values (or a combination thereof):

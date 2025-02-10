@@ -620,7 +620,7 @@ type GoogleCloudRunV2Container struct {
 	// not provided.
 	Args []string `json:"args,omitempty"`
 	// BaseImageUri: Base image for this container. Only supported for services. If
-	// set. it indicates that the service is enrolled into automatic base image
+	// set, it indicates that the service is enrolled into automatic base image
 	// update.
 	BaseImageUri string `json:"baseImageUri,omitempty"`
 	// BuildInfo: Output only. The build info of the container image.
@@ -2335,7 +2335,7 @@ type GoogleCloudRunV2Service struct {
 	// resource. May be used to detect modification conflict during updates.
 	Etag string `json:"etag,omitempty"`
 	// ExpireTime: Output only. For a deleted resource, the time after which it
-	// will be permamently deleted.
+	// will be permanently deleted.
 	ExpireTime string `json:"expireTime,omitempty"`
 	// Generation: Output only. A number that monotonically increases every time
 	// the user modifies the desired state. Please note that unlike v1, this is an
@@ -2437,16 +2437,16 @@ type GoogleCloudRunV2Service struct {
 	// Service is created, or an existing one is updated, Cloud Run will
 	// asynchronously perform all necessary steps to bring the Service to the
 	// desired serving state. This process is called reconciliation. While
-	// reconciliation is in process, `observed_generation`, `latest_ready_revison`,
-	// `traffic_statuses`, and `uri` will have transient values that might mismatch
-	// the intended state: Once reconciliation is over (and this field is false),
-	// there are two possible outcomes: reconciliation succeeded and the serving
-	// state matches the Service, or there was an error, and reconciliation failed.
-	// This state can be found in `terminal_condition.state`. If reconciliation
-	// succeeded, the following fields will match: `traffic` and
-	// `traffic_statuses`, `observed_generation` and `generation`,
-	// `latest_ready_revision` and `latest_created_revision`. If reconciliation
-	// failed, `traffic_statuses`, `observed_generation`, and
+	// reconciliation is in process, `observed_generation`,
+	// `latest_ready_revision`, `traffic_statuses`, and `uri` will have transient
+	// values that might mismatch the intended state: Once reconciliation is over
+	// (and this field is false), there are two possible outcomes: reconciliation
+	// succeeded and the serving state matches the Service, or there was an error,
+	// and reconciliation failed. This state can be found in
+	// `terminal_condition.state`. If reconciliation succeeded, the following
+	// fields will match: `traffic` and `traffic_statuses`, `observed_generation`
+	// and `generation`, `latest_ready_revision` and `latest_created_revision`. If
+	// reconciliation failed, `traffic_statuses`, `observed_generation`, and
 	// `latest_ready_revision` will have the state of the last serving revision, or
 	// empty for newly created Services. Additional information on the failure can
 	// be found in `terminal_condition` and `conditions`.
@@ -3559,6 +3559,9 @@ type GoogleDevtoolsCloudbuildV1BuildOptions struct {
 	// (https://cloud.google.com/build/docs/private-pools/run-builds-in-private-pool)
 	// for more information.
 	Pool *GoogleDevtoolsCloudbuildV1PoolOption `json:"pool,omitempty"`
+	// PubsubTopic: Optional. Option to specify the Pub/Sub topic to receive build
+	// status updates.
+	PubsubTopic string `json:"pubsubTopic,omitempty"`
 	// RequestedVerifyOption: Requested verifiability options.
 	//
 	// Possible values:

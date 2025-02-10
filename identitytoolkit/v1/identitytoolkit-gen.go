@@ -810,11 +810,7 @@ type GoogleCloudIdentitytoolkitV1GetAccountInfoRequest struct {
 	// `name@domain.tld`. The email should also match the RFC 822
 	// (https://tools.ietf.org/html/rfc822) addr-spec production. Should only be
 	// specified by authenticated requests from a developer.
-	Email []string `json:"email,omitempty"`
-	// FederatedUserId: The federated user identifier of one or more accounts to
-	// fetch. Should only be specified by authenticated requests bearing a Google
-	// OAuth 2.0 credential with proper permissions
-	// (https://cloud.google.com/identity-platform/docs/access-control).
+	Email           []string                                               `json:"email,omitempty"`
 	FederatedUserId []*GoogleCloudIdentitytoolkitV1FederatedUserIdentifier `json:"federatedUserId,omitempty"`
 	// IdToken: The Identity Platform ID token of the account to fetch. Require to
 	// be specified for requests from end users.
@@ -954,6 +950,11 @@ type GoogleCloudIdentitytoolkitV1GetOobCodeRequest struct {
 	// VERIFY_AND_CHANGE_EMAIL and VERIFY_EMAIL requests unless return_oob_link is
 	// set to true.
 	IdToken string `json:"idToken,omitempty"`
+	// LinkDomain: Optional. In order to ensure that the url used can be easily
+	// opened in iOS or Android, we create a Hosting link '/__/auth/links'. This
+	// optional field contains the domain to use when constructing a Hosting link.
+	// If not set, '.firebaseapp.com' domain will be used.
+	LinkDomain string `json:"linkDomain,omitempty"`
 	// NewEmail: The email address the account is being updated to. Required only
 	// for VERIFY_AND_CHANGE_EMAIL requests.
 	NewEmail string `json:"newEmail,omitempty"`
@@ -1184,8 +1185,6 @@ type GoogleCloudIdentitytoolkitV1IdpConfig struct {
 	// ExperimentPercent: Percent of users who will be prompted/redirected
 	// federated login for this IdP
 	ExperimentPercent int64 `json:"experimentPercent,omitempty"`
-	// Provider: Name of the identity provider.
-	//
 	// Possible values:
 	//   "PROVIDER_UNSPECIFIED"
 	//   "MSLIVE" - Microsoft Live as identity provider.
@@ -1452,8 +1451,6 @@ func (s GoogleCloudIdentitytoolkitV1ProviderUserInfo) MarshalJSON() ([]byte, err
 // GoogleCloudIdentitytoolkitV1QueryUserInfoRequest: Request message for
 // QueryUserInfo.
 type GoogleCloudIdentitytoolkitV1QueryUserInfoRequest struct {
-	// Expression: Query conditions used to filter results. If more than one is
-	// passed, only the first SqlExpression is evaluated.
 	Expression []*GoogleCloudIdentitytoolkitV1SqlExpression `json:"expression,omitempty"`
 	// Limit: The maximum number of accounts to return with an upper limit of
 	// __500__. Defaults to _500_. Only valid when `return_user_info` is set to
@@ -1462,9 +1459,6 @@ type GoogleCloudIdentitytoolkitV1QueryUserInfoRequest struct {
 	// Offset: The number of accounts to skip from the beginning of matching
 	// records. Only valid when `return_user_info` is set to `true`.
 	Offset int64 `json:"offset,omitempty,string"`
-	// Order: The order for sorting query result. Defaults to __ascending__ order.
-	// Only valid when `return_user_info` is set to `true`.
-	//
 	// Possible values:
 	//   "ORDER_UNSPECIFIED" - Order is not specified.
 	//   "ASC" - Sort on ascending order.
@@ -1474,10 +1468,6 @@ type GoogleCloudIdentitytoolkitV1QueryUserInfoRequest struct {
 	// the query. If `false`, only the __count__ of accounts matching the query
 	// will be returned. Defaults to `true`.
 	ReturnUserInfo bool `json:"returnUserInfo,omitempty"`
-	// SortBy: The field to use for sorting user accounts. Defaults to `USER_ID`.
-	// Note: when `phone_number` is specified in `expression`, the result ignores
-	// the sorting. Only valid when `return_user_info` is set to `true`.
-	//
 	// Possible values:
 	//   "SORT_BY_FIELD_UNSPECIFIED" - Sort field is not specified.
 	//   "USER_ID" - Sort result by userId.
@@ -1758,8 +1748,6 @@ type GoogleCloudIdentitytoolkitV1SetAccountInfoRequest struct {
 	// (https://cloud.google.com/identity-platform/docs/access-control).
 	CustomAttributes       string `json:"customAttributes,omitempty"`
 	DelegatedProjectNumber int64  `json:"delegatedProjectNumber,omitempty,string"`
-	// DeleteAttribute: The account's attributes to be deleted.
-	//
 	// Possible values:
 	//   "USER_ATTRIBUTE_NAME_UNSPECIFIED" - User attribute name is not specified.
 	//   "EMAIL" - User attribute key name is email.
@@ -2802,8 +2790,6 @@ type GoogleCloudIdentitytoolkitV1UploadAccountRequest struct {
 	// cpu_mem_cost help tune the resources needed to hash a password, and should
 	// be tuned as processor speeds and memory technologies advance.
 	Parallelization int64 `json:"parallelization,omitempty"`
-	// PasswordHashOrder: Password and salt order when verify password.
-	//
 	// Possible values:
 	//   "UNSPECIFIED_ORDER" - The order is not specified.
 	//   "SALT_AND_PASSWORD" - The order is salt first, and then password.

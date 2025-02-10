@@ -1024,9 +1024,6 @@ type GoogleCloudAiplatformV1beta1GenerationConfig struct {
 	StopSequences []string `json:"stopSequences,omitempty"`
 	// Temperature: Optional. Controls the randomness of predictions.
 	Temperature float64 `json:"temperature,omitempty"`
-	// ThinkingConfig: Optional. Config for thinking features. An error will be
-	// returned if this field is set for models that don't support thinking.
-	ThinkingConfig *GoogleCloudAiplatformV1beta1GenerationConfigThinkingConfig `json:"thinkingConfig,omitempty"`
 	// TopK: Optional. If specified, top-k sampling will be used.
 	TopK float64 `json:"topK,omitempty"`
 	// TopP: Optional. If specified, nucleus sampling will be used.
@@ -1147,30 +1144,6 @@ type GoogleCloudAiplatformV1beta1GenerationConfigRoutingConfigManualRoutingMode 
 
 func (s GoogleCloudAiplatformV1beta1GenerationConfigRoutingConfigManualRoutingMode) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1beta1GenerationConfigRoutingConfigManualRoutingMode
-	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
-}
-
-// GoogleCloudAiplatformV1beta1GenerationConfigThinkingConfig: Config for
-// thinking features.
-type GoogleCloudAiplatformV1beta1GenerationConfigThinkingConfig struct {
-	// IncludeThoughts: Optional. Indicates whether to include thoughts in the
-	// response. If true, thoughts are returned only when available.
-	IncludeThoughts bool `json:"includeThoughts,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "IncludeThoughts") to
-	// unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
-	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "IncludeThoughts") to include in
-	// API requests with the JSON null value. By default, fields with empty values
-	// are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
-	NullFields []string `json:"-"`
-}
-
-func (s GoogleCloudAiplatformV1beta1GenerationConfigThinkingConfig) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudAiplatformV1beta1GenerationConfigThinkingConfig
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 

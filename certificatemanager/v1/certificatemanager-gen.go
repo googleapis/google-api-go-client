@@ -383,6 +383,8 @@ type Certificate struct {
 	SelfManaged *SelfManagedCertificate `json:"selfManaged,omitempty"`
 	// UpdateTime: Output only. The last update timestamp of a Certificate.
 	UpdateTime string `json:"updateTime,omitempty"`
+	// UsedBy: Output only. The list of resources that use this Certificate.
+	UsedBy []*UsedBy `json:"usedBy,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
@@ -1413,6 +1415,32 @@ type TrustStore struct {
 
 func (s TrustStore) MarshalJSON() ([]byte, error) {
 	type NoMethod TrustStore
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// UsedBy: Defines a resource that uses the certificate.
+type UsedBy struct {
+	// Name: Output only. Full name of the resource
+	// https://google.aip.dev/122#full-resource-names, e.g.
+	// `//certificatemanager.googleapis.com/projects/*/locations/*/certificateMaps/*
+	// /certificateMapEntries/*` or
+	// `//compute.googleapis.com/projects/*/locations/*/targetHttpsProxies/*`.
+	Name string `json:"name,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Name") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Name") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s UsedBy) MarshalJSON() ([]byte, error) {
+	type NoMethod UsedBy
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 

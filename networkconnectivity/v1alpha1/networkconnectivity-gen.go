@@ -932,9 +932,8 @@ type Migration struct {
 	// /projects/{project}/regions/{region}/subnetworks/{subnet}
 	Source string `json:"source,omitempty"`
 	// Target: Immutable. Resource path of the target resource. The target project
-	// can be different, as in the cases when migrating to peer networks. The
-	// resource For example:
-	// /projects/{project}/regions/{region}/subnetworks/{subnet}
+	// can be different, as in the cases when migrating to peer networks. For
+	// example: /projects/{project}/regions/{region}/subnetworks/{subnet}
 	Target string `json:"target,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Source") to unconditionally
 	// include in API requests. By default, fields with empty or default values are

@@ -431,6 +431,7 @@ type CalendarExportOptions struct {
 	//   "PST" - Export as PST. Only available for Gmail, Groups, Hangouts, Voice
 	// and Calendar.
 	//   "ICS" - Export as ICS. Only available for Calendar.
+	//   "XML" - Export as XML. Only available for Gemini.
 	ExportFormat string `json:"exportFormat,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "ExportFormat") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -744,7 +745,7 @@ func (s DriveExportOptions) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// DriveOptions: Additional options for Drive search
+// DriveOptions: Additional options for Drive search.
 type DriveOptions struct {
 	// ClientSideEncryptedOption: Set whether the results include only content
 	// encrypted with Google Workspace Client-side encryption
@@ -860,6 +861,8 @@ type ExportOptions struct {
 	CalendarOptions *CalendarExportOptions `json:"calendarOptions,omitempty"`
 	// DriveOptions: Options for Drive exports.
 	DriveOptions *DriveExportOptions `json:"driveOptions,omitempty"`
+	// GeminiOptions: Option available for Gemini export.
+	GeminiOptions *GeminiExportOptions `json:"geminiOptions,omitempty"`
 	// GroupsOptions: Options for Groups exports.
 	GroupsOptions *GroupsExportOptions `json:"groupsOptions,omitempty"`
 	// HangoutsChatOptions: Options for Chat exports.
@@ -921,6 +924,41 @@ func (s ExportStats) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GeminiExportOptions: The options for Gemini exports.
+type GeminiExportOptions struct {
+	// ExportFormat: The file format for exported messages.
+	//
+	// Possible values:
+	//   "EXPORT_FORMAT_UNSPECIFIED" - No export format specified.
+	//   "MBOX" - Export as MBOX. Only available for Gmail, Groups, Hangouts and
+	// Voice.
+	//   "PST" - Export as PST. Only available for Gmail, Groups, Hangouts, Voice
+	// and Calendar.
+	//   "ICS" - Export as ICS. Only available for Calendar.
+	//   "XML" - Export as XML. Only available for Gemini.
+	ExportFormat string `json:"exportFormat,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ExportFormat") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ExportFormat") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GeminiExportOptions) MarshalJSON() ([]byte, error) {
+	type NoMethod GeminiExportOptions
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GeminiOptions: Additional options for Gemini search
+type GeminiOptions struct {
+}
+
 // GroupsCountResult: Groups specific count metrics.
 type GroupsCountResult struct {
 	// AccountCountErrors: Error occurred when querying these accounts.
@@ -967,6 +1005,7 @@ type GroupsExportOptions struct {
 	//   "PST" - Export as PST. Only available for Gmail, Groups, Hangouts, Voice
 	// and Calendar.
 	//   "ICS" - Export as ICS. Only available for Calendar.
+	//   "XML" - Export as XML. Only available for Gemini.
 	ExportFormat string `json:"exportFormat,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "ExportFormat") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -997,6 +1036,7 @@ type HangoutsChatExportOptions struct {
 	//   "PST" - Export as PST. Only available for Gmail, Groups, Hangouts, Voice
 	// and Calendar.
 	//   "ICS" - Export as ICS. Only available for Calendar.
+	//   "XML" - Export as XML. Only available for Gemini.
 	ExportFormat string `json:"exportFormat,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "ExportFormat") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -1295,6 +1335,7 @@ type Hold struct {
 	// classic Hangouts.
 	//   "VOICE" - Google Voice.
 	//   "CALENDAR" - Calendar.
+	//   "GEMINI" - Gemini.
 	Corpus string `json:"corpus,omitempty"`
 	// HoldId: The unique immutable ID of the hold. Assigned during creation.
 	HoldId string `json:"holdId,omitempty"`
@@ -1541,6 +1582,7 @@ type MailExportOptions struct {
 	//   "PST" - Export as PST. Only available for Gmail, Groups, Hangouts, Voice
 	// and Calendar.
 	//   "ICS" - Export as ICS. Only available for Calendar.
+	//   "XML" - Export as XML. Only available for Gemini.
 	ExportFormat string `json:"exportFormat,omitempty"`
 	// ExportLinkedDriveFiles: Optional. To enable exporting linked Drive files,
 	// set to **true**.
@@ -1782,6 +1824,7 @@ type Query struct {
 	// classic Hangouts.
 	//   "VOICE" - Google Voice.
 	//   "CALENDAR" - Calendar.
+	//   "GEMINI" - Gemini.
 	Corpus string `json:"corpus,omitempty"`
 	// DataScope: The data source to search.
 	//
@@ -1797,6 +1840,8 @@ type Query struct {
 	// EndTime: The end time for the search query. Specify in GMT. The value is
 	// rounded to 12 AM on the specified date.
 	EndTime string `json:"endTime,omitempty"`
+	// GeminiOptions: Set Gemini search-specific options.
+	GeminiOptions *GeminiOptions `json:"geminiOptions,omitempty"`
 	// HangoutsChatInfo: Required when **SearchMethod** is **ROOM**. (read-only)
 	HangoutsChatInfo *HangoutsChatInfo `json:"hangoutsChatInfo,omitempty"`
 	// HangoutsChatOptions: Set Chat search-specific options. (read-only)
@@ -2179,6 +2224,7 @@ type VoiceExportOptions struct {
 	//   "PST" - Export as PST. Only available for Gmail, Groups, Hangouts, Voice
 	// and Calendar.
 	//   "ICS" - Export as ICS. Only available for Calendar.
+	//   "XML" - Export as XML. Only available for Gemini.
 	ExportFormat string `json:"exportFormat,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "ExportFormat") to
 	// unconditionally include in API requests. By default, fields with empty or

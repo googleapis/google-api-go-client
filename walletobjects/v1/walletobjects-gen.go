@@ -137,6 +137,7 @@ func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, err
 	s.Smarttap = NewSmarttapService(s)
 	s.Transitclass = NewTransitclassService(s)
 	s.Transitobject = NewTransitobjectService(s)
+	s.Walletobjects = NewWalletobjectsService(s)
 	if err != nil {
 		return nil, err
 	}
@@ -201,6 +202,8 @@ type Service struct {
 	Transitclass *TransitclassService
 
 	Transitobject *TransitobjectService
+
+	Walletobjects *WalletobjectsService
 }
 
 func (s *Service) userAgent() string {
@@ -378,6 +381,39 @@ func NewTransitobjectService(s *Service) *TransitobjectService {
 }
 
 type TransitobjectService struct {
+	s *Service
+}
+
+func NewWalletobjectsService(s *Service) *WalletobjectsService {
+	rs := &WalletobjectsService{s: s}
+	rs.V1 = NewWalletobjectsV1Service(s)
+	return rs
+}
+
+type WalletobjectsService struct {
+	s *Service
+
+	V1 *WalletobjectsV1Service
+}
+
+func NewWalletobjectsV1Service(s *Service) *WalletobjectsV1Service {
+	rs := &WalletobjectsV1Service{s: s}
+	rs.PrivateContent = NewWalletobjectsV1PrivateContentService(s)
+	return rs
+}
+
+type WalletobjectsV1Service struct {
+	s *Service
+
+	PrivateContent *WalletobjectsV1PrivateContentService
+}
+
+func NewWalletobjectsV1PrivateContentService(s *Service) *WalletobjectsV1PrivateContentService {
+	rs := &WalletobjectsV1PrivateContentService{s: s}
+	return rs
+}
+
+type WalletobjectsV1PrivateContentService struct {
 	s *Service
 }
 
@@ -6643,6 +6679,49 @@ type SecurityAnimation struct {
 func (s SecurityAnimation) MarshalJSON() ([]byte, error) {
 	type NoMethod SecurityAnimation
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// SetPassUpdateNoticeRequest: Request to send a private pass update notice
+// information to Google, so that devices can then fetch the notice prompting
+// the user to update a pass.
+type SetPassUpdateNoticeRequest struct {
+	// ExternalPassId: Required. A fully qualified identifier of the pass that the
+	// issuer wants to notify the pass holder(s) about. Formatted as .
+	ExternalPassId string `json:"externalPassId,omitempty"`
+	// UpdateUri: Required. The issuer endpoint URI the pass holder needs to follow
+	// in order to receive an updated pass JWT. It can not contain any sensitive
+	// information. The endpoint needs to authenticate the user before giving the
+	// user the updated JWT. Example update URI
+	// https://someissuer.com/update/passId=someExternalPassId
+	UpdateUri string `json:"updateUri,omitempty"`
+	// UpdatedPassJwtSignature: Required. The JWT signature of the updated pass
+	// that the issuer wants to notify Google about. Only devices that report a
+	// different JWT signature than this JWT signature will receive the update
+	// notification.
+	UpdatedPassJwtSignature string `json:"updatedPassJwtSignature,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ExternalPassId") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ExternalPassId") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s SetPassUpdateNoticeRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod SetPassUpdateNoticeRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// SetPassUpdateNoticeResponse: A response to a request to notify Google of an
+// awaiting update to a private pass.
+type SetPassUpdateNoticeResponse struct {
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
 }
 
 type SignUpInfo struct {
@@ -18529,5 +18608,104 @@ func (c *TransitobjectUpdateCall) Do(opts ...googleapi.CallOption) (*TransitObje
 		return nil, err
 	}
 	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "walletobjects.transitobject.update", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type WalletobjectsV1PrivateContentSetPassUpdateNoticeCall struct {
+	s                          *Service
+	setpassupdatenoticerequest *SetPassUpdateNoticeRequest
+	urlParams_                 gensupport.URLParams
+	ctx_                       context.Context
+	header_                    http.Header
+}
+
+// SetPassUpdateNotice: Provide Google with information about awaiting private
+// pass update. This will allow Google to provide the update notification to
+// the device that currently holds this pass.
+func (r *WalletobjectsV1PrivateContentService) SetPassUpdateNotice(setpassupdatenoticerequest *SetPassUpdateNoticeRequest) *WalletobjectsV1PrivateContentSetPassUpdateNoticeCall {
+	c := &WalletobjectsV1PrivateContentSetPassUpdateNoticeCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.setpassupdatenoticerequest = setpassupdatenoticerequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *WalletobjectsV1PrivateContentSetPassUpdateNoticeCall) Fields(s ...googleapi.Field) *WalletobjectsV1PrivateContentSetPassUpdateNoticeCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *WalletobjectsV1PrivateContentSetPassUpdateNoticeCall) Context(ctx context.Context) *WalletobjectsV1PrivateContentSetPassUpdateNoticeCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *WalletobjectsV1PrivateContentSetPassUpdateNoticeCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *WalletobjectsV1PrivateContentSetPassUpdateNoticeCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.setpassupdatenoticerequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "walletobjects/v1/privateContent/setPassUpdateNotice")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "walletobjects.walletobjects.v1.privateContent.setPassUpdateNotice", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "walletobjects.walletobjects.v1.privateContent.setPassUpdateNotice" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *SetPassUpdateNoticeResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *WalletobjectsV1PrivateContentSetPassUpdateNoticeCall) Do(opts ...googleapi.CallOption) (*SetPassUpdateNoticeResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &SetPassUpdateNoticeResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "walletobjects.walletobjects.v1.privateContent.setPassUpdateNotice", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }

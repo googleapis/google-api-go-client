@@ -214,6 +214,94 @@ type ProjectsLocationsOperationsService struct {
 	s *Service
 }
 
+// BitbucketCloudConfig: Configuration for connections to an instance of
+// Bitbucket Cloud.
+type BitbucketCloudConfig struct {
+	// AuthorizerCredential: Required. An access token with the minimum
+	// `repository`, `pullrequest` and `webhook` scope access. It can either be a
+	// workspace, project or repository access token. This is needed to create
+	// webhooks. It's recommended to use a system account to generate these
+	// credentials.
+	AuthorizerCredential *UserCredential `json:"authorizerCredential,omitempty"`
+	// ReadAuthorizerCredential: Required. An access token with the minimum
+	// `repository` access. It can either be a workspace, project or repository
+	// access token. It's recommended to use a system account to generate the
+	// credentials.
+	ReadAuthorizerCredential *UserCredential `json:"readAuthorizerCredential,omitempty"`
+	// WebhookSecretSecretVersion: Required. Immutable. SecretManager resource
+	// containing the webhook secret used to verify webhook events, formatted as
+	// `projects/*/secrets/*/versions/*`. This is used to validate and create
+	// webhooks.
+	WebhookSecretSecretVersion string `json:"webhookSecretSecretVersion,omitempty"`
+	// Workspace: Required. The Bitbucket Cloud Workspace ID to be connected to
+	// Google Cloud Platform.
+	Workspace string `json:"workspace,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AuthorizerCredential") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AuthorizerCredential") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s BitbucketCloudConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod BitbucketCloudConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// BitbucketDataCenterConfig: Configuration for connections to an instance of
+// Bitbucket Data Center.
+type BitbucketDataCenterConfig struct {
+	// AuthorizerCredential: Required. An http access token with the minimum
+	// `Repository admin` scope access. This is needed to create webhooks. It's
+	// recommended to use a system account to generate these credentials.
+	AuthorizerCredential *UserCredential `json:"authorizerCredential,omitempty"`
+	// HostUri: Required. The URI of the Bitbucket Data Center host this connection
+	// is for.
+	HostUri string `json:"hostUri,omitempty"`
+	// ReadAuthorizerCredential: Required. An http access token with the minimum
+	// `Repository read` access. It's recommended to use a system account to
+	// generate the credentials.
+	ReadAuthorizerCredential *UserCredential `json:"readAuthorizerCredential,omitempty"`
+	// ServerVersion: Output only. Version of the Bitbucket Data Center server
+	// running on the `host_uri`.
+	ServerVersion string `json:"serverVersion,omitempty"`
+	// ServiceDirectoryConfig: Optional. Configuration for using Service Directory
+	// to privately connect to a Bitbucket Data Center instance. This should only
+	// be set if the Bitbucket Data Center is hosted on-premises and not reachable
+	// by public internet. If this field is left empty, calls to the Bitbucket Data
+	// Center will be made over the public internet.
+	ServiceDirectoryConfig *ServiceDirectoryConfig `json:"serviceDirectoryConfig,omitempty"`
+	// SslCaCertificate: Optional. SSL certificate authority to trust when making
+	// requests to Bitbucket Data Center.
+	SslCaCertificate string `json:"sslCaCertificate,omitempty"`
+	// WebhookSecretSecretVersion: Required. Immutable. SecretManager resource
+	// containing the webhook secret used to verify webhook events, formatted as
+	// `projects/*/secrets/*/versions/*`. This is used to validate webhooks.
+	WebhookSecretSecretVersion string `json:"webhookSecretSecretVersion,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AuthorizerCredential") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AuthorizerCredential") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s BitbucketDataCenterConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod BitbucketDataCenterConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // CancelOperationRequest: The request message for Operations.CancelOperation.
 type CancelOperationRequest struct {
 }
@@ -223,6 +311,12 @@ type Connection struct {
 	// Annotations: Optional. Allows clients to store small amounts of arbitrary
 	// data.
 	Annotations map[string]string `json:"annotations,omitempty"`
+	// BitbucketCloudConfig: Configuration for connections to an instance of
+	// Bitbucket Clouds.
+	BitbucketCloudConfig *BitbucketCloudConfig `json:"bitbucketCloudConfig,omitempty"`
+	// BitbucketDataCenterConfig: Configuration for connections to an instance of
+	// Bitbucket Data Center.
+	BitbucketDataCenterConfig *BitbucketDataCenterConfig `json:"bitbucketDataCenterConfig,omitempty"`
 	// CreateTime: Output only. [Output only] Create timestamp
 	CreateTime string `json:"createTime,omitempty"`
 	// CryptoKeyConfig: Optional. The crypto key configuration. This field is used
@@ -238,6 +332,10 @@ type Connection struct {
 	// of other fields, and may be sent on update and delete requests to ensure the
 	// client has an up-to-date value before proceeding.
 	Etag string `json:"etag,omitempty"`
+	// GitProxyConfig: Optional. Configuration for the git proxy feature. Enabling
+	// the git proxy allows clients to perform git operations on the repositories
+	// linked in the connection.
+	GitProxyConfig *GitProxyConfig `json:"gitProxyConfig,omitempty"`
 	// GithubConfig: Configuration for connections to github.com.
 	GithubConfig *GitHubConfig `json:"githubConfig,omitempty"`
 	// GithubEnterpriseConfig: Configuration for connections to an instance of
@@ -648,6 +746,29 @@ func (s GitLabEnterpriseConfig) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GitProxyConfig: The git proxy configuration.
+type GitProxyConfig struct {
+	// Enabled: Optional. Setting this to true allows the git proxy to be used for
+	// performing git operations on the repositories linked in the connection.
+	Enabled bool `json:"enabled,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Enabled") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Enabled") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GitProxyConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GitProxyConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GitRepositoryLink: Message describing the GitRepositoryLink object
 type GitRepositoryLink struct {
 	// Annotations: Optional. Allows clients to store small amounts of arbitrary
@@ -663,6 +784,10 @@ type GitRepositoryLink struct {
 	// of other fields, and may be sent on update and delete requests to ensure the
 	// client has an up-to-date value before proceeding.
 	Etag string `json:"etag,omitempty"`
+	// GitProxyUri: Output only. URI to access the linked repository through the
+	// Git Proxy. This field is only populated if the git proxy is enabled for the
+	// connection.
+	GitProxyUri string `json:"gitProxyUri,omitempty"`
 	// Labels: Optional. Labels as key value pairs
 	Labels map[string]string `json:"labels,omitempty"`
 	// Name: Identifier. Resource name of the repository, in the format
@@ -1098,6 +1223,52 @@ type OperationMetadata struct {
 
 func (s OperationMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod OperationMetadata
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ProcessBitbucketCloudWebhookRequest: RPC request object accepted by the
+// ProcessBitbucketCloudWebhook RPC method.
+type ProcessBitbucketCloudWebhookRequest struct {
+	// Body: Required. HTTP request body.
+	Body *HttpBody `json:"body,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Body") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Body") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ProcessBitbucketCloudWebhookRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod ProcessBitbucketCloudWebhookRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ProcessBitbucketDataCenterWebhookRequest: RPC request object accepted by the
+// ProcessBitbucketDataCenterWebhook RPC method.
+type ProcessBitbucketDataCenterWebhookRequest struct {
+	// Body: Required. HTTP request body.
+	Body *HttpBody `json:"body,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Body") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Body") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ProcessBitbucketDataCenterWebhookRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod ProcessBitbucketDataCenterWebhookRequest
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -3466,6 +3637,216 @@ func (c *ProjectsLocationsConnectionsGitRepositoryLinksListCall) Pages(ctx conte
 		}
 		c.PageToken(x.NextPageToken)
 	}
+}
+
+type ProjectsLocationsConnectionsGitRepositoryLinksProcessBitbucketCloudWebhookCall struct {
+	s                                   *Service
+	name                                string
+	processbitbucketcloudwebhookrequest *ProcessBitbucketCloudWebhookRequest
+	urlParams_                          gensupport.URLParams
+	ctx_                                context.Context
+	header_                             http.Header
+}
+
+// ProcessBitbucketCloudWebhook: ProcessBitbucketCloudWebhook is called by the
+// external Bitbucket Cloud instances for notifying events.
+//
+//   - name: The GitRepositoryLink where the webhook will be received. Format:
+//     `projects/*/locations/*/connections/*/gitRepositoryLinks/*`.
+func (r *ProjectsLocationsConnectionsGitRepositoryLinksService) ProcessBitbucketCloudWebhook(name string, processbitbucketcloudwebhookrequest *ProcessBitbucketCloudWebhookRequest) *ProjectsLocationsConnectionsGitRepositoryLinksProcessBitbucketCloudWebhookCall {
+	c := &ProjectsLocationsConnectionsGitRepositoryLinksProcessBitbucketCloudWebhookCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.processbitbucketcloudwebhookrequest = processbitbucketcloudwebhookrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsConnectionsGitRepositoryLinksProcessBitbucketCloudWebhookCall) Fields(s ...googleapi.Field) *ProjectsLocationsConnectionsGitRepositoryLinksProcessBitbucketCloudWebhookCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsConnectionsGitRepositoryLinksProcessBitbucketCloudWebhookCall) Context(ctx context.Context) *ProjectsLocationsConnectionsGitRepositoryLinksProcessBitbucketCloudWebhookCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsConnectionsGitRepositoryLinksProcessBitbucketCloudWebhookCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsConnectionsGitRepositoryLinksProcessBitbucketCloudWebhookCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.processbitbucketcloudwebhookrequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}:processBitbucketCloudWebhook")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "developerconnect.projects.locations.connections.gitRepositoryLinks.processBitbucketCloudWebhook", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "developerconnect.projects.locations.connections.gitRepositoryLinks.processBitbucketCloudWebhook" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Empty.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsConnectionsGitRepositoryLinksProcessBitbucketCloudWebhookCall) Do(opts ...googleapi.CallOption) (*Empty, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Empty{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "developerconnect.projects.locations.connections.gitRepositoryLinks.processBitbucketCloudWebhook", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsConnectionsGitRepositoryLinksProcessBitbucketDataCenterWebhookCall struct {
+	s                                        *Service
+	name                                     string
+	processbitbucketdatacenterwebhookrequest *ProcessBitbucketDataCenterWebhookRequest
+	urlParams_                               gensupport.URLParams
+	ctx_                                     context.Context
+	header_                                  http.Header
+}
+
+// ProcessBitbucketDataCenterWebhook: ProcessBitbucketDataCenterWebhook is
+// called by the external Bitbucket Data Center instances for notifying events.
+//
+//   - name: The GitRepositoryLink where the webhook will be received. Format:
+//     `projects/*/locations/*/connections/*/gitRepositoryLinks/*`.
+func (r *ProjectsLocationsConnectionsGitRepositoryLinksService) ProcessBitbucketDataCenterWebhook(name string, processbitbucketdatacenterwebhookrequest *ProcessBitbucketDataCenterWebhookRequest) *ProjectsLocationsConnectionsGitRepositoryLinksProcessBitbucketDataCenterWebhookCall {
+	c := &ProjectsLocationsConnectionsGitRepositoryLinksProcessBitbucketDataCenterWebhookCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.processbitbucketdatacenterwebhookrequest = processbitbucketdatacenterwebhookrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsConnectionsGitRepositoryLinksProcessBitbucketDataCenterWebhookCall) Fields(s ...googleapi.Field) *ProjectsLocationsConnectionsGitRepositoryLinksProcessBitbucketDataCenterWebhookCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsConnectionsGitRepositoryLinksProcessBitbucketDataCenterWebhookCall) Context(ctx context.Context) *ProjectsLocationsConnectionsGitRepositoryLinksProcessBitbucketDataCenterWebhookCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsConnectionsGitRepositoryLinksProcessBitbucketDataCenterWebhookCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsConnectionsGitRepositoryLinksProcessBitbucketDataCenterWebhookCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.processbitbucketdatacenterwebhookrequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}:processBitbucketDataCenterWebhook")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "developerconnect.projects.locations.connections.gitRepositoryLinks.processBitbucketDataCenterWebhook", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "developerconnect.projects.locations.connections.gitRepositoryLinks.processBitbucketDataCenterWebhook" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Empty.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsConnectionsGitRepositoryLinksProcessBitbucketDataCenterWebhookCall) Do(opts ...googleapi.CallOption) (*Empty, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Empty{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "developerconnect.projects.locations.connections.gitRepositoryLinks.processBitbucketDataCenterWebhook", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
 }
 
 type ProjectsLocationsConnectionsGitRepositoryLinksProcessGitLabEnterpriseWebhookCall struct {

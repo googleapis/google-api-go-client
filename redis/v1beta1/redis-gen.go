@@ -461,6 +461,8 @@ type BackupCollection struct {
 	Cluster string `json:"cluster,omitempty"`
 	// ClusterUid: Output only. The cluster uid of the backup collection.
 	ClusterUid string `json:"clusterUid,omitempty"`
+	// CreateTime: Output only. The time when the backup collection was created.
+	CreateTime string `json:"createTime,omitempty"`
 	// KmsKey: Output only. The KMS key used to encrypt the backups under this
 	// backup collection.
 	KmsKey string `json:"kmsKey,omitempty"`
@@ -2990,8 +2992,11 @@ type ObservabilityMetricData struct {
 	//   "STORAGE_UTILIZATION" - Storage utilization for a resource. The value is a
 	// fraction between 0.0 and 1.0 (may momentarily exceed 1.0 in some cases).
 	//   "STORAGE_USED_BYTES" - Sotrage used by a resource.
-	//   "NODE_COUNT" - Node count for a resource. It represents the number of
-	// nodes units in a bigtable/spanner instance.
+	//   "NODE_COUNT" - Node count for a resource. It represents the number of node
+	// units in a bigtable/spanner instance.
+	//   "MEMORY_USED_BYTES" - Memory used by a resource (in bytes).
+	//   "PROCESSING_UNIT_COUNT" - Processing units used by a resource. It
+	// represents the number of processing units in a spanner instance.
 	MetricType string `json:"metricType,omitempty"`
 	// ObservationTime: Required. The time the metric value was observed.
 	ObservationTime string `json:"observationTime,omitempty"`

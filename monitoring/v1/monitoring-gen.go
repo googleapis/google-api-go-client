@@ -2355,6 +2355,10 @@ type Scorecard struct {
 	// BlankView: Will cause the Scorecard to show only the value, with no
 	// indicator to its value relative to its thresholds.
 	BlankView *Empty `json:"blankView,omitempty"`
+	// Breakdowns: Optional. The collection of breakdowns to be applied to the
+	// dataset. A breakdown is a way to slice the data. For example, you can break
+	// down the data by region.
+	Breakdowns []*Breakdown `json:"breakdowns,omitempty"`
 	// Dimensions: Optional. A dimension is a structured label, class, or category
 	// for a set of measurements in your data.
 	Dimensions []*Dimension `json:"dimensions,omitempty"`
@@ -2672,6 +2676,44 @@ type TableDisplayOptions struct {
 
 func (s TableDisplayOptions) MarshalJSON() ([]byte, error) {
 	type NoMethod TableDisplayOptions
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// TemplateVariableCondition: A condition whose evaluation is based on the
+// value of a template variable.
+type TemplateVariableCondition struct {
+	// Comparator: Comparator to use to evaluate whether the value of the template
+	// variable matches the template_variable_value. For example, if the comparator
+	// is REGEX_FULL_MATCH, template_variable_value would contain a regex that is
+	// matched against the value of the template variable.
+	//
+	// Possible values:
+	//   "COMPARATOR_UNSPECIFIED" - No comparator specified. Behavior defaults to
+	// REGEX_FULL_MATCH.
+	//   "REGEX_FULL_MATCH" - Condition with this comparator evaluates to true when
+	// the value of the template variables matches the specified regex.
+	Comparator string `json:"comparator,omitempty"`
+	// TemplateVariable: The template variable whose value is evaluated.
+	TemplateVariable string `json:"templateVariable,omitempty"`
+	// TemplateVariableValue: The value to compare the template variable to. For
+	// example, if the comparator is REGEX_FULL_MATCH, this field should contain a
+	// regex.
+	TemplateVariableValue string `json:"templateVariableValue,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Comparator") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Comparator") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s TemplateVariableCondition) MarshalJSON() ([]byte, error) {
+	type NoMethod TemplateVariableCondition
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -3082,6 +3124,30 @@ func (s Type) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// VisibilityCondition: Condition that determines whether the widget should be
+// displayed.
+type VisibilityCondition struct {
+	// TemplateVariableCondition: A condition whose evaluation is based on the
+	// value of a template variable.
+	TemplateVariableCondition *TemplateVariableCondition `json:"templateVariableCondition,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "TemplateVariableCondition")
+	// to unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "TemplateVariableCondition") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s VisibilityCondition) MarshalJSON() ([]byte, error) {
+	type NoMethod VisibilityCondition
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // Widget: Widget contains a single dashboard component and configuration of
 // how to present the component in the dashboard.
 type Widget struct {
@@ -3119,6 +3185,9 @@ type Widget struct {
 	TimeSeriesTable *TimeSeriesTable `json:"timeSeriesTable,omitempty"`
 	// Title: Optional. The title of the widget.
 	Title string `json:"title,omitempty"`
+	// VisibilityCondition: Optional. If set, this widget is rendered only when the
+	// condition is evaluated to true.
+	VisibilityCondition *VisibilityCondition `json:"visibilityCondition,omitempty"`
 	// XyChart: A chart of time series data.
 	XyChart *XyChart `json:"xyChart,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AlertChart") to

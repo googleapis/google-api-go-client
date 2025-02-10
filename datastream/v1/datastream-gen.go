@@ -1203,6 +1203,28 @@ func (s MysqlDatabase) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// MysqlGtidPosition: MySQL GTID position
+type MysqlGtidPosition struct {
+	// GtidSet: Required. The gtid set to start replication from.
+	GtidSet string `json:"gtidSet,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "GtidSet") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "GtidSet") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s MysqlGtidPosition) MarshalJSON() ([]byte, error) {
+	type NoMethod MysqlGtidPosition
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // MysqlLogPosition: MySQL log position
 type MysqlLogPosition struct {
 	// LogFile: Required. The binary log file name.
@@ -1252,7 +1274,7 @@ func (s MysqlObjectIdentifier) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// MysqlProfile: MySQL database profile. Next ID: 7.
+// MysqlProfile: MySQL database profile.
 type MysqlProfile struct {
 	// Hostname: Required. Hostname for the MySQL connection.
 	Hostname string `json:"hostname,omitempty"`
@@ -1501,7 +1523,7 @@ func (s OperationMetadata) MarshalJSON() ([]byte, error) {
 }
 
 // OracleAsmConfig: Configuration for Oracle Automatic Storage Management (ASM)
-// connection. .
+// connection.
 type OracleAsmConfig struct {
 	// AsmService: Required. ASM service name for the Oracle ASM connection.
 	AsmService string `json:"asmService,omitempty"`
@@ -1602,7 +1624,7 @@ func (s OracleObjectIdentifier) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// OracleProfile: Oracle database profile. Next ID: 10.
+// OracleProfile: Oracle database profile.
 type OracleProfile struct {
 	// ConnectionAttributes: Connection string attributes
 	ConnectionAttributes map[string]string `json:"connectionAttributes,omitempty"`
@@ -2345,19 +2367,21 @@ func (s SourceObjectIdentifier) MarshalJSON() ([]byte, error) {
 // SpecificStartPosition: CDC strategy to start replicating from a specific
 // position in the source.
 type SpecificStartPosition struct {
+	// MysqlGtidPosition: MySQL GTID set to start replicating from.
+	MysqlGtidPosition *MysqlGtidPosition `json:"mysqlGtidPosition,omitempty"`
 	// MysqlLogPosition: MySQL specific log position to start replicating from.
 	MysqlLogPosition *MysqlLogPosition `json:"mysqlLogPosition,omitempty"`
 	// OracleScnPosition: Oracle SCN to start replicating from.
 	OracleScnPosition *OracleScnPosition `json:"oracleScnPosition,omitempty"`
 	// SqlServerLsnPosition: SqlServer LSN to start replicating from.
 	SqlServerLsnPosition *SqlServerLsnPosition `json:"sqlServerLsnPosition,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "MysqlLogPosition") to
+	// ForceSendFields is a list of field names (e.g. "MysqlGtidPosition") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "MysqlLogPosition") to include in
+	// NullFields is a list of field names (e.g. "MysqlGtidPosition") to include in
 	// API requests with the JSON null value. By default, fields with empty values
 	// are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
@@ -2455,7 +2479,7 @@ func (s SqlServerObjectIdentifier) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// SqlServerProfile: SQLServer database profile. Next ID: 8.
+// SqlServerProfile: SQLServer database profile.
 type SqlServerProfile struct {
 	// Database: Required. Database for the SQLServer connection.
 	Database string `json:"database,omitempty"`

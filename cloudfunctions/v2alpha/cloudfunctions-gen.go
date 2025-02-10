@@ -710,6 +710,8 @@ type Function struct {
 	// Name: A user-defined name of the function. Function names must be unique
 	// globally and match pattern `projects/*/locations/*/functions/*`
 	Name string `json:"name,omitempty"`
+	// SatisfiesPzi: Output only. Reserved for future use.
+	SatisfiesPzi bool `json:"satisfiesPzi,omitempty"`
 	// SatisfiesPzs: Output only. Reserved for future use.
 	SatisfiesPzs bool `json:"satisfiesPzs,omitempty"`
 	// ServiceConfig: Describes the Service being deployed. Currently deploys
@@ -726,6 +728,9 @@ type Function struct {
 	//   "UNKNOWN" - Function deployment failed and the function serving state is
 	// undefined. The function should be updated or deleted to move it out of this
 	// state.
+	//   "DETACHING" - Function is being detached.
+	//   "DETACH_FAILED" - Function detach failed and the function is still
+	// serving.
 	State string `json:"state,omitempty"`
 	// StateMessages: Output only. State Messages for this Cloud Function.
 	StateMessages []*GoogleCloudFunctionsV2alphaStateMessage `json:"stateMessages,omitempty"`
@@ -959,7 +964,7 @@ type GoogleCloudFunctionsV2alphaStage struct {
 	//
 	// Possible values:
 	//   "NAME_UNSPECIFIED" - Not specified. Invalid name.
-	//   "ARTIFACT_REGISTRY" - Artifact Regsitry Stage
+	//   "ARTIFACT_REGISTRY" - Artifact Registry Stage
 	//   "BUILD" - Build Stage
 	//   "SERVICE" - Service Stage
 	//   "TRIGGER" - Trigger Stage
@@ -1927,8 +1932,8 @@ func (s TestIamPermissionsResponse) MarshalJSON() ([]byte, error) {
 }
 
 // UpgradeInfo: Information related to: * A function's eligibility for 1st Gen
-// to 2nd Gen migration and 2nd Gen to CRf detach. * Current state of migration
-// for function undergoing migration/detach.
+// to 2nd Gen migration. * Current state of migration for function undergoing
+// migration.
 type UpgradeInfo struct {
 	// BuildConfig: Describes the Build step of the function that builds a
 	// container to prepare for 2nd gen upgrade.
@@ -1964,8 +1969,6 @@ type UpgradeInfo struct {
 	// API was un-successful.
 	//   "COMMIT_FUNCTION_UPGRADE_ERROR" - CommitFunctionUpgrade API was
 	// un-successful.
-	//   "DETACH_IN_PROGRESS" - Function is requested to be detached from 2nd Gen
-	// to CRf.
 	UpgradeState string `json:"upgradeState,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "BuildConfig") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -3174,7 +3177,7 @@ func (c *ProjectsLocationsFunctionsListCall) Filter(filter string) *ProjectsLoca
 
 // OrderBy sets the optional parameter "orderBy": The sorting order of the
 // resources returned. Value should be a comma separated list of fields. The
-// default sorting oder is ascending. See https://google.aip.dev/132#ordering.
+// default sorting order is ascending. See https://google.aip.dev/132#ordering.
 func (c *ProjectsLocationsFunctionsListCall) OrderBy(orderBy string) *ProjectsLocationsFunctionsListCall {
 	c.urlParams_.Set("orderBy", orderBy)
 	return c

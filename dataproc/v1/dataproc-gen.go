@@ -2682,6 +2682,10 @@ type GceClusterConfig struct {
 	// ReservationAffinity: Optional. Reservation Affinity for consuming Zonal
 	// reservation.
 	ReservationAffinity *ReservationAffinity `json:"reservationAffinity,omitempty"`
+	// ResourceManagerTags: Optional. Resource manager tags to add to all instances
+	// (see Resource manager tags resources
+	// (https://cloud.google.com/resource-manager/docs/tags/tags-creating-and-managing)).
+	ResourceManagerTags map[string]string `json:"resourceManagerTags,omitempty"`
 	// ServiceAccount: Optional. The Dataproc service account
 	// (https://cloud.google.com/dataproc/docs/concepts/configuring-clusters/service-accounts#service_accounts_in_dataproc)
 	// (also see VM Data Plane identity
@@ -6473,7 +6477,7 @@ type Session struct {
 	// (https://www.ietf.org/rfc/rfc1035.txt). No more than 32 labels can be
 	// associated with a session.
 	Labels map[string]string `json:"labels,omitempty"`
-	// Name: Required. The resource name of the session.
+	// Name: Identifier. The resource name of the session.
 	Name string `json:"name,omitempty"`
 	// RuntimeConfig: Optional. Runtime configuration for the session execution.
 	RuntimeConfig *RuntimeConfig `json:"runtimeConfig,omitempty"`

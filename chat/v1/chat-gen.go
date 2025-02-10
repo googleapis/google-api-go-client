@@ -665,6 +665,8 @@ func (s ActionStatus) MarshalJSON() ([]byte, error) {
 // "avatarUrl":"https://goo.gl/aeDtrS", "type":"BOT" }, "type":"MENTION" } }]
 // ```
 type Annotation struct {
+	// CustomEmojiMetadata: The metadata for a custom emoji.
+	CustomEmojiMetadata *CustomEmojiMetadata `json:"customEmojiMetadata,omitempty"`
 	// Length: Length of the substring in the plain-text message body this
 	// annotation corresponds to.
 	Length int64 `json:"length,omitempty"`
@@ -682,18 +684,19 @@ type Annotation struct {
 	//   "USER_MENTION" - A user is mentioned.
 	//   "SLASH_COMMAND" - A slash command is invoked.
 	//   "RICH_LINK" - A rich link annotation.
+	//   "CUSTOM_EMOJI" - A custom emoji annotation.
 	Type string `json:"type,omitempty"`
 	// UserMention: The metadata of user mention.
 	UserMention *UserMentionMetadata `json:"userMention,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "Length") to unconditionally
-	// include in API requests. By default, fields with empty or default values are
-	// omitted from API requests. See
+	// ForceSendFields is a list of field names (e.g. "CustomEmojiMetadata") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Length") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
+	// NullFields is a list of field names (e.g. "CustomEmojiMetadata") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -1261,6 +1264,28 @@ func (s CustomEmoji) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// CustomEmojiMetadata: Annotation metadata for custom emoji.
+type CustomEmojiMetadata struct {
+	// CustomEmoji: The custom emoji.
+	CustomEmoji *CustomEmoji `json:"customEmoji,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "CustomEmoji") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CustomEmoji") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s CustomEmojiMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod CustomEmojiMetadata
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // DateInput: Date input values.
 type DateInput struct {
 	// MsSinceEpoch: Time since epoch time, in milliseconds.
@@ -1363,11 +1388,15 @@ type DeprecatedEvent struct {
 	// (https://developers.google.com/workspace/chat/dialogs), like data entered on
 	// a card.
 	Common *CommonEventObject `json:"common,omitempty"`
-	// ConfigCompleteRedirectUrl: For `MESSAGE` interaction events, the URL that
-	// users must be redirected to after they complete an authorization or
-	// configuration flow outside of Google Chat. For more information, see Connect
-	// a Chat app with other services and tools
+	// ConfigCompleteRedirectUrl: This URL is populated for `MESSAGE` and
+	// `ADDED_TO_SPACE` interaction events. After completing an authorization or
+	// configuration flow outside of Google Chat, users must be redirected to this
+	// URL to signal to Google Chat that the authorization or configuration flow
+	// was successful. For more information, see Connect a Chat app with other
+	// services and tools
 	// (https://developers.google.com/workspace/chat/connect-web-services-tools).
+	// In Developer Preview (https://developers.google.com/workspace/preview), this
+	// URL is also populated for `APP_COMMAND` interaction events.
 	ConfigCompleteRedirectUrl string `json:"configCompleteRedirectUrl,omitempty"`
 	// DialogEventType: The type of dialog
 	// (https://developers.google.com/workspace/chat/dialogs) interaction event
@@ -1575,7 +1604,7 @@ func (s DriveLinkData) MarshalJSON() ([]byte, error) {
 
 // Emoji: An emoji that is used as a reaction to a message.
 type Emoji struct {
-	// CustomEmoji: Output only. A custom emoji.
+	// CustomEmoji: A custom emoji.
 	CustomEmoji *CustomEmoji `json:"customEmoji,omitempty"`
 	// Unicode: Optional. A basic emoji represented by a unicode string.
 	Unicode string `json:"unicode,omitempty"`
@@ -9493,8 +9522,8 @@ type SpacesMessagesReactionsCreateCall struct {
 	header_    http.Header
 }
 
-// Create: Creates a reaction and adds it to a message. Only unicode emojis are
-// supported. For an example, see Add a reaction to a message
+// Create: Creates a reaction and adds it to a message. For an example, see Add
+// a reaction to a message
 // (https://developers.google.com/workspace/chat/create-reactions). Requires
 // user authentication
 // (https://developers.google.com/workspace/chat/authenticate-authorize-chat-user).
@@ -9600,10 +9629,9 @@ type SpacesMessagesReactionsDeleteCall struct {
 	header_    http.Header
 }
 
-// Delete: Deletes a reaction to a message. Only unicode emojis are supported.
-// For an example, see Delete a reaction
-// (https://developers.google.com/workspace/chat/delete-reactions). Requires
-// user authentication
+// Delete: Deletes a reaction to a message. For an example, see Delete a
+// reaction (https://developers.google.com/workspace/chat/delete-reactions).
+// Requires user authentication
 // (https://developers.google.com/workspace/chat/authenticate-authorize-chat-user).
 //
 //   - name: Name of the reaction to delete. Format:

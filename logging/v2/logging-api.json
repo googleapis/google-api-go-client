@@ -8922,7 +8922,7 @@
       }
     }
   },
-  "revision": "20250110",
+  "revision": "20250204",
   "rootUrl": "https://logging.googleapis.com/",
   "schemas": {
     "AuditConfig": {

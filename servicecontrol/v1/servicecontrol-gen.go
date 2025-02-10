@@ -1957,6 +1957,10 @@ type Request struct {
 	Id string `json:"id,omitempty"`
 	// Method: The HTTP request method, such as `GET`, `POST`.
 	Method string `json:"method,omitempty"`
+	// Origin: The values from Origin header from the HTTP request, such as
+	// "https://console.cloud.google.com". Modern browsers can only have one
+	// origin. Special browsers and/or HTTP clients may require multiple origins.
+	Origin string `json:"origin,omitempty"`
 	// Path: The HTTP URL path, excluding the query parameters.
 	Path string `json:"path,omitempty"`
 	// Protocol: The network protocol used with the request, such as "http/1.1",

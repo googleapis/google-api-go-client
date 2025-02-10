@@ -1236,12 +1236,13 @@ func (s CloneAddressGroupItemsRequest) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// CustomInterceptProfile: CustomInterceptProfile defines the Packet Intercept
-// Endpoint Group used to intercept traffic to a third-party firewall in a
-// Firewall rule.
+// CustomInterceptProfile: CustomInterceptProfile defines in-band integration
+// behavior (intercept). It is used by firewall rules with an
+// APPLY_SECURITY_PROFILE_GROUP action.
 type CustomInterceptProfile struct {
-	// InterceptEndpointGroup: Required. The InterceptEndpointGroup to which
-	// traffic associated with the SP should be mirrored.
+	// InterceptEndpointGroup: Required. The target InterceptEndpointGroup. When a
+	// firewall rule with this security profile attached matches a packet, the
+	// packet will be intercepted to the location-local target in this group.
 	InterceptEndpointGroup string `json:"interceptEndpointGroup,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "InterceptEndpointGroup") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -1261,11 +1262,13 @@ func (s CustomInterceptProfile) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// CustomMirroringProfile: CustomMirroringProfile defines an action for
-// mirroring traffic to a collector's EndpointGroup
+// CustomMirroringProfile: CustomMirroringProfile defines out-of-band
+// integration behavior (mirroring). It is used by mirroring rules with a
+// MIRROR action.
 type CustomMirroringProfile struct {
-	// MirroringEndpointGroup: Required. The MirroringEndpointGroup to which
-	// traffic associated with the SP should be mirrored.
+	// MirroringEndpointGroup: Required. The target MirroringEndpointGroup. When a
+	// mirroring rule with this security profile attached matches a packet, a
+	// replica will be mirrored to the location-local target in this group.
 	MirroringEndpointGroup string `json:"mirroringEndpointGroup,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "MirroringEndpointGroup") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -3253,6 +3256,9 @@ func (s MTLSPolicy) MarshalJSON() ([]byte, error) {
 type MirroringDeployment struct {
 	// CreateTime: Output only. [Output only] Create time stamp
 	CreateTime string `json:"createTime,omitempty"`
+	// Description: Optional. User-provided description of the deployment. Used as
+	// additional context for the deployment.
+	Description string `json:"description,omitempty"`
 	// ForwardingRule: Required. Immutable. The regional load balancer which the
 	// mirrored traffic should be forwarded to. Format is:
 	// projects/{project}/regions/{region}/forwardingRules/{forwardingRule}
@@ -3315,6 +3321,9 @@ type MirroringDeploymentGroup struct {
 	ConnectedEndpointGroups []*MirroringDeploymentGroupConnectedEndpointGroup `json:"connectedEndpointGroups,omitempty"`
 	// CreateTime: Output only. [Output only] Create time stamp
 	CreateTime string `json:"createTime,omitempty"`
+	// Description: Optional. User-provided description of the deployment group.
+	// Used as additional context for the deployment group.
+	Description string `json:"description,omitempty"`
 	// Labels: Optional. Labels as key value pairs
 	Labels map[string]string `json:"labels,omitempty"`
 	// Name: Immutable. Identifier. Then name of the MirroringDeploymentGroup.
@@ -3386,6 +3395,9 @@ type MirroringEndpointGroup struct {
 	Associations []*MirroringEndpointGroupAssociationDetails `json:"associations,omitempty"`
 	// CreateTime: Output only. [Output only] Create time stamp
 	CreateTime string `json:"createTime,omitempty"`
+	// Description: Optional. User-provided description of the endpoint group. Used
+	// as additional context for the endpoint group.
+	Description string `json:"description,omitempty"`
 	// Labels: Optional. Labels as key value pairs
 	Labels map[string]string `json:"labels,omitempty"`
 	// MirroringDeploymentGroup: Required. Immutable. The Mirroring Deployment
@@ -3802,6 +3814,9 @@ type SecurityProfileGroup struct {
 	// CustomMirroringProfile: Optional. Reference to a SecurityProfile with the
 	// CustomMirroring configuration.
 	CustomMirroringProfile string `json:"customMirroringProfile,omitempty"`
+	// DataPathId: Output only. Identifier used by the data-path. Unique within
+	// {container, location}.
+	DataPathId uint64 `json:"dataPathId,omitempty,string"`
 	// Description: Optional. An optional description of the profile group. Max
 	// length 2048 characters.
 	Description string `json:"description,omitempty"`

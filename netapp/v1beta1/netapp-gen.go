@@ -267,6 +267,7 @@ type ProjectsLocationsStoragePoolsService struct {
 
 func NewProjectsLocationsVolumesService(s *Service) *ProjectsLocationsVolumesService {
 	rs := &ProjectsLocationsVolumesService{s: s}
+	rs.QuotaRules = NewProjectsLocationsVolumesQuotaRulesService(s)
 	rs.Replications = NewProjectsLocationsVolumesReplicationsService(s)
 	rs.Snapshots = NewProjectsLocationsVolumesSnapshotsService(s)
 	return rs
@@ -275,9 +276,20 @@ func NewProjectsLocationsVolumesService(s *Service) *ProjectsLocationsVolumesSer
 type ProjectsLocationsVolumesService struct {
 	s *Service
 
+	QuotaRules *ProjectsLocationsVolumesQuotaRulesService
+
 	Replications *ProjectsLocationsVolumesReplicationsService
 
 	Snapshots *ProjectsLocationsVolumesSnapshotsService
+}
+
+func NewProjectsLocationsVolumesQuotaRulesService(s *Service) *ProjectsLocationsVolumesQuotaRulesService {
+	rs := &ProjectsLocationsVolumesQuotaRulesService{s: s}
+	return rs
+}
+
+type ProjectsLocationsVolumesQuotaRulesService struct {
+	s *Service
 }
 
 func NewProjectsLocationsVolumesReplicationsService(s *Service) *ProjectsLocationsVolumesReplicationsService {
@@ -808,6 +820,15 @@ type HybridPeeringDetails struct {
 	// Passphrase: Optional. Temporary passphrase generated to accept cluster
 	// peering command.
 	Passphrase string `json:"passphrase,omitempty"`
+	// PeerClusterName: Optional. Name of the user's local source cluster to be
+	// peered with the destination cluster.
+	PeerClusterName string `json:"peerClusterName,omitempty"`
+	// PeerSvmName: Optional. Name of the user's local source vserver svm to be
+	// peered with the destination vserver svm.
+	PeerSvmName string `json:"peerSvmName,omitempty"`
+	// PeerVolumeName: Optional. Name of the user's local source volume to be
+	// peered with the destination volume.
+	PeerVolumeName string `json:"peerVolumeName,omitempty"`
 	// SubnetIp: Optional. IP address of the subnet.
 	SubnetIp string `json:"subnetIp,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Command") to unconditionally
@@ -1146,6 +1167,37 @@ func (s ListOperationsResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// ListQuotaRulesResponse: ListQuotaRulesResponse is the response to a
+// ListQuotaRulesRequest.
+type ListQuotaRulesResponse struct {
+	// NextPageToken: A token identifying a page of results the server should
+	// return.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+	// QuotaRules: List of quota rules
+	QuotaRules []*QuotaRule `json:"quotaRules,omitempty"`
+	// Unreachable: Locations that could not be reached.
+	Unreachable []string `json:"unreachable,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "NextPageToken") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ListQuotaRulesResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ListQuotaRulesResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // ListReplicationsResponse: ListReplicationsResponse is the result of
 // ListReplicationsRequest.
 type ListReplicationsResponse struct {
@@ -1310,6 +1362,14 @@ func (s Location) MarshalJSON() ([]byte, error) {
 
 // LocationMetadata: Metadata for a given google.cloud.location.Location.
 type LocationMetadata struct {
+	// SupportedFlexPerformance: Output only. Supported flex performance in a
+	// location.
+	//
+	// Possible values:
+	//   "FLEX_PERFORMANCE_UNSPECIFIED" - Unspecified flex performance.
+	//   "FLEX_PERFORMANCE_DEFAULT" - Flex Storage Pool with default performance.
+	//   "FLEX_PERFORMANCE_CUSTOM" - Flex Storage Pool with custom performance.
+	SupportedFlexPerformance []string `json:"supportedFlexPerformance,omitempty"`
 	// SupportedServiceLevels: Output only. Supported service levels in a location.
 	//
 	// Possible values:
@@ -1319,13 +1379,13 @@ type LocationMetadata struct {
 	//   "STANDARD" - Standard service level.
 	//   "FLEX" - Flex service level.
 	SupportedServiceLevels []string `json:"supportedServiceLevels,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "SupportedServiceLevels") to
-	// unconditionally include in API requests. By default, fields with empty or
+	// ForceSendFields is a list of field names (e.g. "SupportedFlexPerformance")
+	// to unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "SupportedServiceLevels") to
+	// NullFields is a list of field names (e.g. "SupportedFlexPerformance") to
 	// include in API requests with the JSON null value. By default, fields with
 	// empty values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
@@ -1505,6 +1565,67 @@ type OperationMetadata struct {
 
 func (s OperationMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod OperationMetadata
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// QuotaRule: QuotaRule specifies the maximum disk space a user or group can
+// use within a volume. They can be used for creating default and individual
+// quota rules.
+type QuotaRule struct {
+	// CreateTime: Output only. Create time of the quota rule
+	CreateTime string `json:"createTime,omitempty"`
+	// Description: Optional. Description of the quota rule
+	Description string `json:"description,omitempty"`
+	// DiskLimitMib: Required. The maximum allowed disk space in MiB.
+	DiskLimitMib int64 `json:"diskLimitMib,omitempty"`
+	// Labels: Optional. Labels of the quota rule
+	Labels map[string]string `json:"labels,omitempty"`
+	// Name: Identifier. The resource name of the quota rule. Format:
+	// `projects/{project_number}/locations/{location_id}/volumes/volumes/{volume_id
+	// }/quotaRules/{quota_rule_id}`.
+	Name string `json:"name,omitempty"`
+	// State: Output only. State of the quota rule
+	//
+	// Possible values:
+	//   "STATE_UNSPECIFIED" - Unspecified state for quota rule
+	//   "CREATING" - Quota rule is creating
+	//   "UPDATING" - Quota rule is updating
+	//   "DELETING" - Quota rule is deleting
+	//   "READY" - Quota rule is ready
+	//   "ERROR" - Quota rule is in error state.
+	State string `json:"state,omitempty"`
+	// StateDetails: Output only. State details of the quota rule
+	StateDetails string `json:"stateDetails,omitempty"`
+	// Target: Optional. The quota rule applies to the specified user or group,
+	// identified by a Unix UID/GID, Windows SID, or null for default.
+	Target string `json:"target,omitempty"`
+	// Type: Required. The type of quota rule.
+	//
+	// Possible values:
+	//   "TYPE_UNSPECIFIED" - Unspecified type for quota rule
+	//   "INDIVIDUAL_USER_QUOTA" - Individual user quota rule
+	//   "INDIVIDUAL_GROUP_QUOTA" - Individual group quota rule
+	//   "DEFAULT_USER_QUOTA" - Default user quota rule
+	//   "DEFAULT_GROUP_QUOTA" - Default group quota rule
+	Type string `json:"type,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "CreateTime") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CreateTime") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s QuotaRule) MarshalJSON() ([]byte, error) {
+	type NoMethod QuotaRule
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -7833,6 +7954,600 @@ func (c *ProjectsLocationsVolumesRevertCall) Do(opts ...googleapi.CallOption) (*
 		return nil, err
 	}
 	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "netapp.projects.locations.volumes.revert", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsVolumesQuotaRulesCreateCall struct {
+	s          *Service
+	parent     string
+	quotarule  *QuotaRule
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Create: Creates a new quota rule.
+//
+// - parent: Parent value for CreateQuotaRuleRequest.
+func (r *ProjectsLocationsVolumesQuotaRulesService) Create(parent string, quotarule *QuotaRule) *ProjectsLocationsVolumesQuotaRulesCreateCall {
+	c := &ProjectsLocationsVolumesQuotaRulesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.quotarule = quotarule
+	return c
+}
+
+// QuotaRuleId sets the optional parameter "quotaRuleId": Required. ID of the
+// quota rule to create. Must be unique within the parent resource. Must
+// contain only letters, numbers, underscore and hyphen, with the first
+// character a letter or underscore, the last a letter or underscore or a
+// number, and a 63 character maximum.
+func (c *ProjectsLocationsVolumesQuotaRulesCreateCall) QuotaRuleId(quotaRuleId string) *ProjectsLocationsVolumesQuotaRulesCreateCall {
+	c.urlParams_.Set("quotaRuleId", quotaRuleId)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsVolumesQuotaRulesCreateCall) Fields(s ...googleapi.Field) *ProjectsLocationsVolumesQuotaRulesCreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsVolumesQuotaRulesCreateCall) Context(ctx context.Context) *ProjectsLocationsVolumesQuotaRulesCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsVolumesQuotaRulesCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsVolumesQuotaRulesCreateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.quotarule)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+parent}/quotaRules")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "netapp.projects.locations.volumes.quotaRules.create", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "netapp.projects.locations.volumes.quotaRules.create" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsVolumesQuotaRulesCreateCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "netapp.projects.locations.volumes.quotaRules.create", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsVolumesQuotaRulesDeleteCall struct {
+	s          *Service
+	name       string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Delete: Deletes a quota rule.
+//
+// - name: Name of the quota rule.
+func (r *ProjectsLocationsVolumesQuotaRulesService) Delete(name string) *ProjectsLocationsVolumesQuotaRulesDeleteCall {
+	c := &ProjectsLocationsVolumesQuotaRulesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsVolumesQuotaRulesDeleteCall) Fields(s ...googleapi.Field) *ProjectsLocationsVolumesQuotaRulesDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsVolumesQuotaRulesDeleteCall) Context(ctx context.Context) *ProjectsLocationsVolumesQuotaRulesDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsVolumesQuotaRulesDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsVolumesQuotaRulesDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("DELETE", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "netapp.projects.locations.volumes.quotaRules.delete", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "netapp.projects.locations.volumes.quotaRules.delete" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsVolumesQuotaRulesDeleteCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "netapp.projects.locations.volumes.quotaRules.delete", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsVolumesQuotaRulesGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Returns details of the specified quota rule.
+//
+// - name: Name of the quota rule.
+func (r *ProjectsLocationsVolumesQuotaRulesService) Get(name string) *ProjectsLocationsVolumesQuotaRulesGetCall {
+	c := &ProjectsLocationsVolumesQuotaRulesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsVolumesQuotaRulesGetCall) Fields(s ...googleapi.Field) *ProjectsLocationsVolumesQuotaRulesGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsVolumesQuotaRulesGetCall) IfNoneMatch(entityTag string) *ProjectsLocationsVolumesQuotaRulesGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsVolumesQuotaRulesGetCall) Context(ctx context.Context) *ProjectsLocationsVolumesQuotaRulesGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsVolumesQuotaRulesGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsVolumesQuotaRulesGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "netapp.projects.locations.volumes.quotaRules.get", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "netapp.projects.locations.volumes.quotaRules.get" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *QuotaRule.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsVolumesQuotaRulesGetCall) Do(opts ...googleapi.CallOption) (*QuotaRule, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &QuotaRule{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "netapp.projects.locations.volumes.quotaRules.get", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsVolumesQuotaRulesListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Returns list of all quota rules in a location.
+//
+// - parent: Parent value for ListQuotaRulesRequest.
+func (r *ProjectsLocationsVolumesQuotaRulesService) List(parent string) *ProjectsLocationsVolumesQuotaRulesListCall {
+	c := &ProjectsLocationsVolumesQuotaRulesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// Filter sets the optional parameter "filter": Filtering results
+func (c *ProjectsLocationsVolumesQuotaRulesListCall) Filter(filter string) *ProjectsLocationsVolumesQuotaRulesListCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// OrderBy sets the optional parameter "orderBy": Hint for how to order the
+// results
+func (c *ProjectsLocationsVolumesQuotaRulesListCall) OrderBy(orderBy string) *ProjectsLocationsVolumesQuotaRulesListCall {
+	c.urlParams_.Set("orderBy", orderBy)
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": Requested page size. Server
+// may return fewer items than requested. If unspecified, the server will pick
+// an appropriate default.
+func (c *ProjectsLocationsVolumesQuotaRulesListCall) PageSize(pageSize int64) *ProjectsLocationsVolumesQuotaRulesListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": A token identifying a
+// page of results the server should return.
+func (c *ProjectsLocationsVolumesQuotaRulesListCall) PageToken(pageToken string) *ProjectsLocationsVolumesQuotaRulesListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsVolumesQuotaRulesListCall) Fields(s ...googleapi.Field) *ProjectsLocationsVolumesQuotaRulesListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsVolumesQuotaRulesListCall) IfNoneMatch(entityTag string) *ProjectsLocationsVolumesQuotaRulesListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsVolumesQuotaRulesListCall) Context(ctx context.Context) *ProjectsLocationsVolumesQuotaRulesListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsVolumesQuotaRulesListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsVolumesQuotaRulesListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+parent}/quotaRules")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "netapp.projects.locations.volumes.quotaRules.list", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "netapp.projects.locations.volumes.quotaRules.list" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *ListQuotaRulesResponse.ServerResponse.Header or (if a response was returned
+// at all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *ProjectsLocationsVolumesQuotaRulesListCall) Do(opts ...googleapi.CallOption) (*ListQuotaRulesResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ListQuotaRulesResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "netapp.projects.locations.volumes.quotaRules.list", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsLocationsVolumesQuotaRulesListCall) Pages(ctx context.Context, f func(*ListQuotaRulesResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+type ProjectsLocationsVolumesQuotaRulesPatchCall struct {
+	s          *Service
+	name       string
+	quotarule  *QuotaRule
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Patch: Updates a quota rule.
+//
+//   - name: Identifier. The resource name of the quota rule. Format:
+//     `projects/{project_number}/locations/{location_id}/volumes/volumes/{volume_
+//     id}/quotaRules/{quota_rule_id}`.
+func (r *ProjectsLocationsVolumesQuotaRulesService) Patch(name string, quotarule *QuotaRule) *ProjectsLocationsVolumesQuotaRulesPatchCall {
+	c := &ProjectsLocationsVolumesQuotaRulesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.quotarule = quotarule
+	return c
+}
+
+// UpdateMask sets the optional parameter "updateMask": Field mask is used to
+// specify the fields to be overwritten in the Quota Rule resource by the
+// update. The fields specified in the update_mask are relative to the
+// resource, not the full request. A field will be overwritten if it is in the
+// mask. If the user does not provide a mask then all fields will be
+// overwritten.
+func (c *ProjectsLocationsVolumesQuotaRulesPatchCall) UpdateMask(updateMask string) *ProjectsLocationsVolumesQuotaRulesPatchCall {
+	c.urlParams_.Set("updateMask", updateMask)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsVolumesQuotaRulesPatchCall) Fields(s ...googleapi.Field) *ProjectsLocationsVolumesQuotaRulesPatchCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsVolumesQuotaRulesPatchCall) Context(ctx context.Context) *ProjectsLocationsVolumesQuotaRulesPatchCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsVolumesQuotaRulesPatchCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsVolumesQuotaRulesPatchCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.quotarule)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PATCH", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "netapp.projects.locations.volumes.quotaRules.patch", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "netapp.projects.locations.volumes.quotaRules.patch" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsVolumesQuotaRulesPatchCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "netapp.projects.locations.volumes.quotaRules.patch", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 

@@ -2085,6 +2085,28 @@ func (s EndpointAttachment) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// EnrichmentConfig: Data enrichment configuration.
+type EnrichmentConfig struct {
+	// AppendAcl: Optional. Append ACL to the event.
+	AppendAcl bool `json:"appendAcl,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AppendAcl") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AppendAcl") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s EnrichmentConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod EnrichmentConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // EnumOption: EnumOption definition
 type EnumOption struct {
 	// DisplayName: Optional. Display name of the option.
@@ -2281,6 +2303,8 @@ type EventingConfig struct {
 	// DeadLetterConfig: Optional. Dead letter configuration for eventing of a
 	// connection.
 	DeadLetterConfig *DeadLetterConfig `json:"deadLetterConfig,omitempty"`
+	// EnrichmentConfig: Optional. Data enrichment configuration.
+	EnrichmentConfig *EnrichmentConfig `json:"enrichmentConfig,omitempty"`
 	// EnrichmentEnabled: Optional. Enrichment Enabled.
 	EnrichmentEnabled bool `json:"enrichmentEnabled,omitempty"`
 	// EventsListenerIngressEndpoint: Optional. Ingress endpoint of the event
@@ -13930,6 +13954,7 @@ func (r *ProjectsLocationsProvidersConnectorsVersionsService) FetchAuthSchema(na
 //	"AUTH_SCHEMA_VIEW_UNSPECIFIED" - Default value.
 //	"BASIC" - Basic view of the AuthSchema.
 //	"JSON_SCHEMA" - JSON schema view of the AuthSchema.
+//	"EUA_SCHEMA" - EUA Schema view of the AuthSchema.
 func (c *ProjectsLocationsProvidersConnectorsVersionsFetchAuthSchemaCall) View(view string) *ProjectsLocationsProvidersConnectorsVersionsFetchAuthSchemaCall {
 	c.urlParams_.Set("view", view)
 	return c

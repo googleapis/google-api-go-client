@@ -149,7 +149,7 @@
               ],
               "parameters": {
                 "dataSource": {
-                  "description": "Required. The primary or supplemental product data source name. If the product already exists and data source provided is different, then the product will be moved to a new data source. Format: `accounts/{account}/dataSources/{datasource}`.",
+                  "description": "Required. The primary or supplemental product data source name. If the product already exists and data source provided is different, then the product will be moved to a new data source. Only API data sources are supported. Format: `accounts/{account}/dataSources/{datasource}`.",
                   "location": "query",
                   "type": "string"
                 },
@@ -242,7 +242,7 @@
       }
     }
   },
-  "revision": "20250203",
+  "revision": "20250208",
   "rootUrl": "https://merchantapi.googleapis.com/",
   "schemas": {
     "Attributes": {

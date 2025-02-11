@@ -1982,7 +1982,8 @@ func (r *AccountsProductInputsService) Insert(parent string, productinput *Produ
 // DataSource sets the optional parameter "dataSource": Required. The primary
 // or supplemental product data source name. If the product already exists and
 // data source provided is different, then the product will be moved to a new
-// data source. Format: `accounts/{account}/dataSources/{datasource}`.
+// data source. Only API data sources are supported. Format:
+// `accounts/{account}/dataSources/{datasource}`.
 func (c *AccountsProductInputsInsertCall) DataSource(dataSource string) *AccountsProductInputsInsertCall {
 	c.urlParams_.Set("dataSource", dataSource)
 	return c

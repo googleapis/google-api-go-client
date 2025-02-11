@@ -1,6 +1,6 @@
 module google.golang.org/api
 
-go 1.22
+go 1.22.7
 
 require (
 	cloud.google.com/go/auth v0.14.1

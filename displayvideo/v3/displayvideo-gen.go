@@ -9905,6 +9905,10 @@ type IntegralAdScience struct {
 	//   "VIOLENCE_HR" - Violence - Exclude High Risk.
 	//   "VIOLENCE_HMR" - Violence - Exclude High and Moderate Risk.
 	ExcludedViolenceRisk string `json:"excludedViolenceRisk,omitempty"`
+	// QualitySyncCustomSegmentId: Optional. The quality sync custom segment ID
+	// provided by Integral Ad Science. The ID must be between `3000000` and
+	// `4999999`, inclusive.
+	QualitySyncCustomSegmentId googleapi.Int64s `json:"qualitySyncCustomSegmentId,omitempty"`
 	// TraqScoreOption: True advertising quality (applicable to Display line items
 	// only).
 	//

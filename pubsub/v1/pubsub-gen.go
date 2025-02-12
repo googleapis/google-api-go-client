@@ -1088,7 +1088,7 @@ func (s IngestionDataSourceSettings) MarshalJSON() ([]byte, error) {
 // a Pub/Sub message.
 type JavaScriptUDF struct {
 	// Code: Required. JavaScript code that contains a function `function_name`
-	// with the below signature: /** * Transforms a Pub/Sub message. * @return
+	// with the below signature: ``` /** * Transforms a Pub/Sub message. * @return
 	// {(Object)>|null)} - To * filter a message, return `null`. To transform a
 	// message return a map * with the following keys: * - (required) 'data' :
 	// {string} * - (optional) 'attributes' : {Object} * Returning empty
@@ -1097,7 +1097,7 @@ type JavaScriptUDF struct {
 	// (required) 'attributes' : {Object} * * @param {Object} metadata - Pub/Sub
 	// message metadata. * Keys: * - (required) 'message_id' : {string} * -
 	// (optional) 'publish_time': {string} YYYY-MM-DDTHH:MM:SSZ format * -
-	// (optional) 'ordering_key': {string} */ function (message, metadata) { }
+	// (optional) 'ordering_key': {string} */ function (message, metadata) { } ```
 	Code string `json:"code,omitempty"`
 	// FunctionName: Required. Name of the JavasScript function that should applied
 	// to Pub/Sub messages.

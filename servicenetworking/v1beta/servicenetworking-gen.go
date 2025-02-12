@@ -625,6 +625,12 @@ type BackendRule struct {
 	// backend. This ID token will be added in the HTTP "authorization" header, and
 	// sent to the backend.
 	JwtAudience string `json:"jwtAudience,omitempty"`
+	// LoadBalancingPolicy: The load balancing policy used for connection to the
+	// application backend. Defined as an arbitrary string to accomondate custom
+	// load balancing policies supported by the underlying channel, but suggest
+	// most users use one of the standard policies, such as the default,
+	// "RoundRobin".
+	LoadBalancingPolicy string `json:"loadBalancingPolicy,omitempty"`
 	// MinDeadline: Deprecated, do not use.
 	MinDeadline float64 `json:"minDeadline,omitempty"`
 	// OperationDeadline: The number of seconds to wait for the completion of a

@@ -179,6 +179,7 @@ func NewProjectsLocationsService(s *Service) *ProjectsLocationsService {
 	rs.IssueModels = NewProjectsLocationsIssueModelsService(s)
 	rs.Operations = NewProjectsLocationsOperationsService(s)
 	rs.PhraseMatchers = NewProjectsLocationsPhraseMatchersService(s)
+	rs.QaQuestionTags = NewProjectsLocationsQaQuestionTagsService(s)
 	rs.QaScorecards = NewProjectsLocationsQaScorecardsService(s)
 	rs.Views = NewProjectsLocationsViewsService(s)
 	return rs
@@ -202,6 +203,8 @@ type ProjectsLocationsService struct {
 	Operations *ProjectsLocationsOperationsService
 
 	PhraseMatchers *ProjectsLocationsPhraseMatchersService
+
+	QaQuestionTags *ProjectsLocationsQaQuestionTagsService
 
 	QaScorecards *ProjectsLocationsQaScorecardsService
 
@@ -337,6 +340,15 @@ func NewProjectsLocationsPhraseMatchersService(s *Service) *ProjectsLocationsPhr
 }
 
 type ProjectsLocationsPhraseMatchersService struct {
+	s *Service
+}
+
+func NewProjectsLocationsQaQuestionTagsService(s *Service) *ProjectsLocationsQaQuestionTagsService {
+	rs := &ProjectsLocationsQaQuestionTagsService{s: s}
+	return rs
+}
+
+type ProjectsLocationsQaQuestionTagsService struct {
 	s *Service
 }
 
@@ -2627,6 +2639,20 @@ func (s GoogleCloudContactcenterinsightsV1ExportInsightsDataMetadata) MarshalJSO
 type GoogleCloudContactcenterinsightsV1ExportInsightsDataRequest struct {
 	// BigQueryDestination: Specified if sink is a BigQuery table.
 	BigQueryDestination *GoogleCloudContactcenterinsightsV1ExportInsightsDataRequestBigQueryDestination `json:"bigQueryDestination,omitempty"`
+	// ExportSchemaVersion: Optional. Version of the export schema.
+	//
+	// Possible values:
+	//   "EXPORT_SCHEMA_VERSION_UNSPECIFIED" - Unspecified. Defaults to EXPORT_V3.
+	//   "EXPORT_V1" - Export schema version 1.
+	//   "EXPORT_V2" - Export schema version 2.
+	//   "EXPORT_V3" - Export schema version 3.
+	//   "EXPORT_V4" - Export schema version 4.
+	//   "EXPORT_V5" - Export schema version 5.
+	//   "EXPORT_V6" - Export schema version 6.
+	//   "EXPORT_V7" - Export schema version 7.
+	//   "EXPORT_VERSION_LATEST_AVAILABLE" - Export schema version latest
+	// available.
+	ExportSchemaVersion string `json:"exportSchemaVersion,omitempty"`
 	// Filter: A filter to reduce results to a specific subset. Useful for
 	// exporting conversations with specific properties.
 	Filter string `json:"filter,omitempty"`
@@ -3863,6 +3889,35 @@ func (s GoogleCloudContactcenterinsightsV1ListPhraseMatchersResponse) MarshalJSO
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudContactcenterinsightsV1ListQaQuestionTagsResponse: The response
+// from a ListQaQuestionTags request.
+type GoogleCloudContactcenterinsightsV1ListQaQuestionTagsResponse struct {
+	// NextPageToken: A token, which can be sent as `page_token` to retrieve the
+	// next page. If this field is omitted, there are no subsequent pages.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+	// QaQuestionTags: The parent resource of the questions.
+	QaQuestionTags []*GoogleCloudContactcenterinsightsV1QaQuestionTag `json:"qaQuestionTags,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "NextPageToken") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudContactcenterinsightsV1ListQaQuestionTagsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudContactcenterinsightsV1ListQaQuestionTagsResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudContactcenterinsightsV1ListQaQuestionsResponse: The response from
 // a ListQaQuestions request.
 type GoogleCloudContactcenterinsightsV1ListQaQuestionsResponse struct {
@@ -4434,6 +4489,46 @@ func (s *GoogleCloudContactcenterinsightsV1QaQuestionMetrics) UnmarshalJSON(data
 	}
 	s.Accuracy = float64(s1.Accuracy)
 	return nil
+}
+
+// GoogleCloudContactcenterinsightsV1QaQuestionTag: A tag is a resource which
+// aims to categorize a set of questions across multiple scorecards, e.g.,
+// "Customer Satisfaction","Billing", etc.
+type GoogleCloudContactcenterinsightsV1QaQuestionTag struct {
+	// CreateTime: Output only. The time at which the question tag was created.
+	CreateTime string `json:"createTime,omitempty"`
+	// DisplayName: Required. A user-specified display name for the tag.
+	DisplayName string `json:"displayName,omitempty"`
+	// Name: Identifier. Resource name for the QaQuestionTag Format
+	// projects/{project}/locations/{location}/qaQuestionTags/{qa_question_tag} In
+	// the above format, the last segment, i.e., qa_question_tag, is a
+	// server-generated ID corresponding to the tag resource.
+	Name string `json:"name,omitempty"`
+	// QaQuestionIds: Optional. The list of QA question IDs that the tag applies
+	// to. Optional, a tag may not necessarily be referenced by any questions.
+	QaQuestionIds []string `json:"qaQuestionIds,omitempty"`
+	// UpdateTime: Output only. The most recent time at which the question tag was
+	// updated.
+	UpdateTime string `json:"updateTime,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "CreateTime") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CreateTime") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudContactcenterinsightsV1QaQuestionTag) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudContactcenterinsightsV1QaQuestionTag
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudContactcenterinsightsV1QaQuestionTuningMetadata: Metadata about
@@ -7441,6 +7536,20 @@ func (s GoogleCloudContactcenterinsightsV1alpha1ExportInsightsDataMetadata) Mars
 type GoogleCloudContactcenterinsightsV1alpha1ExportInsightsDataRequest struct {
 	// BigQueryDestination: Specified if sink is a BigQuery table.
 	BigQueryDestination *GoogleCloudContactcenterinsightsV1alpha1ExportInsightsDataRequestBigQueryDestination `json:"bigQueryDestination,omitempty"`
+	// ExportSchemaVersion: Optional. Version of the export schema.
+	//
+	// Possible values:
+	//   "EXPORT_SCHEMA_VERSION_UNSPECIFIED" - Unspecified. Defaults to EXPORT_V3.
+	//   "EXPORT_V1" - Export schema version 1.
+	//   "EXPORT_V2" - Export schema version 2.
+	//   "EXPORT_V3" - Export schema version 3.
+	//   "EXPORT_V4" - Export schema version 4.
+	//   "EXPORT_V5" - Export schema version 5.
+	//   "EXPORT_V6" - Export schema version 6.
+	//   "EXPORT_V7" - Export schema version 7.
+	//   "EXPORT_VERSION_LATEST_AVAILABLE" - Export schema version latest
+	// available.
+	ExportSchemaVersion string `json:"exportSchemaVersion,omitempty"`
 	// Filter: A filter to reduce results to a specific subset. Useful for
 	// exporting conversations with specific properties.
 	Filter string `json:"filter,omitempty"`
@@ -16265,6 +16374,270 @@ func (c *ProjectsLocationsPhraseMatchersPatchCall) Do(opts ...googleapi.CallOpti
 	}
 	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "contactcenterinsights.projects.locations.phraseMatchers.patch", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
+}
+
+type ProjectsLocationsQaQuestionTagsCreateCall struct {
+	s                                               *Service
+	parent                                          string
+	googlecloudcontactcenterinsightsv1qaquestiontag *GoogleCloudContactcenterinsightsV1QaQuestionTag
+	urlParams_                                      gensupport.URLParams
+	ctx_                                            context.Context
+	header_                                         http.Header
+}
+
+// Create: Create a QaQuestionTag.
+//
+// - parent: The parent resource of the QaQuestionTag.
+func (r *ProjectsLocationsQaQuestionTagsService) Create(parent string, googlecloudcontactcenterinsightsv1qaquestiontag *GoogleCloudContactcenterinsightsV1QaQuestionTag) *ProjectsLocationsQaQuestionTagsCreateCall {
+	c := &ProjectsLocationsQaQuestionTagsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.googlecloudcontactcenterinsightsv1qaquestiontag = googlecloudcontactcenterinsightsv1qaquestiontag
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsQaQuestionTagsCreateCall) Fields(s ...googleapi.Field) *ProjectsLocationsQaQuestionTagsCreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsQaQuestionTagsCreateCall) Context(ctx context.Context) *ProjectsLocationsQaQuestionTagsCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsQaQuestionTagsCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsQaQuestionTagsCreateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googlecloudcontactcenterinsightsv1qaquestiontag)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/qaQuestionTags")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "contactcenterinsights.projects.locations.qaQuestionTags.create", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "contactcenterinsights.projects.locations.qaQuestionTags.create" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudContactcenterinsightsV1QaQuestionTag.ServerResponse.Header or
+// (if a response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsQaQuestionTagsCreateCall) Do(opts ...googleapi.CallOption) (*GoogleCloudContactcenterinsightsV1QaQuestionTag, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudContactcenterinsightsV1QaQuestionTag{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "contactcenterinsights.projects.locations.qaQuestionTags.create", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsQaQuestionTagsListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists the question tags.
+//
+// - parent: The parent resource of the QaQuestionTags.
+func (r *ProjectsLocationsQaQuestionTagsService) List(parent string) *ProjectsLocationsQaQuestionTagsListCall {
+	c := &ProjectsLocationsQaQuestionTagsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// Filter sets the optional parameter "filter": A filter to reduce results to a
+// specific subset. Supports disjunctions (OR) and conjunctions (AND).
+// Supported fields include the following: * `project_id` - id of the project
+// to list tags for * `qa_scorecard_revision_id` - id of the scorecard revision
+// to list tags for * `qa_question_id - id of the question to list tags for`
+func (c *ProjectsLocationsQaQuestionTagsListCall) Filter(filter string) *ProjectsLocationsQaQuestionTagsListCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The maximum number of
+// questions to return in the response. If the value is zero, the service will
+// select a default size. A call might return fewer objects than requested. A
+// non-empty `next_page_token` in the response indicates that more data is
+// available.
+func (c *ProjectsLocationsQaQuestionTagsListCall) PageSize(pageSize int64) *ProjectsLocationsQaQuestionTagsListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": The value returned by the
+// last `ListQaQuestionTagsResponse`. This value indicates that this is a
+// continuation of a prior `ListQaQuestionTags` call and that the system should
+// return the next page of data.
+func (c *ProjectsLocationsQaQuestionTagsListCall) PageToken(pageToken string) *ProjectsLocationsQaQuestionTagsListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsQaQuestionTagsListCall) Fields(s ...googleapi.Field) *ProjectsLocationsQaQuestionTagsListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsQaQuestionTagsListCall) IfNoneMatch(entityTag string) *ProjectsLocationsQaQuestionTagsListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsQaQuestionTagsListCall) Context(ctx context.Context) *ProjectsLocationsQaQuestionTagsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsQaQuestionTagsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsQaQuestionTagsListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/qaQuestionTags")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "contactcenterinsights.projects.locations.qaQuestionTags.list", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "contactcenterinsights.projects.locations.qaQuestionTags.list" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudContactcenterinsightsV1ListQaQuestionTagsResponse.ServerResponse.
+// Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsQaQuestionTagsListCall) Do(opts ...googleapi.CallOption) (*GoogleCloudContactcenterinsightsV1ListQaQuestionTagsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudContactcenterinsightsV1ListQaQuestionTagsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "contactcenterinsights.projects.locations.qaQuestionTags.list", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsLocationsQaQuestionTagsListCall) Pages(ctx context.Context, f func(*GoogleCloudContactcenterinsightsV1ListQaQuestionTagsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
 }
 
 type ProjectsLocationsQaScorecardsCreateCall struct {

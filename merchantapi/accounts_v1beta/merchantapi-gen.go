@@ -370,7 +370,7 @@ type Account struct {
 	// (https://support.google.com/merchants/answer/160556) and business name
 	// (https://support.google.com/merchants/answer/12159159) for more information.
 	AccountName string `json:"accountName,omitempty"`
-	// AdultContent: Whether this account contains adult content.
+	// AdultContent: Optional. Whether this account contains adult content.
 	AdultContent bool `json:"adultContent,omitempty"`
 	// LanguageCode: Required. The account's BCP-47 language code
 	// (https://tools.ietf.org/html/bcp47), such as `en-US` or `sr-Latn`.
@@ -3504,8 +3504,8 @@ type AccountsListCall struct {
 // constraints of the request such as page size or filters. This is not just
 // listing the sub-accounts of an MCA, but all accounts the calling user has
 // access to including other MCAs, linked accounts, standalone accounts and so
-// on. If no filter is provided, then it returns accounts the user is directly
-// added to. This method is eventually consistent, meaning changes such as
+// on. If no filter is provided, then it returns all the accounts the user has
+// access to. This method is eventually consistent, meaning changes such as
 // creating, updating an account or a change of relationships between accounts
 // may not show up in the results immediately. Instead, these changes propagate
 // over a short period, after which the updated information can match the
@@ -3517,9 +3517,10 @@ func (r *AccountsService) List() *AccountsListCall {
 }
 
 // Filter sets the optional parameter "filter": Returns only accounts that
-// match the filter (/merchant/api/guides/accounts/filter). For more details,
-// see the filter syntax reference
-// (/merchant/api/guides/accounts/filter-syntax).
+// match the filter
+// (https://developers.google.com/merchant/api/guides/accounts/filter). For
+// more details, see the filter syntax reference
+// (https://developers.google.com/merchant/api/guides/accounts/filter-syntax).
 func (c *AccountsListCall) Filter(filter string) *AccountsListCall {
 	c.urlParams_.Set("filter", filter)
 	return c

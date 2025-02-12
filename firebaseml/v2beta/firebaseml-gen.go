@@ -944,7 +944,14 @@ type GoogleCloudAiplatformV1beta1GenerateContentResponseUsageMetadata struct {
 	// PromptTokensDetails: Output only. List of modalities that were processed in
 	// the request input.
 	PromptTokensDetails []*GoogleCloudAiplatformV1beta1ModalityTokenCount `json:"promptTokensDetails,omitempty"`
-	// TotalTokenCount: Total token count for prompt and response candidates.
+	// ToolUsePromptTokenCount: Output only. Number of tokens present in tool-use
+	// prompt(s).
+	ToolUsePromptTokenCount int64 `json:"toolUsePromptTokenCount,omitempty"`
+	// ToolUsePromptTokensDetails: Output only. List of modalities that were
+	// processed for tool-use request inputs.
+	ToolUsePromptTokensDetails []*GoogleCloudAiplatformV1beta1ModalityTokenCount `json:"toolUsePromptTokensDetails,omitempty"`
+	// TotalTokenCount: Total token count for prompt, response candidates, and
+	// tool-use prompts (if present).
 	TotalTokenCount int64 `json:"totalTokenCount,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "CacheTokensDetails") to
 	// unconditionally include in API requests. By default, fields with empty or

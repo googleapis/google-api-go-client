@@ -206,7 +206,7 @@
       }
     }
   },
-  "revision": "20250203",
+  "revision": "20250209",
   "rootUrl": "https://firebaseml.googleapis.com/",
   "schemas": {
     "Date": {
@@ -827,8 +827,22 @@
           "readOnly": true,
           "type": "array"
         },
+        "toolUsePromptTokenCount": {
+          "description": "Output only. Number of tokens present in tool-use prompt(s).",
+          "format": "int32",
+          "readOnly": true,
+          "type": "integer"
+        },
+        "toolUsePromptTokensDetails": {
+          "description": "Output only. List of modalities that were processed for tool-use request inputs.",
+          "items": {
+            "$ref": "GoogleCloudAiplatformV1beta1ModalityTokenCount"
+          },
+          "readOnly": true,
+          "type": "array"
+        },
         "totalTokenCount": {
-          "description": "Total token count for prompt and response candidates.",
+          "description": "Total token count for prompt, response candidates, and tool-use prompts (if present).",
           "format": "int32",
           "type": "integer"
         }

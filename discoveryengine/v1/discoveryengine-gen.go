@@ -3937,24 +3937,24 @@ func (s GoogleCloudDiscoveryengineV1CloudSqlSource) MarshalJSON() ([]byte, error
 type GoogleCloudDiscoveryengineV1CmekConfig struct {
 	// IsDefault: Output only. The default CmekConfig for the Customer.
 	IsDefault bool `json:"isDefault,omitempty"`
-	// KmsKey: Kms key resource name which will be used to encrypt resources
+	// KmsKey: KMS key resource name which will be used to encrypt resources
 	// `projects/{project}/locations/{location}/keyRings/{keyRing}/cryptoKeys/{keyId
 	// }`.
 	KmsKey string `json:"kmsKey,omitempty"`
-	// KmsKeyVersion: Kms key version resource name which will be used to encrypt
+	// KmsKeyVersion: KMS key version resource name which will be used to encrypt
 	// resources `/cryptoKeyVersions/{keyVersion}`.
 	KmsKeyVersion string `json:"kmsKeyVersion,omitempty"`
 	// LastRotationTimestampMicros: Output only. The timestamp of the last key
 	// rotation.
 	LastRotationTimestampMicros int64 `json:"lastRotationTimestampMicros,omitempty,string"`
-	// Name: Required. Name of the CmekConfig, of the form
+	// Name: Required. The name of the CmekConfig of the form
 	// `projects/{project}/locations/{location}/cmekConfig` or
 	// `projects/{project}/locations/{location}/cmekConfigs/{cmekConfig}`.
 	Name string `json:"name,omitempty"`
 	// SingleRegionKeys: Optional. Single-regional CMEKs that are required for some
 	// VAIS features.
 	SingleRegionKeys []*GoogleCloudDiscoveryengineV1SingleRegionKey `json:"singleRegionKeys,omitempty"`
-	// State: Output only. State of the CmekConfig.
+	// State: Output only. The states of the CmekConfig.
 	//
 	// Possible values:
 	//   "STATE_UNSPECIFIED" - The CmekConfig state is unknown.
@@ -6916,8 +6916,8 @@ func (s GoogleCloudDiscoveryengineV1IdentityMappingEntry) MarshalJSON() ([]byte,
 
 // GoogleCloudDiscoveryengineV1IdentityMappingEntryOperationMetadata:
 // IdentityMappingEntry LongRunningOperation metadata for
-// [IdentityMappingStoreService.ImportIdentityMappings] and
-// [IdentityMappingStoreService.PurgeIdentityMappings]
+// IdentityMappingStoreService.ImportIdentityMappings and
+// IdentityMappingStoreService.PurgeIdentityMappings
 type GoogleCloudDiscoveryengineV1IdentityMappingEntryOperationMetadata struct {
 	// FailureCount: The number of IdentityMappingEntries that failed to be
 	// processed.
@@ -8870,10 +8870,7 @@ func (s GoogleCloudDiscoveryengineV1RecommendResponseRecommendationResult) Marsh
 // GoogleCloudDiscoveryengineV1RecrawlUrisRequest: Request message for
 // SiteSearchEngineService.RecrawlUris method.
 type GoogleCloudDiscoveryengineV1RecrawlUrisRequest struct {
-	// SiteCredential: Optional. Full resource name of the `SiteCredential`, such
-	// as
-	// `projects/*/locations/*/collections/*/dataStores/*/siteSearchEngine/siteCrede
-	// ntials/*`. Only set to crawl private URIs.
+	// SiteCredential: Optional. Credential id to use for crawling.
 	SiteCredential string `json:"siteCredential,omitempty"`
 	// Uris: Required. List of URIs to crawl. At most 10K URIs are supported,
 	// otherwise an INVALID_ARGUMENT error is thrown. Each URI should match at
@@ -9992,6 +9989,8 @@ type GoogleCloudDiscoveryengineV1SearchRequestSearchAsYouTypeSpec struct {
 	//   "CONDITION_UNSPECIFIED" - Server behavior defaults to Condition.DISABLED.
 	//   "DISABLED" - Disables Search As You Type.
 	//   "ENABLED" - Enables Search As You Type.
+	//   "AUTO" - Automatic switching between search-as-you-type and standard
+	// search modes, ideal for single-API implementations (e.g., debouncing).
 	Condition string `json:"condition,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Condition") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -12488,24 +12487,24 @@ func (s GoogleCloudDiscoveryengineV1alphaBatchCreateTargetSitesResponse) Marshal
 type GoogleCloudDiscoveryengineV1alphaCmekConfig struct {
 	// IsDefault: Output only. The default CmekConfig for the Customer.
 	IsDefault bool `json:"isDefault,omitempty"`
-	// KmsKey: Kms key resource name which will be used to encrypt resources
+	// KmsKey: KMS key resource name which will be used to encrypt resources
 	// `projects/{project}/locations/{location}/keyRings/{keyRing}/cryptoKeys/{keyId
 	// }`.
 	KmsKey string `json:"kmsKey,omitempty"`
-	// KmsKeyVersion: Kms key version resource name which will be used to encrypt
+	// KmsKeyVersion: KMS key version resource name which will be used to encrypt
 	// resources `/cryptoKeyVersions/{keyVersion}`.
 	KmsKeyVersion string `json:"kmsKeyVersion,omitempty"`
 	// LastRotationTimestampMicros: Output only. The timestamp of the last key
 	// rotation.
 	LastRotationTimestampMicros int64 `json:"lastRotationTimestampMicros,omitempty,string"`
-	// Name: Required. Name of the CmekConfig, of the form
+	// Name: Required. The name of the CmekConfig of the form
 	// `projects/{project}/locations/{location}/cmekConfig` or
 	// `projects/{project}/locations/{location}/cmekConfigs/{cmekConfig}`.
 	Name string `json:"name,omitempty"`
 	// SingleRegionKeys: Optional. Single-regional CMEKs that are required for some
 	// VAIS features.
 	SingleRegionKeys []*GoogleCloudDiscoveryengineV1alphaSingleRegionKey `json:"singleRegionKeys,omitempty"`
-	// State: Output only. State of the CmekConfig.
+	// State: Output only. The states of the CmekConfig.
 	//
 	// Possible values:
 	//   "STATE_UNSPECIFIED" - The CmekConfig state is unknown.
@@ -12732,6 +12731,8 @@ func (s GoogleCloudDiscoveryengineV1alphaConnectorRun) MarshalJSON() ([]byte, er
 // GoogleCloudDiscoveryengineV1alphaConnectorRunEntityRun: Represents an entity
 // that was synced in this ConnectorRun.
 type GoogleCloudDiscoveryengineV1alphaConnectorRunEntityRun struct {
+	// DeletedRecordCount: The number of documents deleted.
+	DeletedRecordCount int64 `json:"deletedRecordCount,omitempty,string"`
 	// EntityName: The name of the source entity.
 	EntityName string `json:"entityName,omitempty"`
 	// ErrorRecordCount: The total number of documents failed at sync at any stage
@@ -12772,15 +12773,15 @@ type GoogleCloudDiscoveryengineV1alphaConnectorRunEntityRun struct {
 	//   "FULL" - Sync triggers full sync of all documents.
 	//   "INCREMENTAL" - Incremental sync of updated documents.
 	SyncType string `json:"syncType,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "EntityName") to
+	// ForceSendFields is a list of field names (e.g. "DeletedRecordCount") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "EntityName") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
+	// NullFields is a list of field names (e.g. "DeletedRecordCount") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -13449,6 +13450,7 @@ type GoogleCloudDiscoveryengineV1alphaDataConnector struct {
 	//   "PERIODIC" - The connector will sync data periodically based on the
 	// refresh_interval. Use it with auto_run_disabled to pause the periodic sync,
 	// or indicate a one-time sync.
+	//   "STREAMING" - The data will be synced in real time.
 	SyncMode string `json:"syncMode,omitempty"`
 	// UpdateTime: Output only. Timestamp the DataConnector was last updated.
 	UpdateTime string `json:"updateTime,omitempty"`
@@ -13483,6 +13485,9 @@ type GoogleCloudDiscoveryengineV1alphaDataConnectorSourceEntity struct {
 	// Salesforce: `Lead`, `Opportunity`, `Contact`, `Account`, `Case`, `Contract`,
 	// `Campaign` * Jira: `Issue` * Confluence: `Content`, `Space`
 	EntityName string `json:"entityName,omitempty"`
+	// HealthcareFhirConfig: Optional. Configuration for `HEALTHCARE_FHIR`
+	// vertical.
+	HealthcareFhirConfig *GoogleCloudDiscoveryengineV1alphaHealthcareFhirConfig `json:"healthcareFhirConfig,omitempty"`
 	// KeyPropertyMappings: Attributes for indexing. Key: Field name. Value: The
 	// key property to map a field to, such as `title`, and `description`.
 	// Supported key properties: * `title`: The title for data record. This would
@@ -13493,6 +13498,15 @@ type GoogleCloudDiscoveryengineV1alphaDataConnectorSourceEntity struct {
 	// BigQuery connectors: * Key: `document_id_column` * Value: type STRING. The
 	// value of the column ID.
 	Params googleapi.RawMessage `json:"params,omitempty"`
+	// StartingSchema: Optional. The start schema to use for the DataStore created
+	// from this SourceEntity. If unset, a default vertical specialized schema will
+	// be used. This field is only used by SetUpDataConnector API, and will be
+	// ignored if used in other APIs. This field will be omitted from all API
+	// responses including GetDataConnector API. To retrieve a schema of a
+	// DataStore, use SchemaService.GetSchema API instead. The provided schema will
+	// be validated against certain rules on schema. Learn more from this doc
+	// (https://cloud.google.com/generative-ai-app-builder/docs/provide-schema).
+	StartingSchema *GoogleCloudDiscoveryengineV1alphaSchema `json:"startingSchema,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "DataStore") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -15116,8 +15130,8 @@ func (s GoogleCloudDiscoveryengineV1alphaHealthcareFhirConfig) MarshalJSON() ([]
 
 // GoogleCloudDiscoveryengineV1alphaIdentityMappingEntryOperationMetadata:
 // IdentityMappingEntry LongRunningOperation metadata for
-// [IdentityMappingStoreService.ImportIdentityMappings] and
-// [IdentityMappingStoreService.PurgeIdentityMappings]
+// IdentityMappingStoreService.ImportIdentityMappings and
+// IdentityMappingStoreService.PurgeIdentityMappings
 type GoogleCloudDiscoveryengineV1alphaIdentityMappingEntryOperationMetadata struct {
 	// FailureCount: The number of IdentityMappingEntries that failed to be
 	// processed.
@@ -16638,6 +16652,9 @@ type GoogleCloudDiscoveryengineV1alphaSearchRequest struct {
 	// with multiple data stores. For engines with a single data store, the specs
 	// directly under SearchRequest should be used.
 	DataStoreSpecs []*GoogleCloudDiscoveryengineV1alphaSearchRequestDataStoreSpec `json:"dataStoreSpecs,omitempty"`
+	// DisplaySpec: Optional. Config for display feature, like match highlighting
+	// on search results.
+	DisplaySpec *GoogleCloudDiscoveryengineV1alphaSearchRequestDisplaySpec `json:"displaySpec,omitempty"`
 	// EmbeddingSpec: Uses the provided embedding to do additional semantic
 	// document retrieval. The retrieval is based on the dot product of
 	// SearchRequest.EmbeddingSpec.EmbeddingVector.vector and the document
@@ -16727,17 +16744,43 @@ type GoogleCloudDiscoveryengineV1alphaSearchRequest struct {
 	QueryExpansionSpec *GoogleCloudDiscoveryengineV1alphaSearchRequestQueryExpansionSpec `json:"queryExpansionSpec,omitempty"`
 	// RankingExpression: The ranking expression controls the customized ranking on
 	// retrieval documents. This overrides ServingConfig.ranking_expression. The
-	// ranking expression is a single function or multiple functions that are
-	// joined by "+". * ranking_expression = function, { " + ", function };
-	// Supported functions: * double * relevance_score * double *
-	// dotProduct(embedding_field_path) Function variables: * `relevance_score`:
-	// pre-defined keywords, used for measure relevance between query and document.
-	// * `embedding_field_path`: the document embedding field used with query
-	// embedding vector. * `dotProduct`: embedding function between
-	// embedding_field_path and query embedding vector. Example ranking expression:
-	// If document has an embedding field doc_embedding, the ranking expression
-	// could be `0.5 * relevance_score + 0.3 * dotProduct(doc_embedding)`.
+	// syntax and supported features depend on the ranking_expression_backend
+	// value. If ranking_expression_backend is not provided, it defaults to BYOE.
+	// === BYOE === If ranking expression is not provided or set to BYOE, it should
+	// be a single function or multiple functions that are joined by "+". *
+	// ranking_expression = function, { " + ", function }; Supported functions: *
+	// double * relevance_score * double * dotProduct(embedding_field_path)
+	// Function variables: * `relevance_score`: pre-defined keywords, used for
+	// measure relevance between query and document. * `embedding_field_path`: the
+	// document embedding field used with query embedding vector. * `dotProduct`:
+	// embedding function between embedding_field_path and query embedding vector.
+	// Example ranking expression: If document has an embedding field
+	// doc_embedding, the ranking expression could be `0.5 * relevance_score + 0.3
+	// * dotProduct(doc_embedding)`. === CLEARBOX === If ranking expression is set
+	// to CLEARBOX, the following expression types (and combinations of those
+	// chained using + or * operators) are supported: * double * signal *
+	// log(signal) * exp(signal) * rr(signal, double > 0) -- reciprocal rank
+	// transformation with second argument being a denominator constant. *
+	// is_nan(signal) -- returns 0 if signal is NaN, 1 otherwise. *
+	// fill_nan(signal1, signal2 | double) -- if signal1 is NaN, returns signal2 |
+	// double, else returns signal1. Examples: * 0.2 * gecko_score + 0.8 *
+	// log(bm25_score) * 0.2 * exp(fill_nan(gecko_score, 0)) + 0.3 *
+	// is_nan(bm25_score) * 0.2 * rr(gecko_score, 16) + 0.8 * rr(bm25_score, 32)
+	// The following signals are supported: * gecko_score -- semantic similarity
+	// adjustment * bm25_score -- keyword match adjustment * jetstream_score --
+	// semantic relevance adjustment * pctr_rank -- predicted conversion rate
+	// adjustment as a rank * freshness_rank -- freshness adjustment as a rank *
+	// base_rank -- the default rank of the result
 	RankingExpression string `json:"rankingExpression,omitempty"`
+	// RankingExpressionBackend: Optional. The backend to use for the ranking
+	// expression evaluation.
+	//
+	// Possible values:
+	//   "UNKNOWN" - Default option for unspecified/unknown values.
+	//   "BYOE" - Bring your own embedding (BYOE), the default way to evaluate the
+	// ranking expression.
+	//   "CLEARBOX" - The expression is compiled into a Clearbox formula.
+	RankingExpressionBackend string `json:"rankingExpressionBackend,omitempty"`
 	// RegionCode: The Unicode country/region code (CLDR) of a location, such as
 	// "US" and "419". For more information, see Standard fields
 	// (https://cloud.google.com/apis/design/standard_fields). If set, then results
@@ -17364,6 +17407,38 @@ func (s GoogleCloudDiscoveryengineV1alphaSearchRequestDataStoreSpec) MarshalJSON
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudDiscoveryengineV1alphaSearchRequestDisplaySpec: Specifies
+// features for display, like match highlighting.
+type GoogleCloudDiscoveryengineV1alphaSearchRequestDisplaySpec struct {
+	// MatchHighlightingCondition: The condition under which match highlighting
+	// should occur.
+	//
+	// Possible values:
+	//   "MATCH_HIGHLIGHTING_CONDITION_UNSPECIFIED" - Server behavior is the same
+	// as DISABLED.
+	//   "MATCH_HIGHLIGHTING_DISABLED" - Disables match highlighting on all
+	// documents.
+	//   "MATCH_HIGHLIGHTING_ENABLED" - Enables match highlighting on all
+	// documents.
+	MatchHighlightingCondition string `json:"matchHighlightingCondition,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "MatchHighlightingCondition")
+	// to unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "MatchHighlightingCondition") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1alphaSearchRequestDisplaySpec) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1alphaSearchRequestDisplaySpec
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudDiscoveryengineV1alphaSearchRequestEmbeddingSpec: The
 // specification that uses customized query embedding vector to do semantic
 // document retrieval.
@@ -17690,6 +17765,8 @@ type GoogleCloudDiscoveryengineV1alphaSearchRequestSearchAsYouTypeSpec struct {
 	//   "CONDITION_UNSPECIFIED" - Server behavior defaults to Condition.DISABLED.
 	//   "DISABLED" - Disables Search As You Type.
 	//   "ENABLED" - Enables Search As You Type.
+	//   "AUTO" - Automatic switching between search-as-you-type and standard
+	// search modes, ideal for single-API implementations (e.g., debouncing).
 	Condition string `json:"condition,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Condition") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -18554,24 +18631,24 @@ func (s GoogleCloudDiscoveryengineV1betaBatchCreateTargetSitesResponse) MarshalJ
 type GoogleCloudDiscoveryengineV1betaCmekConfig struct {
 	// IsDefault: Output only. The default CmekConfig for the Customer.
 	IsDefault bool `json:"isDefault,omitempty"`
-	// KmsKey: Kms key resource name which will be used to encrypt resources
+	// KmsKey: KMS key resource name which will be used to encrypt resources
 	// `projects/{project}/locations/{location}/keyRings/{keyRing}/cryptoKeys/{keyId
 	// }`.
 	KmsKey string `json:"kmsKey,omitempty"`
-	// KmsKeyVersion: Kms key version resource name which will be used to encrypt
+	// KmsKeyVersion: KMS key version resource name which will be used to encrypt
 	// resources `/cryptoKeyVersions/{keyVersion}`.
 	KmsKeyVersion string `json:"kmsKeyVersion,omitempty"`
 	// LastRotationTimestampMicros: Output only. The timestamp of the last key
 	// rotation.
 	LastRotationTimestampMicros int64 `json:"lastRotationTimestampMicros,omitempty,string"`
-	// Name: Required. Name of the CmekConfig, of the form
+	// Name: Required. The name of the CmekConfig of the form
 	// `projects/{project}/locations/{location}/cmekConfig` or
 	// `projects/{project}/locations/{location}/cmekConfigs/{cmekConfig}`.
 	Name string `json:"name,omitempty"`
 	// SingleRegionKeys: Optional. Single-regional CMEKs that are required for some
 	// VAIS features.
 	SingleRegionKeys []*GoogleCloudDiscoveryengineV1betaSingleRegionKey `json:"singleRegionKeys,omitempty"`
-	// State: Output only. State of the CmekConfig.
+	// State: Output only. The states of the CmekConfig.
 	//
 	// Possible values:
 	//   "STATE_UNSPECIFIED" - The CmekConfig state is unknown.
@@ -20153,8 +20230,8 @@ func (s GoogleCloudDiscoveryengineV1betaHealthcareFhirConfig) MarshalJSON() ([]b
 
 // GoogleCloudDiscoveryengineV1betaIdentityMappingEntryOperationMetadata:
 // IdentityMappingEntry LongRunningOperation metadata for
-// [IdentityMappingStoreService.ImportIdentityMappings] and
-// [IdentityMappingStoreService.PurgeIdentityMappings]
+// IdentityMappingStoreService.ImportIdentityMappings and
+// IdentityMappingStoreService.PurgeIdentityMappings
 type GoogleCloudDiscoveryengineV1betaIdentityMappingEntryOperationMetadata struct {
 	// FailureCount: The number of IdentityMappingEntries that failed to be
 	// processed.
@@ -21130,17 +21207,43 @@ type GoogleCloudDiscoveryengineV1betaSearchRequest struct {
 	QueryExpansionSpec *GoogleCloudDiscoveryengineV1betaSearchRequestQueryExpansionSpec `json:"queryExpansionSpec,omitempty"`
 	// RankingExpression: The ranking expression controls the customized ranking on
 	// retrieval documents. This overrides ServingConfig.ranking_expression. The
-	// ranking expression is a single function or multiple functions that are
-	// joined by "+". * ranking_expression = function, { " + ", function };
-	// Supported functions: * double * relevance_score * double *
-	// dotProduct(embedding_field_path) Function variables: * `relevance_score`:
-	// pre-defined keywords, used for measure relevance between query and document.
-	// * `embedding_field_path`: the document embedding field used with query
-	// embedding vector. * `dotProduct`: embedding function between
-	// embedding_field_path and query embedding vector. Example ranking expression:
-	// If document has an embedding field doc_embedding, the ranking expression
-	// could be `0.5 * relevance_score + 0.3 * dotProduct(doc_embedding)`.
+	// syntax and supported features depend on the ranking_expression_backend
+	// value. If ranking_expression_backend is not provided, it defaults to BYOE.
+	// === BYOE === If ranking expression is not provided or set to BYOE, it should
+	// be a single function or multiple functions that are joined by "+". *
+	// ranking_expression = function, { " + ", function }; Supported functions: *
+	// double * relevance_score * double * dotProduct(embedding_field_path)
+	// Function variables: * `relevance_score`: pre-defined keywords, used for
+	// measure relevance between query and document. * `embedding_field_path`: the
+	// document embedding field used with query embedding vector. * `dotProduct`:
+	// embedding function between embedding_field_path and query embedding vector.
+	// Example ranking expression: If document has an embedding field
+	// doc_embedding, the ranking expression could be `0.5 * relevance_score + 0.3
+	// * dotProduct(doc_embedding)`. === CLEARBOX === If ranking expression is set
+	// to CLEARBOX, the following expression types (and combinations of those
+	// chained using + or * operators) are supported: * double * signal *
+	// log(signal) * exp(signal) * rr(signal, double > 0) -- reciprocal rank
+	// transformation with second argument being a denominator constant. *
+	// is_nan(signal) -- returns 0 if signal is NaN, 1 otherwise. *
+	// fill_nan(signal1, signal2 | double) -- if signal1 is NaN, returns signal2 |
+	// double, else returns signal1. Examples: * 0.2 * gecko_score + 0.8 *
+	// log(bm25_score) * 0.2 * exp(fill_nan(gecko_score, 0)) + 0.3 *
+	// is_nan(bm25_score) * 0.2 * rr(gecko_score, 16) + 0.8 * rr(bm25_score, 32)
+	// The following signals are supported: * gecko_score -- semantic similarity
+	// adjustment * bm25_score -- keyword match adjustment * jetstream_score --
+	// semantic relevance adjustment * pctr_rank -- predicted conversion rate
+	// adjustment as a rank * freshness_rank -- freshness adjustment as a rank *
+	// base_rank -- the default rank of the result
 	RankingExpression string `json:"rankingExpression,omitempty"`
+	// RankingExpressionBackend: Optional. The backend to use for the ranking
+	// expression evaluation.
+	//
+	// Possible values:
+	//   "UNKNOWN" - Default option for unspecified/unknown values.
+	//   "BYOE" - Bring your own embedding (BYOE), the default way to evaluate the
+	// ranking expression.
+	//   "CLEARBOX" - The expression is compiled into a Clearbox formula.
+	RankingExpressionBackend string `json:"rankingExpressionBackend,omitempty"`
 	// RegionCode: The Unicode country/region code (CLDR) of a location, such as
 	// "US" and "419". For more information, see Standard fields
 	// (https://cloud.google.com/apis/design/standard_fields). If set, then results
@@ -22093,6 +22196,8 @@ type GoogleCloudDiscoveryengineV1betaSearchRequestSearchAsYouTypeSpec struct {
 	//   "CONDITION_UNSPECIFIED" - Server behavior defaults to Condition.DISABLED.
 	//   "DISABLED" - Disables Search As You Type.
 	//   "ENABLED" - Enables Search As You Type.
+	//   "AUTO" - Automatic switching between search-as-you-type and standard
+	// search modes, ideal for single-API implementations (e.g., debouncing).
 	Condition string `json:"condition,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Condition") to
 	// unconditionally include in API requests. By default, fields with empty or

@@ -706,6 +706,40 @@ func (s Annotation) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// AppCommandMetadata: Metadata associated with app commands. App commands are
+// a way for users to invoke and interact with a Chat app. These can be slash
+// commands typed in the compose box, or items directly selected from the
+// integration menu. For more information, see Respond to quick commands
+// (https://developers.google.com/workspace/chat/quick-commands).
+type AppCommandMetadata struct {
+	// AppCommandId: The command ID for the given app interaction.
+	AppCommandId int64 `json:"appCommandId,omitempty"`
+	// AppCommandType: The type of the app command.
+	//
+	// Possible values:
+	//   "APP_COMMAND_TYPE_UNSPECIFIED" - Default value. Unspecified.
+	//   "SLASH_COMMAND" - A slash command sent in a message.
+	//   "QUICK_COMMAND" - A quick command that is invoked by the user. This can
+	// result from an action taken in the integration menu.
+	AppCommandType string `json:"appCommandType,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AppCommandId") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AppCommandId") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s AppCommandMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod AppCommandMetadata
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // AttachedGif: A GIF image that's specified by a URL.
 type AttachedGif struct {
 	// Uri: Output only. The URL that hosts the GIF image.
@@ -1166,7 +1200,7 @@ type CommonEventObject struct {
 	//   "SHEETS" - The add-on launches from Google Sheets.
 	//   "SLIDES" - The add-on launches from Google Slides.
 	//   "DRAWINGS" - The add-on launches from Google Drawings.
-	//   "CHAT" - A Google Chat app. Not used for Google Workspace Add-ons.
+	//   "CHAT" - A Google Chat app. Not used for Google Workspace add-ons.
 	HostApp string `json:"hostApp,omitempty"`
 	// InvokedFunction: Name of the invoked function associated with the widget.
 	// Only set for Chat apps.
@@ -1348,6 +1382,8 @@ type DeletionMetadata struct {
 	//   "CREATOR_VIA_APP" - A Chat app deleted the message on behalf of the user.
 	//   "SPACE_OWNER_VIA_APP" - A Chat app deleted the message on behalf of the
 	// space owner.
+	//   "SPACE_MEMBER" - A member of the space deleted the message. Human users
+	// can delete messages sent by apps.
 	DeletionType string `json:"deletionType,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "DeletionType") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -1382,21 +1418,22 @@ type DeprecatedEvent struct {
 	// data input by users on cards
 	// (https://developers.google.com/workspace/chat/read-form-data).
 	Action *FormAction `json:"action,omitempty"`
+	// AppCommandMetadata: Populated for app commands, including slash commands and
+	// quick commands.
+	AppCommandMetadata *AppCommandMetadata `json:"appCommandMetadata,omitempty"`
 	// Common: Represents information about the user's client, such as locale, host
 	// app, and platform. For Chat apps, `CommonEventObject` includes information
 	// submitted by users interacting with dialogs
 	// (https://developers.google.com/workspace/chat/dialogs), like data entered on
 	// a card.
 	Common *CommonEventObject `json:"common,omitempty"`
-	// ConfigCompleteRedirectUrl: This URL is populated for `MESSAGE` and
-	// `ADDED_TO_SPACE` interaction events. After completing an authorization or
-	// configuration flow outside of Google Chat, users must be redirected to this
-	// URL to signal to Google Chat that the authorization or configuration flow
-	// was successful. For more information, see Connect a Chat app with other
-	// services and tools
+	// ConfigCompleteRedirectUrl: This URL is populated for `MESSAGE`,
+	// `ADDED_TO_SPACE`, and `APP_COMMAND` interaction events. After completing an
+	// authorization or configuration flow outside of Google Chat, users must be
+	// redirected to this URL to signal to Google Chat that the authorization or
+	// configuration flow was successful. For more information, see Connect a Chat
+	// app with other services and tools
 	// (https://developers.google.com/workspace/chat/connect-web-services-tools).
-	// In Developer Preview (https://developers.google.com/workspace/preview), this
-	// URL is also populated for `APP_COMMAND` interaction events.
 	ConfigCompleteRedirectUrl string `json:"configCompleteRedirectUrl,omitempty"`
 	// DialogEventType: The type of dialog
 	// (https://developers.google.com/workspace/chat/dialogs) interaction event
@@ -1425,6 +1462,11 @@ type DeprecatedEvent struct {
 	Message *Message `json:"message,omitempty"`
 	// Space: The space in which the user interacted with the Chat app.
 	Space *Space `json:"space,omitempty"`
+	// Thread: The thread in which the user interacted with the Chat app. This
+	// could be in a new thread created by a newly sent message. This field is
+	// populated if the interaction event is associated with a specific message or
+	// thread.
+	Thread *Thread `json:"thread,omitempty"`
 	// ThreadKey: The Chat app-defined key for the thread related to the
 	// interaction event. See `spaces.messages.thread.threadKey`
 	// (/chat/api/reference/rest/v1/spaces.messages#Thread.FIELDS.thread_key) for
@@ -1479,6 +1521,7 @@ type DeprecatedEvent struct {
 	// [`DialogEventType`](https://developers.google.com/workspace/chat/api/referenc
 	// e/rest/v1/DialogEventType).
 	//   "WIDGET_UPDATED" - A user updates a widget in a card message or dialog.
+	//   "APP_COMMAND" - A user invokes a command of the app.
 	Type string `json:"type,omitempty"`
 	// User: The user that interacted with the Chat app.
 	User *User `json:"user,omitempty"`

@@ -9256,7 +9256,7 @@
       }
     }
   },
-  "revision": "20250129",
+  "revision": "20250210",
   "rootUrl": "https://displayvideo.googleapis.com/",
   "schemas": {
     "ActiveViewVideoViewabilityMetricConfig": {
@@ -17596,6 +17596,14 @@
             "Violence - Exclude High and Moderate Risk."
           ],
           "type": "string"
+        },
+        "qualitySyncCustomSegmentId": {
+          "description": "Optional. The quality sync custom segment ID provided by Integral Ad Science. The ID must be between `3000000` and `4999999`, inclusive.",
+          "items": {
+            "format": "int64",
+            "type": "string"
+          },
+          "type": "array"
         },
         "traqScoreOption": {
           "description": "True advertising quality (applicable to Display line items only).",

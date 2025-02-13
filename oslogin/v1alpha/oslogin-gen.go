@@ -336,6 +336,9 @@ type PosixAccount struct {
 	Uid int64 `json:"uid,omitempty,string"`
 	// Username: The username of the POSIX account.
 	Username string `json:"username,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
 	// ForceSendFields is a list of field names (e.g. "AccountId") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -351,6 +354,31 @@ type PosixAccount struct {
 
 func (s PosixAccount) MarshalJSON() ([]byte, error) {
 	type NoMethod PosixAccount
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ProvisionPosixAccountRequest: A request message for creating a POSIX account
+// entry.
+type ProvisionPosixAccountRequest struct {
+	// Regions: Optional. The regions to wait for a POSIX account to be written to
+	// before returning a response. If unspecified, defaults to all regions.
+	// Regions are listed at https://cloud.google.com/about/locations#region.
+	Regions []string `json:"regions,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Regions") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Regions") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ProvisionPosixAccountRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod ProvisionPosixAccountRequest
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -914,6 +942,110 @@ func (c *UsersProjectsDeleteCall) Do(opts ...googleapi.CallOption) (*Empty, erro
 		return nil, err
 	}
 	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "oslogin.users.projects.delete", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type UsersProjectsProvisionPosixAccountCall struct {
+	s                            *Service
+	name                         string
+	provisionposixaccountrequest *ProvisionPosixAccountRequest
+	urlParams_                   gensupport.URLParams
+	ctx_                         context.Context
+	header_                      http.Header
+}
+
+// ProvisionPosixAccount: Create a POSIX account if it doesn't exist.
+//
+//   - name: The unique ID for the user in format
+//     `users/{user}/projects/{project}`.
+func (r *UsersProjectsService) ProvisionPosixAccount(name string, provisionposixaccountrequest *ProvisionPosixAccountRequest) *UsersProjectsProvisionPosixAccountCall {
+	c := &UsersProjectsProvisionPosixAccountCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.provisionposixaccountrequest = provisionposixaccountrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *UsersProjectsProvisionPosixAccountCall) Fields(s ...googleapi.Field) *UsersProjectsProvisionPosixAccountCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *UsersProjectsProvisionPosixAccountCall) Context(ctx context.Context) *UsersProjectsProvisionPosixAccountCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *UsersProjectsProvisionPosixAccountCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *UsersProjectsProvisionPosixAccountCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.provisionposixaccountrequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "oslogin.users.projects.provisionPosixAccount", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "oslogin.users.projects.provisionPosixAccount" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *PosixAccount.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *UsersProjectsProvisionPosixAccountCall) Do(opts ...googleapi.CallOption) (*PosixAccount, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &PosixAccount{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "oslogin.users.projects.provisionPosixAccount", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 

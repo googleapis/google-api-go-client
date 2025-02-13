@@ -19384,6 +19384,14 @@ func (r *ProjectsLocationsDatasetsDicomStoresStudiesSeriesInstancesService) Retr
 	return c
 }
 
+// Viewport sets the optional parameter "viewport": The viewport setting to use
+// as specified in
+// https://dicom.nema.org/medical/dicom/current/output/chtml/part18/sect_8.3.5.html#sect_8.3.5.1.3
+func (c *ProjectsLocationsDatasetsDicomStoresStudiesSeriesInstancesRetrieveRenderedCall) Viewport(viewport string) *ProjectsLocationsDatasetsDicomStoresStudiesSeriesInstancesRetrieveRenderedCall {
+	c.urlParams_.Set("viewport", viewport)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
 // details.
@@ -19660,6 +19668,14 @@ func (r *ProjectsLocationsDatasetsDicomStoresStudiesSeriesInstancesFramesService
 	c := &ProjectsLocationsDatasetsDicomStoresStudiesSeriesInstancesFramesRetrieveRenderedCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
 	c.dicomWebPath = dicomWebPath
+	return c
+}
+
+// Viewport sets the optional parameter "viewport": The viewport setting to use
+// as specified in
+// https://dicom.nema.org/medical/dicom/current/output/chtml/part18/sect_8.3.5.html#sect_8.3.5.1.3
+func (c *ProjectsLocationsDatasetsDicomStoresStudiesSeriesInstancesFramesRetrieveRenderedCall) Viewport(viewport string) *ProjectsLocationsDatasetsDicomStoresStudiesSeriesInstancesFramesRetrieveRenderedCall {
+	c.urlParams_.Set("viewport", viewport)
 	return c
 }
 

@@ -1255,6 +1255,8 @@ type ListConnectionsResponse struct {
 	// NextPageToken: A token identifying a page of results the server should
 	// return.
 	NextPageToken string `json:"nextPageToken,omitempty"`
+	// Unreachable: Locations that could not be reached.
+	Unreachable []string `json:"unreachable,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
@@ -1311,6 +1313,8 @@ type ListRepositoriesResponse struct {
 	NextPageToken string `json:"nextPageToken,omitempty"`
 	// Repositories: The list of Repositories.
 	Repositories []*Repository `json:"repositories,omitempty"`
+	// Unreachable: Locations that could not be reached.
+	Unreachable []string `json:"unreachable,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
@@ -3907,6 +3911,15 @@ func (c *ProjectsLocationsConnectionsListCall) PageToken(pageToken string) *Proj
 	return c
 }
 
+// ReturnPartialSuccess sets the optional parameter "returnPartialSuccess": If
+// set to true, the response will return partial results when some regions are
+// unreachable. If set to false, the response will fail if any region is
+// unreachable.
+func (c *ProjectsLocationsConnectionsListCall) ReturnPartialSuccess(returnPartialSuccess bool) *ProjectsLocationsConnectionsListCall {
+	c.urlParams_.Set("returnPartialSuccess", fmt.Sprint(returnPartialSuccess))
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
 // details.
@@ -5326,6 +5339,15 @@ func (c *ProjectsLocationsConnectionsRepositoriesListCall) PageSize(pageSize int
 // PageToken sets the optional parameter "pageToken": Page start.
 func (c *ProjectsLocationsConnectionsRepositoriesListCall) PageToken(pageToken string) *ProjectsLocationsConnectionsRepositoriesListCall {
 	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// ReturnPartialSuccess sets the optional parameter "returnPartialSuccess": If
+// set to true, the response will return partial results when some regions are
+// unreachable. If set to false, the response will fail if any region is
+// unreachable.
+func (c *ProjectsLocationsConnectionsRepositoriesListCall) ReturnPartialSuccess(returnPartialSuccess bool) *ProjectsLocationsConnectionsRepositoriesListCall {
+	c.urlParams_.Set("returnPartialSuccess", fmt.Sprint(returnPartialSuccess))
 	return c
 }
 

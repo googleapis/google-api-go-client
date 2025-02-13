@@ -1447,6 +1447,30 @@ func (s Binding) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// BuildInfo: Native Build Info
+type BuildInfo struct {
+	// BuildKey: Optional. Build key.
+	BuildKey string `json:"buildKey,omitempty"`
+	// BuildValue: Optional. Build value.
+	BuildValue string `json:"buildValue,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "BuildKey") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "BuildKey") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s BuildInfo) MarshalJSON() ([]byte, error) {
+	type NoMethod BuildInfo
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // CancelJobRequest: A request to cancel a job.
 type CancelJobRequest struct {
 }
@@ -2588,6 +2612,30 @@ type Expr struct {
 
 func (s Expr) MarshalJSON() ([]byte, error) {
 	type NoMethod Expr
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// FallbackReason: Native SQL Execution Data
+type FallbackReason struct {
+	// FallbackNode: Optional. Fallback node information.
+	FallbackNode string `json:"fallbackNode,omitempty"`
+	// FallbackReason: Optional. Fallback to Spark reason.
+	FallbackReason string `json:"fallbackReason,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "FallbackNode") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "FallbackNode") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s FallbackReason) MarshalJSON() ([]byte, error) {
+	type NoMethod FallbackReason
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -4609,6 +4657,61 @@ type NamespacedGkeDeploymentTarget struct {
 
 func (s NamespacedGkeDeploymentTarget) MarshalJSON() ([]byte, error) {
 	type NoMethod NamespacedGkeDeploymentTarget
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+type NativeBuildInfoUiData struct {
+	// BuildClass: Optional. Build class of Native.
+	BuildClass string `json:"buildClass,omitempty"`
+	// BuildInfo: Optional. Build related details.
+	BuildInfo []*BuildInfo `json:"buildInfo,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "BuildClass") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "BuildClass") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s NativeBuildInfoUiData) MarshalJSON() ([]byte, error) {
+	type NoMethod NativeBuildInfoUiData
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// NativeSqlExecutionUiData: Native SQL Execution Data
+type NativeSqlExecutionUiData struct {
+	// Description: Optional. Description of the execution.
+	Description string `json:"description,omitempty"`
+	// ExecutionId: Required. Execution ID of the Native SQL Execution.
+	ExecutionId int64 `json:"executionId,omitempty,string"`
+	// FallbackDescription: Optional. Description of the fallback.
+	FallbackDescription string `json:"fallbackDescription,omitempty"`
+	// FallbackNodeToReason: Optional. Fallback node to reason.
+	FallbackNodeToReason []*FallbackReason `json:"fallbackNodeToReason,omitempty"`
+	// NumFallbackNodes: Optional. Number of nodes fallen back to Spark.
+	NumFallbackNodes int64 `json:"numFallbackNodes,omitempty"`
+	// NumNativeNodes: Optional. Number of nodes in Native.
+	NumNativeNodes int64 `json:"numNativeNodes,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Description") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Description") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s NativeSqlExecutionUiData) MarshalJSON() ([]byte, error) {
+	type NoMethod NativeSqlExecutionUiData
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -6934,6 +7037,7 @@ type SoftwareConfig struct {
 	// HCatalog).
 	//   "HUDI" - Hudi.
 	//   "JUPYTER" - The Jupyter Notebook.
+	//   "PIG" - The Pig component.
 	//   "PRESTO" - The Presto query engine.
 	//   "TRINO" - The Trino query engine.
 	//   "RANGER" - The Ranger service.
@@ -7523,23 +7627,27 @@ type SparkWrapperObject struct {
 	ApplicationId   string           `json:"applicationId,omitempty"`
 	ApplicationInfo *ApplicationInfo `json:"applicationInfo,omitempty"`
 	// EventTimestamp: VM Timestamp associated with the data object.
-	EventTimestamp          string                   `json:"eventTimestamp,omitempty"`
-	ExecutorStageSummary    *ExecutorStageSummary    `json:"executorStageSummary,omitempty"`
-	ExecutorSummary         *ExecutorSummary         `json:"executorSummary,omitempty"`
-	JobData                 *JobData                 `json:"jobData,omitempty"`
-	PoolData                *PoolData                `json:"poolData,omitempty"`
-	ProcessSummary          *ProcessSummary          `json:"processSummary,omitempty"`
-	RddOperationGraph       *RddOperationGraph       `json:"rddOperationGraph,omitempty"`
-	RddStorageInfo          *RddStorageInfo          `json:"rddStorageInfo,omitempty"`
-	ResourceProfileInfo     *ResourceProfileInfo     `json:"resourceProfileInfo,omitempty"`
-	SparkPlanGraph          *SparkPlanGraph          `json:"sparkPlanGraph,omitempty"`
-	SpeculationStageSummary *SpeculationStageSummary `json:"speculationStageSummary,omitempty"`
-	SqlExecutionUiData      *SqlExecutionUiData      `json:"sqlExecutionUiData,omitempty"`
-	StageData               *StageData               `json:"stageData,omitempty"`
-	StreamBlockData         *StreamBlockData         `json:"streamBlockData,omitempty"`
-	StreamingQueryData      *StreamingQueryData      `json:"streamingQueryData,omitempty"`
-	StreamingQueryProgress  *StreamingQueryProgress  `json:"streamingQueryProgress,omitempty"`
-	TaskData                *TaskData                `json:"taskData,omitempty"`
+	EventTimestamp       string                `json:"eventTimestamp,omitempty"`
+	ExecutorStageSummary *ExecutorStageSummary `json:"executorStageSummary,omitempty"`
+	ExecutorSummary      *ExecutorSummary      `json:"executorSummary,omitempty"`
+	JobData              *JobData              `json:"jobData,omitempty"`
+	// NativeBuildInfoUiData: Native Build Info
+	NativeBuildInfoUiData *NativeBuildInfoUiData `json:"nativeBuildInfoUiData,omitempty"`
+	// NativeSqlExecutionUiData: Native SQL Execution Info
+	NativeSqlExecutionUiData *NativeSqlExecutionUiData `json:"nativeSqlExecutionUiData,omitempty"`
+	PoolData                 *PoolData                 `json:"poolData,omitempty"`
+	ProcessSummary           *ProcessSummary           `json:"processSummary,omitempty"`
+	RddOperationGraph        *RddOperationGraph        `json:"rddOperationGraph,omitempty"`
+	RddStorageInfo           *RddStorageInfo           `json:"rddStorageInfo,omitempty"`
+	ResourceProfileInfo      *ResourceProfileInfo      `json:"resourceProfileInfo,omitempty"`
+	SparkPlanGraph           *SparkPlanGraph           `json:"sparkPlanGraph,omitempty"`
+	SpeculationStageSummary  *SpeculationStageSummary  `json:"speculationStageSummary,omitempty"`
+	SqlExecutionUiData       *SqlExecutionUiData       `json:"sqlExecutionUiData,omitempty"`
+	StageData                *StageData                `json:"stageData,omitempty"`
+	StreamBlockData          *StreamBlockData          `json:"streamBlockData,omitempty"`
+	StreamingQueryData       *StreamingQueryData       `json:"streamingQueryData,omitempty"`
+	StreamingQueryProgress   *StreamingQueryProgress   `json:"streamingQueryProgress,omitempty"`
+	TaskData                 *TaskData                 `json:"taskData,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AppSummary") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See

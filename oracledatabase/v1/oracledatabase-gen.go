@@ -1890,6 +1890,8 @@ type Entitlement struct {
 	//   "ACCOUNT_NOT_ACTIVE" - Account is linked but not active.
 	//   "ACTIVE" - Entitlement and Account are active.
 	//   "ACCOUNT_SUSPENDED" - Account is suspended.
+	//   "NOT_APPROVED_IN_PRIVATE_MARKETPLACE" - Entitlement is not approved in
+	// private marketplace.
 	State string `json:"state,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "CloudAccountDetails") to
 	// unconditionally include in API requests. By default, fields with empty or

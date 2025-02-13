@@ -469,6 +469,32 @@ func (s AttestationOccurrence) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// BaseImage: BaseImage describes a base image of a container image.
+type BaseImage struct {
+	// Name: The name of the base image.
+	Name string `json:"name,omitempty"`
+	// NumLayers: The number of layers that the base image is composed of.
+	NumLayers string `json:"numLayers,omitempty"`
+	// Repository: The repository name in which the base image is from.
+	Repository string `json:"repository,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Name") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Name") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s BaseImage) MarshalJSON() ([]byte, error) {
+	type NoMethod BaseImage
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 type BinarySourceInfo struct {
 	// BinaryVersion: The binary package. This is significant when the source is
 	// different than the binary itself. Historically if they've differed, we've
@@ -1704,6 +1730,37 @@ func (s Layer) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// LayerDetails: Details about the layer a package was found in. This should be
+// the same as the LayerDetails message in
+// google3/third_party/scalibr/binary/proto/scan_result.proto.
+type LayerDetails struct {
+	// BaseImages: The base images the layer is found within.
+	BaseImages []*BaseImage `json:"baseImages,omitempty"`
+	// Command: The layer build command that was used to build the layer. This may
+	// not be found in all layers depending on how the container image is built.
+	Command string `json:"command,omitempty"`
+	// DiffId: The diff ID (sha256 hash) of the layer in the container image.
+	DiffId string `json:"diffId,omitempty"`
+	// Index: The index of the layer in the container image.
+	Index int64 `json:"index,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "BaseImages") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "BaseImages") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s LayerDetails) MarshalJSON() ([]byte, error) {
+	type NoMethod LayerDetails
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // License: License information.
 type License struct {
 	// Comments: Comments
@@ -2075,7 +2132,8 @@ type PackageData struct {
 	FileLocation []*FileLocation `json:"fileLocation,omitempty"`
 	// HashDigest: HashDigest stores the SHA512 hash digest of the jar file if the
 	// package is of type Maven. This field will be unset for non Maven packages.
-	HashDigest string `json:"hashDigest,omitempty"`
+	HashDigest   string        `json:"hashDigest,omitempty"`
+	LayerDetails *LayerDetails `json:"layerDetails,omitempty"`
 	// Licenses: The list of licenses found that are related to a given package.
 	// Note that licenses may also be stored on the BinarySourceInfo. If there is
 	// no BinarySourceInfo (because there's no concept of source vs binary), then

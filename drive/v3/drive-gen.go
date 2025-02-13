@@ -169,7 +169,6 @@ func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, err
 	s.Comments = NewCommentsService(s)
 	s.Drives = NewDrivesService(s)
 	s.Files = NewFilesService(s)
-	s.Operation = NewOperationService(s)
 	s.Operations = NewOperationsService(s)
 	s.Permissions = NewPermissionsService(s)
 	s.Replies = NewRepliesService(s)
@@ -217,8 +216,6 @@ type Service struct {
 	Drives *DrivesService
 
 	Files *FilesService
-
-	Operation *OperationService
 
 	Operations *OperationsService
 
@@ -307,15 +304,6 @@ func NewFilesService(s *Service) *FilesService {
 }
 
 type FilesService struct {
-	s *Service
-}
-
-func NewOperationService(s *Service) *OperationService {
-	rs := &OperationService{s: s}
-	return rs
-}
-
-type OperationService struct {
 	s *Service
 }
 
@@ -7906,7 +7894,7 @@ func (c *FilesWatchCall) Do(opts ...googleapi.CallOption) (*Channel, error) {
 	return ret, nil
 }
 
-type OperationCancelCall struct {
+type OperationsCancelCall struct {
 	s          *Service
 	name       string
 	urlParams_ gensupport.URLParams
@@ -7925,8 +7913,8 @@ type OperationCancelCall struct {
 // `Code.CANCELLED`.
 //
 // - name: The name of the operation resource to be cancelled.
-func (r *OperationService) Cancel(name string) *OperationCancelCall {
-	c := &OperationCancelCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+func (r *OperationsService) Cancel(name string) *OperationsCancelCall {
+	c := &OperationsCancelCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
 	return c
 }
@@ -7934,31 +7922,31 @@ func (r *OperationService) Cancel(name string) *OperationCancelCall {
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
 // details.
-func (c *OperationCancelCall) Fields(s ...googleapi.Field) *OperationCancelCall {
+func (c *OperationsCancelCall) Fields(s ...googleapi.Field) *OperationsCancelCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
 // Context sets the context to be used in this call's Do method.
-func (c *OperationCancelCall) Context(ctx context.Context) *OperationCancelCall {
+func (c *OperationsCancelCall) Context(ctx context.Context) *OperationsCancelCall {
 	c.ctx_ = ctx
 	return c
 }
 
 // Header returns a http.Header that can be modified by the caller to add
 // headers to the request.
-func (c *OperationCancelCall) Header() http.Header {
+func (c *OperationsCancelCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
 	}
 	return c.header_
 }
 
-func (c *OperationCancelCall) doRequest(alt string) (*http.Response, error) {
+func (c *OperationsCancelCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "operation/{name}:cancel")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "operations/{name}:cancel")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("POST", urls, nil)
 	if err != nil {
@@ -7968,12 +7956,12 @@ func (c *OperationCancelCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "drive.operation.cancel", "request", internallog.HTTPRequest(req, nil))
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "drive.operations.cancel", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
-// Do executes the "drive.operation.cancel" call.
-func (c *OperationCancelCall) Do(opts ...googleapi.CallOption) error {
+// Do executes the "drive.operations.cancel" call.
+func (c *OperationsCancelCall) Do(opts ...googleapi.CallOption) error {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if err != nil {
@@ -7983,11 +7971,11 @@ func (c *OperationCancelCall) Do(opts ...googleapi.CallOption) error {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return gensupport.WrapError(err)
 	}
-	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "drive.operation.cancel", "response", internallog.HTTPResponse(res, nil))
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "drive.operations.cancel", "response", internallog.HTTPResponse(res, nil))
 	return nil
 }
 
-type OperationDeleteCall struct {
+type OperationsDeleteCall struct {
 	s          *Service
 	name       string
 	urlParams_ gensupport.URLParams
@@ -8001,8 +7989,8 @@ type OperationDeleteCall struct {
 // `google.rpc.Code.UNIMPLEMENTED`.
 //
 // - name: The name of the operation resource to be deleted.
-func (r *OperationService) Delete(name string) *OperationDeleteCall {
-	c := &OperationDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+func (r *OperationsService) Delete(name string) *OperationsDeleteCall {
+	c := &OperationsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
 	return c
 }
@@ -8010,31 +7998,31 @@ func (r *OperationService) Delete(name string) *OperationDeleteCall {
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
 // details.
-func (c *OperationDeleteCall) Fields(s ...googleapi.Field) *OperationDeleteCall {
+func (c *OperationsDeleteCall) Fields(s ...googleapi.Field) *OperationsDeleteCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
 // Context sets the context to be used in this call's Do method.
-func (c *OperationDeleteCall) Context(ctx context.Context) *OperationDeleteCall {
+func (c *OperationsDeleteCall) Context(ctx context.Context) *OperationsDeleteCall {
 	c.ctx_ = ctx
 	return c
 }
 
 // Header returns a http.Header that can be modified by the caller to add
 // headers to the request.
-func (c *OperationDeleteCall) Header() http.Header {
+func (c *OperationsDeleteCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
 	}
 	return c.header_
 }
 
-func (c *OperationDeleteCall) doRequest(alt string) (*http.Response, error) {
+func (c *OperationsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "operation/{name}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "operations/{name}")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("DELETE", urls, nil)
 	if err != nil {
@@ -8044,12 +8032,12 @@ func (c *OperationDeleteCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "drive.operation.delete", "request", internallog.HTTPRequest(req, nil))
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "drive.operations.delete", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
-// Do executes the "drive.operation.delete" call.
-func (c *OperationDeleteCall) Do(opts ...googleapi.CallOption) error {
+// Do executes the "drive.operations.delete" call.
+func (c *OperationsDeleteCall) Do(opts ...googleapi.CallOption) error {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if err != nil {
@@ -8059,7 +8047,7 @@ func (c *OperationDeleteCall) Do(opts ...googleapi.CallOption) error {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return gensupport.WrapError(err)
 	}
-	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "drive.operation.delete", "response", internallog.HTTPResponse(res, nil))
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "drive.operations.delete", "response", internallog.HTTPResponse(res, nil))
 	return nil
 }
 

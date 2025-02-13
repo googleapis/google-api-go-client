@@ -1766,6 +1766,36 @@ func (s GoogleCloudApigeeV1ApiCategoryResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudApigeeV1ApiDebugSession: Session carries the debug session id and
+// its creation time.
+type GoogleCloudApigeeV1ApiDebugSession struct {
+	// ApiProxyRevisionId: The revision ID of the deployed API proxy.
+	ApiProxyRevisionId string `json:"apiProxyRevisionId,omitempty"`
+	// CreateTime: The first transaction creation timestamp in millisecond,
+	// recorded by UAP.
+	CreateTime string `json:"createTime,omitempty"`
+	// EnvironmentId: The environment ID of the deployed API proxy.
+	EnvironmentId string `json:"environmentId,omitempty"`
+	// Id: The debug session ID.
+	Id string `json:"id,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ApiProxyRevisionId") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ApiProxyRevisionId") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudApigeeV1ApiDebugSession) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudApigeeV1ApiDebugSession
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudApigeeV1ApiDoc: `ApiDoc` represents an API catalog item. Catalog
 // items are used in two ways in a portal: - Users can browse and interact with
 // a visual representation of the API documentation - The `api_product_name`
@@ -5977,9 +6007,9 @@ type GoogleCloudApigeeV1ListApiDebugSessionsResponse struct {
 	// ListApiDebugSessionsRequest to retrieve the next page. If omitted, no
 	// subsequent pages exist.
 	NextPageToken string `json:"nextPageToken,omitempty"`
-	// Sessions: Session info that includes debug session ID and the first
-	// transaction creation timestamp.
-	Sessions []*GoogleCloudApigeeV1Session `json:"sessions,omitempty"`
+	// Sessions: Session info that includes debug session ID, environment ID, api
+	// proxy revision ID and the first transaction creation timestamp.
+	Sessions []*GoogleCloudApigeeV1ApiDebugSession `json:"sessions,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`

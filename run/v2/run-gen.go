@@ -349,9 +349,9 @@ type GoogleCloudRunV2BuildConfig struct {
 	// WorkerPool: Optional. Name of the Cloud Build Custom Worker Pool that should
 	// be used to build the Cloud Run function. The format of this field is
 	// `projects/{project}/locations/{region}/workerPools/{workerPool}` where
-	// {project} and {region} are the project id and region respectively where the
-	// worker pool is defined and {workerPool} is the short name of the worker
-	// pool.
+	// `{project}` and `{region}` are the project id and region respectively where
+	// the worker pool is defined and `{workerPool}` is the short name of the
+	// worker pool.
 	WorkerPool string `json:"workerPool,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "BaseImage") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -1053,12 +1053,12 @@ type GoogleCloudRunV2ExecutionTemplate struct {
 	// will be rejected. All system labels in v1 now have a corresponding field in
 	// v2 ExecutionTemplate.
 	Labels map[string]string `json:"labels,omitempty"`
-	// Parallelism: Specifies the maximum desired number of tasks the execution
-	// should run at given time. Must be <= task_count. When the job is run, if
-	// this field is 0 or unset, the maximum possible value will be used for that
-	// execution. The actual number of tasks running in steady state will be less
-	// than this number when there are fewer tasks waiting to be completed
-	// remaining, i.e. when the work left to do is less than max parallelism.
+	// Parallelism: Optional. Specifies the maximum desired number of tasks the
+	// execution should run at given time. When the job is run, if this field is 0
+	// or unset, the maximum possible value will be used for that execution. The
+	// actual number of tasks running in steady state will be less than this number
+	// when there are fewer tasks waiting to be completed remaining, i.e. when the
+	// work left to do is less than max parallelism.
 	Parallelism int64 `json:"parallelism,omitempty"`
 	// TaskCount: Specifies the desired number of tasks the execution should run.
 	// Setting to 1 means that parallelism is limited to 1 and the success of that
@@ -1871,6 +1871,8 @@ type GoogleCloudRunV2Revision struct {
 	Containers []*GoogleCloudRunV2Container `json:"containers,omitempty"`
 	// CreateTime: Output only. The creation time.
 	CreateTime string `json:"createTime,omitempty"`
+	// Creator: Output only. Email address of the authenticated creator.
+	Creator string `json:"creator,omitempty"`
 	// DeleteTime: Output only. For a deleted resource, the deletion time. It is
 	// only populated as a response to a Delete request.
 	DeleteTime string `json:"deleteTime,omitempty"`
@@ -3312,6 +3314,9 @@ type GoogleDevtoolsCloudbuildV1Build struct {
 	// CreateTime: Output only. Time at which the request to create the build was
 	// received.
 	CreateTime string `json:"createTime,omitempty"`
+	// Dependencies: Optional. Dependencies that the Cloud Build worker will fetch
+	// before executing user steps.
+	Dependencies []*GoogleDevtoolsCloudbuildV1Dependency `json:"dependencies,omitempty"`
 	// FailureInfo: Output only. Contains information about the build when
 	// status=FAILURE.
 	FailureInfo *GoogleDevtoolsCloudbuildV1FailureInfo `json:"failureInfo,omitempty"`
@@ -3797,6 +3802,32 @@ func (s GoogleDevtoolsCloudbuildV1ConnectedRepository) MarshalJSON() ([]byte, er
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GoogleDevtoolsCloudbuildV1Dependency: A dependency that the Cloud Build
+// worker will fetch before executing user steps.
+type GoogleDevtoolsCloudbuildV1Dependency struct {
+	// Empty: If set to true disable all dependency fetching (ignoring the default
+	// source as well).
+	Empty bool `json:"empty,omitempty"`
+	// GitSource: Represents a git repository as a build dependency.
+	GitSource *GoogleDevtoolsCloudbuildV1GitSourceDependency `json:"gitSource,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Empty") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Empty") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleDevtoolsCloudbuildV1Dependency) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleDevtoolsCloudbuildV1Dependency
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GoogleDevtoolsCloudbuildV1DeveloperConnectConfig: This config defines the
 // location of a source through Developer Connect.
 type GoogleDevtoolsCloudbuildV1DeveloperConnectConfig struct {
@@ -3941,6 +3972,66 @@ type GoogleDevtoolsCloudbuildV1GitSource struct {
 
 func (s GoogleDevtoolsCloudbuildV1GitSource) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleDevtoolsCloudbuildV1GitSource
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleDevtoolsCloudbuildV1GitSourceDependency: Represents a git repository
+// as a build dependency.
+type GoogleDevtoolsCloudbuildV1GitSourceDependency struct {
+	// Depth: Optional. How much history should be fetched for the build (default
+	// 1, -1 for all history).
+	Depth int64 `json:"depth,omitempty,string"`
+	// DestPath: Required. Where should the files be placed on the worker.
+	DestPath string `json:"destPath,omitempty"`
+	// RecurseSubmodules: Optional. True if submodules should be fetched too
+	// (default false).
+	RecurseSubmodules bool `json:"recurseSubmodules,omitempty"`
+	// Repository: Required. The kind of repo (url or dev connect).
+	Repository *GoogleDevtoolsCloudbuildV1GitSourceRepository `json:"repository,omitempty"`
+	// Revision: Required. The revision that we will fetch the repo at.
+	Revision string `json:"revision,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Depth") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Depth") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleDevtoolsCloudbuildV1GitSourceDependency) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleDevtoolsCloudbuildV1GitSourceDependency
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleDevtoolsCloudbuildV1GitSourceRepository: A repository for a git
+// source.
+type GoogleDevtoolsCloudbuildV1GitSourceRepository struct {
+	// DeveloperConnect: The Developer Connect Git repository link or the url that
+	// matches a repository link in the current project, formatted as
+	// `projects/*/locations/*/connections/*/gitRepositoryLink/*`
+	DeveloperConnect string `json:"developerConnect,omitempty"`
+	// Url: Location of the Git repository.
+	Url string `json:"url,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "DeveloperConnect") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DeveloperConnect") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleDevtoolsCloudbuildV1GitSourceRepository) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleDevtoolsCloudbuildV1GitSourceRepository
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 

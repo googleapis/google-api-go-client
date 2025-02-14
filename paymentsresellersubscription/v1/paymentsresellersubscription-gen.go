@@ -728,6 +728,31 @@ func (s GoogleCloudPaymentsResellerSubscriptionV1GenerateUserSessionResponse) Ma
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudPaymentsResellerSubscriptionV1GoogleHomePayload: Payload specific
+// for Google Home products.
+type GoogleCloudPaymentsResellerSubscriptionV1GoogleHomePayload struct {
+	// PartnerStructureId: Optional. This identifies the structure ID on partner
+	// side that the subscription should be applied to. Only required when the
+	// partner requires structure mapping.
+	PartnerStructureId string `json:"partnerStructureId,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "PartnerStructureId") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "PartnerStructureId") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudPaymentsResellerSubscriptionV1GoogleHomePayload) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudPaymentsResellerSubscriptionV1GoogleHomePayload
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudPaymentsResellerSubscriptionV1GoogleOnePayload: Payload specific
 // to Google One products.
 type GoogleCloudPaymentsResellerSubscriptionV1GoogleOnePayload struct {
@@ -969,18 +994,20 @@ func (s GoogleCloudPaymentsResellerSubscriptionV1ProductBundleDetailsBundleEleme
 // GoogleCloudPaymentsResellerSubscriptionV1ProductPayload: Specifies product
 // specific payload.
 type GoogleCloudPaymentsResellerSubscriptionV1ProductPayload struct {
+	// GoogleHomePayload: Payload specific to Google Home products.
+	GoogleHomePayload *GoogleCloudPaymentsResellerSubscriptionV1GoogleHomePayload `json:"googleHomePayload,omitempty"`
 	// GoogleOnePayload: Product-specific payloads. Payload specific to Google One
 	// products.
 	GoogleOnePayload *GoogleCloudPaymentsResellerSubscriptionV1GoogleOnePayload `json:"googleOnePayload,omitempty"`
 	// YoutubePayload: Payload specific to Youtube products.
 	YoutubePayload *GoogleCloudPaymentsResellerSubscriptionV1YoutubePayload `json:"youtubePayload,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "GoogleOnePayload") to
+	// ForceSendFields is a list of field names (e.g. "GoogleHomePayload") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "GoogleOnePayload") to include in
+	// NullFields is a list of field names (e.g. "GoogleHomePayload") to include in
 	// API requests with the JSON null value. By default, fields with empty values
 	// are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.

@@ -1376,14 +1376,17 @@ type DeletionMetadata struct {
 	// Possible values:
 	//   "DELETION_TYPE_UNSPECIFIED" - This value is unused.
 	//   "CREATOR" - User deleted their own message.
-	//   "SPACE_OWNER" - The space owner deleted the message.
-	//   "ADMIN" - A Google Workspace admin deleted the message.
+	//   "SPACE_OWNER" - A space manager deleted the message.
+	//   "ADMIN" - A Google Workspace administrator deleted the message.
+	// Administrators can delete any message in the space, including messages sent
+	// by any space member or Chat app.
 	//   "APP_MESSAGE_EXPIRY" - A Chat app deleted its own message when it expired.
-	//   "CREATOR_VIA_APP" - A Chat app deleted the message on behalf of the user.
-	//   "SPACE_OWNER_VIA_APP" - A Chat app deleted the message on behalf of the
-	// space owner.
-	//   "SPACE_MEMBER" - A member of the space deleted the message. Human users
-	// can delete messages sent by apps.
+	//   "CREATOR_VIA_APP" - A Chat app deleted the message on behalf of the
+	// creator (using user authentication).
+	//   "SPACE_OWNER_VIA_APP" - A Chat app deleted the message on behalf of a
+	// space manager (using user authentication).
+	//   "SPACE_MEMBER" - A member of the space deleted the message. Users can
+	// delete messages sent by apps.
 	DeletionType string `json:"deletionType,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "DeletionType") to
 	// unconditionally include in API requests. By default, fields with empty or

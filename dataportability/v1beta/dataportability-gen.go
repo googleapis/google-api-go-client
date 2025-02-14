@@ -464,6 +464,18 @@ type PortabilityArchiveService struct {
 	s *Service
 }
 
+// CancelPortabilityArchiveRequest: Request to cancel a Portability Archive
+// job.
+type CancelPortabilityArchiveRequest struct {
+}
+
+// CancelPortabilityArchiveResponse: Response to canceling a Data Portability
+// Archive job.
+type CancelPortabilityArchiveResponse struct {
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+}
+
 // Empty: A generic empty message that you can re-use to avoid defining
 // duplicated empty messages in your APIs. A typical example is to use it as
 // the request or the response type of an API method. For instance: service Foo
@@ -475,16 +487,26 @@ type Empty struct {
 
 // InitiatePortabilityArchiveRequest: Request to kick off an Archive job.
 type InitiatePortabilityArchiveRequest struct {
+	// EndTime: Optional. The timestamp that represents the end point for the data
+	// you are exporting. If the end_time is not specified in the
+	// InitiatePortabilityArchiveRequest, this field is set to the latest available
+	// data.
+	EndTime string `json:"endTime,omitempty"`
 	// Resources: The resources from which you're exporting data. These values have
 	// a 1:1 correspondence with the OAuth scopes.
 	Resources []string `json:"resources,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "Resources") to
-	// unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
+	// StartTime: Optional. The timestamp that represents the starting point for
+	// the data you are exporting. If the start_time is not specified in the
+	// InitiatePortabilityArchiveRequest, the field is set to the earliest
+	// available data.
+	StartTime string `json:"startTime,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "EndTime") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Resources") to include in API
+	// NullFields is a list of field names (e.g. "EndTime") to include in API
 	// requests with the JSON null value. By default, fields with empty values are
 	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
@@ -498,19 +520,27 @@ func (s InitiatePortabilityArchiveRequest) MarshalJSON() ([]byte, error) {
 
 // InitiatePortabilityArchiveResponse: Response from initiating an Archive job.
 type InitiatePortabilityArchiveResponse struct {
+	// AccessType: The access type of the Archive job initiated by the API.
+	//
+	// Possible values:
+	//   "ACCESS_TYPE_UNSPECIFIED" - Default value. This value is unused.
+	//   "ACCESS_TYPE_ONE_TIME" - One-time access to the requested scopes.
+	//   "ACCESS_TYPE_TIME_BASED" - Multiple exports allowed over 30 days. Enum
+	// value subject to change before launch.
+	AccessType string `json:"accessType,omitempty"`
 	// ArchiveJobId: The archive job ID that is initiated in the API. This can be
 	// used to get the state of the job.
 	ArchiveJobId string `json:"archiveJobId,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-	// ForceSendFields is a list of field names (e.g. "ArchiveJobId") to
+	// ForceSendFields is a list of field names (e.g. "AccessType") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "ArchiveJobId") to include in API
+	// NullFields is a list of field names (e.g. "AccessType") to include in API
 	// requests with the JSON null value. By default, fields with empty values are
 	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
@@ -524,10 +554,19 @@ func (s InitiatePortabilityArchiveResponse) MarshalJSON() ([]byte, error) {
 
 // PortabilityArchiveState: Resource that contains the state of an Archive job.
 type PortabilityArchiveState struct {
+	// ExportTime: The timestamp that represents the end point for the data you are
+	// exporting. If the end_time value is set in the
+	// InitiatePortabilityArchiveRequest, this field is set to that value. If
+	// end_time is not set, this value is set to the time the export was requested.
+	ExportTime string `json:"exportTime,omitempty"`
 	// Name: The resource name of ArchiveJob's PortabilityArchiveState singleton.
 	// The format is: archiveJobs/{archive_job}/portabilityArchiveState.
 	// archive_job is the job ID provided in the request.
 	Name string `json:"name,omitempty"`
+	// StartTime: The timestamp that represents the starting point for the data you
+	// are exporting. This field is set only if the start_time field is specified
+	// in the InitiatePortabilityArchiveRequest.
+	StartTime string `json:"startTime,omitempty"`
 	// State: Resource that represents the state of the Archive job.
 	//
 	// Possible values:
@@ -543,15 +582,15 @@ type PortabilityArchiveState struct {
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-	// ForceSendFields is a list of field names (e.g. "Name") to unconditionally
-	// include in API requests. By default, fields with empty or default values are
-	// omitted from API requests. See
+	// ForceSendFields is a list of field names (e.g. "ExportTime") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Name") to include in API requests
-	// with the JSON null value. By default, fields with empty values are omitted
-	// from API requests. See
+	// NullFields is a list of field names (e.g. "ExportTime") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -595,6 +634,113 @@ type RetryPortabilityArchiveResponse struct {
 func (s RetryPortabilityArchiveResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod RetryPortabilityArchiveResponse
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+type ArchiveJobsCancelCall struct {
+	s                               *Service
+	name                            string
+	cancelportabilityarchiverequest *CancelPortabilityArchiveRequest
+	urlParams_                      gensupport.URLParams
+	ctx_                            context.Context
+	header_                         http.Header
+}
+
+// Cancel: Cancels a Portability Archive job.
+//
+//   - name: The Archive job ID you're canceling. This is returned by the
+//     InitiatePortabilityArchive response. The format is:
+//     archiveJobs/{archive_job}. Canceling is only executed if the job is in
+//     progress.
+func (r *ArchiveJobsService) Cancel(name string, cancelportabilityarchiverequest *CancelPortabilityArchiveRequest) *ArchiveJobsCancelCall {
+	c := &ArchiveJobsCancelCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.cancelportabilityarchiverequest = cancelportabilityarchiverequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ArchiveJobsCancelCall) Fields(s ...googleapi.Field) *ArchiveJobsCancelCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ArchiveJobsCancelCall) Context(ctx context.Context) *ArchiveJobsCancelCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ArchiveJobsCancelCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ArchiveJobsCancelCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.cancelportabilityarchiverequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta/{+name}:cancel")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "dataportability.archiveJobs.cancel", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "dataportability.archiveJobs.cancel" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *CancelPortabilityArchiveResponse.ServerResponse.Header or (if a response
+// was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ArchiveJobsCancelCall) Do(opts ...googleapi.CallOption) (*CancelPortabilityArchiveResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &CancelPortabilityArchiveResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "dataportability.archiveJobs.cancel", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
 }
 
 type ArchiveJobsGetPortabilityArchiveStateCall struct {

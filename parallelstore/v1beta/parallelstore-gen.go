@@ -360,9 +360,9 @@ type Instance struct {
 	CapacityGib int64 `json:"capacityGib,omitempty,string"`
 	// CreateTime: Output only. The time when the instance was created.
 	CreateTime string `json:"createTime,omitempty"`
-	// DeploymentType: Optional. The deployment type of the instance. Allowed
-	// values are: * `SCRATCH`: the instance is a scratch instance. * `PERSISTENT`:
-	// the instance is a persistent instance.
+	// DeploymentType: Optional. Immutable. The deployment type of the instance.
+	// Allowed values are: * `SCRATCH`: the instance is a scratch instance. *
+	// `PERSISTENT`: the instance is a persistent instance.
 	//
 	// Possible values:
 	//   "DEPLOYMENT_TYPE_UNSPECIFIED" - Default Deployment Type It is equivalent
@@ -373,10 +373,11 @@ type Instance struct {
 	// Description: Optional. The description of the instance. 2048 characters or
 	// less.
 	Description string `json:"description,omitempty"`
-	// DirectoryStripeLevel: Optional. Stripe level for directories. Allowed values
-	// are: * `DIRECTORY_STRIPE_LEVEL_MIN`: recommended when directories contain a
-	// small number of files. * `DIRECTORY_STRIPE_LEVEL_BALANCED`: balances
-	// performance for workloads involving a mix of small and large directories. *
+	// DirectoryStripeLevel: Optional. Immutable. Stripe level for directories.
+	// Allowed values are: * `DIRECTORY_STRIPE_LEVEL_MIN`: recommended when
+	// directories contain a small number of files. *
+	// `DIRECTORY_STRIPE_LEVEL_BALANCED`: balances performance for workloads
+	// involving a mix of small and large directories. *
 	// `DIRECTORY_STRIPE_LEVEL_MAX`: recommended for directories with a large
 	// number of files.
 	//
@@ -391,11 +392,11 @@ type Instance struct {
 	// range being used by the instance's VPC network. This field is populated by
 	// the service and contains the value currently used by the service.
 	EffectiveReservedIpRange string `json:"effectiveReservedIpRange,omitempty"`
-	// FileStripeLevel: Optional. Stripe level for files. Allowed values are: *
-	// `FILE_STRIPE_LEVEL_MIN`: offers the best performance for small size files. *
-	// `FILE_STRIPE_LEVEL_BALANCED`: balances performance for workloads involving a
-	// mix of small and large files. * `FILE_STRIPE_LEVEL_MAX`: higher throughput
-	// performance for larger files.
+	// FileStripeLevel: Optional. Immutable. Stripe level for files. Allowed values
+	// are: * `FILE_STRIPE_LEVEL_MIN`: offers the best performance for small size
+	// files. * `FILE_STRIPE_LEVEL_BALANCED`: balances performance for workloads
+	// involving a mix of small and large files. * `FILE_STRIPE_LEVEL_MAX`: higher
+	// throughput performance for larger files.
 	//
 	// Possible values:
 	//   "FILE_STRIPE_LEVEL_UNSPECIFIED" - If not set, FileStripeLevel will default

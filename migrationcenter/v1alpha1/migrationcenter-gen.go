@@ -1078,6 +1078,10 @@ func (s AwsEc2PlatformDetails) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// AwsRds: Specific details for an AWS RDS database deployment.
+type AwsRds struct {
+}
+
 // AzureVmPlatformDetails: Azure VM specific details.
 type AzureVmPlatformDetails struct {
 	// Hyperthreading: Whether the machine is hyperthreaded.
@@ -1893,6 +1897,8 @@ func (s *DailyResourceUsageAggregationStats) UnmarshalJSON(data []byte) error {
 type DatabaseDeploymentDetails struct {
 	// AggregatedStats: Output only. Aggregated stats for the database deployment.
 	AggregatedStats *DatabaseDeploymentDetailsAggregatedStats `json:"aggregatedStats,omitempty"`
+	// AwsRds: Optional. Details of an AWS RDS instance.
+	AwsRds *AwsRds `json:"awsRds,omitempty"`
 	// Edition: The database deployment edition.
 	Edition string `json:"edition,omitempty"`
 	// GeneratedId: The database deployment generated ID.
@@ -2707,6 +2713,32 @@ func (s DiskPartition) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// DiskPartitionDetails: Disk partition details.
+type DiskPartitionDetails struct {
+	// FreeSpaceBytes: Output only. Total free space of all partitions.
+	FreeSpaceBytes int64 `json:"freeSpaceBytes,omitempty,string"`
+	// Partitions: Optional. List of partitions.
+	Partitions *DiskPartitionList `json:"partitions,omitempty"`
+	// TotalCapacityBytes: Output only. Total capacity of all partitions.
+	TotalCapacityBytes int64 `json:"totalCapacityBytes,omitempty,string"`
+	// ForceSendFields is a list of field names (e.g. "FreeSpaceBytes") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "FreeSpaceBytes") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s DiskPartitionDetails) MarshalJSON() ([]byte, error) {
+	type NoMethod DiskPartitionDetails
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // DiskPartitionList: Disk partition list.
 type DiskPartitionList struct {
 	// Entries: Partition entries.
@@ -2732,14 +2764,14 @@ func (s DiskPartitionList) MarshalJSON() ([]byte, error) {
 // DiskUsageSample: Disk usage sample. Values are across all disks.
 type DiskUsageSample struct {
 	// AverageIops: Average IOPS sampled over a short window. Must be non-negative.
-	// Must be equal to the sum of read and write if one of them is positive. if
-	// both read and write are zero they are ignored.
+	// If read or write are set, the sum of read and write will override the value
+	// of the average_iops.
 	AverageIops float64 `json:"averageIops,omitempty"`
 	// AverageReadIops: Average read IOPS sampled over a short window. Must be
-	// non-negative.
+	// non-negative. If both read and write are zero they are ignored.
 	AverageReadIops float64 `json:"averageReadIops,omitempty"`
 	// AverageWriteIops: Average write IOPS sampled over a short window. Must be
-	// non-negative.
+	// non-negative. If both read and write are zero they are ignored.
 	AverageWriteIops float64 `json:"averageWriteIops,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AverageIops") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -4278,6 +4310,10 @@ type MachineDetails struct {
 	CoreCount int64 `json:"coreCount,omitempty"`
 	// CreateTime: Machine creation time.
 	CreateTime string `json:"createTime,omitempty"`
+	// DiskPartitions: Optional. Disk partitions details. Note: Partitions are not
+	// necessarily mounted on local disks and therefore might not have a one-to-one
+	// correspondence with local disks.
+	DiskPartitions *DiskPartitionDetails `json:"diskPartitions,omitempty"`
 	// Disks: Disk details.
 	Disks *MachineDiskDetails `json:"disks,omitempty"`
 	// GuestOs: Guest OS information.
@@ -7298,6 +7334,10 @@ type VirtualMachineDetails struct {
 	CoreCount int64 `json:"coreCount,omitempty"`
 	// CreateTime: VM creation timestamp.
 	CreateTime string `json:"createTime,omitempty"`
+	// DiskPartitions: Optional. Disk partitions details. Note: Partitions are not
+	// necessarily mounted on local disks and therefore might not have a one-to-one
+	// correspondence with local disks.
+	DiskPartitions *DiskPartitionDetails `json:"diskPartitions,omitempty"`
 	// GuestOs: Guest OS information.
 	GuestOs *GuestOsDetails `json:"guestOs,omitempty"`
 	// MemoryMb: The amount of memory in the VirtualMachine. Must be non-negative.

@@ -1344,7 +1344,7 @@
       }
     }
   },
-  "revision": "20250206",
+  "revision": "20250209",
   "rootUrl": "https://chat.googleapis.com/",
   "schemas": {
     "AccessSettings": {
@@ -2004,12 +2004,12 @@
           "enumDescriptions": [
             "This value is unused.",
             "User deleted their own message.",
-            "The space owner deleted the message.",
-            "A Google Workspace admin deleted the message.",
+            "A space manager deleted the message.",
+            "A Google Workspace administrator deleted the message. Administrators can delete any message in the space, including messages sent by any space member or Chat app.",
             "A Chat app deleted its own message when it expired.",
-            "A Chat app deleted the message on behalf of the user.",
-            "A Chat app deleted the message on behalf of the space owner.",
-            "A member of the space deleted the message. Human users can delete messages sent by apps."
+            "A Chat app deleted the message on behalf of the creator (using user authentication).",
+            "A Chat app deleted the message on behalf of a space manager (using user authentication).",
+            "A member of the space deleted the message. Users can delete messages sent by apps."
           ],
           "type": "string"
         }

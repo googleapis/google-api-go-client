@@ -1712,6 +1712,27 @@ func (s PerformanceLimits) MarshalJSON() ([]byte, error) {
 // PromoteReplicaRequest: PromoteReplicaRequest promotes a Filestore standby
 // instance (replica).
 type PromoteReplicaRequest struct {
+	// PeerInstance: Optional. The resource name of the peer instance to promote,
+	// in the format
+	// `projects/{project_id}/locations/{location_id}/instances/{instance_id}`. The
+	// peer instance is required if the operation is called on an active instance.
+	PeerInstance string `json:"peerInstance,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "PeerInstance") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "PeerInstance") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s PromoteReplicaRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod PromoteReplicaRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ReplicaConfig: Replica configuration for the instance.
@@ -1738,6 +1759,7 @@ type ReplicaConfig struct {
 	// Possible values:
 	//   "STATE_REASON_UNSPECIFIED" - Reason not specified.
 	//   "PEER_INSTANCE_UNREACHABLE" - The peer instance is unreachable.
+	//   "REMOVE_FAILED" - The remove replica peer instance operation failed.
 	StateReasons []string `json:"stateReasons,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "LastActiveSyncTime") to
 	// unconditionally include in API requests. By default, fields with empty or

@@ -1165,9 +1165,7 @@ type BackupPlan struct {
 	// Name: Output only. Identifier. The resource name of the `BackupPlan`.
 	// Format: `projects/{project}/locations/{location}/backupPlans/{backup_plan}`
 	Name string `json:"name,omitempty"`
-	// ResourceType: Required. The resource type to which the `BackupPlan` will be
-	// applied. Examples include, "compute.googleapis.com/Instance",
-	// "sqladmin.googleapis.com/Instance", or "alloydb.googleapis.com/Cluster".
+	// ResourceType: Required.
 	ResourceType string `json:"resourceType,omitempty"`
 	// State: Output only. The `State` for the `BackupPlan`.
 	//
@@ -1223,8 +1221,7 @@ type BackupPlanAssociation struct {
 	// Resource: Required. Immutable. Resource name of workload on which backupplan
 	// is applied
 	Resource string `json:"resource,omitempty"`
-	// ResourceType: Required. Immutable. Resource type of workload on which
-	// backupplan is applied
+	// ResourceType: Required. Immutable.
 	ResourceType string `json:"resourceType,omitempty"`
 	// RulesConfigInfo: Output only. The config info related to backup rules.
 	RulesConfigInfo []*RuleConfigInfo `json:"rulesConfigInfo,omitempty"`

@@ -802,10 +802,9 @@ type CertificateAuthority struct {
 	// UpdateTime: Output only. The time at which this CertificateAuthority was
 	// last updated.
 	UpdateTime string `json:"updateTime,omitempty"`
-	// UserDefinedAccessUrls: Optional. User-defined URLs for accessing content
-	// published by this CertificateAuthority, including the CA certificate and the
-	// PEM-encoded CRLs. The service does not publish content to these URLs. It is
-	// up to the user to mirror content to these URLs.
+	// UserDefinedAccessUrls: Optional. User-defined URLs for CA certificate and
+	// CRLs. The service does not publish content to these URLs. It is up to the
+	// user to mirror content to these URLs.
 	UserDefinedAccessUrls *UserDefinedAccessUrls `json:"userDefinedAccessUrls,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
@@ -2845,11 +2844,13 @@ func (s UndeleteCertificateAuthorityRequest) MarshalJSON() ([]byte, error) {
 type UserDefinedAccessUrls struct {
 	// AiaIssuingCertificateUrls: Optional. A list of URLs where the issuer CA
 	// certificate may be downloaded, which appears in the "Authority Information
-	// Access" extension in the certificate.
+	// Access" extension in the certificate. If specified, the default GCS URLs
+	// will be omitted.
 	AiaIssuingCertificateUrls []string `json:"aiaIssuingCertificateUrls,omitempty"`
 	// CrlAccessUrls: Optional. A list of URLs where to obtain CRL information,
 	// i.e. the DistributionPoint.fullName described by
-	// https://tools.ietf.org/html/rfc5280#section-4.2.1.13
+	// https://tools.ietf.org/html/rfc5280#section-4.2.1.13. If specified, the
+	// default GCS URLs will be omitted.
 	CrlAccessUrls []string `json:"crlAccessUrls,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AiaIssuingCertificateUrls")
 	// to unconditionally include in API requests. By default, fields with empty or

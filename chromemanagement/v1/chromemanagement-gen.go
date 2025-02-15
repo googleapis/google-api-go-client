@@ -4090,6 +4090,12 @@ type GoogleChromeManagementVersionsV1CertificateProvisioningProcess struct {
 	// `CertificateProvisioningProcess` failed. Presence of this field indicates
 	// that the `CertificateProvisioningProcess` has failed.
 	FailureMessage string `json:"failureMessage,omitempty"`
+	// GenericCaConnection: Output only. The CA connection is a generic CA
+	// connection.
+	GenericCaConnection *GoogleChromeManagementVersionsV1GenericCaConnection `json:"genericCaConnection,omitempty"`
+	// GenericProfile: Output only. The profile is a generic certificate
+	// provisioning profile.
+	GenericProfile *GoogleChromeManagementVersionsV1GenericProfile `json:"genericProfile,omitempty"`
 	// IssuedCertificate: Output only. The issued certificate for this
 	// `CertificateProvisioningProcess` in PEM format.
 	IssuedCertificate string `json:"issuedCertificate,omitempty"`
@@ -4366,6 +4372,58 @@ type GoogleChromeManagementVersionsV1DeviceInfo struct {
 
 func (s GoogleChromeManagementVersionsV1DeviceInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleChromeManagementVersionsV1DeviceInfo
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleChromeManagementVersionsV1GenericCaConnection: Describes a generic
+// Certificate Authority Connection.
+type GoogleChromeManagementVersionsV1GenericCaConnection struct {
+	// CaConnectionAdapterConfigReference: Output only. A string that references
+	// the administrator-provided configuration for the certification authority
+	// service. This field can be missing if no configuration was given.
+	CaConnectionAdapterConfigReference string `json:"caConnectionAdapterConfigReference,omitempty"`
+	// ForceSendFields is a list of field names (e.g.
+	// "CaConnectionAdapterConfigReference") to unconditionally include in API
+	// requests. By default, fields with empty or default values are omitted from
+	// API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g.
+	// "CaConnectionAdapterConfigReference") to include in API requests with the
+	// JSON null value. By default, fields with empty values are omitted from API
+	// requests. See https://pkg.go.dev/google.golang.org/api#hdr-NullFields for
+	// more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleChromeManagementVersionsV1GenericCaConnection) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleChromeManagementVersionsV1GenericCaConnection
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleChromeManagementVersionsV1GenericProfile: Describes a generic
+// certificate provisioning profile.
+type GoogleChromeManagementVersionsV1GenericProfile struct {
+	// ProfileAdapterConfigReference: Output only. A string that references the
+	// administrator-provided configuration for the certificate provisioning
+	// profile. This field can be missing if no configuration was given.
+	ProfileAdapterConfigReference string `json:"profileAdapterConfigReference,omitempty"`
+	// ForceSendFields is a list of field names (e.g.
+	// "ProfileAdapterConfigReference") to unconditionally include in API requests.
+	// By default, fields with empty or default values are omitted from API
+	// requests. See https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields
+	// for more details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ProfileAdapterConfigReference")
+	// to include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleChromeManagementVersionsV1GenericProfile) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleChromeManagementVersionsV1GenericProfile
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -4667,6 +4725,12 @@ type GoogleChromeManagementVersionsV1alpha1CertificateProvisioningProcess struct
 	// `CertificateProvisioningProcess` failed. Presence of this field indicates
 	// that the `CertificateProvisioningProcess` has failed.
 	FailureMessage string `json:"failureMessage,omitempty"`
+	// GenericCaConnection: Output only. The CA connection is a generic CA
+	// connection.
+	GenericCaConnection *GoogleChromeManagementVersionsV1alpha1GenericCaConnection `json:"genericCaConnection,omitempty"`
+	// GenericProfile: Output only. The profile is a generic certificate
+	// provisioning profile.
+	GenericProfile *GoogleChromeManagementVersionsV1alpha1GenericProfile `json:"genericProfile,omitempty"`
 	// IssuedCertificate: Output only. The issued certificate for this
 	// `CertificateProvisioningProcess` in PEM format.
 	IssuedCertificate string `json:"issuedCertificate,omitempty"`
@@ -4787,6 +4851,58 @@ type GoogleChromeManagementVersionsV1alpha1ChromeOsUserSession struct {
 
 func (s GoogleChromeManagementVersionsV1alpha1ChromeOsUserSession) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleChromeManagementVersionsV1alpha1ChromeOsUserSession
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleChromeManagementVersionsV1alpha1GenericCaConnection: Describes a
+// generic Certificate Authority Connection.
+type GoogleChromeManagementVersionsV1alpha1GenericCaConnection struct {
+	// CaConnectionAdapterConfigReference: Output only. A string that references
+	// the administrator-provided configuration for the certification authority
+	// service. This field can be missing if no configuration was given.
+	CaConnectionAdapterConfigReference string `json:"caConnectionAdapterConfigReference,omitempty"`
+	// ForceSendFields is a list of field names (e.g.
+	// "CaConnectionAdapterConfigReference") to unconditionally include in API
+	// requests. By default, fields with empty or default values are omitted from
+	// API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g.
+	// "CaConnectionAdapterConfigReference") to include in API requests with the
+	// JSON null value. By default, fields with empty values are omitted from API
+	// requests. See https://pkg.go.dev/google.golang.org/api#hdr-NullFields for
+	// more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleChromeManagementVersionsV1alpha1GenericCaConnection) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleChromeManagementVersionsV1alpha1GenericCaConnection
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleChromeManagementVersionsV1alpha1GenericProfile: Describes a generic
+// certificate provisioning profile.
+type GoogleChromeManagementVersionsV1alpha1GenericProfile struct {
+	// ProfileAdapterConfigReference: Output only. A string that references the
+	// administrator-provided configuration for the certificate provisioning
+	// profile. This field can be missing if no configuration was given.
+	ProfileAdapterConfigReference string `json:"profileAdapterConfigReference,omitempty"`
+	// ForceSendFields is a list of field names (e.g.
+	// "ProfileAdapterConfigReference") to unconditionally include in API requests.
+	// By default, fields with empty or default values are omitted from API
+	// requests. See https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields
+	// for more details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ProfileAdapterConfigReference")
+	// to include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleChromeManagementVersionsV1alpha1GenericProfile) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleChromeManagementVersionsV1alpha1GenericProfile
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 

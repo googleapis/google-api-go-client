@@ -658,6 +658,44 @@ func (s MoveAssignmentRequest) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// ReplicationStatus: Disaster Recovery(DR) replication status of the
+// reservation.
+type ReplicationStatus struct {
+	// Error: Output only. The last error encountered while trying to replicate
+	// changes from the primary to the secondary. This field is only available if
+	// the replication has not succeeded since.
+	Error *Status `json:"error,omitempty"`
+	// LastErrorTime: Output only. The time at which the last error was encountered
+	// while trying to replicate changes from the primary to the secondary. This
+	// field is only available if the replication has not succeeded since.
+	LastErrorTime string `json:"lastErrorTime,omitempty"`
+	// LastReplicationTime: Output only. A timestamp corresponding to the last
+	// change on the primary that was successfully replicated to the secondary.
+	LastReplicationTime string `json:"lastReplicationTime,omitempty"`
+	// SoftFailoverStartTime: Output only. The time at which a soft failover for
+	// the reservation and its associated datasets was initiated. After this field
+	// is set, all subsequent changes to the reservation will be rejected unless a
+	// hard failover overrides this operation. This field will be cleared once the
+	// failover is complete.
+	SoftFailoverStartTime string `json:"softFailoverStartTime,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Error") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Error") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ReplicationStatus) MarshalJSON() ([]byte, error) {
+	type NoMethod ReplicationStatus
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // Reservation: A reservation is a mechanism used to guarantee slots to users.
 type Reservation struct {
 	// Autoscale: The configuration parameters for the auto scaling feature.
@@ -711,6 +749,12 @@ type Reservation struct {
 	// primary replica. This field is only set for reservations using the managed
 	// disaster recovery feature.
 	PrimaryLocation string `json:"primaryLocation,omitempty"`
+	// ReplicationStatus: Output only. The Disater Recovery(DR) replication status
+	// of the reservation. This is only available for the primary replica of
+	// DR/failover reservations and provides information about the both the
+	// staleness of the secondary and the last error encountered while trying to
+	// replicate changes from the primary to the secondary.
+	ReplicationStatus *ReplicationStatus `json:"replicationStatus,omitempty"`
 	// SecondaryLocation: Optional. The current location of the reservation's
 	// secondary replica. This field is only set for reservations using the managed
 	// disaster recovery feature. Users can set this in create reservation calls to

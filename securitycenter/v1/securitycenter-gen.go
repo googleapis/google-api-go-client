@@ -7910,7 +7910,7 @@ func (s GoogleCloudSecuritycenterV2Object) MarshalJSON() ([]byte, error) {
 // GoogleCloudSecuritycenterV2OrgPolicy: Contains information about the org
 // policies associated with the finding.
 type GoogleCloudSecuritycenterV2OrgPolicy struct {
-	// Name: The resource name of the org policy. Example:
+	// Name: Identifier. The resource name of the org policy. Example:
 	// "organizations/{organization_id}/policies/{constraint_name}"
 	Name string `json:"name,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Name") to unconditionally

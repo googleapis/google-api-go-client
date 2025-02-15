@@ -424,7 +424,7 @@ type GoogleCloudRecaptchaenterpriseV1AnnotateAssessmentRequest struct {
 	// event.
 	//
 	// Possible values:
-	//   "REASON_UNSPECIFIED" - Default unspecified reason.
+	//   "REASON_UNSPECIFIED" - Unspecified reason. Do not use.
 	//   "CHARGEBACK" - Indicates that the transaction had a chargeback issued with
 	// no other details. When possible, specify the type by using CHARGEBACK_FRAUD
 	// or CHARGEBACK_DISPUTE instead.
@@ -1501,7 +1501,8 @@ type GoogleCloudRecaptchaenterpriseV1Metrics struct {
 	// ScoreMetrics: Metrics are continuous and in order by dates, and in the
 	// granularity of day. All Key types should have score-based data.
 	ScoreMetrics []*GoogleCloudRecaptchaenterpriseV1ScoreMetrics `json:"scoreMetrics,omitempty"`
-	// StartTime: Inclusive start time aligned to a day (UTC).
+	// StartTime: Inclusive start time aligned to a day in the America/Los_Angeles
+	// (Pacific) timezone.
 	StartTime string `json:"startTime,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.

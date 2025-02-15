@@ -6266,7 +6266,8 @@ func (s GoogleCloudDocumentaiV1beta3ProcessOptionsLayoutConfig) MarshalJSON() ([
 type GoogleCloudDocumentaiV1beta3ProcessOptionsLayoutConfigChunkingConfig struct {
 	// BreakpointPercentileThreshold: Optional. The percentile of cosine
 	// dissimilarity that must be exceeded between a group of tokens and the next.
-	// The smaller this number is, the more chunks will be generated.
+	// The smaller this number is, the more chunks will be generated. THIS FIELD IS
+	// NOT YET USED.
 	BreakpointPercentileThreshold int64 `json:"breakpointPercentileThreshold,omitempty"`
 	// ChunkSize: Optional. The chunk sizes to use when splitting documents, in
 	// order of level.
@@ -6275,7 +6276,7 @@ type GoogleCloudDocumentaiV1beta3ProcessOptionsLayoutConfigChunkingConfig struct
 	// headings when splitting.
 	IncludeAncestorHeadings bool `json:"includeAncestorHeadings,omitempty"`
 	// SemanticChunkingGroupSize: Optional. The number of tokens to group together
-	// when evaluating semantic similarity.
+	// when evaluating semantic similarity. THIS FIELD IS NOT YET USED.
 	SemanticChunkingGroupSize bool `json:"semanticChunkingGroupSize,omitempty"`
 	// ForceSendFields is a list of field names (e.g.
 	// "BreakpointPercentileThreshold") to unconditionally include in API requests.

@@ -1397,7 +1397,7 @@ func (s MasterAuthorizedNetworksConfig) MarshalJSON() ([]byte, error) {
 // NetworkingConfig: Configuration options for networking connections in the
 // Composer 2 environment.
 type NetworkingConfig struct {
-	// ConnectionType: Optional. Indicates the user requested specifc connection
+	// ConnectionType: Optional. Indicates the user requested specific connection
 	// type between Tenant and Customer projects. You cannot set networking
 	// connection type in public IP environment.
 	//

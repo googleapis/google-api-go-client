@@ -6131,8 +6131,12 @@ type CustomBiddingAlgorithm struct {
 	// specified or is unknown in this version.
 	//   "SCRIPT_BASED" - Algorithm generated through customer-uploaded custom
 	// bidding script files.
-	//   "ADS_DATA_HUB_BASED" - Algorithm created through Ads Data Hub product.
-	//   "GOAL_BUILDER_BASED" - Algorithm created through goal builder in DV3 UI.
+	//   "ADS_DATA_HUB_BASED" - DEPRECATED: ADS_DATA_HUB_BASED has been deprecated.
+	// Algorithm created through Ads Data Hub product.
+	//   "GOAL_BUILDER_BASED" - DEPRECATED: GOAL_BUILDER_BASED has been deprecated,
+	// is not longer supported, and has been replaced by RULE_BASED. Algorithm
+	// created through goal builder in DV3 UI. **Existing algorithms of this type
+	// have been migrated to `RULE_BASED`.**
 	//   "RULE_BASED" - Algorithm based in defined rules. These rules are defined
 	// in the API using the AlgorithmRules object. This algorithm type is only
 	// available to allowlisted customers. Other customers attempting to use this
@@ -9658,9 +9662,7 @@ type InsertionOrder struct {
 	// Name: Output only. The resource name of the insertion order.
 	Name string `json:"name,omitempty"`
 	// OptimizationObjective: Optional. The optimization objective of the insertion
-	// order. **This field is only available to allowlisted customers.** If a
-	// customer is not allowlisted, this field will be null and attempts to set it
-	// will return an error.
+	// order.
 	//
 	// Possible values:
 	//   "OPTIMIZATION_OBJECTIVE_UNSPECIFIED" - Type value is not specified or is

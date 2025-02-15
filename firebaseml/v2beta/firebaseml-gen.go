@@ -2133,8 +2133,7 @@ func (s GoogleCloudAiplatformV1beta1SpeechConfig) MarshalJSON() ([]byte, error) 
 // GoogleSearchRetrieval).
 type GoogleCloudAiplatformV1beta1Tool struct {
 	// CodeExecution: Optional. CodeExecution tool type. Enables the model to
-	// execute code as part of generation. This field is only used by the Gemini
-	// Developer API services.
+	// execute code as part of generation.
 	CodeExecution *GoogleCloudAiplatformV1beta1ToolCodeExecution `json:"codeExecution,omitempty"`
 	// FunctionDeclarations: Optional. Function tool type. One or more function
 	// declarations to be passed to the model along with the current user query.

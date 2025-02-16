@@ -1385,6 +1385,18 @@ type DatabaseResourceHealthSignalData struct {
 	// instance is using a weak password hash algorithm.
 	//   "SIGNAL_TYPE_NO_USER_PASSWORD_POLICY" - Detects if a database instance has
 	// no user password policy set.
+	//   "SIGNAL_TYPE_HOT_NODE" - Detects if a database instance/cluster has a hot
+	// node.
+	//   "SIGNAL_TYPE_NO_POINT_IN_TIME_RECOVERY" - Detects if a database instance
+	// has no point in time recovery enabled.
+	//   "SIGNAL_TYPE_RESOURCE_SUSPENDED" - Detects if a database instance/cluster
+	// is suspended.
+	//   "SIGNAL_TYPE_EXPENSIVE_COMMANDS" - Detects that expensive commands are
+	// being run on a database instance impacting overall performance.
+	//   "SIGNAL_TYPE_NO_MAINTENANCE_POLICY_CONFIGURED" - Indicates that the
+	// instance does not have a maintenance policy configured.
+	//   "SIGNAL_TYPE_NO_DELETION_PROTECTION" - Deletion Protection Disabled for
+	// the resource
 	SignalType string `json:"signalType,omitempty"`
 	// Possible values:
 	//   "STATE_UNSPECIFIED" - Unspecified state.
@@ -1464,7 +1476,7 @@ func (s DatabaseResourceId) MarshalJSON() ([]byte, error) {
 }
 
 // DatabaseResourceMetadata: Common model for database resource instance
-// metadata. Next ID: 23
+// metadata. Next ID: 24
 type DatabaseResourceMetadata struct {
 	// AvailabilityConfiguration: Availability configuration for this instance
 	AvailabilityConfiguration *AvailabilityConfiguration `json:"availabilityConfiguration,omitempty"`
@@ -1518,7 +1530,7 @@ type DatabaseResourceMetadata struct {
 	// InstanceType: The type of the instance. Specified at creation time.
 	//
 	// Possible values:
-	//   "INSTANCE_TYPE_UNSPECIFIED"
+	//   "INSTANCE_TYPE_UNSPECIFIED" - Unspecified.
 	//   "SUB_RESOURCE_TYPE_UNSPECIFIED" - For rest of the other categories.
 	//   "PRIMARY" - A regular primary database instance.
 	//   "SECONDARY" - A cluster or an instance acting as a secondary.
@@ -1528,6 +1540,8 @@ type DatabaseResourceMetadata struct {
 	//   "SUB_RESOURCE_TYPE_SECONDARY" - A cluster or an instance acting as a
 	// secondary.
 	//   "SUB_RESOURCE_TYPE_READ_REPLICA" - An instance acting as a read-replica.
+	//   "SUB_RESOURCE_TYPE_EXTERNAL_PRIMARY" - An instance acting as an external
+	// primary.
 	//   "SUB_RESOURCE_TYPE_OTHER" - For rest of the other categories.
 	InstanceType string `json:"instanceType,omitempty"`
 	// Location: The resource location. REQUIRED
@@ -1556,6 +1570,18 @@ type DatabaseResourceMetadata struct {
 	// the same source. Resource name to follow CAIS resource_name format as noted
 	// here go/condor-common-datamodel
 	ResourceName string `json:"resourceName,omitempty"`
+	// SuspensionReason: Suspension reason for the resource.
+	//
+	// Possible values:
+	//   "SUSPENSION_REASON_UNSPECIFIED" - Suspension reason is unspecified.
+	//   "WIPEOUT_HIDE_EVENT" - Wipeout hide event.
+	//   "WIPEOUT_PURGE_EVENT" - Wipeout purge event.
+	//   "BILLING_DISABLED" - Billing disabled for project
+	//   "ABUSER_DETECTED" - Abuse detected for resource
+	//   "ENCRYPTION_KEY_INACCESSIBLE" - Encryption key inaccessible.
+	//   "REPLICATED_CLUSTER_ENCRYPTION_KEY_INACCESSIBLE" - Replicated cluster
+	// encryption key inaccessible.
+	SuspensionReason string `json:"suspensionReason,omitempty"`
 	// TagsSet: Optional. Tags associated with this resources.
 	TagsSet *Tags `json:"tagsSet,omitempty"`
 	// UpdationTime: The time at which the resource was updated and recorded at
@@ -1818,6 +1844,18 @@ type DatabaseResourceRecommendationSignalData struct {
 	// instance is using a weak password hash algorithm.
 	//   "SIGNAL_TYPE_NO_USER_PASSWORD_POLICY" - Detects if a database instance has
 	// no user password policy set.
+	//   "SIGNAL_TYPE_HOT_NODE" - Detects if a database instance/cluster has a hot
+	// node.
+	//   "SIGNAL_TYPE_NO_POINT_IN_TIME_RECOVERY" - Detects if a database instance
+	// has no point in time recovery enabled.
+	//   "SIGNAL_TYPE_RESOURCE_SUSPENDED" - Detects if a database instance/cluster
+	// is suspended.
+	//   "SIGNAL_TYPE_EXPENSIVE_COMMANDS" - Detects that expensive commands are
+	// being run on a database instance impacting overall performance.
+	//   "SIGNAL_TYPE_NO_MAINTENANCE_POLICY_CONFIGURED" - Indicates that the
+	// instance does not have a maintenance policy configured.
+	//   "SIGNAL_TYPE_NO_DELETION_PROTECTION" - Deletion Protection Disabled for
+	// the resource
 	SignalType string `json:"signalType,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AdditionalMetadata") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -1944,8 +1982,12 @@ type Entitlement struct {
 	// Type: An enum that represents the type of this entitlement.
 	//
 	// Possible values:
-	//   "ENTITLEMENT_TYPE_UNSPECIFIED"
-	//   "GEMINI" - The root entitlement representing Gemini package ownership.
+	//   "ENTITLEMENT_TYPE_UNSPECIFIED" - The entitlement type is unspecified.
+	//   "GEMINI" - The root entitlement representing Gemini package ownership.This
+	// will no longer be supported in the future.
+	//   "NATIVE" - The entitlement representing Native Tier, This will be the
+	// default Entitlement going forward with GCA Enablement.
+	//   "GCA_STANDARD" - The entitlement representing GCA-Standard Tier.
 	Type string `json:"type,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "EntitlementState") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -2359,12 +2401,12 @@ type Instance struct {
 	// lfu-log-factor * maxmemory-gb Redis version 5.0 and newer: *
 	// stream-node-max-bytes * stream-node-max-entries
 	RedisConfigs map[string]string `json:"redisConfigs,omitempty"`
-	// RedisVersion: Optional. The version of Redis software. If not provided,
-	// latest supported version will be used. Currently, the supported values are:
-	// * `REDIS_3_2` for Redis 3.2 compatibility * `REDIS_4_0` for Redis 4.0
-	// compatibility (default) * `REDIS_5_0` for Redis 5.0 compatibility *
-	// `REDIS_6_X` for Redis 6.x compatibility * `REDIS_7_0` for Redis 7.0
-	// compatibility
+	// RedisVersion: Optional. The version of Redis software. If not provided, the
+	// default version will be used. Currently, the supported values are: *
+	// `REDIS_3_2` for Redis 3.2 compatibility * `REDIS_4_0` for Redis 4.0
+	// compatibility * `REDIS_5_0` for Redis 5.0 compatibility * `REDIS_6_X` for
+	// Redis 6.x compatibility * `REDIS_7_0` for Redis 7.0 compatibility (default)
+	// * `REDIS_7_2` for Redis 7.2 compatibility
 	RedisVersion string `json:"redisVersion,omitempty"`
 	// ReplicaCount: Optional. The number of replica nodes. The valid range for the
 	// Standard Tier with read replicas enabled is [1-5] and defaults to 2. If read
@@ -2491,9 +2533,12 @@ type InternalResourceMetadata struct {
 	// BackupConfiguration: Backup configuration for this database
 	BackupConfiguration *BackupConfiguration `json:"backupConfiguration,omitempty"`
 	// BackupRun: Information about the last backup attempt for this database
-	BackupRun  *BackupRun          `json:"backupRun,omitempty"`
-	Product    *Product            `json:"product,omitempty"`
-	ResourceId *DatabaseResourceId `json:"resourceId,omitempty"`
+	BackupRun *BackupRun `json:"backupRun,omitempty"`
+	// IsDeletionProtectionEnabled: Whether deletion protection is enabled for this
+	// internal resource.
+	IsDeletionProtectionEnabled bool                `json:"isDeletionProtectionEnabled,omitempty"`
+	Product                     *Product            `json:"product,omitempty"`
+	ResourceId                  *DatabaseResourceId `json:"resourceId,omitempty"`
 	// ResourceName: Required. internal resource name for spanner this will be
 	// database name
 	// e.g."spanner.googleapis.com/projects/123/abc/instances/inst1/databases/db1"
@@ -3871,19 +3916,28 @@ func (s *TypedValue) UnmarshalJSON(data []byte) error {
 
 // UpdateInfo: Represents information about an updating cluster.
 type UpdateInfo struct {
+	// TargetNodeType: Target node type for redis cluster.
+	//
+	// Possible values:
+	//   "NODE_TYPE_UNSPECIFIED" - Node type unspecified
+	//   "REDIS_SHARED_CORE_NANO" - Redis shared core nano node_type.
+	//   "REDIS_HIGHMEM_MEDIUM" - Redis highmem medium node_type.
+	//   "REDIS_HIGHMEM_XLARGE" - Redis highmem xlarge node_type.
+	//   "REDIS_STANDARD_SMALL" - Redis standard small node_type.
+	TargetNodeType string `json:"targetNodeType,omitempty"`
 	// TargetReplicaCount: Target number of replica nodes per shard.
 	TargetReplicaCount int64 `json:"targetReplicaCount,omitempty"`
 	// TargetShardCount: Target number of shards for redis cluster
 	TargetShardCount int64 `json:"targetShardCount,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "TargetReplicaCount") to
+	// ForceSendFields is a list of field names (e.g. "TargetNodeType") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "TargetReplicaCount") to include
-	// in API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. See
+	// NullFields is a list of field names (e.g. "TargetNodeType") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }

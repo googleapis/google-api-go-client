@@ -378,6 +378,8 @@ type Certificate struct {
 	// certificate with cross-region internal Application Load Balancer. The
 	// certificates are served from all Google Cloud regions. See
 	// https://cloud.google.com/compute/docs/regions-zones.
+	//   "CLIENT_AUTH" - Associated with certificates used as client certificates
+	// in Backend mTLS.
 	Scope string `json:"scope,omitempty"`
 	// SelfManaged: If set, defines data of a self-managed certificate.
 	SelfManaged *SelfManagedCertificate `json:"selfManaged,omitempty"`

@@ -531,6 +531,33 @@ func (s CloudControl2SharedOperationsReconciliationOperationMetadata) MarshalJSO
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// CloudSQLBackupRunSource: The source CloudSQL backup resource.
+type CloudSQLBackupRunSource struct {
+	// BackupRunId: Required. The CloudSQL backup run ID.
+	BackupRunId int64 `json:"backupRunId,omitempty,string"`
+	// InstanceId: Required. The CloudSQL instance ID.
+	InstanceId string `json:"instanceId,omitempty"`
+	// Project: The project ID of the source CloudSQL instance. This should be the
+	// same as the AlloyDB cluster's project.
+	Project string `json:"project,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "BackupRunId") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "BackupRunId") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s CloudSQLBackupRunSource) MarshalJSON() ([]byte, error) {
+	type NoMethod CloudSQLBackupRunSource
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // Cluster: A cluster is a collection of regional AlloyDB resources. It can
 // include a primary instance and one or more read pool instances. All cluster
 // resources share a storage layer, which scales as needed.
@@ -546,6 +573,9 @@ type Cluster struct {
 	AutomatedBackupPolicy *AutomatedBackupPolicy `json:"automatedBackupPolicy,omitempty"`
 	// BackupSource: Output only. Cluster created from backup.
 	BackupSource *BackupSource `json:"backupSource,omitempty"`
+	// CloudsqlBackupRunSource: Output only. Cluster created from CloudSQL
+	// snapshot.
+	CloudsqlBackupRunSource *CloudSQLBackupRunSource `json:"cloudsqlBackupRunSource,omitempty"`
 	// ClusterType: Output only. The type of the cluster. This is an output-only
 	// field and it's populated at the Cluster creation time or the Cluster
 	// promotion time. The cluster type is determined by which RPC was used to
@@ -937,6 +967,44 @@ func (s CsvExportOptions) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// CsvImportOptions: Options for importing data in CSV format.
+type CsvImportOptions struct {
+	// Columns: Optional. The columns to which CSV data is imported. If not
+	// specified, all columns of the database table are loaded with CSV data.
+	Columns []string `json:"columns,omitempty"`
+	// EscapeCharacter: Optional. Specifies the character that should appear before
+	// a data character that needs to be escaped. The default is same as quote
+	// character. The value of this argument has to be a character in Hex ASCII
+	// Code.
+	EscapeCharacter string `json:"escapeCharacter,omitempty"`
+	// FieldDelimiter: Optional. Specifies the character that separates columns
+	// within each row (line) of the file. The default is comma. The value of this
+	// argument has to be a character in Hex ASCII Code.
+	FieldDelimiter string `json:"fieldDelimiter,omitempty"`
+	// QuoteCharacter: Optional. Specifies the quoting character to be used when a
+	// data value is quoted. The default is double-quote. The value of this
+	// argument has to be a character in Hex ASCII Code.
+	QuoteCharacter string `json:"quoteCharacter,omitempty"`
+	// Table: Required. The database table to import CSV file into.
+	Table string `json:"table,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Columns") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Columns") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s CsvImportOptions) MarshalJSON() ([]byte, error) {
+	type NoMethod CsvImportOptions
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // Empty: A generic empty message that you can re-use to avoid defining
 // duplicated empty messages in your APIs. A typical example is to use it as
 // the request or the response type of an API method. For instance: service Foo
@@ -1223,6 +1291,66 @@ type GoogleTypeTimeOfDay struct {
 
 func (s GoogleTypeTimeOfDay) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleTypeTimeOfDay
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ImportClusterRequest: Import cluster request.
+type ImportClusterRequest struct {
+	// CsvImportOptions: Options for importing data in CSV format.
+	CsvImportOptions *CsvImportOptions `json:"csvImportOptions,omitempty"`
+	// Database: Optional. Name of the database to which the import will be done.
+	// For import from SQL file, this is required only if the file does not specify
+	// a database. Note - Value provided should be the same as expected from
+	// `SELECT current_database();` and NOT as a resource reference.
+	Database string `json:"database,omitempty"`
+	// GcsUri: Required. The path to the file in Google Cloud Storage where the
+	// source file for import will be stored. The URI is in the form
+	// `gs://bucketName/fileName`.
+	GcsUri string `json:"gcsUri,omitempty"`
+	// SqlImportOptions: Options for importing data in SQL format.
+	SqlImportOptions *SqlImportOptions `json:"sqlImportOptions,omitempty"`
+	// User: Optional. Database user to be used for importing the data. Note -
+	// Value provided should be the same as expected from `SELECT current_user;`
+	// and NOT as a resource reference.
+	User string `json:"user,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "CsvImportOptions") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CsvImportOptions") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ImportClusterRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod ImportClusterRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ImportClusterResponse: Response of import rpc.
+type ImportClusterResponse struct {
+	// BytesDownloaded: Required. Size of the object downloaded from Google Cloud
+	// Storage in bytes.
+	BytesDownloaded int64 `json:"bytesDownloaded,omitempty,string"`
+	// ForceSendFields is a list of field names (e.g. "BytesDownloaded") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "BytesDownloaded") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ImportClusterResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ImportClusterResponse
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -2065,6 +2193,9 @@ type PscConfig struct {
 	// PscEnabled: Optional. Create an instance that allows connections from
 	// Private Service Connect endpoints to the instance.
 	PscEnabled bool `json:"pscEnabled,omitempty"`
+	// ServiceOwnedProjectNumber: Output only. The project number that needs to be
+	// allowlisted on the network attachment to enable outbound connectivity.
+	ServiceOwnedProjectNumber int64 `json:"serviceOwnedProjectNumber,omitempty,string"`
 	// ForceSendFields is a list of field names (e.g. "PscEnabled") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -2092,6 +2223,11 @@ type PscInstanceConfig struct {
 	// PscDnsName: Output only. The DNS name of the instance for PSC connectivity.
 	// Name convention: ...alloydb-psc.goog
 	PscDnsName string `json:"pscDnsName,omitempty"`
+	// PscInterfaceConfigs: Optional. Configurations for setting up PSC interfaces
+	// attached to the instance which are used for outbound connectivity. Only
+	// primary instances can have PSC interface attached. Currently we only support
+	// 0 or 1 PSC interface.
+	PscInterfaceConfigs []*PscInterfaceConfig `json:"pscInterfaceConfigs,omitempty"`
 	// ServiceAttachmentLink: Output only. The service attachment created when
 	// Private Service Connect (PSC) is enabled for the instance. The name of the
 	// resource will be in the format of `projects//regions//serviceAttachments/`
@@ -2111,6 +2247,34 @@ type PscInstanceConfig struct {
 
 func (s PscInstanceConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod PscInstanceConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// PscInterfaceConfig: Configuration for setting up a PSC interface to enable
+// outbound connectivity.
+type PscInterfaceConfig struct {
+	// NetworkAttachmentResource: The network attachment resource created in the
+	// consumer network to which the PSC interface will be linked. This is of the
+	// format:
+	// "projects/${CONSUMER_PROJECT}/regions/${REGION}/networkAttachments/${NETWORK_
+	// ATTACHMENT_NAME}". The network attachment must be in the same region as the
+	// instance.
+	NetworkAttachmentResource string `json:"networkAttachmentResource,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "NetworkAttachmentResource")
+	// to unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "NetworkAttachmentResource") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s PscInterfaceConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod PscInterfaceConfig
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -2363,6 +2527,10 @@ type SqlExportOptions struct {
 func (s SqlExportOptions) MarshalJSON() ([]byte, error) {
 	type NoMethod SqlExportOptions
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// SqlImportOptions: Options for importing data in SQL format.
+type SqlImportOptions struct {
 }
 
 // SslConfig: SSL configuration.
@@ -2969,6 +3137,18 @@ type StorageDatabasecenterPartnerapiV1mainDatabaseResourceHealthSignalData struc
 	// instance is using a weak password hash algorithm.
 	//   "SIGNAL_TYPE_NO_USER_PASSWORD_POLICY" - Detects if a database instance has
 	// no user password policy set.
+	//   "SIGNAL_TYPE_HOT_NODE" - Detects if a database instance/cluster has a hot
+	// node.
+	//   "SIGNAL_TYPE_NO_POINT_IN_TIME_RECOVERY" - Detects if a database instance
+	// has no point in time recovery enabled.
+	//   "SIGNAL_TYPE_RESOURCE_SUSPENDED" - Detects if a database instance/cluster
+	// is suspended.
+	//   "SIGNAL_TYPE_EXPENSIVE_COMMANDS" - Detects that expensive commands are
+	// being run on a database instance impacting overall performance.
+	//   "SIGNAL_TYPE_NO_MAINTENANCE_POLICY_CONFIGURED" - Indicates that the
+	// instance does not have a maintenance policy configured.
+	//   "SIGNAL_TYPE_NO_DELETION_PROTECTION" - Deletion Protection Disabled for
+	// the resource
 	SignalType string `json:"signalType,omitempty"`
 	// Possible values:
 	//   "STATE_UNSPECIFIED" - Unspecified state.
@@ -3048,7 +3228,7 @@ func (s StorageDatabasecenterPartnerapiV1mainDatabaseResourceId) MarshalJSON() (
 }
 
 // StorageDatabasecenterPartnerapiV1mainDatabaseResourceMetadata: Common model
-// for database resource instance metadata. Next ID: 23
+// for database resource instance metadata. Next ID: 24
 type StorageDatabasecenterPartnerapiV1mainDatabaseResourceMetadata struct {
 	// AvailabilityConfiguration: Availability configuration for this instance
 	AvailabilityConfiguration *StorageDatabasecenterPartnerapiV1mainAvailabilityConfiguration `json:"availabilityConfiguration,omitempty"`
@@ -3102,7 +3282,7 @@ type StorageDatabasecenterPartnerapiV1mainDatabaseResourceMetadata struct {
 	// InstanceType: The type of the instance. Specified at creation time.
 	//
 	// Possible values:
-	//   "INSTANCE_TYPE_UNSPECIFIED"
+	//   "INSTANCE_TYPE_UNSPECIFIED" - Unspecified.
 	//   "SUB_RESOURCE_TYPE_UNSPECIFIED" - For rest of the other categories.
 	//   "PRIMARY" - A regular primary database instance.
 	//   "SECONDARY" - A cluster or an instance acting as a secondary.
@@ -3112,6 +3292,8 @@ type StorageDatabasecenterPartnerapiV1mainDatabaseResourceMetadata struct {
 	//   "SUB_RESOURCE_TYPE_SECONDARY" - A cluster or an instance acting as a
 	// secondary.
 	//   "SUB_RESOURCE_TYPE_READ_REPLICA" - An instance acting as a read-replica.
+	//   "SUB_RESOURCE_TYPE_EXTERNAL_PRIMARY" - An instance acting as an external
+	// primary.
 	//   "SUB_RESOURCE_TYPE_OTHER" - For rest of the other categories.
 	InstanceType string `json:"instanceType,omitempty"`
 	// Location: The resource location. REQUIRED
@@ -3140,6 +3322,18 @@ type StorageDatabasecenterPartnerapiV1mainDatabaseResourceMetadata struct {
 	// the same source. Resource name to follow CAIS resource_name format as noted
 	// here go/condor-common-datamodel
 	ResourceName string `json:"resourceName,omitempty"`
+	// SuspensionReason: Suspension reason for the resource.
+	//
+	// Possible values:
+	//   "SUSPENSION_REASON_UNSPECIFIED" - Suspension reason is unspecified.
+	//   "WIPEOUT_HIDE_EVENT" - Wipeout hide event.
+	//   "WIPEOUT_PURGE_EVENT" - Wipeout purge event.
+	//   "BILLING_DISABLED" - Billing disabled for project
+	//   "ABUSER_DETECTED" - Abuse detected for resource
+	//   "ENCRYPTION_KEY_INACCESSIBLE" - Encryption key inaccessible.
+	//   "REPLICATED_CLUSTER_ENCRYPTION_KEY_INACCESSIBLE" - Replicated cluster
+	// encryption key inaccessible.
+	SuspensionReason string `json:"suspensionReason,omitempty"`
 	// TagsSet: Optional. Tags associated with this resources.
 	TagsSet *StorageDatabasecenterPartnerapiV1mainTags `json:"tagsSet,omitempty"`
 	// UpdationTime: The time at which the resource was updated and recorded at
@@ -3402,6 +3596,18 @@ type StorageDatabasecenterPartnerapiV1mainDatabaseResourceRecommendationSignalDa
 	// instance is using a weak password hash algorithm.
 	//   "SIGNAL_TYPE_NO_USER_PASSWORD_POLICY" - Detects if a database instance has
 	// no user password policy set.
+	//   "SIGNAL_TYPE_HOT_NODE" - Detects if a database instance/cluster has a hot
+	// node.
+	//   "SIGNAL_TYPE_NO_POINT_IN_TIME_RECOVERY" - Detects if a database instance
+	// has no point in time recovery enabled.
+	//   "SIGNAL_TYPE_RESOURCE_SUSPENDED" - Detects if a database instance/cluster
+	// is suspended.
+	//   "SIGNAL_TYPE_EXPENSIVE_COMMANDS" - Detects that expensive commands are
+	// being run on a database instance impacting overall performance.
+	//   "SIGNAL_TYPE_NO_MAINTENANCE_POLICY_CONFIGURED" - Indicates that the
+	// instance does not have a maintenance policy configured.
+	//   "SIGNAL_TYPE_NO_DELETION_PROTECTION" - Deletion Protection Disabled for
+	// the resource
 	SignalType string `json:"signalType,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AdditionalMetadata") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -3438,8 +3644,12 @@ type StorageDatabasecenterPartnerapiV1mainEntitlement struct {
 	// Type: An enum that represents the type of this entitlement.
 	//
 	// Possible values:
-	//   "ENTITLEMENT_TYPE_UNSPECIFIED"
-	//   "GEMINI" - The root entitlement representing Gemini package ownership.
+	//   "ENTITLEMENT_TYPE_UNSPECIFIED" - The entitlement type is unspecified.
+	//   "GEMINI" - The root entitlement representing Gemini package ownership.This
+	// will no longer be supported in the future.
+	//   "NATIVE" - The entitlement representing Native Tier, This will be the
+	// default Entitlement going forward with GCA Enablement.
+	//   "GCA_STANDARD" - The entitlement representing GCA-Standard Tier.
 	Type string `json:"type,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "EntitlementState") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -3467,9 +3677,12 @@ type StorageDatabasecenterPartnerapiV1mainInternalResourceMetadata struct {
 	// BackupConfiguration: Backup configuration for this database
 	BackupConfiguration *StorageDatabasecenterPartnerapiV1mainBackupConfiguration `json:"backupConfiguration,omitempty"`
 	// BackupRun: Information about the last backup attempt for this database
-	BackupRun  *StorageDatabasecenterPartnerapiV1mainBackupRun          `json:"backupRun,omitempty"`
-	Product    *StorageDatabasecenterProtoCommonProduct                 `json:"product,omitempty"`
-	ResourceId *StorageDatabasecenterPartnerapiV1mainDatabaseResourceId `json:"resourceId,omitempty"`
+	BackupRun *StorageDatabasecenterPartnerapiV1mainBackupRun `json:"backupRun,omitempty"`
+	// IsDeletionProtectionEnabled: Whether deletion protection is enabled for this
+	// internal resource.
+	IsDeletionProtectionEnabled bool                                                     `json:"isDeletionProtectionEnabled,omitempty"`
+	Product                     *StorageDatabasecenterProtoCommonProduct                 `json:"product,omitempty"`
+	ResourceId                  *StorageDatabasecenterPartnerapiV1mainDatabaseResourceId `json:"resourceId,omitempty"`
 	// ResourceName: Required. internal resource name for spanner this will be
 	// database name
 	// e.g."spanner.googleapis.com/projects/123/abc/instances/inst1/databases/db1"
@@ -5790,6 +6003,109 @@ func (c *ProjectsLocationsClustersGetCall) Do(opts ...googleapi.CallOption) (*Cl
 		return nil, err
 	}
 	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "alloydb.projects.locations.clusters.get", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsClustersImportCall struct {
+	s                    *Service
+	name                 string
+	importclusterrequest *ImportClusterRequest
+	urlParams_           gensupport.URLParams
+	ctx_                 context.Context
+	header_              http.Header
+}
+
+// Import: Imports data to the cluster. Imperative only.
+//
+// - name: The resource name of the cluster.
+func (r *ProjectsLocationsClustersService) Import(name string, importclusterrequest *ImportClusterRequest) *ProjectsLocationsClustersImportCall {
+	c := &ProjectsLocationsClustersImportCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.importclusterrequest = importclusterrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsClustersImportCall) Fields(s ...googleapi.Field) *ProjectsLocationsClustersImportCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsClustersImportCall) Context(ctx context.Context) *ProjectsLocationsClustersImportCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsClustersImportCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsClustersImportCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.importclusterrequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}:import")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "alloydb.projects.locations.clusters.import", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "alloydb.projects.locations.clusters.import" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsClustersImportCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "alloydb.projects.locations.clusters.import", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 

@@ -5386,7 +5386,9 @@ func (s SecurityPostureConfig) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// ServiceMeshCondition: Condition being reported.
+// ServiceMeshCondition: Condition being reported. TODO b/395151419: Remove
+// this message once the membership-level conditions field uses the common
+// Condition message.
 type ServiceMeshCondition struct {
 	// Code: Unique identifier of the condition which describes the condition
 	// recognizable to the user.
@@ -5444,6 +5446,8 @@ type ServiceMeshCondition struct {
 	//   "MODERNIZATION_IN_PROGRESS" - Modernization is in progress for a cluster.
 	//   "MODERNIZATION_COMPLETED" - Modernization is completed for a cluster.
 	//   "MODERNIZATION_ABORTED" - Modernization is aborted for a cluster.
+	//   "MODERNIZATION_WILL_BE_SCHEDULED" - Modernization will be scheduled for a
+	// fleet.
 	Code string `json:"code,omitempty"`
 	// Details: A short summary about the issue.
 	Details string `json:"details,omitempty"`
@@ -5617,6 +5621,7 @@ func (s ServiceMeshMembershipSpec) MarshalJSON() ([]byte, error) {
 // as analyzed by the Service Mesh Hub Controller.
 type ServiceMeshMembershipState struct {
 	// Conditions: Output only. List of conditions reported for this membership.
+	// TODO b/395151419: Use the common Condition message.
 	Conditions []*ServiceMeshCondition `json:"conditions,omitempty"`
 	// ControlPlaneManagement: Output only. Status of control plane management
 	ControlPlaneManagement *ServiceMeshControlPlaneManagement `json:"controlPlaneManagement,omitempty"`

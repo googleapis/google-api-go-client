@@ -3103,6 +3103,8 @@ type ServiceMeshCondition struct {
 	//   "MODERNIZATION_IN_PROGRESS" - Modernization is in progress for a cluster.
 	//   "MODERNIZATION_COMPLETED" - Modernization is completed for a cluster.
 	//   "MODERNIZATION_ABORTED" - Modernization is aborted for a cluster.
+	//   "MODERNIZATION_WILL_BE_SCHEDULED" - Modernization will be scheduled for a
+	// fleet.
 	Code string `json:"code,omitempty"`
 	// Details: A short summary about the issue.
 	Details string `json:"details,omitempty"`

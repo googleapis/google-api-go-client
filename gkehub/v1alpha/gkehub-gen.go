@@ -5933,7 +5933,9 @@ func (s ServiceMeshAnalysisMessageBase) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// ServiceMeshCondition: Condition being reported.
+// ServiceMeshCondition: Condition being reported. TODO b/395151419: Remove
+// this message once the membership-level conditions field uses the common
+// Condition message.
 type ServiceMeshCondition struct {
 	// Code: Unique identifier of the condition which describes the condition
 	// recognizable to the user.
@@ -5991,6 +5993,8 @@ type ServiceMeshCondition struct {
 	//   "MODERNIZATION_IN_PROGRESS" - Modernization is in progress for a cluster.
 	//   "MODERNIZATION_COMPLETED" - Modernization is completed for a cluster.
 	//   "MODERNIZATION_ABORTED" - Modernization is aborted for a cluster.
+	//   "MODERNIZATION_WILL_BE_SCHEDULED" - Modernization will be scheduled for a
+	// fleet.
 	Code string `json:"code,omitempty"`
 	// Details: A short summary about the issue.
 	Details string `json:"details,omitempty"`
@@ -6110,11 +6114,108 @@ func (s ServiceMeshDataPlaneManagement) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// ServiceMeshFeatureCondition: Condition being reported. TODO b/395151419:
+// This message should be used to replace the membership-level Condition
+// message.
+type ServiceMeshFeatureCondition struct {
+	// Code: Unique identifier of the condition which describes the condition
+	// recognizable to the user.
+	//
+	// Possible values:
+	//   "CODE_UNSPECIFIED" - Default Unspecified code
+	//   "MESH_IAM_PERMISSION_DENIED" - Mesh IAM permission denied error code
+	//   "MESH_IAM_CROSS_PROJECT_PERMISSION_DENIED" - Permission denied error code
+	// for cross-project
+	//   "CNI_CONFIG_UNSUPPORTED" - CNI config unsupported error code
+	//   "GKE_SANDBOX_UNSUPPORTED" - GKE sandbox unsupported error code
+	//   "NODEPOOL_WORKLOAD_IDENTITY_FEDERATION_REQUIRED" - Nodepool workload
+	// identity federation required error code
+	//   "CNI_INSTALLATION_FAILED" - CNI installation failed error code
+	//   "CNI_POD_UNSCHEDULABLE" - CNI pod unschedulable error code
+	//   "CLUSTER_HAS_ZERO_NODES" - Cluster has zero node code
+	//   "CANONICAL_SERVICE_ERROR" - Failure to reconcile CanonicalServices
+	//   "UNSUPPORTED_MULTIPLE_CONTROL_PLANES" - Multiple control planes
+	// unsupported error code
+	//   "VPCSC_GA_SUPPORTED" - VPC-SC GA is supported for this control plane.
+	//   "DEPRECATED_SPEC_CONTROL_PLANE_MANAGEMENT" - User is using deprecated
+	// ControlPlaneManagement and they have not yet set Management.
+	//   "DEPRECATED_SPEC_CONTROL_PLANE_MANAGEMENT_SAFE" - User is using deprecated
+	// ControlPlaneManagement and they have already set Management.
+	//   "CONFIG_APPLY_INTERNAL_ERROR" - Configuration (Istio/k8s resources) failed
+	// to apply due to internal error.
+	//   "CONFIG_VALIDATION_ERROR" - Configuration failed to be applied due to
+	// being invalid.
+	//   "CONFIG_VALIDATION_WARNING" - Encountered configuration(s) with possible
+	// unintended behavior or invalid configuration. These configs may not have
+	// been applied.
+	//   "QUOTA_EXCEEDED_BACKEND_SERVICES" - BackendService quota exceeded error
+	// code.
+	//   "QUOTA_EXCEEDED_HEALTH_CHECKS" - HealthCheck quota exceeded error code.
+	//   "QUOTA_EXCEEDED_HTTP_ROUTES" - HTTPRoute quota exceeded error code.
+	//   "QUOTA_EXCEEDED_TCP_ROUTES" - TCPRoute quota exceeded error code.
+	//   "QUOTA_EXCEEDED_TLS_ROUTES" - TLS routes quota exceeded error code.
+	//   "QUOTA_EXCEEDED_TRAFFIC_POLICIES" - TrafficPolicy quota exceeded error
+	// code.
+	//   "QUOTA_EXCEEDED_ENDPOINT_POLICIES" - EndpointPolicy quota exceeded error
+	// code.
+	//   "QUOTA_EXCEEDED_GATEWAYS" - Gateway quota exceeded error code.
+	//   "QUOTA_EXCEEDED_MESHES" - Mesh quota exceeded error code.
+	//   "QUOTA_EXCEEDED_SERVER_TLS_POLICIES" - ServerTLSPolicy quota exceeded
+	// error code.
+	//   "QUOTA_EXCEEDED_CLIENT_TLS_POLICIES" - ClientTLSPolicy quota exceeded
+	// error code.
+	//   "QUOTA_EXCEEDED_SERVICE_LB_POLICIES" - ServiceLBPolicy quota exceeded
+	// error code.
+	//   "QUOTA_EXCEEDED_HTTP_FILTERS" - HTTPFilter quota exceeded error code.
+	//   "QUOTA_EXCEEDED_TCP_FILTERS" - TCPFilter quota exceeded error code.
+	//   "QUOTA_EXCEEDED_NETWORK_ENDPOINT_GROUPS" - NetworkEndpointGroup quota
+	// exceeded error code.
+	//   "MODERNIZATION_SCHEDULED" - Modernization is scheduled for a cluster.
+	//   "MODERNIZATION_IN_PROGRESS" - Modernization is in progress for a cluster.
+	//   "MODERNIZATION_COMPLETED" - Modernization is completed for a cluster.
+	//   "MODERNIZATION_ABORTED" - Modernization is aborted for a cluster.
+	//   "MODERNIZATION_WILL_BE_SCHEDULED" - Modernization will be scheduled for a
+	// fleet.
+	Code string `json:"code,omitempty"`
+	// Details: A short summary about the issue.
+	Details string `json:"details,omitempty"`
+	// DocumentationLink: Links contains actionable information.
+	DocumentationLink string `json:"documentationLink,omitempty"`
+	// Severity: Severity level of the condition.
+	//
+	// Possible values:
+	//   "SEVERITY_UNSPECIFIED" - Unspecified severity
+	//   "ERROR" - Indicates an issue that prevents the mesh from operating
+	// correctly
+	//   "WARNING" - Indicates a setting is likely wrong, but the mesh is still
+	// able to operate
+	//   "INFO" - An informational message, not requiring any action
+	Severity string `json:"severity,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Code") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Code") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ServiceMeshFeatureCondition) MarshalJSON() ([]byte, error) {
+	type NoMethod ServiceMeshFeatureCondition
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // ServiceMeshFeatureState: **Service Mesh**: State for the whole Hub, as
 // analyzed by the Service Mesh Hub Controller.
 type ServiceMeshFeatureState struct {
 	// AnalysisMessages: Output only. Results of running Service Mesh analyzers.
 	AnalysisMessages []*ServiceMeshAnalysisMessage `json:"analysisMessages,omitempty"`
+	// Conditions: Output only. List of conditions reported for this feature.
+	Conditions []*ServiceMeshFeatureCondition `json:"conditions,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AnalysisMessages") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -6201,6 +6302,7 @@ type ServiceMeshMembershipState struct {
 	// AnalysisMessages: Output only. Results of running Service Mesh analyzers.
 	AnalysisMessages []*ServiceMeshAnalysisMessage `json:"analysisMessages,omitempty"`
 	// Conditions: Output only. List of conditions reported for this membership.
+	// TODO b/395151419: Use the common Condition message.
 	Conditions []*ServiceMeshCondition `json:"conditions,omitempty"`
 	// ConfigApiVersion: The API version (i.e. Istio CRD version) for configuring
 	// service mesh in this cluster. This version is influenced by the

@@ -1259,6 +1259,8 @@ type ListBackupsResponse struct {
 	// `ListBackups` call to retrieve the next page of results. If this field is
 	// omitted or empty, then there are no more results to return.
 	NextPageToken string `json:"nextPageToken,omitempty"`
+	// Unreachable: Locations that could not be reached.
+	Unreachable []string `json:"unreachable,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
@@ -4605,6 +4607,14 @@ func (c *ProjectsLocationsBackupPlansBackupsListCall) PageSize(pageSize int64) *
 // call that provided the page token.
 func (c *ProjectsLocationsBackupPlansBackupsListCall) PageToken(pageToken string) *ProjectsLocationsBackupPlansBackupsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// ReturnPartialSuccess sets the optional parameter "returnPartialSuccess": If
+// set to true, the response will return partial results when some regions are
+// unreachable and the unreachable field will be populated.
+func (c *ProjectsLocationsBackupPlansBackupsListCall) ReturnPartialSuccess(returnPartialSuccess bool) *ProjectsLocationsBackupPlansBackupsListCall {
+	c.urlParams_.Set("returnPartialSuccess", fmt.Sprint(returnPartialSuccess))
 	return c
 }
 

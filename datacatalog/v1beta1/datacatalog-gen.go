@@ -1031,7 +1031,7 @@ func (s GoogleCloudDatacatalogV1DataSourceConnectionSpec) MarshalJSON() ([]byte,
 // GoogleCloudDatacatalogV1DatabaseTableSpec: Specification that applies to a
 // table resource. Valid only for entries with the `TABLE` type.
 type GoogleCloudDatacatalogV1DatabaseTableSpec struct {
-	// DatabaseViewSpec: Spec what aplies to tables that are actually views. Not
+	// DatabaseViewSpec: Spec what applies to tables that are actually views. Not
 	// set for "real" tables.
 	DatabaseViewSpec *GoogleCloudDatacatalogV1DatabaseTableSpecDatabaseViewSpec `json:"databaseViewSpec,omitempty"`
 	// DataplexTable: Output only. Fields specific to a Dataplex table and present
@@ -1482,13 +1482,13 @@ func (s GoogleCloudDatacatalogV1EntryOverview) MarshalJSON() ([]byte, error) {
 // GoogleCloudDatacatalogV1FeatureOnlineStoreSpec: Detail description of the
 // source information of a Vertex Feature Online Store.
 type GoogleCloudDatacatalogV1FeatureOnlineStoreSpec struct {
-	// StorageType: Output only. Type of underelaying storage for the
+	// StorageType: Output only. Type of underlying storage for the
 	// FeatureOnlineStore.
 	//
 	// Possible values:
 	//   "STORAGE_TYPE_UNSPECIFIED" - Should not be used.
 	//   "BIGTABLE" - Underlsying storgae is Bigtable.
-	//   "OPTIMIZED" - Underlaying is optimized online server (Lightning).
+	//   "OPTIMIZED" - Underlying is optimized online server (Lightning).
 	StorageType string `json:"storageType,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "StorageType") to
 	// unconditionally include in API requests. By default, fields with empty or

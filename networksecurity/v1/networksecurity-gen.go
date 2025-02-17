@@ -535,6 +535,52 @@ func (s AddressGroup) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// AntivirusOverride: Defines what action to take for antivirus threats per
+// protocol.
+type AntivirusOverride struct {
+	// Action: Required. Threat action override. For some threat types, only a
+	// subset of actions applies.
+	//
+	// Possible values:
+	//   "THREAT_ACTION_UNSPECIFIED" - Threat action not specified.
+	//   "DEFAULT_ACTION" - The default action (as specified by the vendor) is
+	// taken.
+	//   "ALLOW" - The packet matching this rule will be allowed to transmit.
+	//   "ALERT" - The packet matching this rule will be allowed to transmit, but a
+	// threat_log entry will be sent to the consumer project.
+	//   "DENY" - The packet matching this rule will be dropped, and a threat_log
+	// entry will be sent to the consumer project.
+	Action string `json:"action,omitempty"`
+	// Protocol: Required. Protocol to match.
+	//
+	// Possible values:
+	//   "PROTOCOL_UNSPECIFIED" - Protocol not specified.
+	//   "SMTP" - SMTP prtocol
+	//   "SMB" - SMB protocol
+	//   "POP3" - POP3 protocol
+	//   "IMAP" - IMAP protocol
+	//   "HTTP2" - HTTP2 protocol
+	//   "HTTP" - HTTP protocol
+	//   "FTP" - FTP protocol
+	Protocol string `json:"protocol,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Action") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Action") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s AntivirusOverride) MarshalJSON() ([]byte, error) {
+	type NoMethod AntivirusOverride
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // AuthorizationPolicy: AuthorizationPolicy is a resource that specifies how a
 // server should authorize incoming connections. This resource in itself does
 // not change the configuration unless it's attached to a target https proxy or
@@ -1360,6 +1406,10 @@ type FirewallEndpoint struct {
 	// Reconciling: Output only. Whether reconciling is in progress, recommended
 	// per https://google.aip.dev/128.
 	Reconciling bool `json:"reconciling,omitempty"`
+	// SatisfiesPzi: Output only. [Output Only] Reserved for future use.
+	SatisfiesPzi bool `json:"satisfiesPzi,omitempty"`
+	// SatisfiesPzs: Output only. [Output Only] Reserved for future use.
+	SatisfiesPzs bool `json:"satisfiesPzs,omitempty"`
 	// State: Output only. Current state of the endpoint.
 	//
 	// Possible values:
@@ -2407,14 +2457,13 @@ func (s ListMirroringDeploymentsResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// ListMirroringEndpointGroupAssociationsResponse: Message for response to
-// listing MirroringEndpointGroupAssociations
+// ListMirroringEndpointGroupAssociationsResponse: Response message for listing
+// associations.
 type ListMirroringEndpointGroupAssociationsResponse struct {
-	// MirroringEndpointGroupAssociations: The list of
-	// MirroringEndpointGroupAssociation
+	// MirroringEndpointGroupAssociations: The list of associations returned.
 	MirroringEndpointGroupAssociations []*MirroringEndpointGroupAssociation `json:"mirroringEndpointGroupAssociations,omitempty"`
 	// NextPageToken: A token identifying a page of results the server should
-	// return.
+	// return. See https://google.aip.dev/158.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
@@ -2742,46 +2791,59 @@ func (s MTLSPolicy) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// MirroringDeployment: Message describing MirroringDeployment object NEXT ID:
-// 10
+// MirroringDeployment: A deployment represents a zonal mirroring backend ready
+// to accept GENEVE-encapsulated replica traffic, e.g. a zonal instance group
+// fronted by an internal passthrough load balancer. Deployments are always
+// part of a global deployment group which represents a global mirroring
+// service.
 type MirroringDeployment struct {
-	// CreateTime: Output only. [Output only] Create time stamp
+	// CreateTime: Output only. The timestamp when the resource was created. See
+	// https://google.aip.dev/148#timestamps.
 	CreateTime string `json:"createTime,omitempty"`
 	// Description: Optional. User-provided description of the deployment. Used as
 	// additional context for the deployment.
 	Description string `json:"description,omitempty"`
-	// ForwardingRule: Required. Immutable. The regional load balancer which the
-	// mirrored traffic should be forwarded to. Format is:
-	// projects/{project}/regions/{region}/forwardingRules/{forwardingRule}
+	// ForwardingRule: Required. Immutable. The regional forwarding rule that
+	// fronts the mirroring collectors, for example:
+	// `projects/123456789/regions/us-central1/forwardingRules/my-rule`. See
+	// https://google.aip.dev/124.
 	ForwardingRule string `json:"forwardingRule,omitempty"`
-	// Labels: Optional. Labels as key value pairs
+	// Labels: Optional. Labels are key/value pairs that help to organize and
+	// filter resources.
 	Labels map[string]string `json:"labels,omitempty"`
-	// MirroringDeploymentGroup: Required. Immutable. The Mirroring Deployment
-	// Group that this resource is part of. Format is:
-	// `projects/{project}/locations/global/mirroringDeploymentGroups/{mirroringDepl
-	// oymentGroup}`
+	// MirroringDeploymentGroup: Required. Immutable. The deployment group that
+	// this deployment is a part of, for example:
+	// `projects/123456789/locations/global/mirroringDeploymentGroups/my-dg`. See
+	// https://google.aip.dev/124.
 	MirroringDeploymentGroup string `json:"mirroringDeploymentGroup,omitempty"`
-	// Name: Immutable. Identifier. The name of the MirroringDeployment.
+	// Name: Immutable. Identifier. The resource name of this deployment, for
+	// example:
+	// `projects/123456789/locations/us-central1-a/mirroringDeployments/my-dep`.
+	// See https://google.aip.dev/122 for more details.
 	Name string `json:"name,omitempty"`
-	// Reconciling: Output only. Whether reconciling is in progress, recommended
-	// per https://google.aip.dev/128.
+	// Reconciling: Output only. The current state of the resource does not match
+	// the user's intended state, and the system is working to reconcile them. This
+	// part of the normal operation (e.g. linking a new association to the parent
+	// group). See https://google.aip.dev/128.
 	Reconciling bool `json:"reconciling,omitempty"`
-	// State: Output only. Current state of the deployment.
+	// State: Output only. The current state of the deployment. See
+	// https://google.aip.dev/216.
 	//
 	// Possible values:
-	//   "STATE_UNSPECIFIED" - Not set.
-	//   "ACTIVE" - Ready.
-	//   "CREATING" - Being created.
-	//   "DELETING" - Being deleted.
-	//   "OUT_OF_SYNC" - The underlying data plane is out of sync with the
-	// deployment. The deployment is not expected to be usable. This state can
-	// result in undefined behavior.
+	//   "STATE_UNSPECIFIED" - State not set (this is not a valid state).
+	//   "ACTIVE" - The deployment is ready and in sync with the parent group.
+	//   "CREATING" - The deployment is being created.
+	//   "DELETING" - The deployment is being deleted.
+	//   "OUT_OF_SYNC" - The deployment is out of sync with the parent group. In
+	// most cases, this is a result of a transient issue within the system (e.g. a
+	// delayed data-path config) and the system is expected to recover
+	// automatically. See the parent deployment group's state for more details.
 	//   "DELETE_FAILED" - An attempt to delete the deployment has failed. This is
-	// a terminal state and the deployment is not expected to be usable as some of
-	// its resources have been deleted. The only permitted operation is to retry
-	// deleting the deployment.
+	// a terminal state and the deployment is not expected to recover. The only
+	// permitted operation is to retry deleting the deployment.
 	State string `json:"state,omitempty"`
-	// UpdateTime: Output only. [Output only] Update time stamp
+	// UpdateTime: Output only. The timestamp when the resource was most recently
+	// updated. See https://google.aip.dev/148#timestamps.
 	UpdateTime string `json:"updateTime,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
@@ -2804,36 +2866,47 @@ func (s MirroringDeployment) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// MirroringDeploymentGroup: Message describing MirroringDeploymentGroup object
-// NEXT ID: 10
+// MirroringDeploymentGroup: A deployment group aggregates many zonal mirroring
+// backends (deployments) into a single global mirroring service. Consumers can
+// connect this service using an endpoint group.
 type MirroringDeploymentGroup struct {
-	// ConnectedEndpointGroups: Output only. The list of Mirroring Endpoint Groups
-	// that are connected to this resource.
+	// ConnectedEndpointGroups: Output only. The list of endpoint groups that are
+	// connected to this resource.
 	ConnectedEndpointGroups []*MirroringDeploymentGroupConnectedEndpointGroup `json:"connectedEndpointGroups,omitempty"`
-	// CreateTime: Output only. [Output only] Create time stamp
+	// CreateTime: Output only. The timestamp when the resource was created. See
+	// https://google.aip.dev/148#timestamps.
 	CreateTime string `json:"createTime,omitempty"`
 	// Description: Optional. User-provided description of the deployment group.
 	// Used as additional context for the deployment group.
 	Description string `json:"description,omitempty"`
-	// Labels: Optional. Labels as key value pairs
+	// Labels: Optional. Labels are key/value pairs that help to organize and
+	// filter resources.
 	Labels map[string]string `json:"labels,omitempty"`
-	// Name: Immutable. Identifier. Then name of the MirroringDeploymentGroup.
+	// Name: Immutable. Identifier. The resource name of this deployment group, for
+	// example:
+	// `projects/123456789/locations/global/mirroringDeploymentGroups/my-dg`. See
+	// https://google.aip.dev/122 for more details.
 	Name string `json:"name,omitempty"`
-	// Network: Required. Immutable. The network that is being used for the
-	// deployment. Format is: projects/{project}/global/networks/{network}.
+	// Network: Required. Immutable. The network that will be used for all child
+	// deployments, for example: `projects/{project}/global/networks/{network}`.
+	// See https://google.aip.dev/124.
 	Network string `json:"network,omitempty"`
-	// Reconciling: Output only. Whether reconciling is in progress, recommended
-	// per https://google.aip.dev/128.
+	// Reconciling: Output only. The current state of the resource does not match
+	// the user's intended state, and the system is working to reconcile them. This
+	// is part of the normal operation (e.g. adding a new deployment to the group)
+	// See https://google.aip.dev/128.
 	Reconciling bool `json:"reconciling,omitempty"`
-	// State: Output only. Current state of the deployment group.
+	// State: Output only. The current state of the deployment group. See
+	// https://google.aip.dev/216.
 	//
 	// Possible values:
-	//   "STATE_UNSPECIFIED" - Not set.
-	//   "ACTIVE" - Ready.
-	//   "CREATING" - Being created.
-	//   "DELETING" - Being deleted.
+	//   "STATE_UNSPECIFIED" - State not set (this is not a valid state).
+	//   "ACTIVE" - The deployment group is ready.
+	//   "CREATING" - The deployment group is being created.
+	//   "DELETING" - The deployment group is being deleted.
 	State string `json:"state,omitempty"`
-	// UpdateTime: Output only. [Output only] Update time stamp
+	// UpdateTime: Output only. The timestamp when the resource was most recently
+	// updated. See https://google.aip.dev/148#timestamps.
 	UpdateTime string `json:"updateTime,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
@@ -2859,7 +2932,10 @@ func (s MirroringDeploymentGroup) MarshalJSON() ([]byte, error) {
 // MirroringDeploymentGroupConnectedEndpointGroup: An endpoint group connected
 // to this deployment group.
 type MirroringDeploymentGroupConnectedEndpointGroup struct {
-	// Name: Output only. A connected mirroring endpoint group.
+	// Name: Output only. The connected endpoint group's resource name, for
+	// example:
+	// `projects/123456789/locations/global/mirroringEndpointGroups/my-eg`. See
+	// https://google.aip.dev/124.
 	Name string `json:"name,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Name") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -2879,46 +2955,61 @@ func (s MirroringDeploymentGroupConnectedEndpointGroup) MarshalJSON() ([]byte, e
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// MirroringEndpointGroup: Message describing MirroringEndpointGroup object.
+// MirroringEndpointGroup: An endpoint group is a consumer frontend for a
+// deployment group (backend). In order to configure mirroring for a network,
+// consumers must create: - An association between their network and the
+// endpoint group. - A security profile that points to the endpoint group. - A
+// mirroring rule that references the security profile (group).
 type MirroringEndpointGroup struct {
-	// Associations: Output only. List of Mirroring Endpoint Group Associations
-	// that are associated to this endpoint group.
+	// Associations: Output only. List of associations to this endpoint group.
 	Associations []*MirroringEndpointGroupAssociationDetails `json:"associations,omitempty"`
-	// CreateTime: Output only. [Output only] Create time stamp
+	// CreateTime: Output only. The timestamp when the resource was created. See
+	// https://google.aip.dev/148#timestamps.
 	CreateTime string `json:"createTime,omitempty"`
 	// Description: Optional. User-provided description of the endpoint group. Used
 	// as additional context for the endpoint group.
 	Description string `json:"description,omitempty"`
-	// Labels: Optional. Labels as key value pairs
+	// Labels: Optional. Labels are key/value pairs that help to organize and
+	// filter resources.
 	Labels map[string]string `json:"labels,omitempty"`
-	// MirroringDeploymentGroup: Required. Immutable. The Mirroring Deployment
-	// Group that this resource is connected to. Format is:
-	// `projects/{project}/locations/global/mirroringDeploymentGroups/{mirroringDepl
-	// oymentGroup}`
+	// MirroringDeploymentGroup: Immutable. The deployment group that this DIRECT
+	// endpoint group is connected to, for example:
+	// `projects/123456789/locations/global/mirroringDeploymentGroups/my-dg`. See
+	// https://google.aip.dev/124.
 	MirroringDeploymentGroup string `json:"mirroringDeploymentGroup,omitempty"`
-	// Name: Immutable. Identifier. Next ID: 11 The name of the
-	// MirroringEndpointGroup.
+	// Name: Immutable. Identifier. The resource name of this endpoint group, for
+	// example:
+	// `projects/123456789/locations/global/mirroringEndpointGroups/my-eg`. See
+	// https://google.aip.dev/122 for more details.
 	Name string `json:"name,omitempty"`
-	// Reconciling: Output only. Whether reconciling is in progress, recommended
-	// per https://google.aip.dev/128.
+	// Reconciling: Output only. The current state of the resource does not match
+	// the user's intended state, and the system is working to reconcile them. This
+	// is part of the normal operation (e.g. adding a new association to the
+	// group). See https://google.aip.dev/128.
 	Reconciling bool `json:"reconciling,omitempty"`
-	// State: Output only. Current state of the endpoint group.
+	// State: Output only. The current state of the endpoint group. See
+	// https://google.aip.dev/216.
 	//
 	// Possible values:
-	//   "STATE_UNSPECIFIED" - Not set.
-	//   "ACTIVE" - Ready.
-	//   "CLOSED" - The deployment group has been deleted and mirroring is
-	// disabled.
-	//   "CREATING" - Being created.
-	//   "DELETING" - Being deleted.
-	//   "OUT_OF_SYNC" - The underlying data plane is out of sync with the endpoint
-	// group. Some associations might not be usable.
+	//   "STATE_UNSPECIFIED" - State not set (this is not a valid state).
+	//   "ACTIVE" - The endpoint group is ready and in sync with the target
+	// deployment group.
+	//   "CLOSED" - The deployment group backing this endpoint group has been
+	// force-deleted. This endpoint group cannot be used and mirroring is
+	// effectively disabled.
+	//   "CREATING" - The endpoint group is being created.
+	//   "DELETING" - The endpoint group is being deleted.
+	//   "OUT_OF_SYNC" - The endpoint group is out of sync with the backing
+	// deployment group. In most cases, this is a result of a transient issue
+	// within the system (e.g. an inaccessible location) and the system is expected
+	// to recover automatically. See the associations field for details per network
+	// and location.
 	//   "DELETE_FAILED" - An attempt to delete the endpoint group has failed. This
-	// is a terminal state and the endpoint group is not expected to be usable as
-	// some of its resources have been deleted. The only permitted operation is to
-	// retry deleting the endpoint group.
+	// is a terminal state and the endpoint group is not expected to recover. The
+	// only permitted operation is to retry deleting the endpoint group.
 	State string `json:"state,omitempty"`
-	// UpdateTime: Output only. [Output only] Update time stamp
+	// UpdateTime: Output only. The timestamp when the resource was most recently
+	// updated. See https://google.aip.dev/148#timestamps.
 	UpdateTime string `json:"updateTime,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
@@ -2941,48 +3032,62 @@ func (s MirroringEndpointGroup) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// MirroringEndpointGroupAssociation: Message describing
-// MirroringEndpointGroupAssociation object
+// MirroringEndpointGroupAssociation: An endpoint group association represents
+// a link between a network and an endpoint group in the organization. Creating
+// an association creates the networking infrastructure linking the network to
+// the endpoint group, but does not enable mirroring by itself. To enable
+// mirroring, the user must also create a network firewall policy containing
+// mirroring rules and associate it with the network.
 type MirroringEndpointGroupAssociation struct {
-	// CreateTime: Output only. [Output only] Create time stamp
+	// CreateTime: Output only. The timestamp when the resource was created. See
+	// https://google.aip.dev/148#timestamps.
 	CreateTime string `json:"createTime,omitempty"`
-	// Labels: Optional. Labels as key value pairs
+	// Labels: Optional. Labels are key/value pairs that help to organize and
+	// filter resources.
 	Labels map[string]string `json:"labels,omitempty"`
-	// LocationsDetails: Output only. The list of locations that this association
-	// is in and its details.
+	// LocationsDetails: Output only. The list of locations where the association
+	// is present. This information is retrieved from the linked endpoint group,
+	// and not configured as part of the association itself.
 	LocationsDetails []*MirroringEndpointGroupAssociationLocationDetails `json:"locationsDetails,omitempty"`
-	// MirroringEndpointGroup: Required. Immutable. The Mirroring Endpoint Group
-	// that this resource is connected to. Format is:
-	// `projects/{project}/locations/global/mirroringEndpointGroups/{mirroringEndpoi
-	// ntGroup}`
+	// MirroringEndpointGroup: Immutable. The endpoint group that this association
+	// is connected to, for example:
+	// `projects/123456789/locations/global/mirroringEndpointGroups/my-eg`. See
+	// https://google.aip.dev/124.
 	MirroringEndpointGroup string `json:"mirroringEndpointGroup,omitempty"`
-	// Name: Immutable. Identifier. The name of the
-	// MirroringEndpointGroupAssociation.
+	// Name: Immutable. Identifier. The resource name of this endpoint group
+	// association, for example:
+	// `projects/123456789/locations/global/mirroringEndpointGroupAssociations/my-eg
+	// -association`. See https://google.aip.dev/122 for more details.
 	Name string `json:"name,omitempty"`
-	// Network: Required. Immutable. The VPC network associated. Format:
-	// projects/{project}/global/networks/{network}.
+	// Network: Immutable. The VPC network that is associated. for example:
+	// `projects/123456789/global/networks/my-network`. See
+	// https://google.aip.dev/124.
 	Network string `json:"network,omitempty"`
-	// Reconciling: Output only. Whether reconciling is in progress, recommended
-	// per https://google.aip.dev/128.
+	// Reconciling: Output only. The current state of the resource does not match
+	// the user's intended state, and the system is working to reconcile them. This
+	// part of the normal operation (e.g. adding a new location to the target
+	// deployment group). See https://google.aip.dev/128.
 	Reconciling bool `json:"reconciling,omitempty"`
 	// State: Output only. Current state of the endpoint group association.
 	//
 	// Possible values:
 	//   "STATE_UNSPECIFIED" - Not set.
-	//   "ACTIVE" - Ready.
+	//   "ACTIVE" - The association is ready and in sync with the linked endpoint
+	// group.
 	//   "CREATING" - Being created.
 	//   "DELETING" - Being deleted.
 	//   "CLOSED" - Mirroring is disabled due to an operation on another resource.
-	//   "OUT_OF_SYNC" - The underlying data plane is out of sync with the
-	// association. The association is not expected to be usable. This state can
-	// result in undefined behavior. See the `locations_details` field for more
-	// details.
+	//   "OUT_OF_SYNC" - The association is out of sync with the linked endpoint
+	// group. In most cases, this is a result of a transient issue within the
+	// system (e.g. an inaccessible location) and the system is expected to recover
+	// automatically. Check the `locations_details` field for more details.
 	//   "DELETE_FAILED" - An attempt to delete the association has failed. This is
 	// a terminal state and the association is not expected to be usable as some of
 	// its resources have been deleted. The only permitted operation is to retry
 	// deleting the association.
 	State string `json:"state,omitempty"`
-	// UpdateTime: Output only. [Output only] Update time stamp
+	// UpdateTime: Output only. The timestamp when the resource was most recently
+	// updated. See https://google.aip.dev/148#timestamps.
 	UpdateTime string `json:"updateTime,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
@@ -3005,30 +3110,30 @@ func (s MirroringEndpointGroupAssociation) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// MirroringEndpointGroupAssociationDetails: This is a subset of the
-// MirroringEndpointGroupAssociation message, containing fields to be used by
-// the consumer.
+// MirroringEndpointGroupAssociationDetails: The endpoint group's view of a
+// connected association.
 type MirroringEndpointGroupAssociationDetails struct {
-	// Name: Output only. The resource name of the
-	// MirroringEndpointGroupAssociation. Format:
-	// projects/{project}/locations/{location}/mirroringEndpointGroupAssociations/{m
-	// irroringEndpointGroupAssociation}
+	// Name: Output only. The connected association's resource name, for example:
+	// `projects/123456789/locations/global/mirroringEndpointGroupAssociations/my-eg
+	// a`. See https://google.aip.dev/124.
 	Name string `json:"name,omitempty"`
-	// Network: Output only. The VPC network associated. Format:
-	// projects/{project}/global/networks/{name}.
+	// Network: Output only. The associated network, for example:
+	// projects/123456789/global/networks/my-network. See
+	// https://google.aip.dev/124.
 	Network string `json:"network,omitempty"`
-	// State: Output only. Current state of the association.
+	// State: Output only. Most recent known state of the association.
 	//
 	// Possible values:
 	//   "STATE_UNSPECIFIED" - Not set.
-	//   "ACTIVE" - Ready.
+	//   "ACTIVE" - The association is ready and in sync with the linked endpoint
+	// group.
 	//   "CREATING" - Being created.
 	//   "DELETING" - Being deleted.
 	//   "CLOSED" - Mirroring is disabled due to an operation on another resource.
-	//   "OUT_OF_SYNC" - The underlying data plane is out of sync with the
-	// association. The association is not expected to be usable. This state can
-	// result in undefined behavior. See the `locations_details` field for more
-	// details.
+	//   "OUT_OF_SYNC" - The association is out of sync with the linked endpoint
+	// group. In most cases, this is a result of a transient issue within the
+	// system (e.g. an inaccessible location) and the system is expected to recover
+	// automatically. Check the `locations_details` field for more details.
 	//   "DELETE_FAILED" - An attempt to delete the association has failed. This is
 	// a terminal state and the association is not expected to be usable as some of
 	// its resources have been deleted. The only permitted operation is to retry
@@ -3052,18 +3157,22 @@ func (s MirroringEndpointGroupAssociationDetails) MarshalJSON() ([]byte, error) 
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// MirroringEndpointGroupAssociationLocationDetails: Details about the
-// association status in a specific cloud location.
+// MirroringEndpointGroupAssociationLocationDetails: Contains details about the
+// state of an association in a specific cloud location.
 type MirroringEndpointGroupAssociationLocationDetails struct {
-	// Location: Output only. The cloud location.
+	// Location: Output only. The cloud location, e.g. "us-central1-a" or
+	// "asia-south1".
 	Location string `json:"location,omitempty"`
-	// State: Output only. The association state in this location.
+	// State: Output only. The current state of the association in this location.
 	//
 	// Possible values:
 	//   "STATE_UNSPECIFIED" - Not set.
-	//   "ACTIVE" - Ready.
-	//   "OUT_OF_SYNC" - The data plane is out of sync with the association in this
-	// location.
+	//   "ACTIVE" - The association is ready and in sync with the linked endpoint
+	// group.
+	//   "OUT_OF_SYNC" - The association is out of sync with the linked endpoint
+	// group. In most cases, this is a result of a transient issue within the
+	// system (e.g. an inaccessible location) and the system is expected to recover
+	// automatically.
 	State string `json:"state,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Location") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -3592,6 +3701,9 @@ func (s ThreatOverride) MarshalJSON() ([]byte, error) {
 // ThreatPreventionProfile: ThreatPreventionProfile defines an action for
 // specific threat signatures or severity levels.
 type ThreatPreventionProfile struct {
+	// AntivirusOverrides: Optional. Configuration for overriding antivirus actions
+	// per protocol.
+	AntivirusOverrides []*AntivirusOverride `json:"antivirusOverrides,omitempty"`
 	// SeverityOverrides: Optional. Configuration for overriding threats actions by
 	// severity match.
 	SeverityOverrides []*SeverityOverride `json:"severityOverrides,omitempty"`
@@ -3600,15 +3712,15 @@ type ThreatPreventionProfile struct {
 	// severity_overrides and threat_overrides, the threat_overrides action is
 	// applied.
 	ThreatOverrides []*ThreatOverride `json:"threatOverrides,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "SeverityOverrides") to
+	// ForceSendFields is a list of field names (e.g. "AntivirusOverrides") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "SeverityOverrides") to include in
-	// API requests with the JSON null value. By default, fields with empty values
-	// are omitted from API requests. See
+	// NullFields is a list of field names (e.g. "AntivirusOverrides") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -14092,7 +14204,10 @@ type ProjectsLocationsMirroringDeploymentGroupsPatchCall struct {
 
 // Patch: Updates a single MirroringDeploymentGroup.
 //
-// - name: Immutable. Identifier. Then name of the MirroringDeploymentGroup.
+//   - name: Immutable. Identifier. The resource name of this deployment group,
+//     for example:
+//     `projects/123456789/locations/global/mirroringDeploymentGroups/my-dg`. See
+//     https://google.aip.dev/122 for more details.
 func (r *ProjectsLocationsMirroringDeploymentGroupsService) Patch(name string, mirroringdeploymentgroup *MirroringDeploymentGroup) *ProjectsLocationsMirroringDeploymentGroupsPatchCall {
 	c := &ProjectsLocationsMirroringDeploymentGroupsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -14220,7 +14335,8 @@ type ProjectsLocationsMirroringDeploymentsCreateCall struct {
 	header_             http.Header
 }
 
-// Create: Creates a new MirroringDeployment in a given project and location.
+// Create: Creates a deployment in a given project and location. See
+// https://google.aip.dev/133.
 //
 // - parent: Value for parent.
 func (r *ProjectsLocationsMirroringDeploymentsService) Create(parent string, mirroringdeployment *MirroringDeployment) *ProjectsLocationsMirroringDeploymentsCreateCall {
@@ -14347,7 +14463,7 @@ type ProjectsLocationsMirroringDeploymentsDeleteCall struct {
 	header_    http.Header
 }
 
-// Delete: Deletes a single MirroringDeployment.
+// Delete: Deletes a deployment. See https://google.aip.dev/135.
 //
 // - name: Name of the resource.
 func (r *ProjectsLocationsMirroringDeploymentsService) Delete(name string) *ProjectsLocationsMirroringDeploymentsDeleteCall {
@@ -14461,7 +14577,7 @@ type ProjectsLocationsMirroringDeploymentsGetCall struct {
 	header_      http.Header
 }
 
-// Get: Gets details of a single MirroringDeployment.
+// Get: Gets a specific deployment. See https://google.aip.dev/131.
 //
 // - name: Name of the resource.
 func (r *ProjectsLocationsMirroringDeploymentsService) Get(name string) *ProjectsLocationsMirroringDeploymentsGetCall {
@@ -14571,7 +14687,8 @@ type ProjectsLocationsMirroringDeploymentsListCall struct {
 	header_      http.Header
 }
 
-// List: Lists MirroringDeployments in a given project and location.
+// List: Lists deployments in a given project and location. See
+// https://google.aip.dev/132.
 //
 // - parent: Parent value for ListMirroringDeploymentsRequest.
 func (r *ProjectsLocationsMirroringDeploymentsService) List(parent string) *ProjectsLocationsMirroringDeploymentsListCall {
@@ -14730,9 +14847,12 @@ type ProjectsLocationsMirroringDeploymentsPatchCall struct {
 	header_             http.Header
 }
 
-// Patch: Updates a single MirroringDeployment.
+// Patch: Updates a deployment. See https://google.aip.dev/134.
 //
-// - name: Immutable. Identifier. The name of the MirroringDeployment.
+//   - name: Immutable. Identifier. The resource name of this deployment, for
+//     example:
+//     `projects/123456789/locations/us-central1-a/mirroringDeployments/my-dep`.
+//     See https://google.aip.dev/122 for more details.
 func (r *ProjectsLocationsMirroringDeploymentsService) Patch(name string, mirroringdeployment *MirroringDeployment) *ProjectsLocationsMirroringDeploymentsPatchCall {
 	c := &ProjectsLocationsMirroringDeploymentsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -14860,10 +14980,11 @@ type ProjectsLocationsMirroringEndpointGroupAssociationsCreateCall struct {
 	header_                           http.Header
 }
 
-// Create: Creates a new MirroringEndpointGroupAssociation in a given project
-// and location.
+// Create: Creates an association in a given project and location. See
+// https://google.aip.dev/133.
 //
-// - parent: Value for parent.
+//   - parent: Container (project and location) where the association will be
+//     created, e.g. `projects/123456789/locations/global`.
 func (r *ProjectsLocationsMirroringEndpointGroupAssociationsService) Create(parent string, mirroringendpointgroupassociation *MirroringEndpointGroupAssociation) *ProjectsLocationsMirroringEndpointGroupAssociationsCreateCall {
 	c := &ProjectsLocationsMirroringEndpointGroupAssociationsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -14872,10 +14993,13 @@ func (r *ProjectsLocationsMirroringEndpointGroupAssociationsService) Create(pare
 }
 
 // MirroringEndpointGroupAssociationId sets the optional parameter
-// "mirroringEndpointGroupAssociationId": Id of the requesting object If
-// auto-generating Id server-side, remove this field and
-// mirroring_endpoint_group_association_id from the method_signature of Create
-// RPC
+// "mirroringEndpointGroupAssociationId": ID for the new association. If not
+// provided, the server will generate a unique ID. The ID must be a valid RFC
+// 1035 resource name. The ID must be 1-63 characters long and match the
+// regular expression `[a-z]([-a-z0-9]*[a-z0-9])?`. The first character must be
+// a lowercase letter, and all following characters (except for the last
+// character) must be a dash, lowercase letter, or digit. The last character
+// must be a
 func (c *ProjectsLocationsMirroringEndpointGroupAssociationsCreateCall) MirroringEndpointGroupAssociationId(mirroringEndpointGroupAssociationId string) *ProjectsLocationsMirroringEndpointGroupAssociationsCreateCall {
 	c.urlParams_.Set("mirroringEndpointGroupAssociationId", mirroringEndpointGroupAssociationId)
 	return c
@@ -14989,9 +15113,11 @@ type ProjectsLocationsMirroringEndpointGroupAssociationsDeleteCall struct {
 	header_    http.Header
 }
 
-// Delete: Deletes a single MirroringEndpointGroupAssociation.
+// Delete: Deletes a single association. See https://google.aip.dev/135.
 //
-// - name: Name of the resource.
+//   - name: Full resource name of the association to delete, e.g.
+//     projects/123456789/locations/global/mirroringEndpointGroupAssociations/my-e
+//     g-association.
 func (r *ProjectsLocationsMirroringEndpointGroupAssociationsService) Delete(name string) *ProjectsLocationsMirroringEndpointGroupAssociationsDeleteCall {
 	c := &ProjectsLocationsMirroringEndpointGroupAssociationsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -15103,9 +15229,11 @@ type ProjectsLocationsMirroringEndpointGroupAssociationsGetCall struct {
 	header_      http.Header
 }
 
-// Get: Gets details of a single MirroringEndpointGroupAssociation.
+// Get: Gets a specific association. See https://google.aip.dev/131.
 //
-// - name: Name of the resource.
+//   - name: Full resource name of the association to get, e.g.
+//     projects/123456789/locations/global/mirroringEndpointGroupAssociations/my-e
+//     g-association.
 func (r *ProjectsLocationsMirroringEndpointGroupAssociationsService) Get(name string) *ProjectsLocationsMirroringEndpointGroupAssociationsGetCall {
 	c := &ProjectsLocationsMirroringEndpointGroupAssociationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -15213,17 +15341,19 @@ type ProjectsLocationsMirroringEndpointGroupAssociationsListCall struct {
 	header_      http.Header
 }
 
-// List: Lists MirroringEndpointGroupAssociations in a given project and
-// location.
+// List: Lists associations in a given project and location. See
+// https://google.aip.dev/132.
 //
-// - parent: Parent value for ListMirroringEndpointGroupAssociationsRequest.
+//   - parent: Parent container (project and location) of the associations to
+//     list, e.g. `projects/123456789/locations/global`.
 func (r *ProjectsLocationsMirroringEndpointGroupAssociationsService) List(parent string) *ProjectsLocationsMirroringEndpointGroupAssociationsListCall {
 	c := &ProjectsLocationsMirroringEndpointGroupAssociationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
 	return c
 }
 
-// Filter sets the optional parameter "filter": Filtering results
+// Filter sets the optional parameter "filter": A filter expression that
+// filters the results listed in the response. See https://google.aip.dev/160.
 func (c *ProjectsLocationsMirroringEndpointGroupAssociationsListCall) Filter(filter string) *ProjectsLocationsMirroringEndpointGroupAssociationsListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
@@ -15238,14 +15368,14 @@ func (c *ProjectsLocationsMirroringEndpointGroupAssociationsListCall) OrderBy(or
 
 // PageSize sets the optional parameter "pageSize": Requested page size. Server
 // may return fewer items than requested. If unspecified, server will pick an
-// appropriate default.
+// appropriate default. See https://google.aip.dev/158.
 func (c *ProjectsLocationsMirroringEndpointGroupAssociationsListCall) PageSize(pageSize int64) *ProjectsLocationsMirroringEndpointGroupAssociationsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
 // PageToken sets the optional parameter "pageToken": A token identifying a
-// page of results the server should return.
+// page of results the server should return. See https://google.aip.dev/158.
 func (c *ProjectsLocationsMirroringEndpointGroupAssociationsListCall) PageToken(pageToken string) *ProjectsLocationsMirroringEndpointGroupAssociationsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
@@ -15373,10 +15503,12 @@ type ProjectsLocationsMirroringEndpointGroupAssociationsPatchCall struct {
 	header_                           http.Header
 }
 
-// Patch: Updates a single MirroringEndpointGroupAssociation.
+// Patch: Updates an association. See https://google.aip.dev/134.
 //
-//   - name: Immutable. Identifier. The name of the
-//     MirroringEndpointGroupAssociation.
+//   - name: Immutable. Identifier. The resource name of this endpoint group
+//     association, for example:
+//     `projects/123456789/locations/global/mirroringEndpointGroupAssociations/my-
+//     eg-association`. See https://google.aip.dev/122 for more details.
 func (r *ProjectsLocationsMirroringEndpointGroupAssociationsService) Patch(name string, mirroringendpointgroupassociation *MirroringEndpointGroupAssociation) *ProjectsLocationsMirroringEndpointGroupAssociationsPatchCall {
 	c := &ProjectsLocationsMirroringEndpointGroupAssociationsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -15400,12 +15532,9 @@ func (c *ProjectsLocationsMirroringEndpointGroupAssociationsPatchCall) RequestId
 	return c
 }
 
-// UpdateMask sets the optional parameter "updateMask": Required. Field mask is
-// used to specify the fields to be overwritten in the
-// MirroringEndpointGroupAssociation resource by the update. The fields
-// specified in the update_mask are relative to the resource, not the full
-// request. A field will be overwritten if it is in the mask. If the user does
-// not provide a mask then all fields will be overwritten.
+// UpdateMask sets the optional parameter "updateMask": Field mask is used to
+// specify the fields to be overwritten in the association by the update. See
+// https://google.aip.dev/161.
 func (c *ProjectsLocationsMirroringEndpointGroupAssociationsPatchCall) UpdateMask(updateMask string) *ProjectsLocationsMirroringEndpointGroupAssociationsPatchCall {
 	c.urlParams_.Set("updateMask", updateMask)
 	return c
@@ -15504,8 +15633,8 @@ type ProjectsLocationsMirroringEndpointGroupsCreateCall struct {
 	header_                http.Header
 }
 
-// Create: Creates a new MirroringEndpointGroup in a given project and
-// location.
+// Create: Creates an endpoint group in a given project and location. See
+// https://google.aip.dev/133.
 //
 // - parent: Value for parent.
 func (r *ProjectsLocationsMirroringEndpointGroupsService) Create(parent string, mirroringendpointgroup *MirroringEndpointGroup) *ProjectsLocationsMirroringEndpointGroupsCreateCall {
@@ -15632,7 +15761,7 @@ type ProjectsLocationsMirroringEndpointGroupsDeleteCall struct {
 	header_    http.Header
 }
 
-// Delete: Deletes a single MirroringEndpointGroup.
+// Delete: Deletes an endpoint group. See https://google.aip.dev/135.
 //
 // - name: Name of the resource.
 func (r *ProjectsLocationsMirroringEndpointGroupsService) Delete(name string) *ProjectsLocationsMirroringEndpointGroupsDeleteCall {
@@ -15746,7 +15875,7 @@ type ProjectsLocationsMirroringEndpointGroupsGetCall struct {
 	header_      http.Header
 }
 
-// Get: Gets details of a single MirroringEndpointGroup.
+// Get: Gets a specific endpoint group. See https://google.aip.dev/131.
 //
 // - name: Name of the resource.
 func (r *ProjectsLocationsMirroringEndpointGroupsService) Get(name string) *ProjectsLocationsMirroringEndpointGroupsGetCall {
@@ -15856,7 +15985,8 @@ type ProjectsLocationsMirroringEndpointGroupsListCall struct {
 	header_      http.Header
 }
 
-// List: Lists MirroringEndpointGroups in a given project and location.
+// List: Lists endpoint groups in a given project and location. See
+// https://google.aip.dev/132.
 //
 // - parent: Parent value for ListMirroringEndpointGroupsRequest.
 func (r *ProjectsLocationsMirroringEndpointGroupsService) List(parent string) *ProjectsLocationsMirroringEndpointGroupsListCall {
@@ -16015,10 +16145,12 @@ type ProjectsLocationsMirroringEndpointGroupsPatchCall struct {
 	header_                http.Header
 }
 
-// Patch: Updates a single MirroringEndpointGroup.
+// Patch: Updates an endpoint group. See https://google.aip.dev/134.
 //
-//   - name: Immutable. Identifier. Next ID: 11 The name of the
-//     MirroringEndpointGroup.
+//   - name: Immutable. Identifier. The resource name of this endpoint group, for
+//     example:
+//     `projects/123456789/locations/global/mirroringEndpointGroups/my-eg`. See
+//     https://google.aip.dev/122 for more details.
 func (r *ProjectsLocationsMirroringEndpointGroupsService) Patch(name string, mirroringendpointgroup *MirroringEndpointGroup) *ProjectsLocationsMirroringEndpointGroupsPatchCall {
 	c := &ProjectsLocationsMirroringEndpointGroupsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name

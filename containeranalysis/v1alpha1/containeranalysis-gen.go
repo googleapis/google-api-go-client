@@ -1596,6 +1596,9 @@ type ContaineranalysisGoogleDevtoolsCloudbuildV1Build struct {
 	// CreateTime: Output only. Time at which the request to create the build was
 	// received.
 	CreateTime string `json:"createTime,omitempty"`
+	// Dependencies: Optional. Dependencies that the Cloud Build worker will fetch
+	// before executing user steps.
+	Dependencies []*ContaineranalysisGoogleDevtoolsCloudbuildV1Dependency `json:"dependencies,omitempty"`
 	// FailureInfo: Output only. Contains information about the build when
 	// status=FAILURE.
 	FailureInfo *ContaineranalysisGoogleDevtoolsCloudbuildV1BuildFailureInfo `json:"failureInfo,omitempty"`
@@ -1854,6 +1857,9 @@ type ContaineranalysisGoogleDevtoolsCloudbuildV1BuildOptions struct {
 	// (https://cloud.google.com/build/docs/private-pools/run-builds-in-private-pool)
 	// for more information.
 	Pool *ContaineranalysisGoogleDevtoolsCloudbuildV1BuildOptionsPoolOption `json:"pool,omitempty"`
+	// PubsubTopic: Optional. Option to specify the Pub/Sub topic to receive build
+	// status updates.
+	PubsubTopic string `json:"pubsubTopic,omitempty"`
 	// RequestedVerifyOption: Requested verifiability options.
 	//
 	// Possible values:
@@ -2147,6 +2153,92 @@ type ContaineranalysisGoogleDevtoolsCloudbuildV1ConnectedRepository struct {
 
 func (s ContaineranalysisGoogleDevtoolsCloudbuildV1ConnectedRepository) MarshalJSON() ([]byte, error) {
 	type NoMethod ContaineranalysisGoogleDevtoolsCloudbuildV1ConnectedRepository
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ContaineranalysisGoogleDevtoolsCloudbuildV1Dependency: A dependency that the
+// Cloud Build worker will fetch before executing user steps.
+type ContaineranalysisGoogleDevtoolsCloudbuildV1Dependency struct {
+	// Empty: If set to true disable all dependency fetching (ignoring the default
+	// source as well).
+	Empty bool `json:"empty,omitempty"`
+	// GitSource: Represents a git repository as a build dependency.
+	GitSource *ContaineranalysisGoogleDevtoolsCloudbuildV1DependencyGitSourceDependency `json:"gitSource,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Empty") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Empty") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ContaineranalysisGoogleDevtoolsCloudbuildV1Dependency) MarshalJSON() ([]byte, error) {
+	type NoMethod ContaineranalysisGoogleDevtoolsCloudbuildV1Dependency
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ContaineranalysisGoogleDevtoolsCloudbuildV1DependencyGitSourceDependency:
+// Represents a git repository as a build dependency.
+type ContaineranalysisGoogleDevtoolsCloudbuildV1DependencyGitSourceDependency struct {
+	// Depth: Optional. How much history should be fetched for the build (default
+	// 1, -1 for all history).
+	Depth int64 `json:"depth,omitempty,string"`
+	// DestPath: Required. Where should the files be placed on the worker.
+	DestPath string `json:"destPath,omitempty"`
+	// RecurseSubmodules: Optional. True if submodules should be fetched too
+	// (default false).
+	RecurseSubmodules bool `json:"recurseSubmodules,omitempty"`
+	// Repository: Required. The kind of repo (url or dev connect).
+	Repository *ContaineranalysisGoogleDevtoolsCloudbuildV1DependencyGitSourceRepository `json:"repository,omitempty"`
+	// Revision: Required. The revision that we will fetch the repo at.
+	Revision string `json:"revision,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Depth") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Depth") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ContaineranalysisGoogleDevtoolsCloudbuildV1DependencyGitSourceDependency) MarshalJSON() ([]byte, error) {
+	type NoMethod ContaineranalysisGoogleDevtoolsCloudbuildV1DependencyGitSourceDependency
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ContaineranalysisGoogleDevtoolsCloudbuildV1DependencyGitSourceRepository: A
+// repository for a git source.
+type ContaineranalysisGoogleDevtoolsCloudbuildV1DependencyGitSourceRepository struct {
+	// DeveloperConnect: The Developer Connect Git repository link or the url that
+	// matches a repository link in the current project, formatted as
+	// `projects/*/locations/*/connections/*/gitRepositoryLink/*`
+	DeveloperConnect string `json:"developerConnect,omitempty"`
+	// Url: Location of the Git repository.
+	Url string `json:"url,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "DeveloperConnect") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DeveloperConnect") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ContaineranalysisGoogleDevtoolsCloudbuildV1DependencyGitSourceRepository) MarshalJSON() ([]byte, error) {
+	type NoMethod ContaineranalysisGoogleDevtoolsCloudbuildV1DependencyGitSourceRepository
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 

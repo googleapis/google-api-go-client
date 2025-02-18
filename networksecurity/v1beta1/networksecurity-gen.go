@@ -258,6 +258,7 @@ func NewProjectsLocationsService(s *Service) *ProjectsLocationsService {
 	rs.AddressGroups = NewProjectsLocationsAddressGroupsService(s)
 	rs.AuthorizationPolicies = NewProjectsLocationsAuthorizationPoliciesService(s)
 	rs.AuthzPolicies = NewProjectsLocationsAuthzPoliciesService(s)
+	rs.BackendAuthenticationConfigs = NewProjectsLocationsBackendAuthenticationConfigsService(s)
 	rs.ClientTlsPolicies = NewProjectsLocationsClientTlsPoliciesService(s)
 	rs.FirewallEndpointAssociations = NewProjectsLocationsFirewallEndpointAssociationsService(s)
 	rs.GatewaySecurityPolicies = NewProjectsLocationsGatewaySecurityPoliciesService(s)
@@ -284,6 +285,8 @@ type ProjectsLocationsService struct {
 	AuthorizationPolicies *ProjectsLocationsAuthorizationPoliciesService
 
 	AuthzPolicies *ProjectsLocationsAuthzPoliciesService
+
+	BackendAuthenticationConfigs *ProjectsLocationsBackendAuthenticationConfigsService
 
 	ClientTlsPolicies *ProjectsLocationsClientTlsPoliciesService
 
@@ -340,6 +343,15 @@ func NewProjectsLocationsAuthzPoliciesService(s *Service) *ProjectsLocationsAuth
 }
 
 type ProjectsLocationsAuthzPoliciesService struct {
+	s *Service
+}
+
+func NewProjectsLocationsBackendAuthenticationConfigsService(s *Service) *ProjectsLocationsBackendAuthenticationConfigsService {
+	rs := &ProjectsLocationsBackendAuthenticationConfigsService{s: s}
+	return rs
+}
+
+type ProjectsLocationsBackendAuthenticationConfigsService struct {
 	s *Service
 }
 
@@ -580,6 +592,52 @@ type AddressGroup struct {
 
 func (s AddressGroup) MarshalJSON() ([]byte, error) {
 	type NoMethod AddressGroup
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// AntivirusOverride: Defines what action to take for antivirus threats per
+// protocol.
+type AntivirusOverride struct {
+	// Action: Required. Threat action override. For some threat types, only a
+	// subset of actions applies.
+	//
+	// Possible values:
+	//   "THREAT_ACTION_UNSPECIFIED" - Threat action not specified.
+	//   "DEFAULT_ACTION" - The default action (as specified by the vendor) is
+	// taken.
+	//   "ALLOW" - The packet matching this rule will be allowed to transmit.
+	//   "ALERT" - The packet matching this rule will be allowed to transmit, but a
+	// threat_log entry will be sent to the consumer project.
+	//   "DENY" - The packet matching this rule will be dropped, and a threat_log
+	// entry will be sent to the consumer project.
+	Action string `json:"action,omitempty"`
+	// Protocol: Required. Protocol to match.
+	//
+	// Possible values:
+	//   "PROTOCOL_UNSPECIFIED" - Protocol not specified.
+	//   "SMTP" - SMTP prtocol
+	//   "SMB" - SMB protocol
+	//   "POP3" - POP3 protocol
+	//   "IMAP" - IMAP protocol
+	//   "HTTP2" - HTTP2 protocol
+	//   "HTTP" - HTTP protocol
+	//   "FTP" - FTP protocol
+	Protocol string `json:"protocol,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Action") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Action") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s AntivirusOverride) MarshalJSON() ([]byte, error) {
+	type NoMethod AntivirusOverride
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -1120,6 +1178,83 @@ func (s AuthzPolicyTarget) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// BackendAuthenticationConfig: BackendAuthenticationConfig message groups the
+// TrustConfig together with other settings that control how the load balancer
+// authenticates, and expresses its identity to, the backend: * `trustConfig`
+// is the attached TrustConfig. * `wellKnownRoots` indicates whether the load
+// balance should trust backend server certificates that are issued by public
+// certificate authorities, in addition to certificates trusted by the
+// TrustConfig. * `clientCertificate` is a client certificate that the load
+// balancer uses to express its identity to the backend, if the connection to
+// the backend uses mTLS. You can attach the BackendAuthenticationConfig to the
+// load balancer’s BackendService directly determining how that
+// BackendService negotiates TLS.
+type BackendAuthenticationConfig struct {
+	// ClientCertificate: Optional. A reference to a
+	// certificatemanager.googleapis.com.Certificate resource. This is a relative
+	// resource path following the form
+	// "projects/{project}/locations/{location}/certificates/{certificate}". Used
+	// by a BackendService to negotiate mTLS when the backend connection uses TLS
+	// and the backend requests a client certificate. Must have a CLIENT_AUTH
+	// scope.
+	ClientCertificate string `json:"clientCertificate,omitempty"`
+	// CreateTime: Output only. The timestamp when the resource was created.
+	CreateTime string `json:"createTime,omitempty"`
+	// Description: Optional. Free-text description of the resource.
+	Description string `json:"description,omitempty"`
+	// Etag: Output only. Etag of the resource.
+	Etag string `json:"etag,omitempty"`
+	// Labels: Set of label tags associated with the resource.
+	Labels map[string]string `json:"labels,omitempty"`
+	// Name: Required. Name of the BackendAuthenticationConfig resource. It matches
+	// the pattern
+	// `projects/*/locations/{location}/backendAuthenticationConfigs/{backend_authen
+	// tication_config}`
+	Name string `json:"name,omitempty"`
+	// TrustConfig: Optional. A reference to a TrustConfig resource from the
+	// certificatemanager.googleapis.com namespace. This is a relative resource
+	// path following the form
+	// "projects/{project}/locations/{location}/trustConfigs/{trust_config}". A
+	// BackendService uses the chain of trust represented by this TrustConfig, if
+	// specified, to validate the server certificates presented by the backend.
+	// Required unless wellKnownRoots is set to PUBLIC_ROOTS.
+	TrustConfig string `json:"trustConfig,omitempty"`
+	// UpdateTime: Output only. The timestamp when the resource was updated.
+	UpdateTime string `json:"updateTime,omitempty"`
+	// WellKnownRoots: Well known roots to use for server certificate validation.
+	//
+	// Possible values:
+	//   "WELL_KNOWN_ROOTS_UNSPECIFIED" - Equivalent to NONE.
+	//   "NONE" - The BackendService will only validate server certificates against
+	// roots specified in TrustConfig.
+	//   "PUBLIC_ROOTS" - The BackendService uses a set of well-known public roots,
+	// in addition to any roots specified in the trustConfig field, when validating
+	// the server certificates presented by the backend. Validation with these
+	// roots is only considered when the TlsSettings.sni field in the
+	// BackendService is set. The well-known roots are a set of root CAs managed by
+	// Google. CAs in this set can be added or removed without notice.
+	WellKnownRoots string `json:"wellKnownRoots,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "ClientCertificate") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ClientCertificate") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s BackendAuthenticationConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod BackendAuthenticationConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // CancelOperationRequest: The request message for Operations.CancelOperation.
 type CancelOperationRequest struct {
 }
@@ -1408,6 +1543,10 @@ type FirewallEndpoint struct {
 	// Reconciling: Output only. Whether reconciling is in progress, recommended
 	// per https://google.aip.dev/128.
 	Reconciling bool `json:"reconciling,omitempty"`
+	// SatisfiesPzi: Output only. [Output Only] Reserved for future use.
+	SatisfiesPzi bool `json:"satisfiesPzi,omitempty"`
+	// SatisfiesPzs: Output only. [Output Only] Reserved for future use.
+	SatisfiesPzs bool `json:"satisfiesPzs,omitempty"`
 	// State: Output only. Current state of the endpoint.
 	//
 	// Possible values:
@@ -2119,7 +2258,6 @@ func (s InterceptDeployment) MarshalJSON() ([]byte, error) {
 }
 
 // InterceptDeploymentGroup: Message describing InterceptDeploymentGroup object
-// NEXT ID: 10
 type InterceptDeploymentGroup struct {
 	// ConnectedEndpointGroups: Output only. The list of Intercept Endpoint Groups
 	// that are connected to this resource.
@@ -2549,6 +2687,39 @@ func (s ListAuthzPoliciesResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// ListBackendAuthenticationConfigsResponse: Response returned by the
+// ListBackendAuthenticationConfigs method.
+type ListBackendAuthenticationConfigsResponse struct {
+	// BackendAuthenticationConfigs: List of BackendAuthenticationConfig resources.
+	BackendAuthenticationConfigs []*BackendAuthenticationConfig `json:"backendAuthenticationConfigs,omitempty"`
+	// NextPageToken: If there might be more results than those appearing in this
+	// response, then `next_page_token` is included. To get the next set of
+	// results, call this method again using the value of `next_page_token` as
+	// `page_token`.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+	// Unreachable: Locations that could not be reached.
+	Unreachable []string `json:"unreachable,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g.
+	// "BackendAuthenticationConfigs") to unconditionally include in API requests.
+	// By default, fields with empty or default values are omitted from API
+	// requests. See https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields
+	// for more details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "BackendAuthenticationConfigs") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ListBackendAuthenticationConfigsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ListBackendAuthenticationConfigsResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // ListClientTlsPoliciesResponse: Response returned by the
 // ListClientTlsPolicies method.
 type ListClientTlsPoliciesResponse struct {
@@ -2916,14 +3087,13 @@ func (s ListMirroringDeploymentsResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// ListMirroringEndpointGroupAssociationsResponse: Message for response to
-// listing MirroringEndpointGroupAssociations
+// ListMirroringEndpointGroupAssociationsResponse: Response message for listing
+// associations.
 type ListMirroringEndpointGroupAssociationsResponse struct {
-	// MirroringEndpointGroupAssociations: The list of
-	// MirroringEndpointGroupAssociation
+	// MirroringEndpointGroupAssociations: The list of associations returned.
 	MirroringEndpointGroupAssociations []*MirroringEndpointGroupAssociation `json:"mirroringEndpointGroupAssociations,omitempty"`
 	// NextPageToken: A token identifying a page of results the server should
-	// return.
+	// return. See https://google.aip.dev/158.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
@@ -3251,46 +3421,59 @@ func (s MTLSPolicy) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// MirroringDeployment: Message describing MirroringDeployment object NEXT ID:
-// 10
+// MirroringDeployment: A deployment represents a zonal mirroring backend ready
+// to accept GENEVE-encapsulated replica traffic, e.g. a zonal instance group
+// fronted by an internal passthrough load balancer. Deployments are always
+// part of a global deployment group which represents a global mirroring
+// service.
 type MirroringDeployment struct {
-	// CreateTime: Output only. [Output only] Create time stamp
+	// CreateTime: Output only. The timestamp when the resource was created. See
+	// https://google.aip.dev/148#timestamps.
 	CreateTime string `json:"createTime,omitempty"`
 	// Description: Optional. User-provided description of the deployment. Used as
 	// additional context for the deployment.
 	Description string `json:"description,omitempty"`
-	// ForwardingRule: Required. Immutable. The regional load balancer which the
-	// mirrored traffic should be forwarded to. Format is:
-	// projects/{project}/regions/{region}/forwardingRules/{forwardingRule}
+	// ForwardingRule: Required. Immutable. The regional forwarding rule that
+	// fronts the mirroring collectors, for example:
+	// `projects/123456789/regions/us-central1/forwardingRules/my-rule`. See
+	// https://google.aip.dev/124.
 	ForwardingRule string `json:"forwardingRule,omitempty"`
-	// Labels: Optional. Labels as key value pairs
+	// Labels: Optional. Labels are key/value pairs that help to organize and
+	// filter resources.
 	Labels map[string]string `json:"labels,omitempty"`
-	// MirroringDeploymentGroup: Required. Immutable. The Mirroring Deployment
-	// Group that this resource is part of. Format is:
-	// `projects/{project}/locations/global/mirroringDeploymentGroups/{mirroringDepl
-	// oymentGroup}`
+	// MirroringDeploymentGroup: Required. Immutable. The deployment group that
+	// this deployment is a part of, for example:
+	// `projects/123456789/locations/global/mirroringDeploymentGroups/my-dg`. See
+	// https://google.aip.dev/124.
 	MirroringDeploymentGroup string `json:"mirroringDeploymentGroup,omitempty"`
-	// Name: Immutable. Identifier. The name of the MirroringDeployment.
+	// Name: Immutable. Identifier. The resource name of this deployment, for
+	// example:
+	// `projects/123456789/locations/us-central1-a/mirroringDeployments/my-dep`.
+	// See https://google.aip.dev/122 for more details.
 	Name string `json:"name,omitempty"`
-	// Reconciling: Output only. Whether reconciling is in progress, recommended
-	// per https://google.aip.dev/128.
+	// Reconciling: Output only. The current state of the resource does not match
+	// the user's intended state, and the system is working to reconcile them. This
+	// part of the normal operation (e.g. linking a new association to the parent
+	// group). See https://google.aip.dev/128.
 	Reconciling bool `json:"reconciling,omitempty"`
-	// State: Output only. Current state of the deployment.
+	// State: Output only. The current state of the deployment. See
+	// https://google.aip.dev/216.
 	//
 	// Possible values:
-	//   "STATE_UNSPECIFIED" - Not set.
-	//   "ACTIVE" - Ready.
-	//   "CREATING" - Being created.
-	//   "DELETING" - Being deleted.
-	//   "OUT_OF_SYNC" - The underlying data plane is out of sync with the
-	// deployment. The deployment is not expected to be usable. This state can
-	// result in undefined behavior.
+	//   "STATE_UNSPECIFIED" - State not set (this is not a valid state).
+	//   "ACTIVE" - The deployment is ready and in sync with the parent group.
+	//   "CREATING" - The deployment is being created.
+	//   "DELETING" - The deployment is being deleted.
+	//   "OUT_OF_SYNC" - The deployment is out of sync with the parent group. In
+	// most cases, this is a result of a transient issue within the system (e.g. a
+	// delayed data-path config) and the system is expected to recover
+	// automatically. See the parent deployment group's state for more details.
 	//   "DELETE_FAILED" - An attempt to delete the deployment has failed. This is
-	// a terminal state and the deployment is not expected to be usable as some of
-	// its resources have been deleted. The only permitted operation is to retry
-	// deleting the deployment.
+	// a terminal state and the deployment is not expected to recover. The only
+	// permitted operation is to retry deleting the deployment.
 	State string `json:"state,omitempty"`
-	// UpdateTime: Output only. [Output only] Update time stamp
+	// UpdateTime: Output only. The timestamp when the resource was most recently
+	// updated. See https://google.aip.dev/148#timestamps.
 	UpdateTime string `json:"updateTime,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
@@ -3313,36 +3496,47 @@ func (s MirroringDeployment) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// MirroringDeploymentGroup: Message describing MirroringDeploymentGroup object
-// NEXT ID: 10
+// MirroringDeploymentGroup: A deployment group aggregates many zonal mirroring
+// backends (deployments) into a single global mirroring service. Consumers can
+// connect this service using an endpoint group.
 type MirroringDeploymentGroup struct {
-	// ConnectedEndpointGroups: Output only. The list of Mirroring Endpoint Groups
-	// that are connected to this resource.
+	// ConnectedEndpointGroups: Output only. The list of endpoint groups that are
+	// connected to this resource.
 	ConnectedEndpointGroups []*MirroringDeploymentGroupConnectedEndpointGroup `json:"connectedEndpointGroups,omitempty"`
-	// CreateTime: Output only. [Output only] Create time stamp
+	// CreateTime: Output only. The timestamp when the resource was created. See
+	// https://google.aip.dev/148#timestamps.
 	CreateTime string `json:"createTime,omitempty"`
 	// Description: Optional. User-provided description of the deployment group.
 	// Used as additional context for the deployment group.
 	Description string `json:"description,omitempty"`
-	// Labels: Optional. Labels as key value pairs
+	// Labels: Optional. Labels are key/value pairs that help to organize and
+	// filter resources.
 	Labels map[string]string `json:"labels,omitempty"`
-	// Name: Immutable. Identifier. Then name of the MirroringDeploymentGroup.
+	// Name: Immutable. Identifier. The resource name of this deployment group, for
+	// example:
+	// `projects/123456789/locations/global/mirroringDeploymentGroups/my-dg`. See
+	// https://google.aip.dev/122 for more details.
 	Name string `json:"name,omitempty"`
-	// Network: Required. Immutable. The network that is being used for the
-	// deployment. Format is: projects/{project}/global/networks/{network}.
+	// Network: Required. Immutable. The network that will be used for all child
+	// deployments, for example: `projects/{project}/global/networks/{network}`.
+	// See https://google.aip.dev/124.
 	Network string `json:"network,omitempty"`
-	// Reconciling: Output only. Whether reconciling is in progress, recommended
-	// per https://google.aip.dev/128.
+	// Reconciling: Output only. The current state of the resource does not match
+	// the user's intended state, and the system is working to reconcile them. This
+	// is part of the normal operation (e.g. adding a new deployment to the group)
+	// See https://google.aip.dev/128.
 	Reconciling bool `json:"reconciling,omitempty"`
-	// State: Output only. Current state of the deployment group.
+	// State: Output only. The current state of the deployment group. See
+	// https://google.aip.dev/216.
 	//
 	// Possible values:
-	//   "STATE_UNSPECIFIED" - Not set.
-	//   "ACTIVE" - Ready.
-	//   "CREATING" - Being created.
-	//   "DELETING" - Being deleted.
+	//   "STATE_UNSPECIFIED" - State not set (this is not a valid state).
+	//   "ACTIVE" - The deployment group is ready.
+	//   "CREATING" - The deployment group is being created.
+	//   "DELETING" - The deployment group is being deleted.
 	State string `json:"state,omitempty"`
-	// UpdateTime: Output only. [Output only] Update time stamp
+	// UpdateTime: Output only. The timestamp when the resource was most recently
+	// updated. See https://google.aip.dev/148#timestamps.
 	UpdateTime string `json:"updateTime,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
@@ -3368,7 +3562,10 @@ func (s MirroringDeploymentGroup) MarshalJSON() ([]byte, error) {
 // MirroringDeploymentGroupConnectedEndpointGroup: An endpoint group connected
 // to this deployment group.
 type MirroringDeploymentGroupConnectedEndpointGroup struct {
-	// Name: Output only. A connected mirroring endpoint group.
+	// Name: Output only. The connected endpoint group's resource name, for
+	// example:
+	// `projects/123456789/locations/global/mirroringEndpointGroups/my-eg`. See
+	// https://google.aip.dev/124.
 	Name string `json:"name,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Name") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -3388,46 +3585,61 @@ func (s MirroringDeploymentGroupConnectedEndpointGroup) MarshalJSON() ([]byte, e
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// MirroringEndpointGroup: Message describing MirroringEndpointGroup object.
+// MirroringEndpointGroup: An endpoint group is a consumer frontend for a
+// deployment group (backend). In order to configure mirroring for a network,
+// consumers must create: - An association between their network and the
+// endpoint group. - A security profile that points to the endpoint group. - A
+// mirroring rule that references the security profile (group).
 type MirroringEndpointGroup struct {
-	// Associations: Output only. List of Mirroring Endpoint Group Associations
-	// that are associated to this endpoint group.
+	// Associations: Output only. List of associations to this endpoint group.
 	Associations []*MirroringEndpointGroupAssociationDetails `json:"associations,omitempty"`
-	// CreateTime: Output only. [Output only] Create time stamp
+	// CreateTime: Output only. The timestamp when the resource was created. See
+	// https://google.aip.dev/148#timestamps.
 	CreateTime string `json:"createTime,omitempty"`
 	// Description: Optional. User-provided description of the endpoint group. Used
 	// as additional context for the endpoint group.
 	Description string `json:"description,omitempty"`
-	// Labels: Optional. Labels as key value pairs
+	// Labels: Optional. Labels are key/value pairs that help to organize and
+	// filter resources.
 	Labels map[string]string `json:"labels,omitempty"`
-	// MirroringDeploymentGroup: Required. Immutable. The Mirroring Deployment
-	// Group that this resource is connected to. Format is:
-	// `projects/{project}/locations/global/mirroringDeploymentGroups/{mirroringDepl
-	// oymentGroup}`
+	// MirroringDeploymentGroup: Immutable. The deployment group that this DIRECT
+	// endpoint group is connected to, for example:
+	// `projects/123456789/locations/global/mirroringDeploymentGroups/my-dg`. See
+	// https://google.aip.dev/124.
 	MirroringDeploymentGroup string `json:"mirroringDeploymentGroup,omitempty"`
-	// Name: Immutable. Identifier. Next ID: 11 The name of the
-	// MirroringEndpointGroup.
+	// Name: Immutable. Identifier. The resource name of this endpoint group, for
+	// example:
+	// `projects/123456789/locations/global/mirroringEndpointGroups/my-eg`. See
+	// https://google.aip.dev/122 for more details.
 	Name string `json:"name,omitempty"`
-	// Reconciling: Output only. Whether reconciling is in progress, recommended
-	// per https://google.aip.dev/128.
+	// Reconciling: Output only. The current state of the resource does not match
+	// the user's intended state, and the system is working to reconcile them. This
+	// is part of the normal operation (e.g. adding a new association to the
+	// group). See https://google.aip.dev/128.
 	Reconciling bool `json:"reconciling,omitempty"`
-	// State: Output only. Current state of the endpoint group.
+	// State: Output only. The current state of the endpoint group. See
+	// https://google.aip.dev/216.
 	//
 	// Possible values:
-	//   "STATE_UNSPECIFIED" - Not set.
-	//   "ACTIVE" - Ready.
-	//   "CLOSED" - The deployment group has been deleted and mirroring is
-	// disabled.
-	//   "CREATING" - Being created.
-	//   "DELETING" - Being deleted.
-	//   "OUT_OF_SYNC" - The underlying data plane is out of sync with the endpoint
-	// group. Some associations might not be usable.
+	//   "STATE_UNSPECIFIED" - State not set (this is not a valid state).
+	//   "ACTIVE" - The endpoint group is ready and in sync with the target
+	// deployment group.
+	//   "CLOSED" - The deployment group backing this endpoint group has been
+	// force-deleted. This endpoint group cannot be used and mirroring is
+	// effectively disabled.
+	//   "CREATING" - The endpoint group is being created.
+	//   "DELETING" - The endpoint group is being deleted.
+	//   "OUT_OF_SYNC" - The endpoint group is out of sync with the backing
+	// deployment group. In most cases, this is a result of a transient issue
+	// within the system (e.g. an inaccessible location) and the system is expected
+	// to recover automatically. See the associations field for details per network
+	// and location.
 	//   "DELETE_FAILED" - An attempt to delete the endpoint group has failed. This
-	// is a terminal state and the endpoint group is not expected to be usable as
-	// some of its resources have been deleted. The only permitted operation is to
-	// retry deleting the endpoint group.
+	// is a terminal state and the endpoint group is not expected to recover. The
+	// only permitted operation is to retry deleting the endpoint group.
 	State string `json:"state,omitempty"`
-	// UpdateTime: Output only. [Output only] Update time stamp
+	// UpdateTime: Output only. The timestamp when the resource was most recently
+	// updated. See https://google.aip.dev/148#timestamps.
 	UpdateTime string `json:"updateTime,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
@@ -3450,48 +3662,62 @@ func (s MirroringEndpointGroup) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// MirroringEndpointGroupAssociation: Message describing
-// MirroringEndpointGroupAssociation object
+// MirroringEndpointGroupAssociation: An endpoint group association represents
+// a link between a network and an endpoint group in the organization. Creating
+// an association creates the networking infrastructure linking the network to
+// the endpoint group, but does not enable mirroring by itself. To enable
+// mirroring, the user must also create a network firewall policy containing
+// mirroring rules and associate it with the network.
 type MirroringEndpointGroupAssociation struct {
-	// CreateTime: Output only. [Output only] Create time stamp
+	// CreateTime: Output only. The timestamp when the resource was created. See
+	// https://google.aip.dev/148#timestamps.
 	CreateTime string `json:"createTime,omitempty"`
-	// Labels: Optional. Labels as key value pairs
+	// Labels: Optional. Labels are key/value pairs that help to organize and
+	// filter resources.
 	Labels map[string]string `json:"labels,omitempty"`
-	// LocationsDetails: Output only. The list of locations that this association
-	// is in and its details.
+	// LocationsDetails: Output only. The list of locations where the association
+	// is present. This information is retrieved from the linked endpoint group,
+	// and not configured as part of the association itself.
 	LocationsDetails []*MirroringEndpointGroupAssociationLocationDetails `json:"locationsDetails,omitempty"`
-	// MirroringEndpointGroup: Required. Immutable. The Mirroring Endpoint Group
-	// that this resource is connected to. Format is:
-	// `projects/{project}/locations/global/mirroringEndpointGroups/{mirroringEndpoi
-	// ntGroup}`
+	// MirroringEndpointGroup: Immutable. The endpoint group that this association
+	// is connected to, for example:
+	// `projects/123456789/locations/global/mirroringEndpointGroups/my-eg`. See
+	// https://google.aip.dev/124.
 	MirroringEndpointGroup string `json:"mirroringEndpointGroup,omitempty"`
-	// Name: Immutable. Identifier. The name of the
-	// MirroringEndpointGroupAssociation.
+	// Name: Immutable. Identifier. The resource name of this endpoint group
+	// association, for example:
+	// `projects/123456789/locations/global/mirroringEndpointGroupAssociations/my-eg
+	// -association`. See https://google.aip.dev/122 for more details.
 	Name string `json:"name,omitempty"`
-	// Network: Required. Immutable. The VPC network associated. Format:
-	// projects/{project}/global/networks/{network}.
+	// Network: Immutable. The VPC network that is associated. for example:
+	// `projects/123456789/global/networks/my-network`. See
+	// https://google.aip.dev/124.
 	Network string `json:"network,omitempty"`
-	// Reconciling: Output only. Whether reconciling is in progress, recommended
-	// per https://google.aip.dev/128.
+	// Reconciling: Output only. The current state of the resource does not match
+	// the user's intended state, and the system is working to reconcile them. This
+	// part of the normal operation (e.g. adding a new location to the target
+	// deployment group). See https://google.aip.dev/128.
 	Reconciling bool `json:"reconciling,omitempty"`
 	// State: Output only. Current state of the endpoint group association.
 	//
 	// Possible values:
 	//   "STATE_UNSPECIFIED" - Not set.
-	//   "ACTIVE" - Ready.
+	//   "ACTIVE" - The association is ready and in sync with the linked endpoint
+	// group.
 	//   "CREATING" - Being created.
 	//   "DELETING" - Being deleted.
 	//   "CLOSED" - Mirroring is disabled due to an operation on another resource.
-	//   "OUT_OF_SYNC" - The underlying data plane is out of sync with the
-	// association. The association is not expected to be usable. This state can
-	// result in undefined behavior. See the `locations_details` field for more
-	// details.
+	//   "OUT_OF_SYNC" - The association is out of sync with the linked endpoint
+	// group. In most cases, this is a result of a transient issue within the
+	// system (e.g. an inaccessible location) and the system is expected to recover
+	// automatically. Check the `locations_details` field for more details.
 	//   "DELETE_FAILED" - An attempt to delete the association has failed. This is
 	// a terminal state and the association is not expected to be usable as some of
 	// its resources have been deleted. The only permitted operation is to retry
 	// deleting the association.
 	State string `json:"state,omitempty"`
-	// UpdateTime: Output only. [Output only] Update time stamp
+	// UpdateTime: Output only. The timestamp when the resource was most recently
+	// updated. See https://google.aip.dev/148#timestamps.
 	UpdateTime string `json:"updateTime,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
@@ -3514,30 +3740,30 @@ func (s MirroringEndpointGroupAssociation) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// MirroringEndpointGroupAssociationDetails: This is a subset of the
-// MirroringEndpointGroupAssociation message, containing fields to be used by
-// the consumer.
+// MirroringEndpointGroupAssociationDetails: The endpoint group's view of a
+// connected association.
 type MirroringEndpointGroupAssociationDetails struct {
-	// Name: Output only. The resource name of the
-	// MirroringEndpointGroupAssociation. Format:
-	// projects/{project}/locations/{location}/mirroringEndpointGroupAssociations/{m
-	// irroringEndpointGroupAssociation}
+	// Name: Output only. The connected association's resource name, for example:
+	// `projects/123456789/locations/global/mirroringEndpointGroupAssociations/my-eg
+	// a`. See https://google.aip.dev/124.
 	Name string `json:"name,omitempty"`
-	// Network: Output only. The VPC network associated. Format:
-	// projects/{project}/global/networks/{name}.
+	// Network: Output only. The associated network, for example:
+	// projects/123456789/global/networks/my-network. See
+	// https://google.aip.dev/124.
 	Network string `json:"network,omitempty"`
-	// State: Output only. Current state of the association.
+	// State: Output only. Most recent known state of the association.
 	//
 	// Possible values:
 	//   "STATE_UNSPECIFIED" - Not set.
-	//   "ACTIVE" - Ready.
+	//   "ACTIVE" - The association is ready and in sync with the linked endpoint
+	// group.
 	//   "CREATING" - Being created.
 	//   "DELETING" - Being deleted.
 	//   "CLOSED" - Mirroring is disabled due to an operation on another resource.
-	//   "OUT_OF_SYNC" - The underlying data plane is out of sync with the
-	// association. The association is not expected to be usable. This state can
-	// result in undefined behavior. See the `locations_details` field for more
-	// details.
+	//   "OUT_OF_SYNC" - The association is out of sync with the linked endpoint
+	// group. In most cases, this is a result of a transient issue within the
+	// system (e.g. an inaccessible location) and the system is expected to recover
+	// automatically. Check the `locations_details` field for more details.
 	//   "DELETE_FAILED" - An attempt to delete the association has failed. This is
 	// a terminal state and the association is not expected to be usable as some of
 	// its resources have been deleted. The only permitted operation is to retry
@@ -3561,18 +3787,22 @@ func (s MirroringEndpointGroupAssociationDetails) MarshalJSON() ([]byte, error) 
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// MirroringEndpointGroupAssociationLocationDetails: Details about the
-// association status in a specific cloud location.
+// MirroringEndpointGroupAssociationLocationDetails: Contains details about the
+// state of an association in a specific cloud location.
 type MirroringEndpointGroupAssociationLocationDetails struct {
-	// Location: Output only. The cloud location.
+	// Location: Output only. The cloud location, e.g. "us-central1-a" or
+	// "asia-south1".
 	Location string `json:"location,omitempty"`
-	// State: Output only. The association state in this location.
+	// State: Output only. The current state of the association in this location.
 	//
 	// Possible values:
 	//   "STATE_UNSPECIFIED" - Not set.
-	//   "ACTIVE" - Ready.
-	//   "OUT_OF_SYNC" - The data plane is out of sync with the association in this
-	// location.
+	//   "ACTIVE" - The association is ready and in sync with the linked endpoint
+	// group.
+	//   "OUT_OF_SYNC" - The association is out of sync with the linked endpoint
+	// group. In most cases, this is a result of a transient issue within the
+	// system (e.g. an inaccessible location) and the system is expected to recover
+	// automatically.
 	State string `json:"state,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Location") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -4101,6 +4331,9 @@ func (s ThreatOverride) MarshalJSON() ([]byte, error) {
 // ThreatPreventionProfile: ThreatPreventionProfile defines an action for
 // specific threat signatures or severity levels.
 type ThreatPreventionProfile struct {
+	// AntivirusOverrides: Optional. Configuration for overriding antivirus actions
+	// per protocol.
+	AntivirusOverrides []*AntivirusOverride `json:"antivirusOverrides,omitempty"`
 	// SeverityOverrides: Optional. Configuration for overriding threats actions by
 	// severity match.
 	SeverityOverrides []*SeverityOverride `json:"severityOverrides,omitempty"`
@@ -4109,15 +4342,15 @@ type ThreatPreventionProfile struct {
 	// severity_overrides and threat_overrides, the threat_overrides action is
 	// applied.
 	ThreatOverrides []*ThreatOverride `json:"threatOverrides,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "SeverityOverrides") to
+	// ForceSendFields is a list of field names (e.g. "AntivirusOverrides") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "SeverityOverrides") to include in
-	// API requests with the JSON null value. By default, fields with empty values
-	// are omitted from API requests. See
+	// NullFields is a list of field names (e.g. "AntivirusOverrides") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -11324,6 +11557,606 @@ func (c *ProjectsLocationsAuthzPoliciesTestIamPermissionsCall) Do(opts ...google
 	return ret, nil
 }
 
+type ProjectsLocationsBackendAuthenticationConfigsCreateCall struct {
+	s                           *Service
+	parent                      string
+	backendauthenticationconfig *BackendAuthenticationConfig
+	urlParams_                  gensupport.URLParams
+	ctx_                        context.Context
+	header_                     http.Header
+}
+
+// Create: Creates a new BackendAuthenticationConfig in a given project and
+// location.
+//
+//   - parent: The parent resource of the BackendAuthenticationConfig. Must be in
+//     the format `projects/*/locations/{location}`.
+func (r *ProjectsLocationsBackendAuthenticationConfigsService) Create(parent string, backendauthenticationconfig *BackendAuthenticationConfig) *ProjectsLocationsBackendAuthenticationConfigsCreateCall {
+	c := &ProjectsLocationsBackendAuthenticationConfigsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.backendauthenticationconfig = backendauthenticationconfig
+	return c
+}
+
+// BackendAuthenticationConfigId sets the optional parameter
+// "backendAuthenticationConfigId": Required. Short name of the
+// BackendAuthenticationConfig resource to be created. This value should be
+// 1-63 characters long, containing only letters, numbers, hyphens, and
+// underscores, and should not start with a number. E.g. "backend-auth-config".
+func (c *ProjectsLocationsBackendAuthenticationConfigsCreateCall) BackendAuthenticationConfigId(backendAuthenticationConfigId string) *ProjectsLocationsBackendAuthenticationConfigsCreateCall {
+	c.urlParams_.Set("backendAuthenticationConfigId", backendAuthenticationConfigId)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsBackendAuthenticationConfigsCreateCall) Fields(s ...googleapi.Field) *ProjectsLocationsBackendAuthenticationConfigsCreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsBackendAuthenticationConfigsCreateCall) Context(ctx context.Context) *ProjectsLocationsBackendAuthenticationConfigsCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsBackendAuthenticationConfigsCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsBackendAuthenticationConfigsCreateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.backendauthenticationconfig)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+parent}/backendAuthenticationConfigs")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "networksecurity.projects.locations.backendAuthenticationConfigs.create", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "networksecurity.projects.locations.backendAuthenticationConfigs.create" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsBackendAuthenticationConfigsCreateCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "networksecurity.projects.locations.backendAuthenticationConfigs.create", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsBackendAuthenticationConfigsDeleteCall struct {
+	s          *Service
+	name       string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Delete: Deletes a single BackendAuthenticationConfig to
+// BackendAuthenticationConfig.
+//
+//   - name: A name of the BackendAuthenticationConfig to delete. Must be in the
+//     format `projects/*/locations/{location}/backendAuthenticationConfigs/*`.
+func (r *ProjectsLocationsBackendAuthenticationConfigsService) Delete(name string) *ProjectsLocationsBackendAuthenticationConfigsDeleteCall {
+	c := &ProjectsLocationsBackendAuthenticationConfigsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Etag sets the optional parameter "etag": Etag of the resource. If this is
+// provided, it must match the server's etag.
+func (c *ProjectsLocationsBackendAuthenticationConfigsDeleteCall) Etag(etag string) *ProjectsLocationsBackendAuthenticationConfigsDeleteCall {
+	c.urlParams_.Set("etag", etag)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsBackendAuthenticationConfigsDeleteCall) Fields(s ...googleapi.Field) *ProjectsLocationsBackendAuthenticationConfigsDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsBackendAuthenticationConfigsDeleteCall) Context(ctx context.Context) *ProjectsLocationsBackendAuthenticationConfigsDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsBackendAuthenticationConfigsDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsBackendAuthenticationConfigsDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("DELETE", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "networksecurity.projects.locations.backendAuthenticationConfigs.delete", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "networksecurity.projects.locations.backendAuthenticationConfigs.delete" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsBackendAuthenticationConfigsDeleteCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "networksecurity.projects.locations.backendAuthenticationConfigs.delete", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsBackendAuthenticationConfigsGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Gets details of a single BackendAuthenticationConfig to
+// BackendAuthenticationConfig.
+//
+//   - name: A name of the BackendAuthenticationConfig to get. Must be in the
+//     format `projects/*/locations/{location}/backendAuthenticationConfigs/*`.
+func (r *ProjectsLocationsBackendAuthenticationConfigsService) Get(name string) *ProjectsLocationsBackendAuthenticationConfigsGetCall {
+	c := &ProjectsLocationsBackendAuthenticationConfigsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsBackendAuthenticationConfigsGetCall) Fields(s ...googleapi.Field) *ProjectsLocationsBackendAuthenticationConfigsGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsBackendAuthenticationConfigsGetCall) IfNoneMatch(entityTag string) *ProjectsLocationsBackendAuthenticationConfigsGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsBackendAuthenticationConfigsGetCall) Context(ctx context.Context) *ProjectsLocationsBackendAuthenticationConfigsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsBackendAuthenticationConfigsGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsBackendAuthenticationConfigsGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "networksecurity.projects.locations.backendAuthenticationConfigs.get", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "networksecurity.projects.locations.backendAuthenticationConfigs.get" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *BackendAuthenticationConfig.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsBackendAuthenticationConfigsGetCall) Do(opts ...googleapi.CallOption) (*BackendAuthenticationConfig, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &BackendAuthenticationConfig{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "networksecurity.projects.locations.backendAuthenticationConfigs.get", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsBackendAuthenticationConfigsListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists BackendAuthenticationConfigs in a given project and location.
+//
+//   - parent: The project and location from which the
+//     BackendAuthenticationConfigs should be listed, specified in the format
+//     `projects/*/locations/{location}`.
+func (r *ProjectsLocationsBackendAuthenticationConfigsService) List(parent string) *ProjectsLocationsBackendAuthenticationConfigsListCall {
+	c := &ProjectsLocationsBackendAuthenticationConfigsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": Maximum number of
+// BackendAuthenticationConfigs to return per call.
+func (c *ProjectsLocationsBackendAuthenticationConfigsListCall) PageSize(pageSize int64) *ProjectsLocationsBackendAuthenticationConfigsListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": The value returned by the
+// last `ListBackendAuthenticationConfigsResponse` Indicates that this is a
+// continuation of a prior `ListBackendAuthenticationConfigs` call, and that
+// the system should return the next page of data.
+func (c *ProjectsLocationsBackendAuthenticationConfigsListCall) PageToken(pageToken string) *ProjectsLocationsBackendAuthenticationConfigsListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsBackendAuthenticationConfigsListCall) Fields(s ...googleapi.Field) *ProjectsLocationsBackendAuthenticationConfigsListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsBackendAuthenticationConfigsListCall) IfNoneMatch(entityTag string) *ProjectsLocationsBackendAuthenticationConfigsListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsBackendAuthenticationConfigsListCall) Context(ctx context.Context) *ProjectsLocationsBackendAuthenticationConfigsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsBackendAuthenticationConfigsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsBackendAuthenticationConfigsListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+parent}/backendAuthenticationConfigs")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "networksecurity.projects.locations.backendAuthenticationConfigs.list", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "networksecurity.projects.locations.backendAuthenticationConfigs.list" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *ListBackendAuthenticationConfigsResponse.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsBackendAuthenticationConfigsListCall) Do(opts ...googleapi.CallOption) (*ListBackendAuthenticationConfigsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ListBackendAuthenticationConfigsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "networksecurity.projects.locations.backendAuthenticationConfigs.list", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsLocationsBackendAuthenticationConfigsListCall) Pages(ctx context.Context, f func(*ListBackendAuthenticationConfigsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+type ProjectsLocationsBackendAuthenticationConfigsPatchCall struct {
+	s                           *Service
+	name                        string
+	backendauthenticationconfig *BackendAuthenticationConfig
+	urlParams_                  gensupport.URLParams
+	ctx_                        context.Context
+	header_                     http.Header
+}
+
+// Patch: Updates the parameters of a single BackendAuthenticationConfig to
+// BackendAuthenticationConfig.
+//
+//   - name: Name of the BackendAuthenticationConfig resource. It matches the
+//     pattern
+//     `projects/*/locations/{location}/backendAuthenticationConfigs/{backend_auth
+//     entication_config}`.
+func (r *ProjectsLocationsBackendAuthenticationConfigsService) Patch(name string, backendauthenticationconfig *BackendAuthenticationConfig) *ProjectsLocationsBackendAuthenticationConfigsPatchCall {
+	c := &ProjectsLocationsBackendAuthenticationConfigsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.backendauthenticationconfig = backendauthenticationconfig
+	return c
+}
+
+// UpdateMask sets the optional parameter "updateMask": Field mask is used to
+// specify the fields to be overwritten in the BackendAuthenticationConfig
+// resource by the update. The fields specified in the update_mask are relative
+// to the resource, not the full request. A field will be overwritten if it is
+// in the mask. If the user does not provide a mask then all fields will be
+// overwritten.
+func (c *ProjectsLocationsBackendAuthenticationConfigsPatchCall) UpdateMask(updateMask string) *ProjectsLocationsBackendAuthenticationConfigsPatchCall {
+	c.urlParams_.Set("updateMask", updateMask)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsBackendAuthenticationConfigsPatchCall) Fields(s ...googleapi.Field) *ProjectsLocationsBackendAuthenticationConfigsPatchCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsBackendAuthenticationConfigsPatchCall) Context(ctx context.Context) *ProjectsLocationsBackendAuthenticationConfigsPatchCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsBackendAuthenticationConfigsPatchCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsBackendAuthenticationConfigsPatchCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.backendauthenticationconfig)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PATCH", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "networksecurity.projects.locations.backendAuthenticationConfigs.patch", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "networksecurity.projects.locations.backendAuthenticationConfigs.patch" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsBackendAuthenticationConfigsPatchCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "networksecurity.projects.locations.backendAuthenticationConfigs.patch", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
 type ProjectsLocationsClientTlsPoliciesCreateCall struct {
 	s               *Service
 	parent          string
@@ -17167,7 +18000,10 @@ type ProjectsLocationsMirroringDeploymentGroupsPatchCall struct {
 
 // Patch: Updates a single MirroringDeploymentGroup.
 //
-// - name: Immutable. Identifier. Then name of the MirroringDeploymentGroup.
+//   - name: Immutable. Identifier. The resource name of this deployment group,
+//     for example:
+//     `projects/123456789/locations/global/mirroringDeploymentGroups/my-dg`. See
+//     https://google.aip.dev/122 for more details.
 func (r *ProjectsLocationsMirroringDeploymentGroupsService) Patch(name string, mirroringdeploymentgroup *MirroringDeploymentGroup) *ProjectsLocationsMirroringDeploymentGroupsPatchCall {
 	c := &ProjectsLocationsMirroringDeploymentGroupsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -17295,7 +18131,8 @@ type ProjectsLocationsMirroringDeploymentsCreateCall struct {
 	header_             http.Header
 }
 
-// Create: Creates a new MirroringDeployment in a given project and location.
+// Create: Creates a deployment in a given project and location. See
+// https://google.aip.dev/133.
 //
 // - parent: Value for parent.
 func (r *ProjectsLocationsMirroringDeploymentsService) Create(parent string, mirroringdeployment *MirroringDeployment) *ProjectsLocationsMirroringDeploymentsCreateCall {
@@ -17422,7 +18259,7 @@ type ProjectsLocationsMirroringDeploymentsDeleteCall struct {
 	header_    http.Header
 }
 
-// Delete: Deletes a single MirroringDeployment.
+// Delete: Deletes a deployment. See https://google.aip.dev/135.
 //
 // - name: Name of the resource.
 func (r *ProjectsLocationsMirroringDeploymentsService) Delete(name string) *ProjectsLocationsMirroringDeploymentsDeleteCall {
@@ -17536,7 +18373,7 @@ type ProjectsLocationsMirroringDeploymentsGetCall struct {
 	header_      http.Header
 }
 
-// Get: Gets details of a single MirroringDeployment.
+// Get: Gets a specific deployment. See https://google.aip.dev/131.
 //
 // - name: Name of the resource.
 func (r *ProjectsLocationsMirroringDeploymentsService) Get(name string) *ProjectsLocationsMirroringDeploymentsGetCall {
@@ -17646,7 +18483,8 @@ type ProjectsLocationsMirroringDeploymentsListCall struct {
 	header_      http.Header
 }
 
-// List: Lists MirroringDeployments in a given project and location.
+// List: Lists deployments in a given project and location. See
+// https://google.aip.dev/132.
 //
 // - parent: Parent value for ListMirroringDeploymentsRequest.
 func (r *ProjectsLocationsMirroringDeploymentsService) List(parent string) *ProjectsLocationsMirroringDeploymentsListCall {
@@ -17805,9 +18643,12 @@ type ProjectsLocationsMirroringDeploymentsPatchCall struct {
 	header_             http.Header
 }
 
-// Patch: Updates a single MirroringDeployment.
+// Patch: Updates a deployment. See https://google.aip.dev/134.
 //
-// - name: Immutable. Identifier. The name of the MirroringDeployment.
+//   - name: Immutable. Identifier. The resource name of this deployment, for
+//     example:
+//     `projects/123456789/locations/us-central1-a/mirroringDeployments/my-dep`.
+//     See https://google.aip.dev/122 for more details.
 func (r *ProjectsLocationsMirroringDeploymentsService) Patch(name string, mirroringdeployment *MirroringDeployment) *ProjectsLocationsMirroringDeploymentsPatchCall {
 	c := &ProjectsLocationsMirroringDeploymentsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -17935,10 +18776,11 @@ type ProjectsLocationsMirroringEndpointGroupAssociationsCreateCall struct {
 	header_                           http.Header
 }
 
-// Create: Creates a new MirroringEndpointGroupAssociation in a given project
-// and location.
+// Create: Creates an association in a given project and location. See
+// https://google.aip.dev/133.
 //
-// - parent: Value for parent.
+//   - parent: Container (project and location) where the association will be
+//     created, e.g. `projects/123456789/locations/global`.
 func (r *ProjectsLocationsMirroringEndpointGroupAssociationsService) Create(parent string, mirroringendpointgroupassociation *MirroringEndpointGroupAssociation) *ProjectsLocationsMirroringEndpointGroupAssociationsCreateCall {
 	c := &ProjectsLocationsMirroringEndpointGroupAssociationsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -17947,10 +18789,13 @@ func (r *ProjectsLocationsMirroringEndpointGroupAssociationsService) Create(pare
 }
 
 // MirroringEndpointGroupAssociationId sets the optional parameter
-// "mirroringEndpointGroupAssociationId": Id of the requesting object If
-// auto-generating Id server-side, remove this field and
-// mirroring_endpoint_group_association_id from the method_signature of Create
-// RPC
+// "mirroringEndpointGroupAssociationId": ID for the new association. If not
+// provided, the server will generate a unique ID. The ID must be a valid RFC
+// 1035 resource name. The ID must be 1-63 characters long and match the
+// regular expression `[a-z]([-a-z0-9]*[a-z0-9])?`. The first character must be
+// a lowercase letter, and all following characters (except for the last
+// character) must be a dash, lowercase letter, or digit. The last character
+// must be a
 func (c *ProjectsLocationsMirroringEndpointGroupAssociationsCreateCall) MirroringEndpointGroupAssociationId(mirroringEndpointGroupAssociationId string) *ProjectsLocationsMirroringEndpointGroupAssociationsCreateCall {
 	c.urlParams_.Set("mirroringEndpointGroupAssociationId", mirroringEndpointGroupAssociationId)
 	return c
@@ -18064,9 +18909,11 @@ type ProjectsLocationsMirroringEndpointGroupAssociationsDeleteCall struct {
 	header_    http.Header
 }
 
-// Delete: Deletes a single MirroringEndpointGroupAssociation.
+// Delete: Deletes a single association. See https://google.aip.dev/135.
 //
-// - name: Name of the resource.
+//   - name: Full resource name of the association to delete, e.g.
+//     projects/123456789/locations/global/mirroringEndpointGroupAssociations/my-e
+//     g-association.
 func (r *ProjectsLocationsMirroringEndpointGroupAssociationsService) Delete(name string) *ProjectsLocationsMirroringEndpointGroupAssociationsDeleteCall {
 	c := &ProjectsLocationsMirroringEndpointGroupAssociationsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -18178,9 +19025,11 @@ type ProjectsLocationsMirroringEndpointGroupAssociationsGetCall struct {
 	header_      http.Header
 }
 
-// Get: Gets details of a single MirroringEndpointGroupAssociation.
+// Get: Gets a specific association. See https://google.aip.dev/131.
 //
-// - name: Name of the resource.
+//   - name: Full resource name of the association to get, e.g.
+//     projects/123456789/locations/global/mirroringEndpointGroupAssociations/my-e
+//     g-association.
 func (r *ProjectsLocationsMirroringEndpointGroupAssociationsService) Get(name string) *ProjectsLocationsMirroringEndpointGroupAssociationsGetCall {
 	c := &ProjectsLocationsMirroringEndpointGroupAssociationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -18288,17 +19137,19 @@ type ProjectsLocationsMirroringEndpointGroupAssociationsListCall struct {
 	header_      http.Header
 }
 
-// List: Lists MirroringEndpointGroupAssociations in a given project and
-// location.
+// List: Lists associations in a given project and location. See
+// https://google.aip.dev/132.
 //
-// - parent: Parent value for ListMirroringEndpointGroupAssociationsRequest.
+//   - parent: Parent container (project and location) of the associations to
+//     list, e.g. `projects/123456789/locations/global`.
 func (r *ProjectsLocationsMirroringEndpointGroupAssociationsService) List(parent string) *ProjectsLocationsMirroringEndpointGroupAssociationsListCall {
 	c := &ProjectsLocationsMirroringEndpointGroupAssociationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
 	return c
 }
 
-// Filter sets the optional parameter "filter": Filtering results
+// Filter sets the optional parameter "filter": A filter expression that
+// filters the results listed in the response. See https://google.aip.dev/160.
 func (c *ProjectsLocationsMirroringEndpointGroupAssociationsListCall) Filter(filter string) *ProjectsLocationsMirroringEndpointGroupAssociationsListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
@@ -18313,14 +19164,14 @@ func (c *ProjectsLocationsMirroringEndpointGroupAssociationsListCall) OrderBy(or
 
 // PageSize sets the optional parameter "pageSize": Requested page size. Server
 // may return fewer items than requested. If unspecified, server will pick an
-// appropriate default.
+// appropriate default. See https://google.aip.dev/158.
 func (c *ProjectsLocationsMirroringEndpointGroupAssociationsListCall) PageSize(pageSize int64) *ProjectsLocationsMirroringEndpointGroupAssociationsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
 // PageToken sets the optional parameter "pageToken": A token identifying a
-// page of results the server should return.
+// page of results the server should return. See https://google.aip.dev/158.
 func (c *ProjectsLocationsMirroringEndpointGroupAssociationsListCall) PageToken(pageToken string) *ProjectsLocationsMirroringEndpointGroupAssociationsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
@@ -18448,10 +19299,12 @@ type ProjectsLocationsMirroringEndpointGroupAssociationsPatchCall struct {
 	header_                           http.Header
 }
 
-// Patch: Updates a single MirroringEndpointGroupAssociation.
+// Patch: Updates an association. See https://google.aip.dev/134.
 //
-//   - name: Immutable. Identifier. The name of the
-//     MirroringEndpointGroupAssociation.
+//   - name: Immutable. Identifier. The resource name of this endpoint group
+//     association, for example:
+//     `projects/123456789/locations/global/mirroringEndpointGroupAssociations/my-
+//     eg-association`. See https://google.aip.dev/122 for more details.
 func (r *ProjectsLocationsMirroringEndpointGroupAssociationsService) Patch(name string, mirroringendpointgroupassociation *MirroringEndpointGroupAssociation) *ProjectsLocationsMirroringEndpointGroupAssociationsPatchCall {
 	c := &ProjectsLocationsMirroringEndpointGroupAssociationsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -18475,12 +19328,9 @@ func (c *ProjectsLocationsMirroringEndpointGroupAssociationsPatchCall) RequestId
 	return c
 }
 
-// UpdateMask sets the optional parameter "updateMask": Required. Field mask is
-// used to specify the fields to be overwritten in the
-// MirroringEndpointGroupAssociation resource by the update. The fields
-// specified in the update_mask are relative to the resource, not the full
-// request. A field will be overwritten if it is in the mask. If the user does
-// not provide a mask then all fields will be overwritten.
+// UpdateMask sets the optional parameter "updateMask": Field mask is used to
+// specify the fields to be overwritten in the association by the update. See
+// https://google.aip.dev/161.
 func (c *ProjectsLocationsMirroringEndpointGroupAssociationsPatchCall) UpdateMask(updateMask string) *ProjectsLocationsMirroringEndpointGroupAssociationsPatchCall {
 	c.urlParams_.Set("updateMask", updateMask)
 	return c
@@ -18579,8 +19429,8 @@ type ProjectsLocationsMirroringEndpointGroupsCreateCall struct {
 	header_                http.Header
 }
 
-// Create: Creates a new MirroringEndpointGroup in a given project and
-// location.
+// Create: Creates an endpoint group in a given project and location. See
+// https://google.aip.dev/133.
 //
 // - parent: Value for parent.
 func (r *ProjectsLocationsMirroringEndpointGroupsService) Create(parent string, mirroringendpointgroup *MirroringEndpointGroup) *ProjectsLocationsMirroringEndpointGroupsCreateCall {
@@ -18707,7 +19557,7 @@ type ProjectsLocationsMirroringEndpointGroupsDeleteCall struct {
 	header_    http.Header
 }
 
-// Delete: Deletes a single MirroringEndpointGroup.
+// Delete: Deletes an endpoint group. See https://google.aip.dev/135.
 //
 // - name: Name of the resource.
 func (r *ProjectsLocationsMirroringEndpointGroupsService) Delete(name string) *ProjectsLocationsMirroringEndpointGroupsDeleteCall {
@@ -18821,7 +19671,7 @@ type ProjectsLocationsMirroringEndpointGroupsGetCall struct {
 	header_      http.Header
 }
 
-// Get: Gets details of a single MirroringEndpointGroup.
+// Get: Gets a specific endpoint group. See https://google.aip.dev/131.
 //
 // - name: Name of the resource.
 func (r *ProjectsLocationsMirroringEndpointGroupsService) Get(name string) *ProjectsLocationsMirroringEndpointGroupsGetCall {
@@ -18931,7 +19781,8 @@ type ProjectsLocationsMirroringEndpointGroupsListCall struct {
 	header_      http.Header
 }
 
-// List: Lists MirroringEndpointGroups in a given project and location.
+// List: Lists endpoint groups in a given project and location. See
+// https://google.aip.dev/132.
 //
 // - parent: Parent value for ListMirroringEndpointGroupsRequest.
 func (r *ProjectsLocationsMirroringEndpointGroupsService) List(parent string) *ProjectsLocationsMirroringEndpointGroupsListCall {
@@ -19090,10 +19941,12 @@ type ProjectsLocationsMirroringEndpointGroupsPatchCall struct {
 	header_                http.Header
 }
 
-// Patch: Updates a single MirroringEndpointGroup.
+// Patch: Updates an endpoint group. See https://google.aip.dev/134.
 //
-//   - name: Immutable. Identifier. Next ID: 11 The name of the
-//     MirroringEndpointGroup.
+//   - name: Immutable. Identifier. The resource name of this endpoint group, for
+//     example:
+//     `projects/123456789/locations/global/mirroringEndpointGroups/my-eg`. See
+//     https://google.aip.dev/122 for more details.
 func (r *ProjectsLocationsMirroringEndpointGroupsService) Patch(name string, mirroringendpointgroup *MirroringEndpointGroup) *ProjectsLocationsMirroringEndpointGroupsPatchCall {
 	c := &ProjectsLocationsMirroringEndpointGroupsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name

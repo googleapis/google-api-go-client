@@ -1235,11 +1235,27 @@ type Enterprise struct {
 	// Administrator: Admins of the enterprise. This is only supported for
 	// enterprises created via the EMM-initiated flow.
 	Administrator []*Administrator `json:"administrator,omitempty"`
+	// EnterpriseType: The type of the enterprise.
+	//
+	// Possible values:
+	//   "enterpriseTypeUnspecified" - This value is not used.
+	//   "managedGoogleDomain" - The enterprise belongs to a managed Google domain.
+	//   "managedGooglePlayAccountsEnterprise" - The enterprise is a managed Google
+	// Play Accounts enterprise.
+	EnterpriseType string `json:"enterpriseType,omitempty"`
 	// GoogleAuthenticationSettings: Output only. Settings for Google-provided user
 	// authentication.
 	GoogleAuthenticationSettings *GoogleAuthenticationSettings `json:"googleAuthenticationSettings,omitempty"`
 	// Id: The unique ID for the enterprise.
 	Id string `json:"id,omitempty"`
+	// ManagedGoogleDomainType: The type of managed Google domain
+	//
+	// Possible values:
+	//   "managedGoogleDomainTypeUnspecified" - The managed Google domain type is
+	// not specified.
+	//   "typeTeam" - The managed Google domain is an email-verified team.
+	//   "typeDomain" - The managed Google domain is domain-verified.
+	ManagedGoogleDomainType string `json:"managedGoogleDomainType,omitempty"`
 	// Name: The name of the enterprise, for example, "Example, Inc".
 	Name string `json:"name,omitempty"`
 	// PrimaryDomain: The enterprise's primary domain, such as "example.com".

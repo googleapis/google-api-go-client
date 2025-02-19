@@ -14,7 +14,9 @@ import (
 	"google.golang.org/grpc"
 )
 
-func ExampleNewClient(serverPort int, resourceName string) {
+func ExampleNewClient() {
+	serverPort := 8080
+	resourceName := "foo"
 	ctx := context.Background()
 	conn, err := grpc.Dial(fmt.Sprintf("localhost:%d", serverPort), grpc.WithInsecure())
 	if err != nil {
@@ -34,7 +36,9 @@ func ExampleNewClient(serverPort int, resourceName string) {
 	log.Printf("read %q", buf.String())
 }
 
-func ExampleNewReader(serverPort int, resourceName string) {
+func ExampleClient_NewReader() {
+	serverPort := 8080
+	resourceName := "foo"
 	ctx := context.Background()
 	conn, err := grpc.Dial(fmt.Sprintf("localhost:%d", serverPort), grpc.WithInsecure())
 	if err != nil {
@@ -54,7 +58,9 @@ func ExampleNewReader(serverPort int, resourceName string) {
 	log.Printf("read %q", buf.String())
 }
 
-func ExampleNewWriter(serverPort int, resourceName string) {
+func ExampleClient_NewWriter() {
+	serverPort := 8080
+	resourceName := "foo"
 	ctx := context.Background()
 	conn, err := grpc.Dial(fmt.Sprintf("localhost:%d", serverPort), grpc.WithInsecure())
 	if err != nil {

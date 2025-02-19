@@ -41,10 +41,9 @@ golint ./... 2>&1 | (
     grep -vE "\.pb\.go:" || true
 ) | tee /dev/stderr | (! read)
 
-staticcheck -go 1.23 ./... 2>&1 | (
+staticcheck -go 1.24 ./... 2>&1 | (
   grep -v "SA1019" |
     grep -v "S1007" |
     grep -v "error var Done should have name of the form ErrFoo" |
-    grep -v "examples" |
-    grep -v "gen.go" || true
+    grep -v "examples" || true
 ) | tee /dev/stderr | (! read)

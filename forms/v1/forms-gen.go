@@ -805,17 +805,18 @@ func (s *FormResponse) UnmarshalJSON(data []byte) error {
 
 // FormSettings: A form's settings.
 type FormSettings struct {
-	// EmailCollectionType: Optional. Kind of email collection configured in the
-	// form.
+	// EmailCollectionType: Optional. The setting that determines whether the form
+	// collects email addresses from respondents.
 	//
 	// Possible values:
-	//   "EMAIL_COLLECTION_TYPE_UNSPECIFIED" - Default value. The default for forms
-	// owned by Google Workspace users is VERIFIED. For forms owned by other types
-	// of Google accounts, the default is DO_NO_COLLECT.
-	//   "DO_NOT_COLLECT" - Email Field is not collected for the user.
-	//   "VERIFIED" - Email Field is collected automatically from the logged in
-	// user.
-	//   "RESPONDER_INPUT" - Email Field needs to be manually filled.
+	//   "EMAIL_COLLECTION_TYPE_UNSPECIFIED" - Unspecified. This value is unused.
+	//   "DO_NOT_COLLECT" - The form doesn't collect email addresses. Default value
+	// if the form owner uses a Google account.
+	//   "VERIFIED" - The form collects email addresses automatically based on the
+	// account of the signed-in user. Default value if the form owner uses a Google
+	// Workspace account.
+	//   "RESPONDER_INPUT" - The form collects email addresses using a field that
+	// the respondent completes on the form.
 	EmailCollectionType string `json:"emailCollectionType,omitempty"`
 	// QuizSettings: Settings related to quiz forms and grading.
 	QuizSettings *QuizSettings `json:"quizSettings,omitempty"`

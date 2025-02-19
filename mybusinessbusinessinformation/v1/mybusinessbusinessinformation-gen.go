@@ -1055,7 +1055,8 @@ type Metadata struct {
 	// operate on Health data.
 	CanOperateHealthData bool `json:"canOperateHealthData,omitempty"`
 	// CanOperateLocalPost: Output only. Indicates if the listing can manage local
-	// posts.
+	// posts. Deprecated: This field is no longer populated and will be removed in
+	// a future version.
 	CanOperateLocalPost bool `json:"canOperateLocalPost,omitempty"`
 	// CanOperateLodgingData: Output only. Indicates whether the location can
 	// operate on Lodging data.

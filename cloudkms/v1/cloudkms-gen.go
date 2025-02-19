@@ -812,6 +812,39 @@ func (s CertificateChains) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// ChecksummedData: Data with integrity verification field.
+type ChecksummedData struct {
+	// Crc32cChecksum: Integrity verification field. A CRC32C checksum of the
+	// returned ChecksummedData.data. An integrity check of ChecksummedData.data
+	// can be performed by computing the CRC32C checksum of ChecksummedData.data
+	// and comparing your results to this field. Discard the response in case of
+	// non-matching checksum values, and perform a limited number of retries. A
+	// persistent mismatch may indicate an issue in your computation of the CRC32C
+	// checksum. Note: This field is defined as int64 for reasons of compatibility
+	// across different languages. However, it is a non-negative integer, which
+	// will never exceed 2^32-1, and can be safely downconverted to uint32 in
+	// languages that support this type.
+	Crc32cChecksum int64 `json:"crc32cChecksum,omitempty,string"`
+	// Data: Raw Data.
+	Data string `json:"data,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Crc32cChecksum") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Crc32cChecksum") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ChecksummedData) MarshalJSON() ([]byte, error) {
+	type NoMethod ChecksummedData
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // CryptoKey: A CryptoKey represents a logical key that can be used for
 // cryptographic operations. A CryptoKey is made up of zero or more versions,
 // which represent the actual key material used in cryptographic operations.
@@ -976,6 +1009,10 @@ type CryptoKeyVersion struct {
 	//   "HMAC_SHA224" - HMAC-SHA224 signing with a 224 bit key.
 	//   "EXTERNAL_SYMMETRIC_ENCRYPTION" - Algorithm representing symmetric
 	// encryption by an external key manager.
+	//   "PQ_SIGN_ML_DSA_65" - The post-quantum Module-Lattice-Based Digital
+	// Signature Algorithm, at security level 3. Randomized version.
+	//   "PQ_SIGN_SLH_DSA_SHA2_128S" - The post-quantum stateless hash-based
+	// digital signature algorithm, at security level 1. Randomized version.
 	Algorithm string `json:"algorithm,omitempty"`
 	// Attestation: Output only. Statement that was generated and signed by the HSM
 	// at key creation time. Use this statement to verify attributes of the key as
@@ -1157,6 +1194,10 @@ type CryptoKeyVersionTemplate struct {
 	//   "HMAC_SHA224" - HMAC-SHA224 signing with a 224 bit key.
 	//   "EXTERNAL_SYMMETRIC_ENCRYPTION" - Algorithm representing symmetric
 	// encryption by an external key manager.
+	//   "PQ_SIGN_ML_DSA_65" - The post-quantum Module-Lattice-Based Digital
+	// Signature Algorithm, at security level 3. Randomized version.
+	//   "PQ_SIGN_SLH_DSA_SHA2_128S" - The post-quantum stateless hash-based
+	// digital signature algorithm, at security level 1. Randomized version.
 	Algorithm string `json:"algorithm,omitempty"`
 	// ProtectionLevel: ProtectionLevel to use when creating a CryptoKeyVersion
 	// based on this template. Immutable. Defaults to SOFTWARE.
@@ -1760,6 +1801,10 @@ type ImportCryptoKeyVersionRequest struct {
 	//   "HMAC_SHA224" - HMAC-SHA224 signing with a 224 bit key.
 	//   "EXTERNAL_SYMMETRIC_ENCRYPTION" - Algorithm representing symmetric
 	// encryption by an external key manager.
+	//   "PQ_SIGN_ML_DSA_65" - The post-quantum Module-Lattice-Based Digital
+	// Signature Algorithm, at security level 3. Randomized version.
+	//   "PQ_SIGN_SLH_DSA_SHA2_128S" - The post-quantum stateless hash-based
+	// digital signature algorithm, at security level 1. Randomized version.
 	Algorithm string `json:"algorithm,omitempty"`
 	// CryptoKeyVersion: Optional. The optional name of an existing
 	// CryptoKeyVersion to target for an import operation. If this field is not
@@ -2798,6 +2843,10 @@ type PublicKey struct {
 	//   "HMAC_SHA224" - HMAC-SHA224 signing with a 224 bit key.
 	//   "EXTERNAL_SYMMETRIC_ENCRYPTION" - Algorithm representing symmetric
 	// encryption by an external key manager.
+	//   "PQ_SIGN_ML_DSA_65" - The post-quantum Module-Lattice-Based Digital
+	// Signature Algorithm, at security level 3. Randomized version.
+	//   "PQ_SIGN_SLH_DSA_SHA2_128S" - The post-quantum stateless hash-based
+	// digital signature algorithm, at security level 1. Randomized version.
 	Algorithm string `json:"algorithm,omitempty"`
 	// Name: The name of the CryptoKeyVersion public key. Provided here for
 	// verification. NOTE: This field is in Beta.
@@ -2829,6 +2878,27 @@ type PublicKey struct {
 	//   "EXTERNAL_VPC" - Crypto operations are performed in an EKM-over-VPC
 	// backend.
 	ProtectionLevel string `json:"protectionLevel,omitempty"`
+	// PublicKey: This field contains the public key (with integrity verification),
+	// formatted according to the public_key_format field.
+	PublicKey *ChecksummedData `json:"publicKey,omitempty"`
+	// PublicKeyFormat: The PublicKey format specified by the customer through the
+	// public_key_format field.
+	//
+	// Possible values:
+	//   "PUBLIC_KEY_FORMAT_UNSPECIFIED" - If the public_key_format field is not
+	// specified: - For PQC algorithms, an error will be returned. - For non-PQC
+	// algorithms, the default format is PEM, and the field pem will be populated.
+	// Otherwise, the public key will be exported through the public_key field in
+	// the requested format.
+	//   "PEM" - The returned public key will be encoded in PEM format. See the
+	// [RFC7468](https://tools.ietf.org/html/rfc7468) sections for [General
+	// Considerations](https://tools.ietf.org/html/rfc7468#section-2) and [Textual
+	// Encoding of Subject Public Key Info]
+	// (https://tools.ietf.org/html/rfc7468#section-13) for more information.
+	//   "NIST_PQC" - This is supported only for PQC algorithms. The key material
+	// is returned in the format defined by NIST PQC standards (FIPS 203, FIPS 204,
+	// and FIPS 205).
+	PublicKeyFormat string `json:"publicKeyFormat,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
@@ -8516,6 +8586,37 @@ type ProjectsLocationsKeyRingsCryptoKeysCryptoKeyVersionsGetPublicKeyCall struct
 func (r *ProjectsLocationsKeyRingsCryptoKeysCryptoKeyVersionsService) GetPublicKey(name string) *ProjectsLocationsKeyRingsCryptoKeysCryptoKeyVersionsGetPublicKeyCall {
 	c := &ProjectsLocationsKeyRingsCryptoKeysCryptoKeyVersionsGetPublicKeyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
+	return c
+}
+
+// PublicKeyFormat sets the optional parameter "publicKeyFormat": The PublicKey
+// format specified by the user. This field is required for PQC algorithms. If
+// specified, the public key will be exported through the public_key field in
+// the requested format. Otherwise, the pem field will be populated for non-PQC
+// algorithms, and an error will be returned for PQC algorithms.
+//
+// Possible values:
+//
+//	"PUBLIC_KEY_FORMAT_UNSPECIFIED" - If the public_key_format field is not
+//
+// specified: - For PQC algorithms, an error will be returned. - For non-PQC
+// algorithms, the default format is PEM, and the field pem will be populated.
+// Otherwise, the public key will be exported through the public_key field in
+// the requested format.
+//
+//	"PEM" - The returned public key will be encoded in PEM format. See the
+//
+// [RFC7468](https://tools.ietf.org/html/rfc7468) sections for [General
+// Considerations](https://tools.ietf.org/html/rfc7468#section-2) and [Textual
+// Encoding of Subject Public Key Info]
+// (https://tools.ietf.org/html/rfc7468#section-13) for more information.
+//
+//	"NIST_PQC" - This is supported only for PQC algorithms. The key material
+//
+// is returned in the format defined by NIST PQC standards (FIPS 203, FIPS 204,
+// and FIPS 205).
+func (c *ProjectsLocationsKeyRingsCryptoKeysCryptoKeyVersionsGetPublicKeyCall) PublicKeyFormat(publicKeyFormat string) *ProjectsLocationsKeyRingsCryptoKeysCryptoKeyVersionsGetPublicKeyCall {
+	c.urlParams_.Set("publicKeyFormat", publicKeyFormat)
 	return c
 }
 

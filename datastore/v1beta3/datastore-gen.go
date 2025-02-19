@@ -1234,7 +1234,7 @@ func (s GoogleDatastoreAdminV1Progress) MarshalJSON() ([]byte, error) {
 // GoogleDatastoreAdminV1RedirectWritesStepDetails: Details for the
 // `REDIRECT_WRITES` step.
 type GoogleDatastoreAdminV1RedirectWritesStepDetails struct {
-	// ConcurrencyMode: Ths concurrency mode for this database.
+	// ConcurrencyMode: The concurrency mode for this database.
 	//
 	// Possible values:
 	//   "CONCURRENCY_MODE_UNSPECIFIED" - Unspecified.

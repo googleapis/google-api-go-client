@@ -2180,7 +2180,9 @@ func (s ProductStatusChangeMessage) MarshalJSON() ([]byte, error) {
 // A typical example of this is the Free product listings
 // (https://support.google.com/merchants/topic/9240261?ref_topic=7257954,7259405,&sjid=796648681813264022-EU)
 // program, which enables products from a merchant's store to be shown across
-// Google for free.
+// Google for free. The following list is the available set of program resource
+// IDs accessible through the API: * `free-listings` * `shopping-ads` *
+// `youtube-shopping-checkout`
 type Program struct {
 	// ActiveRegionCodes: Output only. The regions in which the account is actively
 	// participating in the program. Active regions are defined as those where all
@@ -2964,7 +2966,7 @@ type UnclaimHomepageRequest struct {
 // account. For more information, see Frequently asked questions about people
 // and access levels (//support.google.com/merchants/answer/12160472).
 type User struct {
-	// AccessRights: Optional. The access rights
+	// AccessRights: Required. The access rights
 	// (https://support.google.com/merchants/answer/12160472?sjid=6789834943175119429-EU#accesstypes)
 	// the user has.
 	//

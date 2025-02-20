@@ -5745,7 +5745,8 @@ func (s InsertDimensionRequest) MarshalJSON() ([]byte, error) {
 // InsertRangeRequest: Inserts cells into a range, shifting the existing cells
 // over or down.
 type InsertRangeRequest struct {
-	// Range: The range to insert new cells into.
+	// Range: The range to insert new cells into. The range is constrained to the
+	// current sheet boundaries.
 	Range *GridRange `json:"range,omitempty"`
 	// ShiftDimension: The dimension which will be shifted when inserting cells. If
 	// ROWS, existing cells will be shifted down. If COLUMNS, existing cells will

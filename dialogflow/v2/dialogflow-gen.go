@@ -3888,7 +3888,7 @@ func (s GoogleCloudDialogflowCxV3WebhookGenericWebService) MarshalJSON() ([]byte
 type GoogleCloudDialogflowCxV3WebhookGenericWebServiceOAuthConfig struct {
 	// ClientId: Required. The client ID provided by the 3rd party platform.
 	ClientId string `json:"clientId,omitempty"`
-	// ClientSecret: Required. The client secret provided by the 3rd party
+	// ClientSecret: Optional. The client secret provided by the 3rd party
 	// platform.
 	ClientSecret string `json:"clientSecret,omitempty"`
 	// Scopes: Optional. The OAuth scopes to grant.
@@ -7262,7 +7262,7 @@ func (s GoogleCloudDialogflowCxV3beta1WebhookGenericWebService) MarshalJSON() ([
 type GoogleCloudDialogflowCxV3beta1WebhookGenericWebServiceOAuthConfig struct {
 	// ClientId: Required. The client ID provided by the 3rd party platform.
 	ClientId string `json:"clientId,omitempty"`
-	// ClientSecret: Required. The client secret provided by the 3rd party
+	// ClientSecret: Optional. The client secret provided by the 3rd party
 	// platform.
 	ClientSecret string `json:"clientSecret,omitempty"`
 	// Scopes: Optional. The OAuth scopes to grant.
@@ -7726,7 +7726,7 @@ type GoogleCloudDialogflowV2AgentAssistantFeedback struct {
 	// document is correct. For example: * Query: "Can I return the package in 2
 	// days once received?" * Suggested document says: "Items must be
 	// returned/exchanged within 60 days of the purchase date." * Ground truth: "No
-	// return or exchange is allowed." * [document_correctness]: INCORRECT
+	// return or exchange is allowed." * document_correctness: INCORRECT
 	//
 	// Possible values:
 	//   "DOCUMENT_CORRECTNESS_UNSPECIFIED" - Document correctness unspecified.
@@ -9049,7 +9049,7 @@ type GoogleCloudDialogflowV2ConversationModelEvaluation struct {
 	// `projects//conversationModels//evaluations/`
 	Name string `json:"name,omitempty"`
 	// RawHumanEvalTemplateCsv: Output only. Human eval template in csv format. It
-	// tooks real-world conversations provided through input dataset, generates
+	// takes real-world conversations provided through input dataset, generates
 	// example suggestions for customer to verify quality of the model. For Smart
 	// Reply, the generated csv file contains columns of Context,
 	// (Suggestions,Q1,Q2)*3, Actual reply. Context contains at most 10 latest
@@ -10004,9 +10004,9 @@ func (s GoogleCloudDialogflowV2EnvironmentHistoryEntry) MarshalJSON() ([]byte, e
 type GoogleCloudDialogflowV2EvaluationConfig struct {
 	// Datasets: Required. Datasets used for evaluation.
 	Datasets []*GoogleCloudDialogflowV2InputDataset `json:"datasets,omitempty"`
-	// SmartComposeConfig: Configuration for smart compose model evalution.
+	// SmartComposeConfig: Configuration for smart compose model evaluation.
 	SmartComposeConfig *GoogleCloudDialogflowV2EvaluationConfigSmartComposeConfig `json:"smartComposeConfig,omitempty"`
-	// SmartReplyConfig: Configuration for smart reply model evalution.
+	// SmartReplyConfig: Configuration for smart reply model evaluation.
 	SmartReplyConfig *GoogleCloudDialogflowV2EvaluationConfigSmartReplyConfig `json:"smartReplyConfig,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Datasets") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -15841,7 +15841,7 @@ type GoogleCloudDialogflowV2SuggestKnowledgeAssistRequest struct {
 	LatestMessage string `json:"latestMessage,omitempty"`
 	// PreviousSuggestedQuery: Optional. The previously suggested query for the
 	// given conversation. This helps identify whether the next suggestion we
-	// generate is resonably different from the previous one. This is useful to
+	// generate is reasonably different from the previous one. This is useful to
 	// avoid similar suggestions within the conversation.
 	PreviousSuggestedQuery string `json:"previousSuggestedQuery,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "ContextSize") to
@@ -19524,8 +19524,8 @@ type GoogleCloudDialogflowV2beta1ResponseMessageEndInteraction struct {
 // this to determine which conversations were handed off to a human agent for
 // measurement purposes. What else to do with this signal is up to you and your
 // handoff procedures. You may set this, for example: * In the entry
-// fulfillment of a CX Page if entering the page indicates something went
-// extremely wrong in the conversation. * In a webhook response when you
+// fulfillment of a Dialogflow CX Page if entering the page indicates something
+// went extremely wrong in the conversation. * In a webhook response when you
 // determine that the customer issue can only be handled by a human.
 type GoogleCloudDialogflowV2beta1ResponseMessageLiveAgentHandoff struct {
 	// Metadata: Custom metadata for your handoff procedure. Dialogflow doesn't
@@ -29813,9 +29813,12 @@ func (r *ProjectsAnswerRecordsService) List(parent string) *ProjectsAnswerRecord
 }
 
 // Filter sets the optional parameter "filter": Filters to restrict results to
-// specific answer records. Marked deprecated as it hasn't been, and isn't
-// currently, supported. For more information about filtering, see API
-// Filtering (https://aip.dev/160).
+// specific answer records. The expression has the following syntax: [AND ] ...
+// The following fields and operators are supported: * conversation_id with
+// equals(=) operator Examples: * "conversation_id=bar" matches answer records
+// in the projects/foo/locations/global/conversations/bar conversation
+// (assuming the parent is projects/foo/locations/global). For more information
+// about filtering, see API Filtering (https://aip.dev/160).
 func (c *ProjectsAnswerRecordsListCall) Filter(filter string) *ProjectsAnswerRecordsListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
@@ -44014,9 +44017,12 @@ func (r *ProjectsLocationsAnswerRecordsService) List(parent string) *ProjectsLoc
 }
 
 // Filter sets the optional parameter "filter": Filters to restrict results to
-// specific answer records. Marked deprecated as it hasn't been, and isn't
-// currently, supported. For more information about filtering, see API
-// Filtering (https://aip.dev/160).
+// specific answer records. The expression has the following syntax: [AND ] ...
+// The following fields and operators are supported: * conversation_id with
+// equals(=) operator Examples: * "conversation_id=bar" matches answer records
+// in the projects/foo/locations/global/conversations/bar conversation
+// (assuming the parent is projects/foo/locations/global). For more information
+// about filtering, see API Filtering (https://aip.dev/160).
 func (c *ProjectsLocationsAnswerRecordsListCall) Filter(filter string) *ProjectsLocationsAnswerRecordsListCall {
 	c.urlParams_.Set("filter", filter)
 	return c

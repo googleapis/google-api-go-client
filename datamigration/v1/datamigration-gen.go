@@ -1743,8 +1743,29 @@ func (s EncryptionConfig) MarshalJSON() ([]byte, error) {
 type EntityDdl struct {
 	// Ddl: The actual ddl code.
 	Ddl string `json:"ddl,omitempty"`
+	// DdlKind: The DDL Kind selected for apply, or SOURCE if getting the source
+	// tree.
+	//
+	// Possible values:
+	//   "DDL_KIND_UNSPECIFIED" - The kind of the DDL is unknown.
+	//   "SOURCE" - DDL of the source entity
+	//   "DETERMINISTIC" - Deterministic converted DDL
+	//   "AI" - Gemini AI converted DDL
+	//   "USER_EDIT" - User edited DDL
+	DdlKind string `json:"ddlKind,omitempty"`
 	// DdlType: Type of DDL (Create, Alter).
 	DdlType string `json:"ddlType,omitempty"`
+	// EditedDdlKind: If ddl_kind is USER_EDIT, this holds the DDL kind of the
+	// original content - DETERMINISTIC or AI. Otherwise, this is
+	// DDL_KIND_UNSPECIFIED.
+	//
+	// Possible values:
+	//   "DDL_KIND_UNSPECIFIED" - The kind of the DDL is unknown.
+	//   "SOURCE" - DDL of the source entity
+	//   "DETERMINISTIC" - Deterministic converted DDL
+	//   "AI" - Gemini AI converted DDL
+	//   "USER_EDIT" - User edited DDL
+	EditedDdlKind string `json:"editedDdlKind,omitempty"`
 	// Entity: The name of the database entity the ddl refers to.
 	Entity string `json:"entity,omitempty"`
 	// EntityType: The entity type (if the DDL is for a sub entity).

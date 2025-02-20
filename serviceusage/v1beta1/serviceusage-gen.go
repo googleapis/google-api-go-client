@@ -476,6 +476,32 @@ func (s Api) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// Aspect: Aspect represents Generic aspect. It is used to configure an aspect
+// without making direct changes to service.proto
+type Aspect struct {
+	// Kind: The type of this aspect configuration.
+	Kind string `json:"kind,omitempty"`
+	// Spec: Content of the configuration. The underlying schema should be defined
+	// by Aspect owners as protobuf message under `apiserving/configaspects/proto`.
+	Spec googleapi.RawMessage `json:"spec,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Kind") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Kind") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s Aspect) MarshalJSON() ([]byte, error) {
+	type NoMethod Aspect
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // AuthProvider: Configuration for an authentication provider, including
 // support for JSON Web Token (JWT)
 // (https://tools.ietf.org/html/draft-ietf-oauth-json-web-token-32).
@@ -693,6 +719,12 @@ type BackendRule struct {
 	// backend. This ID token will be added in the HTTP "authorization" header, and
 	// sent to the backend.
 	JwtAudience string `json:"jwtAudience,omitempty"`
+	// LoadBalancingPolicy: The load balancing policy used for connection to the
+	// application backend. Defined as an arbitrary string to accomondate custom
+	// load balancing policies supported by the underlying channel, but suggest
+	// most users use one of the standard policies, such as the default,
+	// "RoundRobin".
+	LoadBalancingPolicy string `json:"loadBalancingPolicy,omitempty"`
 	// MinDeadline: Deprecated, do not use.
 	MinDeadline float64 `json:"minDeadline,omitempty"`
 	// OperationDeadline: The number of seconds to wait for the completion of a
@@ -1480,9 +1512,9 @@ type Documentation struct {
 	// Rules: A list of documentation rules that apply to individual API elements.
 	// **NOTE:** All service configuration rules follow "last one wins" order.
 	Rules []*DocumentationRule `json:"rules,omitempty"`
-	// SectionOverrides: Specifies section and content to override boilerplate
-	// content provided by go/api-docgen. Currently overrides following sections:
-	// 1. rest.service.client_libraries
+	// SectionOverrides: Specifies section and content to override the boilerplate
+	// content. Currently overrides following sections: 1.
+	// rest.service.client_libraries
 	SectionOverrides []*Page `json:"sectionOverrides,omitempty"`
 	// ServiceRootUrl: Specifies the service root url if the default one (the
 	// service name from the yaml file) is not suitable. This can be seen in any
@@ -1522,8 +1554,7 @@ type DocumentationRule struct {
 	// comments taken from the proto source definition of the proto element.
 	Description string `json:"description,omitempty"`
 	// DisableReplacementWords: String of comma or space separated case-sensitive
-	// words for which method/field name replacement will be disabled by
-	// go/api-docgen.
+	// words for which method/field name replacement will be disabled.
 	DisableReplacementWords string `json:"disableReplacementWords,omitempty"`
 	// Selector: The selector is a comma-separated list of patterns for any element
 	// such as a method, a field, an enum value. Each pattern is a qualified name
@@ -1831,6 +1862,11 @@ type ExperimentalFeatures struct {
 	// be generated. This feature will be enabled by default 1 month after
 	// launching the feature in preview packages.
 	RestAsyncIoEnabled bool `json:"restAsyncIoEnabled,omitempty"`
+	// UnversionedPackageDisabled: Disables generation of an unversioned Python
+	// package for this client library. This means that the module names will need
+	// to be versioned in import statements. For example `import
+	// google.cloud.library_v2` instead of `import google.cloud.library`.
+	UnversionedPackageDisabled bool `json:"unversionedPackageDisabled,omitempty"`
 	// ForceSendFields is a list of field names (e.g.
 	// "ProtobufPythonicTypesEnabled") to unconditionally include in API requests.
 	// By default, fields with empty or default values are omitted from API
@@ -2044,6 +2080,11 @@ type GoogleApiService struct {
 	// normalization process. It is an error to specify an API interface here which
 	// cannot be resolved against the associated IDL files.
 	Apis []*Api `json:"apis,omitempty"`
+	// Aspects: Configuration aspects. This is a repeated field to allow multiple
+	// aspects to be configured. The kind field in each ConfigAspect specifies the
+	// type of aspect. The spec field contains the configuration for that aspect.
+	// The schema for the spec field is defined by the backend service owners.
+	Aspects []*Aspect `json:"aspects,omitempty"`
 	// Authentication: Auth configuration.
 	Authentication *Authentication `json:"authentication,omitempty"`
 	// Backend: API backend configuration.
@@ -2394,8 +2435,8 @@ type GoogleApiServiceusageV2alphaUpdateConsumerPolicyMetadata struct {
 // GoogleApiServiceusageV2betaAnalysis: A message to group the analysis
 // information.
 type GoogleApiServiceusageV2betaAnalysis struct {
-	// Analysis: Output only. Analysis result of updating a policy.
-	Analysis *GoogleApiServiceusageV2betaAnalysisResult `json:"analysis,omitempty"`
+	// AnalysisResult: Output only. Analysis result of updating a policy.
+	AnalysisResult *GoogleApiServiceusageV2betaAnalysisResult `json:"analysisResult,omitempty"`
 	// AnalysisType: Output only. The type of analysis.
 	//
 	// Possible values:
@@ -2410,15 +2451,15 @@ type GoogleApiServiceusageV2betaAnalysis struct {
 	// Service: The names of the service that has analysis result of warnings or
 	// blockers. Example: `services/storage.googleapis.com`.
 	Service string `json:"service,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "Analysis") to
+	// ForceSendFields is a list of field names (e.g. "AnalysisResult") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Analysis") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
+	// NullFields is a list of field names (e.g. "AnalysisResult") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }

@@ -394,6 +394,7 @@ type ProjectsLocationsDatasetsDicomStoresStudiesSeriesInstancesFramesService str
 func NewProjectsLocationsDatasetsFhirStoresService(s *Service) *ProjectsLocationsDatasetsFhirStoresService {
 	rs := &ProjectsLocationsDatasetsFhirStoresService{s: s}
 	rs.Fhir = NewProjectsLocationsDatasetsFhirStoresFhirService(s)
+	rs.Operations = NewProjectsLocationsDatasetsFhirStoresOperationsService(s)
 	return rs
 }
 
@@ -401,6 +402,8 @@ type ProjectsLocationsDatasetsFhirStoresService struct {
 	s *Service
 
 	Fhir *ProjectsLocationsDatasetsFhirStoresFhirService
+
+	Operations *ProjectsLocationsDatasetsFhirStoresOperationsService
 }
 
 func NewProjectsLocationsDatasetsFhirStoresFhirService(s *Service) *ProjectsLocationsDatasetsFhirStoresFhirService {
@@ -409,6 +412,15 @@ func NewProjectsLocationsDatasetsFhirStoresFhirService(s *Service) *ProjectsLoca
 }
 
 type ProjectsLocationsDatasetsFhirStoresFhirService struct {
+	s *Service
+}
+
+func NewProjectsLocationsDatasetsFhirStoresOperationsService(s *Service) *ProjectsLocationsDatasetsFhirStoresOperationsService {
+	rs := &ProjectsLocationsDatasetsFhirStoresOperationsService{s: s}
+	return rs
+}
+
+type ProjectsLocationsDatasetsFhirStoresOperationsService struct {
 	s *Service
 }
 
@@ -1176,6 +1188,34 @@ type BlobStorageSettings struct {
 
 func (s BlobStorageSettings) MarshalJSON() ([]byte, error) {
 	type NoMethod BlobStorageSettings
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// BulkExportGcsDestination: The configuration for exporting to Cloud Storage
+// using the bulk export API.
+type BulkExportGcsDestination struct {
+	// UriPrefix: Optional. URI for a Cloud Storage directory where the server
+	// writes result files, in the format
+	// `gs://{bucket-id}/{path/to/destination/dir}`. If there is no trailing slash,
+	// the service appends one when composing the object path. The user is
+	// responsible for creating the Cloud Storage bucket referenced in
+	// `uri_prefix`.
+	UriPrefix string `json:"uriPrefix,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "UriPrefix") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "UriPrefix") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s BulkExportGcsDestination) MarshalJSON() ([]byte, error) {
+	type NoMethod BulkExportGcsDestination
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -2900,6 +2940,13 @@ func (s FhirNotificationConfig) MarshalJSON() ([]byte, error) {
 
 // FhirStore: Represents a FHIR store.
 type FhirStore struct {
+	// BulkExportGcsDestination: Optional. FHIR bulk export exports resources to
+	// the specified Cloud Storage destination. A Cloud Storage destination is a
+	// URI for a Cloud Storage directory where result files will be written. Only
+	// used in the spec-defined bulk $export methods. The Cloud Healthcare Service
+	// Agent requires the `roles/storage.objectAdmin` Cloud IAM role on the
+	// destination.
+	BulkExportGcsDestination *BulkExportGcsDestination `json:"bulkExportGcsDestination,omitempty"`
 	// ComplexDataTypeReferenceParsing: Optional. Enable parsing of references
 	// within complex FHIR data types such as Extensions. If this value is set to
 	// ENABLED, then features like referential integrity and Bundle reference
@@ -3012,15 +3059,14 @@ type FhirStore struct {
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-	// ForceSendFields is a list of field names (e.g.
-	// "ComplexDataTypeReferenceParsing") to unconditionally include in API
-	// requests. By default, fields with empty or default values are omitted from
-	// API requests. See
+	// ForceSendFields is a list of field names (e.g. "BulkExportGcsDestination")
+	// to unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "ComplexDataTypeReferenceParsing")
-	// to include in API requests with the JSON null value. By default, fields with
+	// NullFields is a list of field names (e.g. "BulkExportGcsDestination") to
+	// include in API requests with the JSON null value. By default, fields with
 	// empty values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
@@ -16476,6 +16522,159 @@ func (c *ProjectsLocationsDatasetsFhirStoresApplyConsentsCall) Do(opts ...google
 	return ret, nil
 }
 
+type ProjectsLocationsDatasetsFhirStoresBulkExportGroupCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// BulkExportGroup: Bulk exports a Group resource and resources in the member
+// field, including related resources for each Patient member. The export for
+// each Patient is identical to a GetPatientEverything request. Implements the
+// FHIR implementation guide $export group of patients
+// (https://build.fhir.org/ig/HL7/bulk-data/export.html#endpoint---group-of-patients).
+// The following headers must be set in the request: * `Accept`: specifies the
+// format of the `OperationOutcome` response. Only `application/fhir+json` is
+// supported. * `Prefer`: specifies whether the response is immediate or
+// asynchronous. Must be to `respond-async` because only asynchronous responses
+// are supported. Specify the destination for the server to write result files
+// by setting the Cloud Storage location bulk_export_gcs_destination on the
+// FHIR store. URI of an existing Cloud Storage directory where the server
+// writes result files, in the format
+// gs://{bucket-id}/{path/to/destination/dir}. If there is no trailing slash,
+// the service appends one when composing the object path. The user is
+// responsible for creating the Cloud Storage bucket referenced. Supports the
+// following query parameters: * `_type`: string of comma-delimited FHIR
+// resource types. If provided, only resources of the specified type(s) are
+// exported. * `_since`: if provided, only resources updated after the
+// specified time are exported. * `_outputFormat`: optional, specify ndjson to
+// export data in NDJSON format. Exported file names use the format:
+// {export_id}_{resource_type}.ndjson. * `organizeOutputBy`: resource type to
+// organize the output by. Required and must be set to `Patient`. When
+// specified, output files are organized by instances of the specified resource
+// type, including the resource, referenced resources, and resources that
+// contain references to that resource. On success, the `Content-Location`
+// header of response is set to a URL that you can use to query the status of
+// the export. The URL is in the format
+// `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/fhirStor
+// es/{fhir_store_id}/operations/{export_id}`. See get-fhir-operation-status
+// for more information. Errors generated by the FHIR store contain a
+// JSON-encoded `OperationOutcome` resource describing the reason for the
+// error.
+//
+//   - name: Name of the Group resource that is exported, in format
+//     `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/fhirSt
+//     ores/{fhir_store_id}/fhir/Group/{group_id}`.
+func (r *ProjectsLocationsDatasetsFhirStoresService) BulkExportGroup(name string) *ProjectsLocationsDatasetsFhirStoresBulkExportGroupCall {
+	c := &ProjectsLocationsDatasetsFhirStoresBulkExportGroupCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Since sets the optional parameter "_since": If provided, only resources
+// updated after this time are exported. The time uses the format
+// YYYY-MM-DDThh:mm:ss.sss+zz:zz. For example, `2015-02-07T13:28:17.239+02:00`
+// or `2017-01-01T00:00:00Z`. The time must be specified to the second and
+// include a time zone.
+func (c *ProjectsLocationsDatasetsFhirStoresBulkExportGroupCall) Since(Since string) *ProjectsLocationsDatasetsFhirStoresBulkExportGroupCall {
+	c.urlParams_.Set("_since", Since)
+	return c
+}
+
+// Type sets the optional parameter "_type": String of comma-delimited FHIR
+// resource types. If provided, only resources of the specified resource
+// type(s) are exported.
+func (c *ProjectsLocationsDatasetsFhirStoresBulkExportGroupCall) Type(Type string) *ProjectsLocationsDatasetsFhirStoresBulkExportGroupCall {
+	c.urlParams_.Set("_type", Type)
+	return c
+}
+
+// OrganizeOutputBy sets the optional parameter "organizeOutputBy": Required.
+// The FHIR resource type used to organize exported resources. Only supports
+// "Patient". When organized by Patient resource, output files are grouped as
+// follows: * Patient file(s) containing the Patient resources. Each Patient is
+// sequentially followed by all resources the Patient references, and all
+// resources that reference the Patient (equivalent to a GetPatientEverything
+// request). * Individual files grouped by resource type for resources in the
+// Group's member field and the Group resource itself. Resources may be
+// duplicated across multiple Patients. For example, if two Patient resources
+// reference the same Organization resource, it will appear twice, once after
+// each Patient. The Group resource from the request does not appear in the
+// Patient files.
+func (c *ProjectsLocationsDatasetsFhirStoresBulkExportGroupCall) OrganizeOutputBy(organizeOutputBy string) *ProjectsLocationsDatasetsFhirStoresBulkExportGroupCall {
+	c.urlParams_.Set("organizeOutputBy", organizeOutputBy)
+	return c
+}
+
+// OutputFormat sets the optional parameter "outputFormat": Output format of
+// the export. This field is optional and only `application/fhir+ndjson` is
+// supported.
+func (c *ProjectsLocationsDatasetsFhirStoresBulkExportGroupCall) OutputFormat(outputFormat string) *ProjectsLocationsDatasetsFhirStoresBulkExportGroupCall {
+	c.urlParams_.Set("outputFormat", outputFormat)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsDatasetsFhirStoresBulkExportGroupCall) Fields(s ...googleapi.Field) *ProjectsLocationsDatasetsFhirStoresBulkExportGroupCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsDatasetsFhirStoresBulkExportGroupCall) IfNoneMatch(entityTag string) *ProjectsLocationsDatasetsFhirStoresBulkExportGroupCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsDatasetsFhirStoresBulkExportGroupCall) Context(ctx context.Context) *ProjectsLocationsDatasetsFhirStoresBulkExportGroupCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsDatasetsFhirStoresBulkExportGroupCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsDatasetsFhirStoresBulkExportGroupCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}/$export")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "healthcare.projects.locations.datasets.fhirStores.bulk-export-group", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "healthcare.projects.locations.datasets.fhirStores.bulk-export-group" call.
+func (c *ProjectsLocationsDatasetsFhirStoresBulkExportGroupCall) Do(opts ...googleapi.CallOption) (*http.Response, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	return c.doRequest("")
+}
+
 type ProjectsLocationsDatasetsFhirStoresCreateCall struct {
 	s          *Service
 	parent     string
@@ -19069,6 +19268,136 @@ func (c *ProjectsLocationsDatasetsFhirStoresFhirResourceValidateCall) Do(opts ..
 	return c.doRequest("")
 }
 
+type ProjectsLocationsDatasetsFhirStoresFhirBulkExportCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// BulkExport: Bulk exports all resources from the FHIR store to the specified
+// destination. Implements the FHIR implementation guide system level $export
+// (https://build.fhir.org/ig/HL7/bulk-data/export.html#endpoint---system-level-export.
+// The following headers must be set in the request: * `Accept`: specifies the
+// format of the `OperationOutcome` response. Only `application/fhir+json` is
+// supported. * `Prefer`: specifies whether the response is immediate or
+// asynchronous. Must be to `respond-async` because only asynchronous responses
+// are supported. Specify the destination for the server to write result files
+// by setting the Cloud Storage location bulk_export_gcs_destination on the
+// FHIR store. URI of an existing Cloud Storage directory where the server
+// writes result files, in the format
+// gs://{bucket-id}/{path/to/destination/dir}. If there is no trailing slash,
+// the service appends one when composing the object path. The user is
+// responsible for creating the Cloud Storage bucket referenced. Supports the
+// following query parameters: * `_type`: string of comma-delimited FHIR
+// resource types. If provided, only the resources of the specified type(s) are
+// exported. * `_since`: if provided, only the resources that are updated after
+// the specified time are exported. * `_outputFormat`: optional, specify ndjson
+// to export data in NDJSON format. Exported file names use the format:
+// {export_id}_{resource_type}.ndjson. On success, the `Content-Location`
+// header of the response is set to a URL that the user can use to query the
+// status of the export. The URL is in the format:
+// `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/fhirStor
+// es/{fhir_store_id}/operations/{export_id}`. See get-fhir-operation-status
+// for more information. Errors generated by the FHIR store contain a
+// JSON-encoded `OperationOutcome` resource describing the reason for the
+// error.
+//
+//   - name: The name of the FHIR store to export resources from, in the format
+//     `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/fhirSt
+//     ores/{fhir_store_id}`.
+func (r *ProjectsLocationsDatasetsFhirStoresFhirService) BulkExport(name string) *ProjectsLocationsDatasetsFhirStoresFhirBulkExportCall {
+	c := &ProjectsLocationsDatasetsFhirStoresFhirBulkExportCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Since sets the optional parameter "_since": If provided, only resources
+// updated after this time are exported. The time uses the format
+// YYYY-MM-DDThh:mm:ss.sss+zz:zz. For example, `2015-02-07T13:28:17.239+02:00`
+// or `2017-01-01T00:00:00Z`. The time must be specified to the second and
+// include a time zone.
+func (c *ProjectsLocationsDatasetsFhirStoresFhirBulkExportCall) Since(Since string) *ProjectsLocationsDatasetsFhirStoresFhirBulkExportCall {
+	c.urlParams_.Set("_since", Since)
+	return c
+}
+
+// Type sets the optional parameter "_type": String of comma-delimited FHIR
+// resource types. If provided, only resources of the specified resource
+// type(s) are exported.
+func (c *ProjectsLocationsDatasetsFhirStoresFhirBulkExportCall) Type(Type string) *ProjectsLocationsDatasetsFhirStoresFhirBulkExportCall {
+	c.urlParams_.Set("_type", Type)
+	return c
+}
+
+// OutputFormat sets the optional parameter "outputFormat": Output format of
+// the export. This field is optional and only `application/fhir+ndjson` is
+// supported.
+func (c *ProjectsLocationsDatasetsFhirStoresFhirBulkExportCall) OutputFormat(outputFormat string) *ProjectsLocationsDatasetsFhirStoresFhirBulkExportCall {
+	c.urlParams_.Set("outputFormat", outputFormat)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsDatasetsFhirStoresFhirBulkExportCall) Fields(s ...googleapi.Field) *ProjectsLocationsDatasetsFhirStoresFhirBulkExportCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsDatasetsFhirStoresFhirBulkExportCall) IfNoneMatch(entityTag string) *ProjectsLocationsDatasetsFhirStoresFhirBulkExportCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsDatasetsFhirStoresFhirBulkExportCall) Context(ctx context.Context) *ProjectsLocationsDatasetsFhirStoresFhirBulkExportCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsDatasetsFhirStoresFhirBulkExportCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsDatasetsFhirStoresFhirBulkExportCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}/fhir/$export")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "healthcare.projects.locations.datasets.fhirStores.fhir.bulk-export", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "healthcare.projects.locations.datasets.fhirStores.fhir.bulk-export" call.
+func (c *ProjectsLocationsDatasetsFhirStoresFhirBulkExportCall) Do(opts ...googleapi.CallOption) (*http.Response, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	return c.doRequest("")
+}
+
 type ProjectsLocationsDatasetsFhirStoresFhirCapabilitiesCall struct {
 	s            *Service
 	name         string
@@ -20514,6 +20843,167 @@ func (c *ProjectsLocationsDatasetsFhirStoresFhirVreadCall) doRequest(alt string)
 
 // Do executes the "healthcare.projects.locations.datasets.fhirStores.fhir.vread" call.
 func (c *ProjectsLocationsDatasetsFhirStoresFhirVreadCall) Do(opts ...googleapi.CallOption) (*http.Response, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	return c.doRequest("")
+}
+
+type ProjectsLocationsDatasetsFhirStoresOperationsDeleteFhirOperationCall struct {
+	s          *Service
+	name       string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// DeleteFhirOperation: Deletes operations as defined in the FHIR
+// specification. Implements the FHIR implementation guide bulk data delete
+// request
+// (https://build.fhir.org/ig/HL7/bulk-data/export.html#bulk-data-delete-request).
+// Returns success if the operation was successfully cancelled. If the
+// operation is complete, or has already been cancelled, returns an error
+// response.
+//
+//   - name: Name of the operation to be deleted, in the format
+//     `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/fhirSt
+//     ores/{fhir_store_id}/operations/{operation_id}`.
+func (r *ProjectsLocationsDatasetsFhirStoresOperationsService) DeleteFhirOperation(name string) *ProjectsLocationsDatasetsFhirStoresOperationsDeleteFhirOperationCall {
+	c := &ProjectsLocationsDatasetsFhirStoresOperationsDeleteFhirOperationCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsDatasetsFhirStoresOperationsDeleteFhirOperationCall) Fields(s ...googleapi.Field) *ProjectsLocationsDatasetsFhirStoresOperationsDeleteFhirOperationCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsDatasetsFhirStoresOperationsDeleteFhirOperationCall) Context(ctx context.Context) *ProjectsLocationsDatasetsFhirStoresOperationsDeleteFhirOperationCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsDatasetsFhirStoresOperationsDeleteFhirOperationCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsDatasetsFhirStoresOperationsDeleteFhirOperationCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("DELETE", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "healthcare.projects.locations.datasets.fhirStores.operations.delete-fhir-operation", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "healthcare.projects.locations.datasets.fhirStores.operations.delete-fhir-operation" call.
+func (c *ProjectsLocationsDatasetsFhirStoresOperationsDeleteFhirOperationCall) Do(opts ...googleapi.CallOption) (*http.Response, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	return c.doRequest("")
+}
+
+type ProjectsLocationsDatasetsFhirStoresOperationsGetFhirOperationStatusCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// GetFhirOperationStatus: Gets the status of operations as defined in the FHIR
+// specification. Implements the FHIR implementation guide bulk data status
+// request
+// (https://build.fhir.org/ig/HL7/bulk-data/export.html#bulk-data-status-request).
+// Operations can have one of these states: * in-progress: response status code
+// is `202` and `X-Progress` header is set to `in progress`. * complete:
+// response status code is `200` and the body is a JSON-encoded operation
+// response as defined by the spec. For a bulk export, this response is defined
+// in
+// https://build.fhir.org/ig/HL7/bulk-data/export.html#response---complete-status.
+// * error: response status code is `5XX`, and the body is a JSON-encoded
+// `OperationOutcome` resource describing the reason for the error.
+//
+//   - name: Name of the operation to query, in the format
+//     `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/fhirSt
+//     ores/{fhir_store_id}/operations/{operation_id}`.
+func (r *ProjectsLocationsDatasetsFhirStoresOperationsService) GetFhirOperationStatus(name string) *ProjectsLocationsDatasetsFhirStoresOperationsGetFhirOperationStatusCall {
+	c := &ProjectsLocationsDatasetsFhirStoresOperationsGetFhirOperationStatusCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsDatasetsFhirStoresOperationsGetFhirOperationStatusCall) Fields(s ...googleapi.Field) *ProjectsLocationsDatasetsFhirStoresOperationsGetFhirOperationStatusCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsDatasetsFhirStoresOperationsGetFhirOperationStatusCall) IfNoneMatch(entityTag string) *ProjectsLocationsDatasetsFhirStoresOperationsGetFhirOperationStatusCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsDatasetsFhirStoresOperationsGetFhirOperationStatusCall) Context(ctx context.Context) *ProjectsLocationsDatasetsFhirStoresOperationsGetFhirOperationStatusCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsDatasetsFhirStoresOperationsGetFhirOperationStatusCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsDatasetsFhirStoresOperationsGetFhirOperationStatusCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "healthcare.projects.locations.datasets.fhirStores.operations.get-fhir-operation-status", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "healthcare.projects.locations.datasets.fhirStores.operations.get-fhir-operation-status" call.
+func (c *ProjectsLocationsDatasetsFhirStoresOperationsGetFhirOperationStatusCall) Do(opts ...googleapi.CallOption) (*http.Response, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	return c.doRequest("")
 }

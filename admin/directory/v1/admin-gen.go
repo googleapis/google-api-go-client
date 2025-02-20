@@ -5307,7 +5307,8 @@ type Users struct {
 	Etag string `json:"etag,omitempty"`
 	// Kind: Kind of resource this is.
 	Kind string `json:"kind,omitempty"`
-	// NextPageToken: Token used to access next page of this result.
+	// NextPageToken: Token used to access next page of this result. The page token
+	// is only valid for three days.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 	// TriggerEvent: Event that triggered this response (only used in case of Push
 	// Response)
@@ -17649,7 +17650,7 @@ func (c *UsersListCall) OrderBy(orderBy string) *UsersListCall {
 }
 
 // PageToken sets the optional parameter "pageToken": Token to specify next
-// page in the list
+// page in the list. The page token is only valid for three days.
 func (c *UsersListCall) PageToken(pageToken string) *UsersListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c

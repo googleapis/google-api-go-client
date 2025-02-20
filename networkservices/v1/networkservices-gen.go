@@ -1258,10 +1258,6 @@ type GrpcRoute struct {
 	// Description: Optional. A free-text description of the resource. Max length
 	// 1024 characters.
 	Description string `json:"description,omitempty"`
-	// Etag: Optional. Etag of the resource. If this is provided, it must match the
-	// server's etag. If the provided etag does not match the server's etag, the
-	// request will fail with a 409 ABORTED error.
-	Etag string `json:"etag,omitempty"`
 	// Gateways: Optional. Gateways defines a list of gateways this GrpcRoute is
 	// attached to, as one of the routing rules to route the requests served by the
 	// gateway. Each gateway reference should match the pattern:
@@ -1692,10 +1688,6 @@ type HttpRoute struct {
 	// Description: Optional. A free-text description of the resource. Max length
 	// 1024 characters.
 	Description string `json:"description,omitempty"`
-	// Etag: Optional. Etag of the resource. If this is provided, it must match the
-	// server's etag. If the provided etag does not match the server's etag, the
-	// request will fail with a 409 ABORTED error.
-	Etag string `json:"etag,omitempty"`
 	// Gateways: Optional. Gateways defines a list of gateways this HttpRoute is
 	// attached to, as one of the routing rules to route the requests served by the
 	// gateway. Each gateway reference should match the pattern:
@@ -3734,10 +3726,6 @@ type TcpRoute struct {
 	// Description: Optional. A free-text description of the resource. Max length
 	// 1024 characters.
 	Description string `json:"description,omitempty"`
-	// Etag: Optional. Etag of the resource. If this is provided, it must match the
-	// server's etag. If the provided etag does not match the server's etag, the
-	// request will fail with a 409 ABORTED error.
-	Etag string `json:"etag,omitempty"`
 	// Gateways: Optional. Gateways defines a list of gateways this TcpRoute is
 	// attached to, as one of the routing rules to route the requests served by the
 	// gateway. Each gateway reference should match the pattern:
@@ -3971,10 +3959,6 @@ type TlsRoute struct {
 	// Description: Optional. A free-text description of the resource. Max length
 	// 1024 characters.
 	Description string `json:"description,omitempty"`
-	// Etag: Optional. Etag of the resource. If this is provided, it must match the
-	// server's etag. If the provided etag does not match the server's etag, the
-	// request will fail with a 409 ABORTED error.
-	Etag string `json:"etag,omitempty"`
 	// Gateways: Optional. Gateways defines a list of gateways this TlsRoute is
 	// attached to, as one of the routing rules to route the requests served by the
 	// gateway. Each gateway reference should match the pattern:
@@ -7939,14 +7923,6 @@ func (r *ProjectsLocationsGrpcRoutesService) Delete(name string) *ProjectsLocati
 	return c
 }
 
-// Etag sets the optional parameter "etag": Etag of the resource. If this is
-// provided, it must match the server's etag. If the provided etag does not
-// match the server's etag, the request will fail with a 409 ABORTED error.
-func (c *ProjectsLocationsGrpcRoutesDeleteCall) Etag(etag string) *ProjectsLocationsGrpcRoutesDeleteCall {
-	c.urlParams_.Set("etag", etag)
-	return c
-}
-
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
 // details.
@@ -8526,14 +8502,6 @@ type ProjectsLocationsHttpRoutesDeleteCall struct {
 func (r *ProjectsLocationsHttpRoutesService) Delete(name string) *ProjectsLocationsHttpRoutesDeleteCall {
 	c := &ProjectsLocationsHttpRoutesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
-	return c
-}
-
-// Etag sets the optional parameter "etag": Etag of the resource. If this is
-// provided, it must match the server's etag. If the provided etag does not
-// match the server's etag, the request will fail with a 409 ABORTED error.
-func (c *ProjectsLocationsHttpRoutesDeleteCall) Etag(etag string) *ProjectsLocationsHttpRoutesDeleteCall {
-	c.urlParams_.Set("etag", etag)
 	return c
 }
 
@@ -12789,14 +12757,6 @@ func (r *ProjectsLocationsTcpRoutesService) Delete(name string) *ProjectsLocatio
 	return c
 }
 
-// Etag sets the optional parameter "etag": Etag of the resource. If this is
-// provided, it must match the server's etag. If the provided etag does not
-// match the server's etag, the request will fail with a 409 ABORTED error.
-func (c *ProjectsLocationsTcpRoutesDeleteCall) Etag(etag string) *ProjectsLocationsTcpRoutesDeleteCall {
-	c.urlParams_.Set("etag", etag)
-	return c
-}
-
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
 // details.
@@ -13375,14 +13335,6 @@ type ProjectsLocationsTlsRoutesDeleteCall struct {
 func (r *ProjectsLocationsTlsRoutesService) Delete(name string) *ProjectsLocationsTlsRoutesDeleteCall {
 	c := &ProjectsLocationsTlsRoutesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
-	return c
-}
-
-// Etag sets the optional parameter "etag": Etag of the resource. If this is
-// provided, it must match the server's etag. If the provided etag does not
-// match the server's etag, the request will fail with a 409 ABORTED error.
-func (c *ProjectsLocationsTlsRoutesDeleteCall) Etag(etag string) *ProjectsLocationsTlsRoutesDeleteCall {
-	c.urlParams_.Set("etag", etag)
 	return c
 }
 

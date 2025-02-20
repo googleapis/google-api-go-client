@@ -721,6 +721,50 @@ func (s CountArtifactsResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// DriveDocumentIds: Specify Drive documents by document ID.
+type DriveDocumentIds struct {
+	// Ids: Required. A list of Drive document IDs.
+	Ids []string `json:"ids,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Ids") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Ids") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s DriveDocumentIds) MarshalJSON() ([]byte, error) {
+	type NoMethod DriveDocumentIds
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// DriveDocumentInfo: The Drive documents to search.
+type DriveDocumentInfo struct {
+	// DocumentIds: Specify Drive documents by document ID.
+	DocumentIds *DriveDocumentIds `json:"documentIds,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "DocumentIds") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DocumentIds") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s DriveDocumentInfo) MarshalJSON() ([]byte, error) {
+	type NoMethod DriveDocumentInfo
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // DriveExportOptions: Options for Drive exports.
 type DriveExportOptions struct {
 	// IncludeAccessInfo: To include access level information for users with
@@ -1835,6 +1879,8 @@ type Query struct {
 	//   "UNPROCESSED_DATA" - Only data not yet processed by Vault. (Gmail and
 	// Groups only)
 	DataScope string `json:"dataScope,omitempty"`
+	// DriveDocumentInfo: Required when **SearchMethod** is **DRIVE_DOCUMENT**.
+	DriveDocumentInfo *DriveDocumentInfo `json:"driveDocumentInfo,omitempty"`
 	// DriveOptions: Set Drive search-specific options.
 	DriveOptions *DriveOptions `json:"driveOptions,omitempty"`
 	// EndTime: The end time for the search query. Specify in GMT. The value is
@@ -1876,6 +1922,7 @@ type Query struct {
 	//   "SHARED_DRIVE" - Search the files in the shared drives specified in
 	// [SharedDriveInfo](https://developers.google.com/vault/reference/rest/v1/Query
 	// #shareddriveinfo).
+	//   "DRIVE_DOCUMENT" - Retrieve the documents specified in DriveDocumentInfo.
 	Method string `json:"method,omitempty"`
 	// OrgUnitInfo: Required when **SearchMethod** is **ORG_UNIT**.
 	OrgUnitInfo *OrgUnitInfo `json:"orgUnitInfo,omitempty"`
@@ -1905,6 +1952,7 @@ type Query struct {
 	//   "SHARED_DRIVE" - Search the files in the shared drives specified in
 	// [SharedDriveInfo](https://developers.google.com/vault/reference/rest/v1/Query
 	// #shareddriveinfo).
+	//   "DRIVE_DOCUMENT" - Retrieve the documents specified in DriveDocumentInfo.
 	SearchMethod string `json:"searchMethod,omitempty"`
 	// SharedDriveInfo: Required when **SearchMethod** is **SHARED_DRIVE**.
 	SharedDriveInfo *SharedDriveInfo `json:"sharedDriveInfo,omitempty"`

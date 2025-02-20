@@ -467,21 +467,21 @@ func (s AttestationOccurrence) MarshalJSON() ([]byte, error) {
 
 // BaseImage: BaseImage describes a base image of a container image.
 type BaseImage struct {
+	// LayerCount: The number of layers that the base image is composed of.
+	LayerCount int64 `json:"layerCount,omitempty"`
 	// Name: The name of the base image.
 	Name string `json:"name,omitempty"`
-	// NumLayers: The number of layers that the base image is composed of.
-	NumLayers string `json:"numLayers,omitempty"`
 	// Repository: The repository name in which the base image is from.
 	Repository string `json:"repository,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "Name") to unconditionally
-	// include in API requests. By default, fields with empty or default values are
-	// omitted from API requests. See
+	// ForceSendFields is a list of field names (e.g. "LayerCount") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Name") to include in API requests
-	// with the JSON null value. By default, fields with empty values are omitted
-	// from API requests. See
+	// NullFields is a list of field names (e.g. "LayerCount") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -1170,7 +1170,8 @@ func (s FileHashes) MarshalJSON() ([]byte, error) {
 type FileLocation struct {
 	// FilePath: For jars that are contained inside .war files, this filepath can
 	// indicate the path to war file combined with the path to jar file.
-	FilePath string `json:"filePath,omitempty"`
+	FilePath     string        `json:"filePath,omitempty"`
+	LayerDetails *LayerDetails `json:"layerDetails,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "FilePath") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -1274,11 +1275,40 @@ func (s GitSourceContext) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GrafeasV1BaseImage: BaseImage describes a base image of a container image.
+type GrafeasV1BaseImage struct {
+	// LayerCount: The number of layers that the base image is composed of.
+	LayerCount int64 `json:"layerCount,omitempty"`
+	// Name: The name of the base image.
+	Name string `json:"name,omitempty"`
+	// Repository: The repository name in which the base image is from.
+	Repository string `json:"repository,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "LayerCount") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "LayerCount") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GrafeasV1BaseImage) MarshalJSON() ([]byte, error) {
+	type NoMethod GrafeasV1BaseImage
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GrafeasV1FileLocation: Indicates the location at which a package was found.
 type GrafeasV1FileLocation struct {
 	// FilePath: For jars that are contained inside .war files, this filepath can
 	// indicate the path to war file combined with the path to jar file.
 	FilePath string `json:"filePath,omitempty"`
+	// LayerDetails: Each package found in a file should have its own layer
+	// metadata (that is, information from the origin layer of the package).
+	LayerDetails *GrafeasV1LayerDetails `json:"layerDetails,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "FilePath") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -1294,6 +1324,36 @@ type GrafeasV1FileLocation struct {
 
 func (s GrafeasV1FileLocation) MarshalJSON() ([]byte, error) {
 	type NoMethod GrafeasV1FileLocation
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GrafeasV1LayerDetails: Details about the layer a package was found in.
+type GrafeasV1LayerDetails struct {
+	// BaseImages: The base images the layer is found within.
+	BaseImages []*GrafeasV1BaseImage `json:"baseImages,omitempty"`
+	// Command: The layer build command that was used to build the layer. This may
+	// not be found in all layers depending on how the container image is built.
+	Command string `json:"command,omitempty"`
+	// DiffId: The diff ID (typically a sha256 hash) of the layer in the container
+	// image.
+	DiffId string `json:"diffId,omitempty"`
+	// Index: The index of the layer in the container image.
+	Index int64 `json:"index,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "BaseImages") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "BaseImages") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GrafeasV1LayerDetails) MarshalJSON() ([]byte, error) {
+	type NoMethod GrafeasV1LayerDetails
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 

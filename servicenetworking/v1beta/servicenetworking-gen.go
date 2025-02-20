@@ -1349,9 +1349,9 @@ type Documentation struct {
 	// Rules: A list of documentation rules that apply to individual API elements.
 	// **NOTE:** All service configuration rules follow "last one wins" order.
 	Rules []*DocumentationRule `json:"rules,omitempty"`
-	// SectionOverrides: Specifies section and content to override boilerplate
-	// content provided by go/api-docgen. Currently overrides following sections:
-	// 1. rest.service.client_libraries
+	// SectionOverrides: Specifies section and content to override the boilerplate
+	// content. Currently overrides following sections: 1.
+	// rest.service.client_libraries
 	SectionOverrides []*Page `json:"sectionOverrides,omitempty"`
 	// ServiceRootUrl: Specifies the service root url if the default one (the
 	// service name from the yaml file) is not suitable. This can be seen in any
@@ -1391,8 +1391,7 @@ type DocumentationRule struct {
 	// comments taken from the proto source definition of the proto element.
 	Description string `json:"description,omitempty"`
 	// DisableReplacementWords: String of comma or space separated case-sensitive
-	// words for which method/field name replacement will be disabled by
-	// go/api-docgen.
+	// words for which method/field name replacement will be disabled.
 	DisableReplacementWords string `json:"disableReplacementWords,omitempty"`
 	// Selector: The selector is a comma-separated list of patterns for any element
 	// such as a method, a field, an enum value. Each pattern is a qualified name

@@ -3,7 +3,7 @@ module google.golang.org/api
 go 1.23.0
 
 require (
-	cloud.google.com/go/auth v0.14.1
+	cloud.google.com/go/auth v0.15.0
 	cloud.google.com/go/auth/oauth2adapt v0.2.7
 	cloud.google.com/go/compute/metadata v0.6.0
 	github.com/google/go-cmp v0.6.0
@@ -11,8 +11,8 @@ require (
 	github.com/google/uuid v1.6.0
 	github.com/googleapis/enterprise-certificate-proxy v0.3.4
 	github.com/googleapis/gax-go/v2 v2.14.1
-	go.opentelemetry.io/contrib/instrumentation/google.golang.org/grpc/otelgrpc v0.58.0
-	go.opentelemetry.io/contrib/instrumentation/net/http/otelhttp v0.58.0
+	go.opentelemetry.io/contrib/instrumentation/google.golang.org/grpc/otelgrpc v0.59.0
+	go.opentelemetry.io/contrib/instrumentation/net/http/otelhttp v0.59.0
 	golang.org/x/net v0.35.0
 	golang.org/x/oauth2 v0.26.0
 	golang.org/x/sync v0.11.0

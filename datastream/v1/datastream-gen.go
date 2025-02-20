@@ -269,6 +269,9 @@ type BackfillAllStrategy struct {
 	// PostgresqlExcludedObjects: PostgreSQL data source objects to avoid
 	// backfilling.
 	PostgresqlExcludedObjects *PostgresqlRdbms `json:"postgresqlExcludedObjects,omitempty"`
+	// SalesforceExcludedObjects: Salesforce data source objects to avoid
+	// backfilling
+	SalesforceExcludedObjects *SalesforceOrg `json:"salesforceExcludedObjects,omitempty"`
 	// SqlServerExcludedObjects: SQLServer data source objects to avoid backfilling
 	SqlServerExcludedObjects *SqlServerRdbms `json:"sqlServerExcludedObjects,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "MysqlExcludedObjects") to
@@ -348,6 +351,8 @@ type BackfillNoneStrategy struct {
 type BigQueryDestinationConfig struct {
 	// AppendOnly: Append only mode
 	AppendOnly *AppendOnly `json:"appendOnly,omitempty"`
+	// BlmtConfig: Optional. Big Lake Managed Tables (BLMT) configuration.
+	BlmtConfig *BlmtConfig `json:"blmtConfig,omitempty"`
 	// DataFreshness: The guaranteed data freshness (in seconds) when querying
 	// tables created by the stream. Editing this field will only affect new tables
 	// created in the future, but existing tables will not be impacted. Lower
@@ -410,6 +415,45 @@ func (s BinaryLogParser) MarshalJSON() ([]byte, error) {
 type BinaryLogPosition struct {
 }
 
+// BlmtConfig: The configuration for BLMT.
+type BlmtConfig struct {
+	// Bucket: Required. The Cloud Storage bucket name.
+	Bucket string `json:"bucket,omitempty"`
+	// ConnectionName: Required. The bigquery connection. Format:
+	// `{project}.{location}.{name}`
+	ConnectionName string `json:"connectionName,omitempty"`
+	// FileFormat: Required. The file format.
+	//
+	// Possible values:
+	//   "FILE_FORMAT_UNSPECIFIED" - Default value.
+	//   "PARQUET" - Parquet file format.
+	FileFormat string `json:"fileFormat,omitempty"`
+	// RootPath: The root path inside the Cloud Storage bucket.
+	RootPath string `json:"rootPath,omitempty"`
+	// TableFormat: Required. The table format.
+	//
+	// Possible values:
+	//   "TABLE_FORMAT_UNSPECIFIED" - Default value.
+	//   "ICEBERG" - Iceberg table format.
+	TableFormat string `json:"tableFormat,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Bucket") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Bucket") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s BlmtConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod BlmtConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // CancelOperationRequest: The request message for Operations.CancelOperation.
 type CancelOperationRequest struct {
 }
@@ -468,6 +512,8 @@ type ConnectionProfile struct {
 	PostgresqlProfile *PostgresqlProfile `json:"postgresqlProfile,omitempty"`
 	// PrivateConnectivity: Private connectivity.
 	PrivateConnectivity *PrivateConnectivity `json:"privateConnectivity,omitempty"`
+	// SalesforceProfile: Salesforce Connection Profile configuration.
+	SalesforceProfile *SalesforceProfile `json:"salesforceProfile,omitempty"`
 	// SatisfiesPzi: Output only. Reserved for future use.
 	SatisfiesPzi bool `json:"satisfiesPzi,omitempty"`
 	// SatisfiesPzs: Output only. Reserved for future use.
@@ -1434,6 +1480,36 @@ func (s MysqlTable) MarshalJSON() ([]byte, error) {
 type NextAvailableStartPosition struct {
 }
 
+// Oauth2ClientCredentials: OAuth2 Client Credentials.
+type Oauth2ClientCredentials struct {
+	// ClientId: Required. Client ID for Salesforce OAuth2 Client Credentials.
+	ClientId string `json:"clientId,omitempty"`
+	// ClientSecret: Optional. Client secret for Salesforce OAuth2 Client
+	// Credentials. Mutually exclusive with the
+	// `secret_manager_stored_client_secret` field.
+	ClientSecret string `json:"clientSecret,omitempty"`
+	// SecretManagerStoredClientSecret: Optional. A reference to a Secret Manager
+	// resource name storing the Salesforce OAuth2 client_secret. Mutually
+	// exclusive with the `client_secret` field.
+	SecretManagerStoredClientSecret string `json:"secretManagerStoredClientSecret,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ClientId") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ClientId") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s Oauth2ClientCredentials) MarshalJSON() ([]byte, error) {
+	type NoMethod Oauth2ClientCredentials
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // Operation: This resource represents a long-running operation that is the
 // result of a network API call.
 type Operation struct {
@@ -2194,6 +2270,156 @@ func (s RunStreamRequest) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// SalesforceField: Salesforce field.
+type SalesforceField struct {
+	// DataType: The data type.
+	DataType string `json:"dataType,omitempty"`
+	// Name: Field name.
+	Name string `json:"name,omitempty"`
+	// Nillable: Indicates whether the field can accept nil values.
+	Nillable bool `json:"nillable,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "DataType") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DataType") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s SalesforceField) MarshalJSON() ([]byte, error) {
+	type NoMethod SalesforceField
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// SalesforceObject: Salesforce object.
+type SalesforceObject struct {
+	// Fields: Salesforce fields. When unspecified as part of include objects,
+	// includes everything, when unspecified as part of exclude objects, excludes
+	// nothing.
+	Fields []*SalesforceField `json:"fields,omitempty"`
+	// ObjectName: Object name.
+	ObjectName string `json:"objectName,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Fields") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Fields") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s SalesforceObject) MarshalJSON() ([]byte, error) {
+	type NoMethod SalesforceObject
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// SalesforceObjectIdentifier: Salesforce data source object identifier.
+type SalesforceObjectIdentifier struct {
+	// ObjectName: Required. The object name.
+	ObjectName string `json:"objectName,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ObjectName") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ObjectName") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s SalesforceObjectIdentifier) MarshalJSON() ([]byte, error) {
+	type NoMethod SalesforceObjectIdentifier
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// SalesforceOrg: Salesforce organization structure.
+type SalesforceOrg struct {
+	// Objects: Salesforce objects in the database server.
+	Objects []*SalesforceObject `json:"objects,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Objects") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Objects") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s SalesforceOrg) MarshalJSON() ([]byte, error) {
+	type NoMethod SalesforceOrg
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// SalesforceProfile: Salesforce profile
+type SalesforceProfile struct {
+	// Domain: Required. Domain endpoint for the Salesforce connection.
+	Domain string `json:"domain,omitempty"`
+	// Oauth2ClientCredentials: Connected app authentication.
+	Oauth2ClientCredentials *Oauth2ClientCredentials `json:"oauth2ClientCredentials,omitempty"`
+	// UserCredentials: User-password authentication.
+	UserCredentials *UserCredentials `json:"userCredentials,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Domain") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Domain") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s SalesforceProfile) MarshalJSON() ([]byte, error) {
+	type NoMethod SalesforceProfile
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// SalesforceSourceConfig: Salesforce source configuration
+type SalesforceSourceConfig struct {
+	// ExcludeObjects: Salesforce objects to exclude from the stream.
+	ExcludeObjects *SalesforceOrg `json:"excludeObjects,omitempty"`
+	// IncludeObjects: Salesforce objects to retrieve from the source.
+	IncludeObjects *SalesforceOrg `json:"includeObjects,omitempty"`
+	// PollingInterval: Required. Salesforce objects polling interval. The interval
+	// at which new changes will be polled for each object. The duration must be
+	// between 5 minutes and 24 hours.
+	PollingInterval string `json:"pollingInterval,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ExcludeObjects") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ExcludeObjects") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s SalesforceSourceConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod SalesforceSourceConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // ServerAndClientVerification: Message represents the option where Datastream
 // will enforce the encryption and authenticate the server identity as well as
 // the client identity. ca_certificate, client_certificate and client_key must
@@ -2289,6 +2515,8 @@ type SourceConfig struct {
 	OracleSourceConfig *OracleSourceConfig `json:"oracleSourceConfig,omitempty"`
 	// PostgresqlSourceConfig: PostgreSQL data source configuration.
 	PostgresqlSourceConfig *PostgresqlSourceConfig `json:"postgresqlSourceConfig,omitempty"`
+	// SalesforceSourceConfig: Salesforce data source configuration.
+	SalesforceSourceConfig *SalesforceSourceConfig `json:"salesforceSourceConfig,omitempty"`
 	// SourceConnectionProfile: Required. Source connection profile resoource.
 	// Format: `projects/{project}/locations/{location}/connectionProfiles/{name}`
 	SourceConnectionProfile string `json:"sourceConnectionProfile,omitempty"`
@@ -2344,6 +2572,8 @@ type SourceObjectIdentifier struct {
 	OracleIdentifier *OracleObjectIdentifier `json:"oracleIdentifier,omitempty"`
 	// PostgresqlIdentifier: PostgreSQL data source object identifier.
 	PostgresqlIdentifier *PostgresqlObjectIdentifier `json:"postgresqlIdentifier,omitempty"`
+	// SalesforceIdentifier: Salesforce data source object identifier.
+	SalesforceIdentifier *SalesforceObjectIdentifier `json:"salesforceIdentifier,omitempty"`
 	// SqlServerIdentifier: SQLServer data source object identifier.
 	SqlServerIdentifier *SqlServerObjectIdentifier `json:"sqlServerIdentifier,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "MysqlIdentifier") to
@@ -2834,6 +3064,42 @@ type StreamObject struct {
 
 func (s StreamObject) MarshalJSON() ([]byte, error) {
 	type NoMethod StreamObject
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// UserCredentials: Username-password credentials.
+type UserCredentials struct {
+	// Password: Optional. Password for the Salesforce connection. Mutually
+	// exclusive with the `secret_manager_stored_password` field.
+	Password string `json:"password,omitempty"`
+	// SecretManagerStoredPassword: Optional. A reference to a Secret Manager
+	// resource name storing the Salesforce connection's password. Mutually
+	// exclusive with the `password` field.
+	SecretManagerStoredPassword string `json:"secretManagerStoredPassword,omitempty"`
+	// SecretManagerStoredSecurityToken: Optional. A reference to a Secret Manager
+	// resource name storing the Salesforce connection's security token. Mutually
+	// exclusive with the `security_token` field.
+	SecretManagerStoredSecurityToken string `json:"secretManagerStoredSecurityToken,omitempty"`
+	// SecurityToken: Optional. Security token for the Salesforce connection.
+	// Mutually exclusive with the `secret_manager_stored_security_token` field.
+	SecurityToken string `json:"securityToken,omitempty"`
+	// Username: Required. Username for the Salesforce connection.
+	Username string `json:"username,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Password") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Password") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s UserCredentials) MarshalJSON() ([]byte, error) {
+	type NoMethod UserCredentials
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 

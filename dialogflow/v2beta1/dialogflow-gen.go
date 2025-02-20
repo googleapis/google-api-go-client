@@ -178,6 +178,7 @@ func NewProjectsService(s *Service) *ProjectsService {
 	rs.KnowledgeBases = NewProjectsKnowledgeBasesService(s)
 	rs.Locations = NewProjectsLocationsService(s)
 	rs.Operations = NewProjectsOperationsService(s)
+	rs.PhoneNumbers = NewProjectsPhoneNumbersService(s)
 	rs.Suggestions = NewProjectsSuggestionsService(s)
 	return rs
 }
@@ -200,6 +201,8 @@ type ProjectsService struct {
 	Locations *ProjectsLocationsService
 
 	Operations *ProjectsOperationsService
+
+	PhoneNumbers *ProjectsPhoneNumbersService
 
 	Suggestions *ProjectsSuggestionsService
 }
@@ -508,6 +511,7 @@ func NewProjectsLocationsService(s *Service) *ProjectsLocationsService {
 	rs.Generators = NewProjectsLocationsGeneratorsService(s)
 	rs.KnowledgeBases = NewProjectsLocationsKnowledgeBasesService(s)
 	rs.Operations = NewProjectsLocationsOperationsService(s)
+	rs.PhoneNumbers = NewProjectsLocationsPhoneNumbersService(s)
 	rs.SipTrunks = NewProjectsLocationsSipTrunksService(s)
 	rs.StatelessSuggestion = NewProjectsLocationsStatelessSuggestionService(s)
 	rs.Suggestions = NewProjectsLocationsSuggestionsService(s)
@@ -532,6 +536,8 @@ type ProjectsLocationsService struct {
 	KnowledgeBases *ProjectsLocationsKnowledgeBasesService
 
 	Operations *ProjectsLocationsOperationsService
+
+	PhoneNumbers *ProjectsLocationsPhoneNumbersService
 
 	SipTrunks *ProjectsLocationsSipTrunksService
 
@@ -828,6 +834,15 @@ type ProjectsLocationsOperationsService struct {
 	s *Service
 }
 
+func NewProjectsLocationsPhoneNumbersService(s *Service) *ProjectsLocationsPhoneNumbersService {
+	rs := &ProjectsLocationsPhoneNumbersService{s: s}
+	return rs
+}
+
+type ProjectsLocationsPhoneNumbersService struct {
+	s *Service
+}
+
 func NewProjectsLocationsSipTrunksService(s *Service) *ProjectsLocationsSipTrunksService {
 	rs := &ProjectsLocationsSipTrunksService{s: s}
 	return rs
@@ -861,6 +876,15 @@ func NewProjectsOperationsService(s *Service) *ProjectsOperationsService {
 }
 
 type ProjectsOperationsService struct {
+	s *Service
+}
+
+func NewProjectsPhoneNumbersService(s *Service) *ProjectsPhoneNumbersService {
+	rs := &ProjectsPhoneNumbersService{s: s}
+	return rs
+}
+
+type ProjectsPhoneNumbersService struct {
 	s *Service
 }
 
@@ -3828,7 +3852,7 @@ func (s GoogleCloudDialogflowCxV3WebhookGenericWebService) MarshalJSON() ([]byte
 type GoogleCloudDialogflowCxV3WebhookGenericWebServiceOAuthConfig struct {
 	// ClientId: Required. The client ID provided by the 3rd party platform.
 	ClientId string `json:"clientId,omitempty"`
-	// ClientSecret: Required. The client secret provided by the 3rd party
+	// ClientSecret: Optional. The client secret provided by the 3rd party
 	// platform.
 	ClientSecret string `json:"clientSecret,omitempty"`
 	// Scopes: Optional. The OAuth scopes to grant.
@@ -7202,7 +7226,7 @@ func (s GoogleCloudDialogflowCxV3beta1WebhookGenericWebService) MarshalJSON() ([
 type GoogleCloudDialogflowCxV3beta1WebhookGenericWebServiceOAuthConfig struct {
 	// ClientId: Required. The client ID provided by the 3rd party platform.
 	ClientId string `json:"clientId,omitempty"`
-	// ClientSecret: Required. The client secret provided by the 3rd party
+	// ClientSecret: Optional. The client secret provided by the 3rd party
 	// platform.
 	ClientSecret string `json:"clientSecret,omitempty"`
 	// Scopes: Optional. The OAuth scopes to grant.
@@ -10930,7 +10954,7 @@ type GoogleCloudDialogflowV2beta1AgentAssistantFeedback struct {
 	// document is correct. For example: * Query: "Can I return the package in 2
 	// days once received?" * Suggested document says: "Items must be
 	// returned/exchanged within 60 days of the purchase date." * Ground truth: "No
-	// return or exchange is allowed." * [document_correctness]: INCORRECT
+	// return or exchange is allowed." * document_correctness: INCORRECT
 	//
 	// Possible values:
 	//   "DOCUMENT_CORRECTNESS_UNSPECIFIED" - Document correctness unspecified.
@@ -11092,8 +11116,8 @@ type GoogleCloudDialogflowV2beta1AnalyzeContentRequest struct {
 	AssistQueryParams *GoogleCloudDialogflowV2beta1AssistQueryParameters `json:"assistQueryParams,omitempty"`
 	// AudioInput: The natural language speech audio to be processed.
 	AudioInput *GoogleCloudDialogflowV2beta1AudioInput `json:"audioInput,omitempty"`
-	// CxCurrentPage: The unique identifier of the CX page to override the
-	// `current_page` in the session. Format:
+	// CxCurrentPage: The unique identifier of the Dialogflow CX page to override
+	// the `current_page` in the session. Format:
 	// `projects//locations//agents//flows//pages/`. If `cx_current_page` is
 	// specified, the previous state of the session will be ignored by Dialogflow
 	// CX, including the previous page and the previous session parameters. In most
@@ -17109,6 +17133,36 @@ func (s GoogleCloudDialogflowV2beta1ListParticipantsResponse) MarshalJSON() ([]b
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudDialogflowV2beta1ListPhoneNumbersResponse: The response message
+// for PhoneNumbers.ListPhoneNumbers.
+type GoogleCloudDialogflowV2beta1ListPhoneNumbersResponse struct {
+	// NextPageToken: Token to retrieve the next page of results, or empty if there
+	// are no more results in the list.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+	// PhoneNumbers: The list of `PhoneNumber` resources. There is a maximum number
+	// of items returned based on the page_size field in the request.
+	PhoneNumbers []*GoogleCloudDialogflowV2beta1PhoneNumber `json:"phoneNumbers,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "NextPageToken") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDialogflowV2beta1ListPhoneNumbersResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDialogflowV2beta1ListPhoneNumbersResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudDialogflowV2beta1ListSessionEntityTypesResponse: The response
 // message for SessionEntityTypes.ListSessionEntityTypes.
 type GoogleCloudDialogflowV2beta1ListSessionEntityTypesResponse struct {
@@ -17589,6 +17643,53 @@ func (s GoogleCloudDialogflowV2beta1Participant) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudDialogflowV2beta1PhoneNumber: Represents a phone number.
+// `PhoneNumber` resources enable phone calls to be answered by Dialogflow
+// services and are added to a project through a PhoneNumberOrder.
+type GoogleCloudDialogflowV2beta1PhoneNumber struct {
+	// ConversationProfile: Optional. The conversation profile calls to this
+	// `PhoneNumber` should use. The project ID here should be the same as the one
+	// in name. Format: `projects//conversationProfiles/`. Format:
+	// `projects//locations//conversationProfiles/`.
+	ConversationProfile string `json:"conversationProfile,omitempty"`
+	// LifecycleState: Output only. The state of the `PhoneNumber`. Defaults to
+	// `ACTIVE`. `PhoneNumber` objects set to `DELETE_REQUESTED` always decline
+	// incoming calls and can be removed completely within 30 days.
+	//
+	// Possible values:
+	//   "LIFECYCLE_STATE_UNSPECIFIED" - This value is never used.
+	//   "ACTIVE" - Number is active and can receive phone calls.
+	//   "DELETE_REQUESTED" - Number is pending deletion, and cannot receive calls.
+	LifecycleState string `json:"lifecycleState,omitempty"`
+	// Name: Optional. The unique identifier of this phone number. Required for
+	// PhoneNumbers.UpdatePhoneNumber method. Format: `projects//phoneNumbers/`.
+	// Format: `projects//locations//phoneNumbers/`.
+	Name string `json:"name,omitempty"`
+	// PhoneNumber: Output only. Phone number in E.164
+	// (https://en.wikipedia.org/wiki/E.164) format. An example of a correctly
+	// formatted phone number: +15556767888.
+	PhoneNumber string `json:"phoneNumber,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "ConversationProfile") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ConversationProfile") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDialogflowV2beta1PhoneNumber) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDialogflowV2beta1PhoneNumber
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudDialogflowV2beta1QueryInput: Represents the query input. It can
 // contain either: 1. An audio config which instructs the speech recognizer how
 // to process the speech audio. 2. A conversational query in the form of text.
@@ -17884,8 +17985,8 @@ type GoogleCloudDialogflowV2beta1ResponseMessageEndInteraction struct {
 // this to determine which conversations were handed off to a human agent for
 // measurement purposes. What else to do with this signal is up to you and your
 // handoff procedures. You may set this, for example: * In the entry
-// fulfillment of a CX Page if entering the page indicates something went
-// extremely wrong in the conversation. * In a webhook response when you
+// fulfillment of a Dialogflow CX Page if entering the page indicates something
+// went extremely wrong in the conversation. * In a webhook response when you
 // determine that the customer issue can only be handled by a human.
 type GoogleCloudDialogflowV2beta1ResponseMessageLiveAgentHandoff struct {
 	// Metadata: Custom metadata for your handoff procedure. Dialogflow doesn't
@@ -19476,7 +19577,7 @@ type GoogleCloudDialogflowV2beta1SuggestKnowledgeAssistRequest struct {
 	LatestMessage string `json:"latestMessage,omitempty"`
 	// PreviousSuggestedQuery: Optional. The previously suggested query for the
 	// given conversation. This helps identify whether the next suggestion we
-	// generate is resonably different from the previous one. This is useful to
+	// generate is reasonably different from the previous one. This is useful to
 	// avoid similar suggestions within the conversation.
 	PreviousSuggestedQuery string `json:"previousSuggestedQuery,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "ContextSize") to
@@ -20192,6 +20293,11 @@ func (s GoogleCloudDialogflowV2beta1TextToSpeechSettings) MarshalJSON() ([]byte,
 // GoogleCloudDialogflowV2beta1TrainAgentRequest: The request message for
 // Agents.TrainAgent.
 type GoogleCloudDialogflowV2beta1TrainAgentRequest struct {
+}
+
+// GoogleCloudDialogflowV2beta1UndeletePhoneNumberRequest: The request message
+// for PhoneNumbers.UndeletePhoneNumber.
+type GoogleCloudDialogflowV2beta1UndeletePhoneNumberRequest struct {
 }
 
 // GoogleCloudDialogflowV2beta1ValidationError: Represents a single validation
@@ -30086,8 +30192,12 @@ func (r *ProjectsAnswerRecordsService) List(parent string) *ProjectsAnswerRecord
 }
 
 // Filter sets the optional parameter "filter": Filters to restrict results to
-// specific answer records. For more information about filtering, see API
-// Filtering (https://aip.dev/160).
+// specific answer records. The expression has the following syntax: [AND ] ...
+// The following fields and operators are supported: * conversation_id with
+// equals(=) operator Examples: * "conversation_id=bar" matches answer records
+// in the projects/foo/locations/global/conversations/bar conversation
+// (assuming the parent is projects/foo/locations/global). For more information
+// about filtering, see API Filtering (https://aip.dev/160).
 func (c *ProjectsAnswerRecordsListCall) Filter(filter string) *ProjectsAnswerRecordsListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
@@ -43457,8 +43567,12 @@ func (r *ProjectsLocationsAnswerRecordsService) List(parent string) *ProjectsLoc
 }
 
 // Filter sets the optional parameter "filter": Filters to restrict results to
-// specific answer records. For more information about filtering, see API
-// Filtering (https://aip.dev/160).
+// specific answer records. The expression has the following syntax: [AND ] ...
+// The following fields and operators are supported: * conversation_id with
+// equals(=) operator Examples: * "conversation_id=bar" matches answer records
+// in the projects/foo/locations/global/conversations/bar conversation
+// (assuming the parent is projects/foo/locations/global). For more information
+// about filtering, see API Filtering (https://aip.dev/160).
 func (c *ProjectsLocationsAnswerRecordsListCall) Filter(filter string) *ProjectsLocationsAnswerRecordsListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
@@ -49028,6 +49142,482 @@ func (c *ProjectsLocationsOperationsListCall) Pages(ctx context.Context, f func(
 	}
 }
 
+type ProjectsLocationsPhoneNumbersDeleteCall struct {
+	s          *Service
+	nameid     string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Delete: Requests deletion of a `PhoneNumber`. The `PhoneNumber` is moved
+// into the DELETE_REQUESTED state immediately, and is deleted approximately 30
+// days later. This method may only be called on a `PhoneNumber` in the ACTIVE
+// state.
+//
+//   - name: The unique identifier of the `PhoneNumber` to delete. Format:
+//     `projects//phoneNumbers/`. Format: `projects//locations//phoneNumbers/`.
+func (r *ProjectsLocationsPhoneNumbersService) Delete(nameid string) *ProjectsLocationsPhoneNumbersDeleteCall {
+	c := &ProjectsLocationsPhoneNumbersDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.nameid = nameid
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsPhoneNumbersDeleteCall) Fields(s ...googleapi.Field) *ProjectsLocationsPhoneNumbersDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsPhoneNumbersDeleteCall) Context(ctx context.Context) *ProjectsLocationsPhoneNumbersDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsPhoneNumbersDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsPhoneNumbersDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2beta1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("DELETE", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.nameid,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "dialogflow.projects.locations.phoneNumbers.delete", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "dialogflow.projects.locations.phoneNumbers.delete" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudDialogflowV2beta1PhoneNumber.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsPhoneNumbersDeleteCall) Do(opts ...googleapi.CallOption) (*GoogleCloudDialogflowV2beta1PhoneNumber, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudDialogflowV2beta1PhoneNumber{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "dialogflow.projects.locations.phoneNumbers.delete", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsPhoneNumbersListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Returns the list of all phone numbers in the specified project.
+//
+//   - parent: The project to list all `PhoneNumber` resources from. Format:
+//     `projects/`. Format: `projects//locations/`.
+func (r *ProjectsLocationsPhoneNumbersService) List(parent string) *ProjectsLocationsPhoneNumbersListCall {
+	c := &ProjectsLocationsPhoneNumbersListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The maximum number of items
+// to return in a single page. The default value is 100. The maximum value is
+// 1000.
+func (c *ProjectsLocationsPhoneNumbersListCall) PageSize(pageSize int64) *ProjectsLocationsPhoneNumbersListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": The next_page_token value
+// returned from a previous list request.
+func (c *ProjectsLocationsPhoneNumbersListCall) PageToken(pageToken string) *ProjectsLocationsPhoneNumbersListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// ShowDeleted sets the optional parameter "showDeleted": Controls whether
+// `PhoneNumber` resources in the DELETE_REQUESTED state should be returned.
+// Defaults to false.
+func (c *ProjectsLocationsPhoneNumbersListCall) ShowDeleted(showDeleted bool) *ProjectsLocationsPhoneNumbersListCall {
+	c.urlParams_.Set("showDeleted", fmt.Sprint(showDeleted))
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsPhoneNumbersListCall) Fields(s ...googleapi.Field) *ProjectsLocationsPhoneNumbersListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsPhoneNumbersListCall) IfNoneMatch(entityTag string) *ProjectsLocationsPhoneNumbersListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsPhoneNumbersListCall) Context(ctx context.Context) *ProjectsLocationsPhoneNumbersListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsPhoneNumbersListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsPhoneNumbersListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2beta1/{+parent}/phoneNumbers")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "dialogflow.projects.locations.phoneNumbers.list", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "dialogflow.projects.locations.phoneNumbers.list" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudDialogflowV2beta1ListPhoneNumbersResponse.ServerResponse.Header
+// or (if a response was returned at all) in error.(*googleapi.Error).Header.
+// Use googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsPhoneNumbersListCall) Do(opts ...googleapi.CallOption) (*GoogleCloudDialogflowV2beta1ListPhoneNumbersResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudDialogflowV2beta1ListPhoneNumbersResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "dialogflow.projects.locations.phoneNumbers.list", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsLocationsPhoneNumbersListCall) Pages(ctx context.Context, f func(*GoogleCloudDialogflowV2beta1ListPhoneNumbersResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+type ProjectsLocationsPhoneNumbersPatchCall struct {
+	s                                       *Service
+	nameid                                  string
+	googleclouddialogflowv2beta1phonenumber *GoogleCloudDialogflowV2beta1PhoneNumber
+	urlParams_                              gensupport.URLParams
+	ctx_                                    context.Context
+	header_                                 http.Header
+}
+
+// Patch: Updates the specified `PhoneNumber`.
+//
+//   - name: Optional. The unique identifier of this phone number. Required for
+//     PhoneNumbers.UpdatePhoneNumber method. Format: `projects//phoneNumbers/`.
+//     Format: `projects//locations//phoneNumbers/`.
+func (r *ProjectsLocationsPhoneNumbersService) Patch(nameid string, googleclouddialogflowv2beta1phonenumber *GoogleCloudDialogflowV2beta1PhoneNumber) *ProjectsLocationsPhoneNumbersPatchCall {
+	c := &ProjectsLocationsPhoneNumbersPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.nameid = nameid
+	c.googleclouddialogflowv2beta1phonenumber = googleclouddialogflowv2beta1phonenumber
+	return c
+}
+
+// UpdateMask sets the optional parameter "updateMask": The mask to control
+// which fields get updated.
+func (c *ProjectsLocationsPhoneNumbersPatchCall) UpdateMask(updateMask string) *ProjectsLocationsPhoneNumbersPatchCall {
+	c.urlParams_.Set("updateMask", updateMask)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsPhoneNumbersPatchCall) Fields(s ...googleapi.Field) *ProjectsLocationsPhoneNumbersPatchCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsPhoneNumbersPatchCall) Context(ctx context.Context) *ProjectsLocationsPhoneNumbersPatchCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsPhoneNumbersPatchCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsPhoneNumbersPatchCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googleclouddialogflowv2beta1phonenumber)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2beta1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PATCH", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.nameid,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "dialogflow.projects.locations.phoneNumbers.patch", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "dialogflow.projects.locations.phoneNumbers.patch" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudDialogflowV2beta1PhoneNumber.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsPhoneNumbersPatchCall) Do(opts ...googleapi.CallOption) (*GoogleCloudDialogflowV2beta1PhoneNumber, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudDialogflowV2beta1PhoneNumber{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "dialogflow.projects.locations.phoneNumbers.patch", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsPhoneNumbersUndeleteCall struct {
+	s                                                      *Service
+	nameid                                                 string
+	googleclouddialogflowv2beta1undeletephonenumberrequest *GoogleCloudDialogflowV2beta1UndeletePhoneNumberRequest
+	urlParams_                                             gensupport.URLParams
+	ctx_                                                   context.Context
+	header_                                                http.Header
+}
+
+// Undelete: Cancels the deletion request for a `PhoneNumber`. This method may
+// only be called on a `PhoneNumber` in the DELETE_REQUESTED state.
+//
+//   - name: The unique identifier of the `PhoneNumber` to delete. Format:
+//     `projects//phoneNumbers/`. Format: `projects//locations//phoneNumbers/`.
+func (r *ProjectsLocationsPhoneNumbersService) Undelete(nameid string, googleclouddialogflowv2beta1undeletephonenumberrequest *GoogleCloudDialogflowV2beta1UndeletePhoneNumberRequest) *ProjectsLocationsPhoneNumbersUndeleteCall {
+	c := &ProjectsLocationsPhoneNumbersUndeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.nameid = nameid
+	c.googleclouddialogflowv2beta1undeletephonenumberrequest = googleclouddialogflowv2beta1undeletephonenumberrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsPhoneNumbersUndeleteCall) Fields(s ...googleapi.Field) *ProjectsLocationsPhoneNumbersUndeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsPhoneNumbersUndeleteCall) Context(ctx context.Context) *ProjectsLocationsPhoneNumbersUndeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsPhoneNumbersUndeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsPhoneNumbersUndeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googleclouddialogflowv2beta1undeletephonenumberrequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2beta1/{+name}:undelete")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.nameid,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "dialogflow.projects.locations.phoneNumbers.undelete", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "dialogflow.projects.locations.phoneNumbers.undelete" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudDialogflowV2beta1PhoneNumber.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsPhoneNumbersUndeleteCall) Do(opts ...googleapi.CallOption) (*GoogleCloudDialogflowV2beta1PhoneNumber, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudDialogflowV2beta1PhoneNumber{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "dialogflow.projects.locations.phoneNumbers.undelete", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
 type ProjectsLocationsSipTrunksCreateCall struct {
 	s                                    *Service
 	parent                               string
@@ -50288,6 +50878,482 @@ func (c *ProjectsOperationsListCall) Pages(ctx context.Context, f func(*GoogleLo
 		}
 		c.PageToken(x.NextPageToken)
 	}
+}
+
+type ProjectsPhoneNumbersDeleteCall struct {
+	s          *Service
+	nameid     string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Delete: Requests deletion of a `PhoneNumber`. The `PhoneNumber` is moved
+// into the DELETE_REQUESTED state immediately, and is deleted approximately 30
+// days later. This method may only be called on a `PhoneNumber` in the ACTIVE
+// state.
+//
+//   - name: The unique identifier of the `PhoneNumber` to delete. Format:
+//     `projects//phoneNumbers/`. Format: `projects//locations//phoneNumbers/`.
+func (r *ProjectsPhoneNumbersService) Delete(nameid string) *ProjectsPhoneNumbersDeleteCall {
+	c := &ProjectsPhoneNumbersDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.nameid = nameid
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsPhoneNumbersDeleteCall) Fields(s ...googleapi.Field) *ProjectsPhoneNumbersDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsPhoneNumbersDeleteCall) Context(ctx context.Context) *ProjectsPhoneNumbersDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsPhoneNumbersDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsPhoneNumbersDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2beta1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("DELETE", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.nameid,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "dialogflow.projects.phoneNumbers.delete", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "dialogflow.projects.phoneNumbers.delete" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudDialogflowV2beta1PhoneNumber.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsPhoneNumbersDeleteCall) Do(opts ...googleapi.CallOption) (*GoogleCloudDialogflowV2beta1PhoneNumber, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudDialogflowV2beta1PhoneNumber{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "dialogflow.projects.phoneNumbers.delete", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsPhoneNumbersListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Returns the list of all phone numbers in the specified project.
+//
+//   - parent: The project to list all `PhoneNumber` resources from. Format:
+//     `projects/`. Format: `projects//locations/`.
+func (r *ProjectsPhoneNumbersService) List(parent string) *ProjectsPhoneNumbersListCall {
+	c := &ProjectsPhoneNumbersListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The maximum number of items
+// to return in a single page. The default value is 100. The maximum value is
+// 1000.
+func (c *ProjectsPhoneNumbersListCall) PageSize(pageSize int64) *ProjectsPhoneNumbersListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": The next_page_token value
+// returned from a previous list request.
+func (c *ProjectsPhoneNumbersListCall) PageToken(pageToken string) *ProjectsPhoneNumbersListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// ShowDeleted sets the optional parameter "showDeleted": Controls whether
+// `PhoneNumber` resources in the DELETE_REQUESTED state should be returned.
+// Defaults to false.
+func (c *ProjectsPhoneNumbersListCall) ShowDeleted(showDeleted bool) *ProjectsPhoneNumbersListCall {
+	c.urlParams_.Set("showDeleted", fmt.Sprint(showDeleted))
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsPhoneNumbersListCall) Fields(s ...googleapi.Field) *ProjectsPhoneNumbersListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsPhoneNumbersListCall) IfNoneMatch(entityTag string) *ProjectsPhoneNumbersListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsPhoneNumbersListCall) Context(ctx context.Context) *ProjectsPhoneNumbersListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsPhoneNumbersListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsPhoneNumbersListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2beta1/{+parent}/phoneNumbers")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "dialogflow.projects.phoneNumbers.list", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "dialogflow.projects.phoneNumbers.list" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudDialogflowV2beta1ListPhoneNumbersResponse.ServerResponse.Header
+// or (if a response was returned at all) in error.(*googleapi.Error).Header.
+// Use googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsPhoneNumbersListCall) Do(opts ...googleapi.CallOption) (*GoogleCloudDialogflowV2beta1ListPhoneNumbersResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudDialogflowV2beta1ListPhoneNumbersResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "dialogflow.projects.phoneNumbers.list", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsPhoneNumbersListCall) Pages(ctx context.Context, f func(*GoogleCloudDialogflowV2beta1ListPhoneNumbersResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+type ProjectsPhoneNumbersPatchCall struct {
+	s                                       *Service
+	nameid                                  string
+	googleclouddialogflowv2beta1phonenumber *GoogleCloudDialogflowV2beta1PhoneNumber
+	urlParams_                              gensupport.URLParams
+	ctx_                                    context.Context
+	header_                                 http.Header
+}
+
+// Patch: Updates the specified `PhoneNumber`.
+//
+//   - name: Optional. The unique identifier of this phone number. Required for
+//     PhoneNumbers.UpdatePhoneNumber method. Format: `projects//phoneNumbers/`.
+//     Format: `projects//locations//phoneNumbers/`.
+func (r *ProjectsPhoneNumbersService) Patch(nameid string, googleclouddialogflowv2beta1phonenumber *GoogleCloudDialogflowV2beta1PhoneNumber) *ProjectsPhoneNumbersPatchCall {
+	c := &ProjectsPhoneNumbersPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.nameid = nameid
+	c.googleclouddialogflowv2beta1phonenumber = googleclouddialogflowv2beta1phonenumber
+	return c
+}
+
+// UpdateMask sets the optional parameter "updateMask": The mask to control
+// which fields get updated.
+func (c *ProjectsPhoneNumbersPatchCall) UpdateMask(updateMask string) *ProjectsPhoneNumbersPatchCall {
+	c.urlParams_.Set("updateMask", updateMask)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsPhoneNumbersPatchCall) Fields(s ...googleapi.Field) *ProjectsPhoneNumbersPatchCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsPhoneNumbersPatchCall) Context(ctx context.Context) *ProjectsPhoneNumbersPatchCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsPhoneNumbersPatchCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsPhoneNumbersPatchCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googleclouddialogflowv2beta1phonenumber)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2beta1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PATCH", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.nameid,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "dialogflow.projects.phoneNumbers.patch", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "dialogflow.projects.phoneNumbers.patch" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudDialogflowV2beta1PhoneNumber.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsPhoneNumbersPatchCall) Do(opts ...googleapi.CallOption) (*GoogleCloudDialogflowV2beta1PhoneNumber, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudDialogflowV2beta1PhoneNumber{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "dialogflow.projects.phoneNumbers.patch", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsPhoneNumbersUndeleteCall struct {
+	s                                                      *Service
+	nameid                                                 string
+	googleclouddialogflowv2beta1undeletephonenumberrequest *GoogleCloudDialogflowV2beta1UndeletePhoneNumberRequest
+	urlParams_                                             gensupport.URLParams
+	ctx_                                                   context.Context
+	header_                                                http.Header
+}
+
+// Undelete: Cancels the deletion request for a `PhoneNumber`. This method may
+// only be called on a `PhoneNumber` in the DELETE_REQUESTED state.
+//
+//   - name: The unique identifier of the `PhoneNumber` to delete. Format:
+//     `projects//phoneNumbers/`. Format: `projects//locations//phoneNumbers/`.
+func (r *ProjectsPhoneNumbersService) Undelete(nameid string, googleclouddialogflowv2beta1undeletephonenumberrequest *GoogleCloudDialogflowV2beta1UndeletePhoneNumberRequest) *ProjectsPhoneNumbersUndeleteCall {
+	c := &ProjectsPhoneNumbersUndeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.nameid = nameid
+	c.googleclouddialogflowv2beta1undeletephonenumberrequest = googleclouddialogflowv2beta1undeletephonenumberrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsPhoneNumbersUndeleteCall) Fields(s ...googleapi.Field) *ProjectsPhoneNumbersUndeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsPhoneNumbersUndeleteCall) Context(ctx context.Context) *ProjectsPhoneNumbersUndeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsPhoneNumbersUndeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsPhoneNumbersUndeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googleclouddialogflowv2beta1undeletephonenumberrequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2beta1/{+name}:undelete")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.nameid,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "dialogflow.projects.phoneNumbers.undelete", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "dialogflow.projects.phoneNumbers.undelete" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudDialogflowV2beta1PhoneNumber.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsPhoneNumbersUndeleteCall) Do(opts ...googleapi.CallOption) (*GoogleCloudDialogflowV2beta1PhoneNumber, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudDialogflowV2beta1PhoneNumber{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "dialogflow.projects.phoneNumbers.undelete", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
 }
 
 type ProjectsSuggestionsGenerateStatelessSummaryCall struct {

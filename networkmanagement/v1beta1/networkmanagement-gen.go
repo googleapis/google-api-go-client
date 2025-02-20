@@ -357,6 +357,9 @@ type AbortInfo struct {
 	// issue in the Google-managed project.
 	//   "UNSUPPORTED_GOOGLE_MANAGED_PROJECT_CONFIG" - Aborted due to an
 	// unsupported configuration of the Google-managed project.
+	//   "NO_SERVERLESS_IP_RANGES" - Aborted because the source endpoint is a Cloud
+	// Run revision with direct VPC access enabled, but there are no reserved
+	// serverless IP ranges.
 	Cause string `json:"cause,omitempty"`
 	// IpAddress: IP address that caused the abort.
 	IpAddress string `json:"ipAddress,omitempty"`

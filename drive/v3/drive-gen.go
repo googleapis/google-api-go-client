@@ -1372,6 +1372,9 @@ type File struct {
 	// ImageMediaMetadata: Output only. Additional metadata about image media, if
 	// available.
 	ImageMediaMetadata *FileImageMediaMetadata `json:"imageMediaMetadata,omitempty"`
+	// InheritedPermissionsDisabled: Whether this file has inherited permissions
+	// disabled. Inherited permissions are enabled by default.
+	InheritedPermissionsDisabled bool `json:"inheritedPermissionsDisabled,omitempty"`
 	// IsAppAuthorized: Output only. Whether the file was created or opened by the
 	// requesting app.
 	IsAppAuthorized bool `json:"isAppAuthorized,omitempty"`
@@ -1583,12 +1586,18 @@ type FileCapabilities struct {
 	// of this folder. This is false when the item is not a folder. Only populated
 	// for items in shared drives.
 	CanDeleteChildren bool `json:"canDeleteChildren,omitempty"`
+	// CanDisableInheritedPermissions: Whether a user can disable inherited
+	// permissions.
+	CanDisableInheritedPermissions bool `json:"canDisableInheritedPermissions,omitempty"`
 	// CanDownload: Output only. Whether the current user can download this file.
 	CanDownload bool `json:"canDownload,omitempty"`
 	// CanEdit: Output only. Whether the current user can edit this file. Other
 	// factors may limit the type of changes a user can make to a file. For
 	// example, see `canChangeCopyRequiresWriterPermission` or `canModifyContent`.
 	CanEdit bool `json:"canEdit,omitempty"`
+	// CanEnableInheritedPermissions: Whether a user can re-enable inherited
+	// permissions.
+	CanEnableInheritedPermissions bool `json:"canEnableInheritedPermissions,omitempty"`
 	// CanListChildren: Output only. Whether the current user can list the children
 	// of this folder. This is always false when the item is not a folder.
 	CanListChildren bool `json:"canListChildren,omitempty"`
@@ -2441,6 +2450,9 @@ type Permission struct {
 	// the grantee, and is published in User resources as `permissionId`. IDs
 	// should be treated as opaque values.
 	Id string `json:"id,omitempty"`
+	// InheritedPermissionsDisabled: When true, only organizers, owners, and users
+	// with permissions added directly on the item can access it.
+	InheritedPermissionsDisabled bool `json:"inheritedPermissionsDisabled,omitempty"`
 	// Kind: Output only. Identifies what kind of resource this is. Value: the
 	// fixed string "drive#permission".
 	Kind string `json:"kind,omitempty"`
@@ -2449,8 +2461,7 @@ type Permission struct {
 	// not in a shared drive.
 	PendingOwner bool `json:"pendingOwner,omitempty"`
 	// PermissionDetails: Output only. Details of whether the permissions on this
-	// shared drive item are inherited or directly on this item. This is an
-	// output-only field which is present only for shared drive items.
+	// item are inherited or directly on this item.
 	PermissionDetails []*PermissionPermissionDetails `json:"permissionDetails,omitempty"`
 	// PhotoLink: Output only. A link to the user's profile photo, if available.
 	PhotoLink string `json:"photoLink,omitempty"`
@@ -2468,7 +2479,11 @@ type Permission struct {
 	// information required for an `anyone` type.
 	Type string `json:"type,omitempty"`
 	// View: Indicates the view for this permission. Only populated for permissions
-	// that belong to a view. 'published' is the only supported value.
+	// that belong to a view. published and metadata are the only supported values.
+	// - published: The permission's role is published_reader. - metadata: The item
+	// is only visible to the metadata view because the item has limited access and
+	// the scope has at least read access to the parent. Note: The metadata view is
+	// currently only supported on folders.
 	View string `json:"view,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
@@ -2496,7 +2511,7 @@ type PermissionPermissionDetails struct {
 	// always populated. This is an output-only field.
 	Inherited bool `json:"inherited,omitempty"`
 	// InheritedFrom: Output only. The ID of the item from which this permission is
-	// inherited. This is an output-only field.
+	// inherited. This is only populated for items in shared drives.
 	InheritedFrom string `json:"inheritedFrom,omitempty"`
 	// PermissionType: Output only. The permission type for this user. While new
 	// values may be added in future, the following are currently possible: *
@@ -8506,6 +8521,13 @@ func (r *PermissionsService) Delete(fileId string, permissionId string) *Permiss
 	return c
 }
 
+// EnforceExpansiveAccess sets the optional parameter "enforceExpansiveAccess":
+// Whether the request should enforce expansive access rules.
+func (c *PermissionsDeleteCall) EnforceExpansiveAccess(enforceExpansiveAccess bool) *PermissionsDeleteCall {
+	c.urlParams_.Set("enforceExpansiveAccess", fmt.Sprint(enforceExpansiveAccess))
+	return c
+}
+
 // SupportsAllDrives sets the optional parameter "supportsAllDrives": Whether
 // the requesting application supports both My Drives and shared drives.
 func (c *PermissionsDeleteCall) SupportsAllDrives(supportsAllDrives bool) *PermissionsDeleteCall {
@@ -8924,6 +8946,13 @@ func (r *PermissionsService) Update(fileId string, permissionId string, permissi
 	c.fileId = fileId
 	c.permissionId = permissionId
 	c.permission = permission
+	return c
+}
+
+// EnforceExpansiveAccess sets the optional parameter "enforceExpansiveAccess":
+// Whether the request should enforce expansive access rules.
+func (c *PermissionsUpdateCall) EnforceExpansiveAccess(enforceExpansiveAccess bool) *PermissionsUpdateCall {
+	c.urlParams_.Set("enforceExpansiveAccess", fmt.Sprint(enforceExpansiveAccess))
 	return c
 }
 

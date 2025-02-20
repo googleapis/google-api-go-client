@@ -2603,15 +2603,15 @@ type CartData struct {
 	Items []*CartDataItem `json:"items,omitempty"`
 	// MerchantFeedLabel: The feed labels associated with the feed where your items
 	// are uploaded. For more information, please refer to ​​
-	// https://support.google.com/merchants/answer/12453549. This is a required
-	// field.
+	// https://support.google.com/merchants/answer/12453549. Providing the feed
+	// label reduces ambiguity in identifying the right offer details.
 	MerchantFeedLabel string `json:"merchantFeedLabel,omitempty"`
 	// MerchantFeedLanguage: The language associated with the feed where your items
-	// are uploaded. Use ISO 639-1 language codes. This field is needed only when
-	// item IDs are not unique across multiple Merchant Center feeds.
+	// are uploaded. Use ISO 639-1 language codes. Providing the feed language
+	// reduces ambiguity in identifying the right offer details.
 	MerchantFeedLanguage string `json:"merchantFeedLanguage,omitempty"`
-	// MerchantId: The Merchant Center ID where the items are uploaded. This is a
-	// required field.
+	// MerchantId: The Merchant Center ID where the items are uploaded. Providing
+	// Merchant Center ID reduces ambiguity in identifying the right offer details.
 	MerchantId int64 `json:"merchantId,omitempty,string"`
 	// ForceSendFields is a list of field names (e.g. "Items") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -3238,7 +3238,8 @@ type Conversion struct {
 	// UserIdentifiers: The user identifiers to enhance the conversion. The maximum
 	// number of user identifiers for each conversion is 5.
 	UserIdentifiers []*UserIdentifier `json:"userIdentifiers,omitempty"`
-	// Value: The value of the conversion. This is a required field.
+	// Value: The value of the conversion. Interpreted in CM360 Floodlight config
+	// parent advertiser's currency code. This is a required field.
 	Value float64 `json:"value,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AdUserDataConsent") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -11109,6 +11110,10 @@ type TagSetting struct {
 	// IncludeClickTracking: Whether click-tracking string should be included in
 	// the tags.
 	IncludeClickTracking bool `json:"includeClickTracking,omitempty"`
+	// IncludeUnescapedlpurlMacro: Optional. Indicates that the unescapedlpurl
+	// macro should be included in the tag for the static landing page. New
+	// placements will default to the value set on their site.
+	IncludeUnescapedlpurlMacro bool `json:"includeUnescapedlpurlMacro,omitempty"`
 	// KeywordOption: Option specifying how keywords are embedded in ad tags. This
 	// setting can be used to specify whether keyword placeholders are inserted in
 	// placement tags for this site. Publishers can then add keywords to those

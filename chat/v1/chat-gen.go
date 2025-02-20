@@ -706,21 +706,20 @@ func (s Annotation) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// AppCommandMetadata: Metadata associated with app commands. App commands are
-// a way for users to invoke and interact with a Chat app. These can be slash
-// commands typed in the compose box, or items directly selected from the
-// integration menu. For more information, see Respond to quick commands
-// (https://developers.google.com/workspace/chat/quick-commands).
+// AppCommandMetadata: Metadata about a Chat app command
+// (https://developers.google.com/workspace/chat/commands).
 type AppCommandMetadata struct {
-	// AppCommandId: The command ID for the given app interaction.
+	// AppCommandId: The ID for the command specified in the Chat API
+	// configuration.
 	AppCommandId int64 `json:"appCommandId,omitempty"`
-	// AppCommandType: The type of the app command.
+	// AppCommandType: The type of Chat app command.
 	//
 	// Possible values:
 	//   "APP_COMMAND_TYPE_UNSPECIFIED" - Default value. Unspecified.
-	//   "SLASH_COMMAND" - A slash command sent in a message.
-	//   "QUICK_COMMAND" - A quick command that is invoked by the user. This can
-	// result from an action taken in the integration menu.
+	//   "SLASH_COMMAND" - A slash command. The user sends the command in a Chat
+	// message.
+	//   "QUICK_COMMAND" - A quick command. The user selects the command from the
+	// Chat menu in the message reply area.
 	AppCommandType string `json:"appCommandType,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AppCommandId") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -1421,8 +1420,7 @@ type DeprecatedEvent struct {
 	// data input by users on cards
 	// (https://developers.google.com/workspace/chat/read-form-data).
 	Action *FormAction `json:"action,omitempty"`
-	// AppCommandMetadata: Populated for app commands, including slash commands and
-	// quick commands.
+	// AppCommandMetadata: Metadata about a Chat app command.
 	AppCommandMetadata *AppCommandMetadata `json:"appCommandMetadata,omitempty"`
 	// Common: Represents information about the user's client, such as locale, host
 	// app, and platform. For Chat apps, `CommonEventObject` includes information
@@ -1492,8 +1490,9 @@ type DeprecatedEvent struct {
 	//   "MESSAGE" - A user sends the Chat app a message, or invokes the Chat app
 	// in a space, such as any of the following examples: * Any message in a direct
 	// message (DM) space with the Chat app. * A message in a multi-person space
-	// where a person @mentions the Chat app, or uses one of its slash commands. *
-	// If you've configured link previews for your Chat app, a user posts a message
+	// where a person @mentions the Chat app, or uses one of its [slash
+	// commands](https://developers.google.com/workspace/chat/commands#types). * If
+	// you've configured link previews for your Chat app, a user posts a message
 	// that contains a link that matches the configured URL pattern.
 	//   "ADDED_TO_SPACE" - A user adds the Chat app to a space, or a Google
 	// Workspace administrator installs the Chat app in direct message spaces for
@@ -1524,7 +1523,8 @@ type DeprecatedEvent struct {
 	// [`DialogEventType`](https://developers.google.com/workspace/chat/api/referenc
 	// e/rest/v1/DialogEventType).
 	//   "WIDGET_UPDATED" - A user updates a widget in a card message or dialog.
-	//   "APP_COMMAND" - A user invokes a command of the app.
+	//   "APP_COMMAND" - A user uses a Chat app [quick
+	// command](https://developers.google.com/workspace/chat/commands#types).
 	Type string `json:"type,omitempty"`
 	// User: The user that interacted with the Chat app.
 	User *User `json:"user,omitempty"`
@@ -5227,11 +5227,10 @@ func (s SetUpSpaceRequest) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// SlashCommand: A slash command
-// (https://developers.google.com/workspace/chat/slash-commands) in Google
-// Chat.
+// SlashCommand: Metadata about a slash command
+// (https://developers.google.com/workspace/chat/commands) in Google Chat.
 type SlashCommand struct {
-	// CommandId: The ID of the slash command invoked.
+	// CommandId: The ID of the slash command.
 	CommandId int64 `json:"commandId,omitempty,string"`
 	// ForceSendFields is a list of field names (e.g. "CommandId") to
 	// unconditionally include in API requests. By default, fields with empty or

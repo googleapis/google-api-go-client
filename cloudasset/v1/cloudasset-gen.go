@@ -1720,7 +1720,7 @@ type GoogleCloudAssetV1BigQueryDestination struct {
 	//   "PARTITION_KEY_UNSPECIFIED" - Unspecified partition key. Tables won't be
 	// partitioned using this option.
 	//   "REQUEST_TIME" - The time when the request is received. If specified as
-	// partition key, the result table(s) is partitoned by the RequestTime column,
+	// partition key, the result table(s) is partitioned by the RequestTime column,
 	// an additional timestamp column representing when the request was received.
 	PartitionKey string `json:"partitionKey,omitempty"`
 	// TablePrefix: Required. The prefix of the BigQuery tables to which the
@@ -3081,12 +3081,10 @@ type GoogleIdentityAccesscontextmanagerV1EgressSource struct {
 	// single `*` is specified for `access_level`, then all EgressSources will be
 	// allowed.
 	AccessLevel string `json:"accessLevel,omitempty"`
-	// Resource: A Google Cloud resource that you want to allow to egress the
-	// perimeter. These resources can access data outside the perimeter. This field
-	// only supports projects. The project format is `projects/{project_number}`.
-	// The resource can be in any Google Cloud organization, not just the
-	// organization where the perimeter is defined. You can't use `*` in this field
-	// to allow all Google Cloud resources.
+	// Resource: A Google Cloud resource from the service perimeter that you want
+	// to allow to access data outside the perimeter. This field supports only
+	// projects. The project format is `projects/{project_number}`. You can't use
+	// `*` in this field to allow all Google Cloud resources.
 	Resource string `json:"resource,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AccessLevel") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -3878,7 +3876,7 @@ type IamPolicySearchResult struct {
 	// in the form of projects/{PROJECT_NUMBER}. If an IAM policy is set on a
 	// resource (like VM instance, Cloud Storage bucket), the project field will
 	// indicate the project that contains the resource. If an IAM policy is set on
-	// a folder or orgnization, this field will be empty. To search against the
+	// a folder or organization, this field will be empty. To search against the
 	// `project`: * specify the `scope` field as this project in your search
 	// request.
 	Project string `json:"project,omitempty"`
@@ -4432,12 +4430,12 @@ type PartitionSpec struct {
 	//   "PARTITION_KEY_UNSPECIFIED" - Unspecified partition key. If used, it means
 	// using non-partitioned table.
 	//   "READ_TIME" - The time when the snapshot is taken. If specified as
-	// partition key, the result table(s) is partitoned by the additional timestamp
-	// column, readTime. If [read_time] in ExportAssetsRequest is specified, the
-	// readTime column's value will be the same as it. Otherwise, its value will be
-	// the current time that is used to take the snapshot.
+	// partition key, the result table(s) is partitioned by the additional
+	// timestamp column, readTime. If [read_time] in ExportAssetsRequest is
+	// specified, the readTime column's value will be the same as it. Otherwise,
+	// its value will be the current time that is used to take the snapshot.
 	//   "REQUEST_TIME" - The time when the request is received and started to be
-	// processed. If specified as partition key, the result table(s) is partitoned
+	// processed. If specified as partition key, the result table(s) is partitioned
 	// by the requestTime column, an additional timestamp column representing when
 	// the request was received.
 	PartitionKey string `json:"partitionKey,omitempty"`
@@ -7928,7 +7926,7 @@ func (r *V1Service) AnalyzeMove(resource string) *V1AnalyzeMoveCall {
 // DestinationParent sets the optional parameter "destinationParent": Required.
 // Name of the Google Cloud folder or organization to reparent the target
 // resource. The analysis will be performed against hypothetically moving the
-// resource to this specified desitination parent. This can only be a folder
+// resource to this specified destination parent. This can only be a folder
 // number (such as "folders/123") or an organization number (such as
 // "organizations/123").
 func (c *V1AnalyzeMoveCall) DestinationParent(destinationParent string) *V1AnalyzeMoveCall {

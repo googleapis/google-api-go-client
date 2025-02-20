@@ -8459,7 +8459,7 @@ func (s GoogleCloudDialogflowCxV3WebhookGenericWebService) MarshalJSON() ([]byte
 type GoogleCloudDialogflowCxV3WebhookGenericWebServiceOAuthConfig struct {
 	// ClientId: Required. The client ID provided by the 3rd party platform.
 	ClientId string `json:"clientId,omitempty"`
-	// ClientSecret: Required. The client secret provided by the 3rd party
+	// ClientSecret: Optional. The client secret provided by the 3rd party
 	// platform.
 	ClientSecret string `json:"clientSecret,omitempty"`
 	// Scopes: Optional. The OAuth scopes to grant.
@@ -11833,7 +11833,7 @@ func (s GoogleCloudDialogflowCxV3beta1WebhookGenericWebService) MarshalJSON() ([
 type GoogleCloudDialogflowCxV3beta1WebhookGenericWebServiceOAuthConfig struct {
 	// ClientId: Required. The client ID provided by the 3rd party platform.
 	ClientId string `json:"clientId,omitempty"`
-	// ClientSecret: Required. The client secret provided by the 3rd party
+	// ClientSecret: Optional. The client secret provided by the 3rd party
 	// platform.
 	ClientSecret string `json:"clientSecret,omitempty"`
 	// Scopes: Optional. The OAuth scopes to grant.
@@ -18295,8 +18295,8 @@ type GoogleCloudDialogflowV2beta1ResponseMessageEndInteraction struct {
 // this to determine which conversations were handed off to a human agent for
 // measurement purposes. What else to do with this signal is up to you and your
 // handoff procedures. You may set this, for example: * In the entry
-// fulfillment of a CX Page if entering the page indicates something went
-// extremely wrong in the conversation. * In a webhook response when you
+// fulfillment of a Dialogflow CX Page if entering the page indicates something
+// went extremely wrong in the conversation. * In a webhook response when you
 // determine that the customer issue can only be handled by a human.
 type GoogleCloudDialogflowV2beta1ResponseMessageLiveAgentHandoff struct {
 	// Metadata: Custom metadata for your handoff procedure. Dialogflow doesn't

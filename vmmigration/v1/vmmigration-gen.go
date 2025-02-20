@@ -436,7 +436,7 @@ func (s AppliedLicense) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// AvailableUpdates: Holds informatiom about the available versions for
+// AvailableUpdates: Holds information about the available versions for
 // upgrade.
 type AvailableUpdates struct {
 	// InPlaceUpdate: The latest version for in place update. The current appliance
@@ -1461,7 +1461,7 @@ func (s CutoverForecast) MarshalJSON() ([]byte, error) {
 
 // CutoverJob: CutoverJob message describes a cutover of a migrating VM. The
 // CutoverJob is the operation of shutting down the VM, creating a snapshot and
-// clonning the VM using the replicated snapshot.
+// cloning the VM using the replicated snapshot.
 type CutoverJob struct {
 	// ComputeEngineDisksTargetDetails: Output only. Details of the target
 	// Persistent Disks in Compute Engine.

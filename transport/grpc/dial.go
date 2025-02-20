@@ -242,7 +242,7 @@ func dialPoolNewAuth(ctx context.Context, secure bool, poolSize int, ds *interna
 			EnableDirectPath:                ds.EnableDirectPath,
 			EnableDirectPathXds:             ds.EnableDirectPathXds,
 			EnableJWTWithScope:              ds.EnableJwtWithScope,
-			AllowHardBoundTokens:            ds.AllowHardBoundTokens, 
+			AllowHardBoundTokens:            ds.AllowHardBoundTokens,
 			DefaultAudience:                 ds.DefaultAudience,
 			DefaultEndpointTemplate:         defaultEndpointTemplate,
 			DefaultMTLSEndpoint:             ds.DefaultMTLSEndpoint,

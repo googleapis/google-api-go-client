@@ -1326,7 +1326,7 @@ type ProjectsLocationsCollectorsDeleteCall struct {
 }
 
 // Delete: Deletes a single Collector - changes state of collector to
-// "Deleting". Background jobs does final deletion thorugh producer api.
+// "Deleting". Background jobs does final deletion through producer API.
 //
 // - name: Name of the resource.
 func (r *ProjectsLocationsCollectorsService) Delete(name string) *ProjectsLocationsCollectorsDeleteCall {

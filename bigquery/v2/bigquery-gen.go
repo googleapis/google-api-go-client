@@ -312,7 +312,7 @@ type AggregateClassificationMetrics struct {
 	RocAuc float64 `json:"rocAuc,omitempty"`
 	// Threshold: Threshold at which the metrics are computed. For binary
 	// classification models this is the positive class threshold. For multi-class
-	// classfication models this is the confidence threshold.
+	// classification models this is the confidence threshold.
 	Threshold float64 `json:"threshold,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Accuracy") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -3184,6 +3184,12 @@ type ExternalDataConfiguration struct {
 	// CsvOptions: Optional. Additional properties to set if sourceFormat is set to
 	// CSV.
 	CsvOptions *CsvOptions `json:"csvOptions,omitempty"`
+	// DateFormat: Optional. Format used to parse DATE values. Supports C-style and
+	// SQL-style values.
+	DateFormat string `json:"dateFormat,omitempty"`
+	// DatetimeFormat: Optional. Format used to parse DATETIME values. Supports
+	// C-style and SQL-style values.
+	DatetimeFormat string `json:"datetimeFormat,omitempty"`
 	// DecimalTargetTypes: Defines the list of possible SQL data types to which the
 	// source decimal values are converted. This list and the precision and the
 	// scale parameters of the decimal field determine the target type. In the
@@ -3196,7 +3202,7 @@ type ExternalDataConfiguration struct {
 	// of this field is ["NUMERIC", "BIGNUMERIC"]. If (precision,scale) is: *
 	// (38,9) -> NUMERIC; * (39,9) -> BIGNUMERIC (NUMERIC cannot hold 30 integer
 	// digits); * (38,10) -> BIGNUMERIC (NUMERIC cannot hold 10 fractional digits);
-	// * (76,38) -> BIGNUMERIC; * (77,38) -> BIGNUMERIC (error if value exeeds
+	// * (76,38) -> BIGNUMERIC; * (77,38) -> BIGNUMERIC (error if value exceeds
 	// supported range). This field cannot contain duplicate types. The order of
 	// the types in this field is ignored. For example, ["BIGNUMERIC", "NUMERIC"]
 	// is the same as ["NUMERIC", "BIGNUMERIC"] and NUMERIC always takes precedence
@@ -3248,7 +3254,7 @@ type ExternalDataConfiguration struct {
 	//
 	// Possible values:
 	//   "JSON_EXTENSION_UNSPECIFIED" - The default if provided value is not one
-	// included in the enum, or the value is not specified. The source formate is
+	// included in the enum, or the value is not specified. The source format is
 	// parsed without any modification.
 	//   "GEOJSON" - Use GeoJSON variant of JSON. See
 	// https://tools.ietf.org/html/rfc7946.
@@ -3312,6 +3318,16 @@ type ExternalDataConfiguration struct {
 	// Cloud Datastore backups, exactly one URI can be specified. Also, the '*'
 	// wildcard character is not allowed.
 	SourceUris []string `json:"sourceUris,omitempty"`
+	// TimeFormat: Optional. Format used to parse TIME values. Supports C-style and
+	// SQL-style values.
+	TimeFormat string `json:"timeFormat,omitempty"`
+	// TimeZone: Optional. Time zone used when parsing timestamp values that do not
+	// have specific time zone information (e.g. 2024-04-20 12:34:56). The expected
+	// format is a IANA timezone string (e.g. America/Los_Angeles).
+	TimeZone string `json:"timeZone,omitempty"`
+	// TimestampFormat: Optional. Format used to parse TIMESTAMP values. Supports
+	// C-style and SQL-style values.
+	TimestampFormat string `json:"timestampFormat,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Autodetect") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -4466,6 +4482,10 @@ type JobConfigurationLoad struct {
 	// location will be set to `Job.JobReference.location` if it is present,
 	// otherwise it's set to the default location based on existing routing logic.
 	CreateSession bool `json:"createSession,omitempty"`
+	// DateFormat: Optional. Date format used for parsing DATE values.
+	DateFormat string `json:"dateFormat,omitempty"`
+	// DatetimeFormat: Optional. Date format used for parsing DATETIME values.
+	DatetimeFormat string `json:"datetimeFormat,omitempty"`
 	// DecimalTargetTypes: Defines the list of possible SQL data types to which the
 	// source decimal values are converted. This list and the precision and the
 	// scale parameters of the decimal field determine the target type. In the
@@ -4478,7 +4498,7 @@ type JobConfigurationLoad struct {
 	// of this field is ["NUMERIC", "BIGNUMERIC"]. If (precision,scale) is: *
 	// (38,9) -> NUMERIC; * (39,9) -> BIGNUMERIC (NUMERIC cannot hold 30 integer
 	// digits); * (38,10) -> BIGNUMERIC (NUMERIC cannot hold 10 fractional digits);
-	// * (76,38) -> BIGNUMERIC; * (77,38) -> BIGNUMERIC (error if value exeeds
+	// * (76,38) -> BIGNUMERIC; * (77,38) -> BIGNUMERIC (error if value exceeds
 	// supported range). This field cannot contain duplicate types. The order of
 	// the types in this field is ignored. For example, ["BIGNUMERIC", "NUMERIC"]
 	// is the same as ["NUMERIC", "BIGNUMERIC"] and NUMERIC always takes precedence
@@ -4557,7 +4577,7 @@ type JobConfigurationLoad struct {
 	//
 	// Possible values:
 	//   "JSON_EXTENSION_UNSPECIFIED" - The default if provided value is not one
-	// included in the enum, or the value is not specified. The source formate is
+	// included in the enum, or the value is not specified. The source format is
 	// parsed without any modification.
 	//   "GEOJSON" - Use GeoJSON variant of JSON. See
 	// https://tools.ietf.org/html/rfc7946.
@@ -4661,10 +4681,17 @@ type JobConfigurationLoad struct {
 	// Cloud Datastore backups: Exactly one URI can be specified. Also, the '*'
 	// wildcard character is not allowed.
 	SourceUris []string `json:"sourceUris,omitempty"`
+	// TimeFormat: Optional. Date format used for parsing TIME values.
+	TimeFormat string `json:"timeFormat,omitempty"`
 	// TimePartitioning: Time-based partitioning specification for the destination
 	// table. Only one of timePartitioning and rangePartitioning should be
 	// specified.
 	TimePartitioning *TimePartitioning `json:"timePartitioning,omitempty"`
+	// TimeZone: Optional. [Experimental] Default time zone that will apply when
+	// parsing timestamp values that have no specific time zone.
+	TimeZone string `json:"timeZone,omitempty"`
+	// TimestampFormat: Optional. Date format used for parsing TIMESTAMP values.
+	TimestampFormat string `json:"timestampFormat,omitempty"`
 	// UseAvroLogicalTypes: Optional. If sourceFormat is set to "AVRO", indicates
 	// whether to interpret logical types as the corresponding BigQuery data type
 	// (for example, TIMESTAMP), instead of using the raw type (for example,
@@ -6029,7 +6056,7 @@ func (s MaterializedViewStatus) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// MetadataCacheStatistics: Statistics for metadata caching in BigLake tables.
+// MetadataCacheStatistics: Statistics for metadata caching in queried tables.
 type MetadataCacheStatistics struct {
 	// TableMetadataCacheUsage: Set for the Metadata caching eligible tables
 	// referenced in the query.
@@ -6937,6 +6964,9 @@ type QueryRequest struct {
 	// names in the query string must be qualified in the format
 	// 'datasetId.tableId'.
 	DefaultDataset *DatasetReference `json:"defaultDataset,omitempty"`
+	// DestinationEncryptionConfiguration: Optional. Custom encryption
+	// configuration (e.g., Cloud KMS keys)
+	DestinationEncryptionConfiguration *EncryptionConfiguration `json:"destinationEncryptionConfiguration,omitempty"`
 	// DryRun: Optional. If set to true, BigQuery doesn't run the job. Instead, if
 	// the query is valid, BigQuery returns statistics about the job such as how
 	// many bytes would be processed. If the query is invalid, an error returns.
@@ -6958,6 +6988,13 @@ type QueryRequest struct {
 	// a Job are subject to change. If Job creation is required,
 	// JOB_CREATION_REQUIRED mode should be used, which is the default.
 	JobCreationMode string `json:"jobCreationMode,omitempty"`
+	// JobTimeoutMs: Optional. Job timeout in milliseconds. If this time limit is
+	// exceeded, BigQuery will attempt to stop a longer job, but may not always
+	// succeed in canceling it before the job completes. For example, a job that
+	// takes more than 60 seconds to complete has a better chance of being stopped
+	// than a job that takes 10 seconds to complete. This timeout applies to the
+	// query even if a job does not need to be created.
+	JobTimeoutMs int64 `json:"jobTimeoutMs,omitempty,string"`
 	// Kind: The resource type of the request.
 	Kind string `json:"kind,omitempty"`
 	// Labels: Optional. The labels associated with this query. Labels can be used
@@ -9403,7 +9440,7 @@ func (s TableListTables) MarshalJSON() ([]byte, error) {
 
 // TableListTablesView: Information about a logical view.
 type TableListTablesView struct {
-	// PrivacyPolicy: Specifices the privacy policy for the view.
+	// PrivacyPolicy: Specifies the privacy policy for the view.
 	PrivacyPolicy *PrivacyPolicy `json:"privacyPolicy,omitempty"`
 	// UseLegacySql: True if view is defined in legacy SQL dialect, false if in
 	// GoogleSQL.
@@ -9912,7 +9949,7 @@ type TrainingOptions struct {
 	//   "UA" - Ukraine
 	//   "US" - United States
 	//   "VE" - Venezuela
-	//   "VN" - Viet Nam
+	//   "VN" - Vietnam
 	//   "ZA" - South Africa
 	HolidayRegion string `json:"holidayRegion,omitempty"`
 	// HolidayRegions: A list of geographical regions that are used for time series
@@ -9987,7 +10024,7 @@ type TrainingOptions struct {
 	//   "UA" - Ukraine
 	//   "US" - United States
 	//   "VE" - Venezuela
-	//   "VN" - Viet Nam
+	//   "VN" - Vietnam
 	//   "ZA" - South Africa
 	HolidayRegions []string `json:"holidayRegions,omitempty"`
 	// Horizon: The number of periods ahead that need to be forecasted.
@@ -10018,7 +10055,7 @@ type TrainingOptions struct {
 	// label. For multiclass this is a globally micro-averaged metric.
 	//   "F1_SCORE" - The F1 score is an average of recall and precision. For
 	// multiclass this is a macro-averaged metric.
-	//   "LOG_LOSS" - Logorithmic Loss. For multiclass this is a macro-averaged
+	//   "LOG_LOSS" - Logarithmic Loss. For multiclass this is a macro-averaged
 	// metric.
 	//   "ROC_AUC" - Area Under an ROC Curve. For multiclass this is a
 	// macro-averaged metric.
@@ -10508,7 +10545,7 @@ func (s VectorSearchStatistics) MarshalJSON() ([]byte, error) {
 type ViewDefinition struct {
 	// ForeignDefinitions: Optional. Foreign view representations.
 	ForeignDefinitions []*ForeignViewDefinition `json:"foreignDefinitions,omitempty"`
-	// PrivacyPolicy: Optional. Specifices the privacy policy for the view.
+	// PrivacyPolicy: Optional. Specifies the privacy policy for the view.
 	PrivacyPolicy *PrivacyPolicy `json:"privacyPolicy,omitempty"`
 	// Query: Required. A query that BigQuery executes when the view is referenced.
 	Query string `json:"query,omitempty"`
@@ -10932,7 +10969,7 @@ func (c *DatasetsListCall) All(all bool) *DatasetsListCall {
 
 // Filter sets the optional parameter "filter": An expression for filtering the
 // results of the request by label. The syntax is `labels.[:]`. Multiple
-// filters can be ANDed together by connecting with a space. Example:
+// filters can be AND-ed together by connecting with a space. Example:
 // `labels.department:receiving labels.active`. See Filtering datasets using
 // labels
 // (https://cloud.google.com/bigquery/docs/filtering-labels#filtering_datasets_using_labels)

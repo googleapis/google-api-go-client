@@ -5312,6 +5312,9 @@ type TaskSpec struct {
 	// MaxRetries: Optional. Number of retries allowed per task, before marking
 	// this job failed. Defaults to 3.
 	MaxRetries int64 `json:"maxRetries,omitempty"`
+	// NodeSelector: Optional. The Node Selector configuration. Map of selector key
+	// to a value which matches a node.
+	NodeSelector map[string]string `json:"nodeSelector,omitempty"`
 	// ServiceAccountName: Optional. Email address of the IAM service account
 	// associated with the task of a job execution. The service account represents
 	// the identity of the running task, and determines what permissions the task

@@ -3024,7 +3024,7 @@ type SslSettings struct {
 	// mapped SSL certificate will be automatically renewed.
 	//   "MANUAL" - SSL support for this domain is configured manually by the user.
 	// Either the domain has no SSL support or a user-obtained SSL certificate has
-	// been explictly mapped to this domain.
+	// been explicitly mapped to this domain.
 	SslManagementType string `json:"sslManagementType,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "CertificateId") to
 	// unconditionally include in API requests. By default, fields with empty or

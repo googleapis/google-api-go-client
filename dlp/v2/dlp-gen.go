@@ -4299,6 +4299,10 @@ type GooglePrivacyDlpV2DiscoveryConfig struct {
 	OrgConfig *GooglePrivacyDlpV2OrgConfig `json:"orgConfig,omitempty"`
 	// OtherCloudStartingLocation: Must be set only when scanning other clouds.
 	OtherCloudStartingLocation *GooglePrivacyDlpV2OtherCloudDiscoveryStartingLocation `json:"otherCloudStartingLocation,omitempty"`
+	// ProcessingLocation: Optional. Processing location configuration. Vertex AI
+	// dataset scanning will set processing_location.image_fallback_type to
+	// MultiRegionProcessing by default.
+	ProcessingLocation *GooglePrivacyDlpV2ProcessingLocation `json:"processingLocation,omitempty"`
 	// Status: Required. A status for this configuration.
 	//
 	// Possible values:
@@ -4669,6 +4673,16 @@ type GooglePrivacyDlpV2DiscoveryTarget struct {
 	// stored in cloud resource metadata and reports them as vulnerabilities to
 	// Security Command Center. Only one target of this type is allowed.
 	SecretsTarget *GooglePrivacyDlpV2SecretsDiscoveryTarget `json:"secretsTarget,omitempty"`
+	// VertexDatasetTarget: Vertex AI dataset target for Discovery. The first
+	// target to match a dataset will be the one applied. Note that discovery for
+	// Vertex AI can incur Cloud Storage Class B operation charges for
+	// storage.objects.get operations and retrieval fees. For more information, see
+	// Cloud Storage pricing
+	// (https://cloud.google.com/storage/pricing#price-tables). Note that discovery
+	// for Vertex AI dataset will not be able to scan images unless
+	// DiscoveryConfig.processing_location.image_fallback_location has
+	// multi_region_processing or global_processing configured.
+	VertexDatasetTarget *GooglePrivacyDlpV2VertexDatasetDiscoveryTarget `json:"vertexDatasetTarget,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "BigQueryTarget") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -4684,6 +4698,108 @@ type GooglePrivacyDlpV2DiscoveryTarget struct {
 
 func (s GooglePrivacyDlpV2DiscoveryTarget) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePrivacyDlpV2DiscoveryTarget
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GooglePrivacyDlpV2DiscoveryVertexDatasetConditions: Requirements that must
+// be true before a dataset is profiled for the first time.
+type GooglePrivacyDlpV2DiscoveryVertexDatasetConditions struct {
+	// CreatedAfter: Vertex AI dataset must have been created after this date. Used
+	// to avoid backfilling.
+	CreatedAfter string `json:"createdAfter,omitempty"`
+	// MinAge: Minimum age a Vertex AI dataset must have. If set, the value must be
+	// 1 hour or greater.
+	MinAge string `json:"minAge,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "CreatedAfter") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CreatedAfter") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GooglePrivacyDlpV2DiscoveryVertexDatasetConditions) MarshalJSON() ([]byte, error) {
+	type NoMethod GooglePrivacyDlpV2DiscoveryVertexDatasetConditions
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GooglePrivacyDlpV2DiscoveryVertexDatasetFilter: Determines what datasets
+// will have profiles generated within an organization or project. Includes the
+// ability to filter by regular expression patterns on project ID or dataset
+// regex.
+type GooglePrivacyDlpV2DiscoveryVertexDatasetFilter struct {
+	// Collection: A specific set of Vertex AI datasets for this filter to apply
+	// to.
+	Collection *GooglePrivacyDlpV2VertexDatasetCollection `json:"collection,omitempty"`
+	// Others: Catch-all. This should always be the last target in the list because
+	// anything above it will apply first. Should only appear once in a
+	// configuration. If none is specified, a default one will be added
+	// automatically.
+	Others *GooglePrivacyDlpV2AllOtherResources `json:"others,omitempty"`
+	// VertexDatasetResourceReference: The dataset resource to scan. Targets
+	// including this can only include one target (the target with this dataset
+	// resource reference).
+	VertexDatasetResourceReference *GooglePrivacyDlpV2VertexDatasetResourceReference `json:"vertexDatasetResourceReference,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Collection") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Collection") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GooglePrivacyDlpV2DiscoveryVertexDatasetFilter) MarshalJSON() ([]byte, error) {
+	type NoMethod GooglePrivacyDlpV2DiscoveryVertexDatasetFilter
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GooglePrivacyDlpV2DiscoveryVertexDatasetGenerationCadence: How often
+// existing datasets should have their profiles refreshed. New datasets are
+// scanned as quickly as possible depending on system capacity.
+type GooglePrivacyDlpV2DiscoveryVertexDatasetGenerationCadence struct {
+	// InspectTemplateModifiedCadence: Governs when to update data profiles when
+	// the inspection rules defined by the `InspectTemplate` change. If not set,
+	// changing the template will not cause a data profile to be updated.
+	InspectTemplateModifiedCadence *GooglePrivacyDlpV2DiscoveryInspectTemplateModifiedCadence `json:"inspectTemplateModifiedCadence,omitempty"`
+	// RefreshFrequency: If you set this field, profiles are refreshed at this
+	// frequency regardless of whether the underlying datasets have changed.
+	// Defaults to never.
+	//
+	// Possible values:
+	//   "UPDATE_FREQUENCY_UNSPECIFIED" - Unspecified.
+	//   "UPDATE_FREQUENCY_NEVER" - After the data profile is created, it will
+	// never be updated.
+	//   "UPDATE_FREQUENCY_DAILY" - The data profile can be updated up to once
+	// every 24 hours.
+	//   "UPDATE_FREQUENCY_MONTHLY" - The data profile can be updated up to once
+	// every 30 days. Default.
+	RefreshFrequency string `json:"refreshFrequency,omitempty"`
+	// ForceSendFields is a list of field names (e.g.
+	// "InspectTemplateModifiedCadence") to unconditionally include in API
+	// requests. By default, fields with empty or default values are omitted from
+	// API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "InspectTemplateModifiedCadence")
+	// to include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GooglePrivacyDlpV2DiscoveryVertexDatasetGenerationCadence) MarshalJSON() ([]byte, error) {
+	type NoMethod GooglePrivacyDlpV2DiscoveryVertexDatasetGenerationCadence
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -5271,7 +5387,8 @@ type GooglePrivacyDlpV2FileStoreDataProfile struct {
 	// https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints
 	FileStoreLocation string `json:"fileStoreLocation,omitempty"`
 	// FileStorePath: The file store path. * Cloud Storage: `gs://{bucket}` *
-	// Amazon S3: `s3://{bucket}`
+	// Amazon S3: `s3://{bucket}` * Vertex AI dataset:
+	// `projects/{project_number}/locations/{location}/datasets/{dataset_id}`
 	FileStorePath string `json:"fileStorePath,omitempty"`
 	// FullResource: The resource name of the resource profiled.
 	// https://cloud.google.com/apis/design/resource_names#full_resource_name
@@ -5298,6 +5415,8 @@ type GooglePrivacyDlpV2FileStoreDataProfile struct {
 	// ProjectId: The Google Cloud project ID that owns the resource. For Amazon S3
 	// buckets, this is the AWS Account Id.
 	ProjectId string `json:"projectId,omitempty"`
+	// RelatedResources: Resources related to this profile.
+	RelatedResources []*GooglePrivacyDlpV2RelatedResource `json:"relatedResources,omitempty"`
 	// ResourceAttributes: Attributes of the resource being profiled. Currently
 	// used attributes: * customer_managed_encryption: boolean - true: the resource
 	// is encrypted with a customer-managed key. - false: the resource is encrypted
@@ -5598,6 +5717,11 @@ func (s *GooglePrivacyDlpV2FixedSizeBucketingConfig) UnmarshalJSON(data []byte) 
 	return nil
 }
 
+// GooglePrivacyDlpV2GlobalProcessing: Processing will happen in the global
+// region.
+type GooglePrivacyDlpV2GlobalProcessing struct {
+}
+
 // GooglePrivacyDlpV2HotwordRule: The rule that adjusts the likelihood of
 // findings within a certain proximity of hotwords.
 type GooglePrivacyDlpV2HotwordRule struct {
@@ -5838,6 +5962,33 @@ func (s GooglePrivacyDlpV2HybridOptions) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GooglePrivacyDlpV2ImageFallbackLocation: Configure image processing to fall
+// back to the configured processing option below if unavailable in the request
+// location.
+type GooglePrivacyDlpV2ImageFallbackLocation struct {
+	// GlobalProcessing: Processing will happen in the global region.
+	GlobalProcessing *GooglePrivacyDlpV2GlobalProcessing `json:"globalProcessing,omitempty"`
+	// MultiRegionProcessing: Processing will happen in a multi-region that
+	// contains the current region if available.
+	MultiRegionProcessing *GooglePrivacyDlpV2MultiRegionProcessing `json:"multiRegionProcessing,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "GlobalProcessing") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "GlobalProcessing") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GooglePrivacyDlpV2ImageFallbackLocation) MarshalJSON() ([]byte, error) {
+	type NoMethod GooglePrivacyDlpV2ImageFallbackLocation
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GooglePrivacyDlpV2ImageLocation: Location of the finding within an image.
 type GooglePrivacyDlpV2ImageLocation struct {
 	// BoundingBoxes: Bounding boxes locating the pixels within the image
@@ -6068,6 +6219,7 @@ type GooglePrivacyDlpV2InfoTypeCategory struct {
 	//   "CONTEXTUAL_INFORMATION" - Information that is not sensitive on its own,
 	// but provides details about the circumstances surrounding an entity or an
 	// event.
+	//   "CUSTOM" - Category for `CustomInfoType` types.
 	TypeCategory string `json:"typeCategory,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "IndustryCategory") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -7669,6 +7821,11 @@ func (s GooglePrivacyDlpV2MetadataLocation) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GooglePrivacyDlpV2MultiRegionProcessing: Processing will happen in a
+// multi-region that contains the current region if available.
+type GooglePrivacyDlpV2MultiRegionProcessing struct {
+}
+
 // GooglePrivacyDlpV2NumericalStatsConfig: Compute numerical stats over an
 // individual column, including min, max, and quantiles.
 type GooglePrivacyDlpV2NumericalStatsConfig struct {
@@ -8153,6 +8310,32 @@ type GooglePrivacyDlpV2PrivacyMetric struct {
 
 func (s GooglePrivacyDlpV2PrivacyMetric) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePrivacyDlpV2PrivacyMetric
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GooglePrivacyDlpV2ProcessingLocation: Configure processing location for
+// discovery and inspection. For example, image OCR is only provided in limited
+// regions but configuring ProcessingLocation will redirect OCR to a location
+// where OCR is provided.
+type GooglePrivacyDlpV2ProcessingLocation struct {
+	// ImageFallbackLocation: Image processing will fall back using this
+	// configuration.
+	ImageFallbackLocation *GooglePrivacyDlpV2ImageFallbackLocation `json:"imageFallbackLocation,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ImageFallbackLocation") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ImageFallbackLocation") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GooglePrivacyDlpV2ProcessingLocation) MarshalJSON() ([]byte, error) {
+	type NoMethod GooglePrivacyDlpV2ProcessingLocation
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -8914,6 +9097,30 @@ type GooglePrivacyDlpV2ReidentifyContentResponse struct {
 
 func (s GooglePrivacyDlpV2ReidentifyContentResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePrivacyDlpV2ReidentifyContentResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GooglePrivacyDlpV2RelatedResource: A related resource. Examples: * The
+// source BigQuery table for a Vertex AI dataset. * The source Cloud Storage
+// bucket for a Vertex AI dataset.
+type GooglePrivacyDlpV2RelatedResource struct {
+	// FullResource: The full resource name of the related resource.
+	FullResource string `json:"fullResource,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "FullResource") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "FullResource") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GooglePrivacyDlpV2RelatedResource) MarshalJSON() ([]byte, error) {
+	type NoMethod GooglePrivacyDlpV2RelatedResource
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -9740,6 +9947,8 @@ type GooglePrivacyDlpV2TableDataProfile struct {
 	// ProjectDataProfile: The resource name of the project data profile for this
 	// table.
 	ProjectDataProfile string `json:"projectDataProfile,omitempty"`
+	// RelatedResources: Resources related to this profile.
+	RelatedResources []*GooglePrivacyDlpV2RelatedResource `json:"relatedResources,omitempty"`
 	// ResourceLabels: The labels applied to the resource at the time the profile
 	// was generated.
 	ResourceLabels map[string]string `json:"resourceLabels,omitempty"`
@@ -10819,6 +11028,136 @@ type GooglePrivacyDlpV2VersionDescription struct {
 
 func (s GooglePrivacyDlpV2VersionDescription) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePrivacyDlpV2VersionDescription
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GooglePrivacyDlpV2VertexDatasetCollection: Match dataset resources using
+// regex filters.
+type GooglePrivacyDlpV2VertexDatasetCollection struct {
+	// VertexDatasetRegexes: The regex used to filter dataset resources.
+	VertexDatasetRegexes *GooglePrivacyDlpV2VertexDatasetRegexes `json:"vertexDatasetRegexes,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "VertexDatasetRegexes") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "VertexDatasetRegexes") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GooglePrivacyDlpV2VertexDatasetCollection) MarshalJSON() ([]byte, error) {
+	type NoMethod GooglePrivacyDlpV2VertexDatasetCollection
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GooglePrivacyDlpV2VertexDatasetDiscoveryTarget: Target used to match against
+// for discovery with Vertex AI datasets.
+type GooglePrivacyDlpV2VertexDatasetDiscoveryTarget struct {
+	// Conditions: In addition to matching the filter, these conditions must be
+	// true before a profile is generated.
+	Conditions *GooglePrivacyDlpV2DiscoveryVertexDatasetConditions `json:"conditions,omitempty"`
+	// Disabled: Disable profiling for datasets that match this filter.
+	Disabled *GooglePrivacyDlpV2Disabled `json:"disabled,omitempty"`
+	// Filter: Required. The datasets the discovery cadence applies to. The first
+	// target with a matching filter will be the one to apply to a dataset.
+	Filter *GooglePrivacyDlpV2DiscoveryVertexDatasetFilter `json:"filter,omitempty"`
+	// GenerationCadence: How often and when to update profiles. New datasets that
+	// match both the filter and conditions are scanned as quickly as possible
+	// depending on system capacity.
+	GenerationCadence *GooglePrivacyDlpV2DiscoveryVertexDatasetGenerationCadence `json:"generationCadence,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Conditions") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Conditions") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GooglePrivacyDlpV2VertexDatasetDiscoveryTarget) MarshalJSON() ([]byte, error) {
+	type NoMethod GooglePrivacyDlpV2VertexDatasetDiscoveryTarget
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GooglePrivacyDlpV2VertexDatasetRegex: A pattern to match against one or more
+// dataset resources.
+type GooglePrivacyDlpV2VertexDatasetRegex struct {
+	// ProjectIdRegex: For organizations, if unset, will match all projects. Has no
+	// effect for configurations created within a project.
+	ProjectIdRegex string `json:"projectIdRegex,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ProjectIdRegex") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ProjectIdRegex") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GooglePrivacyDlpV2VertexDatasetRegex) MarshalJSON() ([]byte, error) {
+	type NoMethod GooglePrivacyDlpV2VertexDatasetRegex
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GooglePrivacyDlpV2VertexDatasetRegexes: A collection of regular expressions
+// to determine what datasets to match against.
+type GooglePrivacyDlpV2VertexDatasetRegexes struct {
+	// Patterns: Required. The group of regular expression patterns to match
+	// against one or more datasets. Maximum of 100 entries. The sum of the lengths
+	// of all regular expressions can't exceed 10 KiB.
+	Patterns []*GooglePrivacyDlpV2VertexDatasetRegex `json:"patterns,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Patterns") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Patterns") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GooglePrivacyDlpV2VertexDatasetRegexes) MarshalJSON() ([]byte, error) {
+	type NoMethod GooglePrivacyDlpV2VertexDatasetRegexes
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GooglePrivacyDlpV2VertexDatasetResourceReference: Identifies a single Vertex
+// AI dataset.
+type GooglePrivacyDlpV2VertexDatasetResourceReference struct {
+	// DatasetResourceName: Required. The name of the dataset resource. If set
+	// within a project-level configuration, the specified resource must be within
+	// the project.
+	DatasetResourceName string `json:"datasetResourceName,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "DatasetResourceName") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DatasetResourceName") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GooglePrivacyDlpV2VertexDatasetResourceReference) MarshalJSON() ([]byte, error) {
+	type NoMethod GooglePrivacyDlpV2VertexDatasetResourceReference
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 

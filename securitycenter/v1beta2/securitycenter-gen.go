@@ -595,6 +595,28 @@ func (s *AdaptiveProtection) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+// Allowed: Allowed IP rule.
+type Allowed struct {
+	// IpRules: Optional. Optional list of allowed IP rules.
+	IpRules []*IpRule `json:"ipRules,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "IpRules") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "IpRules") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s Allowed) MarshalJSON() ([]byte, error) {
+	type NoMethod Allowed
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // Application: Represents an application associated with a finding.
 type Application struct {
 	// BaseUri: The base URI that identifies the network location of the
@@ -1825,6 +1847,28 @@ func (s Database) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// Denied: Denied IP rule.
+type Denied struct {
+	// IpRules: Optional. Optional list of denied IP rules.
+	IpRules []*IpRule `json:"ipRules,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "IpRules") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "IpRules") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s Denied) MarshalJSON() ([]byte, error) {
+	type NoMethod Denied
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // Details: Details of a subscription.
 type Details struct {
 	// EndTime: The time the subscription has or will end.
@@ -2313,6 +2357,10 @@ type Finding struct {
 	// intrusion. For more information, see Indicator of compromise
 	// (https://en.wikipedia.org/wiki/Indicator_of_compromise).
 	Indicator *Indicator `json:"indicator,omitempty"`
+	// IpRules: IP rules associated with the finding.
+	IpRules *IpRules `json:"ipRules,omitempty"`
+	// Job: Job associated with the finding.
+	Job *Job `json:"job,omitempty"`
 	// KernelRootkit: Signature of the kernel rootkit.
 	KernelRootkit *KernelRootkit `json:"kernelRootkit,omitempty"`
 	// Kubernetes: Kubernetes resources associated with the finding.
@@ -2356,6 +2404,8 @@ type Finding struct {
 	// "folders/{folder_id}/sources/{source_id}/findings/{finding_id}",
 	// "projects/{project_id}/sources/{source_id}/findings/{finding_id}".
 	Name string `json:"name,omitempty"`
+	// Networks: Represents the VPC networks that the resource is attached to.
+	Networks []*Network `json:"networks,omitempty"`
 	// NextSteps: Steps to address the finding.
 	NextSteps string `json:"nextSteps,omitempty"`
 	// Notebook: Notebook associated with the finding.
@@ -3740,6 +3790,28 @@ func (s *GoogleCloudSecuritycenterV2AdaptiveProtection) UnmarshalJSON(data []byt
 	return nil
 }
 
+// GoogleCloudSecuritycenterV2Allowed: Allowed IP rule.
+type GoogleCloudSecuritycenterV2Allowed struct {
+	// IpRules: Optional. Optional list of allowed IP rules.
+	IpRules []*GoogleCloudSecuritycenterV2IpRule `json:"ipRules,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "IpRules") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "IpRules") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudSecuritycenterV2Allowed) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudSecuritycenterV2Allowed
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudSecuritycenterV2Application: Represents an application associated
 // with a finding.
 type GoogleCloudSecuritycenterV2Application struct {
@@ -4958,6 +5030,28 @@ func (s GoogleCloudSecuritycenterV2Database) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudSecuritycenterV2Denied: Denied IP rule.
+type GoogleCloudSecuritycenterV2Denied struct {
+	// IpRules: Optional. Optional list of denied IP rules.
+	IpRules []*GoogleCloudSecuritycenterV2IpRule `json:"ipRules,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "IpRules") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "IpRules") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudSecuritycenterV2Denied) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudSecuritycenterV2Denied
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudSecuritycenterV2Detection: Memory hash detection contributing to
 // the binary family match.
 type GoogleCloudSecuritycenterV2Detection struct {
@@ -5390,6 +5484,10 @@ type GoogleCloudSecuritycenterV2Finding struct {
 	// intrusion. For more information, see Indicator of compromise
 	// (https://en.wikipedia.org/wiki/Indicator_of_compromise).
 	Indicator *GoogleCloudSecuritycenterV2Indicator `json:"indicator,omitempty"`
+	// IpRules: IP rules associated with the finding.
+	IpRules *GoogleCloudSecuritycenterV2IpRules `json:"ipRules,omitempty"`
+	// Job: Job associated with the finding.
+	Job *GoogleCloudSecuritycenterV2Job `json:"job,omitempty"`
 	// KernelRootkit: Signature of the kernel rootkit.
 	KernelRootkit *GoogleCloudSecuritycenterV2KernelRootkit `json:"kernelRootkit,omitempty"`
 	// Kubernetes: Kubernetes resources associated with the finding.
@@ -5440,6 +5538,8 @@ type GoogleCloudSecuritycenterV2Finding struct {
 	// `projects/{project_id}/sources/{source_id}/locations/{location_id}/findings/{
 	// finding_id}`
 	Name string `json:"name,omitempty"`
+	// Networks: Represents the VPC networks that the resource is attached to.
+	Networks []*GoogleCloudSecuritycenterV2Network `json:"networks,omitempty"`
 	// NextSteps: Steps to address the finding.
 	NextSteps string `json:"nextSteps,omitempty"`
 	// Notebook: Notebook associated with the finding.
@@ -5701,6 +5801,78 @@ type GoogleCloudSecuritycenterV2Indicator struct {
 
 func (s GoogleCloudSecuritycenterV2Indicator) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudSecuritycenterV2Indicator
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudSecuritycenterV2IpRule: IP rule information.
+type GoogleCloudSecuritycenterV2IpRule struct {
+	// PortRanges: Optional. An optional list of ports to which this rule applies.
+	// This field is only applicable for the UDP or (S)TCP protocols. Each entry
+	// must be either an integer or a range including a min and max port number.
+	PortRanges []*GoogleCloudSecuritycenterV2PortRange `json:"portRanges,omitempty"`
+	// Protocol: The IP protocol this rule applies to. This value can either be one
+	// of the following well known protocol strings (TCP, UDP, ICMP, ESP, AH, IPIP,
+	// SCTP) or a string representation of the integer value.
+	Protocol string `json:"protocol,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "PortRanges") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "PortRanges") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudSecuritycenterV2IpRule) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudSecuritycenterV2IpRule
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudSecuritycenterV2IpRules: IP rules associated with the finding.
+type GoogleCloudSecuritycenterV2IpRules struct {
+	// Allowed: Tuple with allowed rules.
+	Allowed *GoogleCloudSecuritycenterV2Allowed `json:"allowed,omitempty"`
+	// Denied: Tuple with denied rules.
+	Denied *GoogleCloudSecuritycenterV2Denied `json:"denied,omitempty"`
+	// DestinationIpRanges: If destination IP ranges are specified, the firewall
+	// rule applies only to traffic that has a destination IP address in these
+	// ranges. These ranges must be expressed in CIDR format. Only supports IPv4.
+	DestinationIpRanges []string `json:"destinationIpRanges,omitempty"`
+	// Direction: The direction that the rule is applicable to, one of ingress or
+	// egress.
+	//
+	// Possible values:
+	//   "DIRECTION_UNSPECIFIED" - Unspecified direction value.
+	//   "INGRESS" - Ingress direction value.
+	//   "EGRESS" - Egress direction value.
+	Direction string `json:"direction,omitempty"`
+	// ExposedServices: Name of the network protocol service, such as FTP, that is
+	// exposed by the open port. Follows the naming convention available at:
+	// https://www.iana.org/assignments/service-names-port-numbers/service-names-port-numbers.xhtml.
+	ExposedServices []string `json:"exposedServices,omitempty"`
+	// SourceIpRanges: If source IP ranges are specified, the firewall rule applies
+	// only to traffic that has a source IP address in these ranges. These ranges
+	// must be expressed in CIDR format. Only supports IPv4.
+	SourceIpRanges []string `json:"sourceIpRanges,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Allowed") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Allowed") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudSecuritycenterV2IpRules) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudSecuritycenterV2IpRules
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -6166,6 +6338,44 @@ type GoogleCloudSecuritycenterV2IssueSecurityContextContext struct {
 
 func (s GoogleCloudSecuritycenterV2IssueSecurityContextContext) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudSecuritycenterV2IssueSecurityContextContext
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudSecuritycenterV2Job: Describes a job
+type GoogleCloudSecuritycenterV2Job struct {
+	// ErrorCode: Optional. If the job did not complete successfully, this field
+	// describes why.
+	ErrorCode int64 `json:"errorCode,omitempty"`
+	// Location: Optional. Gives the location where the job ran, such as `US` or
+	// `europe-west1`
+	Location string `json:"location,omitempty"`
+	// Name: The fully-qualified name for a job. e.g. `projects//jobs/`
+	Name string `json:"name,omitempty"`
+	// State: Output only. State of the job, such as `RUNNING` or `PENDING`.
+	//
+	// Possible values:
+	//   "JOB_STATE_UNSPECIFIED" - Unspecified represents an unknown state and
+	// should not be used.
+	//   "PENDING" - Job is scheduled and pending for run
+	//   "RUNNING" - Job in progress
+	//   "SUCCEEDED" - Job has completed with success
+	//   "FAILED" - Job has completed but with failure
+	State string `json:"state,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ErrorCode") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ErrorCode") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudSecuritycenterV2Job) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudSecuritycenterV2Job
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -6678,6 +6888,30 @@ func (s GoogleCloudSecuritycenterV2MuteInfo) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudSecuritycenterV2Network: Contains information about a VPC network
+// associated with the finding.
+type GoogleCloudSecuritycenterV2Network struct {
+	// Name: The name of the VPC network resource, for example,
+	// `//compute.googleapis.com/projects/my-project/global/networks/my-network`.
+	Name string `json:"name,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Name") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Name") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudSecuritycenterV2Network) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudSecuritycenterV2Network
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudSecuritycenterV2Node: Kubernetes nodes associated with the
 // finding.
 type GoogleCloudSecuritycenterV2Node struct {
@@ -6929,6 +7163,33 @@ type GoogleCloudSecuritycenterV2PolicyDriftDetails struct {
 
 func (s GoogleCloudSecuritycenterV2PolicyDriftDetails) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudSecuritycenterV2PolicyDriftDetails
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudSecuritycenterV2PortRange: A port range which is inclusive of the
+// min and max values. Values are between 0 and 2^16-1. The max can be equal /
+// must be not smaller than the min value. If min and max are equal this
+// indicates that it is a single port.
+type GoogleCloudSecuritycenterV2PortRange struct {
+	// Max: Maximum port value.
+	Max int64 `json:"max,omitempty,string"`
+	// Min: Minimum port value.
+	Min int64 `json:"min,omitempty,string"`
+	// ForceSendFields is a list of field names (e.g. "Max") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Max") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudSecuritycenterV2PortRange) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudSecuritycenterV2PortRange
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -7843,6 +8104,116 @@ func (s Indicator) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// IpRule: IP rule information.
+type IpRule struct {
+	// PortRanges: Optional. An optional list of ports to which this rule applies.
+	// This field is only applicable for the UDP or (S)TCP protocols. Each entry
+	// must be either an integer or a range including a min and max port number.
+	PortRanges []*PortRange `json:"portRanges,omitempty"`
+	// Protocol: The IP protocol this rule applies to. This value can either be one
+	// of the following well known protocol strings (TCP, UDP, ICMP, ESP, AH, IPIP,
+	// SCTP) or a string representation of the integer value.
+	Protocol string `json:"protocol,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "PortRanges") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "PortRanges") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s IpRule) MarshalJSON() ([]byte, error) {
+	type NoMethod IpRule
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// IpRules: IP rules associated with the finding.
+type IpRules struct {
+	// Allowed: Tuple with allowed rules.
+	Allowed *Allowed `json:"allowed,omitempty"`
+	// Denied: Tuple with denied rules.
+	Denied *Denied `json:"denied,omitempty"`
+	// DestinationIpRanges: If destination IP ranges are specified, the firewall
+	// rule applies only to traffic that has a destination IP address in these
+	// ranges. These ranges must be expressed in CIDR format. Only supports IPv4.
+	DestinationIpRanges []string `json:"destinationIpRanges,omitempty"`
+	// Direction: The direction that the rule is applicable to, one of ingress or
+	// egress.
+	//
+	// Possible values:
+	//   "DIRECTION_UNSPECIFIED" - Unspecified direction value.
+	//   "INGRESS" - Ingress direction value.
+	//   "EGRESS" - Egress direction value.
+	Direction string `json:"direction,omitempty"`
+	// ExposedServices: Name of the network protocol service, such as FTP, that is
+	// exposed by the open port. Follows the naming convention available at:
+	// https://www.iana.org/assignments/service-names-port-numbers/service-names-port-numbers.xhtml.
+	ExposedServices []string `json:"exposedServices,omitempty"`
+	// SourceIpRanges: If source IP ranges are specified, the firewall rule applies
+	// only to traffic that has a source IP address in these ranges. These ranges
+	// must be expressed in CIDR format. Only supports IPv4.
+	SourceIpRanges []string `json:"sourceIpRanges,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Allowed") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Allowed") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s IpRules) MarshalJSON() ([]byte, error) {
+	type NoMethod IpRules
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// Job: Describes a job
+type Job struct {
+	// ErrorCode: Optional. If the job did not complete successfully, this field
+	// describes why.
+	ErrorCode int64 `json:"errorCode,omitempty"`
+	// Location: Optional. Gives the location where the job ran, such as `US` or
+	// `europe-west1`
+	Location string `json:"location,omitempty"`
+	// Name: The fully-qualified name for a job. e.g. `projects//jobs/`
+	Name string `json:"name,omitempty"`
+	// State: Output only. State of the job, such as `RUNNING` or `PENDING`.
+	//
+	// Possible values:
+	//   "JOB_STATE_UNSPECIFIED" - Unspecified represents an unknown state and
+	// should not be used.
+	//   "PENDING" - Job is scheduled and pending for run
+	//   "RUNNING" - Job in progress
+	//   "SUCCEEDED" - Job has completed with success
+	//   "FAILED" - Job has completed but with failure
+	State string `json:"state,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ErrorCode") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ErrorCode") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s Job) MarshalJSON() ([]byte, error) {
+	type NoMethod Job
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // KernelRootkit: Kernel mode rootkit signatures.
 type KernelRootkit struct {
 	// Name: Rootkit name, when available.
@@ -8274,6 +8645,30 @@ func (s MuteInfo) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// Network: Contains information about a VPC network associated with the
+// finding.
+type Network struct {
+	// Name: The name of the VPC network resource, for example,
+	// `//compute.googleapis.com/projects/my-project/global/networks/my-network`.
+	Name string `json:"name,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Name") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Name") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s Network) MarshalJSON() ([]byte, error) {
+	type NoMethod Network
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // Node: Kubernetes nodes associated with the finding.
 type Node struct {
 	// Name: Full resource name (https://google.aip.dev/122#full-resource-names) of
@@ -8494,6 +8889,33 @@ type PolicyDriftDetails struct {
 
 func (s PolicyDriftDetails) MarshalJSON() ([]byte, error) {
 	type NoMethod PolicyDriftDetails
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// PortRange: A port range which is inclusive of the min and max values. Values
+// are between 0 and 2^16-1. The max can be equal / must be not smaller than
+// the min value. If min and max are equal this indicates that it is a single
+// port.
+type PortRange struct {
+	// Max: Maximum port value.
+	Max int64 `json:"max,omitempty,string"`
+	// Min: Minimum port value.
+	Min int64 `json:"min,omitempty,string"`
+	// ForceSendFields is a list of field names (e.g. "Max") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Max") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s PortRange) MarshalJSON() ([]byte, error) {
+	type NoMethod PortRange
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 

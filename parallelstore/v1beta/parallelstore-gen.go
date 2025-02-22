@@ -360,6 +360,9 @@ type Instance struct {
 	CapacityGib int64 `json:"capacityGib,omitempty,string"`
 	// CreateTime: Output only. The time when the instance was created.
 	CreateTime string `json:"createTime,omitempty"`
+	// DaosVersion: Output only. Deprecated 'daos_version' field. Output only. The
+	// version of DAOS software running in the instance.
+	DaosVersion string `json:"daosVersion,omitempty"`
 	// DeploymentType: Optional. Immutable. The deployment type of the instance.
 	// Allowed values are: * `SCRATCH`: the instance is a scratch instance. *
 	// `PERSISTENT`: the instance is a persistent instance.

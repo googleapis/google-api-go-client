@@ -1898,7 +1898,7 @@ type DeployJobRun struct {
 	//   "EXECUTION_FAILED" - The deploy operation did not complete successfully;
 	// check Cloud Build logs.
 	//   "DEADLINE_EXCEEDED" - The deploy job run did not complete within the
-	// alloted time.
+	// allotted time.
 	//   "MISSING_RESOURCES_FOR_CANARY" - There were missing resources in the
 	// runtime environment required for a canary deployment. Check the Cloud Build
 	// logs for more information.
@@ -2944,7 +2944,7 @@ func (s ListReleasesResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// ListRolloutsResponse: ListRolloutsResponse is the response object reutrned
+// ListRolloutsResponse: ListRolloutsResponse is the response object returned
 // by `ListRollouts`.
 type ListRolloutsResponse struct {
 	// NextPageToken: A token, which can be sent as `page_token` to retrieve the
@@ -3612,7 +3612,7 @@ type PostdeployJobRun struct {
 	//   "EXECUTION_FAILED" - The postdeploy operation did not complete
 	// successfully; check Cloud Build logs.
 	//   "DEADLINE_EXCEEDED" - The postdeploy job run did not complete within the
-	// alloted time.
+	// allotted time.
 	//   "CLOUD_BUILD_REQUEST_FAILED" - Cloud Build failed to fulfill Cloud
 	// Deploy's request. See failure_message for additional details.
 	FailureCause string `json:"failureCause,omitempty"`
@@ -3702,7 +3702,7 @@ type PredeployJobRun struct {
 	//   "EXECUTION_FAILED" - The predeploy operation did not complete
 	// successfully; check Cloud Build logs.
 	//   "DEADLINE_EXCEEDED" - The predeploy job run did not complete within the
-	// alloted time.
+	// allotted time.
 	//   "CLOUD_BUILD_REQUEST_FAILED" - Cloud Build failed to fulfill Cloud
 	// Deploy's request. See failure_message for additional details.
 	FailureCause string `json:"failureCause,omitempty"`
@@ -4583,7 +4583,8 @@ type Rollout struct {
 	// #required_permissions).
 	//   "EXECUTION_FAILED" - The deploy operation did not complete successfully;
 	// check Cloud Build logs.
-	//   "DEADLINE_EXCEEDED" - Deployment did not complete within the alloted time.
+	//   "DEADLINE_EXCEEDED" - Deployment did not complete within the allotted
+	// time.
 	//   "RELEASE_FAILED" - Release is in a failed state.
 	//   "RELEASE_ABANDONED" - Release is abandoned.
 	//   "VERIFICATION_CONFIG_NOT_FOUND" - No Skaffold verify configuration was
@@ -4857,8 +4858,8 @@ type RouteDestinations struct {
 	// PropagateService: Optional. Whether to propagate the Kubernetes Service to
 	// the route destination clusters. The Service will always be deployed to the
 	// Target cluster even if the HTTPRoute is not. This option may be used to
-	// facilitiate successful DNS lookup in the route destination clusters. Can
-	// only be set to true if destinations are specified.
+	// facilitate successful DNS lookup in the route destination clusters. Can only
+	// be set to true if destinations are specified.
 	PropagateService bool `json:"propagateService,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "DestinationIds") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -5914,7 +5915,7 @@ type VerifyJobRun struct {
 	//   "EXECUTION_FAILED" - The verify operation did not complete successfully;
 	// check Cloud Build logs.
 	//   "DEADLINE_EXCEEDED" - The verify job run did not complete within the
-	// alloted time.
+	// allotted time.
 	//   "VERIFICATION_CONFIG_NOT_FOUND" - No Skaffold verify configuration was
 	// found.
 	//   "CLOUD_BUILD_REQUEST_FAILED" - Cloud Build failed to fulfill Cloud

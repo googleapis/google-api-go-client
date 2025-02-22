@@ -2209,9 +2209,10 @@ type GoogleCloudAiplatformV1beta1ToolGoogleSearch struct {
 }
 
 // GoogleCloudAiplatformV1beta1VertexAISearch: Retrieve from Vertex AI Search
-// datastore for grounding. See https://cloud.google.com/products/agent-builder
+// datastore or engine for grounding. datastore and engine are mutually
+// exclusive. See https://cloud.google.com/products/agent-builder
 type GoogleCloudAiplatformV1beta1VertexAISearch struct {
-	// Datastore: Required. Fully-qualified Vertex AI Search data store resource
+	// Datastore: Optional. Fully-qualified Vertex AI Search data store resource
 	// ID. Format:
 	// `projects/{project}/locations/{location}/collections/{collection}/dataStores/
 	// {dataStore}`

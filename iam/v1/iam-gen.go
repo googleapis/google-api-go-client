@@ -1192,6 +1192,15 @@ type GoogleIamAdminV1WorkforcePoolProviderExtraAttributesOAuth2Client struct {
 	// https://learn.microsoft.com/en-us/graph/api/resources/group?view=graph-rest-1.0#properties
 	// for more details on `microsoft.graph.group` properties. The attributes
 	// obtained from idntity provider are mapped to `assertion.groups`.
+	//   "AZURE_AD_GROUPS_ID" - Used to get the user's group claims from the
+	// Microsoft Entra ID identity provider using configuration provided in
+	// ExtraAttributesOAuth2Client and `id` property of the `microsoft.graph.group`
+	// object is used for claim mapping. See
+	// https://learn.microsoft.com/en-us/graph/api/resources/group?view=graph-rest-1.0#properties
+	// for more details on `microsoft.graph.group` properties. The group IDs
+	// obtained from Microsoft Entra ID are present in `assertion. groups` for OIDC
+	// providers and `assertion.attributes.groups` for SAML providers for attribute
+	// mapping.
 	AttributesType string `json:"attributesType,omitempty"`
 	// ClientId: Required. The OAuth 2.0 client ID for retrieving extra attributes
 	// from the identity provider. Required to get the Access Token using client

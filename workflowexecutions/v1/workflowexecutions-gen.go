@@ -357,11 +357,11 @@ type Execution struct {
 	// prematurely. The value is only present if the execution's state is `FAILED`
 	// or `CANCELLED`.
 	Error *Error `json:"error,omitempty"`
-	// ExecutionHistoryLevel: Optional. Describes the level of the execution
-	// history feature to apply to this execution. If not specified, the level of
-	// the execution history feature will be determined by its workflow's execution
-	// history level. If the value is different from its workflow's value, it will
-	// override the workflow's execution history level for this exeuction.
+	// ExecutionHistoryLevel: Optional. Describes the execution history level to
+	// apply to this execution. If not specified, the execution history level is
+	// determined by its workflow's execution history level. If the levels are
+	// different, the executionHistoryLevel overrides the workflow's execution
+	// history level for this execution.
 	//
 	// Possible values:
 	//   "EXECUTION_HISTORY_LEVEL_UNSPECIFIED" - The default/unset value.
@@ -806,7 +806,7 @@ type StepEntry struct {
 	// `projects/{project}/locations/{location}/workflows/{workflow}/executions/{exe
 	// cution}/stepEntries/{step_entry}`.
 	Name string `json:"name,omitempty"`
-	// NavigationInfo: Output only. The NavigationInfo associated to this step.
+	// NavigationInfo: Output only. The NavigationInfo associated with this step.
 	NavigationInfo *NavigationInfo `json:"navigationInfo,omitempty"`
 	// Routine: Output only. The name of the routine this step entry belongs to. A
 	// routine name is the subworkflow name defined in the YAML source code. The
@@ -823,7 +823,7 @@ type StepEntry struct {
 	State string `json:"state,omitempty"`
 	// Step: Output only. The name of the step this step entry belongs to.
 	Step string `json:"step,omitempty"`
-	// StepEntryMetadata: Output only. The StepEntryMetadata associated to this
+	// StepEntryMetadata: Output only. The StepEntryMetadata associated with this
 	// step.
 	StepEntryMetadata *StepEntryMetadata `json:"stepEntryMetadata,omitempty"`
 	// StepType: Output only. The type of the step this step entry belongs to.
@@ -858,7 +858,7 @@ type StepEntry struct {
 	StepType string `json:"stepType,omitempty"`
 	// UpdateTime: Output only. The most recently updated time of the step entry.
 	UpdateTime string `json:"updateTime,omitempty"`
-	// VariableData: Output only. The VariableData associated to this step.
+	// VariableData: Output only. The VariableData associated with this step.
 	VariableData *VariableData `json:"variableData,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.

@@ -654,7 +654,7 @@ type Cluster struct {
 	// name. Example:
 	// projects/{project}/locations/{location}/backupCollections/{collection}
 	BackupCollection string `json:"backupCollection,omitempty"`
-	// ClusterEndpoints: Optional. A list of cluster enpoints.
+	// ClusterEndpoints: Optional. A list of cluster endpoints.
 	ClusterEndpoints []*ClusterEndpoint `json:"clusterEndpoints,omitempty"`
 	// CreateTime: Output only. The timestamp associated with the cluster creation
 	// request.
@@ -795,8 +795,8 @@ func (s *Cluster) UnmarshalJSON(data []byte) error {
 // group, there shall be one connection for each service attachment in the
 // cluster.
 type ClusterEndpoint struct {
-	// Connections: A group of PSC connections. They are created in the same VPC
-	// network, one for each service attachment in the cluster.
+	// Connections: Required. A group of PSC connections. They are created in the
+	// same VPC network, one for each service attachment in the cluster.
 	Connections []*ConnectionDetail `json:"connections,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Connections") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -846,7 +846,7 @@ func (s ClusterMaintenancePolicy) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// ClusterMaintenanceSchedule: Upcoming maitenance schedule.
+// ClusterMaintenanceSchedule: Upcoming maintenance schedule.
 type ClusterMaintenanceSchedule struct {
 	// EndTime: Output only. The end time of any upcoming scheduled maintenance for
 	// this instance.
@@ -1397,6 +1397,8 @@ type DatabaseResourceHealthSignalData struct {
 	// instance does not have a maintenance policy configured.
 	//   "SIGNAL_TYPE_NO_DELETION_PROTECTION" - Deletion Protection Disabled for
 	// the resource
+	//   "SIGNAL_TYPE_INEFFICIENT_QUERY" - Indicates that the instance has
+	// inefficient queries detected.
 	SignalType string `json:"signalType,omitempty"`
 	// Possible values:
 	//   "STATE_UNSPECIFIED" - Unspecified state.
@@ -1476,7 +1478,7 @@ func (s DatabaseResourceId) MarshalJSON() ([]byte, error) {
 }
 
 // DatabaseResourceMetadata: Common model for database resource instance
-// metadata. Next ID: 24
+// metadata. Next ID: 25
 type DatabaseResourceMetadata struct {
 	// AvailabilityConfiguration: Availability configuration for this instance
 	AvailabilityConfiguration *AvailabilityConfiguration `json:"availabilityConfiguration,omitempty"`
@@ -1525,6 +1527,8 @@ type DatabaseResourceMetadata struct {
 	//   "DELETED" - Instance is deleted.
 	//   "STATE_OTHER" - For rest of the other category
 	ExpectedState string `json:"expectedState,omitempty"`
+	// GcbdrConfiguration: GCBDR configuration for the resource.
+	GcbdrConfiguration *GCBDRConfiguration `json:"gcbdrConfiguration,omitempty"`
 	// Id: Required. Unique identifier for a Database resource
 	Id *DatabaseResourceId `json:"id,omitempty"`
 	// InstanceType: The type of the instance. Specified at creation time.
@@ -1570,7 +1574,7 @@ type DatabaseResourceMetadata struct {
 	// the same source. Resource name to follow CAIS resource_name format as noted
 	// here go/condor-common-datamodel
 	ResourceName string `json:"resourceName,omitempty"`
-	// SuspensionReason: Suspension reason for the resource.
+	// SuspensionReason: Optional. Suspension reason for the resource.
 	//
 	// Possible values:
 	//   "SUSPENSION_REASON_UNSPECIFIED" - Suspension reason is unspecified.
@@ -1856,6 +1860,8 @@ type DatabaseResourceRecommendationSignalData struct {
 	// instance does not have a maintenance policy configured.
 	//   "SIGNAL_TYPE_NO_DELETION_PROTECTION" - Deletion Protection Disabled for
 	// the resource
+	//   "SIGNAL_TYPE_INEFFICIENT_QUERY" - Indicates that the instance has
+	// inefficient queries detected.
 	SignalType string `json:"signalType,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AdditionalMetadata") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -2109,10 +2115,32 @@ func (s FixedFrequencySchedule) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GCBDRConfiguration: GCBDR Configuration for the resource.
+type GCBDRConfiguration struct {
+	// GcbdrManaged: Whether the resource is managed by GCBDR.
+	GcbdrManaged bool `json:"gcbdrManaged,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "GcbdrManaged") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "GcbdrManaged") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GCBDRConfiguration) MarshalJSON() ([]byte, error) {
+	type NoMethod GCBDRConfiguration
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GcsBackupSource: Backups stored in Cloud Storage buckets. The Cloud Storage
 // buckets need to be the same region as the clusters.
 type GcsBackupSource struct {
-	// Uris: Optional. URIs of the GCS objects to import. Example:
+	// Uris: Optional. URIs of the Cloud Storage objects to import. Example:
 	// gs://bucket1/object1, gs://bucket2/folder2/object2
 	Uris []string `json:"uris,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Uris") to unconditionally
@@ -3441,6 +3469,8 @@ type PscConnection struct {
 	// Network: Required. The consumer network where the IP address resides, in the
 	// form of projects/{project_id}/global/networks/{network_id}.
 	Network string `json:"network,omitempty"`
+	// Port: Output only. The port number of the exposed discovery endpoint.
+	Port int64 `json:"port,omitempty"`
 	// ProjectId: Optional. Project ID of the consumer project where the forwarding
 	// rule is created in.
 	ProjectId string `json:"projectId,omitempty"`

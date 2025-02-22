@@ -2067,8 +2067,8 @@ type AlgorithmRulesSignalComparison struct {
 	//   "LESS_THAN" - Signal value is less than the second.
 	//   "GREATER_THAN_OR_EQUAL_TO" - Signal value is greater than or equal to the
 	// second.
-	//   "LESS_THAN_OR_EQUAL_TO" - Signal value is less or equals to the comparison
-	// value.
+	//   "LESS_THAN_OR_EQUAL_TO" - Signal value is less than or equal to the
+	// comparison value.
 	ComparisonOperator string `json:"comparisonOperator,omitempty"`
 	// ComparisonValue: Value to compare signal to.
 	ComparisonValue *AlgorithmRulesComparisonValue `json:"comparisonValue,omitempty"`
@@ -2269,9 +2269,9 @@ func (s Asset) MarshalJSON() ([]byte, error) {
 
 // AssetAssociation: Asset association for the creative.
 type AssetAssociation struct {
-	// Asset: The associated asset.
+	// Asset: Optional. The associated asset.
 	Asset *Asset `json:"asset,omitempty"`
-	// Role: The role of this asset for the creative.
+	// Role: Optional. The role of this asset for the creative.
 	//
 	// Possible values:
 	//   "ASSET_ROLE_UNSPECIFIED" - Asset role is not specified or is unknown in
@@ -2282,38 +2282,39 @@ type AssetAssociation struct {
 	// creative.
 	//   "ASSET_ROLE_HEADLINE" - Headline of a native creative. The content must be
 	// UTF-8 encoded with a length of no more than 25 characters. This role is only
-	// supported in following creative_type: * `CREATIVE_TYPE_NATIVE` *
+	// supported in the following creative_type: * `CREATIVE_TYPE_NATIVE` *
 	// `CREATIVE_TYPE_NATIVE_SITE_SQUARE` * `CREATIVE_TYPE_NATIVE_VIDEO`
 	//   "ASSET_ROLE_LONG_HEADLINE" - Long headline of a native creative. The
 	// content must be UTF-8 encoded with a length of no more than 50 characters.
-	// This role is only supported in following creative_type: *
+	// This role is only supported in the following creative_type: *
 	// `CREATIVE_TYPE_NATIVE` * `CREATIVE_TYPE_NATIVE_SITE_SQUARE` *
 	// `CREATIVE_TYPE_NATIVE_VIDEO`
 	//   "ASSET_ROLE_BODY" - Body text of a native creative. The content must be
 	// UTF-8 encoded with a length of no more than 90 characters. This role is only
-	// supported in following creative_type: * `CREATIVE_TYPE_NATIVE` *
+	// supported in the following creative_type: * `CREATIVE_TYPE_NATIVE` *
 	// `CREATIVE_TYPE_NATIVE_SITE_SQUARE` * `CREATIVE_TYPE_NATIVE_VIDEO`
 	//   "ASSET_ROLE_LONG_BODY" - Long body text of a native creative. The content
 	// must be UTF-8 encoded with a length of no more than 150 characters. This
-	// role is only supported in following creative_type: * `CREATIVE_TYPE_NATIVE`
-	// * `CREATIVE_TYPE_NATIVE_SITE_SQUARE` * `CREATIVE_TYPE_NATIVE_VIDEO`
+	// role is only supported in the following creative_type: *
+	// `CREATIVE_TYPE_NATIVE` * `CREATIVE_TYPE_NATIVE_SITE_SQUARE` *
+	// `CREATIVE_TYPE_NATIVE_VIDEO`
 	//   "ASSET_ROLE_CAPTION_URL" - A short, friendly version of the landing page
 	// URL to show in the creative. This URL gives people an idea of where they'll
 	// arrive after they click on the creative. The content must be UTF-8 encoded
 	// with a length of no more than 30 characters. For example, if the landing
 	// page URL is 'http://www.example.com/page', the caption URL can be
 	// 'example.com'. The protocol (http://) is optional, but the URL can't contain
-	// spaces or special characters. This role is only supported in following
+	// spaces or special characters. This role is only supported in the following
 	// creative_type: * `CREATIVE_TYPE_NATIVE` * `CREATIVE_TYPE_NATIVE_SITE_SQUARE`
 	// * `CREATIVE_TYPE_NATIVE_VIDEO`
 	//   "ASSET_ROLE_CALL_TO_ACTION" - The text to use on the call-to-action button
 	// of a native creative. The content must be UTF-8 encoded with a length of no
-	// more than 15 characters. This role is only supported in following
+	// more than 15 characters. This role is only supported in the following
 	// creative_type: * `CREATIVE_TYPE_NATIVE` * `CREATIVE_TYPE_NATIVE_SITE_SQUARE`
 	// * `CREATIVE_TYPE_NATIVE_VIDEO`
 	//   "ASSET_ROLE_ADVERTISER_NAME" - The text that identifies the advertiser or
 	// brand name. The content must be UTF-8 encoded with a length of no more than
-	// 25 characters. This role is only supported in following creative_type: *
+	// 25 characters. This role is only supported in the following creative_type: *
 	// `CREATIVE_TYPE_NATIVE` * `CREATIVE_TYPE_NATIVE_SITE_SQUARE` *
 	// `CREATIVE_TYPE_NATIVE_VIDEO`
 	//   "ASSET_ROLE_PRICE" - The purchase price of your app in the Google play
@@ -2325,37 +2326,37 @@ type AssetAssociation struct {
 	//   "ASSET_ROLE_ANDROID_APP_ID" - The ID of an Android app in the Google play
 	// store. You can find this ID in the App’s Google Play Store URL after
 	// ‘id’. For example, in
-	// https://play.google.com/store/apps/details?id=com.company.appname the
+	// `https://play.google.com/store/apps/details?id=com.company.appname` the
 	// identifier is com.company.appname. Assets of this role are read-only.
 	//   "ASSET_ROLE_IOS_APP_ID" - The ID of an iOS app in the Apple app store.
 	// This ID number can be found in the Apple App Store URL as the string of
 	// numbers directly after "id". For example, in
-	// https://apps.apple.com/us/app/gmail-email-by-google/id422689480 the ID is
+	// `https://apps.apple.com/us/app/gmail-email-by-google/id422689480` the ID is
 	// 422689480. Assets of this role are read-only.
 	//   "ASSET_ROLE_RATING" - The rating of an app in the Google play store or iOS
 	// app store. Note that this value is not automatically synced with the actual
 	// rating in the store. It will always be the one provided when save the
 	// creative. Assets of this role are read-only.
 	//   "ASSET_ROLE_ICON" - The icon of a creative. This role is only supported
-	// and required in following creative_type: * `CREATIVE_TYPE_NATIVE` *
+	// and required in the following creative_type: * `CREATIVE_TYPE_NATIVE` *
 	// `CREATIVE_TYPE_NATIVE_SITE_SQUARE`
 	//   "ASSET_ROLE_COVER_IMAGE" - The cover image of a native video creative.
-	// This role is only supported and required in following creative_type: *
+	// This role is only supported and required in the following creative_type: *
 	// `CREATIVE_TYPE_VIDEO`
 	//   "ASSET_ROLE_BACKGROUND_COLOR" - The main color to use in a creative. This
-	// role is only supported and required in following creative_type: *
+	// role is only supported and required in the following creative_type: *
 	// `CREATIVE_TYPE_ASSET_BASED_CREATIVE`
 	//   "ASSET_ROLE_ACCENT_COLOR" - The accent color to use in a creative. This
-	// role is only supported and required in following creative_type: *
+	// role is only supported and required in the following creative_type: *
 	// `CREATIVE_TYPE_ASSET_BASED_CREATIVE`
 	//   "ASSET_ROLE_REQUIRE_LOGO" - Whether the creative must use a logo asset.
-	// This role is only supported and required in following creative_type: *
+	// This role is only supported and required in the following creative_type: *
 	// `CREATIVE_TYPE_ASSET_BASED_CREATIVE`
 	//   "ASSET_ROLE_REQUIRE_IMAGE" - Whether the creative must use an image asset.
-	// This role is only supported and required in following creative_type: *
+	// This role is only supported and required in the following creative_type: *
 	// `CREATIVE_TYPE_ASSET_BASED_CREATIVE`
 	//   "ASSET_ROLE_ENABLE_ASSET_ENHANCEMENTS" - Whether asset enhancements can be
-	// applied to the creative. This role is only supported and required in
+	// applied to the creative. This role is only supported and required in the
 	// following creative_type: * `CREATIVE_TYPE_ASSET_BASED_CREATIVE`
 	Role string `json:"role,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Asset") to unconditionally
@@ -2862,36 +2863,38 @@ func (s AssignedUserRole) MarshalJSON() ([]byte, error) {
 // `TARGETING_TYPE_AUDIENCE_GROUP`. The relation between each group is UNION,
 // except for excluded_first_and_third_party_audience_group and
 // excluded_google_audience_group, of which COMPLEMENT is used as an
-// INTERSECTION with other groups. NEXT_ID: 9
+// INTERSECTION with other groups.
 type AudienceGroupAssignedTargetingOptionDetails struct {
-	// ExcludedFirstPartyAndPartnerAudienceGroup: The first party and partner
-	// audience ids and recencies of the excluded first party and partner audience
-	// group. Used for negative targeting. The COMPLEMENT of the UNION of this
-	// group and other excluded audience groups is used as an INTERSECTION to any
-	// positive audience targeting. All items are logically ‘OR’ of each other.
-	ExcludedFirstPartyAndPartnerAudienceGroup *FirstPartyAndPartnerAudienceGroup `json:"excludedFirstPartyAndPartnerAudienceGroup,omitempty"`
-	// ExcludedGoogleAudienceGroup: The Google audience ids of the excluded Google
+	// ExcludedFirstPartyAndPartnerAudienceGroup: Optional. The first party and
+	// partner audience ids and recencies of the excluded first party and partner
 	// audience group. Used for negative targeting. The COMPLEMENT of the UNION of
 	// this group and other excluded audience groups is used as an INTERSECTION to
-	// any positive audience targeting. Only contains Affinity, In-market and
-	// Installed-apps type Google audiences. All items are logically ‘OR’ of
-	// each other.
+	// any positive audience targeting. All items are logically ‘OR’ of each
+	// other.
+	ExcludedFirstPartyAndPartnerAudienceGroup *FirstPartyAndPartnerAudienceGroup `json:"excludedFirstPartyAndPartnerAudienceGroup,omitempty"`
+	// ExcludedGoogleAudienceGroup: Optional. The Google audience ids of the
+	// excluded Google audience group. Used for negative targeting. The COMPLEMENT
+	// of the UNION of this group and other excluded audience groups is used as an
+	// INTERSECTION to any positive audience targeting. Only contains Affinity,
+	// In-market and Installed-apps type Google audiences. All items are logically
+	// ‘OR’ of each other.
 	ExcludedGoogleAudienceGroup *GoogleAudienceGroup `json:"excludedGoogleAudienceGroup,omitempty"`
-	// IncludedCombinedAudienceGroup: The combined audience ids of the included
-	// combined audience group. Contains combined audience ids only.
+	// IncludedCombinedAudienceGroup: Optional. The combined audience ids of the
+	// included combined audience group. Contains combined audience ids only.
 	IncludedCombinedAudienceGroup *CombinedAudienceGroup `json:"includedCombinedAudienceGroup,omitempty"`
-	// IncludedCustomListGroup: The custom list ids of the included custom list
-	// group. Contains custom list ids only.
+	// IncludedCustomListGroup: Optional. The custom list ids of the included
+	// custom list group. Contains custom list ids only.
 	IncludedCustomListGroup *CustomListGroup `json:"includedCustomListGroup,omitempty"`
-	// IncludedFirstPartyAndPartnerAudienceGroups: The first party and partner
-	// audience ids and recencies of included first party and partner audience
-	// groups. Each first party and partner audience group contains first party and
-	// partner audience ids only. The relation between each first party and partner
-	// audience group is INTERSECTION, and the result is UNION'ed with other
-	// audience groups. Repeated groups with same settings will be ignored.
+	// IncludedFirstPartyAndPartnerAudienceGroups: Optional. The first party and
+	// partner audience ids and recencies of included first party and partner
+	// audience groups. Each first party and partner audience group contains first
+	// party and partner audience ids only. The relation between each first party
+	// and partner audience group is INTERSECTION, and the result is UNION'ed with
+	// other audience groups. Repeated groups with the same settings will be
+	// ignored.
 	IncludedFirstPartyAndPartnerAudienceGroups []*FirstPartyAndPartnerAudienceGroup `json:"includedFirstPartyAndPartnerAudienceGroups,omitempty"`
-	// IncludedGoogleAudienceGroup: The Google audience ids of the included Google
-	// audience group. Contains Google audience ids only.
+	// IncludedGoogleAudienceGroup: Optional. The Google audience ids of the
+	// included Google audience group. Contains Google audience ids only.
 	IncludedGoogleAudienceGroup *GoogleAudienceGroup `json:"includedGoogleAudienceGroup,omitempty"`
 	// ForceSendFields is a list of field names (e.g.
 	// "ExcludedFirstPartyAndPartnerAudienceGroup") to unconditionally include in
@@ -3013,9 +3016,11 @@ func (s AudioContentTypeTargetingOptionDetails) MarshalJSON() ([]byte, error) {
 
 // AudioVideoOffset: The length an audio or a video has been played.
 type AudioVideoOffset struct {
-	// Percentage: The offset in percentage of the audio or video duration.
+	// Percentage: Optional. The offset in percentage of the audio or video
+	// duration.
 	Percentage int64 `json:"percentage,omitempty,string"`
-	// Seconds: The offset in seconds from the start of the audio or video.
+	// Seconds: Optional. The offset in seconds from the start of the audio or
+	// video.
 	Seconds int64 `json:"seconds,omitempty,string"`
 	// ForceSendFields is a list of field names (e.g. "Percentage") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -4217,6 +4222,9 @@ type Campaign struct {
 	// deletion.
 	EntityStatus string `json:"entityStatus,omitempty"`
 	// FrequencyCap: Required. The frequency cap setting of the campaign.
+	// *Warning*: On **February 28, 2025**, frequency cap time periods greater than
+	// 30 days will no longer be accepted. Read more about this announced change
+	// (/display-video/api/deprecations#features.lifetime_frequency_cap)
 	FrequencyCap *FrequencyCap `json:"frequencyCap,omitempty"`
 	// Name: Output only. The resource name of the campaign.
 	Name string `json:"name,omitempty"`
@@ -4625,11 +4633,13 @@ func (s CmHybridConfig) MarshalJSON() ([]byte, error) {
 
 // CmTrackingAd: A Campaign Manager 360 tracking ad.
 type CmTrackingAd struct {
-	// CmAdId: The ad ID of the campaign manager 360 tracking Ad.
+	// CmAdId: Optional. The ad ID of the campaign manager 360 tracking Ad.
 	CmAdId int64 `json:"cmAdId,omitempty,string"`
-	// CmCreativeId: The creative ID of the campaign manager 360 tracking Ad.
+	// CmCreativeId: Optional. The creative ID of the campaign manager 360 tracking
+	// Ad.
 	CmCreativeId int64 `json:"cmCreativeId,omitempty,string"`
-	// CmPlacementId: The placement ID of the campaign manager 360 tracking Ad.
+	// CmPlacementId: Optional. The placement ID of the campaign manager 360
+	// tracking Ad.
 	CmPlacementId int64 `json:"cmPlacementId,omitempty,string"`
 	// ForceSendFields is a list of field names (e.g. "CmAdId") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -4683,9 +4693,9 @@ func (s CombinedAudience) MarshalJSON() ([]byte, error) {
 // audience targeting settings are logically ‘OR’ of each other.
 type CombinedAudienceGroup struct {
 	// Settings: Required. All combined audience targeting settings in combined
-	// audience group. Repeated settings with same id will be ignored. The number
-	// of combined audience settings should be no more than five, error will be
-	// thrown otherwise.
+	// audience group. Repeated settings with the same id will be ignored. The
+	// number of combined audience settings should be no more than five, error will
+	// be thrown otherwise.
 	Settings []*CombinedAudienceTargetingSetting `json:"settings,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Settings") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -5274,7 +5284,12 @@ type ConversionCountingConfig struct {
 	// FloodlightActivityConfigs: The Floodlight activity configs used to track
 	// conversions. The number of conversions counted is the sum of all of the
 	// conversions counted by all of the Floodlight activity IDs specified in this
-	// field.
+	// field. *Warning*: Starting **April 1, 2025**, this field will no longer be
+	// writable while a custom bidding algorithm is assigned to the line item. If
+	// you set this field and assign a custom bidding algorithm in the same
+	// request, the floodlight activities must match the ones used by the custom
+	// bidding algorithm. Read more about this announced change
+	// (/display-video/api/deprecations#features.custom_bidding_floodlight).
 	FloodlightActivityConfigs []*TrackingFloodlightActivityConfig `json:"floodlightActivityConfigs,omitempty"`
 	// PostViewCountPercentageMillis: The percentage of post-view conversions to
 	// count, in millis (1/1000 of a percent). Must be between 0 and 100000
@@ -5571,18 +5586,18 @@ func (s CreateSdfDownloadTaskRequest) MarshalJSON() ([]byte, error) {
 
 // Creative: A single Creative.
 type Creative struct {
-	// AdditionalDimensions: Additional dimensions. Applicable when creative_type
-	// is one of: * `CREATIVE_TYPE_STANDARD` * `CREATIVE_TYPE_EXPANDABLE` *
-	// `CREATIVE_TYPE_NATIVE` * `CREATIVE_TYPE_NATIVE_SITE_SQUARE` *
-	// `CREATIVE_TYPE_LIGHTBOX` * `CREATIVE_TYPE_PUBLISHER_HOSTED` If this field is
-	// specified, width_pixels and height_pixels are both required and must be
-	// greater than or equal to 0.
+	// AdditionalDimensions: Optional. Additional dimensions. Applicable when
+	// creative_type is one of: * `CREATIVE_TYPE_STANDARD` *
+	// `CREATIVE_TYPE_EXPANDABLE` * `CREATIVE_TYPE_NATIVE` *
+	// `CREATIVE_TYPE_NATIVE_SITE_SQUARE` * `CREATIVE_TYPE_LIGHTBOX` *
+	// `CREATIVE_TYPE_PUBLISHER_HOSTED` If this field is specified, width_pixels
+	// and height_pixels are both required and must be greater than or equal to 0.
 	AdditionalDimensions []*Dimensions `json:"additionalDimensions,omitempty"`
 	// AdvertiserId: Output only. The unique ID of the advertiser the creative
 	// belongs to.
 	AdvertiserId int64 `json:"advertiserId,omitempty,string"`
-	// AppendedTag: Third-party HTML tracking tag to be appended to the creative
-	// tag.
+	// AppendedTag: Optional. Third-party HTML tracking tag to be appended to the
+	// creative tag.
 	AppendedTag string `json:"appendedTag,omitempty"`
 	// Assets: Required. Assets associated to this creative.
 	Assets []*AssetAssociation `json:"assets,omitempty"`
@@ -5590,26 +5605,26 @@ type Creative struct {
 	// placement associated with the creative. This field is only applicable for
 	// creatives that are synced from Campaign Manager.
 	CmPlacementId int64 `json:"cmPlacementId,omitempty,string"`
-	// CmTrackingAd: The Campaign Manager 360 tracking ad associated with the
-	// creative. Optional for the following creative_type when created by an
+	// CmTrackingAd: Optional. The Campaign Manager 360 tracking ad associated with
+	// the creative. Optional for the following creative_type when created by an
 	// advertiser that uses both Campaign Manager 360 and third-party ad serving: *
 	// `CREATIVE_TYPE_NATIVE` * `CREATIVE_TYPE_NATIVE_SITE_SQUARE` Output only for
 	// other cases.
 	CmTrackingAd *CmTrackingAd `json:"cmTrackingAd,omitempty"`
-	// CompanionCreativeIds: The IDs of companion creatives for a video creative.
-	// You can assign existing display creatives (with image or HTML5 assets) to
-	// serve surrounding the publisher's video player. Companions display around
-	// the video player while the video is playing and remain after the video has
-	// completed. Creatives contain additional dimensions can not be companion
-	// creatives. This field is only supported for following creative_type: *
-	// `CREATIVE_TYPE_AUDIO` * `CREATIVE_TYPE_VIDEO`
+	// CompanionCreativeIds: Optional. The IDs of companion creatives for a video
+	// creative. You can assign existing display creatives (with image or HTML5
+	// assets) to serve surrounding the publisher's video player. Companions
+	// display around the video player while the video is playing and remain after
+	// the video has completed. Creatives contain additional dimensions can not be
+	// companion creatives. This field is only supported for the following
+	// creative_type: * `CREATIVE_TYPE_AUDIO` * `CREATIVE_TYPE_VIDEO`
 	CompanionCreativeIds googleapi.Int64s `json:"companionCreativeIds,omitempty"`
-	// CounterEvents: Counter events for a rich media creative. Counters track the
-	// number of times that a user interacts with any part of a rich media creative
-	// in a specified way (mouse-overs, mouse-outs, clicks, taps, data loading,
-	// keyboard entries, etc.). Any event that can be captured in the creative can
-	// be recorded as a counter. Leave it empty or unset for creatives containing
-	// image assets only.
+	// CounterEvents: Optional. Counter events for a rich media creative. Counters
+	// track the number of times that a user interacts with any part of a rich
+	// media creative in a specified way (mouse-overs, mouse-outs, clicks, taps,
+	// data loading, keyboard entries, etc.). Any event that can be captured in the
+	// creative can be recorded as a counter. Leave it empty or unset for creatives
+	// containing image assets only.
 	CounterEvents []*CounterEvent `json:"counterEvents,omitempty"`
 	// CreateTime: Output only. The timestamp when the creative was created.
 	// Assigned by the system.
@@ -5673,7 +5688,7 @@ type Creative struct {
 	//   "CREATIVE_TYPE_TEMPLATED_APP_INSTALL_VIDEO" - Templated app install mobile
 	// video creative. Create and update methods are **not** supported for this
 	// creative type.
-	//   "CREATIVE_TYPE_ASSET_BASED_CREATIVE" - Asset based creative. Create and
+	//   "CREATIVE_TYPE_ASSET_BASED_CREATIVE" - Asset-based creative. Create and
 	// update methods are supported for this creative type if the hosting_source is
 	// `HOSTING_SOURCE_HOSTED`.
 	CreativeType string `json:"creativeType,omitempty"`
@@ -5770,19 +5785,20 @@ type Creative struct {
 	// following hosting_source: * `HOSTING_SOURCE_THIRD_PARTY` combined with
 	// following creative_type: * `CREATIVE_TYPE_VIDEO`
 	Html5Video bool `json:"html5Video,omitempty"`
-	// IasCampaignMonitoring: Indicates whether Integral Ad Science (IAS) campaign
-	// monitoring is enabled. To enable this for the creative, make sure the
-	// Advertiser.creative_config.ias_client_id has been set to your IAS client ID.
+	// IasCampaignMonitoring: Optional. Indicates whether Integral Ad Science (IAS)
+	// campaign monitoring is enabled. To enable this for the creative, make sure
+	// the Advertiser.creative_config.ias_client_id has been set to your IAS client
+	// ID.
 	IasCampaignMonitoring bool `json:"iasCampaignMonitoring,omitempty"`
-	// IntegrationCode: ID information used to link this creative to an external
-	// system. Must be UTF-8 encoded with a length of no more than 10,000
+	// IntegrationCode: Optional. ID information used to link this creative to an
+	// external system. Must be UTF-8 encoded with a length of no more than 10,000
 	// characters.
 	IntegrationCode string `json:"integrationCode,omitempty"`
-	// JsTrackerUrl: JavaScript measurement URL from supported third-party
-	// verification providers (ComScore, DoubleVerify, IAS, Moat). HTML script tags
-	// are not supported. This field is only writeable in following creative_type:
-	// * `CREATIVE_TYPE_NATIVE` * `CREATIVE_TYPE_NATIVE_SITE_SQUARE` *
-	// `CREATIVE_TYPE_NATIVE_VIDEO`
+	// JsTrackerUrl: Optional. JavaScript measurement URL from supported
+	// third-party verification providers (ComScore, DoubleVerify, IAS, Moat). HTML
+	// script tags are not supported. This field is only writeable in the following
+	// creative_type: * `CREATIVE_TYPE_NATIVE` * `CREATIVE_TYPE_NATIVE_SITE_SQUARE`
+	// * `CREATIVE_TYPE_NATIVE_VIDEO`
 	JsTrackerUrl string `json:"jsTrackerUrl,omitempty"`
 	// LineItemIds: Output only. The IDs of the line items this creative is
 	// associated with. To associate a creative to a line item, use
@@ -5800,11 +5816,11 @@ type Creative struct {
 	Mp3Audio bool `json:"mp3Audio,omitempty"`
 	// Name: Output only. The resource name of the creative.
 	Name string `json:"name,omitempty"`
-	// Notes: User notes for this creative. Must be UTF-8 encoded with a length of
-	// no more than 20,000 characters.
+	// Notes: Optional. User notes for this creative. Must be UTF-8 encoded with a
+	// length of no more than 20,000 characters.
 	Notes string `json:"notes,omitempty"`
-	// ObaIcon: Specifies the OBA icon for a video creative. This field is only
-	// supported in following creative_type: * `CREATIVE_TYPE_VIDEO`
+	// ObaIcon: Optional. Specifies the OBA icon for a video creative. This field
+	// is only supported in the following creative_type: * `CREATIVE_TYPE_VIDEO`
 	ObaIcon *ObaIcon `json:"obaIcon,omitempty"`
 	// OggAudio: Output only. Indicates the third-party audio creative supports
 	// OGG. Output only and only valid for third-party audio creatives. Third-party
@@ -5812,9 +5828,9 @@ type Creative struct {
 	// `HOSTING_SOURCE_THIRD_PARTY` combined with following creative_type: *
 	// `CREATIVE_TYPE_AUDIO`
 	OggAudio bool `json:"oggAudio,omitempty"`
-	// ProgressOffset: Amount of time to play the video before counting a view.
-	// This field is required when skippable is true. This field is only supported
-	// for the following creative_type: * `CREATIVE_TYPE_VIDEO`
+	// ProgressOffset: Optional. Amount of time to play the video before counting a
+	// view. This field is required when skippable is true. This field is only
+	// supported for the following creative_type: * `CREATIVE_TYPE_VIDEO`
 	ProgressOffset *AudioVideoOffset `json:"progressOffset,omitempty"`
 	// RequireHtml5: Optional. Indicates that the creative relies on HTML5 to
 	// render properly. Optional and only valid for third-party tag creatives.
@@ -5844,12 +5860,13 @@ type Creative struct {
 	// ReviewStatus: Output only. The current status of the creative review
 	// process.
 	ReviewStatus *ReviewStatusInfo `json:"reviewStatus,omitempty"`
-	// SkipOffset: Amount of time to play the video before the skip button appears.
-	// This field is required when skippable is true. This field is only supported
-	// for the following creative_type: * `CREATIVE_TYPE_VIDEO`
+	// SkipOffset: Optional. Amount of time to play the video before the skip
+	// button appears. This field is required when skippable is true. This field is
+	// only supported for the following creative_type: * `CREATIVE_TYPE_VIDEO`
 	SkipOffset *AudioVideoOffset `json:"skipOffset,omitempty"`
-	// Skippable: Whether the user can choose to skip a video creative. This field
-	// is only supported for the following creative_type: * `CREATIVE_TYPE_VIDEO`
+	// Skippable: Optional. Whether the user can choose to skip a video creative.
+	// This field is only supported for the following creative_type: *
+	// `CREATIVE_TYPE_VIDEO`
 	Skippable bool `json:"skippable,omitempty"`
 	// ThirdPartyTag: Optional. The original third-party tag used for the creative.
 	// Required and only valid for third-party tag creatives. Third-party tag
@@ -5857,23 +5874,23 @@ type Creative struct {
 	// `HOSTING_SOURCE_THIRD_PARTY` combined with following creative_type: *
 	// `CREATIVE_TYPE_STANDARD` * `CREATIVE_TYPE_EXPANDABLE`
 	ThirdPartyTag string `json:"thirdPartyTag,omitempty"`
-	// ThirdPartyUrls: Tracking URLs from third parties to track interactions with
-	// a video creative. This field is only supported for the following
-	// creative_type: * `CREATIVE_TYPE_AUDIO` * `CREATIVE_TYPE_VIDEO` *
+	// ThirdPartyUrls: Optional. Tracking URLs from third parties to track
+	// interactions with a video creative. This field is only supported for the
+	// following creative_type: * `CREATIVE_TYPE_AUDIO` * `CREATIVE_TYPE_VIDEO` *
 	// `CREATIVE_TYPE_NATIVE_VIDEO`
 	ThirdPartyUrls []*ThirdPartyUrl `json:"thirdPartyUrls,omitempty"`
-	// TimerEvents: Timer custom events for a rich media creative. Timers track the
-	// time during which a user views and interacts with a specified part of a rich
-	// media creative. A creative can have multiple timer events, each timed
-	// independently. Leave it empty or unset for creatives containing image assets
-	// only.
+	// TimerEvents: Optional. Timer custom events for a rich media creative. Timers
+	// track the time during which a user views and interacts with a specified part
+	// of a rich media creative. A creative can have multiple timer events, each
+	// timed independently. Leave it empty or unset for creatives containing image
+	// assets only.
 	TimerEvents []*TimerEvent `json:"timerEvents,omitempty"`
-	// TrackerUrls: Tracking URLs for analytics providers or third-party ad
-	// technology vendors. The URLs must start with https (except on inventory that
-	// doesn't require SSL compliance). If using macros in your URL, use only
-	// macros supported by Display & Video 360. Standard URLs only, no IMG or
-	// SCRIPT tags. This field is only writeable in following creative_type: *
-	// `CREATIVE_TYPE_NATIVE` * `CREATIVE_TYPE_NATIVE_SITE_SQUARE` *
+	// TrackerUrls: Optional. Tracking URLs for analytics providers or third-party
+	// ad technology vendors. The URLs must start with `https:` (except on
+	// inventory that doesn't require SSL compliance). If using macros in your URL,
+	// use only macros supported by Display & Video 360. Standard URLs only, no IMG
+	// or SCRIPT tags. This field is only writeable in the following creative_type:
+	// * `CREATIVE_TYPE_NATIVE` * `CREATIVE_TYPE_NATIVE_SITE_SQUARE` *
 	// `CREATIVE_TYPE_NATIVE_VIDEO`
 	TrackerUrls []string `json:"trackerUrls,omitempty"`
 	// Transcodes: Output only. Audio/Video transcodes. Display & Video 360
@@ -5883,7 +5900,7 @@ type Creative struct {
 	// bandwidths. These transcodes give a publisher's system more options to
 	// choose from for each impression on your video and ensures that the
 	// appropriate file serves based on the viewer’s connection and screen size.
-	// This field is only supported in following creative_type: *
+	// This field is only supported in the following creative_type: *
 	// `CREATIVE_TYPE_VIDEO` * `CREATIVE_TYPE_NATIVE_VIDEO` * `CREATIVE_TYPE_AUDIO`
 	Transcodes []*Transcode `json:"transcodes,omitempty"`
 	// UniversalAdId: Optional. An optional creative identifier provided by a
@@ -5977,7 +5994,7 @@ type CreativeConfig struct {
 	//   "CREATIVE_TYPE_TEMPLATED_APP_INSTALL_VIDEO" - Templated app install mobile
 	// video creative. Create and update methods are **not** supported for this
 	// creative type.
-	//   "CREATIVE_TYPE_ASSET_BASED_CREATIVE" - Asset based creative. Create and
+	//   "CREATIVE_TYPE_ASSET_BASED_CREATIVE" - Asset-based creative. Create and
 	// update methods are supported for this creative type if the hosting_source is
 	// `HOSTING_SOURCE_HOSTED`.
 	CreativeType string `json:"creativeType,omitempty"`
@@ -6406,7 +6423,7 @@ func (s CustomList) MarshalJSON() ([]byte, error) {
 // settings are logically ‘OR’ of each other.
 type CustomListGroup struct {
 	// Settings: Required. All custom list targeting settings in custom list group.
-	// Repeated settings with same id will be ignored.
+	// Repeated settings with the same id will be ignored.
 	Settings []*CustomListTargetingSetting `json:"settings,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Settings") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -8149,12 +8166,12 @@ func (s ExchangeTargetingOptionDetails) MarshalJSON() ([]byte, error) {
 
 // ExitEvent: Exit event of the creative.
 type ExitEvent struct {
-	// Name: The name of the click tag of the exit event. The name must be unique
-	// within one creative. Leave it empty or unset for creatives containing image
-	// assets only.
+	// Name: Optional. The name of the click tag of the exit event. The name must
+	// be unique within one creative. Leave it empty or unset for creatives
+	// containing image assets only.
 	Name string `json:"name,omitempty"`
-	// ReportingName: The name used to identify this event in reports. Leave it
-	// empty or unset for creatives containing image assets only.
+	// ReportingName: Optional. The name used to identify this event in reports.
+	// Leave it empty or unset for creatives containing image assets only.
 	ReportingName string `json:"reportingName,omitempty"`
 	// Type: Required. The type of the exit event.
 	//
@@ -8332,8 +8349,8 @@ func (s FirstPartyAndPartnerAudience) MarshalJSON() ([]byte, error) {
 // logically ‘OR’ of each other.
 type FirstPartyAndPartnerAudienceGroup struct {
 	// Settings: Required. All first party and partner audience targeting settings
-	// in first party and partner audience group. Repeated settings with same id
-	// are not allowed.
+	// in first party and partner audience group. Repeated settings with the same
+	// id are not allowed.
 	Settings []*FirstPartyAndPartnerAudienceTargetingSetting `json:"settings,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Settings") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -8571,7 +8588,11 @@ type FrequencyCap struct {
 	// Required when unlimited is `false` and max_impressions is not set.
 	MaxViews int64 `json:"maxViews,omitempty"`
 	// TimeUnit: The time unit in which the frequency cap will be applied. Required
-	// when unlimited is `false`.
+	// when unlimited is `false`. *Warning*: On **February 28, 2025**, frequency
+	// cap time periods greater than 30 days will no longer be accepted. This field
+	// will no longer accept the value `TIME_UNIT_LIFETIME`. Read more about this
+	// announced change
+	// (/display-video/api/deprecations#features.lifetime_frequency_cap).
 	//
 	// Possible values:
 	//   "TIME_UNIT_UNSPECIFIED" - Time unit value is not specified or is unknown
@@ -8594,7 +8615,11 @@ type FrequencyCap struct {
 	// will default to 1 * `TIME_UNIT_MONTHS` - must be between 1 and 2 *
 	// `TIME_UNIT_WEEKS` - must be between 1 and 4 * `TIME_UNIT_DAYS` - must be
 	// between 1 and 6 * `TIME_UNIT_HOURS` - must be between 1 and 23 *
-	// `TIME_UNIT_MINUTES` - must be between 1 and 59
+	// `TIME_UNIT_MINUTES` - must be between 1 and 59 *Warning*: On **February 28,
+	// 2025**, frequency cap time periods greater than 30 days will no longer be
+	// accepted. This field will no longer accept the value 2 if the value of
+	// time_unit is `TIME_UNIT_MONTHS`. Read more about this announced change
+	// (/display-video/api/deprecations#features.lifetime_frequency_cap).
 	TimeUnitCount int64 `json:"timeUnitCount,omitempty"`
 	// Unlimited: Whether unlimited frequency capping is applied. When this field
 	// is set to `true`, the remaining frequency cap fields are not applicable.
@@ -9015,7 +9040,7 @@ func (s GoogleAudience) MarshalJSON() ([]byte, error) {
 // targeting settings are logically ‘OR’ of each other.
 type GoogleAudienceGroup struct {
 	// Settings: Required. All Google audience targeting settings in Google
-	// audience group. Repeated settings with same id will be ignored.
+	// audience group. Repeated settings with the same id will be ignored.
 	Settings []*GoogleAudienceTargetingSetting `json:"settings,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Settings") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -9493,8 +9518,8 @@ type InsertionOrder struct {
 	// AdvertiserId: Output only. The unique ID of the advertiser the insertion
 	// order belongs to.
 	AdvertiserId int64 `json:"advertiserId,omitempty,string"`
-	// BidStrategy: The bidding strategy of the insertion order. By default,
-	// fixed_bid is set.
+	// BidStrategy: Optional. The bidding strategy of the insertion order. By
+	// default, fixed_bid is set.
 	BidStrategy *BiddingStrategy `json:"bidStrategy,omitempty"`
 	// Budget: Required. The budget allocation settings of the insertion order.
 	Budget *InsertionOrderBudget `json:"budget,omitempty"`
@@ -9528,12 +9553,15 @@ type InsertionOrder struct {
 	// deletion.
 	EntityStatus string `json:"entityStatus,omitempty"`
 	// FrequencyCap: Required. The frequency capping setting of the insertion
-	// order.
+	// order. *Warning*: On **February 28, 2025**, frequency cap time periods
+	// greater than 30 days will no longer be accepted. Read more about this
+	// announced change
+	// (/display-video/api/deprecations#features.lifetime_frequency_cap)
 	FrequencyCap *FrequencyCap `json:"frequencyCap,omitempty"`
 	// InsertionOrderId: Output only. The unique ID of the insertion order.
 	// Assigned by the system.
 	InsertionOrderId int64 `json:"insertionOrderId,omitempty,string"`
-	// InsertionOrderType: The type of insertion order. If this field is
+	// InsertionOrderType: Optional. The type of insertion order. If this field is
 	// unspecified in creation, the value defaults to `RTB`.
 	//
 	// Possible values:
@@ -9542,7 +9570,8 @@ type InsertionOrder struct {
 	//   "RTB" - Real-time bidding.
 	//   "OVER_THE_TOP" - Over-the-top.
 	InsertionOrderType string `json:"insertionOrderType,omitempty"`
-	// IntegrationDetails: Additional integration details of the insertion order.
+	// IntegrationDetails: Optional. Additional integration details of the
+	// insertion order.
 	IntegrationDetails *IntegrationDetails `json:"integrationDetails,omitempty"`
 	// Kpi: Required. The key performance indicator (KPI) of the insertion order.
 	// This is represented as referred to as the "Goal" in the Display & Video 360
@@ -9550,8 +9579,8 @@ type InsertionOrder struct {
 	Kpi *Kpi `json:"kpi,omitempty"`
 	// Name: Output only. The resource name of the insertion order.
 	Name string `json:"name,omitempty"`
-	// OptimizationObjective: Optional. The optimization objective of the insertion
-	// order.
+	// OptimizationObjective: Optional. Required. The optimization objective of the
+	// insertion order.
 	//
 	// Possible values:
 	//   "OPTIMIZATION_OBJECTIVE_UNSPECIFIED" - Type value is not specified or is
@@ -9568,9 +9597,9 @@ type InsertionOrder struct {
 	// pacing_type `PACING_TYPE_ASAP` is not compatible with pacing_period
 	// `PACING_PERIOD_FLIGHT`.
 	Pacing *Pacing `json:"pacing,omitempty"`
-	// PartnerCosts: The partner costs associated with the insertion order. If
-	// absent or empty in CreateInsertionOrder method, the newly created insertion
-	// order will inherit partner costs from the partner settings.
+	// PartnerCosts: Optional. The partner costs associated with the insertion
+	// order. If absent or empty in CreateInsertionOrder method, the newly created
+	// insertion order will inherit partner costs from the partner settings.
 	PartnerCosts []*PartnerCost `json:"partnerCosts,omitempty"`
 	// ReservationType: Output only. The reservation type of the insertion order.
 	//
@@ -9615,9 +9644,9 @@ func (s InsertionOrder) MarshalJSON() ([]byte, error) {
 // InsertionOrderBudget: Settings that control how insertion order budget is
 // allocated.
 type InsertionOrderBudget struct {
-	// AutomationType: The type of automation used to manage bid and budget for the
-	// insertion order. If this field is unspecified in creation, the value
-	// defaults to `INSERTION_ORDER_AUTOMATION_TYPE_NONE`.
+	// AutomationType: Optional. The type of automation used to manage bid and
+	// budget for the insertion order. If this field is unspecified in creation,
+	// the value defaults to `INSERTION_ORDER_AUTOMATION_TYPE_NONE`.
 	//
 	// Possible values:
 	//   "INSERTION_ORDER_AUTOMATION_TYPE_UNSPECIFIED" - Insertion order automation
@@ -9671,8 +9700,8 @@ type InsertionOrderBudgetSegment struct {
 	// than 0. For example, 500000000 represents 500 standard units of the
 	// currency.
 	BudgetAmountMicros int64 `json:"budgetAmountMicros,omitempty,string"`
-	// CampaignBudgetId: The budget_id of the campaign budget that this insertion
-	// order budget segment is a part of.
+	// CampaignBudgetId: Optional. The budget_id of the campaign budget that this
+	// insertion order budget segment is a part of.
 	CampaignBudgetId int64 `json:"campaignBudgetId,omitempty,string"`
 	// DateRange: Required. The start and end date settings of the budget segment.
 	// They are resolved relative to the parent advertiser's time zone. * When
@@ -9681,9 +9710,9 @@ type InsertionOrderBudgetSegment struct {
 	// a mutable `end_date` but an immutable `start_date`. * `end_date` must be the
 	// `start_date` or later, both before the year 2037.
 	DateRange *DateRange `json:"dateRange,omitempty"`
-	// Description: The budget segment description. It can be used to enter
-	// Purchase Order information for each budget segment and have that information
-	// printed on the invoices. Must be UTF-8 encoded.
+	// Description: Optional. The budget segment description. It can be used to
+	// enter Purchase Order information for each budget segment and have that
+	// information printed on the invoices. Must be UTF-8 encoded.
 	Description string `json:"description,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "BudgetAmountMicros") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -10677,6 +10706,12 @@ type LineItem struct {
 	// belongs to.
 	CampaignId int64 `json:"campaignId,omitempty,string"`
 	// ConversionCounting: The conversion tracking setting of the line item.
+	// *Warning*: Starting **April 1, 2025**, the floodlight_activity_configs field
+	// will no longer be writable while a custom bidding algorithm is assigned to
+	// the line item. If you set this field and assign a custom bidding algorithm
+	// in the same request, the floodlight activities must match the ones used by
+	// the custom bidding algorithm. Read more about this announced change
+	// (/display-video/api/deprecations#features.custom_bidding_floodlight).
 	ConversionCounting *ConversionCountingConfig `json:"conversionCounting,omitempty"`
 	// CreativeIds: The IDs of the creatives associated with the line item.
 	CreativeIds googleapi.Int64s `json:"creativeIds,omitempty"`
@@ -10713,7 +10748,10 @@ type LineItem struct {
 	Flight *LineItemFlight `json:"flight,omitempty"`
 	// FrequencyCap: Required. The impression frequency cap settings of the line
 	// item. The max_impressions field in this settings object must be used if
-	// assigning a limited cap.
+	// assigning a limited cap. *Warning*: On **February 28, 2025**, frequency cap
+	// time periods greater than 30 days will no longer be accepted. Read more
+	// about this announced change
+	// (/display-video/api/deprecations#features.lifetime_frequency_cap)
 	FrequencyCap *FrequencyCap `json:"frequencyCap,omitempty"`
 	// InsertionOrderId: Required. Immutable. The unique ID of the insertion order
 	// that the line item belongs to.
@@ -12135,7 +12173,11 @@ func (s MastheadAd) MarshalJSON() ([]byte, error) {
 type MaximizeSpendBidStrategy struct {
 	// CustomBiddingAlgorithmId: The ID of the Custom Bidding Algorithm used by
 	// this strategy. Only applicable when performance_goal_type is set to
-	// `BIDDING_STRATEGY_PERFORMANCE_GOAL_TYPE_CUSTOM_ALGO`.
+	// `BIDDING_STRATEGY_PERFORMANCE_GOAL_TYPE_CUSTOM_ALGO`. *Warning*: Starting
+	// **April 1, 2025**, assigning a custom bidding algorithm that uses floodlight
+	// activities not identified in floodlightActivityConfigs will return an error.
+	// Read more about this announced change
+	// (/display-video/api/deprecations#features.custom_bidding_floodlight).
 	CustomBiddingAlgorithmId int64 `json:"customBiddingAlgorithmId,omitempty,string"`
 	// MaxAverageCpmBidAmountMicros: The maximum average CPM that may be bid, in
 	// micros of the advertiser's currency. Must be greater than or equal to a
@@ -12516,16 +12558,16 @@ func (s NonSkippableAd) MarshalJSON() ([]byte, error) {
 // ObaIcon: OBA Icon for a Creative
 type ObaIcon struct {
 	// ClickTrackingUrl: Required. The click tracking URL of the OBA icon. Only
-	// URLs of the following domains are allowed: * https://info.evidon.com *
-	// https://l.betrad.com
+	// URLs of the following domains are allowed: * `https://info.evidon.com` *
+	// `https://l.betrad.com`
 	ClickTrackingUrl string `json:"clickTrackingUrl,omitempty"`
-	// Dimensions: The dimensions of the OBA icon.
+	// Dimensions: Optional. The dimensions of the OBA icon.
 	Dimensions *Dimensions `json:"dimensions,omitempty"`
 	// LandingPageUrl: Required. The landing page URL of the OBA icon. Only URLs of
-	// the following domains are allowed: * https://info.evidon.com *
-	// https://l.betrad.com
+	// the following domains are allowed: * `https://info.evidon.com` *
+	// `https://l.betrad.com`
 	LandingPageUrl string `json:"landingPageUrl,omitempty"`
-	// Position: The position of the OBA icon on the creative.
+	// Position: Optional. The position of the OBA icon on the creative.
 	//
 	// Possible values:
 	//   "OBA_ICON_POSITION_UNSPECIFIED" - The OBA icon position is not specified.
@@ -12534,15 +12576,16 @@ type ObaIcon struct {
 	//   "OBA_ICON_POSITION_LOWER_RIGHT" - At the lower right side of the creative.
 	//   "OBA_ICON_POSITION_LOWER_LEFT" - At the lower left side of the creative.
 	Position string `json:"position,omitempty"`
-	// Program: The program of the OBA icon. For example: “AdChoices”.
+	// Program: Optional. The program of the OBA icon. For example:
+	// “AdChoices”.
 	Program string `json:"program,omitempty"`
-	// ResourceMimeType: The MIME type of the OBA icon resource.
+	// ResourceMimeType: Optional. The MIME type of the OBA icon resource.
 	ResourceMimeType string `json:"resourceMimeType,omitempty"`
-	// ResourceUrl: The URL of the OBA icon resource.
+	// ResourceUrl: Optional. The URL of the OBA icon resource.
 	ResourceUrl string `json:"resourceUrl,omitempty"`
 	// ViewTrackingUrl: Required. The view tracking URL of the OBA icon. Only URLs
-	// of the following domains are allowed: * https://info.evidon.com *
-	// https://l.betrad.com
+	// of the following domains are allowed: * `https://info.evidon.com` *
+	// `https://l.betrad.com`
 	ViewTrackingUrl string `json:"viewTrackingUrl,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "ClickTrackingUrl") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -13418,7 +13461,11 @@ func (s PerformanceGoal) MarshalJSON() ([]byte, error) {
 type PerformanceGoalBidStrategy struct {
 	// CustomBiddingAlgorithmId: The ID of the Custom Bidding Algorithm used by
 	// this strategy. Only applicable when performance_goal_type is set to
-	// `BIDDING_STRATEGY_PERFORMANCE_GOAL_TYPE_CUSTOM_ALGO`.
+	// `BIDDING_STRATEGY_PERFORMANCE_GOAL_TYPE_CUSTOM_ALGO`. *Warning*: Starting
+	// **April 1, 2025**, assigning a custom bidding algorithm that uses floodlight
+	// activities not identified in floodlightActivityConfigs will return an error.
+	// Read more about this announced change
+	// (/display-video/api/deprecations#features.custom_bidding_floodlight).
 	CustomBiddingAlgorithmId int64 `json:"customBiddingAlgorithmId,omitempty,string"`
 	// MaxAverageCpmBidAmountMicros: The maximum average CPM that may be bid, in
 	// micros of the advertiser's currency. Must be greater than or equal to a
@@ -14227,82 +14274,6 @@ func (s SdfDownloadTaskMetadata) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// SdfUploadTask: Type for the response returned by
-// [SdfUploadTaskService.CreateSdfUploadTask].
-type SdfUploadTask struct {
-	// ResourceName: A resource name to be used in media.download to Download the
-	// script files. Or media.upload to Upload the script files. Resource names
-	// have the format `download/sdfuploadtasks/media/{media_id}`.
-	ResourceName string `json:"resourceName,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "ResourceName") to
-	// unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
-	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "ResourceName") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
-	NullFields []string `json:"-"`
-}
-
-func (s SdfUploadTask) MarshalJSON() ([]byte, error) {
-	type NoMethod SdfUploadTask
-	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
-}
-
-// SdfUploadTaskMetadata: Type for the metadata returned by
-// [SdfUploadTaskService.CreateSdfUploadTask].
-type SdfUploadTaskMetadata struct {
-	// CreateTime: The time when the operation was created.
-	CreateTime string `json:"createTime,omitempty"`
-	// EndTime: The time when execution was completed.
-	EndTime string `json:"endTime,omitempty"`
-	// Version: The SDF version used to execute this upload task.
-	//
-	// Possible values:
-	//   "SDF_VERSION_UNSPECIFIED" - SDF version value is not specified or is
-	// unknown in this version.
-	//   "SDF_VERSION_3_1" - SDF version 3.1
-	//   "SDF_VERSION_4" - SDF version 4
-	//   "SDF_VERSION_4_1" - SDF version 4.1
-	//   "SDF_VERSION_4_2" - SDF version 4.2
-	//   "SDF_VERSION_5" - SDF version 5.
-	//   "SDF_VERSION_5_1" - SDF version 5.1
-	//   "SDF_VERSION_5_2" - SDF version 5.2
-	//   "SDF_VERSION_5_3" - SDF version 5.3
-	//   "SDF_VERSION_5_4" - SDF version 5.4
-	//   "SDF_VERSION_5_5" - SDF version 5.5
-	//   "SDF_VERSION_6" - SDF version 6
-	//   "SDF_VERSION_7" - SDF version 7. Read the [v7 migration
-	// guide](/display-video/api/structured-data-file/v7-migration-guide) before
-	// migrating to this version.
-	//   "SDF_VERSION_7_1" - SDF version 7.1. Read the [v7 migration
-	// guide](/display-video/api/structured-data-file/v7-migration-guide) before
-	// migrating to this version.
-	//   "SDF_VERSION_8" - SDF version 8. Read the [v8 migration
-	// guide](/display-video/api/structured-data-file/v8-migration-guide) before
-	// migrating to this version.
-	Version string `json:"version,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "CreateTime") to
-	// unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
-	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "CreateTime") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
-	NullFields []string `json:"-"`
-}
-
-func (s SdfUploadTaskMetadata) MarshalJSON() ([]byte, error) {
-	type NoMethod SdfUploadTaskMetadata
-	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
-}
-
 // SearchTargetingOptionsRequest: Request message for SearchTargetingOptions.
 type SearchTargetingOptionsRequest struct {
 	// AdvertiserId: Required. The Advertiser this request is being made in the
@@ -14752,7 +14723,10 @@ type TargetingExpansionConfig struct {
 	// `BIDDING_STRATEGY_PERFORMANCE_GOAL_TYPE_IVO_TEN` *
 	// `BIDDING_STRATEGY_PERFORMANCE_GOAL_TYPE_AV_VIEWED`
 	// performance_goal_auto_bid: *
-	// `BIDDING_STRATEGY_PERFORMANCE_GOAL_TYPE_VIEWABLE_CPM`
+	// `BIDDING_STRATEGY_PERFORMANCE_GOAL_TYPE_VIEWABLE_CPM` *Warning*: Starting
+	// **March 6, 2025**, this field will stop being compatible when using the
+	// BiddingStrategy field fixed_bid. Read more about this announced change
+	// (/display-video/api/deprecations#features.ot_fixed_bid)
 	EnableOptimizedTargeting bool `json:"enableOptimizedTargeting,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AudienceExpansionLevel") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -15044,7 +15018,8 @@ func (s ThirdPartyOnlyConfig) MarshalJSON() ([]byte, error) {
 // ThirdPartyUrl: Tracking URLs from third parties to track interactions with
 // an audio or a video creative.
 type ThirdPartyUrl struct {
-	// Type: The type of interaction needs to be tracked by the tracking URL
+	// Type: Optional. The type of interaction needs to be tracked by the tracking
+	// URL
 	//
 	// Possible values:
 	//   "THIRD_PARTY_URL_TYPE_UNSPECIFIED" - The type of third-party URL is
@@ -15081,9 +15056,9 @@ type ThirdPartyUrl struct {
 	// times the audio or video plays to an offset determined by the
 	// progress_offset.
 	Type string `json:"type,omitempty"`
-	// Url: Tracking URL used to track the interaction. Provide a URL with optional
-	// path or query string, beginning with `https:`. For example,
-	// https://www.example.com/path
+	// Url: Optional. Tracking URL used to track the interaction. Provide a URL
+	// with optional path or query string, beginning with `https:`. For example,
+	// `https://www.example.com/path`
 	Url string `json:"url,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Type") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -15253,26 +15228,28 @@ func (s TrackingFloodlightActivityConfig) MarshalJSON() ([]byte, error) {
 
 // Transcode: Represents information about the transcoded audio or video file.
 type Transcode struct {
-	// AudioBitRateKbps: The bit rate for the audio stream of the transcoded video,
-	// or the bit rate for the transcoded audio, in kilobits per second.
+	// AudioBitRateKbps: Optional. The bit rate for the audio stream of the
+	// transcoded video, or the bit rate for the transcoded audio, in kilobits per
+	// second.
 	AudioBitRateKbps int64 `json:"audioBitRateKbps,omitempty,string"`
-	// AudioSampleRateHz: The sample rate for the audio stream of the transcoded
-	// video, or the sample rate for the transcoded audio, in hertz.
+	// AudioSampleRateHz: Optional. The sample rate for the audio stream of the
+	// transcoded video, or the sample rate for the transcoded audio, in hertz.
 	AudioSampleRateHz int64 `json:"audioSampleRateHz,omitempty,string"`
-	// BitRateKbps: The transcoding bit rate of the transcoded video, in kilobits
-	// per second.
+	// BitRateKbps: Optional. The transcoding bit rate of the transcoded video, in
+	// kilobits per second.
 	BitRateKbps int64 `json:"bitRateKbps,omitempty,string"`
-	// Dimensions: The dimensions of the transcoded video.
+	// Dimensions: Optional. The dimensions of the transcoded video.
 	Dimensions *Dimensions `json:"dimensions,omitempty"`
-	// FileSizeBytes: The size of the transcoded file, in bytes.
+	// FileSizeBytes: Optional. The size of the transcoded file, in bytes.
 	FileSizeBytes int64 `json:"fileSizeBytes,omitempty,string"`
-	// FrameRate: The frame rate of the transcoded video, in frames per second.
+	// FrameRate: Optional. The frame rate of the transcoded video, in frames per
+	// second.
 	FrameRate float64 `json:"frameRate,omitempty"`
-	// MimeType: The MIME type of the transcoded file.
+	// MimeType: Optional. The MIME type of the transcoded file.
 	MimeType string `json:"mimeType,omitempty"`
-	// Name: The name of the transcoded file.
+	// Name: Optional. The name of the transcoded file.
 	Name string `json:"name,omitempty"`
-	// Transcoded: Indicates if the transcoding was successful.
+	// Transcoded: Optional. Indicates if the transcoding was successful.
 	Transcoded bool `json:"transcoded,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AudioBitRateKbps") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -15309,9 +15286,9 @@ func (s *Transcode) UnmarshalJSON(data []byte) error {
 // UniversalAdId: A creative identifier provided by a registry that is unique
 // across all platforms. This is part of the VAST 4.0 standard.
 type UniversalAdId struct {
-	// Id: The unique creative identifier.
+	// Id: Optional. The unique creative identifier.
 	Id string `json:"id,omitempty"`
-	// Registry: The registry provides unique creative identifiers.
+	// Registry: Optional. The registry provides unique creative identifiers.
 	//
 	// Possible values:
 	//   "UNIVERSAL_AD_REGISTRY_UNSPECIFIED" - The Universal Ad registry is
@@ -15979,7 +15956,9 @@ type YoutubeAndPartnersSettings struct {
 	VideoAdSequenceSettings *VideoAdSequenceSettings `json:"videoAdSequenceSettings,omitempty"`
 	// ViewFrequencyCap: The view frequency cap settings of the line item. The
 	// max_views field in this settings object must be used if assigning a limited
-	// cap.
+	// cap. *Warning*: On **February 28, 2025**, frequency cap time periods greater
+	// than 30 days will no longer be accepted. Read more about this announced
+	// change (/display-video/api/deprecations#features.lifetime_frequency_cap)
 	ViewFrequencyCap *FrequencyCap `json:"viewFrequencyCap,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "ContentCategory") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -27109,7 +27088,10 @@ type CustomBiddingAlgorithmsPatchCall struct {
 }
 
 // Patch: Updates an existing custom bidding algorithm. Returns the updated
-// custom bidding algorithm if successful.
+// custom bidding algorithm if successful. *Warning*: Starting **April 1,
+// 2025**, requests updating custom bidding algorithms that are assigned to
+// line items will return an error. Read more about this announced change
+// (/display-video/api/deprecations#features.custom_bidding_floodlight).
 //
 //   - customBiddingAlgorithmId: Output only. The unique ID of the custom bidding
 //     algorithm. Assigned by the system.
@@ -27479,7 +27461,10 @@ type CustomBiddingAlgorithmsRulesCreateCall struct {
 }
 
 // Create: Creates a new rules resource. Returns the newly created rules
-// resource if successful.
+// resource if successful. *Warning*: Starting **April 1, 2025**, requests
+// updating custom bidding algorithms that are assigned to line items will
+// return an error. Read more about this announced change
+// (/display-video/api/deprecations#features.custom_bidding_floodlight).
 //
 //   - customBiddingAlgorithmId: The ID of the custom bidding algorithm that owns
 //     the rules resource.
@@ -27903,7 +27888,10 @@ type CustomBiddingAlgorithmsScriptsCreateCall struct {
 }
 
 // Create: Creates a new custom bidding script. Returns the newly created
-// script if successful.
+// script if successful. *Warning*: Starting **April 1, 2025**, requests
+// updating custom bidding algorithms that are assigned to line items will
+// return an error. Read more about this announced change
+// (/display-video/api/deprecations#features.custom_bidding_floodlight).
 //
 //   - customBiddingAlgorithmId: The ID of the custom bidding algorithm that owns
 //     the script.

@@ -30215,7 +30215,10 @@ type OrganizationsEnvironmentsApisRevisionsDeployCall struct {
 // s`, two permissions are required: * `apigee.deployments.create` on the
 // resource `organizations/{org}/environments/{env}` *
 // `apigee.proxyrevisions.deploy` on the resource
-// `organizations/{org}/apis/{api}/revisions/{rev}`
+// `organizations/{org}/apis/{api}/revisions/{rev}` Apigee hybrid validates the
+// dependencies between shared flows and API proxies at deployment time. For
+// example, if the Flow Callout policy in an API proxy references a shared flow
+// that either doesn't exist or isn't deployed, the API proxy deployment fails.
 //
 //   - name: Name of the API proxy revision deployment in the following format:
 //     `organizations/{org}/environments/{env}/apis/{api}/revisions/{rev}`.

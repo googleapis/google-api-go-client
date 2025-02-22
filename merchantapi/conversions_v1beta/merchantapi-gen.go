@@ -485,6 +485,8 @@ type ProductStatusChangeMessage struct {
 	Attribute string `json:"attribute,omitempty"`
 	// Changes: A message to describe the change that happened to the product
 	Changes []*ProductChange `json:"changes,omitempty"`
+	// EventTime: The time at which the event was generated.
+	EventTime string `json:"eventTime,omitempty"`
 	// ExpirationTime: The product expiration time. This field will not bet set if
 	// the notification is sent for a product deletion event.
 	ExpirationTime string `json:"expirationTime,omitempty"`

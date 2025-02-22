@@ -575,7 +575,10 @@ type CssProductInput struct {
 	// exception will be thrown.
 	FreshnessTime string `json:"freshnessTime,omitempty"`
 	// Name: The name of the CSS Product input. Format:
-	// `accounts/{account}/cssProductInputs/{css_product_input}`
+	// `accounts/{account}/cssProductInputs/{css_product_input}`, where the last
+	// section `css_product_input` consists of 3 parts:
+	// contentLanguage~feedLabel~offerId. Example:
+	// accounts/123/cssProductInputs/de~DE~rawProvidedId123
 	Name string `json:"name,omitempty"`
 	// RawProvidedId: Required. Your unique identifier for the CSS Product. This is
 	// the same for the CSS Product input and processed CSS Product. We only allow
@@ -1451,7 +1454,10 @@ type AccountsCssProductInputsDeleteCall struct {
 // delete it may take several minutes until the input is no longer available.
 //
 //   - name: The name of the CSS product input resource to delete. Format:
-//     accounts/{account}/cssProductInputs/{css_product_input}.
+//     accounts/{account}/cssProductInputs/{css_product_input}, where the last
+//     section `css_product_input` consists of 3 parts:
+//     contentLanguage~feedLabel~offerId. Example:
+//     accounts/123/cssProductInputs/de~DE~rawProvidedId123.
 func (r *AccountsCssProductInputsService) Delete(name string) *AccountsCssProductInputsDeleteCall {
 	c := &AccountsCssProductInputsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -1681,7 +1687,10 @@ type AccountsCssProductInputsPatchCall struct {
 // several minutes before the processed Css Product can be retrieved.
 //
 //   - name: The name of the CSS Product input. Format:
-//     `accounts/{account}/cssProductInputs/{css_product_input}`.
+//     `accounts/{account}/cssProductInputs/{css_product_input}`, where the last
+//     section `css_product_input` consists of 3 parts:
+//     contentLanguage~feedLabel~offerId. Example:
+//     accounts/123/cssProductInputs/de~DE~rawProvidedId123.
 func (r *AccountsCssProductInputsService) Patch(name string, cssproductinput *CssProductInput) *AccountsCssProductInputsPatchCall {
 	c := &AccountsCssProductInputsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name

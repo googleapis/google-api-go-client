@@ -170,8 +170,9 @@ type V1Service struct {
 type Circle struct {
 	// LatLng: The latitude and longitude of the center of the circle.
 	LatLng *LatLng `json:"latLng,omitempty"`
-	// Place: The Place resource name of the center of the circle. Only point
-	// places are supported.
+	// Place: **Format:** Must be in the format `places/PLACE_ID`, where `PLACE_ID`
+	// is the unique identifier of a place. For example:
+	// `places/ChIJgUbEo8cfqokR5lP9_Wh_DaM`.
 	Place string `json:"place,omitempty"`
 	// Radius: Optional. The radius of the circle in meters
 	Radius int64 `json:"radius,omitempty"`
@@ -307,7 +308,7 @@ type Filter struct {
 	// during its defined hours.
 	//   "OPERATING_STATUS_PERMANENTLY_CLOSED" - The Place is no longer in
 	// business.
-	//   "OPERATING_STATUS_TEMPORARILY_CLOSED" - The Place is temporarily closed
+	//   "OPERATING_STATUS_TEMPORARILY_CLOSED" - The place is temporarily closed
 	// and expected to reopen in the future.
 	OperatingStatus []string `json:"operatingStatus,omitempty"`
 	// PriceLevels: Optional. Restricts results to places whose price level is

@@ -1276,6 +1276,10 @@ type Subscription struct {
 	// Listing: Output only. Resource name of the source Listing. e.g.
 	// projects/123/locations/US/dataExchanges/456/listings/789
 	Listing string `json:"listing,omitempty"`
+	// LogLinkedDatasetQueryUserEmail: Output only. By default, false. If true, the
+	// Subscriber agreed to the email sharing mandate that is enabled for
+	// DataExchange/Listing.
+	LogLinkedDatasetQueryUserEmail bool `json:"logLinkedDatasetQueryUserEmail,omitempty"`
 	// Name: Output only. The resource name of the subscription. e.g.
 	// `projects/myproject/locations/US/subscriptions/123`.
 	Name string `json:"name,omitempty"`

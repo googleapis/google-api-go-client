@@ -171,6 +171,7 @@ type ProjectsService struct {
 
 func NewProjectsLocationsService(s *Service) *ProjectsLocationsService {
 	rs := &ProjectsLocationsService{s: s}
+	rs.Announcements = NewProjectsLocationsAnnouncementsService(s)
 	rs.DnsBindPermission = NewProjectsLocationsDnsBindPermissionService(s)
 	rs.NetworkPeerings = NewProjectsLocationsNetworkPeeringsService(s)
 	rs.NetworkPolicies = NewProjectsLocationsNetworkPoliciesService(s)
@@ -184,6 +185,8 @@ func NewProjectsLocationsService(s *Service) *ProjectsLocationsService {
 
 type ProjectsLocationsService struct {
 	s *Service
+
+	Announcements *ProjectsLocationsAnnouncementsService
 
 	DnsBindPermission *ProjectsLocationsDnsBindPermissionService
 
@@ -200,6 +203,15 @@ type ProjectsLocationsService struct {
 	PrivateConnections *ProjectsLocationsPrivateConnectionsService
 
 	VmwareEngineNetworks *ProjectsLocationsVmwareEngineNetworksService
+}
+
+func NewProjectsLocationsAnnouncementsService(s *Service) *ProjectsLocationsAnnouncementsService {
+	rs := &ProjectsLocationsAnnouncementsService{s: s}
+	return rs
+}
+
+type ProjectsLocationsAnnouncementsService struct {
+	s *Service
 }
 
 func NewProjectsLocationsDnsBindPermissionService(s *Service) *ProjectsLocationsDnsBindPermissionService {
@@ -279,6 +291,7 @@ func NewProjectsLocationsPrivateCloudsService(s *Service) *ProjectsLocationsPriv
 	rs.LoggingServers = NewProjectsLocationsPrivateCloudsLoggingServersService(s)
 	rs.ManagementDnsZoneBindings = NewProjectsLocationsPrivateCloudsManagementDnsZoneBindingsService(s)
 	rs.Subnets = NewProjectsLocationsPrivateCloudsSubnetsService(s)
+	rs.Upgrades = NewProjectsLocationsPrivateCloudsUpgradesService(s)
 	return rs
 }
 
@@ -296,6 +309,8 @@ type ProjectsLocationsPrivateCloudsService struct {
 	ManagementDnsZoneBindings *ProjectsLocationsPrivateCloudsManagementDnsZoneBindingsService
 
 	Subnets *ProjectsLocationsPrivateCloudsSubnetsService
+
+	Upgrades *ProjectsLocationsPrivateCloudsUpgradesService
 }
 
 func NewProjectsLocationsPrivateCloudsClustersService(s *Service) *ProjectsLocationsPrivateCloudsClustersService {
@@ -364,6 +379,15 @@ type ProjectsLocationsPrivateCloudsSubnetsService struct {
 	s *Service
 }
 
+func NewProjectsLocationsPrivateCloudsUpgradesService(s *Service) *ProjectsLocationsPrivateCloudsUpgradesService {
+	rs := &ProjectsLocationsPrivateCloudsUpgradesService{s: s}
+	return rs
+}
+
+type ProjectsLocationsPrivateCloudsUpgradesService struct {
+	s *Service
+}
+
 func NewProjectsLocationsPrivateConnectionsService(s *Service) *ProjectsLocationsPrivateConnectionsService {
 	rs := &ProjectsLocationsPrivateConnectionsService{s: s}
 	rs.PeeringRoutes = NewProjectsLocationsPrivateConnectionsPeeringRoutesService(s)
@@ -392,6 +416,68 @@ func NewProjectsLocationsVmwareEngineNetworksService(s *Service) *ProjectsLocati
 
 type ProjectsLocationsVmwareEngineNetworksService struct {
 	s *Service
+}
+
+// Announcement: Announcement for the resources of Vmware Engine.
+type Announcement struct {
+	// ActivityType: Optional. Activity type of the announcement There can be only
+	// one active announcement for a given activity type and target resource.
+	ActivityType string `json:"activityType,omitempty"`
+	// Cluster: A Cluster resource name.
+	Cluster string `json:"cluster,omitempty"`
+	// Code: Required. Code of the announcement. Indicates the presence of a VMware
+	// Engine related announcement and corresponds to a related message in the
+	// `description` field.
+	Code string `json:"code,omitempty"`
+	// CreateTime: Output only. Creation time of this resource. It also serves as
+	// start time of notification.
+	CreateTime string `json:"createTime,omitempty"`
+	// Description: Output only. Description of the announcement.
+	Description string `json:"description,omitempty"`
+	// Metadata: Output only. Additional structured details about this
+	// announcement.
+	Metadata map[string]string `json:"metadata,omitempty"`
+	// Name: Output only. The resource name of the announcement. Resource names are
+	// schemeless URIs that follow the conventions in
+	// https://cloud.google.com/apis/design/resource_names. For example:
+	// `projects/my-project/locations/us-west1-a/announcements/my-announcement-id`
+	Name string `json:"name,omitempty"`
+	// PrivateCloud: A Private Cloud resource name.
+	PrivateCloud string `json:"privateCloud,omitempty"`
+	// State: Output only. State of the resource. New values may be added to this
+	// enum when appropriate.
+	//
+	// Possible values:
+	//   "STATE_UNSPECIFIED" - The default value. This value should never be used.
+	//   "ACTIVE" - Active announcement which should be visible to user.
+	//   "INACTIVE" - Inactive announcement which should not be visible to user.
+	//   "DELETING" - Announcement which is being deleted
+	//   "CREATING" - Announcement which being created
+	State string `json:"state,omitempty"`
+	// TargetResourceType: Output only. Target Resource Type defines the type of
+	// the target for the announcement
+	TargetResourceType string `json:"targetResourceType,omitempty"`
+	// UpdateTime: Output only. Last update time of this resource.
+	UpdateTime string `json:"updateTime,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "ActivityType") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ActivityType") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s Announcement) MarshalJSON() ([]byte, error) {
+	type NoMethod Announcement
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // AuditConfig: Specifies the audit configuration for a service. The
@@ -713,6 +799,38 @@ type Cluster struct {
 
 func (s Cluster) MarshalJSON() ([]byte, error) {
 	type NoMethod Cluster
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// Constraints: Constraints to be applied while editing a schedule. These
+// constraints ensure that `Upgrade` specific requirements are met.
+type Constraints struct {
+	// MinHoursDay: Output only. Minimum number of hours must be allotted for the
+	// upgrade activities for each selected day. This is a minimum; the upgrade
+	// schedule can allot more hours for the given day.
+	MinHoursDay int64 `json:"minHoursDay,omitempty"`
+	// MinHoursWeek: Output only. The minimum number of weekly hours must be
+	// allotted for the upgrade activities. This is just a minimum; the schedule
+	// can assign more weekly hours.
+	MinHoursWeek int64 `json:"minHoursWeek,omitempty"`
+	// RescheduleDateRange: Output only. Output Only. The user can only reschedule
+	// an upgrade that starts within this range.
+	RescheduleDateRange *Interval `json:"rescheduleDateRange,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "MinHoursDay") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "MinHoursDay") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s Constraints) MarshalJSON() ([]byte, error) {
+	type NoMethod Constraints
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -1194,6 +1312,37 @@ func (s HcxActivationKey) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// Interval: Represents a time interval, encoded as a Timestamp start
+// (inclusive) and a Timestamp end (exclusive). The start must be less than or
+// equal to the end. When the start equals the end, the interval is empty
+// (matches no time). When both start and end are unspecified, the interval
+// matches any time.
+type Interval struct {
+	// EndTime: Optional. Exclusive end of the interval. If specified, a Timestamp
+	// matching this interval will have to be before the end.
+	EndTime string `json:"endTime,omitempty"`
+	// StartTime: Optional. Inclusive start of the interval. If specified, a
+	// Timestamp matching this interval will have to be the same or after the
+	// start.
+	StartTime string `json:"startTime,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "EndTime") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "EndTime") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s Interval) MarshalJSON() ([]byte, error) {
+	type NoMethod Interval
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // IpRange: An IP range provided in any one of the supported formats.
 type IpRange struct {
 	// ExternalAddress: The name of an `ExternalAddress` resource. The external
@@ -1224,6 +1373,37 @@ type IpRange struct {
 
 func (s IpRange) MarshalJSON() ([]byte, error) {
 	type NoMethod IpRange
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ListAnnouncementsResponse: Response message for
+// VmwareEngine.ListAnnouncements
+type ListAnnouncementsResponse struct {
+	// Announcements: A list of announcement runs.
+	Announcements []*Announcement `json:"announcements,omitempty"`
+	// NextPageToken: A token, which can be sent as `page_token` to retrieve the
+	// next page. If this field is omitted, there are no subsequent pages.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+	// Unreachable: list of unreachable locations
+	Unreachable []string `json:"unreachable,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "Announcements") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Announcements") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ListAnnouncementsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ListAnnouncementsResponse
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -1745,6 +1925,36 @@ type ListSubnetsResponse struct {
 
 func (s ListSubnetsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListSubnetsResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ListUpgradesResponse: Response message for VmwareEngine.ListUpgrades.
+type ListUpgradesResponse struct {
+	// NextPageToken: A token, which can be sent as `page_token` to retrieve the
+	// next page. If this field is omitted, there are no subsequent pages.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+	// Unreachable: List of unreachable resources.
+	Unreachable []string `json:"unreachable,omitempty"`
+	// Upgrades: A list of `Upgrades`.
+	Upgrades []*Upgrade `json:"upgrades,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "NextPageToken") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ListUpgradesResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ListUpgradesResponse
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -3045,6 +3255,46 @@ func (s RevokeDnsBindPermissionRequest) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// Schedule: Schedule for the upgrade.
+type Schedule struct {
+	// Constraints: Output only. Output Only. Constraints applied to the schedule.
+	// These constraints should be applicable at the time of any rescheduling.
+	Constraints *Constraints `json:"constraints,omitempty"`
+	// EditWindow: Output only. Output Only. The schedule is open for edits during
+	// this time interval or window.
+	EditWindow *Interval `json:"editWindow,omitempty"`
+	// LastEditor: Output only. Output Only. Indicates who most recently edited the
+	// upgrade schedule. The value is updated whenever the upgrade is rescheduled.
+	//
+	// Possible values:
+	//   "EDITOR_UNSPECIFIED" - The default value. This value should never be used.
+	//   "SYSTEM" - The upgrade is scheduled by the System or internal service.
+	//   "USER" - The upgrade is scheduled by the end user.
+	LastEditor string `json:"lastEditor,omitempty"`
+	// StartTime: Required. The scheduled start time for the upgrade.
+	StartTime string `json:"startTime,omitempty"`
+	// WeeklyWindows: Required. Weekly time windows for upgrade activities. The
+	// server performs upgrade activities during these time windows to minimize
+	// disruptions.
+	WeeklyWindows []*TimeWindow `json:"weeklyWindows,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Constraints") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Constraints") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s Schedule) MarshalJSON() ([]byte, error) {
+	type NoMethod Schedule
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // SetIamPolicyRequest: Request message for `SetIamPolicy` method.
 type SetIamPolicyRequest struct {
 	// Policy: REQUIRED: The complete policy to be applied to the `resource`. The
@@ -3273,6 +3523,79 @@ func (s Thresholds) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// TimeOfDay: Represents a time of day. The date and time zone are either not
+// significant or are specified elsewhere. An API may choose to allow leap
+// seconds. Related types are google.type.Date and `google.protobuf.Timestamp`.
+type TimeOfDay struct {
+	// Hours: Hours of a day in 24 hour format. Must be greater than or equal to 0
+	// and typically must be less than or equal to 23. An API may choose to allow
+	// the value "24:00:00" for scenarios like business closing time.
+	Hours int64 `json:"hours,omitempty"`
+	// Minutes: Minutes of an hour. Must be greater than or equal to 0 and less
+	// than or equal to 59.
+	Minutes int64 `json:"minutes,omitempty"`
+	// Nanos: Fractions of seconds, in nanoseconds. Must be greater than or equal
+	// to 0 and less than or equal to 999,999,999.
+	Nanos int64 `json:"nanos,omitempty"`
+	// Seconds: Seconds of a minute. Must be greater than or equal to 0 and
+	// typically must be less than or equal to 59. An API may allow the value 60 if
+	// it allows leap-seconds.
+	Seconds int64 `json:"seconds,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Hours") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Hours") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s TimeOfDay) MarshalJSON() ([]byte, error) {
+	type NoMethod TimeOfDay
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// TimeWindow: Represents the time window to perform upgrade activities.
+type TimeWindow struct {
+	// DayOfWeek: Required. Day of the week for this window.
+	//
+	// Possible values:
+	//   "DAY_OF_WEEK_UNSPECIFIED" - The day of the week is unspecified.
+	//   "MONDAY" - Monday
+	//   "TUESDAY" - Tuesday
+	//   "WEDNESDAY" - Wednesday
+	//   "THURSDAY" - Thursday
+	//   "FRIDAY" - Friday
+	//   "SATURDAY" - Saturday
+	//   "SUNDAY" - Sunday
+	DayOfWeek string `json:"dayOfWeek,omitempty"`
+	// Duration: Required. The duration of the window. The max allowed duration for
+	// any window is 24 hours.
+	Duration string `json:"duration,omitempty"`
+	// StartTime: Required. Time in UTC when the window starts.
+	StartTime *TimeOfDay `json:"startTime,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "DayOfWeek") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DayOfWeek") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s TimeWindow) MarshalJSON() ([]byte, error) {
+	type NoMethod TimeWindow
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // UndeletePrivateCloudRequest: Request message for
 // VmwareEngine.UndeletePrivateCloud
 type UndeletePrivateCloudRequest struct {
@@ -3294,6 +3617,97 @@ type UndeletePrivateCloudRequest struct {
 
 func (s UndeletePrivateCloudRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod UndeletePrivateCloudRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// Upgrade: Describes Private cloud Upgrade.
+type Upgrade struct {
+	// ComponentUpgrades: Output only. Output Only. The list of component upgrades.
+	ComponentUpgrades []*VmwareUpgradeComponent `json:"componentUpgrades,omitempty"`
+	// CreateTime: Output only. Output Only. Creation time of this resource.
+	CreateTime string `json:"createTime,omitempty"`
+	// Description: Output only. Output Only. The description of the upgrade. This
+	// is used to provide additional information about the private cloud upgrade,
+	// such as the upgrade's purpose, the changes included in the upgrade, or any
+	// other relevant information about the upgrade.
+	Description string `json:"description,omitempty"`
+	// EndTime: Output only. Output Only. End time of the upgrade.
+	EndTime string `json:"endTime,omitempty"`
+	// EstimatedDuration: Output only. Output Only. The estimated total duration of
+	// the upgrade. This information can be used to plan or schedule upgrades to
+	// minimize disruptions. Please note that the estimated duration is only an
+	// estimate. The actual upgrade duration may vary.
+	EstimatedDuration string `json:"estimatedDuration,omitempty"`
+	// Etag: The etag for the upgrade resource. If this is provided on update, it
+	// must match the server's etag.
+	Etag string `json:"etag,omitempty"`
+	// Name: Output only. Identifier. The resource name of the private cloud
+	// `Upgrade`. Resource names are schemeless URIs that follow the conventions in
+	// https://cloud.google.com/apis/design/resource_names. For example:
+	// `projects/my-project/locations/us-west1-a/privateClouds/my-cloud/upgrades/my-
+	// upgrade`
+	Name string `json:"name,omitempty"`
+	// Schedule: Schedule details for the upgrade.
+	Schedule *Schedule `json:"schedule,omitempty"`
+	// StartVersion: Output only. Output Only. The start version
+	StartVersion string `json:"startVersion,omitempty"`
+	// State: Output only. The current state of the upgrade.
+	//
+	// Possible values:
+	//   "STATE_UNSPECIFIED" - The default value. This value should never be used.
+	//   "SCHEDULED" - The upgrade is scheduled but not started yet.
+	//   "ONGOING" - The upgrade is currently in progress and has not completed
+	// yet.
+	//   "SUCCEEDED" - The upgrade completed successfully.
+	//   "PAUSED" - The upgrade is currently paused.
+	//   "FAILED" - The upgrade failed.
+	//   "CANCELLING" - The upgrade is in process of being canceled.
+	//   "CANCELLED" - The upgrade is canceled.
+	//   "RESCHEDULING" - The upgrade is in process of being rescheduled.
+	State string `json:"state,omitempty"`
+	// TargetVersion: Output only. Output Only. The target version
+	TargetVersion string `json:"targetVersion,omitempty"`
+	// Type: Output only. Output Only. The type of upgrade.
+	//
+	// Possible values:
+	//   "TYPE_UNSPECIFIED" - The default value. This value should never be used.
+	//   "VSPHERE_UPGRADE" - Upgrade of vmware components when a major version is
+	// available. 7.0u2 -> 7.0u3.
+	//   "VSPHERE_PATCH" - Patching of vmware components when a minor version is
+	// available. 7.0u2c -> 7.0u2d.
+	//   "WORKAROUND" - Workarounds are hotfixes for vulnerabilities or issues
+	// applied to mitigate the known vulnerability or issue until a patch or update
+	// is released. The description of the upgrade will have more details.
+	//   "FIRMWARE_UPGRADE" - Firmware upgrade for VMware product used in the
+	// private cloud.
+	//   "SWITCH_UPGRADE" - Switch upgrade.
+	//   "OTHER" - The upgrade type that doesn't fall into any other category.
+	//   "INFRASTRUCTURE_UPGRADE" - Infrastructure upgrade in BM node maintenance.
+	Type string `json:"type,omitempty"`
+	// Uid: Output only. System-generated unique identifier for the resource.
+	Uid string `json:"uid,omitempty"`
+	// UpdateTime: Output only. Output Only. Last update time of this resource.
+	UpdateTime string `json:"updateTime,omitempty"`
+	// Version: Output only.
+	Version string `json:"version,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "ComponentUpgrades") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ComponentUpgrades") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s Upgrade) MarshalJSON() ([]byte, error) {
+	type NoMethod Upgrade
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -3393,6 +3807,59 @@ type VmwareEngineNetwork struct {
 
 func (s VmwareEngineNetwork) MarshalJSON() ([]byte, error) {
 	type NoMethod VmwareEngineNetwork
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// VmwareUpgradeComponent: Per component upgrade resource
+type VmwareUpgradeComponent struct {
+	// ComponentType: Output only. Type of component
+	//
+	// Possible values:
+	//   "VMWARE_COMPONENT_TYPE_UNSPECIFIED" - The default value. This value should
+	// never be used.
+	//   "VCENTER" - vcenter
+	//   "ESXI" - esxi nodes + transport nodes
+	//   "NSXT_UC" - nsxt upgrade coordinator
+	//   "NSXT_EDGE" - nsxt edges cluster
+	//   "NSXT_MGR" - nsxt managers/management plane
+	//   "HCX" - hcx
+	//   "VSAN" - VSAN cluster
+	//   "DVS" - DVS switch
+	//   "NAMESERVER_VM" - Nameserver VMs
+	//   "KMS_VM" - KMS VM used for vsan encryption
+	//   "WITNESS_VM" - witness VM in case of stretch PC
+	//   "NSXT" - nsxt
+	//   "CLUSTER" - Cluster is used in case of BM
+	ComponentType string `json:"componentType,omitempty"`
+	// State: Output only. Component's upgrade state.
+	//
+	// Possible values:
+	//   "STATE_UNSPECIFIED" - The default value. This value should never be used.
+	//   "RUNNING" - Component's upgrade is in progress
+	//   "PAUSED" - The component's upgrade is paused. Will be resumed when upgrade
+	// job is resumed
+	//   "SUCCEEDED" - The component's upgrade is successfully completed
+	//   "FAILED" - The component's upgrade has failed. This will move to resume if
+	// upgrade is resumed or stay as is
+	//   "NOT_STARTED" - Component's upgrade has not started yet
+	//   "NOT_APPLICABLE" - Component's upgrade is not applicable in this upgrade.
+	// It will be skipped.
+	State string `json:"state,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ComponentType") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ComponentType") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s VmwareUpgradeComponent) MarshalJSON() ([]byte, error) {
+	type NoMethod VmwareUpgradeComponent
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -3798,6 +4265,299 @@ func (c *ProjectsLocationsListCall) Do(opts ...googleapi.CallOption) (*ListLocat
 // A non-nil error returned from f will halt the iteration.
 // The provided context supersedes any context provided to the Context method.
 func (c *ProjectsLocationsListCall) Pages(ctx context.Context, f func(*ListLocationsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+type ProjectsLocationsAnnouncementsGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Retrieves a `Announcement` by its resource name.
+//
+//   - name: The resource name of the announcement to retrieve. Resource names
+//     are schemeless URIs that follow the conventions in
+//     https://cloud.google.com/apis/design/resource_names. For example:
+//     `projects/my-project/locations/us-west1-a/announcements/announcement-uuid`.
+func (r *ProjectsLocationsAnnouncementsService) Get(name string) *ProjectsLocationsAnnouncementsGetCall {
+	c := &ProjectsLocationsAnnouncementsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsAnnouncementsGetCall) Fields(s ...googleapi.Field) *ProjectsLocationsAnnouncementsGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsAnnouncementsGetCall) IfNoneMatch(entityTag string) *ProjectsLocationsAnnouncementsGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsAnnouncementsGetCall) Context(ctx context.Context) *ProjectsLocationsAnnouncementsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsAnnouncementsGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsAnnouncementsGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "vmwareengine.projects.locations.announcements.get", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "vmwareengine.projects.locations.announcements.get" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Announcement.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsAnnouncementsGetCall) Do(opts ...googleapi.CallOption) (*Announcement, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Announcement{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "vmwareengine.projects.locations.announcements.get", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsAnnouncementsListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists `Announcements` for a given region and project
+//
+//   - parent: The resource name of the location to be queried for announcements.
+//     Resource names are schemeless URIs that follow the conventions in
+//     https://cloud.google.com/apis/design/resource_names. For example:
+//     `projects/my-project/locations/us-west1-a`.
+func (r *ProjectsLocationsAnnouncementsService) List(parent string) *ProjectsLocationsAnnouncementsListCall {
+	c := &ProjectsLocationsAnnouncementsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// Filter sets the optional parameter "filter": A filter expression that
+// matches resources returned in the response. The expression must specify the
+// field name, a comparison operator, and the value that you want to use for
+// filtering. The value must be a string, a number, or a boolean. The
+// comparison operator must be `=`, `!=`, `>`, or `<`. For example, if you are
+// filtering a list of announcement runs, you can exclude the ones named
+// `example-announcement` by specifying `name != "example-announcement". You
+// can also filter nested fields. To filter on multiple expressions, provide
+// each separate expression within parentheses. For example: ``` (name =
+// "example-announcement") (createTime > "2021-04-12T08:15:10.40Z") ``` By
+// default, each expression is an `AND` expression. However, you can include
+// `AND` and `OR` expressions explicitly. For example: ``` (name =
+// "announcement-1") AND (createTime > "2021-04-12T08:15:10.40Z") OR (name =
+// "announcement-2") ```
+func (c *ProjectsLocationsAnnouncementsListCall) Filter(filter string) *ProjectsLocationsAnnouncementsListCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// OrderBy sets the optional parameter "orderBy": Sorts list results by a
+// certain order. By default, returned results are ordered by `name` in
+// ascending order. You can also sort results in descending order based on the
+// `name` value using `orderBy="name desc". Currently, only ordering by `name`
+// is supported.
+func (c *ProjectsLocationsAnnouncementsListCall) OrderBy(orderBy string) *ProjectsLocationsAnnouncementsListCall {
+	c.urlParams_.Set("orderBy", orderBy)
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The maximum number of
+// announcements to return in one page. The service may return fewer than this
+// value. The maximum value is coerced to 1000. The default value of this field
+// is 500.
+func (c *ProjectsLocationsAnnouncementsListCall) PageSize(pageSize int64) *ProjectsLocationsAnnouncementsListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": A page token, received
+// from a previous `ListAnnouncements` call. Provide this to retrieve the
+// subsequent page. When paginating, all other parameters provided to
+// `ListAnnouncements` must match the call that provided the page token.
+func (c *ProjectsLocationsAnnouncementsListCall) PageToken(pageToken string) *ProjectsLocationsAnnouncementsListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsAnnouncementsListCall) Fields(s ...googleapi.Field) *ProjectsLocationsAnnouncementsListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsAnnouncementsListCall) IfNoneMatch(entityTag string) *ProjectsLocationsAnnouncementsListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsAnnouncementsListCall) Context(ctx context.Context) *ProjectsLocationsAnnouncementsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsAnnouncementsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsAnnouncementsListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/announcements")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "vmwareengine.projects.locations.announcements.list", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "vmwareengine.projects.locations.announcements.list" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *ListAnnouncementsResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsAnnouncementsListCall) Do(opts ...googleapi.CallOption) (*ListAnnouncementsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ListAnnouncementsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "vmwareengine.projects.locations.announcements.list", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsLocationsAnnouncementsListCall) Pages(ctx context.Context, f func(*ListAnnouncementsResponse) error) error {
 	c.ctx_ = ctx
 	defer c.PageToken(c.urlParams_.Get("pageToken"))
 	for {
@@ -13537,6 +14297,438 @@ func (c *ProjectsLocationsPrivateCloudsSubnetsPatchCall) Do(opts ...googleapi.Ca
 		return nil, err
 	}
 	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "vmwareengine.projects.locations.privateClouds.subnets.patch", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsPrivateCloudsUpgradesGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Retrieves a private cloud `Upgrade` resource by its resource name.
+//
+//   - name: The name of the `Upgrade` resource to be retrieved. Resource names
+//     are schemeless URIs that follow the conventions in
+//     https://cloud.google.com/apis/design/resource_names. For example:
+//     `projects/my-project/locations/us-west1-a/privateClouds/my-cloud/upgrades/m
+//     y-upgrade`.
+func (r *ProjectsLocationsPrivateCloudsUpgradesService) Get(name string) *ProjectsLocationsPrivateCloudsUpgradesGetCall {
+	c := &ProjectsLocationsPrivateCloudsUpgradesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsPrivateCloudsUpgradesGetCall) Fields(s ...googleapi.Field) *ProjectsLocationsPrivateCloudsUpgradesGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsPrivateCloudsUpgradesGetCall) IfNoneMatch(entityTag string) *ProjectsLocationsPrivateCloudsUpgradesGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsPrivateCloudsUpgradesGetCall) Context(ctx context.Context) *ProjectsLocationsPrivateCloudsUpgradesGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsPrivateCloudsUpgradesGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsPrivateCloudsUpgradesGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "vmwareengine.projects.locations.privateClouds.upgrades.get", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "vmwareengine.projects.locations.privateClouds.upgrades.get" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Upgrade.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsPrivateCloudsUpgradesGetCall) Do(opts ...googleapi.CallOption) (*Upgrade, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Upgrade{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "vmwareengine.projects.locations.privateClouds.upgrades.get", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsPrivateCloudsUpgradesListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists past, ongoing and upcoming `Upgrades` for the given private
+// cloud.
+//
+//   - parent: Query a list of `Upgrades` for the given private cloud resource
+//     name. Resource names are schemeless URIs that follow the conventions in
+//     https://cloud.google.com/apis/design/resource_names. For example:
+//     `projects/my-project/locations/us-west1-a/privateClouds/my-cloud`.
+func (r *ProjectsLocationsPrivateCloudsUpgradesService) List(parent string) *ProjectsLocationsPrivateCloudsUpgradesListCall {
+	c := &ProjectsLocationsPrivateCloudsUpgradesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// Filter sets the optional parameter "filter": A filter expression that
+// matches resources returned in the response. The expression must specify the
+// field name, a comparison operator, and the value that you want to use for
+// filtering. The value must be a string, a number, or a boolean. The
+// comparison operator must be `=`, `!=`, `>`, or `<`. For example, if you are
+// filtering a list of upgrades, you can exclude the ones named
+// `example-upgrade1` by specifying `name != "example-upgrade1". You can also
+// filter nested fields. To filter on multiple expressions, provide each
+// separate expression within parentheses. For example: ``` (name =
+// "example-upgrade") (createTime > "2021-04-12T08:15:10.40Z") ``` By default,
+// each expression is an `AND` expression. However, you can include `AND` and
+// `OR` expressions explicitly. For example: ``` (name = "upgrade-1") AND
+// (createTime > "2021-04-12T08:15:10.40Z") OR (name = "upgrade-2") ```
+func (c *ProjectsLocationsPrivateCloudsUpgradesListCall) Filter(filter string) *ProjectsLocationsPrivateCloudsUpgradesListCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// OrderBy sets the optional parameter "orderBy": Sorts list results by a
+// certain order. By default, returned results are ordered by `name` in
+// ascending order. You can also sort results in descending order based on the
+// `name` value using `orderBy="name desc". Currently, only ordering by `name`
+// is supported.
+func (c *ProjectsLocationsPrivateCloudsUpgradesListCall) OrderBy(orderBy string) *ProjectsLocationsPrivateCloudsUpgradesListCall {
+	c.urlParams_.Set("orderBy", orderBy)
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The maximum number of
+// `Upgrades` to return in one page. The service may return fewer resources
+// than this value. The maximum value is coerced to 1000. The default value of
+// this field is 500.
+func (c *ProjectsLocationsPrivateCloudsUpgradesListCall) PageSize(pageSize int64) *ProjectsLocationsPrivateCloudsUpgradesListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": A page token, received
+// from a previous `ListUpgrades` call. Provide this to retrieve the subsequent
+// page. When paginating, all other parameters provided to `ListUpgrades` must
+// match the call that provided the page token.
+func (c *ProjectsLocationsPrivateCloudsUpgradesListCall) PageToken(pageToken string) *ProjectsLocationsPrivateCloudsUpgradesListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsPrivateCloudsUpgradesListCall) Fields(s ...googleapi.Field) *ProjectsLocationsPrivateCloudsUpgradesListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsPrivateCloudsUpgradesListCall) IfNoneMatch(entityTag string) *ProjectsLocationsPrivateCloudsUpgradesListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsPrivateCloudsUpgradesListCall) Context(ctx context.Context) *ProjectsLocationsPrivateCloudsUpgradesListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsPrivateCloudsUpgradesListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsPrivateCloudsUpgradesListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/upgrades")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "vmwareengine.projects.locations.privateClouds.upgrades.list", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "vmwareengine.projects.locations.privateClouds.upgrades.list" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *ListUpgradesResponse.ServerResponse.Header or (if a response was returned
+// at all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *ProjectsLocationsPrivateCloudsUpgradesListCall) Do(opts ...googleapi.CallOption) (*ListUpgradesResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ListUpgradesResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "vmwareengine.projects.locations.privateClouds.upgrades.list", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsLocationsPrivateCloudsUpgradesListCall) Pages(ctx context.Context, f func(*ListUpgradesResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+type ProjectsLocationsPrivateCloudsUpgradesPatchCall struct {
+	s          *Service
+	name       string
+	upgrade    *Upgrade
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Patch: Update the private cloud `Upgrade` resource. Only `schedule` field
+// can updated. The schedule can only be updated when the upgrade has not
+// started and schedule edit window is open. Only fields specified in
+// `update_mask` are considered.
+//
+//   - name: Output only. Identifier. The resource name of the private cloud
+//     `Upgrade`. Resource names are schemeless URIs that follow the conventions
+//     in https://cloud.google.com/apis/design/resource_names. For example:
+//     `projects/my-project/locations/us-west1-a/privateClouds/my-cloud/upgrades/m
+//     y-upgrade`.
+func (r *ProjectsLocationsPrivateCloudsUpgradesService) Patch(name string, upgrade *Upgrade) *ProjectsLocationsPrivateCloudsUpgradesPatchCall {
+	c := &ProjectsLocationsPrivateCloudsUpgradesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.upgrade = upgrade
+	return c
+}
+
+// RequestId sets the optional parameter "requestId": A request ID to identify
+// requests. Specify a unique request ID so that if you must retry your
+// request, the server will know to ignore the request if it has already been
+// completed. The server guarantees that a request doesn't result in creation
+// of duplicate commitments for at least 60 minutes. For example, consider a
+// situation where you make an initial request and the request times out. If
+// you make the request again with the same request ID, the server can check if
+// original operation with the same request ID was received, and if so, will
+// ignore the second request. This prevents clients from accidentally creating
+// duplicate commitments. The request ID must be a valid UUID with the
+// exception that zero UUID is not supported
+// (00000000-0000-0000-0000-000000000000).
+func (c *ProjectsLocationsPrivateCloudsUpgradesPatchCall) RequestId(requestId string) *ProjectsLocationsPrivateCloudsUpgradesPatchCall {
+	c.urlParams_.Set("requestId", requestId)
+	return c
+}
+
+// UpdateMask sets the optional parameter "updateMask": Required. Field mask is
+// used to specify the fields to be overwritten in the `Upgrade` resource by
+// the update. The fields specified in the `update_mask` are relative to the
+// resource, not the full request. A field will be overwritten if it is in the
+// mask. If the user does not provide a mask then all fields will be
+// overwritten.
+func (c *ProjectsLocationsPrivateCloudsUpgradesPatchCall) UpdateMask(updateMask string) *ProjectsLocationsPrivateCloudsUpgradesPatchCall {
+	c.urlParams_.Set("updateMask", updateMask)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsPrivateCloudsUpgradesPatchCall) Fields(s ...googleapi.Field) *ProjectsLocationsPrivateCloudsUpgradesPatchCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsPrivateCloudsUpgradesPatchCall) Context(ctx context.Context) *ProjectsLocationsPrivateCloudsUpgradesPatchCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsPrivateCloudsUpgradesPatchCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsPrivateCloudsUpgradesPatchCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.upgrade)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PATCH", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "vmwareengine.projects.locations.privateClouds.upgrades.patch", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "vmwareengine.projects.locations.privateClouds.upgrades.patch" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsPrivateCloudsUpgradesPatchCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "vmwareengine.projects.locations.privateClouds.upgrades.patch", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 

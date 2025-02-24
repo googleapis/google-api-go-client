@@ -443,8 +443,16 @@ type GoogleIamV2DenyRule struct {
 	// `: All identities in a workload identity pool with a certain attribute. *
 	// `principalSet://iam.googleapis.com/projects/{project_number}/locations/global
 	// /workloadIdentityPools/{pool_id}/*`: All identities in a workload identity
-	// pool. * `deleted:principal://goog/subject/{email_id}?uid={uid}`: A specific
-	// Google Account that was deleted recently. For example,
+	// pool. *
+	// `principalSet://cloudresourcemanager.googleapis.com/[projects|folders|organiz
+	// ations]/{project_number|folder_number|org_number}/type/ServiceAccount`: All
+	// service accounts grouped under a resource (project, folder, or
+	// organization). *
+	// `principalSet://cloudresourcemanager.googleapis.com/[projects|folders|organiz
+	// ations]/{project_number|folder_number|org_number}/type/ServiceAgent`: All
+	// service agents grouped under a resource (project, folder, or organization).
+	// * `deleted:principal://goog/subject/{email_id}?uid={uid}`: A specific Google
+	// Account that was deleted recently. For example,
 	// `deleted:principal://goog/subject/alice@example.com?uid=1234567890`. If the
 	// Google Account is recovered, this identifier reverts to the standard
 	// identifier for a Google Account. *

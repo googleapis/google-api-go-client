@@ -1259,8 +1259,6 @@ type ListBackupsResponse struct {
 	// `ListBackups` call to retrieve the next page of results. If this field is
 	// omitted or empty, then there are no more results to return.
 	NextPageToken string `json:"nextPageToken,omitempty"`
-	// Unreachable: Locations that could not be reached.
-	Unreachable []string `json:"unreachable,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
@@ -1784,7 +1782,7 @@ type Restore struct {
 	// Filter: Optional. Immutable. Filters resources for `Restore`. If not
 	// specified, the scope of the restore will remain the same as defined in the
 	// `RestorePlan`. If this is specified and no resources are matched by the
-	// `inclusion_filters` or everyting is excluded by the `exclusion_filters`,
+	// `inclusion_filters` or everything is excluded by the `exclusion_filters`,
 	// nothing will be restored. This filter can only be specified if the value of
 	// namespaced_resource_restore_mode is set to `MERGE_SKIP_ON_CONFLICT`,
 	// `MERGE_REPLACE_VOLUME_ON_CONFLICT` or `MERGE_REPLACE_ON_CONFLICT`.
@@ -4607,14 +4605,6 @@ func (c *ProjectsLocationsBackupPlansBackupsListCall) PageSize(pageSize int64) *
 // call that provided the page token.
 func (c *ProjectsLocationsBackupPlansBackupsListCall) PageToken(pageToken string) *ProjectsLocationsBackupPlansBackupsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
-	return c
-}
-
-// ReturnPartialSuccess sets the optional parameter "returnPartialSuccess": If
-// set to true, the response will return partial results when some regions are
-// unreachable and the unreachable field will be populated.
-func (c *ProjectsLocationsBackupPlansBackupsListCall) ReturnPartialSuccess(returnPartialSuccess bool) *ProjectsLocationsBackupPlansBackupsListCall {
-	c.urlParams_.Set("returnPartialSuccess", fmt.Sprint(returnPartialSuccess))
 	return c
 }
 

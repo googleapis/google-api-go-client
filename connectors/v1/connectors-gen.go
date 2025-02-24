@@ -3062,6 +3062,9 @@ func (s JsonAuthSchema) MarshalJSON() ([]byte, error) {
 
 // JsonSchema: JsonSchema representation of schema metadata
 type JsonSchema struct {
+	// AdditionalDetails: Additional details apart from standard json schema
+	// fields, this gives flexibility to store metadata about the schema
+	AdditionalDetails googleapi.RawMessage `json:"additionalDetails,omitempty"`
 	// Default: The default value of the field or object described by this schema.
 	Default interface{} `json:"default,omitempty"`
 	// Description: A description of this schema.
@@ -3134,15 +3137,15 @@ type JsonSchema struct {
 	Required []string `json:"required,omitempty"`
 	// Type: JSON Schema Validation: A Vocabulary for Structural Validation of JSON
 	Type []string `json:"type,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "Default") to unconditionally
-	// include in API requests. By default, fields with empty or default values are
-	// omitted from API requests. See
+	// ForceSendFields is a list of field names (e.g. "AdditionalDetails") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Default") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
+	// NullFields is a list of field names (e.g. "AdditionalDetails") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -4946,7 +4949,7 @@ type RoleGrant struct {
 	// HelperTextTemplate: Optional. Template that UI can use to provide helper
 	// text to customers.
 	HelperTextTemplate string `json:"helperTextTemplate,omitempty"`
-	// Principal: Optional. Prinicipal/Identity for whom the role need to assigned.
+	// Principal: Optional. Principal/Identity for whom the role need to assigned.
 	//
 	// Possible values:
 	//   "PRINCIPAL_UNSPECIFIED" - Value type is not specified.
@@ -5383,7 +5386,7 @@ func (s SloMetadata) MarshalJSON() ([]byte, error) {
 
 // Source: Source to extract the backend from.
 type Source struct {
-	// FieldId: Field identifier. For example config vaiable name.
+	// FieldId: Field identifier. For example config variable name.
 	FieldId string `json:"fieldId,omitempty"`
 	// SourceType: Type of the source.
 	//

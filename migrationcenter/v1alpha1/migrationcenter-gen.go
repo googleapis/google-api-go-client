@@ -2687,7 +2687,7 @@ type DiskPartition struct {
 	FileSystem string `json:"fileSystem,omitempty"`
 	// FreeBytes: Partition free space.
 	FreeBytes int64 `json:"freeBytes,omitempty,string"`
-	// MountPoint: Mount pount (Linux/Windows) or drive letter (Windows).
+	// MountPoint: Mount point (Linux/Windows) or drive letter (Windows).
 	MountPoint string `json:"mountPoint,omitempty"`
 	// SubPartitions: Sub-partitions.
 	SubPartitions *DiskPartitionList `json:"subPartitions,omitempty"`
@@ -4800,7 +4800,7 @@ type NetworkAddress struct {
 	//
 	// Possible values:
 	//   "ADDRESS_ASSIGNMENT_UNSPECIFIED" - Unknown (default value).
-	//   "ADDRESS_ASSIGNMENT_STATIC" - Staticly assigned IP.
+	//   "ADDRESS_ASSIGNMENT_STATIC" - Statically assigned IP.
 	//   "ADDRESS_ASSIGNMENT_DHCP" - Dynamically assigned IP (DHCP).
 	Assignment string `json:"assignment,omitempty"`
 	// Bcast: Broadcast address.

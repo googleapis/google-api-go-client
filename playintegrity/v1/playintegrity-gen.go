@@ -281,46 +281,6 @@ type AppAccessRiskVerdict struct {
 	// by Google Play or preloaded on the device, is running that could be used to
 	// control the device, such as a remote support app.
 	AppsDetected []string `json:"appsDetected,omitempty"`
-	// OtherApps: Deprecated: this field will be removed, please use apps_detected
-	// instead. App access risk verdict related to apps that are not installed by
-	// Google Play, and are not preloaded on the system image by the device
-	// manufacturer.
-	//
-	// Possible values:
-	//   "UNKNOWN" - Risk type is unknown.
-	//   "UNEVALUATED" - App access risk was not evaluated because a requirement
-	// was missed, such as the device not being trusted enough.
-	//   "NOT_INSTALLED" - No apps under this field are installed on the device.
-	// This is only valid for the other apps field.
-	//   "INSTALLED" - One or more apps under this field are installed on the
-	// device.
-	//   "CAPTURING" - Apps under this field are running that could be used to read
-	// or capture inputs and outputs of the requesting app, such as screen
-	// recording apps.
-	//   "CONTROLLING" - Apps under this field are running that could be used to
-	// control the device and inputs and outputs of the requesting app, such as
-	// remote controlling apps.
-	OtherApps string `json:"otherApps,omitempty"`
-	// PlayOrSystemApps: Deprecated: this field will be removed, please use
-	// apps_detected instead. App access risk verdict related to apps that are not
-	// installed by the Google Play Store, and are not preloaded on the system
-	// image by the device manufacturer.
-	//
-	// Possible values:
-	//   "UNKNOWN" - Risk type is unknown.
-	//   "UNEVALUATED" - App access risk was not evaluated because a requirement
-	// was missed, such as the device not being trusted enough.
-	//   "NOT_INSTALLED" - No apps under this field are installed on the device.
-	// This is only valid for the other apps field.
-	//   "INSTALLED" - One or more apps under this field are installed on the
-	// device.
-	//   "CAPTURING" - Apps under this field are running that could be used to read
-	// or capture inputs and outputs of the requesting app, such as screen
-	// recording apps.
-	//   "CONTROLLING" - Apps under this field are running that could be used to
-	// control the device and inputs and outputs of the requesting app, such as
-	// remote controlling apps.
-	PlayOrSystemApps string `json:"playOrSystemApps,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AppsDetected") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See

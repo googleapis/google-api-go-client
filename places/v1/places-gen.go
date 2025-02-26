@@ -1119,6 +1119,8 @@ type GoogleMapsPlacesV1EVChargeOptionsConnectorAggregation struct {
 	//   "EV_CONNECTOR_TYPE_UNSPECIFIED_GB_T" - GB/T type corresponds to the GB/T
 	// standard in China. This type covers all GB_T types.
 	//   "EV_CONNECTOR_TYPE_UNSPECIFIED_WALL_OUTLET" - Unspecified wall outlet.
+	//   "EV_CONNECTOR_TYPE_NACS" - The North American Charging System (NACS),
+	// standardized as SAE J3400.
 	Type string `json:"type,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AvailabilityLastUpdateTime")
 	// to unconditionally include in API requests. By default, fields with empty or
@@ -2680,6 +2682,8 @@ type GoogleMapsPlacesV1SearchTextRequestEVOptions struct {
 	//   "EV_CONNECTOR_TYPE_UNSPECIFIED_GB_T" - GB/T type corresponds to the GB/T
 	// standard in China. This type covers all GB_T types.
 	//   "EV_CONNECTOR_TYPE_UNSPECIFIED_WALL_OUTLET" - Unspecified wall outlet.
+	//   "EV_CONNECTOR_TYPE_NACS" - The North American Charging System (NACS),
+	// standardized as SAE J3400.
 	ConnectorTypes []string `json:"connectorTypes,omitempty"`
 	// MinimumChargingRateKw: Optional. Minimum required charging rate in
 	// kilowatts. A place with a charging rate less than the specified rate is

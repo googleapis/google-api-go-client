@@ -6,7 +6,7 @@
 
 // Package forms provides access to the Google Forms API.
 //
-// For product documentation, see: https://developers.google.com/forms/api
+// For product documentation, see: https://developers.google.com/workspace/forms/api
 //
 // # Library status
 //

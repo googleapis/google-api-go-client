@@ -2462,7 +2462,6 @@ func (s Row) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// SeasonalOverride: Next: 5
 type SeasonalOverride struct {
 	// Begin: Required. Defines the date range when this seasonal override applies.
 	// Both begin and end are inclusive and should be in date decimal format,
@@ -2472,8 +2471,13 @@ type SeasonalOverride struct {
 	End *Date `json:"end,omitempty"`
 	// Label: Required. Display name of this seasonal override in Merchant Center.
 	Label string `json:"label,omitempty"`
-	// Policy: Required. The return policy for the given date range.
+	// Policy: The return policy for the given date range.
 	Policy *Policy `json:"policy,omitempty"`
+	// ReturnDays: Number of days (from the delivery date) that the product can be
+	// returned.
+	ReturnDays int64 `json:"returnDays,omitempty"`
+	// ReturnUntilDate: Fixed end date until which the product can be returned.
+	ReturnUntilDate *Date `json:"returnUntilDate,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Begin") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
 	// omitted from API requests. See

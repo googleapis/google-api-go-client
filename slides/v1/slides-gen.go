@@ -308,13 +308,14 @@ func (s AutoText) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// Autofit: The autofit properties of a Shape.
+// Autofit: The autofit properties of a Shape. This property is only set for
+// shapes that allow text.
 type Autofit struct {
 	// AutofitType: The autofit type of the shape. If the autofit type is
 	// AUTOFIT_TYPE_UNSPECIFIED, the autofit type is inherited from a parent
 	// placeholder if it exists. The field is automatically set to NONE if a
 	// request is made that might affect text fitting within its bounding text box.
-	// In this case the font_scale is applied to the font_size and the
+	// In this case, the font_scale is applied to the font_size and the
 	// line_spacing_reduction is applied to the line_spacing. Both properties are
 	// also reset to default values.
 	//
@@ -327,12 +328,12 @@ type Autofit struct {
 	// FontScale: The font scale applied to the shape. For shapes with autofit_type
 	// NONE or SHAPE_AUTOFIT, this value is the default value of 1. For
 	// TEXT_AUTOFIT, this value multiplied by the font_size gives the font size
-	// that is rendered in the editor. This property is read-only.
+	// that's rendered in the editor. This property is read-only.
 	FontScale float64 `json:"fontScale,omitempty"`
 	// LineSpacingReduction: The line spacing reduction applied to the shape. For
 	// shapes with autofit_type NONE or SHAPE_AUTOFIT, this value is the default
 	// value of 0. For TEXT_AUTOFIT, this value subtracted from the line_spacing
-	// gives the line spacing that is rendered in the editor. This property is
+	// gives the line spacing that's rendered in the editor. This property is
 	// read-only.
 	LineSpacingReduction float64 `json:"lineSpacingReduction,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AutofitType") to
@@ -756,10 +757,9 @@ type CreateShapeRequest struct {
 	// ShapeType: The shape type.
 	//
 	// Possible values:
-	//   "TYPE_UNSPECIFIED" - The shape type that is not predefined.
+	//   "TYPE_UNSPECIFIED" - Default value. This value is unused.
 	//   "TEXT_BOX" - Text box shape.
-	//   "RECTANGLE" - Rectangle shape. Corresponds to ECMA-376 ST_ShapeType
-	// 'rect'.
+	//   "RECTANGLE" - Rectangle shape. Corresponds to ECMA-376 ST_ShapeType 'rect'
 	//   "ROUND_RECTANGLE" - Round corner rectangle shape. Corresponds to ECMA-376
 	// ST_ShapeType 'roundRect'
 	//   "ELLIPSE" - Ellipse shape. Corresponds to ECMA-376 ST_ShapeType 'ellipse'
@@ -2114,12 +2114,12 @@ type LineConnection struct {
 	// ConnectionSiteIndex: The index of the connection site on the connected page
 	// element. In most cases, it corresponds to the predefined connection site
 	// index from the ECMA-376 standard. More information on those connection sites
-	// can be found in the description of the "cnx" attribute in section 20.1.9.9
-	// and Annex H. "Predefined DrawingML Shape and Text Geometries" of "Office
-	// Open XML File Formats-Fundamentals and Markup Language Reference", part 1 of
-	// [ECMA-376 5th edition]
-	// (http://www.ecma-international.org/publications/standards/Ecma-376.htm). The
-	// position of each connection site can also be viewed from Slides editor.
+	// can be found in both the description of the "cxn" attribute in section
+	// 20.1.9.9 and "Annex H. Example Predefined DrawingML Shape and Text
+	// Geometries" of "Office Open XML File Formats - Fundamentals and Markup
+	// Language Reference", part 1 of ECMA-376 5th edition
+	// (https://ecma-international.org/publications-and-standards/standards/ecma-376/).
+	// The position of each connection site can also be viewed from Slides editor.
 	ConnectionSiteIndex int64 `json:"connectionSiteIndex,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "ConnectedObjectId") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -3093,8 +3093,8 @@ type Recolor struct {
 	// second available color from its color scheme.
 	//   "LIGHT3" - A recolor effect that lightens the image using the page's third
 	// available color from its color scheme.
-	//   "LIGHT4" - A recolor effect that lightens the image using the page's forth
-	// available color from its color scheme.
+	//   "LIGHT4" - A recolor effect that lightens the image using the page's
+	// fourth available color from its color scheme.
 	//   "LIGHT5" - A recolor effect that lightens the image using the page's fifth
 	// available color from its color scheme.
 	//   "LIGHT6" - A recolor effect that lightens the image using the page's sixth
@@ -3763,8 +3763,9 @@ func (s *Shadow) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-// Shape: A PageElement kind representing a generic shape that does not have a
-// more specific classification.
+// Shape: A PageElement kind representing a generic shape that doesn't have a
+// more specific classification. For more information, see Size and position
+// page elements (https://developers.google.com/slides/api/guides/transform).
 type Shape struct {
 	// Placeholder: Placeholders are page elements that inherit from corresponding
 	// placeholders on layouts and masters. If set, the shape is a placeholder
@@ -3776,10 +3777,9 @@ type Shape struct {
 	// ShapeType: The type of the shape.
 	//
 	// Possible values:
-	//   "TYPE_UNSPECIFIED" - The shape type that is not predefined.
+	//   "TYPE_UNSPECIFIED" - Default value. This value is unused.
 	//   "TEXT_BOX" - Text box shape.
-	//   "RECTANGLE" - Rectangle shape. Corresponds to ECMA-376 ST_ShapeType
-	// 'rect'.
+	//   "RECTANGLE" - Rectangle shape. Corresponds to ECMA-376 ST_ShapeType 'rect'
 	//   "ROUND_RECTANGLE" - Round corner rectangle shape. Corresponds to ECMA-376
 	// ST_ShapeType 'roundRect'
 	//   "ELLIPSE" - Ellipse shape. Corresponds to ECMA-376 ST_ShapeType 'ellipse'

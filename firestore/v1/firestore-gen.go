@@ -2221,23 +2221,7 @@ type GoogleFirestoreAdminV1Index struct {
 	// This is the default.
 	//   "DATASTORE_MODE_API" - The index can only be used by the Firestore in
 	// Datastore Mode query API.
-	//   "IGNITE_API" - The index can only be used by Ignite.
 	ApiScope string `json:"apiScope,omitempty"`
-	// Density: Immutable. The density configuration of the index.
-	//
-	// Possible values:
-	//   "DENSITY_UNSPECIFIED" - Unspecified. It will use database default setting.
-	// This value is input only.
-	//   "SPARSE_ALL" - In order for an index entry to be added, the document must
-	// contain all fields specified in the index. This is the only allowed value
-	// for indexes having ApiScope `ANY_API` and `DATASTORE_MODE_API`.
-	//   "SPARSE_ANY" - In order for an index entry to be added, the document must
-	// contain at least one of the fields specified in the index. Non-existent
-	// fields are treated as having a NULL value when generating index entries.
-	//   "DENSE" - An index entry will be added regardless of whether the document
-	// contains any of the fields specified in the index. Non-existent fields are
-	// treated as having a NULL value when generating index entries.
-	Density string `json:"density,omitempty"`
 	// Fields: The fields supported by this index. For composite indexes, this
 	// requires a minimum of 2 and a maximum of 100 fields. The last field entry is
 	// always for the field path `__name__`. If, on creation, `__name__` was not
@@ -2248,14 +2232,6 @@ type GoogleFirestoreAdminV1Index struct {
 	// exactly one entry with a field path equal to the field path of the
 	// associated field.
 	Fields []*GoogleFirestoreAdminV1IndexField `json:"fields,omitempty"`
-	// Multikey: Optional. Whether the index is multikey. By default, the index is
-	// not multikey. For non-multikey indexes, none of the paths in the index
-	// definition reach or traverse an array, except via an explicit array index.
-	// For multikey indexes, at most one of the paths in the index definition reach
-	// or traverse an array, except via an explicit array index. Violations will
-	// result in errors. Note this field only applies to index with IGNITE_API
-	// ApiScope.
-	Multikey bool `json:"multikey,omitempty"`
 	// Name: Output only. A server defined name for this index. The form of this
 	// name for composite indexes will be:
 	// `projects/{project_id}/databases/{database_id}/collectionGroups/{collection_i

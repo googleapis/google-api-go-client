@@ -5799,6 +5799,45 @@ func (s GoogleCloudDiscoveryengineV1DocumentProcessingConfigParsingConfigOcrPars
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudDiscoveryengineV1DoubleList: Double list.
+type GoogleCloudDiscoveryengineV1DoubleList struct {
+	// Values: Double values.
+	Values []float64 `json:"values,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Values") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Values") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1DoubleList) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1DoubleList
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+func (s *GoogleCloudDiscoveryengineV1DoubleList) UnmarshalJSON(data []byte) error {
+	type NoMethod GoogleCloudDiscoveryengineV1DoubleList
+	var s1 struct {
+		Values []gensupport.JSONFloat64 `json:"values"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.Values = make([]float64, len(s1.Values))
+	for i := range s1.Values {
+		s.Values[i] = float64(s1.Values[i])
+	}
+	return nil
+}
+
 // GoogleCloudDiscoveryengineV1EnableAdvancedSiteSearchMetadata: Metadata
 // related to the progress of the
 // SiteSearchEngineService.EnableAdvancedSiteSearch operation. This will be
@@ -5929,6 +5968,14 @@ type GoogleCloudDiscoveryengineV1EngineChatEngineConfig struct {
 	// retrieved using EngineService.GetEngine or EngineService.ListEngines API
 	// after engine creation.
 	AgentCreationConfig *GoogleCloudDiscoveryengineV1EngineChatEngineConfigAgentCreationConfig `json:"agentCreationConfig,omitempty"`
+	// AllowCrossRegion: Optional. If the flag set to true, we allow the agent and
+	// engine are in different locations, otherwise the agent and engine are
+	// required to be in the same location. The flag is set to false by default.
+	// Note that the `allow_cross_region` are one-time consumed by and passed to
+	// EngineService.CreateEngine. It means they cannot be retrieved using
+	// EngineService.GetEngine or EngineService.ListEngines API after engine
+	// creation.
+	AllowCrossRegion bool `json:"allowCrossRegion,omitempty"`
 	// DialogflowAgentToLink: The resource name of an exist Dialogflow agent to
 	// link to this Chat Engine. Customers can either provide
 	// `agent_creation_config` to create agent or provide an agent name that links
@@ -9336,6 +9383,9 @@ type GoogleCloudDiscoveryengineV1SearchRequest struct {
 	// QueryExpansionSpec: The query expansion specification that specifies the
 	// conditions under which query expansion occurs.
 	QueryExpansionSpec *GoogleCloudDiscoveryengineV1SearchRequestQueryExpansionSpec `json:"queryExpansionSpec,omitempty"`
+	// RelevanceScoreSpec: Optional. The specification for returning the relevance
+	// score.
+	RelevanceScoreSpec *GoogleCloudDiscoveryengineV1SearchRequestRelevanceScoreSpec `json:"relevanceScoreSpec,omitempty"`
 	// SafeSearch: Whether to turn on safe search. This is only supported for
 	// website search.
 	SafeSearch bool `json:"safeSearch,omitempty"`
@@ -10119,6 +10169,31 @@ func (s GoogleCloudDiscoveryengineV1SearchRequestQueryExpansionSpec) MarshalJSON
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudDiscoveryengineV1SearchRequestRelevanceScoreSpec: The
+// specification for returning the document relevance score.
+type GoogleCloudDiscoveryengineV1SearchRequestRelevanceScoreSpec struct {
+	// ReturnRelevanceScore: Optional. Whether to return the relevance score for
+	// search results. The higher the score, the more relevant the document is to
+	// the query.
+	ReturnRelevanceScore bool `json:"returnRelevanceScore,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ReturnRelevanceScore") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ReturnRelevanceScore") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1SearchRequestRelevanceScoreSpec) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1SearchRequestRelevanceScoreSpec
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudDiscoveryengineV1SearchRequestSearchAsYouTypeSpec: Specification
 // for search as you type in search requests.
 type GoogleCloudDiscoveryengineV1SearchRequestSearchAsYouTypeSpec struct {
@@ -10376,6 +10451,8 @@ type GoogleCloudDiscoveryengineV1SearchResponseSearchResult struct {
 	Document *GoogleCloudDiscoveryengineV1Document `json:"document,omitempty"`
 	// Id: Document.id of the searched Document.
 	Id string `json:"id,omitempty"`
+	// ModelScores: Output only. Google provided available scores.
+	ModelScores map[string]GoogleCloudDiscoveryengineV1DoubleList `json:"modelScores,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Chunk") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
 	// omitted from API requests. See
@@ -12606,6 +12683,35 @@ func (s GoogleCloudDiscoveryengineV1alphaAnswerStepActionSearchAction) MarshalJS
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudDiscoveryengineV1alphaBAPConfig: The configuration for the BAP
+// connector.
+type GoogleCloudDiscoveryengineV1alphaBAPConfig struct {
+	// SupportedConnectorModes: Required. The supported connector modes for the
+	// associated BAP connection.
+	//
+	// Possible values:
+	//   "CONNECTOR_MODE_UNSPECIFIED" - Connector mode unspecified.
+	//   "DATA_INGESTION" - Connector utilized for data ingestion.
+	//   "ACTIONS" - Connector utilized for Actions
+	SupportedConnectorModes []string `json:"supportedConnectorModes,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "SupportedConnectorModes") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "SupportedConnectorModes") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1alphaBAPConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1alphaBAPConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudDiscoveryengineV1alphaBatchCreateTargetSiteMetadata: Metadata
 // related to the progress of the
 // SiteSearchEngineService.BatchCreateTargetSites operation. This will be
@@ -13504,6 +13610,8 @@ type GoogleCloudDiscoveryengineV1alphaDataConnector struct {
 	// AutoRunDisabled: Indicates whether the connector is disabled for auto run.
 	// It can be used to pause periodical and real time sync.
 	AutoRunDisabled bool `json:"autoRunDisabled,omitempty"`
+	// BapConfig: Optional. The configuration for establishing a BAP connection.
+	BapConfig *GoogleCloudDiscoveryengineV1alphaBAPConfig `json:"bapConfig,omitempty"`
 	// BlockingReasons: Output only. User actions that must be completed before the
 	// connector can start syncing data.
 	//
@@ -14541,6 +14649,14 @@ type GoogleCloudDiscoveryengineV1alphaEngineChatEngineConfig struct {
 	// retrieved using EngineService.GetEngine or EngineService.ListEngines API
 	// after engine creation.
 	AgentCreationConfig *GoogleCloudDiscoveryengineV1alphaEngineChatEngineConfigAgentCreationConfig `json:"agentCreationConfig,omitempty"`
+	// AllowCrossRegion: Optional. If the flag set to true, we allow the agent and
+	// engine are in different locations, otherwise the agent and engine are
+	// required to be in the same location. The flag is set to false by default.
+	// Note that the `allow_cross_region` are one-time consumed by and passed to
+	// EngineService.CreateEngine. It means they cannot be retrieved using
+	// EngineService.GetEngine or EngineService.ListEngines API after engine
+	// creation.
+	AllowCrossRegion bool `json:"allowCrossRegion,omitempty"`
 	// DialogflowAgentToLink: The resource name of an exist Dialogflow agent to
 	// link to this Chat Engine. Customers can either provide
 	// `agent_creation_config` to create agent or provide an agent name that links
@@ -16921,10 +17037,13 @@ type GoogleCloudDiscoveryengineV1alphaSearchRequest struct {
 	// (https://cloud.google.com/apis/design/standard_fields). If set, then results
 	// will be boosted based on the region_code provided.
 	RegionCode string `json:"regionCode,omitempty"`
+	// RelevanceScoreSpec: Optional. The specification for returning the relevance
+	// score.
+	RelevanceScoreSpec *GoogleCloudDiscoveryengineV1alphaSearchRequestRelevanceScoreSpec `json:"relevanceScoreSpec,omitempty"`
 	// RelevanceThreshold: The relevance threshold of the search results. Default
 	// to Google defined threshold, leveraging a balance of precision and recall to
 	// deliver both highly accurate results and comprehensive coverage of relevant
-	// information.
+	// information. This feature is not supported for healthcare search.
 	//
 	// Possible values:
 	//   "RELEVANCE_THRESHOLD_UNSPECIFIED" - Default value. In this case, server
@@ -17550,7 +17669,7 @@ type GoogleCloudDiscoveryengineV1alphaSearchRequestDisplaySpec struct {
 	//
 	// Possible values:
 	//   "MATCH_HIGHLIGHTING_CONDITION_UNSPECIFIED" - Server behavior is the same
-	// as DISABLED.
+	// as `MATCH_HIGHLIGHTING_DISABLED`.
 	//   "MATCH_HIGHLIGHTING_DISABLED" - Disables match highlighting on all
 	// documents.
 	//   "MATCH_HIGHLIGHTING_ENABLED" - Enables match highlighting on all
@@ -17887,6 +18006,31 @@ type GoogleCloudDiscoveryengineV1alphaSearchRequestQueryExpansionSpec struct {
 
 func (s GoogleCloudDiscoveryengineV1alphaSearchRequestQueryExpansionSpec) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDiscoveryengineV1alphaSearchRequestQueryExpansionSpec
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1alphaSearchRequestRelevanceScoreSpec: The
+// specification for returning the document relevance score.
+type GoogleCloudDiscoveryengineV1alphaSearchRequestRelevanceScoreSpec struct {
+	// ReturnRelevanceScore: Optional. Whether to return the relevance score for
+	// search results. The higher the score, the more relevant the document is to
+	// the query.
+	ReturnRelevanceScore bool `json:"returnRelevanceScore,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ReturnRelevanceScore") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ReturnRelevanceScore") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1alphaSearchRequestRelevanceScoreSpec) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1alphaSearchRequestRelevanceScoreSpec
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -20087,6 +20231,14 @@ type GoogleCloudDiscoveryengineV1betaEngineChatEngineConfig struct {
 	// retrieved using EngineService.GetEngine or EngineService.ListEngines API
 	// after engine creation.
 	AgentCreationConfig *GoogleCloudDiscoveryengineV1betaEngineChatEngineConfigAgentCreationConfig `json:"agentCreationConfig,omitempty"`
+	// AllowCrossRegion: Optional. If the flag set to true, we allow the agent and
+	// engine are in different locations, otherwise the agent and engine are
+	// required to be in the same location. The flag is set to false by default.
+	// Note that the `allow_cross_region` are one-time consumed by and passed to
+	// EngineService.CreateEngine. It means they cannot be retrieved using
+	// EngineService.GetEngine or EngineService.ListEngines API after engine
+	// creation.
+	AllowCrossRegion bool `json:"allowCrossRegion,omitempty"`
 	// DialogflowAgentToLink: The resource name of an exist Dialogflow agent to
 	// link to this Chat Engine. Customers can either provide
 	// `agent_creation_config` to create agent or provide an agent name that links
@@ -21532,10 +21684,13 @@ type GoogleCloudDiscoveryengineV1betaSearchRequest struct {
 	// (https://cloud.google.com/apis/design/standard_fields). If set, then results
 	// will be boosted based on the region_code provided.
 	RegionCode string `json:"regionCode,omitempty"`
+	// RelevanceScoreSpec: Optional. The specification for returning the relevance
+	// score.
+	RelevanceScoreSpec *GoogleCloudDiscoveryengineV1betaSearchRequestRelevanceScoreSpec `json:"relevanceScoreSpec,omitempty"`
 	// RelevanceThreshold: The relevance threshold of the search results. Default
 	// to Google defined threshold, leveraging a balance of precision and recall to
 	// deliver both highly accurate results and comprehensive coverage of relevant
-	// information.
+	// information. This feature is not supported for healthcare search.
 	//
 	// Possible values:
 	//   "RELEVANCE_THRESHOLD_UNSPECIFIED" - Default value. In this case, server
@@ -22466,6 +22621,31 @@ type GoogleCloudDiscoveryengineV1betaSearchRequestQueryExpansionSpec struct {
 
 func (s GoogleCloudDiscoveryengineV1betaSearchRequestQueryExpansionSpec) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDiscoveryengineV1betaSearchRequestQueryExpansionSpec
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1betaSearchRequestRelevanceScoreSpec: The
+// specification for returning the document relevance score.
+type GoogleCloudDiscoveryengineV1betaSearchRequestRelevanceScoreSpec struct {
+	// ReturnRelevanceScore: Optional. Whether to return the relevance score for
+	// search results. The higher the score, the more relevant the document is to
+	// the query.
+	ReturnRelevanceScore bool `json:"returnRelevanceScore,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ReturnRelevanceScore") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ReturnRelevanceScore") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1betaSearchRequestRelevanceScoreSpec) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1betaSearchRequestRelevanceScoreSpec
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 

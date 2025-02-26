@@ -690,6 +690,9 @@ type GoogleCloudContactcenterinsightsV1AnnotatorSelectorSummarizationConfig stru
 	// projects/{project}/locations/{location}/conversationProfiles/{conversation_pr
 	// ofile}
 	ConversationProfile string `json:"conversationProfile,omitempty"`
+	// Generator: The resource name of the existing created generator. Format:
+	// projects//locations//generators/
+	Generator string `json:"generator,omitempty"`
 	// SummarizationModel: Default summarization model to be used.
 	//
 	// Possible values:
@@ -5918,6 +5921,9 @@ type GoogleCloudContactcenterinsightsV1alpha1AnnotatorSelectorSummarizationConfi
 	// projects/{project}/locations/{location}/conversationProfiles/{conversation_pr
 	// ofile}
 	ConversationProfile string `json:"conversationProfile,omitempty"`
+	// Generator: The resource name of the existing created generator. Format:
+	// projects//locations//generators/
+	Generator string `json:"generator,omitempty"`
 	// SummarizationModel: Default summarization model to be used.
 	//
 	// Possible values:

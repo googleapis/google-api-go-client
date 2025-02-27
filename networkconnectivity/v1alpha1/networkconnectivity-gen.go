@@ -610,6 +610,9 @@ type Hub struct {
 	//   "ACTIVE" - The resource is active
 	//   "DELETING" - The resource's Delete operation is in progress
 	//   "UPDATING" - The resource's Update operation is in progress
+	//   "FAILED" - The resource is in an undefined state due to resource creation
+	// or deletion failure. You can try to delete the resource later or contact
+	// support for help.
 	State string `json:"state,omitempty"`
 	// UniqueId: Output only. Google-generated UUID for this resource. This is
 	// unique across all Hub resources. If a Hub resource is deleted and another
@@ -1168,6 +1171,9 @@ type Spoke struct {
 	//   "ACTIVE" - The resource is active
 	//   "DELETING" - The resource's Delete operation is in progress
 	//   "UPDATING" - The resource's Update operation is in progress
+	//   "FAILED" - The resource is in an undefined state due to resource creation
+	// or deletion failure. You can try to delete the resource later or contact
+	// support for help.
 	State string `json:"state,omitempty"`
 	// UniqueId: Output only. Google-generated UUID for this resource. This is
 	// unique across all Spoke resources. If a Spoke resource is deleted and

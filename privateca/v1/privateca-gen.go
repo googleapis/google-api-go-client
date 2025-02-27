@@ -1503,6 +1503,14 @@ type IssuancePolicy struct {
 	// certificate request's public key must match one of the key types listed
 	// here. Otherwise, any key may be used.
 	AllowedKeyTypes []*AllowedKeyType `json:"allowedKeyTypes,omitempty"`
+	// BackdateDuration: Optional. The duration to backdate all certificates issued
+	// from this CaPool. If not set, the certificates will be issued with a
+	// not_before_time of the issuance time (i.e. the current time). If set, the
+	// certificates will be issued with a not_before_time of the issuance time
+	// minus the backdate_duration. The not_after_time will be adjusted to preserve
+	// the requested lifetime. The backdate_duration must be less than or equal to
+	// 48 hours.
+	BackdateDuration string `json:"backdateDuration,omitempty"`
 	// BaselineValues: Optional. A set of X.509 values that will be applied to all
 	// certificates issued through this CaPool. If a certificate request includes
 	// conflicting values for the same properties, they will be overwritten by the

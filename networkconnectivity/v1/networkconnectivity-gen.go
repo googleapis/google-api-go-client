@@ -1063,6 +1063,9 @@ type Group struct {
 	//   "INACTIVE" - The resource is inactive.
 	//   "OBSOLETE" - The hub associated with this spoke resource has been deleted.
 	// This state applies to spoke resources only.
+	//   "FAILED" - The resource is in an undefined state due to resource creation
+	// or deletion failure. You can try to delete the resource later or contact
+	// support for help.
 	State string `json:"state,omitempty"`
 	// Uid: Output only. The Google-generated UUID for the group. This value is
 	// unique across all group resources. If a group is deleted and another with
@@ -1103,10 +1106,10 @@ type Hub struct {
 	CreateTime string `json:"createTime,omitempty"`
 	// Description: Optional. An optional description of the hub.
 	Description string `json:"description,omitempty"`
-	// ExportPsc: Optional. Whether Private Service Connect transitivity is enabled
-	// for the hub. If true, Private Service Connect endpoints in VPC spokes
-	// attached to the hub are made accessible to other VPC spokes attached to the
-	// hub. The default value is false.
+	// ExportPsc: Optional. Whether Private Service Connect connection propagation
+	// is enabled for the hub. If true, Private Service Connect endpoints in VPC
+	// spokes attached to the hub are made accessible to other VPC spokes attached
+	// to the hub. The default value is false.
 	ExportPsc bool `json:"exportPsc,omitempty"`
 	// Labels: Optional labels in key-value pair format. For more information about
 	// labels, see Requirements for labels
@@ -1166,6 +1169,9 @@ type Hub struct {
 	//   "INACTIVE" - The resource is inactive.
 	//   "OBSOLETE" - The hub associated with this spoke resource has been deleted.
 	// This state applies to spoke resources only.
+	//   "FAILED" - The resource is in an undefined state due to resource creation
+	// or deletion failure. You can try to delete the resource later or contact
+	// support for help.
 	State string `json:"state,omitempty"`
 	// UniqueId: Output only. The Google-generated UUID for the hub. This value is
 	// unique across all hub resources. If a hub is deleted and another with the
@@ -2841,6 +2847,9 @@ type Route struct {
 	//   "INACTIVE" - The resource is inactive.
 	//   "OBSOLETE" - The hub associated with this spoke resource has been deleted.
 	// This state applies to spoke resources only.
+	//   "FAILED" - The resource is in an undefined state due to resource creation
+	// or deletion failure. You can try to delete the resource later or contact
+	// support for help.
 	State string `json:"state,omitempty"`
 	// Type: Output only. The route's type. Its type is determined by the
 	// properties of its IP address range.
@@ -2910,6 +2919,9 @@ type RouteTable struct {
 	//   "INACTIVE" - The resource is inactive.
 	//   "OBSOLETE" - The hub associated with this spoke resource has been deleted.
 	// This state applies to spoke resources only.
+	//   "FAILED" - The resource is in an undefined state due to resource creation
+	// or deletion failure. You can try to delete the resource later or contact
+	// support for help.
 	State string `json:"state,omitempty"`
 	// Uid: Output only. The Google-generated UUID for the route table. This value
 	// is unique across all route table resources. If a route table is deleted and
@@ -3305,6 +3317,9 @@ type Spoke struct {
 	//   "INACTIVE" - The resource is inactive.
 	//   "OBSOLETE" - The hub associated with this spoke resource has been deleted.
 	// This state applies to spoke resources only.
+	//   "FAILED" - The resource is in an undefined state due to resource creation
+	// or deletion failure. You can try to delete the resource later or contact
+	// support for help.
 	State string `json:"state,omitempty"`
 	// UniqueId: Output only. The Google-generated UUID for the spoke. This value
 	// is unique across all spoke resources. If a spoke is deleted and another with
@@ -3352,6 +3367,9 @@ type SpokeStateCount struct {
 	//   "INACTIVE" - The resource is inactive.
 	//   "OBSOLETE" - The hub associated with this spoke resource has been deleted.
 	// This state applies to spoke resources only.
+	//   "FAILED" - The resource is in an undefined state due to resource creation
+	// or deletion failure. You can try to delete the resource later or contact
+	// support for help.
 	State string `json:"state,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Count") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -6783,7 +6801,14 @@ func (r *ProjectsLocationsGlobalPolicyBasedRoutesService) Create(parent string, 
 }
 
 // PolicyBasedRouteId sets the optional parameter "policyBasedRouteId":
-// Required. Unique id for the policy-based route to create.
+// Required. Unique id for the policy-based route to create. Provided by the
+// client when the resource is created. The name must comply with
+// https://google.aip.dev/122#resource-id-segments. Specifically, the name must
+// be 1-63 characters long and match the regular expression a-z
+// ([a-z0-9-]*[a-z0-9])?. The first character must be a lowercase letter, and
+// all following characters (except for the last character) must be a dash,
+// lowercase letter, or digit. The last character must be a lowercase letter or
+// digit.
 func (c *ProjectsLocationsGlobalPolicyBasedRoutesCreateCall) PolicyBasedRouteId(policyBasedRouteId string) *ProjectsLocationsGlobalPolicyBasedRoutesCreateCall {
 	c.urlParams_.Set("policyBasedRouteId", policyBasedRouteId)
 	return c

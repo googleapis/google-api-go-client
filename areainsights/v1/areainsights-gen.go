@@ -213,7 +213,7 @@ type ComputeInsightsRequest struct {
 	// "ratingFilter": { "minRating": 4.0 } } } ``` Example response: ``` {
 	// "count": 1234 } ```
 	//   "INSIGHT_PLACES" - Return Places When this insight is specified
-	// ComputeInsights returns places ids that match the specified filter criteria.
+	// ComputeInsights returns places IDs that match the specified filter criteria.
 	// Example request: ``` { "insights": ["INSIGHT_PLACES"], "filter": {
 	// "locationFilter": { "region": { "place":
 	// "places/ChIJPV4oX_65j4ARVW8IJ6IJUYs" } }, "typeFilter": { "includedTypes":
@@ -300,7 +300,8 @@ type Filter struct {
 	// OPERATING_STATUS_OPERATIONAL is used as default.
 	//
 	// Possible values:
-	//   "OPERATING_STATUS_UNSPECIFIED" - Not Specified.
+	//   "OPERATING_STATUS_UNSPECIFIED" - Not specified. This placeholder value
+	// should not be used.
 	//   "OPERATING_STATUS_OPERATIONAL" - The place is operational and its open
 	// during its defined hours.
 	//   "OPERATING_STATUS_PERMANENTLY_CLOSED" - The Place is no longer in

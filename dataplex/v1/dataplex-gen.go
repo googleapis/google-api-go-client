@@ -1521,6 +1521,45 @@ func (s GoogleCloudDataplexV1AssetStatus) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudDataplexV1BusinessGlossaryEvent: Payload associated with Business
+// Glossary related log events.
+type GoogleCloudDataplexV1BusinessGlossaryEvent struct {
+	// EventType: The type of the event.
+	//
+	// Possible values:
+	//   "EVENT_TYPE_UNSPECIFIED" - An unspecified event type.
+	//   "GLOSSARY_CREATE" - Glossary create event.
+	//   "GLOSSARY_UPDATE" - Glossary update event.
+	//   "GLOSSARY_DELETE" - Glossary delete event.
+	//   "GLOSSARY_CATEGORY_CREATE" - Glossary category create event.
+	//   "GLOSSARY_CATEGORY_UPDATE" - Glossary category update event.
+	//   "GLOSSARY_CATEGORY_DELETE" - Glossary category delete event.
+	//   "GLOSSARY_TERM_CREATE" - Glossary term create event.
+	//   "GLOSSARY_TERM_UPDATE" - Glossary term update event.
+	//   "GLOSSARY_TERM_DELETE" - Glossary term delete event.
+	EventType string `json:"eventType,omitempty"`
+	// Message: The log message.
+	Message string `json:"message,omitempty"`
+	// Resource: Name of the resource.
+	Resource string `json:"resource,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "EventType") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "EventType") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDataplexV1BusinessGlossaryEvent) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDataplexV1BusinessGlossaryEvent
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudDataplexV1CancelJobRequest: Cancel task jobs.
 type GoogleCloudDataplexV1CancelJobRequest struct {
 }
@@ -1899,6 +1938,23 @@ type GoogleCloudDataplexV1DataDiscoverySpecBigQueryPublishingConfig struct {
 	// Must be in the form
 	// projects/{project_id}/locations/{location_id}/connections/{connection_id}
 	Connection string `json:"connection,omitempty"`
+	// Location: Optional. The location of the BigQuery dataset to publish BigLake
+	// external or non-BigLake external tables to. 1. If the Cloud Storage bucket
+	// is located in a multi-region bucket, then BigQuery dataset can be in the
+	// same multi-region bucket or any single region that is included in the same
+	// multi-region bucket. The datascan can be created in any single region that
+	// is included in the same multi-region bucket 2. If the Cloud Storage bucket
+	// is located in a dual-region bucket, then BigQuery dataset can be located in
+	// regions that are included in the dual-region bucket, or in a multi-region
+	// that includes the dual-region. The datascan can be created in any single
+	// region that is included in the same dual-region bucket. 3. If the Cloud
+	// Storage bucket is located in a single region, then BigQuery dataset can be
+	// in the same single region or any multi-region bucket that includes the same
+	// single region. The datascan will be created in the same single region as the
+	// bucket. 4. If the BigQuery dataset is in single region, it must be in the
+	// same single region as the datascan.For supported values, refer to
+	// https://cloud.google.com/bigquery/docs/locations#supported_locations.
+	Location string `json:"location,omitempty"`
 	// TableType: Optional. Determines whether to publish discovered tables as
 	// BigLake external tables or non-BigLake external tables.
 	//
@@ -2458,8 +2514,10 @@ type GoogleCloudDataplexV1DataProfileSpec struct {
 	// PostScanActions: Optional. Actions to take upon job completion..
 	PostScanActions *GoogleCloudDataplexV1DataProfileSpecPostScanActions `json:"postScanActions,omitempty"`
 	// RowFilter: Optional. A filter applied to all rows in a single DataScan job.
-	// The filter needs to be a valid SQL expression for a WHERE clause in BigQuery
-	// standard SQL syntax. Example: col1 >= 0 AND col2 < 10
+	// The filter needs to be a valid SQL expression for a WHERE clause in
+	// GoogleSQL syntax
+	// (https://cloud.google.com/bigquery/docs/reference/standard-sql/query-syntax#where_clause).Example:
+	// col1 >= 0 AND col2 < 10
 	RowFilter string `json:"rowFilter,omitempty"`
 	// SamplingPercent: Optional. The percentage of the records to be selected from
 	// the dataset for DataScan. Value can range between 0.0 and 100.0 with up to 3
@@ -3007,8 +3065,10 @@ func (s *GoogleCloudDataplexV1DataQualityRuleResult) UnmarshalJSON(data []byte) 
 
 // GoogleCloudDataplexV1DataQualityRuleRowConditionExpectation: Evaluates
 // whether each row passes the specified condition.The SQL expression needs to
-// use BigQuery standard SQL syntax and should produce a boolean value per row
-// as the result.Example: col1 >= 0 AND col2 < 10
+// use GoogleSQL syntax
+// (https://cloud.google.com/bigquery/docs/reference/standard-sql/query-syntax)
+// and should produce a boolean value per row as the result.Example: col1 >= 0
+// AND col2 < 10
 type GoogleCloudDataplexV1DataQualityRuleRowConditionExpectation struct {
 	// SqlExpression: Optional. The SQL expression.
 	SqlExpression string `json:"sqlExpression,omitempty"`
@@ -3055,12 +3115,13 @@ func (s GoogleCloudDataplexV1DataQualityRuleSetExpectation) MarshalJSON() ([]byt
 
 // GoogleCloudDataplexV1DataQualityRuleSqlAssertion: A SQL statement that is
 // evaluated to return rows that match an invalid state. If any rows are are
-// returned, this rule fails.The SQL statement must use BigQuery standard SQL
-// syntax, and must not contain any semicolons.You can use the data reference
-// parameter ${data()} to reference the source table with all of its
-// precondition filters applied. Examples of precondition filters include row
-// filters, incremental data filters, and sampling. For more information, see
-// Data reference parameter
+// returned, this rule fails.The SQL statement must use GoogleSQL syntax
+// (https://cloud.google.com/bigquery/docs/reference/standard-sql/query-syntax),
+// and must not contain any semicolons.You can use the data reference parameter
+// ${data()} to reference the source table with all of its precondition filters
+// applied. Examples of precondition filters include row filters, incremental
+// data filters, and sampling. For more information, see Data reference
+// parameter
 // (https://cloud.google.com/dataplex/docs/auto-data-quality-overview#data-reference-parameter).Example:
 // SELECT * FROM ${data()} WHERE price < 0
 type GoogleCloudDataplexV1DataQualityRuleSqlAssertion struct {
@@ -3131,8 +3192,9 @@ func (s GoogleCloudDataplexV1DataQualityRuleStatisticRangeExpectation) MarshalJS
 
 // GoogleCloudDataplexV1DataQualityRuleTableConditionExpectation: Evaluates
 // whether the provided expression is true.The SQL expression needs to use
-// BigQuery standard SQL syntax and should produce a scalar boolean
-// result.Example: MIN(col1) >= 0
+// GoogleSQL syntax
+// (https://cloud.google.com/bigquery/docs/reference/standard-sql/query-syntax)
+// and should produce a scalar boolean result.Example: MIN(col1) >= 0
 type GoogleCloudDataplexV1DataQualityRuleTableConditionExpectation struct {
 	// SqlExpression: Optional. The SQL expression.
 	SqlExpression string `json:"sqlExpression,omitempty"`
@@ -3254,8 +3316,10 @@ type GoogleCloudDataplexV1DataQualitySpec struct {
 	// PostScanActions: Optional. Actions to take upon job completion.
 	PostScanActions *GoogleCloudDataplexV1DataQualitySpecPostScanActions `json:"postScanActions,omitempty"`
 	// RowFilter: Optional. A filter applied to all rows in a single DataScan job.
-	// The filter needs to be a valid SQL expression for a WHERE clause in BigQuery
-	// standard SQL syntax. Example: col1 >= 0 AND col2 < 10
+	// The filter needs to be a valid SQL expression for a WHERE clause in
+	// GoogleSQL syntax
+	// (https://cloud.google.com/bigquery/docs/reference/standard-sql/query-syntax#where_clause).Example:
+	// col1 >= 0 AND col2 < 10
 	RowFilter string `json:"rowFilter,omitempty"`
 	// Rules: Required. The list of rules to evaluate against a data source. At
 	// least one rule is required.
@@ -9366,11 +9430,8 @@ type ProjectsLocationsLookupEntryCall struct {
 	header_      http.Header
 }
 
-// LookupEntry: Looks up a single Entry by name using the permission on the
-// source system.Caution: The BigQuery metadata that is stored in Dataplex
-// Catalog is changing. For more information, see Changes to BigQuery metadata
-// stored in Dataplex Catalog
-// (https://cloud.google.com/dataplex/docs/biqquery-metadata-changes).
+// LookupEntry: Looks up an entry by name using the permission on the source
+// system.
 //
 //   - name: The project to which the request should be attributed in the
 //     following form: projects/{project}/locations/{location}.
@@ -13261,9 +13322,7 @@ type ProjectsLocationsDataTaxonomiesCreateCall struct {
 
 // Create: Create a DataTaxonomy resource.
 //
-//   - parent: The resource name of the data taxonomy location, of the form:
-//     projects/{project_number}/locations/{location_id} where location_id refers
-//     to a GCP region.
+// - parent: .
 func (r *ProjectsLocationsDataTaxonomiesService) Create(parent string, googleclouddataplexv1datataxonomy *GoogleCloudDataplexV1DataTaxonomy) *ProjectsLocationsDataTaxonomiesCreateCall {
 	c := &ProjectsLocationsDataTaxonomiesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -13492,9 +13551,7 @@ type ProjectsLocationsDataTaxonomiesGetCall struct {
 
 // Get: Retrieves a DataTaxonomy resource.
 //
-//   - name: The resource name of the DataTaxonomy:
-//     projects/{project_number}/locations/{location_id}/dataTaxonomies/{data_taxo
-//     nomy_id}.
+// - name: .
 func (r *ProjectsLocationsDataTaxonomiesService) Get(name string) *ProjectsLocationsDataTaxonomiesGetCall {
 	c := &ProjectsLocationsDataTaxonomiesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -16412,10 +16469,7 @@ type ProjectsLocationsEntryGroupsEntriesGetCall struct {
 	header_      http.Header
 }
 
-// Get: Gets an Entry.Caution: The BigQuery metadata that is stored in Dataplex
-// Catalog is changing. For more information, see Changes to BigQuery metadata
-// stored in Dataplex Catalog
-// (https://cloud.google.com/dataplex/docs/biqquery-metadata-changes).
+// Get: Gets an Entry.
 //
 //   - name: The resource name of the Entry:
 //     projects/{project}/locations/{location}/entryGroups/{entry_group}/entries/{

@@ -128,7 +128,7 @@
       }
     }
   },
-  "revision": "20250223",
+  "revision": "20250225",
   "rootUrl": "https://areainsights.googleapis.com/",
   "schemas": {
     "Circle": {
@@ -170,7 +170,7 @@
             "enumDescriptions": [
               "Not Specified.",
               "Count insight. When this insight is specified ComputeInsights returns the number of places that match the specified filter criteria. Example request: ``` { \"insights\": [\"INSIGHT_COUNT\"], \"filter\": { \"locationFilter\": { \"region\": { \"place\": \"places/ChIJPV4oX_65j4ARVW8IJ6IJUYs\" } }, \"typeFilter\": { \"includedTypes\": [\"restaurant\"] }, \"operatingStatus\": [\"OPERATING_STATUS_OPERATIONAL\"], \"priceLevels\": [ \"PRICE_LEVEL_FREE\", \"PRICE_LEVEL_INEXPENSIVE\" ], \"ratingFilter\": { \"minRating\": 4.0 } } } ``` Example response: ``` { \"count\": 1234 } ```",
-              "Return Places When this insight is specified ComputeInsights returns places ids that match the specified filter criteria. Example request: ``` { \"insights\": [\"INSIGHT_PLACES\"], \"filter\": { \"locationFilter\": { \"region\": { \"place\": \"places/ChIJPV4oX_65j4ARVW8IJ6IJUYs\" } }, \"typeFilter\": { \"includedTypes\": [\"restaurant\"] }, \"operatingStatus\": [\"OPERATING_STATUS_OPERATIONAL\"], \"priceLevels\": [ \"PRICE_LEVEL_FREE\", \"PRICE_LEVEL_INEXPENSIVE\" ], \"ratingFilter\": { \"minRating\": 4.0 } } } ``` Example response: ``` { \"placeInsights\": [ {\"place\": \"places/ABC\"}, {\"place\": \"places/PQR\"}, {\"place\": \"places/XYZ\"} ] } ```"
+              "Return Places When this insight is specified ComputeInsights returns places IDs that match the specified filter criteria. Example request: ``` { \"insights\": [\"INSIGHT_PLACES\"], \"filter\": { \"locationFilter\": { \"region\": { \"place\": \"places/ChIJPV4oX_65j4ARVW8IJ6IJUYs\" } }, \"typeFilter\": { \"includedTypes\": [\"restaurant\"] }, \"operatingStatus\": [\"OPERATING_STATUS_OPERATIONAL\"], \"priceLevels\": [ \"PRICE_LEVEL_FREE\", \"PRICE_LEVEL_INEXPENSIVE\" ], \"ratingFilter\": { \"minRating\": 4.0 } } } ``` Example response: ``` { \"placeInsights\": [ {\"place\": \"places/ABC\"}, {\"place\": \"places/PQR\"}, {\"place\": \"places/XYZ\"} ] } ```"
             ],
             "type": "string"
           },
@@ -227,7 +227,7 @@
               "OPERATING_STATUS_TEMPORARILY_CLOSED"
             ],
             "enumDescriptions": [
-              "Not Specified.",
+              "Not specified. This placeholder value should not be used.",
               "The place is operational and its open during its defined hours.",
               "The Place is no longer in business.",
               "The place is temporarily closed and expected to reopen in the future."

@@ -1276,7 +1276,9 @@ type Cluster struct {
 	// Alpha enabled clusters are automatically deleted thirty days after creation.
 	EnableKubernetesAlpha bool `json:"enableKubernetesAlpha,omitempty"`
 	// EnableTpu: Enable the ability to use Cloud TPUs in this cluster. This field
-	// is deprecated, use tpu_config.enabled instead.
+	// is deprecated, use tpu_config.enabled instead. This field is deprecated due
+	// to the deprecation of 2VM TPU. The end of life date for 2VM TPU is
+	// 2025-04-25.
 	EnableTpu bool `json:"enableTpu,omitempty"`
 	// Endpoint: Output only. The IP address of this cluster's master endpoint. The
 	// endpoint can be accessed from the internet at
@@ -1505,12 +1507,15 @@ type Cluster struct {
 	// (https://cloud.google.com/compute/docs/subnetworks) to which the cluster is
 	// connected. On output this shows the subnetwork ID instead of the name.
 	Subnetwork string `json:"subnetwork,omitempty"`
-	// TpuConfig: Configuration for Cloud TPU support;
+	// TpuConfig: Configuration for Cloud TPU support; This field is deprecated due
+	// to the deprecation of 2VM TPU. The end of life date for 2VM TPU is
+	// 2025-04-25.
 	TpuConfig *TpuConfig `json:"tpuConfig,omitempty"`
 	// TpuIpv4CidrBlock: Output only. The IP address range of the Cloud TPUs in
 	// this cluster, in CIDR
 	// (http://en.wikipedia.org/wiki/Classless_Inter-Domain_Routing) notation (e.g.
-	// `1.2.3.4/29`).
+	// `1.2.3.4/29`). This field is deprecated due to the deprecation of 2VM TPU.
+	// The end of life date for 2VM TPU is 2025-04-25.
 	TpuIpv4CidrBlock string `json:"tpuIpv4CidrBlock,omitempty"`
 	// UserManagedKeysConfig: The Custom keys configuration for the cluster.
 	UserManagedKeysConfig *UserManagedKeysConfig `json:"userManagedKeysConfig,omitempty"`
@@ -1905,7 +1910,9 @@ type ClusterUpdate struct {
 	//   "IPV4" - The value used if the cluster is a IPV4 only
 	//   "IPV4_IPV6" - The value used if the cluster is a dual stack cluster
 	DesiredStackType string `json:"desiredStackType,omitempty"`
-	// DesiredTpuConfig: The desired Cloud TPU configuration.
+	// DesiredTpuConfig: The desired Cloud TPU configuration. This field is
+	// deprecated due to the deprecation of 2VM TPU. The end of life date for 2VM
+	// TPU is 2025-04-25.
 	DesiredTpuConfig *TpuConfig `json:"desiredTpuConfig,omitempty"`
 	// DesiredVerticalPodAutoscaling: Cluster-level Vertical Pod Autoscaling
 	// configuration.
@@ -3959,6 +3966,7 @@ type LoggingComponentConfig struct {
 	//   "CONTROLLER_MANAGER" - kube-controller-manager
 	//   "KCP_SSHD" - kcp-sshd
 	//   "KCP_CONNECTION" - kcp connection logs
+	//   "KCP_HPA" - horizontal pod autoscaler decision logs
 	EnableComponents []string `json:"enableComponents,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "EnableComponents") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -4351,6 +4359,7 @@ type MonitoringComponentConfig struct {
 	//   "CADVISOR" - CADVISOR
 	//   "KUBELET" - KUBELET
 	//   "DCGM" - NVIDIA Data Center GPU Manager (DCGM)
+	//   "JOBSET" - JobSet
 	EnableComponents []string `json:"enableComponents,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "EnableComponents") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -7747,7 +7756,8 @@ func (s TimeWindow) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// TpuConfig: Configuration for Cloud TPU.
+// TpuConfig: Configuration for Cloud TPU. This message is deprecated due to
+// the deprecation of 2VM TPU. The end of life date for 2VM TPU is 2025-04-25.
 type TpuConfig struct {
 	// Enabled: Whether Cloud TPU integration is enabled or not.
 	Enabled bool `json:"enabled,omitempty"`

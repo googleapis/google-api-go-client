@@ -661,7 +661,7 @@ type GoogleCloudDialogflowCxV3AdvancedSettingsSpeechSettings struct {
 	// NoSpeechTimeout: Timeout before detecting no speech.
 	NoSpeechTimeout string `json:"noSpeechTimeout,omitempty"`
 	// UseTimeoutBasedEndpointing: Use timeout based endpointing, interpreting
-	// endpointer sensitivy as seconds of timeout value.
+	// endpointer sensitivity as seconds of timeout value.
 	UseTimeoutBasedEndpointing bool `json:"useTimeoutBasedEndpointing,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "EndpointerSensitivity") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -2410,7 +2410,7 @@ type GoogleCloudDialogflowCxV3Page struct {
 	// TransitionRoutes: A list of transitions for the transition rules of this
 	// page. They route the conversation to another page in the same flow, or
 	// another flow. When we are in a certain page, the TransitionRoutes are
-	// evalauted in the following order: * TransitionRoutes defined in the page
+	// evaluated in the following order: * TransitionRoutes defined in the page
 	// with intent specified. * TransitionRoutes defined in the transition route
 	// groups with intent specified. * TransitionRoutes defined in flow with intent
 	// specified. * TransitionRoutes defined in the transition route groups with
@@ -3987,7 +3987,7 @@ type GoogleCloudDialogflowCxV3beta1AdvancedSettingsSpeechSettings struct {
 	// NoSpeechTimeout: Timeout before detecting no speech.
 	NoSpeechTimeout string `json:"noSpeechTimeout,omitempty"`
 	// UseTimeoutBasedEndpointing: Use timeout based endpointing, interpreting
-	// endpointer sensitivy as seconds of timeout value.
+	// endpointer sensitivity as seconds of timeout value.
 	UseTimeoutBasedEndpointing bool `json:"useTimeoutBasedEndpointing,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "EndpointerSensitivity") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -4606,7 +4606,7 @@ func (s GoogleCloudDialogflowCxV3beta1BigQueryExportSettings) MarshalJSON() ([]b
 // https://cloud.google.com/generative-ai-app-builder/docs/reference/rest/v1alpha/BoostSpec
 type GoogleCloudDialogflowCxV3beta1BoostSpec struct {
 	// ConditionBoostSpecs: Optional. Condition boost specifications. If a document
-	// matches multiple conditions in the specifictions, boost scores from these
+	// matches multiple conditions in the specifications, boost scores from these
 	// specifications are all applied and combined in a non-linear way. Maximum
 	// number of specifications is 20.
 	ConditionBoostSpecs []*GoogleCloudDialogflowCxV3beta1BoostSpecConditionBoostSpec `json:"conditionBoostSpecs,omitempty"`
@@ -7220,7 +7220,7 @@ type GoogleCloudDialogflowCxV3beta1Flow struct {
 	// as the user saying "help" or "can I talk to a human?", which can be handled
 	// in a common way regardless of the current page. Transition routes defined in
 	// the page have higher priority than those defined in the flow.
-	// TransitionRoutes are evalauted in the following order: * TransitionRoutes
+	// TransitionRoutes are evaluated in the following order: * TransitionRoutes
 	// with intent specified. * TransitionRoutes with only condition specified.
 	// TransitionRoutes with intent specified are inherited by pages in the flow.
 	TransitionRoutes []*GoogleCloudDialogflowCxV3beta1TransitionRoute `json:"transitionRoutes,omitempty"`
@@ -10030,7 +10030,7 @@ type GoogleCloudDialogflowCxV3beta1Page struct {
 	// TransitionRoutes: A list of transitions for the transition rules of this
 	// page. They route the conversation to another page in the same flow, or
 	// another flow. When we are in a certain page, the TransitionRoutes are
-	// evalauted in the following order: * TransitionRoutes defined in the page
+	// evaluated in the following order: * TransitionRoutes defined in the page
 	// with intent specified. * TransitionRoutes defined in the transition route
 	// groups with intent specified. * TransitionRoutes defined in flow with intent
 	// specified. * TransitionRoutes defined in the transition route groups with
@@ -11438,9 +11438,15 @@ func (s GoogleCloudDialogflowCxV3beta1SafetySettingsPhrase) MarshalJSON() ([]byt
 // GoogleCloudDialogflowCxV3beta1SearchConfig: Search configuration for UCS
 // search queries.
 type GoogleCloudDialogflowCxV3beta1SearchConfig struct {
-	// BoostSpecs: Optional. Boosting configuration for the datastores.
+	// BoostSpecs: Optional. Boosting configuration for the datastores. Maps from
+	// datastore name to their boost configuration. Do not specify more than one
+	// BoostSpecs for each datastore name. If multiple BoostSpecs are provided for
+	// the same datastore name, the behavior is undefined.
 	BoostSpecs []*GoogleCloudDialogflowCxV3beta1BoostSpecs `json:"boostSpecs,omitempty"`
-	// FilterSpecs: Optional. Filter configuration for the datastores.
+	// FilterSpecs: Optional. Filter configuration for the datastores. Maps from
+	// datastore name to the filter expression for that datastore. Do not specify
+	// more than one FilterSpecs for each datastore name. If multiple FilterSpecs
+	// are provided for the same datastore name, the behavior is undefined.
 	FilterSpecs []*GoogleCloudDialogflowCxV3beta1FilterSpecs `json:"filterSpecs,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "BoostSpecs") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -16274,7 +16280,8 @@ type GoogleCloudDialogflowV2Message struct {
 	//   "END_USER" - Participant is an end user that has called or chatted with
 	// Dialogflow services.
 	ParticipantRole string `json:"participantRole,omitempty"`
-	// SendTime: Optional. The time when the message was sent.
+	// SendTime: Optional. The time when the message was sent. For voice messages,
+	// this is the time when an utterance started.
 	SendTime string `json:"sendTime,omitempty"`
 	// SentimentAnalysis: Output only. The sentiment analysis result for the
 	// message.
@@ -19779,7 +19786,8 @@ type GoogleCloudDialogflowV2beta1Message struct {
 	ParticipantRole string `json:"participantRole,omitempty"`
 	// ResponseMessages: Optional. Automated agent responses.
 	ResponseMessages []*GoogleCloudDialogflowV2beta1ResponseMessage `json:"responseMessages,omitempty"`
-	// SendTime: Optional. The time when the message was sent.
+	// SendTime: Optional. The time when the message was sent. For voice messages,
+	// this is the time when an utterance started.
 	SendTime string `json:"sendTime,omitempty"`
 	// SentimentAnalysis: Output only. The sentiment analysis result for the
 	// message.

@@ -630,7 +630,8 @@ type Instance struct {
 	DisplayName string `json:"displayName,omitempty"`
 	// EnableRbac: Optional. Option to enable granular role-based access control.
 	EnableRbac bool `json:"enableRbac,omitempty"`
-	// EnableStackdriverLogging: Optional. Option to enable Stackdriver Logging.
+	// EnableStackdriverLogging: Optional. Option to enable Dataproc Stackdriver
+	// Logging.
 	EnableStackdriverLogging bool `json:"enableStackdriverLogging,omitempty"`
 	// EnableStackdriverMonitoring: Optional. Option to enable Stackdriver
 	// Monitoring.
@@ -648,6 +649,9 @@ type Instance struct {
 	// underlying resources such as Compute Engine VMs. The character '=' is not
 	// allowed to be used within the labels.
 	Labels map[string]string `json:"labels,omitempty"`
+	// LoggingConfig: Optional. The logging configuration for this instance. This
+	// field is supported only in CDF versions 6.11.0 and above.
+	LoggingConfig *LoggingConfig `json:"loggingConfig,omitempty"`
 	// MaintenanceEvents: Output only. The maintenance events for this instance.
 	MaintenanceEvents []*MaintenanceEvent `json:"maintenanceEvents,omitempty"`
 	// MaintenancePolicy: Optional. Configure the maintenance policy for this
@@ -670,6 +674,8 @@ type Instance struct {
 	// be private. If set to true, all Data Fusion nodes will have private IP
 	// addresses and will not be able to access the public internet.
 	PrivateInstance bool `json:"privateInstance,omitempty"`
+	// SatisfiesPzi: Output only. Reserved for future use.
+	SatisfiesPzi bool `json:"satisfiesPzi,omitempty"`
 	// SatisfiesPzs: Output only. Reserved for future use.
 	SatisfiesPzs bool `json:"satisfiesPzs,omitempty"`
 	// ServiceAccount: Output only. Deprecated. Use tenant_project_id instead to
@@ -928,6 +934,30 @@ type Location struct {
 
 func (s Location) MarshalJSON() ([]byte, error) {
 	type NoMethod Location
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// LoggingConfig: Logging configuration for a Data Fusion instance.
+type LoggingConfig struct {
+	// InstanceCloudLoggingDisabled: Optional. Option to determine whether instance
+	// logs should be written to Cloud Logging. By default, instance logs are
+	// written to Cloud Logging.
+	InstanceCloudLoggingDisabled bool `json:"instanceCloudLoggingDisabled,omitempty"`
+	// ForceSendFields is a list of field names (e.g.
+	// "InstanceCloudLoggingDisabled") to unconditionally include in API requests.
+	// By default, fields with empty or default values are omitted from API
+	// requests. See https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields
+	// for more details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "InstanceCloudLoggingDisabled") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s LoggingConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod LoggingConfig
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 

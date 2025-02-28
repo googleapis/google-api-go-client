@@ -808,15 +808,25 @@ type CloudSqlSettings struct {
 	// (https://cloud.google.com/sql/help/mysql-data-cache) in Cloud SQL
 	// documentation.
 	DataCacheConfig *DataCacheConfig `json:"dataCacheConfig,omitempty"`
+	// DataDiskProvisionedIops: Optional. Provisioned number of I/O operations per
+	// second for the data disk. This field is only used for hyperdisk-balanced
+	// disk types.
+	DataDiskProvisionedIops int64 `json:"dataDiskProvisionedIops,omitempty,string"`
+	// DataDiskProvisionedThroughput: Optional. Provisioned throughput measured in
+	// MiB per second for the data disk. This field is only used for
+	// hyperdisk-balanced disk types.
+	DataDiskProvisionedThroughput int64 `json:"dataDiskProvisionedThroughput,omitempty,string"`
 	// DataDiskSizeGb: The storage capacity available to the database, in GB. The
 	// minimum (and default) size is 10GB.
 	DataDiskSizeGb int64 `json:"dataDiskSizeGb,omitempty,string"`
-	// DataDiskType: The type of storage: `PD_SSD` (default) or `PD_HDD`.
+	// DataDiskType: The type of storage: `PD_SSD` (default) or `PD_HDD` or
+	// `HYPERDISK_BALANCED`.
 	//
 	// Possible values:
 	//   "SQL_DATA_DISK_TYPE_UNSPECIFIED" - Unspecified.
 	//   "PD_SSD" - SSD disk.
 	//   "PD_HDD" - HDD disk.
+	//   "HYPERDISK_BALANCED" - A Hyperdisk Balanced data disk.
 	DataDiskType string `json:"dataDiskType,omitempty"`
 	// DatabaseFlags: The database flags passed to the Cloud SQL instance at
 	// startup. An object containing a list of "key": value pairs. Example: {
@@ -1091,9 +1101,9 @@ type ConnectionProfile struct {
 	//   "SOURCE" - The role is source.
 	//   "DESTINATION" - The role is destination.
 	Role string `json:"role,omitempty"`
-	// SatisfiesPzi: Output only. Zone Isolation compliance state of the resource.
+	// SatisfiesPzi: Output only. Reserved for future use.
 	SatisfiesPzi bool `json:"satisfiesPzi,omitempty"`
-	// SatisfiesPzs: Output only. Zone Separation compliance state of the resource.
+	// SatisfiesPzs: Output only. Reserved for future use.
 	SatisfiesPzs bool `json:"satisfiesPzs,omitempty"`
 	// Sqlserver: Connection profile for a SQL Server data source.
 	Sqlserver *SqlServerConnectionProfile `json:"sqlserver,omitempty"`
@@ -3040,9 +3050,9 @@ type MigrationJob struct {
 	// ReverseSshConnectivity: The details needed to communicate to the source over
 	// Reverse SSH tunnel connectivity.
 	ReverseSshConnectivity *ReverseSshConnectivity `json:"reverseSshConnectivity,omitempty"`
-	// SatisfiesPzi: Output only. Zone Isolation compliance state of the resource.
+	// SatisfiesPzi: Output only. Reserved for future use.
 	SatisfiesPzi bool `json:"satisfiesPzi,omitempty"`
-	// SatisfiesPzs: Output only. Zone Separation compliance state of the resource.
+	// SatisfiesPzs: Output only. Reserved for future use.
 	SatisfiesPzs bool `json:"satisfiesPzs,omitempty"`
 	// Source: Required. The resource name (URI) of the source connection profile.
 	Source string `json:"source,omitempty"`
@@ -3942,9 +3952,9 @@ type PrivateConnection struct {
 	Labels map[string]string `json:"labels,omitempty"`
 	// Name: The name of the resource.
 	Name string `json:"name,omitempty"`
-	// SatisfiesPzi: Output only. Zone Isolation compliance state of the resource.
+	// SatisfiesPzi: Output only. Reserved for future use.
 	SatisfiesPzi bool `json:"satisfiesPzi,omitempty"`
-	// SatisfiesPzs: Output only. Zone Separation compliance state of the resource.
+	// SatisfiesPzs: Output only. Reserved for future use.
 	SatisfiesPzs bool `json:"satisfiesPzs,omitempty"`
 	// State: Output only. The state of the private connection.
 	//

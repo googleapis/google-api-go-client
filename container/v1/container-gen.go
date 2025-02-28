@@ -1152,7 +1152,9 @@ type Cluster struct {
 	// disabled. Alpha enabled clusters are automatically deleted thirty days after
 	// creation.
 	EnableKubernetesAlpha bool `json:"enableKubernetesAlpha,omitempty"`
-	// EnableTpu: Enable the ability to use Cloud TPUs in this cluster.
+	// EnableTpu: Enable the ability to use Cloud TPUs in this cluster. This field
+	// is deprecated due to the deprecation of 2VM TPU. The end of life date for
+	// 2VM TPU is 2025-04-25.
 	EnableTpu bool `json:"enableTpu,omitempty"`
 	// Endpoint: Output only. The IP address of this cluster's master endpoint. The
 	// endpoint can be accessed from the internet at
@@ -1204,12 +1206,7 @@ type Cluster struct {
 	LabelFingerprint string `json:"labelFingerprint,omitempty"`
 	// LegacyAbac: Configuration for the legacy ABAC authorization mode.
 	LegacyAbac *LegacyAbac `json:"legacyAbac,omitempty"`
-	// Location: Output only. The name of the Google Compute Engine zone
-	// (https://cloud.google.com/compute/docs/regions-zones/regions-zones#available)
-	// or region
-	// (https://cloud.google.com/compute/docs/regions-zones/regions-zones#available)
-	// in which the cluster resides.
-	Location string `json:"location,omitempty"`
+	Location   string      `json:"location,omitempty"`
 	// Locations: The list of Google Compute Engine zones
 	// (https://cloud.google.com/compute/docs/zones#available) in which the
 	// cluster's nodes should be located. This field provides a default value if
@@ -1365,7 +1362,8 @@ type Cluster struct {
 	// TpuIpv4CidrBlock: Output only. The IP address range of the Cloud TPUs in
 	// this cluster, in CIDR
 	// (http://en.wikipedia.org/wiki/Classless_Inter-Domain_Routing) notation (e.g.
-	// `1.2.3.4/29`).
+	// `1.2.3.4/29`). This field is deprecated due to the deprecation of 2VM TPU.
+	// The end of life date for 2VM TPU is 2025-04-25.
 	TpuIpv4CidrBlock string `json:"tpuIpv4CidrBlock,omitempty"`
 	// UserManagedKeysConfig: The Custom keys configuration for the cluster.
 	UserManagedKeysConfig *UserManagedKeysConfig `json:"userManagedKeysConfig,omitempty"`
@@ -2986,7 +2984,9 @@ type IPAllocationPolicy struct {
 	// range chosen with a specific netmask. Set to a CIDR
 	// (http://en.wikipedia.org/wiki/Classless_Inter-Domain_Routing) notation (e.g.
 	// `10.96.0.0/14`) from the RFC-1918 private networks (e.g. `10.0.0.0/8`,
-	// `172.16.0.0/12`, `192.168.0.0/16`) to pick a specific range to use.
+	// `172.16.0.0/12`, `192.168.0.0/16`) to pick a specific range to use. This
+	// field is deprecated due to the deprecation of 2VM TPU. The end of life date
+	// for 2VM TPU is 2025-04-25.
 	TpuIpv4CidrBlock string `json:"tpuIpv4CidrBlock,omitempty"`
 	// UseIpAliases: Whether alias IPs will be used for pod IPs in the cluster.
 	// This is used in conjunction with use_routes. It cannot be true if use_routes
@@ -3445,6 +3445,7 @@ type LoggingComponentConfig struct {
 	//   "CONTROLLER_MANAGER" - kube-controller-manager
 	//   "KCP_SSHD" - kcp-sshd
 	//   "KCP_CONNECTION" - kcp connection logs
+	//   "KCP_HPA" - horizontal pod autoscaler decision logs
 	EnableComponents []string `json:"enableComponents,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "EnableComponents") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -3830,6 +3831,7 @@ type MonitoringComponentConfig struct {
 	//   "CADVISOR" - CADVISOR
 	//   "KUBELET" - KUBELET
 	//   "DCGM" - NVIDIA Data Center GPU Manager (DCGM)
+	//   "JOBSET" - JobSet
 	EnableComponents []string `json:"enableComponents,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "EnableComponents") to
 	// unconditionally include in API requests. By default, fields with empty or

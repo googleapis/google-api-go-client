@@ -34,6 +34,11 @@
 //
 // # Other authentication options
 //
+// By default, all available scopes (see "Constants") are used to authenticate.
+// To restrict scopes, use [google.golang.org/api/option.WithScopes]:
+//
+//	dataformService, err := dataform.NewService(ctx, option.WithScopes(dataform.CloudPlatformScope))
+//
 // To use an API key for authentication (note: some APIs do not support API
 // keys), use [google.golang.org/api/option.WithAPIKey]:
 //
@@ -98,6 +103,10 @@ const mtlsBasePath = "https://dataform.mtls.googleapis.com/"
 
 // OAuth2 scopes used by this API.
 const (
+	// View and manage your data in Google BigQuery and see the email address for
+	// your Google Account
+	BigqueryScope = "https://www.googleapis.com/auth/bigquery"
+
 	// See, edit, configure, and delete your Google Cloud data and see the email
 	// address for your Google Account.
 	CloudPlatformScope = "https://www.googleapis.com/auth/cloud-platform"
@@ -106,6 +115,7 @@ const (
 // NewService creates a new Service.
 func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, error) {
 	scopesOption := internaloption.WithDefaultScopes(
+		"https://www.googleapis.com/auth/bigquery",
 		"https://www.googleapis.com/auth/cloud-platform",
 	)
 	// NOTE: prepend, so we don't override user-specified scopes.
@@ -415,6 +425,13 @@ func (s Binding) MarshalJSON() ([]byte, error) {
 type CancelWorkflowInvocationRequest struct {
 }
 
+// CancelWorkflowInvocationResponse: `CancelWorkflowInvocation` response
+// message.
+type CancelWorkflowInvocationResponse struct {
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+}
+
 // CodeCompilationConfig: Configures various aspects of Dataform code
 // compilation.
 type CodeCompilationConfig struct {
@@ -646,6 +663,12 @@ type CommitWorkspaceChangesRequest struct {
 func (s CommitWorkspaceChangesRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod CommitWorkspaceChangesRequest
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// CommitWorkspaceChangesResponse: `CommitWorkspaceChanges` response message.
+type CommitWorkspaceChangesResponse struct {
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
 }
 
 // CompilationError: An error encountered when attempting to compile a Dataform
@@ -1955,6 +1978,12 @@ func (s PullGitCommitsRequest) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// PullGitCommitsResponse: `PullGitCommits` response message.
+type PullGitCommitsResponse struct {
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+}
+
 // PushGitCommitsRequest: `PushGitCommits` request message.
 type PushGitCommitsRequest struct {
 	// RemoteBranch: Optional. The name of the branch in the Git remote to which
@@ -1977,6 +2006,12 @@ type PushGitCommitsRequest struct {
 func (s PushGitCommitsRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod PushGitCommitsRequest
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// PushGitCommitsResponse: `PushGitCommits` response message.
+type PushGitCommitsResponse struct {
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
 }
 
 // QueryCompilationResultActionsResponse: `QueryCompilationResultActions`
@@ -2316,6 +2351,12 @@ func (s RemoveDirectoryRequest) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// RemoveDirectoryResponse: `RemoveDirectory` response message.
+type RemoveDirectoryResponse struct {
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+}
+
 // RemoveFileRequest: `RemoveFile` request message.
 type RemoveFileRequest struct {
 	// Path: Required. The file's full path including filename, relative to the
@@ -2337,6 +2378,12 @@ type RemoveFileRequest struct {
 func (s RemoveFileRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod RemoveFileRequest
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// RemoveFileResponse: `RemoveFile` response message.
+type RemoveFileResponse struct {
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
 }
 
 // Repository: Represents a Dataform Git repository.
@@ -2431,6 +2478,12 @@ type ResetWorkspaceChangesRequest struct {
 func (s ResetWorkspaceChangesRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod ResetWorkspaceChangesRequest
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ResetWorkspaceChangesResponse: `ResetWorkspaceChanges` response message.
+type ResetWorkspaceChangesResponse struct {
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
 }
 
 // ScheduledExecutionRecord: A record of an attempt to create a workflow
@@ -7011,10 +7064,11 @@ func (c *ProjectsLocationsRepositoriesWorkflowInvocationsCancelCall) doRequest(a
 
 // Do executes the "dataform.projects.locations.repositories.workflowInvocations.cancel" call.
 // Any non-2xx status code is an error. Response headers are in either
-// *Empty.ServerResponse.Header or (if a response was returned at all) in
-// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was returned.
-func (c *ProjectsLocationsRepositoriesWorkflowInvocationsCancelCall) Do(opts ...googleapi.CallOption) (*Empty, error) {
+// *CancelWorkflowInvocationResponse.ServerResponse.Header or (if a response
+// was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsRepositoriesWorkflowInvocationsCancelCall) Do(opts ...googleapi.CallOption) (*CancelWorkflowInvocationResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
@@ -7033,7 +7087,7 @@ func (c *ProjectsLocationsRepositoriesWorkflowInvocationsCancelCall) Do(opts ...
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, gensupport.WrapError(err)
 	}
-	ret := &Empty{
+	ret := &CancelWorkflowInvocationResponse{
 		ServerResponse: googleapi.ServerResponse{
 			Header:         res.Header,
 			HTTPStatusCode: res.StatusCode,
@@ -7739,10 +7793,11 @@ func (c *ProjectsLocationsRepositoriesWorkspacesCommitCall) doRequest(alt string
 
 // Do executes the "dataform.projects.locations.repositories.workspaces.commit" call.
 // Any non-2xx status code is an error. Response headers are in either
-// *Empty.ServerResponse.Header or (if a response was returned at all) in
-// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was returned.
-func (c *ProjectsLocationsRepositoriesWorkspacesCommitCall) Do(opts ...googleapi.CallOption) (*Empty, error) {
+// *CommitWorkspaceChangesResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsRepositoriesWorkspacesCommitCall) Do(opts ...googleapi.CallOption) (*CommitWorkspaceChangesResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
@@ -7761,7 +7816,7 @@ func (c *ProjectsLocationsRepositoriesWorkspacesCommitCall) Do(opts ...googleapi
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, gensupport.WrapError(err)
 	}
-	ret := &Empty{
+	ret := &CommitWorkspaceChangesResponse{
 		ServerResponse: googleapi.ServerResponse{
 			Header:         res.Header,
 			HTTPStatusCode: res.StatusCode,
@@ -9215,10 +9270,11 @@ func (c *ProjectsLocationsRepositoriesWorkspacesPullCall) doRequest(alt string) 
 
 // Do executes the "dataform.projects.locations.repositories.workspaces.pull" call.
 // Any non-2xx status code is an error. Response headers are in either
-// *Empty.ServerResponse.Header or (if a response was returned at all) in
-// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was returned.
-func (c *ProjectsLocationsRepositoriesWorkspacesPullCall) Do(opts ...googleapi.CallOption) (*Empty, error) {
+// *PullGitCommitsResponse.ServerResponse.Header or (if a response was returned
+// at all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *ProjectsLocationsRepositoriesWorkspacesPullCall) Do(opts ...googleapi.CallOption) (*PullGitCommitsResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
@@ -9237,7 +9293,7 @@ func (c *ProjectsLocationsRepositoriesWorkspacesPullCall) Do(opts ...googleapi.C
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, gensupport.WrapError(err)
 	}
-	ret := &Empty{
+	ret := &PullGitCommitsResponse{
 		ServerResponse: googleapi.ServerResponse{
 			Header:         res.Header,
 			HTTPStatusCode: res.StatusCode,
@@ -9318,10 +9374,11 @@ func (c *ProjectsLocationsRepositoriesWorkspacesPushCall) doRequest(alt string) 
 
 // Do executes the "dataform.projects.locations.repositories.workspaces.push" call.
 // Any non-2xx status code is an error. Response headers are in either
-// *Empty.ServerResponse.Header or (if a response was returned at all) in
-// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was returned.
-func (c *ProjectsLocationsRepositoriesWorkspacesPushCall) Do(opts ...googleapi.CallOption) (*Empty, error) {
+// *PushGitCommitsResponse.ServerResponse.Header or (if a response was returned
+// at all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *ProjectsLocationsRepositoriesWorkspacesPushCall) Do(opts ...googleapi.CallOption) (*PushGitCommitsResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
@@ -9340,7 +9397,7 @@ func (c *ProjectsLocationsRepositoriesWorkspacesPushCall) Do(opts ...googleapi.C
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, gensupport.WrapError(err)
 	}
-	ret := &Empty{
+	ret := &PushGitCommitsResponse{
 		ServerResponse: googleapi.ServerResponse{
 			Header:         res.Header,
 			HTTPStatusCode: res.StatusCode,
@@ -9704,10 +9761,11 @@ func (c *ProjectsLocationsRepositoriesWorkspacesRemoveDirectoryCall) doRequest(a
 
 // Do executes the "dataform.projects.locations.repositories.workspaces.removeDirectory" call.
 // Any non-2xx status code is an error. Response headers are in either
-// *Empty.ServerResponse.Header or (if a response was returned at all) in
-// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was returned.
-func (c *ProjectsLocationsRepositoriesWorkspacesRemoveDirectoryCall) Do(opts ...googleapi.CallOption) (*Empty, error) {
+// *RemoveDirectoryResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsRepositoriesWorkspacesRemoveDirectoryCall) Do(opts ...googleapi.CallOption) (*RemoveDirectoryResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
@@ -9726,7 +9784,7 @@ func (c *ProjectsLocationsRepositoriesWorkspacesRemoveDirectoryCall) Do(opts ...
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, gensupport.WrapError(err)
 	}
-	ret := &Empty{
+	ret := &RemoveDirectoryResponse{
 		ServerResponse: googleapi.ServerResponse{
 			Header:         res.Header,
 			HTTPStatusCode: res.StatusCode,
@@ -9807,10 +9865,11 @@ func (c *ProjectsLocationsRepositoriesWorkspacesRemoveFileCall) doRequest(alt st
 
 // Do executes the "dataform.projects.locations.repositories.workspaces.removeFile" call.
 // Any non-2xx status code is an error. Response headers are in either
-// *Empty.ServerResponse.Header or (if a response was returned at all) in
-// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was returned.
-func (c *ProjectsLocationsRepositoriesWorkspacesRemoveFileCall) Do(opts ...googleapi.CallOption) (*Empty, error) {
+// *RemoveFileResponse.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *ProjectsLocationsRepositoriesWorkspacesRemoveFileCall) Do(opts ...googleapi.CallOption) (*RemoveFileResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
@@ -9829,7 +9888,7 @@ func (c *ProjectsLocationsRepositoriesWorkspacesRemoveFileCall) Do(opts ...googl
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, gensupport.WrapError(err)
 	}
-	ret := &Empty{
+	ret := &RemoveFileResponse{
 		ServerResponse: googleapi.ServerResponse{
 			Header:         res.Header,
 			HTTPStatusCode: res.StatusCode,
@@ -9910,10 +9969,11 @@ func (c *ProjectsLocationsRepositoriesWorkspacesResetCall) doRequest(alt string)
 
 // Do executes the "dataform.projects.locations.repositories.workspaces.reset" call.
 // Any non-2xx status code is an error. Response headers are in either
-// *Empty.ServerResponse.Header or (if a response was returned at all) in
-// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was returned.
-func (c *ProjectsLocationsRepositoriesWorkspacesResetCall) Do(opts ...googleapi.CallOption) (*Empty, error) {
+// *ResetWorkspaceChangesResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsRepositoriesWorkspacesResetCall) Do(opts ...googleapi.CallOption) (*ResetWorkspaceChangesResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
@@ -9932,7 +9992,7 @@ func (c *ProjectsLocationsRepositoriesWorkspacesResetCall) Do(opts ...googleapi.
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, gensupport.WrapError(err)
 	}
-	ret := &Empty{
+	ret := &ResetWorkspaceChangesResponse{
 		ServerResponse: googleapi.ServerResponse{
 			Header:         res.Header,
 			HTTPStatusCode: res.StatusCode,

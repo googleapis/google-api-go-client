@@ -6933,14 +6933,6 @@ func (r *AppsServicesService) Delete(appsId string, servicesId string) *AppsServ
 	return c
 }
 
-// Force sets the optional parameter "force": If set to true, any versions of
-// this service will also be deleted. (Otherwise, the request will only succeed
-// if the service has no versions.)
-func (c *AppsServicesDeleteCall) Force(force bool) *AppsServicesDeleteCall {
-	c.urlParams_.Set("force", fmt.Sprint(force))
-	return c
-}
-
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
 // details.
@@ -9087,14 +9079,6 @@ func (r *ProjectsLocationsApplicationsServicesService) Delete(projectsId string,
 	c.locationsId = locationsId
 	c.applicationsId = applicationsId
 	c.servicesId = servicesId
-	return c
-}
-
-// Force sets the optional parameter "force": If set to true, any versions of
-// this service will also be deleted. (Otherwise, the request will only succeed
-// if the service has no versions.)
-func (c *ProjectsLocationsApplicationsServicesDeleteCall) Force(force bool) *ProjectsLocationsApplicationsServicesDeleteCall {
-	c.urlParams_.Set("force", fmt.Sprint(force))
 	return c
 }
 

@@ -6770,7 +6770,7 @@
       }
     }
   },
-  "revision": "20250222",
+  "revision": "20250226",
   "rootUrl": "https://discoveryengine.googleapis.com/",
   "schemas": {
     "GoogleApiDistribution": {
@@ -7026,6 +7026,43 @@
       },
       "type": "object"
     },
+    "GoogleCloudDiscoveryengineLoggingConnectorRunErrorContext": {
+      "description": "The error payload that is populated on LRO sync APIs, including the following: * `google.cloud.discoveryengine.v1main.DataConnectorService.SetUpDataConnector` * `google.cloud.discoveryengine.v1main.DataConnectorService.StartConnectorRun`",
+      "id": "GoogleCloudDiscoveryengineLoggingConnectorRunErrorContext",
+      "properties": {
+        "connectorRun": {
+          "description": "The full resource name of the Connector Run. Format: `projects/*/locations/*/collections/*/dataConnector/connectorRuns/*`. The `connector_run_id` is system-generated.",
+          "type": "string"
+        },
+        "dataConnector": {
+          "description": "The full resource name of the DataConnector. Format: `projects/*/locations/*/collections/*/dataConnector`.",
+          "type": "string"
+        },
+        "endTime": {
+          "description": "The time when the connector run ended.",
+          "format": "google-datetime",
+          "type": "string"
+        },
+        "entity": {
+          "description": "The entity to sync for the connector run.",
+          "type": "string"
+        },
+        "operation": {
+          "description": "The operation resource name of the LRO to sync the connector.",
+          "type": "string"
+        },
+        "startTime": {
+          "description": "The time when the connector run started.",
+          "format": "google-datetime",
+          "type": "string"
+        },
+        "syncType": {
+          "description": "The type of sync run. Can be one of the following: * `FULL` * `INCREMENTAL`",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
     "GoogleCloudDiscoveryengineLoggingErrorContext": {
       "description": "A description of the context in which an error occurred.",
       "id": "GoogleCloudDiscoveryengineLoggingErrorContext",
@@ -7045,6 +7082,10 @@
       "description": "An error log which is reported to the Error Reporting system.",
       "id": "GoogleCloudDiscoveryengineLoggingErrorLog",
       "properties": {
+        "connectorRunPayload": {
+          "$ref": "GoogleCloudDiscoveryengineLoggingConnectorRunErrorContext",
+          "description": "The error payload that is populated on LRO connector sync APIs."
+        },
         "context": {
           "$ref": "GoogleCloudDiscoveryengineLoggingErrorContext",
           "description": "A description of the context in which the error occurred."
@@ -12627,6 +12668,24 @@
         "relevanceScoreSpec": {
           "$ref": "GoogleCloudDiscoveryengineV1SearchRequestRelevanceScoreSpec",
           "description": "Optional. The specification for returning the relevance score."
+        },
+        "relevanceThreshold": {
+          "description": "The relevance threshold of the search results. Default to Google defined threshold, leveraging a balance of precision and recall to deliver both highly accurate results and comprehensive coverage of relevant information. This feature is not supported for healthcare search.",
+          "enum": [
+            "RELEVANCE_THRESHOLD_UNSPECIFIED",
+            "LOWEST",
+            "LOW",
+            "MEDIUM",
+            "HIGH"
+          ],
+          "enumDescriptions": [
+            "Default value. In this case, server behavior defaults to Google defined threshold.",
+            "Lowest relevance threshold.",
+            "Low relevance threshold.",
+            "Medium relevance threshold.",
+            "High relevance threshold."
+          ],
+          "type": "string"
         },
         "safeSearch": {
           "description": "Whether to turn on safe search. This is only supported for website search.",

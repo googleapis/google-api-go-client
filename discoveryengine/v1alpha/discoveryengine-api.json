@@ -9011,7 +9011,7 @@
       }
     }
   },
-  "revision": "20250222",
+  "revision": "20250226",
   "rootUrl": "https://discoveryengine.googleapis.com/",
   "schemas": {
     "ApiservingMediaRequestInfo": {
@@ -9849,6 +9849,43 @@
       },
       "type": "object"
     },
+    "GoogleCloudDiscoveryengineLoggingConnectorRunErrorContext": {
+      "description": "The error payload that is populated on LRO sync APIs, including the following: * `google.cloud.discoveryengine.v1main.DataConnectorService.SetUpDataConnector` * `google.cloud.discoveryengine.v1main.DataConnectorService.StartConnectorRun`",
+      "id": "GoogleCloudDiscoveryengineLoggingConnectorRunErrorContext",
+      "properties": {
+        "connectorRun": {
+          "description": "The full resource name of the Connector Run. Format: `projects/*/locations/*/collections/*/dataConnector/connectorRuns/*`. The `connector_run_id` is system-generated.",
+          "type": "string"
+        },
+        "dataConnector": {
+          "description": "The full resource name of the DataConnector. Format: `projects/*/locations/*/collections/*/dataConnector`.",
+          "type": "string"
+        },
+        "endTime": {
+          "description": "The time when the connector run ended.",
+          "format": "google-datetime",
+          "type": "string"
+        },
+        "entity": {
+          "description": "The entity to sync for the connector run.",
+          "type": "string"
+        },
+        "operation": {
+          "description": "The operation resource name of the LRO to sync the connector.",
+          "type": "string"
+        },
+        "startTime": {
+          "description": "The time when the connector run started.",
+          "format": "google-datetime",
+          "type": "string"
+        },
+        "syncType": {
+          "description": "The type of sync run. Can be one of the following: * `FULL` * `INCREMENTAL`",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
     "GoogleCloudDiscoveryengineLoggingErrorContext": {
       "description": "A description of the context in which an error occurred.",
       "id": "GoogleCloudDiscoveryengineLoggingErrorContext",
@@ -9868,6 +9905,10 @@
       "description": "An error log which is reported to the Error Reporting system.",
       "id": "GoogleCloudDiscoveryengineLoggingErrorLog",
       "properties": {
+        "connectorRunPayload": {
+          "$ref": "GoogleCloudDiscoveryengineLoggingConnectorRunErrorContext",
+          "description": "The error payload that is populated on LRO connector sync APIs."
+        },
         "context": {
           "$ref": "GoogleCloudDiscoveryengineLoggingErrorContext",
           "description": "A description of the context in which the error occurred."
@@ -22847,6 +22888,11 @@
           "readOnly": true,
           "type": "string"
         },
+        "customerProvidedConfig": {
+          "$ref": "GoogleCloudDiscoveryengineV1alphaWidgetConfigCustomerProvidedConfig",
+          "description": "Optional. Output only. Describes the customer related configurations, currently only used for government customers. This field cannot be modified after project onboarding.",
+          "readOnly": true
+        },
         "dataStoreType": {
           "description": "Output only. The type of the parent data store.",
           "enum": [
@@ -23099,6 +23145,25 @@
         },
         "name": {
           "description": "The name of the collection. It should be collection resource name. Format: `projects/{project}/locations/{location}/collections/{collection_id}`. For APIs under WidgetService, such as WidgetService.LookUpWidgetConfig, the project number and location part is erased in this field.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudDiscoveryengineV1alphaWidgetConfigCustomerProvidedConfig": {
+      "description": "Customer provided configurations.",
+      "id": "GoogleCloudDiscoveryengineV1alphaWidgetConfigCustomerProvidedConfig",
+      "properties": {
+        "customerType": {
+          "description": "Customer type.",
+          "enum": [
+            "DEFAULT_CUSTOMER",
+            "GOVERNMENT_CUSTOMER"
+          ],
+          "enumDescriptions": [
+            "Default customer type.",
+            "Government customer type. Some features are disabled for government customers due to legal requirements."
+          ],
           "type": "string"
         }
       },

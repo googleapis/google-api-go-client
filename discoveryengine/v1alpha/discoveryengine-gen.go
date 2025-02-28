@@ -2302,6 +2302,50 @@ func (s GoogleApiMonitoredResourceMetadata) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudDiscoveryengineLoggingConnectorRunErrorContext: The error payload
+// that is populated on LRO sync APIs, including the following: *
+// `google.cloud.discoveryengine.v1main.DataConnectorService.SetUpDataConnector`
+//
+//	*
+//
+// `google.cloud.discoveryengine.v1main.DataConnectorService.StartConnectorRun`
+type GoogleCloudDiscoveryengineLoggingConnectorRunErrorContext struct {
+	// ConnectorRun: The full resource name of the Connector Run. Format:
+	// `projects/*/locations/*/collections/*/dataConnector/connectorRuns/*`. The
+	// `connector_run_id` is system-generated.
+	ConnectorRun string `json:"connectorRun,omitempty"`
+	// DataConnector: The full resource name of the DataConnector. Format:
+	// `projects/*/locations/*/collections/*/dataConnector`.
+	DataConnector string `json:"dataConnector,omitempty"`
+	// EndTime: The time when the connector run ended.
+	EndTime string `json:"endTime,omitempty"`
+	// Entity: The entity to sync for the connector run.
+	Entity string `json:"entity,omitempty"`
+	// Operation: The operation resource name of the LRO to sync the connector.
+	Operation string `json:"operation,omitempty"`
+	// StartTime: The time when the connector run started.
+	StartTime string `json:"startTime,omitempty"`
+	// SyncType: The type of sync run. Can be one of the following: * `FULL` *
+	// `INCREMENTAL`
+	SyncType string `json:"syncType,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ConnectorRun") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ConnectorRun") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineLoggingConnectorRunErrorContext) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineLoggingConnectorRunErrorContext
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudDiscoveryengineLoggingErrorContext: A description of the context
 // in which an error occurred.
 type GoogleCloudDiscoveryengineLoggingErrorContext struct {
@@ -2332,6 +2376,9 @@ func (s GoogleCloudDiscoveryengineLoggingErrorContext) MarshalJSON() ([]byte, er
 // GoogleCloudDiscoveryengineLoggingErrorLog: An error log which is reported to
 // the Error Reporting system.
 type GoogleCloudDiscoveryengineLoggingErrorLog struct {
+	// ConnectorRunPayload: The error payload that is populated on LRO connector
+	// sync APIs.
+	ConnectorRunPayload *GoogleCloudDiscoveryengineLoggingConnectorRunErrorContext `json:"connectorRunPayload,omitempty"`
 	// Context: A description of the context in which the error occurred.
 	Context *GoogleCloudDiscoveryengineLoggingErrorContext `json:"context,omitempty"`
 	// ImportPayload: The error payload that is populated on LRO import APIs.
@@ -2357,15 +2404,15 @@ type GoogleCloudDiscoveryengineLoggingErrorLog struct {
 	ServiceContext *GoogleCloudDiscoveryengineLoggingServiceContext `json:"serviceContext,omitempty"`
 	// Status: The RPC status associated with the error log.
 	Status *GoogleRpcStatus `json:"status,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "Context") to unconditionally
-	// include in API requests. By default, fields with empty or default values are
-	// omitted from API requests. See
+	// ForceSendFields is a list of field names (e.g. "ConnectorRunPayload") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Context") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
+	// NullFields is a list of field names (e.g. "ConnectorRunPayload") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -20604,6 +20651,10 @@ type GoogleCloudDiscoveryengineV1alphaWidgetConfig struct {
 	ContentSearchSpec *GoogleCloudDiscoveryengineV1alphaSearchRequestContentSearchSpec `json:"contentSearchSpec,omitempty"`
 	// CreateTime: Output only. Timestamp the WidgetConfig was created.
 	CreateTime string `json:"createTime,omitempty"`
+	// CustomerProvidedConfig: Optional. Output only. Describes the customer
+	// related configurations, currently only used for government customers. This
+	// field cannot be modified after project onboarding.
+	CustomerProvidedConfig *GoogleCloudDiscoveryengineV1alphaWidgetConfigCustomerProvidedConfig `json:"customerProvidedConfig,omitempty"`
 	// DataStoreType: Output only. The type of the parent data store.
 	//
 	// Possible values:
@@ -20827,6 +20878,34 @@ type GoogleCloudDiscoveryengineV1alphaWidgetConfigCollectionComponent struct {
 
 func (s GoogleCloudDiscoveryengineV1alphaWidgetConfigCollectionComponent) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDiscoveryengineV1alphaWidgetConfigCollectionComponent
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1alphaWidgetConfigCustomerProvidedConfig:
+// Customer provided configurations.
+type GoogleCloudDiscoveryengineV1alphaWidgetConfigCustomerProvidedConfig struct {
+	// CustomerType: Customer type.
+	//
+	// Possible values:
+	//   "DEFAULT_CUSTOMER" - Default customer type.
+	//   "GOVERNMENT_CUSTOMER" - Government customer type. Some features are
+	// disabled for government customers due to legal requirements.
+	CustomerType string `json:"customerType,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "CustomerType") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CustomerType") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1alphaWidgetConfigCustomerProvidedConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1alphaWidgetConfigCustomerProvidedConfig
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 

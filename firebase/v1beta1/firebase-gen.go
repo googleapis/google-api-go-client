@@ -1610,8 +1610,7 @@ type StatusProto struct {
 	// optional proto2.bridge.MessageSet message_set = 5;
 	MessageSet *MessageSet `json:"messageSet,omitempty"`
 	// Space: The following are usually only present when code != 0 Space to which
-	// this status belongs copybara:strip_begin(b/383363683)
-	// copybara:strip_end_and_replace optional string space = 2;
+	// this status belongs
 	Space string `json:"space,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "CanonicalCode") to
 	// unconditionally include in API requests. By default, fields with empty or

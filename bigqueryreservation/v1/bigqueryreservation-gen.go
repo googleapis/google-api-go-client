@@ -727,6 +727,40 @@ type Reservation struct {
 	// these to organize and group your reservations. You can set this property
 	// when inserting or updating a reservation.
 	Labels map[string]string `json:"labels,omitempty"`
+	// MaxSlots: Optional. The overall max slots for the reservation, covering
+	// slot_capacity (baseline), idle slots (if ignore_idle_slots is false) and
+	// scaled slots. If present, the reservation won't use more than the specified
+	// number of slots, even if there is demand and supply (from idle slots). NOTE:
+	// capping a reservation's idle slot usage is best effort and its usage may
+	// exceed the max_slots value. However, in terms of autoscale.current_slots
+	// (which accounts for the additional added slots), it will never exceed the
+	// max_slots - baseline. This field must be set together with the scaling_mode
+	// enum value, otherwise the request will be rejected with error code
+	// `google.rpc.Code.INVALID_ARGUMENT`. If the max_slots and scaling_mode are
+	// set, the autoscale or autoscale.max_slots field must be unset. Otherwise the
+	// request will be rejected with error code `google.rpc.Code.INVALID_ARGUMENT`.
+	// However, the autoscale field may still be in the output. The
+	// autopscale.max_slots will always show as 0 and the autoscaler.current_slots
+	// will represent the current slots from autoscaler excluding idle slots. For
+	// example, if the max_slots is 1000 and scaling_mode is AUTOSCALE_ONLY, then
+	// in the output, the autoscaler.max_slots will be 0 and the
+	// autoscaler.current_slots may be any value between 0 and 1000. If the
+	// max_slots is 1000, scaling_mode is ALL_SLOTS, the baseline is 100 and idle
+	// slots usage is 200, then in the output, the autoscaler.max_slots will be 0
+	// and the autoscaler.current_slots will not be higher than 700. If the
+	// max_slots is 1000, scaling_mode is IDLE_SLOTS_ONLY, then in the output, the
+	// autoscaler field will be null. If the max_slots and scaling_mode are set,
+	// then the ignore_idle_slots field must be aligned with the scaling_mode enum
+	// value.(See details in ScalingMode comments). Otherwise the request will be
+	// rejected with error code `google.rpc.Code.INVALID_ARGUMENT`. Please note,
+	// the max_slots is for user to manage the part of slots greater than the
+	// baseline. Therefore, we don't allow users to set max_slots smaller or equal
+	// to the baseline as it will not be meaningful. If the field is present and
+	// slot_capacity>=max_slots, requests will be rejected with error code
+	// `google.rpc.Code.INVALID_ARGUMENT`. Please note that if max_slots is set to
+	// 0, we will treat it as unset. Customers can set max_slots to 0 and set
+	// scaling_mode to SCALING_MODE_UNSPECIFIED to disable the max_slots feature.
+	MaxSlots int64 `json:"maxSlots,omitempty,string"`
 	// MultiRegionAuxiliary: Applicable only for reservations located within one of
 	// the BigQuery multi-regions (US or EU). If set to true, this reservation is
 	// placed in the organization's secondary region which is designated for
@@ -755,6 +789,48 @@ type Reservation struct {
 	// staleness of the secondary and the last error encountered while trying to
 	// replicate changes from the primary to the secondary.
 	ReplicationStatus *ReplicationStatus `json:"replicationStatus,omitempty"`
+	// ScalingMode: The scaling mode for the reservation. If the field is present
+	// but max_slots is not present, requests will be rejected with error code
+	// `google.rpc.Code.INVALID_ARGUMENT`.
+	//
+	// Possible values:
+	//   "SCALING_MODE_UNSPECIFIED" - Default value of ScalingMode.
+	//   "AUTOSCALE_ONLY" - The reservation will scale up only using slots from
+	// autoscaling. It will not use any idle slots even if there may be some
+	// available. The upper limit that autoscaling can scale up to will be
+	// max_slots - baseline. For example, if max_slots is 1000, baseline is 200 and
+	// customer sets ScalingMode to AUTOSCALE_ONLY, then autoscalerg will scale up
+	// to 800 slots and no idle slots will be used. Please note, in this mode, the
+	// ignore_idle_slots field must be set to true. Otherwise the request will be
+	// rejected with error code `google.rpc.Code.INVALID_ARGUMENT`.
+	//   "IDLE_SLOTS_ONLY" - The reservation will scale up using only idle slots
+	// contributed by other reservations or from unassigned commitments. If no idle
+	// slots are available it will not scale up further. If the idle slots which it
+	// is using are reclaimed by the contributing reservation(s) it may be forced
+	// to scale down. The max idle slots the reservation can be max_slots -
+	// baseline capacity. For example, if max_slots is 1000, baseline is 200 and
+	// customer sets ScalingMode to IDLE_SLOTS_ONLY, 1. if there are 1000 idle
+	// slots available in other reservations, the reservation will scale up to 1000
+	// slots with 200 baseline and 800 idle slots. 2. if there are 500 idle slots
+	// available in other reservations, the reservation will scale up to 700 slots
+	// with 200 baseline and 300 idle slots. Please note, in this mode, the
+	// reservation might not be able to scale up to max_slots. Please note, in this
+	// mode, the ignore_idle_slots field must be set to false. Otherwise the
+	// request will be rejected with error code `google.rpc.Code.INVALID_ARGUMENT`.
+	//   "ALL_SLOTS" - The reservation will scale up using all slots available to
+	// it. It will use idle slots contributed by other reservations or from
+	// unassigned commitments first. If no idle slots are available it will scale
+	// up using autoscaling. For example, if max_slots is 1000, baseline is 200 and
+	// customer sets ScalingMode to ALL_SLOTS, 1. if there are 800 idle slots
+	// available in other reservations, the reservation will scale up to 1000 slots
+	// with 200 baseline and 800 idle slots. 2. if there are 500 idle slots
+	// available in other reservations, the reservation will scale up to 1000 slots
+	// with 200 baseline, 500 idle slots and 300 autoscaling slots. 3. if there are
+	// no idle slots available in other reservations, it will scale up to 1000
+	// slots with 200 baseline and 800 autoscaling slots. Please note, in this
+	// mode, the ignore_idle_slots field must be set to false. Otherwise the
+	// request will be rejected with error code `google.rpc.Code.INVALID_ARGUMENT`.
+	ScalingMode string `json:"scalingMode,omitempty"`
 	// SecondaryLocation: Optional. The current location of the reservation's
 	// secondary replica. This field is only set for reservations using the managed
 	// disaster recovery feature. Users can set this in create reservation calls to

@@ -128,7 +128,7 @@
       }
     }
   },
-  "revision": "20250225",
+  "revision": "20250226",
   "rootUrl": "https://areainsights.googleapis.com/",
   "schemas": {
     "Circle": {
@@ -227,7 +227,7 @@
               "OPERATING_STATUS_TEMPORARILY_CLOSED"
             ],
             "enumDescriptions": [
-              "Not specified. This placeholder value should not be used.",
+              "Not specified. This value should not be used.",
               "The place is operational and its open during its defined hours.",
               "The Place is no longer in business.",
               "The place is temporarily closed and expected to reopen in the future."
@@ -237,7 +237,7 @@
           "type": "array"
         },
         "priceLevels": {
-          "description": "Optional. Restricts results to places whose price level is included on this list. If price_level is not set, all price levels are included in the results.",
+          "description": "Optional. Restricts results to places whose price level is included on this list. If `price_levels` is not set, all price levels are included in the results.",
           "items": {
             "enum": [
               "PRICE_LEVEL_UNSPECIFIED",
@@ -248,7 +248,7 @@
               "PRICE_LEVEL_VERY_EXPENSIVE"
             ],
             "enumDescriptions": [
-              "Place price level is unspecified or unknown.",
+              "Not specified. This value should not be used.",
               "Place provides free services.",
               "Place provides inexpensive services.",
               "Place provides moderately priced services.",

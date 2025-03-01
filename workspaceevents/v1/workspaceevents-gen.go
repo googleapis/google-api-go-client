@@ -279,12 +279,12 @@ func (s ListSubscriptionsResponse) MarshalJSON() ([]byte, error) {
 
 // NotificationEndpoint: The endpoint where the subscription delivers events.
 type NotificationEndpoint struct {
-	// PubsubTopic: Immutable. The Cloud Pub/Sub topic that receives events for the
+	// PubsubTopic: Immutable. The Pub/Sub topic that receives events for the
 	// subscription. Format: `projects/{project}/topics/{topic}` You must create
 	// the topic in the same Google Cloud project where you create this
 	// subscription. When the topic receives events, the events are encoded as
-	// Cloud Pub/Sub messages. For details, see the Google Cloud Pub/Sub Protocol
-	// Binding for CloudEvents
+	// Pub/Sub messages. For details, see the Google Cloud Pub/Sub Protocol Binding
+	// for CloudEvents
 	// (https://github.com/googleapis/google-cloudevents/blob/main/docs/spec/pubsub.md).
 	PubsubTopic string `json:"pubsubTopic,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "PubsubTopic") to

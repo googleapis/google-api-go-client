@@ -2870,6 +2870,8 @@ type GoogleCloudRunV2Task struct {
 	MaxRetries int64 `json:"maxRetries,omitempty"`
 	// Name: Output only. The unique name of this Task.
 	Name string `json:"name,omitempty"`
+	// NodeSelector: Output only. The node selector for the task.
+	NodeSelector *GoogleCloudRunV2NodeSelector `json:"nodeSelector,omitempty"`
 	// ObservedGeneration: Output only. The generation of this Task. See comments
 	// in `Job.reconciling` for additional information on reconciliation process in
 	// Cloud Run.
@@ -2981,6 +2983,8 @@ type GoogleCloudRunV2TaskTemplate struct {
 	// MaxRetries: Number of retries allowed per Task, before marking this Task
 	// failed. Defaults to 3.
 	MaxRetries int64 `json:"maxRetries,omitempty"`
+	// NodeSelector: Optional. The node selector for the task template.
+	NodeSelector *GoogleCloudRunV2NodeSelector `json:"nodeSelector,omitempty"`
 	// ServiceAccount: Optional. Email address of the IAM service account
 	// associated with the Task of a Job. The service account represents the
 	// identity of the running task, and determines what permissions the task has.

@@ -300,8 +300,8 @@ type Filter struct {
 	// OPERATING_STATUS_OPERATIONAL is used as default.
 	//
 	// Possible values:
-	//   "OPERATING_STATUS_UNSPECIFIED" - Not specified. This placeholder value
-	// should not be used.
+	//   "OPERATING_STATUS_UNSPECIFIED" - Not specified. This value should not be
+	// used.
 	//   "OPERATING_STATUS_OPERATIONAL" - The place is operational and its open
 	// during its defined hours.
 	//   "OPERATING_STATUS_PERMANENTLY_CLOSED" - The Place is no longer in
@@ -310,11 +310,11 @@ type Filter struct {
 	// and expected to reopen in the future.
 	OperatingStatus []string `json:"operatingStatus,omitempty"`
 	// PriceLevels: Optional. Restricts results to places whose price level is
-	// included on this list. If price_level is not set, all price levels are
+	// included on this list. If `price_levels` is not set, all price levels are
 	// included in the results.
 	//
 	// Possible values:
-	//   "PRICE_LEVEL_UNSPECIFIED" - Place price level is unspecified or unknown.
+	//   "PRICE_LEVEL_UNSPECIFIED" - Not specified. This value should not be used.
 	//   "PRICE_LEVEL_FREE" - Place provides free services.
 	//   "PRICE_LEVEL_INEXPENSIVE" - Place provides inexpensive services.
 	//   "PRICE_LEVEL_MODERATE" - Place provides moderately priced services.

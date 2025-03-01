@@ -2517,7 +2517,7 @@ type SourceConfig struct {
 	PostgresqlSourceConfig *PostgresqlSourceConfig `json:"postgresqlSourceConfig,omitempty"`
 	// SalesforceSourceConfig: Salesforce data source configuration.
 	SalesforceSourceConfig *SalesforceSourceConfig `json:"salesforceSourceConfig,omitempty"`
-	// SourceConnectionProfile: Required. Source connection profile resoource.
+	// SourceConnectionProfile: Required. Source connection profile resource.
 	// Format: `projects/{project}/locations/{location}/connectionProfiles/{name}`
 	SourceConnectionProfile string `json:"sourceConnectionProfile,omitempty"`
 	// SqlServerSourceConfig: SQLServer data source configuration.

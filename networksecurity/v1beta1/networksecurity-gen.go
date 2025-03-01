@@ -829,11 +829,13 @@ func (s AuthzPolicyAuthzRuleFrom) MarshalJSON() ([]byte, error) {
 type AuthzPolicyAuthzRuleFromRequestSource struct {
 	// Principals: Optional. A list of identities derived from the client's
 	// certificate. This field will not match on a request unless mutual TLS is
-	// enabled for the Forwarding rule or Gateway. Each identity is a string whose
-	// value is matched against the URI SAN, or DNS SAN or the subject field in the
-	// client's certificate. The match can be exact, prefix, suffix or a substring
-	// match. One of exact, prefix, suffix or contains must be specified. Limited
-	// to 5 principals.
+	// enabled for the forwarding rule or Gateway. For Application Load Balancers,
+	// each identity is a string whose value is matched against the URI SAN, or DNS
+	// SAN, or SPIFFE ID, or the subject field in the client's certificate. For
+	// Cloud Service Mesh, each identity is a string whose value is matched against
+	// the URI SAN, or DNS SAN, or the subject field in the client's certificate.
+	// The match can be exact, prefix, suffix, or a substring match. One of exact,
+	// prefix, suffix, or contains must be specified. Limited to 5 principals.
 	Principals []*AuthzPolicyAuthzRuleStringMatch `json:"principals,omitempty"`
 	// Resources: Optional. A list of resources to match against the resource of
 	// the source VM of a request. Limited to 5 resources.
@@ -2195,46 +2197,58 @@ func (s HttpHeaderMatch) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// InterceptDeployment: Message describing InterceptDeployment object NEXT ID:
-// 10
+// InterceptDeployment: A deployment represents a zonal intercept backend ready
+// to accept GENEVE-encapsulated traffic, e.g. a zonal instance group fronted
+// by an internal passthrough load balancer. Deployments are always part of a
+// global deployment group which represents a global intercept service.
 type InterceptDeployment struct {
-	// CreateTime: Output only. [Output only] Create time stamp
+	// CreateTime: Output only. The timestamp when the resource was created. See
+	// https://google.aip.dev/148#timestamps.
 	CreateTime string `json:"createTime,omitempty"`
 	// Description: Optional. User-provided description of the deployment. Used as
 	// additional context for the deployment.
 	Description string `json:"description,omitempty"`
-	// ForwardingRule: Required. Immutable. The regional load balancer which the
-	// intercepted traffic should be forwarded to. Format is:
-	// projects/{project}/regions/{region}/forwardingRules/{forwardingRule}
+	// ForwardingRule: Required. Immutable. The regional forwarding rule that
+	// fronts the intercept collectors, for example:
+	// `projects/123456789/regions/us-central1/forwardingRules/my-rule`. See
+	// https://google.aip.dev/124.
 	ForwardingRule string `json:"forwardingRule,omitempty"`
-	// InterceptDeploymentGroup: Required. Immutable. The Intercept Deployment
-	// Group that this resource is part of. Format is:
-	// `projects/{project}/locations/global/interceptDeploymentGroups/{interceptDepl
-	// oymentGroup}`
+	// InterceptDeploymentGroup: Required. Immutable. The deployment group that
+	// this deployment is a part of, for example:
+	// `projects/123456789/locations/global/interceptDeploymentGroups/my-dg`. See
+	// https://google.aip.dev/124.
 	InterceptDeploymentGroup string `json:"interceptDeploymentGroup,omitempty"`
-	// Labels: Optional. Labels as key value pairs
+	// Labels: Optional. Labels are key/value pairs that help to organize and
+	// filter resources.
 	Labels map[string]string `json:"labels,omitempty"`
-	// Name: Immutable. Identifier. The name of the InterceptDeployment.
+	// Name: Immutable. Identifier. The resource name of this deployment, for
+	// example:
+	// `projects/123456789/locations/us-central1-a/interceptDeployments/my-dep`.
+	// See https://google.aip.dev/122 for more details.
 	Name string `json:"name,omitempty"`
-	// Reconciling: Output only. Whether reconciling is in progress, recommended
-	// per https://google.aip.dev/128.
+	// Reconciling: Output only. The current state of the resource does not match
+	// the user's intended state, and the system is working to reconcile them. This
+	// part of the normal operation (e.g. linking a new association to the parent
+	// group). See https://google.aip.dev/128.
 	Reconciling bool `json:"reconciling,omitempty"`
-	// State: Output only. Current state of the deployment.
+	// State: Output only. The current state of the deployment. See
+	// https://google.aip.dev/216.
 	//
 	// Possible values:
-	//   "STATE_UNSPECIFIED" - Not set.
-	//   "ACTIVE" - Ready.
-	//   "CREATING" - Being created.
-	//   "DELETING" - Being deleted.
-	//   "OUT_OF_SYNC" - The underlying data plane is out of sync with the
-	// deployment. The deployment is not expected to be usable. This state can
-	// result in undefined behavior.
+	//   "STATE_UNSPECIFIED" - State not set (this is not a valid state).
+	//   "ACTIVE" - The deployment is ready and in sync with the parent group.
+	//   "CREATING" - The deployment is being created.
+	//   "DELETING" - The deployment is being deleted.
+	//   "OUT_OF_SYNC" - The deployment is out of sync with the parent group. In
+	// most cases, this is a result of a transient issue within the system (e.g. a
+	// delayed data-path config) and the system is expected to recover
+	// automatically. See the parent deployment group's state for more details.
 	//   "DELETE_FAILED" - An attempt to delete the deployment has failed. This is
-	// a terminal state and the deployment is not expected to be usable as some of
-	// its resources have been deleted. The only permitted operation is to retry
-	// deleting the deployment.
+	// a terminal state and the deployment is not expected to recover. The only
+	// permitted operation is to retry deleting the deployment.
 	State string `json:"state,omitempty"`
-	// UpdateTime: Output only. [Output only] Update time stamp
+	// UpdateTime: Output only. The timestamp when the resource was most recently
+	// updated. See https://google.aip.dev/148#timestamps.
 	UpdateTime string `json:"updateTime,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
@@ -2257,35 +2271,50 @@ func (s InterceptDeployment) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// InterceptDeploymentGroup: Message describing InterceptDeploymentGroup object
+// InterceptDeploymentGroup: A deployment group aggregates many zonal intercept
+// backends (deployments) into a single global intercept service. Consumers can
+// connect this service using an endpoint group.
 type InterceptDeploymentGroup struct {
-	// ConnectedEndpointGroups: Output only. The list of Intercept Endpoint Groups
-	// that are connected to this resource.
+	// ConnectedEndpointGroups: Output only. The list of endpoint groups that are
+	// connected to this resource.
 	ConnectedEndpointGroups []*InterceptDeploymentGroupConnectedEndpointGroup `json:"connectedEndpointGroups,omitempty"`
-	// CreateTime: Output only. [Output only] Create time stamp
+	// CreateTime: Output only. The timestamp when the resource was created. See
+	// https://google.aip.dev/148#timestamps.
 	CreateTime string `json:"createTime,omitempty"`
 	// Description: Optional. User-provided description of the deployment group.
 	// Used as additional context for the deployment group.
 	Description string `json:"description,omitempty"`
-	// Labels: Optional. Labels as key value pairs
+	// Labels: Optional. Labels are key/value pairs that help to organize and
+	// filter resources.
 	Labels map[string]string `json:"labels,omitempty"`
-	// Name: Immutable. Identifier. Then name of the InterceptDeploymentGroup.
+	// Name: Immutable. Identifier. The resource name of this deployment group, for
+	// example:
+	// `projects/123456789/locations/global/interceptDeploymentGroups/my-dg`. See
+	// https://google.aip.dev/122 for more details.
 	Name string `json:"name,omitempty"`
-	// Network: Required. Immutable. The network that is being used for the
-	// deployment. Format is: projects/{project}/global/networks/{network}.
+	// NestedDeployments: Output only. The list of Intercept Deployments that
+	// belong to this group.
+	NestedDeployments []*InterceptDeploymentGroupDeployment `json:"nestedDeployments,omitempty"`
+	// Network: Required. Immutable. The network that will be used for all child
+	// deployments, for example: `projects/{project}/global/networks/{network}`.
+	// See https://google.aip.dev/124.
 	Network string `json:"network,omitempty"`
-	// Reconciling: Output only. Whether reconciling is in progress, recommended
-	// per https://google.aip.dev/128.
+	// Reconciling: Output only. The current state of the resource does not match
+	// the user's intended state, and the system is working to reconcile them. This
+	// is part of the normal operation (e.g. adding a new deployment to the group)
+	// See https://google.aip.dev/128.
 	Reconciling bool `json:"reconciling,omitempty"`
-	// State: Output only. Current state of the deployment group.
+	// State: Output only. The current state of the deployment group. See
+	// https://google.aip.dev/216.
 	//
 	// Possible values:
-	//   "STATE_UNSPECIFIED" - Not set.
-	//   "ACTIVE" - Ready.
-	//   "CREATING" - Being created.
-	//   "DELETING" - Being deleted.
+	//   "STATE_UNSPECIFIED" - State not set (this is not a valid state).
+	//   "ACTIVE" - The deployment group is ready.
+	//   "CREATING" - The deployment group is being created.
+	//   "DELETING" - The deployment group is being deleted.
 	State string `json:"state,omitempty"`
-	// UpdateTime: Output only. [Output only] Update time stamp
+	// UpdateTime: Output only. The timestamp when the resource was most recently
+	// updated. See https://google.aip.dev/148#timestamps.
 	UpdateTime string `json:"updateTime,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
@@ -2311,7 +2340,10 @@ func (s InterceptDeploymentGroup) MarshalJSON() ([]byte, error) {
 // InterceptDeploymentGroupConnectedEndpointGroup: An endpoint group connected
 // to this deployment group.
 type InterceptDeploymentGroupConnectedEndpointGroup struct {
-	// Name: Output only. A connected intercept endpoint group.
+	// Name: Output only. The connected endpoint group's resource name, for
+	// example:
+	// `projects/123456789/locations/global/interceptEndpointGroups/my-eg`. See
+	// https://google.aip.dev/124.
 	Name string `json:"name,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Name") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -2331,45 +2363,101 @@ func (s InterceptDeploymentGroupConnectedEndpointGroup) MarshalJSON() ([]byte, e
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// InterceptEndpointGroup: Message describing InterceptEndpointGroup object.
+// InterceptDeploymentGroupDeployment: A deployment belonging to this
+// deployment group.
+type InterceptDeploymentGroupDeployment struct {
+	// Name: Output only. The name of the Intercept Deployment, in the format:
+	// `projects/{project}/locations/{location}/interceptDeployments/{intercept_depl
+	// oyment}`.
+	Name string `json:"name,omitempty"`
+	// State: Output only. Most recent known state of the deployment.
+	//
+	// Possible values:
+	//   "STATE_UNSPECIFIED" - State not set (this is not a valid state).
+	//   "ACTIVE" - The deployment is ready and in sync with the parent group.
+	//   "CREATING" - The deployment is being created.
+	//   "DELETING" - The deployment is being deleted.
+	//   "OUT_OF_SYNC" - The deployment is out of sync with the parent group. In
+	// most cases, this is a result of a transient issue within the system (e.g. a
+	// delayed data-path config) and the system is expected to recover
+	// automatically. See the parent deployment group's state for more details.
+	//   "DELETE_FAILED" - An attempt to delete the deployment has failed. This is
+	// a terminal state and the deployment is not expected to recover. The only
+	// permitted operation is to retry deleting the deployment.
+	State string `json:"state,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Name") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Name") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s InterceptDeploymentGroupDeployment) MarshalJSON() ([]byte, error) {
+	type NoMethod InterceptDeploymentGroupDeployment
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// InterceptEndpointGroup: An endpoint group is a consumer frontend for a
+// deployment group (backend). In order to configure intercept for a network,
+// consumers must create: - An association between their network and the
+// endpoint group. - A security profile that points to the endpoint group. - A
+// firewall rule that references the security profile (group).
 type InterceptEndpointGroup struct {
-	// Associations: Output only. List of Intercept Endpoint Group Associations
-	// that are associated to this endpoint group.
+	// Associations: Output only. List of associations to this endpoint group.
 	Associations []*InterceptEndpointGroupAssociationDetails `json:"associations,omitempty"`
-	// CreateTime: Output only. [Output only] Create time stamp
+	// CreateTime: Output only. The timestamp when the resource was created. See
+	// https://google.aip.dev/148#timestamps.
 	CreateTime string `json:"createTime,omitempty"`
 	// Description: Optional. User-provided description of the endpoint group. Used
 	// as additional context for the endpoint group.
 	Description string `json:"description,omitempty"`
-	// InterceptDeploymentGroup: Required. Immutable. The Intercept Deployment
-	// Group that this resource is connected to. Format is:
-	// `projects/{project}/locations/global/interceptDeploymentGroups/{interceptDepl
-	// oymentGroup}`
+	// InterceptDeploymentGroup: Immutable. The deployment group that this endpoint
+	// group is connected to, for example:
+	// `projects/123456789/locations/global/interceptDeploymentGroups/my-dg`. See
+	// https://google.aip.dev/124.
 	InterceptDeploymentGroup string `json:"interceptDeploymentGroup,omitempty"`
-	// Labels: Optional. Labels as key value pairs
+	// Labels: Optional. Labels are key/value pairs that help to organize and
+	// filter resources.
 	Labels map[string]string `json:"labels,omitempty"`
-	// Name: Immutable. Identifier. The name of the InterceptEndpointGroup.
+	// Name: Immutable. Identifier. The resource name of this endpoint group, for
+	// example:
+	// `projects/123456789/locations/global/interceptEndpointGroups/my-eg`. See
+	// https://google.aip.dev/122 for more details.
 	Name string `json:"name,omitempty"`
-	// Reconciling: Output only. Whether reconciling is in progress, recommended
-	// per https://google.aip.dev/128.
+	// Reconciling: Output only. The current state of the resource does not match
+	// the user's intended state, and the system is working to reconcile them. This
+	// is part of the normal operation (e.g. adding a new association to the
+	// group). See https://google.aip.dev/128.
 	Reconciling bool `json:"reconciling,omitempty"`
-	// State: Output only. Current state of the endpoint group.
+	// State: Output only. The current state of the endpoint group. See
+	// https://google.aip.dev/216.
 	//
 	// Possible values:
-	//   "STATE_UNSPECIFIED" - Not set.
-	//   "ACTIVE" - Ready.
-	//   "CLOSED" - The deployment group has been deleted and intercept is
-	// disabled.
-	//   "CREATING" - Being created.
-	//   "DELETING" - Being deleted.
-	//   "OUT_OF_SYNC" - The underlying data plane is out of sync with the endpoint
-	// group. Some associations might not be usable.
+	//   "STATE_UNSPECIFIED" - State not set (this is not a valid state).
+	//   "ACTIVE" - The endpoint group is ready and in sync with the target
+	// deployment group.
+	//   "CLOSED" - The deployment group backing this endpoint group has been
+	// force-deleted. This endpoint group cannot be used and interception is
+	// effectively disabled.
+	//   "CREATING" - The endpoint group is being created.
+	//   "DELETING" - The endpoint group is being deleted.
+	//   "OUT_OF_SYNC" - The endpoint group is out of sync with the backing
+	// deployment group. In most cases, this is a result of a transient issue
+	// within the system (e.g. an inaccessible location) and the system is expected
+	// to recover automatically. See the associations field for details per network
+	// and location.
 	//   "DELETE_FAILED" - An attempt to delete the endpoint group has failed. This
-	// is a terminal state and the endpoint group is not expected to be usable as
-	// some of its resources have been deleted. The only permitted operation is to
-	// retry deleting the endpoint group.
+	// is a terminal state and the endpoint group is not expected to recover. The
+	// only permitted operation is to retry deleting the endpoint group.
 	State string `json:"state,omitempty"`
-	// UpdateTime: Output only. [Output only] Update time stamp
+	// UpdateTime: Output only. The timestamp when the resource was most recently
+	// updated. See https://google.aip.dev/148#timestamps.
 	UpdateTime string `json:"updateTime,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
@@ -2392,48 +2480,63 @@ func (s InterceptEndpointGroup) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// InterceptEndpointGroupAssociation: Message describing
-// InterceptEndpointGroupAssociation object
+// InterceptEndpointGroupAssociation: An endpoint group association represents
+// a link between a network and an endpoint group in the organization. Creating
+// an association creates the networking infrastructure linking the network to
+// the endpoint group, but does not enable intercept by itself. To enable
+// intercept, the user must also create a network firewall policy containing
+// intercept rules and associate it with the network.
 type InterceptEndpointGroupAssociation struct {
-	// CreateTime: Output only. [Output only] Create time stamp
+	// CreateTime: Output only. The timestamp when the resource was created. See
+	// https://google.aip.dev/148#timestamps.
 	CreateTime string `json:"createTime,omitempty"`
-	// InterceptEndpointGroup: Required. Immutable. The Intercept Endpoint Group
-	// that this resource is connected to. Format is:
-	// `projects/{project}/locations/global/interceptEndpointGroups/{interceptEndpoi
-	// ntGroup}`
+	// InterceptEndpointGroup: Immutable. The endpoint group that this association
+	// is connected to, for example:
+	// `projects/123456789/locations/global/interceptEndpointGroups/my-eg`. See
+	// https://google.aip.dev/124.
 	InterceptEndpointGroup string `json:"interceptEndpointGroup,omitempty"`
-	// Labels: Optional. Labels as key value pairs
+	// Labels: Optional. Labels are key/value pairs that help to organize and
+	// filter resources.
 	Labels map[string]string `json:"labels,omitempty"`
-	// LocationsDetails: Output only. The list of locations that this association
-	// is in and its details.
+	// LocationsDetails: Output only. The list of locations where the association
+	// is present. This information is retrieved from the linked endpoint group,
+	// and not configured as part of the association itself.
 	LocationsDetails []*InterceptEndpointGroupAssociationLocationDetails `json:"locationsDetails,omitempty"`
-	// Name: Immutable. Identifier. The name of the
-	// InterceptEndpointGroupAssociation.
+	// Name: Immutable. Identifier. The resource name of this endpoint group
+	// association, for example:
+	// `projects/123456789/locations/global/interceptEndpointGroupAssociations/my-eg
+	// -association`. See https://google.aip.dev/122 for more details.
 	Name string `json:"name,omitempty"`
-	// Network: Required. Immutable. The VPC network associated. Format:
-	// projects/{project}/global/networks/{network}.
+	// Network: Immutable. The VPC network that is associated. for example:
+	// `projects/123456789/global/networks/my-network`. See
+	// https://google.aip.dev/124.
 	Network string `json:"network,omitempty"`
-	// Reconciling: Output only. Whether reconciling is in progress, recommended
-	// per https://google.aip.dev/128.
+	// Reconciling: Output only. The current state of the resource does not match
+	// the user's intended state, and the system is working to reconcile them. This
+	// part of the normal operation (e.g. adding a new location to the target
+	// deployment group). See https://google.aip.dev/128.
 	Reconciling bool `json:"reconciling,omitempty"`
 	// State: Output only. Current state of the endpoint group association.
 	//
 	// Possible values:
 	//   "STATE_UNSPECIFIED" - Not set.
-	//   "ACTIVE" - Ready.
-	//   "CREATING" - Being created.
-	//   "DELETING" - Being deleted.
-	//   "CLOSED" - Intercept is disabled due to an operation on another resource.
-	//   "OUT_OF_SYNC" - The underlying data plane is out of sync with the
-	// association. The association is not expected to be usable. This state can
-	// result in undefined behavior. See the `locations_details` field for more
-	// details.
+	//   "ACTIVE" - The association is ready and in sync with the linked endpoint
+	// group.
+	//   "CREATING" - The association is being created.
+	//   "DELETING" - The association is being deleted.
+	//   "CLOSED" - The association is disabled due to a breaking change in another
+	// resource.
+	//   "OUT_OF_SYNC" - The association is out of sync with the linked endpoint
+	// group. In most cases, this is a result of a transient issue within the
+	// system (e.g. an inaccessible location) and the system is expected to recover
+	// automatically. Check the `locations_details` field for more details.
 	//   "DELETE_FAILED" - An attempt to delete the association has failed. This is
 	// a terminal state and the association is not expected to be usable as some of
 	// its resources have been deleted. The only permitted operation is to retry
 	// deleting the association.
 	State string `json:"state,omitempty"`
-	// UpdateTime: Output only. [Output only] Update time stamp
+	// UpdateTime: Output only. The timestamp when the resource was most recently
+	// updated. See https://google.aip.dev/148#timestamps.
 	UpdateTime string `json:"updateTime,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
@@ -2456,30 +2559,31 @@ func (s InterceptEndpointGroupAssociation) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// InterceptEndpointGroupAssociationDetails: This is a subset of the
-// InterceptEndpointGroupAssociation message, containing fields to be used by
-// the consumer.
+// InterceptEndpointGroupAssociationDetails: The endpoint group's view of a
+// connected association.
 type InterceptEndpointGroupAssociationDetails struct {
-	// Name: Output only. The resource name of the
-	// InterceptEndpointGroupAssociation. Format:
-	// projects/{project}/locations/{location}/interceptEndpointGroupAssociations/{i
-	// nterceptEndpointGroupAssociation}
+	// Name: Output only. The connected association's resource name, for example:
+	// `projects/123456789/locations/global/interceptEndpointGroupAssociations/my-eg
+	// a`. See https://google.aip.dev/124.
 	Name string `json:"name,omitempty"`
-	// Network: Output only. The VPC network associated. Format:
-	// projects/{project}/global/networks/{name}.
+	// Network: Output only. The associated network, for example:
+	// projects/123456789/global/networks/my-network. See
+	// https://google.aip.dev/124.
 	Network string `json:"network,omitempty"`
-	// State: Output only. Current state of the association.
+	// State: Output only. Most recent known state of the association.
 	//
 	// Possible values:
 	//   "STATE_UNSPECIFIED" - Not set.
-	//   "ACTIVE" - Ready.
-	//   "CREATING" - Being created.
-	//   "DELETING" - Being deleted.
-	//   "CLOSED" - Intercept is disabled due to an operation on another resource.
-	//   "OUT_OF_SYNC" - The underlying data plane is out of sync with the
-	// association. The association is not expected to be usable. This state can
-	// result in undefined behavior. See the `locations_details` field for more
-	// details.
+	//   "ACTIVE" - The association is ready and in sync with the linked endpoint
+	// group.
+	//   "CREATING" - The association is being created.
+	//   "DELETING" - The association is being deleted.
+	//   "CLOSED" - The association is disabled due to a breaking change in another
+	// resource.
+	//   "OUT_OF_SYNC" - The association is out of sync with the linked endpoint
+	// group. In most cases, this is a result of a transient issue within the
+	// system (e.g. an inaccessible location) and the system is expected to recover
+	// automatically. Check the `locations_details` field for more details.
 	//   "DELETE_FAILED" - An attempt to delete the association has failed. This is
 	// a terminal state and the association is not expected to be usable as some of
 	// its resources have been deleted. The only permitted operation is to retry
@@ -2503,18 +2607,22 @@ func (s InterceptEndpointGroupAssociationDetails) MarshalJSON() ([]byte, error) 
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// InterceptEndpointGroupAssociationLocationDetails: Details about the
-// association status in a specific cloud location.
+// InterceptEndpointGroupAssociationLocationDetails: Contains details about the
+// state of an association in a specific cloud location.
 type InterceptEndpointGroupAssociationLocationDetails struct {
-	// Location: Output only. The cloud location.
+	// Location: Output only. The cloud location, e.g. "us-central1-a" or
+	// "asia-south1".
 	Location string `json:"location,omitempty"`
-	// State: Output only. The association state in this location.
+	// State: Output only. The current state of the association in this location.
 	//
 	// Possible values:
 	//   "STATE_UNSPECIFIED" - Not set.
-	//   "ACTIVE" - Ready.
-	//   "OUT_OF_SYNC" - The data plane is out of sync with the association in this
-	// location.
+	//   "ACTIVE" - The association is ready and in sync with the linked endpoint
+	// group.
+	//   "OUT_OF_SYNC" - The association is out of sync with the linked endpoint
+	// group. In most cases, this is a result of a transient issue within the
+	// system (e.g. an inaccessible location) and the system is expected to recover
+	// automatically.
 	State string `json:"state,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Location") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -2604,6 +2712,8 @@ type ListAddressGroupsResponse struct {
 	// results, call this method again using the value of `next_page_token` as
 	// `page_token`.
 	NextPageToken string `json:"nextPageToken,omitempty"`
+	// Unreachable: Locations that could not be reached.
+	Unreachable []string `json:"unreachable,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
@@ -2878,13 +2988,14 @@ func (s ListGatewaySecurityPolicyRulesResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// ListInterceptDeploymentGroupsResponse: Message for response to listing
-// InterceptDeploymentGroups
+// ListInterceptDeploymentGroupsResponse: Response message for
+// ListInterceptDeploymentGroups.
 type ListInterceptDeploymentGroupsResponse struct {
-	// InterceptDeploymentGroups: The list of InterceptDeploymentGroup
+	// InterceptDeploymentGroups: The deployment groups from the specified parent.
 	InterceptDeploymentGroups []*InterceptDeploymentGroup `json:"interceptDeploymentGroups,omitempty"`
-	// NextPageToken: A token identifying a page of results the server should
-	// return.
+	// NextPageToken: A token that can be sent as `page_token` to retrieve the next
+	// page. If this field is omitted, there are no subsequent pages. See
+	// https://google.aip.dev/158 for more details.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
@@ -2907,13 +3018,14 @@ func (s ListInterceptDeploymentGroupsResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// ListInterceptDeploymentsResponse: Message for response to listing
-// InterceptDeployments
+// ListInterceptDeploymentsResponse: Response message for
+// ListInterceptDeployments.
 type ListInterceptDeploymentsResponse struct {
-	// InterceptDeployments: The list of InterceptDeployment
+	// InterceptDeployments: The deployments from the specified parent.
 	InterceptDeployments []*InterceptDeployment `json:"interceptDeployments,omitempty"`
-	// NextPageToken: A token identifying a page of results the server should
-	// return.
+	// NextPageToken: A token that can be sent as `page_token` to retrieve the next
+	// page. If this field is omitted, there are no subsequent pages. See
+	// https://google.aip.dev/158 for more details.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 	// Unreachable: Locations that could not be reached.
 	Unreachable []string `json:"unreachable,omitempty"`
@@ -2938,14 +3050,15 @@ func (s ListInterceptDeploymentsResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// ListInterceptEndpointGroupAssociationsResponse: Message for response to
-// listing InterceptEndpointGroupAssociations
+// ListInterceptEndpointGroupAssociationsResponse: Response message for
+// ListInterceptEndpointGroupAssociations.
 type ListInterceptEndpointGroupAssociationsResponse struct {
-	// InterceptEndpointGroupAssociations: The list of
-	// InterceptEndpointGroupAssociation
+	// InterceptEndpointGroupAssociations: The associations from the specified
+	// parent.
 	InterceptEndpointGroupAssociations []*InterceptEndpointGroupAssociation `json:"interceptEndpointGroupAssociations,omitempty"`
-	// NextPageToken: A token identifying a page of results the server should
-	// return.
+	// NextPageToken: A token that can be sent as `page_token` to retrieve the next
+	// page. If this field is omitted, there are no subsequent pages. See
+	// https://google.aip.dev/158 for more details.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
@@ -2970,13 +3083,14 @@ func (s ListInterceptEndpointGroupAssociationsResponse) MarshalJSON() ([]byte, e
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// ListInterceptEndpointGroupsResponse: Message for response to listing
-// InterceptEndpointGroups
+// ListInterceptEndpointGroupsResponse: Response message for
+// ListInterceptEndpointGroups.
 type ListInterceptEndpointGroupsResponse struct {
-	// InterceptEndpointGroups: The list of InterceptEndpointGroup
+	// InterceptEndpointGroups: The endpoint groups from the specified parent.
 	InterceptEndpointGroups []*InterceptEndpointGroup `json:"interceptEndpointGroups,omitempty"`
-	// NextPageToken: A token identifying a page of results the server should
-	// return.
+	// NextPageToken: A token that can be sent as `page_token` to retrieve the next
+	// page. If this field is omitted, there are no subsequent pages. See
+	// https://google.aip.dev/158 for more details.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
@@ -3027,13 +3141,14 @@ func (s ListLocationsResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// ListMirroringDeploymentGroupsResponse: Message for response to listing
-// MirroringDeploymentGroups
+// ListMirroringDeploymentGroupsResponse: Response message for
+// ListMirroringDeploymentGroups.
 type ListMirroringDeploymentGroupsResponse struct {
-	// MirroringDeploymentGroups: The list of MirroringDeploymentGroup
+	// MirroringDeploymentGroups: The deployment groups from the specified parent.
 	MirroringDeploymentGroups []*MirroringDeploymentGroup `json:"mirroringDeploymentGroups,omitempty"`
-	// NextPageToken: A token identifying a page of results the server should
-	// return.
+	// NextPageToken: A token that can be sent as `page_token` to retrieve the next
+	// page. If this field is omitted, there are no subsequent pages. See
+	// https://google.aip.dev/158 for more details.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
@@ -3056,13 +3171,14 @@ func (s ListMirroringDeploymentGroupsResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// ListMirroringDeploymentsResponse: Message for response to listing
-// MirroringDeployments
+// ListMirroringDeploymentsResponse: Response message for
+// ListMirroringDeployments.
 type ListMirroringDeploymentsResponse struct {
-	// MirroringDeployments: The list of MirroringDeployment
+	// MirroringDeployments: The deployments from the specified parent.
 	MirroringDeployments []*MirroringDeployment `json:"mirroringDeployments,omitempty"`
-	// NextPageToken: A token identifying a page of results the server should
-	// return.
+	// NextPageToken: A token that can be sent as `page_token` to retrieve the next
+	// page. If this field is omitted, there are no subsequent pages. See
+	// https://google.aip.dev/158 for more details.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 	// Unreachable: Locations that could not be reached.
 	Unreachable []string `json:"unreachable,omitempty"`
@@ -3087,13 +3203,15 @@ func (s ListMirroringDeploymentsResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// ListMirroringEndpointGroupAssociationsResponse: Response message for listing
-// associations.
+// ListMirroringEndpointGroupAssociationsResponse: Response message for
+// ListMirroringEndpointGroupAssociations.
 type ListMirroringEndpointGroupAssociationsResponse struct {
-	// MirroringEndpointGroupAssociations: The list of associations returned.
+	// MirroringEndpointGroupAssociations: The associations from the specified
+	// parent.
 	MirroringEndpointGroupAssociations []*MirroringEndpointGroupAssociation `json:"mirroringEndpointGroupAssociations,omitempty"`
-	// NextPageToken: A token identifying a page of results the server should
-	// return. See https://google.aip.dev/158.
+	// NextPageToken: A token that can be sent as `page_token` to retrieve the next
+	// page. If this field is omitted, there are no subsequent pages. See
+	// https://google.aip.dev/158 for more details.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
@@ -3118,13 +3236,14 @@ func (s ListMirroringEndpointGroupAssociationsResponse) MarshalJSON() ([]byte, e
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// ListMirroringEndpointGroupsResponse: Message for response to listing
-// MirroringEndpointGroups
+// ListMirroringEndpointGroupsResponse: Response message for
+// ListMirroringEndpointGroups.
 type ListMirroringEndpointGroupsResponse struct {
-	// MirroringEndpointGroups: The list of MirroringEndpointGroup
+	// MirroringEndpointGroups: The endpoint groups from the specified parent.
 	MirroringEndpointGroups []*MirroringEndpointGroup `json:"mirroringEndpointGroups,omitempty"`
-	// NextPageToken: A token identifying a page of results the server should
-	// return.
+	// NextPageToken: A token that can be sent as `page_token` to retrieve the next
+	// page. If this field is omitted, there are no subsequent pages. See
+	// https://google.aip.dev/158 for more details.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
@@ -3517,6 +3636,9 @@ type MirroringDeploymentGroup struct {
 	// `projects/123456789/locations/global/mirroringDeploymentGroups/my-dg`. See
 	// https://google.aip.dev/122 for more details.
 	Name string `json:"name,omitempty"`
+	// NestedDeployments: Output only. The list of Mirroring Deployments that
+	// belong to this group.
+	NestedDeployments []*MirroringDeploymentGroupDeployment `json:"nestedDeployments,omitempty"`
 	// Network: Required. Immutable. The network that will be used for all child
 	// deployments, for example: `projects/{project}/global/networks/{network}`.
 	// See https://google.aip.dev/124.
@@ -3582,6 +3704,46 @@ type MirroringDeploymentGroupConnectedEndpointGroup struct {
 
 func (s MirroringDeploymentGroupConnectedEndpointGroup) MarshalJSON() ([]byte, error) {
 	type NoMethod MirroringDeploymentGroupConnectedEndpointGroup
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// MirroringDeploymentGroupDeployment: A deployment belonging to this
+// deployment group.
+type MirroringDeploymentGroupDeployment struct {
+	// Name: Output only. The name of the Mirroring Deployment, in the format:
+	// `projects/{project}/locations/{location}/mirroringDeployments/{mirroring_depl
+	// oyment}`.
+	Name string `json:"name,omitempty"`
+	// State: Output only. Most recent known state of the deployment.
+	//
+	// Possible values:
+	//   "STATE_UNSPECIFIED" - State not set (this is not a valid state).
+	//   "ACTIVE" - The deployment is ready and in sync with the parent group.
+	//   "CREATING" - The deployment is being created.
+	//   "DELETING" - The deployment is being deleted.
+	//   "OUT_OF_SYNC" - The deployment is out of sync with the parent group. In
+	// most cases, this is a result of a transient issue within the system (e.g. a
+	// delayed data-path config) and the system is expected to recover
+	// automatically. See the parent deployment group's state for more details.
+	//   "DELETE_FAILED" - An attempt to delete the deployment has failed. This is
+	// a terminal state and the deployment is not expected to recover. The only
+	// permitted operation is to retry deleting the deployment.
+	State string `json:"state,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Name") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Name") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s MirroringDeploymentGroupDeployment) MarshalJSON() ([]byte, error) {
+	type NoMethod MirroringDeploymentGroupDeployment
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -3704,9 +3866,10 @@ type MirroringEndpointGroupAssociation struct {
 	//   "STATE_UNSPECIFIED" - Not set.
 	//   "ACTIVE" - The association is ready and in sync with the linked endpoint
 	// group.
-	//   "CREATING" - Being created.
-	//   "DELETING" - Being deleted.
-	//   "CLOSED" - Mirroring is disabled due to an operation on another resource.
+	//   "CREATING" - The association is being created.
+	//   "DELETING" - The association is being deleted.
+	//   "CLOSED" - The association is disabled due to a breaking change in another
+	// resource.
 	//   "OUT_OF_SYNC" - The association is out of sync with the linked endpoint
 	// group. In most cases, this is a result of a transient issue within the
 	// system (e.g. an inaccessible location) and the system is expected to recover
@@ -3757,9 +3920,10 @@ type MirroringEndpointGroupAssociationDetails struct {
 	//   "STATE_UNSPECIFIED" - Not set.
 	//   "ACTIVE" - The association is ready and in sync with the linked endpoint
 	// group.
-	//   "CREATING" - Being created.
-	//   "DELETING" - Being deleted.
-	//   "CLOSED" - Mirroring is disabled due to an operation on another resource.
+	//   "CREATING" - The association is being created.
+	//   "DELETING" - The association is being deleted.
+	//   "CLOSED" - The association is disabled due to a breaking change in another
+	// resource.
 	//   "OUT_OF_SYNC" - The association is out of sync with the linked endpoint
 	// group. In most cases, this is a result of a transient issue within the
 	// system (e.g. an inaccessible location) and the system is expected to recover
@@ -5114,6 +5278,13 @@ func (c *OrganizationsLocationsAddressGroupsListCall) PageSize(pageSize int64) *
 // page of data.
 func (c *OrganizationsLocationsAddressGroupsListCall) PageToken(pageToken string) *OrganizationsLocationsAddressGroupsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// ReturnPartialSuccess sets the optional parameter "returnPartialSuccess": If
+// true, allow partial responses for multi-regional Aggregated List requests.
+func (c *OrganizationsLocationsAddressGroupsListCall) ReturnPartialSuccess(returnPartialSuccess bool) *OrganizationsLocationsAddressGroupsListCall {
+	c.urlParams_.Set("returnPartialSuccess", fmt.Sprint(returnPartialSuccess))
 	return c
 }
 
@@ -8909,6 +9080,13 @@ func (c *ProjectsLocationsAddressGroupsListCall) PageSize(pageSize int64) *Proje
 // page of data.
 func (c *ProjectsLocationsAddressGroupsListCall) PageToken(pageToken string) *ProjectsLocationsAddressGroupsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// ReturnPartialSuccess sets the optional parameter "returnPartialSuccess": If
+// true, allow partial responses for multi-regional Aggregated List requests.
+func (c *ProjectsLocationsAddressGroupsListCall) ReturnPartialSuccess(returnPartialSuccess bool) *ProjectsLocationsAddressGroupsListCall {
+	c.urlParams_.Set("returnPartialSuccess", fmt.Sprint(returnPartialSuccess))
 	return c
 }
 
@@ -14921,10 +15099,11 @@ type ProjectsLocationsInterceptDeploymentGroupsCreateCall struct {
 	header_                  http.Header
 }
 
-// Create: Creates a new InterceptDeploymentGroup in a given project and
-// location.
+// Create: Creates a deployment group in a given project and location. See
+// https://google.aip.dev/133.
 //
-// - parent: Value for parent.
+//   - parent: The parent resource where this deployment group will be created.
+//     Format: projects/{project}/locations/{location}.
 func (r *ProjectsLocationsInterceptDeploymentGroupsService) Create(parent string, interceptdeploymentgroup *InterceptDeploymentGroup) *ProjectsLocationsInterceptDeploymentGroupsCreateCall {
 	c := &ProjectsLocationsInterceptDeploymentGroupsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -14933,25 +15112,17 @@ func (r *ProjectsLocationsInterceptDeploymentGroupsService) Create(parent string
 }
 
 // InterceptDeploymentGroupId sets the optional parameter
-// "interceptDeploymentGroupId": Required. Id of the requesting object If
-// auto-generating Id server-side, remove this field and
-// intercept_deployment_group_id from the method_signature of Create RPC
+// "interceptDeploymentGroupId": Required. The ID to use for the new deployment
+// group, which will become the final component of the deployment group's
+// resource name.
 func (c *ProjectsLocationsInterceptDeploymentGroupsCreateCall) InterceptDeploymentGroupId(interceptDeploymentGroupId string) *ProjectsLocationsInterceptDeploymentGroupsCreateCall {
 	c.urlParams_.Set("interceptDeploymentGroupId", interceptDeploymentGroupId)
 	return c
 }
 
-// RequestId sets the optional parameter "requestId": An optional request ID to
-// identify requests. Specify a unique request ID so that if you must retry
-// your request, the server will know to ignore the request if it has already
-// been completed. The server will guarantee that for at least 60 minutes since
-// the first request. For example, consider a situation where you make an
-// initial request and the request times out. If you make the request again
-// with the same request ID, the server can check if original operation with
-// the same request ID was received, and if so, will ignore the second request.
-// This prevents clients from accidentally creating duplicate commitments. The
-// request ID must be a valid UUID with the exception that zero UUID is not
-// supported (00000000-0000-0000-0000-000000000000).
+// RequestId sets the optional parameter "requestId": A unique identifier for
+// this request. Must be a UUID4. This request is only idempotent if a
+// `request_id` is provided. See https://google.aip.dev/155 for more details.
 func (c *ProjectsLocationsInterceptDeploymentGroupsCreateCall) RequestId(requestId string) *ProjectsLocationsInterceptDeploymentGroupsCreateCall {
 	c.urlParams_.Set("requestId", requestId)
 	return c
@@ -15049,26 +15220,18 @@ type ProjectsLocationsInterceptDeploymentGroupsDeleteCall struct {
 	header_    http.Header
 }
 
-// Delete: Deletes a single InterceptDeploymentGroup.
+// Delete: Deletes a deployment group. See https://google.aip.dev/135.
 //
-// - name: Name of the resource.
+// - name: The deployment group to delete.
 func (r *ProjectsLocationsInterceptDeploymentGroupsService) Delete(name string) *ProjectsLocationsInterceptDeploymentGroupsDeleteCall {
 	c := &ProjectsLocationsInterceptDeploymentGroupsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
 	return c
 }
 
-// RequestId sets the optional parameter "requestId": An optional request ID to
-// identify requests. Specify a unique request ID so that if you must retry
-// your request, the server will know to ignore the request if it has already
-// been completed. The server will guarantee that for at least 60 minutes after
-// the first request. For example, consider a situation where you make an
-// initial request and the request times out. If you make the request again
-// with the same request ID, the server can check if original operation with
-// the same request ID was received, and if so, will ignore the second request.
-// This prevents clients from accidentally creating duplicate commitments. The
-// request ID must be a valid UUID with the exception that zero UUID is not
-// supported (00000000-0000-0000-0000-000000000000).
+// RequestId sets the optional parameter "requestId": A unique identifier for
+// this request. Must be a UUID4. This request is only idempotent if a
+// `request_id` is provided. See https://google.aip.dev/155 for more details.
 func (c *ProjectsLocationsInterceptDeploymentGroupsDeleteCall) RequestId(requestId string) *ProjectsLocationsInterceptDeploymentGroupsDeleteCall {
 	c.urlParams_.Set("requestId", requestId)
 	return c
@@ -15163,9 +15326,11 @@ type ProjectsLocationsInterceptDeploymentGroupsGetCall struct {
 	header_      http.Header
 }
 
-// Get: Gets details of a single InterceptDeploymentGroup.
+// Get: Gets a specific deployment group. See https://google.aip.dev/131.
 //
-// - name: Name of the resource.
+//   - name: The name of the deployment group to retrieve. Format:
+//     projects/{project}/locations/{location}/interceptDeploymentGroups/{intercep
+//     t_deployment_group}.
 func (r *ProjectsLocationsInterceptDeploymentGroupsService) Get(name string) *ProjectsLocationsInterceptDeploymentGroupsGetCall {
 	c := &ProjectsLocationsInterceptDeploymentGroupsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -15273,23 +15438,27 @@ type ProjectsLocationsInterceptDeploymentGroupsListCall struct {
 	header_      http.Header
 }
 
-// List: Lists InterceptDeploymentGroups in a given project and location.
+// List: Lists deployment groups in a given project and location. See
+// https://google.aip.dev/132.
 //
-// - parent: Parent value for ListInterceptDeploymentGroupsRequest.
+//   - parent: The parent, which owns this collection of deployment groups.
+//     Example: `projects/123456789/locations/global`. See
+//     https://google.aip.dev/132 for more details.
 func (r *ProjectsLocationsInterceptDeploymentGroupsService) List(parent string) *ProjectsLocationsInterceptDeploymentGroupsListCall {
 	c := &ProjectsLocationsInterceptDeploymentGroupsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
 	return c
 }
 
-// Filter sets the optional parameter "filter": Filtering results
+// Filter sets the optional parameter "filter": Filter expression. See
+// https://google.aip.dev/160#filtering for more details.
 func (c *ProjectsLocationsInterceptDeploymentGroupsListCall) Filter(filter string) *ProjectsLocationsInterceptDeploymentGroupsListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
 }
 
-// OrderBy sets the optional parameter "orderBy": Hint for how to order the
-// results
+// OrderBy sets the optional parameter "orderBy": Sort expression. See
+// https://google.aip.dev/132#ordering for more details.
 func (c *ProjectsLocationsInterceptDeploymentGroupsListCall) OrderBy(orderBy string) *ProjectsLocationsInterceptDeploymentGroupsListCall {
 	c.urlParams_.Set("orderBy", orderBy)
 	return c
@@ -15297,14 +15466,17 @@ func (c *ProjectsLocationsInterceptDeploymentGroupsListCall) OrderBy(orderBy str
 
 // PageSize sets the optional parameter "pageSize": Requested page size. Server
 // may return fewer items than requested. If unspecified, server will pick an
-// appropriate default.
+// appropriate default. See https://google.aip.dev/158 for more details.
 func (c *ProjectsLocationsInterceptDeploymentGroupsListCall) PageSize(pageSize int64) *ProjectsLocationsInterceptDeploymentGroupsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": A token identifying a
-// page of results the server should return.
+// PageToken sets the optional parameter "pageToken": A page token, received
+// from a previous `ListInterceptDeploymentGroups` call. Provide this to
+// retrieve the subsequent page. When paginating, all other parameters provided
+// to `ListInterceptDeploymentGroups` must match the call that provided the
+// page token. See https://google.aip.dev/158 for more details.
 func (c *ProjectsLocationsInterceptDeploymentGroupsListCall) PageToken(pageToken string) *ProjectsLocationsInterceptDeploymentGroupsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
@@ -15432,9 +15604,12 @@ type ProjectsLocationsInterceptDeploymentGroupsPatchCall struct {
 	header_                  http.Header
 }
 
-// Patch: Updates a single InterceptDeploymentGroup.
+// Patch: Updates a deployment group. See https://google.aip.dev/134.
 //
-// - name: Immutable. Identifier. Then name of the InterceptDeploymentGroup.
+//   - name: Immutable. Identifier. The resource name of this deployment group,
+//     for example:
+//     `projects/123456789/locations/global/interceptDeploymentGroups/my-dg`. See
+//     https://google.aip.dev/122 for more details.
 func (r *ProjectsLocationsInterceptDeploymentGroupsService) Patch(name string, interceptdeploymentgroup *InterceptDeploymentGroup) *ProjectsLocationsInterceptDeploymentGroupsPatchCall {
 	c := &ProjectsLocationsInterceptDeploymentGroupsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -15442,28 +15617,18 @@ func (r *ProjectsLocationsInterceptDeploymentGroupsService) Patch(name string, i
 	return c
 }
 
-// RequestId sets the optional parameter "requestId": An optional request ID to
-// identify requests. Specify a unique request ID so that if you must retry
-// your request, the server will know to ignore the request if it has already
-// been completed. The server will guarantee that for at least 60 minutes since
-// the first request. For example, consider a situation where you make an
-// initial request and the request times out. If you make the request again
-// with the same request ID, the server can check if original operation with
-// the same request ID was received, and if so, will ignore the second request.
-// This prevents clients from accidentally creating duplicate commitments. The
-// request ID must be a valid UUID with the exception that zero UUID is not
-// supported (00000000-0000-0000-0000-000000000000).
+// RequestId sets the optional parameter "requestId": A unique identifier for
+// this request. Must be a UUID4. This request is only idempotent if a
+// `request_id` is provided. See https://google.aip.dev/155 for more details.
 func (c *ProjectsLocationsInterceptDeploymentGroupsPatchCall) RequestId(requestId string) *ProjectsLocationsInterceptDeploymentGroupsPatchCall {
 	c.urlParams_.Set("requestId", requestId)
 	return c
 }
 
-// UpdateMask sets the optional parameter "updateMask": Required. Field mask is
-// used to specify the fields to be overwritten in the InterceptDeploymentGroup
-// resource by the update. The fields specified in the update_mask are relative
-// to the resource, not the full request. A field will be overwritten if it is
-// in the mask. If the user does not provide a mask then all fields will be
-// overwritten.
+// UpdateMask sets the optional parameter "updateMask": The list of fields to
+// update. Fields are specified relative to the deployment group (e.g.
+// `description`; *not* `intercept_deployment_group.description`). See
+// https://google.aip.dev/161 for more details.
 func (c *ProjectsLocationsInterceptDeploymentGroupsPatchCall) UpdateMask(updateMask string) *ProjectsLocationsInterceptDeploymentGroupsPatchCall {
 	c.urlParams_.Set("updateMask", updateMask)
 	return c
@@ -15562,9 +15727,11 @@ type ProjectsLocationsInterceptDeploymentsCreateCall struct {
 	header_             http.Header
 }
 
-// Create: Creates a new InterceptDeployment in a given project and location.
+// Create: Creates a deployment in a given project and location. See
+// https://google.aip.dev/133.
 //
-// - parent: Value for parent.
+//   - parent: The parent resource where this deployment will be created. Format:
+//     projects/{project}/locations/{location}.
 func (r *ProjectsLocationsInterceptDeploymentsService) Create(parent string, interceptdeployment *InterceptDeployment) *ProjectsLocationsInterceptDeploymentsCreateCall {
 	c := &ProjectsLocationsInterceptDeploymentsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -15573,25 +15740,16 @@ func (r *ProjectsLocationsInterceptDeploymentsService) Create(parent string, int
 }
 
 // InterceptDeploymentId sets the optional parameter "interceptDeploymentId":
-// Required. Id of the requesting object If auto-generating Id server-side,
-// remove this field and intercept_deployment_id from the method_signature of
-// Create RPC
+// Required. The ID to use for the new deployment, which will become the final
+// component of the deployment's resource name.
 func (c *ProjectsLocationsInterceptDeploymentsCreateCall) InterceptDeploymentId(interceptDeploymentId string) *ProjectsLocationsInterceptDeploymentsCreateCall {
 	c.urlParams_.Set("interceptDeploymentId", interceptDeploymentId)
 	return c
 }
 
-// RequestId sets the optional parameter "requestId": An optional request ID to
-// identify requests. Specify a unique request ID so that if you must retry
-// your request, the server will know to ignore the request if it has already
-// been completed. The server will guarantee that for at least 60 minutes since
-// the first request. For example, consider a situation where you make an
-// initial request and the request times out. If you make the request again
-// with the same request ID, the server can check if original operation with
-// the same request ID was received, and if so, will ignore the second request.
-// This prevents clients from accidentally creating duplicate commitments. The
-// request ID must be a valid UUID with the exception that zero UUID is not
-// supported (00000000-0000-0000-0000-000000000000).
+// RequestId sets the optional parameter "requestId": A unique identifier for
+// this request. Must be a UUID4. This request is only idempotent if a
+// `request_id` is provided. See https://google.aip.dev/155 for more details.
 func (c *ProjectsLocationsInterceptDeploymentsCreateCall) RequestId(requestId string) *ProjectsLocationsInterceptDeploymentsCreateCall {
 	c.urlParams_.Set("requestId", requestId)
 	return c
@@ -15689,7 +15847,7 @@ type ProjectsLocationsInterceptDeploymentsDeleteCall struct {
 	header_    http.Header
 }
 
-// Delete: Deletes a single InterceptDeployment.
+// Delete: Deletes a deployment. See https://google.aip.dev/135.
 //
 // - name: Name of the resource.
 func (r *ProjectsLocationsInterceptDeploymentsService) Delete(name string) *ProjectsLocationsInterceptDeploymentsDeleteCall {
@@ -15698,17 +15856,9 @@ func (r *ProjectsLocationsInterceptDeploymentsService) Delete(name string) *Proj
 	return c
 }
 
-// RequestId sets the optional parameter "requestId": An optional request ID to
-// identify requests. Specify a unique request ID so that if you must retry
-// your request, the server will know to ignore the request if it has already
-// been completed. The server will guarantee that for at least 60 minutes after
-// the first request. For example, consider a situation where you make an
-// initial request and the request times out. If you make the request again
-// with the same request ID, the server can check if original operation with
-// the same request ID was received, and if so, will ignore the second request.
-// This prevents clients from accidentally creating duplicate commitments. The
-// request ID must be a valid UUID with the exception that zero UUID is not
-// supported (00000000-0000-0000-0000-000000000000).
+// RequestId sets the optional parameter "requestId": A unique identifier for
+// this request. Must be a UUID4. This request is only idempotent if a
+// `request_id` is provided. See https://google.aip.dev/155 for more details.
 func (c *ProjectsLocationsInterceptDeploymentsDeleteCall) RequestId(requestId string) *ProjectsLocationsInterceptDeploymentsDeleteCall {
 	c.urlParams_.Set("requestId", requestId)
 	return c
@@ -15803,9 +15953,11 @@ type ProjectsLocationsInterceptDeploymentsGetCall struct {
 	header_      http.Header
 }
 
-// Get: Gets details of a single InterceptDeployment.
+// Get: Gets a specific deployment. See https://google.aip.dev/131.
 //
-// - name: Name of the resource.
+//   - name: The name of the deployment to retrieve. Format:
+//     projects/{project}/locations/{location}/interceptDeployments/{intercept_dep
+//     loyment}.
 func (r *ProjectsLocationsInterceptDeploymentsService) Get(name string) *ProjectsLocationsInterceptDeploymentsGetCall {
 	c := &ProjectsLocationsInterceptDeploymentsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -15913,23 +16065,27 @@ type ProjectsLocationsInterceptDeploymentsListCall struct {
 	header_      http.Header
 }
 
-// List: Lists InterceptDeployments in a given project and location.
+// List: Lists deployments in a given project and location. See
+// https://google.aip.dev/132.
 //
-// - parent: Parent value for ListInterceptDeploymentsRequest.
+//   - parent: The parent, which owns this collection of deployments. Example:
+//     `projects/123456789/locations/us-central1-a`. See
+//     https://google.aip.dev/132 for more details.
 func (r *ProjectsLocationsInterceptDeploymentsService) List(parent string) *ProjectsLocationsInterceptDeploymentsListCall {
 	c := &ProjectsLocationsInterceptDeploymentsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
 	return c
 }
 
-// Filter sets the optional parameter "filter": Filtering results
+// Filter sets the optional parameter "filter": Filter expression. See
+// https://google.aip.dev/160#filtering for more details.
 func (c *ProjectsLocationsInterceptDeploymentsListCall) Filter(filter string) *ProjectsLocationsInterceptDeploymentsListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
 }
 
-// OrderBy sets the optional parameter "orderBy": Hint for how to order the
-// results
+// OrderBy sets the optional parameter "orderBy": Sort expression. See
+// https://google.aip.dev/132#ordering for more details.
 func (c *ProjectsLocationsInterceptDeploymentsListCall) OrderBy(orderBy string) *ProjectsLocationsInterceptDeploymentsListCall {
 	c.urlParams_.Set("orderBy", orderBy)
 	return c
@@ -15937,14 +16093,17 @@ func (c *ProjectsLocationsInterceptDeploymentsListCall) OrderBy(orderBy string) 
 
 // PageSize sets the optional parameter "pageSize": Requested page size. Server
 // may return fewer items than requested. If unspecified, server will pick an
-// appropriate default.
+// appropriate default. See https://google.aip.dev/158 for more details.
 func (c *ProjectsLocationsInterceptDeploymentsListCall) PageSize(pageSize int64) *ProjectsLocationsInterceptDeploymentsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": A token identifying a
-// page of results the server should return.
+// PageToken sets the optional parameter "pageToken": A page token, received
+// from a previous `ListInterceptDeployments` call. Provide this to retrieve
+// the subsequent page. When paginating, all other parameters provided to
+// `ListInterceptDeployments` must match the call that provided the page token.
+// See https://google.aip.dev/158 for more details.
 func (c *ProjectsLocationsInterceptDeploymentsListCall) PageToken(pageToken string) *ProjectsLocationsInterceptDeploymentsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
@@ -16072,9 +16231,12 @@ type ProjectsLocationsInterceptDeploymentsPatchCall struct {
 	header_             http.Header
 }
 
-// Patch: Updates a single InterceptDeployment.
+// Patch: Updates a deployment. See https://google.aip.dev/134.
 //
-// - name: Immutable. Identifier. The name of the InterceptDeployment.
+//   - name: Immutable. Identifier. The resource name of this deployment, for
+//     example:
+//     `projects/123456789/locations/us-central1-a/interceptDeployments/my-dep`.
+//     See https://google.aip.dev/122 for more details.
 func (r *ProjectsLocationsInterceptDeploymentsService) Patch(name string, interceptdeployment *InterceptDeployment) *ProjectsLocationsInterceptDeploymentsPatchCall {
 	c := &ProjectsLocationsInterceptDeploymentsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -16082,28 +16244,18 @@ func (r *ProjectsLocationsInterceptDeploymentsService) Patch(name string, interc
 	return c
 }
 
-// RequestId sets the optional parameter "requestId": An optional request ID to
-// identify requests. Specify a unique request ID so that if you must retry
-// your request, the server will know to ignore the request if it has already
-// been completed. The server will guarantee that for at least 60 minutes since
-// the first request. For example, consider a situation where you make an
-// initial request and the request times out. If you make the request again
-// with the same request ID, the server can check if original operation with
-// the same request ID was received, and if so, will ignore the second request.
-// This prevents clients from accidentally creating duplicate commitments. The
-// request ID must be a valid UUID with the exception that zero UUID is not
-// supported (00000000-0000-0000-0000-000000000000).
+// RequestId sets the optional parameter "requestId": A unique identifier for
+// this request. Must be a UUID4. This request is only idempotent if a
+// `request_id` is provided. See https://google.aip.dev/155 for more details.
 func (c *ProjectsLocationsInterceptDeploymentsPatchCall) RequestId(requestId string) *ProjectsLocationsInterceptDeploymentsPatchCall {
 	c.urlParams_.Set("requestId", requestId)
 	return c
 }
 
-// UpdateMask sets the optional parameter "updateMask": Required. Field mask is
-// used to specify the fields to be overwritten in the InterceptDeployment
-// resource by the update. The fields specified in the update_mask are relative
-// to the resource, not the full request. A field will be overwritten if it is
-// in the mask. If the user does not provide a mask then all fields will be
-// overwritten.
+// UpdateMask sets the optional parameter "updateMask": The list of fields to
+// update. Fields are specified relative to the deployment (e.g. `description`;
+// *not* `intercept_deployment.description`). See https://google.aip.dev/161
+// for more details.
 func (c *ProjectsLocationsInterceptDeploymentsPatchCall) UpdateMask(updateMask string) *ProjectsLocationsInterceptDeploymentsPatchCall {
 	c.urlParams_.Set("updateMask", updateMask)
 	return c
@@ -16202,10 +16354,11 @@ type ProjectsLocationsInterceptEndpointGroupAssociationsCreateCall struct {
 	header_                           http.Header
 }
 
-// Create: Creates a new InterceptEndpointGroupAssociation in a given project
-// and location.
+// Create: Creates an association in a given project and location. See
+// https://google.aip.dev/133.
 //
-// - parent: Value for parent.
+//   - parent: The parent resource where this association will be created.
+//     Format: projects/{project}/locations/{location}.
 func (r *ProjectsLocationsInterceptEndpointGroupAssociationsService) Create(parent string, interceptendpointgroupassociation *InterceptEndpointGroupAssociation) *ProjectsLocationsInterceptEndpointGroupAssociationsCreateCall {
 	c := &ProjectsLocationsInterceptEndpointGroupAssociationsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -16214,26 +16367,17 @@ func (r *ProjectsLocationsInterceptEndpointGroupAssociationsService) Create(pare
 }
 
 // InterceptEndpointGroupAssociationId sets the optional parameter
-// "interceptEndpointGroupAssociationId": Id of the requesting object If
-// auto-generating Id server-side, remove this field and
-// intercept_endpoint_group_association_id from the method_signature of Create
-// RPC
+// "interceptEndpointGroupAssociationId": The ID to use for the new
+// association, which will become the final component of the endpoint group's
+// resource name. If not provided, the server will generate a unique ID.
 func (c *ProjectsLocationsInterceptEndpointGroupAssociationsCreateCall) InterceptEndpointGroupAssociationId(interceptEndpointGroupAssociationId string) *ProjectsLocationsInterceptEndpointGroupAssociationsCreateCall {
 	c.urlParams_.Set("interceptEndpointGroupAssociationId", interceptEndpointGroupAssociationId)
 	return c
 }
 
-// RequestId sets the optional parameter "requestId": An optional request ID to
-// identify requests. Specify a unique request ID so that if you must retry
-// your request, the server will know to ignore the request if it has already
-// been completed. The server will guarantee that for at least 60 minutes since
-// the first request. For example, consider a situation where you make an
-// initial request and the request times out. If you make the request again
-// with the same request ID, the server can check if original operation with
-// the same request ID was received, and if so, will ignore the second request.
-// This prevents clients from accidentally creating duplicate commitments. The
-// request ID must be a valid UUID with the exception that zero UUID is not
-// supported (00000000-0000-0000-0000-000000000000).
+// RequestId sets the optional parameter "requestId": A unique identifier for
+// this request. Must be a UUID4. This request is only idempotent if a
+// `request_id` is provided. See https://google.aip.dev/155 for more details.
 func (c *ProjectsLocationsInterceptEndpointGroupAssociationsCreateCall) RequestId(requestId string) *ProjectsLocationsInterceptEndpointGroupAssociationsCreateCall {
 	c.urlParams_.Set("requestId", requestId)
 	return c
@@ -16331,26 +16475,18 @@ type ProjectsLocationsInterceptEndpointGroupAssociationsDeleteCall struct {
 	header_    http.Header
 }
 
-// Delete: Deletes a single InterceptEndpointGroupAssociation.
+// Delete: Deletes an association. See https://google.aip.dev/135.
 //
-// - name: Name of the resource.
+// - name: The association to delete.
 func (r *ProjectsLocationsInterceptEndpointGroupAssociationsService) Delete(name string) *ProjectsLocationsInterceptEndpointGroupAssociationsDeleteCall {
 	c := &ProjectsLocationsInterceptEndpointGroupAssociationsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
 	return c
 }
 
-// RequestId sets the optional parameter "requestId": An optional request ID to
-// identify requests. Specify a unique request ID so that if you must retry
-// your request, the server will know to ignore the request if it has already
-// been completed. The server will guarantee that for at least 60 minutes after
-// the first request. For example, consider a situation where you make an
-// initial request and the request times out. If you make the request again
-// with the same request ID, the server can check if original operation with
-// the same request ID was received, and if so, will ignore the second request.
-// This prevents clients from accidentally creating duplicate commitments. The
-// request ID must be a valid UUID with the exception that zero UUID is not
-// supported (00000000-0000-0000-0000-000000000000).
+// RequestId sets the optional parameter "requestId": A unique identifier for
+// this request. Must be a UUID4. This request is only idempotent if a
+// `request_id` is provided. See https://google.aip.dev/155 for more details.
 func (c *ProjectsLocationsInterceptEndpointGroupAssociationsDeleteCall) RequestId(requestId string) *ProjectsLocationsInterceptEndpointGroupAssociationsDeleteCall {
 	c.urlParams_.Set("requestId", requestId)
 	return c
@@ -16445,9 +16581,11 @@ type ProjectsLocationsInterceptEndpointGroupAssociationsGetCall struct {
 	header_      http.Header
 }
 
-// Get: Gets details of a single InterceptEndpointGroupAssociation.
+// Get: Gets a specific association. See https://google.aip.dev/131.
 //
-// - name: Name of the resource.
+//   - name: The name of the association to retrieve. Format:
+//     projects/{project}/locations/{location}/interceptEndpointGroupAssociations/
+//     {intercept_endpoint_group_association}.
 func (r *ProjectsLocationsInterceptEndpointGroupAssociationsService) Get(name string) *ProjectsLocationsInterceptEndpointGroupAssociationsGetCall {
 	c := &ProjectsLocationsInterceptEndpointGroupAssociationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -16555,24 +16693,27 @@ type ProjectsLocationsInterceptEndpointGroupAssociationsListCall struct {
 	header_      http.Header
 }
 
-// List: Lists InterceptEndpointGroupAssociations in a given project and
-// location.
+// List: Lists associations in a given project and location. See
+// https://google.aip.dev/132.
 //
-// - parent: Parent value for ListInterceptEndpointGroupAssociationsRequest.
+//   - parent: The parent, which owns this collection of associations. Example:
+//     `projects/123456789/locations/global`. See https://google.aip.dev/132 for
+//     more details.
 func (r *ProjectsLocationsInterceptEndpointGroupAssociationsService) List(parent string) *ProjectsLocationsInterceptEndpointGroupAssociationsListCall {
 	c := &ProjectsLocationsInterceptEndpointGroupAssociationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
 	return c
 }
 
-// Filter sets the optional parameter "filter": Filtering results
+// Filter sets the optional parameter "filter": Filter expression. See
+// https://google.aip.dev/160#filtering for more details.
 func (c *ProjectsLocationsInterceptEndpointGroupAssociationsListCall) Filter(filter string) *ProjectsLocationsInterceptEndpointGroupAssociationsListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
 }
 
-// OrderBy sets the optional parameter "orderBy": Hint for how to order the
-// results
+// OrderBy sets the optional parameter "orderBy": Sort expression. See
+// https://google.aip.dev/132#ordering for more details.
 func (c *ProjectsLocationsInterceptEndpointGroupAssociationsListCall) OrderBy(orderBy string) *ProjectsLocationsInterceptEndpointGroupAssociationsListCall {
 	c.urlParams_.Set("orderBy", orderBy)
 	return c
@@ -16580,14 +16721,17 @@ func (c *ProjectsLocationsInterceptEndpointGroupAssociationsListCall) OrderBy(or
 
 // PageSize sets the optional parameter "pageSize": Requested page size. Server
 // may return fewer items than requested. If unspecified, server will pick an
-// appropriate default.
+// appropriate default. See https://google.aip.dev/158 for more details.
 func (c *ProjectsLocationsInterceptEndpointGroupAssociationsListCall) PageSize(pageSize int64) *ProjectsLocationsInterceptEndpointGroupAssociationsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": A token identifying a
-// page of results the server should return.
+// PageToken sets the optional parameter "pageToken": A page token, received
+// from a previous `ListInterceptEndpointGroups` call. Provide this to retrieve
+// the subsequent page. When paginating, all other parameters provided to
+// `ListInterceptEndpointGroups` must match the call that provided the page
+// token. See https://google.aip.dev/158 for more details.
 func (c *ProjectsLocationsInterceptEndpointGroupAssociationsListCall) PageToken(pageToken string) *ProjectsLocationsInterceptEndpointGroupAssociationsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
@@ -16715,10 +16859,12 @@ type ProjectsLocationsInterceptEndpointGroupAssociationsPatchCall struct {
 	header_                           http.Header
 }
 
-// Patch: Updates a single InterceptEndpointGroupAssociation.
+// Patch: Updates an association. See https://google.aip.dev/134.
 //
-//   - name: Immutable. Identifier. The name of the
-//     InterceptEndpointGroupAssociation.
+//   - name: Immutable. Identifier. The resource name of this endpoint group
+//     association, for example:
+//     `projects/123456789/locations/global/interceptEndpointGroupAssociations/my-
+//     eg-association`. See https://google.aip.dev/122 for more details.
 func (r *ProjectsLocationsInterceptEndpointGroupAssociationsService) Patch(name string, interceptendpointgroupassociation *InterceptEndpointGroupAssociation) *ProjectsLocationsInterceptEndpointGroupAssociationsPatchCall {
 	c := &ProjectsLocationsInterceptEndpointGroupAssociationsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -16726,28 +16872,18 @@ func (r *ProjectsLocationsInterceptEndpointGroupAssociationsService) Patch(name 
 	return c
 }
 
-// RequestId sets the optional parameter "requestId": An optional request ID to
-// identify requests. Specify a unique request ID so that if you must retry
-// your request, the server will know to ignore the request if it has already
-// been completed. The server will guarantee that for at least 60 minutes since
-// the first request. For example, consider a situation where you make an
-// initial request and the request times out. If you make the request again
-// with the same request ID, the server can check if original operation with
-// the same request ID was received, and if so, will ignore the second request.
-// This prevents clients from accidentally creating duplicate commitments. The
-// request ID must be a valid UUID with the exception that zero UUID is not
-// supported (00000000-0000-0000-0000-000000000000).
+// RequestId sets the optional parameter "requestId": A unique identifier for
+// this request. Must be a UUID4. This request is only idempotent if a
+// `request_id` is provided. See https://google.aip.dev/155 for more details.
 func (c *ProjectsLocationsInterceptEndpointGroupAssociationsPatchCall) RequestId(requestId string) *ProjectsLocationsInterceptEndpointGroupAssociationsPatchCall {
 	c.urlParams_.Set("requestId", requestId)
 	return c
 }
 
-// UpdateMask sets the optional parameter "updateMask": Required. Field mask is
-// used to specify the fields to be overwritten in the
-// InterceptEndpointGroupAssociation resource by the update. The fields
-// specified in the update_mask are relative to the resource, not the full
-// request. A field will be overwritten if it is in the mask. If the user does
-// not provide a mask then all fields will be overwritten.
+// UpdateMask sets the optional parameter "updateMask": The list of fields to
+// update. Fields are specified relative to the association (e.g.
+// `description`; *not* `intercept_endpoint_group_association.description`).
+// See https://google.aip.dev/161 for more details.
 func (c *ProjectsLocationsInterceptEndpointGroupAssociationsPatchCall) UpdateMask(updateMask string) *ProjectsLocationsInterceptEndpointGroupAssociationsPatchCall {
 	c.urlParams_.Set("updateMask", updateMask)
 	return c
@@ -16846,10 +16982,11 @@ type ProjectsLocationsInterceptEndpointGroupsCreateCall struct {
 	header_                http.Header
 }
 
-// Create: Creates a new InterceptEndpointGroup in a given project and
-// location.
+// Create: Creates an endpoint group in a given project and location. See
+// https://google.aip.dev/133.
 //
-// - parent: Value for parent.
+//   - parent: The parent resource where this endpoint group will be created.
+//     Format: projects/{project}/locations/{location}.
 func (r *ProjectsLocationsInterceptEndpointGroupsService) Create(parent string, interceptendpointgroup *InterceptEndpointGroup) *ProjectsLocationsInterceptEndpointGroupsCreateCall {
 	c := &ProjectsLocationsInterceptEndpointGroupsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -16858,25 +16995,16 @@ func (r *ProjectsLocationsInterceptEndpointGroupsService) Create(parent string, 
 }
 
 // InterceptEndpointGroupId sets the optional parameter
-// "interceptEndpointGroupId": Required. Id of the requesting object If
-// auto-generating Id server-side, remove this field and
-// intercept_endpoint_group_id from the method_signature of Create RPC
+// "interceptEndpointGroupId": Required. The ID to use for the endpoint group,
+// which will become the final component of the endpoint group's resource name.
 func (c *ProjectsLocationsInterceptEndpointGroupsCreateCall) InterceptEndpointGroupId(interceptEndpointGroupId string) *ProjectsLocationsInterceptEndpointGroupsCreateCall {
 	c.urlParams_.Set("interceptEndpointGroupId", interceptEndpointGroupId)
 	return c
 }
 
-// RequestId sets the optional parameter "requestId": An optional request ID to
-// identify requests. Specify a unique request ID so that if you must retry
-// your request, the server will know to ignore the request if it has already
-// been completed. The server will guarantee that for at least 60 minutes since
-// the first request. For example, consider a situation where you make an
-// initial request and the request times out. If you make the request again
-// with the same request ID, the server can check if original operation with
-// the same request ID was received, and if so, will ignore the second request.
-// This prevents clients from accidentally creating duplicate commitments. The
-// request ID must be a valid UUID with the exception that zero UUID is not
-// supported (00000000-0000-0000-0000-000000000000).
+// RequestId sets the optional parameter "requestId": A unique identifier for
+// this request. Must be a UUID4. This request is only idempotent if a
+// `request_id` is provided. See https://google.aip.dev/155 for more details.
 func (c *ProjectsLocationsInterceptEndpointGroupsCreateCall) RequestId(requestId string) *ProjectsLocationsInterceptEndpointGroupsCreateCall {
 	c.urlParams_.Set("requestId", requestId)
 	return c
@@ -16974,26 +17102,18 @@ type ProjectsLocationsInterceptEndpointGroupsDeleteCall struct {
 	header_    http.Header
 }
 
-// Delete: Deletes a single InterceptEndpointGroup.
+// Delete: Deletes an endpoint group. See https://google.aip.dev/135.
 //
-// - name: Name of the resource.
+// - name: The endpoint group to delete.
 func (r *ProjectsLocationsInterceptEndpointGroupsService) Delete(name string) *ProjectsLocationsInterceptEndpointGroupsDeleteCall {
 	c := &ProjectsLocationsInterceptEndpointGroupsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
 	return c
 }
 
-// RequestId sets the optional parameter "requestId": An optional request ID to
-// identify requests. Specify a unique request ID so that if you must retry
-// your request, the server will know to ignore the request if it has already
-// been completed. The server will guarantee that for at least 60 minutes after
-// the first request. For example, consider a situation where you make an
-// initial request and the request times out. If you make the request again
-// with the same request ID, the server can check if original operation with
-// the same request ID was received, and if so, will ignore the second request.
-// This prevents clients from accidentally creating duplicate commitments. The
-// request ID must be a valid UUID with the exception that zero UUID is not
-// supported (00000000-0000-0000-0000-000000000000).
+// RequestId sets the optional parameter "requestId": A unique identifier for
+// this request. Must be a UUID4. This request is only idempotent if a
+// `request_id` is provided. See https://google.aip.dev/155 for more details.
 func (c *ProjectsLocationsInterceptEndpointGroupsDeleteCall) RequestId(requestId string) *ProjectsLocationsInterceptEndpointGroupsDeleteCall {
 	c.urlParams_.Set("requestId", requestId)
 	return c
@@ -17088,9 +17208,11 @@ type ProjectsLocationsInterceptEndpointGroupsGetCall struct {
 	header_      http.Header
 }
 
-// Get: Gets details of a single InterceptEndpointGroup.
+// Get: Gets a specific endpoint group. See https://google.aip.dev/131.
 //
-// - name: Name of the resource.
+//   - name: The name of the endpoint group to retrieve. Format:
+//     projects/{project}/locations/{location}/interceptEndpointGroups/{intercept_
+//     endpoint_group}.
 func (r *ProjectsLocationsInterceptEndpointGroupsService) Get(name string) *ProjectsLocationsInterceptEndpointGroupsGetCall {
 	c := &ProjectsLocationsInterceptEndpointGroupsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -17198,23 +17320,27 @@ type ProjectsLocationsInterceptEndpointGroupsListCall struct {
 	header_      http.Header
 }
 
-// List: Lists InterceptEndpointGroups in a given project and location.
+// List: Lists endpoint groups in a given project and location. See
+// https://google.aip.dev/132.
 //
-// - parent: Parent value for ListInterceptEndpointGroupsRequest.
+//   - parent: The parent, which owns this collection of endpoint groups.
+//     Example: `projects/123456789/locations/global`. See
+//     https://google.aip.dev/132 for more details.
 func (r *ProjectsLocationsInterceptEndpointGroupsService) List(parent string) *ProjectsLocationsInterceptEndpointGroupsListCall {
 	c := &ProjectsLocationsInterceptEndpointGroupsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
 	return c
 }
 
-// Filter sets the optional parameter "filter": Filtering results
+// Filter sets the optional parameter "filter": Filter expression. See
+// https://google.aip.dev/160#filtering for more details.
 func (c *ProjectsLocationsInterceptEndpointGroupsListCall) Filter(filter string) *ProjectsLocationsInterceptEndpointGroupsListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
 }
 
-// OrderBy sets the optional parameter "orderBy": Hint for how to order the
-// results
+// OrderBy sets the optional parameter "orderBy": Sort expression. See
+// https://google.aip.dev/132#ordering for more details.
 func (c *ProjectsLocationsInterceptEndpointGroupsListCall) OrderBy(orderBy string) *ProjectsLocationsInterceptEndpointGroupsListCall {
 	c.urlParams_.Set("orderBy", orderBy)
 	return c
@@ -17222,14 +17348,17 @@ func (c *ProjectsLocationsInterceptEndpointGroupsListCall) OrderBy(orderBy strin
 
 // PageSize sets the optional parameter "pageSize": Requested page size. Server
 // may return fewer items than requested. If unspecified, server will pick an
-// appropriate default.
+// appropriate default. See https://google.aip.dev/158 for more details.
 func (c *ProjectsLocationsInterceptEndpointGroupsListCall) PageSize(pageSize int64) *ProjectsLocationsInterceptEndpointGroupsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": A token identifying a
-// page of results the server should return.
+// PageToken sets the optional parameter "pageToken": A page token, received
+// from a previous `ListInterceptEndpointGroups` call. Provide this to retrieve
+// the subsequent page. When paginating, all other parameters provided to
+// `ListInterceptEndpointGroups` must match the call that provided the page
+// token. See https://google.aip.dev/158 for more details.
 func (c *ProjectsLocationsInterceptEndpointGroupsListCall) PageToken(pageToken string) *ProjectsLocationsInterceptEndpointGroupsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
@@ -17357,9 +17486,12 @@ type ProjectsLocationsInterceptEndpointGroupsPatchCall struct {
 	header_                http.Header
 }
 
-// Patch: Updates a single InterceptEndpointGroup.
+// Patch: Updates an endpoint group. See https://google.aip.dev/134.
 //
-// - name: Immutable. Identifier. The name of the InterceptEndpointGroup.
+//   - name: Immutable. Identifier. The resource name of this endpoint group, for
+//     example:
+//     `projects/123456789/locations/global/interceptEndpointGroups/my-eg`. See
+//     https://google.aip.dev/122 for more details.
 func (r *ProjectsLocationsInterceptEndpointGroupsService) Patch(name string, interceptendpointgroup *InterceptEndpointGroup) *ProjectsLocationsInterceptEndpointGroupsPatchCall {
 	c := &ProjectsLocationsInterceptEndpointGroupsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -17367,28 +17499,18 @@ func (r *ProjectsLocationsInterceptEndpointGroupsService) Patch(name string, int
 	return c
 }
 
-// RequestId sets the optional parameter "requestId": An optional request ID to
-// identify requests. Specify a unique request ID so that if you must retry
-// your request, the server will know to ignore the request if it has already
-// been completed. The server will guarantee that for at least 60 minutes since
-// the first request. For example, consider a situation where you make an
-// initial request and the request times out. If you make the request again
-// with the same request ID, the server can check if original operation with
-// the same request ID was received, and if so, will ignore the second request.
-// This prevents clients from accidentally creating duplicate commitments. The
-// request ID must be a valid UUID with the exception that zero UUID is not
-// supported (00000000-0000-0000-0000-000000000000).
+// RequestId sets the optional parameter "requestId": A unique identifier for
+// this request. Must be a UUID4. This request is only idempotent if a
+// `request_id` is provided. See https://google.aip.dev/155 for more details.
 func (c *ProjectsLocationsInterceptEndpointGroupsPatchCall) RequestId(requestId string) *ProjectsLocationsInterceptEndpointGroupsPatchCall {
 	c.urlParams_.Set("requestId", requestId)
 	return c
 }
 
-// UpdateMask sets the optional parameter "updateMask": Required. Field mask is
-// used to specify the fields to be overwritten in the InterceptEndpointGroup
-// resource by the update. The fields specified in the update_mask are relative
-// to the resource, not the full request. A field will be overwritten if it is
-// in the mask. If the user does not provide a mask then all fields will be
-// overwritten.
+// UpdateMask sets the optional parameter "updateMask": The list of fields to
+// update. Fields are specified relative to the endpoint group (e.g.
+// `description`; *not* `intercept_endpoint_group.description`). See
+// https://google.aip.dev/161 for more details.
 func (c *ProjectsLocationsInterceptEndpointGroupsPatchCall) UpdateMask(updateMask string) *ProjectsLocationsInterceptEndpointGroupsPatchCall {
 	c.urlParams_.Set("updateMask", updateMask)
 	return c
@@ -17487,10 +17609,11 @@ type ProjectsLocationsMirroringDeploymentGroupsCreateCall struct {
 	header_                  http.Header
 }
 
-// Create: Creates a new MirroringDeploymentGroup in a given project and
-// location.
+// Create: Creates a deployment group in a given project and location. See
+// https://google.aip.dev/133.
 //
-// - parent: Value for parent.
+//   - parent: The parent resource where this deployment group will be created.
+//     Format: projects/{project}/locations/{location}.
 func (r *ProjectsLocationsMirroringDeploymentGroupsService) Create(parent string, mirroringdeploymentgroup *MirroringDeploymentGroup) *ProjectsLocationsMirroringDeploymentGroupsCreateCall {
 	c := &ProjectsLocationsMirroringDeploymentGroupsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -17499,25 +17622,17 @@ func (r *ProjectsLocationsMirroringDeploymentGroupsService) Create(parent string
 }
 
 // MirroringDeploymentGroupId sets the optional parameter
-// "mirroringDeploymentGroupId": Required. Id of the requesting object If
-// auto-generating Id server-side, remove this field and
-// mirroring_deployment_group_id from the method_signature of Create RPC
+// "mirroringDeploymentGroupId": Required. The ID to use for the new deployment
+// group, which will become the final component of the deployment group's
+// resource name.
 func (c *ProjectsLocationsMirroringDeploymentGroupsCreateCall) MirroringDeploymentGroupId(mirroringDeploymentGroupId string) *ProjectsLocationsMirroringDeploymentGroupsCreateCall {
 	c.urlParams_.Set("mirroringDeploymentGroupId", mirroringDeploymentGroupId)
 	return c
 }
 
-// RequestId sets the optional parameter "requestId": An optional request ID to
-// identify requests. Specify a unique request ID so that if you must retry
-// your request, the server will know to ignore the request if it has already
-// been completed. The server will guarantee that for at least 60 minutes since
-// the first request. For example, consider a situation where you make an
-// initial request and the request times out. If you make the request again
-// with the same request ID, the server can check if original operation with
-// the same request ID was received, and if so, will ignore the second request.
-// This prevents clients from accidentally creating duplicate commitments. The
-// request ID must be a valid UUID with the exception that zero UUID is not
-// supported (00000000-0000-0000-0000-000000000000).
+// RequestId sets the optional parameter "requestId": A unique identifier for
+// this request. Must be a UUID4. This request is only idempotent if a
+// `request_id` is provided. See https://google.aip.dev/155 for more details.
 func (c *ProjectsLocationsMirroringDeploymentGroupsCreateCall) RequestId(requestId string) *ProjectsLocationsMirroringDeploymentGroupsCreateCall {
 	c.urlParams_.Set("requestId", requestId)
 	return c
@@ -17615,26 +17730,18 @@ type ProjectsLocationsMirroringDeploymentGroupsDeleteCall struct {
 	header_    http.Header
 }
 
-// Delete: Deletes a single MirroringDeploymentGroup.
+// Delete: Deletes a deployment group. See https://google.aip.dev/135.
 //
-// - name: Name of the resource.
+// - name: The deployment group to delete.
 func (r *ProjectsLocationsMirroringDeploymentGroupsService) Delete(name string) *ProjectsLocationsMirroringDeploymentGroupsDeleteCall {
 	c := &ProjectsLocationsMirroringDeploymentGroupsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
 	return c
 }
 
-// RequestId sets the optional parameter "requestId": An optional request ID to
-// identify requests. Specify a unique request ID so that if you must retry
-// your request, the server will know to ignore the request if it has already
-// been completed. The server will guarantee that for at least 60 minutes after
-// the first request. For example, consider a situation where you make an
-// initial request and the request times out. If you make the request again
-// with the same request ID, the server can check if original operation with
-// the same request ID was received, and if so, will ignore the second request.
-// This prevents clients from accidentally creating duplicate commitments. The
-// request ID must be a valid UUID with the exception that zero UUID is not
-// supported (00000000-0000-0000-0000-000000000000).
+// RequestId sets the optional parameter "requestId": A unique identifier for
+// this request. Must be a UUID4. This request is only idempotent if a
+// `request_id` is provided. See https://google.aip.dev/155 for more details.
 func (c *ProjectsLocationsMirroringDeploymentGroupsDeleteCall) RequestId(requestId string) *ProjectsLocationsMirroringDeploymentGroupsDeleteCall {
 	c.urlParams_.Set("requestId", requestId)
 	return c
@@ -17729,9 +17836,11 @@ type ProjectsLocationsMirroringDeploymentGroupsGetCall struct {
 	header_      http.Header
 }
 
-// Get: Gets details of a single MirroringDeploymentGroup.
+// Get: Gets a specific deployment group. See https://google.aip.dev/131.
 //
-// - name: Name of the resource.
+//   - name: The name of the deployment group to retrieve. Format:
+//     projects/{project}/locations/{location}/mirroringDeploymentGroups/{mirrorin
+//     g_deployment_group}.
 func (r *ProjectsLocationsMirroringDeploymentGroupsService) Get(name string) *ProjectsLocationsMirroringDeploymentGroupsGetCall {
 	c := &ProjectsLocationsMirroringDeploymentGroupsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -17839,23 +17948,27 @@ type ProjectsLocationsMirroringDeploymentGroupsListCall struct {
 	header_      http.Header
 }
 
-// List: Lists MirroringDeploymentGroups in a given project and location.
+// List: Lists deployment groups in a given project and location. See
+// https://google.aip.dev/132.
 //
-// - parent: Parent value for ListMirroringDeploymentGroupsRequest.
+//   - parent: The parent, which owns this collection of deployment groups.
+//     Example: `projects/123456789/locations/global`. See
+//     https://google.aip.dev/132 for more details.
 func (r *ProjectsLocationsMirroringDeploymentGroupsService) List(parent string) *ProjectsLocationsMirroringDeploymentGroupsListCall {
 	c := &ProjectsLocationsMirroringDeploymentGroupsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
 	return c
 }
 
-// Filter sets the optional parameter "filter": Filtering results
+// Filter sets the optional parameter "filter": Filter expression. See
+// https://google.aip.dev/160#filtering for more details.
 func (c *ProjectsLocationsMirroringDeploymentGroupsListCall) Filter(filter string) *ProjectsLocationsMirroringDeploymentGroupsListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
 }
 
-// OrderBy sets the optional parameter "orderBy": Hint for how to order the
-// results
+// OrderBy sets the optional parameter "orderBy": Sort expression. See
+// https://google.aip.dev/132#ordering for more details.
 func (c *ProjectsLocationsMirroringDeploymentGroupsListCall) OrderBy(orderBy string) *ProjectsLocationsMirroringDeploymentGroupsListCall {
 	c.urlParams_.Set("orderBy", orderBy)
 	return c
@@ -17863,14 +17976,17 @@ func (c *ProjectsLocationsMirroringDeploymentGroupsListCall) OrderBy(orderBy str
 
 // PageSize sets the optional parameter "pageSize": Requested page size. Server
 // may return fewer items than requested. If unspecified, server will pick an
-// appropriate default.
+// appropriate default. See https://google.aip.dev/158 for more details.
 func (c *ProjectsLocationsMirroringDeploymentGroupsListCall) PageSize(pageSize int64) *ProjectsLocationsMirroringDeploymentGroupsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": A token identifying a
-// page of results the server should return.
+// PageToken sets the optional parameter "pageToken": A page token, received
+// from a previous `ListMirroringDeploymentGroups` call. Provide this to
+// retrieve the subsequent page. When paginating, all other parameters provided
+// to `ListMirroringDeploymentGroups` must match the call that provided the
+// page token. See https://google.aip.dev/158 for more details.
 func (c *ProjectsLocationsMirroringDeploymentGroupsListCall) PageToken(pageToken string) *ProjectsLocationsMirroringDeploymentGroupsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
@@ -17998,7 +18114,7 @@ type ProjectsLocationsMirroringDeploymentGroupsPatchCall struct {
 	header_                  http.Header
 }
 
-// Patch: Updates a single MirroringDeploymentGroup.
+// Patch: Updates a deployment group. See https://google.aip.dev/134.
 //
 //   - name: Immutable. Identifier. The resource name of this deployment group,
 //     for example:
@@ -18011,28 +18127,18 @@ func (r *ProjectsLocationsMirroringDeploymentGroupsService) Patch(name string, m
 	return c
 }
 
-// RequestId sets the optional parameter "requestId": An optional request ID to
-// identify requests. Specify a unique request ID so that if you must retry
-// your request, the server will know to ignore the request if it has already
-// been completed. The server will guarantee that for at least 60 minutes since
-// the first request. For example, consider a situation where you make an
-// initial request and the request times out. If you make the request again
-// with the same request ID, the server can check if original operation with
-// the same request ID was received, and if so, will ignore the second request.
-// This prevents clients from accidentally creating duplicate commitments. The
-// request ID must be a valid UUID with the exception that zero UUID is not
-// supported (00000000-0000-0000-0000-000000000000).
+// RequestId sets the optional parameter "requestId": A unique identifier for
+// this request. Must be a UUID4. This request is only idempotent if a
+// `request_id` is provided. See https://google.aip.dev/155 for more details.
 func (c *ProjectsLocationsMirroringDeploymentGroupsPatchCall) RequestId(requestId string) *ProjectsLocationsMirroringDeploymentGroupsPatchCall {
 	c.urlParams_.Set("requestId", requestId)
 	return c
 }
 
-// UpdateMask sets the optional parameter "updateMask": Required. Field mask is
-// used to specify the fields to be overwritten in the MirroringDeploymentGroup
-// resource by the update. The fields specified in the update_mask are relative
-// to the resource, not the full request. A field will be overwritten if it is
-// in the mask. If the user does not provide a mask then all fields will be
-// overwritten.
+// UpdateMask sets the optional parameter "updateMask": The list of fields to
+// update. Fields are specified relative to the deployment group (e.g.
+// `description`; *not* `mirroring_deployment_group.description`). See
+// https://google.aip.dev/161 for more details.
 func (c *ProjectsLocationsMirroringDeploymentGroupsPatchCall) UpdateMask(updateMask string) *ProjectsLocationsMirroringDeploymentGroupsPatchCall {
 	c.urlParams_.Set("updateMask", updateMask)
 	return c
@@ -18134,7 +18240,8 @@ type ProjectsLocationsMirroringDeploymentsCreateCall struct {
 // Create: Creates a deployment in a given project and location. See
 // https://google.aip.dev/133.
 //
-// - parent: Value for parent.
+//   - parent: The parent resource where this deployment will be created. Format:
+//     projects/{project}/locations/{location}.
 func (r *ProjectsLocationsMirroringDeploymentsService) Create(parent string, mirroringdeployment *MirroringDeployment) *ProjectsLocationsMirroringDeploymentsCreateCall {
 	c := &ProjectsLocationsMirroringDeploymentsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -18143,25 +18250,16 @@ func (r *ProjectsLocationsMirroringDeploymentsService) Create(parent string, mir
 }
 
 // MirroringDeploymentId sets the optional parameter "mirroringDeploymentId":
-// Required. Id of the requesting object If auto-generating Id server-side,
-// remove this field and mirroring_deployment_id from the method_signature of
-// Create RPC
+// Required. The ID to use for the new deployment, which will become the final
+// component of the deployment's resource name.
 func (c *ProjectsLocationsMirroringDeploymentsCreateCall) MirroringDeploymentId(mirroringDeploymentId string) *ProjectsLocationsMirroringDeploymentsCreateCall {
 	c.urlParams_.Set("mirroringDeploymentId", mirroringDeploymentId)
 	return c
 }
 
-// RequestId sets the optional parameter "requestId": An optional request ID to
-// identify requests. Specify a unique request ID so that if you must retry
-// your request, the server will know to ignore the request if it has already
-// been completed. The server will guarantee that for at least 60 minutes since
-// the first request. For example, consider a situation where you make an
-// initial request and the request times out. If you make the request again
-// with the same request ID, the server can check if original operation with
-// the same request ID was received, and if so, will ignore the second request.
-// This prevents clients from accidentally creating duplicate commitments. The
-// request ID must be a valid UUID with the exception that zero UUID is not
-// supported (00000000-0000-0000-0000-000000000000).
+// RequestId sets the optional parameter "requestId": A unique identifier for
+// this request. Must be a UUID4. This request is only idempotent if a
+// `request_id` is provided. See https://google.aip.dev/155 for more details.
 func (c *ProjectsLocationsMirroringDeploymentsCreateCall) RequestId(requestId string) *ProjectsLocationsMirroringDeploymentsCreateCall {
 	c.urlParams_.Set("requestId", requestId)
 	return c
@@ -18268,17 +18366,9 @@ func (r *ProjectsLocationsMirroringDeploymentsService) Delete(name string) *Proj
 	return c
 }
 
-// RequestId sets the optional parameter "requestId": An optional request ID to
-// identify requests. Specify a unique request ID so that if you must retry
-// your request, the server will know to ignore the request if it has already
-// been completed. The server will guarantee that for at least 60 minutes after
-// the first request. For example, consider a situation where you make an
-// initial request and the request times out. If you make the request again
-// with the same request ID, the server can check if original operation with
-// the same request ID was received, and if so, will ignore the second request.
-// This prevents clients from accidentally creating duplicate commitments. The
-// request ID must be a valid UUID with the exception that zero UUID is not
-// supported (00000000-0000-0000-0000-000000000000).
+// RequestId sets the optional parameter "requestId": A unique identifier for
+// this request. Must be a UUID4. This request is only idempotent if a
+// `request_id` is provided. See https://google.aip.dev/155 for more details.
 func (c *ProjectsLocationsMirroringDeploymentsDeleteCall) RequestId(requestId string) *ProjectsLocationsMirroringDeploymentsDeleteCall {
 	c.urlParams_.Set("requestId", requestId)
 	return c
@@ -18375,7 +18465,9 @@ type ProjectsLocationsMirroringDeploymentsGetCall struct {
 
 // Get: Gets a specific deployment. See https://google.aip.dev/131.
 //
-// - name: Name of the resource.
+//   - name: The name of the deployment to retrieve. Format:
+//     projects/{project}/locations/{location}/mirroringDeployments/{mirroring_dep
+//     loyment}.
 func (r *ProjectsLocationsMirroringDeploymentsService) Get(name string) *ProjectsLocationsMirroringDeploymentsGetCall {
 	c := &ProjectsLocationsMirroringDeploymentsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -18486,21 +18578,24 @@ type ProjectsLocationsMirroringDeploymentsListCall struct {
 // List: Lists deployments in a given project and location. See
 // https://google.aip.dev/132.
 //
-// - parent: Parent value for ListMirroringDeploymentsRequest.
+//   - parent: The parent, which owns this collection of deployments. Example:
+//     `projects/123456789/locations/us-central1-a`. See
+//     https://google.aip.dev/132 for more details.
 func (r *ProjectsLocationsMirroringDeploymentsService) List(parent string) *ProjectsLocationsMirroringDeploymentsListCall {
 	c := &ProjectsLocationsMirroringDeploymentsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
 	return c
 }
 
-// Filter sets the optional parameter "filter": Filtering results
+// Filter sets the optional parameter "filter": Filter expression. See
+// https://google.aip.dev/160#filtering for more details.
 func (c *ProjectsLocationsMirroringDeploymentsListCall) Filter(filter string) *ProjectsLocationsMirroringDeploymentsListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
 }
 
-// OrderBy sets the optional parameter "orderBy": Hint for how to order the
-// results
+// OrderBy sets the optional parameter "orderBy": Sort expression. See
+// https://google.aip.dev/132#ordering for more details.
 func (c *ProjectsLocationsMirroringDeploymentsListCall) OrderBy(orderBy string) *ProjectsLocationsMirroringDeploymentsListCall {
 	c.urlParams_.Set("orderBy", orderBy)
 	return c
@@ -18508,14 +18603,17 @@ func (c *ProjectsLocationsMirroringDeploymentsListCall) OrderBy(orderBy string) 
 
 // PageSize sets the optional parameter "pageSize": Requested page size. Server
 // may return fewer items than requested. If unspecified, server will pick an
-// appropriate default.
+// appropriate default. See https://google.aip.dev/158 for more details.
 func (c *ProjectsLocationsMirroringDeploymentsListCall) PageSize(pageSize int64) *ProjectsLocationsMirroringDeploymentsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": A token identifying a
-// page of results the server should return.
+// PageToken sets the optional parameter "pageToken": A page token, received
+// from a previous `ListMirroringDeployments` call. Provide this to retrieve
+// the subsequent page. When paginating, all other parameters provided to
+// `ListMirroringDeployments` must match the call that provided the page token.
+// See https://google.aip.dev/158 for more details.
 func (c *ProjectsLocationsMirroringDeploymentsListCall) PageToken(pageToken string) *ProjectsLocationsMirroringDeploymentsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
@@ -18656,28 +18754,18 @@ func (r *ProjectsLocationsMirroringDeploymentsService) Patch(name string, mirror
 	return c
 }
 
-// RequestId sets the optional parameter "requestId": An optional request ID to
-// identify requests. Specify a unique request ID so that if you must retry
-// your request, the server will know to ignore the request if it has already
-// been completed. The server will guarantee that for at least 60 minutes since
-// the first request. For example, consider a situation where you make an
-// initial request and the request times out. If you make the request again
-// with the same request ID, the server can check if original operation with
-// the same request ID was received, and if so, will ignore the second request.
-// This prevents clients from accidentally creating duplicate commitments. The
-// request ID must be a valid UUID with the exception that zero UUID is not
-// supported (00000000-0000-0000-0000-000000000000).
+// RequestId sets the optional parameter "requestId": A unique identifier for
+// this request. Must be a UUID4. This request is only idempotent if a
+// `request_id` is provided. See https://google.aip.dev/155 for more details.
 func (c *ProjectsLocationsMirroringDeploymentsPatchCall) RequestId(requestId string) *ProjectsLocationsMirroringDeploymentsPatchCall {
 	c.urlParams_.Set("requestId", requestId)
 	return c
 }
 
-// UpdateMask sets the optional parameter "updateMask": Required. Field mask is
-// used to specify the fields to be overwritten in the MirroringDeployment
-// resource by the update. The fields specified in the update_mask are relative
-// to the resource, not the full request. A field will be overwritten if it is
-// in the mask. If the user does not provide a mask then all fields will be
-// overwritten.
+// UpdateMask sets the optional parameter "updateMask": The list of fields to
+// update. Fields are specified relative to the deployment (e.g. `description`;
+// *not* `mirroring_deployment.description`). See https://google.aip.dev/161
+// for more details.
 func (c *ProjectsLocationsMirroringDeploymentsPatchCall) UpdateMask(updateMask string) *ProjectsLocationsMirroringDeploymentsPatchCall {
 	c.urlParams_.Set("updateMask", updateMask)
 	return c
@@ -18779,8 +18867,8 @@ type ProjectsLocationsMirroringEndpointGroupAssociationsCreateCall struct {
 // Create: Creates an association in a given project and location. See
 // https://google.aip.dev/133.
 //
-//   - parent: Container (project and location) where the association will be
-//     created, e.g. `projects/123456789/locations/global`.
+//   - parent: The parent resource where this association will be created.
+//     Format: projects/{project}/locations/{location}.
 func (r *ProjectsLocationsMirroringEndpointGroupAssociationsService) Create(parent string, mirroringendpointgroupassociation *MirroringEndpointGroupAssociation) *ProjectsLocationsMirroringEndpointGroupAssociationsCreateCall {
 	c := &ProjectsLocationsMirroringEndpointGroupAssociationsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -18789,29 +18877,17 @@ func (r *ProjectsLocationsMirroringEndpointGroupAssociationsService) Create(pare
 }
 
 // MirroringEndpointGroupAssociationId sets the optional parameter
-// "mirroringEndpointGroupAssociationId": ID for the new association. If not
-// provided, the server will generate a unique ID. The ID must be a valid RFC
-// 1035 resource name. The ID must be 1-63 characters long and match the
-// regular expression `[a-z]([-a-z0-9]*[a-z0-9])?`. The first character must be
-// a lowercase letter, and all following characters (except for the last
-// character) must be a dash, lowercase letter, or digit. The last character
-// must be a
+// "mirroringEndpointGroupAssociationId": The ID to use for the new
+// association, which will become the final component of the endpoint group's
+// resource name. If not provided, the server will generate a unique ID.
 func (c *ProjectsLocationsMirroringEndpointGroupAssociationsCreateCall) MirroringEndpointGroupAssociationId(mirroringEndpointGroupAssociationId string) *ProjectsLocationsMirroringEndpointGroupAssociationsCreateCall {
 	c.urlParams_.Set("mirroringEndpointGroupAssociationId", mirroringEndpointGroupAssociationId)
 	return c
 }
 
-// RequestId sets the optional parameter "requestId": An optional request ID to
-// identify requests. Specify a unique request ID so that if you must retry
-// your request, the server will know to ignore the request if it has already
-// been completed. The server will guarantee that for at least 60 minutes since
-// the first request. For example, consider a situation where you make an
-// initial request and the request times out. If you make the request again
-// with the same request ID, the server can check if original operation with
-// the same request ID was received, and if so, will ignore the second request.
-// This prevents clients from accidentally creating duplicate commitments. The
-// request ID must be a valid UUID with the exception that zero UUID is not
-// supported (00000000-0000-0000-0000-000000000000).
+// RequestId sets the optional parameter "requestId": A unique identifier for
+// this request. Must be a UUID4. This request is only idempotent if a
+// `request_id` is provided. See https://google.aip.dev/155 for more details.
 func (c *ProjectsLocationsMirroringEndpointGroupAssociationsCreateCall) RequestId(requestId string) *ProjectsLocationsMirroringEndpointGroupAssociationsCreateCall {
 	c.urlParams_.Set("requestId", requestId)
 	return c
@@ -18909,28 +18985,18 @@ type ProjectsLocationsMirroringEndpointGroupAssociationsDeleteCall struct {
 	header_    http.Header
 }
 
-// Delete: Deletes a single association. See https://google.aip.dev/135.
+// Delete: Deletes an association. See https://google.aip.dev/135.
 //
-//   - name: Full resource name of the association to delete, e.g.
-//     projects/123456789/locations/global/mirroringEndpointGroupAssociations/my-e
-//     g-association.
+// - name: The association to delete.
 func (r *ProjectsLocationsMirroringEndpointGroupAssociationsService) Delete(name string) *ProjectsLocationsMirroringEndpointGroupAssociationsDeleteCall {
 	c := &ProjectsLocationsMirroringEndpointGroupAssociationsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
 	return c
 }
 
-// RequestId sets the optional parameter "requestId": An optional request ID to
-// identify requests. Specify a unique request ID so that if you must retry
-// your request, the server will know to ignore the request if it has already
-// been completed. The server will guarantee that for at least 60 minutes after
-// the first request. For example, consider a situation where you make an
-// initial request and the request times out. If you make the request again
-// with the same request ID, the server can check if original operation with
-// the same request ID was received, and if so, will ignore the second request.
-// This prevents clients from accidentally creating duplicate commitments. The
-// request ID must be a valid UUID with the exception that zero UUID is not
-// supported (00000000-0000-0000-0000-000000000000).
+// RequestId sets the optional parameter "requestId": A unique identifier for
+// this request. Must be a UUID4. This request is only idempotent if a
+// `request_id` is provided. See https://google.aip.dev/155 for more details.
 func (c *ProjectsLocationsMirroringEndpointGroupAssociationsDeleteCall) RequestId(requestId string) *ProjectsLocationsMirroringEndpointGroupAssociationsDeleteCall {
 	c.urlParams_.Set("requestId", requestId)
 	return c
@@ -19027,9 +19093,9 @@ type ProjectsLocationsMirroringEndpointGroupAssociationsGetCall struct {
 
 // Get: Gets a specific association. See https://google.aip.dev/131.
 //
-//   - name: Full resource name of the association to get, e.g.
-//     projects/123456789/locations/global/mirroringEndpointGroupAssociations/my-e
-//     g-association.
+//   - name: The name of the association to retrieve. Format:
+//     projects/{project}/locations/{location}/mirroringEndpointGroupAssociations/
+//     {mirroring_endpoint_group_association}.
 func (r *ProjectsLocationsMirroringEndpointGroupAssociationsService) Get(name string) *ProjectsLocationsMirroringEndpointGroupAssociationsGetCall {
 	c := &ProjectsLocationsMirroringEndpointGroupAssociationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -19140,23 +19206,24 @@ type ProjectsLocationsMirroringEndpointGroupAssociationsListCall struct {
 // List: Lists associations in a given project and location. See
 // https://google.aip.dev/132.
 //
-//   - parent: Parent container (project and location) of the associations to
-//     list, e.g. `projects/123456789/locations/global`.
+//   - parent: The parent, which owns this collection of associations. Example:
+//     `projects/123456789/locations/global`. See https://google.aip.dev/132 for
+//     more details.
 func (r *ProjectsLocationsMirroringEndpointGroupAssociationsService) List(parent string) *ProjectsLocationsMirroringEndpointGroupAssociationsListCall {
 	c := &ProjectsLocationsMirroringEndpointGroupAssociationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
 	return c
 }
 
-// Filter sets the optional parameter "filter": A filter expression that
-// filters the results listed in the response. See https://google.aip.dev/160.
+// Filter sets the optional parameter "filter": Filter expression. See
+// https://google.aip.dev/160#filtering for more details.
 func (c *ProjectsLocationsMirroringEndpointGroupAssociationsListCall) Filter(filter string) *ProjectsLocationsMirroringEndpointGroupAssociationsListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
 }
 
-// OrderBy sets the optional parameter "orderBy": Hint for how to order the
-// results
+// OrderBy sets the optional parameter "orderBy": Sort expression. See
+// https://google.aip.dev/132#ordering for more details.
 func (c *ProjectsLocationsMirroringEndpointGroupAssociationsListCall) OrderBy(orderBy string) *ProjectsLocationsMirroringEndpointGroupAssociationsListCall {
 	c.urlParams_.Set("orderBy", orderBy)
 	return c
@@ -19164,14 +19231,17 @@ func (c *ProjectsLocationsMirroringEndpointGroupAssociationsListCall) OrderBy(or
 
 // PageSize sets the optional parameter "pageSize": Requested page size. Server
 // may return fewer items than requested. If unspecified, server will pick an
-// appropriate default. See https://google.aip.dev/158.
+// appropriate default. See https://google.aip.dev/158 for more details.
 func (c *ProjectsLocationsMirroringEndpointGroupAssociationsListCall) PageSize(pageSize int64) *ProjectsLocationsMirroringEndpointGroupAssociationsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": A token identifying a
-// page of results the server should return. See https://google.aip.dev/158.
+// PageToken sets the optional parameter "pageToken": A page token, received
+// from a previous `ListMirroringEndpointGroups` call. Provide this to retrieve
+// the subsequent page. When paginating, all other parameters provided to
+// `ListMirroringEndpointGroups` must match the call that provided the page
+// token. See https://google.aip.dev/158 for more details.
 func (c *ProjectsLocationsMirroringEndpointGroupAssociationsListCall) PageToken(pageToken string) *ProjectsLocationsMirroringEndpointGroupAssociationsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
@@ -19312,25 +19382,18 @@ func (r *ProjectsLocationsMirroringEndpointGroupAssociationsService) Patch(name 
 	return c
 }
 
-// RequestId sets the optional parameter "requestId": An optional request ID to
-// identify requests. Specify a unique request ID so that if you must retry
-// your request, the server will know to ignore the request if it has already
-// been completed. The server will guarantee that for at least 60 minutes since
-// the first request. For example, consider a situation where you make an
-// initial request and the request times out. If you make the request again
-// with the same request ID, the server can check if original operation with
-// the same request ID was received, and if so, will ignore the second request.
-// This prevents clients from accidentally creating duplicate commitments. The
-// request ID must be a valid UUID with the exception that zero UUID is not
-// supported (00000000-0000-0000-0000-000000000000).
+// RequestId sets the optional parameter "requestId": A unique identifier for
+// this request. Must be a UUID4. This request is only idempotent if a
+// `request_id` is provided. See https://google.aip.dev/155 for more details.
 func (c *ProjectsLocationsMirroringEndpointGroupAssociationsPatchCall) RequestId(requestId string) *ProjectsLocationsMirroringEndpointGroupAssociationsPatchCall {
 	c.urlParams_.Set("requestId", requestId)
 	return c
 }
 
-// UpdateMask sets the optional parameter "updateMask": Field mask is used to
-// specify the fields to be overwritten in the association by the update. See
-// https://google.aip.dev/161.
+// UpdateMask sets the optional parameter "updateMask": The list of fields to
+// update. Fields are specified relative to the association (e.g.
+// `description`; *not* `mirroring_endpoint_group_association.description`).
+// See https://google.aip.dev/161 for more details.
 func (c *ProjectsLocationsMirroringEndpointGroupAssociationsPatchCall) UpdateMask(updateMask string) *ProjectsLocationsMirroringEndpointGroupAssociationsPatchCall {
 	c.urlParams_.Set("updateMask", updateMask)
 	return c
@@ -19432,7 +19495,8 @@ type ProjectsLocationsMirroringEndpointGroupsCreateCall struct {
 // Create: Creates an endpoint group in a given project and location. See
 // https://google.aip.dev/133.
 //
-// - parent: Value for parent.
+//   - parent: The parent resource where this endpoint group will be created.
+//     Format: projects/{project}/locations/{location}.
 func (r *ProjectsLocationsMirroringEndpointGroupsService) Create(parent string, mirroringendpointgroup *MirroringEndpointGroup) *ProjectsLocationsMirroringEndpointGroupsCreateCall {
 	c := &ProjectsLocationsMirroringEndpointGroupsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -19441,25 +19505,16 @@ func (r *ProjectsLocationsMirroringEndpointGroupsService) Create(parent string, 
 }
 
 // MirroringEndpointGroupId sets the optional parameter
-// "mirroringEndpointGroupId": Required. Id of the requesting object If
-// auto-generating Id server-side, remove this field and
-// mirroring_endpoint_group_id from the method_signature of Create RPC
+// "mirroringEndpointGroupId": Required. The ID to use for the endpoint group,
+// which will become the final component of the endpoint group's resource name.
 func (c *ProjectsLocationsMirroringEndpointGroupsCreateCall) MirroringEndpointGroupId(mirroringEndpointGroupId string) *ProjectsLocationsMirroringEndpointGroupsCreateCall {
 	c.urlParams_.Set("mirroringEndpointGroupId", mirroringEndpointGroupId)
 	return c
 }
 
-// RequestId sets the optional parameter "requestId": An optional request ID to
-// identify requests. Specify a unique request ID so that if you must retry
-// your request, the server will know to ignore the request if it has already
-// been completed. The server will guarantee that for at least 60 minutes since
-// the first request. For example, consider a situation where you make an
-// initial request and the request times out. If you make the request again
-// with the same request ID, the server can check if original operation with
-// the same request ID was received, and if so, will ignore the second request.
-// This prevents clients from accidentally creating duplicate commitments. The
-// request ID must be a valid UUID with the exception that zero UUID is not
-// supported (00000000-0000-0000-0000-000000000000).
+// RequestId sets the optional parameter "requestId": A unique identifier for
+// this request. Must be a UUID4. This request is only idempotent if a
+// `request_id` is provided. See https://google.aip.dev/155 for more details.
 func (c *ProjectsLocationsMirroringEndpointGroupsCreateCall) RequestId(requestId string) *ProjectsLocationsMirroringEndpointGroupsCreateCall {
 	c.urlParams_.Set("requestId", requestId)
 	return c
@@ -19559,24 +19614,16 @@ type ProjectsLocationsMirroringEndpointGroupsDeleteCall struct {
 
 // Delete: Deletes an endpoint group. See https://google.aip.dev/135.
 //
-// - name: Name of the resource.
+// - name: The endpoint group to delete.
 func (r *ProjectsLocationsMirroringEndpointGroupsService) Delete(name string) *ProjectsLocationsMirroringEndpointGroupsDeleteCall {
 	c := &ProjectsLocationsMirroringEndpointGroupsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
 	return c
 }
 
-// RequestId sets the optional parameter "requestId": An optional request ID to
-// identify requests. Specify a unique request ID so that if you must retry
-// your request, the server will know to ignore the request if it has already
-// been completed. The server will guarantee that for at least 60 minutes after
-// the first request. For example, consider a situation where you make an
-// initial request and the request times out. If you make the request again
-// with the same request ID, the server can check if original operation with
-// the same request ID was received, and if so, will ignore the second request.
-// This prevents clients from accidentally creating duplicate commitments. The
-// request ID must be a valid UUID with the exception that zero UUID is not
-// supported (00000000-0000-0000-0000-000000000000).
+// RequestId sets the optional parameter "requestId": A unique identifier for
+// this request. Must be a UUID4. This request is only idempotent if a
+// `request_id` is provided. See https://google.aip.dev/155 for more details.
 func (c *ProjectsLocationsMirroringEndpointGroupsDeleteCall) RequestId(requestId string) *ProjectsLocationsMirroringEndpointGroupsDeleteCall {
 	c.urlParams_.Set("requestId", requestId)
 	return c
@@ -19673,7 +19720,9 @@ type ProjectsLocationsMirroringEndpointGroupsGetCall struct {
 
 // Get: Gets a specific endpoint group. See https://google.aip.dev/131.
 //
-// - name: Name of the resource.
+//   - name: The name of the endpoint group to retrieve. Format:
+//     projects/{project}/locations/{location}/mirroringEndpointGroups/{mirroring_
+//     endpoint_group}.
 func (r *ProjectsLocationsMirroringEndpointGroupsService) Get(name string) *ProjectsLocationsMirroringEndpointGroupsGetCall {
 	c := &ProjectsLocationsMirroringEndpointGroupsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -19784,21 +19833,24 @@ type ProjectsLocationsMirroringEndpointGroupsListCall struct {
 // List: Lists endpoint groups in a given project and location. See
 // https://google.aip.dev/132.
 //
-// - parent: Parent value for ListMirroringEndpointGroupsRequest.
+//   - parent: The parent, which owns this collection of endpoint groups.
+//     Example: `projects/123456789/locations/global`. See
+//     https://google.aip.dev/132 for more details.
 func (r *ProjectsLocationsMirroringEndpointGroupsService) List(parent string) *ProjectsLocationsMirroringEndpointGroupsListCall {
 	c := &ProjectsLocationsMirroringEndpointGroupsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
 	return c
 }
 
-// Filter sets the optional parameter "filter": Filtering results
+// Filter sets the optional parameter "filter": Filter expression. See
+// https://google.aip.dev/160#filtering for more details.
 func (c *ProjectsLocationsMirroringEndpointGroupsListCall) Filter(filter string) *ProjectsLocationsMirroringEndpointGroupsListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
 }
 
-// OrderBy sets the optional parameter "orderBy": Hint for how to order the
-// results
+// OrderBy sets the optional parameter "orderBy": Sort expression. See
+// https://google.aip.dev/132#ordering for more details.
 func (c *ProjectsLocationsMirroringEndpointGroupsListCall) OrderBy(orderBy string) *ProjectsLocationsMirroringEndpointGroupsListCall {
 	c.urlParams_.Set("orderBy", orderBy)
 	return c
@@ -19806,14 +19858,17 @@ func (c *ProjectsLocationsMirroringEndpointGroupsListCall) OrderBy(orderBy strin
 
 // PageSize sets the optional parameter "pageSize": Requested page size. Server
 // may return fewer items than requested. If unspecified, server will pick an
-// appropriate default.
+// appropriate default. See https://google.aip.dev/158 for more details.
 func (c *ProjectsLocationsMirroringEndpointGroupsListCall) PageSize(pageSize int64) *ProjectsLocationsMirroringEndpointGroupsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": A token identifying a
-// page of results the server should return.
+// PageToken sets the optional parameter "pageToken": A page token, received
+// from a previous `ListMirroringEndpointGroups` call. Provide this to retrieve
+// the subsequent page. When paginating, all other parameters provided to
+// `ListMirroringEndpointGroups` must match the call that provided the page
+// token. See https://google.aip.dev/158 for more details.
 func (c *ProjectsLocationsMirroringEndpointGroupsListCall) PageToken(pageToken string) *ProjectsLocationsMirroringEndpointGroupsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
@@ -19954,28 +20009,18 @@ func (r *ProjectsLocationsMirroringEndpointGroupsService) Patch(name string, mir
 	return c
 }
 
-// RequestId sets the optional parameter "requestId": An optional request ID to
-// identify requests. Specify a unique request ID so that if you must retry
-// your request, the server will know to ignore the request if it has already
-// been completed. The server will guarantee that for at least 60 minutes since
-// the first request. For example, consider a situation where you make an
-// initial request and the request times out. If you make the request again
-// with the same request ID, the server can check if original operation with
-// the same request ID was received, and if so, will ignore the second request.
-// This prevents clients from accidentally creating duplicate commitments. The
-// request ID must be a valid UUID with the exception that zero UUID is not
-// supported (00000000-0000-0000-0000-000000000000).
+// RequestId sets the optional parameter "requestId": A unique identifier for
+// this request. Must be a UUID4. This request is only idempotent if a
+// `request_id` is provided. See https://google.aip.dev/155 for more details.
 func (c *ProjectsLocationsMirroringEndpointGroupsPatchCall) RequestId(requestId string) *ProjectsLocationsMirroringEndpointGroupsPatchCall {
 	c.urlParams_.Set("requestId", requestId)
 	return c
 }
 
-// UpdateMask sets the optional parameter "updateMask": Required. Field mask is
-// used to specify the fields to be overwritten in the MirroringEndpointGroup
-// resource by the update. The fields specified in the update_mask are relative
-// to the resource, not the full request. A field will be overwritten if it is
-// in the mask. If the user does not provide a mask then all fields will be
-// overwritten.
+// UpdateMask sets the optional parameter "updateMask": The list of fields to
+// update. Fields are specified relative to the endpoint group (e.g.
+// `description`; *not* `mirroring_endpoint_group.description`). See
+// https://google.aip.dev/161 for more details.
 func (c *ProjectsLocationsMirroringEndpointGroupsPatchCall) UpdateMask(updateMask string) *ProjectsLocationsMirroringEndpointGroupsPatchCall {
 	c.urlParams_.Set("updateMask", updateMask)
 	return c

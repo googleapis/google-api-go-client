@@ -500,7 +500,7 @@ type Backup struct {
 	// backup.
 	MaxChargeableBytes int64 `json:"maxChargeableBytes,omitempty,string"`
 	// Name: Output only. The resource name of the backup. Format:
-	// projects/{project}/backups/{backup}
+	// projects/{project}/backups/{backup}.
 	Name string `json:"name,omitempty"`
 	// SatisfiesPzi: Output only. This status indicates whether the backup
 	// satisfies PZI. The status is reserved for future use.
@@ -523,7 +523,7 @@ type Backup struct {
 	State string `json:"state,omitempty"`
 	// TimeZone: Output only. This output contains a backup time zone. If a Cloud
 	// SQL for SQL Server instance has a different time zone from the backup's time
-	// zone, then restores to the instance won't happen.
+	// zone, then the restore to the instance doesn't happen.
 	TimeZone string `json:"timeZone,omitempty"`
 	// TtlDays: Input only. The time-to-live (TTL) interval for this resource (in
 	// days). For example: ttlDays:7 means 7 days.
@@ -3538,9 +3538,11 @@ type Operation struct {
 	// instance.
 	//   "MAJOR_VERSION_UPGRADE" - Updates the major version of a Cloud SQL
 	// instance.
-	//   "ADVANCED_BACKUP" - Creates a backup for an Advanced BackupTier Cloud SQL
-	// instance.
+	//   "ADVANCED_BACKUP" - Deprecated: ADVANCED_BACKUP is deprecated. Use
+	// ENHANCED_BACKUP instead.
 	//   "MANAGE_BACKUP" - Changes the BackupTier of a Cloud SQL instance.
+	//   "ENHANCED_BACKUP" - Creates a backup for an Enhanced BackupTier Cloud SQL
+	// instance.
 	OperationType string `json:"operationType,omitempty"`
 	// SelfLink: The URI of this resource.
 	SelfLink string `json:"selfLink,omitempty"`
@@ -3559,8 +3561,9 @@ type Operation struct {
 	Status string `json:"status,omitempty"`
 	// SubOperationType: Optional. The sub operation based on the operation type.
 	SubOperationType *SqlSubOperationType `json:"subOperationType,omitempty"`
-	TargetId         string               `json:"targetId,omitempty"`
-	TargetLink       string               `json:"targetLink,omitempty"`
+	// TargetId: Name of the resource on which this operation runs.
+	TargetId   string `json:"targetId,omitempty"`
+	TargetLink string `json:"targetLink,omitempty"`
 	// TargetProject: The project ID of the target instance related to this
 	// operation.
 	TargetProject string `json:"targetProject,omitempty"`

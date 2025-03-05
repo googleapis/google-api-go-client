@@ -11208,7 +11208,10 @@ func (s ReturnPolicyOnlineRestockingFee) MarshalJSON() ([]byte, error) {
 // ReturnPolicyOnlineReturnReasonCategoryInfo: The return reason category info
 // wrapper.
 type ReturnPolicyOnlineReturnReasonCategoryInfo struct {
-	// ReturnLabelSource: The corresponding return label source.
+	// ReturnLabelSource: The corresponding return label source. If the
+	// `ReturnMethod` field includes `BY_MAIL`, it is required to specify
+	// `ReturnLabelSource` for both `BUYER_REMORSE` and `ITEM_DEFECT` return reason
+	// categories.
 	//
 	// Possible values:
 	//   "RETURN_LABEL_SOURCE_UNSPECIFIED" - Default value. This value is unused.

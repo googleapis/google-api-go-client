@@ -1210,9 +1210,9 @@ type BuildingInsightsFindClosestCall struct {
 	header_      http.Header
 }
 
-// FindClosest: Locates the closest building to a query point. Returns an error
-// with code `NOT_FOUND` if there are no buildings within approximately 50m of
-// the query point.
+// FindClosest: Locates the building whose centroid is closest to a query
+// point. Returns an error with code `NOT_FOUND` if there are no buildings
+// within approximately 50m of the query point.
 func (r *BuildingInsightsService) FindClosest() *BuildingInsightsFindClosestCall {
 	c := &BuildingInsightsFindClosestCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	return c

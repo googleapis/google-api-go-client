@@ -239,13 +239,22 @@ func (s MethodDetails) MarshalJSON() ([]byte, error) {
 // ProductChange: The change that happened to the product including old value,
 // new value, country code as the region code and reporting context.
 type ProductChange struct {
-	// NewValue: The new value of the changed resource or attribute.
+	// NewValue: The new value of the changed resource or attribute. If empty, it
+	// means that the product was deleted. Will have one of these values :
+	// (`approved`, `pending`, `disapproved`, ``)
 	NewValue string `json:"newValue,omitempty"`
-	// OldValue: The old value of the changed resource or attribute.
+	// OldValue: The old value of the changed resource or attribute. If empty, it
+	// means that the product was created. Will have one of these values :
+	// (`approved`, `pending`, `disapproved`, ``)
 	OldValue string `json:"oldValue,omitempty"`
-	// RegionCode: Countries that have the change (if applicable)
+	// RegionCode: Countries that have the change (if applicable). Represented in
+	// the ISO 3166 format.
 	RegionCode string `json:"regionCode,omitempty"`
-	// ReportingContext: Reporting contexts that have the change (if applicable)
+	// ReportingContext: Reporting contexts that have the change (if applicable).
+	// Currently this field supports only (`SHOPPING_ADS`, `LOCAL_INVENTORY_ADS`,
+	// `YOUTUBE_SHOPPING`, `YOUTUBE_CHECKOUT`, `YOUTUBE_AFFILIATE`) from the enum
+	// value ReportingContextEnum
+	// (/merchant/api/reference/rest/Shared.Types/ReportingContextEnum)
 	//
 	// Possible values:
 	//   "REPORTING_CONTEXT_ENUM_UNSPECIFIED" - Not specified.
@@ -283,7 +292,7 @@ type ProductChange struct {
 	// Reviews](https://support.google.com/merchants/answer/14620732).
 	//   "MERCHANT_REVIEWS" - [Merchant
 	// Reviews](https://developers.google.com/merchant-review-feeds).
-	//   "YOUTUBE_CHECKOUT" - [YouTube Checkout](
+	//   "YOUTUBE_CHECKOUT" - YouTube Checkout .
 	ReportingContext string `json:"reportingContext,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "NewValue") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -320,15 +329,14 @@ type ProductStatusChangeMessage struct {
 	Changes []*ProductChange `json:"changes,omitempty"`
 	// EventTime: The time at which the event was generated.
 	EventTime string `json:"eventTime,omitempty"`
-	// ExpirationTime: The product expiration time. This field will not bet set if
-	// the notification is sent for a product deletion event.
+	// ExpirationTime: Optional. The product expiration time. This field will not
+	// bet set if the notification is sent for a product deletion event.
 	ExpirationTime string `json:"expirationTime,omitempty"`
 	// ManagingAccount: The account that manages the merchant's account. can be the
 	// same as merchant id if it is standalone account. Format :
 	// `accounts/{service_provider_id}`
 	ManagingAccount string `json:"managingAccount,omitempty"`
-	// Resource: The product name. Format:
-	// `{product.name=accounts/{account}/products/{product}}`
+	// Resource: The product name. Format: `accounts/{account}/products/{product}`
 	Resource string `json:"resource,omitempty"`
 	// ResourceId: The product id.
 	ResourceId string `json:"resourceId,omitempty"`

@@ -914,7 +914,7 @@ func (a *API) GenerateCode() ([]byte, error) {
 	pn("// If you are using google.golang.org/api/googleapis/transport.APIKey, use option.WithAPIKey with NewService instead.")
 	pn("func New(client *http.Client) (*%s, error) {", service)
 	pn("if client == nil { return nil, errors.New(\"client is nil\") }")
-	pn("return NewService(context.Background(), option.WithHTTPClient(client))")
+	pn("return NewService(context.TODO(), option.WithHTTPClient(client))")
 	pn("}")
 
 	pn("\ntype %s struct {", service)

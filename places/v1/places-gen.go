@@ -1501,6 +1501,8 @@ type GoogleMapsPlacesV1Place struct {
 	SubDestinations []*GoogleMapsPlacesV1PlaceSubDestination `json:"subDestinations,omitempty"`
 	// Takeout: Specifies if the business supports takeout.
 	Takeout bool `json:"takeout,omitempty"`
+	// TimeZone: IANA Time Zone Database time zone. For example "America/New_York".
+	TimeZone *GoogleTypeTimeZone `json:"timeZone,omitempty"`
 	// Types: A set of type tags for this result. For example, "political" and
 	// "locality". For the complete list of possible values, see Table A and Table
 	// B at
@@ -2999,6 +3001,32 @@ type GoogleTypeMoney struct {
 
 func (s GoogleTypeMoney) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleTypeMoney
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleTypeTimeZone: Represents a time zone from the IANA Time Zone Database
+// (https://www.iana.org/time-zones).
+type GoogleTypeTimeZone struct {
+	// Id: IANA Time Zone Database time zone. For example "America/New_York".
+	Id string `json:"id,omitempty"`
+	// Version: Optional. IANA Time Zone Database version number. For example
+	// "2019a".
+	Version string `json:"version,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Id") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Id") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleTypeTimeZone) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleTypeTimeZone
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 

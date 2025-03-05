@@ -5929,6 +5929,8 @@ type GoogleCloudDiscoveryengineV1alphaConnectorRunEntityRun struct {
 	ExtractedRecordCount int64 `json:"extractedRecordCount,omitempty,string"`
 	// IndexedRecordCount: The number of documents indexed.
 	IndexedRecordCount int64 `json:"indexedRecordCount,omitempty,string"`
+	// Progress: Metadata to generate the progress bar.
+	Progress *GoogleCloudDiscoveryengineV1alphaConnectorRunEntityRunProgress `json:"progress,omitempty"`
 	// SourceApiRequestCount: The number of requests sent to 3p API.
 	SourceApiRequestCount int64 `json:"sourceApiRequestCount,omitempty,string"`
 	// State: The state of the entity's sync run.
@@ -5971,6 +5973,33 @@ type GoogleCloudDiscoveryengineV1alphaConnectorRunEntityRun struct {
 
 func (s GoogleCloudDiscoveryengineV1alphaConnectorRunEntityRun) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDiscoveryengineV1alphaConnectorRunEntityRun
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1alphaConnectorRunEntityRunProgress: Represents
+// the progress of a sync run.
+type GoogleCloudDiscoveryengineV1alphaConnectorRunEntityRunProgress struct {
+	// CurrentCount: The current progress.
+	CurrentCount int64 `json:"currentCount,omitempty,string"`
+	// Percentile: Derived. The percentile of the progress.
+	Percentile int64 `json:"percentile,omitempty"`
+	// TotalCount: The total.
+	TotalCount int64 `json:"totalCount,omitempty,string"`
+	// ForceSendFields is a list of field names (e.g. "CurrentCount") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CurrentCount") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1alphaConnectorRunEntityRunProgress) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1alphaConnectorRunEntityRunProgress
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -6636,6 +6665,7 @@ type GoogleCloudDiscoveryengineV1alphaDataConnector struct {
 	// refresh_interval. Use it with auto_run_disabled to pause the periodic sync,
 	// or indicate a one-time sync.
 	//   "STREAMING" - The data will be synced in real time.
+	//   "UNSPECIFIED" - Connector that doesn't ingest data will have this value
 	SyncMode string `json:"syncMode,omitempty"`
 	// UpdateTime: Output only. Timestamp the DataConnector was last updated.
 	UpdateTime string `json:"updateTime,omitempty"`
@@ -6901,25 +6931,31 @@ func (s GoogleCloudDiscoveryengineV1alphaDataStoreServingConfigDataStore) Marsha
 // Dedicated crawl is used by Vertex AI to crawl the user's website when
 // dedicate crawl is set.
 type GoogleCloudDiscoveryengineV1alphaDedicatedCrawlRateTimeSeries struct {
+	// AutoRefreshCrawlErrorRate: Vertex AI's error rate time series of
+	// auto-refresh dedicated crawl.
+	AutoRefreshCrawlErrorRate *GoogleCloudDiscoveryengineV1alphaCrawlRateTimeSeries `json:"autoRefreshCrawlErrorRate,omitempty"`
 	// AutoRefreshCrawlRate: Vertex AI's dedicated crawl rate time series of
 	// auto-refresh, which is the crawl rate of Google-CloudVertexBot when dedicate
 	// crawl is set, and the crawl rate is for best effort use cases like
 	// refreshing urls periodically.
 	AutoRefreshCrawlRate *GoogleCloudDiscoveryengineV1alphaCrawlRateTimeSeries `json:"autoRefreshCrawlRate,omitempty"`
+	// UserTriggeredCrawlErrorRate: Vertex AI's error rate time series of user
+	// triggered dedicated crawl.
+	UserTriggeredCrawlErrorRate *GoogleCloudDiscoveryengineV1alphaCrawlRateTimeSeries `json:"userTriggeredCrawlErrorRate,omitempty"`
 	// UserTriggeredCrawlRate: Vertex AI's dedicated crawl rate time series of user
 	// triggered crawl, which is the crawl rate of Google-CloudVertexBot when
 	// dedicate crawl is set, and user triggered crawl rate is for deterministic
 	// use cases like crawling urls or sitemaps specified by users.
 	UserTriggeredCrawlRate *GoogleCloudDiscoveryengineV1alphaCrawlRateTimeSeries `json:"userTriggeredCrawlRate,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "AutoRefreshCrawlRate") to
-	// unconditionally include in API requests. By default, fields with empty or
+	// ForceSendFields is a list of field names (e.g. "AutoRefreshCrawlErrorRate")
+	// to unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "AutoRefreshCrawlRate") to include
-	// in API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. See
+	// NullFields is a list of field names (e.g. "AutoRefreshCrawlErrorRate") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -15842,25 +15878,31 @@ func (s GoogleCloudDiscoveryengineV1betaDataStoreServingConfigDataStore) Marshal
 // dedicated crawl rate timeseries data, used for monitoring. Dedicated crawl
 // is used by Vertex AI to crawl the user's website when dedicate crawl is set.
 type GoogleCloudDiscoveryengineV1betaDedicatedCrawlRateTimeSeries struct {
+	// AutoRefreshCrawlErrorRate: Vertex AI's error rate time series of
+	// auto-refresh dedicated crawl.
+	AutoRefreshCrawlErrorRate *GoogleCloudDiscoveryengineV1betaCrawlRateTimeSeries `json:"autoRefreshCrawlErrorRate,omitempty"`
 	// AutoRefreshCrawlRate: Vertex AI's dedicated crawl rate time series of
 	// auto-refresh, which is the crawl rate of Google-CloudVertexBot when dedicate
 	// crawl is set, and the crawl rate is for best effort use cases like
 	// refreshing urls periodically.
 	AutoRefreshCrawlRate *GoogleCloudDiscoveryengineV1betaCrawlRateTimeSeries `json:"autoRefreshCrawlRate,omitempty"`
+	// UserTriggeredCrawlErrorRate: Vertex AI's error rate time series of user
+	// triggered dedicated crawl.
+	UserTriggeredCrawlErrorRate *GoogleCloudDiscoveryengineV1betaCrawlRateTimeSeries `json:"userTriggeredCrawlErrorRate,omitempty"`
 	// UserTriggeredCrawlRate: Vertex AI's dedicated crawl rate time series of user
 	// triggered crawl, which is the crawl rate of Google-CloudVertexBot when
 	// dedicate crawl is set, and user triggered crawl rate is for deterministic
 	// use cases like crawling urls or sitemaps specified by users.
 	UserTriggeredCrawlRate *GoogleCloudDiscoveryengineV1betaCrawlRateTimeSeries `json:"userTriggeredCrawlRate,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "AutoRefreshCrawlRate") to
-	// unconditionally include in API requests. By default, fields with empty or
+	// ForceSendFields is a list of field names (e.g. "AutoRefreshCrawlErrorRate")
+	// to unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "AutoRefreshCrawlRate") to include
-	// in API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. See
+	// NullFields is a list of field names (e.g. "AutoRefreshCrawlErrorRate") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -17304,21 +17346,24 @@ func (s *GoogleCloudDiscoveryengineV1betaGenerateGroundedContentRequestGeneratio
 // GoogleCloudDiscoveryengineV1betaGenerateGroundedContentRequestGroundingSource
 // : Grounding source.
 type GoogleCloudDiscoveryengineV1betaGenerateGroundedContentRequestGroundingSource struct {
+	// EnterpriseWebRetrievalSource: If set, grounding is performed with enterprise
+	// web retrieval.
+	EnterpriseWebRetrievalSource *GoogleCloudDiscoveryengineV1betaGenerateGroundedContentRequestGroundingSourceEnterpriseWebRetrievalSource `json:"enterpriseWebRetrievalSource,omitempty"`
 	// GoogleSearchSource: If set, grounding is performed with Google Search.
 	GoogleSearchSource *GoogleCloudDiscoveryengineV1betaGenerateGroundedContentRequestGroundingSourceGoogleSearchSource `json:"googleSearchSource,omitempty"`
 	// InlineSource: If set, grounding is performed with inline content.
 	InlineSource *GoogleCloudDiscoveryengineV1betaGenerateGroundedContentRequestGroundingSourceInlineSource `json:"inlineSource,omitempty"`
 	// SearchSource: If set, grounding is performed with Vertex AI Search.
 	SearchSource *GoogleCloudDiscoveryengineV1betaGenerateGroundedContentRequestGroundingSourceSearchSource `json:"searchSource,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "GoogleSearchSource") to
-	// unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
+	// ForceSendFields is a list of field names (e.g.
+	// "EnterpriseWebRetrievalSource") to unconditionally include in API requests.
+	// By default, fields with empty or default values are omitted from API
+	// requests. See https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields
+	// for more details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "GoogleSearchSource") to include
-	// in API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. See
+	// NullFields is a list of field names (e.g. "EnterpriseWebRetrievalSource") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -17326,6 +17371,12 @@ type GoogleCloudDiscoveryengineV1betaGenerateGroundedContentRequestGroundingSour
 func (s GoogleCloudDiscoveryengineV1betaGenerateGroundedContentRequestGroundingSource) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDiscoveryengineV1betaGenerateGroundedContentRequestGroundingSource
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1betaGenerateGroundedContentRequestGroundingSource
+// EnterpriseWebRetrievalSource: Params for using enterprise web retrieval as
+// grounding source.
+type GoogleCloudDiscoveryengineV1betaGenerateGroundedContentRequestGroundingSourceEnterpriseWebRetrievalSource struct {
 }
 
 // GoogleCloudDiscoveryengineV1betaGenerateGroundedContentRequestGroundingSource
@@ -22319,6 +22370,8 @@ func (s GoogleCloudDiscoveryengineV1betaSearchResponseGuidedSearchResultRefineme
 // ngInfo: Information describing what natural language understanding was done
 // on the input query.
 type GoogleCloudDiscoveryengineV1betaSearchResponseNaturalLanguageQueryUnderstandingInfo struct {
+	// ClassifiedIntents: The classified intents from the input query.
+	ClassifiedIntents []string `json:"classifiedIntents,omitempty"`
 	// ExtractedFilters: The filters that were extracted from the input query.
 	ExtractedFilters string `json:"extractedFilters,omitempty"`
 	// RewrittenQuery: Rewritten input query minus the extracted filters.
@@ -22329,13 +22382,13 @@ type GoogleCloudDiscoveryengineV1betaSearchResponseNaturalLanguageQueryUnderstan
 	// StructuredExtractedFilter: The filters that were extracted from the input
 	// query represented in a structured form.
 	StructuredExtractedFilter *GoogleCloudDiscoveryengineV1betaSearchResponseNaturalLanguageQueryUnderstandingInfoStructuredExtractedFilter `json:"structuredExtractedFilter,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "ExtractedFilters") to
+	// ForceSendFields is a list of field names (e.g. "ClassifiedIntents") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "ExtractedFilters") to include in
+	// NullFields is a list of field names (e.g. "ClassifiedIntents") to include in
 	// API requests with the JSON null value. By default, fields with empty values
 	// are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.

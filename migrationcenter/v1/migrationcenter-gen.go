@@ -6948,6 +6948,13 @@ func (r *ProjectsLocationsAssetsService) Get(name string) *ProjectsLocationsAsse
 //	"ASSET_VIEW_FULL" - The asset view includes all the metadata of an asset
 //
 // and performance data.
+//
+//	"ASSET_VIEW_STANDARD" - The asset view includes the standard metadata of
+//
+// an asset.
+//
+//	"ASSET_VIEW_UI" - The asset view includes fields needed by UI.
+//	"ASSET_VIEW_LABELS" - The asset view includes asset name and labels.
 func (c *ProjectsLocationsAssetsGetCall) View(view string) *ProjectsLocationsAssetsGetCall {
 	c.urlParams_.Set("view", view)
 	return c
@@ -7106,6 +7113,13 @@ func (c *ProjectsLocationsAssetsListCall) PageToken(pageToken string) *ProjectsL
 //	"ASSET_VIEW_FULL" - The asset view includes all the metadata of an asset
 //
 // and performance data.
+//
+//	"ASSET_VIEW_STANDARD" - The asset view includes the standard metadata of
+//
+// an asset.
+//
+//	"ASSET_VIEW_UI" - The asset view includes fields needed by UI.
+//	"ASSET_VIEW_LABELS" - The asset view includes asset name and labels.
 func (c *ProjectsLocationsAssetsListCall) View(view string) *ProjectsLocationsAssetsListCall {
 	c.urlParams_.Set("view", view)
 	return c

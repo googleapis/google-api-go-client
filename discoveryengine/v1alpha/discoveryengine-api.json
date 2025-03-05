@@ -9011,7 +9011,7 @@
       }
     }
   },
-  "revision": "20250226",
+  "revision": "20250228",
   "rootUrl": "https://discoveryengine.googleapis.com/",
   "schemas": {
     "ApiservingMediaRequestInfo": {
@@ -14831,6 +14831,10 @@
           "format": "int64",
           "type": "string"
         },
+        "progress": {
+          "$ref": "GoogleCloudDiscoveryengineV1alphaConnectorRunEntityRunProgress",
+          "description": "Metadata to generate the progress bar."
+        },
         "sourceApiRequestCount": {
           "description": "The number of requests sent to 3p API.",
           "format": "int64",
@@ -14882,6 +14886,28 @@
             "Sync triggers full sync of all documents.",
             "Incremental sync of updated documents."
           ],
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudDiscoveryengineV1alphaConnectorRunEntityRunProgress": {
+      "description": "Represents the progress of a sync run.",
+      "id": "GoogleCloudDiscoveryengineV1alphaConnectorRunEntityRunProgress",
+      "properties": {
+        "currentCount": {
+          "description": "The current progress.",
+          "format": "int64",
+          "type": "string"
+        },
+        "percentile": {
+          "description": "Derived. The percentile of the progress.",
+          "format": "int32",
+          "type": "integer"
+        },
+        "totalCount": {
+          "description": "The total.",
+          "format": "int64",
           "type": "string"
         }
       },
@@ -15650,11 +15676,13 @@
           "description": "The data synchronization mode supported by the data connector.",
           "enum": [
             "PERIODIC",
-            "STREAMING"
+            "STREAMING",
+            "UNSPECIFIED"
           ],
           "enumDescriptions": [
             "The connector will sync data periodically based on the refresh_interval. Use it with auto_run_disabled to pause the periodic sync, or indicate a one-time sync.",
-            "The data will be synced in real time."
+            "The data will be synced in real time.",
+            "Connector that doesn't ingest data will have this value"
           ],
           "type": "string"
         },
@@ -15902,9 +15930,17 @@
       "description": "The historical dedicated crawl rate timeseries data, used for monitoring. Dedicated crawl is used by Vertex AI to crawl the user's website when dedicate crawl is set.",
       "id": "GoogleCloudDiscoveryengineV1alphaDedicatedCrawlRateTimeSeries",
       "properties": {
+        "autoRefreshCrawlErrorRate": {
+          "$ref": "GoogleCloudDiscoveryengineV1alphaCrawlRateTimeSeries",
+          "description": "Vertex AI's error rate time series of auto-refresh dedicated crawl."
+        },
         "autoRefreshCrawlRate": {
           "$ref": "GoogleCloudDiscoveryengineV1alphaCrawlRateTimeSeries",
           "description": "Vertex AI's dedicated crawl rate time series of auto-refresh, which is the crawl rate of Google-CloudVertexBot when dedicate crawl is set, and the crawl rate is for best effort use cases like refreshing urls periodically."
+        },
+        "userTriggeredCrawlErrorRate": {
+          "$ref": "GoogleCloudDiscoveryengineV1alphaCrawlRateTimeSeries",
+          "description": "Vertex AI's error rate time series of user triggered dedicated crawl."
         },
         "userTriggeredCrawlRate": {
           "$ref": "GoogleCloudDiscoveryengineV1alphaCrawlRateTimeSeries",
@@ -17378,6 +17414,10 @@
       "description": "Grounding source.",
       "id": "GoogleCloudDiscoveryengineV1alphaGenerateGroundedContentRequestGroundingSource",
       "properties": {
+        "enterpriseWebRetrievalSource": {
+          "$ref": "GoogleCloudDiscoveryengineV1alphaGenerateGroundedContentRequestGroundingSourceEnterpriseWebRetrievalSource",
+          "description": "If set, grounding is performed with enterprise web retrieval."
+        },
         "googleSearchSource": {
           "$ref": "GoogleCloudDiscoveryengineV1alphaGenerateGroundedContentRequestGroundingSourceGoogleSearchSource",
           "description": "If set, grounding is performed with Google Search."
@@ -17391,6 +17431,12 @@
           "description": "If set, grounding is performed with Vertex AI Search."
         }
       },
+      "type": "object"
+    },
+    "GoogleCloudDiscoveryengineV1alphaGenerateGroundedContentRequestGroundingSourceEnterpriseWebRetrievalSource": {
+      "description": "Params for using enterprise web retrieval as grounding source.",
+      "id": "GoogleCloudDiscoveryengineV1alphaGenerateGroundedContentRequestGroundingSourceEnterpriseWebRetrievalSource",
+      "properties": {},
       "type": "object"
     },
     "GoogleCloudDiscoveryengineV1alphaGenerateGroundedContentRequestGroundingSourceGoogleSearchSource": {
@@ -21310,6 +21356,13 @@
       "description": "Information describing what natural language understanding was done on the input query.",
       "id": "GoogleCloudDiscoveryengineV1alphaSearchResponseNaturalLanguageQueryUnderstandingInfo",
       "properties": {
+        "classifiedIntents": {
+          "description": "The classified intents from the input query.",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
         "extractedFilters": {
           "description": "The filters that were extracted from the input query.",
           "type": "string"
@@ -23467,6 +23520,22 @@
           "description": "Optional. Specifies whether to filter out queries that are not answer-seeking. The default value is `false`. No answer is returned if the search query is classified as a non-answer seeking query. If this field is set to `true`, we skip generating answers for non-answer seeking queries and return fallback messages instead.",
           "type": "boolean"
         },
+        "imageSource": {
+          "description": "Optional. Source of image returned in the answer.",
+          "enum": [
+            "IMAGE_SOURCE_UNSPECIFIED",
+            "ALL_AVAILABLE_SOURCES",
+            "CORPUS_IMAGE_ONLY",
+            "FIGURE_GENERATION_ONLY"
+          ],
+          "enumDescriptions": [
+            "Unspecified image source (multimodal feature is disabled by default)",
+            "Behavior when service determines the pick from all available sources.",
+            "Include image from corpus in the answer.",
+            "Triggers figure generation in the answer."
+          ],
+          "type": "string"
+        },
         "languageCode": {
           "description": "Language code for Summary. Use language tags defined by [BCP47](https://www.rfc-editor.org/rfc/bcp/bcp47.txt). Note: This is an experimental feature.",
           "type": "string"
@@ -24221,9 +24290,17 @@
       "description": "The historical dedicated crawl rate timeseries data, used for monitoring. Dedicated crawl is used by Vertex AI to crawl the user's website when dedicate crawl is set.",
       "id": "GoogleCloudDiscoveryengineV1betaDedicatedCrawlRateTimeSeries",
       "properties": {
+        "autoRefreshCrawlErrorRate": {
+          "$ref": "GoogleCloudDiscoveryengineV1betaCrawlRateTimeSeries",
+          "description": "Vertex AI's error rate time series of auto-refresh dedicated crawl."
+        },
         "autoRefreshCrawlRate": {
           "$ref": "GoogleCloudDiscoveryengineV1betaCrawlRateTimeSeries",
           "description": "Vertex AI's dedicated crawl rate time series of auto-refresh, which is the crawl rate of Google-CloudVertexBot when dedicate crawl is set, and the crawl rate is for best effort use cases like refreshing urls periodically."
+        },
+        "userTriggeredCrawlErrorRate": {
+          "$ref": "GoogleCloudDiscoveryengineV1betaCrawlRateTimeSeries",
+          "description": "Vertex AI's error rate time series of user triggered dedicated crawl."
         },
         "userTriggeredCrawlRate": {
           "$ref": "GoogleCloudDiscoveryengineV1betaCrawlRateTimeSeries",

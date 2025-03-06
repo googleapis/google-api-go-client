@@ -2954,6 +2954,110 @@ func (s GooglePrivacyDlpV2DataProfileConfigSnapshot) MarshalJSON() ([]byte, erro
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GooglePrivacyDlpV2DataProfileFinding: Details about a piece of potentially
+// sensitive information that was detected when the data resource was profiled.
+type GooglePrivacyDlpV2DataProfileFinding struct {
+	// DataProfileResourceName: Resource name of the data profile associated with
+	// the finding.
+	DataProfileResourceName string `json:"dataProfileResourceName,omitempty"`
+	// FindingId: A unique identifier for the finding.
+	FindingId string `json:"findingId,omitempty"`
+	// Infotype: The type of content
+	// (https://cloud.google.com/sensitive-data-protection/docs/infotypes-reference)
+	// that might have been found.
+	Infotype *GooglePrivacyDlpV2InfoType `json:"infotype,omitempty"`
+	// Location: Where the content was found.
+	Location *GooglePrivacyDlpV2DataProfileFindingLocation `json:"location,omitempty"`
+	// Quote: The content that was found. Even if the content is not textual, it
+	// may be converted to a textual representation here. If the finding exceeds
+	// 4096 bytes in length, the quote may be omitted.
+	Quote string `json:"quote,omitempty"`
+	// QuoteInfo: Contains data parsed from quotes. Currently supported infoTypes:
+	// DATE, DATE_OF_BIRTH, and TIME.
+	QuoteInfo *GooglePrivacyDlpV2QuoteInfo `json:"quoteInfo,omitempty"`
+	// ResourceVisibility: How broadly a resource has been shared.
+	//
+	// Possible values:
+	//   "RESOURCE_VISIBILITY_UNSPECIFIED" - Unused.
+	//   "RESOURCE_VISIBILITY_PUBLIC" - Visible to any user.
+	//   "RESOURCE_VISIBILITY_INCONCLUSIVE" - May contain public items. For
+	// example, if a Cloud Storage bucket has uniform bucket level access disabled,
+	// some objects inside it may be public, but none are known yet.
+	//   "RESOURCE_VISIBILITY_RESTRICTED" - Visible only to specific users.
+	ResourceVisibility string `json:"resourceVisibility,omitempty"`
+	// Timestamp: Timestamp when the finding was detected.
+	Timestamp string `json:"timestamp,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "DataProfileResourceName") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DataProfileResourceName") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GooglePrivacyDlpV2DataProfileFinding) MarshalJSON() ([]byte, error) {
+	type NoMethod GooglePrivacyDlpV2DataProfileFinding
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GooglePrivacyDlpV2DataProfileFindingLocation: Location of a data profile
+// finding within a resource.
+type GooglePrivacyDlpV2DataProfileFindingLocation struct {
+	// ContainerName: Name of the container where the finding is located. The
+	// top-level name is the source file name or table name. Names of some common
+	// storage containers are formatted as follows: * BigQuery tables:
+	// `{project_id}:{dataset_id}.{table_id}` * Cloud Storage files:
+	// `gs://{bucket}/{path}`
+	ContainerName string `json:"containerName,omitempty"`
+	// DataProfileFindingRecordLocation: Location of a finding within a resource
+	// that produces a table data profile.
+	DataProfileFindingRecordLocation *GooglePrivacyDlpV2DataProfileFindingRecordLocation `json:"dataProfileFindingRecordLocation,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ContainerName") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ContainerName") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GooglePrivacyDlpV2DataProfileFindingLocation) MarshalJSON() ([]byte, error) {
+	type NoMethod GooglePrivacyDlpV2DataProfileFindingLocation
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GooglePrivacyDlpV2DataProfileFindingRecordLocation: Location of a finding
+// within a resource that produces a table data profile.
+type GooglePrivacyDlpV2DataProfileFindingRecordLocation struct {
+	// Field: Field ID of the column containing the finding.
+	Field *GooglePrivacyDlpV2FieldId `json:"field,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Field") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Field") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GooglePrivacyDlpV2DataProfileFindingRecordLocation) MarshalJSON() ([]byte, error) {
+	type NoMethod GooglePrivacyDlpV2DataProfileFindingRecordLocation
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GooglePrivacyDlpV2DataProfileJobConfig: Configuration for setting up a job
 // to scan resources for profile generation. Only one data profile
 // configuration may exist per organization, folder, or project. The generated
@@ -5088,6 +5192,13 @@ type GooglePrivacyDlpV2Export struct {
 	// If you use VPC Service Controls to define security perimeters, then you must
 	// use a separate table for each boundary.
 	ProfileTable *GooglePrivacyDlpV2BigQueryTable `json:"profileTable,omitempty"`
+	// SampleFindingsTable: Store sample data profile findings in an existing table
+	// or a new table in an existing dataset. Each regeneration will result in new
+	// rows in BigQuery. Data is inserted using streaming insert
+	// (https://cloud.google.com/blog/products/bigquery/life-of-a-bigquery-streaming-insert)
+	// and so data may be in the buffer for a period of time after the profile has
+	// finished.
+	SampleFindingsTable *GooglePrivacyDlpV2BigQueryTable `json:"sampleFindingsTable,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "ProfileTable") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -5435,6 +5546,9 @@ type GooglePrivacyDlpV2FileStoreDataProfile struct {
 	// some objects inside it may be public, but none are known yet.
 	//   "RESOURCE_VISIBILITY_RESTRICTED" - Visible only to specific users.
 	ResourceVisibility string `json:"resourceVisibility,omitempty"`
+	// SampleFindingsTable: The BigQuery table to which the sample findings are
+	// written.
+	SampleFindingsTable *GooglePrivacyDlpV2BigQueryTable `json:"sampleFindingsTable,omitempty"`
 	// SensitivityScore: The sensitivity score of this resource.
 	SensitivityScore *GooglePrivacyDlpV2SensitivityScore `json:"sensitivityScore,omitempty"`
 	// State: State of a profile.
@@ -6164,6 +6278,7 @@ type GooglePrivacyDlpV2InfoTypeCategory struct {
 	//   "CHINA" - The infoType is typically used in China.
 	//   "COLOMBIA" - The infoType is typically used in Colombia.
 	//   "CROATIA" - The infoType is typically used in Croatia.
+	//   "CZECHIA" - The infoType is typically used in Czechia.
 	//   "DENMARK" - The infoType is typically used in Denmark.
 	//   "FRANCE" - The infoType is typically used in France.
 	//   "FINLAND" - The infoType is typically used in Finland.
@@ -9965,6 +10080,9 @@ type GooglePrivacyDlpV2TableDataProfile struct {
 	// RowCount: Number of rows in the table when the profile was generated. This
 	// will not be populated for BigLake tables.
 	RowCount int64 `json:"rowCount,omitempty,string"`
+	// SampleFindingsTable: The BigQuery table to which the sample findings are
+	// written.
+	SampleFindingsTable *GooglePrivacyDlpV2BigQueryTable `json:"sampleFindingsTable,omitempty"`
 	// ScannedColumnCount: The number of columns profiled in the table.
 	ScannedColumnCount int64 `json:"scannedColumnCount,omitempty,string"`
 	// SensitivityScore: The sensitivity score of this table.

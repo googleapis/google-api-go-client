@@ -1721,7 +1721,7 @@ type DataRetentionDeletionEvent struct {
 	EventType string `json:"eventType,omitempty"`
 	// MaxRetentionAllowed: Maximum duration of retention allowed from the DRD
 	// control. This comes from the DRD control where users set a max TTL for their
-	// data. For example, suppose that a user set the max TTL for a Cloud Storage
+	// data. For example, suppose that a user sets the max TTL for a Cloud Storage
 	// bucket to 90 days. However, an object in that bucket is 100 days old. In
 	// this case, a DataRetentionDeletionEvent will be generated for that Cloud
 	// Storage bucket, and the max_retention_allowed is 90 days.
@@ -1858,8 +1858,8 @@ func (s *Detection) UnmarshalJSON(data []byte) error {
 // Disk: Contains information about the disk associated with the finding.
 type Disk struct {
 	// Name: The name of the disk, for example,
-	// "https://www.googleapis.com/compute/v1/projects/project-id/zones/zone-id/disk
-	// s/disk-id".
+	// "https://www.googleapis.com/compute/v1/projects/{project-id}/zones/{zone-id}/
+	// disks/{disk-id}".
 	Name string `json:"name,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Name") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -5007,7 +5007,7 @@ type GoogleCloudSecuritycenterV2DataRetentionDeletionEvent struct {
 	EventType string `json:"eventType,omitempty"`
 	// MaxRetentionAllowed: Maximum duration of retention allowed from the DRD
 	// control. This comes from the DRD control where users set a max TTL for their
-	// data. For example, suppose that a user set the max TTL for a Cloud Storage
+	// data. For example, suppose that a user sets the max TTL for a Cloud Storage
 	// bucket to 90 days. However, an object in that bucket is 100 days old. In
 	// this case, a DataRetentionDeletionEvent will be generated for that Cloud
 	// Storage bucket, and the max_retention_allowed is 90 days.
@@ -5146,8 +5146,8 @@ func (s *GoogleCloudSecuritycenterV2Detection) UnmarshalJSON(data []byte) error 
 // associated with the finding.
 type GoogleCloudSecuritycenterV2Disk struct {
 	// Name: The name of the disk, for example,
-	// "https://www.googleapis.com/compute/v1/projects/project-id/zones/zone-id/disk
-	// s/disk-id".
+	// "https://www.googleapis.com/compute/v1/projects/{project-id}/zones/{zone-id}/
+	// disks/{disk-id}".
 	Name string `json:"name,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Name") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -6651,6 +6651,7 @@ type GoogleCloudSecuritycenterV2MitreAttack struct {
 	//
 	// Possible values:
 	//   "TECHNIQUE_UNSPECIFIED" - Unspecified value.
+	//   "AUTOMATED_EXFILTRATION" - T1020
 	//   "MASQUERADING" - T1036
 	//   "MATCH_LEGITIMATE_NAME_OR_LOCATION" - T1036.005
 	//   "BOOT_OR_LOGON_INITIALIZATION_SCRIPTS" - T1037
@@ -6686,6 +6687,7 @@ type GoogleCloudSecuritycenterV2MitreAttack struct {
 	//   "ACCESS_TOKEN_MANIPULATION" - T1134
 	//   "TOKEN_IMPERSONATION_OR_THEFT" - T1134.001
 	//   "EXPLOIT_PUBLIC_FACING_APPLICATION" - T1190
+	//   "USER_EXECUTION" - T1204
 	//   "DOMAIN_POLICY_MODIFICATION" - T1484
 	//   "DATA_DESTRUCTION" - T1485
 	//   "SERVICE_STOP" - T1489
@@ -6748,6 +6750,7 @@ type GoogleCloudSecuritycenterV2MitreAttack struct {
 	//
 	// Possible values:
 	//   "TECHNIQUE_UNSPECIFIED" - Unspecified value.
+	//   "AUTOMATED_EXFILTRATION" - T1020
 	//   "MASQUERADING" - T1036
 	//   "MATCH_LEGITIMATE_NAME_OR_LOCATION" - T1036.005
 	//   "BOOT_OR_LOGON_INITIALIZATION_SCRIPTS" - T1037
@@ -6783,6 +6786,7 @@ type GoogleCloudSecuritycenterV2MitreAttack struct {
 	//   "ACCESS_TOKEN_MANIPULATION" - T1134
 	//   "TOKEN_IMPERSONATION_OR_THEFT" - T1134.001
 	//   "EXPLOIT_PUBLIC_FACING_APPLICATION" - T1190
+	//   "USER_EXECUTION" - T1204
 	//   "DOMAIN_POLICY_MODIFICATION" - T1484
 	//   "DATA_DESTRUCTION" - T1485
 	//   "SERVICE_STOP" - T1489
@@ -8848,6 +8852,7 @@ type MitreAttack struct {
 	//
 	// Possible values:
 	//   "TECHNIQUE_UNSPECIFIED" - Unspecified value.
+	//   "AUTOMATED_EXFILTRATION" - T1020
 	//   "MASQUERADING" - T1036
 	//   "MATCH_LEGITIMATE_NAME_OR_LOCATION" - T1036.005
 	//   "BOOT_OR_LOGON_INITIALIZATION_SCRIPTS" - T1037
@@ -8883,6 +8888,7 @@ type MitreAttack struct {
 	//   "ACCESS_TOKEN_MANIPULATION" - T1134
 	//   "TOKEN_IMPERSONATION_OR_THEFT" - T1134.001
 	//   "EXPLOIT_PUBLIC_FACING_APPLICATION" - T1190
+	//   "USER_EXECUTION" - T1204
 	//   "DOMAIN_POLICY_MODIFICATION" - T1484
 	//   "DATA_DESTRUCTION" - T1485
 	//   "SERVICE_STOP" - T1489
@@ -8945,6 +8951,7 @@ type MitreAttack struct {
 	//
 	// Possible values:
 	//   "TECHNIQUE_UNSPECIFIED" - Unspecified value.
+	//   "AUTOMATED_EXFILTRATION" - T1020
 	//   "MASQUERADING" - T1036
 	//   "MATCH_LEGITIMATE_NAME_OR_LOCATION" - T1036.005
 	//   "BOOT_OR_LOGON_INITIALIZATION_SCRIPTS" - T1037
@@ -8980,6 +8987,7 @@ type MitreAttack struct {
 	//   "ACCESS_TOKEN_MANIPULATION" - T1134
 	//   "TOKEN_IMPERSONATION_OR_THEFT" - T1134.001
 	//   "EXPLOIT_PUBLIC_FACING_APPLICATION" - T1190
+	//   "USER_EXECUTION" - T1204
 	//   "DOMAIN_POLICY_MODIFICATION" - T1484
 	//   "DATA_DESTRUCTION" - T1485
 	//   "SERVICE_STOP" - T1489

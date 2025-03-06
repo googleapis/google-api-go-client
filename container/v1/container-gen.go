@@ -572,6 +572,34 @@ func (s AuthenticatorGroupsConfig) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// AutoMonitoringConfig: AutoMonitoringConfig defines the configuration for GKE
+// Workload Auto-Monitoring.
+type AutoMonitoringConfig struct {
+	// Scope: Scope for GKE Workload Auto-Monitoring.
+	//
+	// Possible values:
+	//   "SCOPE_UNSPECIFIED" - Not set.
+	//   "ALL" - Auto-Monitoring is enabled for all supported applications.
+	//   "NONE" - Disable Auto-Monitoring.
+	Scope string `json:"scope,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Scope") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Scope") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s AutoMonitoringConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod AutoMonitoringConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // AutoUpgradeOptions: AutoUpgradeOptions defines the set of options for the
 // user to control how the Auto Upgrades will proceed.
 type AutoUpgradeOptions struct {
@@ -2401,6 +2429,7 @@ type Filter struct {
 	//   "UPGRADE_AVAILABLE_EVENT" - Corresponds with UpgradeAvailableEvent.
 	//   "UPGRADE_EVENT" - Corresponds with UpgradeEvent.
 	//   "SECURITY_BULLETIN_EVENT" - Corresponds with SecurityBulletinEvent.
+	//   "UPGRADE_INFO_EVENT" - Corresponds with UpgradeInfoEvent.
 	EventType []string `json:"eventType,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "EventType") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -3612,17 +3641,19 @@ func (s MaintenanceWindow) MarshalJSON() ([]byte, error) {
 // ManagedPrometheusConfig: ManagedPrometheusConfig defines the configuration
 // for Google Cloud Managed Service for Prometheus.
 type ManagedPrometheusConfig struct {
+	// AutoMonitoringConfig: GKE Workload Auto-Monitoring Configuration.
+	AutoMonitoringConfig *AutoMonitoringConfig `json:"autoMonitoringConfig,omitempty"`
 	// Enabled: Enable Managed Collection.
 	Enabled bool `json:"enabled,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "Enabled") to unconditionally
-	// include in API requests. By default, fields with empty or default values are
-	// omitted from API requests. See
+	// ForceSendFields is a list of field names (e.g. "AutoMonitoringConfig") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Enabled") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
+	// NullFields is a list of field names (e.g. "AutoMonitoringConfig") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -6952,6 +6983,8 @@ type StatusCondition struct {
 	//   "CLOUD_KMS_KEY_ERROR" - Unable to perform an encrypt operation against the
 	// CloudKMS key used for etcd level encryption.
 	//   "CA_EXPIRING" - Cluster CA is expiring soon.
+	//   "NODE_SERVICE_ACCOUNT_MISSING_PERMISSIONS" - Node service account is
+	// missing permissions.
 	Code string `json:"code,omitempty"`
 	// Message: Human-friendly representation of the condition
 	Message string `json:"message,omitempty"`

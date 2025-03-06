@@ -933,8 +933,8 @@ type GeoPolicyItem struct {
 	Location string   `json:"location,omitempty"`
 	Rrdata   []string `json:"rrdata,omitempty"`
 	// SignatureRrdata: DNSSEC generated signatures for all the `rrdata` within
-	// this item. If health checked targets are provided for DNSSEC enabled zones,
-	// there's a restriction of 1 IP address per item.
+	// this item. When using health-checked targets for DNSSEC-enabled zones, you
+	// can only use at most one health-checked IP address per item.
 	SignatureRrdata []string `json:"signatureRrdata,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "HealthCheckedTargets") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -1038,7 +1038,8 @@ func (s GoogleDomainsDns) MarshalJSON() ([]byte, error) {
 
 // HealthCheckTargets: HealthCheckTargets describes endpoints to health-check
 // when responding to Routing Policy queries. Only the healthy endpoints will
-// be included in the response.
+// be included in the response. Set either `internal_load_balancer` or
+// `external_endpoints`. Do not set both.
 type HealthCheckTargets struct {
 	// ExternalEndpoints: The Internet IP addresses to be health checked. The
 	// format matches the format of ResourceRecordSet.rrdata as defined in RFC 1035
@@ -1741,8 +1742,10 @@ func (s *PrimaryBackupPolicy) UnmarshalJSON(data []byte) error {
 type RRSetRoutingPolicy struct {
 	Geo       *GeoPolicy `json:"geo,omitempty"`
 	GeoPolicy *GeoPolicy `json:"geoPolicy,omitempty"`
-	// HealthCheck: The selfLink attribute of the HealthCheck resource to use for
-	// this RRSetRoutingPolicy.
+	// HealthCheck: The fully qualified URL of the HealthCheck to use for this
+	// RRSetRoutingPolicy. Format this URL like
+	// `https://www.googleapis.com/compute/v1/projects/{project}/global/healthChecks
+	// /{healthCheck}`.
 	// https://cloud.google.com/compute/docs/reference/rest/v1/healthChecks
 	HealthCheck   string               `json:"healthCheck,omitempty"`
 	PrimaryBackup *PrimaryBackupPolicy `json:"primaryBackup,omitempty"`
@@ -2613,8 +2616,8 @@ type WrrPolicyItem struct {
 	HealthCheckedTargets *HealthCheckTargets `json:"healthCheckedTargets,omitempty"`
 	Rrdata               []string            `json:"rrdata,omitempty"`
 	// SignatureRrdata: DNSSEC generated signatures for all the `rrdata` within
-	// this item. Note that if health checked targets are provided for DNSSEC
-	// enabled zones, there's a restriction of 1 IP address per item.
+	// this item. When using health-checked targets for DNSSEC-enabled zones, you
+	// can only use at most one health-checked IP address per item.
 	SignatureRrdata []string `json:"signatureRrdata,omitempty"`
 	// Weight: The weight corresponding to this `WrrPolicyItem` object. When
 	// multiple `WrrPolicyItem` objects are configured, the probability of

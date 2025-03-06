@@ -288,8 +288,7 @@ type AutomatedBackupPolicy struct {
 	Enabled bool `json:"enabled,omitempty"`
 	// EncryptionConfig: Optional. The encryption config can be specified to
 	// encrypt the backups with a customer-managed encryption key (CMEK). When this
-	// field is not specified, the backup will then use default encryption scheme
-	// to protect the user data.
+	// field is not specified, the backup will use the cluster's encryption config.
 	EncryptionConfig *EncryptionConfig `json:"encryptionConfig,omitempty"`
 	// Labels: Labels to apply to backups created using this configuration.
 	Labels map[string]string `json:"labels,omitempty"`
@@ -1155,6 +1154,34 @@ func (s FailoverInstanceRequest) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GCAInstanceConfig: Instance level configuration parameters related to the
+// Gemini Cloud Assist product.
+type GCAInstanceConfig struct {
+	// GcaEntitlement: Output only. Represents the GCA entitlement state of the
+	// instance.
+	//
+	// Possible values:
+	//   "GCA_ENTITLEMENT_TYPE_UNSPECIFIED" - No GCA entitlement is assigned.
+	//   "GCA_STANDARD" - The resource is entitled to the GCA Standard Tier.
+	GcaEntitlement string `json:"gcaEntitlement,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "GcaEntitlement") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "GcaEntitlement") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GCAInstanceConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GCAInstanceConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GcsDestination: Destination for Export. Export will be done to cloud
 // storage.
 type GcsDestination struct {
@@ -1455,6 +1482,9 @@ type Instance struct {
 	DisplayName string `json:"displayName,omitempty"`
 	// Etag: For Resource freshness validation (https://google.aip.dev/154)
 	Etag string `json:"etag,omitempty"`
+	// GcaConfig: Output only. Configuration parameters related to Gemini Cloud
+	// Assist.
+	GcaConfig *GCAInstanceConfig `json:"gcaConfig,omitempty"`
 	// GceZone: The Compute Engine zone that the instance should serve from, per
 	// https://cloud.google.com/compute/docs/regions-zones This can ONLY be
 	// specified for ZONAL instances. If present for a REGIONAL instance, an error
@@ -2089,13 +2119,10 @@ type ObservabilityInstanceConfig struct {
 	// TrackActiveQueries: Track actively running queries on the instance. If not
 	// set, this flag is "off" by default.
 	TrackActiveQueries bool `json:"trackActiveQueries,omitempty"`
-	// TrackClientAddress: Track client address for an instance. If not set,
-	// default value is "off".
-	TrackClientAddress bool `json:"trackClientAddress,omitempty"`
 	// TrackWaitEventTypes: Output only. Track wait event types during query
 	// execution for an instance. This flag is turned "on" by default but tracking
 	// is enabled only after observability enabled flag is also turned on. This is
-	// read-only flag and only modifiable by producer API.
+	// read-only flag and only modifiable by internal API.
 	TrackWaitEventTypes bool `json:"trackWaitEventTypes,omitempty"`
 	// TrackWaitEvents: Track wait events during query execution for an instance.
 	// This flag is turned "on" by default but tracking is enabled only after
@@ -3986,15 +4013,15 @@ func (s StorageDatabasecenterPartnerapiV1mainInternalResourceMetadata) MarshalJS
 // Database Resource.
 type StorageDatabasecenterPartnerapiV1mainMachineConfiguration struct {
 	// CpuCount: The number of CPUs. Deprecated. Use vcpu_count instead.
-	// TODO(b/342344482, b/342346271) add proto validations again after bug fix.
+	// TODO(b/342344482) add proto validations again after bug fix.
 	CpuCount int64 `json:"cpuCount,omitempty"`
-	// MemorySizeInBytes: Memory size in bytes. TODO(b/342344482, b/342346271) add
-	// proto validations again after bug fix.
+	// MemorySizeInBytes: Memory size in bytes. TODO(b/342344482) add proto
+	// validations again after bug fix.
 	MemorySizeInBytes int64 `json:"memorySizeInBytes,omitempty,string"`
 	// ShardCount: Optional. Number of shards (if applicable).
 	ShardCount int64 `json:"shardCount,omitempty"`
-	// VcpuCount: Optional. The number of vCPUs. TODO(b/342344482, b/342346271) add
-	// proto validations again after bug fix.
+	// VcpuCount: Optional. The number of vCPUs. TODO(b/342344482) add proto
+	// validations again after bug fix.
 	VcpuCount float64 `json:"vcpuCount,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "CpuCount") to
 	// unconditionally include in API requests. By default, fields with empty or

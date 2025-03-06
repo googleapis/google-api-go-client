@@ -1753,8 +1753,8 @@ func (s EncryptionConfig) MarshalJSON() ([]byte, error) {
 type EntityDdl struct {
 	// Ddl: The actual ddl code.
 	Ddl string `json:"ddl,omitempty"`
-	// DdlKind: The DDL Kind selected for apply, or SOURCE if getting the source
-	// tree.
+	// DdlKind: The DDL Kind selected for apply, or UNSPECIFIED if the entity
+	// wasn't converted yet.
 	//
 	// Possible values:
 	//   "DDL_KIND_UNSPECIFIED" - The kind of the DDL is unknown.
@@ -7792,6 +7792,10 @@ func (c *ProjectsLocationsConversionWorkspacesDescribeDatabaseEntitiesCall) Unco
 // only a single page of result is returned and the page_size property of the
 // request is ignored. The returned page will only include the top-most node
 // types.
+//
+//	"DATABASE_ENTITY_VIEW_FULL_COMPACT" - Returns full entity details except
+//
+// for ddls and schema custom features.
 func (c *ProjectsLocationsConversionWorkspacesDescribeDatabaseEntitiesCall) View(view string) *ProjectsLocationsConversionWorkspacesDescribeDatabaseEntitiesCall {
 	c.urlParams_.Set("view", view)
 	return c

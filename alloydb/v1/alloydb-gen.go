@@ -288,8 +288,7 @@ type AutomatedBackupPolicy struct {
 	Enabled bool `json:"enabled,omitempty"`
 	// EncryptionConfig: Optional. The encryption config can be specified to
 	// encrypt the backups with a customer-managed encryption key (CMEK). When this
-	// field is not specified, the backup will then use default encryption scheme
-	// to protect the user data.
+	// field is not specified, the backup will use the cluster's encryption config.
 	EncryptionConfig *EncryptionConfig `json:"encryptionConfig,omitempty"`
 	// Labels: Labels to apply to backups created using this configuration.
 	Labels map[string]string `json:"labels,omitempty"`
@@ -1477,6 +1476,8 @@ type Instance struct {
 	// Nodes: Output only. List of available read-only VMs in this instance,
 	// including the standby for a PRIMARY instance.
 	Nodes []*Node `json:"nodes,omitempty"`
+	// ObservabilityConfig: Configuration for observability.
+	ObservabilityConfig *ObservabilityInstanceConfig `json:"observabilityConfig,omitempty"`
 	// OutboundPublicIpAddresses: Output only. All outbound public IP addresses
 	// configured for the instance.
 	OutboundPublicIpAddresses []string `json:"outboundPublicIpAddresses,omitempty"`
@@ -2034,6 +2035,53 @@ type Node struct {
 
 func (s Node) MarshalJSON() ([]byte, error) {
 	type NoMethod Node
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ObservabilityInstanceConfig: Observability Instance specific configuration.
+type ObservabilityInstanceConfig struct {
+	// Enabled: Observability feature status for an instance. This flag is turned
+	// "off" by default.
+	Enabled bool `json:"enabled,omitempty"`
+	// MaxQueryStringLength: Query string length. The default value is 10k.
+	MaxQueryStringLength int64 `json:"maxQueryStringLength,omitempty"`
+	// PreserveComments: Preserve comments in query string for an instance. This
+	// flag is turned "off" by default.
+	PreserveComments bool `json:"preserveComments,omitempty"`
+	// QueryPlansPerMinute: Number of query execution plans captured by Insights
+	// per minute for all queries combined. The default value is 200. Any integer
+	// between 0 to 200 is considered valid.
+	QueryPlansPerMinute int64 `json:"queryPlansPerMinute,omitempty"`
+	// RecordApplicationTags: Record application tags for an instance. This flag is
+	// turned "off" by default.
+	RecordApplicationTags bool `json:"recordApplicationTags,omitempty"`
+	// TrackActiveQueries: Track actively running queries on the instance. If not
+	// set, this flag is "off" by default.
+	TrackActiveQueries bool `json:"trackActiveQueries,omitempty"`
+	// TrackWaitEventTypes: Output only. Track wait event types during query
+	// execution for an instance. This flag is turned "on" by default but tracking
+	// is enabled only after observability enabled flag is also turned on. This is
+	// read-only flag and only modifiable by internal API.
+	TrackWaitEventTypes bool `json:"trackWaitEventTypes,omitempty"`
+	// TrackWaitEvents: Track wait events during query execution for an instance.
+	// This flag is turned "on" by default but tracking is enabled only after
+	// observability enabled flag is also turned on.
+	TrackWaitEvents bool `json:"trackWaitEvents,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Enabled") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Enabled") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ObservabilityInstanceConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod ObservabilityInstanceConfig
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -3904,15 +3952,15 @@ func (s StorageDatabasecenterPartnerapiV1mainInternalResourceMetadata) MarshalJS
 // Database Resource.
 type StorageDatabasecenterPartnerapiV1mainMachineConfiguration struct {
 	// CpuCount: The number of CPUs. Deprecated. Use vcpu_count instead.
-	// TODO(b/342344482, b/342346271) add proto validations again after bug fix.
+	// TODO(b/342344482) add proto validations again after bug fix.
 	CpuCount int64 `json:"cpuCount,omitempty"`
-	// MemorySizeInBytes: Memory size in bytes. TODO(b/342344482, b/342346271) add
-	// proto validations again after bug fix.
+	// MemorySizeInBytes: Memory size in bytes. TODO(b/342344482) add proto
+	// validations again after bug fix.
 	MemorySizeInBytes int64 `json:"memorySizeInBytes,omitempty,string"`
 	// ShardCount: Optional. Number of shards (if applicable).
 	ShardCount int64 `json:"shardCount,omitempty"`
-	// VcpuCount: Optional. The number of vCPUs. TODO(b/342344482, b/342346271) add
-	// proto validations again after bug fix.
+	// VcpuCount: Optional. The number of vCPUs. TODO(b/342344482) add proto
+	// validations again after bug fix.
 	VcpuCount float64 `json:"vcpuCount,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "CpuCount") to
 	// unconditionally include in API requests. By default, fields with empty or

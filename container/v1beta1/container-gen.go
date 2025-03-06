@@ -2756,6 +2756,7 @@ type Filter struct {
 	//   "UPGRADE_AVAILABLE_EVENT" - Corresponds with UpgradeAvailableEvent.
 	//   "UPGRADE_EVENT" - Corresponds with UpgradeEvent.
 	//   "SECURITY_BULLETIN_EVENT" - Corresponds with SecurityBulletinEvent.
+	//   "UPGRADE_INFO_EVENT" - Corresponds with UpgradeInfoEvent.
 	EventType []string `json:"eventType,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "EventType") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -7707,6 +7708,8 @@ type StatusCondition struct {
 	//   "CLOUD_KMS_KEY_ERROR" - Unable to perform an encrypt operation against the
 	// CloudKMS key used for etcd level encryption.
 	//   "CA_EXPIRING" - Cluster CA is expiring soon.
+	//   "NODE_SERVICE_ACCOUNT_MISSING_PERMISSIONS" - Node service account is
+	// missing permissions.
 	Code string `json:"code,omitempty"`
 	// Message: Human-friendly representation of the condition
 	Message string `json:"message,omitempty"`

@@ -2852,13 +2852,13 @@ func (s UndeleteCertificateAuthorityRequest) MarshalJSON() ([]byte, error) {
 type UserDefinedAccessUrls struct {
 	// AiaIssuingCertificateUrls: Optional. A list of URLs where the issuer CA
 	// certificate may be downloaded, which appears in the "Authority Information
-	// Access" extension in the certificate. If specified, the default GCS URLs
-	// will be omitted.
+	// Access" extension in the certificate. If specified, the default Cloud
+	// Storage URLs will be omitted.
 	AiaIssuingCertificateUrls []string `json:"aiaIssuingCertificateUrls,omitempty"`
 	// CrlAccessUrls: Optional. A list of URLs where to obtain CRL information,
 	// i.e. the DistributionPoint.fullName described by
 	// https://tools.ietf.org/html/rfc5280#section-4.2.1.13. If specified, the
-	// default GCS URLs will be omitted.
+	// default Cloud Storage URLs will be omitted.
 	CrlAccessUrls []string `json:"crlAccessUrls,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AiaIssuingCertificateUrls")
 	// to unconditionally include in API requests. By default, fields with empty or

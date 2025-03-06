@@ -5636,6 +5636,9 @@ type UptimeCheckConfig struct {
 	// is_internal is true, or to provide 'internal_checkers' when is_internal is
 	// false.
 	IsInternal bool `json:"isInternal,omitempty"`
+	// LogCheckFailures: To specify whether to log the results of failed probes to
+	// Cloud Logging.
+	LogCheckFailures bool `json:"logCheckFailures,omitempty"`
 	// MonitoredResource: The monitored resource
 	// (https://cloud.google.com/monitoring/api/resources) associated with the
 	// configuration. The following monitored resource types are valid for this

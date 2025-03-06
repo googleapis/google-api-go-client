@@ -909,6 +909,9 @@ type GoogleCloudFunctionsV2betaOperationMetadata struct {
 	CancelRequested bool `json:"cancelRequested,omitempty"`
 	// CreateTime: The time the operation was created.
 	CreateTime string `json:"createTime,omitempty"`
+	// CustomIamRoleDetected: Output only. Whether a custom IAM role binding was
+	// detected during the upgrade.
+	CustomIamRoleDetected bool `json:"customIamRoleDetected,omitempty"`
 	// EndTime: The time the operation finished running.
 	EndTime string `json:"endTime,omitempty"`
 	// OperationType: The operation type.

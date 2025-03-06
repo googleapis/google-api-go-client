@@ -993,7 +993,9 @@ type GoogleChannelConfig struct {
 	// `projects/*/locations/*/keyRings/*/cryptoKeys/*`.
 	CryptoKeyName string `json:"cryptoKeyName,omitempty"`
 	// Name: Required. The resource name of the config. Must be in the format of,
-	// `projects/{project}/locations/{location}/googleChannelConfig`.
+	// `projects/{project}/locations/{location}/googleChannelConfig`. In API
+	// responses, the config name always includes the projectID, regardless of
+	// whether the projectID or projectNumber was provided.
 	Name string `json:"name,omitempty"`
 	// UpdateTime: Output only. The last-modified time.
 	UpdateTime string `json:"updateTime,omitempty"`
@@ -2813,7 +2815,8 @@ type ProjectsLocationsGetGoogleChannelConfigCall struct {
 	header_      http.Header
 }
 
-// GetGoogleChannelConfig: Get a GoogleChannelConfig
+// GetGoogleChannelConfig: Get a GoogleChannelConfig. The name of the
+// GoogleChannelConfig in the response is ALWAYS coded with projectID.
 //
 // - name: The name of the config to get.
 func (r *ProjectsLocationsService) GetGoogleChannelConfig(name string) *ProjectsLocationsGetGoogleChannelConfigCall {
@@ -3081,7 +3084,9 @@ type ProjectsLocationsUpdateGoogleChannelConfigCall struct {
 // UpdateGoogleChannelConfig: Update a single GoogleChannelConfig
 //
 //   - name: The resource name of the config. Must be in the format of,
-//     `projects/{project}/locations/{location}/googleChannelConfig`.
+//     `projects/{project}/locations/{location}/googleChannelConfig`. In API
+//     responses, the config name always includes the projectID, regardless of
+//     whether the projectID or projectNumber was provided.
 func (r *ProjectsLocationsService) UpdateGoogleChannelConfig(name string, googlechannelconfig *GoogleChannelConfig) *ProjectsLocationsUpdateGoogleChannelConfigCall {
 	c := &ProjectsLocationsUpdateGoogleChannelConfigCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name

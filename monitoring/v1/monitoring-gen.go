@@ -2437,6 +2437,30 @@ func (s SectionHeader) MarshalJSON() ([]byte, error) {
 // menu. All widgets that are within the area spanned by the grouping widget
 // are considered member widgets.
 type SingleViewGroup struct {
+	// DisplayType: Optional. Determines how the widget selector will be displayed.
+	//
+	// Possible values:
+	//   "DISPLAY_TYPE_UNSPECIFIED" - Display type is not specified, defaults to
+	// DROPDOWN.
+	//   "DROPDOWN" - Renders the widget selector as a dropdown.
+	//   "TAB" - Renders the widget selector as a tab list.
+	DisplayType string `json:"displayType,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "DisplayType") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DisplayType") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s SingleViewGroup) MarshalJSON() ([]byte, error) {
+	type NoMethod SingleViewGroup
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SourceContext: SourceContext represents information about the source of a

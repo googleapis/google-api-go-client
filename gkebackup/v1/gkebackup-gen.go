@@ -557,6 +557,11 @@ type BackupPlan struct {
 	Etag string `json:"etag,omitempty"`
 	// Labels: Optional. A set of custom labels supplied by user.
 	Labels map[string]string `json:"labels,omitempty"`
+	// LastSuccessfulBackupTime: Output only. Completion time of the last
+	// successful Backup. This is sourced from a successful Backup's complete_time
+	// field. This field is added to maintain consistency with BackupPlanBinding to
+	// display last successful backup time.
+	LastSuccessfulBackupTime string `json:"lastSuccessfulBackupTime,omitempty"`
 	// Name: Output only. The full name of the BackupPlan resource. Format:
 	// `projects/*/locations/*/backupPlans/*`
 	Name string `json:"name,omitempty"`

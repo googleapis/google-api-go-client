@@ -13267,8 +13267,10 @@ type CoursesTopicsCreateCall struct {
 // `PERMISSION_DENIED` if the requesting user is not permitted to access the
 // requested course, create a topic in the requested course, or for access
 // errors. * `INVALID_ARGUMENT` if the request is malformed. * `ALREADY_EXISTS`
-// if there exists a topic in the course with the same name. * `NOT_FOUND` if
-// the requested course does not exist.
+// if there exists a topic in the course with the same name. *
+// `FAILED_PRECONDITION` for the following request error: *
+// CourseTopicLimitReached * `NOT_FOUND` if the requested course does not
+// exist.
 //
 //   - courseId: Identifier of the course. This identifier can be either the
 //     Classroom-assigned identifier or an alias.

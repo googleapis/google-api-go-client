@@ -250,6 +250,7 @@ func NewProjectsInstancesService(s *Service) *ProjectsInstancesService {
 	rs := &ProjectsInstancesService{s: s}
 	rs.AppProfiles = NewProjectsInstancesAppProfilesService(s)
 	rs.Clusters = NewProjectsInstancesClustersService(s)
+	rs.LogicalViews = NewProjectsInstancesLogicalViewsService(s)
 	rs.MaterializedViews = NewProjectsInstancesMaterializedViewsService(s)
 	rs.Tables = NewProjectsInstancesTablesService(s)
 	return rs
@@ -261,6 +262,8 @@ type ProjectsInstancesService struct {
 	AppProfiles *ProjectsInstancesAppProfilesService
 
 	Clusters *ProjectsInstancesClustersService
+
+	LogicalViews *ProjectsInstancesLogicalViewsService
 
 	MaterializedViews *ProjectsInstancesMaterializedViewsService
 
@@ -306,6 +309,15 @@ func NewProjectsInstancesClustersHotTabletsService(s *Service) *ProjectsInstance
 }
 
 type ProjectsInstancesClustersHotTabletsService struct {
+	s *Service
+}
+
+func NewProjectsInstancesLogicalViewsService(s *Service) *ProjectsInstancesLogicalViewsService {
+	rs := &ProjectsInstancesLogicalViewsService{s: s}
+	return rs
+}
+
+type ProjectsInstancesLogicalViewsService struct {
 	s *Service
 }
 
@@ -2007,6 +2019,26 @@ func (s GoogleBigtableAdminV2TypeBytesEncoding) MarshalJSON() ([]byte, error) {
 // GoogleBigtableAdminV2TypeBytesEncodingRaw: Leaves the value as-is. Sorted
 // mode: all values are supported. Distinct mode: all values are supported.
 type GoogleBigtableAdminV2TypeBytesEncodingRaw struct {
+	// EscapeNulls: If set, allows NULL values to be encoded as the empty string
+	// "". The actual empty string, or any value which only contains the null byte
+	// 0x00, has one more null byte appended.
+	EscapeNulls bool `json:"escapeNulls,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "EscapeNulls") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "EscapeNulls") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleBigtableAdminV2TypeBytesEncodingRaw) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleBigtableAdminV2TypeBytesEncodingRaw
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleBigtableAdminV2TypeDate: Date Values of type `Date` are stored in
@@ -2052,6 +2084,8 @@ func (s GoogleBigtableAdminV2TypeInt64) MarshalJSON() ([]byte, error) {
 type GoogleBigtableAdminV2TypeInt64Encoding struct {
 	// BigEndianBytes: Use `BigEndianBytes` encoding.
 	BigEndianBytes *GoogleBigtableAdminV2TypeInt64EncodingBigEndianBytes `json:"bigEndianBytes,omitempty"`
+	// OrderedCodeBytes: Use `OrderedCodeBytes` encoding.
+	OrderedCodeBytes *GoogleBigtableAdminV2TypeInt64EncodingOrderedCodeBytes `json:"orderedCodeBytes,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "BigEndianBytes") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -2094,6 +2128,13 @@ type GoogleBigtableAdminV2TypeInt64EncodingBigEndianBytes struct {
 func (s GoogleBigtableAdminV2TypeInt64EncodingBigEndianBytes) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleBigtableAdminV2TypeInt64EncodingBigEndianBytes
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleBigtableAdminV2TypeInt64EncodingOrderedCodeBytes: Encodes the value in
+// a variable length binary format of up to 10 bytes. Values that are closer to
+// zero use fewer bytes. Sorted mode: all values are supported. Distinct mode:
+// all values are supported.
+type GoogleBigtableAdminV2TypeInt64EncodingOrderedCodeBytes struct {
 }
 
 // GoogleBigtableAdminV2TypeMap: A mapping of keys to values of a given type.
@@ -2179,6 +2220,29 @@ func (s GoogleBigtableAdminV2TypeStringEncoding) MarshalJSON() ([]byte, error) {
 // mode: all values are supported. Compatible with: - BigQuery `TEXT` encoding
 // - HBase `Bytes.toBytes` - Java `String#getBytes(StandardCharsets.UTF_8)`
 type GoogleBigtableAdminV2TypeStringEncodingUtf8Bytes struct {
+	// NullEscapeChar: Single-character escape sequence used to support NULL
+	// values. If set, allows NULL values to be encoded as the empty string "". The
+	// actual empty string, or any value where every character equals
+	// `null_escape_char`, has one more `null_escape_char` appended. If
+	// `null_escape_char` is set and does not equal the ASCII null character 0x00,
+	// then the encoding will not support sorted mode. .
+	NullEscapeChar string `json:"nullEscapeChar,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "NullEscapeChar") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "NullEscapeChar") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleBigtableAdminV2TypeStringEncodingUtf8Bytes) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleBigtableAdminV2TypeStringEncodingUtf8Bytes
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleBigtableAdminV2TypeStringEncodingUtf8Raw: Deprecated: prefer the
@@ -2191,15 +2255,17 @@ type GoogleBigtableAdminV2TypeStringEncodingUtf8Raw struct {
 // stored in `Value.array_value` where entries are in the same order and number
 // as `field_types`.
 type GoogleBigtableAdminV2TypeStruct struct {
+	// Encoding: The encoding to use when converting to or from lower level types.
+	Encoding *GoogleBigtableAdminV2TypeStructEncoding `json:"encoding,omitempty"`
 	// Fields: The names and types of the fields in this struct.
 	Fields []*GoogleBigtableAdminV2TypeStructField `json:"fields,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "Fields") to unconditionally
-	// include in API requests. By default, fields with empty or default values are
-	// omitted from API requests. See
+	// ForceSendFields is a list of field names (e.g. "Encoding") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Fields") to include in API
+	// NullFields is a list of field names (e.g. "Encoding") to include in API
 	// requests with the JSON null value. By default, fields with empty values are
 	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
@@ -2209,6 +2275,91 @@ type GoogleBigtableAdminV2TypeStruct struct {
 func (s GoogleBigtableAdminV2TypeStruct) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleBigtableAdminV2TypeStruct
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleBigtableAdminV2TypeStructEncoding: Rules used to convert to or from
+// lower level types.
+type GoogleBigtableAdminV2TypeStructEncoding struct {
+	// DelimitedBytes: Use `DelimitedBytes` encoding.
+	DelimitedBytes *GoogleBigtableAdminV2TypeStructEncodingDelimitedBytes `json:"delimitedBytes,omitempty"`
+	// OrderedCodeBytes: User `OrderedCodeBytes` encoding.
+	OrderedCodeBytes *GoogleBigtableAdminV2TypeStructEncodingOrderedCodeBytes `json:"orderedCodeBytes,omitempty"`
+	// Singleton: Use `Singleton` encoding.
+	Singleton *GoogleBigtableAdminV2TypeStructEncodingSingleton `json:"singleton,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "DelimitedBytes") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DelimitedBytes") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleBigtableAdminV2TypeStructEncoding) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleBigtableAdminV2TypeStructEncoding
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleBigtableAdminV2TypeStructEncodingDelimitedBytes: Fields are encoded
+// independently and concatenated with a configurable `delimiter` in between. A
+// struct with no fields defined is encoded as a single `delimiter`. Sorted
+// mode: - Fields are encoded in sorted mode. - Encoded field values must not
+// contain any bytes <= `delimiter[0]` - Element-wise order is preserved: `A <
+// B` if `A[0] < B[0]`, or if `A[0] == B[0] && A[1] < B[1]`, etc. Strict
+// prefixes sort first. Distinct mode: - Fields are encoded in distinct mode. -
+// Encoded field values must not contain `delimiter[0]`.
+type GoogleBigtableAdminV2TypeStructEncodingDelimitedBytes struct {
+	// Delimiter: Byte sequence used to delimit concatenated fields. The delimiter
+	// must contain at least 1 character and at most 50 characters.
+	Delimiter string `json:"delimiter,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Delimiter") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Delimiter") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleBigtableAdminV2TypeStructEncodingDelimitedBytes) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleBigtableAdminV2TypeStructEncodingDelimitedBytes
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleBigtableAdminV2TypeStructEncodingOrderedCodeBytes: Fields are encoded
+// independently and concatenated with the fixed byte pair {0x00, 0x01} in
+// between. Any null (0x00) byte in an encoded field is replaced by the fixed
+// byte pair {0x00, 0xFF}. Fields that encode to the empty string "" have
+// special handling: - If *every* field encodes to "", or if the STRUCT has no
+// fields defined, then the STRUCT is encoded as the fixed byte pair {0x00,
+// 0x00}. - Otherwise, the STRUCT only encodes until the last non-empty field,
+// omitting any trailing empty fields. Any empty fields that aren't omitted are
+// replaced with the fixed byte pair {0x00, 0x00}. Examples: - STRUCT() ->
+// "\00\00" - STRUCT("") -> "\00\00" - STRUCT("", "") -> "\00\00" - STRUCT("",
+// "B") -> "\00\00" + "\00\01" + "B" - STRUCT("A", "") -> "A" - STRUCT("", "B",
+// "") -> "\00\00" + "\00\01" + "B" - STRUCT("A", "", "C") -> "A" + "\00\01" +
+// "\00\00" + "\00\01" + "C" Since null bytes are always escaped, this encoding
+// can cause size blowup for encodings like `Int64.BigEndianBytes` that are
+// likely to produce many such bytes. Sorted mode: - Fields are encoded in
+// sorted mode. - All values supported by the field encodings are allowed -
+// Element-wise order is preserved: `A < B` if `A[0] < B[0]`, or if `A[0] ==
+// B[0] && A[1] < B[1]`, etc. Strict prefixes sort first. Distinct mode: -
+// Fields are encoded in distinct mode. - All values supported by the field
+// encodings are allowed.
+type GoogleBigtableAdminV2TypeStructEncodingOrderedCodeBytes struct {
+}
+
+// GoogleBigtableAdminV2TypeStructEncodingSingleton: Uses the encoding of
+// `fields[0].type` as-is. Only valid if `fields.size == 1`.
+type GoogleBigtableAdminV2TypeStructEncodingSingleton struct {
 }
 
 // GoogleBigtableAdminV2TypeStructField: A struct field and its type.
@@ -2239,6 +2390,49 @@ func (s GoogleBigtableAdminV2TypeStructField) MarshalJSON() ([]byte, error) {
 // GoogleBigtableAdminV2TypeTimestamp: Timestamp Values of type `Timestamp` are
 // stored in `Value.timestamp_value`.
 type GoogleBigtableAdminV2TypeTimestamp struct {
+	// Encoding: The encoding to use when converting to or from lower level types.
+	Encoding *GoogleBigtableAdminV2TypeTimestampEncoding `json:"encoding,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Encoding") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Encoding") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleBigtableAdminV2TypeTimestamp) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleBigtableAdminV2TypeTimestamp
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleBigtableAdminV2TypeTimestampEncoding: Rules used to convert to or from
+// lower level types.
+type GoogleBigtableAdminV2TypeTimestampEncoding struct {
+	// UnixMicrosInt64: Encodes the number of microseconds since the Unix epoch
+	// using the given `Int64` encoding. Values must be microsecond-aligned.
+	// Compatible with: - Java `Instant.truncatedTo()` with `ChronoUnit.MICROS`
+	UnixMicrosInt64 *GoogleBigtableAdminV2TypeInt64Encoding `json:"unixMicrosInt64,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "UnixMicrosInt64") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "UnixMicrosInt64") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleBigtableAdminV2TypeTimestampEncoding) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleBigtableAdminV2TypeTimestampEncoding
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // HotTablet: A tablet is a defined by a start and end key and is explained in
@@ -7620,6 +7814,327 @@ func (c *ProjectsInstancesClustersHotTabletsListCall) Pages(ctx context.Context,
 	}
 }
 
+type ProjectsInstancesLogicalViewsGetIamPolicyCall struct {
+	s                   *Service
+	resource            string
+	getiampolicyrequest *GetIamPolicyRequest
+	urlParams_          gensupport.URLParams
+	ctx_                context.Context
+	header_             http.Header
+}
+
+// GetIamPolicy: Gets the access control policy for an instance resource.
+// Returns an empty policy if an instance exists but does not have a policy
+// set.
+//
+//   - resource: REQUIRED: The resource for which the policy is being requested.
+//     See Resource names (https://cloud.google.com/apis/design/resource_names)
+//     for the appropriate value for this field.
+func (r *ProjectsInstancesLogicalViewsService) GetIamPolicy(resource string, getiampolicyrequest *GetIamPolicyRequest) *ProjectsInstancesLogicalViewsGetIamPolicyCall {
+	c := &ProjectsInstancesLogicalViewsGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.resource = resource
+	c.getiampolicyrequest = getiampolicyrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsInstancesLogicalViewsGetIamPolicyCall) Fields(s ...googleapi.Field) *ProjectsInstancesLogicalViewsGetIamPolicyCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsInstancesLogicalViewsGetIamPolicyCall) Context(ctx context.Context) *ProjectsInstancesLogicalViewsGetIamPolicyCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsInstancesLogicalViewsGetIamPolicyCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsInstancesLogicalViewsGetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.getiampolicyrequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+resource}:getIamPolicy")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"resource": c.resource,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "bigtableadmin.projects.instances.logicalViews.getIamPolicy", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "bigtableadmin.projects.instances.logicalViews.getIamPolicy" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Policy.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsInstancesLogicalViewsGetIamPolicyCall) Do(opts ...googleapi.CallOption) (*Policy, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Policy{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "bigtableadmin.projects.instances.logicalViews.getIamPolicy", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsInstancesLogicalViewsSetIamPolicyCall struct {
+	s                   *Service
+	resource            string
+	setiampolicyrequest *SetIamPolicyRequest
+	urlParams_          gensupport.URLParams
+	ctx_                context.Context
+	header_             http.Header
+}
+
+// SetIamPolicy: Sets the access control policy on an instance resource.
+// Replaces any existing policy.
+//
+//   - resource: REQUIRED: The resource for which the policy is being specified.
+//     See Resource names (https://cloud.google.com/apis/design/resource_names)
+//     for the appropriate value for this field.
+func (r *ProjectsInstancesLogicalViewsService) SetIamPolicy(resource string, setiampolicyrequest *SetIamPolicyRequest) *ProjectsInstancesLogicalViewsSetIamPolicyCall {
+	c := &ProjectsInstancesLogicalViewsSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.resource = resource
+	c.setiampolicyrequest = setiampolicyrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsInstancesLogicalViewsSetIamPolicyCall) Fields(s ...googleapi.Field) *ProjectsInstancesLogicalViewsSetIamPolicyCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsInstancesLogicalViewsSetIamPolicyCall) Context(ctx context.Context) *ProjectsInstancesLogicalViewsSetIamPolicyCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsInstancesLogicalViewsSetIamPolicyCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsInstancesLogicalViewsSetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.setiampolicyrequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+resource}:setIamPolicy")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"resource": c.resource,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "bigtableadmin.projects.instances.logicalViews.setIamPolicy", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "bigtableadmin.projects.instances.logicalViews.setIamPolicy" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Policy.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsInstancesLogicalViewsSetIamPolicyCall) Do(opts ...googleapi.CallOption) (*Policy, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Policy{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "bigtableadmin.projects.instances.logicalViews.setIamPolicy", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsInstancesLogicalViewsTestIamPermissionsCall struct {
+	s                         *Service
+	resource                  string
+	testiampermissionsrequest *TestIamPermissionsRequest
+	urlParams_                gensupport.URLParams
+	ctx_                      context.Context
+	header_                   http.Header
+}
+
+// TestIamPermissions: Returns permissions that the caller has on the specified
+// instance resource.
+//
+//   - resource: REQUIRED: The resource for which the policy detail is being
+//     requested. See Resource names
+//     (https://cloud.google.com/apis/design/resource_names) for the appropriate
+//     value for this field.
+func (r *ProjectsInstancesLogicalViewsService) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *ProjectsInstancesLogicalViewsTestIamPermissionsCall {
+	c := &ProjectsInstancesLogicalViewsTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.resource = resource
+	c.testiampermissionsrequest = testiampermissionsrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsInstancesLogicalViewsTestIamPermissionsCall) Fields(s ...googleapi.Field) *ProjectsInstancesLogicalViewsTestIamPermissionsCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsInstancesLogicalViewsTestIamPermissionsCall) Context(ctx context.Context) *ProjectsInstancesLogicalViewsTestIamPermissionsCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsInstancesLogicalViewsTestIamPermissionsCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsInstancesLogicalViewsTestIamPermissionsCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.testiampermissionsrequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+resource}:testIamPermissions")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"resource": c.resource,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "bigtableadmin.projects.instances.logicalViews.testIamPermissions", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "bigtableadmin.projects.instances.logicalViews.testIamPermissions" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *TestIamPermissionsResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsInstancesLogicalViewsTestIamPermissionsCall) Do(opts ...googleapi.CallOption) (*TestIamPermissionsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &TestIamPermissionsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "bigtableadmin.projects.instances.logicalViews.testIamPermissions", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
 type ProjectsInstancesMaterializedViewsGetIamPolicyCall struct {
 	s                   *Service
 	resource            string
@@ -9046,8 +9561,8 @@ func (r *ProjectsInstancesTablesService) Patch(name string, table *Table) *Proje
 // the following fields: * `change_stream_config` *
 // `change_stream_config.retention_period` * `deletion_protection` *
 // `automated_backup_policy` * `automated_backup_policy.retention_period` *
-// `automated_backup_policy.frequency` If `column_families` is set in
-// `update_mask`, it will return an UNIMPLEMENTED error.
+// `automated_backup_policy.frequency` * `row_key_schema` If `column_families`
+// is set in `update_mask`, it will return an UNIMPLEMENTED error.
 func (c *ProjectsInstancesTablesPatchCall) UpdateMask(updateMask string) *ProjectsInstancesTablesPatchCall {
 	c.urlParams_.Set("updateMask", updateMask)
 	return c

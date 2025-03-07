@@ -2319,6 +2319,8 @@ type GoogleAnalyticsAdminV1alphaChangeHistoryChangeChangeHistoryResource struct 
 	// GoogleSignalsSettings: A snapshot of a GoogleSignalsSettings resource in
 	// change history.
 	GoogleSignalsSettings *GoogleAnalyticsAdminV1alphaGoogleSignalsSettings `json:"googleSignalsSettings,omitempty"`
+	// KeyEvent: A snapshot of a KeyEvent resource in change history.
+	KeyEvent *GoogleAnalyticsAdminV1alphaKeyEvent `json:"keyEvent,omitempty"`
 	// MeasurementProtocolSecret: A snapshot of a MeasurementProtocolSecret
 	// resource in change history.
 	MeasurementProtocolSecret *GoogleAnalyticsAdminV1alphaMeasurementProtocolSecret `json:"measurementProtocolSecret,omitempty"`
@@ -5916,6 +5918,7 @@ type GoogleAnalyticsAdminV1alphaSearchChangeHistoryEventsRequest struct {
 	//   "ADSENSE_LINK" - AdSenseLink resource
 	//   "AUDIENCE" - Audience resource
 	//   "EVENT_CREATE_RULE" - EventCreateRule resource
+	//   "KEY_EVENT" - KeyEvent resource
 	//   "CALCULATED_METRIC" - CalculatedMetric resource
 	ResourceType []string `json:"resourceType,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Action") to unconditionally

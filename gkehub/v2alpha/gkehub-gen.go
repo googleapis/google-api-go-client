@@ -529,6 +529,8 @@ func (s ConfigManagementBinauthzVersion) MarshalJSON() ([]byte, error) {
 
 // ConfigManagementConfigSync: Configuration for Config Sync
 type ConfigManagementConfigSync struct {
+	// DeploymentOverrides: Optional. Configuration for deployment overrides.
+	DeploymentOverrides []*ConfigManagementDeploymentOverride `json:"deploymentOverrides,omitempty"`
 	// Enabled: Optional. Enables the installation of ConfigSync. If set to true,
 	// ConfigSync resources will be created and the other ConfigSync fields will be
 	// applied if exist. If set to false, all other ConfigSync fields will be
@@ -559,15 +561,15 @@ type ConfigManagementConfigSync struct {
 	// StopSyncing: Optional. Set to true to stop syncing configs for a single
 	// cluster. Default to false.
 	StopSyncing bool `json:"stopSyncing,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "Enabled") to unconditionally
-	// include in API requests. By default, fields with empty or default values are
-	// omitted from API requests. See
+	// ForceSendFields is a list of field names (e.g. "DeploymentOverrides") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Enabled") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
+	// NullFields is a list of field names (e.g. "DeploymentOverrides") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -817,6 +819,65 @@ type ConfigManagementConfigSyncVersion struct {
 
 func (s ConfigManagementConfigSyncVersion) MarshalJSON() ([]byte, error) {
 	type NoMethod ConfigManagementConfigSyncVersion
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ConfigManagementContainerOverride: Configuration for a container override.
+type ConfigManagementContainerOverride struct {
+	// ContainerName: Required. The name of the container.
+	ContainerName string `json:"containerName,omitempty"`
+	// CpuLimit: Optional. The cpu limit of the container.
+	CpuLimit string `json:"cpuLimit,omitempty"`
+	// CpuRequest: Optional. The cpu request of the container.
+	CpuRequest string `json:"cpuRequest,omitempty"`
+	// MemoryLimit: Optional. The memory limit of the container.
+	MemoryLimit string `json:"memoryLimit,omitempty"`
+	// MemoryRequest: Optional. The memory request of the container.
+	MemoryRequest string `json:"memoryRequest,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ContainerName") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ContainerName") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ConfigManagementContainerOverride) MarshalJSON() ([]byte, error) {
+	type NoMethod ConfigManagementContainerOverride
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ConfigManagementDeploymentOverride: Configuration for a deployment override.
+type ConfigManagementDeploymentOverride struct {
+	// Containers: Optional. The containers of the deployment resource to be
+	// overridden.
+	Containers []*ConfigManagementContainerOverride `json:"containers,omitempty"`
+	// DeploymentName: Required. The name of the deployment resource to be
+	// overridden.
+	DeploymentName string `json:"deploymentName,omitempty"`
+	// DeploymentNamespace: Required. The namespace of the deployment resource to
+	// be overridden..
+	DeploymentNamespace string `json:"deploymentNamespace,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Containers") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Containers") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ConfigManagementDeploymentOverride) MarshalJSON() ([]byte, error) {
+	type NoMethod ConfigManagementDeploymentOverride
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 

@@ -19061,7 +19061,8 @@ type GoogleCloudDialogflowV2beta1SpeechToTextConfig struct {
 	// for model selection.
 	Model string `json:"model,omitempty"`
 	// PhraseSets: List of names of Cloud Speech phrase sets that are used for
-	// transcription.
+	// transcription. For phrase set limitations, please refer to Cloud Speech API
+	// quotas and limits (https://cloud.google.com/speech-to-text/quotas#content).
 	PhraseSets []string `json:"phraseSets,omitempty"`
 	// SampleRateHertz: Sample rate (in Hertz) of the audio content sent in the
 	// query. Refer to Cloud Speech API documentation

@@ -15402,7 +15402,8 @@ type GoogleCloudDialogflowV2SpeechToTextConfig struct {
 	// for model selection.
 	Model string `json:"model,omitempty"`
 	// PhraseSets: List of names of Cloud Speech phrase sets that are used for
-	// transcription.
+	// transcription. For phrase set limitations, please refer to Cloud Speech API
+	// quotas and limits (https://cloud.google.com/speech-to-text/quotas#content).
 	PhraseSets []string `json:"phraseSets,omitempty"`
 	// SampleRateHertz: Sample rate (in Hertz) of the audio content sent in the
 	// query. Refer to Cloud Speech API documentation
@@ -29824,10 +29825,10 @@ func (r *ProjectsAnswerRecordsService) List(parent string) *ProjectsAnswerRecord
 // Filter sets the optional parameter "filter": Filters to restrict results to
 // specific answer records. The expression has the following syntax: [AND ] ...
 // The following fields and operators are supported: * conversation_id with
-// equals(=) operator Examples: * "conversation_id=bar" matches answer records
-// in the projects/foo/locations/global/conversations/bar conversation
-// (assuming the parent is projects/foo/locations/global). For more information
-// about filtering, see API Filtering (https://aip.dev/160).
+// equals(=) operator Examples: * `conversation_id=bar` matches answer records
+// in the `projects/foo/locations/global/conversations/bar` conversation
+// (assuming the parent is `projects/foo/locations/global`). For more
+// information about filtering, see API Filtering (https://aip.dev/160).
 func (c *ProjectsAnswerRecordsListCall) Filter(filter string) *ProjectsAnswerRecordsListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
@@ -44028,10 +44029,10 @@ func (r *ProjectsLocationsAnswerRecordsService) List(parent string) *ProjectsLoc
 // Filter sets the optional parameter "filter": Filters to restrict results to
 // specific answer records. The expression has the following syntax: [AND ] ...
 // The following fields and operators are supported: * conversation_id with
-// equals(=) operator Examples: * "conversation_id=bar" matches answer records
-// in the projects/foo/locations/global/conversations/bar conversation
-// (assuming the parent is projects/foo/locations/global). For more information
-// about filtering, see API Filtering (https://aip.dev/160).
+// equals(=) operator Examples: * `conversation_id=bar` matches answer records
+// in the `projects/foo/locations/global/conversations/bar` conversation
+// (assuming the parent is `projects/foo/locations/global`). For more
+// information about filtering, see API Filtering (https://aip.dev/160).
 func (c *ProjectsLocationsAnswerRecordsListCall) Filter(filter string) *ProjectsLocationsAnswerRecordsListCall {
 	c.urlParams_.Set("filter", filter)
 	return c

@@ -2529,8 +2529,8 @@ type RedisClusterInfo struct {
 	// Location: Name of the region in which the Redis Cluster is defined. For
 	// example, "us-central1".
 	Location string `json:"location,omitempty"`
-	// NetworkUri: URI of a Redis Cluster network in format
-	// "projects/{project_id}/global/networks/{network_id}".
+	// NetworkUri: URI of the network containing the Redis Cluster endpoints in
+	// format "projects/{project_id}/global/networks/{network_id}".
 	NetworkUri string `json:"networkUri,omitempty"`
 	// SecondaryEndpointIpAddress: Secondary endpoint IP address of a Redis
 	// Cluster.

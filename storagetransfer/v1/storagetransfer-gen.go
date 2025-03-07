@@ -945,7 +945,7 @@ type LoggingConfig struct {
 	//   "LOGGABLE_ACTION_UNSPECIFIED" - Default value. This value is unused.
 	//   "FIND" - Listing objects in a bucket.
 	//   "DELETE" - Deleting objects at the source or the destination.
-	//   "COPY" - Copying objects to Google Cloud Storage.
+	//   "COPY" - Copying objects to the destination.
 	LogActions []string `json:"logActions,omitempty"`
 	// ForceSendFields is a list of field names (e.g.
 	// "EnableOnpremGcsTransferLogs") to unconditionally include in API requests.

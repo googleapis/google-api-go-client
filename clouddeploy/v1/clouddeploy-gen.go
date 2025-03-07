@@ -5395,13 +5395,13 @@ type TargetArtifact struct {
 	// paths are relative to this location.
 	ArtifactUri string `json:"artifactUri,omitempty"`
 	// ManifestPath: Output only. File path of the rendered manifest relative to
-	// the URI.
+	// the URI for the stable phase.
 	ManifestPath string `json:"manifestPath,omitempty"`
 	// PhaseArtifacts: Output only. Map from the phase ID to the phase artifacts
 	// for the `Target`.
 	PhaseArtifacts map[string]PhaseArtifact `json:"phaseArtifacts,omitempty"`
 	// SkaffoldConfigPath: Output only. File path of the resolved Skaffold
-	// configuration relative to the URI.
+	// configuration for the stable phase, relative to the URI.
 	SkaffoldConfigPath string `json:"skaffoldConfigPath,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "ArtifactUri") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -5509,9 +5509,9 @@ type TargetRender struct {
 	// successfully because the verification stanza required for verify was not
 	// found on the Skaffold configuration.
 	//   "CUSTOM_ACTION_NOT_FOUND" - The render operation did not complete
-	// successfully because the custom action required for predeploy or postdeploy
-	// was not found in the Skaffold configuration. See failure_message for
-	// additional details.
+	// successfully because the custom action(s) required for Rollout jobs were not
+	// found in the Skaffold configuration. See failure_message for additional
+	// details.
 	//   "DEPLOYMENT_STRATEGY_NOT_SUPPORTED" - Release failed during rendering
 	// because the release configuration is not supported with the specified
 	// deployment strategy.

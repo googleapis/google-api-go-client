@@ -253,6 +253,8 @@ func (s DestinationParallelstore) MarshalJSON() ([]byte, error) {
 type ExportDataRequest struct {
 	// DestinationGcsBucket: Cloud Storage destination.
 	DestinationGcsBucket *DestinationGcsBucket `json:"destinationGcsBucket,omitempty"`
+	// MetadataOptions: Optional. The metadata options for the export data.
+	MetadataOptions *TransferMetadataOptions `json:"metadataOptions,omitempty"`
 	// RequestId: Optional. An optional request ID to identify requests. Specify a
 	// unique request ID so that if you must retry your request, the server will
 	// know to ignore the request if it has already been completed. The server will
@@ -308,6 +310,9 @@ type GoogleProtobufEmpty struct {
 type ImportDataRequest struct {
 	// DestinationParallelstore: Parallelstore destination.
 	DestinationParallelstore *DestinationParallelstore `json:"destinationParallelstore,omitempty"`
+	// MetadataOptions: Optional. The transfer metadata options for the import
+	// data.
+	MetadataOptions *TransferMetadataOptions `json:"metadataOptions,omitempty"`
 	// RequestId: Optional. An optional request ID to identify requests. Specify a
 	// unique request ID so that if you must retry your request, the server will
 	// know to ignore the request if it has already been completed. The server will
@@ -780,6 +785,49 @@ type Status struct {
 
 func (s Status) MarshalJSON() ([]byte, error) {
 	type NoMethod Status
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// TransferMetadataOptions: Transfer metadata options for the instance.
+type TransferMetadataOptions struct {
+	// Gid: Optional. The GID preservation behavior.
+	//
+	// Possible values:
+	//   "GID_UNSPECIFIED" - default is GID_NUMBER_PRESERVE.
+	//   "GID_SKIP" - Do not preserve GID during a transfer job.
+	//   "GID_NUMBER_PRESERVE" - Preserve GID that is in number format during a
+	// transfer job.
+	Gid string `json:"gid,omitempty"`
+	// Mode: Optional. The mode preservation behavior.
+	//
+	// Possible values:
+	//   "MODE_UNSPECIFIED" - default is MODE_PRESERVE.
+	//   "MODE_SKIP" - Do not preserve mode during a transfer job.
+	//   "MODE_PRESERVE" - Preserve mode during a transfer job.
+	Mode string `json:"mode,omitempty"`
+	// Uid: Optional. The UID preservation behavior.
+	//
+	// Possible values:
+	//   "UID_UNSPECIFIED" - default is UID_NUMBER_PRESERVE.
+	//   "UID_SKIP" - Do not preserve UID during a transfer job.
+	//   "UID_NUMBER_PRESERVE" - Preserve UID that is in number format during a
+	// transfer job.
+	Uid string `json:"uid,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Gid") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Gid") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s TransferMetadataOptions) MarshalJSON() ([]byte, error) {
+	type NoMethod TransferMetadataOptions
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 

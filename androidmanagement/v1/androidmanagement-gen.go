@@ -2786,11 +2786,13 @@ func (s FilePushedEvent) MarshalJSON() ([]byte, error) {
 type FreezePeriod struct {
 	// EndDate: The end date (inclusive) of the freeze period. Must be no later
 	// than 90 days from the start date. If the end date is earlier than the start
-	// date, the freeze period is considered wrapping year-end. Note: year must not
-	// be set. For example, {"month": 1,"date": 30}.
+	// date, the freeze period is considered wrapping year-end. Note: day and month
+	// must be set. year should not be set as it is not used. For example,
+	// {"month": 1,"date": 30}.
 	EndDate *Date `json:"endDate,omitempty"`
-	// StartDate: The start date (inclusive) of the freeze period. Note: year must
-	// not be set. For example, {"month": 1,"date": 30}.
+	// StartDate: The start date (inclusive) of the freeze period. Note: day and
+	// month must be set. year should not be set as it is not used. For example,
+	// {"month": 1,"date": 30}.
 	StartDate *Date `json:"startDate,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "EndDate") to unconditionally
 	// include in API requests. By default, fields with empty or default values are

@@ -96,8 +96,13 @@ func (w withCredentialsJSON) Apply(o *internal.DialSettings) {
 
 // WithEndpoint returns a ClientOption that overrides the default endpoint
 // to be used for a service. Please note that by default Google APIs only
-// accept HTTPS traffic and that the port number is typically included in
-// the endpoint. Example: "us-central1-speech.googleapis.com:443".
+// accept HTTPS traffic.
+//
+// For a gRPC client, the port number is typically included in the endpoint.
+// Example: "us-central1-speech.googleapis.com:443".
+//
+// For a REST client, the port number is typically not included. Example:
+// "https://speech.googleapis.com".
 func WithEndpoint(url string) ClientOption {
 	return withEndpoint(url)
 }

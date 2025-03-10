@@ -150,7 +150,7 @@ func New(client *http.Client) (*Service, error) {
 	if client == nil {
 		return nil, errors.New("client is nil")
 	}
-	return NewService(context.Background(), option.WithHTTPClient(client))
+	return NewService(context.TODO(), option.WithHTTPClient(client))
 }
 
 type Service struct {
@@ -1916,6 +1916,8 @@ type ConvertRegionPricesResponse struct {
 	ConvertedOtherRegionsPrice *ConvertedOtherRegionsPrice `json:"convertedOtherRegionsPrice,omitempty"`
 	// ConvertedRegionPrices: Map from region code to converted region price.
 	ConvertedRegionPrices map[string]ConvertedRegionPrice `json:"convertedRegionPrices,omitempty"`
+	// RegionVersion: The region version at which the prices were generated.
+	RegionVersion *RegionsVersion `json:"regionVersion,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`

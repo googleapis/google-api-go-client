@@ -138,7 +138,7 @@ func New(client *http.Client) (*Service, error) {
 	if client == nil {
 		return nil, errors.New("client is nil")
 	}
-	return NewService(context.Background(), option.WithHTTPClient(client))
+	return NewService(context.TODO(), option.WithHTTPClient(client))
 }
 
 type Service struct {
@@ -288,8 +288,7 @@ type AutomatedBackupPolicy struct {
 	Enabled bool `json:"enabled,omitempty"`
 	// EncryptionConfig: Optional. The encryption config can be specified to
 	// encrypt the backups with a customer-managed encryption key (CMEK). When this
-	// field is not specified, the backup will then use default encryption scheme
-	// to protect the user data.
+	// field is not specified, the backup will use the cluster's encryption config.
 	EncryptionConfig *EncryptionConfig `json:"encryptionConfig,omitempty"`
 	// Labels: Labels to apply to backups created using this configuration.
 	Labels map[string]string `json:"labels,omitempty"`
@@ -837,8 +836,7 @@ type ContinuousBackupConfig struct {
 	Enabled bool `json:"enabled,omitempty"`
 	// EncryptionConfig: The encryption config can be specified to encrypt the
 	// backups with a customer-managed encryption key (CMEK). When this field is
-	// not specified, the backup will then use default encryption scheme to protect
-	// the user data.
+	// not specified, the backup will use the cluster's encryption config.
 	EncryptionConfig *EncryptionConfig `json:"encryptionConfig,omitempty"`
 	// RecoveryWindowDays: The number of days that are eligible to restore from
 	// using PITR. To support the entire recovery window, backups and logs are
@@ -1478,6 +1476,8 @@ type Instance struct {
 	// Nodes: Output only. List of available read-only VMs in this instance,
 	// including the standby for a PRIMARY instance.
 	Nodes []*Node `json:"nodes,omitempty"`
+	// ObservabilityConfig: Configuration for observability.
+	ObservabilityConfig *ObservabilityInstanceConfig `json:"observabilityConfig,omitempty"`
 	// OutboundPublicIpAddresses: Output only. All outbound public IP addresses
 	// configured for the instance.
 	OutboundPublicIpAddresses []string `json:"outboundPublicIpAddresses,omitempty"`
@@ -2005,7 +2005,7 @@ func (s NetworkConfig) MarshalJSON() ([]byte, error) {
 }
 
 // Node: Details of a single node in the instance. Nodes in an AlloyDB instance
-// are ephemereal, they can change during update, failover, autohealing and
+// are ephemeral, they can change during update, failover, autohealing and
 // resize operations.
 type Node struct {
 	// Id: Output only. The identifier of the VM e.g.
@@ -2035,6 +2035,53 @@ type Node struct {
 
 func (s Node) MarshalJSON() ([]byte, error) {
 	type NoMethod Node
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ObservabilityInstanceConfig: Observability Instance specific configuration.
+type ObservabilityInstanceConfig struct {
+	// Enabled: Observability feature status for an instance. This flag is turned
+	// "off" by default.
+	Enabled bool `json:"enabled,omitempty"`
+	// MaxQueryStringLength: Query string length. The default value is 10k.
+	MaxQueryStringLength int64 `json:"maxQueryStringLength,omitempty"`
+	// PreserveComments: Preserve comments in query string for an instance. This
+	// flag is turned "off" by default.
+	PreserveComments bool `json:"preserveComments,omitempty"`
+	// QueryPlansPerMinute: Number of query execution plans captured by Insights
+	// per minute for all queries combined. The default value is 200. Any integer
+	// between 0 to 200 is considered valid.
+	QueryPlansPerMinute int64 `json:"queryPlansPerMinute,omitempty"`
+	// RecordApplicationTags: Record application tags for an instance. This flag is
+	// turned "off" by default.
+	RecordApplicationTags bool `json:"recordApplicationTags,omitempty"`
+	// TrackActiveQueries: Track actively running queries on the instance. If not
+	// set, this flag is "off" by default.
+	TrackActiveQueries bool `json:"trackActiveQueries,omitempty"`
+	// TrackWaitEventTypes: Output only. Track wait event types during query
+	// execution for an instance. This flag is turned "on" by default but tracking
+	// is enabled only after observability enabled flag is also turned on. This is
+	// read-only flag and only modifiable by internal API.
+	TrackWaitEventTypes bool `json:"trackWaitEventTypes,omitempty"`
+	// TrackWaitEvents: Track wait events during query execution for an instance.
+	// This flag is turned "on" by default but tracking is enabled only after
+	// observability enabled flag is also turned on.
+	TrackWaitEvents bool `json:"trackWaitEvents,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Enabled") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Enabled") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ObservabilityInstanceConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod ObservabilityInstanceConfig
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -2103,6 +2150,8 @@ type OperationMetadata struct {
 	// Target: Output only. Server-defined resource path for the target of the
 	// operation.
 	Target string `json:"target,omitempty"`
+	// UpgradeClusterStatus: Output only. UpgradeClusterStatus related metadata.
+	UpgradeClusterStatus *UpgradeClusterStatus `json:"upgradeClusterStatus,omitempty"`
 	// Verb: Output only. Name of the verb executed by the operation.
 	Verb string `json:"verb,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "ApiVersion") to
@@ -2188,6 +2237,43 @@ func (s PromoteClusterRequest) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// PscAutoConnectionConfig: Configuration for setting up PSC service
+// automation. Consumer projects in the configs will be allowlisted
+// automatically for the instance.
+type PscAutoConnectionConfig struct {
+	// ConsumerNetwork: The consumer network for the PSC service automation,
+	// example: "projects/vpc-host-project/global/networks/default". The consumer
+	// network might be hosted a different project than the consumer project.
+	ConsumerNetwork string `json:"consumerNetwork,omitempty"`
+	// ConsumerNetworkStatus: Output only. The status of the service connection
+	// policy.
+	ConsumerNetworkStatus string `json:"consumerNetworkStatus,omitempty"`
+	// ConsumerProject: The consumer project to which the PSC service automation
+	// endpoint will be created.
+	ConsumerProject string `json:"consumerProject,omitempty"`
+	// IpAddress: Output only. The IP address of the PSC service automation
+	// endpoint.
+	IpAddress string `json:"ipAddress,omitempty"`
+	// Status: Output only. The status of the PSC service automation connection.
+	Status string `json:"status,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ConsumerNetwork") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ConsumerNetwork") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s PscAutoConnectionConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod PscAutoConnectionConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // PscConfig: PscConfig contains PSC related configuration at a cluster level.
 type PscConfig struct {
 	// PscEnabled: Optional. Create an instance that allows connections from
@@ -2220,6 +2306,9 @@ type PscInstanceConfig struct {
 	// AllowedConsumerProjects: Optional. List of consumer projects that are
 	// allowed to create PSC endpoints to service-attachments to this instance.
 	AllowedConsumerProjects []string `json:"allowedConsumerProjects,omitempty"`
+	// PscAutoConnections: Optional. Configurations for setting up PSC service
+	// automation.
+	PscAutoConnections []*PscAutoConnectionConfig `json:"pscAutoConnections,omitempty"`
 	// PscDnsName: Output only. The DNS name of the instance for PSC connectivity.
 	// Name convention: ...alloydb-psc.goog
 	PscDnsName string `json:"pscDnsName,omitempty"`
@@ -2390,6 +2479,29 @@ func (s ReadPoolConfig) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// ReadPoolInstancesUpgradeStageStatus: Read pool instances upgrade specific
+// status.
+type ReadPoolInstancesUpgradeStageStatus struct {
+	// UpgradeStats: Read pool instances upgrade statistics.
+	UpgradeStats *Stats `json:"upgradeStats,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "UpgradeStats") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "UpgradeStats") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ReadPoolInstancesUpgradeStageStatus) MarshalJSON() ([]byte, error) {
+	type NoMethod ReadPoolInstancesUpgradeStageStatus
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 type RestartInstanceRequest struct {
 	// NodeIds: Optional. Full name of the nodes as obtained from
 	// INSTANCE_VIEW_FULL to restart upon. Applicable only to read instances.
@@ -2471,6 +2583,33 @@ type RestoreClusterRequest struct {
 
 func (s RestoreClusterRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod RestoreClusterRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// RestoreFromCloudSQLRequest: Message for registering Restoring from CloudSQL
+// resource.
+type RestoreFromCloudSQLRequest struct {
+	// CloudsqlBackupRunSource: Cluster created from CloudSQL backup run.
+	CloudsqlBackupRunSource *CloudSQLBackupRunSource `json:"cloudsqlBackupRunSource,omitempty"`
+	// Cluster: Required. The resource being created
+	Cluster *Cluster `json:"cluster,omitempty"`
+	// ClusterId: Required. ID of the requesting object.
+	ClusterId string `json:"clusterId,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "CloudsqlBackupRunSource") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CloudsqlBackupRunSource") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s RestoreFromCloudSQLRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod RestoreFromCloudSQLRequest
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -2626,6 +2765,80 @@ type StageInfo struct {
 
 func (s StageInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod StageInfo
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// StageStatus: Status of an upgrade stage.
+type StageStatus struct {
+	// ReadPoolInstancesUpgrade: Read pool instances upgrade metadata.
+	ReadPoolInstancesUpgrade *ReadPoolInstancesUpgradeStageStatus `json:"readPoolInstancesUpgrade,omitempty"`
+	// Stage: Upgrade stage.
+	//
+	// Possible values:
+	//   "STAGE_UNSPECIFIED" - Unspecified stage.
+	//   "ALLOYDB_PRECHECK" - Pre-upgrade custom checks, not covered by pg_upgrade.
+	//   "PG_UPGRADE_CHECK" - Pre-upgrade pg_upgrade checks.
+	//   "PREPARE_FOR_UPGRADE" - Clone the original cluster.
+	//   "PRIMARY_INSTANCE_UPGRADE" - Upgrade the primary instance(downtime).
+	//   "READ_POOL_INSTANCES_UPGRADE" - This stage is read pool upgrade.
+	//   "ROLLBACK" - Rollback in case of critical failures.
+	//   "CLEANUP" - Cleanup.
+	Stage string `json:"stage,omitempty"`
+	// State: State of this stage.
+	//
+	// Possible values:
+	//   "STATUS_UNSPECIFIED" - Unspecified status.
+	//   "NOT_STARTED" - Not started.
+	//   "IN_PROGRESS" - In progress.
+	//   "SUCCESS" - Operation succeeded.
+	//   "FAILED" - Operation failed.
+	//   "PARTIAL_SUCCESS" - Operation partially succeeded.
+	//   "CANCEL_IN_PROGRESS" - Cancel is in progress.
+	//   "CANCELLED" - Cancellation complete.
+	State string `json:"state,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ReadPoolInstancesUpgrade")
+	// to unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ReadPoolInstancesUpgrade") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s StageStatus) MarshalJSON() ([]byte, error) {
+	type NoMethod StageStatus
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// Stats: Upgrade stats for read pool instances.
+type Stats struct {
+	// Failed: Number of read pool instances which failed to upgrade.
+	Failed int64 `json:"failed,omitempty"`
+	// NotStarted: Number of read pool instances for which upgrade has not started.
+	NotStarted int64 `json:"notStarted,omitempty"`
+	// Ongoing: Number of read pool instances undergoing upgrade.
+	Ongoing int64 `json:"ongoing,omitempty"`
+	// Success: Number of read pool instances successfully upgraded.
+	Success int64 `json:"success,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Failed") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Failed") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s Stats) MarshalJSON() ([]byte, error) {
+	type NoMethod Stats
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -3149,6 +3362,8 @@ type StorageDatabasecenterPartnerapiV1mainDatabaseResourceHealthSignalData struc
 	// instance does not have a maintenance policy configured.
 	//   "SIGNAL_TYPE_NO_DELETION_PROTECTION" - Deletion Protection Disabled for
 	// the resource
+	//   "SIGNAL_TYPE_INEFFICIENT_QUERY" - Indicates that the instance has
+	// inefficient queries detected.
 	SignalType string `json:"signalType,omitempty"`
 	// Possible values:
 	//   "STATE_UNSPECIFIED" - Unspecified state.
@@ -3228,7 +3443,7 @@ func (s StorageDatabasecenterPartnerapiV1mainDatabaseResourceId) MarshalJSON() (
 }
 
 // StorageDatabasecenterPartnerapiV1mainDatabaseResourceMetadata: Common model
-// for database resource instance metadata. Next ID: 24
+// for database resource instance metadata. Next ID: 25
 type StorageDatabasecenterPartnerapiV1mainDatabaseResourceMetadata struct {
 	// AvailabilityConfiguration: Availability configuration for this instance
 	AvailabilityConfiguration *StorageDatabasecenterPartnerapiV1mainAvailabilityConfiguration `json:"availabilityConfiguration,omitempty"`
@@ -3277,6 +3492,8 @@ type StorageDatabasecenterPartnerapiV1mainDatabaseResourceMetadata struct {
 	//   "DELETED" - Instance is deleted.
 	//   "STATE_OTHER" - For rest of the other category
 	ExpectedState string `json:"expectedState,omitempty"`
+	// GcbdrConfiguration: GCBDR configuration for the resource.
+	GcbdrConfiguration *StorageDatabasecenterPartnerapiV1mainGCBDRConfiguration `json:"gcbdrConfiguration,omitempty"`
 	// Id: Required. Unique identifier for a Database resource
 	Id *StorageDatabasecenterPartnerapiV1mainDatabaseResourceId `json:"id,omitempty"`
 	// InstanceType: The type of the instance. Specified at creation time.
@@ -3322,7 +3539,7 @@ type StorageDatabasecenterPartnerapiV1mainDatabaseResourceMetadata struct {
 	// the same source. Resource name to follow CAIS resource_name format as noted
 	// here go/condor-common-datamodel
 	ResourceName string `json:"resourceName,omitempty"`
-	// SuspensionReason: Suspension reason for the resource.
+	// SuspensionReason: Optional. Suspension reason for the resource.
 	//
 	// Possible values:
 	//   "SUSPENSION_REASON_UNSPECIFIED" - Suspension reason is unspecified.
@@ -3608,6 +3825,8 @@ type StorageDatabasecenterPartnerapiV1mainDatabaseResourceRecommendationSignalDa
 	// instance does not have a maintenance policy configured.
 	//   "SIGNAL_TYPE_NO_DELETION_PROTECTION" - Deletion Protection Disabled for
 	// the resource
+	//   "SIGNAL_TYPE_INEFFICIENT_QUERY" - Indicates that the instance has
+	// inefficient queries detected.
 	SignalType string `json:"signalType,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AdditionalMetadata") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -3669,6 +3888,29 @@ func (s StorageDatabasecenterPartnerapiV1mainEntitlement) MarshalJSON() ([]byte,
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// StorageDatabasecenterPartnerapiV1mainGCBDRConfiguration: GCBDR Configuration
+// for the resource.
+type StorageDatabasecenterPartnerapiV1mainGCBDRConfiguration struct {
+	// GcbdrManaged: Whether the resource is managed by GCBDR.
+	GcbdrManaged bool `json:"gcbdrManaged,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "GcbdrManaged") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "GcbdrManaged") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s StorageDatabasecenterPartnerapiV1mainGCBDRConfiguration) MarshalJSON() ([]byte, error) {
+	type NoMethod StorageDatabasecenterPartnerapiV1mainGCBDRConfiguration
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // StorageDatabasecenterPartnerapiV1mainInternalResourceMetadata: Metadata for
 // individual internal resources in an instance. e.g. spanner instance can have
 // multiple databases with unique configuration settings. Similarly bigtable
@@ -3710,15 +3952,15 @@ func (s StorageDatabasecenterPartnerapiV1mainInternalResourceMetadata) MarshalJS
 // Database Resource.
 type StorageDatabasecenterPartnerapiV1mainMachineConfiguration struct {
 	// CpuCount: The number of CPUs. Deprecated. Use vcpu_count instead.
-	// TODO(b/342344482, b/342346271) add proto validations again after bug fix.
+	// TODO(b/342344482) add proto validations again after bug fix.
 	CpuCount int64 `json:"cpuCount,omitempty"`
-	// MemorySizeInBytes: Memory size in bytes. TODO(b/342344482, b/342346271) add
-	// proto validations again after bug fix.
+	// MemorySizeInBytes: Memory size in bytes. TODO(b/342344482) add proto
+	// validations again after bug fix.
 	MemorySizeInBytes int64 `json:"memorySizeInBytes,omitempty,string"`
 	// ShardCount: Optional. Number of shards (if applicable).
 	ShardCount int64 `json:"shardCount,omitempty"`
-	// VcpuCount: Optional. The number of vCPUs. TODO(b/342344482, b/342346271) add
-	// proto validations again after bug fix.
+	// VcpuCount: Optional. The number of vCPUs. TODO(b/342344482) add proto
+	// validations again after bug fix.
 	VcpuCount float64 `json:"vcpuCount,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "CpuCount") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -4087,11 +4329,23 @@ type SupportedDatabaseFlag struct {
 	// e.g.: * projects/{project}/locations/{location}/flags/{flag} This field
 	// currently has no semantic meaning.
 	Name string `json:"name,omitempty"`
+	// RecommendedIntegerValue: The recommended value for an INTEGER flag.
+	RecommendedIntegerValue int64 `json:"recommendedIntegerValue,omitempty,string"`
+	// RecommendedStringValue: The recommended value for a STRING flag.
+	RecommendedStringValue string `json:"recommendedStringValue,omitempty"`
 	// RequiresDbRestart: Whether setting or updating this flag on an Instance
 	// requires a database restart. If a flag that requires database restart is
 	// set, the backend will automatically restart the database (making sure to
 	// satisfy any availability SLO's).
 	RequiresDbRestart bool `json:"requiresDbRestart,omitempty"`
+	// Scope: The scope of the flag.
+	//
+	// Possible values:
+	//   "SCOPE_UNSPECIFIED" - The scope of the flag is not specified. Default is
+	// DATABASE.
+	//   "DATABASE" - The flag is a database flag.
+	//   "CONNECTION_POOL" - The flag is a connection pool flag.
+	Scope string `json:"scope,omitempty"`
 	// StringRestrictions: Restriction on STRING type value.
 	StringRestrictions *StringRestrictions `json:"stringRestrictions,omitempty"`
 	// SupportedDbVersions: Major database engine versions for which this flag is
@@ -4302,6 +4556,61 @@ type UpgradeClusterResponse struct {
 
 func (s UpgradeClusterResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod UpgradeClusterResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// UpgradeClusterStatus: Message for current status of the Major Version
+// Upgrade operation.
+type UpgradeClusterStatus struct {
+	// Cancellable: Whether the operation is cancellable.
+	Cancellable bool `json:"cancellable,omitempty"`
+	// SourceVersion: Source database major version.
+	//
+	// Possible values:
+	//   "DATABASE_VERSION_UNSPECIFIED" - This is an unknown database version.
+	//   "POSTGRES_13" - DEPRECATED - The database version is Postgres 13.
+	//   "POSTGRES_14" - The database version is Postgres 14.
+	//   "POSTGRES_15" - The database version is Postgres 15.
+	//   "POSTGRES_16" - The database version is Postgres 16.
+	SourceVersion string `json:"sourceVersion,omitempty"`
+	// Stages: Status of all upgrade stages.
+	Stages []*StageStatus `json:"stages,omitempty"`
+	// State: Cluster Major Version Upgrade state.
+	//
+	// Possible values:
+	//   "STATUS_UNSPECIFIED" - Unspecified status.
+	//   "NOT_STARTED" - Not started.
+	//   "IN_PROGRESS" - In progress.
+	//   "SUCCESS" - Operation succeeded.
+	//   "FAILED" - Operation failed.
+	//   "PARTIAL_SUCCESS" - Operation partially succeeded.
+	//   "CANCEL_IN_PROGRESS" - Cancel is in progress.
+	//   "CANCELLED" - Cancellation complete.
+	State string `json:"state,omitempty"`
+	// TargetVersion: Target database major version.
+	//
+	// Possible values:
+	//   "DATABASE_VERSION_UNSPECIFIED" - This is an unknown database version.
+	//   "POSTGRES_13" - DEPRECATED - The database version is Postgres 13.
+	//   "POSTGRES_14" - The database version is Postgres 14.
+	//   "POSTGRES_15" - The database version is Postgres 15.
+	//   "POSTGRES_16" - The database version is Postgres 16.
+	TargetVersion string `json:"targetVersion,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Cancellable") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Cancellable") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s UpgradeClusterStatus) MarshalJSON() ([]byte, error) {
+	type NoMethod UpgradeClusterStatus
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -6630,6 +6939,110 @@ func (c *ProjectsLocationsClustersRestoreCall) Do(opts ...googleapi.CallOption) 
 		return nil, err
 	}
 	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "alloydb.projects.locations.clusters.restore", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsClustersRestoreFromCloudSQLCall struct {
+	s                          *Service
+	parent                     string
+	restorefromcloudsqlrequest *RestoreFromCloudSQLRequest
+	urlParams_                 gensupport.URLParams
+	ctx_                       context.Context
+	header_                    http.Header
+}
+
+// RestoreFromCloudSQL: Restores an AlloyDB cluster from a CloudSQL resource.
+//
+//   - parent: The location of the new cluster. For the required format, see the
+//     comment on Cluster.name field.
+func (r *ProjectsLocationsClustersService) RestoreFromCloudSQL(parent string, restorefromcloudsqlrequest *RestoreFromCloudSQLRequest) *ProjectsLocationsClustersRestoreFromCloudSQLCall {
+	c := &ProjectsLocationsClustersRestoreFromCloudSQLCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.restorefromcloudsqlrequest = restorefromcloudsqlrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsClustersRestoreFromCloudSQLCall) Fields(s ...googleapi.Field) *ProjectsLocationsClustersRestoreFromCloudSQLCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsClustersRestoreFromCloudSQLCall) Context(ctx context.Context) *ProjectsLocationsClustersRestoreFromCloudSQLCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsClustersRestoreFromCloudSQLCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsClustersRestoreFromCloudSQLCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.restorefromcloudsqlrequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/clusters:restoreFromCloudSQL")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "alloydb.projects.locations.clusters.restoreFromCloudSQL", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "alloydb.projects.locations.clusters.restoreFromCloudSQL" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsClustersRestoreFromCloudSQLCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "alloydb.projects.locations.clusters.restoreFromCloudSQL", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -9306,6 +9719,22 @@ func (c *ProjectsLocationsSupportedDatabaseFlagsListCall) PageSize(pageSize int6
 // page of results the server should return.
 func (c *ProjectsLocationsSupportedDatabaseFlagsListCall) PageToken(pageToken string) *ProjectsLocationsSupportedDatabaseFlagsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Scope sets the optional parameter "scope": The scope for which supported
+// flags are requested. If not specified, default is DATABASE.
+//
+// Possible values:
+//
+//	"SCOPE_UNSPECIFIED" - The scope of the flag is not specified. Default is
+//
+// DATABASE.
+//
+//	"DATABASE" - The flag is a database flag.
+//	"CONNECTION_POOL" - The flag is a connection pool flag.
+func (c *ProjectsLocationsSupportedDatabaseFlagsListCall) Scope(scope string) *ProjectsLocationsSupportedDatabaseFlagsListCall {
+	c.urlParams_.Set("scope", scope)
 	return c
 }
 

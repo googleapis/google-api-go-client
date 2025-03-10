@@ -192,7 +192,7 @@ func New(client *http.Client) (*Service, error) {
 	if client == nil {
 		return nil, errors.New("client is nil")
 	}
-	return NewService(context.Background(), option.WithHTTPClient(client))
+	return NewService(context.TODO(), option.WithHTTPClient(client))
 }
 
 type Service struct {
@@ -1010,6 +1010,31 @@ func (s ContentRestriction) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// DownloadRestriction: A restriction for copy and download of the file.
+type DownloadRestriction struct {
+	// RestrictedForReaders: Whether download and copy is restricted for readers.
+	RestrictedForReaders bool `json:"restrictedForReaders,omitempty"`
+	// RestrictedForWriters: Whether download and copy is restricted for writers.
+	// If true, download is also restricted for readers.
+	RestrictedForWriters bool `json:"restrictedForWriters,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "RestrictedForReaders") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "RestrictedForReaders") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s DownloadRestriction) MarshalJSON() ([]byte, error) {
+	type NoMethod DownloadRestriction
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // Drive: Representation of a shared drive. Some resource methods (such as
 // `drives.update`) require a `driveId`. Use the `drives.list` method to
 // retrieve the ID for a shared drive.
@@ -1244,6 +1269,8 @@ type DriveRestrictions struct {
 	// belongs. This restriction may be overridden by other sharing policies
 	// controlled outside of this shared drive.
 	DomainUsersOnly bool `json:"domainUsersOnly,omitempty"`
+	// DownloadRestriction: Download restrictions applied by shared drive managers.
+	DownloadRestriction *DownloadRestriction `json:"downloadRestriction,omitempty"`
 	// DriveMembersOnly: Whether access to items inside this shared drive is
 	// restricted to its members.
 	DriveMembersOnly bool `json:"driveMembersOnly,omitempty"`
@@ -2518,8 +2545,8 @@ type PermissionPermissionDetails struct {
 	// `file` * `member`
 	PermissionType string `json:"permissionType,omitempty"`
 	// Role: Output only. The primary role for this user. While new values may be
-	// added in the future, the following are currently possible: * `organizer` *
-	// `fileOrganizer` * `writer` * `commenter` * `reader`
+	// added in the future, the following are currently possible: * `owner` *
+	// `organizer` * `fileOrganizer` * `writer` * `commenter` * `reader`
 	Role string `json:"role,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Inherited") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -3118,6 +3145,8 @@ type TeamDriveRestrictions struct {
 	// belongs. This restriction may be overridden by other sharing policies
 	// controlled outside of this Team Drive.
 	DomainUsersOnly bool `json:"domainUsersOnly,omitempty"`
+	// DownloadRestriction: Download restrictions applied by shared drive managers.
+	DownloadRestriction *DownloadRestriction `json:"downloadRestriction,omitempty"`
 	// SharingFoldersRequiresOrganizerPermission: If true, only users with the
 	// organizer role can share folders. If false, users with either the organizer
 	// role or the file organizer role can share folders.

@@ -138,7 +138,7 @@ func New(client *http.Client) (*Service, error) {
 	if client == nil {
 		return nil, errors.New("client is nil")
 	}
-	return NewService(context.Background(), option.WithHTTPClient(client))
+	return NewService(context.TODO(), option.WithHTTPClient(client))
 }
 
 type Service struct {
@@ -1086,6 +1086,9 @@ type Connection struct {
 	// TlsServiceDirectory: Output only. The name of the Service Directory service
 	// with TLS.
 	TlsServiceDirectory string `json:"tlsServiceDirectory,omitempty"`
+	// TrafficShapingConfigs: Optional. Traffic shaping configuration for the
+	// connection.
+	TrafficShapingConfigs []*TrafficShapingConfig `json:"trafficShapingConfigs,omitempty"`
 	// UpdateTime: Output only. Updated time.
 	UpdateTime string `json:"updateTime,omitempty"`
 
@@ -1440,7 +1443,7 @@ func (s ConnectorVersion) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// ConnectorVersionInfraConfig: This cofiguration provides infra configs like
+// ConnectorVersionInfraConfig: This configuration provides infra configs like
 // rate limit threshold which need to be configurable for every connector
 // version
 type ConnectorVersionInfraConfig struct {
@@ -5737,6 +5740,48 @@ type TimeOfDay struct {
 
 func (s TimeOfDay) MarshalJSON() ([]byte, error) {
 	type NoMethod TimeOfDay
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// TrafficShapingConfig: * TrafficShapingConfig defines the configuration for
+// shaping API traffic by specifying a quota limit and the duration over which
+// this limit is enforced. This configuration helps to control and manage the
+// rate at which API calls are made on the client side, preventing service
+// overload on the backend. For example: - if the quota limit is 100 calls per
+// 10 seconds, then the message would be: { quota_limit: 100 duration: {
+// seconds: 10 } } - if the quota limit is 100 calls per 5 minutes, then the
+// message would be: { quota_limit: 100 duration: { seconds: 300 } } - if the
+// quota limit is 10000 calls per day, then the message would be: {
+// quota_limit: 10000 duration: { seconds: 86400 } and so on.
+type TrafficShapingConfig struct {
+	// Duration: Required. * The duration over which the API call quota limits are
+	// calculated. This duration is used to define the time window for evaluating
+	// if the number of API calls made by a user is within the allowed quota
+	// limits. For example: - To define a quota sampled over 16 seconds, set
+	// `seconds` to 16 - To define a quota sampled over 5 minutes, set `seconds` to
+	// 300 (5 * 60) - To define a quota sampled over 1 day, set `seconds` to 86400
+	// (24 * 60 * 60) and so on. It is important to note that this duration is not
+	// the time the quota is valid for, but rather the time window over which the
+	// quota is evaluated. For example, if the quota is 100 calls per 10 seconds,
+	// then this duration field would be set to 10 seconds.
+	Duration string `json:"duration,omitempty"`
+	// QuotaLimit: Required. Maximum number of api calls allowed.
+	QuotaLimit int64 `json:"quotaLimit,omitempty,string"`
+	// ForceSendFields is a list of field names (e.g. "Duration") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Duration") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s TrafficShapingConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod TrafficShapingConfig
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 

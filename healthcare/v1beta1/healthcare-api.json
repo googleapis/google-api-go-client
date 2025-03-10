@@ -6011,7 +6011,7 @@
       }
     }
   },
-  "revision": "20250206",
+  "revision": "20250219",
   "rootUrl": "https://healthcare.googleapis.com/",
   "schemas": {
     "AccessDeterminationLogConfig": {
@@ -6827,11 +6827,11 @@
           "type": "string"
         },
         "environment": {
-          "description": "An abstract identifier that describes the environment or conditions under which the accessor is acting. Can be \"*\" if it applies to all environments.",
+          "description": "An abstract identifier that describes the environment or conditions under which the accessor is acting. If it's not specified, it applies to all environments.",
           "type": "string"
         },
         "purpose": {
-          "description": "The intent of data use. Can be \"*\" if it applies to all purposes.",
+          "description": "The intent of data use. If it's not specified, it applies to all purposes.",
           "type": "string"
         }
       },
@@ -7073,6 +7073,16 @@
         "name": {
           "description": "Identifier. Resource name of the dataset, of the form `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}`.",
           "type": "string"
+        },
+        "satisfiesPzi": {
+          "description": "Output only. For future use.",
+          "readOnly": true,
+          "type": "boolean"
+        },
+        "satisfiesPzs": {
+          "description": "Output only. For future use.",
+          "readOnly": true,
+          "type": "boolean"
         },
         "timeZone": {
           "description": "The default timezone used by this dataset. Must be a either a valid IANA time zone name such as \"America/New_York\" or empty, which defaults to UTC. This is used for parsing times in resources, such as HL7 messages, where no explicit timezone is specified.",

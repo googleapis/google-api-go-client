@@ -4100,7 +4100,7 @@
       }
     }
   },
-  "revision": "20250128",
+  "revision": "20250224",
   "rootUrl": "https://youtube.googleapis.com/",
   "schemas": {
     "AbuseReport": {
@@ -6490,7 +6490,11 @@
               "djctqIllegalDrugs",
               "djctqInappropriateLanguage",
               "djctqCriminalActs",
-              "djctqImpactingContent"
+              "djctqImpactingContent",
+              "djctqFear",
+              "djctqMedicalProcedures",
+              "djctqSensitiveTopics",
+              "djctqFantasyViolence"
             ],
             "enumDescriptions": [
               "",
@@ -6505,7 +6509,11 @@
               "Drogas Ilícitas (Illegal drugs)",
               "Linguagem Imprópria (Inappropriate language)",
               "Atos Criminosos (Criminal Acts)",
-              "Conteúdo Impactante (Impacting content)"
+              "Conteúdo Impactante (Impacting content)",
+              "Temer (Fear)",
+              "Procedimentos médicos (Medical Procedures)",
+              "Tópicos sensíveis (Sensitive Topics)",
+              "Fantasia Violência (Fantasy Violence)"
             ],
             "type": "string"
           },

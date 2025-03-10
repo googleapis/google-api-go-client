@@ -164,7 +164,7 @@ func New(client *http.Client) (*Service, error) {
 	if client == nil {
 		return nil, errors.New("client is nil")
 	}
-	return NewService(context.Background(), option.WithHTTPClient(client))
+	return NewService(context.TODO(), option.WithHTTPClient(client))
 }
 
 type Service struct {
@@ -1975,8 +1975,10 @@ func (s Quota) MarshalJSON() ([]byte, error) {
 // properties such as geolocation or by weighted random selection.
 type RRSetRoutingPolicy struct {
 	Geo *RRSetRoutingPolicyGeoPolicy `json:"geo,omitempty"`
-	// HealthCheck: The selfLink attribute of the HealthCheck resource to use for
-	// this RRSetRoutingPolicy.
+	// HealthCheck: The fully qualified URL of the HealthCheck to use for this
+	// RRSetRoutingPolicy. Format this URL like
+	// `https://www.googleapis.com/compute/v1/projects/{project}/global/healthChecks
+	// /{healthCheck}`.
 	// https://cloud.google.com/compute/docs/reference/rest/v1/healthChecks
 	HealthCheck   string                                 `json:"healthCheck,omitempty"`
 	Kind          string                                 `json:"kind,omitempty"`
@@ -2047,8 +2049,8 @@ type RRSetRoutingPolicyGeoPolicyGeoPolicyItem struct {
 	Location string   `json:"location,omitempty"`
 	Rrdatas  []string `json:"rrdatas,omitempty"`
 	// SignatureRrdatas: DNSSEC generated signatures for all the `rrdata` within
-	// this item. If health checked targets are provided for DNSSEC enabled zones,
-	// there's a restriction of 1 IP address per item.
+	// this item. When using health-checked targets for DNSSEC-enabled zones, you
+	// can only use at most one health-checked IP address per item.
 	SignatureRrdatas []string `json:"signatureRrdatas,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "HealthCheckedTargets") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -2070,7 +2072,8 @@ func (s RRSetRoutingPolicyGeoPolicyGeoPolicyItem) MarshalJSON() ([]byte, error) 
 
 // RRSetRoutingPolicyHealthCheckTargets: HealthCheckTargets describes endpoints
 // to health-check when responding to Routing Policy queries. Only the healthy
-// endpoints will be included in the response.
+// endpoints will be included in the response. Set either
+// `internal_load_balancer` or `external_endpoints`. Do not set both.
 type RRSetRoutingPolicyHealthCheckTargets struct {
 	// ExternalEndpoints: The Internet IP addresses to be health checked. The
 	// format matches the format of ResourceRecordSet.rrdata as defined in RFC 1035
@@ -2239,8 +2242,8 @@ type RRSetRoutingPolicyWrrPolicyWrrPolicyItem struct {
 	Kind                 string                                `json:"kind,omitempty"`
 	Rrdatas              []string                              `json:"rrdatas,omitempty"`
 	// SignatureRrdatas: DNSSEC generated signatures for all the `rrdata` within
-	// this item. Note that if health checked targets are provided for DNSSEC
-	// enabled zones, there's a restriction of 1 IP address per item.
+	// this item. When using health-checked targets for DNSSEC-enabled zones, you
+	// can only use at most one health-checked IP address per item.
 	SignatureRrdatas []string `json:"signatureRrdatas,omitempty"`
 	// Weight: The weight corresponding to this `WrrPolicyItem` object. When
 	// multiple `WrrPolicyItem` objects are configured, the probability of

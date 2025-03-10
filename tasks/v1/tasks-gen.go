@@ -147,7 +147,7 @@ func New(client *http.Client) (*Service, error) {
 	if client == nil {
 		return nil, errors.New("client is nil")
 	}
-	return NewService(context.Background(), option.WithHTTPClient(client))
+	return NewService(context.TODO(), option.WithHTTPClient(client))
 }
 
 type Service struct {
@@ -778,7 +778,7 @@ func (r *TasklistsService) List() *TasklistsListCall {
 }
 
 // MaxResults sets the optional parameter "maxResults": Maximum number of task
-// lists returned on one page.  The default is 20 (max allowed: 100).
+// lists returned on one page.  The default is 1000 (max allowed: 1000).
 func (c *TasklistsListCall) MaxResults(maxResults int64) *TasklistsListCall {
 	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
@@ -1742,7 +1742,7 @@ func (r *TasksService) Move(tasklistid string, taskid string) *TasksMoveCall {
 // DestinationTasklist sets the optional parameter "destinationTasklist":
 // Destination task list identifier. If set, the task is moved from tasklist to
 // the destinationTasklist list. Otherwise the task is moved within its current
-// list. Recurrent tasks cannot currently be moved between lists. Optional.
+// list. Recurrent tasks cannot currently be moved between lists.
 func (c *TasksMoveCall) DestinationTasklist(destinationTasklist string) *TasksMoveCall {
 	c.urlParams_.Set("destinationTasklist", destinationTasklist)
 	return c
@@ -1750,9 +1750,10 @@ func (c *TasksMoveCall) DestinationTasklist(destinationTasklist string) *TasksMo
 
 // Parent sets the optional parameter "parent": New parent task identifier. If
 // the task is moved to the top level, this parameter is omitted. The task set
-// as parent must exist in the task list and can not be hidden. Assigned tasks
-// can not be set as parent task (have subtasks) or be moved under a parent
-// task (become subtasks).
+// as parent must exist in the task list and can not be hidden. Exceptions: 1.
+// Assigned tasks can not be set as parent task (have subtasks) or be moved
+// under a parent task (become subtasks). 2. Tasks that are both completed and
+// hidden cannot be nested, so the parent field must be empty.
 func (c *TasksMoveCall) Parent(parent string) *TasksMoveCall {
 	c.urlParams_.Set("parent", parent)
 	return c
@@ -1761,7 +1762,8 @@ func (c *TasksMoveCall) Parent(parent string) *TasksMoveCall {
 // Previous sets the optional parameter "previous": New previous sibling task
 // identifier. If the task is moved to the first position among its siblings,
 // this parameter is omitted. The task set as previous must exist in the task
-// list and can not be hidden.
+// list and can not be hidden. Exceptions: 1. Tasks that are both completed and
+// hidden can only be moved to position 0, so the previous field must be empty.
 func (c *TasksMoveCall) Previous(previous string) *TasksMoveCall {
 	c.urlParams_.Set("previous", previous)
 	return c

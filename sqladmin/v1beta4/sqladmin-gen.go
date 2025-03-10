@@ -157,7 +157,7 @@ func New(client *http.Client) (*Service, error) {
 	if client == nil {
 		return nil, errors.New("client is nil")
 	}
-	return NewService(context.Background(), option.WithHTTPClient(client))
+	return NewService(context.TODO(), option.WithHTTPClient(client))
 }
 
 type Service struct {
@@ -484,6 +484,12 @@ type Backup struct {
 	ExpiryTime string `json:"expiryTime,omitempty"`
 	// Instance: The name of the database instance.
 	Instance string `json:"instance,omitempty"`
+	// InstanceDeletionTime: Optional. Output only. Timestamp in UTC of when the
+	// instance associated with this backup is deleted.
+	InstanceDeletionTime string `json:"instanceDeletionTime,omitempty"`
+	// InstanceSettings: Optional. Output only. Instance setting of the source
+	// instance that's associated with this backup.
+	InstanceSettings *DatabaseInstance `json:"instanceSettings,omitempty"`
 	// Kind: Output only. This is always `sql#backup`.
 	Kind string `json:"kind,omitempty"`
 	// KmsKey: Output only. This output contains the encryption configuration for a
@@ -500,7 +506,7 @@ type Backup struct {
 	// backup.
 	MaxChargeableBytes int64 `json:"maxChargeableBytes,omitempty,string"`
 	// Name: Output only. The resource name of the backup. Format:
-	// projects/{project}/backups/{backup}
+	// projects/{project}/backups/{backup}.
 	Name string `json:"name,omitempty"`
 	// SatisfiesPzi: Output only. This status indicates whether the backup
 	// satisfies PZI. The status is reserved for future use.
@@ -523,10 +529,12 @@ type Backup struct {
 	State string `json:"state,omitempty"`
 	// TimeZone: Output only. This output contains a backup time zone. If a Cloud
 	// SQL for SQL Server instance has a different time zone from the backup's time
-	// zone, then restores to the instance won't happen.
+	// zone, then the restore to the instance doesn't happen.
 	TimeZone string `json:"timeZone,omitempty"`
 	// TtlDays: Input only. The time-to-live (TTL) interval for this resource (in
-	// days). For example: ttlDays:7 means 7 days.
+	// days). For example: ttlDays:7, means 7 days from the current time. The
+	// expiration time can't exceed 365 days from the time that the backup is
+	// created.
 	TtlDays int64 `json:"ttlDays,omitempty,string"`
 	// Type: Output only. The type of this backup. The type can be "AUTOMATED",
 	// "ON_DEMAND", or “FINAL”.
@@ -1018,6 +1026,8 @@ type ConnectSettings struct {
 	DatabaseVersion string `json:"databaseVersion,omitempty"`
 	// DnsName: The dns name of the instance.
 	DnsName string `json:"dnsName,omitempty"`
+	// DnsNames: Output only. The list of DNS names used by this instance.
+	DnsNames []*DnsNameMapping `json:"dnsNames,omitempty"`
 	// IpAddresses: The assigned IP addresses for the instance.
 	IpAddresses []*IpMapping `json:"ipAddresses,omitempty"`
 	// Kind: This is always `sql#connectSettings`.
@@ -1276,6 +1286,8 @@ type DatabaseInstance struct {
 	DiskEncryptionStatus *DiskEncryptionStatus `json:"diskEncryptionStatus,omitempty"`
 	// DnsName: Output only. The dns name of the instance.
 	DnsName string `json:"dnsName,omitempty"`
+	// DnsNames: Output only. The list of DNS names used by this instance.
+	DnsNames []*DnsNameMapping `json:"dnsNames,omitempty"`
 	// Etag: This field is deprecated and will be removed from a future version of
 	// the API. Use the `settings.settingsVersion` field instead.
 	Etag string `json:"etag,omitempty"`
@@ -1719,6 +1731,42 @@ func (s DiskEncryptionStatus) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// DnsNameMapping: DNS metadata.
+type DnsNameMapping struct {
+	// ConnectionType: Output only. The connection type of the DNS name.
+	//
+	// Possible values:
+	//   "CONNECTION_TYPE_UNSPECIFIED" - Unknown connection type.
+	//   "PUBLIC" - Public IP.
+	//   "PRIVATE_SERVICES_ACCESS" - Private services access (private IP).
+	//   "PRIVATE_SERVICE_CONNECT" - Private Service Connect.
+	ConnectionType string `json:"connectionType,omitempty"`
+	// DnsScope: Output only. The scope that the DNS name applies to.
+	//
+	// Possible values:
+	//   "DNS_SCOPE_UNSPECIFIED" - Unknown DNS scope.
+	//   "INSTANCE" - Indicates a instance-level DNS name.
+	DnsScope string `json:"dnsScope,omitempty"`
+	// Name: The DNS name.
+	Name string `json:"name,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ConnectionType") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ConnectionType") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s DnsNameMapping) MarshalJSON() ([]byte, error) {
+	type NoMethod DnsNameMapping
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // Empty: A generic empty message that you can re-use to avoid defining
 // duplicated empty messages in your APIs. A typical example is to use it as
 // the request or the response type of an API method. For instance: service Foo
@@ -1740,10 +1788,14 @@ type ExportContext struct {
 	// the `mysql` system database. If `fileType` is `CSV`, you can specify one
 	// database, either by using this property or by using the
 	// `csvExportOptions.selectQuery` property, which takes precedence over this
-	// property. `PostgreSQL instances:` You must specify one database to be
-	// exported. If `fileType` is `CSV`, this database must match the one specified
-	// in the `csvExportOptions.selectQuery` property. `SQL Server instances:` You
-	// must specify one database to be exported, and the `fileType` must be `BAK`.
+	// property. `PostgreSQL instances:` If you don't specify a database by name,
+	// all user databases in the instance are exported. This excludes system
+	// databases and Cloud SQL databases used to manage internal operations.
+	// Exporting all user databases is only available for directory-formatted
+	// parallel export. If `fileType` is `CSV`, this database must match the one
+	// specified in the `csvExportOptions.selectQuery` property. `SQL Server
+	// instances:` You must specify one database to be exported, and the `fileType`
+	// must be `BAK`.
 	Databases []string `json:"databases,omitempty"`
 	// FileType: The file type for the specified uri.
 	//
@@ -1752,6 +1804,7 @@ type ExportContext struct {
 	//   "SQL" - File containing SQL statements.
 	//   "CSV" - File in CSV format.
 	//   "BAK"
+	//   "TDE" - TDE certificate.
 	FileType string `json:"fileType,omitempty"`
 	// Kind: This is always `sql#exportContext`.
 	Kind string `json:"kind,omitempty"`
@@ -2308,8 +2361,10 @@ type ImportContext struct {
 	CsvImportOptions *ImportContextCsvImportOptions `json:"csvImportOptions,omitempty"`
 	// Database: The target database for the import. If `fileType` is `SQL`, this
 	// field is required only if the import file does not specify a database, and
-	// is overridden by any database specification in the import file. If
-	// `fileType` is `CSV`, one database must be specified.
+	// is overridden by any database specification in the import file. For entire
+	// instance parallel import operations, the database is overridden by the
+	// database name stored in subdirectory name. If `fileType` is `CSV`, one
+	// database must be specified.
 	Database string `json:"database,omitempty"`
 	// FileType: The file type for the specified uri. * `SQL`: The file contains
 	// SQL statements. * `CSV`: The file contains CSV data. * `BAK`: The file
@@ -2320,6 +2375,7 @@ type ImportContext struct {
 	//   "SQL" - File containing SQL statements.
 	//   "CSV" - File in CSV format.
 	//   "BAK"
+	//   "TDE" - TDE certificate.
 	FileType string `json:"fileType,omitempty"`
 	// ImportUser: The PostgreSQL user for this import operation. PostgreSQL
 	// instances only.
@@ -2912,10 +2968,10 @@ type InstancesRestoreBackupRequest struct {
 	// operation.
 	RestoreBackupContext *RestoreBackupContext `json:"restoreBackupContext,omitempty"`
 	// RestoreInstanceSettings: Optional. By using this parameter, Cloud SQL
-	// overrides any instance settings that it stored with the instance settings
-	// that you want to restore. You can't change the Instance's major database
-	// version and you can only increase the disk size. You can use this field to
-	// restore new instances only.
+	// overrides any instance settings stored in the backup you are restoring from.
+	// You can't change the instance's major database version and you can only
+	// increase the disk size. You can use this field to restore new instances
+	// only. This field is not applicable for restore to existing instances.
 	RestoreInstanceSettings *DatabaseInstance `json:"restoreInstanceSettings,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Backup") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -3084,7 +3140,7 @@ type IpConfiguration struct {
 	ServerCaMode string `json:"serverCaMode,omitempty"`
 	// ServerCaPool: Optional. The resource name of the server CA pool for an
 	// instance with `CUSTOMER_MANAGED_CAS_CA` as the `server_ca_mode`. Format:
-	// projects//locations//caPools/
+	// projects/{PROJECT}/locations/{REGION}/caPools/{CA_POOL_ID}
 	ServerCaPool string `json:"serverCaPool,omitempty"`
 	// SslMode: Specify how SSL/TLS is enforced in database connections. If you
 	// must use the `require_ssl` flag for backward compatibility, then only the
@@ -3538,9 +3594,11 @@ type Operation struct {
 	// instance.
 	//   "MAJOR_VERSION_UPGRADE" - Updates the major version of a Cloud SQL
 	// instance.
-	//   "ADVANCED_BACKUP" - Creates a backup for an Advanced BackupTier Cloud SQL
-	// instance.
+	//   "ADVANCED_BACKUP" - Deprecated: ADVANCED_BACKUP is deprecated. Use
+	// ENHANCED_BACKUP instead.
 	//   "MANAGE_BACKUP" - Changes the BackupTier of a Cloud SQL instance.
+	//   "ENHANCED_BACKUP" - Creates a backup for an Enhanced BackupTier Cloud SQL
+	// instance.
 	OperationType string `json:"operationType,omitempty"`
 	// SelfLink: The URI of this resource.
 	SelfLink string `json:"selfLink,omitempty"`
@@ -3559,8 +3617,9 @@ type Operation struct {
 	Status string `json:"status,omitempty"`
 	// SubOperationType: Optional. The sub operation based on the operation type.
 	SubOperationType *SqlSubOperationType `json:"subOperationType,omitempty"`
-	TargetId         string               `json:"targetId,omitempty"`
-	TargetLink       string               `json:"targetLink,omitempty"`
+	// TargetId: Name of the resource on which this operation runs.
+	TargetId   string `json:"targetId,omitempty"`
+	TargetLink string `json:"targetLink,omitempty"`
 	// TargetProject: The project ID of the target instance related to this
 	// operation.
 	TargetProject string `json:"targetProject,omitempty"`
@@ -4234,6 +4293,12 @@ type Settings struct {
 	// while this option is set to asynchronous, you can lose up to a few seconds
 	// of updates to your data.
 	ReplicationType string `json:"replicationType,omitempty"`
+	// RetainBackupsOnDelete: Optional. When this parameter is set to true, Cloud
+	// SQL retains backups of the instance even after the instance is deleted. The
+	// ON_DEMAND backup will be retained until customer deletes the backup or the
+	// project. The AUTOMATED backup will be retained based on the backups
+	// retention setting.
+	RetainBackupsOnDelete bool `json:"retainBackupsOnDelete,omitempty"`
 	// SettingsVersion: The version of instance settings. This is a required field
 	// for update method to make sure concurrent updates are handled properly.
 	// During update, use the most recent settingsVersion value for this instance
@@ -6147,8 +6212,10 @@ func (r *BackupsService) ListBackups(parent string) *BackupsListBackupsCall {
 }
 
 // Filter sets the optional parameter "filter": Multiple filter queries are
-// separated by spaces. For example, 'instance:abc type:FINAL. You can filter
-// by type, instance name, creation time, or location.
+// separated by spaces. For example, 'instance:abc AND type:FINAL,
+// 'location:us', 'backupInterval.startTime>=1950-01-01T01:01:25.771Z'. You can
+// filter by type, instance, backupInterval.startTime (creation time), or
+// location.
 func (c *BackupsListBackupsCall) Filter(filter string) *BackupsListBackupsCall {
 	c.urlParams_.Set("filter", filter)
 	return c

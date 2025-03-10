@@ -139,7 +139,7 @@ func New(client *http.Client) (*Service, error) {
 	if client == nil {
 		return nil, errors.New("client is nil")
 	}
-	return NewService(context.Background(), option.WithHTTPClient(client))
+	return NewService(context.TODO(), option.WithHTTPClient(client))
 }
 
 type Service struct {
@@ -8771,8 +8771,8 @@ func (c *ProjectsLocationsGlobalSecurityGatewaysApplicationsPatchCall) RequestId
 	return c
 }
 
-// UpdateMask sets the optional parameter "updateMask": Required. Mutable
-// fields include: display_name.
+// UpdateMask sets the optional parameter "updateMask": Mutable fields include:
+// display_name.
 func (c *ProjectsLocationsGlobalSecurityGatewaysApplicationsPatchCall) UpdateMask(updateMask string) *ProjectsLocationsGlobalSecurityGatewaysApplicationsPatchCall {
 	c.urlParams_.Set("updateMask", updateMask)
 	return c
@@ -10144,8 +10144,8 @@ func (c *ProjectsLocationsSecurityGatewaysPatchCall) RequestId(requestId string)
 	return c
 }
 
-// UpdateMask sets the optional parameter "updateMask": Required. Mutable
-// fields include: display_name, hubs.
+// UpdateMask sets the optional parameter "updateMask": Mutable fields include:
+// display_name, hubs.
 func (c *ProjectsLocationsSecurityGatewaysPatchCall) UpdateMask(updateMask string) *ProjectsLocationsSecurityGatewaysPatchCall {
 	c.urlParams_.Set("updateMask", updateMask)
 	return c

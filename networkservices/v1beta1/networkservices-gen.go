@@ -138,7 +138,7 @@ func New(client *http.Client) (*Service, error) {
 	if client == nil {
 		return nil, errors.New("client is nil")
 	}
-	return NewService(context.Background(), option.WithHTTPClient(client))
+	return NewService(context.TODO(), option.WithHTTPClient(client))
 }
 
 type Service struct {
@@ -451,15 +451,15 @@ type AuthzExtension struct {
 	// UpdateTime: Output only. The timestamp when the resource was updated.
 	UpdateTime string `json:"updateTime,omitempty"`
 	// WireFormat: Optional. The format of communication supported by the callout
-	// extension. If not specified, the default is `EXT_PROC_GRPC`.
+	// extension. If not specified, the default value `EXT_PROC_GRPC` is used.
 	//
 	// Possible values:
 	//   "WIRE_FORMAT_UNSPECIFIED" - Not specified.
 	//   "EXT_PROC_GRPC" - The extension service uses ExtProc GRPC API over a gRPC
 	// stream. This is the default value if the wire format is not specified. The
 	// backend service for the extension must use HTTP2 or H2C as the protocol. All
-	// `supported_events` for a client request will be sent as part of the same
-	// gRPC stream.
+	// `supported_events` for a client request are sent as part of the same gRPC
+	// stream.
 	WireFormat string `json:"wireFormat,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
@@ -2200,7 +2200,7 @@ type LbTrafficExtension struct {
 	Labels map[string]string `json:"labels,omitempty"`
 	// LoadBalancingScheme: Required. All backend services and forwarding rules
 	// referenced by this extension must share the same load balancing scheme.
-	// Supported values: `INTERNAL_MANAGED`, `EXTERNAL_MANAGED`. For more
+	// Supported values: `INTERNAL_MANAGED` and `EXTERNAL_MANAGED`. For more
 	// information, refer to Backend services overview
 	// (https://cloud.google.com/load-balancing/docs/backend-service).
 	//
@@ -2558,6 +2558,10 @@ type ListMeshesResponse struct {
 	// results, call this method again using the value of `next_page_token` as
 	// `page_token`.
 	NextPageToken string `json:"nextPageToken,omitempty"`
+	// Unreachable: Unreachable resources. Populated when the request opts into
+	// `return_partial_success` and reading across collections e.g. when attempting
+	// to list all resources across all supported locations.
+	Unreachable []string `json:"unreachable,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
@@ -3142,8 +3146,10 @@ func (s RetryFilterPerRouteConfig) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// ServiceBinding: ServiceBinding is the resource that defines a Service
-// Directory Service to be used in a BackendService resource.
+// ServiceBinding: ServiceBinding can be used to: - Bind a Service Directory
+// Service to be used in a BackendService resource. - Bind a Private Service
+// Connect producer service to be used in consumer Cloud Service Mesh or
+// Application Load Balancers.
 type ServiceBinding struct {
 	// CreateTime: Output only. The timestamp when the resource was created.
 	CreateTime string `json:"createTime,omitempty"`
@@ -3154,13 +3160,13 @@ type ServiceBinding struct {
 	// resource.
 	Labels map[string]string `json:"labels,omitempty"`
 	// Name: Identifier. Name of the ServiceBinding resource. It matches pattern
-	// `projects/*/locations/global/serviceBindings/service_binding_name`.
+	// `projects/*/locations/*/serviceBindings/`.
 	Name string `json:"name,omitempty"`
-	// Service: Required. The full Service Directory Service name of the format
-	// projects/*/locations/*/namespaces/*/services/*
+	// Service: Optional. The full Service Directory Service name of the format
+	// `projects/*/locations/*/namespaces/*/services/*`. This field must be set.
 	Service string `json:"service,omitempty"`
 	// ServiceId: Output only. The unique identifier of the Service Directory
-	// Service against which the Service Binding resource is validated. This is
+	// Service against which the ServiceBinding resource is validated. This is
 	// populated when the Service Binding resource is used in another resource
 	// (like Backend Service). This is of the UUID4 format.
 	ServiceId string `json:"serviceId,omitempty"`
@@ -4279,14 +4285,13 @@ func (c *ProjectsLocationsAuthzExtensionsCreateCall) AuthzExtensionId(authzExten
 // RequestId sets the optional parameter "requestId": An optional request ID to
 // identify requests. Specify a unique request ID so that if you must retry
 // your request, the server can ignore the request if it has already been
-// completed. The server guarantees that for at least 60 minutes since the
-// first request. For example, consider a situation where you make an initial
-// request and the request times out. If you make the request again with the
-// same request ID, the server can check if original operation with the same
-// request ID was received, and if so, ignores the second request. This
-// prevents clients from accidentally creating duplicate commitments. The
-// request ID must be a valid UUID with the exception that zero UUID is not
-// supported (00000000-0000-0000-0000-000000000000).
+// completed. The server guarantees that for 60 minutes since the first
+// request. For example, consider a situation where you make an initial request
+// and the request times out. If you make the request again with the same
+// request ID, the server ignores the second request This prevents clients from
+// accidentally creating duplicate commitments. The request ID must be a valid
+// UUID with the exception that zero UUID is not supported
+// (00000000-0000-0000-0000-000000000000).
 func (c *ProjectsLocationsAuthzExtensionsCreateCall) RequestId(requestId string) *ProjectsLocationsAuthzExtensionsCreateCall {
 	c.urlParams_.Set("requestId", requestId)
 	return c
@@ -4399,14 +4404,13 @@ func (r *ProjectsLocationsAuthzExtensionsService) Delete(name string) *ProjectsL
 // RequestId sets the optional parameter "requestId": An optional request ID to
 // identify requests. Specify a unique request ID so that if you must retry
 // your request, the server can ignore the request if it has already been
-// completed. The server guarantees that for at least 60 minutes after the
-// first request. For example, consider a situation where you make an initial
-// request and the request times out. If you make the request again with the
-// same request ID, the server can check if original operation with the same
-// request ID was received, and if so, ignores the second request. This
-// prevents clients from accidentally creating duplicate commitments. The
-// request ID must be a valid UUID with the exception that zero UUID is not
-// supported (00000000-0000-0000-0000-000000000000).
+// completed. The server guarantees that for 60 minutes after the first
+// request. For example, consider a situation where you make an initial request
+// and the request times out. If you make the request again with the same
+// request ID, the server ignores the second request This prevents clients from
+// accidentally creating duplicate commitments. The request ID must be a valid
+// UUID with the exception that zero UUID is not supported
+// (00000000-0000-0000-0000-000000000000).
 func (c *ProjectsLocationsAuthzExtensionsDeleteCall) RequestId(requestId string) *ProjectsLocationsAuthzExtensionsDeleteCall {
 	c.urlParams_.Set("requestId", requestId)
 	return c
@@ -4616,7 +4620,7 @@ type ProjectsLocationsAuthzExtensionsListCall struct {
 // List: Lists `AuthzExtension` resources in a given project and location.
 //
 //   - parent: The project and location from which the `AuthzExtension` resources
-//     are listed, specified in the following format:
+//     are listed. These values are specified in the following format:
 //     `projects/{project}/locations/{location}`.
 func (r *ProjectsLocationsAuthzExtensionsService) List(parent string) *ProjectsLocationsAuthzExtensionsListCall {
 	c := &ProjectsLocationsAuthzExtensionsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -4630,7 +4634,7 @@ func (c *ProjectsLocationsAuthzExtensionsListCall) Filter(filter string) *Projec
 	return c
 }
 
-// OrderBy sets the optional parameter "orderBy": Hint for how to order the
+// OrderBy sets the optional parameter "orderBy": Hint about how to order the
 // results.
 func (c *ProjectsLocationsAuthzExtensionsListCall) OrderBy(orderBy string) *ProjectsLocationsAuthzExtensionsListCall {
 	c.urlParams_.Set("orderBy", orderBy)
@@ -4790,14 +4794,13 @@ func (r *ProjectsLocationsAuthzExtensionsService) Patch(name string, authzextens
 // RequestId sets the optional parameter "requestId": An optional request ID to
 // identify requests. Specify a unique request ID so that if you must retry
 // your request, the server can ignore the request if it has already been
-// completed. The server guarantees that for at least 60 minutes since the
-// first request. For example, consider a situation where you make an initial
-// request and the request times out. If you make the request again with the
-// same request ID, the server can check if original operation with the same
-// request ID was received, and if so, ignores the second request. This
-// prevents clients from accidentally creating duplicate commitments. The
-// request ID must be a valid UUID with the exception that zero UUID is not
-// supported (00000000-0000-0000-0000-000000000000).
+// completed. The server guarantees that for 60 minutes since the first
+// request. For example, consider a situation where you make an initial request
+// and the request times out. If you make the request again with the same
+// request ID, the server ignores the second request This prevents clients from
+// accidentally creating duplicate commitments. The request ID must be a valid
+// UUID with the exception that zero UUID is not supported
+// (00000000-0000-0000-0000-000000000000).
 func (c *ProjectsLocationsAuthzExtensionsPatchCall) RequestId(requestId string) *ProjectsLocationsAuthzExtensionsPatchCall {
 	c.urlParams_.Set("requestId", requestId)
 	return c
@@ -7515,14 +7518,13 @@ func (c *ProjectsLocationsLbRouteExtensionsCreateCall) LbRouteExtensionId(lbRout
 // RequestId sets the optional parameter "requestId": An optional request ID to
 // identify requests. Specify a unique request ID so that if you must retry
 // your request, the server can ignore the request if it has already been
-// completed. The server guarantees that for at least 60 minutes since the
-// first request. For example, consider a situation where you make an initial
-// request and the request times out. If you make the request again with the
-// same request ID, the server can check if original operation with the same
-// request ID was received, and if so, ignores the second request. This
-// prevents clients from accidentally creating duplicate commitments. The
-// request ID must be a valid UUID with the exception that zero UUID is not
-// supported (00000000-0000-0000-0000-000000000000).
+// completed. The server guarantees that for 60 minutes since the first
+// request. For example, consider a situation where you make an initial request
+// and the request times out. If you make the request again with the same
+// request ID, the server ignores the second request This prevents clients from
+// accidentally creating duplicate commitments. The request ID must be a valid
+// UUID with the exception that zero UUID is not supported
+// (00000000-0000-0000-0000-000000000000).
 func (c *ProjectsLocationsLbRouteExtensionsCreateCall) RequestId(requestId string) *ProjectsLocationsLbRouteExtensionsCreateCall {
 	c.urlParams_.Set("requestId", requestId)
 	return c
@@ -7635,14 +7637,13 @@ func (r *ProjectsLocationsLbRouteExtensionsService) Delete(name string) *Project
 // RequestId sets the optional parameter "requestId": An optional request ID to
 // identify requests. Specify a unique request ID so that if you must retry
 // your request, the server can ignore the request if it has already been
-// completed. The server guarantees that for at least 60 minutes after the
-// first request. For example, consider a situation where you make an initial
-// request and the request times out. If you make the request again with the
-// same request ID, the server can check if original operation with the same
-// request ID was received, and if so, ignores the second request. This
-// prevents clients from accidentally creating duplicate commitments. The
-// request ID must be a valid UUID with the exception that zero UUID is not
-// supported (00000000-0000-0000-0000-000000000000).
+// completed. The server guarantees that for 60 minutes after the first
+// request. For example, consider a situation where you make an initial request
+// and the request times out. If you make the request again with the same
+// request ID, the server ignores the second request This prevents clients from
+// accidentally creating duplicate commitments. The request ID must be a valid
+// UUID with the exception that zero UUID is not supported
+// (00000000-0000-0000-0000-000000000000).
 func (c *ProjectsLocationsLbRouteExtensionsDeleteCall) RequestId(requestId string) *ProjectsLocationsLbRouteExtensionsDeleteCall {
 	c.urlParams_.Set("requestId", requestId)
 	return c
@@ -7853,7 +7854,7 @@ type ProjectsLocationsLbRouteExtensionsListCall struct {
 // List: Lists `LbRouteExtension` resources in a given project and location.
 //
 //   - parent: The project and location from which the `LbRouteExtension`
-//     resources are listed, specified in the following format:
+//     resources are listed. These values are specified in the following format:
 //     `projects/{project}/locations/{location}`.
 func (r *ProjectsLocationsLbRouteExtensionsService) List(parent string) *ProjectsLocationsLbRouteExtensionsListCall {
 	c := &ProjectsLocationsLbRouteExtensionsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -7867,7 +7868,7 @@ func (c *ProjectsLocationsLbRouteExtensionsListCall) Filter(filter string) *Proj
 	return c
 }
 
-// OrderBy sets the optional parameter "orderBy": Hint for how to order the
+// OrderBy sets the optional parameter "orderBy": Hint about how to order the
 // results.
 func (c *ProjectsLocationsLbRouteExtensionsListCall) OrderBy(orderBy string) *ProjectsLocationsLbRouteExtensionsListCall {
 	c.urlParams_.Set("orderBy", orderBy)
@@ -8027,14 +8028,13 @@ func (r *ProjectsLocationsLbRouteExtensionsService) Patch(name string, lbrouteex
 // RequestId sets the optional parameter "requestId": An optional request ID to
 // identify requests. Specify a unique request ID so that if you must retry
 // your request, the server can ignore the request if it has already been
-// completed. The server guarantees that for at least 60 minutes since the
-// first request. For example, consider a situation where you make an initial
-// request and the request times out. If you make the request again with the
-// same request ID, the server can check if original operation with the same
-// request ID was received, and if so, ignores the second request. This
-// prevents clients from accidentally creating duplicate commitments. The
-// request ID must be a valid UUID with the exception that zero UUID is not
-// supported (00000000-0000-0000-0000-000000000000).
+// completed. The server guarantees that for 60 minutes since the first
+// request. For example, consider a situation where you make an initial request
+// and the request times out. If you make the request again with the same
+// request ID, the server ignores the second request This prevents clients from
+// accidentally creating duplicate commitments. The request ID must be a valid
+// UUID with the exception that zero UUID is not supported
+// (00000000-0000-0000-0000-000000000000).
 func (c *ProjectsLocationsLbRouteExtensionsPatchCall) RequestId(requestId string) *ProjectsLocationsLbRouteExtensionsPatchCall {
 	c.urlParams_.Set("requestId", requestId)
 	return c
@@ -8166,14 +8166,13 @@ func (c *ProjectsLocationsLbTrafficExtensionsCreateCall) LbTrafficExtensionId(lb
 // RequestId sets the optional parameter "requestId": An optional request ID to
 // identify requests. Specify a unique request ID so that if you must retry
 // your request, the server can ignore the request if it has already been
-// completed. The server guarantees that for at least 60 minutes since the
-// first request. For example, consider a situation where you make an initial
-// request and the request times out. If you make the request again with the
-// same request ID, the server can check if original operation with the same
-// request ID was received, and if so, ignores the second request. This
-// prevents clients from accidentally creating duplicate commitments. The
-// request ID must be a valid UUID with the exception that zero UUID is not
-// supported (00000000-0000-0000-0000-000000000000).
+// completed. The server guarantees that for 60 minutes since the first
+// request. For example, consider a situation where you make an initial request
+// and the request times out. If you make the request again with the same
+// request ID, the server ignores the second request This prevents clients from
+// accidentally creating duplicate commitments. The request ID must be a valid
+// UUID with the exception that zero UUID is not supported
+// (00000000-0000-0000-0000-000000000000).
 func (c *ProjectsLocationsLbTrafficExtensionsCreateCall) RequestId(requestId string) *ProjectsLocationsLbTrafficExtensionsCreateCall {
 	c.urlParams_.Set("requestId", requestId)
 	return c
@@ -8286,14 +8285,13 @@ func (r *ProjectsLocationsLbTrafficExtensionsService) Delete(name string) *Proje
 // RequestId sets the optional parameter "requestId": An optional request ID to
 // identify requests. Specify a unique request ID so that if you must retry
 // your request, the server can ignore the request if it has already been
-// completed. The server guarantees that for at least 60 minutes after the
-// first request. For example, consider a situation where you make an initial
-// request and the request times out. If you make the request again with the
-// same request ID, the server can check if original operation with the same
-// request ID was received, and if so, ignores the second request. This
-// prevents clients from accidentally creating duplicate commitments. The
-// request ID must be a valid UUID with the exception that zero UUID is not
-// supported (00000000-0000-0000-0000-000000000000).
+// completed. The server guarantees that for 60 minutes after the first
+// request. For example, consider a situation where you make an initial request
+// and the request times out. If you make the request again with the same
+// request ID, the server ignores the second request This prevents clients from
+// accidentally creating duplicate commitments. The request ID must be a valid
+// UUID with the exception that zero UUID is not supported
+// (00000000-0000-0000-0000-000000000000).
 func (c *ProjectsLocationsLbTrafficExtensionsDeleteCall) RequestId(requestId string) *ProjectsLocationsLbTrafficExtensionsDeleteCall {
 	c.urlParams_.Set("requestId", requestId)
 	return c
@@ -8504,7 +8502,7 @@ type ProjectsLocationsLbTrafficExtensionsListCall struct {
 // List: Lists `LbTrafficExtension` resources in a given project and location.
 //
 //   - parent: The project and location from which the `LbTrafficExtension`
-//     resources are listed, specified in the following format:
+//     resources are listed. These values are specified in the following format:
 //     `projects/{project}/locations/{location}`.
 func (r *ProjectsLocationsLbTrafficExtensionsService) List(parent string) *ProjectsLocationsLbTrafficExtensionsListCall {
 	c := &ProjectsLocationsLbTrafficExtensionsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -8518,7 +8516,7 @@ func (c *ProjectsLocationsLbTrafficExtensionsListCall) Filter(filter string) *Pr
 	return c
 }
 
-// OrderBy sets the optional parameter "orderBy": Hint for how to order the
+// OrderBy sets the optional parameter "orderBy": Hint about how to order the
 // results.
 func (c *ProjectsLocationsLbTrafficExtensionsListCall) OrderBy(orderBy string) *ProjectsLocationsLbTrafficExtensionsListCall {
 	c.urlParams_.Set("orderBy", orderBy)
@@ -8679,14 +8677,13 @@ func (r *ProjectsLocationsLbTrafficExtensionsService) Patch(name string, lbtraff
 // RequestId sets the optional parameter "requestId": An optional request ID to
 // identify requests. Specify a unique request ID so that if you must retry
 // your request, the server can ignore the request if it has already been
-// completed. The server guarantees that for at least 60 minutes since the
-// first request. For example, consider a situation where you make an initial
-// request and the request times out. If you make the request again with the
-// same request ID, the server can check if original operation with the same
-// request ID was received, and if so, ignores the second request. This
-// prevents clients from accidentally creating duplicate commitments. The
-// request ID must be a valid UUID with the exception that zero UUID is not
-// supported (00000000-0000-0000-0000-000000000000).
+// completed. The server guarantees that for 60 minutes since the first
+// request. For example, consider a situation where you make an initial request
+// and the request times out. If you make the request again with the same
+// request ID, the server ignores the second request This prevents clients from
+// accidentally creating duplicate commitments. The request ID must be a valid
+// UUID with the exception that zero UUID is not supported
+// (00000000-0000-0000-0000-000000000000).
 func (c *ProjectsLocationsLbTrafficExtensionsPatchCall) RequestId(requestId string) *ProjectsLocationsLbTrafficExtensionsPatchCall {
 	c.urlParams_.Set("requestId", requestId)
 	return c
@@ -9136,6 +9133,15 @@ func (c *ProjectsLocationsMeshesListCall) PageSize(pageSize int64) *ProjectsLoca
 // `ListMeshes` call, and that the system should return the next page of data.
 func (c *ProjectsLocationsMeshesListCall) PageToken(pageToken string) *ProjectsLocationsMeshesListCall {
 	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// ReturnPartialSuccess sets the optional parameter "returnPartialSuccess": If
+// true, allow partial responses for multi-regional Aggregated List requests.
+// Otherwise if one of the locations is down or unreachable, the Aggregated
+// List request will fail.
+func (c *ProjectsLocationsMeshesListCall) ReturnPartialSuccess(returnPartialSuccess bool) *ProjectsLocationsMeshesListCall {
+	c.urlParams_.Set("returnPartialSuccess", fmt.Sprint(returnPartialSuccess))
 	return c
 }
 
@@ -10111,7 +10117,7 @@ type ProjectsLocationsServiceBindingsCreateCall struct {
 // Create: Creates a new ServiceBinding in a given project and location.
 //
 //   - parent: The parent resource of the ServiceBinding. Must be in the format
-//     `projects/*/locations/global`.
+//     `projects/*/locations/*`.
 func (r *ProjectsLocationsServiceBindingsService) Create(parent string, servicebinding *ServiceBinding) *ProjectsLocationsServiceBindingsCreateCall {
 	c := &ProjectsLocationsServiceBindingsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -10221,7 +10227,7 @@ type ProjectsLocationsServiceBindingsDeleteCall struct {
 // Delete: Deletes a single ServiceBinding.
 //
 //   - name: A name of the ServiceBinding to delete. Must be in the format
-//     `projects/*/locations/global/serviceBindings/*`.
+//     `projects/*/locations/*/serviceBindings/*`.
 func (r *ProjectsLocationsServiceBindingsService) Delete(name string) *ProjectsLocationsServiceBindingsDeleteCall {
 	c := &ProjectsLocationsServiceBindingsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -10320,7 +10326,7 @@ type ProjectsLocationsServiceBindingsGetCall struct {
 // Get: Gets details of a single ServiceBinding.
 //
 //   - name: A name of the ServiceBinding to get. Must be in the format
-//     `projects/*/locations/global/serviceBindings/*`.
+//     `projects/*/locations/*/serviceBindings/*`.
 func (r *ProjectsLocationsServiceBindingsService) Get(name string) *ProjectsLocationsServiceBindingsGetCall {
 	c := &ProjectsLocationsServiceBindingsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -10430,7 +10436,7 @@ type ProjectsLocationsServiceBindingsListCall struct {
 // List: Lists ServiceBinding in a given project and location.
 //
 //   - parent: The project and location from which the ServiceBindings should be
-//     listed, specified in the format `projects/*/locations/global`.
+//     listed, specified in the format `projects/*/locations/*`.
 func (r *ProjectsLocationsServiceBindingsService) List(parent string) *ProjectsLocationsServiceBindingsListCall {
 	c := &ProjectsLocationsServiceBindingsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent

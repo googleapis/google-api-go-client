@@ -138,7 +138,7 @@ func New(client *http.Client) (*Service, error) {
 	if client == nil {
 		return nil, errors.New("client is nil")
 	}
-	return NewService(context.Background(), option.WithHTTPClient(client))
+	return NewService(context.TODO(), option.WithHTTPClient(client))
 }
 
 type Service struct {
@@ -862,6 +862,37 @@ type DeliverInfo struct {
 
 func (s DeliverInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod DeliverInfo
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// DirectVpcEgressConnectionInfo: For display only. Metadata associated with a
+// serverless direct VPC egress connection.
+type DirectVpcEgressConnectionInfo struct {
+	// NetworkUri: URI of direct access network.
+	NetworkUri string `json:"networkUri,omitempty"`
+	// Region: Region in which the Direct VPC egress is deployed.
+	Region string `json:"region,omitempty"`
+	// SelectedIpAddress: Selected starting IP address, from the selected IP range.
+	SelectedIpAddress string `json:"selectedIpAddress,omitempty"`
+	// SelectedIpRange: Selected IP range.
+	SelectedIpRange string `json:"selectedIpRange,omitempty"`
+	// SubnetworkUri: URI of direct access subnetwork.
+	SubnetworkUri string `json:"subnetworkUri,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "NetworkUri") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "NetworkUri") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s DirectVpcEgressConnectionInfo) MarshalJSON() ([]byte, error) {
+	type NoMethod DirectVpcEgressConnectionInfo
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -2448,8 +2479,8 @@ type RedisClusterInfo struct {
 	// Location: Name of the region in which the Redis Cluster is defined. For
 	// example, "us-central1".
 	Location string `json:"location,omitempty"`
-	// NetworkUri: URI of a Redis Cluster network in format
-	// "projects/{project_id}/global/networks/{network_id}".
+	// NetworkUri: URI of the network containing the Redis Cluster endpoints in
+	// format "projects/{project_id}/global/networks/{network_id}".
 	NetworkUri string `json:"networkUri,omitempty"`
 	// SecondaryEndpointIpAddress: Secondary endpoint IP address of a Redis
 	// Cluster.
@@ -2650,6 +2681,30 @@ func (s RouteInfo) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// ServerlessExternalConnectionInfo: For display only. Metadata associated with
+// a serverless public connection.
+type ServerlessExternalConnectionInfo struct {
+	// SelectedIpAddress: Selected starting IP address, from the Google dynamic
+	// address pool.
+	SelectedIpAddress string `json:"selectedIpAddress,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "SelectedIpAddress") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "SelectedIpAddress") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ServerlessExternalConnectionInfo) MarshalJSON() ([]byte, error) {
+	type NoMethod ServerlessExternalConnectionInfo
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // ServerlessNegInfo: For display only. Metadata associated with the serverless
 // network endpoint group backend.
 type ServerlessNegInfo struct {
@@ -2756,6 +2811,9 @@ type Step struct {
 	// Description: A description of the step. Usually this is a summary of the
 	// state.
 	Description string `json:"description,omitempty"`
+	// DirectVpcEgressConnection: Display information of a serverless direct VPC
+	// egress connection.
+	DirectVpcEgressConnection *DirectVpcEgressConnectionInfo `json:"directVpcEgressConnection,omitempty"`
 	// Drop: Display information of the final state "drop" and reason.
 	Drop *DropInfo `json:"drop,omitempty"`
 	// Endpoint: Display information of the source and destination under analysis.
@@ -2796,6 +2854,9 @@ type Step struct {
 	RedisInstance *RedisInstanceInfo `json:"redisInstance,omitempty"`
 	// Route: Display information of a Compute Engine route.
 	Route *RouteInfo `json:"route,omitempty"`
+	// ServerlessExternalConnection: Display information of a serverless public
+	// (external) connection.
+	ServerlessExternalConnection *ServerlessExternalConnectionInfo `json:"serverlessExternalConnection,omitempty"`
 	// ServerlessNeg: Display information of a Serverless network endpoint group
 	// backend. Used only for return traces.
 	ServerlessNeg *ServerlessNegInfo `json:"serverlessNeg,omitempty"`
@@ -2864,6 +2925,11 @@ type Step struct {
 	// gateway.
 	//   "ARRIVE_AT_VPN_TUNNEL" - Forwarding state: arriving at a Cloud VPN tunnel.
 	//   "ARRIVE_AT_VPC_CONNECTOR" - Forwarding state: arriving at a VPC connector.
+	//   "DIRECT_VPC_EGRESS_CONNECTION" - Forwarding state: for packets originating
+	// from a serverless endpoint forwarded through Direct VPC egress.
+	//   "SERVERLESS_EXTERNAL_CONNECTION" - Forwarding state: for packets
+	// originating from a serverless endpoint forwarded through public (external)
+	// connectivity.
 	//   "NAT" - Transition state: packet header translated.
 	//   "PROXY_CONNECTION" - Transition state: original connection is terminated
 	// and a new proxied connection is initiated.

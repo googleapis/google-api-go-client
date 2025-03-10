@@ -139,7 +139,7 @@ func New(client *http.Client) (*Service, error) {
 	if client == nil {
 		return nil, errors.New("client is nil")
 	}
-	return NewService(context.Background(), option.WithHTTPClient(client))
+	return NewService(context.TODO(), option.WithHTTPClient(client))
 }
 
 type Service struct {
@@ -2792,7 +2792,13 @@ type GoogleCloudBeyondcorpSaasplatformSubscriptionsV1alphaSubscription struct {
 	BillingAccount string `json:"billingAccount,omitempty"`
 	// CreateTime: Output only. Create time of the subscription.
 	CreateTime string `json:"createTime,omitempty"`
-	// EndTime: Output only. End time of the subscription.
+	// CsgCustomer: Optional. Whether the subscription is being created as part of
+	// the Citrix flow. If this field is set to true, the subscription should have
+	// both the start_time and end_time set in the request and the billing account
+	// used will be the Citrix master billing account regardless of what its set to
+	// in the request. This field can only be set to true in create requests.
+	CsgCustomer bool `json:"csgCustomer,omitempty"`
+	// EndTime: Optional. End time of the subscription.
 	EndTime string `json:"endTime,omitempty"`
 	// Name: Identifier. Unique resource name of the Subscription. The name is
 	// ignored when creating a subscription.
@@ -2805,7 +2811,7 @@ type GoogleCloudBeyondcorpSaasplatformSubscriptionsV1alphaSubscription struct {
 	//   "SKU_UNSPECIFIED" - Default value. This value is unused.
 	//   "BCE_STANDARD_SKU" - Represents BeyondCorp Standard SKU.
 	Sku string `json:"sku,omitempty"`
-	// StartTime: Output only. Start time of the subscription.
+	// StartTime: Optional. Start time of the subscription.
 	StartTime string `json:"startTime,omitempty"`
 	// State: Output only. The current state of the subscription.
 	//
@@ -16622,8 +16628,8 @@ func (c *ProjectsLocationsGlobalSecurityGatewaysApplicationsPatchCall) RequestId
 	return c
 }
 
-// UpdateMask sets the optional parameter "updateMask": Required. Mutable
-// fields include: display_name.
+// UpdateMask sets the optional parameter "updateMask": Mutable fields include:
+// display_name.
 func (c *ProjectsLocationsGlobalSecurityGatewaysApplicationsPatchCall) UpdateMask(updateMask string) *ProjectsLocationsGlobalSecurityGatewaysApplicationsPatchCall {
 	c.urlParams_.Set("updateMask", updateMask)
 	return c
@@ -18587,8 +18593,8 @@ func (c *ProjectsLocationsSecurityGatewaysPatchCall) RequestId(requestId string)
 	return c
 }
 
-// UpdateMask sets the optional parameter "updateMask": Required. Mutable
-// fields include: display_name, hubs.
+// UpdateMask sets the optional parameter "updateMask": Mutable fields include:
+// display_name, hubs.
 func (c *ProjectsLocationsSecurityGatewaysPatchCall) UpdateMask(updateMask string) *ProjectsLocationsSecurityGatewaysPatchCall {
 	c.urlParams_.Set("updateMask", updateMask)
 	return c

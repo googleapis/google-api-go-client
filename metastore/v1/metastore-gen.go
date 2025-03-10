@@ -138,7 +138,7 @@ func New(client *http.Client) (*APIService, error) {
 	if client == nil {
 		return nil, errors.New("client is nil")
 	}
-	return NewService(context.Background(), option.WithHTTPClient(client))
+	return NewService(context.TODO(), option.WithHTTPClient(client))
 }
 
 type APIService struct {
@@ -1912,6 +1912,10 @@ type MoveTableToDatabaseResponse struct {
 type MultiRegionMetadata struct {
 	// ConstituentRegions: The regions constituting the multi-region.
 	ConstituentRegions []string `json:"constituentRegions,omitempty"`
+	// Continent: The continent for this multi-region.
+	Continent string `json:"continent,omitempty"`
+	// WitnessRegion: The Spanner witness region for this multi-region.
+	WitnessRegion string `json:"witnessRegion,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "ConstituentRegions") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See

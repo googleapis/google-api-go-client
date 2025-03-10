@@ -158,7 +158,7 @@ func New(client *http.Client) (*Service, error) {
 	if client == nil {
 		return nil, errors.New("client is nil")
 	}
-	return NewService(context.Background(), option.WithHTTPClient(client))
+	return NewService(context.TODO(), option.WithHTTPClient(client))
 }
 
 type Service struct {
@@ -1592,9 +1592,7 @@ func (s Status) MarshalJSON() ([]byte, error) {
 
 // StatusProto: Wire-format for a Status object
 type StatusProto struct {
-	// CanonicalCode: The canonical error code (see codes.proto) that most closely
-	// corresponds to this status. This may be missing, and in the common case of
-	// the generic space, it definitely will be. copybara:strip_begin(b/383363683)
+	// CanonicalCode: copybara:strip_begin(b/383363683)
 	// copybara:strip_end_and_replace optional int32 canonical_code = 6;
 	CanonicalCode int64 `json:"canonicalCode,omitempty"`
 	// Code: Numeric code drawn from the space specified below. Often, this is the
@@ -1609,9 +1607,9 @@ type StatusProto struct {
 	// status. copybara:strip_begin(b/383363683) copybara:strip_end_and_replace
 	// optional proto2.bridge.MessageSet message_set = 5;
 	MessageSet *MessageSet `json:"messageSet,omitempty"`
-	// Space: The following are usually only present when code != 0 Space to which
-	// this status belongs copybara:strip_begin(b/383363683)
-	// copybara:strip_end_and_replace optional string space = 2;
+	// Space: copybara:strip_begin(b/383363683) Space to which this status belongs
+	// copybara:strip_end_and_replace optional string space = 2; // Space to which
+	// this status belongs
 	Space string `json:"space,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "CanonicalCode") to
 	// unconditionally include in API requests. By default, fields with empty or

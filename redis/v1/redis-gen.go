@@ -140,7 +140,7 @@ func New(client *http.Client) (*Service, error) {
 	if client == nil {
 		return nil, errors.New("client is nil")
 	}
-	return NewService(context.Background(), option.WithHTTPClient(client))
+	return NewService(context.TODO(), option.WithHTTPClient(client))
 }
 
 type Service struct {
@@ -701,6 +701,10 @@ type Cluster struct {
 	//   "REDIS_HIGHMEM_XLARGE" - Redis highmem xlarge node_type.
 	//   "REDIS_STANDARD_SMALL" - Redis standard small node_type.
 	NodeType string `json:"nodeType,omitempty"`
+	// OndemandMaintenance: Optional. Input only. Ondemand maintenance for the
+	// cluster. This field can be used to trigger ondemand critical update on the
+	// cluster.
+	OndemandMaintenance bool `json:"ondemandMaintenance,omitempty"`
 	// PersistenceConfig: Optional. Persistence config (RDB, AOF) for the cluster.
 	PersistenceConfig *ClusterPersistenceConfig `json:"persistenceConfig,omitempty"`
 	// PreciseSizeGb: Output only. Precise value of redis memory size in GB for the
@@ -2832,15 +2836,15 @@ func (s Location) MarshalJSON() ([]byte, error) {
 // machine specific to Database Resource.
 type MachineConfiguration struct {
 	// CpuCount: The number of CPUs. Deprecated. Use vcpu_count instead.
-	// TODO(b/342344482, b/342346271) add proto validations again after bug fix.
+	// TODO(b/342344482) add proto validations again after bug fix.
 	CpuCount int64 `json:"cpuCount,omitempty"`
-	// MemorySizeInBytes: Memory size in bytes. TODO(b/342344482, b/342346271) add
-	// proto validations again after bug fix.
+	// MemorySizeInBytes: Memory size in bytes. TODO(b/342344482) add proto
+	// validations again after bug fix.
 	MemorySizeInBytes int64 `json:"memorySizeInBytes,omitempty,string"`
 	// ShardCount: Optional. Number of shards (if applicable).
 	ShardCount int64 `json:"shardCount,omitempty"`
-	// VcpuCount: Optional. The number of vCPUs. TODO(b/342344482, b/342346271) add
-	// proto validations again after bug fix.
+	// VcpuCount: Optional. The number of vCPUs. TODO(b/342344482) add proto
+	// validations again after bug fix.
 	VcpuCount float64 `json:"vcpuCount,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "CpuCount") to
 	// unconditionally include in API requests. By default, fields with empty or

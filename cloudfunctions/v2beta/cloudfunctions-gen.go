@@ -138,7 +138,7 @@ func New(client *http.Client) (*Service, error) {
 	if client == nil {
 		return nil, errors.New("client is nil")
 	}
-	return NewService(context.Background(), option.WithHTTPClient(client))
+	return NewService(context.TODO(), option.WithHTTPClient(client))
 }
 
 type Service struct {
@@ -909,6 +909,9 @@ type GoogleCloudFunctionsV2betaOperationMetadata struct {
 	CancelRequested bool `json:"cancelRequested,omitempty"`
 	// CreateTime: The time the operation was created.
 	CreateTime string `json:"createTime,omitempty"`
+	// CustomIamRoleDetected: Output only. Whether a custom IAM role binding was
+	// detected during the upgrade.
+	CustomIamRoleDetected bool `json:"customIamRoleDetected,omitempty"`
 	// EndTime: The time the operation finished running.
 	EndTime string `json:"endTime,omitempty"`
 	// OperationType: The operation type.

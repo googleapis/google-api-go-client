@@ -138,7 +138,7 @@ func New(client *http.Client) (*Service, error) {
 	if client == nil {
 		return nil, errors.New("client is nil")
 	}
-	return NewService(context.Background(), option.WithHTTPClient(client))
+	return NewService(context.TODO(), option.WithHTTPClient(client))
 }
 
 type Service struct {
@@ -7075,6 +7075,13 @@ type GoogleCloudRetailV2alphaSearchRequest struct {
 	// (https://cloud.google.com/resource-manager/docs/creating-managing-labels#requirements)
 	// in the Resource Manager documentation.
 	Labels map[string]string `json:"labels,omitempty"`
+	// LanguageCode: Optional. The BCP-47 language code, such as "en-US" or
+	// "sr-Latn" list (https://www.unicode.org/cldr/charts/46/summary/root.html).
+	// For more information, see Standardized codes (https://google.aip.dev/143).
+	// This field helps to better interpret the query. If a value isn't specified,
+	// the query language code is automatically detected, which may not be
+	// accurate.
+	LanguageCode string `json:"languageCode,omitempty"`
 	// Offset: A 0-indexed integer that specifies the current offset (that is,
 	// starting result location, amongst the Products deemed by the API as
 	// relevant) in search results. This field is only considered if page_token is
@@ -7121,6 +7128,12 @@ type GoogleCloudRetailV2alphaSearchRequest struct {
 	// Query expansion
 	// (https://cloud.google.com/retail/docs/result-size#query_expansion).
 	QueryExpansionSpec *GoogleCloudRetailV2alphaSearchRequestQueryExpansionSpec `json:"queryExpansionSpec,omitempty"`
+	// RegionCode: Optional. The Unicode country/region code (CLDR) of a location,
+	// such as "US" and "419" list
+	// (https://www.unicode.org/cldr/charts/46/supplemental/territory_information.html).
+	// For more information, see Standardized codes (https://google.aip.dev/143).
+	// If set, then results will be boosted based on the region_code provided.
+	RegionCode string `json:"regionCode,omitempty"`
 	// RelevanceThreshold: The relevance threshold of the search results. Defaults
 	// to RelevanceThreshold.HIGH, which means only the most relevant results are
 	// shown, and the least number of results are returned. For more information,
@@ -8510,10 +8523,9 @@ type GoogleCloudRetailV2alphaUserEvent struct {
 	// Products being added to cart. * `remove-from-cart`: Products being removed
 	// from cart. * `category-page-view`: Special pages such as sale or promotion
 	// pages viewed. * `detail-page-view`: Products detail page viewed. *
-	// `home-page-view`: Homepage viewed. * `promotion-offered`: Promotion is
-	// offered to a user. * `promotion-not-offered`: Promotion is not offered to a
-	// user. * `purchase-complete`: User finishing a purchase. * `search`: Product
-	// search. * `shopping-cart-page-view`: User viewing a shopping cart.
+	// `home-page-view`: Homepage viewed. * `purchase-complete`: User finishing a
+	// purchase. * `search`: Product search. * `shopping-cart-page-view`: User
+	// viewing a shopping cart.
 	EventType string `json:"eventType,omitempty"`
 	// ExperimentIds: A list of identifiers for the independent experiment groups
 	// this user event belongs to. This is used to distinguish between user events
@@ -10603,7 +10615,10 @@ func (c *ProjectsLocationsCatalogsCompleteQueryCall) EnableAttributeSuggestions(
 // run multiple entities, domains, sites, or regions, for example, `Google US`,
 // `Google Ads`, `Waymo`, `google.com`, `youtube.com`, etc. If this is set, it
 // must be an exact match with UserEvent.entity to get per-entity autocomplete
-// results.
+// results. Also, this entity should be limited to 256 characters, if too long,
+// it will be truncated to 256 characters in both generation and serving time,
+// and may lead to mis-match. To ensure it works, please set the entity with
+// string within 256 characters.
 func (c *ProjectsLocationsCatalogsCompleteQueryCall) Entity(entity string) *ProjectsLocationsCatalogsCompleteQueryCall {
 	c.urlParams_.Set("entity", entity)
 	return c

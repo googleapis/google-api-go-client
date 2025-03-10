@@ -146,7 +146,7 @@ func New(client *http.Client) (*Service, error) {
 	if client == nil {
 		return nil, errors.New("client is nil")
 	}
-	return NewService(context.Background(), option.WithHTTPClient(client))
+	return NewService(context.TODO(), option.WithHTTPClient(client))
 }
 
 type Service struct {
@@ -1303,15 +1303,28 @@ func (s PolicyIssue) MarshalJSON() ([]byte, error) {
 // content. A single policy issue can have multiple policy topics for a single
 // entity.
 type PolicyTopic struct {
-	// MustFix: Required. Indicates if this is a policy violation or not. When the
-	// value is true, issues that are instances of this topic must be addressed to
-	// remain in compliance with the partner's agreements with Google. A false
-	// value indicates that it's not mandatory to fix the issues but advertising
-	// demand might be restricted.
+	// MustFix: Required. Deprecated. Policy topics no longer have a "must-fix"
+	// classification.
 	MustFix bool `json:"mustFix,omitempty"`
 	// Topic: Required. The policy topic. For example, "sexual-content" or
 	// "ads-obscuring-content"."
 	Topic string `json:"topic,omitempty"`
+	// Type: Optional. The type of policy topic. For example, "POLICY" represents
+	// all the policy topics that are related to the Google Publisher Policy (GPP).
+	// See https://support.google.com/adsense/answer/15689616.
+	//
+	// Possible values:
+	//   "POLICY_TOPIC_TYPE_UNSPECIFIED" - The type is unspecified.
+	//   "POLICY" - Topics that are primarily related to the Google Publisher
+	// Policy (GPP) https://support.google.com/publisherpolicies/answer/10502938 or
+	// the Google Publisher Restrictions (GPR) policies
+	// https://support.google.com/publisherpolicies/answer/10437795.
+	//   "ADVERTISER_PREFERENCE" - Topics that are related to advertiser
+	// preferences. Certain advertisers may choose not to bid on content that are
+	// labeled with certain policies.
+	//   "REGULATORY" - Any topics that are a result of a country or regional
+	// regulatory requirement body.
+	Type string `json:"type,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "MustFix") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
 	// omitted from API requests. See

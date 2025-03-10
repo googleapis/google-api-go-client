@@ -138,7 +138,7 @@ func New(client *http.Client) (*Service, error) {
 	if client == nil {
 		return nil, errors.New("client is nil")
 	}
-	return NewService(context.Background(), option.WithHTTPClient(client))
+	return NewService(context.TODO(), option.WithHTTPClient(client))
 }
 
 type Service struct {
@@ -1827,7 +1827,7 @@ type DiskPartition struct {
 	FileSystem string `json:"fileSystem,omitempty"`
 	// FreeBytes: Partition free space.
 	FreeBytes int64 `json:"freeBytes,omitempty,string"`
-	// MountPoint: Mount pount (Linux/Windows) or drive letter (Windows).
+	// MountPoint: Mount point (Linux/Windows) or drive letter (Windows).
 	MountPoint string `json:"mountPoint,omitempty"`
 	// SubPartitions: Sub-partitions.
 	SubPartitions *DiskPartitionList `json:"subPartitions,omitempty"`
@@ -3745,7 +3745,7 @@ type NetworkAddress struct {
 	//
 	// Possible values:
 	//   "ADDRESS_ASSIGNMENT_UNSPECIFIED" - Unknown (default value).
-	//   "ADDRESS_ASSIGNMENT_STATIC" - Staticly assigned IP.
+	//   "ADDRESS_ASSIGNMENT_STATIC" - Statically assigned IP.
 	//   "ADDRESS_ASSIGNMENT_DHCP" - Dynamically assigned IP (DHCP).
 	Assignment string `json:"assignment,omitempty"`
 	// Bcast: Broadcast address.
@@ -6948,6 +6948,13 @@ func (r *ProjectsLocationsAssetsService) Get(name string) *ProjectsLocationsAsse
 //	"ASSET_VIEW_FULL" - The asset view includes all the metadata of an asset
 //
 // and performance data.
+//
+//	"ASSET_VIEW_STANDARD" - The asset view includes the standard metadata of
+//
+// an asset.
+//
+//	"ASSET_VIEW_UI" - The asset view includes fields needed by UI.
+//	"ASSET_VIEW_LABELS" - The asset view includes asset name and labels.
 func (c *ProjectsLocationsAssetsGetCall) View(view string) *ProjectsLocationsAssetsGetCall {
 	c.urlParams_.Set("view", view)
 	return c
@@ -7106,6 +7113,13 @@ func (c *ProjectsLocationsAssetsListCall) PageToken(pageToken string) *ProjectsL
 //	"ASSET_VIEW_FULL" - The asset view includes all the metadata of an asset
 //
 // and performance data.
+//
+//	"ASSET_VIEW_STANDARD" - The asset view includes the standard metadata of
+//
+// an asset.
+//
+//	"ASSET_VIEW_UI" - The asset view includes fields needed by UI.
+//	"ASSET_VIEW_LABELS" - The asset view includes asset name and labels.
 func (c *ProjectsLocationsAssetsListCall) View(view string) *ProjectsLocationsAssetsListCall {
 	c.urlParams_.Set("view", view)
 	return c

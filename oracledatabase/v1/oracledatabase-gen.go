@@ -138,7 +138,7 @@ func New(client *http.Client) (*Service, error) {
 	if client == nil {
 		return nil, errors.New("client is nil")
 	}
-	return NewService(context.Background(), option.WithHTTPClient(client))
+	return NewService(context.TODO(), option.WithHTTPClient(client))
 }
 
 type Service struct {
@@ -357,7 +357,7 @@ func (s AllConnectionStrings) MarshalJSON() ([]byte, error) {
 type AutonomousDatabase struct {
 	// AdminPassword: Optional. The password for the default ADMIN user.
 	AdminPassword string `json:"adminPassword,omitempty"`
-	// Cidr: Required. The subnet CIDR range for the Autonmous Database.
+	// Cidr: Optional. The subnet CIDR range for the Autonmous Database.
 	Cidr string `json:"cidr,omitempty"`
 	// CreateTime: Output only. The date and time that the Autonomous Database was
 	// created.
@@ -380,7 +380,7 @@ type AutonomousDatabase struct {
 	// projects/{project}/locations/{region}/autonomousDatabases/{autonomous_databas
 	// e}
 	Name string `json:"name,omitempty"`
-	// Network: Required. The name of the VPC network used by the Autonomous
+	// Network: Optional. The name of the VPC network used by the Autonomous
 	// Database in the following format:
 	// projects/{project}/global/networks/{network}
 	Network string `json:"network,omitempty"`

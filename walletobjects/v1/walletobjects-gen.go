@@ -156,7 +156,7 @@ func New(client *http.Client) (*Service, error) {
 	if client == nil {
 		return nil, errors.New("client is nil")
 	}
-	return NewService(context.Background(), option.WithHTTPClient(client))
+	return NewService(context.TODO(), option.WithHTTPClient(client))
 }
 
 type Service struct {
@@ -4111,7 +4111,7 @@ func (s GroupingInfo) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// Image: Wrapping type for Google hosted images. Next ID: 7
+// Image: Wrapping type for Google hosted images. Next ID: 8
 type Image struct {
 	// ContentDescription: Description of the image used for accessibility.
 	ContentDescription *LocalizedString `json:"contentDescription,omitempty"`

@@ -6,7 +6,7 @@
 
 // Package forms provides access to the Google Forms API.
 //
-// For product documentation, see: https://developers.google.com/forms/api
+// For product documentation, see: https://developers.google.com/workspace/forms/api
 //
 // # Library status
 //
@@ -163,7 +163,7 @@ func New(client *http.Client) (*Service, error) {
 	if client == nil {
 		return nil, errors.New("client is nil")
 	}
-	return NewService(context.Background(), option.WithHTTPClient(client))
+	return NewService(context.TODO(), option.WithHTTPClient(client))
 }
 
 type Service struct {

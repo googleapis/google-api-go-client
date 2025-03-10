@@ -138,7 +138,7 @@ func New(client *http.Client) (*Service, error) {
 	if client == nil {
 		return nil, errors.New("client is nil")
 	}
-	return NewService(context.Background(), option.WithHTTPClient(client))
+	return NewService(context.TODO(), option.WithHTTPClient(client))
 }
 
 type Service struct {
@@ -329,6 +329,10 @@ type GoogleCloudMetastoreV1MoveTableToDatabaseResponse struct {
 type GoogleCloudMetastoreV1MultiRegionMetadata struct {
 	// ConstituentRegions: The regions constituting the multi-region.
 	ConstituentRegions []string `json:"constituentRegions,omitempty"`
+	// Continent: The continent for this multi-region.
+	Continent string `json:"continent,omitempty"`
+	// WitnessRegion: The Spanner witness region for this multi-region.
+	WitnessRegion string `json:"witnessRegion,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "ConstituentRegions") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -591,6 +595,10 @@ type GoogleCloudMetastoreV1alphaMoveTableToDatabaseResponse struct {
 type GoogleCloudMetastoreV1alphaMultiRegionMetadata struct {
 	// ConstituentRegions: The regions constituting the multi-region.
 	ConstituentRegions []string `json:"constituentRegions,omitempty"`
+	// Continent: The continent for this multi-region.
+	Continent string `json:"continent,omitempty"`
+	// WitnessRegion: The Spanner witness region for this multi-region.
+	WitnessRegion string `json:"witnessRegion,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "ConstituentRegions") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -853,6 +861,10 @@ type GoogleCloudMetastoreV1betaMoveTableToDatabaseResponse struct {
 type GoogleCloudMetastoreV1betaMultiRegionMetadata struct {
 	// ConstituentRegions: The regions constituting the multi-region.
 	ConstituentRegions []string `json:"constituentRegions,omitempty"`
+	// Continent: The continent for this multi-region.
+	Continent string `json:"continent,omitempty"`
+	// WitnessRegion: The Spanner witness region for this multi-region.
+	WitnessRegion string `json:"witnessRegion,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "ConstituentRegions") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -1106,8 +1118,9 @@ func (s GoogleCloudMetastoreV2DataCatalogConfig) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudMetastoreV2DatabaseDump: A specification of the location of and
-// metadata about a database dump from a relational database management system.
+// GoogleCloudMetastoreV2DatabaseDump: A specification of the location and
+// metadata type for a database dump from a relational database management
+// system.
 type GoogleCloudMetastoreV2DatabaseDump struct {
 	// GcsUri: Required. A Cloud Storage object or folder URI that specifies the
 	// source from which to import metadata. It must begin with gs://.

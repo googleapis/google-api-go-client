@@ -154,7 +154,7 @@ func New(client *http.Client) (*Service, error) {
 	if client == nil {
 		return nil, errors.New("client is nil")
 	}
-	return NewService(context.Background(), option.WithHTTPClient(client))
+	return NewService(context.TODO(), option.WithHTTPClient(client))
 }
 
 type Service struct {
@@ -419,6 +419,85 @@ func NewScansService(s *Service) *ScansService {
 
 type ScansService struct {
 	s *Service
+}
+
+// AdaptMessageRequest: Message sent by the client to the adapter.
+type AdaptMessageRequest struct {
+	// Attachments: Optional. Opaque request state passed by the client to the
+	// server.
+	Attachments map[string]string `json:"attachments,omitempty"`
+	// Payload: Optional. Uninterpreted bytes from the underlying wire protocol.
+	Payload string `json:"payload,omitempty"`
+	// Protocol: Required. Identifier for the underlying wire protocol.
+	Protocol string `json:"protocol,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Attachments") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Attachments") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s AdaptMessageRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod AdaptMessageRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// AdaptMessageResponse: Message sent by the adapter to the client.
+type AdaptMessageResponse struct {
+	// Payload: Optional. Uninterpreted bytes from the underlying wire protocol.
+	Payload string `json:"payload,omitempty"`
+	// StateUpdates: Optional. Opaque state updates to be applied by the client.
+	StateUpdates map[string]string `json:"stateUpdates,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "Payload") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Payload") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s AdaptMessageResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod AdaptMessageResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// AdapterSession: A session in the Cloud Spanner Adapter API.
+type AdapterSession struct {
+	// Name: Identifier. The name of the session. This is always system-assigned.
+	Name string `json:"name,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "Name") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Name") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s AdapterSession) MarshalJSON() ([]byte, error) {
+	type NoMethod AdapterSession
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // AddSplitPointsRequest: The request for AddSplitPoints.
@@ -14947,6 +15026,217 @@ func (c *ProjectsInstancesDatabasesOperationsListCall) Pages(ctx context.Context
 		}
 		c.PageToken(x.NextPageToken)
 	}
+}
+
+type ProjectsInstancesDatabasesSessionsAdaptMessageCall struct {
+	s                   *Service
+	name                string
+	adaptmessagerequest *AdaptMessageRequest
+	urlParams_          gensupport.URLParams
+	ctx_                context.Context
+	header_             http.Header
+}
+
+// AdaptMessage: Handles a single message from the client and returns the
+// result as a stream. The server will interpret the message frame and respond
+// with message frames to the client.
+//
+// - name: The database session in which the adapter request is processed.
+func (r *ProjectsInstancesDatabasesSessionsService) AdaptMessage(name string, adaptmessagerequest *AdaptMessageRequest) *ProjectsInstancesDatabasesSessionsAdaptMessageCall {
+	c := &ProjectsInstancesDatabasesSessionsAdaptMessageCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.adaptmessagerequest = adaptmessagerequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsInstancesDatabasesSessionsAdaptMessageCall) Fields(s ...googleapi.Field) *ProjectsInstancesDatabasesSessionsAdaptMessageCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsInstancesDatabasesSessionsAdaptMessageCall) Context(ctx context.Context) *ProjectsInstancesDatabasesSessionsAdaptMessageCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsInstancesDatabasesSessionsAdaptMessageCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsInstancesDatabasesSessionsAdaptMessageCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.adaptmessagerequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}:adaptMessage")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "spanner.projects.instances.databases.sessions.adaptMessage", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "spanner.projects.instances.databases.sessions.adaptMessage" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *AdaptMessageResponse.ServerResponse.Header or (if a response was returned
+// at all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *ProjectsInstancesDatabasesSessionsAdaptMessageCall) Do(opts ...googleapi.CallOption) (*AdaptMessageResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &AdaptMessageResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "spanner.projects.instances.databases.sessions.adaptMessage", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsInstancesDatabasesSessionsAdapterCall struct {
+	s              *Service
+	parent         string
+	adaptersession *AdapterSession
+	urlParams_     gensupport.URLParams
+	ctx_           context.Context
+	header_        http.Header
+}
+
+// Adapter: Creates a new session to be used for requests made by the adapter.
+// A session identifies a specific incarnation of a database resource and is
+// meant to be reused across many `AdaptMessage` calls.
+//
+// - parent: The database in which the new session is created.
+func (r *ProjectsInstancesDatabasesSessionsService) Adapter(parent string, adaptersession *AdapterSession) *ProjectsInstancesDatabasesSessionsAdapterCall {
+	c := &ProjectsInstancesDatabasesSessionsAdapterCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.adaptersession = adaptersession
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsInstancesDatabasesSessionsAdapterCall) Fields(s ...googleapi.Field) *ProjectsInstancesDatabasesSessionsAdapterCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsInstancesDatabasesSessionsAdapterCall) Context(ctx context.Context) *ProjectsInstancesDatabasesSessionsAdapterCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsInstancesDatabasesSessionsAdapterCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsInstancesDatabasesSessionsAdapterCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.adaptersession)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/sessions:adapter")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "spanner.projects.instances.databases.sessions.adapter", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "spanner.projects.instances.databases.sessions.adapter" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *AdapterSession.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsInstancesDatabasesSessionsAdapterCall) Do(opts ...googleapi.CallOption) (*AdapterSession, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &AdapterSession{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "spanner.projects.instances.databases.sessions.adapter", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
 }
 
 type ProjectsInstancesDatabasesSessionsBatchCreateCall struct {

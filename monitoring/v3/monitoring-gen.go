@@ -162,7 +162,7 @@ func New(client *http.Client) (*Service, error) {
 	if client == nil {
 		return nil, errors.New("client is nil")
 	}
-	return NewService(context.Background(), option.WithHTTPClient(client))
+	return NewService(context.TODO(), option.WithHTTPClient(client))
 }
 
 type Service struct {
@@ -5636,6 +5636,9 @@ type UptimeCheckConfig struct {
 	// is_internal is true, or to provide 'internal_checkers' when is_internal is
 	// false.
 	IsInternal bool `json:"isInternal,omitempty"`
+	// LogCheckFailures: To specify whether to log the results of failed probes to
+	// Cloud Logging.
+	LogCheckFailures bool `json:"logCheckFailures,omitempty"`
 	// MonitoredResource: The monitored resource
 	// (https://cloud.google.com/monitoring/api/resources) associated with the
 	// configuration. The following monitored resource types are valid for this

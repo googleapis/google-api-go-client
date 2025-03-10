@@ -138,7 +138,7 @@ func New(client *http.Client) (*Service, error) {
 	if client == nil {
 		return nil, errors.New("client is nil")
 	}
-	return NewService(context.Background(), option.WithHTTPClient(client))
+	return NewService(context.TODO(), option.WithHTTPClient(client))
 }
 
 type Service struct {
@@ -921,6 +921,16 @@ type Deal struct {
 	// Buyer: Output only. Refers to a buyer in Real-time Bidding API's Buyer
 	// resource. Format: `buyers/{buyerAccountId}`
 	Buyer string `json:"buyer,omitempty"`
+	// BuyerPermissionType: Output only. The buyer permission type of the deal.
+	//
+	// Possible values:
+	//   "BUYER_PERMISSION_TYPE_UNSPECIFIED" - A placeholder for an undefined buyer
+	// permission type.
+	//   "NEGOTIATOR_ONLY" - Only the [Deal.negotiating_buyer] can transact on the
+	// deal.
+	//   "BIDDER" - All buyers under the [Deal.negotiating_buyer]'s bidder can
+	// transact on the deal.
+	BuyerPermissionType string `json:"buyerPermissionType,omitempty"`
 	// Client: Output only. Refers to a Client. Format:
 	// `buyers/{buyerAccountId}/clients/{clientAccountid}`
 	Client string `json:"client,omitempty"`

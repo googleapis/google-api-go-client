@@ -126,7 +126,7 @@ func New(client *http.Client) (*Service, error) {
 	if client == nil {
 		return nil, errors.New("client is nil")
 	}
-	return NewService(context.Background(), option.WithHTTPClient(client))
+	return NewService(context.TODO(), option.WithHTTPClient(client))
 }
 
 type Service struct {
@@ -392,10 +392,10 @@ type FlightsComputeFlightEmissionsCall struct {
 // entries that match the input flight legs, in the same order. If there are no
 // estimates available for a certain flight leg, the response will return the
 // flight leg object with empty emission fields. The request will still be
-// considered successful. Reasons for missing emission estimates include: - The
-// flight is unknown to the server. - The input flight leg is missing one or
-// more identifiers. - The flight date is in the past. - The aircraft type is
-// not supported by the model. - Missing seat configuration. The request can
+// considered successful. Reasons for missing emission estimates include: * The
+// flight is unknown to the server. * The input flight leg is missing one or
+// more identifiers. * The flight date is in the past. * The aircraft type is
+// not supported by the model. * Missing seat configuration. The request can
 // contain up to 1000 flight legs. If the request has more than 1000 direct
 // flights, if will fail with an INVALID_ARGUMENT error.
 func (r *FlightsService) ComputeFlightEmissions(computeflightemissionsrequest *ComputeFlightEmissionsRequest) *FlightsComputeFlightEmissionsCall {

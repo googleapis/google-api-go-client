@@ -139,7 +139,7 @@ func New(client *http.Client) (*Service, error) {
 	if client == nil {
 		return nil, errors.New("client is nil")
 	}
-	return NewService(context.Background(), option.WithHTTPClient(client))
+	return NewService(context.TODO(), option.WithHTTPClient(client))
 }
 
 type Service struct {
@@ -628,7 +628,7 @@ type GoogleCloudKmsV1CryptoKeyVersion struct {
 	//   "ENABLED" - This version may be used for cryptographic operations.
 	//   "DISABLED" - This version may not be used, but the key material is still
 	// available, and the version can be placed back into the ENABLED state.
-	//   "DESTROYED" - This version is destroyed, and the key material is no longer
+	//   "DESTROYED" - This key material of this version is destroyed and no longer
 	// stored. This version may only become ENABLED again if this version is
 	// reimport_eligible and the original key material is reimported with a call to
 	// KeyManagementService.ImportCryptoKeyVersion.

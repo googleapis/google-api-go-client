@@ -149,7 +149,7 @@ func New(client *http.Client) (*Service, error) {
 	if client == nil {
 		return nil, errors.New("client is nil")
 	}
-	return NewService(context.Background(), option.WithHTTPClient(client))
+	return NewService(context.TODO(), option.WithHTTPClient(client))
 }
 
 type Service struct {
@@ -1540,9 +1540,9 @@ func (r *OrganizationsService) List() *OrganizationsListCall {
 // Filter sets the optional parameter "filter": An optional query string used
 // to filter the Organizations to return in the response. Filter rules are
 // case-insensitive. Organizations may be filtered by
-// `owner.directoryCustomerId` or by `domain`, where the domain is a G Suite
-// domain, for example: * Filter `owner.directorycustomerid:123456789` returns
-// Organization resources with `owner.directory_customer_id` equal to
+// `owner.directoryCustomerId` or by `domain`, where the domain is a verified G
+// Suite domain, for example: * Filter `owner.directorycustomerid:123456789`
+// returns Organization resources with `owner.directory_customer_id` equal to
 // `123456789`. * Filter `domain:google.com` returns Organization resources
 // corresponding to the domain `google.com`. This field is optional.
 func (c *OrganizationsListCall) Filter(filter string) *OrganizationsListCall {

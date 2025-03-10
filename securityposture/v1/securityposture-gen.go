@@ -139,7 +139,7 @@ func New(client *http.Client) (*Service, error) {
 	if client == nil {
 		return nil, errors.New("client is nil")
 	}
-	return NewService(context.Background(), option.WithHTTPClient(client))
+	return NewService(context.TODO(), option.WithHTTPClient(client))
 }
 
 type Service struct {
@@ -632,14 +632,14 @@ type GoogleCloudSecuritypostureV1PolicyRule struct {
 	// Enforce: Whether to enforce the constraint. Valid only for boolean
 	// constraints.
 	Enforce bool `json:"enforce,omitempty"`
-	// Parameters: Optional. Required for GMCs if parameters defined in
-	// constraints. Pass parameter values when policy enforcement is enabled.
-	// Ensure that parameter value types match those defined in the constraint
-	// definition. For example: { "allowedLocations" : ["us-east1", "us-west1"],
-	// "allowAll" : true }
+	// Parameters: Optional. Required for managed constraints if parameters are
+	// defined. Passes parameter values when policy enforcement is enabled. Ensure
+	// that parameter value types match those defined in the constraint definition.
+	// For example: { "allowedLocations" : ["us-east1", "us-west1"], "allowAll" :
+	// true }
 	Parameters googleapi.RawMessage `json:"parameters,omitempty"`
-	// ResourceTypes: Optional. The resource types policy can support, only used
-	// for Google managed constraint and method type is GOVERN_TAGS.
+	// ResourceTypes: Optional. The resource types policies can support, only used
+	// for managed constraints. Method type is `GOVERN_TAGS`.
 	ResourceTypes *ResourceTypes `json:"resourceTypes,omitempty"`
 	// Values: The allowed and denied values for a list constraint. Valid only for
 	// list constraints.
@@ -1568,14 +1568,14 @@ func (s ResourceSelector) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// ResourceTypes: Set multiple resource types for one policy, eg:
+// ResourceTypes: Set multiple resource types for one policy, for example:
 // resourceTypes: included: - compute.googleapis.com/Instance -
 // compute.googleapis.com/Disk Constraint definition contains an empty resource
-// type in order to support multiple resource types in the policy. Only support
-// Google managed constriaint and method type is GOVERN_TAGS Refer
+// type in order to support multiple resource types in the policy. Only
+// supports managed constraints. Method type is `GOVERN_TAGS`. Refer
 // go/multi-resource-support-force-tags-gmc to get more details.
 type ResourceTypes struct {
-	// Included: Optional. The resource type we currently support.
+	// Included: Optional. The resource types we currently support.
 	// cloud/orgpolicy/customconstraintconfig/prod/resource_types.prototext
 	Included []string `json:"included,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Included") to

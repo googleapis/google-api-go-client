@@ -138,7 +138,7 @@ func New(client *http.Client) (*Service, error) {
 	if client == nil {
 		return nil, errors.New("client is nil")
 	}
-	return NewService(context.Background(), option.WithHTTPClient(client))
+	return NewService(context.TODO(), option.WithHTTPClient(client))
 }
 
 type Service struct {
@@ -343,7 +343,7 @@ func (s AccessConfig) MarshalJSON() ([]byte, error) {
 type ActiveData struct {
 }
 
-// AttachedDisk: A node-attached disk resource. Next ID: 8;
+// AttachedDisk: A node-attached disk resource.
 type AttachedDisk struct {
 	// Mode: The mode in which to attach this disk. If not specified, the default
 	// is READ_WRITE mode. Only applicable to data_disks.
@@ -358,6 +358,8 @@ type AttachedDisk struct {
 	// SourceDisk: Specifies the full path to an existing disk. For example:
 	// "projects/my-project/zones/us-central1-c/disks/my-disk".
 	SourceDisk string `json:"sourceDisk,omitempty"`
+	// WorkerIds: Optional. The list of worker IDs this disk is attached to.
+	WorkerIds []string `json:"workerIds,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Mode") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
 	// omitted from API requests. See

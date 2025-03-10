@@ -138,7 +138,7 @@ func New(client *http.Client) (*Service, error) {
 	if client == nil {
 		return nil, errors.New("client is nil")
 	}
-	return NewService(context.Background(), option.WithHTTPClient(client))
+	return NewService(context.TODO(), option.WithHTTPClient(client))
 }
 
 type Service struct {
@@ -205,26 +205,23 @@ type ComputeInsightsRequest struct {
 	//   "INSIGHT_UNSPECIFIED" - Not Specified.
 	//   "INSIGHT_COUNT" - Count insight. When this insight is specified
 	// ComputeInsights returns the number of places that match the specified filter
-	// criteria. ``` For example if the request is: ComputeInsightsRequest {
-	// insights: INSIGHT_COUNT filter { location_filter {region: } type_filter
-	// {included_types: "restaurant"} operating_status:
-	// OPERATING_STATUS_OPERATIONAL price_levels: PRICE_LEVEL_FREE price_levels:
-	// PRICE_LEVEL_INEXPENSIVE min_rating: 4.0 } } The method will return the count
-	// of restaurants in California that are operational, with price level free or
-	// inexpensive and have an average rating of at least 4 starts. Example
-	// response: ComputeInsightsResponse { count: } ```
+	// criteria. Example request: ``` { "insights": ["INSIGHT_COUNT"], "filter": {
+	// "locationFilter": { "region": { "place":
+	// "places/ChIJPV4oX_65j4ARVW8IJ6IJUYs" } }, "typeFilter": { "includedTypes":
+	// ["restaurant"] }, "operatingStatus": ["OPERATING_STATUS_OPERATIONAL"],
+	// "priceLevels": [ "PRICE_LEVEL_FREE", "PRICE_LEVEL_INEXPENSIVE" ],
+	// "ratingFilter": { "minRating": 4.0 } } } ``` Example response: ``` {
+	// "count": 1234 } ```
 	//   "INSIGHT_PLACES" - Return Places When this insight is specified
-	// ComputeInsights returns Places that match the specified filter criteria. ```
-	// For example if the request is: ComputeInsightsRequest { insights:
-	// INSIGHT_PLACES filter { location_filter {region: } type_filter
-	// {included_types: "restaurant"} operating_status:
-	// OPERATING_STATUS_OPERATIONAL price_levels: PRICE_LEVEL_FREE price_levels:
-	// PRICE_LEVEL_INEXPENSIVE min_rating: 4.0 } } The method will return list of
-	// places of restaurants in California that are operational, with price level
-	// free or inexpensive and have an average rating of at least 4 stars. Example
-	// response: ComputeInsightsResponse { place_insights { place: "places/ABC" }
-	// place_insights { place: "places/PQR" } place_insights { place: "places/XYZ"
-	// } } ```
+	// ComputeInsights returns places IDs that match the specified filter criteria.
+	// Example request: ``` { "insights": ["INSIGHT_PLACES"], "filter": {
+	// "locationFilter": { "region": { "place":
+	// "places/ChIJPV4oX_65j4ARVW8IJ6IJUYs" } }, "typeFilter": { "includedTypes":
+	// ["restaurant"] }, "operatingStatus": ["OPERATING_STATUS_OPERATIONAL"],
+	// "priceLevels": [ "PRICE_LEVEL_FREE", "PRICE_LEVEL_INEXPENSIVE" ],
+	// "ratingFilter": { "minRating": 4.0 } } } ``` Example response: ``` {
+	// "placeInsights": [ {"place": "places/ABC"}, {"place": "places/PQR"},
+	// {"place": "places/XYZ"} ] } ```
 	Insights []string `json:"insights,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Filter") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -303,7 +300,8 @@ type Filter struct {
 	// OPERATING_STATUS_OPERATIONAL is used as default.
 	//
 	// Possible values:
-	//   "OPERATING_STATUS_UNSPECIFIED" - Not Specified.
+	//   "OPERATING_STATUS_UNSPECIFIED" - Not specified. This value should not be
+	// used.
 	//   "OPERATING_STATUS_OPERATIONAL" - The place is operational and its open
 	// during its defined hours.
 	//   "OPERATING_STATUS_PERMANENTLY_CLOSED" - The Place is no longer in
@@ -312,11 +310,11 @@ type Filter struct {
 	// and expected to reopen in the future.
 	OperatingStatus []string `json:"operatingStatus,omitempty"`
 	// PriceLevels: Optional. Restricts results to places whose price level is
-	// included on this list. If price_level is not set, all price levels are
+	// included on this list. If `price_levels` is not set, all price levels are
 	// included in the results.
 	//
 	// Possible values:
-	//   "PRICE_LEVEL_UNSPECIFIED" - Place price level is unspecified or unknown.
+	//   "PRICE_LEVEL_UNSPECIFIED" - Not specified. This value should not be used.
 	//   "PRICE_LEVEL_FREE" - Place provides free services.
 	//   "PRICE_LEVEL_INEXPENSIVE" - Place provides inexpensive services.
 	//   "PRICE_LEVEL_MODERATE" - Place provides moderately priced services.

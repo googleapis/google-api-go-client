@@ -138,7 +138,7 @@ func New(client *http.Client) (*Service, error) {
 	if client == nil {
 		return nil, errors.New("client is nil")
 	}
-	return NewService(context.Background(), option.WithHTTPClient(client))
+	return NewService(context.TODO(), option.WithHTTPClient(client))
 }
 
 type Service struct {
@@ -257,6 +257,8 @@ func (s DestinationParallelstore) MarshalJSON() ([]byte, error) {
 type ExportDataRequest struct {
 	// DestinationGcsBucket: Cloud Storage destination.
 	DestinationGcsBucket *DestinationGcsBucket `json:"destinationGcsBucket,omitempty"`
+	// MetadataOptions: Optional. The metadata options for the export data.
+	MetadataOptions *TransferMetadataOptions `json:"metadataOptions,omitempty"`
 	// RequestId: Optional. An optional request ID to identify requests. Specify a
 	// unique request ID so that if you must retry your request, the server will
 	// know to ignore the request if it has already been completed. The server will
@@ -312,6 +314,9 @@ type GoogleProtobufEmpty struct {
 type ImportDataRequest struct {
 	// DestinationParallelstore: Parallelstore destination.
 	DestinationParallelstore *DestinationParallelstore `json:"destinationParallelstore,omitempty"`
+	// MetadataOptions: Optional. The transfer metadata options for the import
+	// data.
+	MetadataOptions *TransferMetadataOptions `json:"metadataOptions,omitempty"`
 	// RequestId: Optional. An optional request ID to identify requests. Specify a
 	// unique request ID so that if you must retry your request, the server will
 	// know to ignore the request if it has already been completed. The server will
@@ -672,6 +677,41 @@ func (s OperationMetadata) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// ReconciliationOperationMetadata: Operation metadata returned by the CLH
+// during resource state reconciliation.
+type ReconciliationOperationMetadata struct {
+	// DeleteResource: DEPRECATED. Use exclusive_action instead.
+	DeleteResource bool `json:"deleteResource,omitempty"`
+	// ExclusiveAction: Excluisive action returned by the CLH.
+	//
+	// Possible values:
+	//   "UNKNOWN_REPAIR_ACTION" - Unknown repair action.
+	//   "DELETE" - The resource has to be deleted. When using this bit, the CLH
+	// should fail the operation. DEPRECATED. Instead use DELETE_RESOURCE
+	// OperationSignal in SideChannel.
+	//   "RETRY" - This resource could not be repaired but the repair should be
+	// tried again at a later time. This can happen if there is a dependency that
+	// needs to be resolved first- e.g. if a parent resource must be repaired
+	// before a child resource.
+	ExclusiveAction string `json:"exclusiveAction,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "DeleteResource") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DeleteResource") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ReconciliationOperationMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod ReconciliationOperationMetadata
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // SourceGcsBucket: Cloud Storage as the source of a data transfer.
 type SourceGcsBucket struct {
 	// Uri: Required. URI to a Cloud Storage bucket in the format: `gs:///`. The
@@ -749,6 +789,49 @@ type Status struct {
 
 func (s Status) MarshalJSON() ([]byte, error) {
 	type NoMethod Status
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// TransferMetadataOptions: Transfer metadata options for the instance.
+type TransferMetadataOptions struct {
+	// Gid: Optional. The GID preservation behavior.
+	//
+	// Possible values:
+	//   "GID_UNSPECIFIED" - default is GID_NUMBER_PRESERVE.
+	//   "GID_SKIP" - Do not preserve GID during a transfer job.
+	//   "GID_NUMBER_PRESERVE" - Preserve GID that is in number format during a
+	// transfer job.
+	Gid string `json:"gid,omitempty"`
+	// Mode: Optional. The mode preservation behavior.
+	//
+	// Possible values:
+	//   "MODE_UNSPECIFIED" - default is MODE_PRESERVE.
+	//   "MODE_SKIP" - Do not preserve mode during a transfer job.
+	//   "MODE_PRESERVE" - Preserve mode during a transfer job.
+	Mode string `json:"mode,omitempty"`
+	// Uid: Optional. The UID preservation behavior.
+	//
+	// Possible values:
+	//   "UID_UNSPECIFIED" - default is UID_NUMBER_PRESERVE.
+	//   "UID_SKIP" - Do not preserve UID during a transfer job.
+	//   "UID_NUMBER_PRESERVE" - Preserve UID that is in number format during a
+	// transfer job.
+	Uid string `json:"uid,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Gid") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Gid") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s TransferMetadataOptions) MarshalJSON() ([]byte, error) {
+	type NoMethod TransferMetadataOptions
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 

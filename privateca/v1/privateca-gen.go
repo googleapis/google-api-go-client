@@ -138,7 +138,7 @@ func New(client *http.Client) (*Service, error) {
 	if client == nil {
 		return nil, errors.New("client is nil")
 	}
-	return NewService(context.Background(), option.WithHTTPClient(client))
+	return NewService(context.TODO(), option.WithHTTPClient(client))
 }
 
 type Service struct {
@@ -1503,6 +1503,14 @@ type IssuancePolicy struct {
 	// certificate request's public key must match one of the key types listed
 	// here. Otherwise, any key may be used.
 	AllowedKeyTypes []*AllowedKeyType `json:"allowedKeyTypes,omitempty"`
+	// BackdateDuration: Optional. The duration to backdate all certificates issued
+	// from this CaPool. If not set, the certificates will be issued with a
+	// not_before_time of the issuance time (i.e. the current time). If set, the
+	// certificates will be issued with a not_before_time of the issuance time
+	// minus the backdate_duration. The not_after_time will be adjusted to preserve
+	// the requested lifetime. The backdate_duration must be less than or equal to
+	// 48 hours.
+	BackdateDuration string `json:"backdateDuration,omitempty"`
 	// BaselineValues: Optional. A set of X.509 values that will be applied to all
 	// certificates issued through this CaPool. If a certificate request includes
 	// conflicting values for the same properties, they will be overwritten by the
@@ -2844,13 +2852,13 @@ func (s UndeleteCertificateAuthorityRequest) MarshalJSON() ([]byte, error) {
 type UserDefinedAccessUrls struct {
 	// AiaIssuingCertificateUrls: Optional. A list of URLs where the issuer CA
 	// certificate may be downloaded, which appears in the "Authority Information
-	// Access" extension in the certificate. If specified, the default GCS URLs
-	// will be omitted.
+	// Access" extension in the certificate. If specified, the default Cloud
+	// Storage URLs will be omitted.
 	AiaIssuingCertificateUrls []string `json:"aiaIssuingCertificateUrls,omitempty"`
 	// CrlAccessUrls: Optional. A list of URLs where to obtain CRL information,
 	// i.e. the DistributionPoint.fullName described by
 	// https://tools.ietf.org/html/rfc5280#section-4.2.1.13. If specified, the
-	// default GCS URLs will be omitted.
+	// default Cloud Storage URLs will be omitted.
 	CrlAccessUrls []string `json:"crlAccessUrls,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AiaIssuingCertificateUrls")
 	// to unconditionally include in API requests. By default, fields with empty or

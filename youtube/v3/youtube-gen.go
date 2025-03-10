@@ -200,7 +200,7 @@ func New(client *http.Client) (*Service, error) {
 	if client == nil {
 		return nil, errors.New("client is nil")
 	}
-	return NewService(context.Background(), option.WithHTTPClient(client))
+	return NewService(context.TODO(), option.WithHTTPClient(client))
 }
 
 type Service struct {
@@ -2876,6 +2876,10 @@ type ContentRating struct {
 	// language)
 	//   "djctqCriminalActs" - Atos Criminosos (Criminal Acts)
 	//   "djctqImpactingContent" - Conteúdo Impactante (Impacting content)
+	//   "djctqFear" - Temer (Fear)
+	//   "djctqMedicalProcedures" - Procedimentos médicos (Medical Procedures)
+	//   "djctqSensitiveTopics" - Tópicos sensíveis (Sensitive Topics)
+	//   "djctqFantasyViolence" - Fantasia Violência (Fantasy Violence)
 	DjctqRatingReasons []string `json:"djctqRatingReasons,omitempty"`
 	// EcbmctRating: Rating system in Turkey - Evaluation and Classification Board
 	// of the Ministry of Culture and Tourism

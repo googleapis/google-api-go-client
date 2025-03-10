@@ -5938,7 +5938,7 @@
       }
     }
   },
-  "revision": "20250218",
+  "revision": "20250228",
   "rootUrl": "https://securitycenter.googleapis.com/",
   "schemas": {
     "Access": {
@@ -7342,7 +7342,7 @@
           "type": "string"
         },
         "maxRetentionAllowed": {
-          "description": "Maximum duration of retention allowed from the DRD control. This comes from the DRD control where users set a max TTL for their data. For example, suppose that a user set the max TTL for a Cloud Storage bucket to 90 days. However, an object in that bucket is 100 days old. In this case, a DataRetentionDeletionEvent will be generated for that Cloud Storage bucket, and the max_retention_allowed is 90 days.",
+          "description": "Maximum duration of retention allowed from the DRD control. This comes from the DRD control where users set a max TTL for their data. For example, suppose that a user sets the max TTL for a Cloud Storage bucket to 90 days. However, an object in that bucket is 100 days old. In this case, a DataRetentionDeletionEvent will be generated for that Cloud Storage bucket, and the max_retention_allowed is 90 days.",
           "format": "google-duration",
           "type": "string"
         }
@@ -7418,7 +7418,7 @@
       "id": "Disk",
       "properties": {
         "name": {
-          "description": "The name of the disk, for example, \"https://www.googleapis.com/compute/v1/projects/project-id/zones/zone-id/disks/disk-id\".",
+          "description": "The name of the disk, for example, \"https://www.googleapis.com/compute/v1/projects/{project-id}/zones/{zone-id}/disks/{disk-id}\".",
           "type": "string"
         }
       },
@@ -10108,7 +10108,7 @@
           "type": "string"
         },
         "maxRetentionAllowed": {
-          "description": "Maximum duration of retention allowed from the DRD control. This comes from the DRD control where users set a max TTL for their data. For example, suppose that a user set the max TTL for a Cloud Storage bucket to 90 days. However, an object in that bucket is 100 days old. In this case, a DataRetentionDeletionEvent will be generated for that Cloud Storage bucket, and the max_retention_allowed is 90 days.",
+          "description": "Maximum duration of retention allowed from the DRD control. This comes from the DRD control where users set a max TTL for their data. For example, suppose that a user sets the max TTL for a Cloud Storage bucket to 90 days. However, an object in that bucket is 100 days old. In this case, a DataRetentionDeletionEvent will be generated for that Cloud Storage bucket, and the max_retention_allowed is 90 days.",
           "format": "google-duration",
           "type": "string"
         }
@@ -10184,7 +10184,7 @@
       "id": "GoogleCloudSecuritycenterV2Disk",
       "properties": {
         "name": {
-          "description": "The name of the disk, for example, \"https://www.googleapis.com/compute/v1/projects/project-id/zones/zone-id/disks/disk-id\".",
+          "description": "The name of the disk, for example, \"https://www.googleapis.com/compute/v1/projects/{project-id}/zones/{zone-id}/disks/{disk-id}\".",
           "type": "string"
         }
       },
@@ -11552,6 +11552,7 @@
           "items": {
             "enum": [
               "TECHNIQUE_UNSPECIFIED",
+              "AUTOMATED_EXFILTRATION",
               "MASQUERADING",
               "MATCH_LEGITIMATE_NAME_OR_LOCATION",
               "BOOT_OR_LOGON_INITIALIZATION_SCRIPTS",
@@ -11577,6 +11578,7 @@
               "MULTI_HOP_PROXY",
               "ACCOUNT_MANIPULATION",
               "ADDITIONAL_CLOUD_CREDENTIALS",
+              "ADDITIONAL_CLOUD_ROLES",
               "SSH_AUTHORIZED_KEYS",
               "ADDITIONAL_CONTAINER_CLUSTER_ROLES",
               "INGRESS_TOOL_TRANSFER",
@@ -11586,6 +11588,7 @@
               "ACCESS_TOKEN_MANIPULATION",
               "TOKEN_IMPERSONATION_OR_THEFT",
               "EXPLOIT_PUBLIC_FACING_APPLICATION",
+              "USER_EXECUTION",
               "DOMAIN_POLICY_MODIFICATION",
               "DATA_DESTRUCTION",
               "SERVICE_STOP",
@@ -11621,6 +11624,7 @@
             ],
             "enumDescriptions": [
               "Unspecified value.",
+              "T1020",
               "T1036",
               "T1036.005",
               "T1037",
@@ -11646,6 +11650,7 @@
               "T1090.003",
               "T1098",
               "T1098.001",
+              "T1098.003",
               "T1098.004",
               "T1098.006",
               "T1105",
@@ -11655,6 +11660,7 @@
               "T1134",
               "T1134.001",
               "T1190",
+              "T1204",
               "T1484",
               "T1485",
               "T1489",
@@ -11735,6 +11741,7 @@
           "items": {
             "enum": [
               "TECHNIQUE_UNSPECIFIED",
+              "AUTOMATED_EXFILTRATION",
               "MASQUERADING",
               "MATCH_LEGITIMATE_NAME_OR_LOCATION",
               "BOOT_OR_LOGON_INITIALIZATION_SCRIPTS",
@@ -11760,6 +11767,7 @@
               "MULTI_HOP_PROXY",
               "ACCOUNT_MANIPULATION",
               "ADDITIONAL_CLOUD_CREDENTIALS",
+              "ADDITIONAL_CLOUD_ROLES",
               "SSH_AUTHORIZED_KEYS",
               "ADDITIONAL_CONTAINER_CLUSTER_ROLES",
               "INGRESS_TOOL_TRANSFER",
@@ -11769,6 +11777,7 @@
               "ACCESS_TOKEN_MANIPULATION",
               "TOKEN_IMPERSONATION_OR_THEFT",
               "EXPLOIT_PUBLIC_FACING_APPLICATION",
+              "USER_EXECUTION",
               "DOMAIN_POLICY_MODIFICATION",
               "DATA_DESTRUCTION",
               "SERVICE_STOP",
@@ -11804,6 +11813,7 @@
             ],
             "enumDescriptions": [
               "Unspecified value.",
+              "T1020",
               "T1036",
               "T1036.005",
               "T1037",
@@ -11829,6 +11839,7 @@
               "T1090.003",
               "T1098",
               "T1098.001",
+              "T1098.003",
               "T1098.004",
               "T1098.006",
               "T1105",
@@ -11838,6 +11849,7 @@
               "T1134",
               "T1134.001",
               "T1190",
+              "T1204",
               "T1484",
               "T1485",
               "T1489",
@@ -13765,6 +13777,7 @@
           "items": {
             "enum": [
               "TECHNIQUE_UNSPECIFIED",
+              "AUTOMATED_EXFILTRATION",
               "MASQUERADING",
               "MATCH_LEGITIMATE_NAME_OR_LOCATION",
               "BOOT_OR_LOGON_INITIALIZATION_SCRIPTS",
@@ -13790,6 +13803,7 @@
               "MULTI_HOP_PROXY",
               "ACCOUNT_MANIPULATION",
               "ADDITIONAL_CLOUD_CREDENTIALS",
+              "ADDITIONAL_CLOUD_ROLES",
               "SSH_AUTHORIZED_KEYS",
               "ADDITIONAL_CONTAINER_CLUSTER_ROLES",
               "INGRESS_TOOL_TRANSFER",
@@ -13799,6 +13813,7 @@
               "ACCESS_TOKEN_MANIPULATION",
               "TOKEN_IMPERSONATION_OR_THEFT",
               "EXPLOIT_PUBLIC_FACING_APPLICATION",
+              "USER_EXECUTION",
               "DOMAIN_POLICY_MODIFICATION",
               "DATA_DESTRUCTION",
               "SERVICE_STOP",
@@ -13834,6 +13849,7 @@
             ],
             "enumDescriptions": [
               "Unspecified value.",
+              "T1020",
               "T1036",
               "T1036.005",
               "T1037",
@@ -13859,6 +13875,7 @@
               "T1090.003",
               "T1098",
               "T1098.001",
+              "T1098.003",
               "T1098.004",
               "T1098.006",
               "T1105",
@@ -13868,6 +13885,7 @@
               "T1134",
               "T1134.001",
               "T1190",
+              "T1204",
               "T1484",
               "T1485",
               "T1489",
@@ -13948,6 +13966,7 @@
           "items": {
             "enum": [
               "TECHNIQUE_UNSPECIFIED",
+              "AUTOMATED_EXFILTRATION",
               "MASQUERADING",
               "MATCH_LEGITIMATE_NAME_OR_LOCATION",
               "BOOT_OR_LOGON_INITIALIZATION_SCRIPTS",
@@ -13973,6 +13992,7 @@
               "MULTI_HOP_PROXY",
               "ACCOUNT_MANIPULATION",
               "ADDITIONAL_CLOUD_CREDENTIALS",
+              "ADDITIONAL_CLOUD_ROLES",
               "SSH_AUTHORIZED_KEYS",
               "ADDITIONAL_CONTAINER_CLUSTER_ROLES",
               "INGRESS_TOOL_TRANSFER",
@@ -13982,6 +14002,7 @@
               "ACCESS_TOKEN_MANIPULATION",
               "TOKEN_IMPERSONATION_OR_THEFT",
               "EXPLOIT_PUBLIC_FACING_APPLICATION",
+              "USER_EXECUTION",
               "DOMAIN_POLICY_MODIFICATION",
               "DATA_DESTRUCTION",
               "SERVICE_STOP",
@@ -14017,6 +14038,7 @@
             ],
             "enumDescriptions": [
               "Unspecified value.",
+              "T1020",
               "T1036",
               "T1036.005",
               "T1037",
@@ -14042,6 +14064,7 @@
               "T1090.003",
               "T1098",
               "T1098.001",
+              "T1098.003",
               "T1098.004",
               "T1098.006",
               "T1105",
@@ -14051,6 +14074,7 @@
               "T1134",
               "T1134.001",
               "T1190",
+              "T1204",
               "T1484",
               "T1485",
               "T1489",

@@ -157,7 +157,7 @@ func New(client *http.Client) (*APIService, error) {
 	if client == nil {
 		return nil, errors.New("client is nil")
 	}
-	return NewService(context.Background(), option.WithHTTPClient(client))
+	return NewService(context.TODO(), option.WithHTTPClient(client))
 }
 
 type APIService struct {
@@ -1461,9 +1461,9 @@ type Documentation struct {
 	// Rules: A list of documentation rules that apply to individual API elements.
 	// **NOTE:** All service configuration rules follow "last one wins" order.
 	Rules []*DocumentationRule `json:"rules,omitempty"`
-	// SectionOverrides: Specifies section and content to override boilerplate
-	// content provided by go/api-docgen. Currently overrides following sections:
-	// 1. rest.service.client_libraries
+	// SectionOverrides: Specifies section and content to override the boilerplate
+	// content. Currently overrides following sections: 1.
+	// rest.service.client_libraries
 	SectionOverrides []*Page `json:"sectionOverrides,omitempty"`
 	// ServiceRootUrl: Specifies the service root url if the default one (the
 	// service name from the yaml file) is not suitable. This can be seen in any
@@ -1503,8 +1503,7 @@ type DocumentationRule struct {
 	// comments taken from the proto source definition of the proto element.
 	Description string `json:"description,omitempty"`
 	// DisableReplacementWords: String of comma or space separated case-sensitive
-	// words for which method/field name replacement will be disabled by
-	// go/api-docgen.
+	// words for which method/field name replacement will be disabled.
 	DisableReplacementWords string `json:"disableReplacementWords,omitempty"`
 	// Selector: The selector is a comma-separated list of patterns for any element
 	// such as a method, a field, an enum value. Each pattern is a qualified name
@@ -4604,20 +4603,13 @@ func (s Usage) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// UsageRule: Usage configuration rules for the service. NOTE: Under
-// development. Use this rule to configure unregistered calls for the service.
-// Unregistered calls are calls that do not contain consumer project identity.
-// (Example: calls that do not contain an API key). By default, API methods do
-// not allow unregistered calls, and each method call must be identified by a
-// consumer project identity. Use this rule to allow/disallow unregistered
-// calls. Example of an API that wants to allow unregistered calls for entire
-// service. usage: rules: - selector: "*" allow_unregistered_calls: true
-// Example of a method that wants to allow unregistered calls. usage: rules: -
-// selector: "google.example.library.v1.LibraryService.CreateBook"
-// allow_unregistered_calls: true
+// UsageRule: Usage configuration rules for the service.
 type UsageRule struct {
-	// AllowUnregisteredCalls: If true, the selected method allows unregistered
-	// calls, e.g. calls that don't identify any user or application.
+	// AllowUnregisteredCalls:  Use this rule to configure unregistered calls for
+	// the service. Unregistered calls are calls that do not contain consumer
+	// project identity. (Example: calls that do not contain an API key). WARNING:
+	// By default, API methods do not allow unregistered calls, and each method
+	// call must be identified by a consumer project identity.
 	AllowUnregisteredCalls bool `json:"allowUnregisteredCalls,omitempty"`
 	// Selector: Selects the methods to which this rule applies. Use '*' to
 	// indicate all methods in all APIs. Refer to selector for syntax details.

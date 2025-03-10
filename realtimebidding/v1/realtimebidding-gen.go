@@ -139,7 +139,7 @@ func New(client *http.Client) (*Service, error) {
 	if client == nil {
 		return nil, errors.New("client is nil")
 	}
-	return NewService(context.Background(), option.WithHTTPClient(client))
+	return NewService(context.TODO(), option.WithHTTPClient(client))
 }
 
 type Service struct {
@@ -992,6 +992,9 @@ type CreativeServingDecision struct {
 	// Possible values:
 	//   "AD_CATEGORY_TAXONOMY_UNSPECIFIED" - Default value that should never be
 	// used.
+	//   "GOOGLE_AD_CATEGORY_TAXONOMY" - Google ad categories taxonomy, including
+	// product categories and sensitive categories. Find the category lists at
+	// https://developers.google.com/authorized-buyers/rtb/data#reference-data
 	//   "IAB_CONTENT_1_0" - IAB Content Taxonomy 1.0. See
 	// https://github.com/InteractiveAdvertisingBureau/Taxonomies/blob/main/Content%20Taxonomies/Content%20Taxonomy%201.0.tsv
 	// for more details.

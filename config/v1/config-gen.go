@@ -138,7 +138,7 @@ func New(client *http.Client) (*Service, error) {
 	if client == nil {
 		return nil, errors.New("client is nil")
 	}
-	return NewService(context.Background(), option.WithHTTPClient(client))
+	return NewService(context.TODO(), option.WithHTTPClient(client))
 }
 
 type Service struct {
@@ -1329,7 +1329,7 @@ func (s Policy) MarshalJSON() ([]byte, error) {
 // configuration.
 type Preview struct {
 	// Annotations: Optional. Arbitrary key-value metadata storage e.g. to help
-	// client tools identifiy preview during automation. See
+	// client tools identify preview during automation. See
 	// https://google.aip.dev/148#annotations for details on format and size
 	// limitations.
 	Annotations map[string]string `json:"annotations,omitempty"`

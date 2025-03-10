@@ -150,7 +150,7 @@ func New(client *http.Client) (*APIService, error) {
 	if client == nil {
 		return nil, errors.New("client is nil")
 	}
-	return NewService(context.Background(), option.WithHTTPClient(client))
+	return NewService(context.TODO(), option.WithHTTPClient(client))
 }
 
 type APIService struct {
@@ -1730,6 +1730,9 @@ type LabInfo struct {
 	// Name: Lab name where the device is hosted. If empty, the device is hosted in
 	// a Google owned lab.
 	Name string `json:"name,omitempty"`
+	// RegionCode: The Unicode country/region code (CLDR) of the lab where the
+	// device is hosted. E.g. "US" for United States, "CH" for Switzerland.
+	RegionCode string `json:"regionCode,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Name") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
 	// omitted from API requests. See

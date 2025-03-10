@@ -2540,7 +2540,7 @@
       }
     }
   },
-  "revision": "20250204",
+  "revision": "20250225",
   "rootUrl": "https://container.googleapis.com/",
   "schemas": {
     "AcceleratorConfig": {
@@ -2752,6 +2752,27 @@
         },
         "securityGroup": {
           "description": "The name of the security group-of-groups to be used. Only relevant if enabled = true.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "AutoMonitoringConfig": {
+      "description": "AutoMonitoringConfig defines the configuration for GKE Workload Auto-Monitoring.",
+      "id": "AutoMonitoringConfig",
+      "properties": {
+        "scope": {
+          "description": "Scope for GKE Workload Auto-Monitoring.",
+          "enum": [
+            "SCOPE_UNSPECIFIED",
+            "ALL",
+            "NONE"
+          ],
+          "enumDescriptions": [
+            "Not set.",
+            "Auto-Monitoring is enabled for all supported applications.",
+            "Disable Auto-Monitoring."
+          ],
           "type": "string"
         }
       },
@@ -3233,7 +3254,8 @@
           "type": "boolean"
         },
         "enableTpu": {
-          "description": "Enable the ability to use Cloud TPUs in this cluster.",
+          "deprecated": true,
+          "description": "Enable the ability to use Cloud TPUs in this cluster. This field is deprecated due to the deprecation of 2VM TPU. The end of life date for 2VM TPU is 2025-04-25.",
           "type": "boolean"
         },
         "endpoint": {
@@ -3299,7 +3321,6 @@
           "description": "Configuration for the legacy ABAC authorization mode."
         },
         "location": {
-          "description": "Output only. The name of the Google Compute Engine [zone](https://cloud.google.com/compute/docs/regions-zones/regions-zones#available) or [region](https://cloud.google.com/compute/docs/regions-zones/regions-zones#available) in which the cluster resides.",
           "readOnly": true,
           "type": "string"
         },
@@ -3482,7 +3503,8 @@
           "type": "string"
         },
         "tpuIpv4CidrBlock": {
-          "description": "Output only. The IP address range of the Cloud TPUs in this cluster, in [CIDR](http://en.wikipedia.org/wiki/Classless_Inter-Domain_Routing) notation (e.g. `1.2.3.4/29`).",
+          "deprecated": true,
+          "description": "Output only. The IP address range of the Cloud TPUs in this cluster, in [CIDR](http://en.wikipedia.org/wiki/Classless_Inter-Domain_Routing) notation (e.g. `1.2.3.4/29`). This field is deprecated due to the deprecation of 2VM TPU. The end of life date for 2VM TPU is 2025-04-25.",
           "readOnly": true,
           "type": "string"
         },
@@ -4344,13 +4366,15 @@
               "EVENT_TYPE_UNSPECIFIED",
               "UPGRADE_AVAILABLE_EVENT",
               "UPGRADE_EVENT",
-              "SECURITY_BULLETIN_EVENT"
+              "SECURITY_BULLETIN_EVENT",
+              "UPGRADE_INFO_EVENT"
             ],
             "enumDescriptions": [
               "Not set, will be ignored.",
               "Corresponds with UpgradeAvailableEvent.",
               "Corresponds with UpgradeEvent.",
-              "Corresponds with SecurityBulletinEvent."
+              "Corresponds with SecurityBulletinEvent.",
+              "Corresponds with UpgradeInfoEvent."
             ],
             "type": "string"
           },
@@ -4767,7 +4791,8 @@
           "type": "string"
         },
         "tpuIpv4CidrBlock": {
-          "description": "The IP address range of the Cloud TPUs in this cluster. If unspecified, a range will be automatically chosen with the default size. This field is only applicable when `use_ip_aliases` is true. If unspecified, the range will use the default size. Set to /netmask (e.g. `/14`) to have a range chosen with a specific netmask. Set to a [CIDR](http://en.wikipedia.org/wiki/Classless_Inter-Domain_Routing) notation (e.g. `10.96.0.0/14`) from the RFC-1918 private networks (e.g. `10.0.0.0/8`, `172.16.0.0/12`, `192.168.0.0/16`) to pick a specific range to use.",
+          "deprecated": true,
+          "description": "The IP address range of the Cloud TPUs in this cluster. If unspecified, a range will be automatically chosen with the default size. This field is only applicable when `use_ip_aliases` is true. If unspecified, the range will use the default size. Set to /netmask (e.g. `/14`) to have a range chosen with a specific netmask. Set to a [CIDR](http://en.wikipedia.org/wiki/Classless_Inter-Domain_Routing) notation (e.g. `10.96.0.0/14`) from the RFC-1918 private networks (e.g. `10.0.0.0/8`, `172.16.0.0/12`, `192.168.0.0/16`) to pick a specific range to use. This field is deprecated due to the deprecation of 2VM TPU. The end of life date for 2VM TPU is 2025-04-25.",
           "type": "string"
         },
         "useIpAliases": {
@@ -5052,7 +5077,8 @@
               "SCHEDULER",
               "CONTROLLER_MANAGER",
               "KCP_SSHD",
-              "KCP_CONNECTION"
+              "KCP_CONNECTION",
+              "KCP_HPA"
             ],
             "enumDescriptions": [
               "Default value. This shouldn't be used.",
@@ -5062,7 +5088,8 @@
               "kube-scheduler",
               "kube-controller-manager",
               "kcp-sshd",
-              "kcp connection logs"
+              "kcp connection logs",
+              "horizontal pod autoscaler decision logs"
             ],
             "type": "string"
           },
@@ -5165,6 +5192,10 @@
       "description": "ManagedPrometheusConfig defines the configuration for Google Cloud Managed Service for Prometheus.",
       "id": "ManagedPrometheusConfig",
       "properties": {
+        "autoMonitoringConfig": {
+          "$ref": "AutoMonitoringConfig",
+          "description": "GKE Workload Auto-Monitoring Configuration."
+        },
         "enabled": {
           "description": "Enable Managed Collection.",
           "type": "boolean"
@@ -5303,7 +5334,8 @@
               "STATEFULSET",
               "CADVISOR",
               "KUBELET",
-              "DCGM"
+              "DCGM",
+              "JOBSET"
             ],
             "enumDescriptions": [
               "Default value. This shouldn't be used.",
@@ -5319,7 +5351,8 @@
               "Statefulset",
               "CADVISOR",
               "KUBELET",
-              "NVIDIA Data Center GPU Manager (DCGM)"
+              "NVIDIA Data Center GPU Manager (DCGM)",
+              "JobSet"
             ],
             "type": "string"
           },
@@ -7723,7 +7756,8 @@
             "GCE_QUOTA_EXCEEDED",
             "SET_BY_OPERATOR",
             "CLOUD_KMS_KEY_ERROR",
-            "CA_EXPIRING"
+            "CA_EXPIRING",
+            "NODE_SERVICE_ACCOUNT_MISSING_PERMISSIONS"
           ],
           "enumDescriptions": [
             "UNKNOWN indicates a generic condition.",
@@ -7732,7 +7766,8 @@
             "Google Compute Engine quota was exceeded.",
             "Cluster state was manually changed by an SRE due to a system logic error.",
             "Unable to perform an encrypt operation against the CloudKMS key used for etcd level encryption.",
-            "Cluster CA is expiring soon."
+            "Cluster CA is expiring soon.",
+            "Node service account is missing permissions."
           ],
           "type": "string"
         },

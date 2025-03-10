@@ -148,7 +148,7 @@ func New(client *http.Client) (*Service, error) {
 	if client == nil {
 		return nil, errors.New("client is nil")
 	}
-	return NewService(context.Background(), option.WithHTTPClient(client))
+	return NewService(context.TODO(), option.WithHTTPClient(client))
 }
 
 type Service struct {
@@ -191,6 +191,10 @@ type ProjectsMessagesService struct {
 // AndroidConfig: Android specific options for messages sent through FCM
 // connection server (https://goo.gl/4GLdUl).
 type AndroidConfig struct {
+	// BandwidthConstrainedOk: Optional. If set to true, messages will be allowed
+	// to be delivered to the app while the device is in bandwidth constrained
+	// mode.
+	BandwidthConstrainedOk bool `json:"bandwidthConstrainedOk,omitempty"`
 	// CollapseKey: An identifier of a group of messages that can be collapsed, so
 	// that only the last message gets sent when delivery can be resumed. A maximum
 	// of 4 different collapse keys is allowed at any given time.
@@ -239,15 +243,15 @@ type AndroidConfig struct {
 	// expressed in JSON format as "3.000000001s". The ttl will be rounded down to
 	// the nearest second.
 	Ttl string `json:"ttl,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "CollapseKey") to
+	// ForceSendFields is a list of field names (e.g. "BandwidthConstrainedOk") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "CollapseKey") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
+	// NullFields is a list of field names (e.g. "BandwidthConstrainedOk") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }

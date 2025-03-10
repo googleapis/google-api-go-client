@@ -147,7 +147,7 @@ func New(client *http.Client) (*Service, error) {
 	if client == nil {
 		return nil, errors.New("client is nil")
 	}
-	return NewService(context.Background(), option.WithHTTPClient(client))
+	return NewService(context.TODO(), option.WithHTTPClient(client))
 }
 
 type Service struct {
@@ -1759,10 +1759,11 @@ type ConsentAccessorScope struct {
 	// `{resourceType}/{id}`) or an external URI. This value must be present.
 	Actor string `json:"actor,omitempty"`
 	// Environment: An abstract identifier that describes the environment or
-	// conditions under which the accessor is acting. Can be "*" if it applies to
-	// all environments.
+	// conditions under which the accessor is acting. If it's not specified, it
+	// applies to all environments.
 	Environment string `json:"environment,omitempty"`
-	// Purpose: The intent of data use. Can be "*" if it applies to all purposes.
+	// Purpose: The intent of data use. If it's not specified, it applies to all
+	// purposes.
 	Purpose string `json:"purpose,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Actor") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -2135,6 +2136,10 @@ type Dataset struct {
 	// Name: Identifier. Resource name of the dataset, of the form
 	// `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}`.
 	Name string `json:"name,omitempty"`
+	// SatisfiesPzi: Output only. For future use.
+	SatisfiesPzi bool `json:"satisfiesPzi,omitempty"`
+	// SatisfiesPzs: Output only. For future use.
+	SatisfiesPzs bool `json:"satisfiesPzs,omitempty"`
 	// TimeZone: The default timezone used by this dataset. Must be a either a
 	// valid IANA time zone name such as "America/New_York" or empty, which
 	// defaults to UTC. This is used for parsing times in resources, such as HL7

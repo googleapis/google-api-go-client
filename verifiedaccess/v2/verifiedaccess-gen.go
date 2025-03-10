@@ -137,7 +137,7 @@ func New(client *http.Client) (*Service, error) {
 	if client == nil {
 		return nil, errors.New("client is nil")
 	}
-	return NewService(context.Background(), option.WithHTTPClient(client))
+	return NewService(context.TODO(), option.WithHTTPClient(client))
 }
 
 type Service struct {
@@ -163,6 +163,36 @@ func NewChallengeService(s *Service) *ChallengeService {
 
 type ChallengeService struct {
 	s *Service
+}
+
+// Antivirus: Antivirus information on a device.
+type Antivirus struct {
+	// State: Output only. The state of the antivirus on the device. Introduced in
+	// Chrome M136.
+	//
+	// Possible values:
+	//   "STATE_UNSPECIFIED" - Unspecified.
+	//   "MISSING" - No antivirus was detected on the device.
+	//   "DISABLED" - At least one antivirus was installed on the device but none
+	// was enabled.
+	//   "ENABLED" - At least one antivirus was enabled on the device.
+	State string `json:"state,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "State") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "State") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s Antivirus) MarshalJSON() ([]byte, error) {
+	type NoMethod Antivirus
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Challenge: Result message for VerifiedAccess.GenerateChallenge.
@@ -192,9 +222,9 @@ func (s Challenge) MarshalJSON() ([]byte, error) {
 
 // CrowdStrikeAgent: Properties of the CrowdStrike agent installed on a device.
 type CrowdStrikeAgent struct {
-	// AgentId: The Agent ID of the Crowdstrike agent.
+	// AgentId: Output only. The Agent ID of the Crowdstrike agent.
 	AgentId string `json:"agentId,omitempty"`
-	// CustomerId: The Customer ID to which the agent belongs to.
+	// CustomerId: Output only. The Customer ID to which the agent belongs to.
 	CustomerId string `json:"customerId,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AgentId") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -217,40 +247,43 @@ func (s CrowdStrikeAgent) MarshalJSON() ([]byte, error) {
 // DeviceSignals: The device signals as reported by Chrome. Unless otherwise
 // specified, signals are available on all platforms.
 type DeviceSignals struct {
-	// AllowScreenLock: Value of the AllowScreenLock policy on the device. See
-	// https://chromeenterprise.google/policies/?policy=AllowScreenLock for more
-	// details. Available on ChromeOS only.
+	// AllowScreenLock: Output only. Value of the AllowScreenLock policy on the
+	// device. See https://chromeenterprise.google/policies/?policy=AllowScreenLock
+	// for more details. Available on ChromeOS only.
 	AllowScreenLock bool `json:"allowScreenLock,omitempty"`
-	// BrowserVersion: Current version of the Chrome browser which generated this
-	// set of signals. Example value: "107.0.5286.0".
+	// Antivirus: Output only. Information about Antivirus software on the device.
+	// Available on Windows only.
+	Antivirus *Antivirus `json:"antivirus,omitempty"`
+	// BrowserVersion: Output only. Current version of the Chrome browser which
+	// generated this set of signals. Example value: "107.0.5286.0".
 	BrowserVersion string `json:"browserVersion,omitempty"`
-	// BuiltInDnsClientEnabled: Whether Chrome's built-in DNS client is used. The
-	// OS DNS client is otherwise used. This value may be controlled by an
-	// enterprise policy:
+	// BuiltInDnsClientEnabled: Output only. Whether Chrome's built-in DNS client
+	// is used. The OS DNS client is otherwise used. This value may be controlled
+	// by an enterprise policy:
 	// https://chromeenterprise.google/policies/#BuiltInDnsClientEnabled.
 	BuiltInDnsClientEnabled bool `json:"builtInDnsClientEnabled,omitempty"`
-	// ChromeRemoteDesktopAppBlocked: Whether access to the Chrome Remote Desktop
-	// application is blocked via a policy.
+	// ChromeRemoteDesktopAppBlocked: Output only. Whether access to the Chrome
+	// Remote Desktop application is blocked via a policy.
 	ChromeRemoteDesktopAppBlocked bool `json:"chromeRemoteDesktopAppBlocked,omitempty"`
-	// CrowdStrikeAgent: Crowdstrike agent properties installed on the device, if
-	// any. Available on Windows and MacOS only.
+	// CrowdStrikeAgent: Output only. Crowdstrike agent properties installed on the
+	// device, if any. Available on Windows and MacOS only.
 	CrowdStrikeAgent *CrowdStrikeAgent `json:"crowdStrikeAgent,omitempty"`
-	// DeviceAffiliationIds: Affiliation IDs of the organizations that are
-	// affiliated with the organization that is currently managing the device. When
-	// the sets of device and profile affiliation IDs overlap, it means that the
-	// organizations managing the device and user are affiliated. To learn more
+	// DeviceAffiliationIds: Output only. Affiliation IDs of the organizations that
+	// are affiliated with the organization that is currently managing the device.
+	// When the sets of device and profile affiliation IDs overlap, it means that
+	// the organizations managing the device and user are affiliated. To learn more
 	// about user affiliation, visit
 	// https://support.google.com/chrome/a/answer/12801245?ref_topic=9027936.
 	DeviceAffiliationIds []string `json:"deviceAffiliationIds,omitempty"`
-	// DeviceEnrollmentDomain: Enrollment domain of the customer which is currently
-	// managing the device.
+	// DeviceEnrollmentDomain: Output only. Enrollment domain of the customer which
+	// is currently managing the device.
 	DeviceEnrollmentDomain string `json:"deviceEnrollmentDomain,omitempty"`
-	// DeviceManufacturer: The name of the device's manufacturer.
+	// DeviceManufacturer: Output only. The name of the device's manufacturer.
 	DeviceManufacturer string `json:"deviceManufacturer,omitempty"`
-	// DeviceModel: The name of the device's model.
+	// DeviceModel: Output only. The name of the device's model.
 	DeviceModel string `json:"deviceModel,omitempty"`
-	// DiskEncryption: The encryption state of the disk. On ChromeOS, the main disk
-	// is always ENCRYPTED.
+	// DiskEncryption: Output only. The encryption state of the disk. On ChromeOS,
+	// the main disk is always ENCRYPTED.
 	//
 	// Possible values:
 	//   "DISK_ENCRYPTION_UNSPECIFIED" - Unspecified.
@@ -259,20 +292,21 @@ type DeviceSignals struct {
 	//   "DISK_ENCRYPTION_DISABLED" - The main disk is not encrypted.
 	//   "DISK_ENCRYPTION_ENCRYPTED" - The main disk is encrypted.
 	DiskEncryption string `json:"diskEncryption,omitempty"`
-	// DisplayName: The display name of the device, as defined by the user.
+	// DisplayName: Output only. The display name of the device, as defined by the
+	// user.
 	DisplayName string `json:"displayName,omitempty"`
 	// Hostname: Hostname of the device.
 	Hostname string `json:"hostname,omitempty"`
-	// Imei: International Mobile Equipment Identity (IMEI) of the device.
-	// Available on ChromeOS only.
+	// Imei: Output only. International Mobile Equipment Identity (IMEI) of the
+	// device. Available on ChromeOS only.
 	Imei []string `json:"imei,omitempty"`
-	// MacAddresses: MAC addresses of the device.
+	// MacAddresses: Output only. MAC addresses of the device.
 	MacAddresses []string `json:"macAddresses,omitempty"`
-	// Meid: Mobile Equipment Identifier (MEID) of the device. Available on
-	// ChromeOS only.
+	// Meid: Output only. Mobile Equipment Identifier (MEID) of the device.
+	// Available on ChromeOS only.
 	Meid []string `json:"meid,omitempty"`
-	// OperatingSystem: The type of the Operating System currently running on the
-	// device.
+	// OperatingSystem: Output only. The type of the Operating System currently
+	// running on the device.
 	//
 	// Possible values:
 	//   "OPERATING_SYSTEM_UNSPECIFIED" - UNSPECIFIED.
@@ -282,10 +316,10 @@ type DeviceSignals struct {
 	//   "MAC_OS_X" - Mac Os X.
 	//   "LINUX" - Linux
 	OperatingSystem string `json:"operatingSystem,omitempty"`
-	// OsFirewall: The state of the OS level firewall. On ChromeOS, the value will
-	// always be ENABLED on regular devices and UNKNOWN on devices in developer
-	// mode. Support for MacOS 15 (Sequoia) and later has been introduced in Chrome
-	// M131.
+	// OsFirewall: Output only. The state of the OS level firewall. On ChromeOS,
+	// the value will always be ENABLED on regular devices and UNKNOWN on devices
+	// in developer mode. Support for MacOS 15 (Sequoia) and later has been
+	// introduced in Chrome M131.
 	//
 	// Possible values:
 	//   "OS_FIREWALL_UNSPECIFIED" - Unspecified.
@@ -293,13 +327,14 @@ type DeviceSignals struct {
 	//   "OS_FIREWALL_DISABLED" - The OS firewall is disabled.
 	//   "OS_FIREWALL_ENABLED" - The OS firewall is enabled.
 	OsFirewall string `json:"osFirewall,omitempty"`
-	// OsVersion: The current version of the Operating System. On Windows and
-	// linux, the value will also include the security patch information.
+	// OsVersion: Output only. The current version of the Operating System. On
+	// Windows and linux, the value will also include the security patch
+	// information.
 	OsVersion string `json:"osVersion,omitempty"`
-	// PasswordProtectionWarningTrigger: Whether the Password Protection Warning
-	// feature is enabled or not. Password protection alerts users when they reuse
-	// their protected password on potentially suspicious sites. This setting is
-	// controlled by an enterprise policy:
+	// PasswordProtectionWarningTrigger: Output only. Whether the Password
+	// Protection Warning feature is enabled or not. Password protection alerts
+	// users when they reuse their protected password on potentially suspicious
+	// sites. This setting is controlled by an enterprise policy:
 	// https://chromeenterprise.google/policies/#PasswordProtectionWarningTrigger.
 	// Note that the policy unset does not have the same effects as having the
 	// policy explicitly set to `PASSWORD_PROTECTION_OFF`.
@@ -313,16 +348,16 @@ type DeviceSignals struct {
 	//   "PHISHING_REUSE" - Password protection warning is shown if a protected
 	// password is re-used on a known phishing website.
 	PasswordProtectionWarningTrigger string `json:"passwordProtectionWarningTrigger,omitempty"`
-	// ProfileAffiliationIds: Affiliation IDs of the organizations that are
-	// affiliated with the organization that is currently managing the Chrome
-	// Profile’s user or ChromeOS user.
+	// ProfileAffiliationIds: Output only. Affiliation IDs of the organizations
+	// that are affiliated with the organization that is currently managing the
+	// Chrome Profile’s user or ChromeOS user.
 	ProfileAffiliationIds []string `json:"profileAffiliationIds,omitempty"`
-	// ProfileEnrollmentDomain: Enrollment domain of the customer which is
-	// currently managing the profile.
+	// ProfileEnrollmentDomain: Output only. Enrollment domain of the customer
+	// which is currently managing the profile.
 	ProfileEnrollmentDomain string `json:"profileEnrollmentDomain,omitempty"`
-	// RealtimeUrlCheckMode: Whether Enterprise-grade (i.e. custom) unsafe URL
-	// scanning is enabled or not. This setting may be controlled by an enterprise
-	// policy:
+	// RealtimeUrlCheckMode: Output only. Whether Enterprise-grade (i.e. custom)
+	// unsafe URL scanning is enabled or not. This setting may be controlled by an
+	// enterprise policy:
 	// https://chromeenterprise.google/policies/#EnterpriseRealTimeUrlCheckMode
 	//
 	// Possible values:
@@ -332,8 +367,8 @@ type DeviceSignals struct {
 	//   "REALTIME_URL_CHECK_MODE_ENABLED_MAIN_FRAME" - Realtime check for main
 	// frame URLs is enabled.
 	RealtimeUrlCheckMode string `json:"realtimeUrlCheckMode,omitempty"`
-	// SafeBrowsingProtectionLevel: Safe Browsing Protection Level. That setting
-	// may be controlled by an enterprise policy:
+	// SafeBrowsingProtectionLevel: Output only. Safe Browsing Protection Level.
+	// That setting may be controlled by an enterprise policy:
 	// https://chromeenterprise.google/policies/#SafeBrowsingProtectionLevel.
 	//
 	// Possible values:
@@ -342,9 +377,9 @@ type DeviceSignals struct {
 	//   "STANDARD" - Safe Browsing is active in the standard mode.
 	//   "ENHANCED" - Safe Browsing is active in the enhanced mode.
 	SafeBrowsingProtectionLevel string `json:"safeBrowsingProtectionLevel,omitempty"`
-	// ScreenLockSecured: The state of the Screen Lock password protection. On
-	// ChromeOS, this value will always be ENABLED as there is not way to disable
-	// requiring a password or pin when unlocking the device.
+	// ScreenLockSecured: Output only. The state of the Screen Lock password
+	// protection. On ChromeOS, this value will always be ENABLED as there is not
+	// way to disable requiring a password or pin when unlocking the device.
 	//
 	// Possible values:
 	//   "SCREEN_LOCK_SECURED_UNSPECIFIED" - Unspecified.
@@ -354,8 +389,8 @@ type DeviceSignals struct {
 	// password-protected.
 	//   "SCREEN_LOCK_SECURED_ENABLED" - The Screen Lock is password-protected.
 	ScreenLockSecured string `json:"screenLockSecured,omitempty"`
-	// SecureBootMode: Whether the device's startup software has its Secure Boot
-	// feature enabled. Available on Windows only.
+	// SecureBootMode: Output only. Whether the device's startup software has its
+	// Secure Boot feature enabled. Available on Windows only.
 	//
 	// Possible values:
 	//   "SECURE_BOOT_MODE_UNSPECIFIED" - Unspecified.
@@ -366,22 +401,24 @@ type DeviceSignals struct {
 	//   "SECURE_BOOT_MODE_ENABLED" - Secure Boot was enabled on the startup
 	// software.
 	SecureBootMode string `json:"secureBootMode,omitempty"`
-	// SerialNumber: The serial number of the device. On Windows, this represents
-	// the BIOS's serial number. Not available on most Linux distributions.
+	// SerialNumber: Output only. The serial number of the device. On Windows, this
+	// represents the BIOS's serial number. Not available on most Linux
+	// distributions.
 	SerialNumber string `json:"serialNumber,omitempty"`
-	// SiteIsolationEnabled: Whether the Site Isolation (a.k.a Site Per Process)
-	// setting is enabled. That setting may be controlled by an enterprise policy:
-	// https://chromeenterprise.google/policies/#SitePerProcess
+	// SiteIsolationEnabled: Output only. Whether the Site Isolation (a.k.a Site
+	// Per Process) setting is enabled. That setting may be controlled by an
+	// enterprise policy: https://chromeenterprise.google/policies/#SitePerProcess
 	SiteIsolationEnabled bool `json:"siteIsolationEnabled,omitempty"`
 	// SystemDnsServers: List of the addesses of all OS level DNS servers
 	// configured in the device's network settings.
 	SystemDnsServers []string `json:"systemDnsServers,omitempty"`
-	// ThirdPartyBlockingEnabled: Whether Chrome is blocking third-party software
-	// injection or not. This setting may be controlled by an enterprise policy:
+	// ThirdPartyBlockingEnabled: Output only. Whether Chrome is blocking
+	// third-party software injection or not. This setting may be controlled by an
+	// enterprise policy:
 	// https://chromeenterprise.google/policies/?policy=ThirdPartyBlockingEnabled.
 	// Available on Windows only.
 	ThirdPartyBlockingEnabled bool `json:"thirdPartyBlockingEnabled,omitempty"`
-	// Trigger: The trigger which generated this set of signals.
+	// Trigger: Output only. The trigger which generated this set of signals.
 	//
 	// Possible values:
 	//   "TRIGGER_UNSPECIFIED" - Unspecified.
@@ -389,11 +426,11 @@ type DeviceSignals struct {
 	//   "TRIGGER_LOGIN_SCREEN" - When signing into an account on the ChromeOS
 	// login screen.
 	Trigger string `json:"trigger,omitempty"`
-	// WindowsMachineDomain: Windows domain that the current machine has joined.
-	// Available on Windows only.
+	// WindowsMachineDomain: Output only. Windows domain that the current machine
+	// has joined. Available on Windows only.
 	WindowsMachineDomain string `json:"windowsMachineDomain,omitempty"`
-	// WindowsUserDomain: Windows domain for the current OS user. Available on
-	// Windows only.
+	// WindowsUserDomain: Output only. Windows domain for the current OS user.
+	// Available on Windows only.
 	WindowsUserDomain string `json:"windowsUserDomain,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AllowScreenLock") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -452,23 +489,23 @@ func (s VerifyChallengeResponseRequest) MarshalJSON() ([]byte, error) {
 // VerifyChallengeResponseResult: Result message for
 // VerifiedAccess.VerifyChallengeResponse.
 type VerifyChallengeResponseResult struct {
-	// AttestedDeviceId: Attested device ID (ADID).
+	// AttestedDeviceId: Output only. Attested device ID (ADID).
 	AttestedDeviceId string `json:"attestedDeviceId,omitempty"`
-	// CustomerId: Unique customer id that this device belongs to, as defined by
-	// the Google Admin SDK at
+	// CustomerId: Output only. Unique customer id that this device belongs to, as
+	// defined by the Google Admin SDK at
 	// https://developers.google.com/admin-sdk/directory/v1/guides/manage-customers
 	CustomerId string `json:"customerId,omitempty"`
-	// DeviceEnrollmentId: Device enrollment id for ChromeOS devices.
+	// DeviceEnrollmentId: Output only. Device enrollment id for ChromeOS devices.
 	DeviceEnrollmentId string `json:"deviceEnrollmentId,omitempty"`
-	// DevicePermanentId: Device permanent id is returned in this field (for the
-	// machine response only).
+	// DevicePermanentId: Output only. Device permanent id is returned in this
+	// field (for the machine response only).
 	DevicePermanentId string `json:"devicePermanentId,omitempty"`
-	// DeviceSignal: Deprecated. Device signal in json string representation.
-	// Prefer using `device_signals` instead.
+	// DeviceSignal: Output only. Deprecated. Device signal in json string
+	// representation. Prefer using `device_signals` instead.
 	DeviceSignal string `json:"deviceSignal,omitempty"`
-	// DeviceSignals: Device signals.
+	// DeviceSignals: Output only. Device signals.
 	DeviceSignals *DeviceSignals `json:"deviceSignals,omitempty"`
-	// KeyTrustLevel: Device attested key trust level.
+	// KeyTrustLevel: Output only. Device attested key trust level.
 	//
 	// Possible values:
 	//   "KEY_TRUST_LEVEL_UNSPECIFIED" - UNSPECIFIED.
@@ -479,11 +516,11 @@ type VerifyChallengeResponseResult struct {
 	//   "CHROME_BROWSER_OS_KEY" - Chrome Browser with the key stored at OS level.
 	//   "CHROME_BROWSER_NO_KEY" - Chrome Browser without an attestation key.
 	KeyTrustLevel string `json:"keyTrustLevel,omitempty"`
-	// ProfileCustomerId: Unique customer id that this profile belongs to, as
-	// defined by the Google Admin SDK at
+	// ProfileCustomerId: Output only. Unique customer id that this profile belongs
+	// to, as defined by the Google Admin SDK at
 	// https://developers.google.com/admin-sdk/directory/v1/guides/manage-customers
 	ProfileCustomerId string `json:"profileCustomerId,omitempty"`
-	// ProfileKeyTrustLevel: Profile attested key trust level.
+	// ProfileKeyTrustLevel: Output only. Profile attested key trust level.
 	//
 	// Possible values:
 	//   "KEY_TRUST_LEVEL_UNSPECIFIED" - UNSPECIFIED.
@@ -494,15 +531,19 @@ type VerifyChallengeResponseResult struct {
 	//   "CHROME_BROWSER_OS_KEY" - Chrome Browser with the key stored at OS level.
 	//   "CHROME_BROWSER_NO_KEY" - Chrome Browser without an attestation key.
 	ProfileKeyTrustLevel string `json:"profileKeyTrustLevel,omitempty"`
-	// SignedPublicKeyAndChallenge: Certificate Signing Request (in the SPKAC
-	// format, base64 encoded) is returned in this field. This field will be set
-	// only if device has included CSR in its challenge response. (the option to
-	// include CSR is now available for both user and machine responses)
+	// ProfilePermanentId: Output only. The unique server-side ID of a profile on
+	// the device.
+	ProfilePermanentId string `json:"profilePermanentId,omitempty"`
+	// SignedPublicKeyAndChallenge: Output only. Certificate Signing Request (in
+	// the SPKAC format, base64 encoded) is returned in this field. This field will
+	// be set only if device has included CSR in its challenge response. (the
+	// option to include CSR is now available for both user and machine responses)
 	SignedPublicKeyAndChallenge string `json:"signedPublicKeyAndChallenge,omitempty"`
-	// VirtualDeviceId: Virtual device id of the device. The definition of virtual
-	// device id is platform-specific.
+	// VirtualDeviceId: Output only. Virtual device id of the device. The
+	// definition of virtual device id is platform-specific.
 	VirtualDeviceId string `json:"virtualDeviceId,omitempty"`
-	// VirtualProfileId: The ID of a profile on the device.
+	// VirtualProfileId: Output only. The client-provided ID of a profile on the
+	// device.
 	VirtualProfileId string `json:"virtualProfileId,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.

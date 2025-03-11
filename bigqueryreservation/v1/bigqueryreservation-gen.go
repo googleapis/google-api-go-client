@@ -672,12 +672,6 @@ type ReplicationStatus struct {
 	// LastReplicationTime: Output only. A timestamp corresponding to the last
 	// change on the primary that was successfully replicated to the secondary.
 	LastReplicationTime string `json:"lastReplicationTime,omitempty"`
-	// SoftFailoverStartTime: Output only. The time at which a soft failover for
-	// the reservation and its associated datasets was initiated. After this field
-	// is set, all subsequent changes to the reservation will be rejected unless a
-	// hard failover overrides this operation. This field will be cleared once the
-	// failover is complete.
-	SoftFailoverStartTime string `json:"softFailoverStartTime,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Error") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
 	// omitted from API requests. See
@@ -783,11 +777,14 @@ type Reservation struct {
 	// primary replica. This field is only set for reservations using the managed
 	// disaster recovery feature.
 	PrimaryLocation string `json:"primaryLocation,omitempty"`
-	// ReplicationStatus: Output only. The Disater Recovery(DR) replication status
-	// of the reservation. This is only available for the primary replica of
+	// ReplicationStatus: Output only. The Disaster Recovery(DR) replication status
+	// of the reservation. This is only available for the primary replicas of
 	// DR/failover reservations and provides information about the both the
 	// staleness of the secondary and the last error encountered while trying to
-	// replicate changes from the primary to the secondary.
+	// replicate changes from the primary to the secondary. If this field is blank,
+	// it means that the reservation is either not a DR reservation or the
+	// reservation is a DR secondary or that any replication operations on the
+	// reservation have succeeded.
 	ReplicationStatus *ReplicationStatus `json:"replicationStatus,omitempty"`
 	// ScalingMode: The scaling mode for the reservation. If the field is present
 	// but max_slots is not present, requests will be rejected with error code

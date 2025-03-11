@@ -210,6 +210,7 @@ func NewOrganizationsService(s *Service) *OrganizationsService {
 	rs.SecurityProfilesV2 = NewOrganizationsSecurityProfilesV2Service(s)
 	rs.Sharedflows = NewOrganizationsSharedflowsService(s)
 	rs.Sites = NewOrganizationsSitesService(s)
+	rs.Spaces = NewOrganizationsSpacesService(s)
 	return rs
 }
 
@@ -263,6 +264,8 @@ type OrganizationsService struct {
 	Sharedflows *OrganizationsSharedflowsService
 
 	Sites *OrganizationsSitesService
+
+	Spaces *OrganizationsSpacesService
 }
 
 func NewOrganizationsAnalyticsService(s *Service) *OrganizationsAnalyticsService {
@@ -1249,6 +1252,15 @@ type OrganizationsSitesApidocsService struct {
 	s *Service
 }
 
+func NewOrganizationsSpacesService(s *Service) *OrganizationsSpacesService {
+	rs := &OrganizationsSpacesService{s: s}
+	return rs
+}
+
+type OrganizationsSpacesService struct {
+	s *Service
+}
+
 func NewProjectsService(s *Service) *ProjectsService {
 	rs := &ProjectsService{s: s}
 	return rs
@@ -2120,6 +2132,11 @@ type GoogleCloudApigeeV1ApiProduct struct {
 	// Apigee validates that the scopes in any access token presented match the
 	// scopes defined in the OAuth policy associated with the API product.
 	Scopes []string `json:"scopes,omitempty"`
+	// Space: Optional. The resource ID of the parent Space. If not set, the parent
+	// resource will be the Organization. To learn how Spaces can be used to manage
+	// resources, read the Apigee Spaces Overview
+	// (https://cloud.google.com/apigee/docs/api-platform/system-administration/spaces/apigee-spaces-overview).
+	Space string `json:"space,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
@@ -2194,6 +2211,11 @@ type GoogleCloudApigeeV1ApiProxy struct {
 	ReadOnly bool `json:"readOnly,omitempty"`
 	// Revision: Output only. List of revisions defined for the API proxy.
 	Revision []string `json:"revision,omitempty"`
+	// Space: Optional. The id of the space this proxy is associated with. Any IAM
+	// policies applied to the space will control access to this proxy. To learn
+	// how Spaces can be used to manage resources, read the Apigee Spaces Overview
+	// (https://cloud.google.com/apigee/docs/api-platform/system-administration/spaces/apigee-spaces-overview).
+	Space string `json:"space,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
@@ -3874,6 +3896,8 @@ func (s GoogleCloudApigeeV1DeleteResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudApigeeV1Deployment: Deployment represents a deployment of an API
+// proxy or shared flow.
 type GoogleCloudApigeeV1Deployment struct {
 	// ApiProxy: API proxy.
 	ApiProxy string `json:"apiProxy,omitempty"`
@@ -4694,10 +4718,10 @@ type GoogleCloudApigeeV1Environment struct {
 	DisplayName string `json:"displayName,omitempty"`
 	// ForwardProxyUri: Optional. URI of the forward proxy to be applied to the
 	// runtime instances in this environment. Must be in the format of
-	// {scheme}://{hostname}:{port}. Note that the scheme must be one of "http" or
-	// "https", and the port must be supplied. To remove a forward proxy setting,
-	// update the field to an empty value. Note: At this time, PUT operations to
-	// add forwardProxyUri to an existing environment fail if the environment has
+	// {scheme}://{hostname}:{port}. Note that the only supported scheme is "http".
+	// The port must be supplied. To remove a forward proxy setting, update the
+	// field to an empty value. Note: At this time, PUT operations to add
+	// forwardProxyUri to an existing environment fail if the environment has
 	// nodeConfig set up. To successfully add the forwardProxyUri setting in this
 	// case, include the NodeConfig details with the request.
 	ForwardProxyUri      string `json:"forwardProxyUri,omitempty"`
@@ -6999,6 +7023,36 @@ func (s GoogleCloudApigeeV1ListSharedFlowsResponse) MarshalJSON() ([]byte, error
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudApigeeV1ListSpacesResponse: A response to a ListSpaces request
+// containing the list of organization spaces and a page token for the next
+// page.
+type GoogleCloudApigeeV1ListSpacesResponse struct {
+	// NextPageToken: A token that can be sent as `page_token` to retrieve the next
+	// page. If this field is omitted, there are no subsequent pages.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+	// Spaces: List of Apigee organization spaces.
+	Spaces []*GoogleCloudApigeeV1Space `json:"spaces,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "NextPageToken") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudApigeeV1ListSpacesResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudApigeeV1ListSpacesResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudApigeeV1ListTraceConfigOverridesResponse: Response for
 // ListTraceConfigOverrides.
 type GoogleCloudApigeeV1ListTraceConfigOverridesResponse struct {
@@ -7150,6 +7204,78 @@ type GoogleCloudApigeeV1MonetizationConfig struct {
 
 func (s GoogleCloudApigeeV1MonetizationConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudApigeeV1MonetizationConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudApigeeV1MoveApiProductRequest: Moves API product to a different
+// space.
+type GoogleCloudApigeeV1MoveApiProductRequest struct {
+	// Space: Optional. Resource ID of the space to move the API product to. If
+	// unspecified, the API product will be moved to the organization level.
+	Space string `json:"space,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Space") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Space") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudApigeeV1MoveApiProductRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudApigeeV1MoveApiProductRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudApigeeV1MoveApiProxyRequest: Moves an API Proxy to a different
+// Space.
+type GoogleCloudApigeeV1MoveApiProxyRequest struct {
+	// Space: Optional. Resource ID of the space to move the proxy to. If
+	// unspecified, the proxy will be moved to the organization level.
+	Space string `json:"space,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Space") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Space") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudApigeeV1MoveApiProxyRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudApigeeV1MoveApiProxyRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudApigeeV1MoveSharedFlowRequest: Moves a Shared Flow to a different
+// space.
+type GoogleCloudApigeeV1MoveSharedFlowRequest struct {
+	// Space: Optional. Resource ID of the space to move the shared flow to. If
+	// unspecified, the shared flow will be moved to the organization level.
+	Space string `json:"space,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Space") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Space") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudApigeeV1MoveSharedFlowRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudApigeeV1MoveSharedFlowRequest
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -10505,6 +10631,12 @@ type GoogleCloudApigeeV1SharedFlow struct {
 	Name string `json:"name,omitempty"`
 	// Revision: A list of revisions of this shared flow.
 	Revision []string `json:"revision,omitempty"`
+	// Space: Optional. The ID of the space associated with this shared flow. Any
+	// IAM policies applied to the space will control access to this shared flow.
+	// To learn how Spaces can be used to manage resources, read the Apigee Spaces
+	// Overview
+	// (https://cloud.google.com/apigee/docs/api-platform/system-administration/spaces/apigee-spaces-overview).
+	Space string `json:"space,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
@@ -10583,6 +10715,39 @@ type GoogleCloudApigeeV1SharedFlowRevision struct {
 
 func (s GoogleCloudApigeeV1SharedFlowRevision) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudApigeeV1SharedFlowRevision
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudApigeeV1Space: Organization space resource.
+type GoogleCloudApigeeV1Space struct {
+	// CreateTime: Output only. Create timestamp of the space.
+	CreateTime string `json:"createTime,omitempty"`
+	// DisplayName: Optional. Display name of the space.
+	DisplayName string `json:"displayName,omitempty"`
+	// Name: Output only. Identifier. Id of the space. This field is used as the
+	// resource name, and must follow AIP-122 (https://google.aip.dev/122)
+	// guidelines.
+	Name string `json:"name,omitempty"`
+	// UpdateTime: Output only. Last modified timestamp of the space.
+	UpdateTime string `json:"updateTime,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "CreateTime") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CreateTime") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudApigeeV1Space) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudApigeeV1Space
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -14444,7 +14609,11 @@ type OrganizationsApiproductsAttributesCall struct {
 // access token in less than 180 seconds.
 //
 //   - name: Name of the API product. Use the following structure in your
-//     request: `organizations/{org}/apiproducts/{apiproduct}`.
+//     request: `organizations/{org}/apiproducts/{apiproduct}` If the API Product
+//     resource has the `space` attribute set, IAM permissions are checked
+//     against the Space resource path. To learn more, read the Apigee Spaces
+//     Overview
+//     (https://cloud.google.com/apigee/docs/api-platform/system-administration/spaces/apigee-spaces-overview).
 func (r *OrganizationsApiproductsService) Attributes(name string, googlecloudapigeev1attributes *GoogleCloudApigeeV1Attributes) *OrganizationsApiproductsAttributesCall {
 	c := &OrganizationsApiproductsAttributesCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -14565,7 +14734,11 @@ type OrganizationsApiproductsCreateCall struct {
 // an API product?
 //
 //   - parent: Name of the organization in which the API product will be created.
-//     Use the following structure in your request: `organizations/{org}`.
+//     Use the following structure in your request: `organizations/{org}` If the
+//     resource has the `space` attribute set, IAM permissions are checked
+//     against the Space resource path. To learn more, read the Apigee Spaces
+//     Overview
+//     (https://cloud.google.com/apigee/docs/api-platform/system-administration/spaces/apigee-spaces-overview).
 func (r *OrganizationsApiproductsService) Create(parent string, googlecloudapigeev1apiproduct *GoogleCloudApigeeV1ApiProduct) *OrganizationsApiproductsCreateCall {
 	c := &OrganizationsApiproductsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -14676,7 +14849,10 @@ type OrganizationsApiproductsDeleteCall struct {
 // API products to verify the internal name.
 //
 //   - name: Name of the API product. Use the following structure in your
-//     request: `organizations/{org}/apiproducts/{apiproduct}`.
+//     request: `organizations/{org}/apiproducts/{apiproduct}` If the resource
+//     has the `space` attribute set, IAM permissions are checked against the
+//     Space resource path. To learn more, read the Apigee Spaces Overview
+//     (https://cloud.google.com/apigee/docs/api-platform/system-administration/spaces/apigee-spaces-overview).
 func (r *OrganizationsApiproductsService) Delete(name string) *OrganizationsApiproductsDeleteCall {
 	c := &OrganizationsApiproductsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -14780,7 +14956,10 @@ type OrganizationsApiproductsGetCall struct {
 // verify the internal name.
 //
 //   - name: Name of the API product. Use the following structure in your
-//     request: `organizations/{org}/apiproducts/{apiproduct}`.
+//     request: `organizations/{org}/apiproducts/{apiproduct}` If the resource
+//     has the `space` attribute set, IAM permissions are checked against the
+//     Space resource path. To learn more, read the Apigee Spaces Overview
+//     (https://cloud.google.com/apigee/docs/api-platform/system-administration/spaces/apigee-spaces-overview).
 func (r *OrganizationsApiproductsService) Get(name string) *OrganizationsApiproductsGetCall {
 	c := &OrganizationsApiproductsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -14891,10 +15070,16 @@ type OrganizationsApiproductsListCall struct {
 // List: Lists all API product names for an organization. Filter the list by
 // passing an `attributename` and `attibutevalue`. The maximum number of API
 // products returned is 1000. You can paginate the list of API products
-// returned using the `startKey` and `count` query parameters.
+// returned using the `startKey` and `count` query parameters. If the resource
+// has the `space` attribute set, the response may not return all resources. To
+// learn more, read the Apigee Spaces Overview
+// (https://cloud.google.com/apigee/docs/api-platform/system-administration/spaces/apigee-spaces-overview).
 //
 //   - parent: Name of the organization. Use the following structure in your
-//     request: `organizations/{org}`.
+//     request: `organizations/{org}` If the resource has the `space` attribute
+//     set, IAM permissions are checked against the Space resource path. To learn
+//     more, read the Apigee Spaces Overview
+//     (https://cloud.google.com/apigee/docs/api-platform/system-administration/spaces/apigee-spaces-overview).
 func (r *OrganizationsApiproductsService) List(parent string) *OrganizationsApiproductsListCall {
 	c := &OrganizationsApiproductsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -14926,6 +15111,17 @@ func (c *OrganizationsApiproductsListCall) Count(count int64) *OrganizationsApip
 // expand the results. Set to `true` to get expanded details about each API.
 func (c *OrganizationsApiproductsListCall) Expand(expand bool) *OrganizationsApiproductsListCall {
 	c.urlParams_.Set("expand", fmt.Sprint(expand))
+	return c
+}
+
+// Space sets the optional parameter "space": The Space to list API products
+// for. When none provided, all the spaces the user has list access, will be
+// used implicitly, and the same following rules will apply. Can be used in
+// conjunction with start_key, expand and count for paginated response.
+// Composite queries with attributename and attributevalue are not supported
+// yet.
+func (c *OrganizationsApiproductsListCall) Space(space string) *OrganizationsApiproductsListCall {
+	c.urlParams_.Set("space", space)
 	return c
 }
 
@@ -15031,6 +15227,111 @@ func (c *OrganizationsApiproductsListCall) Do(opts ...googleapi.CallOption) (*Go
 	return ret, nil
 }
 
+type OrganizationsApiproductsMoveCall struct {
+	s                                        *Service
+	name                                     string
+	googlecloudapigeev1moveapiproductrequest *GoogleCloudApigeeV1MoveApiProductRequest
+	urlParams_                               gensupport.URLParams
+	ctx_                                     context.Context
+	header_                                  http.Header
+}
+
+// Move: Moves an API product to a different space.
+//
+//   - name: API product to move in the following format:
+//     `organizations/{org}/apiproducts/{apiproduct}.
+func (r *OrganizationsApiproductsService) Move(name string, googlecloudapigeev1moveapiproductrequest *GoogleCloudApigeeV1MoveApiProductRequest) *OrganizationsApiproductsMoveCall {
+	c := &OrganizationsApiproductsMoveCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.googlecloudapigeev1moveapiproductrequest = googlecloudapigeev1moveapiproductrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *OrganizationsApiproductsMoveCall) Fields(s ...googleapi.Field) *OrganizationsApiproductsMoveCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *OrganizationsApiproductsMoveCall) Context(ctx context.Context) *OrganizationsApiproductsMoveCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *OrganizationsApiproductsMoveCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *OrganizationsApiproductsMoveCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googlecloudapigeev1moveapiproductrequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}:move")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "apigee.organizations.apiproducts.move", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "apigee.organizations.apiproducts.move" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudApigeeV1ApiProduct.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *OrganizationsApiproductsMoveCall) Do(opts ...googleapi.CallOption) (*GoogleCloudApigeeV1ApiProduct, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudApigeeV1ApiProduct{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "apigee.organizations.apiproducts.move", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
 type OrganizationsApiproductsUpdateCall struct {
 	s                             *Service
 	name                          string
@@ -15048,7 +15349,10 @@ type OrganizationsApiproductsUpdateCall struct {
 // View the list of API products to identify their internal names.
 //
 //   - name: Name of the API product. Use the following structure in your
-//     request: `organizations/{org}/apiproducts/{apiproduct}`.
+//     request: `organizations/{org}/apiproducts/{apiproduct}` If the resource
+//     has the `space` attribute set, IAM permissions are checked against the
+//     Space resource path.To learn more, read the Apigee Spaces Overview
+//     (https://cloud.google.com/apigee/docs/api-platform/system-administration/spaces/apigee-spaces-overview).
 func (r *OrganizationsApiproductsService) Update(name string, googlecloudapigeev1apiproduct *GoogleCloudApigeeV1ApiProduct) *OrganizationsApiproductsUpdateCall {
 	c := &OrganizationsApiproductsUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -15153,7 +15457,11 @@ type OrganizationsApiproductsAttributesDeleteCall struct {
 //
 //   - name: Name of the API product attribute. Use the following structure in
 //     your request:
-//     `organizations/{org}/apiproducts/{apiproduct}/attributes/{attribute}`.
+//     `organizations/{org}/apiproducts/{apiproduct}/attributes/{attribute}` If
+//     the API Product resource has the `space` attribute set, IAM permissions
+//     are checked against the Space resource path. To learn more, read the
+//     Apigee Spaces Overview
+//     (https://cloud.google.com/apigee/docs/api-platform/system-administration/spaces/apigee-spaces-overview).
 func (r *OrganizationsApiproductsAttributesService) Delete(name string) *OrganizationsApiproductsAttributesDeleteCall {
 	c := &OrganizationsApiproductsAttributesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -15254,7 +15562,11 @@ type OrganizationsApiproductsAttributesGetCall struct {
 //
 //   - name: Name of the API product attribute. Use the following structure in
 //     your request:
-//     `organizations/{org}/apiproducts/{apiproduct}/attributes/{attribute}`.
+//     `organizations/{org}/apiproducts/{apiproduct}/attributes/{attribute}` If
+//     the API Product resource has the `space` attribute set, IAM permissions
+//     are checked against the Space resource path. To learn more, read the
+//     Apigee Spaces Overview
+//     (https://cloud.google.com/apigee/docs/api-platform/system-administration/spaces/apigee-spaces-overview).
 func (r *OrganizationsApiproductsAttributesService) Get(name string) *OrganizationsApiproductsAttributesGetCall {
 	c := &OrganizationsApiproductsAttributesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -15365,7 +15677,11 @@ type OrganizationsApiproductsAttributesListCall struct {
 // List: Lists all API product attributes.
 //
 //   - parent: Name of the API product. Use the following structure in your
-//     request: `organizations/{org}/apiproducts/{apiproduct}`.
+//     request: `organizations/{org}/apiproducts/{apiproduct}` If the API Product
+//     resource has the `space` attribute set, IAM permissions are checked
+//     against the Space resource path. To learn more, read the Apigee Spaces
+//     Overview
+//     (https://cloud.google.com/apigee/docs/api-platform/system-administration/spaces/apigee-spaces-overview).
 func (r *OrganizationsApiproductsAttributesService) List(parent string) *OrganizationsApiproductsAttributesListCall {
 	c := &OrganizationsApiproductsAttributesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -15482,7 +15798,11 @@ type OrganizationsApiproductsAttributesUpdateApiProductAttributeCall struct {
 // access token in less than 180 seconds.
 //
 //   - name: Name of the API product. Use the following structure in your
-//     request: `organizations/{org}/apiproducts/{apiproduct}`.
+//     request: `organizations/{org}/apiproducts/{apiproduct}` If the API Product
+//     resource has the `space` attribute set, IAM permissions are checked
+//     against the Space resource path. To learn more, read the Apigee Spaces
+//     Overview
+//     (https://cloud.google.com/apigee/docs/api-platform/system-administration/spaces/apigee-spaces-overview).
 func (r *OrganizationsApiproductsAttributesService) UpdateApiProductAttribute(name string, googlecloudapigeev1attribute *GoogleCloudApigeeV1Attribute) *OrganizationsApiproductsAttributesUpdateApiProductAttributeCall {
 	c := &OrganizationsApiproductsAttributesUpdateApiProductAttributeCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -15596,7 +15916,10 @@ type OrganizationsApiproductsRateplansCreateCall struct {
 //
 //   - parent: Name of the API product that is associated with the rate plan. Use
 //     the following structure in your request:
-//     `organizations/{org}/apiproducts/{apiproduct}`.
+//     `organizations/{org}/apiproducts/{apiproduct}` If the API Product resource
+//     has the `space` attribute set, IAM permissions are checked against the
+//     Space resource path. To learn more, read the Apigee Spaces Overview
+//     (https://cloud.google.com/apigee/docs/api-platform/system-administration/spaces/apigee-spaces-overview).
 func (r *OrganizationsApiproductsRateplansService) Create(parent string, googlecloudapigeev1rateplan *GoogleCloudApigeeV1RatePlan) *OrganizationsApiproductsRateplansCreateCall {
 	c := &OrganizationsApiproductsRateplansCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -15700,7 +16023,11 @@ type OrganizationsApiproductsRateplansDeleteCall struct {
 // Delete: Deletes a rate plan.
 //
 //   - name: ID of the rate plan. Use the following structure in your request:
-//     `organizations/{org}/apiproducts/{apiproduct}/rateplans/{rateplan}`.
+//     `organizations/{org}/apiproducts/{apiproduct}/rateplans/{rateplan}` If the
+//     API Product resource has the `space` attribute set, IAM permissions are
+//     checked against the Space resource path. To learn more, read the Apigee
+//     Spaces Overview
+//     (https://cloud.google.com/apigee/docs/api-platform/system-administration/spaces/apigee-spaces-overview).
 func (r *OrganizationsApiproductsRateplansService) Delete(name string) *OrganizationsApiproductsRateplansDeleteCall {
 	c := &OrganizationsApiproductsRateplansDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -15800,7 +16127,11 @@ type OrganizationsApiproductsRateplansGetCall struct {
 // Get: Gets the details of a rate plan.
 //
 //   - name: Name of the rate plan. Use the following structure in your request:
-//     `organizations/{org}/apiproducts/{apiproduct}/rateplans/{rateplan}`.
+//     `organizations/{org}/apiproducts/{apiproduct}/rateplans/{rateplan}` If the
+//     API Product resource has the `space` attribute set, IAM permissions are
+//     checked against the Space resource path. To learn more, read the Apigee
+//     Spaces Overview
+//     (https://cloud.google.com/apigee/docs/api-platform/system-administration/spaces/apigee-spaces-overview).
 func (r *OrganizationsApiproductsRateplansService) Get(name string) *OrganizationsApiproductsRateplansGetCall {
 	c := &OrganizationsApiproductsRateplansGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -15913,7 +16244,10 @@ type OrganizationsApiproductsRateplansListCall struct {
 //   - parent: Name of the API product. Use the following structure in your
 //     request: `organizations/{org}/apiproducts/{apiproduct}` Use
 //     `organizations/{org}/apiproducts/-` to return rate plans for all API
-//     products within the organization.
+//     products within the organization. If the API Product resource has the
+//     `space` attribute set, IAM permissions are checked against the Space
+//     resource path. To learn more, read the Apigee Spaces Overview
+//     (https://cloud.google.com/apigee/docs/api-platform/system-administration/spaces/apigee-spaces-overview).
 func (r *OrganizationsApiproductsRateplansService) List(parent string) *OrganizationsApiproductsRateplansListCall {
 	c := &OrganizationsApiproductsRateplansListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -16075,7 +16409,11 @@ type OrganizationsApiproductsRateplansUpdateCall struct {
 // Update: Updates an existing rate plan.
 //
 //   - name: Name of the rate plan. Use the following structure in your request:
-//     `organizations/{org}/apiproducts/{apiproduct}/rateplans/{rateplan}`.
+//     `organizations/{org}/apiproducts/{apiproduct}/rateplans/{rateplan}` If the
+//     API Product resource has the `space` attribute set, IAM permissions are
+//     checked against the Space resource path. To learn more, read the Apigee
+//     Spaces Overview
+//     (https://cloud.google.com/apigee/docs/api-platform/system-administration/spaces/apigee-spaces-overview).
 func (r *OrganizationsApiproductsRateplansService) Update(name string, googlecloudapigeev1rateplan *GoogleCloudApigeeV1RatePlan) *OrganizationsApiproductsRateplansUpdateCall {
 	c := &OrganizationsApiproductsRateplansUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -16194,7 +16532,10 @@ type OrganizationsApisCreateCall struct {
 // the client.
 //
 //   - parent: Name of the organization in the following format:
-//     `organizations/{org}`.
+//     `organizations/{org}` If the API Proxy resource has the `space` attribute
+//     set, IAM permissions are checked against the Space resource path. To learn
+//     more, read the Apigee Spaces Overview
+//     (https://cloud.google.com/apigee/docs/api-platform/system-administration/spaces/apigee-spaces-overview).
 func (r *OrganizationsApisService) Create(parent string, googleapihttpbody *GoogleApiHttpBody) *OrganizationsApisCreateCall {
 	c := &OrganizationsApisCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -16216,6 +16557,15 @@ func (c *OrganizationsApisCreateCall) Action(action string) *OrganizationsApisCr
 // characters used to: A-Za-z0-9._-
 func (c *OrganizationsApisCreateCall) Name(name string) *OrganizationsApisCreateCall {
 	c.urlParams_.Set("name", name)
+	return c
+}
+
+// Space sets the optional parameter "space": The ID of the space associated
+// with this proxy. Any IAM policies applied to the space will affect access to
+// this proxy. Note that this field is only respected when creating a new
+// proxy. It has no effect when creating a new revision for an existing proxy.
+func (c *OrganizationsApisCreateCall) Space(space string) *OrganizationsApisCreateCall {
+	c.urlParams_.Set("space", space)
 	return c
 }
 
@@ -16325,7 +16675,10 @@ type OrganizationsApisDeleteCall struct {
 // delete it.
 //
 //   - name: Name of the API proxy in the following format:
-//     `organizations/{org}/apis/{api}`.
+//     `organizations/{org}/apis/{api}` If the API Proxy resource has the `space`
+//     attribute set, IAM permissions are checked against the Space resource
+//     path. To learn more, read the Apigee Spaces Overview
+//     (https://cloud.google.com/apigee/docs/api-platform/system-administration/spaces/apigee-spaces-overview).
 func (r *OrganizationsApisService) Delete(name string) *OrganizationsApisDeleteCall {
 	c := &OrganizationsApisDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -16425,7 +16778,10 @@ type OrganizationsApisGetCall struct {
 // Get: Gets an API proxy including a list of existing revisions.
 //
 //   - name: Name of the API proxy in the following format:
-//     `organizations/{org}/apis/{api}`.
+//     `organizations/{org}/apis/{api}` If the API Proxy resource has the `space`
+//     attribute set, IAM permissions are checked against the Space resource
+//     path. To learn more, read the Apigee Spaces Overview
+//     (https://cloud.google.com/apigee/docs/api-platform/system-administration/spaces/apigee-spaces-overview).
 func (r *OrganizationsApisService) Get(name string) *OrganizationsApisGetCall {
 	c := &OrganizationsApisGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -16535,10 +16891,15 @@ type OrganizationsApisListCall struct {
 
 // List: Lists the names of all API proxies in an organization. The names
 // returned correspond to the names defined in the configuration files for each
-// API proxy.
+// API proxy. If the resource has the `space` attribute set, the response may
+// not return all resources. To learn more, read the Apigee Spaces Overview
+// (https://cloud.google.com/apigee/docs/api-platform/system-administration/spaces/apigee-spaces-overview).
 //
 //   - parent: Name of the organization in the following format:
-//     `organizations/{org}`.
+//     `organizations/{org}` If the resource has the `space` attribute set, IAM
+//     permissions are checked against the Space resource path. To learn more,
+//     read the Apigee Spaces Overview
+//     (https://cloud.google.com/apigee/docs/api-platform/system-administration/spaces/apigee-spaces-overview).
 func (r *OrganizationsApisService) List(parent string) *OrganizationsApisListCall {
 	c := &OrganizationsApisListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -16556,6 +16917,14 @@ func (c *OrganizationsApisListCall) IncludeMetaData(includeMetaData bool) *Organ
 // specifies whether to include a list of revisions in the response.
 func (c *OrganizationsApisListCall) IncludeRevisions(includeRevisions bool) *OrganizationsApisListCall {
 	c.urlParams_.Set("includeRevisions", fmt.Sprint(includeRevisions))
+	return c
+}
+
+// Space sets the optional parameter "space": The space ID to filter the list
+// of proxies (optional). If unspecified, all proxies in the organization will
+// be listed.
+func (c *OrganizationsApisListCall) Space(space string) *OrganizationsApisListCall {
+	c.urlParams_.Set("space", space)
 	return c
 }
 
@@ -16651,6 +17020,111 @@ func (c *OrganizationsApisListCall) Do(opts ...googleapi.CallOption) (*GoogleClo
 	return ret, nil
 }
 
+type OrganizationsApisMoveCall struct {
+	s                                      *Service
+	name                                   string
+	googlecloudapigeev1moveapiproxyrequest *GoogleCloudApigeeV1MoveApiProxyRequest
+	urlParams_                             gensupport.URLParams
+	ctx_                                   context.Context
+	header_                                http.Header
+}
+
+// Move: Moves an API proxy to a different space.
+//
+//   - name: API proxy to move in the following format:
+//     `organizations/{org}/apis/{api}`.
+func (r *OrganizationsApisService) Move(name string, googlecloudapigeev1moveapiproxyrequest *GoogleCloudApigeeV1MoveApiProxyRequest) *OrganizationsApisMoveCall {
+	c := &OrganizationsApisMoveCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.googlecloudapigeev1moveapiproxyrequest = googlecloudapigeev1moveapiproxyrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *OrganizationsApisMoveCall) Fields(s ...googleapi.Field) *OrganizationsApisMoveCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *OrganizationsApisMoveCall) Context(ctx context.Context) *OrganizationsApisMoveCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *OrganizationsApisMoveCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *OrganizationsApisMoveCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googlecloudapigeev1moveapiproxyrequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}:move")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "apigee.organizations.apis.move", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "apigee.organizations.apis.move" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudApigeeV1ApiProxy.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *OrganizationsApisMoveCall) Do(opts ...googleapi.CallOption) (*GoogleCloudApigeeV1ApiProxy, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudApigeeV1ApiProxy{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "apigee.organizations.apis.move", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
 type OrganizationsApisPatchCall struct {
 	s                           *Service
 	name                        string
@@ -16663,7 +17137,10 @@ type OrganizationsApisPatchCall struct {
 // Patch: Updates an existing API proxy.
 //
 //   - name: API proxy to update in the following format:
-//     `organizations/{org}/apis/{api}`.
+//     `organizations/{org}/apis/{api}` If the resource has the `space` attribute
+//     set, IAM permissions are checked against the Space resource path. To learn
+//     more, read the Apigee Spaces Overview
+//     (https://cloud.google.com/apigee/docs/api-platform/system-administration/spaces/apigee-spaces-overview).
 func (r *OrganizationsApisService) Patch(name string, googlecloudapigeev1apiproxy *GoogleCloudApigeeV1ApiProxy) *OrganizationsApisPatchCall {
 	c := &OrganizationsApisPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -16922,7 +17399,10 @@ type OrganizationsApisDeploymentsListCall struct {
 // List: Lists all deployments of an API proxy.
 //
 //   - parent: Name of the API proxy for which to return deployment information
-//     in the following format: `organizations/{org}/apis/{api}`.
+//     in the following format: `organizations/{org}/apis/{api}` If the API proxy
+//     resource has the `space` attribute set, IAM permissions are checked
+//     differently . To learn more, read the Apigee Spaces Overview
+//     (https://cloud.google.com/apigee/docs/api-platform/system-administration/spaces/apigee-spaces-overview).
 func (r *OrganizationsApisDeploymentsService) List(parent string) *OrganizationsApisDeploymentsListCall {
 	c := &OrganizationsApisDeploymentsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -17033,7 +17513,11 @@ type OrganizationsApisKeyvaluemapsCreateCall struct {
 // Create: Creates a key value map in an API proxy.
 //
 //   - parent: Name of the environment in which to create the key value map. Use
-//     the following structure in your request: `organizations/{org}/apis/{api}`.
+//     the following structure in your request: `organizations/{org}/apis/{api}`
+//     If the API Proxy resource has the `space` attribute set, IAM permissions
+//     are checked against the Space resource path. To learn more, read the
+//     Apigee Spaces Overview
+//     (https://cloud.google.com/apigee/docs/api-platform/system-administration/spaces/apigee-spaces-overview).
 func (r *OrganizationsApisKeyvaluemapsService) Create(parent string, googlecloudapigeev1keyvaluemap *GoogleCloudApigeeV1KeyValueMap) *OrganizationsApisKeyvaluemapsCreateCall {
 	c := &OrganizationsApisKeyvaluemapsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -17137,7 +17621,11 @@ type OrganizationsApisKeyvaluemapsDeleteCall struct {
 // Delete: Deletes a key value map from an API proxy.
 //
 //   - name: Name of the key value map. Use the following structure in your
-//     request: `organizations/{org}/apis/{api}/keyvaluemaps/{keyvaluemap}`.
+//     request: `organizations/{org}/apis/{api}/keyvaluemaps/{keyvaluemap}` If
+//     the API Proxy resource has the `space` attribute set, IAM permissions are
+//     checked against the Space resource path. To learn more, read the Apigee
+//     Spaces Overview
+//     (https://cloud.google.com/apigee/docs/api-platform/system-administration/spaces/apigee-spaces-overview).
 func (r *OrganizationsApisKeyvaluemapsService) Delete(name string) *OrganizationsApisKeyvaluemapsDeleteCall {
 	c := &OrganizationsApisKeyvaluemapsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -17242,7 +17730,11 @@ type OrganizationsApisKeyvaluemapsEntriesCreateCall struct {
 //     entry. Use **one** of the following structures in your request: *
 //     `organizations/{organization}/apis/{api}/keyvaluemaps/{keyvaluemap}`. *
 //     `organizations/{organization}/environments/{environment}/keyvaluemaps/{keyv
-//     aluemap}` * `organizations/{organization}/keyvaluemaps/{keyvaluemap}`.
+//     aluemap}` * `organizations/{organization}/keyvaluemaps/{keyvaluemap}`. If
+//     the KeyValueMap is under an API Proxy resource that has the `space`
+//     attribute set, IAM permissions are checked against the Space resource
+//     path. To learn more, read the Apigee Spaces Overview
+//     (https://cloud.google.com/apigee/docs/api-platform/system-administration/spaces/apigee-spaces-overview).
 func (r *OrganizationsApisKeyvaluemapsEntriesService) Create(parent string, googlecloudapigeev1keyvalueentry *GoogleCloudApigeeV1KeyValueEntry) *OrganizationsApisKeyvaluemapsEntriesCreateCall {
 	c := &OrganizationsApisKeyvaluemapsEntriesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -17356,6 +17848,10 @@ type OrganizationsApisKeyvaluemapsEntriesDeleteCall struct {
 //     `organizations/{organization}/environments/{environment}/keyvaluemaps/{keyv
 //     aluemap}/entries/{entry}` *
 //     `organizations/{organization}/keyvaluemaps/{keyvaluemap}/entries/{entry}`.
+//     If the KeyValueMap is under an API Proxy resource that has the `space`
+//     attribute set, IAM permissions are checked against the Space resource
+//     path. To learn more, read the Apigee Spaces Overview
+//     (https://cloud.google.com/apigee/docs/api-platform/system-administration/spaces/apigee-spaces-overview).
 func (r *OrganizationsApisKeyvaluemapsEntriesService) Delete(name string) *OrganizationsApisKeyvaluemapsEntriesDeleteCall {
 	c := &OrganizationsApisKeyvaluemapsEntriesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -17463,6 +17959,10 @@ type OrganizationsApisKeyvaluemapsEntriesGetCall struct {
 //     `organizations/{organization}/environments/{environment}/keyvaluemaps/{keyv
 //     aluemap}/entries/{entry}` *
 //     `organizations/{organization}/keyvaluemaps/{keyvaluemap}/entries/{entry}`.
+//     If the KeyValueMap is under an API Proxy resource that has the `space`
+//     attribute set, IAM permissions are checked against the Space resource
+//     path. To learn more, read the Apigee Spaces Overview
+//     (https://cloud.google.com/apigee/docs/api-platform/system-administration/spaces/apigee-spaces-overview).
 func (r *OrganizationsApisKeyvaluemapsEntriesService) Get(name string) *OrganizationsApisKeyvaluemapsEntriesGetCall {
 	c := &OrganizationsApisKeyvaluemapsEntriesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -17578,7 +18078,11 @@ type OrganizationsApisKeyvaluemapsEntriesListCall struct {
 //     **one** of the following structures in your request: *
 //     `organizations/{organization}/apis/{api}/keyvaluemaps/{keyvaluemap}`. *
 //     `organizations/{organization}/environments/{environment}/keyvaluemaps/{keyv
-//     aluemap}` * `organizations/{organization}/keyvaluemaps/{keyvaluemap}`.
+//     aluemap}` * `organizations/{organization}/keyvaluemaps/{keyvaluemap}`. If
+//     the KeyValueMap is under an API Proxy resource that has the `space`
+//     attribute set, IAM permissions are checked against the Space resource
+//     path. To learn more, read the Apigee Spaces Overview
+//     (https://cloud.google.com/apigee/docs/api-platform/system-administration/spaces/apigee-spaces-overview).
 func (r *OrganizationsApisKeyvaluemapsEntriesService) List(parent string) *OrganizationsApisKeyvaluemapsEntriesListCall {
 	c := &OrganizationsApisKeyvaluemapsEntriesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -17729,7 +18233,11 @@ type OrganizationsApisKeyvaluemapsEntriesUpdateCall struct {
 //     entry. Use **one** of the following structures in your request: *
 //     `organizations/{organization}/apis/{api}/keyvaluemaps/{keyvaluemap}`. *
 //     `organizations/{organization}/environments/{environment}/keyvaluemaps/{keyv
-//     aluemap}` * `organizations/{organization}/keyvaluemaps/{keyvaluemap}`.
+//     aluemap}` * `organizations/{organization}/keyvaluemaps/{keyvaluemap}`. If
+//     the KeyValueMap is under an API Proxy resource that has the `space`
+//     attribute set, IAM permissions are checked against the Space resource
+//     path. To learn more, read the Apigee Spaces Overview
+//     (https://cloud.google.com/apigee/docs/api-platform/system-administration/spaces/apigee-spaces-overview).
 func (r *OrganizationsApisKeyvaluemapsEntriesService) Update(name string, googlecloudapigeev1keyvalueentry *GoogleCloudApigeeV1KeyValueEntry) *OrganizationsApisKeyvaluemapsEntriesUpdateCall {
 	c := &OrganizationsApisKeyvaluemapsEntriesUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -17835,7 +18343,10 @@ type OrganizationsApisRevisionsDeleteCall struct {
 // undeployed before you can delete it.
 //
 //   - name: API proxy revision in the following format:
-//     `organizations/{org}/apis/{api}/revisions/{rev}`.
+//     `organizations/{org}/apis/{api}/revisions/{rev}` If the API Proxy resource
+//     has the `space` attribute set, IAM permissions are checked against the
+//     Space resource path. To learn more, read the Apigee Spaces Overview
+//     (https://cloud.google.com/apigee/docs/api-platform/system-administration/spaces/apigee-spaces-overview).
 func (r *OrganizationsApisRevisionsService) Delete(name string) *OrganizationsApisRevisionsDeleteCall {
 	c := &OrganizationsApisRevisionsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -17941,7 +18452,10 @@ type OrganizationsApisRevisionsGetCall struct {
 // (updateApiProxyRevision).
 //
 //   - name: API proxy revision in the following format:
-//     `organizations/{org}/apis/{api}/revisions/{rev}`.
+//     `organizations/{org}/apis/{api}/revisions/{rev}` If the API Proxy resource
+//     has the `space` attribute set, IAM permissions are checked against the
+//     Space resource path. To learn more, read the Apigee Spaces Overview
+//     (https://cloud.google.com/apigee/docs/api-platform/system-administration/spaces/apigee-spaces-overview).
 func (r *OrganizationsApisRevisionsService) Get(name string) *OrganizationsApisRevisionsGetCall {
 	c := &OrganizationsApisRevisionsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -18065,7 +18579,10 @@ type OrganizationsApisRevisionsUpdateApiProxyRevisionCall struct {
 // `application/octet-stream`.
 //
 //   - name: API proxy revision to update in the following format:
-//     `organizations/{org}/apis/{api}/revisions/{rev}`.
+//     `organizations/{org}/apis/{api}/revisions/{rev}` If the API Proxy resource
+//     has the `space` attribute set, IAM permissions are checked against the
+//     Space resource path. To learn more, read the Apigee Spaces Overview
+//     (https://cloud.google.com/apigee/docs/api-platform/system-administration/spaces/apigee-spaces-overview).
 func (r *OrganizationsApisRevisionsService) UpdateApiProxyRevision(name string, googleapihttpbody *GoogleApiHttpBody) *OrganizationsApisRevisionsUpdateApiProxyRevisionCall {
 	c := &OrganizationsApisRevisionsUpdateApiProxyRevisionCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -18179,7 +18696,10 @@ type OrganizationsApisRevisionsDeploymentsListCall struct {
 //
 //   - parent: Name of the API proxy revision for which to return deployment
 //     information in the following format:
-//     `organizations/{org}/apis/{api}/revisions/{rev}`.
+//     `organizations/{org}/apis/{api}/revisions/{rev}`. If the API proxy
+//     resource has the `space` attribute set, IAM permissions are checked
+//     differently . To learn more, read the Apigee Spaces Overview
+//     (https://cloud.google.com/apigee/docs/api-platform/system-administration/spaces/apigee-spaces-overview).
 func (r *OrganizationsApisRevisionsDeploymentsService) List(parent string) *OrganizationsApisRevisionsDeploymentsListCall {
 	c := &OrganizationsApisRevisionsDeploymentsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -18396,7 +18916,7 @@ type OrganizationsAppgroupsDeleteCall struct {
 // Delete: Deletes an AppGroup. All app and API keys associations with the
 // AppGroup are also removed. **Warning**: This API will permanently delete the
 // AppGroup and related artifacts. **Note**: The delete operation is
-// asynchronous. The AppGroup app is deleted immediately, but its associated
+// asynchronous. The AppGroup is deleted immediately, but its associated
 // resources, such as apps and API keys, may take anywhere from a few seconds
 // to a few minutes to be deleted.
 //
@@ -21403,9 +21923,9 @@ type OrganizationsDevelopersDeleteCall struct {
 // the developer and related artifacts. To avoid permanently deleting
 // developers and their artifacts, set the developer status to `inactive` using
 // the SetDeveloperStatus API. **Note**: The delete operation is asynchronous.
-// The developer app is deleted immediately, but its associated resources, such
-// as apps and API keys, may take anywhere from a few seconds to a few minutes
-// to be deleted.
+// The developer is deleted immediately, but its associated resources, such as
+// apps and API keys, may take anywhere from a few seconds to a few minutes to
+// be deleted.
 //
 //   - name: Email address of the developer. Use the following structure in your
 //     request: `organizations/{org}/developers/{developer_email}`.
@@ -30098,7 +30618,10 @@ type OrganizationsEnvironmentsApisDeploymentsListCall struct {
 // List: Lists all deployments of an API proxy in an environment.
 //
 //   - parent: Name representing an API proxy in an environment in the following
-//     format: `organizations/{org}/environments/{env}/apis/{api}`.
+//     format: `organizations/{org}/environments/{env}/apis/{api}` If the API
+//     proxy resource has the `space` attribute set, IAM permissions are checked
+//     differently . To learn more, read the Apigee Spaces Overview
+//     (https://cloud.google.com/apigee/docs/api-platform/system-administration/spaces/apigee-spaces-overview).
 func (r *OrganizationsEnvironmentsApisDeploymentsService) List(parent string) *OrganizationsEnvironmentsApisDeploymentsListCall {
 	c := &OrganizationsEnvironmentsApisDeploymentsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -30215,13 +30738,20 @@ type OrganizationsEnvironmentsApisRevisionsDeployCall struct {
 // s`, two permissions are required: * `apigee.deployments.create` on the
 // resource `organizations/{org}/environments/{env}` *
 // `apigee.proxyrevisions.deploy` on the resource
-// `organizations/{org}/apis/{api}/revisions/{rev}` Apigee hybrid validates the
-// dependencies between shared flows and API proxies at deployment time. For
-// example, if the Flow Callout policy in an API proxy references a shared flow
-// that either doesn't exist or isn't deployed, the API proxy deployment fails.
+// `organizations/{org}/apis/{api}/revisions/{rev}` All successful API proxy
+// deployments to Apigee are zero-downtime deployments
+// (https://cloud.google.com/apigee/docs/api-platform/deploy/ui-deploy-overview#zero-downtime-deployment).
+// Apigee hybrid validates the dependencies between shared flows and API
+// proxies at deployment time. For example, if the Flow Callout policy in an
+// API proxy references a shared flow that either doesn't exist or isn't
+// deployed, the API proxy deployment fails.
 //
 //   - name: Name of the API proxy revision deployment in the following format:
-//     `organizations/{org}/environments/{env}/apis/{api}/revisions/{rev}`.
+//     `organizations/{org}/environments/{env}/apis/{api}/revisions/{rev}` If the
+//     API proxy resource being deployed has the `space` attribute set, IAM
+//     permissions are checked differently . To learn more, read the Apigee
+//     Spaces Overview
+//     (https://cloud.google.com/apigee/docs/api-platform/system-administration/spaces/apigee-spaces-overview).
 func (r *OrganizationsEnvironmentsApisRevisionsService) Deploy(name string) *OrganizationsEnvironmentsApisRevisionsDeployCall {
 	c := &OrganizationsEnvironmentsApisRevisionsDeployCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -30359,7 +30889,10 @@ type OrganizationsEnvironmentsApisRevisionsGetDeploymentsCall struct {
 //
 //   - name: Name representing an API proxy revision in an environment in the
 //     following format:
-//     `organizations/{org}/environments/{env}/apis/{api}/revisions/{rev}`.
+//     `organizations/{org}/environments/{env}/apis/{api}/revisions/{rev}` If the
+//     API proxy resource has the `space` attribute set, IAM permissions are
+//     checked differently . To learn more, read the Apigee Spaces Overview
+//     (https://cloud.google.com/apigee/docs/api-platform/system-administration/spaces/apigee-spaces-overview).
 func (r *OrganizationsEnvironmentsApisRevisionsService) GetDeployments(name string) *OrganizationsEnvironmentsApisRevisionsGetDeploymentsCall {
 	c := &OrganizationsEnvironmentsApisRevisionsGetDeploymentsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -30475,7 +31008,10 @@ type OrganizationsEnvironmentsApisRevisionsUndeployCall struct {
 // `organizations/{org}/apis/{api}/revisions/{rev}`
 //
 //   - name: Name of the API proxy revision deployment in the following format:
-//     `organizations/{org}/environments/{env}/apis/{api}/revisions/{rev}`.
+//     `organizations/{org}/environments/{env}/apis/{api}/revisions/{rev}` If the
+//     API proxy resource has the `space` attribute set, IAM permissions are
+//     checked differently . To learn more, read the Apigee Spaces Overview
+//     (https://cloud.google.com/apigee/docs/api-platform/system-administration/spaces/apigee-spaces-overview).
 func (r *OrganizationsEnvironmentsApisRevisionsService) Undeploy(name string) *OrganizationsEnvironmentsApisRevisionsUndeployCall {
 	c := &OrganizationsEnvironmentsApisRevisionsUndeployCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -30592,7 +31128,10 @@ type OrganizationsEnvironmentsApisRevisionsDebugsessionsCreateCall struct {
 //   - parent: The resource name of the API Proxy revision deployment for which
 //     to create the DebugSession. Must be of the form
 //     `organizations/{organization}/environments/{environment}/apis/{api}/revisio
-//     ns/{revision}`.
+//     ns/{revision}`. If the API proxy resource has the `space` attribute set,
+//     IAM permissions are checked differently . To learn more, read the Apigee
+//     Spaces Overview
+//     (https://cloud.google.com/apigee/docs/api-platform/system-administration/spaces/apigee-spaces-overview).
 func (r *OrganizationsEnvironmentsApisRevisionsDebugsessionsService) Create(parent string, googlecloudapigeev1debugsession *GoogleCloudApigeeV1DebugSession) *OrganizationsEnvironmentsApisRevisionsDebugsessionsCreateCall {
 	c := &OrganizationsEnvironmentsApisRevisionsDebugsessionsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -30707,7 +31246,10 @@ type OrganizationsEnvironmentsApisRevisionsDebugsessionsDeleteDataCall struct {
 //
 //   - name: The name of the debug session to delete. Must be of the form:
 //     `organizations/{organization}/environments/{environment}/apis/{api}/revisio
-//     ns/{revision}/debugsessions/{debugsession}`.
+//     ns/{revision}/debugsessions/{debugsession}`. If the API proxy resource has
+//     the `space` attribute set, IAM permissions are checked differently . To
+//     learn more, read the Apigee Spaces Overview
+//     (https://cloud.google.com/apigee/docs/api-platform/system-administration/spaces/apigee-spaces-overview).
 func (r *OrganizationsEnvironmentsApisRevisionsDebugsessionsService) DeleteData(name string) *OrganizationsEnvironmentsApisRevisionsDebugsessionsDeleteDataCall {
 	c := &OrganizationsEnvironmentsApisRevisionsDebugsessionsDeleteDataCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -30808,7 +31350,10 @@ type OrganizationsEnvironmentsApisRevisionsDebugsessionsGetCall struct {
 //
 //   - name: The name of the debug session to retrieve. Must be of the form:
 //     `organizations/{organization}/environments/{environment}/apis/{api}/revisio
-//     ns/{revision}/debugsessions/{session}`.
+//     ns/{revision}/debugsessions/{session}`. If the API proxy resource has the
+//     `space` attribute set, IAM permissions are checked differently . To learn
+//     more, read the Apigee Spaces Overview
+//     (https://cloud.google.com/apigee/docs/api-platform/system-administration/spaces/apigee-spaces-overview).
 func (r *OrganizationsEnvironmentsApisRevisionsDebugsessionsService) Get(name string) *OrganizationsEnvironmentsApisRevisionsDebugsessionsGetCall {
 	c := &OrganizationsEnvironmentsApisRevisionsDebugsessionsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -30922,7 +31467,10 @@ type OrganizationsEnvironmentsApisRevisionsDebugsessionsListCall struct {
 //   - parent: The name of the API Proxy revision deployment for which to list
 //     debug sessions. Must be of the form:
 //     `organizations/{organization}/environments/{environment}/apis/{api}/revisio
-//     ns/{revision}`.
+//     ns/{revision}`. If the API proxy resource has the `space` attribute set,
+//     IAM permissions are checked differently . To learn more, read the Apigee
+//     Spaces Overview
+//     (https://cloud.google.com/apigee/docs/api-platform/system-administration/spaces/apigee-spaces-overview).
 func (r *OrganizationsEnvironmentsApisRevisionsDebugsessionsService) List(parent string) *OrganizationsEnvironmentsApisRevisionsDebugsessionsListCall {
 	c := &OrganizationsEnvironmentsApisRevisionsDebugsessionsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -31070,7 +31618,10 @@ type OrganizationsEnvironmentsApisRevisionsDebugsessionsDataGetCall struct {
 //
 //   - name: The name of the debug session transaction. Must be of the form:
 //     `organizations/{organization}/environments/{environment}/apis/{api}/revisio
-//     ns/{revision}/debugsessions/{session}/data/{transaction}`.
+//     ns/{revision}/debugsessions/{session}/data/{transaction}`. If the API
+//     proxy resource has the `space` attribute set, IAM permissions are checked
+//     differently . To learn more, read the Apigee Spaces Overview
+//     (https://cloud.google.com/apigee/docs/api-platform/system-administration/spaces/apigee-spaces-overview).
 func (r *OrganizationsEnvironmentsApisRevisionsDebugsessionsDataService) Get(name string) *OrganizationsEnvironmentsApisRevisionsDebugsessionsDataGetCall {
 	c := &OrganizationsEnvironmentsApisRevisionsDebugsessionsDataGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -31191,7 +31742,10 @@ type OrganizationsEnvironmentsApisRevisionsDeploymentsGenerateDeployChangeReport
 // the resource `organizations/{org}/apis/{api}/revisions/{rev}`
 //
 //   - name: Name of the API proxy revision deployment in the following format:
-//     `organizations/{org}/environments/{env}/apis/{api}/revisions/{rev}`.
+//     `organizations/{org}/environments/{env}/apis/{api}/revisions/{rev}` If the
+//     API proxy resource has the `space` attribute set, IAM permissions are
+//     checked differently . To learn more, read the Apigee Spaces Overview
+//     (https://cloud.google.com/apigee/docs/api-platform/system-administration/spaces/apigee-spaces-overview).
 func (r *OrganizationsEnvironmentsApisRevisionsDeploymentsService) GenerateDeployChangeReport(name string) *OrganizationsEnvironmentsApisRevisionsDeploymentsGenerateDeployChangeReportCall {
 	c := &OrganizationsEnvironmentsApisRevisionsDeploymentsGenerateDeployChangeReportCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -34477,7 +35031,11 @@ type OrganizationsEnvironmentsKeyvaluemapsEntriesCreateCall struct {
 //     entry. Use **one** of the following structures in your request: *
 //     `organizations/{organization}/apis/{api}/keyvaluemaps/{keyvaluemap}`. *
 //     `organizations/{organization}/environments/{environment}/keyvaluemaps/{keyv
-//     aluemap}` * `organizations/{organization}/keyvaluemaps/{keyvaluemap}`.
+//     aluemap}` * `organizations/{organization}/keyvaluemaps/{keyvaluemap}`. If
+//     the KeyValueMap is under an API Proxy resource that has the `space`
+//     attribute set, IAM permissions are checked against the Space resource
+//     path. To learn more, read the Apigee Spaces Overview
+//     (https://cloud.google.com/apigee/docs/api-platform/system-administration/spaces/apigee-spaces-overview).
 func (r *OrganizationsEnvironmentsKeyvaluemapsEntriesService) Create(parent string, googlecloudapigeev1keyvalueentry *GoogleCloudApigeeV1KeyValueEntry) *OrganizationsEnvironmentsKeyvaluemapsEntriesCreateCall {
 	c := &OrganizationsEnvironmentsKeyvaluemapsEntriesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -34591,6 +35149,10 @@ type OrganizationsEnvironmentsKeyvaluemapsEntriesDeleteCall struct {
 //     `organizations/{organization}/environments/{environment}/keyvaluemaps/{keyv
 //     aluemap}/entries/{entry}` *
 //     `organizations/{organization}/keyvaluemaps/{keyvaluemap}/entries/{entry}`.
+//     If the KeyValueMap is under an API Proxy resource that has the `space`
+//     attribute set, IAM permissions are checked against the Space resource
+//     path. To learn more, read the Apigee Spaces Overview
+//     (https://cloud.google.com/apigee/docs/api-platform/system-administration/spaces/apigee-spaces-overview).
 func (r *OrganizationsEnvironmentsKeyvaluemapsEntriesService) Delete(name string) *OrganizationsEnvironmentsKeyvaluemapsEntriesDeleteCall {
 	c := &OrganizationsEnvironmentsKeyvaluemapsEntriesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -34698,6 +35260,10 @@ type OrganizationsEnvironmentsKeyvaluemapsEntriesGetCall struct {
 //     `organizations/{organization}/environments/{environment}/keyvaluemaps/{keyv
 //     aluemap}/entries/{entry}` *
 //     `organizations/{organization}/keyvaluemaps/{keyvaluemap}/entries/{entry}`.
+//     If the KeyValueMap is under an API Proxy resource that has the `space`
+//     attribute set, IAM permissions are checked against the Space resource
+//     path. To learn more, read the Apigee Spaces Overview
+//     (https://cloud.google.com/apigee/docs/api-platform/system-administration/spaces/apigee-spaces-overview).
 func (r *OrganizationsEnvironmentsKeyvaluemapsEntriesService) Get(name string) *OrganizationsEnvironmentsKeyvaluemapsEntriesGetCall {
 	c := &OrganizationsEnvironmentsKeyvaluemapsEntriesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -34813,7 +35379,11 @@ type OrganizationsEnvironmentsKeyvaluemapsEntriesListCall struct {
 //     **one** of the following structures in your request: *
 //     `organizations/{organization}/apis/{api}/keyvaluemaps/{keyvaluemap}`. *
 //     `organizations/{organization}/environments/{environment}/keyvaluemaps/{keyv
-//     aluemap}` * `organizations/{organization}/keyvaluemaps/{keyvaluemap}`.
+//     aluemap}` * `organizations/{organization}/keyvaluemaps/{keyvaluemap}`. If
+//     the KeyValueMap is under an API Proxy resource that has the `space`
+//     attribute set, IAM permissions are checked against the Space resource
+//     path. To learn more, read the Apigee Spaces Overview
+//     (https://cloud.google.com/apigee/docs/api-platform/system-administration/spaces/apigee-spaces-overview).
 func (r *OrganizationsEnvironmentsKeyvaluemapsEntriesService) List(parent string) *OrganizationsEnvironmentsKeyvaluemapsEntriesListCall {
 	c := &OrganizationsEnvironmentsKeyvaluemapsEntriesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -34964,7 +35534,11 @@ type OrganizationsEnvironmentsKeyvaluemapsEntriesUpdateCall struct {
 //     entry. Use **one** of the following structures in your request: *
 //     `organizations/{organization}/apis/{api}/keyvaluemaps/{keyvaluemap}`. *
 //     `organizations/{organization}/environments/{environment}/keyvaluemaps/{keyv
-//     aluemap}` * `organizations/{organization}/keyvaluemaps/{keyvaluemap}`.
+//     aluemap}` * `organizations/{organization}/keyvaluemaps/{keyvaluemap}`. If
+//     the KeyValueMap is under an API Proxy resource that has the `space`
+//     attribute set, IAM permissions are checked against the Space resource
+//     path. To learn more, read the Apigee Spaces Overview
+//     (https://cloud.google.com/apigee/docs/api-platform/system-administration/spaces/apigee-spaces-overview).
 func (r *OrganizationsEnvironmentsKeyvaluemapsEntriesService) Update(name string, googlecloudapigeev1keyvalueentry *GoogleCloudApigeeV1KeyValueEntry) *OrganizationsEnvironmentsKeyvaluemapsEntriesUpdateCall {
 	c := &OrganizationsEnvironmentsKeyvaluemapsEntriesUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -39017,7 +39591,10 @@ type OrganizationsEnvironmentsSharedflowsDeploymentsListCall struct {
 // List: Lists all deployments of a shared flow in an environment.
 //
 //   - parent: Name representing a shared flow in an environment in the following
-//     format: `organizations/{org}/environments/{env}/sharedflows/{sharedflow}`.
+//     format: `organizations/{org}/environments/{env}/sharedflows/{sharedflow}`
+//     If the shared flow resource has the `space` attribute set, IAM permissions
+//     are checked differently . To learn more, read the Apigee Spaces Overview
+//     (https://cloud.google.com/apigee/docs/api-platform/system-administration/spaces/apigee-spaces-overview).
 func (r *OrganizationsEnvironmentsSharedflowsDeploymentsService) List(parent string) *OrganizationsEnvironmentsSharedflowsDeploymentsListCall {
 	c := &OrganizationsEnvironmentsSharedflowsDeploymentsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -39136,7 +39713,10 @@ type OrganizationsEnvironmentsSharedflowsRevisionsDeployCall struct {
 //
 //   - name: Name of the shared flow revision to deploy in the following format:
 //     `organizations/{org}/environments/{env}/sharedflows/{sharedflow}/revisions/
-//     {rev}`.
+//     {rev}` If the shared flow resource being deployed has the `space`
+//     attribute set, IAM permissions are checked differently . To learn more,
+//     read the Apigee Spaces Overview
+//     (https://cloud.google.com/apigee/docs/api-platform/system-administration/spaces/apigee-spaces-overview).
 func (r *OrganizationsEnvironmentsSharedflowsRevisionsService) Deploy(name string) *OrganizationsEnvironmentsSharedflowsRevisionsDeployCall {
 	c := &OrganizationsEnvironmentsSharedflowsRevisionsDeployCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -39258,7 +39838,10 @@ type OrganizationsEnvironmentsSharedflowsRevisionsGetDeploymentsCall struct {
 //   - name: Name representing a shared flow in an environment in the following
 //     format:
 //     `organizations/{org}/environments/{env}/sharedflows/{sharedflow}/revisions/
-//     {rev}`.
+//     {rev}` If the shared flow resource has the `space` attribute set, IAM
+//     permissions are checked differently . To learn more, read the Apigee
+//     Spaces Overview
+//     (https://cloud.google.com/apigee/docs/api-platform/system-administration/spaces/apigee-spaces-overview).
 func (r *OrganizationsEnvironmentsSharedflowsRevisionsService) GetDeployments(name string) *OrganizationsEnvironmentsSharedflowsRevisionsGetDeploymentsCall {
 	c := &OrganizationsEnvironmentsSharedflowsRevisionsGetDeploymentsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -39376,7 +39959,10 @@ type OrganizationsEnvironmentsSharedflowsRevisionsUndeployCall struct {
 //   - name: Name of the shared flow revision to undeploy in the following
 //     format:
 //     `organizations/{org}/environments/{env}/sharedflows/{sharedflow}/revisions/
-//     {rev}`.
+//     {rev}` If the shared flow resource has the `space` attribute set, IAM
+//     permissions are checked differently . To learn more, read the Apigee
+//     Spaces Overview
+//     (https://cloud.google.com/apigee/docs/api-platform/system-administration/spaces/apigee-spaces-overview).
 func (r *OrganizationsEnvironmentsSharedflowsRevisionsService) Undeploy(name string) *OrganizationsEnvironmentsSharedflowsRevisionsUndeployCall {
 	c := &OrganizationsEnvironmentsSharedflowsRevisionsUndeployCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -44353,7 +44939,11 @@ type OrganizationsKeyvaluemapsEntriesCreateCall struct {
 //     entry. Use **one** of the following structures in your request: *
 //     `organizations/{organization}/apis/{api}/keyvaluemaps/{keyvaluemap}`. *
 //     `organizations/{organization}/environments/{environment}/keyvaluemaps/{keyv
-//     aluemap}` * `organizations/{organization}/keyvaluemaps/{keyvaluemap}`.
+//     aluemap}` * `organizations/{organization}/keyvaluemaps/{keyvaluemap}`. If
+//     the KeyValueMap is under an API Proxy resource that has the `space`
+//     attribute set, IAM permissions are checked against the Space resource
+//     path. To learn more, read the Apigee Spaces Overview
+//     (https://cloud.google.com/apigee/docs/api-platform/system-administration/spaces/apigee-spaces-overview).
 func (r *OrganizationsKeyvaluemapsEntriesService) Create(parent string, googlecloudapigeev1keyvalueentry *GoogleCloudApigeeV1KeyValueEntry) *OrganizationsKeyvaluemapsEntriesCreateCall {
 	c := &OrganizationsKeyvaluemapsEntriesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -44467,6 +45057,10 @@ type OrganizationsKeyvaluemapsEntriesDeleteCall struct {
 //     `organizations/{organization}/environments/{environment}/keyvaluemaps/{keyv
 //     aluemap}/entries/{entry}` *
 //     `organizations/{organization}/keyvaluemaps/{keyvaluemap}/entries/{entry}`.
+//     If the KeyValueMap is under an API Proxy resource that has the `space`
+//     attribute set, IAM permissions are checked against the Space resource
+//     path. To learn more, read the Apigee Spaces Overview
+//     (https://cloud.google.com/apigee/docs/api-platform/system-administration/spaces/apigee-spaces-overview).
 func (r *OrganizationsKeyvaluemapsEntriesService) Delete(name string) *OrganizationsKeyvaluemapsEntriesDeleteCall {
 	c := &OrganizationsKeyvaluemapsEntriesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -44574,6 +45168,10 @@ type OrganizationsKeyvaluemapsEntriesGetCall struct {
 //     `organizations/{organization}/environments/{environment}/keyvaluemaps/{keyv
 //     aluemap}/entries/{entry}` *
 //     `organizations/{organization}/keyvaluemaps/{keyvaluemap}/entries/{entry}`.
+//     If the KeyValueMap is under an API Proxy resource that has the `space`
+//     attribute set, IAM permissions are checked against the Space resource
+//     path. To learn more, read the Apigee Spaces Overview
+//     (https://cloud.google.com/apigee/docs/api-platform/system-administration/spaces/apigee-spaces-overview).
 func (r *OrganizationsKeyvaluemapsEntriesService) Get(name string) *OrganizationsKeyvaluemapsEntriesGetCall {
 	c := &OrganizationsKeyvaluemapsEntriesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -44689,7 +45287,11 @@ type OrganizationsKeyvaluemapsEntriesListCall struct {
 //     **one** of the following structures in your request: *
 //     `organizations/{organization}/apis/{api}/keyvaluemaps/{keyvaluemap}`. *
 //     `organizations/{organization}/environments/{environment}/keyvaluemaps/{keyv
-//     aluemap}` * `organizations/{organization}/keyvaluemaps/{keyvaluemap}`.
+//     aluemap}` * `organizations/{organization}/keyvaluemaps/{keyvaluemap}`. If
+//     the KeyValueMap is under an API Proxy resource that has the `space`
+//     attribute set, IAM permissions are checked against the Space resource
+//     path. To learn more, read the Apigee Spaces Overview
+//     (https://cloud.google.com/apigee/docs/api-platform/system-administration/spaces/apigee-spaces-overview).
 func (r *OrganizationsKeyvaluemapsEntriesService) List(parent string) *OrganizationsKeyvaluemapsEntriesListCall {
 	c := &OrganizationsKeyvaluemapsEntriesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -44840,7 +45442,11 @@ type OrganizationsKeyvaluemapsEntriesUpdateCall struct {
 //     entry. Use **one** of the following structures in your request: *
 //     `organizations/{organization}/apis/{api}/keyvaluemaps/{keyvaluemap}`. *
 //     `organizations/{organization}/environments/{environment}/keyvaluemaps/{keyv
-//     aluemap}` * `organizations/{organization}/keyvaluemaps/{keyvaluemap}`.
+//     aluemap}` * `organizations/{organization}/keyvaluemaps/{keyvaluemap}`. If
+//     the KeyValueMap is under an API Proxy resource that has the `space`
+//     attribute set, IAM permissions are checked against the Space resource
+//     path. To learn more, read the Apigee Spaces Overview
+//     (https://cloud.google.com/apigee/docs/api-platform/system-administration/spaces/apigee-spaces-overview).
 func (r *OrganizationsKeyvaluemapsEntriesService) Update(name string, googlecloudapigeev1keyvalueentry *GoogleCloudApigeeV1KeyValueEntry) *OrganizationsKeyvaluemapsEntriesUpdateCall {
 	c := &OrganizationsKeyvaluemapsEntriesUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -47754,7 +48360,11 @@ type OrganizationsSharedflowsCreateCall struct {
 // runtime. The size limit of a shared flow bundle is 15 MB.
 //
 //   - parent: The name of the parent organization under which to create the
-//     shared flow. Must be of the form: `organizations/{organization_id}`.
+//     shared flow. Must be of the form: `organizations/{organization_id}` If the
+//     resource has the `space` attribute set, IAM permissions are checked
+//     against the Space resource path. To learn more, read the Apigee Spaces
+//     Overview
+//     (https://cloud.google.com/apigee/docs/api-platform/system-administration/spaces/apigee-spaces-overview).
 func (r *OrganizationsSharedflowsService) Create(parent string, googleapihttpbody *GoogleApiHttpBody) *OrganizationsSharedflowsCreateCall {
 	c := &OrganizationsSharedflowsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -47773,6 +48383,16 @@ func (c *OrganizationsSharedflowsCreateCall) Action(action string) *Organization
 // shared flow
 func (c *OrganizationsSharedflowsCreateCall) Name(name string) *OrganizationsSharedflowsCreateCall {
 	c.urlParams_.Set("name", name)
+	return c
+}
+
+// Space sets the optional parameter "space": The ID of the space to associated
+// with this shared flow. Any IAM policies applied to the space will affect
+// access to this shared flow. Note that this field is only respected when
+// creating a new shared flow. It has no effect when creating a new revision
+// for an existing shared flow.
+func (c *OrganizationsSharedflowsCreateCall) Space(space string) *OrganizationsSharedflowsCreateCall {
+	c.urlParams_.Set("space", space)
 	return c
 }
 
@@ -47873,7 +48493,11 @@ type OrganizationsSharedflowsDeleteCall struct {
 // be undeployed before you can delete it.
 //
 //   - name: shared flow name of the form:
-//     `organizations/{organization_id}/sharedflows/{shared_flow_id}`.
+//     `organizations/{organization_id}/sharedflows/{shared_flow_id}` If the
+//     resource has the `space` attribute set, IAM permissions are checked
+//     against the Space resource path. To learn more, read the Apigee Spaces
+//     Overview
+//     (https://cloud.google.com/apigee/docs/api-platform/system-administration/spaces/apigee-spaces-overview).
 func (r *OrganizationsSharedflowsService) Delete(name string) *OrganizationsSharedflowsDeleteCall {
 	c := &OrganizationsSharedflowsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -47973,7 +48597,11 @@ type OrganizationsSharedflowsGetCall struct {
 // Get: Gets a shared flow by name, including a list of its revisions.
 //
 //   - name: The name of the shared flow to get. Must be of the form:
-//     `organizations/{organization_id}/sharedflows/{shared_flow_id}`.
+//     `organizations/{organization_id}/sharedflows/{shared_flow_id}` If the
+//     resource has the `space` attribute set, IAM permissions are checked
+//     against the Space resource path. To learn more, read the Apigee Spaces
+//     Overview
+//     (https://cloud.google.com/apigee/docs/api-platform/system-administration/spaces/apigee-spaces-overview).
 func (r *OrganizationsSharedflowsService) Get(name string) *OrganizationsSharedflowsGetCall {
 	c := &OrganizationsSharedflowsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -48081,10 +48709,17 @@ type OrganizationsSharedflowsListCall struct {
 	header_      http.Header
 }
 
-// List: Lists all shared flows in the organization.
+// List: Lists all shared flows in the organization. If the resource has the
+// `space` attribute set, the response may not return all resources. To learn
+// more, read the Apigee Spaces Overview
+// (https://cloud.google.com/apigee/docs/api-platform/system-administration/spaces/apigee-spaces-overview).
 //
 //   - parent: The name of the parent organization under which to get shared
-//     flows. Must be of the form: `organizations/{organization_id}`.
+//     flows. Must be of the form: `organizations/{organization_id}` If the
+//     resource has the `space` attribute set, IAM permissions are checked
+//     against the Space resource path. To learn more, read the Apigee Spaces
+//     Overview
+//     (https://cloud.google.com/apigee/docs/api-platform/system-administration/spaces/apigee-spaces-overview).
 func (r *OrganizationsSharedflowsService) List(parent string) *OrganizationsSharedflowsListCall {
 	c := &OrganizationsSharedflowsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -48102,6 +48737,16 @@ func (c *OrganizationsSharedflowsListCall) IncludeMetaData(includeMetaData bool)
 // whether to include a list of revisions in the response.
 func (c *OrganizationsSharedflowsListCall) IncludeRevisions(includeRevisions bool) *OrganizationsSharedflowsListCall {
 	c.urlParams_.Set("includeRevisions", fmt.Sprint(includeRevisions))
+	return c
+}
+
+// Space sets the optional parameter "space": The space ID used to filter the
+// list of shared flows (optional). If unspecified, all shared flows in the
+// organization will be listed. To learn how Spaces can be used to manage
+// resources, read the Apigee Spaces Overview
+// (https://cloud.google.com/apigee/docs/api-platform/system-administration/spaces/apigee-spaces-overview).
+func (c *OrganizationsSharedflowsListCall) Space(space string) *OrganizationsSharedflowsListCall {
+	c.urlParams_.Set("space", space)
 	return c
 }
 
@@ -48197,6 +48842,111 @@ func (c *OrganizationsSharedflowsListCall) Do(opts ...googleapi.CallOption) (*Go
 	return ret, nil
 }
 
+type OrganizationsSharedflowsMoveCall struct {
+	s                                        *Service
+	name                                     string
+	googlecloudapigeev1movesharedflowrequest *GoogleCloudApigeeV1MoveSharedFlowRequest
+	urlParams_                               gensupport.URLParams
+	ctx_                                     context.Context
+	header_                                  http.Header
+}
+
+// Move: Moves an shared flow to a different space.
+//
+//   - name: Shared Flow to move in the following format:
+//     `organizations/{org}/sharedflows/{shared_flow}`.
+func (r *OrganizationsSharedflowsService) Move(name string, googlecloudapigeev1movesharedflowrequest *GoogleCloudApigeeV1MoveSharedFlowRequest) *OrganizationsSharedflowsMoveCall {
+	c := &OrganizationsSharedflowsMoveCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.googlecloudapigeev1movesharedflowrequest = googlecloudapigeev1movesharedflowrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *OrganizationsSharedflowsMoveCall) Fields(s ...googleapi.Field) *OrganizationsSharedflowsMoveCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *OrganizationsSharedflowsMoveCall) Context(ctx context.Context) *OrganizationsSharedflowsMoveCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *OrganizationsSharedflowsMoveCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *OrganizationsSharedflowsMoveCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googlecloudapigeev1movesharedflowrequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}:move")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "apigee.organizations.sharedflows.move", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "apigee.organizations.sharedflows.move" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudApigeeV1SharedFlow.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *OrganizationsSharedflowsMoveCall) Do(opts ...googleapi.CallOption) (*GoogleCloudApigeeV1SharedFlow, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudApigeeV1SharedFlow{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "apigee.organizations.sharedflows.move", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
 type OrganizationsSharedflowsDeploymentsListCall struct {
 	s            *Service
 	parent       string
@@ -48209,7 +48959,10 @@ type OrganizationsSharedflowsDeploymentsListCall struct {
 // List: Lists all deployments of a shared flow.
 //
 //   - parent: Name of the shared flow for which to return deployment information
-//     in the following format: `organizations/{org}/sharedflows/{sharedflow}`.
+//     in the following format: `organizations/{org}/sharedflows/{sharedflow}` If
+//     the shared flow resource has the `space` attribute set, IAM permissions
+//     are checked differently . To learn more, read the Apigee Spaces Overview
+//     (https://cloud.google.com/apigee/docs/api-platform/system-administration/spaces/apigee-spaces-overview).
 func (r *OrganizationsSharedflowsDeploymentsService) List(parent string) *OrganizationsSharedflowsDeploymentsListCall {
 	c := &OrganizationsSharedflowsDeploymentsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -48321,7 +49074,10 @@ type OrganizationsSharedflowsRevisionsDeleteCall struct {
 //
 //   - name: The name of the shared flow revision to delete. Must be of the form:
 //     `organizations/{organization_id}/sharedflows/{shared_flow_id}/revisions/{re
-//     vision_id}`.
+//     vision_id}` If the Shared Flow resource has the `space` attribute set, IAM
+//     permissions are checked against the Space resource path. To learn more,
+//     read the Apigee Spaces Overview
+//     (https://cloud.google.com/apigee/docs/api-platform/system-administration/spaces/apigee-spaces-overview).
 func (r *OrganizationsSharedflowsRevisionsService) Delete(name string) *OrganizationsSharedflowsRevisionsDeleteCall {
 	c := &OrganizationsSharedflowsRevisionsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -48428,7 +49184,10 @@ type OrganizationsSharedflowsRevisionsGetCall struct {
 //
 //   - name: The name of the shared flow revision to get. Must be of the form:
 //     `organizations/{organization_id}/sharedflows/{shared_flow_id}/revisions/{re
-//     vision_id}`.
+//     vision_id}` If the Shared Flow resource has the `space` attribute set, IAM
+//     permissions are checked against the Space resource path. To learn more,
+//     read the Apigee Spaces Overview
+//     (https://cloud.google.com/apigee/docs/api-platform/system-administration/spaces/apigee-spaces-overview).
 func (r *OrganizationsSharedflowsRevisionsService) Get(name string) *OrganizationsSharedflowsRevisionsGetCall {
 	c := &OrganizationsSharedflowsRevisionsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -48552,7 +49311,10 @@ type OrganizationsSharedflowsRevisionsUpdateSharedFlowRevisionCall struct {
 //
 //   - name: The name of the shared flow revision to update. Must be of the form:
 //     `organizations/{organization_id}/sharedflows/{shared_flow_id}/revisions/{re
-//     vision_id}`.
+//     vision_id}` If the resource has the `space` attribute set, IAM permissions
+//     are checked against the Space resource path. To learn more, read the
+//     Apigee Spaces Overview
+//     (https://cloud.google.com/apigee/docs/api-platform/system-administration/spaces/apigee-spaces-overview).
 func (r *OrganizationsSharedflowsRevisionsService) UpdateSharedFlowRevision(name string, googleapihttpbody *GoogleApiHttpBody) *OrganizationsSharedflowsRevisionsUpdateSharedFlowRevisionCall {
 	c := &OrganizationsSharedflowsRevisionsUpdateSharedFlowRevisionCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -48666,7 +49428,10 @@ type OrganizationsSharedflowsRevisionsDeploymentsListCall struct {
 //
 //   - parent: Name of the API proxy revision for which to return deployment
 //     information in the following format:
-//     `organizations/{org}/sharedflows/{sharedflow}/revisions/{rev}`.
+//     `organizations/{org}/sharedflows/{sharedflow}/revisions/{rev}`. If the
+//     shared flow resource has the `space` attribute set, IAM permissions are
+//     checked differently . To learn more, read the Apigee Spaces Overview
+//     (https://cloud.google.com/apigee/docs/api-platform/system-administration/spaces/apigee-spaces-overview).
 func (r *OrganizationsSharedflowsRevisionsDeploymentsService) List(parent string) *OrganizationsSharedflowsRevisionsDeploymentsListCall {
 	c := &OrganizationsSharedflowsRevisionsDeploymentsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -50082,6 +50847,931 @@ func (c *OrganizationsSitesApidocsUpdateDocumentationCall) Do(opts ...googleapi.
 		return nil, err
 	}
 	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "apigee.organizations.sites.apidocs.updateDocumentation", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type OrganizationsSpacesCreateCall struct {
+	s                        *Service
+	parent                   string
+	googlecloudapigeev1space *GoogleCloudApigeeV1Space
+	urlParams_               gensupport.URLParams
+	ctx_                     context.Context
+	header_                  http.Header
+}
+
+// Create: Create a space under an organization.
+//
+//   - parent: Name of the Google Cloud project in which to associate the Apigee
+//     space. Pass the information as a query parameter using the following
+//     structure in your request: `organizations/`.
+func (r *OrganizationsSpacesService) Create(parent string, googlecloudapigeev1space *GoogleCloudApigeeV1Space) *OrganizationsSpacesCreateCall {
+	c := &OrganizationsSpacesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.googlecloudapigeev1space = googlecloudapigeev1space
+	return c
+}
+
+// SpaceId sets the optional parameter "spaceId": Required. Resource ID of the
+// space.
+func (c *OrganizationsSpacesCreateCall) SpaceId(spaceId string) *OrganizationsSpacesCreateCall {
+	c.urlParams_.Set("spaceId", spaceId)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *OrganizationsSpacesCreateCall) Fields(s ...googleapi.Field) *OrganizationsSpacesCreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *OrganizationsSpacesCreateCall) Context(ctx context.Context) *OrganizationsSpacesCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *OrganizationsSpacesCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *OrganizationsSpacesCreateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googlecloudapigeev1space)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/spaces")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "apigee.organizations.spaces.create", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "apigee.organizations.spaces.create" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudApigeeV1Space.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *OrganizationsSpacesCreateCall) Do(opts ...googleapi.CallOption) (*GoogleCloudApigeeV1Space, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudApigeeV1Space{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "apigee.organizations.spaces.create", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type OrganizationsSpacesDeleteCall struct {
+	s          *Service
+	name       string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Delete: Deletes an organization space.
+//
+//   - name: Apigee organization space name in the following format:
+//     `organizations/{org}/spaces/{space}`.
+func (r *OrganizationsSpacesService) Delete(name string) *OrganizationsSpacesDeleteCall {
+	c := &OrganizationsSpacesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *OrganizationsSpacesDeleteCall) Fields(s ...googleapi.Field) *OrganizationsSpacesDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *OrganizationsSpacesDeleteCall) Context(ctx context.Context) *OrganizationsSpacesDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *OrganizationsSpacesDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *OrganizationsSpacesDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("DELETE", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "apigee.organizations.spaces.delete", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "apigee.organizations.spaces.delete" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleProtobufEmpty.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *OrganizationsSpacesDeleteCall) Do(opts ...googleapi.CallOption) (*GoogleProtobufEmpty, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleProtobufEmpty{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "apigee.organizations.spaces.delete", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type OrganizationsSpacesGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Get a space under an Organization.
+//
+//   - name: Apigee organization space name in the following format:
+//     `organizations/{org}/spaces/{space}`.
+func (r *OrganizationsSpacesService) Get(name string) *OrganizationsSpacesGetCall {
+	c := &OrganizationsSpacesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *OrganizationsSpacesGetCall) Fields(s ...googleapi.Field) *OrganizationsSpacesGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *OrganizationsSpacesGetCall) IfNoneMatch(entityTag string) *OrganizationsSpacesGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *OrganizationsSpacesGetCall) Context(ctx context.Context) *OrganizationsSpacesGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *OrganizationsSpacesGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *OrganizationsSpacesGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "apigee.organizations.spaces.get", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "apigee.organizations.spaces.get" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudApigeeV1Space.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *OrganizationsSpacesGetCall) Do(opts ...googleapi.CallOption) (*GoogleCloudApigeeV1Space, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudApigeeV1Space{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "apigee.organizations.spaces.get", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type OrganizationsSpacesGetIamPolicyCall struct {
+	s            *Service
+	resource     string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// GetIamPolicy: Callers must have apigee.spaces.getIamPolicy.
+//
+//   - resource: REQUIRED: The resource for which the policy is being requested.
+//     See Resource names (https://cloud.google.com/apis/design/resource_names)
+//     for the appropriate value for this field.
+func (r *OrganizationsSpacesService) GetIamPolicy(resource string) *OrganizationsSpacesGetIamPolicyCall {
+	c := &OrganizationsSpacesGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.resource = resource
+	return c
+}
+
+// OptionsRequestedPolicyVersion sets the optional parameter
+// "options.requestedPolicyVersion": The maximum policy version that will be
+// used to format the policy. Valid values are 0, 1, and 3. Requests specifying
+// an invalid value will be rejected. Requests for policies with any
+// conditional role bindings must specify version 3. Policies with no
+// conditional role bindings may specify any valid value or leave the field
+// unset. The policy in the response might use the policy version that you
+// specified, or it might use a lower policy version. For example, if you
+// specify version 3, but the policy has no conditional role bindings, the
+// response uses version 1. To learn which resources support conditions in
+// their IAM policies, see the IAM documentation
+// (https://cloud.google.com/iam/help/conditions/resource-policies).
+func (c *OrganizationsSpacesGetIamPolicyCall) OptionsRequestedPolicyVersion(optionsRequestedPolicyVersion int64) *OrganizationsSpacesGetIamPolicyCall {
+	c.urlParams_.Set("options.requestedPolicyVersion", fmt.Sprint(optionsRequestedPolicyVersion))
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *OrganizationsSpacesGetIamPolicyCall) Fields(s ...googleapi.Field) *OrganizationsSpacesGetIamPolicyCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *OrganizationsSpacesGetIamPolicyCall) IfNoneMatch(entityTag string) *OrganizationsSpacesGetIamPolicyCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *OrganizationsSpacesGetIamPolicyCall) Context(ctx context.Context) *OrganizationsSpacesGetIamPolicyCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *OrganizationsSpacesGetIamPolicyCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *OrganizationsSpacesGetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+resource}:getIamPolicy")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"resource": c.resource,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "apigee.organizations.spaces.getIamPolicy", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "apigee.organizations.spaces.getIamPolicy" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleIamV1Policy.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *OrganizationsSpacesGetIamPolicyCall) Do(opts ...googleapi.CallOption) (*GoogleIamV1Policy, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleIamV1Policy{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "apigee.organizations.spaces.getIamPolicy", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type OrganizationsSpacesListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists spaces under an organization.
+//
+// - parent: Use the following structure in your request: `organizations`.
+func (r *OrganizationsSpacesService) List(parent string) *OrganizationsSpacesListCall {
+	c := &OrganizationsSpacesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The maximum number of
+// spaces to return. The service may return fewer than this value. If
+// unspecified, at most 50 spaces will be returned. The maximum value is 1000;
+// values above 1000 will be coerced to 1000.
+func (c *OrganizationsSpacesListCall) PageSize(pageSize int64) *OrganizationsSpacesListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": A page token, received
+// from a previous `ListSpaces` call. Provide this to retrieve the subsequent
+// page. When paginating, all parameters must match the original call.
+func (c *OrganizationsSpacesListCall) PageToken(pageToken string) *OrganizationsSpacesListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *OrganizationsSpacesListCall) Fields(s ...googleapi.Field) *OrganizationsSpacesListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *OrganizationsSpacesListCall) IfNoneMatch(entityTag string) *OrganizationsSpacesListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *OrganizationsSpacesListCall) Context(ctx context.Context) *OrganizationsSpacesListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *OrganizationsSpacesListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *OrganizationsSpacesListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/spaces")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "apigee.organizations.spaces.list", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "apigee.organizations.spaces.list" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudApigeeV1ListSpacesResponse.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *OrganizationsSpacesListCall) Do(opts ...googleapi.CallOption) (*GoogleCloudApigeeV1ListSpacesResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudApigeeV1ListSpacesResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "apigee.organizations.spaces.list", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *OrganizationsSpacesListCall) Pages(ctx context.Context, f func(*GoogleCloudApigeeV1ListSpacesResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+type OrganizationsSpacesPatchCall struct {
+	s                        *Service
+	name                     string
+	googlecloudapigeev1space *GoogleCloudApigeeV1Space
+	urlParams_               gensupport.URLParams
+	ctx_                     context.Context
+	header_                  http.Header
+}
+
+// Patch: Updates a space.
+//
+//   - name: Name of the space in the following format:
+//     `organizations/{org}/spaces/{space_id}`.
+func (r *OrganizationsSpacesService) Patch(name string, googlecloudapigeev1space *GoogleCloudApigeeV1Space) *OrganizationsSpacesPatchCall {
+	c := &OrganizationsSpacesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.googlecloudapigeev1space = googlecloudapigeev1space
+	return c
+}
+
+// UpdateMask sets the optional parameter "updateMask": Required. List of
+// fields to be updated. Fields that can be updated: display_name.
+func (c *OrganizationsSpacesPatchCall) UpdateMask(updateMask string) *OrganizationsSpacesPatchCall {
+	c.urlParams_.Set("updateMask", updateMask)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *OrganizationsSpacesPatchCall) Fields(s ...googleapi.Field) *OrganizationsSpacesPatchCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *OrganizationsSpacesPatchCall) Context(ctx context.Context) *OrganizationsSpacesPatchCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *OrganizationsSpacesPatchCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *OrganizationsSpacesPatchCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googlecloudapigeev1space)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PATCH", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "apigee.organizations.spaces.patch", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "apigee.organizations.spaces.patch" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudApigeeV1Space.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *OrganizationsSpacesPatchCall) Do(opts ...googleapi.CallOption) (*GoogleCloudApigeeV1Space, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudApigeeV1Space{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "apigee.organizations.spaces.patch", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type OrganizationsSpacesSetIamPolicyCall struct {
+	s                              *Service
+	resource                       string
+	googleiamv1setiampolicyrequest *GoogleIamV1SetIamPolicyRequest
+	urlParams_                     gensupport.URLParams
+	ctx_                           context.Context
+	header_                        http.Header
+}
+
+// SetIamPolicy: IAM META APIs Callers must have apigee.spaces.setIamPolicy.
+//
+//   - resource: REQUIRED: The resource for which the policy is being specified.
+//     See Resource names (https://cloud.google.com/apis/design/resource_names)
+//     for the appropriate value for this field.
+func (r *OrganizationsSpacesService) SetIamPolicy(resource string, googleiamv1setiampolicyrequest *GoogleIamV1SetIamPolicyRequest) *OrganizationsSpacesSetIamPolicyCall {
+	c := &OrganizationsSpacesSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.resource = resource
+	c.googleiamv1setiampolicyrequest = googleiamv1setiampolicyrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *OrganizationsSpacesSetIamPolicyCall) Fields(s ...googleapi.Field) *OrganizationsSpacesSetIamPolicyCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *OrganizationsSpacesSetIamPolicyCall) Context(ctx context.Context) *OrganizationsSpacesSetIamPolicyCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *OrganizationsSpacesSetIamPolicyCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *OrganizationsSpacesSetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googleiamv1setiampolicyrequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+resource}:setIamPolicy")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"resource": c.resource,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "apigee.organizations.spaces.setIamPolicy", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "apigee.organizations.spaces.setIamPolicy" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleIamV1Policy.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *OrganizationsSpacesSetIamPolicyCall) Do(opts ...googleapi.CallOption) (*GoogleIamV1Policy, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleIamV1Policy{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "apigee.organizations.spaces.setIamPolicy", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type OrganizationsSpacesTestIamPermissionsCall struct {
+	s                                    *Service
+	resource                             string
+	googleiamv1testiampermissionsrequest *GoogleIamV1TestIamPermissionsRequest
+	urlParams_                           gensupport.URLParams
+	ctx_                                 context.Context
+	header_                              http.Header
+}
+
+// TestIamPermissions: Callers don't need any permissions.
+//
+//   - resource: REQUIRED: The resource for which the policy detail is being
+//     requested. See Resource names
+//     (https://cloud.google.com/apis/design/resource_names) for the appropriate
+//     value for this field.
+func (r *OrganizationsSpacesService) TestIamPermissions(resource string, googleiamv1testiampermissionsrequest *GoogleIamV1TestIamPermissionsRequest) *OrganizationsSpacesTestIamPermissionsCall {
+	c := &OrganizationsSpacesTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.resource = resource
+	c.googleiamv1testiampermissionsrequest = googleiamv1testiampermissionsrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *OrganizationsSpacesTestIamPermissionsCall) Fields(s ...googleapi.Field) *OrganizationsSpacesTestIamPermissionsCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *OrganizationsSpacesTestIamPermissionsCall) Context(ctx context.Context) *OrganizationsSpacesTestIamPermissionsCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *OrganizationsSpacesTestIamPermissionsCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *OrganizationsSpacesTestIamPermissionsCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googleiamv1testiampermissionsrequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+resource}:testIamPermissions")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"resource": c.resource,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "apigee.organizations.spaces.testIamPermissions", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "apigee.organizations.spaces.testIamPermissions" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleIamV1TestIamPermissionsResponse.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *OrganizationsSpacesTestIamPermissionsCall) Do(opts ...googleapi.CallOption) (*GoogleIamV1TestIamPermissionsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleIamV1TestIamPermissionsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "apigee.organizations.spaces.testIamPermissions", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 

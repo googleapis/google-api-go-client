@@ -2891,6 +2891,22 @@ func (r *ProjectsLocationsConnectionsEntityTypesService) Get(name string) *Proje
 	return c
 }
 
+// View sets the optional parameter "view": Specifies view for entity type
+// schema.
+//
+// Possible values:
+//
+//	"ENTITY_TYPE_SCHEMA_VIEW_UNSPECIFIED" - VIEW_UNSPECIFIED. The unset value.
+//
+// Defaults to BASIC View.
+//
+//	"ENTITY_TYPE_SCHEMA_VIEW_BASIC" - Return basic entity type schema.
+//	"ENTITY_TYPE_SCHEMA_VIEW_ENRICHED" - Return enriched entity types schema.
+func (c *ProjectsLocationsConnectionsEntityTypesGetCall) View(view string) *ProjectsLocationsConnectionsEntityTypesGetCall {
+	c.urlParams_.Set("view", view)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
 // details.

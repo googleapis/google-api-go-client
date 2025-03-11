@@ -1538,7 +1538,7 @@ func (s ListSubscriptionsResponse) MarshalJSON() ([]byte, error) {
 // along with descriptive information that will help subscribers find and
 // subscribe the data.
 type Listing struct {
-	// BigqueryDataset: Required. Shared dataset i.e. BigQuery dataset source.
+	// BigqueryDataset: Shared dataset i.e. BigQuery dataset source.
 	BigqueryDataset *BigQueryDatasetSource `json:"bigqueryDataset,omitempty"`
 	// Categories: Optional. Categories of the listing. Up to two categories are
 	// allowed.
@@ -1612,7 +1612,7 @@ type Listing struct {
 	// Publisher: Optional. Details of the publisher who owns the listing and who
 	// can share the source data.
 	Publisher *Publisher `json:"publisher,omitempty"`
-	// PubsubTopic: Required. Pub/Sub topic source.
+	// PubsubTopic: Pub/Sub topic source.
 	PubsubTopic *PubSubTopicSource `json:"pubsubTopic,omitempty"`
 	// RequestAccess: Optional. Email or URL of the request access of the listing.
 	// Subscribers can use this reference to request access. Max Length: 1000
@@ -2148,6 +2148,26 @@ func (s RetryPolicy) MarshalJSON() ([]byte, error) {
 
 // RevokeSubscriptionRequest: Message for revoking a subscription.
 type RevokeSubscriptionRequest struct {
+	// RevokeCommercial: Optional. If the subscription is commercial then this
+	// field must be set to true, otherwise a failure is thrown. This acts as a
+	// safety guard to avoid revoking commercial subscriptions accidentally.
+	RevokeCommercial bool `json:"revokeCommercial,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "RevokeCommercial") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "RevokeCommercial") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s RevokeSubscriptionRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod RevokeSubscriptionRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // RevokeSubscriptionResponse: Message for response when you revoke a
@@ -2335,8 +2355,8 @@ type SubscribeListingRequest struct {
 	// DestinationDataset: Input only. BigQuery destination dataset to create for
 	// the subscriber.
 	DestinationDataset *DestinationDataset `json:"destinationDataset,omitempty"`
-	// DestinationPubsubSubscription: Required. Input only. Destination Pub/Sub
-	// subscription to create for the subscriber.
+	// DestinationPubsubSubscription: Input only. Destination Pub/Sub subscription
+	// to create for the subscriber.
 	DestinationPubsubSubscription *DestinationPubSubSubscription `json:"destinationPubsubSubscription,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "DestinationDataset") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -3957,6 +3977,15 @@ type ProjectsLocationsDataExchangesListingsDeleteCall struct {
 func (r *ProjectsLocationsDataExchangesListingsService) Delete(name string) *ProjectsLocationsDataExchangesListingsDeleteCall {
 	c := &ProjectsLocationsDataExchangesListingsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
+	return c
+}
+
+// DeleteCommercial sets the optional parameter "deleteCommercial": If the
+// listing is commercial then this field must be set to true, otherwise a
+// failure is thrown. This acts as a safety guard to avoid deleting commercial
+// listings accidentally.
+func (c *ProjectsLocationsDataExchangesListingsDeleteCall) DeleteCommercial(deleteCommercial bool) *ProjectsLocationsDataExchangesListingsDeleteCall {
+	c.urlParams_.Set("deleteCommercial", fmt.Sprint(deleteCommercial))
 	return c
 }
 

@@ -1386,6 +1386,7 @@ type GpuMetric struct {
 	//   "NVIDIA_TESLA_T4"
 	//   "NVIDIA_TESLA_V100"
 	//   "NVIDIA_H100_80GB"
+	//   "NVIDIA_H200_141GB"
 	GpuType string `json:"gpuType,omitempty"`
 	// MachineSpec: Required. Machine spec, e.g. N1_STANDARD_4.
 	//
@@ -1578,7 +1579,7 @@ func (s GpuMetric) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// InfraUsage: Infra Usage of billing metrics.
+// InfraUsage: LINT: LEGACY_NAMES Infra Usage of billing metrics.
 type InfraUsage struct {
 	// CpuMetrics: Aggregated core metrics since requested start_time.
 	CpuMetrics []*CpuMetric `json:"cpuMetrics,omitempty"`

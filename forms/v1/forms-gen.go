@@ -707,6 +707,12 @@ type Form struct {
 	// LinkedSheetId: Output only. The ID of the linked Google Sheet which is
 	// accumulating responses from this Form (if such a Sheet exists).
 	LinkedSheetId string `json:"linkedSheetId,omitempty"`
+	// PublishSettings: Output only. The publishing settings for a form. This field
+	// isn't set for legacy forms because they don't have the `publish_settings`
+	// field. All newly created forms support publish settings. Forms with
+	// `publish_settings` value set can call UpdatePublishSettings API to publish
+	// or unpublish the form.
+	PublishSettings *PublishSettings `json:"publishSettings,omitempty"`
 	// ResponderUri: Output only. The form URI to share with responders. This opens
 	// a page that allows the user to submit responses but not edit the questions.
 	ResponderUri string `json:"responderUri,omitempty"`
@@ -1253,6 +1259,56 @@ func (s Option) MarshalJSON() ([]byte, error) {
 type PageBreakItem struct {
 }
 
+// PublishSettings: The publishing settings of a form.
+type PublishSettings struct {
+	// PublishState: Optional. The publishing state of a form. When updating
+	// `publish_state`, both `is_published` and `is_accepting_responses` must be
+	// set. However, setting `is_accepting_responses` to `true` and `is_published`
+	// to `false` isn't supported and returns an error.
+	PublishState *PublishState `json:"publishState,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "PublishState") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "PublishState") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s PublishSettings) MarshalJSON() ([]byte, error) {
+	type NoMethod PublishSettings
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// PublishState: The publishing state of a form.
+type PublishState struct {
+	// IsAcceptingResponses: Required. Whether the form accepts responses. If
+	// `is_published` is set to `false`, this field is forced to `false`.
+	IsAcceptingResponses bool `json:"isAcceptingResponses,omitempty"`
+	// IsPublished: Required. Whether the form is published and visible to others.
+	IsPublished bool `json:"isPublished,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "IsAcceptingResponses") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "IsAcceptingResponses") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s PublishState) MarshalJSON() ([]byte, error) {
+	type NoMethod PublishState
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // Question: Any question. The specific type of question is known by its
 // `kind`.
 type Question struct {
@@ -1518,6 +1574,62 @@ type ScaleQuestion struct {
 
 func (s ScaleQuestion) MarshalJSON() ([]byte, error) {
 	type NoMethod ScaleQuestion
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// SetPublishSettingsRequest: Updates the publish settings of a Form.
+type SetPublishSettingsRequest struct {
+	// PublishSettings: Required. The desired publish settings to apply to the
+	// form.
+	PublishSettings *PublishSettings `json:"publishSettings,omitempty"`
+	// UpdateMask: Optional. The `publish_settings` fields to update. This field
+	// mask accepts the following values: * `publish_state`: Updates or replaces
+	// all `publish_state` settings. * "*": Updates or replaces all
+	// `publish_settings` fields.
+	UpdateMask string `json:"updateMask,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "PublishSettings") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "PublishSettings") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s SetPublishSettingsRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod SetPublishSettingsRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// SetPublishSettingsResponse: The response of a `SetPublishSettings` request.
+type SetPublishSettingsResponse struct {
+	// FormId: Required. The ID of the Form. This is same as the `Form.form_id`
+	// field.
+	FormId string `json:"formId,omitempty"`
+	// PublishSettings: The publish settings of the form.
+	PublishSettings *PublishSettings `json:"publishSettings,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "FormId") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "FormId") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s SetPublishSettingsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod SetPublishSettingsResponse
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -2073,6 +2185,14 @@ func (r *FormsService) Create(form *Form) *FormsCreateCall {
 	return c
 }
 
+// Unpublished sets the optional parameter "unpublished": Whether the form is
+// unpublished. If set to `true`, the form doesn't accept responses. If set to
+// `false` or unset, the form is published and accepts responses.
+func (c *FormsCreateCall) Unpublished(unpublished bool) *FormsCreateCall {
+	c.urlParams_.Set("unpublished", fmt.Sprint(unpublished))
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
 // details.
@@ -2260,6 +2380,111 @@ func (c *FormsGetCall) Do(opts ...googleapi.CallOption) (*Form, error) {
 		return nil, err
 	}
 	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "forms.forms.get", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type FormsSetPublishSettingsCall struct {
+	s                         *Service
+	formId                    string
+	setpublishsettingsrequest *SetPublishSettingsRequest
+	urlParams_                gensupport.URLParams
+	ctx_                      context.Context
+	header_                   http.Header
+}
+
+// SetPublishSettings: Updates the publish settings of a form. Legacy forms
+// aren't supported because they don't have the `publish_settings` field.
+//
+// - formId: The ID of the form. You can get the id from `Form.form_id` field.
+func (r *FormsService) SetPublishSettings(formId string, setpublishsettingsrequest *SetPublishSettingsRequest) *FormsSetPublishSettingsCall {
+	c := &FormsSetPublishSettingsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.formId = formId
+	c.setpublishsettingsrequest = setpublishsettingsrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *FormsSetPublishSettingsCall) Fields(s ...googleapi.Field) *FormsSetPublishSettingsCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *FormsSetPublishSettingsCall) Context(ctx context.Context) *FormsSetPublishSettingsCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *FormsSetPublishSettingsCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *FormsSetPublishSettingsCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.setpublishsettingsrequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/forms/{formId}:setPublishSettings")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"formId": c.formId,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "forms.forms.setPublishSettings", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "forms.forms.setPublishSettings" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *SetPublishSettingsResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *FormsSetPublishSettingsCall) Do(opts ...googleapi.CallOption) (*SetPublishSettingsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &SetPublishSettingsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "forms.forms.setPublishSettings", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 

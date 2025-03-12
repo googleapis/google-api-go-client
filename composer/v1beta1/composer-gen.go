@@ -1382,7 +1382,8 @@ type MasterAuthorizedNetworksConfig struct {
 	// CidrBlocks: Up to 50 external networks that could access Kubernetes master
 	// through HTTPS.
 	CidrBlocks []*CidrBlock `json:"cidrBlocks,omitempty"`
-	// Enabled: Whether or not master authorized networks feature is enabled.
+	// Enabled: Optional. Whether or not master authorized networks feature is
+	// enabled.
 	Enabled bool `json:"enabled,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "CidrBlocks") to
 	// unconditionally include in API requests. By default, fields with empty or

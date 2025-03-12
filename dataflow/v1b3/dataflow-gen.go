@@ -2000,6 +2000,9 @@ func (s FlattenInstruction) MarshalJSON() ([]byte, error) {
 type FlexTemplateRuntimeEnvironment struct {
 	// AdditionalExperiments: Additional experiment flags for the job.
 	AdditionalExperiments []string `json:"additionalExperiments,omitempty"`
+	// AdditionalPipelineOptions: Optional. Additional pipeline option flags for
+	// the job.
+	AdditionalPipelineOptions []string `json:"additionalPipelineOptions,omitempty"`
 	// AdditionalUserLabels: Additional user labels to be specified for the job.
 	// Keys and values must follow the restrictions specified in the labeling
 	// restrictions
@@ -3626,7 +3629,7 @@ func (s MetricStructuredName) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// MetricUpdate: Describes the state of a metric. Next ID: 14
+// MetricUpdate: Describes the state of a metric.
 type MetricUpdate struct {
 	// Cumulative: True if this metric is reported as the total cumulative
 	// aggregate value accumulated since the worker started working on this
@@ -4619,6 +4622,9 @@ type RuntimeEnvironment struct {
 	// AdditionalExperiments: Optional. Additional experiment flags for the job,
 	// specified with the `--experiments` option.
 	AdditionalExperiments []string `json:"additionalExperiments,omitempty"`
+	// AdditionalPipelineOptions: Optional. Additional pipeline option flags for
+	// the job.
+	AdditionalPipelineOptions []string `json:"additionalPipelineOptions,omitempty"`
 	// AdditionalUserLabels: Optional. Additional user labels to be specified for
 	// the job. Keys and values should follow the restrictions specified in the
 	// labeling restrictions

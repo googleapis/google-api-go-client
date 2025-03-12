@@ -8388,6 +8388,29 @@ func (s *GoogleCloudDialogflowV2FaqAnswer) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+// GoogleCloudDialogflowV2FreeFormSuggestion: Suggestion generated using free
+// form generator.
+type GoogleCloudDialogflowV2FreeFormSuggestion struct {
+	// Response: Required. Free form suggestion.
+	Response string `json:"response,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Response") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Response") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDialogflowV2FreeFormSuggestion) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDialogflowV2FreeFormSuggestion
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudDialogflowV2GcsDestination: Google Cloud Storage location for the
 // output.
 type GoogleCloudDialogflowV2GcsDestination struct {
@@ -8411,6 +8434,88 @@ type GoogleCloudDialogflowV2GcsDestination struct {
 
 func (s GoogleCloudDialogflowV2GcsDestination) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowV2GcsDestination
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDialogflowV2GenerateSuggestionsResponse: The response message for
+// Conversations.GenerateSuggestions.
+type GoogleCloudDialogflowV2GenerateSuggestionsResponse struct {
+	// GeneratorSuggestionAnswers: The answers generated for the conversation based
+	// on context.
+	GeneratorSuggestionAnswers []*GoogleCloudDialogflowV2GenerateSuggestionsResponseGeneratorSuggestionAnswer `json:"generatorSuggestionAnswers,omitempty"`
+	// LatestMessage: The name of the latest conversation message used as context
+	// for compiling suggestion. Format:
+	// `projects//locations//conversations//messages/`.
+	LatestMessage string `json:"latestMessage,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "GeneratorSuggestionAnswers")
+	// to unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "GeneratorSuggestionAnswers") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDialogflowV2GenerateSuggestionsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDialogflowV2GenerateSuggestionsResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDialogflowV2GenerateSuggestionsResponseGeneratorSuggestionAnswer:
+// A GeneratorSuggestion answer.
+type GoogleCloudDialogflowV2GenerateSuggestionsResponseGeneratorSuggestionAnswer struct {
+	// AnswerRecord: Answer record that uniquely identifies the suggestion. This
+	// can be used to provide suggestion feedback.
+	AnswerRecord string `json:"answerRecord,omitempty"`
+	// GeneratorSuggestion: Suggestion details.
+	GeneratorSuggestion *GoogleCloudDialogflowV2GeneratorSuggestion `json:"generatorSuggestion,omitempty"`
+	// SourceGenerator: The name of the generator used to generate this suggestion.
+	// Format: `projects//locations//generators/`.
+	SourceGenerator string `json:"sourceGenerator,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AnswerRecord") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AnswerRecord") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDialogflowV2GenerateSuggestionsResponseGeneratorSuggestionAnswer) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDialogflowV2GenerateSuggestionsResponseGeneratorSuggestionAnswer
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDialogflowV2GeneratorSuggestion: Suggestion generated using a
+// Generator.
+type GoogleCloudDialogflowV2GeneratorSuggestion struct {
+	// FreeFormSuggestion: Optional. Free form suggestion.
+	FreeFormSuggestion *GoogleCloudDialogflowV2FreeFormSuggestion `json:"freeFormSuggestion,omitempty"`
+	// SummarySuggestion: Optional. Suggested summary.
+	SummarySuggestion *GoogleCloudDialogflowV2SummarySuggestion `json:"summarySuggestion,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "FreeFormSuggestion") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "FreeFormSuggestion") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDialogflowV2GeneratorSuggestion) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDialogflowV2GeneratorSuggestion
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -10669,6 +10774,9 @@ func (s GoogleCloudDialogflowV2SuggestSmartRepliesResponse) MarshalJSON() ([]byt
 type GoogleCloudDialogflowV2SuggestionResult struct {
 	// Error: Error status if the request failed.
 	Error *GoogleRpcStatus `json:"error,omitempty"`
+	// GenerateSuggestionsResponse: Suggestions generated using generators
+	// triggered by customer or agent messages.
+	GenerateSuggestionsResponse *GoogleCloudDialogflowV2GenerateSuggestionsResponse `json:"generateSuggestionsResponse,omitempty"`
 	// SuggestArticlesResponse: SuggestArticlesResponse if request is for
 	// ARTICLE_SUGGESTION.
 	SuggestArticlesResponse *GoogleCloudDialogflowV2SuggestArticlesResponse `json:"suggestArticlesResponse,omitempty"`
@@ -10696,6 +10804,54 @@ type GoogleCloudDialogflowV2SuggestionResult struct {
 
 func (s GoogleCloudDialogflowV2SuggestionResult) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowV2SuggestionResult
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDialogflowV2SummarySuggestion: Suggested summary of the
+// conversation.
+type GoogleCloudDialogflowV2SummarySuggestion struct {
+	// SummarySections: Required. All the parts of generated summary.
+	SummarySections []*GoogleCloudDialogflowV2SummarySuggestionSummarySection `json:"summarySections,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "SummarySections") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "SummarySections") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDialogflowV2SummarySuggestion) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDialogflowV2SummarySuggestion
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDialogflowV2SummarySuggestionSummarySection: A component of the
+// generated summary.
+type GoogleCloudDialogflowV2SummarySuggestionSummarySection struct {
+	// Section: Required. Name of the section.
+	Section string `json:"section,omitempty"`
+	// Summary: Required. Summary text for the section.
+	Summary string `json:"summary,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Section") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Section") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDialogflowV2SummarySuggestionSummarySection) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDialogflowV2SummarySuggestionSummarySection
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -12261,6 +12417,9 @@ type GoogleCloudDialogflowV2beta1Conversation struct {
 	ConversationStage string `json:"conversationStage,omitempty"`
 	// EndTime: Output only. The time the conversation was finished.
 	EndTime string `json:"endTime,omitempty"`
+	// IngestedContextReferences: Output only. The context reference updates
+	// provided by external systems.
+	IngestedContextReferences map[string]GoogleCloudDialogflowV2beta1ConversationContextReference `json:"ingestedContextReferences,omitempty"`
 	// LifecycleState: Output only. The current state of the Conversation.
 	//
 	// Possible values:
@@ -12319,6 +12478,76 @@ type GoogleCloudDialogflowV2beta1ConversationContext struct {
 
 func (s GoogleCloudDialogflowV2beta1ConversationContext) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowV2beta1ConversationContext
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDialogflowV2beta1ConversationContextReference: Represents a piece
+// of ingested context information.
+type GoogleCloudDialogflowV2beta1ConversationContextReference struct {
+	// ContextContents: Required. The list of content updates for a context
+	// reference.
+	ContextContents []*GoogleCloudDialogflowV2beta1ConversationContextReferenceContextContent `json:"contextContents,omitempty"`
+	// CreateTime: Output only. The time the context reference was first created.
+	CreateTime string `json:"createTime,omitempty"`
+	// LanguageCode: Optional. The language of the information ingested, defaults
+	// to "en-US" if not set.
+	LanguageCode string `json:"languageCode,omitempty"`
+	// UpdateMode: Required. The mode in which context reference contents are
+	// updated.
+	//
+	// Possible values:
+	//   "UPDATE_MODE_UNSPECIFIED" - Unspecified update mode.
+	//   "APPEND" - Context content updates are applied in append mode.
+	//   "OVERWRITE" - Context content updates are applied in overwrite mode.
+	UpdateMode string `json:"updateMode,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ContextContents") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ContextContents") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDialogflowV2beta1ConversationContextReference) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDialogflowV2beta1ConversationContextReference
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDialogflowV2beta1ConversationContextReferenceContextContent:
+// Contents ingested.
+type GoogleCloudDialogflowV2beta1ConversationContextReferenceContextContent struct {
+	// Content: Required. The information ingested in a single request.
+	Content string `json:"content,omitempty"`
+	// ContentFormat: Required. The format of the ingested string.
+	//
+	// Possible values:
+	//   "CONTENT_FORMAT_UNSPECIFIED" - Unspecified content format.
+	//   "JSON" - Content was provided in JSON format.
+	//   "PLAIN_TEXT" - Content was provided as plain text.
+	ContentFormat string `json:"contentFormat,omitempty"`
+	// IngestionTime: Output only. The time when this information was incorporated
+	// into the relevant context reference.
+	IngestionTime string `json:"ingestionTime,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Content") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Content") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDialogflowV2beta1ConversationContextReferenceContextContent) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDialogflowV2beta1ConversationContextReferenceContextContent
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -13348,6 +13577,52 @@ func (s GoogleCloudDialogflowV2beta1FewShotExample) MarshalJSON() ([]byte, error
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudDialogflowV2beta1FreeFormContext: Free form generator context
+// that customer can configure.
+type GoogleCloudDialogflowV2beta1FreeFormContext struct {
+	// Text: Optional. Free form text input to LLM.
+	Text string `json:"text,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Text") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Text") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDialogflowV2beta1FreeFormContext) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDialogflowV2beta1FreeFormContext
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDialogflowV2beta1FreeFormSuggestion: Suggestion generated using
+// free form generator.
+type GoogleCloudDialogflowV2beta1FreeFormSuggestion struct {
+	// Response: Required. Free form suggestion.
+	Response string `json:"response,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Response") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Response") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDialogflowV2beta1FreeFormSuggestion) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDialogflowV2beta1FreeFormSuggestion
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudDialogflowV2beta1Fulfillment: By default, your agent responds to
 // a matched intent with a static response. As an alternative, you can provide
 // a more dynamic response by using fulfillment. When you enable fulfillment
@@ -13539,6 +13814,11 @@ func (s GoogleCloudDialogflowV2beta1GcsSources) MarshalJSON() ([]byte, error) {
 // GoogleCloudDialogflowV2beta1GenerateStatelessSuggestionRequest: The request
 // message for Conversations.GenerateStatelessSuggestion.
 type GoogleCloudDialogflowV2beta1GenerateStatelessSuggestionRequest struct {
+	// ContextReferences: Optional. A section of ingested context information. The
+	// key is the name of the context reference and the value contains the contents
+	// of the context reference. The key is used to incorporate ingested context
+	// references to enhance the generator.
+	ContextReferences map[string]GoogleCloudDialogflowV2beta1ConversationContextReference `json:"contextReferences,omitempty"`
 	// ConversationContext: Optional. Context of the conversation, including
 	// transcripts.
 	ConversationContext *GoogleCloudDialogflowV2beta1ConversationContext `json:"conversationContext,omitempty"`
@@ -13558,16 +13838,18 @@ type GoogleCloudDialogflowV2beta1GenerateStatelessSuggestionRequest struct {
 	//   "MANUAL_CALL" - Triggers on the conversation manually by API calls, such
 	// as Conversations.GenerateStatelessSuggestion and
 	// Conversations.GenerateSuggestions.
+	//   "CUSTOMER_MESSAGE" - Triggers after each customer message only.
+	//   "AGENT_MESSAGE" - Triggers after each agent message only.
 	TriggerEvents []string `json:"triggerEvents,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "ConversationContext") to
+	// ForceSendFields is a list of field names (e.g. "ContextReferences") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "ConversationContext") to include
-	// in API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. See
+	// NullFields is a list of field names (e.g. "ContextReferences") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -13733,17 +14015,123 @@ func (s GoogleCloudDialogflowV2beta1GenerateStatelessSummaryResponseSummary) Mar
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudDialogflowV2beta1GenerateSuggestionsRequest: The request message
+// for Conversations.GenerateSuggestions.
+type GoogleCloudDialogflowV2beta1GenerateSuggestionsRequest struct {
+	// LatestMessage: Optional. The name of the latest conversation message for
+	// which the request is triggered. Format:
+	// `projects//locations//conversations//messages/`.
+	LatestMessage string `json:"latestMessage,omitempty"`
+	// TriggerEvents: Optional. A list of trigger events. Only generators
+	// configured in the conversation_profile whose trigger_event is listed here
+	// will be triggered.
+	//
+	// Possible values:
+	//   "TRIGGER_EVENT_UNSPECIFIED" - Default value for TriggerEvent.
+	//   "END_OF_UTTERANCE" - Triggers when each chat message or voice utterance
+	// ends.
+	//   "MANUAL_CALL" - Triggers on the conversation manually by API calls, such
+	// as Conversations.GenerateStatelessSuggestion and
+	// Conversations.GenerateSuggestions.
+	//   "CUSTOMER_MESSAGE" - Triggers after each customer message only.
+	//   "AGENT_MESSAGE" - Triggers after each agent message only.
+	TriggerEvents []string `json:"triggerEvents,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "LatestMessage") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "LatestMessage") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDialogflowV2beta1GenerateSuggestionsRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDialogflowV2beta1GenerateSuggestionsRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDialogflowV2beta1GenerateSuggestionsResponse: The response
+// message for Conversations.GenerateSuggestions.
+type GoogleCloudDialogflowV2beta1GenerateSuggestionsResponse struct {
+	// GeneratorSuggestionAnswers: The answers generated for the conversation based
+	// on context.
+	GeneratorSuggestionAnswers []*GoogleCloudDialogflowV2beta1GenerateSuggestionsResponseGeneratorSuggestionAnswer `json:"generatorSuggestionAnswers,omitempty"`
+	// LatestMessage: The name of the latest conversation message used as context
+	// for compiling suggestion. Format:
+	// `projects//locations//conversations//messages/`.
+	LatestMessage string `json:"latestMessage,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "GeneratorSuggestionAnswers")
+	// to unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "GeneratorSuggestionAnswers") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDialogflowV2beta1GenerateSuggestionsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDialogflowV2beta1GenerateSuggestionsResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDialogflowV2beta1GenerateSuggestionsResponseGeneratorSuggestionAns
+// wer: A GeneratorSuggestion answer.
+type GoogleCloudDialogflowV2beta1GenerateSuggestionsResponseGeneratorSuggestionAnswer struct {
+	// AnswerRecord: Answer record that uniquely identifies the suggestion. This
+	// can be used to provide suggestion feedback.
+	AnswerRecord string `json:"answerRecord,omitempty"`
+	// GeneratorSuggestion: Suggestion details.
+	GeneratorSuggestion *GoogleCloudDialogflowV2beta1GeneratorSuggestion `json:"generatorSuggestion,omitempty"`
+	// SourceGenerator: The name of the generator used to generate this suggestion.
+	// Format: `projects//locations//generators/`.
+	SourceGenerator string `json:"sourceGenerator,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AnswerRecord") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AnswerRecord") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDialogflowV2beta1GenerateSuggestionsResponseGeneratorSuggestionAnswer) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDialogflowV2beta1GenerateSuggestionsResponseGeneratorSuggestionAnswer
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudDialogflowV2beta1Generator: LLM generator.
 type GoogleCloudDialogflowV2beta1Generator struct {
 	// CreateTime: Output only. Creation time of this generator.
 	CreateTime string `json:"createTime,omitempty"`
 	// Description: Optional. Human readable description of the generator.
 	Description string `json:"description,omitempty"`
+	// FreeFormContext: Input of free from generator to LLM.
+	FreeFormContext *GoogleCloudDialogflowV2beta1FreeFormContext `json:"freeFormContext,omitempty"`
 	// InferenceParameter: Optional. Inference parameters for this generator.
 	InferenceParameter *GoogleCloudDialogflowV2beta1InferenceParameter `json:"inferenceParameter,omitempty"`
 	// Name: Output only. Identifier. The resource name of the generator. Format:
 	// `projects//locations//generators/`
 	Name string `json:"name,omitempty"`
+	// PublishedModel: Optional. The published Large Language Model name. * To use
+	// the latest model version, specify the model name without version number.
+	// Example: `text-bison` * To use a stable model version, specify the version
+	// number as well. Example: `text-bison@002`.
+	PublishedModel string `json:"publishedModel,omitempty"`
 	// SummarizationContext: Input of Summarization feature.
 	SummarizationContext *GoogleCloudDialogflowV2beta1SummarizationContext `json:"summarizationContext,omitempty"`
 	// TriggerEvent: Optional. The trigger event of the generator. It defines when
@@ -13756,6 +14144,8 @@ type GoogleCloudDialogflowV2beta1Generator struct {
 	//   "MANUAL_CALL" - Triggers on the conversation manually by API calls, such
 	// as Conversations.GenerateStatelessSuggestion and
 	// Conversations.GenerateSuggestions.
+	//   "CUSTOMER_MESSAGE" - Triggers after each customer message only.
+	//   "AGENT_MESSAGE" - Triggers after each agent message only.
 	TriggerEvent string `json:"triggerEvent,omitempty"`
 	// UpdateTime: Output only. Update time of this generator.
 	UpdateTime string `json:"updateTime,omitempty"`
@@ -13783,17 +14173,19 @@ func (s GoogleCloudDialogflowV2beta1Generator) MarshalJSON() ([]byte, error) {
 // GoogleCloudDialogflowV2beta1GeneratorSuggestion: Suggestion generated using
 // a Generator.
 type GoogleCloudDialogflowV2beta1GeneratorSuggestion struct {
+	// FreeFormSuggestion: Optional. Free form suggestion.
+	FreeFormSuggestion *GoogleCloudDialogflowV2beta1FreeFormSuggestion `json:"freeFormSuggestion,omitempty"`
 	// SummarySuggestion: Optional. Suggested summary.
 	SummarySuggestion *GoogleCloudDialogflowV2beta1SummarySuggestion `json:"summarySuggestion,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "SummarySuggestion") to
+	// ForceSendFields is a list of field names (e.g. "FreeFormSuggestion") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "SummarySuggestion") to include in
-	// API requests with the JSON null value. By default, fields with empty values
-	// are omitted from API requests. See
+	// NullFields is a list of field names (e.g. "FreeFormSuggestion") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -14623,6 +15015,58 @@ func (s *GoogleCloudDialogflowV2beta1InferenceParameter) UnmarshalJSON(data []by
 	s.Temperature = float64(s1.Temperature)
 	s.TopP = float64(s1.TopP)
 	return nil
+}
+
+// GoogleCloudDialogflowV2beta1IngestContextReferencesRequest: The request
+// message for ConversationsService.IngestContextReferences.
+type GoogleCloudDialogflowV2beta1IngestContextReferencesRequest struct {
+	// ContextReferences: Required. The context references to ingest. The key is
+	// the name of the context reference and the value contains the contents of the
+	// context reference. The key is used to incorporate ingested context
+	// references to enhance the generator.
+	ContextReferences map[string]GoogleCloudDialogflowV2beta1ConversationContextReference `json:"contextReferences,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ContextReferences") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ContextReferences") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDialogflowV2beta1IngestContextReferencesRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDialogflowV2beta1IngestContextReferencesRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDialogflowV2beta1IngestContextReferencesResponse: The response
+// message for ConversationsService.IngestContextReferences.
+type GoogleCloudDialogflowV2beta1IngestContextReferencesResponse struct {
+	// IngestedContextReferences: All context references ingested.
+	IngestedContextReferences map[string]GoogleCloudDialogflowV2beta1ConversationContextReference `json:"ingestedContextReferences,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "IngestedContextReferences")
+	// to unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "IngestedContextReferences") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDialogflowV2beta1IngestContextReferencesResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDialogflowV2beta1IngestContextReferencesResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowV2beta1InitializeEncryptionSpecMetadata: Metadata for
@@ -19920,6 +20364,9 @@ func (s GoogleCloudDialogflowV2beta1SuggestionInput) MarshalJSON() ([]byte, erro
 type GoogleCloudDialogflowV2beta1SuggestionResult struct {
 	// Error: Error status if the request failed.
 	Error *GoogleRpcStatus `json:"error,omitempty"`
+	// GenerateSuggestionsResponse: Suggestions generated using generators
+	// triggered by customer or agent messages.
+	GenerateSuggestionsResponse *GoogleCloudDialogflowV2beta1GenerateSuggestionsResponse `json:"generateSuggestionsResponse,omitempty"`
 	// SuggestArticlesResponse: SuggestArticlesResponse if request is for
 	// ARTICLE_SUGGESTION.
 	SuggestArticlesResponse *GoogleCloudDialogflowV2beta1SuggestArticlesResponse `json:"suggestArticlesResponse,omitempty"`
@@ -20017,6 +20464,10 @@ type GoogleCloudDialogflowV2beta1SummarizationSection struct {
 	// number, order number, dollar amount, etc. Section names are prefixed by
 	// "entities/".
 	//   "CUSTOMER_DEFINED" - Customer defined sections.
+	//   "SITUATION_CONCISE" - Concise version of the situation section. This type
+	// is only available if type SITUATION is not selected.
+	//   "ACTION_CONCISE" - Concise version of the action section. This type is
+	// only available if type ACTION is not selected.
 	Type string `json:"type,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Definition") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -33320,6 +33771,115 @@ func (c *ProjectsConversationsParticipantsSuggestionsSuggestSmartRepliesCall) Do
 	return ret, nil
 }
 
+type ProjectsConversationsSuggestionsGenerateCall struct {
+	s                                                      *Service
+	conversation                                           string
+	googleclouddialogflowv2beta1generatesuggestionsrequest *GoogleCloudDialogflowV2beta1GenerateSuggestionsRequest
+	urlParams_                                             gensupport.URLParams
+	ctx_                                                   context.Context
+	header_                                                http.Header
+}
+
+// Generate: Generates all the suggestions using generators configured in the
+// conversation profile. A generator is used only if its trigger event is
+// matched.
+//
+//   - conversation: The conversation for which the suggestions are generated.
+//     Format: `projects//locations//conversations/`. The conversation must be
+//     created with a conversation profile which has generators configured in it
+//     to be able to get suggestions.
+func (r *ProjectsConversationsSuggestionsService) Generate(conversation string, googleclouddialogflowv2beta1generatesuggestionsrequest *GoogleCloudDialogflowV2beta1GenerateSuggestionsRequest) *ProjectsConversationsSuggestionsGenerateCall {
+	c := &ProjectsConversationsSuggestionsGenerateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.conversation = conversation
+	c.googleclouddialogflowv2beta1generatesuggestionsrequest = googleclouddialogflowv2beta1generatesuggestionsrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsConversationsSuggestionsGenerateCall) Fields(s ...googleapi.Field) *ProjectsConversationsSuggestionsGenerateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsConversationsSuggestionsGenerateCall) Context(ctx context.Context) *ProjectsConversationsSuggestionsGenerateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsConversationsSuggestionsGenerateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsConversationsSuggestionsGenerateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googleclouddialogflowv2beta1generatesuggestionsrequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2beta1/{+conversation}/suggestions:generate")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"conversation": c.conversation,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "dialogflow.projects.conversations.suggestions.generate", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "dialogflow.projects.conversations.suggestions.generate" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudDialogflowV2beta1GenerateSuggestionsResponse.ServerResponse.Heade
+// r or (if a response was returned at all) in error.(*googleapi.Error).Header.
+// Use googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsConversationsSuggestionsGenerateCall) Do(opts ...googleapi.CallOption) (*GoogleCloudDialogflowV2beta1GenerateSuggestionsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudDialogflowV2beta1GenerateSuggestionsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "dialogflow.projects.conversations.suggestions.generate", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
 type ProjectsConversationsSuggestionsSearchKnowledgeCall struct {
 	s                                                  *Service
 	conversation                                       string
@@ -44984,6 +45544,112 @@ func (c *ProjectsLocationsConversationsGetCall) Do(opts ...googleapi.CallOption)
 	return ret, nil
 }
 
+type ProjectsLocationsConversationsIngestContextReferencesCall struct {
+	s                                                          *Service
+	conversationid                                             string
+	googleclouddialogflowv2beta1ingestcontextreferencesrequest *GoogleCloudDialogflowV2beta1IngestContextReferencesRequest
+	urlParams_                                                 gensupport.URLParams
+	ctx_                                                       context.Context
+	header_                                                    http.Header
+}
+
+// IngestContextReferences: Data ingestion API. Ingests context references for
+// an existing conversation.
+//
+//   - conversation: Resource identifier of the conversation to ingest context
+//     information for. Format: `projects//locations//conversations/`.
+func (r *ProjectsLocationsConversationsService) IngestContextReferences(conversationid string, googleclouddialogflowv2beta1ingestcontextreferencesrequest *GoogleCloudDialogflowV2beta1IngestContextReferencesRequest) *ProjectsLocationsConversationsIngestContextReferencesCall {
+	c := &ProjectsLocationsConversationsIngestContextReferencesCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.conversationid = conversationid
+	c.googleclouddialogflowv2beta1ingestcontextreferencesrequest = googleclouddialogflowv2beta1ingestcontextreferencesrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsConversationsIngestContextReferencesCall) Fields(s ...googleapi.Field) *ProjectsLocationsConversationsIngestContextReferencesCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsConversationsIngestContextReferencesCall) Context(ctx context.Context) *ProjectsLocationsConversationsIngestContextReferencesCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsConversationsIngestContextReferencesCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsConversationsIngestContextReferencesCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googleclouddialogflowv2beta1ingestcontextreferencesrequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2beta1/{+conversation}:ingestContextReferences")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"conversation": c.conversationid,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "dialogflow.projects.locations.conversations.ingestContextReferences", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "dialogflow.projects.locations.conversations.ingestContextReferences" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudDialogflowV2beta1IngestContextReferencesResponse.ServerResponse.H
+// eader or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsConversationsIngestContextReferencesCall) Do(opts ...googleapi.CallOption) (*GoogleCloudDialogflowV2beta1IngestContextReferencesResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudDialogflowV2beta1IngestContextReferencesResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "dialogflow.projects.locations.conversations.ingestContextReferences", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
 type ProjectsLocationsConversationsListCall struct {
 	s            *Service
 	parent       string
@@ -46412,6 +47078,115 @@ func (c *ProjectsLocationsConversationsParticipantsSuggestionsSuggestSmartReplie
 		return nil, err
 	}
 	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "dialogflow.projects.locations.conversations.participants.suggestions.suggestSmartReplies", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsConversationsSuggestionsGenerateCall struct {
+	s                                                      *Service
+	conversation                                           string
+	googleclouddialogflowv2beta1generatesuggestionsrequest *GoogleCloudDialogflowV2beta1GenerateSuggestionsRequest
+	urlParams_                                             gensupport.URLParams
+	ctx_                                                   context.Context
+	header_                                                http.Header
+}
+
+// Generate: Generates all the suggestions using generators configured in the
+// conversation profile. A generator is used only if its trigger event is
+// matched.
+//
+//   - conversation: The conversation for which the suggestions are generated.
+//     Format: `projects//locations//conversations/`. The conversation must be
+//     created with a conversation profile which has generators configured in it
+//     to be able to get suggestions.
+func (r *ProjectsLocationsConversationsSuggestionsService) Generate(conversation string, googleclouddialogflowv2beta1generatesuggestionsrequest *GoogleCloudDialogflowV2beta1GenerateSuggestionsRequest) *ProjectsLocationsConversationsSuggestionsGenerateCall {
+	c := &ProjectsLocationsConversationsSuggestionsGenerateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.conversation = conversation
+	c.googleclouddialogflowv2beta1generatesuggestionsrequest = googleclouddialogflowv2beta1generatesuggestionsrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsConversationsSuggestionsGenerateCall) Fields(s ...googleapi.Field) *ProjectsLocationsConversationsSuggestionsGenerateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsConversationsSuggestionsGenerateCall) Context(ctx context.Context) *ProjectsLocationsConversationsSuggestionsGenerateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsConversationsSuggestionsGenerateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsConversationsSuggestionsGenerateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googleclouddialogflowv2beta1generatesuggestionsrequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2beta1/{+conversation}/suggestions:generate")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"conversation": c.conversation,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "dialogflow.projects.locations.conversations.suggestions.generate", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "dialogflow.projects.locations.conversations.suggestions.generate" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudDialogflowV2beta1GenerateSuggestionsResponse.ServerResponse.Heade
+// r or (if a response was returned at all) in error.(*googleapi.Error).Header.
+// Use googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsConversationsSuggestionsGenerateCall) Do(opts ...googleapi.CallOption) (*GoogleCloudDialogflowV2beta1GenerateSuggestionsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudDialogflowV2beta1GenerateSuggestionsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "dialogflow.projects.locations.conversations.suggestions.generate", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 

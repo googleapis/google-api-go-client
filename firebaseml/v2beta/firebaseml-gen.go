@@ -660,6 +660,10 @@ type GoogleCloudAiplatformV1beta1FunctionCall struct {
 	// Args: Optional. Required. The function parameters and values in JSON object
 	// format. See [FunctionDeclaration.parameters] for parameter details.
 	Args googleapi.RawMessage `json:"args,omitempty"`
+	// Id: Optional. The unique id of the function call. If populated, the client
+	// to execute the `function_call` and return the response with the matching
+	// `id`.
+	Id string `json:"id,omitempty"`
 	// Name: Required. The name of the function to call. Matches
 	// [FunctionDeclaration.name].
 	Name string `json:"name,omitempty"`
@@ -772,6 +776,9 @@ func (s GoogleCloudAiplatformV1beta1FunctionDeclaration) MarshalJSON() ([]byte, 
 // output from the function is used as context to the model. This should
 // contain the result of a [FunctionCall] made based on model prediction.
 type GoogleCloudAiplatformV1beta1FunctionResponse struct {
+	// Id: Optional. The id of the function call this response is for. Populated by
+	// the client to match the corresponding function call `id`.
+	Id string `json:"id,omitempty"`
 	// Name: Required. The name of the function to call. Matches
 	// [FunctionDeclaration.name] and [FunctionCall.name].
 	Name string `json:"name,omitempty"`
@@ -780,13 +787,13 @@ type GoogleCloudAiplatformV1beta1FunctionResponse struct {
 	// details (if any). If "output" and "error" keys are not specified, then whole
 	// "response" is treated as function output.
 	Response googleapi.RawMessage `json:"response,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "Name") to unconditionally
+	// ForceSendFields is a list of field names (e.g. "Id") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
 	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Name") to include in API requests
+	// NullFields is a list of field names (e.g. "Id") to include in API requests
 	// with the JSON null value. By default, fields with empty values are omitted
 	// from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
@@ -949,6 +956,9 @@ type GoogleCloudAiplatformV1beta1GenerateContentResponseUsageMetadata struct {
 	// PromptTokensDetails: Output only. List of modalities that were processed in
 	// the request input.
 	PromptTokensDetails []*GoogleCloudAiplatformV1beta1ModalityTokenCount `json:"promptTokensDetails,omitempty"`
+	// ThoughtsTokenCount: Output only. Number of tokens present in thoughts
+	// output.
+	ThoughtsTokenCount int64 `json:"thoughtsTokenCount,omitempty"`
 	// ToolUsePromptTokenCount: Output only. Number of tokens present in tool-use
 	// prompt(s).
 	ToolUsePromptTokenCount int64 `json:"toolUsePromptTokenCount,omitempty"`
@@ -2225,6 +2235,11 @@ type GoogleCloudAiplatformV1beta1VertexAISearch struct {
 	// `projects/{project}/locations/{location}/collections/{collection}/dataStores/
 	// {dataStore}`
 	Datastore string `json:"datastore,omitempty"`
+	// Engine: Optional. Fully-qualified Vertex AI Search engine resource ID.
+	// Format:
+	// `projects/{project}/locations/{location}/collections/{collection}/engines/{en
+	// gine}`
+	Engine string `json:"engine,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Datastore") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See

@@ -4130,9 +4130,6 @@ type GoogleChromeManagementVersionsV1CertificateProvisioningProcess struct {
 	//   "SIGNATURE_ALGORITHM_RSA_PKCS1_V1_5_SHA256" - The server-side builds the
 	// PKCS#1 DigestInfo, i.e., the SHA256 hash is constructed on the server-side.
 	// The client should sign using RSA with PKCS#1 v1.5 padding.
-	//   "SIGNATURE_ALGORITHM_ECDSA_SHA256" - The PKCS#1 digest info is built by
-	// the server-side and sent to the client unhashed. The client is responsible
-	// for signing and hashing. Uses the P-256 curve.
 	SignatureAlgorithm string `json:"signatureAlgorithm,omitempty"`
 	// StartTime: Output only. Server-generated timestamp of when the certificate
 	// provisioning process has been created.

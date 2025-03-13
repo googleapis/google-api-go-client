@@ -5714,6 +5714,10 @@
           "format": "google-duration",
           "type": "string"
         },
+        "flexStart": {
+          "description": "Enables Flex Start provisioning model for the node pool.",
+          "type": "boolean"
+        },
         "metadata": {
           "additionalProperties": {
             "type": "string"

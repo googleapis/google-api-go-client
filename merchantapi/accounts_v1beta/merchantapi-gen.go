@@ -582,6 +582,188 @@ func (s AutofeedSettings) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// AutomaticImageImprovements: This improvement will attempt to automatically
+// correct submitted images if they don't meet the image requirements
+// (https://support.google.com/merchants/answer/6324350), for example, removing
+// overlays. If successful, the image will be replaced and approved. This
+// improvement is only applied to images of disapproved offers. For more
+// information see: Automatic image improvements
+// (https://support.google.com/merchants/answer/9242973)
+type AutomaticImageImprovements struct {
+	// AccountImageImprovementsSettings: Optional. Determines how the images should
+	// be automatically updated. If this field is not present and provided in the
+	// update mask, then the settings will be deleted. If there are no settings for
+	// subaccount, they are inherited from aggregator.
+	AccountImageImprovementsSettings *ImageImprovementsAccountLevelSettings `json:"accountImageImprovementsSettings,omitempty"`
+	// EffectiveAllowAutomaticImageImprovements: Output only. The effective value
+	// of allow_automatic_image_improvements. If
+	// account_image_improvements_settings is present, then this value is the same.
+	// Otherwise, it represents the inherited value of the parent account.
+	// Read-only.
+	EffectiveAllowAutomaticImageImprovements bool `json:"effectiveAllowAutomaticImageImprovements,omitempty"`
+	// ForceSendFields is a list of field names (e.g.
+	// "AccountImageImprovementsSettings") to unconditionally include in API
+	// requests. By default, fields with empty or default values are omitted from
+	// API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g.
+	// "AccountImageImprovementsSettings") to include in API requests with the JSON
+	// null value. By default, fields with empty values are omitted from API
+	// requests. See https://pkg.go.dev/google.golang.org/api#hdr-NullFields for
+	// more details.
+	NullFields []string `json:"-"`
+}
+
+func (s AutomaticImageImprovements) MarshalJSON() ([]byte, error) {
+	type NoMethod AutomaticImageImprovements
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// AutomaticImprovements: Collection of information related to the automatic
+// improvements
+// (https://developers.google.com/shopping-content/guides/automatic-improvements)
+// of an account.
+type AutomaticImprovements struct {
+	// ImageImprovements: This improvement will attempt to automatically correct
+	// submitted images if they don't meet the image requirements
+	// (https://support.google.com/merchants/answer/6324350), for example, removing
+	// overlays. If successful, the image will be replaced and approved. This
+	// improvement is only applied to images of disapproved offers. For more
+	// information see: Automatic image improvements
+	// (https://support.google.com/merchants/answer/9242973) This field is only
+	// updated (cleared) if provided in the update mask.
+	ImageImprovements *AutomaticImageImprovements `json:"imageImprovements,omitempty"`
+	// ItemUpdates: Turning on item updates
+	// (https://support.google.com/merchants/answer/3246284) allows Google to
+	// automatically update items for you. When item updates are on, Google uses
+	// the structured data markup on the website and advanced data extractors to
+	// update the price and availability of the items. When the item updates are
+	// off, items with mismatched data aren't shown. This field is only updated
+	// (cleared) if provided in the update mask.
+	ItemUpdates *AutomaticItemUpdates `json:"itemUpdates,omitempty"`
+	// Name: Identifier. The resource name of the automatic improvements. Format:
+	// `accounts/{account}/automaticImprovements`.
+	Name string `json:"name,omitempty"`
+	// ShippingImprovements: Not available for MCAs accounts
+	// (https://support.google.com/merchants/answer/188487). By turning on
+	// automatic shipping improvements
+	// (https://support.google.com/merchants/answer/10027038), you are allowing
+	// Google to improve the accuracy of your delivery times shown to shoppers
+	// using Google. More accurate delivery times, especially when faster,
+	// typically lead to better conversion rates. Google will improve your
+	// estimated delivery times based on various factors: * Delivery address of an
+	// order * Current handling time and shipping time settings * Estimated
+	// weekdays or business days * Parcel tracking data This field is only updated
+	// (cleared) if provided in the update mask.
+	ShippingImprovements *AutomaticShippingImprovements `json:"shippingImprovements,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "ImageImprovements") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ImageImprovements") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s AutomaticImprovements) MarshalJSON() ([]byte, error) {
+	type NoMethod AutomaticImprovements
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// AutomaticItemUpdates: Turning on item updates
+// (https://support.google.com/merchants/answer/3246284) allows Google to
+// automatically update items for you. When item updates are on, Google uses
+// the structured data markup on the website and advanced data extractors to
+// update the price and availability of the items. When the item updates are
+// off, items with mismatched data aren't shown.
+type AutomaticItemUpdates struct {
+	// AccountItemUpdatesSettings: Optional. Determines which attributes of the
+	// items should be automatically updated. If this field is not present and
+	// provided in the update mask, then the settings will be deleted. If there are
+	// no settings for subaccount, they are inherited from aggregator.
+	AccountItemUpdatesSettings *ItemUpdatesAccountLevelSettings `json:"accountItemUpdatesSettings,omitempty"`
+	// EffectiveAllowAvailabilityUpdates: Output only. The effective value of
+	// allow_availability_updates. If account_item_updates_settings is present,
+	// then this value is the same. Otherwise, it represents the inherited value of
+	// the parent account. The default value is true if no settings are present.
+	// Read-only.
+	EffectiveAllowAvailabilityUpdates bool `json:"effectiveAllowAvailabilityUpdates,omitempty"`
+	// EffectiveAllowConditionUpdates: Output only. The effective value of
+	// allow_condition_updates. If account_item_updates_settings is present, then
+	// this value is the same. Otherwise, it represents the inherited value of the
+	// parent account. The default value is true if no settings are present.
+	// Read-only.
+	EffectiveAllowConditionUpdates bool `json:"effectiveAllowConditionUpdates,omitempty"`
+	// EffectiveAllowPriceUpdates: Output only. The effective value of
+	// allow_price_updates. If account_item_updates_settings is present, then this
+	// value is the same. Otherwise, it represents the inherited value of the
+	// parent account. The default value is true if no settings are present.
+	// Read-only.
+	EffectiveAllowPriceUpdates bool `json:"effectiveAllowPriceUpdates,omitempty"`
+	// EffectiveAllowStrictAvailabilityUpdates: Output only. The effective value of
+	// allow_strict_availability_updates. If account_item_updates_settings is
+	// present, then this value is the same. Otherwise, it represents the inherited
+	// value of the parent account. The default value is true if no settings are
+	// present. Read-only.
+	EffectiveAllowStrictAvailabilityUpdates bool `json:"effectiveAllowStrictAvailabilityUpdates,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AccountItemUpdatesSettings")
+	// to unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AccountItemUpdatesSettings") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s AutomaticItemUpdates) MarshalJSON() ([]byte, error) {
+	type NoMethod AutomaticItemUpdates
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// AutomaticShippingImprovements: Not available for MCAs accounts
+// (https://support.google.com/merchants/answer/188487). By turning on
+// automatic shipping improvements
+// (https://support.google.com/merchants/answer/10027038), you are allowing
+// Google to improve the accuracy of your delivery times shown to shoppers
+// using Google. More accurate delivery times, especially when faster,
+// typically lead to better conversion rates. Google will improve your
+// estimated delivery times based on various factors: * Delivery address of an
+// order * Current handling time and shipping time settings * Estimated
+// weekdays or business days * Parcel tracking data
+type AutomaticShippingImprovements struct {
+	// AllowShippingImprovements: Enables automatic shipping improvements.
+	AllowShippingImprovements bool `json:"allowShippingImprovements,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AllowShippingImprovements")
+	// to unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AllowShippingImprovements") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s AutomaticShippingImprovements) MarshalJSON() ([]byte, error) {
+	type NoMethod AutomaticShippingImprovements
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // BusinessDayConfig: Business days of the warehouse.
 type BusinessDayConfig struct {
 	// BusinessDays: Required. Regular business days. May not be empty.
@@ -1271,6 +1453,30 @@ func (s IdentityAttribute) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// ImageImprovementsAccountLevelSettings: Settings for the Automatic Image
+// Improvements.
+type ImageImprovementsAccountLevelSettings struct {
+	// AllowAutomaticImageImprovements: Enables automatic image improvements.
+	AllowAutomaticImageImprovements bool `json:"allowAutomaticImageImprovements,omitempty"`
+	// ForceSendFields is a list of field names (e.g.
+	// "AllowAutomaticImageImprovements") to unconditionally include in API
+	// requests. By default, fields with empty or default values are omitted from
+	// API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AllowAutomaticImageImprovements")
+	// to include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ImageImprovementsAccountLevelSettings) MarshalJSON() ([]byte, error) {
+	type NoMethod ImageImprovementsAccountLevelSettings
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // Impact: The impact of the issue on a region.
 type Impact struct {
 	// RegionCode: The CLDR region code (https://cldr.unicode.org/) where this
@@ -1362,6 +1568,47 @@ type ImpactedDestination struct {
 
 func (s ImpactedDestination) MarshalJSON() ([]byte, error) {
 	type NoMethod ImpactedDestination
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ItemUpdatesAccountLevelSettings: Settings for the Automatic Item Updates.
+type ItemUpdatesAccountLevelSettings struct {
+	// AllowAvailabilityUpdates: If availability updates are enabled, any previous
+	// availability values get overwritten if Google finds an out-of-stock
+	// annotation on the offer's page. If additionally
+	// `allow_strict_availability_updates` field is set to true, values get
+	// overwritten if Google finds an in-stock annotation on the offer’s page.
+	AllowAvailabilityUpdates bool `json:"allowAvailabilityUpdates,omitempty"`
+	// AllowConditionUpdates: If condition updates are enabled, Google always
+	// updates item condition with the condition detected from the details of your
+	// product.
+	AllowConditionUpdates bool `json:"allowConditionUpdates,omitempty"`
+	// AllowPriceUpdates: If price updates are enabled, Google always updates the
+	// active price with the crawled information.
+	AllowPriceUpdates bool `json:"allowPriceUpdates,omitempty"`
+	// AllowStrictAvailabilityUpdates: If `allow_availability_updates` is enabled,
+	// items are automatically updated in all your Shopping target countries. By
+	// default, availability updates will only be applied to items that are 'out of
+	// stock' on your website but 'in stock' on Shopping. Set this to true to also
+	// update items that are 'in stock' on your website, but 'out of stock' on
+	// Google Shopping. In order for this field to have an effect, you must also
+	// set `allow_availability_updates`.
+	AllowStrictAvailabilityUpdates bool `json:"allowStrictAvailabilityUpdates,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AllowAvailabilityUpdates")
+	// to unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AllowAvailabilityUpdates") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ItemUpdatesAccountLevelSettings) MarshalJSON() ([]byte, error) {
+	type NoMethod ItemUpdatesAccountLevelSettings
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -1708,8 +1955,8 @@ type OnlineReturnPolicy struct {
 	// Countries: Required. Immutable. The countries of sale where the return
 	// policy applies. The values must be a valid 2 letter ISO 3166 code.
 	Countries []string `json:"countries,omitempty"`
-	// ItemConditions: The item conditions accepted for returns must not be empty
-	// unless the type of return policy is 'noReturns'.
+	// ItemConditions: Optional. The item conditions accepted for returns must not
+	// be empty unless the type of return policy is 'noReturns'.
 	//
 	// Possible values:
 	//   "ITEM_CONDITION_UNSPECIFIED" - Default value. This value is unused.
@@ -1737,9 +1984,9 @@ type OnlineReturnPolicy struct {
 	// categories. This would be treated as a free restocking fee if the value is
 	// not set.
 	RestockingFee *RestockingFee `json:"restockingFee,omitempty"`
-	// ReturnMethods: The return methods of how customers can return an item. This
-	// value is required to not be empty unless the type of return policy is
-	// noReturns.
+	// ReturnMethods: Optional. The return methods of how customers can return an
+	// item. This value is required to not be empty unless the type of return
+	// policy is noReturns.
 	//
 	// Possible values:
 	//   "RETURN_METHOD_UNSPECIFIED" - Default value. This value is unused.
@@ -1752,8 +1999,8 @@ type OnlineReturnPolicy struct {
 	// ReturnPolicyUri: Required. The return policy uri. This can used by Google to
 	// do a sanity check for the policy. It must be a valid URL.
 	ReturnPolicyUri string `json:"returnPolicyUri,omitempty"`
-	// ReturnShippingFee: The return shipping fee. Should be set only when customer
-	// need to download and print the return label.
+	// ReturnShippingFee: Optional. The return shipping fee. Should be set only
+	// when customer need to download and print the return label.
 	ReturnShippingFee *ReturnShippingFee `json:"returnShippingFee,omitempty"`
 	// SeasonalOverrides: Optional. Overrides to the general policy for orders
 	// placed during a specific set of time intervals.
@@ -2147,7 +2394,9 @@ type ProductStatusChangeMessage struct {
 	Attribute string `json:"attribute,omitempty"`
 	// Changes: A message to describe the change that happened to the product
 	Changes []*ProductChange `json:"changes,omitempty"`
-	// EventTime: The time at which the event was generated.
+	// EventTime: The time at which the event was generated. If you want to order
+	// the notification messages you receive you should rely on this field not on
+	// the order of receiving the notifications.
 	EventTime string `json:"eventTime,omitempty"`
 	// ExpirationTime: Optional. The product expiration time. This field will not
 	// bet set if the notification is sent for a product deletion event.
@@ -2471,28 +2720,26 @@ func (s Row) MarshalJSON() ([]byte, error) {
 }
 
 type SeasonalOverride struct {
-	// Begin: Required. Defines the date range when this seasonal override applies.
-	// Both begin and end are inclusive and should be in date decimal format,
-	// example 20250115. The dates of the seasonal overrides should not overlap.
-	Begin *Date `json:"begin,omitempty"`
-	// End: Required. seasonal override end date (inclusive).
-	End *Date `json:"end,omitempty"`
+	// EndDate: Required. seasonal override end date (inclusive).
+	EndDate *Date `json:"endDate,omitempty"`
 	// Label: Required. Display name of this seasonal override in Merchant Center.
 	Label string `json:"label,omitempty"`
-	// Policy: The return policy for the given date range.
-	Policy *Policy `json:"policy,omitempty"`
 	// ReturnDays: Number of days (from the delivery date) that the product can be
 	// returned.
 	ReturnDays int64 `json:"returnDays,omitempty"`
 	// ReturnUntilDate: Fixed end date until which the product can be returned.
 	ReturnUntilDate *Date `json:"returnUntilDate,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "Begin") to unconditionally
+	// StartDate: Required. Defines the date range when this seasonal override
+	// applies. Both start_date and end_date are inclusive. The dates of the
+	// seasonal overrides should not overlap.
+	StartDate *Date `json:"startDate,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "EndDate") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
 	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Begin") to include in API
+	// NullFields is a list of field names (e.g. "EndDate") to include in API
 	// requests with the JSON null value. By default, fields with empty values are
 	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
@@ -3508,6 +3755,118 @@ func (c *AccountsGetCall) Do(opts ...googleapi.CallOption) (*Account, error) {
 	return ret, nil
 }
 
+type AccountsGetAutomaticImprovementsCall struct {
+	s            *APIService
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// GetAutomaticImprovements: Retrieves the automatic improvements of an
+// account.
+//
+//   - name: The resource name of the automatic improvements. Format:
+//     `accounts/{account}/automaticImprovements`.
+func (r *AccountsService) GetAutomaticImprovements(name string) *AccountsGetAutomaticImprovementsCall {
+	c := &AccountsGetAutomaticImprovementsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *AccountsGetAutomaticImprovementsCall) Fields(s ...googleapi.Field) *AccountsGetAutomaticImprovementsCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *AccountsGetAutomaticImprovementsCall) IfNoneMatch(entityTag string) *AccountsGetAutomaticImprovementsCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *AccountsGetAutomaticImprovementsCall) Context(ctx context.Context) *AccountsGetAutomaticImprovementsCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *AccountsGetAutomaticImprovementsCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *AccountsGetAutomaticImprovementsCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "accounts/v1beta/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "merchantapi.accounts.getAutomaticImprovements", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "merchantapi.accounts.getAutomaticImprovements" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *AutomaticImprovements.ServerResponse.Header or (if a response was returned
+// at all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *AccountsGetAutomaticImprovementsCall) Do(opts ...googleapi.CallOption) (*AutomaticImprovements, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &AutomaticImprovements{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "merchantapi.accounts.getAutomaticImprovements", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
 type AccountsListCall struct {
 	s            *APIService
 	urlParams_   gensupport.URLParams
@@ -3935,6 +4294,123 @@ func (c *AccountsPatchCall) Do(opts ...googleapi.CallOption) (*Account, error) {
 		return nil, err
 	}
 	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "merchantapi.accounts.patch", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type AccountsUpdateAutomaticImprovementsCall struct {
+	s                     *APIService
+	name                  string
+	automaticimprovements *AutomaticImprovements
+	urlParams_            gensupport.URLParams
+	ctx_                  context.Context
+	header_               http.Header
+}
+
+// UpdateAutomaticImprovements: Updates the automatic improvements of an
+// account.
+//
+//   - name: Identifier. The resource name of the automatic improvements. Format:
+//     `accounts/{account}/automaticImprovements`.
+func (r *AccountsService) UpdateAutomaticImprovements(name string, automaticimprovements *AutomaticImprovements) *AccountsUpdateAutomaticImprovementsCall {
+	c := &AccountsUpdateAutomaticImprovementsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.automaticimprovements = automaticimprovements
+	return c
+}
+
+// UpdateMask sets the optional parameter "updateMask": Required. List of
+// fields being updated. The following fields are supported (in both
+// `snake_case` and `lowerCamelCase`): - `item_updates` -
+// `item_updates.account_level_settings` - `image_improvements` -
+// `image_improvements.account_level_settings` - `shipping_improvements` -
+// `shipping_improvements.allow_shipping_improvements`
+func (c *AccountsUpdateAutomaticImprovementsCall) UpdateMask(updateMask string) *AccountsUpdateAutomaticImprovementsCall {
+	c.urlParams_.Set("updateMask", updateMask)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *AccountsUpdateAutomaticImprovementsCall) Fields(s ...googleapi.Field) *AccountsUpdateAutomaticImprovementsCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *AccountsUpdateAutomaticImprovementsCall) Context(ctx context.Context) *AccountsUpdateAutomaticImprovementsCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *AccountsUpdateAutomaticImprovementsCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *AccountsUpdateAutomaticImprovementsCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.automaticimprovements)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "accounts/v1beta/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PATCH", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "merchantapi.accounts.updateAutomaticImprovements", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "merchantapi.accounts.updateAutomaticImprovements" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *AutomaticImprovements.ServerResponse.Header or (if a response was returned
+// at all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *AccountsUpdateAutomaticImprovementsCall) Do(opts ...googleapi.CallOption) (*AutomaticImprovements, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &AutomaticImprovements{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "merchantapi.accounts.updateAutomaticImprovements", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 

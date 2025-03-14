@@ -1011,6 +1011,10 @@ type DropInfo struct {
 	// [Health check firewall
 	// rules](https://cloud.google.com/load-balancing/docs/health-checks#firewall_ru
 	// les).
+	//   "INGRESS_FIREWALL_TAGS_UNSUPPORTED_BY_DIRECT_VPC_EGRESS" - Matching
+	// ingress firewall rules by network tags for packets sent via serverless VPC
+	// direct egress is unsupported. Behavior is undefined.
+	// https://cloud.google.com/run/docs/configuring/vpc-direct-vpc#limitations
 	//   "INSTANCE_NOT_RUNNING" - Packet is sent from or to a Compute Engine
 	// instance that is not in a running state.
 	//   "GKE_CLUSTER_NOT_RUNNING" - Packet sent from or to a GKE cluster that is

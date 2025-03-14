@@ -1472,6 +1472,120 @@ func (s CreateInstanceRequest) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// CreateLogicalViewMetadata: The metadata for the Operation returned by
+// CreateLogicalView.
+type CreateLogicalViewMetadata struct {
+	// EndTime: If set, the time at which this operation finished or was canceled.
+	EndTime string `json:"endTime,omitempty"`
+	// OriginalRequest: The request that prompted the initiation of this
+	// CreateLogicalView operation.
+	OriginalRequest *CreateLogicalViewRequest `json:"originalRequest,omitempty"`
+	// StartTime: The time at which this operation started.
+	StartTime string `json:"startTime,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "EndTime") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "EndTime") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s CreateLogicalViewMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod CreateLogicalViewMetadata
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// CreateLogicalViewRequest: Request message for
+// BigtableInstanceAdmin.CreateLogicalView.
+type CreateLogicalViewRequest struct {
+	// LogicalView: Required. The logical view to create.
+	LogicalView *LogicalView `json:"logicalView,omitempty"`
+	// LogicalViewId: Required. The ID to use for the logical view, which will
+	// become the final component of the logical view's resource name.
+	LogicalViewId string `json:"logicalViewId,omitempty"`
+	// Parent: Required. The parent instance where this logical view will be
+	// created. Format: `projects/{project}/instances/{instance}`.
+	Parent string `json:"parent,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "LogicalView") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "LogicalView") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s CreateLogicalViewRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod CreateLogicalViewRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// CreateMaterializedViewMetadata: The metadata for the Operation returned by
+// CreateMaterializedView.
+type CreateMaterializedViewMetadata struct {
+	// EndTime: If set, the time at which this operation finished or was canceled.
+	EndTime string `json:"endTime,omitempty"`
+	// OriginalRequest: The request that prompted the initiation of this
+	// CreateMaterializedView operation.
+	OriginalRequest *CreateMaterializedViewRequest `json:"originalRequest,omitempty"`
+	// StartTime: The time at which this operation started.
+	StartTime string `json:"startTime,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "EndTime") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "EndTime") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s CreateMaterializedViewMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod CreateMaterializedViewMetadata
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// CreateMaterializedViewRequest: Request message for
+// BigtableInstanceAdmin.CreateMaterializedView.
+type CreateMaterializedViewRequest struct {
+	// MaterializedView: Required. The materialized view to create.
+	MaterializedView *MaterializedView `json:"materializedView,omitempty"`
+	// MaterializedViewId: Required. The ID to use for the materialized view, which
+	// will become the final component of the materialized view's resource name.
+	MaterializedViewId string `json:"materializedViewId,omitempty"`
+	// Parent: Required. The parent instance where this materialized view will be
+	// created. Format: `projects/{project}/instances/{instance}`.
+	Parent string `json:"parent,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "MaterializedView") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "MaterializedView") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s CreateMaterializedViewRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod CreateMaterializedViewRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // CreateTableRequest: Request message for
 // google.bigtable.admin.v2.BigtableTableAdmin.CreateTable
 type CreateTableRequest struct {
@@ -2901,6 +3015,70 @@ func (s Location) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// LogicalView: A SQL logical view object that can be referenced in SQL
+// queries.
+type LogicalView struct {
+	// Etag: Optional. The etag for this logical view. This may be sent on update
+	// requests to ensure that the client has an up-to-date value before
+	// proceeding. The server returns an ABORTED error on a mismatched etag.
+	Etag string `json:"etag,omitempty"`
+	// Name: Identifier. The unique name of the logical view. Format:
+	// `projects/{project}/instances/{instance}/logicalViews/{logical_view}`
+	Name string `json:"name,omitempty"`
+	// Query: Required. The logical view's select query.
+	Query string `json:"query,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Etag") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Etag") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s LogicalView) MarshalJSON() ([]byte, error) {
+	type NoMethod LogicalView
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// MaterializedView: A materialized view object that can be referenced in SQL
+// queries.
+type MaterializedView struct {
+	// DeletionProtection: Set to true to make the MaterializedView protected
+	// against deletion.
+	DeletionProtection bool `json:"deletionProtection,omitempty"`
+	// Etag: Optional. The etag for this materialized view. This may be sent on
+	// update requests to ensure that the client has an up-to-date value before
+	// proceeding. The server returns an ABORTED error on a mismatched etag.
+	Etag string `json:"etag,omitempty"`
+	// Name: Identifier. The unique name of the materialized view. Format:
+	// `projects/{project}/instances/{instance}/materializedViews/{materialized_view
+	// }`
+	Name string `json:"name,omitempty"`
+	// Query: Required. Immutable. The materialized view's select query.
+	Query string `json:"query,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "DeletionProtection") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DeletionProtection") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s MaterializedView) MarshalJSON() ([]byte, error) {
+	type NoMethod MaterializedView
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // Modification: A create, update, or delete of a particular column family.
 type Modification struct {
 	// Create: Create a new column family with the specified schema, or fail if one
@@ -3984,6 +4162,61 @@ type UpdateInstanceMetadata struct {
 
 func (s UpdateInstanceMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod UpdateInstanceMetadata
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// UpdateLogicalViewMetadata: The metadata for the Operation returned by
+// UpdateLogicalView.
+type UpdateLogicalViewMetadata struct {
+	// EndTime: If set, the time at which this operation finished or was canceled.
+	EndTime string `json:"endTime,omitempty"`
+	// OriginalRequest: The request that prompted the initiation of this
+	// UpdateLogicalView operation.
+	OriginalRequest *UpdateLogicalViewRequest `json:"originalRequest,omitempty"`
+	// StartTime: The time at which this operation was started.
+	StartTime string `json:"startTime,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "EndTime") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "EndTime") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s UpdateLogicalViewMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod UpdateLogicalViewMetadata
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// UpdateLogicalViewRequest: Request message for
+// BigtableInstanceAdmin.UpdateLogicalView.
+type UpdateLogicalViewRequest struct {
+	// LogicalView: Required. The logical view to update. The logical view's `name`
+	// field is used to identify the view to update. Format:
+	// `projects/{project}/instances/{instance}/logicalViews/{logical_view}`.
+	LogicalView *LogicalView `json:"logicalView,omitempty"`
+	// UpdateMask: Optional. The list of fields to update.
+	UpdateMask string `json:"updateMask,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "LogicalView") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "LogicalView") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s UpdateLogicalViewRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod UpdateLogicalViewRequest
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 

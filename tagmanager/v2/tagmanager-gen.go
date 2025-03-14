@@ -408,8 +408,7 @@ type Account struct {
 	// Fingerprint: The fingerprint of the GTM Account as computed at storage time.
 	// This value is recomputed whenever the account is modified.
 	Fingerprint string `json:"fingerprint,omitempty"`
-	// Name: Account display name. @mutable tagmanager.accounts.create @mutable
-	// tagmanager.accounts.update
+	// Name: Account display name.
 	Name string `json:"name,omitempty"`
 	// Path: GTM Account's API relative path.
 	Path string `json:"path,omitempty"`
@@ -417,8 +416,7 @@ type Account struct {
 	// others. This flag enables benchmarking by sharing your data in an anonymous
 	// form. Google will remove all identifiable information about your website,
 	// combine the data with hundreds of other anonymous sites and report aggregate
-	// trends in the benchmarking service. @mutable tagmanager.accounts.create
-	// @mutable tagmanager.accounts.update
+	// trends in the benchmarking service.
 	ShareData bool `json:"shareData,omitempty"`
 	// TagManagerUrl: Auto generated link to the tag manager UI
 	TagManagerUrl string `json:"tagManagerUrl,omitempty"`
@@ -446,8 +444,7 @@ func (s Account) MarshalJSON() ([]byte, error) {
 // AccountAccess: Defines the Google Tag Manager Account access permissions.
 type AccountAccess struct {
 	// Permission: Whether the user has no access, user access, or admin access to
-	// an account. @mutable tagmanager.accounts.permissions.create @mutable
-	// tagmanager.accounts.permissions.update
+	// an account.
 	//
 	// Possible values:
 	//   "accountPermissionUnspecified"
@@ -513,8 +510,6 @@ type BuiltInVariable struct {
 	// Path: GTM BuiltInVariable's API relative path.
 	Path string `json:"path,omitempty"`
 	// Type: Type of built-in variable.
-	// @required.tagmanager.accounts.containers.workspaces.built_in_variable.update
-	// @mutable tagmanager.accounts.containers.workspaces.built_in_variable.update
 	//
 	// Possible values:
 	//   "builtInVariableTypeUnspecified"
@@ -662,31 +657,21 @@ type Client struct {
 	// Fingerprint: The fingerprint of the GTM Client as computed at storage time.
 	// This value is recomputed whenever the client is modified.
 	Fingerprint string `json:"fingerprint,omitempty"`
-	// Name: Client display name. @mutable
-	// tagmanager.accounts.containers.workspaces.clients.create @mutable
-	// tagmanager.accounts.containers.workspaces.clients.update
+	// Name: Client display name.
 	Name string `json:"name,omitempty"`
-	// Notes: User notes on how to apply this tag in the container. @mutable
-	// tagmanager.accounts.containers.workspaces.tags.create @mutable
-	// tagmanager.accounts.containers.workspaces.tags.update
+	// Notes: User notes on how to apply this tag in the container.
 	Notes string `json:"notes,omitempty"`
-	// Parameter: The client's parameters. @mutable
-	// tagmanager.accounts.containers.workspaces.clients.create @mutable
-	// tagmanager.accounts.containers.workspaces.clients.update
+	// Parameter: The client's parameters.
 	Parameter []*Parameter `json:"parameter,omitempty"`
 	// ParentFolderId: Parent folder id.
 	ParentFolderId string `json:"parentFolderId,omitempty"`
 	// Path: GTM client's API relative path.
 	Path string `json:"path,omitempty"`
-	// Priority: Priority determines relative firing order. @mutable
-	// tagmanager.accounts.containers.workspaces.clients.create @mutable
-	// tagmanager.accounts.containers.workspaces.clients.update
+	// Priority: Priority determines relative firing order.
 	Priority int64 `json:"priority,omitempty"`
 	// TagManagerUrl: Auto generated link to the tag manager UI
 	TagManagerUrl string `json:"tagManagerUrl,omitempty"`
-	// Type: Client type. @mutable
-	// tagmanager.accounts.containers.workspaces.clients.create @mutable
-	// tagmanager.accounts.containers.workspaces.clients.update
+	// Type: Client type.
 	Type string `json:"type,omitempty"`
 	// WorkspaceId: GTM Workspace ID.
 	WorkspaceId string `json:"workspaceId,omitempty"`
@@ -721,12 +706,8 @@ type Condition struct {
 	// ignore_case that is set to true. If not specified or set to any other value,
 	// the matching will be case sensitive. - To negate an operator, include a
 	// boolean parameter named negate boolean parameter that is set to true.
-	// @mutable tagmanager.accounts.containers.workspaces.triggers.create @mutable
-	// tagmanager.accounts.containers.workspaces.triggers.update
 	Parameter []*Parameter `json:"parameter,omitempty"`
-	// Type: The type of operator for this condition. @mutable
-	// tagmanager.accounts.containers.workspaces.triggers.create @mutable
-	// tagmanager.accounts.containers.workspaces.triggers.update
+	// Type: The type of operator for this condition.
 	//
 	// Possible values:
 	//   "conditionTypeUnspecified"
@@ -768,20 +749,16 @@ type Container struct {
 	AccountId string `json:"accountId,omitempty"`
 	// ContainerId: The Container ID uniquely identifies the GTM Container.
 	ContainerId string `json:"containerId,omitempty"`
-	// DomainName: List of domain names associated with the Container. @mutable
-	// tagmanager.accounts.containers.create @mutable
-	// tagmanager.accounts.containers.update
+	// DomainName: List of domain names associated with the Container.
 	DomainName []string `json:"domainName,omitempty"`
 	// Features: Read-only Container feature set.
 	Features *ContainerFeatures `json:"features,omitempty"`
 	// Fingerprint: The fingerprint of the GTM Container as computed at storage
 	// time. This value is recomputed whenever the account is modified.
 	Fingerprint string `json:"fingerprint,omitempty"`
-	// Name: Container display name. @mutable tagmanager.accounts.containers.create
-	// @mutable tagmanager.accounts.containers.update
+	// Name: Container display name.
 	Name string `json:"name,omitempty"`
-	// Notes: Container Notes. @mutable tagmanager.accounts.containers.create
-	// @mutable tagmanager.accounts.containers.update
+	// Notes: Container Notes.
 	Notes string `json:"notes,omitempty"`
 	// Path: GTM Container's API relative path.
 	Path string `json:"path,omitempty"`
@@ -792,14 +769,10 @@ type Container struct {
 	// TagManagerUrl: Auto generated link to the tag manager UI
 	TagManagerUrl string `json:"tagManagerUrl,omitempty"`
 	// TaggingServerUrls: List of server-side container URLs for the Container. If
-	// multiple URLs are provided, all URL paths must match. @mutable
-	// tagmanager.accounts.containers.create @mutable
-	// tagmanager.accounts.containers.update
+	// multiple URLs are provided, all URL paths must match.
 	TaggingServerUrls []string `json:"taggingServerUrls,omitempty"`
 	// UsageContext: List of Usage Contexts for the Container. Valid values
-	// include: web, android, or ios. @mutable
-	// tagmanager.accounts.containers.create @mutable
-	// tagmanager.accounts.containers.update
+	// include: web, android, or ios.
 	//
 	// Possible values:
 	//   "usageContextUnspecified"
@@ -835,13 +808,9 @@ func (s Container) MarshalJSON() ([]byte, error) {
 // ContainerAccess: Defines the Google Tag Manager Container access
 // permissions.
 type ContainerAccess struct {
-	// ContainerId: GTM Container ID. @mutable
-	// tagmanager.accounts.permissions.create @mutable
-	// tagmanager.accounts.permissions.update
+	// ContainerId: GTM Container ID.
 	ContainerId string `json:"containerId,omitempty"`
-	// Permission: List of Container permissions. @mutable
-	// tagmanager.accounts.permissions.create @mutable
-	// tagmanager.accounts.permissions.update
+	// Permission: List of Container permissions.
 	//
 	// Possible values:
 	//   "containerPermissionUnspecified"
@@ -938,8 +907,7 @@ type ContainerVersion struct {
 	CustomTemplate []*CustomTemplate `json:"customTemplate,omitempty"`
 	// Deleted: A value of true indicates this container version has been deleted.
 	Deleted bool `json:"deleted,omitempty"`
-	// Description: Container version description. @mutable
-	// tagmanager.accounts.containers.versions.update
+	// Description: Container version description.
 	Description string `json:"description,omitempty"`
 	// Fingerprint: The fingerprint of the GTM Container Version as computed at
 	// storage time. This value is recomputed whenever the container version is
@@ -950,8 +918,7 @@ type ContainerVersion struct {
 	// GtagConfig: The Google tag configs in the container that this version was
 	// taken from.
 	GtagConfig []*GtagConfig `json:"gtagConfig,omitempty"`
-	// Name: Container version display name. @mutable
-	// tagmanager.accounts.containers.versions.update
+	// Name: Container version display name.
 	Name string `json:"name,omitempty"`
 	// Path: GTM Container Version's API relative path.
 	Path string `json:"path,omitempty"`
@@ -1281,13 +1248,9 @@ type Environment struct {
 	// ContainerVersionId: Represents a link to a container version.
 	ContainerVersionId string `json:"containerVersionId,omitempty"`
 	// Description: The environment description. Can be set or changed only on USER
-	// type environments. @mutable
-	// tagmanager.accounts.containers.environments.create @mutable
-	// tagmanager.accounts.containers.environments.update
+	// type environments.
 	Description string `json:"description,omitempty"`
 	// EnableDebug: Whether or not to enable debug by default for the environment.
-	// @mutable tagmanager.accounts.containers.environments.create @mutable
-	// tagmanager.accounts.containers.environments.update
 	EnableDebug bool `json:"enableDebug,omitempty"`
 	// EnvironmentId: GTM Environment ID uniquely identifies the GTM Environment.
 	EnvironmentId string `json:"environmentId,omitempty"`
@@ -1295,8 +1258,7 @@ type Environment struct {
 	// time. This value is recomputed whenever the environment is modified.
 	Fingerprint string `json:"fingerprint,omitempty"`
 	// Name: The environment display name. Can be set or changed only on USER type
-	// environments. @mutable tagmanager.accounts.containers.environments.create
-	// @mutable tagmanager.accounts.containers.environments.update
+	// environments.
 	Name string `json:"name,omitempty"`
 	// Path: GTM Environment's API relative path.
 	Path string `json:"path,omitempty"`
@@ -1311,9 +1273,7 @@ type Environment struct {
 	//   "workspace" - Automatically managed environment that points to a workspace
 	// preview or version created by a workspace.
 	Type string `json:"type,omitempty"`
-	// Url: Default preview page url for the environment. @mutable
-	// tagmanager.accounts.containers.environments.create @mutable
-	// tagmanager.accounts.containers.environments.update
+	// Url: Default preview page url for the environment.
 	Url string `json:"url,omitempty"`
 	// WorkspaceId: Represents a link to a quick preview of a workspace.
 	WorkspaceId string `json:"workspaceId,omitempty"`
@@ -1349,13 +1309,9 @@ type Folder struct {
 	Fingerprint string `json:"fingerprint,omitempty"`
 	// FolderId: The Folder ID uniquely identifies the GTM Folder.
 	FolderId string `json:"folderId,omitempty"`
-	// Name: Folder display name. @mutable
-	// tagmanager.accounts.containers.workspaces.folders.create @mutable
-	// tagmanager.accounts.containers.workspaces.folders.update
+	// Name: Folder display name.
 	Name string `json:"name,omitempty"`
-	// Notes: User notes on how to apply this folder in the container. @mutable
-	// tagmanager.accounts.containers.workspaces.folders.create @mutable
-	// tagmanager.accounts.containers.workspaces.folders.update
+	// Notes: User notes on how to apply this folder in the container.
 	Notes string `json:"notes,omitempty"`
 	// Path: GTM Folder's API relative path.
 	Path string `json:"path,omitempty"`
@@ -1522,19 +1478,13 @@ type GtagConfig struct {
 	Fingerprint string `json:"fingerprint,omitempty"`
 	// GtagConfigId: The ID uniquely identifies the Google tag config.
 	GtagConfigId string `json:"gtagConfigId,omitempty"`
-	// Parameter: The Google tag config's parameters. @mutable
-	// tagmanager.accounts.containers.workspaces.gtag_config.create @mutable
-	// tagmanager.accounts.containers.workspaces.gtag_config.update
+	// Parameter: The Google tag config's parameters.
 	Parameter []*Parameter `json:"parameter,omitempty"`
 	// Path: Google tag config's API relative path.
 	Path string `json:"path,omitempty"`
 	// TagManagerUrl: Auto generated link to the tag manager UI
 	TagManagerUrl string `json:"tagManagerUrl,omitempty"`
-	// Type: Google tag config type. @required
-	// tagmanager.accounts.containers.workspaces.gtag_config.create @required
-	// tagmanager.accounts.containers.workspaces.gtag_config.update @mutable
-	// tagmanager.accounts.containers.workspaces.gtag_config.create @mutable
-	// tagmanager.accounts.containers.workspaces.gtag_config.update
+	// Type: Google tag config type.
 	Type string `json:"type,omitempty"`
 	// WorkspaceId: Google tag workspace ID. Only used by GTM containers. Set to 0
 	// otherwise.
@@ -2045,34 +1995,14 @@ func (s MergeConflict) MarshalJSON() ([]byte, error) {
 // Parameter: Represents a Google Tag Manager Parameter.
 type Parameter struct {
 	// IsWeakReference: Whether or not a reference type parameter is strongly or
-	// weakly referenced. Only used by Transformations. @mutable
-	// tagmanager.accounts.containers.workspaces.transformations.create @mutable
-	// tagmanager.accounts.containers.workspaces.transformations.update
+	// weakly referenced. Only used by Transformations.
 	IsWeakReference bool `json:"isWeakReference,omitempty"`
 	// Key: The named key that uniquely identifies a parameter. Required for
 	// top-level parameters, as well as map values. Ignored for list values.
-	// @mutable tagmanager.accounts.containers.workspaces.variables.create @mutable
-	// tagmanager.accounts.containers.workspaces.variables.update @mutable
-	// tagmanager.accounts.containers.workspaces.triggers.create @mutable
-	// tagmanager.accounts.containers.workspaces.triggers.update @mutable
-	// tagmanager.accounts.containers.workspaces.tags.create @mutable
-	// tagmanager.accounts.containers.workspaces.tags.update
 	Key string `json:"key,omitempty"`
-	// List: This list parameter's parameters (keys will be ignored). @mutable
-	// tagmanager.accounts.containers.workspaces.variables.create @mutable
-	// tagmanager.accounts.containers.workspaces.variables.update @mutable
-	// tagmanager.accounts.containers.workspaces.triggers.create @mutable
-	// tagmanager.accounts.containers.workspaces.triggers.update @mutable
-	// tagmanager.accounts.containers.workspaces.tags.create @mutable
-	// tagmanager.accounts.containers.workspaces.tags.update
+	// List: This list parameter's parameters (keys will be ignored).
 	List []*Parameter `json:"list,omitempty"`
 	// Map: This map parameter's parameters (must have keys; keys must be unique).
-	// @mutable tagmanager.accounts.containers.workspaces.variables.create @mutable
-	// tagmanager.accounts.containers.workspaces.variables.update @mutable
-	// tagmanager.accounts.containers.workspaces.triggers.create @mutable
-	// tagmanager.accounts.containers.workspaces.triggers.update @mutable
-	// tagmanager.accounts.containers.workspaces.tags.create @mutable
-	// tagmanager.accounts.containers.workspaces.tags.update
 	Map []*Parameter `json:"map,omitempty"`
 	// Type: The parameter type. Valid values are: - boolean: The value represents
 	// a boolean, represented as 'true' or 'false' - integer: The value represents
@@ -2082,16 +2012,11 @@ type Parameter struct {
 	// references (even variable references that might return non-string types) -
 	// trigger_reference: The value represents a trigger, represented as the
 	// trigger id - tag_reference: The value represents a tag, represented as the
-	// tag name @mutable tagmanager.accounts.containers.workspaces.variables.create
-	// @mutable tagmanager.accounts.containers.workspaces.variables.update @mutable
-	// tagmanager.accounts.containers.workspaces.triggers.create @mutable
-	// tagmanager.accounts.containers.workspaces.triggers.update @mutable
-	// tagmanager.accounts.containers.workspaces.tags.create @mutable
-	// tagmanager.accounts.containers.workspaces.tags.update
+	// tag name
 	//
 	// Possible values:
 	//   "typeUnspecified"
-	//   "template" - May include variable references (such as "{{myVariable}}").
+	//   "template" - May include variable references.
 	//   "integer"
 	//   "boolean"
 	//   "list"
@@ -2099,14 +2024,8 @@ type Parameter struct {
 	//   "triggerReference"
 	//   "tagReference"
 	Type string `json:"type,omitempty"`
-	// Value: A parameter's value (may contain variable references such as
-	// "{{myVariable}}") as appropriate to the specified type. @mutable
-	// tagmanager.accounts.containers.workspaces.variables.create @mutable
-	// tagmanager.accounts.containers.workspaces.variables.update @mutable
-	// tagmanager.accounts.containers.workspaces.triggers.create @mutable
-	// tagmanager.accounts.containers.workspaces.triggers.update @mutable
-	// tagmanager.accounts.containers.workspaces.tags.create @mutable
-	// tagmanager.accounts.containers.workspaces.tags.update
+	// Value: A parameter's value (may contain variable references). as appropriate
+	// to the specified type.
 	Value string `json:"value,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "IsWeakReference") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -2514,18 +2433,12 @@ type Tag struct {
 	// AccountId: GTM Account ID.
 	AccountId string `json:"accountId,omitempty"`
 	// BlockingRuleId: Blocking rule IDs. If any of the listed rules evaluate to
-	// true, the tag will not fire. @mutable
-	// tagmanager.accounts.containers.workspaces.tags.create @mutable
-	// tagmanager.accounts.containers.workspaces.tags.update
+	// true, the tag will not fire.
 	BlockingRuleId []string `json:"blockingRuleId,omitempty"`
 	// BlockingTriggerId: Blocking trigger IDs. If any of the listed triggers
-	// evaluate to true, the tag will not fire. @mutable
-	// tagmanager.accounts.containers.workspaces.tags.create @mutable
-	// tagmanager.accounts.containers.workspaces.tags.update
+	// evaluate to true, the tag will not fire.
 	BlockingTriggerId []string `json:"blockingTriggerId,omitempty"`
-	// ConsentSettings: Consent settings of a tag. @mutable
-	// tagmanager.accounts.containers.workspaces.tags.create @mutable
-	// tagmanager.accounts.containers.workspaces.tags.update
+	// ConsentSettings: Consent settings of a tag.
 	ConsentSettings *TagConsentSetting `json:"consentSettings,omitempty"`
 	// ContainerId: GTM Container ID.
 	ContainerId string `json:"containerId,omitempty"`
@@ -2534,64 +2447,43 @@ type Tag struct {
 	Fingerprint string `json:"fingerprint,omitempty"`
 	// FiringRuleId: Firing rule IDs. A tag will fire when any of the listed rules
 	// are true and all of its blockingRuleIds (if any specified) are false.
-	// @mutable tagmanager.accounts.containers.workspaces.tags.create @mutable
-	// tagmanager.accounts.containers.workspaces.tags.update
 	FiringRuleId []string `json:"firingRuleId,omitempty"`
 	// FiringTriggerId: Firing trigger IDs. A tag will fire when any of the listed
 	// triggers are true and all of its blockingTriggerIds (if any specified) are
-	// false. @mutable tagmanager.accounts.containers.workspaces.tags.create
-	// @mutable tagmanager.accounts.containers.workspaces.tags.update
+	// false.
 	FiringTriggerId []string `json:"firingTriggerId,omitempty"`
 	// LiveOnly: If set to true, this tag will only fire in the live environment
-	// (e.g. not in preview or debug mode). @mutable
-	// tagmanager.accounts.containers.workspaces.tags.create @mutable
-	// tagmanager.accounts.containers.workspaces.tags.update
+	// (e.g. not in preview or debug mode).
 	LiveOnly bool `json:"liveOnly,omitempty"`
 	// MonitoringMetadata: A map of key-value pairs of tag metadata to be included
 	// in the event data for tag monitoring. Notes: - This parameter must be type
 	// MAP. - Each parameter in the map are type TEMPLATE, however cannot contain
-	// variable references. @mutable
-	// tagmanager.accounts.containers.workspaces.tags.create @mutable
-	// tagmanager.accounts.containers.workspaces.tags.update
+	// variable references.
 	MonitoringMetadata *Parameter `json:"monitoringMetadata,omitempty"`
 	// MonitoringMetadataTagNameKey: If non-empty, then the tag display name will
-	// be included in the monitoring metadata map using the key specified. @mutable
-	// tagmanager.accounts.containers.workspaces.tags.create @mutable
-	// tagmanager.accounts.containers.workspaces.tags.update
+	// be included in the monitoring metadata map using the key specified.
 	MonitoringMetadataTagNameKey string `json:"monitoringMetadataTagNameKey,omitempty"`
-	// Name: Tag display name. @mutable
-	// tagmanager.accounts.containers.workspaces.tags.create @mutable
-	// tagmanager.accounts.containers.workspaces.tags.update
+	// Name: Tag display name.
 	Name string `json:"name,omitempty"`
-	// Notes: User notes on how to apply this tag in the container. @mutable
-	// tagmanager.accounts.containers.workspaces.tags.create @mutable
-	// tagmanager.accounts.containers.workspaces.tags.update
+	// Notes: User notes on how to apply this tag in the container.
 	Notes string `json:"notes,omitempty"`
-	// Parameter: The tag's parameters. @mutable
-	// tagmanager.accounts.containers.workspaces.tags.create @mutable
-	// tagmanager.accounts.containers.workspaces.tags.update
+	// Parameter: The tag's parameters.
 	Parameter []*Parameter `json:"parameter,omitempty"`
 	// ParentFolderId: Parent folder id.
 	ParentFolderId string `json:"parentFolderId,omitempty"`
 	// Path: GTM Tag's API relative path.
 	Path string `json:"path,omitempty"`
 	// Paused: Indicates whether the tag is paused, which prevents the tag from
-	// firing. @mutable tagmanager.accounts.containers.workspaces.tags.create
-	// @mutable tagmanager.accounts.containers.workspaces.tags.update
+	// firing.
 	Paused bool `json:"paused,omitempty"`
 	// Priority: User defined numeric priority of the tag. Tags are fired
 	// asynchronously in order of priority. Tags with higher numeric value fire
 	// first. A tag's priority can be a positive or negative value. The default
-	// value is 0. @mutable tagmanager.accounts.containers.workspaces.tags.create
-	// @mutable tagmanager.accounts.containers.workspaces.tags.update
+	// value is 0.
 	Priority *Parameter `json:"priority,omitempty"`
-	// ScheduleEndMs: The end timestamp in milliseconds to schedule a tag. @mutable
-	// tagmanager.accounts.containers.workspaces.tags.create @mutable
-	// tagmanager.accounts.containers.workspaces.tags.update
+	// ScheduleEndMs: The end timestamp in milliseconds to schedule a tag.
 	ScheduleEndMs int64 `json:"scheduleEndMs,omitempty,string"`
 	// ScheduleStartMs: The start timestamp in milliseconds to schedule a tag.
-	// @mutable tagmanager.accounts.containers.workspaces.tags.create @mutable
-	// tagmanager.accounts.containers.workspaces.tags.update
 	ScheduleStartMs int64 `json:"scheduleStartMs,omitempty,string"`
 	// SetupTag: The list of setup tags. Currently we only allow one.
 	SetupTag []*SetupTag `json:"setupTag,omitempty"`
@@ -2611,9 +2503,7 @@ type Tag struct {
 	TagManagerUrl string `json:"tagManagerUrl,omitempty"`
 	// TeardownTag: The list of teardown tags. Currently we only allow one.
 	TeardownTag []*TeardownTag `json:"teardownTag,omitempty"`
-	// Type: GTM Tag Type. @mutable
-	// tagmanager.accounts.containers.workspaces.tags.create @mutable
-	// tagmanager.accounts.containers.workspaces.tags.update
+	// Type: GTM Tag Type.
 	Type string `json:"type,omitempty"`
 	// WorkspaceId: GTM Workspace ID.
 	WorkspaceId string `json:"workspaceId,omitempty"`
@@ -2707,17 +2597,11 @@ type Transformation struct {
 	// storage time. This value is recomputed whenever the transformation is
 	// modified.
 	Fingerprint string `json:"fingerprint,omitempty"`
-	// Name: Transformation display name. @mutable
-	// tagmanager.accounts.containers.workspaces.transformations.create @mutable
-	// tagmanager.accounts.containers.workspaces.transformations.update
+	// Name: Transformation display name.
 	Name string `json:"name,omitempty"`
 	// Notes: User notes on how to apply this transformation in the container.
-	// @mutable tagmanager.accounts.containers.workspaces.transformations.create
-	// @mutable tagmanager.accounts.containers.workspaces.transformations.update
 	Notes string `json:"notes,omitempty"`
-	// Parameter: The transformation's parameters. @mutable
-	// tagmanager.accounts.containers.workspaces.transformations.create @mutable
-	// tagmanager.accounts.containers.workspaces.transformations.update
+	// Parameter: The transformation's parameters.
 	Parameter []*Parameter `json:"parameter,omitempty"`
 	// ParentFolderId: Parent folder id.
 	ParentFolderId string `json:"parentFolderId,omitempty"`
@@ -2728,9 +2612,7 @@ type Transformation struct {
 	// TransformationId: The Transformation ID uniquely identifies the GTM
 	// transformation.
 	TransformationId string `json:"transformationId,omitempty"`
-	// Type: Transformation type. @mutable
-	// tagmanager.accounts.containers.workspaces.transformations.create @mutable
-	// tagmanager.accounts.containers.workspaces.transformations.update
+	// Type: Transformation type.
 	Type string `json:"type,omitempty"`
 	// WorkspaceId: GTM Workspace ID.
 	WorkspaceId string `json:"workspaceId,omitempty"`
@@ -2759,99 +2641,67 @@ func (s Transformation) MarshalJSON() ([]byte, error) {
 type Trigger struct {
 	// AccountId: GTM Account ID.
 	AccountId string `json:"accountId,omitempty"`
-	// AutoEventFilter: Used in the case of auto event tracking. @mutable
-	// tagmanager.accounts.containers.workspaces.triggers.create @mutable
-	// tagmanager.accounts.containers.workspaces.triggers.update
+	// AutoEventFilter: Used in the case of auto event tracking.
 	AutoEventFilter []*Condition `json:"autoEventFilter,omitempty"`
 	// CheckValidation: Whether or not we should only fire tags if the form submit
 	// or link click event is not cancelled by some other event handler (e.g.
 	// because of validation). Only valid for Form Submission and Link Click
-	// triggers. @mutable tagmanager.accounts.containers.workspaces.triggers.create
-	// @mutable tagmanager.accounts.containers.workspaces.triggers.update
+	// triggers.
 	CheckValidation *Parameter `json:"checkValidation,omitempty"`
 	// ContainerId: GTM Container ID.
 	ContainerId string `json:"containerId,omitempty"`
 	// ContinuousTimeMinMilliseconds: A visibility trigger minimum continuous
 	// visible time (in milliseconds). Only valid for AMP Visibility trigger.
-	// @mutable tagmanager.accounts.containers.workspaces.triggers.create @mutable
-	// tagmanager.accounts.containers.workspaces.triggers.update
 	ContinuousTimeMinMilliseconds *Parameter `json:"continuousTimeMinMilliseconds,omitempty"`
 	// CustomEventFilter: Used in the case of custom event, which is fired iff all
-	// Conditions are true. @mutable
-	// tagmanager.accounts.containers.workspaces.triggers.create @mutable
-	// tagmanager.accounts.containers.workspaces.triggers.update
+	// Conditions are true.
 	CustomEventFilter []*Condition `json:"customEventFilter,omitempty"`
 	// EventName: Name of the GTM event that is fired. Only valid for Timer
-	// triggers. @mutable tagmanager.accounts.containers.workspaces.triggers.create
-	// @mutable tagmanager.accounts.containers.workspaces.triggers.update
+	// triggers.
 	EventName *Parameter `json:"eventName,omitempty"`
-	// Filter: The trigger will only fire iff all Conditions are true. @mutable
-	// tagmanager.accounts.containers.workspaces.triggers.create @mutable
-	// tagmanager.accounts.containers.workspaces.triggers.update
+	// Filter: The trigger will only fire iff all Conditions are true.
 	Filter []*Condition `json:"filter,omitempty"`
 	// Fingerprint: The fingerprint of the GTM Trigger as computed at storage time.
 	// This value is recomputed whenever the trigger is modified.
 	Fingerprint string `json:"fingerprint,omitempty"`
 	// HorizontalScrollPercentageList: List of integer percentage values for scroll
 	// triggers. The trigger will fire when each percentage is reached when the
-	// view is scrolled horizontally. Only valid for AMP scroll triggers. @mutable
-	// tagmanager.accounts.containers.workspaces.triggers.create @mutable
-	// tagmanager.accounts.containers.workspaces.triggers.update
+	// view is scrolled horizontally. Only valid for AMP scroll triggers.
 	HorizontalScrollPercentageList *Parameter `json:"horizontalScrollPercentageList,omitempty"`
 	// Interval: Time between triggering recurring Timer Events (in milliseconds).
-	// Only valid for Timer triggers. @mutable
-	// tagmanager.accounts.containers.workspaces.triggers.create @mutable
-	// tagmanager.accounts.containers.workspaces.triggers.update
+	// Only valid for Timer triggers.
 	Interval *Parameter `json:"interval,omitempty"`
 	// IntervalSeconds: Time between Timer Events to fire (in seconds). Only valid
-	// for AMP Timer trigger. @mutable
-	// tagmanager.accounts.containers.workspaces.triggers.create @mutable
-	// tagmanager.accounts.containers.workspaces.triggers.update
+	// for AMP Timer trigger.
 	IntervalSeconds *Parameter `json:"intervalSeconds,omitempty"`
 	// Limit: Limit of the number of GTM events this Timer Trigger will fire. If no
 	// limit is set, we will continue to fire GTM events until the user leaves the
-	// page. Only valid for Timer triggers. @mutable
-	// tagmanager.accounts.containers.workspaces.triggers.create @mutable
-	// tagmanager.accounts.containers.workspaces.triggers.update
+	// page. Only valid for Timer triggers.
 	Limit *Parameter `json:"limit,omitempty"`
 	// MaxTimerLengthSeconds: Max time to fire Timer Events (in seconds). Only
-	// valid for AMP Timer trigger. @mutable
-	// tagmanager.accounts.containers.workspaces.triggers.create @mutable
-	// tagmanager.accounts.containers.workspaces.triggers.update
+	// valid for AMP Timer trigger.
 	MaxTimerLengthSeconds *Parameter `json:"maxTimerLengthSeconds,omitempty"`
-	// Name: Trigger display name. @mutable
-	// tagmanager.accounts.containers.workspaces.triggers.create @mutable
-	// tagmanager.accounts.containers.workspaces.triggers.update
+	// Name: Trigger display name.
 	Name string `json:"name,omitempty"`
-	// Notes: User notes on how to apply this trigger in the container. @mutable
-	// tagmanager.accounts.containers.workspaces.triggers.create @mutable
-	// tagmanager.accounts.containers.workspaces.triggers.update
+	// Notes: User notes on how to apply this trigger in the container.
 	Notes string `json:"notes,omitempty"`
-	// Parameter: Additional parameters. @mutable
-	// tagmanager.accounts.containers.workspaces.triggers.create @mutable
-	// tagmanager.accounts.containers.workspaces.triggers.update
+	// Parameter: Additional parameters.
 	Parameter []*Parameter `json:"parameter,omitempty"`
 	// ParentFolderId: Parent folder id.
 	ParentFolderId string `json:"parentFolderId,omitempty"`
 	// Path: GTM Trigger's API relative path.
 	Path string `json:"path,omitempty"`
 	// Selector: A click trigger CSS selector (i.e. "a", "button" etc.). Only valid
-	// for AMP Click trigger. @mutable
-	// tagmanager.accounts.containers.workspaces.triggers.create @mutable
-	// tagmanager.accounts.containers.workspaces.triggers.update
+	// for AMP Click trigger.
 	Selector *Parameter `json:"selector,omitempty"`
 	// TagManagerUrl: Auto generated link to the tag manager UI
 	TagManagerUrl string `json:"tagManagerUrl,omitempty"`
 	// TotalTimeMinMilliseconds: A visibility trigger minimum total visible time
-	// (in milliseconds). Only valid for AMP Visibility trigger. @mutable
-	// tagmanager.accounts.containers.workspaces.triggers.create @mutable
-	// tagmanager.accounts.containers.workspaces.triggers.update
+	// (in milliseconds). Only valid for AMP Visibility trigger.
 	TotalTimeMinMilliseconds *Parameter `json:"totalTimeMinMilliseconds,omitempty"`
 	// TriggerId: The Trigger ID uniquely identifies the GTM Trigger.
 	TriggerId string `json:"triggerId,omitempty"`
-	// Type: Defines the data layer event that causes this trigger. @mutable
-	// tagmanager.accounts.containers.workspaces.triggers.create @mutable
-	// tagmanager.accounts.containers.workspaces.triggers.update
+	// Type: Defines the data layer event that causes this trigger.
 	//
 	// Possible values:
 	//   "eventTypeUnspecified"
@@ -2895,43 +2745,29 @@ type Trigger struct {
 	// incompatible auto-events work together with trigger filtering based on
 	// trigger ids. This value is populated during output generation since the tags
 	// implied by triggers don't exist until then. Only valid for Form Submit, Link
-	// Click and Timer triggers. @mutable
-	// tagmanager.accounts.containers.workspaces.triggers.create @mutable
-	// tagmanager.accounts.containers.workspaces.triggers.update
+	// Click and Timer triggers.
 	UniqueTriggerId *Parameter `json:"uniqueTriggerId,omitempty"`
 	// VerticalScrollPercentageList: List of integer percentage values for scroll
 	// triggers. The trigger will fire when each percentage is reached when the
-	// view is scrolled vertically. Only valid for AMP scroll triggers. @mutable
-	// tagmanager.accounts.containers.workspaces.triggers.create @mutable
-	// tagmanager.accounts.containers.workspaces.triggers.update
+	// view is scrolled vertically. Only valid for AMP scroll triggers.
 	VerticalScrollPercentageList *Parameter `json:"verticalScrollPercentageList,omitempty"`
 	// VisibilitySelector: A visibility trigger CSS selector (i.e. "#id"). Only
-	// valid for AMP Visibility trigger. @mutable
-	// tagmanager.accounts.containers.workspaces.triggers.create @mutable
-	// tagmanager.accounts.containers.workspaces.triggers.update
+	// valid for AMP Visibility trigger.
 	VisibilitySelector *Parameter `json:"visibilitySelector,omitempty"`
 	// VisiblePercentageMax: A visibility trigger maximum percent visibility. Only
-	// valid for AMP Visibility trigger. @mutable
-	// tagmanager.accounts.containers.workspaces.triggers.create @mutable
-	// tagmanager.accounts.containers.workspaces.triggers.update
+	// valid for AMP Visibility trigger.
 	VisiblePercentageMax *Parameter `json:"visiblePercentageMax,omitempty"`
 	// VisiblePercentageMin: A visibility trigger minimum percent visibility. Only
-	// valid for AMP Visibility trigger. @mutable
-	// tagmanager.accounts.containers.workspaces.triggers.create @mutable
-	// tagmanager.accounts.containers.workspaces.triggers.update
+	// valid for AMP Visibility trigger.
 	VisiblePercentageMin *Parameter `json:"visiblePercentageMin,omitempty"`
 	// WaitForTags: Whether or not we should delay the form submissions or link
 	// opening until all of the tags have fired (by preventing the default action
 	// and later simulating the default action). Only valid for Form Submission and
-	// Link Click triggers. @mutable
-	// tagmanager.accounts.containers.workspaces.triggers.create @mutable
-	// tagmanager.accounts.containers.workspaces.triggers.update
+	// Link Click triggers.
 	WaitForTags *Parameter `json:"waitForTags,omitempty"`
 	// WaitForTagsTimeout: How long to wait (in milliseconds) for tags to fire when
 	// 'waits_for_tags' above evaluates to true. Only valid for Form Submission and
-	// Link Click triggers. @mutable
-	// tagmanager.accounts.containers.workspaces.triggers.create @mutable
-	// tagmanager.accounts.containers.workspaces.triggers.update
+	// Link Click triggers.
 	WaitForTagsTimeout *Parameter `json:"waitForTagsTimeout,omitempty"`
 	// WorkspaceId: GTM Workspace ID.
 	WorkspaceId string `json:"workspaceId,omitempty"`
@@ -2959,18 +2795,13 @@ func (s Trigger) MarshalJSON() ([]byte, error) {
 // UserPermission: Represents a user's permissions to an account and its
 // container.
 type UserPermission struct {
-	// AccountAccess: GTM Account access permissions. @mutable
-	// tagmanager.accounts.permissions.create @mutable
-	// tagmanager.accounts.permissions.update
+	// AccountAccess: GTM Account access permissions.
 	AccountAccess *AccountAccess `json:"accountAccess,omitempty"`
 	// AccountId: The Account ID uniquely identifies the GTM Account.
 	AccountId string `json:"accountId,omitempty"`
-	// ContainerAccess: GTM Container access permissions. @mutable
-	// tagmanager.accounts.permissions.create @mutable
-	// tagmanager.accounts.permissions.update
+	// ContainerAccess: GTM Container access permissions.
 	ContainerAccess []*ContainerAccess `json:"containerAccess,omitempty"`
-	// EmailAddress: User's email address. @mutable
-	// tagmanager.accounts.permissions.create
+	// EmailAddress: User's email address.
 	EmailAddress string `json:"emailAddress,omitempty"`
 	// Path: GTM UserPermission's API relative path.
 	Path string `json:"path,omitempty"`
@@ -3004,51 +2835,35 @@ type Variable struct {
 	// DisablingTriggerId: For mobile containers only: A list of trigger IDs for
 	// disabling conditional variables; the variable is enabled if one of the
 	// enabling trigger is true while all the disabling trigger are false. Treated
-	// as an unordered set. @mutable
-	// tagmanager.accounts.containers.workspaces.variables.create @mutable
-	// tagmanager.accounts.containers.workspaces.variables.update
+	// as an unordered set.
 	DisablingTriggerId []string `json:"disablingTriggerId,omitempty"`
 	// EnablingTriggerId: For mobile containers only: A list of trigger IDs for
 	// enabling conditional variables; the variable is enabled if one of the
 	// enabling triggers is true while all the disabling triggers are false.
-	// Treated as an unordered set. @mutable
-	// tagmanager.accounts.containers.workspaces.variables.create @mutable
-	// tagmanager.accounts.containers.workspaces.variables.update
+	// Treated as an unordered set.
 	EnablingTriggerId []string `json:"enablingTriggerId,omitempty"`
 	// Fingerprint: The fingerprint of the GTM Variable as computed at storage
 	// time. This value is recomputed whenever the variable is modified.
 	Fingerprint string `json:"fingerprint,omitempty"`
 	// FormatValue: Option to convert a variable value to other value.
 	FormatValue *VariableFormatValue `json:"formatValue,omitempty"`
-	// Name: Variable display name. @mutable
-	// tagmanager.accounts.containers.workspaces.variables.create @mutable
-	// tagmanager.accounts.containers.workspaces.variables.update
+	// Name: Variable display name.
 	Name string `json:"name,omitempty"`
-	// Notes: User notes on how to apply this variable in the container. @mutable
-	// tagmanager.accounts.containers.workspaces.variables.create @mutable
-	// tagmanager.accounts.containers.workspaces.variables.update
+	// Notes: User notes on how to apply this variable in the container.
 	Notes string `json:"notes,omitempty"`
-	// Parameter: The variable's parameters. @mutable
-	// tagmanager.accounts.containers.workspaces.variables.create @mutable
-	// tagmanager.accounts.containers.workspaces.variables.update
+	// Parameter: The variable's parameters.
 	Parameter []*Parameter `json:"parameter,omitempty"`
 	// ParentFolderId: Parent folder id.
 	ParentFolderId string `json:"parentFolderId,omitempty"`
 	// Path: GTM Variable's API relative path.
 	Path string `json:"path,omitempty"`
 	// ScheduleEndMs: The end timestamp in milliseconds to schedule a variable.
-	// @mutable tagmanager.accounts.containers.workspaces.variables.create @mutable
-	// tagmanager.accounts.containers.workspaces.variables.update
 	ScheduleEndMs int64 `json:"scheduleEndMs,omitempty,string"`
 	// ScheduleStartMs: The start timestamp in milliseconds to schedule a variable.
-	// @mutable tagmanager.accounts.containers.workspaces.variables.create @mutable
-	// tagmanager.accounts.containers.workspaces.variables.update
 	ScheduleStartMs int64 `json:"scheduleStartMs,omitempty,string"`
 	// TagManagerUrl: Auto generated link to the tag manager UI
 	TagManagerUrl string `json:"tagManagerUrl,omitempty"`
-	// Type: GTM Variable Type. @mutable
-	// tagmanager.accounts.containers.workspaces.variables.create @mutable
-	// tagmanager.accounts.containers.workspaces.variables.update
+	// Type: GTM Variable Type.
 	Type string `json:"type,omitempty"`
 	// VariableId: The Variable ID uniquely identifies the GTM Variable.
 	VariableId string `json:"variableId,omitempty"`
@@ -3117,16 +2932,12 @@ type Workspace struct {
 	AccountId string `json:"accountId,omitempty"`
 	// ContainerId: GTM Container ID.
 	ContainerId string `json:"containerId,omitempty"`
-	// Description: Workspace description. @mutable
-	// tagmanager.accounts.containers.workspaces.create @mutable
-	// tagmanager.accounts.containers.workspaces.update
+	// Description: Workspace description.
 	Description string `json:"description,omitempty"`
 	// Fingerprint: The fingerprint of the GTM Workspace as computed at storage
 	// time. This value is recomputed whenever the workspace is modified.
 	Fingerprint string `json:"fingerprint,omitempty"`
-	// Name: Workspace display name. @mutable
-	// tagmanager.accounts.containers.workspaces.create @mutable
-	// tagmanager.accounts.containers.workspaces.update
+	// Name: Workspace display name.
 	Name string `json:"name,omitempty"`
 	// Path: GTM Workspace's API relative path.
 	Path string `json:"path,omitempty"`
@@ -3288,7 +3099,7 @@ type AccountsGetCall struct {
 
 // Get: Gets a GTM Account.
 //
-// - path: GTM Account's API relative path. Example: accounts/{account_id}.
+// - path: GTM Account's API relative path.
 func (r *AccountsService) Get(path string) *AccountsGetCall {
 	c := &AccountsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.path = path
@@ -3535,7 +3346,7 @@ type AccountsUpdateCall struct {
 
 // Update: Updates a GTM Account.
 //
-// - path: GTM Account's API relative path. Example: accounts/{account_id}.
+// - path: GTM Account's API relative path.
 func (r *AccountsService) Update(path string, account *Account) *AccountsUpdateCall {
 	c := &AccountsUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.path = path
@@ -3644,8 +3455,7 @@ type AccountsContainersCombineCall struct {
 
 // Combine: Combines Containers.
 //
-//   - path: GTM Container's API relative path. Example:
-//     accounts/{account_id}/containers/{container_id}.
+// - path: GTM Container's API relative path.
 func (r *AccountsContainersService) Combine(path string) *AccountsContainersCombineCall {
 	c := &AccountsContainersCombineCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.path = path
@@ -3772,7 +3582,7 @@ type AccountsContainersCreateCall struct {
 
 // Create: Creates a Container.
 //
-// - parent: GTM Account's API relative path. Example: accounts/{account_id}.
+// - parent: GTM Account's API relative path.
 func (r *AccountsContainersService) Create(parent string, container *Container) *AccountsContainersCreateCall {
 	c := &AccountsContainersCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -3874,8 +3684,7 @@ type AccountsContainersDeleteCall struct {
 
 // Delete: Deletes a Container.
 //
-//   - path: GTM Container's API relative path. Example:
-//     accounts/{account_id}/containers/{container_id}.
+// - path: GTM Container's API relative path.
 func (r *AccountsContainersService) Delete(path string) *AccountsContainersDeleteCall {
 	c := &AccountsContainersDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.path = path
@@ -3949,8 +3758,7 @@ type AccountsContainersGetCall struct {
 
 // Get: Gets a Container.
 //
-//   - path: GTM Container's API relative path. Example:
-//     accounts/{account_id}/containers/{container_id}.
+// - path: GTM Container's API relative path.
 func (r *AccountsContainersService) Get(path string) *AccountsContainersGetCall {
 	c := &AccountsContainersGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.path = path
@@ -4059,7 +3867,7 @@ type AccountsContainersListCall struct {
 
 // List: Lists all Containers that belongs to a GTM Account.
 //
-// - parent: GTM Account's API relative path. Example: accounts/{account_id}.
+// - parent: GTM Account's API relative path.
 func (r *AccountsContainersService) List(parent string) *AccountsContainersListCall {
 	c := &AccountsContainersListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -4201,17 +4009,15 @@ func (r *AccountsContainersService) Lookup() *AccountsContainersLookupCall {
 }
 
 // DestinationId sets the optional parameter "destinationId": Destination ID
-// linked to a GTM Container, e.g. AW-123456789. Example:
-// accounts/containers:lookup?destination_id={destination_id}. Only one of
-// destination_id or tag_id should be set.
+// linked to a GTM Container, e.g. AW-123456789. Only one of destination_id or
+// tag_id should be set.
 func (c *AccountsContainersLookupCall) DestinationId(destinationId string) *AccountsContainersLookupCall {
 	c.urlParams_.Set("destinationId", destinationId)
 	return c
 }
 
 // TagId sets the optional parameter "tagId": Tag ID for a GTM Container, e.g.
-// GTM-123456789. Example: accounts/containers:lookup?tag_id={tag_id}. Only one
-// of destination_id or tag_id should be set.
+// GTM-123456789. Only one of destination_id or tag_id should be set.
 func (c *AccountsContainersLookupCall) TagId(tagId string) *AccountsContainersLookupCall {
 	c.urlParams_.Set("tagId", tagId)
 	return c
@@ -4315,8 +4121,7 @@ type AccountsContainersMoveTagIdCall struct {
 
 // MoveTagId: Move Tag ID out of a Container.
 //
-//   - path: GTM Container's API relative path. Example:
-//     accounts/{account_id}/containers/{container_id}.
+// - path: GTM Container's API relative path.
 func (r *AccountsContainersService) MoveTagId(path string) *AccountsContainersMoveTagIdCall {
 	c := &AccountsContainersMoveTagIdCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.path = path
@@ -4460,8 +4265,7 @@ type AccountsContainersSnippetCall struct {
 
 // Snippet: Gets the tagging snippet for a Container.
 //
-//   - path: Container snippet's API relative path. Example:
-//     accounts/{account_id}/containers/{container_id}:snippet.
+// - path: Container snippet's API relative path.
 func (r *AccountsContainersService) Snippet(path string) *AccountsContainersSnippetCall {
 	c := &AccountsContainersSnippetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.path = path
@@ -4571,8 +4375,7 @@ type AccountsContainersUpdateCall struct {
 
 // Update: Updates a Container.
 //
-//   - path: GTM Container's API relative path. Example:
-//     accounts/{account_id}/containers/{container_id}.
+// - path: GTM Container's API relative path.
 func (r *AccountsContainersService) Update(path string, container *Container) *AccountsContainersUpdateCall {
 	c := &AccountsContainersUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.path = path
@@ -4682,9 +4485,7 @@ type AccountsContainersDestinationsGetCall struct {
 
 // Get: Gets a Destination.
 //
-//   - path: Google Tag Destination's API relative path. Example:
-//     accounts/{account_id}/containers/{container_id}/destinations/{destination_l
-//     ink_id}.
+// - path: Google Tag Destination's API relative path.
 func (r *AccountsContainersDestinationsService) Get(path string) *AccountsContainersDestinationsGetCall {
 	c := &AccountsContainersDestinationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.path = path
@@ -4793,8 +4594,7 @@ type AccountsContainersDestinationsLinkCall struct {
 // Link: Adds a Destination to this Container and removes it from the Container
 // to which it is currently linked.
 //
-//   - parent: GTM parent Container's API relative path. Example:
-//     accounts/{account_id}/containers/{container_id}.
+// - parent: GTM parent Container's API relative path.
 func (r *AccountsContainersDestinationsService) Link(parent string) *AccountsContainersDestinationsLinkCall {
 	c := &AccountsContainersDestinationsLinkCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -4908,8 +4708,7 @@ type AccountsContainersDestinationsListCall struct {
 
 // List: Lists all Destinations linked to a GTM Container.
 //
-//   - parent: GTM parent Container's API relative path. Example:
-//     accounts/{account_id}/containers/{container_id}.
+// - parent: GTM parent Container's API relative path.
 func (r *AccountsContainersDestinationsService) List(parent string) *AccountsContainersDestinationsListCall {
 	c := &AccountsContainersDestinationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -5019,8 +4818,7 @@ type AccountsContainersEnvironmentsCreateCall struct {
 
 // Create: Creates a GTM Environment.
 //
-//   - parent: GTM Container's API relative path. Example:
-//     accounts/{account_id}/containers/{container_id}.
+// - parent: GTM Container's API relative path.
 func (r *AccountsContainersEnvironmentsService) Create(parent string, environment *Environment) *AccountsContainersEnvironmentsCreateCall {
 	c := &AccountsContainersEnvironmentsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -5122,9 +4920,7 @@ type AccountsContainersEnvironmentsDeleteCall struct {
 
 // Delete: Deletes a GTM Environment.
 //
-//   - path: GTM Environment's API relative path. Example:
-//     accounts/{account_id}/containers/{container_id}/environments/{environment_i
-//     d}.
+// - path: GTM Environment's API relative path.
 func (r *AccountsContainersEnvironmentsService) Delete(path string) *AccountsContainersEnvironmentsDeleteCall {
 	c := &AccountsContainersEnvironmentsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.path = path
@@ -5198,9 +4994,7 @@ type AccountsContainersEnvironmentsGetCall struct {
 
 // Get: Gets a GTM Environment.
 //
-//   - path: GTM Environment's API relative path. Example:
-//     accounts/{account_id}/containers/{container_id}/environments/{environment_i
-//     d}.
+// - path: GTM Environment's API relative path.
 func (r *AccountsContainersEnvironmentsService) Get(path string) *AccountsContainersEnvironmentsGetCall {
 	c := &AccountsContainersEnvironmentsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.path = path
@@ -5309,8 +5103,7 @@ type AccountsContainersEnvironmentsListCall struct {
 
 // List: Lists all GTM Environments of a GTM Container.
 //
-//   - parent: GTM Container's API relative path. Example:
-//     accounts/{account_id}/containers/{container_id}.
+// - parent: GTM Container's API relative path.
 func (r *AccountsContainersEnvironmentsService) List(parent string) *AccountsContainersEnvironmentsListCall {
 	c := &AccountsContainersEnvironmentsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -5448,9 +5241,7 @@ type AccountsContainersEnvironmentsReauthorizeCall struct {
 
 // Reauthorize: Re-generates the authorization code for a GTM Environment.
 //
-//   - path: GTM Environment's API relative path. Example:
-//     accounts/{account_id}/containers/{container_id}/environments/{environment_i
-//     d}.
+// - path: GTM Environment's API relative path.
 func (r *AccountsContainersEnvironmentsService) Reauthorize(path string, environment *Environment) *AccountsContainersEnvironmentsReauthorizeCall {
 	c := &AccountsContainersEnvironmentsReauthorizeCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.path = path
@@ -5553,9 +5344,7 @@ type AccountsContainersEnvironmentsUpdateCall struct {
 
 // Update: Updates a GTM Environment.
 //
-//   - path: GTM Environment's API relative path. Example:
-//     accounts/{account_id}/containers/{container_id}/environments/{environment_i
-//     d}.
+// - path: GTM Environment's API relative path.
 func (r *AccountsContainersEnvironmentsService) Update(path string, environment *Environment) *AccountsContainersEnvironmentsUpdateCall {
 	c := &AccountsContainersEnvironmentsUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.path = path
@@ -5665,8 +5454,7 @@ type AccountsContainersVersionHeadersLatestCall struct {
 
 // Latest: Gets the latest container version header
 //
-//   - parent: GTM Container's API relative path. Example:
-//     accounts/{account_id}/containers/{container_id}.
+// - parent: GTM Container's API relative path.
 func (r *AccountsContainersVersionHeadersService) Latest(parent string) *AccountsContainersVersionHeadersLatestCall {
 	c := &AccountsContainersVersionHeadersLatestCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -5776,8 +5564,7 @@ type AccountsContainersVersionHeadersListCall struct {
 
 // List: Lists all Container Versions of a GTM Container.
 //
-//   - parent: GTM Container's API relative path. Example:
-//     accounts/{account_id}/containers/{container_id}.
+// - parent: GTM Container's API relative path.
 func (r *AccountsContainersVersionHeadersService) List(parent string) *AccountsContainersVersionHeadersListCall {
 	c := &AccountsContainersVersionHeadersListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -5921,8 +5708,7 @@ type AccountsContainersVersionsDeleteCall struct {
 
 // Delete: Deletes a Container Version.
 //
-//   - path: GTM ContainerVersion's API relative path. Example:
-//     accounts/{account_id}/containers/{container_id}/versions/{version_id}.
+// - path: GTM ContainerVersion's API relative path.
 func (r *AccountsContainersVersionsService) Delete(path string) *AccountsContainersVersionsDeleteCall {
 	c := &AccountsContainersVersionsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.path = path
@@ -5996,8 +5782,7 @@ type AccountsContainersVersionsGetCall struct {
 
 // Get: Gets a Container Version.
 //
-//   - path: GTM ContainerVersion's API relative path. Example:
-//     accounts/{account_id}/containers/{container_id}/versions/{version_id}.
+// - path: GTM ContainerVersion's API relative path.
 func (r *AccountsContainersVersionsService) Get(path string) *AccountsContainersVersionsGetCall {
 	c := &AccountsContainersVersionsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.path = path
@@ -6115,8 +5900,7 @@ type AccountsContainersVersionsLiveCall struct {
 
 // Live: Gets the live (i.e. published) container version
 //
-//   - parent: GTM Container's API relative path. Example:
-//     accounts/{account_id}/containers/{container_id}.
+// - parent: GTM Container's API relative path.
 func (r *AccountsContainersVersionsService) Live(parent string) *AccountsContainersVersionsLiveCall {
 	c := &AccountsContainersVersionsLiveCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -6225,8 +6009,7 @@ type AccountsContainersVersionsPublishCall struct {
 
 // Publish: Publishes a Container Version.
 //
-//   - path: GTM ContainerVersion's API relative path. Example:
-//     accounts/{account_id}/containers/{container_id}/versions/{version_id}.
+// - path: GTM ContainerVersion's API relative path.
 func (r *AccountsContainersVersionsService) Publish(path string) *AccountsContainersVersionsPublishCall {
 	c := &AccountsContainersVersionsPublishCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.path = path
@@ -6332,8 +6115,7 @@ type AccountsContainersVersionsSetLatestCall struct {
 // SetLatest: Sets the latest version used for synchronization of workspaces
 // when detecting conflicts and errors.
 //
-//   - path: GTM ContainerVersion's API relative path. Example:
-//     accounts/{account_id}/containers/{container_id}/versions/{version_id}.
+// - path: GTM ContainerVersion's API relative path.
 func (r *AccountsContainersVersionsService) SetLatest(path string) *AccountsContainersVersionsSetLatestCall {
 	c := &AccountsContainersVersionsSetLatestCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.path = path
@@ -6431,8 +6213,7 @@ type AccountsContainersVersionsUndeleteCall struct {
 
 // Undelete: Undeletes a Container Version.
 //
-//   - path: GTM ContainerVersion's API relative path. Example:
-//     accounts/{account_id}/containers/{container_id}/versions/{version_id}.
+// - path: GTM ContainerVersion's API relative path.
 func (r *AccountsContainersVersionsService) Undelete(path string) *AccountsContainersVersionsUndeleteCall {
 	c := &AccountsContainersVersionsUndeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.path = path
@@ -6531,8 +6312,7 @@ type AccountsContainersVersionsUpdateCall struct {
 
 // Update: Updates a Container Version.
 //
-//   - path: GTM ContainerVersion's API relative path. Example:
-//     accounts/{account_id}/containers/{container_id}/versions/{version_id}.
+// - path: GTM ContainerVersion's API relative path.
 func (r *AccountsContainersVersionsService) Update(path string, containerversion *ContainerVersion) *AccountsContainersVersionsUpdateCall {
 	c := &AccountsContainersVersionsUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.path = path
@@ -6643,8 +6423,7 @@ type AccountsContainersWorkspacesCreateCall struct {
 
 // Create: Creates a Workspace.
 //
-//   - parent: GTM parent Container's API relative path. Example:
-//     accounts/{account_id}/containers/{container_id}.
+// - parent: GTM parent Container's API relative path.
 func (r *AccountsContainersWorkspacesService) Create(parent string, workspace *Workspace) *AccountsContainersWorkspacesCreateCall {
 	c := &AccountsContainersWorkspacesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -6749,8 +6528,7 @@ type AccountsContainersWorkspacesCreateVersionCall struct {
 // workspace, deletes the workspace, and sets the base container version to the
 // newly created version.
 //
-//   - path: GTM Workspace's API relative path. Example:
-//     accounts/{account_id}/containers/{container_id}/workspaces/{workspace_id}.
+// - path: GTM Workspace's API relative path.
 func (r *AccountsContainersWorkspacesService) CreateVersion(path string, createcontainerversionrequestversionoptions *CreateContainerVersionRequestVersionOptions) *AccountsContainersWorkspacesCreateVersionCall {
 	c := &AccountsContainersWorkspacesCreateVersionCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.path = path
@@ -6853,8 +6631,7 @@ type AccountsContainersWorkspacesDeleteCall struct {
 
 // Delete: Deletes a Workspace.
 //
-//   - path: GTM Workspace's API relative path. Example:
-//     accounts/{account_id}/containers/{container_id}/workspaces/{workspace_id}.
+// - path: GTM Workspace's API relative path.
 func (r *AccountsContainersWorkspacesService) Delete(path string) *AccountsContainersWorkspacesDeleteCall {
 	c := &AccountsContainersWorkspacesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.path = path
@@ -6928,8 +6705,7 @@ type AccountsContainersWorkspacesGetCall struct {
 
 // Get: Gets a Workspace.
 //
-//   - path: GTM Workspace's API relative path. Example:
-//     accounts/{account_id}/containers/{container_id}/workspaces/{workspace_id}.
+// - path: GTM Workspace's API relative path.
 func (r *AccountsContainersWorkspacesService) Get(path string) *AccountsContainersWorkspacesGetCall {
 	c := &AccountsContainersWorkspacesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.path = path
@@ -7038,8 +6814,7 @@ type AccountsContainersWorkspacesGetStatusCall struct {
 
 // GetStatus: Finds conflicting and modified entities in the workspace.
 //
-//   - path: GTM Workspace's API relative path. Example:
-//     accounts/{account_id}/containers/{container_id}/workspaces/{workspace_id}.
+// - path: GTM Workspace's API relative path.
 func (r *AccountsContainersWorkspacesService) GetStatus(path string) *AccountsContainersWorkspacesGetStatusCall {
 	c := &AccountsContainersWorkspacesGetStatusCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.path = path
@@ -7149,8 +6924,7 @@ type AccountsContainersWorkspacesListCall struct {
 
 // List: Lists all Workspaces that belong to a GTM Container.
 //
-//   - parent: GTM parent Container's API relative path. Example:
-//     accounts/{account_id}/containers/{container_id}.
+// - parent: GTM parent Container's API relative path.
 func (r *AccountsContainersWorkspacesService) List(parent string) *AccountsContainersWorkspacesListCall {
 	c := &AccountsContainersWorkspacesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -7288,8 +7062,7 @@ type AccountsContainersWorkspacesQuickPreviewCall struct {
 // QuickPreview: Quick previews a workspace by creating a fake container
 // version from all entities in the provided workspace.
 //
-//   - path: GTM Workspace's API relative path. Example:
-//     accounts/{account_id}/containers/{container_id}/workspaces/{workspace_id}.
+// - path: GTM Workspace's API relative path.
 func (r *AccountsContainersWorkspacesService) QuickPreview(path string) *AccountsContainersWorkspacesQuickPreviewCall {
 	c := &AccountsContainersWorkspacesQuickPreviewCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.path = path
@@ -7389,8 +7162,7 @@ type AccountsContainersWorkspacesResolveConflictCall struct {
 // ResolveConflict: Resolves a merge conflict for a workspace entity by
 // updating it to the resolved entity passed in the request.
 //
-//   - path: GTM Workspace's API relative path. Example:
-//     accounts/{account_id}/containers/{container_id}/workspaces/{workspace_id}.
+// - path: GTM Workspace's API relative path.
 func (r *AccountsContainersWorkspacesService) ResolveConflict(path string, entity *Entity) *AccountsContainersWorkspacesResolveConflictCall {
 	c := &AccountsContainersWorkspacesResolveConflictCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.path = path
@@ -7478,8 +7250,7 @@ type AccountsContainersWorkspacesSyncCall struct {
 // unmodified workspace entities and displaying conflicts for modified
 // entities.
 //
-//   - path: GTM Workspace's API relative path. Example:
-//     accounts/{account_id}/containers/{container_id}/workspaces/{workspace_id}.
+// - path: GTM Workspace's API relative path.
 func (r *AccountsContainersWorkspacesService) Sync(path string) *AccountsContainersWorkspacesSyncCall {
 	c := &AccountsContainersWorkspacesSyncCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.path = path
@@ -7578,8 +7349,7 @@ type AccountsContainersWorkspacesUpdateCall struct {
 
 // Update: Updates a Workspace.
 //
-//   - path: GTM Workspace's API relative path. Example:
-//     accounts/{account_id}/containers/{container_id}/workspaces/{workspace_id}.
+// - path: GTM Workspace's API relative path.
 func (r *AccountsContainersWorkspacesService) Update(path string, workspace *Workspace) *AccountsContainersWorkspacesUpdateCall {
 	c := &AccountsContainersWorkspacesUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.path = path
@@ -7688,8 +7458,7 @@ type AccountsContainersWorkspacesBuiltInVariablesCreateCall struct {
 
 // Create: Creates one or more GTM Built-In Variables.
 //
-//   - parent: GTM Workspace's API relative path. Example:
-//     accounts/{account_id}/containers/{container_id}/workspaces/{workspace_id}.
+// - parent: GTM Workspace's API relative path.
 func (r *AccountsContainersWorkspacesBuiltInVariablesService) Create(parent string) *AccountsContainersWorkspacesBuiltInVariablesCreateCall {
 	c := &AccountsContainersWorkspacesBuiltInVariablesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -7911,9 +7680,7 @@ type AccountsContainersWorkspacesBuiltInVariablesDeleteCall struct {
 
 // Delete: Deletes one or more GTM Built-In Variables.
 //
-//   - path: GTM BuiltInVariable's API relative path. Example:
-//     accounts/{account_id}/containers/{container_id}/workspaces/{workspace_id}/b
-//     uilt_in_variables.
+// - path: GTM BuiltInVariable's API relative path.
 func (r *AccountsContainersWorkspacesBuiltInVariablesService) Delete(path string) *AccountsContainersWorkspacesBuiltInVariablesDeleteCall {
 	c := &AccountsContainersWorkspacesBuiltInVariablesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.path = path
@@ -8111,8 +7878,7 @@ type AccountsContainersWorkspacesBuiltInVariablesListCall struct {
 
 // List: Lists all the enabled Built-In Variables of a GTM Container.
 //
-//   - parent: GTM Workspace's API relative path. Example:
-//     accounts/{account_id}/containers/{container_id}/workspaces/{workspace_id}.
+// - parent: GTM Workspace's API relative path.
 func (r *AccountsContainersWorkspacesBuiltInVariablesService) List(parent string) *AccountsContainersWorkspacesBuiltInVariablesListCall {
 	c := &AccountsContainersWorkspacesBuiltInVariablesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -8249,9 +8015,7 @@ type AccountsContainersWorkspacesBuiltInVariablesRevertCall struct {
 
 // Revert: Reverts changes to a GTM Built-In Variables in a GTM Workspace.
 //
-//   - path: GTM BuiltInVariable's API relative path. Example:
-//     accounts/{account_id}/containers/{container_id}/workspaces/{workspace_id}/b
-//     uilt_in_variables.
+// - path: GTM BuiltInVariable's API relative path.
 func (r *AccountsContainersWorkspacesBuiltInVariablesService) Revert(path string) *AccountsContainersWorkspacesBuiltInVariablesRevertCall {
 	c := &AccountsContainersWorkspacesBuiltInVariablesRevertCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.path = path
@@ -8474,8 +8238,7 @@ type AccountsContainersWorkspacesClientsCreateCall struct {
 
 // Create: Creates a GTM Client.
 //
-//   - parent: GTM Workspace's API relative path. Example:
-//     accounts/{account_id}/containers/{container_id}/workspaces/{workspace_id}.
+// - parent: GTM Workspace's API relative path.
 func (r *AccountsContainersWorkspacesClientsService) Create(parent string, client *Client) *AccountsContainersWorkspacesClientsCreateCall {
 	c := &AccountsContainersWorkspacesClientsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -8577,9 +8340,7 @@ type AccountsContainersWorkspacesClientsDeleteCall struct {
 
 // Delete: Deletes a GTM Client.
 //
-//   - path: GTM Client's API relative path. Example:
-//     accounts/{account_id}/containers/{container_id}/workspaces/{workspace_id}/c
-//     lients/{client_id}.
+// - path: GTM Client's API relative path.
 func (r *AccountsContainersWorkspacesClientsService) Delete(path string) *AccountsContainersWorkspacesClientsDeleteCall {
 	c := &AccountsContainersWorkspacesClientsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.path = path
@@ -8653,9 +8414,7 @@ type AccountsContainersWorkspacesClientsGetCall struct {
 
 // Get: Gets a GTM Client.
 //
-//   - path: GTM Client's API relative path. Example:
-//     accounts/{account_id}/containers/{container_id}/workspaces/{workspace_id}/c
-//     lients/{client_id}.
+// - path: GTM Client's API relative path.
 func (r *AccountsContainersWorkspacesClientsService) Get(path string) *AccountsContainersWorkspacesClientsGetCall {
 	c := &AccountsContainersWorkspacesClientsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.path = path
@@ -8764,8 +8523,7 @@ type AccountsContainersWorkspacesClientsListCall struct {
 
 // List: Lists all GTM Clients of a GTM container workspace.
 //
-//   - parent: GTM Workspace's API relative path. Example:
-//     accounts/{account_id}/containers/{container_id}/workspaces/{workspace_id}.
+// - parent: GTM Workspace's API relative path.
 func (r *AccountsContainersWorkspacesClientsService) List(parent string) *AccountsContainersWorkspacesClientsListCall {
 	c := &AccountsContainersWorkspacesClientsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -8902,9 +8660,7 @@ type AccountsContainersWorkspacesClientsRevertCall struct {
 
 // Revert: Reverts changes to a GTM Client in a GTM Workspace.
 //
-//   - path: GTM Client's API relative path. Example:
-//     accounts/{account_id}/containers/{container_id}/workspaces/{workspace_id}/c
-//     lients/{client_id}.
+// - path: GTM Client's API relative path.
 func (r *AccountsContainersWorkspacesClientsService) Revert(path string) *AccountsContainersWorkspacesClientsRevertCall {
 	c := &AccountsContainersWorkspacesClientsRevertCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.path = path
@@ -9010,9 +8766,7 @@ type AccountsContainersWorkspacesClientsUpdateCall struct {
 
 // Update: Updates a GTM Client.
 //
-//   - path: GTM Client's API relative path. Example:
-//     accounts/{account_id}/containers/{container_id}/workspaces/{workspace_id}/c
-//     lients/{client_id}.
+// - path: GTM Client's API relative path.
 func (r *AccountsContainersWorkspacesClientsService) Update(path string, client *Client) *AccountsContainersWorkspacesClientsUpdateCall {
 	c := &AccountsContainersWorkspacesClientsUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.path = path
@@ -9122,8 +8876,7 @@ type AccountsContainersWorkspacesFoldersCreateCall struct {
 
 // Create: Creates a GTM Folder.
 //
-//   - parent: GTM Workspace's API relative path. Example:
-//     accounts/{account_id}/containers/{container_id}/workspaces/{workspace_id}.
+// - parent: GTM Workspace's API relative path.
 func (r *AccountsContainersWorkspacesFoldersService) Create(parent string, folder *Folder) *AccountsContainersWorkspacesFoldersCreateCall {
 	c := &AccountsContainersWorkspacesFoldersCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -9225,9 +8978,7 @@ type AccountsContainersWorkspacesFoldersDeleteCall struct {
 
 // Delete: Deletes a GTM Folder.
 //
-//   - path: GTM Folder's API relative path. Example:
-//     accounts/{account_id}/containers/{container_id}/workspaces/{workspace_id}/f
-//     olders/{folder_id}.
+// - path: GTM Folder's API relative path.
 func (r *AccountsContainersWorkspacesFoldersService) Delete(path string) *AccountsContainersWorkspacesFoldersDeleteCall {
 	c := &AccountsContainersWorkspacesFoldersDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.path = path
@@ -9300,9 +9051,7 @@ type AccountsContainersWorkspacesFoldersEntitiesCall struct {
 
 // Entities: List all entities in a GTM Folder.
 //
-//   - path: GTM Folder's API relative path. Example:
-//     accounts/{account_id}/containers/{container_id}/workspaces/{workspace_id}/f
-//     olders/{folder_id}.
+// - path: GTM Folder's API relative path.
 func (r *AccountsContainersWorkspacesFoldersService) Entities(path string) *AccountsContainersWorkspacesFoldersEntitiesCall {
 	c := &AccountsContainersWorkspacesFoldersEntitiesCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.path = path
@@ -9428,9 +9177,7 @@ type AccountsContainersWorkspacesFoldersGetCall struct {
 
 // Get: Gets a GTM Folder.
 //
-//   - path: GTM Folder's API relative path. Example:
-//     accounts/{account_id}/containers/{container_id}/workspaces/{workspace_id}/f
-//     olders/{folder_id}.
+// - path: GTM Folder's API relative path.
 func (r *AccountsContainersWorkspacesFoldersService) Get(path string) *AccountsContainersWorkspacesFoldersGetCall {
 	c := &AccountsContainersWorkspacesFoldersGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.path = path
@@ -9539,8 +9286,7 @@ type AccountsContainersWorkspacesFoldersListCall struct {
 
 // List: Lists all GTM Folders of a Container.
 //
-//   - parent: GTM Workspace's API relative path. Example:
-//     accounts/{account_id}/containers/{container_id}/workspaces/{workspace_id}.
+// - parent: GTM Workspace's API relative path.
 func (r *AccountsContainersWorkspacesFoldersService) List(parent string) *AccountsContainersWorkspacesFoldersListCall {
 	c := &AccountsContainersWorkspacesFoldersListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -9680,9 +9426,7 @@ type AccountsContainersWorkspacesFoldersMoveEntitiesToFolderCall struct {
 // request path equals 0, this will instead move entities out of the folder
 // they currently belong to.
 //
-//   - path: GTM Folder's API relative path. Example:
-//     accounts/{account_id}/containers/{container_id}/workspaces/{workspace_id}/f
-//     olders/{folder_id}.
+// - path: GTM Folder's API relative path.
 func (r *AccountsContainersWorkspacesFoldersService) MoveEntitiesToFolder(path string, folder *Folder) *AccountsContainersWorkspacesFoldersMoveEntitiesToFolderCall {
 	c := &AccountsContainersWorkspacesFoldersMoveEntitiesToFolderCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.path = path
@@ -9781,9 +9525,7 @@ type AccountsContainersWorkspacesFoldersRevertCall struct {
 
 // Revert: Reverts changes to a GTM Folder in a GTM Workspace.
 //
-//   - path: GTM Folder's API relative path. Example:
-//     accounts/{account_id}/containers/{container_id}/workspaces/{workspace_id}/f
-//     olders/{folder_id}.
+// - path: GTM Folder's API relative path.
 func (r *AccountsContainersWorkspacesFoldersService) Revert(path string) *AccountsContainersWorkspacesFoldersRevertCall {
 	c := &AccountsContainersWorkspacesFoldersRevertCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.path = path
@@ -9889,9 +9631,7 @@ type AccountsContainersWorkspacesFoldersUpdateCall struct {
 
 // Update: Updates a GTM Folder.
 //
-//   - path: GTM Folder's API relative path. Example:
-//     accounts/{account_id}/containers/{container_id}/workspaces/{workspace_id}/f
-//     olders/{folder_id}.
+// - path: GTM Folder's API relative path.
 func (r *AccountsContainersWorkspacesFoldersService) Update(path string, folder *Folder) *AccountsContainersWorkspacesFoldersUpdateCall {
 	c := &AccountsContainersWorkspacesFoldersUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.path = path
@@ -10001,8 +9741,7 @@ type AccountsContainersWorkspacesGtagConfigCreateCall struct {
 
 // Create: Creates a Google tag config.
 //
-//   - parent: Workspace's API relative path. Example:
-//     accounts/{account_id}/containers/{container_id}/workspaces/{workspace_id}.
+// - parent: Workspace's API relative path.
 func (r *AccountsContainersWorkspacesGtagConfigService) Create(parent string, gtagconfig *GtagConfig) *AccountsContainersWorkspacesGtagConfigCreateCall {
 	c := &AccountsContainersWorkspacesGtagConfigCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -10104,9 +9843,7 @@ type AccountsContainersWorkspacesGtagConfigDeleteCall struct {
 
 // Delete: Deletes a Google tag config.
 //
-//   - path: Google tag config's API relative path. Example:
-//     accounts/{account_id}/containers/{container_id}/workspaces/{workspace_id}/g
-//     tag_config/{gtag_config_id}.
+// - path: Google tag config's API relative path.
 func (r *AccountsContainersWorkspacesGtagConfigService) Delete(path string) *AccountsContainersWorkspacesGtagConfigDeleteCall {
 	c := &AccountsContainersWorkspacesGtagConfigDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.path = path
@@ -10180,9 +9917,7 @@ type AccountsContainersWorkspacesGtagConfigGetCall struct {
 
 // Get: Gets a Google tag config.
 //
-//   - path: Google tag config's API relative path. Example:
-//     accounts/{account_id}/containers/{container_id}/workspaces/{workspace_id}/g
-//     tag_config/{gtag_config_id}.
+// - path: Google tag config's API relative path.
 func (r *AccountsContainersWorkspacesGtagConfigService) Get(path string) *AccountsContainersWorkspacesGtagConfigGetCall {
 	c := &AccountsContainersWorkspacesGtagConfigGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.path = path
@@ -10291,8 +10026,7 @@ type AccountsContainersWorkspacesGtagConfigListCall struct {
 
 // List: Lists all Google tag configs in a Container.
 //
-//   - parent: Workspace's API relative path. Example:
-//     accounts/{account_id}/containers/{container_id}/workspaces/{workspace_id}.
+// - parent: Workspace's API relative path.
 func (r *AccountsContainersWorkspacesGtagConfigService) List(parent string) *AccountsContainersWorkspacesGtagConfigListCall {
 	c := &AccountsContainersWorkspacesGtagConfigListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -10430,9 +10164,7 @@ type AccountsContainersWorkspacesGtagConfigUpdateCall struct {
 
 // Update: Updates a Google tag config.
 //
-//   - path: Google tag config's API relative path. Example:
-//     accounts/{account_id}/containers/{container_id}/workspaces/{workspace_id}/g
-//     tag_config/{gtag_config_id}.
+// - path: Google tag config's API relative path.
 func (r *AccountsContainersWorkspacesGtagConfigService) Update(path string, gtagconfig *GtagConfig) *AccountsContainersWorkspacesGtagConfigUpdateCall {
 	c := &AccountsContainersWorkspacesGtagConfigUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.path = path
@@ -10542,8 +10274,7 @@ type AccountsContainersWorkspacesTagsCreateCall struct {
 
 // Create: Creates a GTM Tag.
 //
-//   - parent: GTM Workspace's API relative path. Example:
-//     accounts/{account_id}/containers/{container_id}/workspaces/{workspace_id}.
+// - parent: GTM Workspace's API relative path.
 func (r *AccountsContainersWorkspacesTagsService) Create(parent string, tag *Tag) *AccountsContainersWorkspacesTagsCreateCall {
 	c := &AccountsContainersWorkspacesTagsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -10645,9 +10376,7 @@ type AccountsContainersWorkspacesTagsDeleteCall struct {
 
 // Delete: Deletes a GTM Tag.
 //
-//   - path: GTM Tag's API relative path. Example:
-//     accounts/{account_id}/containers/{container_id}/workspaces/{workspace_id}/t
-//     ags/{tag_id}.
+// - path: GTM Tag's API relative path.
 func (r *AccountsContainersWorkspacesTagsService) Delete(path string) *AccountsContainersWorkspacesTagsDeleteCall {
 	c := &AccountsContainersWorkspacesTagsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.path = path
@@ -10721,9 +10450,7 @@ type AccountsContainersWorkspacesTagsGetCall struct {
 
 // Get: Gets a GTM Tag.
 //
-//   - path: GTM Tag's API relative path. Example:
-//     accounts/{account_id}/containers/{container_id}/workspaces/{workspace_id}/t
-//     ags/{tag_id}.
+// - path: GTM Tag's API relative path.
 func (r *AccountsContainersWorkspacesTagsService) Get(path string) *AccountsContainersWorkspacesTagsGetCall {
 	c := &AccountsContainersWorkspacesTagsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.path = path
@@ -10832,8 +10559,7 @@ type AccountsContainersWorkspacesTagsListCall struct {
 
 // List: Lists all GTM Tags of a Container.
 //
-//   - parent: GTM Workspace's API relative path. Example:
-//     accounts/{account_id}/containers/{container_id}/workspaces/{workspace_id}.
+// - parent: GTM Workspace's API relative path.
 func (r *AccountsContainersWorkspacesTagsService) List(parent string) *AccountsContainersWorkspacesTagsListCall {
 	c := &AccountsContainersWorkspacesTagsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -10970,9 +10696,7 @@ type AccountsContainersWorkspacesTagsRevertCall struct {
 
 // Revert: Reverts changes to a GTM Tag in a GTM Workspace.
 //
-//   - path: GTM Tag's API relative path. Example:
-//     accounts/{account_id}/containers/{container_id}/workspaces/{workspace_id}/t
-//     ags/{tag_id}.
+// - path: GTM Tag's API relative path.
 func (r *AccountsContainersWorkspacesTagsService) Revert(path string) *AccountsContainersWorkspacesTagsRevertCall {
 	c := &AccountsContainersWorkspacesTagsRevertCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.path = path
@@ -11078,9 +10802,7 @@ type AccountsContainersWorkspacesTagsUpdateCall struct {
 
 // Update: Updates a GTM Tag.
 //
-//   - path: GTM Tag's API relative path. Example:
-//     accounts/{account_id}/containers/{container_id}/workspaces/{workspace_id}/t
-//     ags/{tag_id}.
+// - path: GTM Tag's API relative path.
 func (r *AccountsContainersWorkspacesTagsService) Update(path string, tag *Tag) *AccountsContainersWorkspacesTagsUpdateCall {
 	c := &AccountsContainersWorkspacesTagsUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.path = path
@@ -11190,8 +10912,7 @@ type AccountsContainersWorkspacesTemplatesCreateCall struct {
 
 // Create: Creates a GTM Custom Template.
 //
-//   - parent: GTM Workspace's API relative path. Example:
-//     accounts/{account_id}/containers/{container_id}/workspaces/{workspace_id}.
+// - parent: GTM Workspace's API relative path.
 func (r *AccountsContainersWorkspacesTemplatesService) Create(parent string, customtemplate *CustomTemplate) *AccountsContainersWorkspacesTemplatesCreateCall {
 	c := &AccountsContainersWorkspacesTemplatesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -11293,9 +11014,7 @@ type AccountsContainersWorkspacesTemplatesDeleteCall struct {
 
 // Delete: Deletes a GTM Template.
 //
-//   - path: GTM Custom Template's API relative path. Example:
-//     accounts/{account_id}/containers/{container_id}/workspaces/{workspace_id}/t
-//     emplates/{template_id}.
+// - path: GTM Custom Template's API relative path.
 func (r *AccountsContainersWorkspacesTemplatesService) Delete(path string) *AccountsContainersWorkspacesTemplatesDeleteCall {
 	c := &AccountsContainersWorkspacesTemplatesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.path = path
@@ -11369,9 +11088,7 @@ type AccountsContainersWorkspacesTemplatesGetCall struct {
 
 // Get: Gets a GTM Template.
 //
-//   - path: GTM Custom Template's API relative path. Example:
-//     accounts/{account_id}/containers/{container_id}/workspaces/{workspace_id}/t
-//     emplates/{template_id}.
+// - path: GTM Custom Template's API relative path.
 func (r *AccountsContainersWorkspacesTemplatesService) Get(path string) *AccountsContainersWorkspacesTemplatesGetCall {
 	c := &AccountsContainersWorkspacesTemplatesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.path = path
@@ -11469,6 +11186,133 @@ func (c *AccountsContainersWorkspacesTemplatesGetCall) Do(opts ...googleapi.Call
 	return ret, nil
 }
 
+type AccountsContainersWorkspacesTemplatesImportFromGalleryCall struct {
+	s          *Service
+	parent     string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// ImportFromGallery: Imports a GTM Custom Template from Gallery.
+//
+// - parent: GTM Workspace's API relative path.
+func (r *AccountsContainersWorkspacesTemplatesService) ImportFromGallery(parent string) *AccountsContainersWorkspacesTemplatesImportFromGalleryCall {
+	c := &AccountsContainersWorkspacesTemplatesImportFromGalleryCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// AcknowledgePermissions sets the optional parameter "acknowledgePermissions":
+// Must be set to true to allow Gallery template to be imported into the
+// workspace. If this bit is false, the import operation will fail.
+func (c *AccountsContainersWorkspacesTemplatesImportFromGalleryCall) AcknowledgePermissions(acknowledgePermissions bool) *AccountsContainersWorkspacesTemplatesImportFromGalleryCall {
+	c.urlParams_.Set("acknowledgePermissions", fmt.Sprint(acknowledgePermissions))
+	return c
+}
+
+// GalleryOwner sets the optional parameter "galleryOwner": Owner of the
+// Gallery template to import
+func (c *AccountsContainersWorkspacesTemplatesImportFromGalleryCall) GalleryOwner(galleryOwner string) *AccountsContainersWorkspacesTemplatesImportFromGalleryCall {
+	c.urlParams_.Set("galleryOwner", galleryOwner)
+	return c
+}
+
+// GalleryRepository sets the optional parameter "galleryRepository":
+// Repository of the Gallery template to import
+func (c *AccountsContainersWorkspacesTemplatesImportFromGalleryCall) GalleryRepository(galleryRepository string) *AccountsContainersWorkspacesTemplatesImportFromGalleryCall {
+	c.urlParams_.Set("galleryRepository", galleryRepository)
+	return c
+}
+
+// GallerySha sets the optional parameter "gallerySha": SHA version of the
+// Gallery template to import. Defaulted to the latest SHA version if not
+// provided.
+func (c *AccountsContainersWorkspacesTemplatesImportFromGalleryCall) GallerySha(gallerySha string) *AccountsContainersWorkspacesTemplatesImportFromGalleryCall {
+	c.urlParams_.Set("gallerySha", gallerySha)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *AccountsContainersWorkspacesTemplatesImportFromGalleryCall) Fields(s ...googleapi.Field) *AccountsContainersWorkspacesTemplatesImportFromGalleryCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *AccountsContainersWorkspacesTemplatesImportFromGalleryCall) Context(ctx context.Context) *AccountsContainersWorkspacesTemplatesImportFromGalleryCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *AccountsContainersWorkspacesTemplatesImportFromGalleryCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *AccountsContainersWorkspacesTemplatesImportFromGalleryCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "tagmanager/v2/{+parent}/templates:import_from_gallery")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "tagmanager.accounts.containers.workspaces.templates.import_from_gallery", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "tagmanager.accounts.containers.workspaces.templates.import_from_gallery" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *CustomTemplate.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *AccountsContainersWorkspacesTemplatesImportFromGalleryCall) Do(opts ...googleapi.CallOption) (*CustomTemplate, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &CustomTemplate{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "tagmanager.accounts.containers.workspaces.templates.import_from_gallery", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
 type AccountsContainersWorkspacesTemplatesListCall struct {
 	s            *Service
 	parent       string
@@ -11480,8 +11324,7 @@ type AccountsContainersWorkspacesTemplatesListCall struct {
 
 // List: Lists all GTM Templates of a GTM container workspace.
 //
-//   - parent: GTM Workspace's API relative path. Example:
-//     accounts/{account_id}/containers/{container_id}/workspaces/{workspace_id}.
+// - parent: GTM Workspace's API relative path.
 func (r *AccountsContainersWorkspacesTemplatesService) List(parent string) *AccountsContainersWorkspacesTemplatesListCall {
 	c := &AccountsContainersWorkspacesTemplatesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -11618,9 +11461,7 @@ type AccountsContainersWorkspacesTemplatesRevertCall struct {
 
 // Revert: Reverts changes to a GTM Template in a GTM Workspace.
 //
-//   - path: GTM Custom Template's API relative path. Example:
-//     accounts/{account_id}/containers/{container_id}/workspaces/{workspace_id}/t
-//     emplates/{template_id}.
+// - path: GTM Custom Template's API relative path.
 func (r *AccountsContainersWorkspacesTemplatesService) Revert(path string) *AccountsContainersWorkspacesTemplatesRevertCall {
 	c := &AccountsContainersWorkspacesTemplatesRevertCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.path = path
@@ -11726,9 +11567,7 @@ type AccountsContainersWorkspacesTemplatesUpdateCall struct {
 
 // Update: Updates a GTM Template.
 //
-//   - path: GTM Custom Template's API relative path. Example:
-//     accounts/{account_id}/containers/{container_id}/workspaces/{workspace_id}/t
-//     emplates/{template_id}.
+// - path: GTM Custom Template's API relative path.
 func (r *AccountsContainersWorkspacesTemplatesService) Update(path string, customtemplate *CustomTemplate) *AccountsContainersWorkspacesTemplatesUpdateCall {
 	c := &AccountsContainersWorkspacesTemplatesUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.path = path
@@ -11838,8 +11677,7 @@ type AccountsContainersWorkspacesTransformationsCreateCall struct {
 
 // Create: Creates a GTM Transformation.
 //
-//   - parent: GTM Workspace's API relative path. Example:
-//     accounts/{account_id}/containers/{container_id}/workspaces/{workspace_id}.
+// - parent: GTM Workspace's API relative path.
 func (r *AccountsContainersWorkspacesTransformationsService) Create(parent string, transformation *Transformation) *AccountsContainersWorkspacesTransformationsCreateCall {
 	c := &AccountsContainersWorkspacesTransformationsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -11941,9 +11779,7 @@ type AccountsContainersWorkspacesTransformationsDeleteCall struct {
 
 // Delete: Deletes a GTM Transformation.
 //
-//   - path: GTM Transformation's API relative path. Example:
-//     accounts/{account_id}/containers/{container_id}/workspaces/{workspace_id}/t
-//     ransformations/{transformation_id}.
+// - path: GTM Transformation's API relative path.
 func (r *AccountsContainersWorkspacesTransformationsService) Delete(path string) *AccountsContainersWorkspacesTransformationsDeleteCall {
 	c := &AccountsContainersWorkspacesTransformationsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.path = path
@@ -12017,9 +11853,7 @@ type AccountsContainersWorkspacesTransformationsGetCall struct {
 
 // Get: Gets a GTM Transformation.
 //
-//   - path: GTM Transformation's API relative path. Example:
-//     accounts/{account_id}/containers/{container_id}/workspaces/{workspace_id}/t
-//     ransformations/{transformation_id}.
+// - path: GTM Transformation's API relative path.
 func (r *AccountsContainersWorkspacesTransformationsService) Get(path string) *AccountsContainersWorkspacesTransformationsGetCall {
 	c := &AccountsContainersWorkspacesTransformationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.path = path
@@ -12128,8 +11962,7 @@ type AccountsContainersWorkspacesTransformationsListCall struct {
 
 // List: Lists all GTM Transformations of a GTM container workspace.
 //
-//   - parent: GTM Workspace's API relative path. Example:
-//     accounts/{account_id}/containers/{container_id}/workspaces/{workspace_id}.
+// - parent: GTM Workspace's API relative path.
 func (r *AccountsContainersWorkspacesTransformationsService) List(parent string) *AccountsContainersWorkspacesTransformationsListCall {
 	c := &AccountsContainersWorkspacesTransformationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -12266,9 +12099,7 @@ type AccountsContainersWorkspacesTransformationsRevertCall struct {
 
 // Revert: Reverts changes to a GTM Transformation in a GTM Workspace.
 //
-//   - path: GTM Transformation's API relative path. Example:
-//     accounts/{account_id}/containers/{container_id}/workspaces/{workspace_id}/t
-//     ransformations/{transformation_id}.
+// - path: GTM Transformation's API relative path.
 func (r *AccountsContainersWorkspacesTransformationsService) Revert(path string) *AccountsContainersWorkspacesTransformationsRevertCall {
 	c := &AccountsContainersWorkspacesTransformationsRevertCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.path = path
@@ -12374,9 +12205,7 @@ type AccountsContainersWorkspacesTransformationsUpdateCall struct {
 
 // Update: Updates a GTM Transformation.
 //
-//   - path: GTM Transformation's API relative path. Example:
-//     accounts/{account_id}/containers/{container_id}/workspaces/{workspace_id}/t
-//     ransformations/{transformation_id}.
+// - path: GTM Transformation's API relative path.
 func (r *AccountsContainersWorkspacesTransformationsService) Update(path string, transformation *Transformation) *AccountsContainersWorkspacesTransformationsUpdateCall {
 	c := &AccountsContainersWorkspacesTransformationsUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.path = path
@@ -12486,8 +12315,7 @@ type AccountsContainersWorkspacesTriggersCreateCall struct {
 
 // Create: Creates a GTM Trigger.
 //
-//   - parent: GTM Workspace's API relative path. Example:
-//     accounts/{account_id}/containers/{container_id}/workspaces/{workspace_id}.
+// - parent: GTM Workspace's API relative path.
 func (r *AccountsContainersWorkspacesTriggersService) Create(parent string, trigger *Trigger) *AccountsContainersWorkspacesTriggersCreateCall {
 	c := &AccountsContainersWorkspacesTriggersCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -12589,9 +12417,7 @@ type AccountsContainersWorkspacesTriggersDeleteCall struct {
 
 // Delete: Deletes a GTM Trigger.
 //
-//   - path: GTM Trigger's API relative path. Example:
-//     accounts/{account_id}/containers/{container_id}/workspaces/{workspace_id}/t
-//     riggers/{trigger_id}.
+// - path: GTM Trigger's API relative path.
 func (r *AccountsContainersWorkspacesTriggersService) Delete(path string) *AccountsContainersWorkspacesTriggersDeleteCall {
 	c := &AccountsContainersWorkspacesTriggersDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.path = path
@@ -12665,9 +12491,7 @@ type AccountsContainersWorkspacesTriggersGetCall struct {
 
 // Get: Gets a GTM Trigger.
 //
-//   - path: GTM Trigger's API relative path. Example:
-//     accounts/{account_id}/containers/{container_id}/workspaces/{workspace_id}/t
-//     riggers/{trigger_id}.
+// - path: GTM Trigger's API relative path.
 func (r *AccountsContainersWorkspacesTriggersService) Get(path string) *AccountsContainersWorkspacesTriggersGetCall {
 	c := &AccountsContainersWorkspacesTriggersGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.path = path
@@ -12776,8 +12600,7 @@ type AccountsContainersWorkspacesTriggersListCall struct {
 
 // List: Lists all GTM Triggers of a Container.
 //
-//   - parent: GTM Workspace's API relative path. Example:
-//     accounts/{account_id}/containers/{container_id}/workspaces/{workspace_id}.
+// - parent: GTM Workspace's API relative path.
 func (r *AccountsContainersWorkspacesTriggersService) List(parent string) *AccountsContainersWorkspacesTriggersListCall {
 	c := &AccountsContainersWorkspacesTriggersListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -12914,9 +12737,7 @@ type AccountsContainersWorkspacesTriggersRevertCall struct {
 
 // Revert: Reverts changes to a GTM Trigger in a GTM Workspace.
 //
-//   - path: GTM Trigger's API relative path. Example:
-//     accounts/{account_id}/containers/{container_id}/workspaces/{workspace_id}/t
-//     riggers/{trigger_id}.
+// - path: GTM Trigger's API relative path.
 func (r *AccountsContainersWorkspacesTriggersService) Revert(path string) *AccountsContainersWorkspacesTriggersRevertCall {
 	c := &AccountsContainersWorkspacesTriggersRevertCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.path = path
@@ -13022,9 +12843,7 @@ type AccountsContainersWorkspacesTriggersUpdateCall struct {
 
 // Update: Updates a GTM Trigger.
 //
-//   - path: GTM Trigger's API relative path. Example:
-//     accounts/{account_id}/containers/{container_id}/workspaces/{workspace_id}/t
-//     riggers/{trigger_id}.
+// - path: GTM Trigger's API relative path.
 func (r *AccountsContainersWorkspacesTriggersService) Update(path string, trigger *Trigger) *AccountsContainersWorkspacesTriggersUpdateCall {
 	c := &AccountsContainersWorkspacesTriggersUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.path = path
@@ -13134,8 +12953,7 @@ type AccountsContainersWorkspacesVariablesCreateCall struct {
 
 // Create: Creates a GTM Variable.
 //
-//   - parent: GTM Workspace's API relative path. Example:
-//     accounts/{account_id}/containers/{container_id}/workspaces/{workspace_id}.
+// - parent: GTM Workspace's API relative path.
 func (r *AccountsContainersWorkspacesVariablesService) Create(parent string, variable *Variable) *AccountsContainersWorkspacesVariablesCreateCall {
 	c := &AccountsContainersWorkspacesVariablesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -13237,9 +13055,7 @@ type AccountsContainersWorkspacesVariablesDeleteCall struct {
 
 // Delete: Deletes a GTM Variable.
 //
-//   - path: GTM Variable's API relative path. Example:
-//     accounts/{account_id}/containers/{container_id}/workspaces/{workspace_id}/v
-//     ariables/{variable_id}.
+// - path: GTM Variable's API relative path.
 func (r *AccountsContainersWorkspacesVariablesService) Delete(path string) *AccountsContainersWorkspacesVariablesDeleteCall {
 	c := &AccountsContainersWorkspacesVariablesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.path = path
@@ -13313,9 +13129,7 @@ type AccountsContainersWorkspacesVariablesGetCall struct {
 
 // Get: Gets a GTM Variable.
 //
-//   - path: GTM Variable's API relative path. Example:
-//     accounts/{account_id}/containers/{container_id}/workspaces/{workspace_id}/v
-//     ariables/{variable_id}.
+// - path: GTM Variable's API relative path.
 func (r *AccountsContainersWorkspacesVariablesService) Get(path string) *AccountsContainersWorkspacesVariablesGetCall {
 	c := &AccountsContainersWorkspacesVariablesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.path = path
@@ -13424,8 +13238,7 @@ type AccountsContainersWorkspacesVariablesListCall struct {
 
 // List: Lists all GTM Variables of a Container.
 //
-//   - parent: GTM Workspace's API relative path. Example:
-//     accounts/{account_id}/containers/{container_id}/workspaces/{workspace_id}.
+// - parent: GTM Workspace's API relative path.
 func (r *AccountsContainersWorkspacesVariablesService) List(parent string) *AccountsContainersWorkspacesVariablesListCall {
 	c := &AccountsContainersWorkspacesVariablesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -13562,9 +13375,7 @@ type AccountsContainersWorkspacesVariablesRevertCall struct {
 
 // Revert: Reverts changes to a GTM Variable in a GTM Workspace.
 //
-//   - path: GTM Variable's API relative path. Example:
-//     accounts/{account_id}/containers/{container_id}/workspaces/{workspace_id}/v
-//     ariables/{variable_id}.
+// - path: GTM Variable's API relative path.
 func (r *AccountsContainersWorkspacesVariablesService) Revert(path string) *AccountsContainersWorkspacesVariablesRevertCall {
 	c := &AccountsContainersWorkspacesVariablesRevertCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.path = path
@@ -13670,9 +13481,7 @@ type AccountsContainersWorkspacesVariablesUpdateCall struct {
 
 // Update: Updates a GTM Variable.
 //
-//   - path: GTM Variable's API relative path. Example:
-//     accounts/{account_id}/containers/{container_id}/workspaces/{workspace_id}/v
-//     ariables/{variable_id}.
+// - path: GTM Variable's API relative path.
 func (r *AccountsContainersWorkspacesVariablesService) Update(path string, variable *Variable) *AccountsContainersWorkspacesVariablesUpdateCall {
 	c := &AccountsContainersWorkspacesVariablesUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.path = path
@@ -13782,8 +13591,7 @@ type AccountsContainersWorkspacesZonesCreateCall struct {
 
 // Create: Creates a GTM Zone.
 //
-//   - parent: GTM Workspace's API relative path. Example:
-//     accounts/{account_id}/containers/{container_id}/workspaces/{workspace_id}.
+// - parent: GTM Workspace's API relative path.
 func (r *AccountsContainersWorkspacesZonesService) Create(parent string, zone *Zone) *AccountsContainersWorkspacesZonesCreateCall {
 	c := &AccountsContainersWorkspacesZonesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -13885,9 +13693,7 @@ type AccountsContainersWorkspacesZonesDeleteCall struct {
 
 // Delete: Deletes a GTM Zone.
 //
-//   - path: GTM Zone's API relative path. Example:
-//     accounts/{account_id}/containers/{container_id}/workspaces/{workspace_id}/z
-//     ones/{zone_id}.
+// - path: GTM Zone's API relative path.
 func (r *AccountsContainersWorkspacesZonesService) Delete(path string) *AccountsContainersWorkspacesZonesDeleteCall {
 	c := &AccountsContainersWorkspacesZonesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.path = path
@@ -13961,9 +13767,7 @@ type AccountsContainersWorkspacesZonesGetCall struct {
 
 // Get: Gets a GTM Zone.
 //
-//   - path: GTM Zone's API relative path. Example:
-//     accounts/{account_id}/containers/{container_id}/workspaces/{workspace_id}/z
-//     ones/{zone_id}.
+// - path: GTM Zone's API relative path.
 func (r *AccountsContainersWorkspacesZonesService) Get(path string) *AccountsContainersWorkspacesZonesGetCall {
 	c := &AccountsContainersWorkspacesZonesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.path = path
@@ -14072,8 +13876,7 @@ type AccountsContainersWorkspacesZonesListCall struct {
 
 // List: Lists all GTM Zones of a GTM container workspace.
 //
-//   - parent: GTM Workspace's API relative path. Example:
-//     accounts/{account_id}/containers/{container_id}/workspaces/{workspace_id}.
+// - parent: GTM Workspace's API relative path.
 func (r *AccountsContainersWorkspacesZonesService) List(parent string) *AccountsContainersWorkspacesZonesListCall {
 	c := &AccountsContainersWorkspacesZonesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -14210,9 +14013,7 @@ type AccountsContainersWorkspacesZonesRevertCall struct {
 
 // Revert: Reverts changes to a GTM Zone in a GTM Workspace.
 //
-//   - path: GTM Zone's API relative path. Example:
-//     accounts/{account_id}/containers/{container_id}/workspaces/{workspace_id}/z
-//     ones/{zone_id}.
+// - path: GTM Zone's API relative path.
 func (r *AccountsContainersWorkspacesZonesService) Revert(path string) *AccountsContainersWorkspacesZonesRevertCall {
 	c := &AccountsContainersWorkspacesZonesRevertCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.path = path
@@ -14318,9 +14119,7 @@ type AccountsContainersWorkspacesZonesUpdateCall struct {
 
 // Update: Updates a GTM Zone.
 //
-//   - path: GTM Zone's API relative path. Example:
-//     accounts/{account_id}/containers/{container_id}/workspaces/{workspace_id}/z
-//     ones/{zone_id}.
+// - path: GTM Zone's API relative path.
 func (r *AccountsContainersWorkspacesZonesService) Update(path string, zone *Zone) *AccountsContainersWorkspacesZonesUpdateCall {
 	c := &AccountsContainersWorkspacesZonesUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.path = path
@@ -14430,7 +14229,7 @@ type AccountsUserPermissionsCreateCall struct {
 
 // Create: Creates a user's Account & Container access.
 //
-// - parent: GTM Account's API relative path. Example: accounts/{account_id}.
+// - parent: GTM Account's API relative path.
 func (r *AccountsUserPermissionsService) Create(parent string, userpermission *UserPermission) *AccountsUserPermissionsCreateCall {
 	c := &AccountsUserPermissionsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -14533,8 +14332,7 @@ type AccountsUserPermissionsDeleteCall struct {
 // Delete: Removes a user from the account, revoking access to it and all of
 // its containers.
 //
-//   - path: GTM UserPermission's API relative path. Example:
-//     accounts/{account_id}/user_permissions/{user_permission_id}.
+// - path: GTM UserPermission's API relative path.
 func (r *AccountsUserPermissionsService) Delete(path string) *AccountsUserPermissionsDeleteCall {
 	c := &AccountsUserPermissionsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.path = path
@@ -14608,8 +14406,7 @@ type AccountsUserPermissionsGetCall struct {
 
 // Get: Gets a user's Account & Container access.
 //
-//   - path: GTM UserPermission's API relative path. Example:
-//     accounts/{account_id}/user_permissions/{user_permission_id}.
+// - path: GTM UserPermission's API relative path.
 func (r *AccountsUserPermissionsService) Get(path string) *AccountsUserPermissionsGetCall {
 	c := &AccountsUserPermissionsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.path = path
@@ -14719,7 +14516,7 @@ type AccountsUserPermissionsListCall struct {
 // List: List all users that have access to the account along with Account and
 // Container user access granted to each of them.
 //
-// - parent: GTM Account's API relative path. Example: accounts/{account_id}.
+// - parent: GTM Account's API relative path.
 func (r *AccountsUserPermissionsService) List(parent string) *AccountsUserPermissionsListCall {
 	c := &AccountsUserPermissionsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -14857,8 +14654,7 @@ type AccountsUserPermissionsUpdateCall struct {
 
 // Update: Updates a user's Account & Container access.
 //
-//   - path: GTM UserPermission's API relative path. Example:
-//     accounts/{account_id}/user_permissions/{user_permission_id}.
+// - path: GTM UserPermission's API relative path.
 func (r *AccountsUserPermissionsService) Update(path string, userpermission *UserPermission) *AccountsUserPermissionsUpdateCall {
 	c := &AccountsUserPermissionsUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.path = path

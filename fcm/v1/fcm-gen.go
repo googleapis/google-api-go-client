@@ -895,9 +895,9 @@ type ProjectsMessagesSendCall struct {
 // condition).
 //
 //   - parent: It contains the Firebase project id (i.e. the unique identifier
-//     for your Firebase project), in the format of `projects/{project_id}`. For
-//     legacy support, the numeric project number with no padding is also
-//     supported in the format of `projects/{project_number}`.
+//     for your Firebase project), in the format of `projects/{project_id}`. The
+//     numeric project number with no padding is also supported in the format of
+//     `projects/{project_number}`.
 func (r *ProjectsMessagesService) Send(parentid string, sendmessagerequest *SendMessageRequest) *ProjectsMessagesSendCall {
 	c := &ProjectsMessagesSendCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parentid = parentid

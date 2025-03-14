@@ -290,7 +290,7 @@ func (s ListProductReviewsResponse) MarshalJSON() ([]byte, error) {
 type MerchantReview struct {
 	// Attributes: Optional. A list of merchant review attributes.
 	Attributes *MerchantReviewAttributes `json:"attributes,omitempty"`
-	// CustomAttributes: Required. A list of custom (merchant-provided) attributes.
+	// CustomAttributes: Optional. A list of custom (merchant-provided) attributes.
 	// It can also be used for submitting any attribute of the data specification
 	// in its generic form (for example, `{ "name": "size type", "value": "regular"
 	// }`). This is useful for submitting attributes not explicitly exposed by the
@@ -378,7 +378,7 @@ type MerchantReviewAttributes struct {
 	// ReviewCountry: Optional. The country where the reviewer made the order
 	// defined by ISO 3166-1 Alpha-2 Country Code.
 	ReviewCountry string `json:"reviewCountry,omitempty"`
-	// ReviewLanguage: Required. The language of the review defined by BCP-47
+	// ReviewLanguage: Optional. The language of the review defined by BCP-47
 	// language code.
 	ReviewLanguage string `json:"reviewLanguage,omitempty"`
 	// ReviewTime: Required. The timestamp indicating when the review was written.
@@ -1039,7 +1039,9 @@ type ProductStatusChangeMessage struct {
 	Attribute string `json:"attribute,omitempty"`
 	// Changes: A message to describe the change that happened to the product
 	Changes []*ProductChange `json:"changes,omitempty"`
-	// EventTime: The time at which the event was generated.
+	// EventTime: The time at which the event was generated. If you want to order
+	// the notification messages you receive you should rely on this field not on
+	// the order of receiving the notifications.
 	EventTime string `json:"eventTime,omitempty"`
 	// ExpirationTime: Optional. The product expiration time. This field will not
 	// bet set if the notification is sent for a product deletion event.

@@ -2209,7 +2209,7 @@ type InterceptDeployment struct {
 	// additional context for the deployment.
 	Description string `json:"description,omitempty"`
 	// ForwardingRule: Required. Immutable. The regional forwarding rule that
-	// fronts the intercept collectors, for example:
+	// fronts the interceptors, for example:
 	// `projects/123456789/regions/us-central1/forwardingRules/my-rule`. See
 	// https://google.aip.dev/124.
 	ForwardingRule string `json:"forwardingRule,omitempty"`
@@ -2287,6 +2287,9 @@ type InterceptDeploymentGroup struct {
 	// Labels: Optional. Labels are key/value pairs that help to organize and
 	// filter resources.
 	Labels map[string]string `json:"labels,omitempty"`
+	// Locations: Output only. The list of locations where the deployment group is
+	// present.
+	Locations []*InterceptLocation `json:"locations,omitempty"`
 	// Name: Immutable. Identifier. The resource name of this deployment group, for
 	// example:
 	// `projects/123456789/locations/global/interceptDeploymentGroups/my-dg`. See
@@ -2411,14 +2414,17 @@ func (s InterceptDeploymentGroupDeployment) MarshalJSON() ([]byte, error) {
 type InterceptEndpointGroup struct {
 	// Associations: Output only. List of associations to this endpoint group.
 	Associations []*InterceptEndpointGroupAssociationDetails `json:"associations,omitempty"`
+	// ConnectedDeploymentGroup: Output only. Details about the connected
+	// deployment group to this endpoint group.
+	ConnectedDeploymentGroup *InterceptEndpointGroupConnectedDeploymentGroup `json:"connectedDeploymentGroup,omitempty"`
 	// CreateTime: Output only. The timestamp when the resource was created. See
 	// https://google.aip.dev/148#timestamps.
 	CreateTime string `json:"createTime,omitempty"`
 	// Description: Optional. User-provided description of the endpoint group. Used
 	// as additional context for the endpoint group.
 	Description string `json:"description,omitempty"`
-	// InterceptDeploymentGroup: Immutable. The deployment group that this endpoint
-	// group is connected to, for example:
+	// InterceptDeploymentGroup: Required. Immutable. The deployment group that
+	// this endpoint group is connected to, for example:
 	// `projects/123456789/locations/global/interceptDeploymentGroups/my-dg`. See
 	// https://google.aip.dev/124.
 	InterceptDeploymentGroup string `json:"interceptDeploymentGroup,omitempty"`
@@ -2490,14 +2496,17 @@ type InterceptEndpointGroupAssociation struct {
 	// CreateTime: Output only. The timestamp when the resource was created. See
 	// https://google.aip.dev/148#timestamps.
 	CreateTime string `json:"createTime,omitempty"`
-	// InterceptEndpointGroup: Immutable. The endpoint group that this association
-	// is connected to, for example:
+	// InterceptEndpointGroup: Required. Immutable. The endpoint group that this
+	// association is connected to, for example:
 	// `projects/123456789/locations/global/interceptEndpointGroups/my-eg`. See
 	// https://google.aip.dev/124.
 	InterceptEndpointGroup string `json:"interceptEndpointGroup,omitempty"`
 	// Labels: Optional. Labels are key/value pairs that help to organize and
 	// filter resources.
 	Labels map[string]string `json:"labels,omitempty"`
+	// Locations: Output only. The list of locations where the association is
+	// configured. This information is retrieved from the linked endpoint group.
+	Locations []*InterceptLocation `json:"locations,omitempty"`
 	// LocationsDetails: Output only. The list of locations where the association
 	// is present. This information is retrieved from the linked endpoint group,
 	// and not configured as part of the association itself.
@@ -2507,8 +2516,8 @@ type InterceptEndpointGroupAssociation struct {
 	// `projects/123456789/locations/global/interceptEndpointGroupAssociations/my-eg
 	// -association`. See https://google.aip.dev/122 for more details.
 	Name string `json:"name,omitempty"`
-	// Network: Immutable. The VPC network that is associated. for example:
-	// `projects/123456789/global/networks/my-network`. See
+	// Network: Required. Immutable. The VPC network that is associated. for
+	// example: `projects/123456789/global/networks/my-network`. See
 	// https://google.aip.dev/124.
 	Network string `json:"network,omitempty"`
 	// Reconciling: Output only. The current state of the resource does not match
@@ -2639,6 +2648,67 @@ type InterceptEndpointGroupAssociationLocationDetails struct {
 
 func (s InterceptEndpointGroupAssociationLocationDetails) MarshalJSON() ([]byte, error) {
 	type NoMethod InterceptEndpointGroupAssociationLocationDetails
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// InterceptEndpointGroupConnectedDeploymentGroup: The endpoint group's view of
+// a connected deployment group.
+type InterceptEndpointGroupConnectedDeploymentGroup struct {
+	// Locations: Output only. The list of locations where the deployment group is
+	// present.
+	Locations []*InterceptLocation `json:"locations,omitempty"`
+	// Name: Output only. The connected deployment group's resource name, for
+	// example:
+	// `projects/123456789/locations/global/interceptDeploymentGroups/my-dg`. See
+	// https://google.aip.dev/124.
+	Name string `json:"name,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Locations") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Locations") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s InterceptEndpointGroupConnectedDeploymentGroup) MarshalJSON() ([]byte, error) {
+	type NoMethod InterceptEndpointGroupConnectedDeploymentGroup
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// InterceptLocation: Details about intercept in a specific cloud location.
+type InterceptLocation struct {
+	// Location: Output only. The cloud location, e.g. "us-central1-a" or
+	// "asia-south1".
+	Location string `json:"location,omitempty"`
+	// State: Output only. The current state of the association in this location.
+	//
+	// Possible values:
+	//   "STATE_UNSPECIFIED" - State not set (this is not a valid state).
+	//   "ACTIVE" - The resource is ready and in sync in the location.
+	//   "OUT_OF_SYNC" - The resource is out of sync in the location. In most
+	// cases, this is a result of a transient issue within the system (e.g. an
+	// inaccessible location) and the system is expected to recover automatically.
+	State string `json:"state,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Location") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Location") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s InterceptLocation) MarshalJSON() ([]byte, error) {
+	type NoMethod InterceptLocation
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -3366,6 +3436,10 @@ type ListServerTlsPoliciesResponse struct {
 	NextPageToken string `json:"nextPageToken,omitempty"`
 	// ServerTlsPolicies: List of ServerTlsPolicy resources.
 	ServerTlsPolicies []*ServerTlsPolicy `json:"serverTlsPolicies,omitempty"`
+	// Unreachable: Unreachable resources. Populated when the request opts into
+	// `return_partial_success` and reading across collections e.g. when attempting
+	// to list all resources across all supported locations.
+	Unreachable []string `json:"unreachable,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
@@ -3631,6 +3705,9 @@ type MirroringDeploymentGroup struct {
 	// Labels: Optional. Labels are key/value pairs that help to organize and
 	// filter resources.
 	Labels map[string]string `json:"labels,omitempty"`
+	// Locations: Output only. The list of locations where the deployment group is
+	// present.
+	Locations []*MirroringLocation `json:"locations,omitempty"`
 	// Name: Immutable. Identifier. The resource name of this deployment group, for
 	// example:
 	// `projects/123456789/locations/global/mirroringDeploymentGroups/my-dg`. See
@@ -3755,6 +3832,9 @@ func (s MirroringDeploymentGroupDeployment) MarshalJSON() ([]byte, error) {
 type MirroringEndpointGroup struct {
 	// Associations: Output only. List of associations to this endpoint group.
 	Associations []*MirroringEndpointGroupAssociationDetails `json:"associations,omitempty"`
+	// ConnectedDeploymentGroups: Output only. List of details about the connected
+	// deployment groups to this endpoint group.
+	ConnectedDeploymentGroups []*MirroringEndpointGroupConnectedDeploymentGroup `json:"connectedDeploymentGroups,omitempty"`
 	// CreateTime: Output only. The timestamp when the resource was created. See
 	// https://google.aip.dev/148#timestamps.
 	CreateTime string `json:"createTime,omitempty"`
@@ -3837,6 +3917,9 @@ type MirroringEndpointGroupAssociation struct {
 	// Labels: Optional. Labels are key/value pairs that help to organize and
 	// filter resources.
 	Labels map[string]string `json:"labels,omitempty"`
+	// Locations: Output only. The list of locations where the association is
+	// configured. This information is retrieved from the linked endpoint group.
+	Locations []*MirroringLocation `json:"locations,omitempty"`
 	// LocationsDetails: Output only. The list of locations where the association
 	// is present. This information is retrieved from the linked endpoint group,
 	// and not configured as part of the association itself.
@@ -3983,6 +4066,67 @@ type MirroringEndpointGroupAssociationLocationDetails struct {
 
 func (s MirroringEndpointGroupAssociationLocationDetails) MarshalJSON() ([]byte, error) {
 	type NoMethod MirroringEndpointGroupAssociationLocationDetails
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// MirroringEndpointGroupConnectedDeploymentGroup: The endpoint group's view of
+// a connected deployment group.
+type MirroringEndpointGroupConnectedDeploymentGroup struct {
+	// Locations: Output only. The list of locations where the deployment group is
+	// present.
+	Locations []*MirroringLocation `json:"locations,omitempty"`
+	// Name: Output only. The connected deployment group's resource name, for
+	// example:
+	// `projects/123456789/locations/global/mirroringDeploymentGroups/my-dg`. See
+	// https://google.aip.dev/124.
+	Name string `json:"name,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Locations") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Locations") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s MirroringEndpointGroupConnectedDeploymentGroup) MarshalJSON() ([]byte, error) {
+	type NoMethod MirroringEndpointGroupConnectedDeploymentGroup
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// MirroringLocation: Details about mirroring in a specific cloud location.
+type MirroringLocation struct {
+	// Location: Output only. The cloud location, e.g. "us-central1-a" or
+	// "asia-south1".
+	Location string `json:"location,omitempty"`
+	// State: Output only. The current state of the association in this location.
+	//
+	// Possible values:
+	//   "STATE_UNSPECIFIED" - State not set (this is not a valid state).
+	//   "ACTIVE" - The resource is ready and in sync in the location.
+	//   "OUT_OF_SYNC" - The resource is out of sync in the location. In most
+	// cases, this is a result of a transient issue within the system (e.g. an
+	// inaccessible location) and the system is expected to recover automatically.
+	State string `json:"state,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Location") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Location") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s MirroringLocation) MarshalJSON() ([]byte, error) {
+	type NoMethod MirroringLocation
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -21068,6 +21212,17 @@ func (c *ProjectsLocationsServerTlsPoliciesListCall) PageSize(pageSize int64) *P
 // the next page of data.
 func (c *ProjectsLocationsServerTlsPoliciesListCall) PageToken(pageToken string) *ProjectsLocationsServerTlsPoliciesListCall {
 	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// ReturnPartialSuccess sets the optional parameter "returnPartialSuccess":
+// Setting this field to `true` will opt the request into returning the
+// resources that are reachable, and into including the names of those that
+// were unreachable in the [ListServerTlsPoliciesResponse.unreachable] field.
+// This can only be `true` when reading across collections e.g. when `parent`
+// is set to "projects/example/locations/-".
+func (c *ProjectsLocationsServerTlsPoliciesListCall) ReturnPartialSuccess(returnPartialSuccess bool) *ProjectsLocationsServerTlsPoliciesListCall {
+	c.urlParams_.Set("returnPartialSuccess", fmt.Sprint(returnPartialSuccess))
 	return c
 }
 

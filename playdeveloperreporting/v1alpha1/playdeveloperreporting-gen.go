@@ -186,6 +186,7 @@ func NewVitalsService(s *Service) *VitalsService {
 	rs.Crashrate = NewVitalsCrashrateService(s)
 	rs.Errors = NewVitalsErrorsService(s)
 	rs.Excessivewakeuprate = NewVitalsExcessivewakeuprateService(s)
+	rs.Lmkrate = NewVitalsLmkrateService(s)
 	rs.Slowrenderingrate = NewVitalsSlowrenderingrateService(s)
 	rs.Slowstartrate = NewVitalsSlowstartrateService(s)
 	rs.Stuckbackgroundwakelockrate = NewVitalsStuckbackgroundwakelockrateService(s)
@@ -202,6 +203,8 @@ type VitalsService struct {
 	Errors *VitalsErrorsService
 
 	Excessivewakeuprate *VitalsExcessivewakeuprateService
+
+	Lmkrate *VitalsLmkrateService
 
 	Slowrenderingrate *VitalsSlowrenderingrateService
 
@@ -279,6 +282,15 @@ func NewVitalsExcessivewakeuprateService(s *Service) *VitalsExcessivewakeuprateS
 }
 
 type VitalsExcessivewakeuprateService struct {
+	s *Service
+}
+
+func NewVitalsLmkrateService(s *Service) *VitalsLmkrateService {
+	rs := &VitalsLmkrateService{s: s}
+	return rs
+}
+
+type VitalsLmkrateService struct {
 	s *Service
 }
 
@@ -1131,6 +1143,88 @@ func (s GooglePlayDeveloperReportingV1alpha1ListAnomaliesResponse) MarshalJSON()
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GooglePlayDeveloperReportingV1alpha1LmkRateMetricSet: Singleton resource
+// representing the set of LMK (Low Memory Kill) metrics. This metric set
+// contains LMKs data combined with usage data to produce a normalized metric
+// independent of user counts. **Supported aggregation periods:** * DAILY:
+// metrics are aggregated in calendar date intervals. Due to historical
+// constraints, the only supported timezone is `America/Los_Angeles`.
+// **Supported metrics:** * `userPerceivedLmkRate` (`google.type.Decimal`):
+// Percentage of distinct users in the aggregation period that experienced at
+// least one LMK while they were actively using your app (a user-perceived
+// LMK). An app is considered to be in active use if it is displaying any
+// activity or executing any foreground service. *
+// `userPerceivedLmkRate7dUserWeighted` (`google.type.Decimal`): Rolling
+// average value of `userPerceivedLmkRate` in the last 7 days. The daily values
+// are weighted by the count of distinct users for the day. *
+// `userPerceivedLmkRate28dUserWeighted` (`google.type.Decimal`): Rolling
+// average value of `userPerceivedLmkRate` in the last 28 days. The daily
+// values are weighted by the count of distinct users for the day. *
+// `distinctUsers` (`google.type.Decimal`): Count of distinct users in the
+// aggregation period that were used as normalization value for the
+// `userPerceivedLmkRate` metrics. A user is counted in this metric if they
+// used the app in the foreground during the aggregation period. Care must be
+// taken not to aggregate this count further, as it may result in users being
+// counted multiple times. The value is rounded to the nearest multiple of 10,
+// 100, 1,000 or 1,000,000, depending on the magnitude of the value.
+// **Supported dimensions:** * `apiLevel` (string): the API level of Android
+// that was running on the user's device, e.g., 26. * `versionCode` (int64):
+// version of the app that was running on the user's device. * `deviceModel`
+// (string): unique identifier of the user's device model. The form of the
+// identifier is 'deviceBrand/device', where deviceBrand corresponds to
+// Build.BRAND and device corresponds to Build.DEVICE, e.g., google/coral. *
+// `deviceBrand` (string): unique identifier of the user's device brand, e.g.,
+// google. * `deviceType` (string): the type (also known as form factor) of the
+// user's device, e.g., PHONE. * `countryCode` (string): the country or region
+// of the user's device based on their IP address, represented as a 2-letter
+// ISO-3166 code (e.g. US for the United States). * `deviceRamBucket` (int64):
+// RAM of the device, in MB, in buckets (3GB, 4GB, etc.). * `deviceSocMake`
+// (string): Make of the device's primary system-on-chip, e.g., Samsung.
+// Reference
+// (https://developer.android.com/reference/android/os/Build#SOC_MANUFACTURER)
+// * `deviceSocModel` (string): Model of the device's primary system-on-chip,
+// e.g., "Exynos 2100". Reference
+// (https://developer.android.com/reference/android/os/Build#SOC_MODEL) *
+// `deviceCpuMake` (string): Make of the device's CPU, e.g., Qualcomm. *
+// `deviceCpuModel` (string): Model of the device's CPU, e.g., "Kryo 240". *
+// `deviceGpuMake` (string): Make of the device's GPU, e.g., ARM. *
+// `deviceGpuModel` (string): Model of the device's GPU, e.g., Mali. *
+// `deviceGpuVersion` (string): Version of the device's GPU, e.g., T750. *
+// `deviceVulkanVersion` (string): Vulkan version of the device, e.g.,
+// "4198400". * `deviceGlEsVersion` (string): OpenGL ES version of the device,
+// e.g., "196610". * `deviceScreenSize` (string): Screen size of the device,
+// e.g., NORMAL, LARGE. * `deviceScreenDpi` (string): Screen density of the
+// device, e.g., mdpi, hdpi. **Required permissions**: to access this resource,
+// the calling user needs the _View app information (read-only)_ permission for
+// the app. **Related metric sets:** * vitals.errors contains normalized
+// metrics about crashes, another stability metric. * vitals.errors contains
+// normalized metrics about ANRs, another stability metric.
+type GooglePlayDeveloperReportingV1alpha1LmkRateMetricSet struct {
+	// FreshnessInfo: Summary about data freshness in this resource.
+	FreshnessInfo *GooglePlayDeveloperReportingV1alpha1FreshnessInfo `json:"freshnessInfo,omitempty"`
+	// Name: Identifier. The resource name. Format: apps/{app}/lmkRateMetricSet
+	Name string `json:"name,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "FreshnessInfo") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "FreshnessInfo") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GooglePlayDeveloperReportingV1alpha1LmkRateMetricSet) MarshalJSON() ([]byte, error) {
+	type NoMethod GooglePlayDeveloperReportingV1alpha1LmkRateMetricSet
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GooglePlayDeveloperReportingV1alpha1MetricValue: Represents the value of a
 // metric.
 type GooglePlayDeveloperReportingV1alpha1MetricValue struct {
@@ -1737,6 +1831,141 @@ type GooglePlayDeveloperReportingV1alpha1QueryExcessiveWakeupRateMetricSetRespon
 
 func (s GooglePlayDeveloperReportingV1alpha1QueryExcessiveWakeupRateMetricSetResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePlayDeveloperReportingV1alpha1QueryExcessiveWakeupRateMetricSetResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GooglePlayDeveloperReportingV1alpha1QueryLmkRateMetricSetRequest: Request
+// message for QueryLmkRateMetricSet.
+type GooglePlayDeveloperReportingV1alpha1QueryLmkRateMetricSetRequest struct {
+	// Dimensions: Optional. Dimensions to slice the metrics by. **Supported
+	// dimensions:** * `apiLevel` (string): the API level of Android that was
+	// running on the user's device, e.g., 26. * `versionCode` (int64): version of
+	// the app that was running on the user's device. * `deviceModel` (string):
+	// unique identifier of the user's device model. The form of the identifier is
+	// 'deviceBrand/device', where deviceBrand corresponds to Build.BRAND and
+	// device corresponds to Build.DEVICE, e.g., google/coral. * `deviceBrand`
+	// (string): unique identifier of the user's device brand, e.g., google. *
+	// `deviceType` (string): the type (also known as form factor) of the user's
+	// device, e.g., PHONE. * `countryCode` (string): the country or region of the
+	// user's device based on their IP address, represented as a 2-letter ISO-3166
+	// code (e.g. US for the United States). * `deviceRamBucket` (int64): RAM of
+	// the device, in MB, in buckets (3GB, 4GB, etc.). * `deviceSocMake` (string):
+	// Make of the device's primary system-on-chip, e.g., Samsung. Reference
+	// (https://developer.android.com/reference/android/os/Build#SOC_MANUFACTURER)
+	// * `deviceSocModel` (string): Model of the device's primary system-on-chip,
+	// e.g., "Exynos 2100". Reference
+	// (https://developer.android.com/reference/android/os/Build#SOC_MODEL) *
+	// `deviceCpuMake` (string): Make of the device's CPU, e.g., Qualcomm. *
+	// `deviceCpuModel` (string): Model of the device's CPU, e.g., "Kryo 240". *
+	// `deviceGpuMake` (string): Make of the device's GPU, e.g., ARM. *
+	// `deviceGpuModel` (string): Model of the device's GPU, e.g., Mali. *
+	// `deviceGpuVersion` (string): Version of the device's GPU, e.g., T750. *
+	// `deviceVulkanVersion` (string): Vulkan version of the device, e.g.,
+	// "4198400". * `deviceGlEsVersion` (string): OpenGL ES version of the device,
+	// e.g., "196610". * `deviceScreenSize` (string): Screen size of the device,
+	// e.g., NORMAL, LARGE. * `deviceScreenDpi` (string): Screen density of the
+	// device, e.g., mdpi, hdpi.
+	Dimensions []string `json:"dimensions,omitempty"`
+	// Filter: Optional. Filters to apply to data. The filtering expression follows
+	// AIP-160 (https://google.aip.dev/160) standard and supports filtering by
+	// equality of all breakdown dimensions.
+	Filter string `json:"filter,omitempty"`
+	// Metrics: Optional. Metrics to aggregate. **Supported metrics:** *
+	// `userPerceivedLmkRate` (`google.type.Decimal`): Percentage of distinct users
+	// in the aggregation period that experienced at least one LMK while they were
+	// actively using your app (a user-perceived LMK). An app is considered to be
+	// in active use if it is displaying any activity or executing any foreground
+	// service. * `userPerceivedLmkRate7dUserWeighted` (`google.type.Decimal`):
+	// Rolling average value of `userPerceivedLmkRate` in the last 7 days. The
+	// daily values are weighted by the count of distinct users for the day. *
+	// `userPerceivedLmkRate28dUserWeighted` (`google.type.Decimal`): Rolling
+	// average value of `userPerceivedLmkRate` in the last 28 days. The daily
+	// values are weighted by the count of distinct users for the day. *
+	// `distinctUsers` (`google.type.Decimal`): Count of distinct users in the
+	// aggregation period that were used as normalization value for the
+	// `userPerceivedLmkRate` metrics. A user is counted in this metric if they
+	// used the app in the foreground during the aggregation period. Care must be
+	// taken not to aggregate this count further, as it may result in users being
+	// counted multiple times. The value is rounded to the nearest multiple of 10,
+	// 100, 1,000 or 1,000,000, depending on the magnitude of the value.
+	Metrics []string `json:"metrics,omitempty"`
+	// PageSize: Optional. Maximum size of the returned data. If unspecified, at
+	// most 1000 rows will be returned. The maximum value is 100,000; values above
+	// 100,000 will be coerced to 100,000.
+	PageSize int64 `json:"pageSize,omitempty"`
+	// PageToken: Optional. A page token, received from a previous call. Provide
+	// this to retrieve the subsequent page. When paginating, all other parameters
+	// provided to the request must match the call that provided the page token.
+	PageToken string `json:"pageToken,omitempty"`
+	// TimelineSpec: Optional. Specification of the timeline aggregation
+	// parameters. **Supported aggregation periods:** * DAILY: metrics are
+	// aggregated in calendar date intervals. Due to historical constraints, the
+	// default and only supported timezone is `America/Los_Angeles`.
+	TimelineSpec *GooglePlayDeveloperReportingV1alpha1TimelineSpec `json:"timelineSpec,omitempty"`
+	// UserCohort: Optional. User view to select. The output data will correspond
+	// to the selected view. **Supported values:** * `OS_PUBLIC` To select data
+	// from all publicly released Android versions. This is the default. Supports
+	// all the above dimensions. * `APP_TESTERS` To select data from users who have
+	// opted in to be testers. Supports all the above dimensions. * `OS_BETA` To
+	// select data from beta android versions only, excluding data from released
+	// android versions. Only the following dimensions are supported: *
+	// `versionCode` (int64): version of the app that was running on the user's
+	// device. * `osBuild` (string): OS build of the user's device, e.g.,
+	// "T1B2.220916.004".
+	//
+	// Possible values:
+	//   "USER_COHORT_UNSPECIFIED" - Unspecified User cohort. This will
+	// automatically choose the default value.
+	//   "OS_PUBLIC" - This is default view. Contains data from public released
+	// android versions only.
+	//   "OS_BETA" - This is the view with just android beta data excluding
+	// released OS version data.
+	//   "APP_TESTERS" - This is the view with data only from users who have opted
+	// in to be testers for a given app, excluding OS beta data.
+	UserCohort string `json:"userCohort,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Dimensions") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Dimensions") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GooglePlayDeveloperReportingV1alpha1QueryLmkRateMetricSetRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod GooglePlayDeveloperReportingV1alpha1QueryLmkRateMetricSetRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GooglePlayDeveloperReportingV1alpha1QueryLmkRateMetricSetResponse: Response
+// message for QueryLmkRateMetricSet.
+type GooglePlayDeveloperReportingV1alpha1QueryLmkRateMetricSetResponse struct {
+	// NextPageToken: Continuation token to fetch the next page of data.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+	// Rows: Returned rows of data.
+	Rows []*GooglePlayDeveloperReportingV1alpha1MetricsRow `json:"rows,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "NextPageToken") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GooglePlayDeveloperReportingV1alpha1QueryLmkRateMetricSetResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GooglePlayDeveloperReportingV1alpha1QueryLmkRateMetricSetResponse
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -4835,6 +5064,241 @@ func (c *VitalsExcessivewakeuprateQueryCall) Pages(ctx context.Context, f func(*
 			return nil
 		}
 		c.googleplaydeveloperreportingv1alpha1queryexcessivewakeupratemetricsetrequest.PageToken = x.NextPageToken
+	}
+}
+
+type VitalsLmkrateGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Describes the properties of the metric set.
+//
+// - name: The resource name. Format: apps/{app}/lmkRateMetricSet.
+func (r *VitalsLmkrateService) Get(name string) *VitalsLmkrateGetCall {
+	c := &VitalsLmkrateGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *VitalsLmkrateGetCall) Fields(s ...googleapi.Field) *VitalsLmkrateGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *VitalsLmkrateGetCall) IfNoneMatch(entityTag string) *VitalsLmkrateGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *VitalsLmkrateGetCall) Context(ctx context.Context) *VitalsLmkrateGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *VitalsLmkrateGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *VitalsLmkrateGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "playdeveloperreporting.vitals.lmkrate.get", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "playdeveloperreporting.vitals.lmkrate.get" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GooglePlayDeveloperReportingV1alpha1LmkRateMetricSet.ServerResponse.Header
+// or (if a response was returned at all) in error.(*googleapi.Error).Header.
+// Use googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *VitalsLmkrateGetCall) Do(opts ...googleapi.CallOption) (*GooglePlayDeveloperReportingV1alpha1LmkRateMetricSet, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GooglePlayDeveloperReportingV1alpha1LmkRateMetricSet{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "playdeveloperreporting.vitals.lmkrate.get", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type VitalsLmkrateQueryCall struct {
+	s                                                                *Service
+	name                                                             string
+	googleplaydeveloperreportingv1alpha1querylmkratemetricsetrequest *GooglePlayDeveloperReportingV1alpha1QueryLmkRateMetricSetRequest
+	urlParams_                                                       gensupport.URLParams
+	ctx_                                                             context.Context
+	header_                                                          http.Header
+}
+
+// Query: Queries the metrics in the metric set.
+//
+// - name: The resource name. Format: apps/{app}/lmkRateMetricSet.
+func (r *VitalsLmkrateService) Query(name string, googleplaydeveloperreportingv1alpha1querylmkratemetricsetrequest *GooglePlayDeveloperReportingV1alpha1QueryLmkRateMetricSetRequest) *VitalsLmkrateQueryCall {
+	c := &VitalsLmkrateQueryCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.googleplaydeveloperreportingv1alpha1querylmkratemetricsetrequest = googleplaydeveloperreportingv1alpha1querylmkratemetricsetrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *VitalsLmkrateQueryCall) Fields(s ...googleapi.Field) *VitalsLmkrateQueryCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *VitalsLmkrateQueryCall) Context(ctx context.Context) *VitalsLmkrateQueryCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *VitalsLmkrateQueryCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *VitalsLmkrateQueryCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googleplaydeveloperreportingv1alpha1querylmkratemetricsetrequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha1/{+name}:query")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "playdeveloperreporting.vitals.lmkrate.query", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "playdeveloperreporting.vitals.lmkrate.query" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GooglePlayDeveloperReportingV1alpha1QueryLmkRateMetricSetResponse.ServerResp
+// onse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *VitalsLmkrateQueryCall) Do(opts ...googleapi.CallOption) (*GooglePlayDeveloperReportingV1alpha1QueryLmkRateMetricSetResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GooglePlayDeveloperReportingV1alpha1QueryLmkRateMetricSetResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "playdeveloperreporting.vitals.lmkrate.query", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *VitalsLmkrateQueryCall) Pages(ctx context.Context, f func(*GooglePlayDeveloperReportingV1alpha1QueryLmkRateMetricSetResponse) error) error {
+	c.ctx_ = ctx
+	defer func(pt string) { c.googleplaydeveloperreportingv1alpha1querylmkratemetricsetrequest.PageToken = pt }(c.googleplaydeveloperreportingv1alpha1querylmkratemetricsetrequest.PageToken)
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.googleplaydeveloperreportingv1alpha1querylmkratemetricsetrequest.PageToken = x.NextPageToken
 	}
 }
 

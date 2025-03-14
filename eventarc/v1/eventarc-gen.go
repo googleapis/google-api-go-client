@@ -992,6 +992,8 @@ type GoogleChannelConfig struct {
 	// user) used to encrypt/decrypt their event data. It must match the pattern
 	// `projects/*/locations/*/keyRings/*/cryptoKeys/*`.
 	CryptoKeyName string `json:"cryptoKeyName,omitempty"`
+	// Labels: Optional. Resource labels.
+	Labels map[string]string `json:"labels,omitempty"`
 	// Name: Required. The resource name of the config. Must be in the format of,
 	// `projects/{project}/locations/{location}/googleChannelConfig`. In API
 	// responses, the config name always includes the projectID, regardless of

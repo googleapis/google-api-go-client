@@ -3475,8 +3475,8 @@ type ProjectsLocationsUpdateConfigCall struct {
 }
 
 // UpdateConfig: Update default config for a given project and location.
-// **Note:** This method does not fully implement AIP-134
-// (https://google.aip.dev/134); in particular: - The wildcard entry (**\***)
+// **Note:** *This method does not fully implement*, (see AIP/134
+// (https://google.aip.dev/134), in particular: - The wildcard entry (**\***)
 // is treated as a bad request - When the **field_mask** is omitted, instead of
 // only updating the set fields, the request is treated as a full update on all
 // modifiable fields
@@ -4683,8 +4683,8 @@ type ProjectsLocationsRepositoriesPatchCall struct {
 	header_    http.Header
 }
 
-// Patch: Updates a single Repository. **Note:** This method does not fully
-// implement AIP-134 (https://google.aip.dev/134); in particular: - The
+// Patch: Updates a single Repository. **Note:** *This method does not fully
+// implement*, (see AIP/134 (https://google.aip.dev/134), in particular: - The
 // wildcard entry (**\***) is treated as a bad request - When the
 // **field_mask** is omitted, instead of only updating the set fields, the
 // request is treated as a full update on all modifiable fields
@@ -6310,8 +6310,8 @@ type ProjectsLocationsRepositoriesReleaseConfigsPatchCall struct {
 	header_       http.Header
 }
 
-// Patch: Updates a single ReleaseConfig. **Note:** This method does not fully
-// implement AIP-134 (https://google.aip.dev/134); in particular: - The
+// Patch: Updates a single ReleaseConfig. **Note:** *This method does not fully
+// implement*, (see AIP/134 (https://google.aip.dev/134), in particular: - The
 // wildcard entry (**\***) is treated as a bad request - When the
 // **field_mask** is omitted, instead of only updating the set fields, the
 // request is treated as a full update on all modifiable fields
@@ -6892,9 +6892,9 @@ type ProjectsLocationsRepositoriesWorkflowConfigsPatchCall struct {
 	header_        http.Header
 }
 
-// Patch: Updates a single WorkflowConfig. **Note:** This method does not fully
-// implement AIP-134 (https://google.aip.dev/134); in particular: - The
-// wildcard entry (**\***) is treated as a bad request - When the
+// Patch: Updates a single WorkflowConfig. **Note:** *This method does not
+// fully implement*, (see AIP/134 (https://google.aip.dev/134), in particular:
+// - The wildcard entry (**\***) is treated as a bad request - When the
 // **field_mask** is omitted, instead of only updating the set fields, the
 // request is treated as a full update on all modifiable fields
 //

@@ -1017,8 +1017,8 @@ type ExtensionChainExtension struct {
 	Service string `json:"service,omitempty"`
 	// SupportedEvents: Optional. A set of events during request or response
 	// processing for which this extension is called. This field is required for
-	// the `LbTrafficExtension` resource. It must not be set for the
-	// `LbRouteExtension` resource, otherwise a validation error is returned.
+	// the `LbTrafficExtension` resource. It is optional for the `LbRouteExtension`
+	// resource. If unspecified `REQUEST_HEADERS` event is assumed as supported.
 	//
 	// Possible values:
 	//   "EVENT_TYPE_UNSPECIFIED" - Unspecified value. Do not use.
@@ -2649,6 +2649,10 @@ type ListGatewayRouteViewsResponse struct {
 	// NextPageToken: A token, which can be sent as `page_token` to retrieve the
 	// next page. If this field is omitted, there are no subsequent pages.
 	NextPageToken string `json:"nextPageToken,omitempty"`
+	// Unreachable: Unreachable resources. Populated when the request attempts to
+	// list all resources across all supported locations, while some locations are
+	// temporarily unavailable.
+	Unreachable []string `json:"unreachable,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
@@ -2860,6 +2864,10 @@ type ListMeshRouteViewsResponse struct {
 	// NextPageToken: A token, which can be sent as `page_token` to retrieve the
 	// next page. If this field is omitted, there are no subsequent pages.
 	NextPageToken string `json:"nextPageToken,omitempty"`
+	// Unreachable: Unreachable resources. Populated when the request attempts to
+	// list all resources across all supported locations, while some locations are
+	// temporarily unavailable.
+	Unreachable []string `json:"unreachable,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
@@ -2953,6 +2961,10 @@ type ListServiceBindingsResponse struct {
 	NextPageToken string `json:"nextPageToken,omitempty"`
 	// ServiceBindings: List of ServiceBinding resources.
 	ServiceBindings []*ServiceBinding `json:"serviceBindings,omitempty"`
+	// Unreachable: Unreachable resources. Populated when the request attempts to
+	// list all resources across all supported locations, while some locations are
+	// temporarily unavailable.
+	Unreachable []string `json:"unreachable,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
@@ -2984,6 +2996,10 @@ type ListServiceLbPoliciesResponse struct {
 	NextPageToken string `json:"nextPageToken,omitempty"`
 	// ServiceLbPolicies: List of ServiceLbPolicy resources.
 	ServiceLbPolicies []*ServiceLbPolicy `json:"serviceLbPolicies,omitempty"`
+	// Unreachable: Unreachable resources. Populated when the request attempts to
+	// list all resources across all supported locations, while some locations are
+	// temporarily unavailable.
+	Unreachable []string `json:"unreachable,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`

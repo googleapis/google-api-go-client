@@ -4324,6 +4324,12 @@ func (s GoogleCloudHealthcareV1beta1DeidentifyOptions) MarshalJSON() ([]byte, er
 // GoogleCloudHealthcareV1beta1DicomBigQueryDestination: The BigQuery table
 // where the server writes output.
 type GoogleCloudHealthcareV1beta1DicomBigQueryDestination struct {
+	// ChangeDataCaptureConfig: Optional. Setting this field will enable BigQuery's
+	// Change Data Capture (CDC) on the destination tables. Set this field if you
+	// want to only keep the latest version of each instance. Updates and deletes
+	// to an existing' instance will overwrite the corresponding row. See
+	// https://cloud.google.com/bigquery/docs/change-data-capture for details.
+	ChangeDataCaptureConfig *GoogleCloudHealthcareV1beta1DicomChangeDataCaptureConfig `json:"changeDataCaptureConfig,omitempty"`
 	// Force: Use `write_disposition` instead. If `write_disposition` is specified,
 	// this parameter is ignored. force=false is equivalent to
 	// write_disposition=WRITE_EMPTY and force=true is equivalent to
@@ -4344,15 +4350,15 @@ type GoogleCloudHealthcareV1beta1DicomBigQueryDestination struct {
 	// writing the instances.
 	//   "WRITE_APPEND" - Append data to the destination table.
 	WriteDisposition string `json:"writeDisposition,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "Force") to unconditionally
-	// include in API requests. By default, fields with empty or default values are
-	// omitted from API requests. See
+	// ForceSendFields is a list of field names (e.g. "ChangeDataCaptureConfig") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Force") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
+	// NullFields is a list of field names (e.g. "ChangeDataCaptureConfig") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -4360,6 +4366,11 @@ type GoogleCloudHealthcareV1beta1DicomBigQueryDestination struct {
 func (s GoogleCloudHealthcareV1beta1DicomBigQueryDestination) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudHealthcareV1beta1DicomBigQueryDestination
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudHealthcareV1beta1DicomChangeDataCaptureConfig: BigQuery Change
+// Data Capture configuration.
+type GoogleCloudHealthcareV1beta1DicomChangeDataCaptureConfig struct {
 }
 
 // GoogleCloudHealthcareV1beta1DicomGcsDestination: The Cloud Storage location

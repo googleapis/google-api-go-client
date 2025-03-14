@@ -1280,7 +1280,7 @@
       }
     }
   },
-  "revision": "20250309",
+  "revision": "20250311",
   "rootUrl": "https://chromemanagement.googleapis.com/",
   "schemas": {
     "GoogleChromeManagementV1AndroidAppInfo": {
@@ -5015,11 +5015,6 @@
       "description": "A certificate provisioning process.",
       "id": "GoogleChromeManagementVersionsV1CertificateProvisioningProcess",
       "properties": {
-        "caConnectionAdapterConfigReference": {
-          "description": "Output only. A JSON string that contains the administrator-provided configuration for the certification authority service. This field can be missing if no configuration was given.",
-          "readOnly": true,
-          "type": "string"
-        },
         "chromeOsDevice": {
           "$ref": "GoogleChromeManagementVersionsV1ChromeOsDevice",
           "description": "Output only. The client certificate is being provisioned for a ChromeOS device. This contains information about the device.",
@@ -5027,11 +5022,11 @@
         },
         "chromeOsUserSession": {
           "$ref": "GoogleChromeManagementVersionsV1ChromeOsUserSession",
-          "description": "Output only. The client certificate is being provisioned for a ChromeOS user session. This contains information about the user session.",
+          "description": "Output only. The client certificate is being provisioned for a ChromeOS user. This contains information about the current user session.",
           "readOnly": true
         },
         "failureMessage": {
-          "description": "Output only. A message describing why this `CertificateProvisioningProcess` failed. Presence of this field indicates that the `CertificateProvisioningProcess` has failed.",
+          "description": "Output only. A message describing why this `CertificateProvisioningProcess` has failed. Presence of this field indicates that the `CertificateProvisioningProcess` has failed.",
           "readOnly": true,
           "type": "string"
         },
@@ -5054,11 +5049,6 @@
           "description": "Identifier. Resource name of the `CertificateProvisioningProcess`. The name pattern is given as `customers/{customer}/certificateProvisioningProcesses/{certificate_provisioning_process}` with `{customer}` being the obfuscated customer id and `{certificate_provisioning_process}` being the certificate provisioning process id.",
           "type": "string"
         },
-        "profileAdapterConfigReference": {
-          "description": "Output only. A JSON string that contains the administrator-provided configuration for the certificate provisioning profile. This field can be missing if no configuration was given.",
-          "readOnly": true,
-          "type": "string"
-        },
         "provisioningProfileId": {
           "description": "Output only. The ID of the certificate provisioning profile.",
           "readOnly": true,
@@ -5071,7 +5061,7 @@
           "type": "string"
         },
         "signature": {
-          "description": "Output only. The signature of `signature_algorithm`, generated using the client's private key using `signature_algorithm`. This field is only present after the`SignData` operation has finished.",
+          "description": "Output only. The signature of `signature_algorithm`, generated using the client's private key using `signature_algorithm`. This field is only present after the `SignData` operation has finished.",
           "format": "byte",
           "readOnly": true,
           "type": "string"
@@ -5294,7 +5284,7 @@
       "properties": {
         "chromeOsDevice": {
           "$ref": "GoogleChromeManagementVersionsV1ChromeOsDevice",
-          "description": "Output only. This field contains information about the ChromeOS device that the user session is running on. It is only set if the user session is affiliated, i.e. if the user is managed by the same organization that managed the ChromeOS device.",
+          "description": "Output only. This field contains information about the ChromeOS device that the user session is running on. It is only set if the user is affiliated, i.e., if the user is managed by the same organization that manages the ChromeOS device.",
           "readOnly": true
         },
         "userDirectoryApiId": {

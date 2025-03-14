@@ -1885,9 +1885,8 @@ func (s GoogleCloudDataplexV1DataDiscoveryResult) MarshalJSON() ([]byte, error) 
 // GoogleCloudDataplexV1DataDiscoveryResultBigQueryPublishing: Describes
 // BigQuery publishing configurations.
 type GoogleCloudDataplexV1DataDiscoveryResultBigQueryPublishing struct {
-	// Dataset: Output only. The BigQuery dataset to publish to. It takes the form
-	// projects/{project_id}/datasets/{dataset_id}. If not set, the service creates
-	// a default publishing dataset.
+	// Dataset: Output only. The BigQuery dataset the discovered tables are
+	// published to.
 	Dataset string `json:"dataset,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Dataset") to unconditionally
 	// include in API requests. By default, fields with empty or default values are

@@ -4075,20 +4075,16 @@ func (s GoogleChromeManagementVersionsV1AttestationCredential) MarshalJSON() ([]
 // GoogleChromeManagementVersionsV1CertificateProvisioningProcess: A
 // certificate provisioning process.
 type GoogleChromeManagementVersionsV1CertificateProvisioningProcess struct {
-	// CaConnectionAdapterConfigReference: Output only. A JSON string that contains
-	// the administrator-provided configuration for the certification authority
-	// service. This field can be missing if no configuration was given.
-	CaConnectionAdapterConfigReference string `json:"caConnectionAdapterConfigReference,omitempty"`
 	// ChromeOsDevice: Output only. The client certificate is being provisioned for
 	// a ChromeOS device. This contains information about the device.
 	ChromeOsDevice *GoogleChromeManagementVersionsV1ChromeOsDevice `json:"chromeOsDevice,omitempty"`
 	// ChromeOsUserSession: Output only. The client certificate is being
-	// provisioned for a ChromeOS user session. This contains information about the
+	// provisioned for a ChromeOS user. This contains information about the current
 	// user session.
 	ChromeOsUserSession *GoogleChromeManagementVersionsV1ChromeOsUserSession `json:"chromeOsUserSession,omitempty"`
 	// FailureMessage: Output only. A message describing why this
-	// `CertificateProvisioningProcess` failed. Presence of this field indicates
-	// that the `CertificateProvisioningProcess` has failed.
+	// `CertificateProvisioningProcess` has failed. Presence of this field
+	// indicates that the `CertificateProvisioningProcess` has failed.
 	FailureMessage string `json:"failureMessage,omitempty"`
 	// GenericCaConnection: Output only. The CA connection is a generic CA
 	// connection.
@@ -4106,10 +4102,6 @@ type GoogleChromeManagementVersionsV1CertificateProvisioningProcess struct {
 	// `{certificate_provisioning_process}` being the certificate provisioning
 	// process id.
 	Name string `json:"name,omitempty"`
-	// ProfileAdapterConfigReference: Output only. A JSON string that contains the
-	// administrator-provided configuration for the certificate provisioning
-	// profile. This field can be missing if no configuration was given.
-	ProfileAdapterConfigReference string `json:"profileAdapterConfigReference,omitempty"`
 	// ProvisioningProfileId: Output only. The ID of the certificate provisioning
 	// profile.
 	ProvisioningProfileId string `json:"provisioningProfileId,omitempty"`
@@ -4118,7 +4110,7 @@ type GoogleChromeManagementVersionsV1CertificateProvisioningProcess struct {
 	SignData string `json:"signData,omitempty"`
 	// Signature: Output only. The signature of `signature_algorithm`, generated
 	// using the client's private key using `signature_algorithm`. This field is
-	// only present after the`SignData` operation has finished.
+	// only present after the `SignData` operation has finished.
 	Signature string `json:"signature,omitempty"`
 	// SignatureAlgorithm: Output only. The signature algorithm that the adapter
 	// expects the client and backend components to use when processing
@@ -4138,18 +4130,16 @@ type GoogleChromeManagementVersionsV1CertificateProvisioningProcess struct {
 	// should be provisioned. Represented as a DER-encoded X.509
 	// SubjectPublicKeyInfo.
 	SubjectPublicKeyInfo string `json:"subjectPublicKeyInfo,omitempty"`
-	// ForceSendFields is a list of field names (e.g.
-	// "CaConnectionAdapterConfigReference") to unconditionally include in API
-	// requests. By default, fields with empty or default values are omitted from
-	// API requests. See
+	// ForceSendFields is a list of field names (e.g. "ChromeOsDevice") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g.
-	// "CaConnectionAdapterConfigReference") to include in API requests with the
-	// JSON null value. By default, fields with empty values are omitted from API
-	// requests. See https://pkg.go.dev/google.golang.org/api#hdr-NullFields for
-	// more details.
+	// NullFields is a list of field names (e.g. "ChromeOsDevice") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
@@ -4308,8 +4298,8 @@ func (s GoogleChromeManagementVersionsV1ChromeOsDevice) MarshalJSON() ([]byte, e
 type GoogleChromeManagementVersionsV1ChromeOsUserSession struct {
 	// ChromeOsDevice: Output only. This field contains information about the
 	// ChromeOS device that the user session is running on. It is only set if the
-	// user session is affiliated, i.e. if the user is managed by the same
-	// organization that managed the ChromeOS device.
+	// user is affiliated, i.e., if the user is managed by the same organization
+	// that manages the ChromeOS device.
 	ChromeOsDevice *GoogleChromeManagementVersionsV1ChromeOsDevice `json:"chromeOsDevice,omitempty"`
 	// UserDirectoryApiId: Output only. The unique Directory API ID of the user.
 	UserDirectoryApiId string `json:"userDirectoryApiId,omitempty"`

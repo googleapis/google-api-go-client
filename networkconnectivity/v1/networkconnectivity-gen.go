@@ -2734,9 +2734,9 @@ type RegionalEndpoint struct {
 	IpAddress string `json:"ipAddress,omitempty"`
 	// Labels: User-defined labels.
 	Labels map[string]string `json:"labels,omitempty"`
-	// Name: Output only. The name of a RegionalEndpoint. Format:
-	// `projects/{project}/locations/{location}/regionalEndpoints/{regional_endpoint
-	// }`.
+	// Name: Output only. The name of a RegionalEndpoint. Pattern:
+	// `projects/{project}/locations/{location}/regionalEndpoints/^-a-z0-9
+	// (?:[-a-z0-9]{0,44})[a-z0-9]$`.
 	Name string `json:"name,omitempty"`
 	// Network: The name of the VPC network for this private regional endpoint.
 	// Format: `projects/{project}/global/networks/{network}`
@@ -9078,7 +9078,8 @@ func (r *ProjectsLocationsRegionalEndpointsService) Create(parent string, region
 }
 
 // RegionalEndpointId sets the optional parameter "regionalEndpointId":
-// Required. Unique id of the Regional Endpoint to be created.
+// Required. Unique id of the Regional Endpoint to be created. @pattern:
+// ^-a-z0-9 (?:[-a-z0-9]{0,44})[a-z0-9]$
 func (c *ProjectsLocationsRegionalEndpointsCreateCall) RegionalEndpointId(regionalEndpointId string) *ProjectsLocationsRegionalEndpointsCreateCall {
 	c.urlParams_.Set("regionalEndpointId", regionalEndpointId)
 	return c

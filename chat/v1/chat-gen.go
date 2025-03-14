@@ -10583,7 +10583,10 @@ type UsersSpacesSpaceNotificationSettingGetCall struct {
 	header_      http.Header
 }
 
-// Get: Gets the space notification state setting. Requires user authentication
+// Get: Gets the space notification setting. For an example, see Get the
+// caller's space notification setting
+// (https://developers.google.com/workspace/chat/get-space-notification-setting).
+// Requires user authentication
 // (https://developers.google.com/workspace/chat/authenticate-authorize-chat-user).
 //
 //   - name: Format: users/{user}/spaces/{space}/spaceNotificationSetting -
@@ -10698,8 +10701,10 @@ type UsersSpacesSpaceNotificationSettingPatchCall struct {
 	header_                  http.Header
 }
 
-// Patch: Updates the space notification state setting. Requires user
-// authentication
+// Patch: Updates the space notification setting. For an example, see Update
+// the caller's space notification setting
+// (https://developers.google.com/workspace/chat/update-space-notification-setting).
+// Requires user authentication
 // (https://developers.google.com/workspace/chat/authenticate-authorize-chat-user).
 //
 //   - name: Identifier. The resource name of the space notification setting.

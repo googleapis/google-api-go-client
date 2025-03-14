@@ -1421,6 +1421,10 @@ type GoogleIdentityAccesscontextmanagerV1EgressTo struct {
 	// this list. If `*` is specified for `resources`, then this EgressTo rule will
 	// authorize access to all resources outside the perimeter.
 	Resources []string `json:"resources,omitempty"`
+	// Roles: IAM roles that represent the set of operations that the sources
+	// specified in the corresponding EgressFrom. are allowed to perform in this
+	// ServicePerimeter.
+	Roles []string `json:"roles,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "ExternalResources") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -1580,6 +1584,10 @@ type GoogleIdentityAccesscontextmanagerV1IngressTo struct {
 	// `*` is specified, then access to all resources inside the perimeter are
 	// allowed.
 	Resources []string `json:"resources,omitempty"`
+	// Roles: IAM roles that represent the set of operations that the sources
+	// specified in the corresponding IngressFrom are allowed to perform in this
+	// ServicePerimeter.
+	Roles []string `json:"roles,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Operations") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See

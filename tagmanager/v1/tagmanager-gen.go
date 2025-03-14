@@ -334,12 +334,10 @@ type Account struct {
 	// Fingerprint: The fingerprint of the GTM Account as computed at storage time.
 	// This value is recomputed whenever the account is modified.
 	Fingerprint string `json:"fingerprint,omitempty"`
-	// Name: Account display name. @mutable tagmanager.accounts.create @mutable
-	// tagmanager.accounts.update
+	// Name: Account display name.
 	Name string `json:"name,omitempty"`
 	// ShareData: Whether the account shares data anonymously with Google and
-	// others. @mutable tagmanager.accounts.create @mutable
-	// tagmanager.accounts.update
+	// others.
 	ShareData bool `json:"shareData,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
@@ -365,8 +363,7 @@ func (s Account) MarshalJSON() ([]byte, error) {
 // AccountAccess: Defines the Google Tag Manager Account access permissions.
 type AccountAccess struct {
 	// Permission: List of Account permissions. Valid account permissions are read
-	// and manage. @mutable tagmanager.accounts.permissions.create @mutable
-	// tagmanager.accounts.permissions.update
+	// and manage.
 	//
 	// Possible values:
 	//   "read"
@@ -404,12 +401,8 @@ type Condition struct {
 	// ignore_case that is set to true. If not specified or set to any other value,
 	// the matching will be case sensitive. - To negate an operator, include a
 	// boolean parameter named negate boolean parameter that is set to true.
-	// @mutable tagmanager.accounts.containers.triggers.create @mutable
-	// tagmanager.accounts.containers.triggers.update
 	Parameter []*Parameter `json:"parameter,omitempty"`
-	// Type: The type of operator for this condition. @mutable
-	// tagmanager.accounts.containers.triggers.create @mutable
-	// tagmanager.accounts.containers.triggers.update
+	// Type: The type of operator for this condition.
 	//
 	// Possible values:
 	//   "equals"
@@ -449,8 +442,6 @@ type Container struct {
 	// ContainerId: The Container ID uniquely identifies the GTM Container.
 	ContainerId string `json:"containerId,omitempty"`
 	// DomainName: Optional list of domain names associated with the Container.
-	// @mutable tagmanager.accounts.containers.create @mutable
-	// tagmanager.accounts.containers.update
 	DomainName []string `json:"domainName,omitempty"`
 	// EnabledBuiltInVariable: List of enabled built-in variables. Valid values
 	// include: pageUrl, pageHostname, pagePath, referrer, event, clickElement,
@@ -458,8 +449,7 @@ type Container struct {
 	// formClasses, formId, formTarget, formUrl, formText, errorMessage, errorUrl,
 	// errorLine, newHistoryFragment, oldHistoryFragment, newHistoryState,
 	// oldHistoryState, historySource, containerVersion, debugMode, randomNumber,
-	// containerId. @mutable tagmanager.accounts.containers.create @mutable
-	// tagmanager.accounts.containers.update
+	// containerId.
 	//
 	// Possible values:
 	//   "pageUrl"
@@ -571,25 +561,18 @@ type Container struct {
 	// Fingerprint: The fingerprint of the GTM Container as computed at storage
 	// time. This value is recomputed whenever the account is modified.
 	Fingerprint string `json:"fingerprint,omitempty"`
-	// Name: Container display name. @mutable tagmanager.accounts.containers.create
-	// @mutable tagmanager.accounts.containers.update
+	// Name: Container display name.
 	Name string `json:"name,omitempty"`
-	// Notes: Container Notes. @mutable tagmanager.accounts.containers.create
-	// @mutable tagmanager.accounts.containers.update
+	// Notes: Container Notes.
 	Notes string `json:"notes,omitempty"`
 	// PublicId: Container Public ID.
 	PublicId string `json:"publicId,omitempty"`
-	// TimeZoneCountryId: Container Country ID. @mutable
-	// tagmanager.accounts.containers.create @mutable
-	// tagmanager.accounts.containers.update
+	// TimeZoneCountryId: Container Country ID.
 	TimeZoneCountryId string `json:"timeZoneCountryId,omitempty"`
-	// TimeZoneId: Container Time Zone ID. @mutable
-	// tagmanager.accounts.containers.create @mutable
-	// tagmanager.accounts.containers.update
+	// TimeZoneId: Container Time Zone ID.
 	TimeZoneId string `json:"timeZoneId,omitempty"`
 	// UsageContext: List of Usage Contexts for the Container. Valid values
-	// include: web, android, ios. @mutable tagmanager.accounts.containers.create
-	// @mutable tagmanager.accounts.containers.update
+	// include: web, android, ios.
 	//
 	// Possible values:
 	//   "web"
@@ -623,13 +606,10 @@ func (s Container) MarshalJSON() ([]byte, error) {
 // ContainerAccess: Defines the Google Tag Manager Container access
 // permissions.
 type ContainerAccess struct {
-	// ContainerId: GTM Container ID. @mutable
-	// tagmanager.accounts.permissions.create @mutable
-	// tagmanager.accounts.permissions.update
+	// ContainerId: GTM Container ID.
 	ContainerId string `json:"containerId,omitempty"`
 	// Permission: List of Container permissions. Valid container permissions are:
-	// read, edit, delete, publish. @mutable tagmanager.accounts.permissions.create
-	// @mutable tagmanager.accounts.permissions.update
+	// read, edit, delete, publish.
 	//
 	// Possible values:
 	//   "read"
@@ -678,11 +658,9 @@ type ContainerVersion struct {
 	Folder []*Folder `json:"folder,omitempty"`
 	// Macro: The macros in the container that this version was taken from.
 	Macro []*Macro `json:"macro,omitempty"`
-	// Name: Container version display name. @mutable
-	// tagmanager.accounts.containers.versions.update
+	// Name: Container version display name.
 	Name string `json:"name,omitempty"`
 	// Notes: User notes on how to apply this container version in the container.
-	// @mutable tagmanager.accounts.containers.versions.update
 	Notes string `json:"notes,omitempty"`
 	// Rule: The rules in the container that this version was taken from.
 	Rule []*Rule `json:"rule,omitempty"`
@@ -825,13 +803,10 @@ type Environment struct {
 	ContainerId        string `json:"containerId,omitempty"`
 	ContainerVersionId string `json:"containerVersionId,omitempty"`
 	// Description: The environment description. Can be set or changed only on USER
-	// type environments. @mutable
-	// tagmanager.accounts.containers.environments.create @mutable
-	// tagmanager.accounts.containers.environments.update
+	// type environments.
 	Description string `json:"description,omitempty"`
 	// EnableDebug: Whether or not to enable debug by default on for the
-	// environment. @mutable tagmanager.accounts.containers.environments.create
-	// @mutable tagmanager.accounts.containers.environments.update
+	// environment.
 	EnableDebug bool `json:"enableDebug,omitempty"`
 	// EnvironmentId: GTM Environment ID uniquely identifies the GTM Environment.
 	EnvironmentId string `json:"environmentId,omitempty"`
@@ -839,8 +814,7 @@ type Environment struct {
 	// time. This value is recomputed whenever the environment is modified.
 	Fingerprint string `json:"fingerprint,omitempty"`
 	// Name: The environment display name. Can be set or changed only on USER type
-	// environments. @mutable tagmanager.accounts.containers.environments.create
-	// @mutable tagmanager.accounts.containers.environments.update
+	// environments.
 	Name string `json:"name,omitempty"`
 	// Type: The type of this environment.
 	//
@@ -853,9 +827,7 @@ type Environment struct {
 	//   "draft" - Used for Draft environment, which points to the single draft in
 	// the container.
 	Type string `json:"type,omitempty"`
-	// Url: Default preview page url for the environment. @mutable
-	// tagmanager.accounts.containers.environments.create @mutable
-	// tagmanager.accounts.containers.environments.update
+	// Url: Default preview page url for the environment.
 	Url string `json:"url,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
@@ -889,9 +861,7 @@ type Folder struct {
 	Fingerprint string `json:"fingerprint,omitempty"`
 	// FolderId: The Folder ID uniquely identifies the GTM Folder.
 	FolderId string `json:"folderId,omitempty"`
-	// Name: Folder display name. @mutable
-	// tagmanager.accounts.containers.folders.create @mutable
-	// tagmanager.accounts.containers.folders.update
+	// Name: Folder display name.
 	Name string `json:"name,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
@@ -1179,44 +1149,30 @@ type Macro struct {
 	// DisablingRuleId: For mobile containers only: A list of rule IDs for
 	// disabling conditional macros; the macro is enabled if one of the enabling
 	// rules is true while all the disabling rules are false. Treated as an
-	// unordered set. @mutable tagmanager.accounts.containers.macros.create
-	// @mutable tagmanager.accounts.containers.macros.update
+	// unordered set.
 	DisablingRuleId []string `json:"disablingRuleId,omitempty"`
 	// EnablingRuleId: For mobile containers only: A list of rule IDs for enabling
 	// conditional macros; the macro is enabled if one of the enabling rules is
 	// true while all the disabling rules are false. Treated as an unordered set.
-	// @mutable tagmanager.accounts.containers.macros.create @mutable
-	// tagmanager.accounts.containers.macros.update
 	EnablingRuleId []string `json:"enablingRuleId,omitempty"`
 	// Fingerprint: The fingerprint of the GTM Macro as computed at storage time.
 	// This value is recomputed whenever the macro is modified.
 	Fingerprint string `json:"fingerprint,omitempty"`
 	// MacroId: The Macro ID uniquely identifies the GTM Macro.
 	MacroId string `json:"macroId,omitempty"`
-	// Name: Macro display name. @mutable
-	// tagmanager.accounts.containers.macros.create @mutable
-	// tagmanager.accounts.containers.macros.update
+	// Name: Macro display name.
 	Name string `json:"name,omitempty"`
-	// Notes: User notes on how to apply this macro in the container. @mutable
-	// tagmanager.accounts.containers.macros.create @mutable
-	// tagmanager.accounts.containers.macros.update
+	// Notes: User notes on how to apply this macro in the container.
 	Notes string `json:"notes,omitempty"`
-	// Parameter: The macro's parameters. @mutable
-	// tagmanager.accounts.containers.macros.create @mutable
-	// tagmanager.accounts.containers.macros.update
+	// Parameter: The macro's parameters.
 	Parameter []*Parameter `json:"parameter,omitempty"`
 	// ParentFolderId: Parent folder id.
 	ParentFolderId string `json:"parentFolderId,omitempty"`
 	// ScheduleEndMs: The end timestamp in milliseconds to schedule a macro.
-	// @mutable tagmanager.accounts.containers.macros.create @mutable
-	// tagmanager.accounts.containers.macros.update
 	ScheduleEndMs int64 `json:"scheduleEndMs,omitempty,string"`
 	// ScheduleStartMs: The start timestamp in milliseconds to schedule a macro.
-	// @mutable tagmanager.accounts.containers.macros.create @mutable
-	// tagmanager.accounts.containers.macros.update
 	ScheduleStartMs int64 `json:"scheduleStartMs,omitempty,string"`
-	// Type: GTM Macro Type. @mutable tagmanager.accounts.containers.macros.create
-	// @mutable tagmanager.accounts.containers.macros.update
+	// Type: GTM Macro Type.
 	Type string `json:"type,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AccountId") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -1240,28 +1196,10 @@ func (s Macro) MarshalJSON() ([]byte, error) {
 type Parameter struct {
 	// Key: The named key that uniquely identifies a parameter. Required for
 	// top-level parameters, as well as map values. Ignored for list values.
-	// @mutable tagmanager.accounts.containers.variables.create @mutable
-	// tagmanager.accounts.containers.variables.update @mutable
-	// tagmanager.accounts.containers.triggers.create @mutable
-	// tagmanager.accounts.containers.triggers.update @mutable
-	// tagmanager.accounts.containers.tags.create @mutable
-	// tagmanager.accounts.containers.tags.update
 	Key string `json:"key,omitempty"`
-	// List: This list parameter's parameters (keys will be ignored). @mutable
-	// tagmanager.accounts.containers.variables.create @mutable
-	// tagmanager.accounts.containers.variables.update @mutable
-	// tagmanager.accounts.containers.triggers.create @mutable
-	// tagmanager.accounts.containers.triggers.update @mutable
-	// tagmanager.accounts.containers.tags.create @mutable
-	// tagmanager.accounts.containers.tags.update
+	// List: This list parameter's parameters (keys will be ignored).
 	List []*Parameter `json:"list,omitempty"`
 	// Map: This map parameter's parameters (must have keys; keys must be unique).
-	// @mutable tagmanager.accounts.containers.variables.create @mutable
-	// tagmanager.accounts.containers.variables.update @mutable
-	// tagmanager.accounts.containers.triggers.create @mutable
-	// tagmanager.accounts.containers.triggers.update @mutable
-	// tagmanager.accounts.containers.tags.create @mutable
-	// tagmanager.accounts.containers.tags.update
 	Map []*Parameter `json:"map,omitempty"`
 	// Type: The parameter type. Valid values are: - boolean: The value represents
 	// a boolean, represented as 'true' or 'false' - integer: The value represents
@@ -1271,15 +1209,10 @@ type Parameter struct {
 	// references (even variable references that might return non-string types) -
 	// trigger_reference: The value represents a trigger, represented as the
 	// trigger id - tag_reference: The value represents a tag, represented as the
-	// tag name @mutable tagmanager.accounts.containers.variables.create @mutable
-	// tagmanager.accounts.containers.variables.update @mutable
-	// tagmanager.accounts.containers.triggers.create @mutable
-	// tagmanager.accounts.containers.triggers.update @mutable
-	// tagmanager.accounts.containers.tags.create @mutable
-	// tagmanager.accounts.containers.tags.update
+	// tag name
 	//
 	// Possible values:
-	//   "template" - May include variable references (such as "{{myVariable}}").
+	//   "template" - May include variable references.
 	//   "integer"
 	//   "boolean"
 	//   "list"
@@ -1287,14 +1220,8 @@ type Parameter struct {
 	//   "triggerReference"
 	//   "tagReference"
 	Type string `json:"type,omitempty"`
-	// Value: A parameter's value (may contain variable references such as
-	// "{{myVariable}}") as appropriate to the specified type. @mutable
-	// tagmanager.accounts.containers.variables.create @mutable
-	// tagmanager.accounts.containers.variables.update @mutable
-	// tagmanager.accounts.containers.triggers.create @mutable
-	// tagmanager.accounts.containers.triggers.update @mutable
-	// tagmanager.accounts.containers.tags.create @mutable
-	// tagmanager.accounts.containers.tags.update
+	// Value: A parameter's value (may contain variable references). as appropriate
+	// to the specified type.
 	Value string `json:"value,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Key") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -1346,21 +1273,16 @@ type Rule struct {
 	// AccountId: GTM Account ID.
 	AccountId string `json:"accountId,omitempty"`
 	// Condition: The list of conditions that make up this rule (implicit AND
-	// between them). @mutable tagmanager.accounts.containers.rules.create @mutable
-	// tagmanager.accounts.containers.rules.update
+	// between them).
 	Condition []*Condition `json:"condition,omitempty"`
 	// ContainerId: GTM Container ID.
 	ContainerId string `json:"containerId,omitempty"`
 	// Fingerprint: The fingerprint of the GTM Rule as computed at storage time.
 	// This value is recomputed whenever the rule is modified.
 	Fingerprint string `json:"fingerprint,omitempty"`
-	// Name: Rule display name. @mutable
-	// tagmanager.accounts.containers.rules.create @mutable
-	// tagmanager.accounts.containers.rules.update
+	// Name: Rule display name.
 	Name string `json:"name,omitempty"`
-	// Notes: User notes on how to apply this rule in the container. @mutable
-	// tagmanager.accounts.containers.rules.create @mutable
-	// tagmanager.accounts.containers.rules.update
+	// Notes: User notes on how to apply this rule in the container.
 	Notes string `json:"notes,omitempty"`
 	// RuleId: The Rule ID uniquely identifies the GTM Rule.
 	RuleId string `json:"ruleId,omitempty"`
@@ -1412,14 +1334,10 @@ type Tag struct {
 	// AccountId: GTM Account ID.
 	AccountId string `json:"accountId,omitempty"`
 	// BlockingRuleId: Blocking rule IDs. If any of the listed rules evaluate to
-	// true, the tag will not fire. @mutable
-	// tagmanager.accounts.containers.tags.create @mutable
-	// tagmanager.accounts.containers.tags.update
+	// true, the tag will not fire.
 	BlockingRuleId []string `json:"blockingRuleId,omitempty"`
 	// BlockingTriggerId: Blocking trigger IDs. If any of the listed triggers
-	// evaluate to true, the tag will not fire. @mutable
-	// tagmanager.accounts.containers.tags.create @mutable
-	// tagmanager.accounts.containers.tags.update
+	// evaluate to true, the tag will not fire.
 	BlockingTriggerId []string `json:"blockingTriggerId,omitempty"`
 	// ContainerId: GTM Container ID.
 	ContainerId string `json:"containerId,omitempty"`
@@ -1428,49 +1346,32 @@ type Tag struct {
 	Fingerprint string `json:"fingerprint,omitempty"`
 	// FiringRuleId: Firing rule IDs. A tag will fire when any of the listed rules
 	// are true and all of its blockingRuleIds (if any specified) are false.
-	// @mutable tagmanager.accounts.containers.tags.create @mutable
-	// tagmanager.accounts.containers.tags.update
 	FiringRuleId []string `json:"firingRuleId,omitempty"`
 	// FiringTriggerId: Firing trigger IDs. A tag will fire when any of the listed
 	// triggers are true and all of its blockingTriggerIds (if any specified) are
-	// false. @mutable tagmanager.accounts.containers.tags.create @mutable
-	// tagmanager.accounts.containers.tags.update
+	// false.
 	FiringTriggerId []string `json:"firingTriggerId,omitempty"`
 	// LiveOnly: If set to true, this tag will only fire in the live environment
-	// (e.g. not in preview or debug mode). @mutable
-	// tagmanager.accounts.containers.tags.create @mutable
-	// tagmanager.accounts.containers.tags.update
+	// (e.g. not in preview or debug mode).
 	LiveOnly bool `json:"liveOnly,omitempty"`
-	// Name: Tag display name. @mutable tagmanager.accounts.containers.tags.create
-	// @mutable tagmanager.accounts.containers.tags.update
+	// Name: Tag display name.
 	Name string `json:"name,omitempty"`
-	// Notes: User notes on how to apply this tag in the container. @mutable
-	// tagmanager.accounts.containers.tags.create @mutable
-	// tagmanager.accounts.containers.tags.update
+	// Notes: User notes on how to apply this tag in the container.
 	Notes string `json:"notes,omitempty"`
-	// Parameter: The tag's parameters. @mutable
-	// tagmanager.accounts.containers.tags.create @mutable
-	// tagmanager.accounts.containers.tags.update
+	// Parameter: The tag's parameters.
 	Parameter []*Parameter `json:"parameter,omitempty"`
 	// ParentFolderId: Parent folder id.
 	ParentFolderId string `json:"parentFolderId,omitempty"`
-	// Paused: True if the tag is paused. @mutable
-	// tagmanager.accounts.containers.tags.create @mutable
-	// tagmanager.accounts.containers.tags.update
+	// Paused: True if the tag is paused.
 	Paused bool `json:"paused,omitempty"`
 	// Priority: User defined numeric priority of the tag. Tags are fired
 	// asynchronously in order of priority. Tags with higher numeric value fire
 	// first. A tag's priority can be a positive or negative value. The default
-	// value is 0. @mutable tagmanager.accounts.containers.tags.create @mutable
-	// tagmanager.accounts.containers.tags.update
+	// value is 0.
 	Priority *Parameter `json:"priority,omitempty"`
-	// ScheduleEndMs: The end timestamp in milliseconds to schedule a tag. @mutable
-	// tagmanager.accounts.containers.tags.create @mutable
-	// tagmanager.accounts.containers.tags.update
+	// ScheduleEndMs: The end timestamp in milliseconds to schedule a tag.
 	ScheduleEndMs int64 `json:"scheduleEndMs,omitempty,string"`
 	// ScheduleStartMs: The start timestamp in milliseconds to schedule a tag.
-	// @mutable tagmanager.accounts.containers.tags.create @mutable
-	// tagmanager.accounts.containers.tags.update
 	ScheduleStartMs int64 `json:"scheduleStartMs,omitempty,string"`
 	// SetupTag: The list of setup tags. Currently we only allow one.
 	SetupTag []*SetupTag `json:"setupTag,omitempty"`
@@ -1487,8 +1388,7 @@ type Tag struct {
 	TagId string `json:"tagId,omitempty"`
 	// TeardownTag: The list of teardown tags. Currently we only allow one.
 	TeardownTag []*TeardownTag `json:"teardownTag,omitempty"`
-	// Type: GTM Tag Type. @mutable tagmanager.accounts.containers.tags.create
-	// @mutable tagmanager.accounts.containers.tags.update
+	// Type: GTM Tag Type.
 	Type string `json:"type,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
@@ -1540,90 +1440,61 @@ func (s TeardownTag) MarshalJSON() ([]byte, error) {
 type Trigger struct {
 	// AccountId: GTM Account ID.
 	AccountId string `json:"accountId,omitempty"`
-	// AutoEventFilter: Used in the case of auto event tracking. @mutable
-	// tagmanager.accounts.containers.triggers.create @mutable
-	// tagmanager.accounts.containers.triggers.update
+	// AutoEventFilter: Used in the case of auto event tracking.
 	AutoEventFilter []*Condition `json:"autoEventFilter,omitempty"`
 	// CheckValidation: Whether or not we should only fire tags if the form submit
 	// or link click event is not cancelled by some other event handler (e.g.
 	// because of validation). Only valid for Form Submission and Link Click
-	// triggers. @mutable tagmanager.accounts.containers.triggers.create @mutable
-	// tagmanager.accounts.containers.triggers.update
+	// triggers.
 	CheckValidation *Parameter `json:"checkValidation,omitempty"`
 	// ContainerId: GTM Container ID.
 	ContainerId string `json:"containerId,omitempty"`
 	// ContinuousTimeMinMilliseconds: A visibility trigger minimum continuous
 	// visible time (in milliseconds). Only valid for AMP Visibility trigger.
-	// @mutable tagmanager.accounts.containers.triggers.create @mutable
-	// tagmanager.accounts.containers.triggers.update
 	ContinuousTimeMinMilliseconds *Parameter `json:"continuousTimeMinMilliseconds,omitempty"`
 	// CustomEventFilter: Used in the case of custom event, which is fired iff all
-	// Conditions are true. @mutable tagmanager.accounts.containers.triggers.create
-	// @mutable tagmanager.accounts.containers.triggers.update
+	// Conditions are true.
 	CustomEventFilter []*Condition `json:"customEventFilter,omitempty"`
 	// EventName: Name of the GTM event that is fired. Only valid for Timer
-	// triggers. @mutable tagmanager.accounts.containers.triggers.create @mutable
-	// tagmanager.accounts.containers.triggers.update
+	// triggers.
 	EventName *Parameter `json:"eventName,omitempty"`
-	// Filter: The trigger will only fire iff all Conditions are true. @mutable
-	// tagmanager.accounts.containers.triggers.create @mutable
-	// tagmanager.accounts.containers.triggers.update
+	// Filter: The trigger will only fire iff all Conditions are true.
 	Filter []*Condition `json:"filter,omitempty"`
 	// Fingerprint: The fingerprint of the GTM Trigger as computed at storage time.
 	// This value is recomputed whenever the trigger is modified.
 	Fingerprint string `json:"fingerprint,omitempty"`
 	// HorizontalScrollPercentageList: List of integer percentage values for scroll
 	// triggers. The trigger will fire when each percentage is reached when the
-	// view is scrolled horizontally. Only valid for AMP scroll triggers. @mutable
-	// tagmanager.accounts.containers.triggers.create @mutable
-	// tagmanager.accounts.containers.triggers.update
+	// view is scrolled horizontally. Only valid for AMP scroll triggers.
 	HorizontalScrollPercentageList *Parameter `json:"horizontalScrollPercentageList,omitempty"`
 	// Interval: Time between triggering recurring Timer Events (in milliseconds).
-	// Only valid for Timer triggers. @mutable
-	// tagmanager.accounts.containers.triggers.create @mutable
-	// tagmanager.accounts.containers.triggers.update
+	// Only valid for Timer triggers.
 	Interval *Parameter `json:"interval,omitempty"`
 	// IntervalSeconds: Time between Timer Events to fire (in seconds). Only valid
-	// for AMP Timer trigger. @mutable
-	// tagmanager.accounts.containers.triggers.create @mutable
-	// tagmanager.accounts.containers.triggers.update
+	// for AMP Timer trigger.
 	IntervalSeconds *Parameter `json:"intervalSeconds,omitempty"`
 	// Limit: Limit of the number of GTM events this Timer Trigger will fire. If no
 	// limit is set, we will continue to fire GTM events until the user leaves the
-	// page. Only valid for Timer triggers. @mutable
-	// tagmanager.accounts.containers.triggers.create @mutable
-	// tagmanager.accounts.containers.triggers.update
+	// page. Only valid for Timer triggers.
 	Limit *Parameter `json:"limit,omitempty"`
 	// MaxTimerLengthSeconds: Max time to fire Timer Events (in seconds). Only
-	// valid for AMP Timer trigger. @mutable
-	// tagmanager.accounts.containers.triggers.create @mutable
-	// tagmanager.accounts.containers.triggers.update
+	// valid for AMP Timer trigger.
 	MaxTimerLengthSeconds *Parameter `json:"maxTimerLengthSeconds,omitempty"`
-	// Name: Trigger display name. @mutable
-	// tagmanager.accounts.containers.triggers.create @mutable
-	// tagmanager.accounts.containers.triggers.update
+	// Name: Trigger display name.
 	Name string `json:"name,omitempty"`
-	// Parameter: Additional parameters. @mutable
-	// tagmanager.accounts.containers.workspaces.triggers.create @mutable
-	// tagmanager.accounts.containers.workspaces.triggers.update
+	// Parameter: Additional parameters.
 	Parameter []*Parameter `json:"parameter,omitempty"`
 	// ParentFolderId: Parent folder id.
 	ParentFolderId string `json:"parentFolderId,omitempty"`
 	// Selector: A click trigger CSS selector (i.e. "a", "button" etc.). Only valid
-	// for AMP Click trigger. @mutable
-	// tagmanager.accounts.containers.triggers.create @mutable
-	// tagmanager.accounts.containers.triggers.update
+	// for AMP Click trigger.
 	Selector *Parameter `json:"selector,omitempty"`
 	// TotalTimeMinMilliseconds: A visibility trigger minimum total visible time
-	// (in milliseconds). Only valid for AMP Visibility trigger. @mutable
-	// tagmanager.accounts.containers.triggers.create @mutable
-	// tagmanager.accounts.containers.triggers.update
+	// (in milliseconds). Only valid for AMP Visibility trigger.
 	TotalTimeMinMilliseconds *Parameter `json:"totalTimeMinMilliseconds,omitempty"`
 	// TriggerId: The Trigger ID uniquely identifies the GTM Trigger.
 	TriggerId string `json:"triggerId,omitempty"`
-	// Type: Defines the data layer event that causes this trigger. @mutable
-	// tagmanager.accounts.containers.triggers.create @mutable
-	// tagmanager.accounts.containers.triggers.update
+	// Type: Defines the data layer event that causes this trigger.
 	//
 	// Possible values:
 	//   "pageview"
@@ -1651,41 +1522,29 @@ type Trigger struct {
 	// incompatible auto-events work together with trigger filtering based on
 	// trigger ids. This value is populated during output generation since the tags
 	// implied by triggers don't exist until then. Only valid for Form Submit, Link
-	// Click and Timer triggers. @mutable
-	// tagmanager.accounts.containers.triggers.create @mutable
-	// tagmanager.accounts.containers.triggers.update
+	// Click and Timer triggers.
 	UniqueTriggerId *Parameter `json:"uniqueTriggerId,omitempty"`
 	// VerticalScrollPercentageList: List of integer percentage values for scroll
 	// triggers. The trigger will fire when each percentage is reached when the
-	// view is scrolled vertically. Only valid for AMP scroll triggers. @mutable
-	// tagmanager.accounts.containers.triggers.create @mutable
-	// tagmanager.accounts.containers.triggers.update
+	// view is scrolled vertically. Only valid for AMP scroll triggers.
 	VerticalScrollPercentageList *Parameter `json:"verticalScrollPercentageList,omitempty"`
 	// VisibilitySelector: A visibility trigger CSS selector (i.e. "#id"). Only
-	// valid for AMP Visibility trigger. @mutable
-	// tagmanager.accounts.containers.triggers.create @mutable
-	// tagmanager.accounts.containers.triggers.update
+	// valid for AMP Visibility trigger.
 	VisibilitySelector *Parameter `json:"visibilitySelector,omitempty"`
 	// VisiblePercentageMax: A visibility trigger maximum percent visibility. Only
-	// valid for AMP Visibility trigger. @mutable
-	// tagmanager.accounts.containers.triggers.create @mutable
-	// tagmanager.accounts.containers.triggers.update
+	// valid for AMP Visibility trigger.
 	VisiblePercentageMax *Parameter `json:"visiblePercentageMax,omitempty"`
 	// VisiblePercentageMin: A visibility trigger minimum percent visibility. Only
-	// valid for AMP Visibility trigger. @mutable
-	// tagmanager.accounts.containers.triggers.create @mutable
-	// tagmanager.accounts.containers.triggers.update
+	// valid for AMP Visibility trigger.
 	VisiblePercentageMin *Parameter `json:"visiblePercentageMin,omitempty"`
 	// WaitForTags: Whether or not we should delay the form submissions or link
 	// opening until all of the tags have fired (by preventing the default action
 	// and later simulating the default action). Only valid for Form Submission and
-	// Link Click triggers. @mutable tagmanager.accounts.containers.triggers.create
-	// @mutable tagmanager.accounts.containers.triggers.update
+	// Link Click triggers.
 	WaitForTags *Parameter `json:"waitForTags,omitempty"`
 	// WaitForTagsTimeout: How long to wait (in milliseconds) for tags to fire when
 	// 'waits_for_tags' above evaluates to true. Only valid for Form Submission and
-	// Link Click triggers. @mutable tagmanager.accounts.containers.triggers.create
-	// @mutable tagmanager.accounts.containers.triggers.update
+	// Link Click triggers.
 	WaitForTagsTimeout *Parameter `json:"waitForTagsTimeout,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
@@ -1710,18 +1569,13 @@ func (s Trigger) MarshalJSON() ([]byte, error) {
 
 // UserAccess: Represents a user's permissions to an account and its container.
 type UserAccess struct {
-	// AccountAccess: GTM Account access permissions. @mutable
-	// tagmanager.accounts.permissions.create @mutable
-	// tagmanager.accounts.permissions.update
+	// AccountAccess: GTM Account access permissions.
 	AccountAccess *AccountAccess `json:"accountAccess,omitempty"`
 	// AccountId: GTM Account ID.
 	AccountId string `json:"accountId,omitempty"`
-	// ContainerAccess: GTM Container access permissions. @mutable
-	// tagmanager.accounts.permissions.create @mutable
-	// tagmanager.accounts.permissions.update
+	// ContainerAccess: GTM Container access permissions.
 	ContainerAccess []*ContainerAccess `json:"containerAccess,omitempty"`
-	// EmailAddress: User's email address. @mutable
-	// tagmanager.accounts.permissions.create
+	// EmailAddress: User's email address.
 	EmailAddress string `json:"emailAddress,omitempty"`
 	// PermissionId: Account Permission ID.
 	PermissionId string `json:"permissionId,omitempty"`
@@ -1755,45 +1609,29 @@ type Variable struct {
 	// DisablingTriggerId: For mobile containers only: A list of trigger IDs for
 	// disabling conditional variables; the variable is enabled if one of the
 	// enabling trigger is true while all the disabling trigger are false. Treated
-	// as an unordered set. @mutable
-	// tagmanager.accounts.containers.variables.create @mutable
-	// tagmanager.accounts.containers.variables.update
+	// as an unordered set.
 	DisablingTriggerId []string `json:"disablingTriggerId,omitempty"`
 	// EnablingTriggerId: For mobile containers only: A list of trigger IDs for
 	// enabling conditional variables; the variable is enabled if one of the
 	// enabling triggers is true while all the disabling triggers are false.
-	// Treated as an unordered set. @mutable
-	// tagmanager.accounts.containers.variables.create @mutable
-	// tagmanager.accounts.containers.variables.update
+	// Treated as an unordered set.
 	EnablingTriggerId []string `json:"enablingTriggerId,omitempty"`
 	// Fingerprint: The fingerprint of the GTM Variable as computed at storage
 	// time. This value is recomputed whenever the variable is modified.
 	Fingerprint string `json:"fingerprint,omitempty"`
-	// Name: Variable display name. @mutable
-	// tagmanager.accounts.containers.variables.create @mutable
-	// tagmanager.accounts.containers.variables.update
+	// Name: Variable display name.
 	Name string `json:"name,omitempty"`
-	// Notes: User notes on how to apply this variable in the container. @mutable
-	// tagmanager.accounts.containers.variables.create @mutable
-	// tagmanager.accounts.containers.variables.update
+	// Notes: User notes on how to apply this variable in the container.
 	Notes string `json:"notes,omitempty"`
-	// Parameter: The variable's parameters. @mutable
-	// tagmanager.accounts.containers.variables.create @mutable
-	// tagmanager.accounts.containers.variables.update
+	// Parameter: The variable's parameters.
 	Parameter []*Parameter `json:"parameter,omitempty"`
 	// ParentFolderId: Parent folder id.
 	ParentFolderId string `json:"parentFolderId,omitempty"`
 	// ScheduleEndMs: The end timestamp in milliseconds to schedule a variable.
-	// @mutable tagmanager.accounts.containers.variables.create @mutable
-	// tagmanager.accounts.containers.variables.update
 	ScheduleEndMs int64 `json:"scheduleEndMs,omitempty,string"`
 	// ScheduleStartMs: The start timestamp in milliseconds to schedule a variable.
-	// @mutable tagmanager.accounts.containers.variables.create @mutable
-	// tagmanager.accounts.containers.variables.update
 	ScheduleStartMs int64 `json:"scheduleStartMs,omitempty,string"`
-	// Type: GTM Variable Type. @mutable
-	// tagmanager.accounts.containers.variables.create @mutable
-	// tagmanager.accounts.containers.variables.update
+	// Type: GTM Variable Type.
 	Type string `json:"type,omitempty"`
 	// VariableId: The Variable ID uniquely identifies the GTM Variable.
 	VariableId string `json:"variableId,omitempty"`

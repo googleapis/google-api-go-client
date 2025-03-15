@@ -206,7 +206,7 @@
       }
     }
   },
-  "revision": "20250309",
+  "revision": "20250312",
   "rootUrl": "https://firebaseml.googleapis.com/",
   "schemas": {
     "Date": {
@@ -1085,6 +1085,10 @@
       "description": "Chunk from the web.",
       "id": "GoogleCloudAiplatformV1beta1GroundingChunkWeb",
       "properties": {
+        "domain": {
+          "description": "Domain of the (original) URI.",
+          "type": "string"
+        },
         "title": {
           "description": "Title of the chunk.",
           "type": "string"

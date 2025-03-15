@@ -2083,8 +2083,8 @@ type JavaSettings struct {
 	// option set in the protobuf. This should be used **only** by APIs who have
 	// already set the language_settings.java.package_name" field in gapic.yaml.
 	// API teams should use the protobuf java_package option where possible.
-	// Example of a YAML configuration:: publishing: java_settings:
-	// library_package: com.google.cloud.pubsub.v1
+	// Example of a YAML configuration:: publishing: library_settings:
+	// java_settings: library_package: com.google.cloud.pubsub.v1
 	LibraryPackage string `json:"libraryPackage,omitempty"`
 	// ServiceClassNames: Configure the Java class name to use instead of the
 	// service's for its corresponding generated GAPIC client. Keys are

@@ -1546,6 +1546,9 @@ type SchedulingConfig struct {
 	Reserved bool `json:"reserved,omitempty"`
 	// Spot: Optional. Defines whether the node is Spot VM.
 	Spot bool `json:"spot,omitempty"`
+	// TerminationTimestamp: Output only. The time at which the node will be
+	// terminated.
+	TerminationTimestamp string `json:"terminationTimestamp,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Preemptible") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See

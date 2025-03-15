@@ -1247,17 +1247,19 @@ func (s GoogleCloudAiplatformV1beta1GroundingChunkRetrievedContext) MarshalJSON(
 
 // GoogleCloudAiplatformV1beta1GroundingChunkWeb: Chunk from the web.
 type GoogleCloudAiplatformV1beta1GroundingChunkWeb struct {
+	// Domain: Domain of the (original) URI.
+	Domain string `json:"domain,omitempty"`
 	// Title: Title of the chunk.
 	Title string `json:"title,omitempty"`
 	// Uri: URI reference of the chunk.
 	Uri string `json:"uri,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "Title") to unconditionally
+	// ForceSendFields is a list of field names (e.g. "Domain") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
 	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Title") to include in API
+	// NullFields is a list of field names (e.g. "Domain") to include in API
 	// requests with the JSON null value. By default, fields with empty values are
 	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.

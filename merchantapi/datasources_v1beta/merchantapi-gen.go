@@ -328,6 +328,64 @@ func (s DefaultRule) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// Destination: Destinations also known as Marketing methods
+// (https://support.google.com/merchants/answer/15130232) selections.
+type Destination struct {
+	// Destination: Marketing methods
+	// (https://support.google.com/merchants/answer/15130232) (also known as
+	// destination) selections.
+	//
+	// Possible values:
+	//   "DESTINATION_ENUM_UNSPECIFIED" - Not specified.
+	//   "SHOPPING_ADS" - [Shopping
+	// ads](https://support.google.com/google-ads/answer/2454022).
+	//   "DISPLAY_ADS" - [Display
+	// ads](https://support.google.com/merchants/answer/6069387).
+	//   "LOCAL_INVENTORY_ADS" - [Local inventory
+	// ads](https://support.google.com/merchants/answer/3057972).
+	//   "FREE_LISTINGS" - [Free
+	// listings](https://support.google.com/merchants/answer/9199328).
+	//   "FREE_LOCAL_LISTINGS" - [Free local product
+	// listings](https://support.google.com/merchants/answer/9825611).
+	//   "YOUTUBE_SHOPPING" - [YouTube
+	// Shopping](https://support.google.com/merchants/answer/12362804).
+	//   "YOUTUBE_SHOPPING_CHECKOUT" - Youtube shopping checkout.
+	//   "YOUTUBE_AFFILIATE" - [Youtube
+	// Affiliate](https://support.google.com/youtube/answer/13376398).
+	//   "FREE_VEHICLE_LISTINGS" - [Free vehicle
+	// listings](https://support.google.com/merchants/answer/11189169).
+	//   "VEHICLE_ADS" - [Vehicle
+	// ads](https://support.google.com/merchants/answer/11189169).
+	//   "CLOUD_RETAIL" - [Cloud
+	// retail](https://cloud.google.com/solutions/retail).
+	//   "LOCAL_CLOUD_RETAIL" - [Local cloud
+	// retail](https://cloud.google.com/solutions/retail).
+	Destination string `json:"destination,omitempty"`
+	// State: The state of the destination.
+	//
+	// Possible values:
+	//   "STATE_UNSPECIFIED" - Not specified.
+	//   "ENABLED" - Indicates that the destination is enabled.
+	//   "DISABLED" - Indicates that the destination is disabled.
+	State string `json:"state,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Destination") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Destination") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s Destination) MarshalJSON() ([]byte, error) {
+	type NoMethod Destination
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // Empty: A generic empty message that you can re-use to avoid defining
 // duplicated empty messages in your APIs. A typical example is to use it as
 // the request or the response type of an API method. For instance: service Foo
@@ -629,6 +687,17 @@ type PrimaryProductDataSource struct {
 	// DefaultRule: Optional. Default rule management of the data source. If set,
 	// the linked data sources will be replaced.
 	DefaultRule *DefaultRule `json:"defaultRule,omitempty"`
+	// Destinations: Optional. A list of destinations describing where products of
+	// the data source can be shown. When retrieving the data source, the list
+	// contains all the destinations that can be used for the data source,
+	// including the ones that are disabled for the data source but enabled for the
+	// account. Only destinations that are enabled on the account, for example
+	// through program participation, can be enabled on the data source. If unset,
+	// during creation, the destinations will be inherited based on the account
+	// level program participation. If set, during creation or update, the data
+	// source will be set only for the specified destinations. Updating this field
+	// requires at least one destination.
+	Destinations []*Destination `json:"destinations,omitempty"`
 	// FeedLabel: Optional. Immutable. The feed label that is specified on the data
 	// source level. Must be less than or equal to 20 uppercase letters (A-Z),
 	// numbers (0-9), and dashes (-). See also migration to feed labels

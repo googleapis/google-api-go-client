@@ -245,6 +245,7 @@ func NewOrganizationsLocationsService(s *Service) *OrganizationsLocationsService
 	rs.DiscoveryConfigs = NewOrganizationsLocationsDiscoveryConfigsService(s)
 	rs.DlpJobs = NewOrganizationsLocationsDlpJobsService(s)
 	rs.FileStoreDataProfiles = NewOrganizationsLocationsFileStoreDataProfilesService(s)
+	rs.InfoTypes = NewOrganizationsLocationsInfoTypesService(s)
 	rs.InspectTemplates = NewOrganizationsLocationsInspectTemplatesService(s)
 	rs.JobTriggers = NewOrganizationsLocationsJobTriggersService(s)
 	rs.ProjectDataProfiles = NewOrganizationsLocationsProjectDataProfilesService(s)
@@ -267,6 +268,8 @@ type OrganizationsLocationsService struct {
 	DlpJobs *OrganizationsLocationsDlpJobsService
 
 	FileStoreDataProfiles *OrganizationsLocationsFileStoreDataProfilesService
+
+	InfoTypes *OrganizationsLocationsInfoTypesService
 
 	InspectTemplates *OrganizationsLocationsInspectTemplatesService
 
@@ -330,6 +333,15 @@ func NewOrganizationsLocationsFileStoreDataProfilesService(s *Service) *Organiza
 }
 
 type OrganizationsLocationsFileStoreDataProfilesService struct {
+	s *Service
+}
+
+func NewOrganizationsLocationsInfoTypesService(s *Service) *OrganizationsLocationsInfoTypesService {
+	rs := &OrganizationsLocationsInfoTypesService{s: s}
+	return rs
+}
+
+type OrganizationsLocationsInfoTypesService struct {
 	s *Service
 }
 
@@ -484,6 +496,7 @@ func NewProjectsLocationsService(s *Service) *ProjectsLocationsService {
 	rs.DlpJobs = NewProjectsLocationsDlpJobsService(s)
 	rs.FileStoreDataProfiles = NewProjectsLocationsFileStoreDataProfilesService(s)
 	rs.Image = NewProjectsLocationsImageService(s)
+	rs.InfoTypes = NewProjectsLocationsInfoTypesService(s)
 	rs.InspectTemplates = NewProjectsLocationsInspectTemplatesService(s)
 	rs.JobTriggers = NewProjectsLocationsJobTriggersService(s)
 	rs.ProjectDataProfiles = NewProjectsLocationsProjectDataProfilesService(s)
@@ -510,6 +523,8 @@ type ProjectsLocationsService struct {
 	FileStoreDataProfiles *ProjectsLocationsFileStoreDataProfilesService
 
 	Image *ProjectsLocationsImageService
+
+	InfoTypes *ProjectsLocationsInfoTypesService
 
 	InspectTemplates *ProjectsLocationsInspectTemplatesService
 
@@ -591,6 +606,15 @@ func NewProjectsLocationsImageService(s *Service) *ProjectsLocationsImageService
 }
 
 type ProjectsLocationsImageService struct {
+	s *Service
+}
+
+func NewProjectsLocationsInfoTypesService(s *Service) *ProjectsLocationsInfoTypesService {
+	rs := &ProjectsLocationsInfoTypesService{s: s}
+	return rs
+}
+
+type ProjectsLocationsInfoTypesService struct {
 	s *Service
 }
 
@@ -5561,6 +5585,9 @@ type GooglePrivacyDlpV2FileStoreDataProfile struct {
 	// profile_status.status.code is 0, the profile succeeded, otherwise, it
 	// failed.
 	State string `json:"state,omitempty"`
+	// Tags: The tags attached to the resource, including any tags attached during
+	// profiling.
+	Tags []*GooglePrivacyDlpV2Tag `json:"tags,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
@@ -6369,6 +6396,12 @@ type GooglePrivacyDlpV2InfoTypeDescription struct {
 	Name string `json:"name,omitempty"`
 	// SensitivityScore: The default sensitivity of the infoType.
 	SensitivityScore *GooglePrivacyDlpV2SensitivityScore `json:"sensitivityScore,omitempty"`
+	// SpecificInfoTypes: If this field is set, this infoType is a general infoType
+	// and these specific infoTypes are contained within it. General infoTypes are
+	// infoTypes that encompass multiple specific infoTypes. For example, the
+	// "GEOGRAPHIC_DATA" general infoType would have set for this field "LOCATION",
+	// "LOCATION_COORDINATES", and "STREET_ADDRESS".
+	SpecificInfoTypes []string `json:"specificInfoTypes,omitempty"`
 	// SupportedBy: Which parts of the API supports this InfoType.
 	//
 	// Possible values:
@@ -10101,6 +10134,10 @@ type GooglePrivacyDlpV2TableDataProfile struct {
 	TableId string `json:"tableId,omitempty"`
 	// TableSizeBytes: The size of the table when the profile was generated.
 	TableSizeBytes int64 `json:"tableSizeBytes,omitempty,string"`
+	// Tags: The tags attached to the table, including any tags attached during
+	// profiling. Because tags are attached to Cloud SQL instances rather than
+	// Cloud SQL tables, this field is empty for Cloud SQL table profiles.
+	Tags []*GooglePrivacyDlpV2Tag `json:"tags,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
@@ -10197,6 +10234,37 @@ type GooglePrivacyDlpV2TableReference struct {
 
 func (s GooglePrivacyDlpV2TableReference) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePrivacyDlpV2TableReference
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GooglePrivacyDlpV2Tag: A tag associated with a resource.
+type GooglePrivacyDlpV2Tag struct {
+	// Key: The key of a tag key-value pair. For Google Cloud resources, this is
+	// the resource name of the key, for example, "tagKeys/123456".
+	Key string `json:"key,omitempty"`
+	// NamespacedTagValue: The namespaced name for the tag value to attach to
+	// Google Cloud resources. Must be in the format
+	// `{parent_id}/{tag_key_short_name}/{short_name}`, for example,
+	// "123456/environment/prod". This is only set for Google Cloud resources.
+	NamespacedTagValue string `json:"namespacedTagValue,omitempty"`
+	// Value: The value of a tag key-value pair. For Google Cloud resources, this
+	// is the resource name of the value, for example, "tagValues/123456".
+	Value string `json:"value,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Key") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Key") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GooglePrivacyDlpV2Tag) MarshalJSON() ([]byte, error) {
+	type NoMethod GooglePrivacyDlpV2Tag
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -15799,6 +15867,142 @@ func (c *OrganizationsLocationsFileStoreDataProfilesListCall) Pages(ctx context.
 		}
 		c.PageToken(x.NextPageToken)
 	}
+}
+
+type OrganizationsLocationsInfoTypesListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Returns a list of the sensitive information types that the DLP API
+// supports. See
+// https://cloud.google.com/sensitive-data-protection/docs/infotypes-reference
+// to learn more.
+//
+//   - parent: The parent resource name. The format of this value is as follows:
+//     `locations/{location_id}`.
+func (r *OrganizationsLocationsInfoTypesService) List(parent string) *OrganizationsLocationsInfoTypesListCall {
+	c := &OrganizationsLocationsInfoTypesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// Filter sets the optional parameter "filter": filter to only return infoTypes
+// supported by certain parts of the API. Defaults to supported_by=INSPECT.
+func (c *OrganizationsLocationsInfoTypesListCall) Filter(filter string) *OrganizationsLocationsInfoTypesListCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// LanguageCode sets the optional parameter "languageCode": BCP-47 language
+// code for localized infoType friendly names. If omitted, or if localized
+// strings are not available, en-US strings will be returned.
+func (c *OrganizationsLocationsInfoTypesListCall) LanguageCode(languageCode string) *OrganizationsLocationsInfoTypesListCall {
+	c.urlParams_.Set("languageCode", languageCode)
+	return c
+}
+
+// LocationId sets the optional parameter "locationId": Deprecated. This field
+// has no effect.
+func (c *OrganizationsLocationsInfoTypesListCall) LocationId(locationId string) *OrganizationsLocationsInfoTypesListCall {
+	c.urlParams_.Set("locationId", locationId)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *OrganizationsLocationsInfoTypesListCall) Fields(s ...googleapi.Field) *OrganizationsLocationsInfoTypesListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *OrganizationsLocationsInfoTypesListCall) IfNoneMatch(entityTag string) *OrganizationsLocationsInfoTypesListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *OrganizationsLocationsInfoTypesListCall) Context(ctx context.Context) *OrganizationsLocationsInfoTypesListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *OrganizationsLocationsInfoTypesListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *OrganizationsLocationsInfoTypesListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+parent}/infoTypes")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "dlp.organizations.locations.infoTypes.list", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "dlp.organizations.locations.infoTypes.list" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GooglePrivacyDlpV2ListInfoTypesResponse.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *OrganizationsLocationsInfoTypesListCall) Do(opts ...googleapi.CallOption) (*GooglePrivacyDlpV2ListInfoTypesResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GooglePrivacyDlpV2ListInfoTypesResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "dlp.organizations.locations.infoTypes.list", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
 }
 
 type OrganizationsLocationsInspectTemplatesCreateCall struct {
@@ -26124,6 +26328,142 @@ func (c *ProjectsLocationsImageRedactCall) Do(opts ...googleapi.CallOption) (*Go
 		return nil, err
 	}
 	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "dlp.projects.locations.image.redact", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsInfoTypesListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Returns a list of the sensitive information types that the DLP API
+// supports. See
+// https://cloud.google.com/sensitive-data-protection/docs/infotypes-reference
+// to learn more.
+//
+//   - parent: The parent resource name. The format of this value is as follows:
+//     `locations/{location_id}`.
+func (r *ProjectsLocationsInfoTypesService) List(parent string) *ProjectsLocationsInfoTypesListCall {
+	c := &ProjectsLocationsInfoTypesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// Filter sets the optional parameter "filter": filter to only return infoTypes
+// supported by certain parts of the API. Defaults to supported_by=INSPECT.
+func (c *ProjectsLocationsInfoTypesListCall) Filter(filter string) *ProjectsLocationsInfoTypesListCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// LanguageCode sets the optional parameter "languageCode": BCP-47 language
+// code for localized infoType friendly names. If omitted, or if localized
+// strings are not available, en-US strings will be returned.
+func (c *ProjectsLocationsInfoTypesListCall) LanguageCode(languageCode string) *ProjectsLocationsInfoTypesListCall {
+	c.urlParams_.Set("languageCode", languageCode)
+	return c
+}
+
+// LocationId sets the optional parameter "locationId": Deprecated. This field
+// has no effect.
+func (c *ProjectsLocationsInfoTypesListCall) LocationId(locationId string) *ProjectsLocationsInfoTypesListCall {
+	c.urlParams_.Set("locationId", locationId)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsInfoTypesListCall) Fields(s ...googleapi.Field) *ProjectsLocationsInfoTypesListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsInfoTypesListCall) IfNoneMatch(entityTag string) *ProjectsLocationsInfoTypesListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsInfoTypesListCall) Context(ctx context.Context) *ProjectsLocationsInfoTypesListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsInfoTypesListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsInfoTypesListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+parent}/infoTypes")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "dlp.projects.locations.infoTypes.list", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "dlp.projects.locations.infoTypes.list" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GooglePrivacyDlpV2ListInfoTypesResponse.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsInfoTypesListCall) Do(opts ...googleapi.CallOption) (*GooglePrivacyDlpV2ListInfoTypesResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GooglePrivacyDlpV2ListInfoTypesResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "dlp.projects.locations.infoTypes.list", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 

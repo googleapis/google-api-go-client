@@ -1617,6 +1617,32 @@ func (s *Cvssv3) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+// Cwe: CWE stands for Common Weakness Enumeration. Information about this
+// weakness, as described by CWE (https://cwe.mitre.org/).
+type Cwe struct {
+	// Id: The CWE identifier, e.g. CWE-94
+	Id string `json:"id,omitempty"`
+	// References: Any reference to the details on the CWE, for example,
+	// https://cwe.mitre.org/data/definitions/94.html
+	References []*Reference `json:"references,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Id") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Id") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s Cwe) MarshalJSON() ([]byte, error) {
+	type NoMethod Cwe
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // DataAccessEvent: Details about a data access attempt made by a principal not
 // authorized under applicable data security policy.
 type DataAccessEvent struct {
@@ -4901,6 +4927,33 @@ func (s *GoogleCloudSecuritycenterV2Cvssv3) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+// GoogleCloudSecuritycenterV2Cwe: CWE stands for Common Weakness Enumeration.
+// Information about this weakness, as described by CWE
+// (https://cwe.mitre.org/).
+type GoogleCloudSecuritycenterV2Cwe struct {
+	// Id: The CWE identifier, e.g. CWE-94
+	Id string `json:"id,omitempty"`
+	// References: Any reference to the details on the CWE, for example,
+	// https://cwe.mitre.org/data/definitions/94.html
+	References []*GoogleCloudSecuritycenterV2Reference `json:"references,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Id") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Id") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudSecuritycenterV2Cwe) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudSecuritycenterV2Cwe
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudSecuritycenterV2DataAccessEvent: Details about a data access
 // attempt made by a principal not authorized under applicable data security
 // policy.
@@ -8016,10 +8069,19 @@ type GoogleCloudSecuritycenterV2Vulnerability struct {
 	// Cve: CVE stands for Common Vulnerabilities and Exposures
 	// (https://cve.mitre.org/about/)
 	Cve *GoogleCloudSecuritycenterV2Cve `json:"cve,omitempty"`
+	// Cwes: Represents one or more Common Weakness Enumeration (CWE) information
+	// on this vulnerability.
+	Cwes []*GoogleCloudSecuritycenterV2Cwe `json:"cwes,omitempty"`
 	// FixedPackage: The fixed package is relevant to the finding.
 	FixedPackage *GoogleCloudSecuritycenterV2Package `json:"fixedPackage,omitempty"`
 	// OffendingPackage: The offending package is relevant to the finding.
 	OffendingPackage *GoogleCloudSecuritycenterV2Package `json:"offendingPackage,omitempty"`
+	// ProviderRiskScore: Provider provided risk_score based on multiple factors.
+	// The higher the risk score, the more risky the vulnerability is.
+	ProviderRiskScore int64 `json:"providerRiskScore,omitempty,string"`
+	// Reachable: Represents whether the vulnerability is reachable (detected via
+	// static analysis)
+	Reachable bool `json:"reachable,omitempty"`
 	// SecurityBulletin: The security bulletin is relevant to this finding.
 	SecurityBulletin *GoogleCloudSecuritycenterV2SecurityBulletin `json:"securityBulletin,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Cve") to unconditionally
@@ -10323,10 +10385,19 @@ type Vulnerability struct {
 	// Cve: CVE stands for Common Vulnerabilities and Exposures
 	// (https://cve.mitre.org/about/)
 	Cve *Cve `json:"cve,omitempty"`
+	// Cwes: Represents one or more Common Weakness Enumeration (CWE) information
+	// on this vulnerability.
+	Cwes []*Cwe `json:"cwes,omitempty"`
 	// FixedPackage: The fixed package is relevant to the finding.
 	FixedPackage *Package `json:"fixedPackage,omitempty"`
 	// OffendingPackage: The offending package is relevant to the finding.
 	OffendingPackage *Package `json:"offendingPackage,omitempty"`
+	// ProviderRiskScore: Provider provided risk_score based on multiple factors.
+	// The higher the risk score, the more risky the vulnerability is.
+	ProviderRiskScore int64 `json:"providerRiskScore,omitempty,string"`
+	// Reachable: Represents whether the vulnerability is reachable (detected via
+	// static analysis)
+	Reachable bool `json:"reachable,omitempty"`
 	// SecurityBulletin: The security bulletin is relevant to this finding.
 	SecurityBulletin *SecurityBulletin `json:"securityBulletin,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Cve") to unconditionally

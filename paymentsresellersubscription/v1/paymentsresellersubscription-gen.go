@@ -731,8 +731,8 @@ func (s GoogleCloudPaymentsResellerSubscriptionV1GenerateUserSessionResponse) Ma
 // GoogleCloudPaymentsResellerSubscriptionV1GoogleHomePayload: Payload specific
 // for Google Home products.
 type GoogleCloudPaymentsResellerSubscriptionV1GoogleHomePayload struct {
-	// AttachedToGoogleStructure: Output only. Output only. This identifies whether
-	// the subscription is attached to a Google Home structure.
+	// AttachedToGoogleStructure: Output only. This identifies whether the
+	// subscription is attached to a Google Home structure.
 	AttachedToGoogleStructure bool `json:"attachedToGoogleStructure,omitempty"`
 	// PartnerStructureId: Optional. This identifies the structure ID on partner
 	// side that the subscription should be applied to. Only required when the
@@ -921,8 +921,7 @@ func (s GoogleCloudPaymentsResellerSubscriptionV1Location) MarshalJSON() ([]byte
 // GoogleCloudPaymentsResellerSubscriptionV1Product: A Product resource that
 // defines a subscription service that can be resold.
 type GoogleCloudPaymentsResellerSubscriptionV1Product struct {
-	// BundleDetails: Output only. Output Only. Specifies the details for a bundle
-	// product.
+	// BundleDetails: Output only. Specifies the details for a bundle product.
 	BundleDetails *ProductBundleDetails `json:"bundleDetails,omitempty"`
 	// FiniteBillingCycleDetails: Optional. Details for a subscription line item
 	// with finite billing cycles. If unset, the line item will be charged
@@ -934,7 +933,7 @@ type GoogleCloudPaymentsResellerSubscriptionV1Product struct {
 	// PriceConfigs: Output only. Price configs for the product in the available
 	// regions.
 	PriceConfigs []*GoogleCloudPaymentsResellerSubscriptionV1ProductPriceConfig `json:"priceConfigs,omitempty"`
-	// ProductType: Output only. Output Only. Specifies the type of the product.
+	// ProductType: Output only. Specifies the type of the product.
 	//
 	// Possible values:
 	//   "PRODUCT_TYPE_UNSPECIFIED" - Unspecified. It's reserved as an unexpected
@@ -1068,8 +1067,7 @@ type GoogleCloudPaymentsResellerSubscriptionV1Promotion struct {
 	// promotion. It will have the format of
 	// "partners/{partner_id}/promotion/{promotion_id}"
 	Name string `json:"name,omitempty"`
-	// PromotionType: Output only. Output Only. Specifies the type of the
-	// promotion.
+	// PromotionType: Output only. Specifies the type of the promotion.
 	//
 	// Possible values:
 	//   "PROMOTION_TYPE_UNSPECIFIED" - The promotion type is unspecified.
@@ -1137,8 +1135,8 @@ type GoogleCloudPaymentsResellerSubscriptionV1PromotionIntroductoryPricingDetail
 	// DiscountRatioMicros: Output only. The discount percentage in micros. For
 	// example, 50,000 represents 5%.
 	DiscountRatioMicros int64 `json:"discountRatioMicros,omitempty,string"`
-	// RecurrenceCount: Output only. Output Only. The duration of an introductory
-	// offer in billing cycles.
+	// RecurrenceCount: Output only. The duration of an introductory offer in
+	// billing cycles.
 	RecurrenceCount int64 `json:"recurrenceCount,omitempty"`
 	// RegionCode: Output only. 2-letter ISO region code where the product is
 	// available in. Ex. "US".
@@ -1802,9 +1800,9 @@ type PartnersProductsListCall struct {
 	header_      http.Header
 }
 
-// List: To retrieve the products that can be resold by the partner. It should
-// be autenticated with a service account. - This API doesn't apply to YouTube
-// products currently.
+// List: Currently, it doesn't support **YouTube** products. Retrieves the
+// products that can be resold by the partner. It should be autenticated with a
+// service account.
 //
 //   - parent: The parent, the partner that can resell. Format:
 //     partners/{partner}.
@@ -1969,9 +1967,10 @@ type PartnersPromotionsFindEligibleCall struct {
 	header_                                                                http.Header
 }
 
-// FindEligible: To find eligible promotions for the current user. The API
-// requires user authorization via OAuth. The bare minimum oauth scope `openid`
-// is sufficient, which will skip the consent screen.
+// FindEligible: Currently, it is only enabeld for **YouTube**. Finds eligible
+// promotions for the current user. The API requires user authorization via
+// OAuth. The bare minimum oauth scope `openid` is sufficient, which will skip
+// the consent screen.
 //
 //   - parent: The parent, the partner that can resell. Format:
 //     partners/{partner}.
@@ -2099,8 +2098,8 @@ type PartnersPromotionsListCall struct {
 	header_      http.Header
 }
 
-// List: Retrieves the promotions, such as free trial, that can be used by the
-// partner. - This API doesn't apply to YouTube promotions currently. It should
+// List: Currently, it doesn't support **YouTube** promotions. Retrieves the
+// promotions, such as free trial, that can be used by the partner. It should
 // be autenticated with a service account.
 //
 //   - parent: The parent, the partner that can resell. Format:
@@ -2267,9 +2266,9 @@ type PartnersSubscriptionsCancelCall struct {
 	header_                                                            http.Header
 }
 
-// Cancel: Used by partners to cancel a subscription service either immediately
-// or by the end of the current billing cycle for their customers. It should be
-// called directly by the partner using service accounts.
+// Cancel: Cancels a subscription service either immediately or by the end of
+// the current billing cycle for their customers. It should be called directly
+// by the partner using service accounts.
 //
 //   - name: The name of the subscription resource to be cancelled. It will have
 //     the format of "partners/{partner_id}/subscriptions/{subscription_id}".
@@ -2491,10 +2490,9 @@ type PartnersSubscriptionsEntitleCall struct {
 	header_                                                             http.Header
 }
 
-// Entitle: Used by partners to entitle a previously provisioned subscription
-// to the current end user. The end user identity is inferred from the
-// authorized credential of the request. This API must be authorized by the end
-// user using OAuth.
+// Entitle: Entitles a previously provisioned subscription to the current end
+// user. The end user identity is inferred from the authorized credential of
+// the request. This API must be authorized by the end user using OAuth.
 //
 //   - name: The name of the subscription resource that is entitled to the
 //     current end user. It will have the format of
@@ -2601,9 +2599,9 @@ type PartnersSubscriptionsExtendCall struct {
 }
 
 // Extend: [Opt-in only] Most partners should be on auto-extend by default.
-// Used by partners to extend a subscription service for their customers on an
-// ongoing basis for the subscription to remain active and renewable. It should
-// be called directly by the partner using service accounts.
+// Extends a subscription service for their customers on an ongoing basis for
+// the subscription to remain active and renewable. It should be called
+// directly by the partner using service accounts.
 //
 //   - name: The name of the subscription resource to be extended. It will have
 //     the format of "partners/{partner_id}/subscriptions/{subscription_id}".
@@ -2708,8 +2706,8 @@ type PartnersSubscriptionsGetCall struct {
 	header_      http.Header
 }
 
-// Get: Used by partners to get a subscription by id. It should be called
-// directly by the partner using service accounts.
+// Get: Gets a subscription by id. It should be called directly by the partner
+// using service accounts.
 //
 //   - name: The name of the subscription resource to retrieve. It will have the
 //     format of "partners/{partner_id}/subscriptions/{subscription_id}".
@@ -2939,11 +2937,11 @@ type PartnersSubscriptionsUndoCancelCall struct {
 	header_                                                                http.Header
 }
 
-// UndoCancel: Revokes the pending cancellation of a subscription, which is
-// currently in `STATE_CANCEL_AT_END_OF_CYCLE` state. If the subscription is
-// already cancelled, the request will fail. - **This API doesn't apply to
-// YouTube subscriptions.** It should be called directly by the partner using
-// service accounts.
+// UndoCancel: Currently, it is used by **Google One, Play Pass** partners.
+// Revokes the pending cancellation of a subscription, which is currently in
+// `STATE_CANCEL_AT_END_OF_CYCLE` state. If the subscription is already
+// cancelled, the request will fail. It should be called directly by the
+// partner using service accounts.
 //
 //   - name: The name of the subscription resource whose pending cancellation
 //     needs to be undone. It will have the format of
@@ -3050,11 +3048,11 @@ type PartnersUserSessionsGenerateCall struct {
 }
 
 // Generate: This API replaces user authorized OAuth consent based APIs
-// (Create, Entitle). Generates a short-lived token for a user session based on
-// the user intent. You can use the session token to redirect the user to
-// Google to finish the signup flow. You can re-generate new session token
-// repeatedly for the same request if necessary, regardless of the previous
-// tokens being expired or not.
+// (Create, Entitle). Issues a timed session token for the given user intent.
+// You can use the session token to redirect the user to Google to finish the
+// signup flow. You can re-generate new session token repeatedly for the same
+// request if necessary, regardless of the previous tokens being expired or
+// not.
 //
 //   - parent: The parent, the partner that can resell. Format:
 //     partners/{partner}.

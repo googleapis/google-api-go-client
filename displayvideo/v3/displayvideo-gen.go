@@ -8703,11 +8703,7 @@ type FrequencyCap struct {
 	// Required when unlimited is `false` and max_impressions is not set.
 	MaxViews int64 `json:"maxViews,omitempty"`
 	// TimeUnit: The time unit in which the frequency cap will be applied. Required
-	// when unlimited is `false`. *Warning*: On **February 28, 2025**, frequency
-	// cap time periods greater than 30 days will no longer be accepted. This field
-	// will no longer accept the value `TIME_UNIT_LIFETIME`. Read more about this
-	// announced change
-	// (/display-video/api/deprecations#features.lifetime_frequency_cap).
+	// when unlimited is `false`.
 	//
 	// Possible values:
 	//   "TIME_UNIT_UNSPECIFIED" - Time unit value is not specified or is unknown
@@ -8726,15 +8722,10 @@ type FrequencyCap struct {
 	TimeUnit string `json:"timeUnit,omitempty"`
 	// TimeUnitCount: The number of time_unit the frequency cap will last. Required
 	// when unlimited is `false`. The following restrictions apply based on the
-	// value of time_unit: * `TIME_UNIT_LIFETIME` - this field is output only and
-	// will default to 1 * `TIME_UNIT_MONTHS` - must be between 1 and 2 *
-	// `TIME_UNIT_WEEKS` - must be between 1 and 4 * `TIME_UNIT_DAYS` - must be
-	// between 1 and 6 * `TIME_UNIT_HOURS` - must be between 1 and 23 *
-	// `TIME_UNIT_MINUTES` - must be between 1 and 59 *Warning*: On **February 28,
-	// 2025**, frequency cap time periods greater than 30 days will no longer be
-	// accepted. This field will no longer accept the value 2 if the value of
-	// time_unit is `TIME_UNIT_MONTHS`. Read more about this announced change
-	// (/display-video/api/deprecations#features.lifetime_frequency_cap).
+	// value of time_unit: * `TIME_UNIT_MONTHS` - must be 1 * `TIME_UNIT_WEEKS` -
+	// must be between 1 and 4 * `TIME_UNIT_DAYS` - must be between 1 and 6 *
+	// `TIME_UNIT_HOURS` - must be between 1 and 23 * `TIME_UNIT_MINUTES` - must be
+	// between 1 and 59
 	TimeUnitCount int64 `json:"timeUnitCount,omitempty"`
 	// Unlimited: Whether unlimited frequency capping is applied. When this field
 	// is set to `true`, the remaining frequency cap fields are not applicable.
@@ -9668,10 +9659,7 @@ type InsertionOrder struct {
 	// deletion.
 	EntityStatus string `json:"entityStatus,omitempty"`
 	// FrequencyCap: Required. The frequency capping setting of the insertion
-	// order. *Warning*: On **February 28, 2025**, frequency cap time periods
-	// greater than 30 days will no longer be accepted. Read more about this
-	// announced change
-	// (/display-video/api/deprecations#features.lifetime_frequency_cap)
+	// order.
 	FrequencyCap *FrequencyCap `json:"frequencyCap,omitempty"`
 	// InsertionOrderId: Output only. The unique ID of the insertion order.
 	// Assigned by the system.
@@ -10863,10 +10851,7 @@ type LineItem struct {
 	Flight *LineItemFlight `json:"flight,omitempty"`
 	// FrequencyCap: Required. The impression frequency cap settings of the line
 	// item. The max_impressions field in this settings object must be used if
-	// assigning a limited cap. *Warning*: On **February 28, 2025**, frequency cap
-	// time periods greater than 30 days will no longer be accepted. Read more
-	// about this announced change
-	// (/display-video/api/deprecations#features.lifetime_frequency_cap)
+	// assigning a limited cap.
 	FrequencyCap *FrequencyCap `json:"frequencyCap,omitempty"`
 	// InsertionOrderId: Required. Immutable. The unique ID of the insertion order
 	// that the line item belongs to.
@@ -14928,17 +14913,15 @@ type TargetingExpansionConfig struct {
 	AudienceExpansionSeedListExcluded bool `json:"audienceExpansionSeedListExcluded,omitempty"`
 	// EnableOptimizedTargeting: Required. Whether to enable Optimized Targeting
 	// for the line item. Optimized targeting is not compatible with all bid
-	// strategies. Attempting to set this field to `true` for a line item using one
-	// of the following combinations of BiddingStrategy fields and
-	// BiddingStrategyPerformanceGoalType will result in an error:
-	// maximize_auto_spend_bid: * `BIDDING_STRATEGY_PERFORMANCE_GOAL_TYPE_CIVA` *
+	// strategies. Attempting to set this field to `true` for a line item using the
+	// BiddingStrategy field fixed_bid or one of the following combinations of
+	// BiddingStrategy fields and BiddingStrategyPerformanceGoalType will result in
+	// an error: maximize_auto_spend_bid: *
+	// `BIDDING_STRATEGY_PERFORMANCE_GOAL_TYPE_CIVA` *
 	// `BIDDING_STRATEGY_PERFORMANCE_GOAL_TYPE_IVO_TEN` *
 	// `BIDDING_STRATEGY_PERFORMANCE_GOAL_TYPE_AV_VIEWED`
 	// performance_goal_auto_bid: *
-	// `BIDDING_STRATEGY_PERFORMANCE_GOAL_TYPE_VIEWABLE_CPM` *Warning*: Starting
-	// **March 6, 2025**, this field will stop being compatible when using the
-	// BiddingStrategy field fixed_bid. Read more about this announced change
-	// (/display-video/api/deprecations#features.ot_fixed_bid)
+	// `BIDDING_STRATEGY_PERFORMANCE_GOAL_TYPE_VIEWABLE_CPM`
 	EnableOptimizedTargeting bool `json:"enableOptimizedTargeting,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AudienceExpansionLevel") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -16168,9 +16151,7 @@ type YoutubeAndPartnersSettings struct {
 	VideoAdSequenceSettings *VideoAdSequenceSettings `json:"videoAdSequenceSettings,omitempty"`
 	// ViewFrequencyCap: The view frequency cap settings of the line item. The
 	// max_views field in this settings object must be used if assigning a limited
-	// cap. *Warning*: On **February 28, 2025**, frequency cap time periods greater
-	// than 30 days will no longer be accepted. Read more about this announced
-	// change (/display-video/api/deprecations#features.lifetime_frequency_cap)
+	// cap.
 	ViewFrequencyCap *FrequencyCap `json:"viewFrequencyCap,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "ContentCategory") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -30524,10 +30505,8 @@ func (c *FirstAndThirdPartyAudiencesListCall) OrderBy(orderBy string) *FirstAndT
 }
 
 // PageSize sets the optional parameter "pageSize": Requested page size. Must
-// be between `1` and `5000`. If unspecified, this value defaults to `100`.
+// be between `1` and `5000`. If unspecified, this value defaults to `5000`.
 // Returns error code `INVALID_ARGUMENT` if an invalid value is specified.
-// *Warning*: Starting **March 6, 2025**, this value will default to `5000` if
-// not set.
 func (c *FirstAndThirdPartyAudiencesListCall) PageSize(pageSize int64) *FirstAndThirdPartyAudiencesListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c

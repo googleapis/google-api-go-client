@@ -934,6 +934,116 @@ type V2Service struct {
 	s *Service
 }
 
+// AppHub: Metadata associated with App Hub.
+type AppHub struct {
+	// Application: Metadata associated with the application.
+	Application *AppHubApplication `json:"application,omitempty"`
+	// Service: Metadata associated with the service.
+	Service *AppHubService `json:"service,omitempty"`
+	// Workload: Metadata associated with the workload.
+	Workload *AppHubWorkload `json:"workload,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Application") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Application") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s AppHub) MarshalJSON() ([]byte, error) {
+	type NoMethod AppHub
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// AppHubApplication: Resource identifiers associated with an AppHub
+// application AppHub resources are of the form
+// projects//locations//applications/
+// projects//locations//applications//services/
+// projects//locations//applications//workloads/ These resources can be
+// reconstructed from the components below.
+type AppHubApplication struct {
+	// Container: Resource container that owns the application. Example:
+	// "projects/management_project"
+	Container string `json:"container,omitempty"`
+	// Id: Application Id. Example: "my-app"
+	Id string `json:"id,omitempty"`
+	// Location: Location associated with the Application. Example: "us-east1"
+	Location string `json:"location,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Container") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Container") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s AppHubApplication) MarshalJSON() ([]byte, error) {
+	type NoMethod AppHubApplication
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// AppHubService: Metadata associated with an App Hub service.
+type AppHubService struct {
+	// CriticalityType: Service criticality type Example: "CRITICAL"
+	CriticalityType string `json:"criticalityType,omitempty"`
+	// EnvironmentType: Service environment type Example: "DEV"
+	EnvironmentType string `json:"environmentType,omitempty"`
+	// Id: Service Id. Example: "my-service"
+	Id string `json:"id,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "CriticalityType") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CriticalityType") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s AppHubService) MarshalJSON() ([]byte, error) {
+	type NoMethod AppHubService
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// AppHubWorkload: Metadata associated with an App Hub workload.
+type AppHubWorkload struct {
+	// CriticalityType: Workload criticality type Example: "CRITICAL"
+	CriticalityType string `json:"criticalityType,omitempty"`
+	// EnvironmentType: Workload environment type Example: "DEV"
+	EnvironmentType string `json:"environmentType,omitempty"`
+	// Id: Workload Id. Example: "my-workload"
+	Id string `json:"id,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "CriticalityType") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CriticalityType") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s AppHubWorkload) MarshalJSON() ([]byte, error) {
+	type NoMethod AppHubWorkload
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // BigQueryDataset: Describes a BigQuery dataset that was created by a link.
 type BigQueryDataset struct {
 	// DatasetId: Output only. The full resource name of the BigQuery dataset. The
@@ -2641,6 +2751,10 @@ func (s LogBucket) MarshalJSON() ([]byte, error) {
 
 // LogEntry: An individual entry in a log.
 type LogEntry struct {
+	// Apphub: Output only. AppHub application metadata associated with this
+	// LogEntry. May be empty if there is no associated AppHub application or
+	// multiple associated applications (such as for VPC flow logs)
+	Apphub *AppHub `json:"apphub,omitempty"`
 	// ErrorGroups: Output only. The Error Reporting
 	// (https://cloud.google.com/error-reporting) error groups associated with this
 	// LogEntry. Error Reporting sets the values for this field during error group
@@ -2782,13 +2896,13 @@ type LogEntry struct {
 	// value is still useful as a request correlation identifier. The default is
 	// False.
 	TraceSampled bool `json:"traceSampled,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "ErrorGroups") to
-	// unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
+	// ForceSendFields is a list of field names (e.g. "Apphub") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "ErrorGroups") to include in API
+	// NullFields is a list of field names (e.g. "Apphub") to include in API
 	// requests with the JSON null value. By default, fields with empty values are
 	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.

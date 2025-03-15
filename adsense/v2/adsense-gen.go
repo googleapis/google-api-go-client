@@ -1227,7 +1227,7 @@ type PolicyIssue struct {
 	// the ad requests coming from the EEA and UK do not have a TCF string or the
 	// Consent Management Platform (CMP) indicated by the TCF string is not Google
 	// certified. As a result, basic/limited ads will be served. See
-	// https://support.google.com/adsense/answer/13554116
+	// https://support.google.com/adsense/answer/13554116.
 	Action string `json:"action,omitempty"`
 	// AdClients: Optional. List of ad clients associated with the policy issue
 	// (either as the primary ad client or an associated host/secondary ad client).
@@ -1316,9 +1316,9 @@ type PolicyTopic struct {
 	// Possible values:
 	//   "POLICY_TOPIC_TYPE_UNSPECIFIED" - The type is unspecified.
 	//   "POLICY" - Topics that are primarily related to the Google Publisher
-	// Policy (GPP) https://support.google.com/publisherpolicies/answer/10502938 or
-	// the Google Publisher Restrictions (GPR) policies
-	// https://support.google.com/publisherpolicies/answer/10437795.
+	// Policy (GPP) (https://support.google.com/publisherpolicies/answer/10502938)
+	// or the Google Publisher Restrictions (GPR) policies
+	// (https://support.google.com/publisherpolicies/answer/10437795).
 	//   "ADVERTISER_PREFERENCE" - Topics that are related to advertiser
 	// preferences. Certain advertisers may choose not to bid on content that are
 	// labeled with certain policies.

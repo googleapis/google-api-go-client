@@ -2965,6 +2965,363 @@ func (s GoogleCloudRetailV2alphaControl) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudRetailV2alphaConversationalSearchRequest: Request message for
+// ConversationalSearchService.ConversationalSearch method.
+type GoogleCloudRetailV2alphaConversationalSearchRequest struct {
+	// Branch: Required. The branch resource name, such as
+	// `projects/*/locations/global/catalogs/default_catalog/branches/0`. Use
+	// "default_branch" as the branch ID or leave this field empty, to search
+	// products under the default branch.
+	Branch string `json:"branch,omitempty"`
+	// ConversationId: Optional. This field specifies the conversation id, which
+	// maintains the state of the conversation between client side and server side.
+	// Use the value from the previous
+	// ConversationalSearchResponse.conversation_id. For the initial request, this
+	// should be empty.
+	ConversationId string `json:"conversationId,omitempty"`
+	// ConversationalFilteringSpec: Optional. This field specifies all
+	// conversational filtering related parameters.
+	ConversationalFilteringSpec *GoogleCloudRetailV2alphaConversationalSearchRequestConversationalFilteringSpec `json:"conversationalFilteringSpec,omitempty"`
+	// PageCategories: Optional. The categories associated with a category page.
+	// Must be set for category navigation queries to achieve good search quality.
+	// The format should be the same as UserEvent.page_categories; To represent
+	// full path of category, use '>' sign to separate different hierarchies. If
+	// '>' is part of the category name, replace it with other character(s).
+	// Category pages include special pages such as sales or promotions. For
+	// instance, a special sale page may have the category hierarchy:
+	// "pageCategories" : ["Sales > 2017 Black Friday Deals"].
+	PageCategories []string `json:"pageCategories,omitempty"`
+	// Query: Optional. Raw search query to be searched for. If this field is
+	// empty, the request is considered a category browsing request.
+	Query string `json:"query,omitempty"`
+	// SearchParams: Optional. Search parameters.
+	SearchParams *GoogleCloudRetailV2alphaConversationalSearchRequestSearchParams `json:"searchParams,omitempty"`
+	// UserInfo: Optional. User information.
+	UserInfo *GoogleCloudRetailV2alphaUserInfo `json:"userInfo,omitempty"`
+	// VisitorId: Required. A unique identifier for tracking visitors. For example,
+	// this could be implemented with an HTTP cookie, which should be able to
+	// uniquely identify a visitor on a single device. This unique identifier
+	// should not change if the visitor logs in or out of the website. This should
+	// be the same identifier as UserEvent.visitor_id. The field must be a UTF-8
+	// encoded string with a length limit of 128 characters. Otherwise, an
+	// INVALID_ARGUMENT error is returned.
+	VisitorId string `json:"visitorId,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Branch") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Branch") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudRetailV2alphaConversationalSearchRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudRetailV2alphaConversationalSearchRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudRetailV2alphaConversationalSearchRequestConversationalFilteringSpe
+// c: This field specifies all conversational filtering related parameters
+// addition to conversational retail search.
+type GoogleCloudRetailV2alphaConversationalSearchRequestConversationalFilteringSpec struct {
+	// ConversationalFilteringMode: Optional. Mode to control Conversational
+	// Filtering. Defaults to Mode.DISABLED if it's unset.
+	//
+	// Possible values:
+	//   "MODE_UNSPECIFIED" - Default value.
+	//   "CONVERSATIONAL_FILTER_ONLY" - Enabled Conversational Filtering without
+	// default Conversational Search.
+	ConversationalFilteringMode string `json:"conversationalFilteringMode,omitempty"`
+	// EnableConversationalFiltering: Optional. This field is deprecated. Please
+	// use ConversationalFilteringSpec.conversational_filtering_mode instead.
+	EnableConversationalFiltering bool `json:"enableConversationalFiltering,omitempty"`
+	// UserAnswer: Optional. This field specifies the current user answer during
+	// the conversational filtering search. It can be either user selected from
+	// suggested answers or user input plain text.
+	UserAnswer *GoogleCloudRetailV2alphaConversationalSearchRequestUserAnswer `json:"userAnswer,omitempty"`
+	// ForceSendFields is a list of field names (e.g.
+	// "ConversationalFilteringMode") to unconditionally include in API requests.
+	// By default, fields with empty or default values are omitted from API
+	// requests. See https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields
+	// for more details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ConversationalFilteringMode") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudRetailV2alphaConversationalSearchRequestConversationalFilteringSpec) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudRetailV2alphaConversationalSearchRequestConversationalFilteringSpec
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudRetailV2alphaConversationalSearchRequestSearchParams: Search
+// parameters.
+type GoogleCloudRetailV2alphaConversationalSearchRequestSearchParams struct {
+	// BoostSpec: Optional. The boost spec to specify the boosting of search
+	// results. The syntax of the boost spec is the same as
+	// SearchRequest.boost_spec.
+	BoostSpec *GoogleCloudRetailV2alphaSearchRequestBoostSpec `json:"boostSpec,omitempty"`
+	// CanonicalFilter: Optional. The canonical filter string to restrict search
+	// results. The syntax of the canonical filter string is the same as
+	// SearchRequest.canonical_filter.
+	CanonicalFilter string `json:"canonicalFilter,omitempty"`
+	// Filter: Optional. The filter string to restrict search results. The syntax
+	// of the filter string is the same as SearchRequest.filter.
+	Filter string `json:"filter,omitempty"`
+	// SortBy: Optional. The sort string to specify the sorting of search results.
+	// The syntax of the sort string is the same as SearchRequest.sort.
+	SortBy string `json:"sortBy,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "BoostSpec") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "BoostSpec") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudRetailV2alphaConversationalSearchRequestSearchParams) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudRetailV2alphaConversationalSearchRequestSearchParams
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudRetailV2alphaConversationalSearchRequestUserAnswer: This field
+// specifies the current user answer during the conversational filtering
+// search. This can be either user selected from suggested answers or user
+// input plain text.
+type GoogleCloudRetailV2alphaConversationalSearchRequestUserAnswer struct {
+	// SelectedAnswer: Optional. This field specifies the selected answer during
+	// the conversational search. This should be a subset of
+	// ConversationalSearchResponse.followup_question.suggested_answers.
+	SelectedAnswer *GoogleCloudRetailV2alphaConversationalSearchRequestUserAnswerSelectedAnswer `json:"selectedAnswer,omitempty"`
+	// TextAnswer: This field specifies the incremental input text from the user
+	// during the conversational search.
+	TextAnswer string `json:"textAnswer,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "SelectedAnswer") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "SelectedAnswer") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudRetailV2alphaConversationalSearchRequestUserAnswer) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudRetailV2alphaConversationalSearchRequestUserAnswer
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudRetailV2alphaConversationalSearchRequestUserAnswerSelectedAnswer:
+// This field specifies the selected answers during the conversational search.
+type GoogleCloudRetailV2alphaConversationalSearchRequestUserAnswerSelectedAnswer struct {
+	// ProductAttributeValue: Optional. This field specifies the selected answer
+	// which is a attribute key-value.
+	ProductAttributeValue *GoogleCloudRetailV2alphaProductAttributeValue `json:"productAttributeValue,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ProductAttributeValue") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ProductAttributeValue") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudRetailV2alphaConversationalSearchRequestUserAnswerSelectedAnswer) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudRetailV2alphaConversationalSearchRequestUserAnswerSelectedAnswer
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudRetailV2alphaConversationalSearchResponse: Response message for
+// ConversationalSearchService.ConversationalSearch method.
+type GoogleCloudRetailV2alphaConversationalSearchResponse struct {
+	// ConversationId: Conversation UUID. This field will be stored in client side
+	// storage to maintain the conversation session with server and will be used
+	// for next search request's ConversationalSearchRequest.conversation_id to
+	// restore conversation state in server.
+	ConversationId string `json:"conversationId,omitempty"`
+	// ConversationalFilteringResult: This field specifies all related information
+	// that is needed on client side for UI rendering of conversational filtering
+	// search.
+	ConversationalFilteringResult *GoogleCloudRetailV2alphaConversationalSearchResponseConversationalFilteringResult `json:"conversationalFilteringResult,omitempty"`
+	// RefinedSearch: The proposed refined search queries. They can be used to
+	// fetch the relevant search results. When using CONVERSATIONAL_FILTER_ONLY
+	// mode, the refined_query from search response will be populated here.
+	RefinedSearch []*GoogleCloudRetailV2alphaConversationalSearchResponseRefinedSearch `json:"refinedSearch,omitempty"`
+	// RephrasedQuery: This field is deprecated. Please find the refinded_query
+	// from search response when using CONVERSATIONAL_FILTER_ONLY mode in
+	// ConversationalSearchResponse.refined_search instead. The rephrased query
+	// based on the user's query and the conversation history. It can be used to
+	// fetch the relevant search results.
+	RephrasedQuery string `json:"rephrasedQuery,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "ConversationId") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ConversationId") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudRetailV2alphaConversationalSearchResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudRetailV2alphaConversationalSearchResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudRetailV2alphaConversationalSearchResponseConversationalFilteringRe
+// sult: This field specifies all related information that is needed on client
+// side for UI rendering of conversational filtering search.
+type GoogleCloudRetailV2alphaConversationalSearchResponseConversationalFilteringResult struct {
+	// AdditionalFilter: This is the incremental additional filters implied from
+	// the current user answer. User should add the suggested addition filters to
+	// the previous ConversationalSearchRequest.search_params.filter and
+	// SearchRequest.filter, and use the merged filter in the follow up requests.
+	AdditionalFilter *GoogleCloudRetailV2alphaConversationalSearchResponseConversationalFilteringResultAdditionalFilter `json:"additionalFilter,omitempty"`
+	// FollowupQuestion: The conversational filtering question.
+	FollowupQuestion *GoogleCloudRetailV2alphaConversationalSearchResponseFollowupQuestion `json:"followupQuestion,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AdditionalFilter") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AdditionalFilter") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudRetailV2alphaConversationalSearchResponseConversationalFilteringResult) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudRetailV2alphaConversationalSearchResponseConversationalFilteringResult
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudRetailV2alphaConversationalSearchResponseConversationalFilteringRe
+// sultAdditionalFilter: Additional filter that client side need to apply.
+type GoogleCloudRetailV2alphaConversationalSearchResponseConversationalFilteringResultAdditionalFilter struct {
+	// ProductAttributeValue: Product attribute value, including an attribute key
+	// and an attribute value. Other types can be added here in the future.
+	ProductAttributeValue *GoogleCloudRetailV2alphaProductAttributeValue `json:"productAttributeValue,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ProductAttributeValue") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ProductAttributeValue") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudRetailV2alphaConversationalSearchResponseConversationalFilteringResultAdditionalFilter) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudRetailV2alphaConversationalSearchResponseConversationalFilteringResultAdditionalFilter
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudRetailV2alphaConversationalSearchResponseFollowupQuestion: The
+// conversational followup question generated for Intent refinement.
+type GoogleCloudRetailV2alphaConversationalSearchResponseFollowupQuestion struct {
+	// FollowupQuestion: The conversational followup question generated for Intent
+	// refinement.
+	FollowupQuestion string `json:"followupQuestion,omitempty"`
+	// SuggestedAnswers: The answer options provided to client for the follow-up
+	// question.
+	SuggestedAnswers []*GoogleCloudRetailV2alphaConversationalSearchResponseFollowupQuestionSuggestedAnswer `json:"suggestedAnswers,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "FollowupQuestion") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "FollowupQuestion") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudRetailV2alphaConversationalSearchResponseFollowupQuestion) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudRetailV2alphaConversationalSearchResponseFollowupQuestion
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudRetailV2alphaConversationalSearchResponseFollowupQuestionSuggested
+// Answer: Suggested answers to the follow-up question.
+type GoogleCloudRetailV2alphaConversationalSearchResponseFollowupQuestionSuggestedAnswer struct {
+	// ProductAttributeValue: Product attribute value, including an attribute key
+	// and an attribute value. Other types can be added here in the future.
+	ProductAttributeValue *GoogleCloudRetailV2alphaProductAttributeValue `json:"productAttributeValue,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ProductAttributeValue") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ProductAttributeValue") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudRetailV2alphaConversationalSearchResponseFollowupQuestionSuggestedAnswer) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudRetailV2alphaConversationalSearchResponseFollowupQuestionSuggestedAnswer
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudRetailV2alphaConversationalSearchResponseRefinedSearch: The
+// proposed refined search for intent-refinement/bundled shopping conversation.
+// When using CONVERSATIONAL_FILTER_ONLY mode, the refined_query from search
+// response will be populated here.
+type GoogleCloudRetailV2alphaConversationalSearchResponseRefinedSearch struct {
+	// Query: The query to be used for search.
+	Query string `json:"query,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Query") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Query") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudRetailV2alphaConversationalSearchResponseRefinedSearch) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudRetailV2alphaConversationalSearchResponseRefinedSearch
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudRetailV2alphaCreateMerchantCenterAccountLinkMetadata: Common
 // metadata related to the progress of the operations.
 type GoogleCloudRetailV2alphaCreateMerchantCenterAccountLinkMetadata struct {
@@ -7119,6 +7476,10 @@ type GoogleCloudRetailV2alphaSearchRequest struct {
 	// SearchRequest.personalization_spec will override
 	// ServingConfig.personalization_spec.
 	PersonalizationSpec *GoogleCloudRetailV2alphaSearchRequestPersonalizationSpec `json:"personalizationSpec,omitempty"`
+	// PlaceId: Optional. An id corresponding to a place, such as a store id or
+	// region id. When specified, we use the price from the local inventory with
+	// the matching product's LocalInventory.place_id for revenue optimization.
+	PlaceId string `json:"placeId,omitempty"`
 	// Query: Raw search query. If this field is empty, the request is considered a
 	// category browsing request and returned results are based on filter and
 	// page_categories.
@@ -10654,13 +11015,13 @@ func (c *ProjectsLocationsCatalogsCompleteQueryCall) Query(query string) *Projec
 	return c
 }
 
-// VisitorId sets the optional parameter "visitorId": Required field. A unique
-// identifier for tracking visitors. For example, this could be implemented
-// with an HTTP cookie, which should be able to uniquely identify a visitor on
-// a single device. This unique identifier should not change if the visitor
-// logs in or out of the website. The field must be a UTF-8 encoded string with
-// a length limit of 128 characters. Otherwise, an INVALID_ARGUMENT error is
-// returned.
+// VisitorId sets the optional parameter "visitorId": Recommended field. A
+// unique identifier for tracking visitors. For example, this could be
+// implemented with an HTTP cookie, which should be able to uniquely identify a
+// visitor on a single device. This unique identifier should not change if the
+// visitor logs in or out of the website. The field must be a UTF-8 encoded
+// string with a length limit of 128 characters. Otherwise, an INVALID_ARGUMENT
+// error is returned.
 func (c *ProjectsLocationsCatalogsCompleteQueryCall) VisitorId(visitorId string) *ProjectsLocationsCatalogsCompleteQueryCall {
 	c.urlParams_.Set("visitorId", visitorId)
 	return c
@@ -17118,6 +17479,116 @@ func (c *ProjectsLocationsCatalogsOperationsListCall) Pages(ctx context.Context,
 	}
 }
 
+type ProjectsLocationsCatalogsPlacementsConversationalSearchCall struct {
+	s                                                   *Service
+	placement                                           string
+	googlecloudretailv2alphaconversationalsearchrequest *GoogleCloudRetailV2alphaConversationalSearchRequest
+	urlParams_                                          gensupport.URLParams
+	ctx_                                                context.Context
+	header_                                             http.Header
+}
+
+// ConversationalSearch: Performs a conversational search. This feature is only
+// available for users who have Conversational Search enabled.
+//
+//   - placement: The resource name of the search engine placement, such as
+//     `projects/*/locations/global/catalogs/default_catalog/placements/default_se
+//     arch` or
+//     `projects/*/locations/global/catalogs/default_catalog/servingConfigs/defaul
+//     t_serving_config` This field is used to identify the serving config name
+//     and the set of models that will be used to make the search.
+func (r *ProjectsLocationsCatalogsPlacementsService) ConversationalSearch(placement string, googlecloudretailv2alphaconversationalsearchrequest *GoogleCloudRetailV2alphaConversationalSearchRequest) *ProjectsLocationsCatalogsPlacementsConversationalSearchCall {
+	c := &ProjectsLocationsCatalogsPlacementsConversationalSearchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.placement = placement
+	c.googlecloudretailv2alphaconversationalsearchrequest = googlecloudretailv2alphaconversationalsearchrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsCatalogsPlacementsConversationalSearchCall) Fields(s ...googleapi.Field) *ProjectsLocationsCatalogsPlacementsConversationalSearchCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsCatalogsPlacementsConversationalSearchCall) Context(ctx context.Context) *ProjectsLocationsCatalogsPlacementsConversationalSearchCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsCatalogsPlacementsConversationalSearchCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsCatalogsPlacementsConversationalSearchCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googlecloudretailv2alphaconversationalsearchrequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2alpha/{+placement}:conversationalSearch")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"placement": c.placement,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "retail.projects.locations.catalogs.placements.conversationalSearch", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "retail.projects.locations.catalogs.placements.conversationalSearch" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudRetailV2alphaConversationalSearchResponse.ServerResponse.Header
+// or (if a response was returned at all) in error.(*googleapi.Error).Header.
+// Use googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsCatalogsPlacementsConversationalSearchCall) Do(opts ...googleapi.CallOption) (*GoogleCloudRetailV2alphaConversationalSearchResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudRetailV2alphaConversationalSearchResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "retail.projects.locations.catalogs.placements.conversationalSearch", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
 type ProjectsLocationsCatalogsPlacementsPredictCall struct {
 	s                                      *Service
 	placement                              string
@@ -17474,6 +17945,116 @@ func (c *ProjectsLocationsCatalogsServingConfigsAddControlCall) Do(opts ...googl
 		return nil, err
 	}
 	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "retail.projects.locations.catalogs.servingConfigs.addControl", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsCatalogsServingConfigsConversationalSearchCall struct {
+	s                                                   *Service
+	placement                                           string
+	googlecloudretailv2alphaconversationalsearchrequest *GoogleCloudRetailV2alphaConversationalSearchRequest
+	urlParams_                                          gensupport.URLParams
+	ctx_                                                context.Context
+	header_                                             http.Header
+}
+
+// ConversationalSearch: Performs a conversational search. This feature is only
+// available for users who have Conversational Search enabled.
+//
+//   - placement: The resource name of the search engine placement, such as
+//     `projects/*/locations/global/catalogs/default_catalog/placements/default_se
+//     arch` or
+//     `projects/*/locations/global/catalogs/default_catalog/servingConfigs/defaul
+//     t_serving_config` This field is used to identify the serving config name
+//     and the set of models that will be used to make the search.
+func (r *ProjectsLocationsCatalogsServingConfigsService) ConversationalSearch(placement string, googlecloudretailv2alphaconversationalsearchrequest *GoogleCloudRetailV2alphaConversationalSearchRequest) *ProjectsLocationsCatalogsServingConfigsConversationalSearchCall {
+	c := &ProjectsLocationsCatalogsServingConfigsConversationalSearchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.placement = placement
+	c.googlecloudretailv2alphaconversationalsearchrequest = googlecloudretailv2alphaconversationalsearchrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsCatalogsServingConfigsConversationalSearchCall) Fields(s ...googleapi.Field) *ProjectsLocationsCatalogsServingConfigsConversationalSearchCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsCatalogsServingConfigsConversationalSearchCall) Context(ctx context.Context) *ProjectsLocationsCatalogsServingConfigsConversationalSearchCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsCatalogsServingConfigsConversationalSearchCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsCatalogsServingConfigsConversationalSearchCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googlecloudretailv2alphaconversationalsearchrequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2alpha/{+placement}:conversationalSearch")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"placement": c.placement,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "retail.projects.locations.catalogs.servingConfigs.conversationalSearch", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "retail.projects.locations.catalogs.servingConfigs.conversationalSearch" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudRetailV2alphaConversationalSearchResponse.ServerResponse.Header
+// or (if a response was returned at all) in error.(*googleapi.Error).Header.
+// Use googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsCatalogsServingConfigsConversationalSearchCall) Do(opts ...googleapi.CallOption) (*GoogleCloudRetailV2alphaConversationalSearchResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudRetailV2alphaConversationalSearchResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "retail.projects.locations.catalogs.servingConfigs.conversationalSearch", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 

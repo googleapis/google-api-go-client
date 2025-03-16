@@ -965,11 +965,11 @@ func (s BackupScheduleSpec) MarshalJSON() ([]byte, error) {
 // BatchCreateSessionsRequest: The request for BatchCreateSessions.
 type BatchCreateSessionsRequest struct {
 	// SessionCount: Required. The number of sessions to be created in this batch
-	// call. The API may return fewer than the requested number of sessions. If a
+	// call. The API can return fewer than the requested number of sessions. If a
 	// specific number of sessions are desired, the client can make additional
-	// calls to BatchCreateSessions (adjusting session_count as necessary).
+	// calls to `BatchCreateSessions` (adjusting session_count as necessary).
 	SessionCount int64 `json:"sessionCount,omitempty"`
-	// SessionTemplate: Parameters to be applied to each created session.
+	// SessionTemplate: Parameters to apply to each created session.
 	SessionTemplate *Session `json:"sessionTemplate,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "SessionCount") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -1018,15 +1018,15 @@ func (s BatchCreateSessionsResponse) MarshalJSON() ([]byte, error) {
 type BatchWriteRequest struct {
 	// ExcludeTxnFromChangeStreams: Optional. When
 	// `exclude_txn_from_change_streams` is set to `true`: * Modifications from all
-	// transactions in this batch write operation will not be recorded in change
+	// transactions in this batch write operation are not be recorded in change
 	// streams with DDL option `allow_txn_exclusion=true` that are tracking columns
 	// modified by these transactions. * Modifications from all transactions in
-	// this batch write operation will be recorded in change streams with DDL
-	// option `allow_txn_exclusion=false or not set` that are tracking columns
-	// modified by these transactions. When `exclude_txn_from_change_streams` is
-	// set to `false` or not set, Modifications from all transactions in this batch
-	// write operation will be recorded in all change streams that are tracking
-	// columns modified by these transactions.
+	// this batch write operation are recorded in change streams with DDL option
+	// `allow_txn_exclusion=false or not set` that are tracking columns modified by
+	// these transactions. When `exclude_txn_from_change_streams` is set to `false`
+	// or not set, Modifications from all transactions in this batch write
+	// operation are recorded in all change streams that are tracking columns
+	// modified by these transactions.
 	ExcludeTxnFromChangeStreams bool `json:"excludeTxnFromChangeStreams,omitempty"`
 	// MutationGroups: Required. The groups of mutations to be applied.
 	MutationGroups []*MutationGroup `json:"mutationGroups,omitempty"`
@@ -1085,14 +1085,14 @@ func (s BatchWriteResponse) MarshalJSON() ([]byte, error) {
 // BeginTransactionRequest: The request for BeginTransaction.
 type BeginTransactionRequest struct {
 	// MutationKey: Optional. Required for read-write transactions on a multiplexed
-	// session that commit mutations but do not perform any reads or queries.
-	// Clients should randomly select one of the mutations from the mutation set
-	// and send it as a part of this request.
+	// session that commit mutations but don't perform any reads or queries. You
+	// must randomly select one of the mutations from the mutation set and send it
+	// as a part of this request.
 	MutationKey *Mutation `json:"mutationKey,omitempty"`
 	// Options: Required. Options for the new transaction.
 	Options *TransactionOptions `json:"options,omitempty"`
 	// RequestOptions: Common options for this request. Priority is ignored for
-	// this request. Setting the priority in this request_options struct will not
+	// this request. Setting the priority in this `request_options` struct doesn't
 	// do anything. To set the priority for a transaction, set it on the reads and
 	// writes that are part of this transaction instead.
 	RequestOptions *RequestOptions `json:"requestOptions,omitempty"`
@@ -1311,7 +1311,7 @@ func (s ChildLink) MarshalJSON() ([]byte, error) {
 // CommitRequest: The request for Commit.
 type CommitRequest struct {
 	// MaxCommitDelay: Optional. The amount of latency this request is configured
-	// to incur in order to improve throughput. If this field is not set, Spanner
+	// to incur in order to improve throughput. If this field isn't set, Spanner
 	// assumes requests are relatively latency sensitive and automatically
 	// determines an appropriate delay time. You can specify a commit delay value
 	// between 0 and 500 ms.
@@ -1320,20 +1320,20 @@ type CommitRequest struct {
 	// mutations are applied atomically, in the order they appear in this list.
 	Mutations []*Mutation `json:"mutations,omitempty"`
 	// PrecommitToken: Optional. If the read-write transaction was executed on a
-	// multiplexed session, the precommit token with the highest sequence number
-	// received in this transaction attempt, should be included here. Failing to do
-	// so will result in a FailedPrecondition error.
+	// multiplexed session, then you must include the precommit token with the
+	// highest sequence number received in this transaction attempt. Failing to do
+	// so results in a `FailedPrecondition` error.
 	PrecommitToken *MultiplexedSessionPrecommitToken `json:"precommitToken,omitempty"`
 	// RequestOptions: Common options for this request.
 	RequestOptions *RequestOptions `json:"requestOptions,omitempty"`
-	// ReturnCommitStats: If `true`, then statistics related to the transaction
-	// will be included in the CommitResponse. Default value is `false`.
+	// ReturnCommitStats: If `true`, then statistics related to the transaction is
+	// included in the CommitResponse. Default value is `false`.
 	ReturnCommitStats bool `json:"returnCommitStats,omitempty"`
 	// SingleUseTransaction: Execute mutations in a temporary transaction. Note
 	// that unlike commit of a previously-started transaction, commit with a
 	// temporary transaction is non-idempotent. That is, if the `CommitRequest` is
 	// sent to Cloud Spanner more than once (for instance, due to retries in the
-	// application, or in the transport library), it is possible that the mutations
+	// application, or in the transport library), it's possible that the mutations
 	// are executed more than once. If this is undesirable, use BeginTransaction
 	// and Commit instead.
 	SingleUseTransaction *TransactionOptions `json:"singleUseTransaction,omitempty"`
@@ -1359,14 +1359,14 @@ func (s CommitRequest) MarshalJSON() ([]byte, error) {
 
 // CommitResponse: The response for Commit.
 type CommitResponse struct {
-	// CommitStats: The statistics about this Commit. Not returned by default. For
-	// more information, see CommitRequest.return_commit_stats.
+	// CommitStats: The statistics about this `Commit`. Not returned by default.
+	// For more information, see CommitRequest.return_commit_stats.
 	CommitStats *CommitStats `json:"commitStats,omitempty"`
 	// CommitTimestamp: The Cloud Spanner timestamp at which the transaction
 	// committed.
 	CommitTimestamp string `json:"commitTimestamp,omitempty"`
-	// PrecommitToken: If specified, transaction has not committed yet. Clients
-	// must retry the commit with the new precommit token.
+	// PrecommitToken: If specified, transaction has not committed yet. You must
+	// retry the commit with the new precommit token.
 	PrecommitToken *MultiplexedSessionPrecommitToken `json:"precommitToken,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
@@ -2275,20 +2275,20 @@ func (s DiagnosticMessage) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// DirectedReadOptions: The DirectedReadOptions can be used to indicate which
+// DirectedReadOptions: The `DirectedReadOptions` can be used to indicate which
 // replicas or regions should be used for non-transactional reads or queries.
-// DirectedReadOptions may only be specified for a read-only transaction,
-// otherwise the API will return an `INVALID_ARGUMENT` error.
+// `DirectedReadOptions` can only be specified for a read-only transaction,
+// otherwise the API returns an `INVALID_ARGUMENT` error.
 type DirectedReadOptions struct {
-	// ExcludeReplicas: Exclude_replicas indicates that specified replicas should
-	// be excluded from serving requests. Spanner will not route requests to the
+	// ExcludeReplicas: `Exclude_replicas` indicates that specified replicas should
+	// be excluded from serving requests. Spanner doesn't route requests to the
 	// replicas in this list.
 	ExcludeReplicas *ExcludeReplicas `json:"excludeReplicas,omitempty"`
-	// IncludeReplicas: Include_replicas indicates the order of replicas (as they
-	// appear in this list) to process the request. If auto_failover_disabled is
-	// set to true and all replicas are exhausted without finding a healthy
-	// replica, Spanner will wait for a replica in the list to become available,
-	// requests may fail due to `DEADLINE_EXCEEDED` errors.
+	// IncludeReplicas: `Include_replicas` indicates the order of replicas (as they
+	// appear in this list) to process the request. If `auto_failover_disabled` is
+	// set to `true` and all replicas are exhausted without finding a healthy
+	// replica, Spanner waits for a replica in the list to become available,
+	// requests might fail due to `DEADLINE_EXCEEDED` errors.
 	IncludeReplicas *IncludeReplicas `json:"includeReplicas,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "ExcludeReplicas") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -2426,24 +2426,24 @@ func (s ExcludeReplicas) MarshalJSON() ([]byte, error) {
 
 // ExecuteBatchDmlRequest: The request for ExecuteBatchDml.
 type ExecuteBatchDmlRequest struct {
-	// LastStatements: Optional. If set to true, this request marks the end of the
-	// transaction. The transaction should be committed or aborted after these
-	// statements execute, and attempts to execute any other requests against this
-	// transaction (including reads and queries) will be rejected. Setting this
-	// option may cause some error reporting to be deferred until commit time (e.g.
-	// validation of unique constraints). Given this, successful execution of
-	// statements should not be assumed until a subsequent Commit call completes
-	// successfully.
+	// LastStatements: Optional. If set to `true`, this request marks the end of
+	// the transaction. After these statements execute, you must commit or abort
+	// the transaction. Attempts to execute any other requests against this
+	// transaction (including reads and queries) are rejected. Setting this option
+	// might cause some error reporting to be deferred until commit time (for
+	// example, validation of unique constraints). Given this, successful execution
+	// of statements shouldn't be assumed until a subsequent `Commit` call
+	// completes successfully.
 	LastStatements bool `json:"lastStatements,omitempty"`
 	// RequestOptions: Common options for this request.
 	RequestOptions *RequestOptions `json:"requestOptions,omitempty"`
 	// Seqno: Required. A per-transaction sequence number used to identify this
 	// request. This field makes each request idempotent such that if the request
-	// is received multiple times, at most one will succeed. The sequence number
-	// must be monotonically increasing within the transaction. If a request
-	// arrives for the first time with an out-of-order sequence number, the
-	// transaction may be aborted. Replays of previously handled requests will
-	// yield the same response as the first execution.
+	// is received multiple times, at most one succeeds. The sequence number must
+	// be monotonically increasing within the transaction. If a request arrives for
+	// the first time with an out-of-order sequence number, the transaction might
+	// be aborted. Replays of previously handled requests yield the same response
+	// as the first execution.
 	Seqno int64 `json:"seqno,omitempty,string"`
 	// Statements: Required. The list of statements to execute in this batch.
 	// Statements are executed serially, such that the effects of statement `i` are
@@ -2491,10 +2491,10 @@ func (s ExecuteBatchDmlRequest) MarshalJSON() ([]byte, error) {
 // the third statement failed, and the fourth and fifth statements were not
 // executed.
 type ExecuteBatchDmlResponse struct {
-	// PrecommitToken: Optional. A precommit token will be included if the
-	// read-write transaction is on a multiplexed session. The precommit token with
-	// the highest sequence number from this transaction attempt should be passed
-	// to the Commit request for this transaction.
+	// PrecommitToken: Optional. A precommit token is included if the read-write
+	// transaction is on a multiplexed session. Pass the precommit token with the
+	// highest sequence number from this transaction attempt should be passed to
+	// the Commit request for this transaction.
 	PrecommitToken *MultiplexedSessionPrecommitToken `json:"precommitToken,omitempty"`
 	// ResultSets: One ResultSet for each statement in the request that ran
 	// successfully, in the same order as the statements in the request. Each
@@ -2530,26 +2530,26 @@ func (s ExecuteBatchDmlResponse) MarshalJSON() ([]byte, error) {
 type ExecuteSqlRequest struct {
 	// DataBoostEnabled: If this is for a partitioned query and this field is set
 	// to `true`, the request is executed with Spanner Data Boost independent
-	// compute resources. If the field is set to `true` but the request does not
-	// set `partition_token`, the API returns an `INVALID_ARGUMENT` error.
+	// compute resources. If the field is set to `true` but the request doesn't set
+	// `partition_token`, the API returns an `INVALID_ARGUMENT` error.
 	DataBoostEnabled bool `json:"dataBoostEnabled,omitempty"`
 	// DirectedReadOptions: Directed read options for this request.
 	DirectedReadOptions *DirectedReadOptions `json:"directedReadOptions,omitempty"`
-	// LastStatement: Optional. If set to true, this statement marks the end of the
-	// transaction. The transaction should be committed or aborted after this
-	// statement executes, and attempts to execute any other requests against this
-	// transaction (including reads and queries) will be rejected. For DML
-	// statements, setting this option may cause some error reporting to be
-	// deferred until commit time (e.g. validation of unique constraints). Given
-	// this, successful execution of a DML statement should not be assumed until a
-	// subsequent Commit call completes successfully.
+	// LastStatement: Optional. If set to `true`, this statement marks the end of
+	// the transaction. After this statement executes, you must commit or abort the
+	// transaction. Attempts to execute any other requests against this transaction
+	// (including reads and queries) are rejected. For DML statements, setting this
+	// option might cause some error reporting to be deferred until commit time
+	// (for example, validation of unique constraints). Given this, successful
+	// execution of a DML statement shouldn't be assumed until a subsequent
+	// `Commit` call completes successfully.
 	LastStatement bool `json:"lastStatement,omitempty"`
-	// ParamTypes: It is not always possible for Cloud Spanner to infer the right
+	// ParamTypes: It isn't always possible for Cloud Spanner to infer the right
 	// SQL type from a JSON value. For example, values of type `BYTES` and values
-	// of type `STRING` both appear in params as JSON strings. In these cases,
-	// `param_types` can be used to specify the exact SQL type for some or all of
-	// the SQL statement parameters. See the definition of Type for more
-	// information about SQL types.
+	// of type `STRING` both appear in params as JSON strings. In these cases, you
+	// can use `param_types` to specify the exact SQL type for some or all of the
+	// SQL statement parameters. See the definition of Type for more information
+	// about SQL types.
 	ParamTypes map[string]Type `json:"paramTypes,omitempty"`
 	// Params: Parameter names and values that bind to placeholders in the SQL
 	// string. A parameter placeholder consists of the `@` character followed by
@@ -2558,13 +2558,13 @@ type ExecuteSqlRequest struct {
 	// https://cloud.google.com/spanner/docs/lexical#identifiers. Parameters can
 	// appear anywhere that a literal value is expected. The same parameter name
 	// can be used more than once, for example: "WHERE id > @msg_id AND id <
-	// @msg_id + 100" It is an error to execute a SQL statement with unbound
+	// @msg_id + 100" It's an error to execute a SQL statement with unbound
 	// parameters.
 	Params googleapi.RawMessage `json:"params,omitempty"`
-	// PartitionToken: If present, results will be restricted to the specified
-	// partition previously created using PartitionQuery(). There must be an exact
+	// PartitionToken: If present, results are restricted to the specified
+	// partition previously created using `PartitionQuery`. There must be an exact
 	// match for the values of fields common to this message and the
-	// PartitionQueryRequest message used to create this partition_token.
+	// `PartitionQueryRequest` message used to create this `partition_token`.
 	PartitionToken string `json:"partitionToken,omitempty"`
 	// QueryMode: Used to control the amount of debugging information returned in
 	// ResultSetStats. If partition_token is set, query_mode can only be set to
@@ -2576,8 +2576,8 @@ type ExecuteSqlRequest struct {
 	// execution statistics information.
 	//   "PROFILE" - This mode returns the query plan, overall execution
 	// statistics, operator level execution statistics along with the results. This
-	// has a performance overhead compared to the other modes. It is not
-	// recommended to use this mode for production traffic.
+	// has a performance overhead compared to the other modes. It isn't recommended
+	// to use this mode for production traffic.
 	//   "WITH_STATS" - This mode returns the overall (but not operator-level)
 	// execution statistics along with the results.
 	//   "WITH_PLAN_AND_STATS" - This mode returns the query plan, overall (but not
@@ -2596,11 +2596,11 @@ type ExecuteSqlRequest struct {
 	ResumeToken string `json:"resumeToken,omitempty"`
 	// Seqno: A per-transaction sequence number used to identify this request. This
 	// field makes each request idempotent such that if the request is received
-	// multiple times, at most one will succeed. The sequence number must be
+	// multiple times, at most one succeeds. The sequence number must be
 	// monotonically increasing within the transaction. If a request arrives for
-	// the first time with an out-of-order sequence number, the transaction may be
-	// aborted. Replays of previously handled requests will yield the same response
-	// as the first execution. Required for DML statements. Ignored for queries.
+	// the first time with an out-of-order sequence number, the transaction can be
+	// aborted. Replays of previously handled requests yield the same response as
+	// the first execution. Required for DML statements. Ignored for queries.
 	Seqno int64 `json:"seqno,omitempty,string"`
 	// Sql: Required. The SQL string.
 	Sql string `json:"sql,omitempty"`
@@ -2839,12 +2839,12 @@ func (s GetPolicyOptions) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// IncludeReplicas: An IncludeReplicas contains a repeated set of
-// ReplicaSelection which indicates the order in which replicas should be
+// IncludeReplicas: An `IncludeReplicas` contains a repeated set of
+// `ReplicaSelection` which indicates the order in which replicas should be
 // considered.
 type IncludeReplicas struct {
-	// AutoFailoverDisabled: If true, Spanner will not route requests to a replica
-	// outside the include_replicas list when all of the specified replicas are
+	// AutoFailoverDisabled: If `true`, Spanner doesn't route requests to a replica
+	// outside the <`include_replicas` list when all of the specified replicas are
 	// unavailable or unhealthy. Default value is `false`.
 	AutoFailoverDisabled bool `json:"autoFailoverDisabled,omitempty"`
 	// ReplicaSelections: The directed read replica selector.
@@ -4204,8 +4204,8 @@ func (s MoveInstanceRequest) MarshalJSON() ([]byte, error) {
 
 // MultiplexedSessionPrecommitToken: When a read-write transaction is executed
 // on a multiplexed session, this precommit token is sent back to the client as
-// a part of the [Transaction] message in the BeginTransaction response and
-// also as a part of the [ResultSet] and [PartialResultSet] responses.
+// a part of the Transaction message in the BeginTransaction response and also
+// as a part of the ResultSet and PartialResultSet responses.
 type MultiplexedSessionPrecommitToken struct {
 	// PrecommitToken: Opaque precommit token.
 	PrecommitToken string `json:"precommitToken,omitempty"`
@@ -4413,13 +4413,17 @@ type PartialResultSet struct {
 	// be combined with more values from subsequent `PartialResultSet`s to obtain a
 	// complete field value.
 	ChunkedValue bool `json:"chunkedValue,omitempty"`
+	// Last: Optional. Indicates whether this is the last `PartialResultSet` in the
+	// stream. The server might optionally set this field. Clients shouldn't rely
+	// on this field being set in all cases.
+	Last bool `json:"last,omitempty"`
 	// Metadata: Metadata about the result set, such as row type information. Only
 	// present in the first response.
 	Metadata *ResultSetMetadata `json:"metadata,omitempty"`
-	// PrecommitToken: Optional. A precommit token will be included if the
-	// read-write transaction is on a multiplexed session. The precommit token with
-	// the highest sequence number from this transaction attempt should be passed
-	// to the Commit request for this transaction.
+	// PrecommitToken: Optional. A precommit token is included if the read-write
+	// transaction has multiplexed sessions enabled. Pass the precommit token with
+	// the highest sequence number from this transaction attempt to the Commit
+	// request for this transaction.
 	PrecommitToken *MultiplexedSessionPrecommitToken `json:"precommitToken,omitempty"`
 	// ResumeToken: Streaming calls might be interrupted for a variety of reasons,
 	// such as TCP connection loss. If this occurs, the stream of results can be
@@ -4430,46 +4434,45 @@ type PartialResultSet struct {
 	// Stats: Query plan and execution statistics for the statement that produced
 	// this streaming result set. These can be requested by setting
 	// ExecuteSqlRequest.query_mode and are sent only once with the last response
-	// in the stream. This field will also be present in the last response for DML
+	// in the stream. This field is also present in the last response for DML
 	// statements.
 	Stats *ResultSetStats `json:"stats,omitempty"`
 	// Values: A streamed result set consists of a stream of values, which might be
 	// split into many `PartialResultSet` messages to accommodate large rows and/or
 	// large values. Every N complete values defines a row, where N is equal to the
 	// number of entries in metadata.row_type.fields. Most values are encoded based
-	// on type as described here. It is possible that the last value in values is
+	// on type as described here. It's possible that the last value in values is
 	// "chunked", meaning that the rest of the value is sent in subsequent
 	// `PartialResultSet`(s). This is denoted by the chunked_value field. Two or
 	// more chunked values can be merged to form a complete value as follows: *
-	// `bool/number/null`: cannot be chunked * `string`: concatenate the strings *
+	// `bool/number/null`: can't be chunked * `string`: concatenate the strings *
 	// `list`: concatenate the lists. If the last element in a list is a `string`,
 	// `list`, or `object`, merge it with the first element in the next list by
 	// applying these rules recursively. * `object`: concatenate the (field name,
 	// field value) pairs. If a field name is duplicated, then apply these rules
-	// recursively to merge the field values. Some examples of merging: # Strings
-	// are concatenated. "foo", "bar" => "foobar" # Lists of non-strings are
-	// concatenated. [2, 3], [4] => [2, 3, 4] # Lists are concatenated, but the
-	// last and first elements are merged # because they are strings. ["a", "b"],
-	// ["c", "d"] => ["a", "bc", "d"] # Lists are concatenated, but the last and
-	// first elements are merged # because they are lists. Recursively, the last
-	// and first elements # of the inner lists are merged because they are strings.
-	// ["a", ["b", "c"]], [["d"], "e"] => ["a", ["b", "cd"], "e"] # Non-overlapping
-	// object fields are combined. {"a": "1"}, {"b": "2"} => {"a": "1", "b": 2"} #
-	// Overlapping object fields are merged. {"a": "1"}, {"a": "2"} => {"a": "12"}
-	// # Examples of merging objects containing lists of strings. {"a": ["1"]},
-	// {"a": ["2"]} => {"a": ["12"]} For a more complete example, suppose a
-	// streaming SQL query is yielding a result set whose rows contain a single
-	// string field. The following `PartialResultSet`s might be yielded: {
-	// "metadata": { ... } "values": ["Hello", "W"] "chunked_value": true
-	// "resume_token": "Af65..." } { "values": ["orl"] "chunked_value": true } {
-	// "values": ["d"] "resume_token": "Zx1B..." } This sequence of
-	// `PartialResultSet`s encodes two rows, one containing the field value
-	// "Hello", and a second containing the field value "World" = "W" + "orl" +
-	// "d". Not all `PartialResultSet`s contain a `resume_token`. Execution can
-	// only be resumed from a previously yielded `resume_token`. For the above
-	// sequence of `PartialResultSet`s, resuming the query with "resume_token":
-	// "Af65..." will yield results from the `PartialResultSet` with value
-	// `["orl"]`.
+	// recursively to merge the field values. Some examples of merging: Strings are
+	// concatenated. "foo", "bar" => "foobar" Lists of non-strings are
+	// concatenated. [2, 3], [4] => [2, 3, 4] Lists are concatenated, but the last
+	// and first elements are merged because they are strings. ["a", "b"], ["c",
+	// "d"] => ["a", "bc", "d"] Lists are concatenated, but the last and first
+	// elements are merged because they are lists. Recursively, the last and first
+	// elements of the inner lists are merged because they are strings. ["a", ["b",
+	// "c"]], [["d"], "e"] => ["a", ["b", "cd"], "e"] Non-overlapping object fields
+	// are combined. {"a": "1"}, {"b": "2"} => {"a": "1", "b": 2"} Overlapping
+	// object fields are merged. {"a": "1"}, {"a": "2"} => {"a": "12"} Examples of
+	// merging objects containing lists of strings. {"a": ["1"]}, {"a": ["2"]} =>
+	// {"a": ["12"]} For a more complete example, suppose a streaming SQL query is
+	// yielding a result set whose rows contain a single string field. The
+	// following `PartialResultSet`s might be yielded: { "metadata": { ... }
+	// "values": ["Hello", "W"] "chunked_value": true "resume_token": "Af65..." } {
+	// "values": ["orl"] "chunked_value": true } { "values": ["d"] "resume_token":
+	// "Zx1B..." } This sequence of `PartialResultSet`s encodes two rows, one
+	// containing the field value "Hello", and a second containing the field
+	// value "World" = "W" + "orl" + "d". Not all `PartialResultSet`s contain a
+	// `resume_token`. Execution can only be resumed from a previously yielded
+	// `resume_token`. For the above sequence of `PartialResultSet`s, resuming the
+	// query with "resume_token": "Af65..." yields results from the
+	// `PartialResultSet` with value "orl".
 	Values []interface{} `json:"values,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
@@ -4495,9 +4498,9 @@ func (s PartialResultSet) MarshalJSON() ([]byte, error) {
 // Partition: Information returned for each partition returned in a
 // PartitionResponse.
 type Partition struct {
-	// PartitionToken: This token can be passed to Read, StreamingRead, ExecuteSql,
-	// or ExecuteStreamingSql requests to restrict the results to those identified
-	// by this partition token.
+	// PartitionToken: This token can be passed to `Read`, `StreamingRead`,
+	// `ExecuteSql`, or `ExecuteStreamingSql` requests to restrict the results to
+	// those identified by this partition token.
 	PartitionToken string `json:"partitionToken,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "PartitionToken") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -4517,21 +4520,21 @@ func (s Partition) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// PartitionOptions: Options for a PartitionQueryRequest and
-// PartitionReadRequest.
+// PartitionOptions: Options for a `PartitionQueryRequest` and
+// `PartitionReadRequest`.
 type PartitionOptions struct {
-	// MaxPartitions: **Note:** This hint is currently ignored by PartitionQuery
-	// and PartitionRead requests. The desired maximum number of partitions to
-	// return. For example, this may be set to the number of workers available. The
-	// default for this option is currently 10,000. The maximum value is currently
-	// 200,000. This is only a hint. The actual number of partitions returned may
-	// be smaller or larger than this maximum count request.
+	// MaxPartitions: **Note:** This hint is currently ignored by `PartitionQuery`
+	// and `PartitionRead` requests. The desired maximum number of partitions to
+	// return. For example, this might be set to the number of workers available.
+	// The default for this option is currently 10,000. The maximum value is
+	// currently 200,000. This is only a hint. The actual number of partitions
+	// returned can be smaller or larger than this maximum count request.
 	MaxPartitions int64 `json:"maxPartitions,omitempty,string"`
 	// PartitionSizeBytes: **Note:** This hint is currently ignored by
-	// PartitionQuery and PartitionRead requests. The desired data size for each
-	// partition generated. The default for this option is currently 1 GiB. This is
-	// only a hint. The actual size of each partition may be smaller or larger than
-	// this size request.
+	// `PartitionQuery` and `PartitionRead` requests. The desired data size for
+	// each partition generated. The default for this option is currently 1 GiB.
+	// This is only a hint. The actual size of each partition can be smaller or
+	// larger than this size request.
 	PartitionSizeBytes int64 `json:"partitionSizeBytes,omitempty,string"`
 	// ForceSendFields is a list of field names (e.g. "MaxPartitions") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -4553,7 +4556,7 @@ func (s PartitionOptions) MarshalJSON() ([]byte, error) {
 
 // PartitionQueryRequest: The request for PartitionQuery
 type PartitionQueryRequest struct {
-	// ParamTypes: It is not always possible for Cloud Spanner to infer the right
+	// ParamTypes: It isn't always possible for Cloud Spanner to infer the right
 	// SQL type from a JSON value. For example, values of type `BYTES` and values
 	// of type `STRING` both appear in params as JSON strings. In these cases,
 	// `param_types` can be used to specify the exact SQL type for some or all of
@@ -4565,25 +4568,25 @@ type PartitionQueryRequest struct {
 	// the parameter name (for example, `@firstName`). Parameter names can contain
 	// letters, numbers, and underscores. Parameters can appear anywhere that a
 	// literal value is expected. The same parameter name can be used more than
-	// once, for example: "WHERE id > @msg_id AND id < @msg_id + 100" It is an
+	// once, for example: "WHERE id > @msg_id AND id < @msg_id + 100" It's an
 	// error to execute a SQL statement with unbound parameters.
 	Params googleapi.RawMessage `json:"params,omitempty"`
 	// PartitionOptions: Additional options that affect how many partitions are
 	// created.
 	PartitionOptions *PartitionOptions `json:"partitionOptions,omitempty"`
 	// Sql: Required. The query request to generate partitions for. The request
-	// fails if the query is not root partitionable. For a query to be root
+	// fails if the query isn't root partitionable. For a query to be root
 	// partitionable, it needs to satisfy a few conditions. For example, if the
 	// query execution plan contains a distributed union operator, then it must be
 	// the first operator in the plan. For more information about other conditions,
 	// see Read data in parallel
 	// (https://cloud.google.com/spanner/docs/reads#read_data_in_parallel). The
 	// query request must not contain DML commands, such as `INSERT`, `UPDATE`, or
-	// `DELETE`. Use `ExecuteStreamingSql` with a PartitionedDml transaction for
+	// `DELETE`. Use `ExecuteStreamingSql` with a `PartitionedDml` transaction for
 	// large, partition-friendly DML operations.
 	Sql string `json:"sql,omitempty"`
-	// Transaction: Read only snapshot transactions are supported, read/write and
-	// single use transactions are not.
+	// Transaction: Read-only snapshot transactions are supported, read and write
+	// and single-use transactions are not.
 	Transaction *TransactionSelector `json:"transaction,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "ParamTypes") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -4615,8 +4618,8 @@ type PartitionReadRequest struct {
 	// KeySet: Required. `key_set` identifies the rows to be yielded. `key_set`
 	// names the primary keys of the rows in table to be yielded, unless index is
 	// present. If index is present, then key_set instead names index keys in
-	// index. It is not an error for the `key_set` to name rows that do not exist
-	// in the database. Read yields nothing for nonexistent rows.
+	// index. It isn't an error for the `key_set` to name rows that don't exist in
+	// the database. Read yields nothing for nonexistent rows.
 	KeySet *KeySet `json:"keySet,omitempty"`
 	// PartitionOptions: Additional options that affect how many partitions are
 	// created.
@@ -4887,14 +4890,14 @@ type QueryOptions struct {
 	// different query optimizer statistics package. Specifying `latest` as a value
 	// instructs Cloud Spanner to use the latest generated statistics package. If
 	// not specified, Cloud Spanner uses the statistics package set at the database
-	// level options, or the latest package if the database option is not set. The
+	// level options, or the latest package if the database option isn't set. The
 	// statistics package requested by the query has to be exempt from garbage
-	// collection. This can be achieved with the following DDL statement: ``` ALTER
-	// STATISTICS SET OPTIONS (allow_gc=false) ``` The list of available statistics
-	// packages can be queried from `INFORMATION_SCHEMA.SPANNER_STATISTICS`.
-	// Executing a SQL statement with an invalid optimizer statistics package or
-	// with a statistics package that allows garbage collection fails with an
-	// `INVALID_ARGUMENT` error.
+	// collection. This can be achieved with the following DDL statement: ```sql
+	// ALTER STATISTICS SET OPTIONS (allow_gc=false) ``` The list of available
+	// statistics packages can be queried from
+	// `INFORMATION_SCHEMA.SPANNER_STATISTICS`. Executing a SQL statement with an
+	// invalid optimizer statistics package or with a statistics package that
+	// allows garbage collection fails with an `INVALID_ARGUMENT` error.
 	OptimizerStatisticsPackage string `json:"optimizerStatisticsPackage,omitempty"`
 	// OptimizerVersion: An option to control the selection of optimizer version.
 	// This parameter allows individual queries to pick different query optimizer
@@ -4904,8 +4907,8 @@ type QueryOptions struct {
 	// positive integer (from the list of supported optimizer versions) overrides
 	// the default optimizer version for query execution. The list of supported
 	// optimizer versions can be queried from
-	// SPANNER_SYS.SUPPORTED_OPTIMIZER_VERSIONS. Executing a SQL statement with an
-	// invalid optimizer version fails with an `INVALID_ARGUMENT` error. See
+	// `SPANNER_SYS.SUPPORTED_OPTIMIZER_VERSIONS`. Executing a SQL statement with
+	// an invalid optimizer version fails with an `INVALID_ARGUMENT` error. See
 	// https://cloud.google.com/spanner/docs/query-optimizer/manage-query-optimizer
 	// for more information on managing the query optimizer. The
 	// `optimizer_version` statement hint has precedence over this setting.
@@ -5083,7 +5086,7 @@ type ReadRequest struct {
 	Columns []string `json:"columns,omitempty"`
 	// DataBoostEnabled: If this is for a partitioned read and this field is set to
 	// `true`, the request is executed with Spanner Data Boost independent compute
-	// resources. If the field is set to `true` but the request does not set
+	// resources. If the field is set to `true` but the request doesn't set
 	// `partition_token`, the API returns an `INVALID_ARGUMENT` error.
 	DataBoostEnabled bool `json:"dataBoostEnabled,omitempty"`
 	// DirectedReadOptions: Directed read options for this request.
@@ -5097,20 +5100,20 @@ type ReadRequest struct {
 	// present. If index is present, then key_set instead names index keys in
 	// index. If the partition_token field is empty, rows are yielded in table
 	// primary key order (if index is empty) or index key order (if index is
-	// non-empty). If the partition_token field is not empty, rows will be yielded
-	// in an unspecified order. It is not an error for the `key_set` to name rows
-	// that do not exist in the database. Read yields nothing for nonexistent rows.
+	// non-empty). If the partition_token field isn't empty, rows are yielded in an
+	// unspecified order. It isn't an error for the `key_set` to name rows that
+	// don't exist in the database. Read yields nothing for nonexistent rows.
 	KeySet *KeySet `json:"keySet,omitempty"`
 	// Limit: If greater than zero, only the first `limit` rows are yielded. If
-	// `limit` is zero, the default is no limit. A limit cannot be specified if
+	// `limit` is zero, the default is no limit. A limit can't be specified if
 	// `partition_token` is set.
 	Limit int64 `json:"limit,omitempty,string"`
 	// LockHint: Optional. Lock Hint for the request, it can only be used with
 	// read-write transactions.
 	//
 	// Possible values:
-	//   "LOCK_HINT_UNSPECIFIED" - Default value. LOCK_HINT_UNSPECIFIED is
-	// equivalent to LOCK_HINT_SHARED.
+	//   "LOCK_HINT_UNSPECIFIED" - Default value. `LOCK_HINT_UNSPECIFIED` is
+	// equivalent to `LOCK_HINT_SHARED`.
 	//   "LOCK_HINT_SHARED" - Acquire shared locks. By default when you perform a
 	// read as part of a read-write transaction, Spanner acquires shared read
 	// locks, which allows other reads to still access the data until your
@@ -5134,8 +5137,8 @@ type ReadRequest struct {
 	// multiple transactions try to act on the same data, they automatically get
 	// serialized. Each transaction waits its turn to acquire the lock and avoids
 	// getting into deadlock situations. Because the exclusive lock hint is just a
-	// hint, it should not be considered equivalent to a mutex. In other words, you
-	// should not use Spanner exclusive locks as a mutual exclusion mechanism for
+	// hint, it shouldn't be considered equivalent to a mutex. In other words, you
+	// shouldn't use Spanner exclusive locks as a mutual exclusion mechanism for
 	// the execution of code outside of Spanner. **Note:** Request exclusive locks
 	// judiciously because they block others from reading that data for the entire
 	// transaction, rather than just when the writes are being performed. Unless
@@ -5143,23 +5146,23 @@ type ReadRequest struct {
 	// locks so you don't prematurely block other clients from reading the data
 	// that you're writing to.
 	LockHint string `json:"lockHint,omitempty"`
-	// OrderBy: Optional. Order for the returned rows. By default, Spanner will
-	// return result rows in primary key order except for PartitionRead requests.
-	// For applications that do not require rows to be returned in primary key
+	// OrderBy: Optional. Order for the returned rows. By default, Spanner returns
+	// result rows in primary key order except for PartitionRead requests. For
+	// applications that don't require rows to be returned in primary key
 	// (`ORDER_BY_PRIMARY_KEY`) order, setting `ORDER_BY_NO_ORDER` option allows
 	// Spanner to optimize row retrieval, resulting in lower latencies in certain
-	// cases (e.g. bulk point lookups).
+	// cases (for example, bulk point lookups).
 	//
 	// Possible values:
-	//   "ORDER_BY_UNSPECIFIED" - Default value. ORDER_BY_UNSPECIFIED is equivalent
-	// to ORDER_BY_PRIMARY_KEY.
+	//   "ORDER_BY_UNSPECIFIED" - Default value. `ORDER_BY_UNSPECIFIED` is
+	// equivalent to `ORDER_BY_PRIMARY_KEY`.
 	//   "ORDER_BY_PRIMARY_KEY" - Read rows are returned in primary key order. In
 	// the event that this option is used in conjunction with the `partition_token`
-	// field, the API will return an `INVALID_ARGUMENT` error.
+	// field, the API returns an `INVALID_ARGUMENT` error.
 	//   "ORDER_BY_NO_ORDER" - Read rows are returned in any order.
 	OrderBy string `json:"orderBy,omitempty"`
-	// PartitionToken: If present, results will be restricted to the specified
-	// partition previously created using PartitionRead(). There must be an exact
+	// PartitionToken: If present, results are restricted to the specified
+	// partition previously created using `PartitionRead`. There must be an exact
 	// match for the values of fields common to this message and the
 	// PartitionReadRequest message used to create this partition_token.
 	PartitionToken string `json:"partitionToken,omitempty"`
@@ -5204,14 +5207,22 @@ type ReadWrite struct {
 	// ReadLockMode: Read lock mode for the transaction.
 	//
 	// Possible values:
-	//   "READ_LOCK_MODE_UNSPECIFIED" - Default value. If the value is not
-	// specified, the pessimistic read lock is used.
+	//   "READ_LOCK_MODE_UNSPECIFIED" - Default value. * If isolation level is
+	// REPEATABLE_READ, then it is an error to specify `read_lock_mode`. Locking
+	// semantics default to `OPTIMISTIC`. No validation checks are done for reads,
+	// except to validate that the data that was served at the snapshot time is
+	// unchanged at commit time in the following cases: 1. reads done as part of
+	// queries that use `SELECT FOR UPDATE` 2. reads done as part of statements
+	// with a `LOCK_SCANNED_RANGES` hint 3. reads done as part of DML statements *
+	// At all other isolation levels, if `read_lock_mode` is the default value,
+	// then pessimistic read locks are used.
 	//   "PESSIMISTIC" - Pessimistic lock mode. Read locks are acquired immediately
-	// on read.
+	// on read. Semantics described only applies to SERIALIZABLE isolation.
 	//   "OPTIMISTIC" - Optimistic lock mode. Locks for reads within the
 	// transaction are not acquired on read. Instead the locks are acquired on a
 	// commit to validate that read/queried data has not changed since the
-	// transaction started.
+	// transaction started. Semantics described only applies to SERIALIZABLE
+	// isolation.
 	ReadLockMode string `json:"readLockMode,omitempty"`
 	// ForceSendFields is a list of field names (e.g.
 	// "MultiplexedSessionPreviousTransactionId") to unconditionally include in API
@@ -5313,13 +5324,14 @@ func (s ReplicaInfo) MarshalJSON() ([]byte, error) {
 // The location must be one of the regions within the multi-region
 // configuration of your database. * `type` - The type of the replica. Some
 // examples of using replica_selectors are: * `location:us-east1` --> The
-// "us-east1" replica(s) of any available type will be used to process the
-// request. * `type:READ_ONLY` --> The "READ_ONLY" type replica(s) in nearest
-// available location will be used to process the request. * `location:us-east1
+// "us-east1" replica(s) of any available type is used to process the request.
+// * `type:READ_ONLY` --> The "READ_ONLY" type replica(s) in the nearest
+// available location are used to process the request. * `location:us-east1
 // type:READ_ONLY` --> The "READ_ONLY" type replica(s) in location "us-east1"
-// will be used to process the request.
+// is used to process the request.
 type ReplicaSelection struct {
-	// Location: The location or region of the serving requests, e.g. "us-east1".
+	// Location: The location or region of the serving requests, for example,
+	// "us-east1".
 	Location string `json:"location,omitempty"`
 	// Type: The type of replica.
 	//
@@ -5358,23 +5370,23 @@ type RequestOptions struct {
 	//   "PRIORITY_HIGH" - This specifies that the request is high priority.
 	Priority string `json:"priority,omitempty"`
 	// RequestTag: A per-request tag which can be applied to queries or reads, used
-	// for statistics collection. Both request_tag and transaction_tag can be
+	// for statistics collection. Both `request_tag` and `transaction_tag` can be
 	// specified for a read or query that belongs to a transaction. This field is
-	// ignored for requests where it's not applicable (e.g. CommitRequest). Legal
-	// characters for `request_tag` values are all printable characters (ASCII 32 -
-	// 126) and the length of a request_tag is limited to 50 characters. Values
-	// that exceed this limit are truncated. Any leading underscore (_) characters
-	// will be removed from the string.
+	// ignored for requests where it's not applicable (for example,
+	// `CommitRequest`). Legal characters for `request_tag` values are all
+	// printable characters (ASCII 32 - 126) and the length of a request_tag is
+	// limited to 50 characters. Values that exceed this limit are truncated. Any
+	// leading underscore (_) characters are removed from the string.
 	RequestTag string `json:"requestTag,omitempty"`
 	// TransactionTag: A tag used for statistics collection about this transaction.
-	// Both request_tag and transaction_tag can be specified for a read or query
-	// that belongs to a transaction. The value of transaction_tag should be the
-	// same for all requests belonging to the same transaction. If this request
-	// doesn't belong to any transaction, transaction_tag will be ignored. Legal
+	// Both `request_tag` and `transaction_tag` can be specified for a read or
+	// query that belongs to a transaction. The value of transaction_tag should be
+	// the same for all requests belonging to the same transaction. If this request
+	// doesn't belong to any transaction, `transaction_tag` is ignored. Legal
 	// characters for `transaction_tag` values are all printable characters (ASCII
-	// 32 - 126) and the length of a transaction_tag is limited to 50 characters.
+	// 32 - 126) and the length of a `transaction_tag` is limited to 50 characters.
 	// Values that exceed this limit are truncated. Any leading underscore (_)
-	// characters will be removed from the string.
+	// characters are removed from the string.
 	TransactionTag string `json:"transactionTag,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Priority") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -5564,10 +5576,10 @@ func (s RestoreInfo) MarshalJSON() ([]byte, error) {
 type ResultSet struct {
 	// Metadata: Metadata about the result set, such as row type information.
 	Metadata *ResultSetMetadata `json:"metadata,omitempty"`
-	// PrecommitToken: Optional. A precommit token will be included if the
-	// read-write transaction is on a multiplexed session. The precommit token with
-	// the highest sequence number from this transaction attempt should be passed
-	// to the Commit request for this transaction.
+	// PrecommitToken: Optional. A precommit token is included if the read-write
+	// transaction is on a multiplexed session. Pass the precommit token with the
+	// highest sequence number from this transaction attempt to the Commit request
+	// for this transaction.
 	PrecommitToken *MultiplexedSessionPrecommitToken `json:"precommitToken,omitempty"`
 	// Rows: Each element in `rows` is a row whose format is defined by
 	// metadata.row_type. The ith element in each row matches the ith field in
@@ -5578,7 +5590,7 @@ type ResultSet struct {
 	// ExecuteSqlRequest.query_mode. DML statements always produce stats containing
 	// the number of rows modified, unless executed using the
 	// ExecuteSqlRequest.QueryMode.PLAN ExecuteSqlRequest.query_mode. Other fields
-	// may or may not be populated, based on the ExecuteSqlRequest.query_mode.
+	// might or might not be populated, based on the ExecuteSqlRequest.query_mode.
 	Stats *ResultSetStats `json:"stats,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
@@ -5649,8 +5661,8 @@ type ResultSetStats struct {
 	// RowCountExact: Standard DML returns an exact count of rows that were
 	// modified.
 	RowCountExact int64 `json:"rowCountExact,omitempty,string"`
-	// RowCountLowerBound: Partitioned DML does not offer exactly-once semantics,
-	// so it returns a lower bound of the rows modified.
+	// RowCountLowerBound: Partitioned DML doesn't offer exactly-once semantics, so
+	// it returns a lower bound of the rows modified.
 	RowCountLowerBound int64 `json:"rowCountLowerBound,omitempty,string"`
 	// ForceSendFields is a list of field names (e.g. "QueryPlan") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -5762,7 +5774,7 @@ func (s ScanData) MarshalJSON() ([]byte, error) {
 // Session: A session in the Cloud Spanner API.
 type Session struct {
 	// ApproximateLastUseTime: Output only. The approximate timestamp when the
-	// session is last used. It is typically earlier than the actual last use time.
+	// session is last used. It's typically earlier than the actual last use time.
 	ApproximateLastUseTime string `json:"approximateLastUseTime,omitempty"`
 	// CreateTime: Output only. The timestamp when the session is created.
 	CreateTime string `json:"createTime,omitempty"`
@@ -5776,7 +5788,7 @@ type Session struct {
 	// with a given session. See https://goo.gl/xmQnxf for more information on and
 	// examples of labels.
 	Labels map[string]string `json:"labels,omitempty"`
-	// Multiplexed: Optional. If true, specifies a multiplexed session. Use a
+	// Multiplexed: Optional. If `true`, specifies a multiplexed session. Use a
 	// multiplexed session for multiple, concurrent read-only operations. Don't use
 	// them for read-write transactions, partitioned reads, or partitioned queries.
 	// Use `sessions.create` to create multiplexed sessions. Don't use
@@ -5920,7 +5932,7 @@ func (s SplitPoints) MarshalJSON() ([]byte, error) {
 
 // Statement: A single DML statement.
 type Statement struct {
-	// ParamTypes: It is not always possible for Cloud Spanner to infer the right
+	// ParamTypes: It isn't always possible for Cloud Spanner to infer the right
 	// SQL type from a JSON value. For example, values of type `BYTES` and values
 	// of type `STRING` both appear in params as JSON strings. In these cases,
 	// `param_types` can be used to specify the exact SQL type for some or all of
@@ -5932,7 +5944,7 @@ type Statement struct {
 	// the parameter name (for example, `@firstName`). Parameter names can contain
 	// letters, numbers, and underscores. Parameters can appear anywhere that a
 	// literal value is expected. The same parameter name can be used more than
-	// once, for example: "WHERE id > @msg_id AND id < @msg_id + 100" It is an
+	// once, for example: "WHERE id > @msg_id AND id < @msg_id + 100" It's an
 	// error to execute a SQL statement with unbound parameters.
 	Params googleapi.RawMessage `json:"params,omitempty"`
 	// Sql: Required. The DML string.
@@ -6319,6 +6331,28 @@ type TransactionOptions struct {
 	// partitioned-dml transactions, otherwise the API will return an
 	// `INVALID_ARGUMENT` error.
 	ExcludeTxnFromChangeStreams bool `json:"excludeTxnFromChangeStreams,omitempty"`
+	// IsolationLevel: Isolation level for the transaction.
+	//
+	// Possible values:
+	//   "ISOLATION_LEVEL_UNSPECIFIED" - Default value. If the value is not
+	// specified, the `SERIALIZABLE` isolation level is used.
+	//   "SERIALIZABLE" - All transactions appear as if they executed in a serial
+	// order, even if some of the reads, writes, and other operations of distinct
+	// transactions actually occurred in parallel. Spanner assigns commit
+	// timestamps that reflect the order of committed transactions to implement
+	// this property. Spanner offers a stronger guarantee than serializability
+	// called external consistency. For further details, please refer to
+	// https://cloud.google.com/spanner/docs/true-time-external-consistency#serializability.
+	//   "REPEATABLE_READ" - All reads performed during the transaction observe a
+	// consistent snapshot of the database, and the transaction will only
+	// successfully commit in the absence of conflicts between its updates and any
+	// concurrent updates that have occurred since that snapshot. Consequently, in
+	// contrast to `SERIALIZABLE` transactions, only write-write conflicts are
+	// detected in snapshot transactions. This isolation level does not support
+	// Read-only and Partitioned DML transactions. When `REPEATABLE_READ` is
+	// specified on a read-write transaction, the locking semantics default to
+	// `OPTIMISTIC`.
+	IsolationLevel string `json:"isolationLevel,omitempty"`
 	// PartitionedDml: Partitioned DML transaction. Authorization to begin a
 	// Partitioned DML transaction requires
 	// `spanner.databases.beginPartitionedDmlTransaction` permission on the
@@ -15358,15 +15392,16 @@ type ProjectsInstancesDatabasesSessionsBatchWriteCall struct {
 // efficient transactions. All mutations in a group are committed atomically.
 // However, mutations across groups can be committed non-atomically in an
 // unspecified order and thus, they must be independent of each other. Partial
-// failure is possible, i.e., some groups may have been committed successfully,
-// while some may have failed. The results of individual batches are streamed
-// into the response as the batches are applied. BatchWrite requests are not
-// replay protected, meaning that each mutation group may be applied more than
-// once. Replays of non-idempotent mutations may have undesirable effects. For
-// example, replays of an insert mutation may produce an already exists error
-// or if you use generated or commit timestamp-based keys, it may result in
-// additional rows being added to the mutation's table. We recommend
-// structuring your mutation groups to be idempotent to avoid this issue.
+// failure is possible, that is, some groups might have been committed
+// successfully, while some might have failed. The results of individual
+// batches are streamed into the response as the batches are applied.
+// `BatchWrite` requests are not replay protected, meaning that each mutation
+// group can be applied more than once. Replays of non-idempotent mutations can
+// have undesirable effects. For example, replays of an insert mutation can
+// produce an already exists error or if you use generated or commit
+// timestamp-based keys, it can result in additional rows being added to the
+// mutation's table. We recommend structuring your mutation groups to be
+// idempotent to avoid this issue.
 //
 // - session: The session in which the batch request is to be run.
 func (r *ProjectsInstancesDatabasesSessionsService) BatchWrite(session string, batchwriterequest *BatchWriteRequest) *ProjectsInstancesDatabasesSessionsBatchWriteCall {
@@ -15578,11 +15613,11 @@ type ProjectsInstancesDatabasesSessionsCommitCall struct {
 // applied to rows in the database. `Commit` might return an `ABORTED` error.
 // This can occur at any time; commonly, the cause is conflicts with concurrent
 // transactions. However, it can also happen for a variety of other reasons. If
-// `Commit` returns `ABORTED`, the caller should re-attempt the transaction
-// from the beginning, re-using the same session. On very rare occasions,
-// `Commit` might return `UNKNOWN`. This can happen, for example, if the client
-// job experiences a 1+ hour networking failure. At that point, Cloud Spanner
-// has lost track of the transaction outcome and we recommend that you perform
+// `Commit` returns `ABORTED`, the caller should retry the transaction from the
+// beginning, reusing the same session. On very rare occasions, `Commit` might
+// return `UNKNOWN`. This can happen, for example, if the client job
+// experiences a 1+ hour networking failure. At that point, Cloud Spanner has
+// lost track of the transaction outcome and we recommend that you perform
 // another read from the database to see the state of things as they are now.
 //
 // - session: The session in which the transaction to be committed is running.
@@ -15693,11 +15728,11 @@ type ProjectsInstancesDatabasesSessionsCreateCall struct {
 // read-write/write-only transactions, create multiple sessions. Note that
 // standalone reads and queries use a transaction internally, and count toward
 // the one transaction limit. Active sessions use additional server resources,
-// so it is a good idea to delete idle and unneeded sessions. Aside from
-// explicit deletes, Cloud Spanner may delete sessions for which no operations
-// are sent for more than an hour. If a session is deleted, requests to it
-// return `NOT_FOUND`. Idle sessions can be kept alive by sending a trivial SQL
-// query periodically, e.g., "SELECT 1".
+// so it's a good idea to delete idle and unneeded sessions. Aside from
+// explicit deletes, Cloud Spanner can delete sessions when no operations are
+// sent for more than an hour. If a session is deleted, requests to it return
+// `NOT_FOUND`. Idle sessions can be kept alive by sending a trivial SQL query
+// periodically, for example, "SELECT 1".
 //
 // - database: The database in which the new session is created.
 func (r *ProjectsInstancesDatabasesSessionsService) Create(database string, createsessionrequest *CreateSessionRequest) *ProjectsInstancesDatabasesSessionsCreateCall {
@@ -15800,7 +15835,7 @@ type ProjectsInstancesDatabasesSessionsDeleteCall struct {
 }
 
 // Delete: Ends a session, releasing server resources associated with it. This
-// will asynchronously trigger cancellation of any operations that are running
+// asynchronously triggers the cancellation of any operations that are running
 // with this session.
 //
 // - name: The name of the session to delete.
@@ -16011,7 +16046,7 @@ type ProjectsInstancesDatabasesSessionsExecuteSqlCall struct {
 }
 
 // ExecuteSql: Executes an SQL statement, returning all results in a single
-// reply. This method cannot be used to return a result set larger than 10 MiB;
+// reply. This method can't be used to return a result set larger than 10 MiB;
 // if the query yields more data than that, the query fails with a
 // `FAILED_PRECONDITION` error. Operations inside read-write transactions might
 // return `ABORTED`. If this occurs, the application should restart the
@@ -16231,7 +16266,7 @@ type ProjectsInstancesDatabasesSessionsGetCall struct {
 	header_      http.Header
 }
 
-// Get: Gets a session. Returns `NOT_FOUND` if the session does not exist. This
+// Get: Gets a session. Returns `NOT_FOUND` if the session doesn't exist. This
 // is mainly useful for determining whether a session is still alive.
 //
 // - name: The name of the session to retrieve.
@@ -16503,11 +16538,11 @@ type ProjectsInstancesDatabasesSessionsPartitionQueryCall struct {
 // execute a query operation in parallel. Each of the returned partition tokens
 // can be used by ExecuteStreamingSql to specify a subset of the query result
 // to read. The same session and read-only transaction must be used by the
-// PartitionQueryRequest used to create the partition tokens and the
-// ExecuteSqlRequests that use the partition tokens. Partition tokens become
+// `PartitionQueryRequest` used to create the partition tokens and the
+// `ExecuteSqlRequests` that use the partition tokens. Partition tokens become
 // invalid when the session used to create them is deleted, is idle for too
 // long, begins a new transaction, or becomes too old. When any of these
-// happen, it is not possible to resume the query, and the whole operation must
+// happen, it isn't possible to resume the query, and the whole operation must
 // be restarted from the beginning.
 //
 // - session: The session used to create the partitions.
@@ -16616,14 +16651,14 @@ type ProjectsInstancesDatabasesSessionsPartitionReadCall struct {
 // a read operation in parallel. Each of the returned partition tokens can be
 // used by StreamingRead to specify a subset of the read result to read. The
 // same session and read-only transaction must be used by the
-// PartitionReadRequest used to create the partition tokens and the
-// ReadRequests that use the partition tokens. There are no ordering guarantees
-// on rows returned among the returned partition tokens, or even within each
-// individual StreamingRead call issued with a partition_token. Partition
-// tokens become invalid when the session used to create them is deleted, is
-// idle for too long, begins a new transaction, or becomes too old. When any of
-// these happen, it is not possible to resume the read, and the whole operation
-// must be restarted from the beginning.
+// `PartitionReadRequest` used to create the partition tokens and the
+// `ReadRequests` that use the partition tokens. There are no ordering
+// guarantees on rows returned among the returned partition tokens, or even
+// within each individual `StreamingRead` call issued with a `partition_token`.
+// Partition tokens become invalid when the session used to create them is
+// deleted, is idle for too long, begins a new transaction, or becomes too old.
+// When any of these happen, it isn't possible to resume the read, and the
+// whole operation must be restarted from the beginning.
 //
 // - session: The session used to create the partitions.
 func (r *ProjectsInstancesDatabasesSessionsService) PartitionRead(session string, partitionreadrequest *PartitionReadRequest) *ProjectsInstancesDatabasesSessionsPartitionReadCall {
@@ -16728,7 +16763,7 @@ type ProjectsInstancesDatabasesSessionsReadCall struct {
 }
 
 // Read: Reads rows from the database using key lookups and scans, as a simple
-// key/value style alternative to ExecuteSql. This method cannot be used to
+// key/value style alternative to ExecuteSql. This method can't be used to
 // return a result set larger than 10 MiB; if the read matches more data than
 // that, the read fails with a `FAILED_PRECONDITION` error. Reads inside
 // read-write transactions might return `ABORTED`. If this occurs, the
@@ -16837,12 +16872,11 @@ type ProjectsInstancesDatabasesSessionsRollbackCall struct {
 	header_         http.Header
 }
 
-// Rollback: Rolls back a transaction, releasing any locks it holds. It is a
+// Rollback: Rolls back a transaction, releasing any locks it holds. It's a
 // good idea to call this for any transaction that includes one or more Read or
 // ExecuteSql requests and ultimately decides not to commit. `Rollback` returns
 // `OK` if it successfully aborts the transaction, the transaction was already
-// aborted, or the transaction is not found. `Rollback` never returns
-// `ABORTED`.
+// aborted, or the transaction isn't found. `Rollback` never returns `ABORTED`.
 //
 // - session: The session in which the transaction to roll back is running.
 func (r *ProjectsInstancesDatabasesSessionsService) Rollback(session string, rollbackrequest *RollbackRequest) *ProjectsInstancesDatabasesSessionsRollbackCall {

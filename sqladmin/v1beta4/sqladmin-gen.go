@@ -474,6 +474,84 @@ type Backup struct {
 	// BackupRun: Output only. The mapping to backup run resource used for IAM
 	// validations.
 	BackupRun string `json:"backupRun,omitempty"`
+	// DatabaseVersion: Output only. The database version of the instance of when
+	// this backup was made.
+	//
+	// Possible values:
+	//   "SQL_DATABASE_VERSION_UNSPECIFIED" - This is an unknown database version.
+	//   "MYSQL_5_1" - The database version is MySQL 5.1.
+	//   "MYSQL_5_5" - The database version is MySQL 5.5.
+	//   "MYSQL_5_6" - The database version is MySQL 5.6.
+	//   "MYSQL_5_7" - The database version is MySQL 5.7.
+	//   "MYSQL_8_0" - The database version is MySQL 8.
+	//   "MYSQL_8_0_18" - The database major version is MySQL 8.0 and the minor
+	// version is 18.
+	//   "MYSQL_8_0_26" - The database major version is MySQL 8.0 and the minor
+	// version is 26.
+	//   "MYSQL_8_0_27" - The database major version is MySQL 8.0 and the minor
+	// version is 27.
+	//   "MYSQL_8_0_28" - The database major version is MySQL 8.0 and the minor
+	// version is 28.
+	//   "MYSQL_8_0_29" - The database major version is MySQL 8.0 and the minor
+	// version is 29.
+	//   "MYSQL_8_0_30" - The database major version is MySQL 8.0 and the minor
+	// version is 30.
+	//   "MYSQL_8_0_31" - The database major version is MySQL 8.0 and the minor
+	// version is 31.
+	//   "MYSQL_8_0_32" - The database major version is MySQL 8.0 and the minor
+	// version is 32.
+	//   "MYSQL_8_0_33" - The database major version is MySQL 8.0 and the minor
+	// version is 33.
+	//   "MYSQL_8_0_34" - The database major version is MySQL 8.0 and the minor
+	// version is 34.
+	//   "MYSQL_8_0_35" - The database major version is MySQL 8.0 and the minor
+	// version is 35.
+	//   "MYSQL_8_0_36" - The database major version is MySQL 8.0 and the minor
+	// version is 36.
+	//   "MYSQL_8_0_37" - The database major version is MySQL 8.0 and the minor
+	// version is 37.
+	//   "MYSQL_8_0_38" - The database major version is MySQL 8.0 and the minor
+	// version is 38.
+	//   "MYSQL_8_0_39" - The database major version is MySQL 8.0 and the minor
+	// version is 39.
+	//   "MYSQL_8_0_40" - The database major version is MySQL 8.0 and the minor
+	// version is 40.
+	//   "MYSQL_8_0_41" - The database major version is MySQL 8.0 and the minor
+	// version is 41.
+	//   "MYSQL_8_0_42" - The database major version is MySQL 8.0 and the minor
+	// version is 42.
+	//   "MYSQL_8_4" - The database version is MySQL 8.4.
+	//   "SQLSERVER_2017_STANDARD" - The database version is SQL Server 2017
+	// Standard.
+	//   "SQLSERVER_2017_ENTERPRISE" - The database version is SQL Server 2017
+	// Enterprise.
+	//   "SQLSERVER_2017_EXPRESS" - The database version is SQL Server 2017
+	// Express.
+	//   "SQLSERVER_2017_WEB" - The database version is SQL Server 2017 Web.
+	//   "POSTGRES_9_6" - The database version is PostgreSQL 9.6.
+	//   "POSTGRES_10" - The database version is PostgreSQL 10.
+	//   "POSTGRES_11" - The database version is PostgreSQL 11.
+	//   "POSTGRES_12" - The database version is PostgreSQL 12.
+	//   "POSTGRES_13" - The database version is PostgreSQL 13.
+	//   "POSTGRES_14" - The database version is PostgreSQL 14.
+	//   "POSTGRES_15" - The database version is PostgreSQL 15.
+	//   "POSTGRES_16" - The database version is PostgreSQL 16.
+	//   "POSTGRES_17" - The database version is PostgreSQL 17.
+	//   "SQLSERVER_2019_STANDARD" - The database version is SQL Server 2019
+	// Standard.
+	//   "SQLSERVER_2019_ENTERPRISE" - The database version is SQL Server 2019
+	// Enterprise.
+	//   "SQLSERVER_2019_EXPRESS" - The database version is SQL Server 2019
+	// Express.
+	//   "SQLSERVER_2019_WEB" - The database version is SQL Server 2019 Web.
+	//   "SQLSERVER_2022_STANDARD" - The database version is SQL Server 2022
+	// Standard.
+	//   "SQLSERVER_2022_ENTERPRISE" - The database version is SQL Server 2022
+	// Enterprise.
+	//   "SQLSERVER_2022_EXPRESS" - The database version is SQL Server 2022
+	// Express.
+	//   "SQLSERVER_2022_WEB" - The database version is SQL Server 2022 Web.
+	DatabaseVersion string `json:"databaseVersion,omitempty"`
 	// Description: The description of this backup.
 	Description string `json:"description,omitempty"`
 	// Error: Output only. Information about why the backup operation fails (for
@@ -721,6 +799,84 @@ type BackupRun struct {
 	//   "SNAPSHOT" - Snapshot-based backups.
 	//   "PHYSICAL" - Physical backups.
 	BackupKind string `json:"backupKind,omitempty"`
+	// DatabaseVersion: Output only. The instance database version when this backup
+	// was made.
+	//
+	// Possible values:
+	//   "SQL_DATABASE_VERSION_UNSPECIFIED" - This is an unknown database version.
+	//   "MYSQL_5_1" - The database version is MySQL 5.1.
+	//   "MYSQL_5_5" - The database version is MySQL 5.5.
+	//   "MYSQL_5_6" - The database version is MySQL 5.6.
+	//   "MYSQL_5_7" - The database version is MySQL 5.7.
+	//   "MYSQL_8_0" - The database version is MySQL 8.
+	//   "MYSQL_8_0_18" - The database major version is MySQL 8.0 and the minor
+	// version is 18.
+	//   "MYSQL_8_0_26" - The database major version is MySQL 8.0 and the minor
+	// version is 26.
+	//   "MYSQL_8_0_27" - The database major version is MySQL 8.0 and the minor
+	// version is 27.
+	//   "MYSQL_8_0_28" - The database major version is MySQL 8.0 and the minor
+	// version is 28.
+	//   "MYSQL_8_0_29" - The database major version is MySQL 8.0 and the minor
+	// version is 29.
+	//   "MYSQL_8_0_30" - The database major version is MySQL 8.0 and the minor
+	// version is 30.
+	//   "MYSQL_8_0_31" - The database major version is MySQL 8.0 and the minor
+	// version is 31.
+	//   "MYSQL_8_0_32" - The database major version is MySQL 8.0 and the minor
+	// version is 32.
+	//   "MYSQL_8_0_33" - The database major version is MySQL 8.0 and the minor
+	// version is 33.
+	//   "MYSQL_8_0_34" - The database major version is MySQL 8.0 and the minor
+	// version is 34.
+	//   "MYSQL_8_0_35" - The database major version is MySQL 8.0 and the minor
+	// version is 35.
+	//   "MYSQL_8_0_36" - The database major version is MySQL 8.0 and the minor
+	// version is 36.
+	//   "MYSQL_8_0_37" - The database major version is MySQL 8.0 and the minor
+	// version is 37.
+	//   "MYSQL_8_0_38" - The database major version is MySQL 8.0 and the minor
+	// version is 38.
+	//   "MYSQL_8_0_39" - The database major version is MySQL 8.0 and the minor
+	// version is 39.
+	//   "MYSQL_8_0_40" - The database major version is MySQL 8.0 and the minor
+	// version is 40.
+	//   "MYSQL_8_0_41" - The database major version is MySQL 8.0 and the minor
+	// version is 41.
+	//   "MYSQL_8_0_42" - The database major version is MySQL 8.0 and the minor
+	// version is 42.
+	//   "MYSQL_8_4" - The database version is MySQL 8.4.
+	//   "SQLSERVER_2017_STANDARD" - The database version is SQL Server 2017
+	// Standard.
+	//   "SQLSERVER_2017_ENTERPRISE" - The database version is SQL Server 2017
+	// Enterprise.
+	//   "SQLSERVER_2017_EXPRESS" - The database version is SQL Server 2017
+	// Express.
+	//   "SQLSERVER_2017_WEB" - The database version is SQL Server 2017 Web.
+	//   "POSTGRES_9_6" - The database version is PostgreSQL 9.6.
+	//   "POSTGRES_10" - The database version is PostgreSQL 10.
+	//   "POSTGRES_11" - The database version is PostgreSQL 11.
+	//   "POSTGRES_12" - The database version is PostgreSQL 12.
+	//   "POSTGRES_13" - The database version is PostgreSQL 13.
+	//   "POSTGRES_14" - The database version is PostgreSQL 14.
+	//   "POSTGRES_15" - The database version is PostgreSQL 15.
+	//   "POSTGRES_16" - The database version is PostgreSQL 16.
+	//   "POSTGRES_17" - The database version is PostgreSQL 17.
+	//   "SQLSERVER_2019_STANDARD" - The database version is SQL Server 2019
+	// Standard.
+	//   "SQLSERVER_2019_ENTERPRISE" - The database version is SQL Server 2019
+	// Enterprise.
+	//   "SQLSERVER_2019_EXPRESS" - The database version is SQL Server 2019
+	// Express.
+	//   "SQLSERVER_2019_WEB" - The database version is SQL Server 2019 Web.
+	//   "SQLSERVER_2022_STANDARD" - The database version is SQL Server 2022
+	// Standard.
+	//   "SQLSERVER_2022_ENTERPRISE" - The database version is SQL Server 2022
+	// Enterprise.
+	//   "SQLSERVER_2022_EXPRESS" - The database version is SQL Server 2022
+	// Express.
+	//   "SQLSERVER_2022_WEB" - The database version is SQL Server 2022 Web.
+	DatabaseVersion string `json:"databaseVersion,omitempty"`
 	// Description: The description of this run, only applicable to on-demand
 	// backups.
 	Description string `json:"description,omitempty"`
@@ -922,6 +1078,35 @@ func (s CloneContext) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// ConnectPoolNodeConfig: Details of a single node of a read pool.
+type ConnectPoolNodeConfig struct {
+	// DnsName: Output only. The DNS name of the node.
+	DnsName string `json:"dnsName,omitempty"`
+	// DnsNames: Output only. The list of DNS names used by this instance.
+	DnsNames []*DnsNameMapping `json:"dnsNames,omitempty"`
+	// IpAddresses: Output only. Mappings containing IP addresses that can be used
+	// to connect to the node.
+	IpAddresses []*IpMapping `json:"ipAddresses,omitempty"`
+	// Name: Output only. The name of the node. Doesn't include the project ID.
+	Name string `json:"name,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "DnsName") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DnsName") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ConnectPoolNodeConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod ConnectPoolNodeConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // ConnectSettings: Connect settings retrieval response.
 type ConnectSettings struct {
 	// BackendType: `SECOND_GEN`: Cloud SQL database instance. `EXTERNAL`: A
@@ -1032,6 +1217,11 @@ type ConnectSettings struct {
 	IpAddresses []*IpMapping `json:"ipAddresses,omitempty"`
 	// Kind: This is always `sql#connectSettings`.
 	Kind string `json:"kind,omitempty"`
+	// NodeCount: The number of nodes in a read pool.
+	NodeCount int64 `json:"nodeCount,omitempty"`
+	// Nodes: Output only. Entries containing information about each node of the
+	// read pool.
+	Nodes []*ConnectPoolNodeConfig `json:"nodes,omitempty"`
 	// PscEnabled: Whether PSC connectivity is enabled for this instance.
 	PscEnabled bool `json:"pscEnabled,omitempty"`
 	// Region: The cloud region for the instance. e.g. `us-central1`,
@@ -1068,6 +1258,76 @@ type ConnectSettings struct {
 
 func (s ConnectSettings) MarshalJSON() ([]byte, error) {
 	type NoMethod ConnectSettings
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ConnectionPoolConfig: The managed connection pooling configuration.
+type ConnectionPoolConfig struct {
+	// ClientConnectionIdleTimeout: Client idle timeout.
+	ClientConnectionIdleTimeout string `json:"clientConnectionIdleTimeout,omitempty"`
+	// ConnPoolSize: Managed connection pool size.
+	ConnPoolSize int64 `json:"connPoolSize,omitempty"`
+	// ConnectionPoolingEnabled: Whether managed connection pooling is enabled.
+	ConnectionPoolingEnabled bool `json:"connectionPoolingEnabled,omitempty"`
+	// Flags: Optional. List of connection pool configuration flags
+	Flags []*ConnectionPoolFlags `json:"flags,omitempty"`
+	// MaxClientConnections: Maximum number of client connections in connection
+	// pool.
+	MaxClientConnections int64 `json:"maxClientConnections,omitempty"`
+	// PoolMode: The managed connection pool mode for the instance.
+	//
+	// Possible values:
+	//   "POOL_MODE_UNSPECIFIED" - The pool mode is unknown.
+	//   "SESSION" - The session mode for managed connection pooling.
+	//   "TRANSACTION" - The transaction(default) mode for managed connection
+	// pooling.
+	PoolMode string `json:"poolMode,omitempty"`
+	// QueryWaitTimeout: Query wait timeout.
+	QueryWaitTimeout string `json:"queryWaitTimeout,omitempty"`
+	// ServerConnectionIdleTimeout: Server idle timeout.
+	ServerConnectionIdleTimeout string `json:"serverConnectionIdleTimeout,omitempty"`
+	// ForceSendFields is a list of field names (e.g.
+	// "ClientConnectionIdleTimeout") to unconditionally include in API requests.
+	// By default, fields with empty or default values are omitted from API
+	// requests. See https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields
+	// for more details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ClientConnectionIdleTimeout") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ConnectionPoolConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod ConnectionPoolConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ConnectionPoolFlags: Connection pool flags for Cloud SQL instances managed
+// connection pool configuration.
+type ConnectionPoolFlags struct {
+	// Name: Required. The name of the flag.
+	Name string `json:"name,omitempty"`
+	// Value: Required. The value of the flag. Boolean flags are set to `on` for
+	// true and `off` for false. This field must be omitted if the flag doesn't
+	// take a value.
+	Value string `json:"value,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Name") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Name") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ConnectionPoolFlags) MarshalJSON() ([]byte, error) {
+	type NoMethod ConnectionPoolFlags
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -1314,6 +1574,7 @@ type DatabaseInstance struct {
 	//   "ON_PREMISES_INSTANCE" - An instance running on the customer's premises
 	// that is not managed by Cloud SQL.
 	//   "READ_REPLICA_INSTANCE" - A Cloud SQL instance acting as a read-replica.
+	//   "READ_POOL_INSTANCE" - CloudSQL read pool.
 	InstanceType string `json:"instanceType,omitempty"`
 	// IpAddresses: The assigned IP addresses for the instance.
 	IpAddresses []*IpMapping `json:"ipAddresses,omitempty"`
@@ -1331,6 +1592,11 @@ type DatabaseInstance struct {
 	MaxDiskSize int64 `json:"maxDiskSize,omitempty,string"`
 	// Name: Name of the Cloud SQL instance. This does not include the project ID.
 	Name string `json:"name,omitempty"`
+	// NodeCount: The number of nodes in a read pool.
+	NodeCount int64 `json:"nodeCount,omitempty"`
+	// Nodes: Output only. Entries containing information about each node of the
+	// read pool.
+	Nodes []*PoolNodeConfig `json:"nodes,omitempty"`
 	// OnPremisesConfiguration: Configuration specific to on-premises instances.
 	OnPremisesConfiguration *OnPremisesConfiguration `json:"onPremisesConfiguration,omitempty"`
 	// OutOfDiskReport: This field represents the report generated by the proactive
@@ -1409,6 +1675,8 @@ type DatabaseInstance struct {
 	//   "FAILED" - The creation of the instance failed or a fatal error occurred
 	// during maintenance.
 	//   "ONLINE_MAINTENANCE" - Deprecated
+	//   "REPAIRING" - (Applicable to read pool nodes only.) The read pool node
+	// needs to be repaired. The database might be unavailable.
 	State string `json:"state,omitempty"`
 	// SuspensionReason: If the instance state is SUSPENDED, the reason for the
 	// suspension.
@@ -2189,6 +2457,13 @@ type Flag struct {
 	// Express.
 	//   "SQLSERVER_2022_WEB" - The database version is SQL Server 2022 Web.
 	AppliesTo []string `json:"appliesTo,omitempty"`
+	// FlagScope: Scope of flag.
+	//
+	// Possible values:
+	//   "SQL_FLAG_SCOPE_UNSPECIFIED" - Assume database flags if unspecified
+	//   "SQL_FLAG_SCOPE_DATABASE" - database flags
+	//   "SQL_FLAG_SCOPE_CONNECTION_POOL" - connection pool configuration flags
+	FlagScope string `json:"flagScope,omitempty"`
 	// InBeta: Whether or not the flag is considered in beta.
 	InBeta bool `json:"inBeta,omitempty"`
 	// Kind: This is always `sql#flag`.
@@ -2200,6 +2475,12 @@ type Flag struct {
 	// Name: This is the name of the flag. Flag names always use underscores, not
 	// hyphens, for example: `max_allowed_packet`
 	Name string `json:"name,omitempty"`
+	// RecommendedIntValue: Recommended flag value in integer format for UI
+	// display.
+	RecommendedIntValue int64 `json:"recommendedIntValue,omitempty,string"`
+	// RecommendedStringValue: Recommended flag value in string format for UI
+	// display.
+	RecommendedStringValue string `json:"recommendedStringValue,omitempty"`
 	// RequiresRestart: Indicates whether changing this flag will trigger a
 	// database restart. Only applicable to Second Generation instances.
 	RequiresRestart bool `json:"requiresRestart,omitempty"`
@@ -3599,6 +3880,9 @@ type Operation struct {
 	//   "MANAGE_BACKUP" - Changes the BackupTier of a Cloud SQL instance.
 	//   "ENHANCED_BACKUP" - Creates a backup for an Enhanced BackupTier Cloud SQL
 	// instance.
+	//   "REPAIR_READ_POOL" - Repairs entire read pool or specified nodes in the
+	// read pool.
+	//   "CREATE_READ_POOL" - Creates a Cloud SQL read pool instance.
 	OperationType string `json:"operationType,omitempty"`
 	// SelfLink: The URI of this resource.
 	SelfLink string `json:"selfLink,omitempty"`
@@ -3850,6 +4134,54 @@ type PerformDiskShrinkContext struct {
 
 func (s PerformDiskShrinkContext) MarshalJSON() ([]byte, error) {
 	type NoMethod PerformDiskShrinkContext
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// PoolNodeConfig: Details of a single node of a read pool.
+type PoolNodeConfig struct {
+	// DnsName: Output only. The DNS name of the node.
+	DnsName string `json:"dnsName,omitempty"`
+	// DnsNames: Output only. The list of DNS names used by this node.
+	DnsNames []*DnsNameMapping `json:"dnsNames,omitempty"`
+	// GceZone: Output only. The serving zone of the node.
+	GceZone string `json:"gceZone,omitempty"`
+	// IpAddresses: Output only. Mappings containing IP addresses that can be used
+	// to connect to the node.
+	IpAddresses []*IpMapping `json:"ipAddresses,omitempty"`
+	// Name: Output only. The name of the node, to be used for retrieving metrics
+	// and logs for the node.
+	Name string `json:"name,omitempty"`
+	// State: Output only. The current state of the node.
+	//
+	// Possible values:
+	//   "SQL_INSTANCE_STATE_UNSPECIFIED" - The state of the instance is unknown.
+	//   "RUNNABLE" - The instance is running, or has been stopped by owner.
+	//   "SUSPENDED" - The instance is not available, for example due to problems
+	// with billing.
+	//   "PENDING_DELETE" - The instance is being deleted.
+	//   "PENDING_CREATE" - The instance is being created.
+	//   "MAINTENANCE" - The instance is down for maintenance.
+	//   "FAILED" - The creation of the instance failed or a fatal error occurred
+	// during maintenance.
+	//   "ONLINE_MAINTENANCE" - Deprecated
+	//   "REPAIRING" - (Applicable to read pool nodes only.) The read pool node
+	// needs to be repaired. The database might be unavailable.
+	State string `json:"state,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "DnsName") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DnsName") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s PoolNodeConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod PoolNodeConfig
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -4182,6 +4514,9 @@ type Settings struct {
 	BackupConfiguration *BackupConfiguration `json:"backupConfiguration,omitempty"`
 	// Collation: The name of server Instance collation.
 	Collation string `json:"collation,omitempty"`
+	// ConnectionPoolConfig: Optional. The managed connection pooling configuration
+	// for the instance.
+	ConnectionPoolConfig *ConnectionPoolConfig `json:"connectionPoolConfig,omitempty"`
 	// ConnectorEnforcement: Specifies if connections must use Cloud SQL
 	// connectors. Option values include the following: `NOT_REQUIRED` (Cloud SQL
 	// instances can be connected without Cloud SQL Connectors) and `REQUIRED`
@@ -4205,6 +4540,14 @@ type Settings struct {
 	CrashSafeReplicationEnabled bool `json:"crashSafeReplicationEnabled,omitempty"`
 	// DataCacheConfig: Configuration for data cache.
 	DataCacheConfig *DataCacheConfig `json:"dataCacheConfig,omitempty"`
+	// DataDiskProvisionedIops: Optional. Provisioned number of I/O operations per
+	// second for the data disk. This field is only used for hyperdisk-balanced
+	// disk types.
+	DataDiskProvisionedIops int64 `json:"dataDiskProvisionedIops,omitempty,string"`
+	// DataDiskProvisionedThroughput: Optional. Provisioned throughput measured in
+	// MiB per second for the data disk. This field is only used for
+	// hyperdisk-balanced disk types.
+	DataDiskProvisionedThroughput int64 `json:"dataDiskProvisionedThroughput,omitempty,string"`
 	// DataDiskSizeGb: The size of data disk, in GB. The data disk size minimum is
 	// 10GB.
 	DataDiskSizeGb int64 `json:"dataDiskSizeGb,omitempty,string"`
@@ -7387,6 +7730,20 @@ func (r *FlagsService) List() *FlagsListCall {
 // flags for all database types and versions.
 func (c *FlagsListCall) DatabaseVersion(databaseVersion string) *FlagsListCall {
 	c.urlParams_.Set("databaseVersion", databaseVersion)
+	return c
+}
+
+// FlagScope sets the optional parameter "flagScope": Specify the scope of
+// flags to be returned by SqlFlagsListService. Return list of database flags
+// if unspecified.
+//
+// Possible values:
+//
+//	"SQL_FLAG_SCOPE_UNSPECIFIED" - Assume database flags if unspecified
+//	"SQL_FLAG_SCOPE_DATABASE" - database flags
+//	"SQL_FLAG_SCOPE_CONNECTION_POOL" - connection pool configuration flags
+func (c *FlagsListCall) FlagScope(flagScope string) *FlagsListCall {
+	c.urlParams_.Set("flagScope", flagScope)
 	return c
 }
 

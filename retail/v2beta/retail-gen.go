@@ -7490,6 +7490,10 @@ type GoogleCloudRetailV2betaSearchRequest struct {
 	// SearchRequest.personalization_spec will override
 	// ServingConfig.personalization_spec.
 	PersonalizationSpec *GoogleCloudRetailV2betaSearchRequestPersonalizationSpec `json:"personalizationSpec,omitempty"`
+	// PlaceId: Optional. An id corresponding to a place, such as a store id or
+	// region id. When specified, we use the price from the local inventory with
+	// the matching product's LocalInventory.place_id for revenue optimization.
+	PlaceId string `json:"placeId,omitempty"`
 	// Query: Raw search query. If this field is empty, the request is considered a
 	// category browsing request and returned results are based on filter and
 	// page_categories.
@@ -9577,13 +9581,13 @@ func (c *ProjectsLocationsCatalogsCompleteQueryCall) Query(query string) *Projec
 	return c
 }
 
-// VisitorId sets the optional parameter "visitorId": Required field. A unique
-// identifier for tracking visitors. For example, this could be implemented
-// with an HTTP cookie, which should be able to uniquely identify a visitor on
-// a single device. This unique identifier should not change if the visitor
-// logs in or out of the website. The field must be a UTF-8 encoded string with
-// a length limit of 128 characters. Otherwise, an INVALID_ARGUMENT error is
-// returned.
+// VisitorId sets the optional parameter "visitorId": Recommended field. A
+// unique identifier for tracking visitors. For example, this could be
+// implemented with an HTTP cookie, which should be able to uniquely identify a
+// visitor on a single device. This unique identifier should not change if the
+// visitor logs in or out of the website. The field must be a UTF-8 encoded
+// string with a length limit of 128 characters. Otherwise, an INVALID_ARGUMENT
+// error is returned.
 func (c *ProjectsLocationsCatalogsCompleteQueryCall) VisitorId(visitorId string) *ProjectsLocationsCatalogsCompleteQueryCall {
 	c.urlParams_.Set("visitorId", visitorId)
 	return c

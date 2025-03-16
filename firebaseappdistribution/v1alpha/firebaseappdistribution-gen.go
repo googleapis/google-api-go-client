@@ -1502,7 +1502,9 @@ type GoogleFirebaseAppdistroV1alphaTerminalAction struct {
 	//
 	// Possible values:
 	//   "REASON_UNSPECIFIED" - Reason unspecified.
-	//   "GOAL_IMPOSSIBLE" - The goal was impossible to accomplish.
+	//   "GOAL_IMPOSSIBLE" - The goal failed to be completed. Note that
+	// "impossible" is a legacy term and the goal is reported to the customer as
+	// having "failed".
 	//   "GOAL_COMPLETE" - The goal was completed successfully.
 	Reason string `json:"reason,omitempty"`
 	// Screenshot: Output only. The screenshot used in the context of this terminal

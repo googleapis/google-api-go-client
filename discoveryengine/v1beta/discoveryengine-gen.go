@@ -3894,7 +3894,8 @@ type GoogleCloudDiscoveryengineV1SearchLinkPromotion struct {
 	ImageUri string `json:"imageUri,omitempty"`
 	// Title: Required. The title of the promotion. Maximum length: 160 characters.
 	Title string `json:"title,omitempty"`
-	// Uri: Required. The URL for the page the user wants to promote.
+	// Uri: Optional. The URL for the page the user wants to promote. Must be set
+	// for site search. For other verticals, this is optional.
 	Uri string `json:"uri,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Description") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -4909,6 +4910,63 @@ func (s GoogleCloudDiscoveryengineV1alphaAdvancedSiteSearchConfig) MarshalJSON()
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudDiscoveryengineV1alphaAlertPolicyConfig: The connector level
+// alert config.
+type GoogleCloudDiscoveryengineV1alphaAlertPolicyConfig struct {
+	// AlertEnrollments: Optional. The enrollment states of each alert.
+	AlertEnrollments []*GoogleCloudDiscoveryengineV1alphaAlertPolicyConfigAlertEnrollment `json:"alertEnrollments,omitempty"`
+	// AlertPolicyName: Immutable. The fully qualified resource name of the
+	// AlertPolicy.
+	AlertPolicyName string `json:"alertPolicyName,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AlertEnrollments") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AlertEnrollments") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1alphaAlertPolicyConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1alphaAlertPolicyConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1alphaAlertPolicyConfigAlertEnrollment: The alert
+// enrollment status.
+type GoogleCloudDiscoveryengineV1alphaAlertPolicyConfigAlertEnrollment struct {
+	// AlertId: Immutable. The id of an alert.
+	AlertId string `json:"alertId,omitempty"`
+	// EnrollState: Required. The enrollment status of a customer.
+	//
+	// Possible values:
+	//   "ENROLL_STATES_UNSPECIFIED" - Default value. Used for customers who have
+	// not responded to the alert policy.
+	//   "ENROLLED" - Customer is enrolled in this policy.
+	//   "DECLINED" - Customer declined this policy.
+	EnrollState string `json:"enrollState,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AlertId") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AlertId") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1alphaAlertPolicyConfigAlertEnrollment) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1alphaAlertPolicyConfigAlertEnrollment
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudDiscoveryengineV1alphaAnswer: Defines an answer.
 type GoogleCloudDiscoveryengineV1alphaAnswer struct {
 	// AnswerSkippedReasons: Additional answer-skipped reasons. This provides the
@@ -5878,6 +5936,8 @@ type GoogleCloudDiscoveryengineV1alphaConnectorRun struct {
 	//   "CANCELLED" - Data sync was scheduled but has been cancelled.
 	//   "PENDING" - Data sync is about to start.
 	//   "WARNING" - The data sync completed with non-fatal errors.
+	//   "SKIPPED" - An ongoing connector run has been running longer than
+	// expected, causing this run to be skipped.
 	State string `json:"state,omitempty"`
 	// StateUpdateTime: Timestamp at which the connector run sync state was last
 	// updated.
@@ -5945,6 +6005,8 @@ type GoogleCloudDiscoveryengineV1alphaConnectorRunEntityRun struct {
 	//   "CANCELLED" - Data sync was scheduled but has been cancelled.
 	//   "PENDING" - Data sync is about to start.
 	//   "WARNING" - The data sync completed with non-fatal errors.
+	//   "SKIPPED" - An ongoing connector run has been running longer than
+	// expected, causing this run to be skipped.
 	State string `json:"state,omitempty"`
 	// StateUpdateTime: Timestamp at which the entity sync state was last updated.
 	StateUpdateTime string `json:"stateUpdateTime,omitempty"`
@@ -6554,6 +6616,8 @@ type GoogleCloudDiscoveryengineV1alphaDataConnector struct {
 	// ActionConfig: Optional. Action configurations to make the connector support
 	// actions.
 	ActionConfig *GoogleCloudDiscoveryengineV1alphaActionConfig `json:"actionConfig,omitempty"`
+	// AlertPolicyConfigs: Optional. The connector level alert config.
+	AlertPolicyConfigs []*GoogleCloudDiscoveryengineV1alphaAlertPolicyConfig `json:"alertPolicyConfigs,omitempty"`
 	// AutoRunDisabled: Indicates whether the connector is disabled for auto run.
 	// It can be used to pause periodical and real time sync.
 	AutoRunDisabled bool `json:"autoRunDisabled,omitempty"`
@@ -9845,7 +9909,8 @@ type GoogleCloudDiscoveryengineV1alphaSearchLinkPromotion struct {
 	ImageUri string `json:"imageUri,omitempty"`
 	// Title: Required. The title of the promotion. Maximum length: 160 characters.
 	Title string `json:"title,omitempty"`
-	// Uri: Required. The URL for the page the user wants to promote.
+	// Uri: Optional. The URL for the page the user wants to promote. Must be set
+	// for site search. For other verticals, this is optional.
 	Uri string `json:"uri,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Description") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -12832,17 +12897,20 @@ func (s GoogleCloudDiscoveryengineV1betaAnswerQueryRequestGroundingSpec) Marshal
 // GoogleCloudDiscoveryengineV1betaAnswerQueryRequestQueryUnderstandingSpec:
 // Query understanding specification.
 type GoogleCloudDiscoveryengineV1betaAnswerQueryRequestQueryUnderstandingSpec struct {
+	// DisableSpellCorrection: Optional. Whether to disable spell correction. The
+	// default value is `false`.
+	DisableSpellCorrection bool `json:"disableSpellCorrection,omitempty"`
 	// QueryClassificationSpec: Query classification specification.
 	QueryClassificationSpec *GoogleCloudDiscoveryengineV1betaAnswerQueryRequestQueryUnderstandingSpecQueryClassificationSpec `json:"queryClassificationSpec,omitempty"`
 	// QueryRephraserSpec: Query rephraser specification.
 	QueryRephraserSpec *GoogleCloudDiscoveryengineV1betaAnswerQueryRequestQueryUnderstandingSpecQueryRephraserSpec `json:"queryRephraserSpec,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "QueryClassificationSpec") to
+	// ForceSendFields is a list of field names (e.g. "DisableSpellCorrection") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "QueryClassificationSpec") to
+	// NullFields is a list of field names (e.g. "DisableSpellCorrection") to
 	// include in API requests with the JSON null value. By default, fields with
 	// empty values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
@@ -20302,7 +20370,8 @@ type GoogleCloudDiscoveryengineV1betaSearchLinkPromotion struct {
 	ImageUri string `json:"imageUri,omitempty"`
 	// Title: Required. The title of the promotion. Maximum length: 160 characters.
 	Title string `json:"title,omitempty"`
-	// Uri: Required. The URL for the page the user wants to promote.
+	// Uri: Optional. The URL for the page the user wants to promote. Must be set
+	// for site search. For other verticals, this is optional.
 	Uri string `json:"uri,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Description") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -20351,6 +20420,9 @@ type GoogleCloudDiscoveryengineV1betaSearchRequest struct {
 	// considered for Engines with multiple data stores. For engines with a single
 	// data store, the specs directly under SearchRequest should be used.
 	DataStoreSpecs []*GoogleCloudDiscoveryengineV1betaSearchRequestDataStoreSpec `json:"dataStoreSpecs,omitempty"`
+	// DisplaySpec: Optional. Config for display feature, like match highlighting
+	// on search results.
+	DisplaySpec *GoogleCloudDiscoveryengineV1betaSearchRequestDisplaySpec `json:"displaySpec,omitempty"`
 	// EmbeddingSpec: Uses the provided embedding to do additional semantic
 	// document retrieval. The retrieval is based on the dot product of
 	// SearchRequest.EmbeddingSpec.EmbeddingVector.vector and the document
@@ -21103,6 +21175,38 @@ type GoogleCloudDiscoveryengineV1betaSearchRequestDataStoreSpec struct {
 
 func (s GoogleCloudDiscoveryengineV1betaSearchRequestDataStoreSpec) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDiscoveryengineV1betaSearchRequestDataStoreSpec
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1betaSearchRequestDisplaySpec: Specifies features
+// for display, like match highlighting.
+type GoogleCloudDiscoveryengineV1betaSearchRequestDisplaySpec struct {
+	// MatchHighlightingCondition: The condition under which match highlighting
+	// should occur.
+	//
+	// Possible values:
+	//   "MATCH_HIGHLIGHTING_CONDITION_UNSPECIFIED" - Server behavior is the same
+	// as `MATCH_HIGHLIGHTING_DISABLED`.
+	//   "MATCH_HIGHLIGHTING_DISABLED" - Disables match highlighting on all
+	// documents.
+	//   "MATCH_HIGHLIGHTING_ENABLED" - Enables match highlighting on all
+	// documents.
+	MatchHighlightingCondition string `json:"matchHighlightingCondition,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "MatchHighlightingCondition")
+	// to unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "MatchHighlightingCondition") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1betaSearchRequestDisplaySpec) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1betaSearchRequestDisplaySpec
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 

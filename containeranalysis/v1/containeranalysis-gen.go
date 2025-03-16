@@ -490,6 +490,32 @@ func (s AttestationOccurrence) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// BaseImage: BaseImage describes a base image of a container image.
+type BaseImage struct {
+	// LayerCount: The number of layers that the base image is composed of.
+	LayerCount int64 `json:"layerCount,omitempty"`
+	// Name: The name of the base image.
+	Name string `json:"name,omitempty"`
+	// Repository: The repository name in which the base image is from.
+	Repository string `json:"repository,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "LayerCount") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "LayerCount") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s BaseImage) MarshalJSON() ([]byte, error) {
+	type NoMethod BaseImage
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // BatchCreateNotesRequest: Request to create notes in batch.
 type BatchCreateNotesRequest struct {
 	// Notes: Required. The notes to create. Max allowed length is 1000.
@@ -849,7 +875,7 @@ func (s BuildProvenance) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// BuildStep: A step in the build pipeline. Next ID: 21
+// BuildStep: A step in the build pipeline. Next ID: 22
 type BuildStep struct {
 	// AllowExitCodes: Allow this build step to fail without failing the entire
 	// build if and only if the exit code is one of the specified codes. If
@@ -907,7 +933,8 @@ type BuildStep struct {
 	Name string `json:"name,omitempty"`
 	// PullTiming: Output only. Stores timing information for pulling this build
 	// step's builder image only.
-	PullTiming *TimeSpan `json:"pullTiming,omitempty"`
+	PullTiming *TimeSpan     `json:"pullTiming,omitempty"`
+	Results    []*StepResult `json:"results,omitempty"`
 	// Script: A shell script to be executed in the step. When script is provided,
 	// the user cannot specify the entrypoint or args.
 	Script string `json:"script,omitempty"`
@@ -3888,6 +3915,9 @@ type GrafeasV1FileLocation struct {
 	// FilePath: For jars that are contained inside .war files, this filepath can
 	// indicate the path to war file combined with the path to jar file.
 	FilePath string `json:"filePath,omitempty"`
+	// LayerDetails: Each package found in a file should have its own layer
+	// metadata (that is, information from the origin layer of the package).
+	LayerDetails *LayerDetails `json:"layerDetails,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "FilePath") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -4388,6 +4418,36 @@ type Layer struct {
 
 func (s Layer) MarshalJSON() ([]byte, error) {
 	type NoMethod Layer
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// LayerDetails: Details about the layer a package was found in.
+type LayerDetails struct {
+	// BaseImages: The base images the layer is found within.
+	BaseImages []*BaseImage `json:"baseImages,omitempty"`
+	// Command: The layer build command that was used to build the layer. This may
+	// not be found in all layers depending on how the container image is built.
+	Command string `json:"command,omitempty"`
+	// DiffId: The diff ID (typically a sha256 hash) of the layer in the container
+	// image.
+	DiffId string `json:"diffId,omitempty"`
+	// Index: The index of the layer in the container image.
+	Index int64 `json:"index,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "BaseImages") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "BaseImages") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s LayerDetails) MarshalJSON() ([]byte, error) {
+	type NoMethod LayerDetails
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -5871,6 +5931,29 @@ type Status struct {
 
 func (s Status) MarshalJSON() ([]byte, error) {
 	type NoMethod Status
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// StepResult: StepResult is the declaration of a result for a build step.
+type StepResult struct {
+	AttestationContentName string `json:"attestationContentName,omitempty"`
+	AttestationType        string `json:"attestationType,omitempty"`
+	Name                   string `json:"name,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AttestationContentName") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AttestationContentName") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s StepResult) MarshalJSON() ([]byte, error) {
+	type NoMethod StepResult
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 

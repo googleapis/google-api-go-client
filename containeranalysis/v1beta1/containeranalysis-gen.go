@@ -911,7 +911,7 @@ func (s BuildSignature) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// BuildStep: A step in the build pipeline. Next ID: 21
+// BuildStep: A step in the build pipeline. Next ID: 22
 type BuildStep struct {
 	// AllowExitCodes: Allow this build step to fail without failing the entire
 	// build if and only if the exit code is one of the specified codes. If
@@ -969,7 +969,8 @@ type BuildStep struct {
 	Name string `json:"name,omitempty"`
 	// PullTiming: Output only. Stores timing information for pulling this build
 	// step's builder image only.
-	PullTiming *TimeSpan `json:"pullTiming,omitempty"`
+	PullTiming *TimeSpan     `json:"pullTiming,omitempty"`
+	Results    []*StepResult `json:"results,omitempty"`
 	// Script: A shell script to be executed in the step. When script is provided,
 	// the user cannot specify the entrypoint or args.
 	Script string `json:"script,omitempty"`
@@ -6261,6 +6262,29 @@ type Status struct {
 
 func (s Status) MarshalJSON() ([]byte, error) {
 	type NoMethod Status
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// StepResult: StepResult is the declaration of a result for a build step.
+type StepResult struct {
+	AttestationContentName string `json:"attestationContentName,omitempty"`
+	AttestationType        string `json:"attestationType,omitempty"`
+	Name                   string `json:"name,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AttestationContentName") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AttestationContentName") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s StepResult) MarshalJSON() ([]byte, error) {
+	type NoMethod StepResult
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 

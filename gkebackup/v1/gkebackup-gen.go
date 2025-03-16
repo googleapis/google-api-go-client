@@ -418,6 +418,10 @@ type Backup struct {
 	// RetainExpireTime: Output only. The time at which this Backup will be
 	// automatically deleted (calculated from create_time + retain_days).
 	RetainExpireTime string `json:"retainExpireTime,omitempty"`
+	// SatisfiesPzi: Output only. [Output Only] Reserved for future use.
+	SatisfiesPzi bool `json:"satisfiesPzi,omitempty"`
+	// SatisfiesPzs: Output only. [Output Only] Reserved for future use.
+	SatisfiesPzs bool `json:"satisfiesPzs,omitempty"`
 	// SelectedApplications: Output only. If set, the list of ProtectedApplications
 	// whose resources were included in the Backup.
 	SelectedApplications *NamespacedNames `json:"selectedApplications,omitempty"`
@@ -1264,6 +1268,8 @@ type ListBackupsResponse struct {
 	// `ListBackups` call to retrieve the next page of results. If this field is
 	// omitted or empty, then there are no more results to return.
 	NextPageToken string `json:"nextPageToken,omitempty"`
+	// Unreachable: Locations that could not be reached.
+	Unreachable []string `json:"unreachable,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
@@ -2522,6 +2528,10 @@ type VolumeBackup struct {
 	// Name: Output only. The full name of the VolumeBackup resource. Format:
 	// `projects/*/locations/*/backupPlans/*/backups/*/volumeBackups/*`.
 	Name string `json:"name,omitempty"`
+	// SatisfiesPzi: Output only. [Output Only] Reserved for future use.
+	SatisfiesPzi bool `json:"satisfiesPzi,omitempty"`
+	// SatisfiesPzs: Output only. [Output Only] Reserved for future use.
+	SatisfiesPzs bool `json:"satisfiesPzs,omitempty"`
 	// SourcePvc: Output only. A reference to the source Kubernetes PVC from which
 	// this VolumeBackup was created.
 	SourcePvc *NamespacedName `json:"sourcePvc,omitempty"`
@@ -4610,6 +4620,14 @@ func (c *ProjectsLocationsBackupPlansBackupsListCall) PageSize(pageSize int64) *
 // call that provided the page token.
 func (c *ProjectsLocationsBackupPlansBackupsListCall) PageToken(pageToken string) *ProjectsLocationsBackupPlansBackupsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// ReturnPartialSuccess sets the optional parameter "returnPartialSuccess": If
+// set to true, the response will return partial results when some regions are
+// unreachable and the unreachable field will be populated.
+func (c *ProjectsLocationsBackupPlansBackupsListCall) ReturnPartialSuccess(returnPartialSuccess bool) *ProjectsLocationsBackupPlansBackupsListCall {
+	c.urlParams_.Set("returnPartialSuccess", fmt.Sprint(returnPartialSuccess))
 	return c
 }
 

@@ -1016,6 +1016,39 @@ func (s CsvImportOptions) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// DenyMaintenancePeriod: DenyMaintenancePeriod definition. Excepting
+// emergencies, maintenance will not be scheduled to start within this deny
+// period. The start_date must be less than the end_date.
+type DenyMaintenancePeriod struct {
+	// EndDate: Deny period end date. This can be: * A full date, with non-zero
+	// year, month and day values OR * A month and day value, with a zero year for
+	// recurring
+	EndDate *GoogleTypeDate `json:"endDate,omitempty"`
+	// StartDate: Deny period start date. This can be: * A full date, with non-zero
+	// year, month and day values OR * A month and day value, with a zero year for
+	// recurring
+	StartDate *GoogleTypeDate `json:"startDate,omitempty"`
+	// Time: Time in UTC when the deny period starts on start_date and ends on
+	// end_date. This can be: * Full time OR * All zeros for 00:00:00 UTC
+	Time *GoogleTypeTimeOfDay `json:"time,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "EndDate") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "EndDate") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s DenyMaintenancePeriod) MarshalJSON() ([]byte, error) {
+	type NoMethod DenyMaintenancePeriod
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // Empty: A generic empty message that you can re-use to avoid defining
 // duplicated empty messages in your APIs. A typical example is to use it as
 // the request or the response type of an API method. For instance: service Foo
@@ -1326,6 +1359,44 @@ func (s GoogleCloudLocationLocation) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GoogleTypeDate: Represents a whole or partial calendar date, such as a
+// birthday. The time of day and time zone are either specified elsewhere or
+// are insignificant. The date is relative to the Gregorian Calendar. This can
+// represent one of the following: * A full date, with non-zero year, month,
+// and day values. * A month and day, with a zero year (for example, an
+// anniversary). * A year on its own, with a zero month and a zero day. * A
+// year and month, with a zero day (for example, a credit card expiration
+// date). Related types: * google.type.TimeOfDay * google.type.DateTime *
+// google.protobuf.Timestamp
+type GoogleTypeDate struct {
+	// Day: Day of a month. Must be from 1 to 31 and valid for the year and month,
+	// or 0 to specify a year by itself or a year and month where the day isn't
+	// significant.
+	Day int64 `json:"day,omitempty"`
+	// Month: Month of a year. Must be from 1 to 12, or 0 to specify a year without
+	// a month and day.
+	Month int64 `json:"month,omitempty"`
+	// Year: Year of the date. Must be from 1 to 9999, or 0 to specify a date
+	// without a year.
+	Year int64 `json:"year,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Day") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Day") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleTypeDate) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleTypeDate
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GoogleTypeTimeOfDay: Represents a time of day. The date and time zone are
 // either not significant or are specified elsewhere. An API may choose to
 // allow leap seconds. Related types are google.type.Date and
@@ -1623,6 +1694,12 @@ type InstanceNetworkConfig struct {
 	EnableOutboundPublicIp bool `json:"enableOutboundPublicIp,omitempty"`
 	// EnablePublicIp: Optional. Enabling public ip for the instance.
 	EnablePublicIp bool `json:"enablePublicIp,omitempty"`
+	// Network: Output only. The resource link for the VPC network in which
+	// instance resources are created and from which they are accessible via
+	// Private IP. This will be the same value as the parent cluster's network. It
+	// is specified in the form: //
+	// `projects/{project_number}/global/networks/{network_id}`.
+	Network string `json:"network,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AuthorizedExternalNetworks")
 	// to unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -1894,6 +1971,10 @@ func (s ListUsersResponse) MarshalJSON() ([]byte, error) {
 type MachineConfig struct {
 	// CpuCount: The number of CPU's in the VM instance.
 	CpuCount int64 `json:"cpuCount,omitempty"`
+	// MachineType: Machine type of the VM instance. E.g. "n2-highmem-4",
+	// "n2-highmem-8", "c4a-highmem-4-lssd". cpu_count must match the number of
+	// vCPUs in the machine type.
+	MachineType string `json:"machineType,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "CpuCount") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -1941,18 +2022,20 @@ func (s MaintenanceSchedule) MarshalJSON() ([]byte, error) {
 // MaintenanceUpdatePolicy: MaintenanceUpdatePolicy defines the policy for
 // system updates.
 type MaintenanceUpdatePolicy struct {
+	// DenyMaintenancePeriods: Periods to deny maintenance. Currently limited to 1.
+	DenyMaintenancePeriods []*DenyMaintenancePeriod `json:"denyMaintenancePeriods,omitempty"`
 	// MaintenanceWindows: Preferred windows to perform maintenance. Currently
 	// limited to 1.
 	MaintenanceWindows []*MaintenanceWindow `json:"maintenanceWindows,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "MaintenanceWindows") to
+	// ForceSendFields is a list of field names (e.g. "DenyMaintenancePeriods") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "MaintenanceWindows") to include
-	// in API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. See
+	// NullFields is a list of field names (e.g. "DenyMaintenancePeriods") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -2101,6 +2184,9 @@ func (s Node) MarshalJSON() ([]byte, error) {
 
 // ObservabilityInstanceConfig: Observability Instance specific configuration.
 type ObservabilityInstanceConfig struct {
+	// AssistiveExperiencesEnabled: Whether assistive experiences are enabled for
+	// this AlloyDB instance.
+	AssistiveExperiencesEnabled bool `json:"assistiveExperiencesEnabled,omitempty"`
 	// Enabled: Observability feature status for an instance. This flag is turned
 	// "off" by default.
 	Enabled bool `json:"enabled,omitempty"`
@@ -2128,15 +2214,15 @@ type ObservabilityInstanceConfig struct {
 	// This flag is turned "on" by default but tracking is enabled only after
 	// observability enabled flag is also turned on.
 	TrackWaitEvents bool `json:"trackWaitEvents,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "Enabled") to unconditionally
-	// include in API requests. By default, fields with empty or default values are
-	// omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
+	// ForceSendFields is a list of field names (e.g.
+	// "AssistiveExperiencesEnabled") to unconditionally include in API requests.
+	// By default, fields with empty or default values are omitted from API
+	// requests. See https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields
+	// for more details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Enabled") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
+	// NullFields is a list of field names (e.g. "AssistiveExperiencesEnabled") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -3425,6 +3511,10 @@ type StorageDatabasecenterPartnerapiV1mainDatabaseResourceHealthSignalData struc
 	// the resource
 	//   "SIGNAL_TYPE_INEFFICIENT_QUERY" - Indicates that the instance has
 	// inefficient queries detected.
+	//   "SIGNAL_TYPE_READ_INTENSIVE_WORKLOAD" - Indicates that the instance has
+	// read intensive workload.
+	//   "SIGNAL_TYPE_MEMORY_LIMIT" - Indicates that the instance is nearing memory
+	// limit.
 	SignalType string `json:"signalType,omitempty"`
 	// Possible values:
 	//   "STATE_UNSPECIFIED" - Unspecified state.
@@ -3888,6 +3978,10 @@ type StorageDatabasecenterPartnerapiV1mainDatabaseResourceRecommendationSignalDa
 	// the resource
 	//   "SIGNAL_TYPE_INEFFICIENT_QUERY" - Indicates that the instance has
 	// inefficient queries detected.
+	//   "SIGNAL_TYPE_READ_INTENSIVE_WORKLOAD" - Indicates that the instance has
+	// read intensive workload.
+	//   "SIGNAL_TYPE_MEMORY_LIMIT" - Indicates that the instance is nearing memory
+	// limit.
 	SignalType string `json:"signalType,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AdditionalMetadata") to
 	// unconditionally include in API requests. By default, fields with empty or

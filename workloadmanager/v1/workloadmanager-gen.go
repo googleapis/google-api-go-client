@@ -5563,6 +5563,22 @@ func (c *ProjectsLocationsRulesListCall) CustomRulesBucket(customRulesBucket str
 	return c
 }
 
+// EvaluationType sets the optional parameter "evaluationType": The evaluation
+// type of the rules will be applied to. The Cloud Storage bucket name for
+// custom rules.
+//
+// Possible values:
+//
+//	"EVALUATION_TYPE_UNSPECIFIED" - Not specified
+//	"SAP" - SAP best practices
+//	"SQL_SERVER" - SQL best practices
+//	"OTHER" - Customized best practices
+//	"SCC_IAC" - SCC IaC (Infra as Code) best practices
+func (c *ProjectsLocationsRulesListCall) EvaluationType(evaluationType string) *ProjectsLocationsRulesListCall {
+	c.urlParams_.Set("evaluationType", evaluationType)
+	return c
+}
+
 // Filter sets the optional parameter "filter": Filter based on
 // primary_category, secondary_category
 func (c *ProjectsLocationsRulesListCall) Filter(filter string) *ProjectsLocationsRulesListCall {

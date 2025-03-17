@@ -1329,6 +1329,10 @@ type MysqlProfile struct {
 	Password string `json:"password,omitempty"`
 	// Port: Port for the MySQL connection, default value is 3306.
 	Port int64 `json:"port,omitempty"`
+	// SecretManagerStoredPassword: Optional. A reference to a Secret Manager
+	// resource name storing the MySQL connection password. Mutually exclusive with
+	// the `password` field.
+	SecretManagerStoredPassword string `json:"secretManagerStoredPassword,omitempty"`
 	// SslConfig: SSL configuration for the MySQL connection.
 	SslConfig *MysqlSslConfig `json:"sslConfig,omitempty"`
 	// Username: Required. Username for the MySQL connection.
@@ -1427,8 +1431,7 @@ type MysqlSslConfig struct {
 	ClientCertificateSet bool `json:"clientCertificateSet,omitempty"`
 	// ClientKey: Optional. Input only. PEM-encoded private key associated with the
 	// Client Certificate. If this field is used then the 'client_certificate' and
-	// the 'ca_certificate' fields are mandatory. Mutually exclusive with the
-	// `secret_manager_stored_client_key` field.
+	// the 'ca_certificate' fields are mandatory.
 	ClientKey string `json:"clientKey,omitempty"`
 	// ClientKeySet: Output only. Indicates whether the client_key field is set.
 	ClientKeySet bool `json:"clientKeySet,omitempty"`
@@ -1609,10 +1612,15 @@ type OracleAsmConfig struct {
 	Hostname string `json:"hostname,omitempty"`
 	// OracleSslConfig: Optional. SSL configuration for the Oracle connection.
 	OracleSslConfig *OracleSslConfig `json:"oracleSslConfig,omitempty"`
-	// Password: Optional. Password for the Oracle ASM connection.
+	// Password: Optional. Password for the Oracle ASM connection. Mutually
+	// exclusive with the `secret_manager_stored_password` field.
 	Password string `json:"password,omitempty"`
 	// Port: Required. Port for the Oracle ASM connection.
 	Port int64 `json:"port,omitempty"`
+	// SecretManagerStoredPassword: Optional. A reference to a Secret Manager
+	// resource name storing the Oracle ASM connection password. Mutually exclusive
+	// with the `password` field.
+	SecretManagerStoredPassword string `json:"secretManagerStoredPassword,omitempty"`
 	// Username: Required. Username for the Oracle ASM connection.
 	Username string `json:"username,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AsmService") to
@@ -1971,6 +1979,10 @@ type PostgresqlProfile struct {
 	Password string `json:"password,omitempty"`
 	// Port: Port for the PostgreSQL connection, default value is 5432.
 	Port int64 `json:"port,omitempty"`
+	// SecretManagerStoredPassword: Optional. A reference to a Secret Manager
+	// resource name storing the PostgreSQL connection password. Mutually exclusive
+	// with the `password` field.
+	SecretManagerStoredPassword string `json:"secretManagerStoredPassword,omitempty"`
 	// SslConfig: Optional. SSL configuration for the PostgreSQL connection. In
 	// case PostgresqlSslConfig is not set, the connection will use the default SSL
 	// mode, which is `prefer` (i.e. this mode will only use encryption if enabled
@@ -2437,8 +2449,7 @@ type ServerAndClientVerification struct {
 	// ClientKey: Optional. Input only. PEM-encoded private key associated with the
 	// client certificate. This value will be used during the SSL/TLS handshake,
 	// allowing the PostgreSQL server to authenticate the client's identity, i.e.
-	// identity of the Datastream. Mutually exclusive with the
-	// `secret_manager_stored_client_key` field.
+	// identity of the Datastream.
 	ClientKey string `json:"clientKey,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "CaCertificate") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -2720,6 +2731,10 @@ type SqlServerProfile struct {
 	Password string `json:"password,omitempty"`
 	// Port: Port for the SQLServer connection, default value is 1433.
 	Port int64 `json:"port,omitempty"`
+	// SecretManagerStoredPassword: Optional. A reference to a Secret Manager
+	// resource name storing the SQLServer connection password. Mutually exclusive
+	// with the `password` field.
+	SecretManagerStoredPassword string `json:"secretManagerStoredPassword,omitempty"`
 	// Username: Required. Username for the SQLServer connection.
 	Username string `json:"username,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Database") to

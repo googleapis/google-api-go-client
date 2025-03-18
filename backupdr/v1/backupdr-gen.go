@@ -975,6 +975,9 @@ type BackupConfigInfo struct {
 	// LastSuccessfulBackupConsistencyTime: Output only. If the last backup were
 	// successful, this field has the consistency date.
 	LastSuccessfulBackupConsistencyTime string `json:"lastSuccessfulBackupConsistencyTime,omitempty"`
+	// LastSuccessfulLogBackupConsistencyTime: Output only. If the last log backup
+	// were successful, this field has the consistency date.
+	LastSuccessfulLogBackupConsistencyTime string `json:"lastSuccessfulLogBackupConsistencyTime,omitempty"`
 	// ForceSendFields is a list of field names (e.g.
 	// "BackupApplianceBackupConfig") to unconditionally include in API requests.
 	// By default, fields with empty or default values are omitted from API

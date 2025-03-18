@@ -1403,6 +1403,10 @@ type DatabaseResourceHealthSignalData struct {
 	// the resource
 	//   "SIGNAL_TYPE_INEFFICIENT_QUERY" - Indicates that the instance has
 	// inefficient queries detected.
+	//   "SIGNAL_TYPE_READ_INTENSIVE_WORKLOAD" - Indicates that the instance has
+	// read intensive workload.
+	//   "SIGNAL_TYPE_MEMORY_LIMIT" - Indicates that the instance is nearing memory
+	// limit.
 	SignalType string `json:"signalType,omitempty"`
 	// Possible values:
 	//   "STATE_UNSPECIFIED" - Unspecified state.
@@ -1866,6 +1870,10 @@ type DatabaseResourceRecommendationSignalData struct {
 	// the resource
 	//   "SIGNAL_TYPE_INEFFICIENT_QUERY" - Indicates that the instance has
 	// inefficient queries detected.
+	//   "SIGNAL_TYPE_READ_INTENSIVE_WORKLOAD" - Indicates that the instance has
+	// read intensive workload.
+	//   "SIGNAL_TYPE_MEMORY_LIMIT" - Indicates that the instance is nearing memory
+	// limit.
 	SignalType string `json:"signalType,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AdditionalMetadata") to
 	// unconditionally include in API requests. By default, fields with empty or

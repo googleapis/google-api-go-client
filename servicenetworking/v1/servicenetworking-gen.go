@@ -467,16 +467,15 @@ type AddSubnetworkRequest struct {
 	// determines whether the consumer project has 'servicenetworking.services.use'
 	// permission or not.
 	CheckServiceNetworkingUsePermission bool `json:"checkServiceNetworkingUsePermission,omitempty"`
-	// ComputeIdempotencyWindow: Optional. Specifies a custom time bucket for Arcus
+	// ComputeIdempotencyWindow: Optional. Specifies a custom time bucket for GCE
 	// subnetwork request idempotency. If two equivalent concurrent requests are
-	// made, Arcus will know to ignore the request if it has already been completed
+	// made, GCE will know to ignore the request if it has already been completed
 	// or is in progress. Only requests with matching compute_idempotency_window
 	// have guaranteed idempotency. Changing this time window between requests
 	// results in undefined behavior. Zero (or empty) value with
 	// custom_compute_idempotency_window=true specifies no idempotency (i.e. no
-	// request ID is provided to Arcus). Maximum value of 14 days (enforced by
-	// Arcus limit). For more information on how to use, see:
-	// go/revisit-sn-idempotency-window
+	// request ID is provided to GCE). Maximum value of 14 days (enforced by GCE
+	// limit).
 	ComputeIdempotencyWindow string `json:"computeIdempotencyWindow,omitempty"`
 	// Consumer: Required. A resource that represents the service consumer, such as
 	// `projects/123456`. The project number can be different from the value in the
@@ -563,11 +562,10 @@ type AddSubnetworkRequest struct {
 	// `roles/servicenetworking.subnetworkAdmin` role on the subnet.
 	SubnetworkUsers []string `json:"subnetworkUsers,omitempty"`
 	// UseCustomComputeIdempotencyWindow: Optional. Specifies if Service Networking
-	// should use a custom time bucket for Arcus idempotency. If false, Service
-	// Networking uses a 300 second (5 minute) Arcus idempotency window. If true,
+	// should use a custom time bucket for GCE idempotency. If false, Service
+	// Networking uses a 300 second (5 minute) GCE idempotency window. If true,
 	// Service Networking uses a custom idempotency window provided by the user in
-	// field compute_idempotency_window. For more information on how to use, see:
-	// go/revisit-sn-idempotency-window
+	// field compute_idempotency_window.
 	UseCustomComputeIdempotencyWindow bool `json:"useCustomComputeIdempotencyWindow,omitempty"`
 	// ForceSendFields is a list of field names (e.g.
 	// "AllowSubnetCidrRoutesOverlap") to unconditionally include in API requests.

@@ -2085,6 +2085,138 @@ func (c *AccountsProductInputsInsertCall) Do(opts ...googleapi.CallOption) (*Pro
 	return ret, nil
 }
 
+type AccountsProductInputsPatchCall struct {
+	s            *Service
+	name         string
+	productinput *ProductInput
+	urlParams_   gensupport.URLParams
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Patch: Updates the existing product input in your Merchant Center account.
+// After inserting, updating, or deleting a product input, it may take several
+// minutes before the processed product can be retrieved.
+//
+//   - name: Identifier. The name of the product input. Format:
+//     "{productinput.name=accounts/{account}/productInputs/{productinput}}"
+//     where the last section `productinput` consists of 4 parts:
+//     channel~content_language~feed_label~offer_id example for product input
+//     name is "accounts/123/productInputs/online~en~US~sku123".
+func (r *AccountsProductInputsService) Patch(name string, productinput *ProductInput) *AccountsProductInputsPatchCall {
+	c := &AccountsProductInputsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.productinput = productinput
+	return c
+}
+
+// DataSource sets the optional parameter "dataSource": Required. The primary
+// or supplemental product data source where `data_source` name identifies the
+// product input to be updated. Only API data sources are supported. Format:
+// `accounts/{account}/dataSources/{datasource}`.
+func (c *AccountsProductInputsPatchCall) DataSource(dataSource string) *AccountsProductInputsPatchCall {
+	c.urlParams_.Set("dataSource", dataSource)
+	return c
+}
+
+// UpdateMask sets the optional parameter "updateMask": The list of product
+// attributes to be updated. If the update mask is omitted, then it is treated
+// as implied field mask equivalent to all fields that are populated (have a
+// non-empty value). Attributes specified in the update mask without a value
+// specified in the body will be deleted from the product. Update mask can only
+// be specified for top level fields in attributes and custom attributes. To
+// specify the update mask for custom attributes you need to add the
+// `custom_attribute.` prefix. Providing special "*" value for full product
+// replacement is not supported.
+func (c *AccountsProductInputsPatchCall) UpdateMask(updateMask string) *AccountsProductInputsPatchCall {
+	c.urlParams_.Set("updateMask", updateMask)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *AccountsProductInputsPatchCall) Fields(s ...googleapi.Field) *AccountsProductInputsPatchCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *AccountsProductInputsPatchCall) Context(ctx context.Context) *AccountsProductInputsPatchCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *AccountsProductInputsPatchCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *AccountsProductInputsPatchCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.productinput)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "products/v1beta/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PATCH", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "merchantapi.accounts.productInputs.patch", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "merchantapi.accounts.productInputs.patch" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *ProductInput.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *AccountsProductInputsPatchCall) Do(opts ...googleapi.CallOption) (*ProductInput, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ProductInput{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "merchantapi.accounts.productInputs.patch", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
 type AccountsProductsGetCall struct {
 	s            *Service
 	name         string

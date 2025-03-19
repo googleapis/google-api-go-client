@@ -1236,7 +1236,6 @@ func (s Location) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// MessageSet: This is proto2's version of MessageSet.
 type MessageSet struct {
 }
 

@@ -335,7 +335,8 @@ type SshPublicKey struct {
 	ExpirationTimeUsec int64 `json:"expirationTimeUsec,omitempty,string"`
 	// Fingerprint: Output only. The SHA-256 fingerprint of the SSH public key.
 	Fingerprint string `json:"fingerprint,omitempty"`
-	// Key: Public key text in SSH format, defined by RFC4253 section 6.6.
+	// Key: Required. Public key text in SSH format, defined by RFC4253
+	// (https://www.ietf.org/rfc/rfc4253.txt) section 6.6.
 	Key string `json:"key,omitempty"`
 	// Name: Output only. The canonical resource name.
 	Name string `json:"name,omitempty"`

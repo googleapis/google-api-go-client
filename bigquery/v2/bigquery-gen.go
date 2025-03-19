@@ -4362,6 +4362,12 @@ type JobConfiguration struct {
 	Load *JobConfigurationLoad `json:"load,omitempty"`
 	// Query: [Pick one] Configures a query job.
 	Query *JobConfigurationQuery `json:"query,omitempty"`
+	// Reservation: Optional. The reservation that job would use. User can specify
+	// a reservation to execute the job. If reservation is not set, reservation is
+	// determined based on the rules defined by the reservation assignments. The
+	// expected format is
+	// `projects/{project}/locations/{location}/reservations/{reservation}`.
+	Reservation string `json:"reservation,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Copy") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
 	// omitted from API requests. See
@@ -7091,6 +7097,10 @@ type QueryRequest struct {
 	// 15 minutes. In other words, if two requests are sent with the same
 	// request_id, but more than 15 minutes apart, idempotency is not guaranteed.
 	RequestId string `json:"requestId,omitempty"`
+	// Reservation: Optional. The reservation that jobs.query request would use.
+	// User can specify a reservation to execute the job.query. The expected format
+	// is `projects/{project}/locations/{location}/reservations/{reservation}`.
+	Reservation string `json:"reservation,omitempty"`
 	// TimeoutMs: Optional. Optional: Specifies the maximum amount of time, in
 	// milliseconds, that the client is willing to wait for the query to complete.
 	// By default, this limit is 10 seconds (10,000 milliseconds). If the query is

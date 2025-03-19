@@ -1975,14 +1975,14 @@ type OnlineReturnPolicy struct {
 	// Name: Identifier. The name of the `OnlineReturnPolicy` resource. Format:
 	// `accounts/{account}/onlineReturnPolicies/{return_policy}`
 	Name string `json:"name,omitempty"`
-	// Policy: The return policy.
+	// Policy: Optional. The return policy.
 	Policy *Policy `json:"policy,omitempty"`
 	// ProcessRefundDays: The field specifies the number of days it takes for
 	// merchants to process refunds, field is optional.
 	ProcessRefundDays int64 `json:"processRefundDays,omitempty"`
-	// RestockingFee: The restocking fee that applies to all return reason
-	// categories. This would be treated as a free restocking fee if the value is
-	// not set.
+	// RestockingFee: Optional. The restocking fee that applies to all return
+	// reason categories. This would be treated as a free restocking fee if the
+	// value is not set.
 	RestockingFee *RestockingFee `json:"restockingFee,omitempty"`
 	// ReturnMethods: Optional. The return methods of how customers can return an
 	// item. This value is required to not be empty unless the type of return

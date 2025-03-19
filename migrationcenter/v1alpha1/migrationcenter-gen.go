@@ -5526,7 +5526,7 @@ type PreferenceSet struct {
 	Description string `json:"description,omitempty"`
 	// DisplayName: User-friendly display name. Maximum length is 63 characters.
 	DisplayName string `json:"displayName,omitempty"`
-	// Name: Output only. Name of the preference set.
+	// Name: Output only. Name of the PreferenceSet.
 	Name string `json:"name,omitempty"`
 	// RegionPreferences: Optional. Region preferences for assets using this
 	// preference set. If you are unsure which value to set, the migration service
@@ -13879,7 +13879,7 @@ type ProjectsLocationsPreferenceSetsPatchCall struct {
 
 // Patch: Updates the parameters of a preference set.
 //
-// - name: Output only. Name of the preference set.
+// - name: Output only. Name of the PreferenceSet.
 func (r *ProjectsLocationsPreferenceSetsService) Patch(name string, preferenceset *PreferenceSet) *ProjectsLocationsPreferenceSetsPatchCall {
 	c := &ProjectsLocationsPreferenceSetsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name

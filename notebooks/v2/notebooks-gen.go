@@ -467,6 +467,10 @@ type Config struct {
 	AvailableImages []*ImageRelease `json:"availableImages,omitempty"`
 	// DefaultValues: Output only. The default values for configuration.
 	DefaultValues *DefaultValues `json:"defaultValues,omitempty"`
+	// DisableWorkbenchLegacyCreation: Output only. Flag to disable the creation of
+	// legacy Workbench notebooks (User-managed notebooks and Google-managed
+	// notebooks).
+	DisableWorkbenchLegacyCreation bool `json:"disableWorkbenchLegacyCreation,omitempty"`
 	// SupportedValues: Output only. The supported values for configuration.
 	SupportedValues *SupportedValues `json:"supportedValues,omitempty"`
 

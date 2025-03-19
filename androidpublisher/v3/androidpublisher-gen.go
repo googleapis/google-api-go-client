@@ -8715,10 +8715,10 @@ func (r *EditsService) Commit(packageName string, editId string) *EditsCommitCal
 }
 
 // ChangesNotSentForReview sets the optional parameter
-// "changesNotSentForReview": Indicates that the changes in this edit will not
-// be reviewed until they are explicitly sent for review from the Google Play
-// Console UI. These changes will be added to any other changes that are not
-// yet sent for review.
+// "changesNotSentForReview": When a rejection happens, the parameter will make
+// sure that the changes in this edit won't be reviewed until they are
+// explicitly sent for review from within the Google Play Console UI. These
+// changes will be added to any other changes that are not yet sent for review.
 func (c *EditsCommitCall) ChangesNotSentForReview(changesNotSentForReview bool) *EditsCommitCall {
 	c.urlParams_.Set("changesNotSentForReview", fmt.Sprint(changesNotSentForReview))
 	return c

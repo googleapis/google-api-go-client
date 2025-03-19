@@ -604,20 +604,26 @@ func (s ListReservationsResponse) MarshalJSON() ([]byte, error) {
 // MergeCapacityCommitmentsRequest: The request for
 // ReservationService.MergeCapacityCommitments.
 type MergeCapacityCommitmentsRequest struct {
+	// CapacityCommitmentId: Optional. The optional resulting capacity commitment
+	// ID. Capacity commitment name will be generated automatically if this field
+	// is empty. This field must only contain lower case alphanumeric characters or
+	// dashes. The first and last character cannot be a dash. Max length is 64
+	// characters.
+	CapacityCommitmentId string `json:"capacityCommitmentId,omitempty"`
 	// CapacityCommitmentIds: Ids of capacity commitments to merge. These capacity
 	// commitments must exist under admin project and location specified in the
 	// parent. ID is the last portion of capacity commitment name e.g., 'abc' for
 	// projects/myproject/locations/US/capacityCommitments/abc
 	CapacityCommitmentIds []string `json:"capacityCommitmentIds,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "CapacityCommitmentIds") to
+	// ForceSendFields is a list of field names (e.g. "CapacityCommitmentId") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "CapacityCommitmentIds") to
-	// include in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. See
+	// NullFields is a list of field names (e.g. "CapacityCommitmentId") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }

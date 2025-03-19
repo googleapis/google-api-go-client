@@ -194,6 +194,7 @@ func NewOrganizationsService(s *Service) *OrganizationsService {
 	rs.Datacollectors = NewOrganizationsDatacollectorsService(s)
 	rs.Deployments = NewOrganizationsDeploymentsService(s)
 	rs.Developers = NewOrganizationsDevelopersService(s)
+	rs.DnsZones = NewOrganizationsDnsZonesService(s)
 	rs.EndpointAttachments = NewOrganizationsEndpointAttachmentsService(s)
 	rs.Envgroups = NewOrganizationsEnvgroupsService(s)
 	rs.Environments = NewOrganizationsEnvironmentsService(s)
@@ -206,6 +207,7 @@ func NewOrganizationsService(s *Service) *OrganizationsService {
 	rs.OptimizedHostStats = NewOrganizationsOptimizedHostStatsService(s)
 	rs.Reports = NewOrganizationsReportsService(s)
 	rs.SecurityAssessmentResults = NewOrganizationsSecurityAssessmentResultsService(s)
+	rs.SecurityMonitoringConditions = NewOrganizationsSecurityMonitoringConditionsService(s)
 	rs.SecurityProfiles = NewOrganizationsSecurityProfilesService(s)
 	rs.SecurityProfilesV2 = NewOrganizationsSecurityProfilesV2Service(s)
 	rs.Sharedflows = NewOrganizationsSharedflowsService(s)
@@ -233,6 +235,8 @@ type OrganizationsService struct {
 
 	Developers *OrganizationsDevelopersService
 
+	DnsZones *OrganizationsDnsZonesService
+
 	EndpointAttachments *OrganizationsEndpointAttachmentsService
 
 	Envgroups *OrganizationsEnvgroupsService
@@ -256,6 +260,8 @@ type OrganizationsService struct {
 	Reports *OrganizationsReportsService
 
 	SecurityAssessmentResults *OrganizationsSecurityAssessmentResultsService
+
+	SecurityMonitoringConditions *OrganizationsSecurityMonitoringConditionsService
 
 	SecurityProfiles *OrganizationsSecurityProfilesService
 
@@ -577,6 +583,15 @@ func NewOrganizationsDevelopersSubscriptionsService(s *Service) *OrganizationsDe
 }
 
 type OrganizationsDevelopersSubscriptionsService struct {
+	s *Service
+}
+
+func NewOrganizationsDnsZonesService(s *Service) *OrganizationsDnsZonesService {
+	rs := &OrganizationsDnsZonesService{s: s}
+	return rs
+}
+
+type OrganizationsDnsZonesService struct {
 	s *Service
 }
 
@@ -1141,6 +1156,15 @@ func NewOrganizationsSecurityAssessmentResultsService(s *Service) *Organizations
 }
 
 type OrganizationsSecurityAssessmentResultsService struct {
+	s *Service
+}
+
+func NewOrganizationsSecurityMonitoringConditionsService(s *Service) *OrganizationsSecurityMonitoringConditionsService {
+	rs := &OrganizationsSecurityMonitoringConditionsService{s: s}
+	return rs
+}
+
+type OrganizationsSecurityMonitoringConditionsService struct {
 	s *Service
 }
 
@@ -4518,6 +4542,86 @@ func (s GoogleCloudApigeeV1DimensionMetric) MarshalJSON() ([]byte, error) {
 type GoogleCloudApigeeV1DisableSecurityActionRequest struct {
 }
 
+// GoogleCloudApigeeV1DnsZone: A DNS zone is a resource under an Apigee
+// organization that is used to create a DNS peering with Apigee's network. DNS
+// peering will let Apigee instances resolve the hostnames created in a peered
+// network.
+type GoogleCloudApigeeV1DnsZone struct {
+	// CreateTime: Output only. The time that this resource was created on the
+	// server.
+	CreateTime string `json:"createTime,omitempty"`
+	// Description: Required. Description of the resource. String of at most 1024
+	// characters associated with this resource for the user's convenience.
+	Description string `json:"description,omitempty"`
+	// Domain: Required. The domain name for hosts in this private zone, for
+	// instance "example.com.".
+	Domain string `json:"domain,omitempty"`
+	// Name: Identifier. Unique name for the resource. Defined by the server
+	// Format: "organizations/{organization}/dnsZones/{dns_zone}".
+	Name string `json:"name,omitempty"`
+	// PeeringConfig: DNS PEERING zone configuration.
+	PeeringConfig *GoogleCloudApigeeV1DnsZonePeeringConfig `json:"peeringConfig,omitempty"`
+	// State: Output only. State of the DNS Peering. Values other than `ACTIVE`
+	// mean the resource is not ready to use.
+	//
+	// Possible values:
+	//   "STATE_UNSPECIFIED" - Resource is in an unspecified state.
+	//   "CREATING" - Resource is being created.
+	//   "ACTIVE" - Resource is provisioned and ready to use.
+	//   "DELETING" - The resource is being deleted.
+	//   "UPDATING" - The resource is being updated.
+	State string `json:"state,omitempty"`
+	// UpdateTime: Output only. The time that this resource was updated on the
+	// server.
+	UpdateTime string `json:"updateTime,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "CreateTime") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CreateTime") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudApigeeV1DnsZone) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudApigeeV1DnsZone
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudApigeeV1DnsZonePeeringConfig: Fields for DNS PEERING zone.
+type GoogleCloudApigeeV1DnsZonePeeringConfig struct {
+	// TargetNetworkId: Required. The VPC network where the records for that
+	// private DNS zone's namespace are available. Apigee will be performing DNS
+	// peering with this VPC network.
+	TargetNetworkId string `json:"targetNetworkId,omitempty"`
+	// TargetProjectId: Required. The ID of the project containing the private DNS
+	// zone.
+	TargetProjectId string `json:"targetProjectId,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "TargetNetworkId") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "TargetNetworkId") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudApigeeV1DnsZonePeeringConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudApigeeV1DnsZonePeeringConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudApigeeV1DocumentationFile: Documentation file contents for a
 // catalog item.
 type GoogleCloudApigeeV1DocumentationFile struct {
@@ -6464,6 +6568,34 @@ func (s GoogleCloudApigeeV1ListDeveloperSubscriptionsResponse) MarshalJSON() ([]
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudApigeeV1ListDnsZonesResponse: Response for list DNS zones.
+type GoogleCloudApigeeV1ListDnsZonesResponse struct {
+	// DnsZones: DNS zones in a given organization.
+	DnsZones []*GoogleCloudApigeeV1DnsZone `json:"dnsZones,omitempty"`
+	// NextPageToken: Page token that you can include in an `ListDnsZones` request
+	// to retrieve the next page. If omitted, no subsequent pages exist.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "DnsZones") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DnsZones") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudApigeeV1ListDnsZonesResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudApigeeV1ListDnsZonesResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudApigeeV1ListEndpointAttachmentsResponse: Response for
 // ListEndpointAttachments method.
 type GoogleCloudApigeeV1ListEndpointAttachmentsResponse struct {
@@ -6876,6 +7008,36 @@ type GoogleCloudApigeeV1ListSecurityIncidentsResponse struct {
 
 func (s GoogleCloudApigeeV1ListSecurityIncidentsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudApigeeV1ListSecurityIncidentsResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudApigeeV1ListSecurityMonitoringConditionsResponse: Response for
+// ListSecurityMonitoringConditions.
+type GoogleCloudApigeeV1ListSecurityMonitoringConditionsResponse struct {
+	// NextPageToken: A token that can be sent as `page_token` to retrieve the next
+	// page. If this field is omitted, there are no subsequent pages.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+	// SecurityMonitoringConditions: List of security monitoring conditions in the
+	// organization.
+	SecurityMonitoringConditions []*GoogleCloudApigeeV1SecurityMonitoringCondition `json:"securityMonitoringConditions,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "NextPageToken") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudApigeeV1ListSecurityMonitoringConditionsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudApigeeV1ListSecurityMonitoringConditionsResponse
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -10026,6 +10188,57 @@ type GoogleCloudApigeeV1SecurityIncident struct {
 
 func (s GoogleCloudApigeeV1SecurityIncident) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudApigeeV1SecurityIncident
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudApigeeV1SecurityMonitoringCondition: Security monitoring
+// condition for risk assessment version 2.
+type GoogleCloudApigeeV1SecurityMonitoringCondition struct {
+	// CreateTime: Output only. The time of the security monitoring condition
+	// creation.
+	CreateTime string `json:"createTime,omitempty"`
+	// Include: Include only these resources.
+	Include *GoogleCloudApigeeV1BatchComputeSecurityAssessmentResultsRequestResourceArray `json:"include,omitempty"`
+	// IncludeAllResources: Include all resources under the scope.
+	IncludeAllResources *GoogleCloudApigeeV1BatchComputeSecurityAssessmentResultsRequestIncludeAll `json:"includeAllResources,omitempty"`
+	// Name: Identifier. Name of the security monitoring condition resource.
+	// Format:
+	// organizations/{org}/securityMonitoringConditions/{security_monitoring_conditi
+	// on}
+	Name string `json:"name,omitempty"`
+	// Profile: Required. ID of security profile of the security monitoring
+	// condition.
+	Profile string `json:"profile,omitempty"`
+	// Scope: Required. Scope of the security monitoring condition. For Apigee, the
+	// environment is the scope of the resources.
+	Scope string `json:"scope,omitempty"`
+	// TotalDeployedResources: Output only. Total number of deployed resources
+	// within scope.
+	TotalDeployedResources int64 `json:"totalDeployedResources,omitempty"`
+	// TotalMonitoredResources: Output only. Total number of monitored resources
+	// within this condition.
+	TotalMonitoredResources int64 `json:"totalMonitoredResources,omitempty"`
+	// UpdateTime: Output only. The time of the security monitoring condition
+	// update.
+	UpdateTime string `json:"updateTime,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "CreateTime") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CreateTime") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudApigeeV1SecurityMonitoringCondition) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudApigeeV1SecurityMonitoringCondition
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -26145,6 +26358,475 @@ func (c *OrganizationsDevelopersSubscriptionsListCall) Do(opts ...googleapi.Call
 	}
 	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "apigee.organizations.developers.subscriptions.list", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
+}
+
+type OrganizationsDnsZonesCreateCall struct {
+	s                          *Service
+	parent                     string
+	googlecloudapigeev1dnszone *GoogleCloudApigeeV1DnsZone
+	urlParams_                 gensupport.URLParams
+	ctx_                       context.Context
+	header_                    http.Header
+}
+
+// Create: Creates a new DNS zone.
+//
+// - parent: Organization where the DNS zone will be created.
+func (r *OrganizationsDnsZonesService) Create(parent string, googlecloudapigeev1dnszone *GoogleCloudApigeeV1DnsZone) *OrganizationsDnsZonesCreateCall {
+	c := &OrganizationsDnsZonesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.googlecloudapigeev1dnszone = googlecloudapigeev1dnszone
+	return c
+}
+
+// DnsZoneId sets the optional parameter "dnsZoneId": Required. User assigned
+// ID for this resource. Must be unique within the organization. The name must
+// be 1-63 characters long, must begin with a letter, end with a letter or
+// digit, and only contain lowercase letters, digits or dashes.
+func (c *OrganizationsDnsZonesCreateCall) DnsZoneId(dnsZoneId string) *OrganizationsDnsZonesCreateCall {
+	c.urlParams_.Set("dnsZoneId", dnsZoneId)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *OrganizationsDnsZonesCreateCall) Fields(s ...googleapi.Field) *OrganizationsDnsZonesCreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *OrganizationsDnsZonesCreateCall) Context(ctx context.Context) *OrganizationsDnsZonesCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *OrganizationsDnsZonesCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *OrganizationsDnsZonesCreateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googlecloudapigeev1dnszone)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/dnsZones")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "apigee.organizations.dnsZones.create", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "apigee.organizations.dnsZones.create" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleLongrunningOperation.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *OrganizationsDnsZonesCreateCall) Do(opts ...googleapi.CallOption) (*GoogleLongrunningOperation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleLongrunningOperation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "apigee.organizations.dnsZones.create", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type OrganizationsDnsZonesDeleteCall struct {
+	s          *Service
+	name       string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Delete: Deletes a previously created DNS zone.
+//
+//   - name: Name of the DNS zone to delete. Use the following structure in your
+//     request: `organizations/{org}/dnsZones/{dns_zone}`.
+func (r *OrganizationsDnsZonesService) Delete(name string) *OrganizationsDnsZonesDeleteCall {
+	c := &OrganizationsDnsZonesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *OrganizationsDnsZonesDeleteCall) Fields(s ...googleapi.Field) *OrganizationsDnsZonesDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *OrganizationsDnsZonesDeleteCall) Context(ctx context.Context) *OrganizationsDnsZonesDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *OrganizationsDnsZonesDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *OrganizationsDnsZonesDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("DELETE", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "apigee.organizations.dnsZones.delete", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "apigee.organizations.dnsZones.delete" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleLongrunningOperation.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *OrganizationsDnsZonesDeleteCall) Do(opts ...googleapi.CallOption) (*GoogleLongrunningOperation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleLongrunningOperation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "apigee.organizations.dnsZones.delete", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type OrganizationsDnsZonesGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Fetches the representation of an existing DNS zone.
+//
+//   - name: Name of the DNS zone to fetch. Use the following structure in your
+//     request: `organizations/{org}/dnsZones/{dns_zone}`.
+func (r *OrganizationsDnsZonesService) Get(name string) *OrganizationsDnsZonesGetCall {
+	c := &OrganizationsDnsZonesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *OrganizationsDnsZonesGetCall) Fields(s ...googleapi.Field) *OrganizationsDnsZonesGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *OrganizationsDnsZonesGetCall) IfNoneMatch(entityTag string) *OrganizationsDnsZonesGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *OrganizationsDnsZonesGetCall) Context(ctx context.Context) *OrganizationsDnsZonesGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *OrganizationsDnsZonesGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *OrganizationsDnsZonesGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "apigee.organizations.dnsZones.get", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "apigee.organizations.dnsZones.get" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudApigeeV1DnsZone.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *OrganizationsDnsZonesGetCall) Do(opts ...googleapi.CallOption) (*GoogleCloudApigeeV1DnsZone, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudApigeeV1DnsZone{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "apigee.organizations.dnsZones.get", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type OrganizationsDnsZonesListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Enumerates DNS zones that have been created but not yet deleted.
+//
+//   - parent: Name of the organization for which to list the DNS zones. Use the
+//     following structure in your request: `organizations/{org}`.
+func (r *OrganizationsDnsZonesService) List(parent string) *OrganizationsDnsZonesListCall {
+	c := &OrganizationsDnsZonesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": Maximum number of DNS zones
+// to return. If unspecified, at most 25 DNS zones will be returned.
+func (c *OrganizationsDnsZonesListCall) PageSize(pageSize int64) *OrganizationsDnsZonesListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": Page token, returned from
+// a previous `ListDnsZones` call, that you can use to retrieve the next page.
+func (c *OrganizationsDnsZonesListCall) PageToken(pageToken string) *OrganizationsDnsZonesListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *OrganizationsDnsZonesListCall) Fields(s ...googleapi.Field) *OrganizationsDnsZonesListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *OrganizationsDnsZonesListCall) IfNoneMatch(entityTag string) *OrganizationsDnsZonesListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *OrganizationsDnsZonesListCall) Context(ctx context.Context) *OrganizationsDnsZonesListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *OrganizationsDnsZonesListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *OrganizationsDnsZonesListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/dnsZones")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "apigee.organizations.dnsZones.list", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "apigee.organizations.dnsZones.list" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudApigeeV1ListDnsZonesResponse.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *OrganizationsDnsZonesListCall) Do(opts ...googleapi.CallOption) (*GoogleCloudApigeeV1ListDnsZonesResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudApigeeV1ListDnsZonesResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "apigee.organizations.dnsZones.list", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *OrganizationsDnsZonesListCall) Pages(ctx context.Context, f func(*GoogleCloudApigeeV1ListDnsZonesResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
 }
 
 type OrganizationsEndpointAttachmentsCreateCall struct {
@@ -46690,6 +47372,601 @@ func (c *OrganizationsSecurityAssessmentResultsBatchComputeCall) Pages(ctx conte
 		}
 		c.googlecloudapigeev1batchcomputesecurityassessmentresultsrequest.PageToken = x.NextPageToken
 	}
+}
+
+type OrganizationsSecurityMonitoringConditionsCreateCall struct {
+	s                                              *Service
+	parent                                         string
+	googlecloudapigeev1securitymonitoringcondition *GoogleCloudApigeeV1SecurityMonitoringCondition
+	urlParams_                                     gensupport.URLParams
+	ctx_                                           context.Context
+	header_                                        http.Header
+}
+
+// Create: Create a security monitoring condition.
+//
+// - parent: The parent resource name. Format: `organizations/{org}`.
+func (r *OrganizationsSecurityMonitoringConditionsService) Create(parent string, googlecloudapigeev1securitymonitoringcondition *GoogleCloudApigeeV1SecurityMonitoringCondition) *OrganizationsSecurityMonitoringConditionsCreateCall {
+	c := &OrganizationsSecurityMonitoringConditionsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.googlecloudapigeev1securitymonitoringcondition = googlecloudapigeev1securitymonitoringcondition
+	return c
+}
+
+// SecurityMonitoringConditionId sets the optional parameter
+// "securityMonitoringConditionId": Optional: The security monitoring condition
+// id. If not specified, a monitoring condition uuid will be generated by the
+// backend. This value should be 4-63 characters, and valid characters are
+// /a-z-/.
+func (c *OrganizationsSecurityMonitoringConditionsCreateCall) SecurityMonitoringConditionId(securityMonitoringConditionId string) *OrganizationsSecurityMonitoringConditionsCreateCall {
+	c.urlParams_.Set("securityMonitoringConditionId", securityMonitoringConditionId)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *OrganizationsSecurityMonitoringConditionsCreateCall) Fields(s ...googleapi.Field) *OrganizationsSecurityMonitoringConditionsCreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *OrganizationsSecurityMonitoringConditionsCreateCall) Context(ctx context.Context) *OrganizationsSecurityMonitoringConditionsCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *OrganizationsSecurityMonitoringConditionsCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *OrganizationsSecurityMonitoringConditionsCreateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googlecloudapigeev1securitymonitoringcondition)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/securityMonitoringConditions")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "apigee.organizations.securityMonitoringConditions.create", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "apigee.organizations.securityMonitoringConditions.create" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudApigeeV1SecurityMonitoringCondition.ServerResponse.Header or (if
+// a response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *OrganizationsSecurityMonitoringConditionsCreateCall) Do(opts ...googleapi.CallOption) (*GoogleCloudApigeeV1SecurityMonitoringCondition, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudApigeeV1SecurityMonitoringCondition{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "apigee.organizations.securityMonitoringConditions.create", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type OrganizationsSecurityMonitoringConditionsDeleteCall struct {
+	s          *Service
+	name       string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Delete: Delete a security monitoring condition.
+//
+//   - name: The name of the security monitoring condition to delete. Format:
+//     `organizations/{org}/securityMonitoringConditions/{security_monitoring_cond
+//     ition}`.
+func (r *OrganizationsSecurityMonitoringConditionsService) Delete(name string) *OrganizationsSecurityMonitoringConditionsDeleteCall {
+	c := &OrganizationsSecurityMonitoringConditionsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *OrganizationsSecurityMonitoringConditionsDeleteCall) Fields(s ...googleapi.Field) *OrganizationsSecurityMonitoringConditionsDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *OrganizationsSecurityMonitoringConditionsDeleteCall) Context(ctx context.Context) *OrganizationsSecurityMonitoringConditionsDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *OrganizationsSecurityMonitoringConditionsDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *OrganizationsSecurityMonitoringConditionsDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("DELETE", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "apigee.organizations.securityMonitoringConditions.delete", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "apigee.organizations.securityMonitoringConditions.delete" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleProtobufEmpty.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *OrganizationsSecurityMonitoringConditionsDeleteCall) Do(opts ...googleapi.CallOption) (*GoogleProtobufEmpty, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleProtobufEmpty{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "apigee.organizations.securityMonitoringConditions.delete", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type OrganizationsSecurityMonitoringConditionsGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Get a security monitoring condition.
+//
+//   - name: The name of the security monitoring condition to get. Format:
+//     `organizations/{org}/securityMonitoringConditions/{security_monitoring_cond
+//     ition}`.
+func (r *OrganizationsSecurityMonitoringConditionsService) Get(name string) *OrganizationsSecurityMonitoringConditionsGetCall {
+	c := &OrganizationsSecurityMonitoringConditionsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *OrganizationsSecurityMonitoringConditionsGetCall) Fields(s ...googleapi.Field) *OrganizationsSecurityMonitoringConditionsGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *OrganizationsSecurityMonitoringConditionsGetCall) IfNoneMatch(entityTag string) *OrganizationsSecurityMonitoringConditionsGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *OrganizationsSecurityMonitoringConditionsGetCall) Context(ctx context.Context) *OrganizationsSecurityMonitoringConditionsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *OrganizationsSecurityMonitoringConditionsGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *OrganizationsSecurityMonitoringConditionsGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "apigee.organizations.securityMonitoringConditions.get", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "apigee.organizations.securityMonitoringConditions.get" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudApigeeV1SecurityMonitoringCondition.ServerResponse.Header or (if
+// a response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *OrganizationsSecurityMonitoringConditionsGetCall) Do(opts ...googleapi.CallOption) (*GoogleCloudApigeeV1SecurityMonitoringCondition, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudApigeeV1SecurityMonitoringCondition{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "apigee.organizations.securityMonitoringConditions.get", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type OrganizationsSecurityMonitoringConditionsListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: List security monitoring conditions.
+//
+//   - parent: For a specific organization, list all the security monitoring
+//     conditions. Format: `organizations/{org}`.
+func (r *OrganizationsSecurityMonitoringConditionsService) List(parent string) *OrganizationsSecurityMonitoringConditionsListCall {
+	c := &OrganizationsSecurityMonitoringConditionsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// Filter sets the optional parameter "filter": Filter for the monitoring
+// conditions. For example: `profile=profile1 AND scope=env1`
+func (c *OrganizationsSecurityMonitoringConditionsListCall) Filter(filter string) *OrganizationsSecurityMonitoringConditionsListCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The maximum number of
+// monitoring conditions to return.
+func (c *OrganizationsSecurityMonitoringConditionsListCall) PageSize(pageSize int64) *OrganizationsSecurityMonitoringConditionsListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": A page token, received
+// from a previous `ListSecurityMonitoringConditions` call. Provide this to
+// retrieve the subsequent page.
+func (c *OrganizationsSecurityMonitoringConditionsListCall) PageToken(pageToken string) *OrganizationsSecurityMonitoringConditionsListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *OrganizationsSecurityMonitoringConditionsListCall) Fields(s ...googleapi.Field) *OrganizationsSecurityMonitoringConditionsListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *OrganizationsSecurityMonitoringConditionsListCall) IfNoneMatch(entityTag string) *OrganizationsSecurityMonitoringConditionsListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *OrganizationsSecurityMonitoringConditionsListCall) Context(ctx context.Context) *OrganizationsSecurityMonitoringConditionsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *OrganizationsSecurityMonitoringConditionsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *OrganizationsSecurityMonitoringConditionsListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/securityMonitoringConditions")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "apigee.organizations.securityMonitoringConditions.list", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "apigee.organizations.securityMonitoringConditions.list" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudApigeeV1ListSecurityMonitoringConditionsResponse.ServerResponse.H
+// eader or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *OrganizationsSecurityMonitoringConditionsListCall) Do(opts ...googleapi.CallOption) (*GoogleCloudApigeeV1ListSecurityMonitoringConditionsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudApigeeV1ListSecurityMonitoringConditionsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "apigee.organizations.securityMonitoringConditions.list", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *OrganizationsSecurityMonitoringConditionsListCall) Pages(ctx context.Context, f func(*GoogleCloudApigeeV1ListSecurityMonitoringConditionsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+type OrganizationsSecurityMonitoringConditionsPatchCall struct {
+	s                                              *Service
+	name                                           string
+	googlecloudapigeev1securitymonitoringcondition *GoogleCloudApigeeV1SecurityMonitoringCondition
+	urlParams_                                     gensupport.URLParams
+	ctx_                                           context.Context
+	header_                                        http.Header
+}
+
+// Patch: Update a security monitoring condition.
+//
+//   - name: Identifier. Name of the security monitoring condition resource.
+//     Format:
+//     organizations/{org}/securityMonitoringConditions/{security_monitoring_condi
+//     tion}.
+func (r *OrganizationsSecurityMonitoringConditionsService) Patch(name string, googlecloudapigeev1securitymonitoringcondition *GoogleCloudApigeeV1SecurityMonitoringCondition) *OrganizationsSecurityMonitoringConditionsPatchCall {
+	c := &OrganizationsSecurityMonitoringConditionsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.googlecloudapigeev1securitymonitoringcondition = googlecloudapigeev1securitymonitoringcondition
+	return c
+}
+
+// UpdateMask sets the optional parameter "updateMask": The list of fields to
+// update. Valid fields to update are `profile`, `scope`,
+// `include_all_resources`, `include`, and `exclude`.
+func (c *OrganizationsSecurityMonitoringConditionsPatchCall) UpdateMask(updateMask string) *OrganizationsSecurityMonitoringConditionsPatchCall {
+	c.urlParams_.Set("updateMask", updateMask)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *OrganizationsSecurityMonitoringConditionsPatchCall) Fields(s ...googleapi.Field) *OrganizationsSecurityMonitoringConditionsPatchCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *OrganizationsSecurityMonitoringConditionsPatchCall) Context(ctx context.Context) *OrganizationsSecurityMonitoringConditionsPatchCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *OrganizationsSecurityMonitoringConditionsPatchCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *OrganizationsSecurityMonitoringConditionsPatchCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googlecloudapigeev1securitymonitoringcondition)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PATCH", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "apigee.organizations.securityMonitoringConditions.patch", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "apigee.organizations.securityMonitoringConditions.patch" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudApigeeV1SecurityMonitoringCondition.ServerResponse.Header or (if
+// a response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *OrganizationsSecurityMonitoringConditionsPatchCall) Do(opts ...googleapi.CallOption) (*GoogleCloudApigeeV1SecurityMonitoringCondition, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudApigeeV1SecurityMonitoringCondition{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "apigee.organizations.securityMonitoringConditions.patch", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
 }
 
 type OrganizationsSecurityProfilesCreateCall struct {

@@ -3846,12 +3846,21 @@ func (s GoogleCloudDialogflowCxV3WebhookServiceDirectoryConfig) MarshalJSON() ([
 type GoogleCloudDialogflowCxV3beta1Action struct {
 	// AgentUtterance: Optional. Action performed by the agent as a message.
 	AgentUtterance *GoogleCloudDialogflowCxV3beta1AgentUtterance `json:"agentUtterance,omitempty"`
+	// Event: Optional. The agent received an event from the customer or a system
+	// event is emitted.
+	Event *GoogleCloudDialogflowCxV3beta1Event `json:"event,omitempty"`
 	// FlowInvocation: Optional. Action performed on behalf of the agent by
 	// invoking a CX flow.
 	FlowInvocation *GoogleCloudDialogflowCxV3beta1FlowInvocation `json:"flowInvocation,omitempty"`
+	// FlowTransition: Optional. Action performed on behalf of the agent by
+	// transitioning to a target CX flow.
+	FlowTransition *GoogleCloudDialogflowCxV3beta1FlowTransition `json:"flowTransition,omitempty"`
 	// PlaybookInvocation: Optional. Action performed on behalf of the agent by
 	// invoking a child playbook.
 	PlaybookInvocation *GoogleCloudDialogflowCxV3beta1PlaybookInvocation `json:"playbookInvocation,omitempty"`
+	// PlaybookTransition: Optional. Action performed on behalf of the agent by
+	// transitioning to a target playbook.
+	PlaybookTransition *GoogleCloudDialogflowCxV3beta1PlaybookTransition `json:"playbookTransition,omitempty"`
 	// ToolUse: Optional. Action performed on behalf of the agent by calling a
 	// plugin tool.
 	ToolUse *GoogleCloudDialogflowCxV3beta1ToolUse `json:"toolUse,omitempty"`
@@ -6337,6 +6346,29 @@ func (s GoogleCloudDialogflowCxV3beta1EnvironmentWebhookConfig) MarshalJSON() ([
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudDialogflowCxV3beta1Event: Event represents the event sent by the
+// customer.
+type GoogleCloudDialogflowCxV3beta1Event struct {
+	// Event: Required. Name of the event.
+	Event string `json:"event,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Event") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Event") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDialogflowCxV3beta1Event) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDialogflowCxV3beta1Event
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudDialogflowCxV3beta1EventHandler: An event handler specifies an
 // event that can be handled during a session. When the specified event
 // happens, the following actions are taken in order: * If there is a
@@ -7401,6 +7433,33 @@ type GoogleCloudDialogflowCxV3beta1FlowMultiLanguageSettings struct {
 
 func (s GoogleCloudDialogflowCxV3beta1FlowMultiLanguageSettings) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowCxV3beta1FlowMultiLanguageSettings
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDialogflowCxV3beta1FlowTransition: Stores metadata of the
+// transition to a target CX flow. Flow transition actions exit the caller
+// playbook and enter the child flow.
+type GoogleCloudDialogflowCxV3beta1FlowTransition struct {
+	// DisplayName: Output only. The display name of the flow.
+	DisplayName string `json:"displayName,omitempty"`
+	// Flow: Required. The unique identifier of the flow. Format:
+	// `projects//locations//agents/`.
+	Flow string `json:"flow,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "DisplayName") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DisplayName") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDialogflowCxV3beta1FlowTransition) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDialogflowCxV3beta1FlowTransition
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -10424,6 +10483,13 @@ type GoogleCloudDialogflowCxV3beta1Playbook struct {
 	// OutputParameterDefinitions: Optional. Defined structured output parameters
 	// for this playbook.
 	OutputParameterDefinitions []*GoogleCloudDialogflowCxV3beta1ParameterDefinition `json:"outputParameterDefinitions,omitempty"`
+	// PlaybookType: Optional. Type of the playbook.
+	//
+	// Possible values:
+	//   "PLAYBOOK_TYPE_UNSPECIFIED" - Unspecified type. Default to TASK.
+	//   "TASK" - Task playbook.
+	//   "ROUTINE" - Routine playbook.
+	PlaybookType string `json:"playbookType,omitempty"`
 	// ReferencedFlows: Output only. The resource name of flows referenced by the
 	// current playbook in the instructions.
 	ReferencedFlows []string `json:"referencedFlows,omitempty"`
@@ -10605,6 +10671,33 @@ type GoogleCloudDialogflowCxV3beta1PlaybookStep struct {
 
 func (s GoogleCloudDialogflowCxV3beta1PlaybookStep) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowCxV3beta1PlaybookStep
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDialogflowCxV3beta1PlaybookTransition: Stores metadata of the
+// transition to another target playbook. Playbook transition actions exit the
+// caller playbook and enter the target playbook.
+type GoogleCloudDialogflowCxV3beta1PlaybookTransition struct {
+	// DisplayName: Output only. The display name of the playbook.
+	DisplayName string `json:"displayName,omitempty"`
+	// Playbook: Required. The unique identifier of the playbook. Format:
+	// `projects//locations//agents//playbooks/`.
+	Playbook string `json:"playbook,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "DisplayName") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DisplayName") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDialogflowCxV3beta1PlaybookTransition) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDialogflowCxV3beta1PlaybookTransition
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 

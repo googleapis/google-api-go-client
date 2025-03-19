@@ -6,7 +6,7 @@
 
 // Package tasks provides access to the Google Tasks API.
 //
-// For product documentation, see: https://developers.google.com/tasks/
+// For product documentation, see: https://developers.google.com/workspace/tasks/
 //
 // # Library status
 //
@@ -359,12 +359,12 @@ func (s Task) MarshalJSON() ([]byte, error) {
 }
 
 type TaskLinks struct {
-	// Description: The description. In HTML speak: Everything between <a> and
-	// </a>.
+	// Description: The description (might be empty).
 	Description string `json:"description,omitempty"`
 	// Link: The URL.
 	Link string `json:"link,omitempty"`
-	// Type: Type of the link, e.g. "email".
+	// Type: Type of the link, e.g. "email", "generic", "chat_message",
+	// "keep_note".
 	Type string `json:"type,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Description") to
 	// unconditionally include in API requests. By default, fields with empty or

@@ -9648,8 +9648,9 @@ func (c *ProjectsLocationsResourceBackupConfigsListCall) OrderBy(orderBy string)
 }
 
 // PageSize sets the optional parameter "pageSize": Requested page size. Server
-// may return fewer items than requested. If unspecified, server will pick an
-// appropriate default.
+// may return fewer items than requested. If unspecified, server will use 100
+// as default. Maximum value is 500 and values above 500 will be coerced to
+// 500.
 func (c *ProjectsLocationsResourceBackupConfigsListCall) PageSize(pageSize int64) *ProjectsLocationsResourceBackupConfigsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c

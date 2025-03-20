@@ -4337,8 +4337,7 @@ func (c *EntriesLookupCall) Project(project string) *EntriesLookupCall {
 // `bigquery.table.{PROJECT_ID}.{DATASET_ID}.{TABLE_ID}` *
 // `bigquery.dataset.{PROJECT_ID}.{DATASET_ID}` *
 // `datacatalog.entry.{PROJECT_ID}.{LOCATION_ID}.{ENTRY_GROUP_ID}.{ENTRY_ID}`
-// Identifiers (`*_ID`) should comply with the [Lexical structure in Standard
-// SQL]
+// Identifiers (`*_ID`) should comply with the [Lexical structure in GoogleSQL]
 // (https://cloud.google.com/bigquery/docs/reference/standard-sql/lexical).
 func (c *EntriesLookupCall) SqlResource(sqlResource string) *EntriesLookupCall {
 	c.urlParams_.Set("sqlResource", sqlResource)

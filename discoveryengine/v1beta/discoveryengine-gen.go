@@ -2444,6 +2444,14 @@ func (s GoogleCloudDiscoveryengineV1CreateTargetSiteMetadata) MarshalJSON() ([]b
 // GoogleCloudDiscoveryengineV1DataStore: DataStore captures global settings
 // and configs at the DataStore level.
 type GoogleCloudDiscoveryengineV1DataStore struct {
+	// AclEnabled: Immutable. Whether data in the DataStore has ACL information. If
+	// set to `true`, the source data must have ACL. ACL will be ingested when data
+	// is ingested by DocumentService.ImportDocuments methods. When ACL is enabled
+	// for the DataStore, Document can't be accessed by calling
+	// DocumentService.GetDocument or DocumentService.ListDocuments. Currently ACL
+	// is only supported in `GENERIC` industry vertical with non-`PUBLIC_WEBSITE`
+	// content config.
+	AclEnabled bool `json:"aclEnabled,omitempty"`
 	// AdvancedSiteSearchConfig: Optional. Configuration for advanced site search.
 	AdvancedSiteSearchConfig *GoogleCloudDiscoveryengineV1AdvancedSiteSearchConfig `json:"advancedSiteSearchConfig,omitempty"`
 	// BillingEstimation: Output only. Data size estimation for billing.
@@ -2537,15 +2545,15 @@ type GoogleCloudDiscoveryengineV1DataStore struct {
 	// data. This must be set when DataStore.content_config is set as
 	// DataStore.ContentConfig.GOOGLE_WORKSPACE.
 	WorkspaceConfig *GoogleCloudDiscoveryengineV1WorkspaceConfig `json:"workspaceConfig,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "AdvancedSiteSearchConfig")
-	// to unconditionally include in API requests. By default, fields with empty or
+	// ForceSendFields is a list of field names (e.g. "AclEnabled") to
+	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "AdvancedSiteSearchConfig") to
-	// include in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. See
+	// NullFields is a list of field names (e.g. "AclEnabled") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -10064,7 +10072,7 @@ type GoogleCloudDiscoveryengineV1alphaSearchRequest struct {
 	// CustomFineTuningSpec: Custom fine tuning configs. If set, it has higher
 	// priority than the configs set in ServingConfig.custom_fine_tuning_spec.
 	CustomFineTuningSpec *GoogleCloudDiscoveryengineV1alphaCustomFineTuningSpec `json:"customFineTuningSpec,omitempty"`
-	// DataStoreSpecs: Specifications that define the specific [DataStore]s to be
+	// DataStoreSpecs: Specifications that define the specific DataStores to be
 	// searched, along with configurations for those data stores. This is only
 	// considered for Engines with multiple data stores. For engines with a single
 	// data store, the specs directly under SearchRequest should be used.
@@ -16073,6 +16081,14 @@ func (s GoogleCloudDiscoveryengineV1betaCustomTuningModel) MarshalJSON() ([]byte
 // GoogleCloudDiscoveryengineV1betaDataStore: DataStore captures global
 // settings and configs at the DataStore level.
 type GoogleCloudDiscoveryengineV1betaDataStore struct {
+	// AclEnabled: Immutable. Whether data in the DataStore has ACL information. If
+	// set to `true`, the source data must have ACL. ACL will be ingested when data
+	// is ingested by DocumentService.ImportDocuments methods. When ACL is enabled
+	// for the DataStore, Document can't be accessed by calling
+	// DocumentService.GetDocument or DocumentService.ListDocuments. Currently ACL
+	// is only supported in `GENERIC` industry vertical with non-`PUBLIC_WEBSITE`
+	// content config.
+	AclEnabled bool `json:"aclEnabled,omitempty"`
 	// AdvancedSiteSearchConfig: Optional. Configuration for advanced site search.
 	AdvancedSiteSearchConfig *GoogleCloudDiscoveryengineV1betaAdvancedSiteSearchConfig `json:"advancedSiteSearchConfig,omitempty"`
 	// BillingEstimation: Output only. Data size estimation for billing.
@@ -16174,15 +16190,15 @@ type GoogleCloudDiscoveryengineV1betaDataStore struct {
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-	// ForceSendFields is a list of field names (e.g. "AdvancedSiteSearchConfig")
-	// to unconditionally include in API requests. By default, fields with empty or
+	// ForceSendFields is a list of field names (e.g. "AclEnabled") to
+	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "AdvancedSiteSearchConfig") to
-	// include in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. See
+	// NullFields is a list of field names (e.g. "AclEnabled") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -20666,7 +20682,7 @@ type GoogleCloudDiscoveryengineV1betaSearchRequest struct {
 	// ContentSearchSpec: A specification for configuring the behavior of content
 	// search.
 	ContentSearchSpec *GoogleCloudDiscoveryengineV1betaSearchRequestContentSearchSpec `json:"contentSearchSpec,omitempty"`
-	// DataStoreSpecs: Specifications that define the specific [DataStore]s to be
+	// DataStoreSpecs: Specifications that define the specific DataStores to be
 	// searched, along with configurations for those data stores. This is only
 	// considered for Engines with multiple data stores. For engines with a single
 	// data store, the specs directly under SearchRequest should be used.

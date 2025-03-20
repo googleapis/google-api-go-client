@@ -834,6 +834,77 @@ func (s ConnectionInfo) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// ConnectionPoolConfig: Configuration for Managed Connection Pool (MCP).
+type ConnectionPoolConfig struct {
+	// DefaultPoolSize: Optional. Deprecated. Use 'flags' instead. The default pool
+	// size. Defaults to 20.
+	DefaultPoolSize string `json:"defaultPoolSize,omitempty"`
+	// Enable: Optional. Deprecated; Prefer 'enabled' as this will be removed soon.
+	// TODO(b/394996708) move to reserved once the field is removed from the gcloud
+	// client.
+	Enable bool `json:"enable,omitempty"`
+	// Enabled: Optional. Whether to enable Managed Connection Pool (MCP).
+	Enabled bool `json:"enabled,omitempty"`
+	// Flags: Optional. Connection Pool flags, as a list of "key": "value" pairs.
+	Flags map[string]string `json:"flags,omitempty"`
+	// IgnoreStartupParameters: Optional. Deprecated. Use 'flags' instead. The list
+	// of startup parameters to ignore. Defaults to ["extra_float_digits"]
+	IgnoreStartupParameters []string `json:"ignoreStartupParameters,omitempty"`
+	// MaxClientConn: Optional. Deprecated. Use 'flags' instead. The maximum number
+	// of client connections allowed.
+	MaxClientConn string `json:"maxClientConn,omitempty"`
+	// MaxPreparedStatements: Optional. Deprecated. Use 'flags' instead. The
+	// maximum number of prepared statements allowed. MCP makes sure that any
+	// statement prepared by a client, up to this limit, is available on the
+	// backing server connection in transaction and statement pooling mode. Even if
+	// the statement was originally prepared on another server connection. Defaults
+	// to 0.
+	MaxPreparedStatements string `json:"maxPreparedStatements,omitempty"`
+	// MinPoolSize: Optional. Deprecated. Use 'flags' instead. The minimum pool
+	// size. Defaults to 0.
+	MinPoolSize string `json:"minPoolSize,omitempty"`
+	// PoolMode: Optional. Deprecated. Use 'flags' instead. The pool mode. Defaults
+	// to `POOL_MODE_TRANSACTION`.
+	//
+	// Possible values:
+	//   "POOL_MODE_UNSPECIFIED" - The pool mode is not specified. Defaults to
+	// `POOL_MODE_TRANSACTION`.
+	//   "POOL_MODE_SESSION" - Server is released back to pool after a client
+	// disconnects.
+	//   "POOL_MODE_TRANSACTION" - Server is released back to pool after a
+	// transaction finishes.
+	PoolMode string `json:"poolMode,omitempty"`
+	// QueryWaitTimeout: Optional. Deprecated. Use 'flags' instead. The maximum
+	// number of seconds queries are allowed to spend waiting for execution. If the
+	// query is not assigned to a server during that time, the client is
+	// disconnected. 0 disables.
+	QueryWaitTimeout string `json:"queryWaitTimeout,omitempty"`
+	// ServerIdleTimeout: Optional. Deprecated. Use 'flags' instead. The maximum
+	// number of seconds a server is allowed to be idle before it is disconnected.
+	// 0 disables.
+	ServerIdleTimeout string `json:"serverIdleTimeout,omitempty"`
+	// StatsUsers: Optional. Deprecated. Use 'flags' instead. The list of users
+	// that are allowed to connect to the MCP stats console. The users must exist
+	// in the database.
+	StatsUsers []string `json:"statsUsers,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "DefaultPoolSize") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DefaultPoolSize") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ConnectionPoolConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod ConnectionPoolConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // ContinuousBackupConfig: ContinuousBackupConfig describes the continuous
 // backups recovery configurations of a cluster.
 type ContinuousBackupConfig struct {
@@ -1524,6 +1595,9 @@ type Instance struct {
 	AvailabilityType string `json:"availabilityType,omitempty"`
 	// ClientConnectionConfig: Optional. Client connection specific configurations
 	ClientConnectionConfig *ClientConnectionConfig `json:"clientConnectionConfig,omitempty"`
+	// ConnectionPoolConfig: Optional. The configuration for Managed Connection
+	// Pool (MCP).
+	ConnectionPoolConfig *ConnectionPoolConfig `json:"connectionPoolConfig,omitempty"`
 	// CreateTime: Output only. Create time stamp
 	CreateTime string `json:"createTime,omitempty"`
 	// DatabaseFlags: Database flags. Set at the instance level. They are copied

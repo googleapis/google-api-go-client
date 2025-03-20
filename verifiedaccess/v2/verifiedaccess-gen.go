@@ -412,9 +412,9 @@ type DeviceSignals struct {
 	// SystemDnsServers: List of the addesses of all OS level DNS servers
 	// configured in the device's network settings.
 	SystemDnsServers []string `json:"systemDnsServers,omitempty"`
-	// ThirdPartyBlockingEnabled: Output only. Whether Chrome is blocking
-	// third-party software injection or not. This setting may be controlled by an
-	// enterprise policy:
+	// ThirdPartyBlockingEnabled: Output only. Deprecated. The corresponding policy
+	// is now deprecated. Whether Chrome is blocking third-party software injection
+	// or not. This setting may be controlled by an enterprise policy:
 	// https://chromeenterprise.google/policies/?policy=ThirdPartyBlockingEnabled.
 	// Available on Windows only.
 	ThirdPartyBlockingEnabled bool `json:"thirdPartyBlockingEnabled,omitempty"`

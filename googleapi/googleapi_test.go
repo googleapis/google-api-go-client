@@ -312,6 +312,19 @@ Details:
 		},
 		`googleapi: got HTTP response code 500 with body: {"error":{}}`,
 	},
+	{
+		// Case: Streaming error in JSON array in body.
+		&http.Response{
+			StatusCode: http.StatusTooManyRequests,
+		},
+		`[{"error":{"code": 429,"message": "Resource has been exhausted (e.g. check quota).","status": "RESOURCE_EXHAUSTED"}}]`,
+		&Error{
+			Code:    http.StatusTooManyRequests,
+			Message: "Resource has been exhausted (e.g. check quota).",
+			Body: "[{\"error\":{\"code\": 429,\"message\": \"Resource has been exhausted (e.g. check quota).\",\"status\": \"RESOURCE_EXHAUSTED\"}}]",
+		},
+		`googleapi: Error 429: Resource has been exhausted (e.g. check quota).`,
+	},
 }
 
 func TestCheckResponse(t *testing.T) {

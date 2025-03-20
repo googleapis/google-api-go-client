@@ -184,11 +184,10 @@ func CheckResponseWithBody(res *http.Response, body []byte) error {
 // may be a JSON object or JSON array, or may be something else.
 func errorReplyFromBody(body []byte) (*errorReply, error) {
 	jerr := new(errorReply)
-	peekChar := body[0]
-	if peekChar == '[' {
+	if body[0] == '[' {
 		// Attempt JSON array
-		jsonArr := &[]*errorReply{jerr}
-		err := json.Unmarshal(body, jsonArr)
+		jsonArr := []*errorReply{jerr}
+		err := json.Unmarshal(body, &jsonArr)
 		return jerr, err
 	}
 	// Attempt JSON object

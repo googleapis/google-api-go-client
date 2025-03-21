@@ -4601,8 +4601,8 @@ type GoogleCloudApigeeV1DnsZonePeeringConfig struct {
 	// private DNS zone's namespace are available. Apigee will be performing DNS
 	// peering with this VPC network.
 	TargetNetworkId string `json:"targetNetworkId,omitempty"`
-	// TargetProjectId: Required. The ID of the project containing the private DNS
-	// zone.
+	// TargetProjectId: Required. The ID of the project that contains the producer
+	// VPC network.
 	TargetProjectId string `json:"targetProjectId,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "TargetNetworkId") to
 	// unconditionally include in API requests. By default, fields with empty or

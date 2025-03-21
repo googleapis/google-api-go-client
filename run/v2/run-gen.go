@@ -2013,6 +2013,9 @@ type GoogleCloudRunV2Revision struct {
 	// Generation: Output only. A number that monotonically increases every time
 	// the user modifies the desired state.
 	Generation int64 `json:"generation,omitempty,string"`
+	// GpuZonalRedundancyDisabled: Optional. Output only. True if GPU zonal
+	// redundancy is disabled on this revision.
+	GpuZonalRedundancyDisabled bool `json:"gpuZonalRedundancyDisabled,omitempty"`
 	// Labels: Output only. Unstructured key value map that can be used to organize
 	// and categorize objects. User-provided labels are shared with Google's
 	// billing system, so they can be used to filter, or break down billing charges
@@ -2221,6 +2224,9 @@ type GoogleCloudRunV2RevisionTemplate struct {
 	//   "EXECUTION_ENVIRONMENT_GEN1" - Uses the First Generation environment.
 	//   "EXECUTION_ENVIRONMENT_GEN2" - Uses Second Generation environment.
 	ExecutionEnvironment string `json:"executionEnvironment,omitempty"`
+	// GpuZonalRedundancyDisabled: Optional. True if GPU zonal redundancy is
+	// disabled on this revision.
+	GpuZonalRedundancyDisabled bool `json:"gpuZonalRedundancyDisabled,omitempty"`
 	// HealthCheckDisabled: Optional. Disables health checking containers during
 	// deployment.
 	HealthCheckDisabled bool `json:"healthCheckDisabled,omitempty"`
@@ -5811,7 +5817,6 @@ func (s GoogleTypeExpr) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// Proto2BridgeMessageSet: This is proto2's version of MessageSet.
 type Proto2BridgeMessageSet struct {
 }
 

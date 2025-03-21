@@ -1466,6 +1466,9 @@ type LinkedProducerVpcNetwork struct {
 	Peering string `json:"peering,omitempty"`
 	// ProducerNetwork: Output only. The URI of the Producer VPC.
 	ProducerNetwork string `json:"producerNetwork,omitempty"`
+	// ProposedExcludeExportRanges: Output only. The proposed exclude export IP
+	// ranges waiting for hub administration's approval.
+	ProposedExcludeExportRanges []string `json:"proposedExcludeExportRanges,omitempty"`
 	// ProposedIncludeExportRanges: Optional. The proposed include export IP ranges
 	// waiting for hub administration's approval.
 	ProposedIncludeExportRanges []string `json:"proposedIncludeExportRanges,omitempty"`
@@ -1542,6 +1545,9 @@ type LinkedVpcNetwork struct {
 	// spokes. This VPC spoke cannot be deleted as long as any of these producer
 	// VPC spokes are connected to the NCC Hub.
 	ProducerVpcSpokes []string `json:"producerVpcSpokes,omitempty"`
+	// ProposedExcludeExportRanges: Output only. The proposed exclude export IP
+	// ranges waiting for hub administration's approval.
+	ProposedExcludeExportRanges []string `json:"proposedExcludeExportRanges,omitempty"`
 	// ProposedIncludeExportRanges: Optional. The proposed include export IP ranges
 	// waiting for hub administration's approval.
 	ProposedIncludeExportRanges []string `json:"proposedIncludeExportRanges,omitempty"`

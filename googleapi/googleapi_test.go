@@ -321,7 +321,7 @@ Details:
 		&Error{
 			Code:    http.StatusTooManyRequests,
 			Message: "Resource has been exhausted (e.g. check quota).",
-			Body:    "{\"error\":{\"code\": 429,\"message\": \"Resource has been exhausted (e.g. check quota).\",\"status\": \"RESOURCE_EXHAUSTED\"}}",
+			Body:    `{"error":{"code": 429,"message": "Resource has been exhausted (e.g. check quota).","status": "RESOURCE_EXHAUSTED"}}`,
 		},
 		`googleapi: Error 429: Resource has been exhausted (e.g. check quota).`,
 	},
@@ -334,7 +334,7 @@ Details:
 		&Error{
 			Code:    http.StatusTooManyRequests,
 			Message: "Resource has been exhausted (e.g. check quota).",
-			Body:    "[{\"error\":{\"code\": 429,\"message\": \"Resource has been exhausted (e.g. check quota).\",\"status\": \"RESOURCE_EXHAUSTED\"}}]",
+			Body:    `[{"error":{"code": 429,"message": "Resource has been exhausted (e.g. check quota).","status": "RESOURCE_EXHAUSTED"}}]`,
 		},
 		`googleapi: Error 429: Resource has been exhausted (e.g. check quota).`,
 	},

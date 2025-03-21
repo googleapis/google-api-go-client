@@ -6050,6 +6050,12 @@ type ServiceMeshCondition struct {
 	//   "QUOTA_EXCEEDED_TCP_FILTERS" - TCPFilter quota exceeded error code.
 	//   "QUOTA_EXCEEDED_NETWORK_ENDPOINT_GROUPS" - NetworkEndpointGroup quota
 	// exceeded error code.
+	//   "LEGACY_MC_SECRETS" - Legacy istio secrets found for multicluster error
+	// code
+	//   "WORKLOAD_IDENTITY_REQUIRED" - Workload identity required error code
+	//   "NON_STANDARD_BINARY_USAGE" - Non-standard binary usage error code
+	//   "UNSUPPORTED_GATEWAY_CLASS" - Unsupported gateway class error code
+	//   "MANAGED_CNI_NOT_ENABLED" - Managed CNI not enabled error code
 	//   "MODERNIZATION_SCHEDULED" - Modernization is scheduled for a cluster.
 	//   "MODERNIZATION_IN_PROGRESS" - Modernization is in progress for a cluster.
 	//   "MODERNIZATION_COMPLETED" - Modernization is completed for a cluster.

@@ -5618,6 +5618,8 @@ type UptimeCheckConfig struct {
 	// entries will be ignored. This field is optional and should only be specified
 	// if a content match is required as part of the/ Uptime check.
 	ContentMatchers []*ContentMatcher `json:"contentMatchers,omitempty"`
+	// Disabled: Whether the check is disabled or not.
+	Disabled bool `json:"disabled,omitempty"`
 	// DisplayName: A human-friendly name for the Uptime check configuration. The
 	// display name should be unique within a Cloud Monitoring Workspace in order
 	// to make it easier to identify; however, uniqueness is not enforced.

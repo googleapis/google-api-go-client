@@ -784,8 +784,8 @@ type AutoprovisioningNodePoolDefaults struct {
 	// https://cloud.google.com/kubernetes-engine/docs/concepts/node-images for
 	// available image types.
 	ImageType string `json:"imageType,omitempty"`
-	// InsecureKubeletReadonlyPortEnabled: Enable or disable Kubelet read only
-	// port.
+	// InsecureKubeletReadonlyPortEnabled: DEPRECATED. Use
+	// NodePoolAutoConfig.NodeKubeletConfig instead.
 	InsecureKubeletReadonlyPortEnabled bool `json:"insecureKubeletReadonlyPortEnabled,omitempty"`
 	// Management: NodeManagement configuration for this NodePool.
 	Management *NodeManagement `json:"management,omitempty"`
@@ -1382,7 +1382,7 @@ type Cluster struct {
 	MonitoringConfig *MonitoringConfig `json:"monitoringConfig,omitempty"`
 	// MonitoringService: The monitoring service the cluster should use to write
 	// metrics. Currently available options: *
-	// "monitoring.googleapis.com/kubernetes" - The Cloud Monitoring service with a
+	// `monitoring.googleapis.com/kubernetes` - The Cloud Monitoring service with a
 	// Kubernetes-native resource model * `monitoring.googleapis.com` - The legacy
 	// Cloud Monitoring service (no longer available as of GKE 1.15). * `none` - No
 	// metrics will be exported from the cluster. If left as an empty
@@ -1802,7 +1802,7 @@ type ClusterUpdate struct {
 	DesiredMonitoringConfig *MonitoringConfig `json:"desiredMonitoringConfig,omitempty"`
 	// DesiredMonitoringService: The monitoring service the cluster should use to
 	// write metrics. Currently available options: *
-	// "monitoring.googleapis.com/kubernetes" - The Cloud Monitoring service with a
+	// `monitoring.googleapis.com/kubernetes` - The Cloud Monitoring service with a
 	// Kubernetes-native resource model * `monitoring.googleapis.com` - The legacy
 	// Cloud Monitoring service (no longer available as of GKE 1.15). * `none` - No
 	// metrics will be exported from the cluster. If left as an empty
@@ -4678,7 +4678,8 @@ type NodeConfig struct {
 	// ContainerdConfig: Parameters for containerd customization.
 	ContainerdConfig *ContainerdConfig `json:"containerdConfig,omitempty"`
 	// DiskSizeGb: Size of the disk attached to each node, specified in GB. The
-	// smallest allowed disk size is 10GB. If unspecified, the default disk size is
+	// smallest allowed disk size is 10GB. TODO(b/395671893) - Deprecate
+	// disk_size_gb and disk_type fields. If unspecified, the default disk size is
 	// 100GB.
 	DiskSizeGb int64 `json:"diskSizeGb,omitempty"`
 	// DiskType: Type of the disk attached to each node (e.g. 'pd-standard',
@@ -6751,6 +6752,8 @@ type SecurityBulletinEvent struct {
 	// ManualStepsRequired: If this field is specified, it means there are manual
 	// steps that the user must take to make their clusters safe.
 	ManualStepsRequired bool `json:"manualStepsRequired,omitempty"`
+	// MitigatedVersions: The GKE versions where this vulnerability is mitigated.
+	MitigatedVersions []string `json:"mitigatedVersions,omitempty"`
 	// PatchedVersions: The GKE versions where this vulnerability is patched.
 	PatchedVersions []string `json:"patchedVersions,omitempty"`
 	// ResourceTypeAffected: The resource type (node/control plane) that has the
@@ -7191,7 +7194,7 @@ type SetMonitoringServiceRequest struct {
 	ClusterId string `json:"clusterId,omitempty"`
 	// MonitoringService: Required. The monitoring service the cluster should use
 	// to write metrics. Currently available options: *
-	// "monitoring.googleapis.com/kubernetes" - The Cloud Monitoring service with a
+	// `monitoring.googleapis.com/kubernetes` - The Cloud Monitoring service with a
 	// Kubernetes-native resource model * `monitoring.googleapis.com` - The legacy
 	// Cloud Monitoring service (no longer available as of GKE 1.15). * `none` - No
 	// metrics will be exported from the cluster. If left as an empty
@@ -8072,6 +8075,13 @@ type UpgradeDetails struct {
 	InitialVersion string `json:"initialVersion,omitempty"`
 	// StartTime: The start timestamp of the upgrade.
 	StartTime string `json:"startTime,omitempty"`
+	// StartType: The start type of the upgrade.
+	//
+	// Possible values:
+	//   "START_TYPE_UNSPECIFIED" - Upgrade start type is unspecified.
+	//   "AUTOMATIC" - Upgrade started automatically.
+	//   "MANUAL" - Upgrade started manually.
+	StartType string `json:"startType,omitempty"`
 	// State: Output only. The state of the upgrade.
 	//
 	// Possible values:
@@ -8456,17 +8466,17 @@ func (s VirtualNIC) MarshalJSON() ([]byte, error) {
 
 // WindowsNodeConfig: Parameters that can be configured on Windows nodes.
 // Windows Node Config that define the parameters that will be used to
-// configure the Windows node pool settings
+// configure the Windows node pool settings.
 type WindowsNodeConfig struct {
 	// OsVersion: OSVersion specifies the Windows node config to be used on the
-	// node
+	// node.
 	//
 	// Possible values:
 	//   "OS_VERSION_UNSPECIFIED" - When OSVersion is not specified
 	//   "OS_VERSION_LTSC2019" - LTSC2019 specifies to use LTSC2019 as the Windows
-	// Servercore Base Image
+	// Servercore Base Image.
 	//   "OS_VERSION_LTSC2022" - LTSC2022 specifies to use LTSC2022 as the Windows
-	// Servercore Base Image
+	// Servercore Base Image.
 	OsVersion string `json:"osVersion,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "OsVersion") to
 	// unconditionally include in API requests. By default, fields with empty or

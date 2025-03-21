@@ -2154,6 +2154,8 @@ type PrivateConnection struct {
 	Labels map[string]string `json:"labels,omitempty"`
 	// Name: Output only. Identifier. The resource's name.
 	Name string `json:"name,omitempty"`
+	// PscInterfaceConfig: PSC Interface Config.
+	PscInterfaceConfig *PscInterfaceConfig `json:"pscInterfaceConfig,omitempty"`
 	// SatisfiesPzi: Output only. Reserved for future use.
 	SatisfiesPzi bool `json:"satisfiesPzi,omitempty"`
 	// SatisfiesPzs: Output only. Reserved for future use.
@@ -2216,6 +2218,31 @@ type PrivateConnectivity struct {
 
 func (s PrivateConnectivity) MarshalJSON() ([]byte, error) {
 	type NoMethod PrivateConnectivity
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// PscInterfaceConfig: The PSC Interface configuration is used to create PSC
+// Interface between Datastream and the consumer's PSC.
+type PscInterfaceConfig struct {
+	// NetworkAttachment: Required. Fully qualified name of the Network Attachment
+	// that Datastream will connect to. Format:
+	// `projects/{{project}}/regions/{{region}}/networkAttachments/{{name}}`
+	NetworkAttachment string `json:"networkAttachment,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "NetworkAttachment") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "NetworkAttachment") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s PscInterfaceConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod PscInterfaceConfig
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -4945,6 +4972,14 @@ func (c *ProjectsLocationsPrivateConnectionsCreateCall) PrivateConnectionId(priv
 // supported (00000000-0000-0000-0000-000000000000).
 func (c *ProjectsLocationsPrivateConnectionsCreateCall) RequestId(requestId string) *ProjectsLocationsPrivateConnectionsCreateCall {
 	c.urlParams_.Set("requestId", requestId)
+	return c
+}
+
+// ValidateOnly sets the optional parameter "validateOnly": When supplied with
+// PSC Interface config, will get/create the tenant project required for the
+// customer to allow list and won't actually create the private connection.
+func (c *ProjectsLocationsPrivateConnectionsCreateCall) ValidateOnly(validateOnly bool) *ProjectsLocationsPrivateConnectionsCreateCall {
+	c.urlParams_.Set("validateOnly", fmt.Sprint(validateOnly))
 	return c
 }
 

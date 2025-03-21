@@ -1996,6 +1996,33 @@ func (s BulkMuteFindingsRequest) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// Chokepoint: Contains details about a chokepoint, which is a resource or
+// resource group where high-risk attack paths converge, based on [attack path
+// simulations]
+// (https://cloud.google.com/security-command-center/docs/attack-exposure-learn#attack_path_simulations).
+type Chokepoint struct {
+	// RelatedFindings: List of resource names of findings associated with this
+	// chokepoint. For example, organizations/123/sources/456/findings/789. This
+	// list will have at most 100 findings.
+	RelatedFindings []string `json:"relatedFindings,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "RelatedFindings") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "RelatedFindings") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s Chokepoint) MarshalJSON() ([]byte, error) {
+	type NoMethod Chokepoint
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // CloudArmor: Fields related to Google Cloud Armor findings.
 type CloudArmor struct {
 	// AdaptiveProtection: Information about potential Layer 7 DDoS attacks
@@ -3303,6 +3330,12 @@ type Finding struct {
 	// Category: The additional taxonomy group within findings from a given source.
 	// This field is immutable after creation time. Example: "XSS_FLASH_INJECTION"
 	Category string `json:"category,omitempty"`
+	// Chokepoint: Contains details about a chokepoint, which is a resource or
+	// resource group where high-risk attack paths converge, based on [attack path
+	// simulations]
+	// (https://cloud.google.com/security-command-center/docs/attack-exposure-learn#attack_path_simulations).
+	// This field cannot be updated. Its value is ignored in all update requests.
+	Chokepoint *Chokepoint `json:"chokepoint,omitempty"`
 	// CloudArmor: Fields related to Cloud Armor findings.
 	CloudArmor *CloudArmor `json:"cloudArmor,omitempty"`
 	// CloudDlpDataProfile: Cloud DLP data profile that is associated with the
@@ -3381,6 +3414,8 @@ type Finding struct {
 	// independently. A group of such issues is referred to as a toxic combination.
 	//   "SENSITIVE_DATA_RISK" - Describes a potential security risk to data assets
 	// that contain sensitive data.
+	//   "CHOKEPOINT" - Describes a resource or resource group where high risk
+	// attack paths converge, based on attack path simulations (APS).
 	FindingClass string `json:"findingClass,omitempty"`
 	// GroupMemberships: Contains details about groups of which this finding is a
 	// member. A group is a collection of findings that are related in some way.
@@ -5467,6 +5502,33 @@ func (s GoogleCloudSecuritycenterV2Binding) MarshalJSON() ([]byte, error) {
 type GoogleCloudSecuritycenterV2BulkMuteFindingsResponse struct {
 }
 
+// GoogleCloudSecuritycenterV2Chokepoint: Contains details about a chokepoint,
+// which is a resource or resource group where high-risk attack paths converge,
+// based on [attack path simulations]
+// (https://cloud.google.com/security-command-center/docs/attack-exposure-learn#attack_path_simulations).
+type GoogleCloudSecuritycenterV2Chokepoint struct {
+	// RelatedFindings: List of resource names of findings associated with this
+	// chokepoint. For example, organizations/123/sources/456/findings/789. This
+	// list will have at most 100 findings.
+	RelatedFindings []string `json:"relatedFindings,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "RelatedFindings") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "RelatedFindings") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudSecuritycenterV2Chokepoint) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudSecuritycenterV2Chokepoint
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudSecuritycenterV2CloudArmor: Fields related to Google Cloud Armor
 // findings.
 type GoogleCloudSecuritycenterV2CloudArmor struct {
@@ -6534,6 +6596,12 @@ type GoogleCloudSecuritycenterV2Finding struct {
 	// Category: Immutable. The additional taxonomy group within findings from a
 	// given source. Example: "XSS_FLASH_INJECTION"
 	Category string `json:"category,omitempty"`
+	// Chokepoint: Contains details about a chokepoint, which is a resource or
+	// resource group where high-risk attack paths converge, based on [attack path
+	// simulations]
+	// (https://cloud.google.com/security-command-center/docs/attack-exposure-learn#attack_path_simulations).
+	// This field cannot be updated. Its value is ignored in all update requests.
+	Chokepoint *GoogleCloudSecuritycenterV2Chokepoint `json:"chokepoint,omitempty"`
 	// CloudArmor: Fields related to Cloud Armor findings.
 	CloudArmor *GoogleCloudSecuritycenterV2CloudArmor `json:"cloudArmor,omitempty"`
 	// CloudDlpDataProfile: Cloud DLP data profile that is associated with the
@@ -6611,6 +6679,8 @@ type GoogleCloudSecuritycenterV2Finding struct {
 	// represent a more severe security problem when taken together.
 	//   "SENSITIVE_DATA_RISK" - Describes a potential security risk to data assets
 	// that contain sensitive data.
+	//   "CHOKEPOINT" - Describes a resource or resource group where high risk
+	// attack paths converge, based on attack path simulations (APS).
 	FindingClass string `json:"findingClass,omitempty"`
 	// GroupMemberships: Contains details about groups of which this finding is a
 	// member. A group is a collection of findings that are related in some way.
@@ -6858,6 +6928,7 @@ type GoogleCloudSecuritycenterV2GroupMembership struct {
 	// Possible values:
 	//   "GROUP_TYPE_UNSPECIFIED" - Default value.
 	//   "GROUP_TYPE_TOXIC_COMBINATION" - Group represents a toxic combination.
+	//   "GROUP_TYPE_CHOKEPOINT" - Group represents a chokepoint.
 	GroupType string `json:"groupType,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "GroupId") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -9428,6 +9499,7 @@ type GroupMembership struct {
 	// Possible values:
 	//   "GROUP_TYPE_UNSPECIFIED" - Default value.
 	//   "GROUP_TYPE_TOXIC_COMBINATION" - Group represents a toxic combination.
+	//   "GROUP_TYPE_CHOKEPOINT" - Group represents a chokepoint.
 	GroupType string `json:"groupType,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "GroupId") to unconditionally
 	// include in API requests. By default, fields with empty or default values are

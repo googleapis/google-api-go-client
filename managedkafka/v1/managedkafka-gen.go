@@ -172,6 +172,7 @@ type ProjectsService struct {
 func NewProjectsLocationsService(s *Service) *ProjectsLocationsService {
 	rs := &ProjectsLocationsService{s: s}
 	rs.Clusters = NewProjectsLocationsClustersService(s)
+	rs.ConnectClusters = NewProjectsLocationsConnectClustersService(s)
 	rs.Operations = NewProjectsLocationsOperationsService(s)
 	return rs
 }
@@ -180,6 +181,8 @@ type ProjectsLocationsService struct {
 	s *Service
 
 	Clusters *ProjectsLocationsClustersService
+
+	ConnectClusters *ProjectsLocationsConnectClustersService
 
 	Operations *ProjectsLocationsOperationsService
 }
@@ -214,6 +217,27 @@ func NewProjectsLocationsClustersTopicsService(s *Service) *ProjectsLocationsClu
 }
 
 type ProjectsLocationsClustersTopicsService struct {
+	s *Service
+}
+
+func NewProjectsLocationsConnectClustersService(s *Service) *ProjectsLocationsConnectClustersService {
+	rs := &ProjectsLocationsConnectClustersService{s: s}
+	rs.Connectors = NewProjectsLocationsConnectClustersConnectorsService(s)
+	return rs
+}
+
+type ProjectsLocationsConnectClustersService struct {
+	s *Service
+
+	Connectors *ProjectsLocationsConnectClustersConnectorsService
+}
+
+func NewProjectsLocationsConnectClustersConnectorsService(s *Service) *ProjectsLocationsConnectClustersConnectorsService {
+	rs := &ProjectsLocationsConnectClustersConnectorsService{s: s}
+	return rs
+}
+
+type ProjectsLocationsConnectClustersConnectorsService struct {
 	s *Service
 }
 
@@ -329,6 +353,199 @@ type Cluster struct {
 
 func (s Cluster) MarshalJSON() ([]byte, error) {
 	type NoMethod Cluster
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ConnectAccessConfig: The configuration of access to the Kafka Connect
+// cluster.
+type ConnectAccessConfig struct {
+	// NetworkConfigs: Required. Virtual Private Cloud (VPC) networks that must be
+	// granted direct access to the Kafka Connect cluster. Minimum of 1 network is
+	// required. Maximum 10 networks can be specified.
+	NetworkConfigs []*ConnectNetworkConfig `json:"networkConfigs,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "NetworkConfigs") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "NetworkConfigs") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ConnectAccessConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod ConnectAccessConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ConnectCluster: An Apache Kafka Connect cluster deployed in a location.
+type ConnectCluster struct {
+	// CapacityConfig: Required. Capacity configuration for the Kafka Connect
+	// cluster.
+	CapacityConfig *CapacityConfig `json:"capacityConfig,omitempty"`
+	// Config: Optional. Configurations for the worker that are overridden from the
+	// defaults. The key of the map is a Kafka Connect worker property name, for
+	// example: `exactly.once.source.support`.
+	Config map[string]string `json:"config,omitempty"`
+	// CreateTime: Output only. The time when the cluster was created.
+	CreateTime string `json:"createTime,omitempty"`
+	// GcpConfig: Required. Configuration properties for a Kafka Connect cluster
+	// deployed to Google Cloud Platform.
+	GcpConfig *ConnectGcpConfig `json:"gcpConfig,omitempty"`
+	// KafkaCluster: Required. Immutable. The name of the Kafka cluster this Kafka
+	// Connect cluster is attached to. Structured like:
+	// projects/{project}/locations/{location}/clusters/{cluster}
+	KafkaCluster string `json:"kafkaCluster,omitempty"`
+	// Labels: Optional. Labels as key value pairs.
+	Labels map[string]string `json:"labels,omitempty"`
+	// Name: Identifier. The name of the Kafka Connect cluster. Structured like:
+	// projects/{project_number}/locations/{location}/connectClusters/{connect_clust
+	// er_id}
+	Name string `json:"name,omitempty"`
+	// State: Output only. The current state of the cluster.
+	//
+	// Possible values:
+	//   "STATE_UNSPECIFIED" - A state was not specified.
+	//   "CREATING" - The cluster is being created.
+	//   "ACTIVE" - The cluster is active.
+	//   "DELETING" - The cluster is being deleted.
+	State string `json:"state,omitempty"`
+	// UpdateTime: Output only. The time when the cluster was last updated.
+	UpdateTime string `json:"updateTime,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "CapacityConfig") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CapacityConfig") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ConnectCluster) MarshalJSON() ([]byte, error) {
+	type NoMethod ConnectCluster
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ConnectGcpConfig: Configuration properties for a Kafka Connect cluster
+// deployed to Google Cloud Platform.
+type ConnectGcpConfig struct {
+	// AccessConfig: Required. Access configuration for the Kafka Connect cluster.
+	AccessConfig *ConnectAccessConfig `json:"accessConfig,omitempty"`
+	// SecretPaths: Optional. Secrets to load into workers. Exact SecretVersions
+	// from Secret Manager must be provided -- aliases are not supported. Up to 32
+	// secrets may be loaded into one cluster. Format: projects//secrets//versions/
+	SecretPaths []string `json:"secretPaths,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AccessConfig") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AccessConfig") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ConnectGcpConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod ConnectGcpConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ConnectNetworkConfig: The configuration of a Virtual Private Cloud (VPC)
+// network that can access the Kafka Connect cluster.
+type ConnectNetworkConfig struct {
+	// AdditionalSubnets: Optional. Additional subnets may be specified. They may
+	// be in another region, but must be in the same VPC network. The Connect
+	// workers can communicate with network endpoints in either the primary or
+	// additional subnets.
+	AdditionalSubnets []string `json:"additionalSubnets,omitempty"`
+	// DnsDomainNames: Optional. Additional DNS domain names from the subnet's
+	// network to be made visible to the Connect Cluster. When using MirrorMaker2,
+	// it's necessary to add the bootstrap address's dns domain name of the target
+	// cluster to make it visible to the connector. For example:
+	// my-kafka-cluster.us-central1.managedkafka.my-project.cloud.goog
+	DnsDomainNames []string `json:"dnsDomainNames,omitempty"`
+	// PrimarySubnet: Required. VPC subnet to make available to the Kafka Connect
+	// cluster. Structured like:
+	// projects/{project}/regions/{region}/subnetworks/{subnet_id} It is used to
+	// create a Private Service Connect (PSC) interface for the Kafka Connect
+	// workers. It must be located in the same region as the Kafka Connect cluster.
+	// The CIDR range of the subnet must be within the IPv4 address ranges for
+	// private networks, as specified in RFC 1918. The primary subnet CIDR range
+	// must have a minimum size of /22 (1024 addresses).
+	PrimarySubnet string `json:"primarySubnet,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AdditionalSubnets") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AdditionalSubnets") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ConnectNetworkConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod ConnectNetworkConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// Connector: A Kafka Connect connector in a given ConnectCluster.
+type Connector struct {
+	// Configs: Optional. Connector config as keys/values. The keys of the map are
+	// connector property names, for example: `connector.class`, `tasks.max`,
+	// `key.converter`.
+	Configs map[string]string `json:"configs,omitempty"`
+	// Name: Identifier. The name of the connector. Structured like:
+	// projects/{project}/locations/{location}/connectClusters/{connect_cluster}/con
+	// nectors/{connector}
+	Name string `json:"name,omitempty"`
+	// State: Output only. The current state of the connector.
+	//
+	// Possible values:
+	//   "STATE_UNSPECIFIED" - A state was not specified.
+	//   "UNASSIGNED" - The connector is not assigned to any tasks, usually
+	// transient.
+	//   "RUNNING" - The connector is running.
+	//   "PAUSED" - The connector has been paused.
+	//   "FAILED" - The connector has failed. See logs for why.
+	//   "RESTARTING" - The connector is restarting.
+	//   "STOPPED" - The connector has been stopped.
+	State string `json:"state,omitempty"`
+	// TaskRestartPolicy: Optional. Restarts the individual tasks of a Connector.
+	TaskRestartPolicy *TaskRetryPolicy `json:"taskRestartPolicy,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "Configs") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Configs") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s Connector) MarshalJSON() ([]byte, error) {
+	type NoMethod Connector
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -480,6 +697,64 @@ type ListClustersResponse struct {
 
 func (s ListClustersResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListClustersResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ListConnectClustersResponse: Response for ListConnectClusters.
+type ListConnectClustersResponse struct {
+	// ConnectClusters: The list of Connect clusters in the requested parent.
+	ConnectClusters []*ConnectCluster `json:"connectClusters,omitempty"`
+	// NextPageToken: A token that can be sent as `page_token` to retrieve the next
+	// page of results. If this field is omitted, there are no more results.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+	// Unreachable: Locations that could not be reached.
+	Unreachable []string `json:"unreachable,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "ConnectClusters") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ConnectClusters") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ListConnectClustersResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ListConnectClustersResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ListConnectorsResponse: Response for ListConnectors.
+type ListConnectorsResponse struct {
+	// Connectors: The list of connectors in the requested parent.
+	Connectors []*Connector `json:"connectors,omitempty"`
+	// NextPageToken: A token that can be sent as `page_token` to retrieve the next
+	// page of results. If this field is omitted, there are no more results.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "Connectors") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Connectors") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ListConnectorsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ListConnectorsResponse
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -748,6 +1023,16 @@ func (s OperationMetadata) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// PauseConnectorRequest: Request for PauseConnector.
+type PauseConnectorRequest struct {
+}
+
+// PauseConnectorResponse: Response for PauseConnector.
+type PauseConnectorResponse struct {
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+}
+
 // RebalanceConfig: Defines rebalancing behavior of a Kafka cluster.
 type RebalanceConfig struct {
 	// Mode: Optional. The rebalance behavior for the cluster. When not specified,
@@ -775,6 +1060,26 @@ type RebalanceConfig struct {
 func (s RebalanceConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod RebalanceConfig
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// RestartConnectorRequest: Request for RestartConnector.
+type RestartConnectorRequest struct {
+}
+
+// RestartConnectorResponse: Response for RestartConnector.
+type RestartConnectorResponse struct {
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+}
+
+// ResumeConnectorRequest: Request for ResumeConnector.
+type ResumeConnectorRequest struct {
+}
+
+// ResumeConnectorResponse: Response for ResumeConnector.
+type ResumeConnectorResponse struct {
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
 }
 
 // Status: The `Status` type defines a logical error model that is suitable for
@@ -808,6 +1113,47 @@ type Status struct {
 
 func (s Status) MarshalJSON() ([]byte, error) {
 	type NoMethod Status
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// StopConnectorRequest: Request for StopConnector.
+type StopConnectorRequest struct {
+}
+
+// StopConnectorResponse: Response for StopConnector.
+type StopConnectorResponse struct {
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+}
+
+// TaskRetryPolicy: Task Retry Policy is implemented on a best-effort basis.
+// Retry delay will be exponential based on provided minimum and maximum
+// backoffs. https://en.wikipedia.org/wiki/Exponential_backoff. Note that the
+// delay between consecutive task restarts may not always precisely match the
+// configured settings. This can happen when the ConnectCluster is in
+// rebalancing state or if the ConnectCluster is unresponsive etc.
+type TaskRetryPolicy struct {
+	// MaximumBackoff: Optional. The maximum amount of time to wait before retrying
+	// a failed task. This sets an upper bound for the backoff delay.
+	MaximumBackoff string `json:"maximumBackoff,omitempty"`
+	// MinimumBackoff: Optional. The minimum amount of time to wait before retrying
+	// a failed task. This sets a lower bound for the backoff delay.
+	MinimumBackoff string `json:"minimumBackoff,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "MaximumBackoff") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "MaximumBackoff") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s TaskRetryPolicy) MarshalJSON() ([]byte, error) {
+	type NoMethod TaskRetryPolicy
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -2818,6 +3164,1674 @@ func (c *ProjectsLocationsClustersTopicsPatchCall) Do(opts ...googleapi.CallOpti
 		return nil, err
 	}
 	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "managedkafka.projects.locations.clusters.topics.patch", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsConnectClustersCreateCall struct {
+	s              *Service
+	parent         string
+	connectcluster *ConnectCluster
+	urlParams_     gensupport.URLParams
+	ctx_           context.Context
+	header_        http.Header
+}
+
+// Create: Creates a new Kafka Connect cluster in a given project and location.
+//
+//   - parent: The parent project/location in which to create the Kafka Connect
+//     cluster. Structured like `projects/{project}/locations/{location}/`.
+func (r *ProjectsLocationsConnectClustersService) Create(parent string, connectcluster *ConnectCluster) *ProjectsLocationsConnectClustersCreateCall {
+	c := &ProjectsLocationsConnectClustersCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.connectcluster = connectcluster
+	return c
+}
+
+// ConnectClusterId sets the optional parameter "connectClusterId": Required.
+// The ID to use for the Connect cluster, which will become the final component
+// of the cluster's name. The ID must be 1-63 characters long, and match the
+// regular expression `[a-z]([-a-z0-9]*[a-z0-9])?` to comply with RFC 1035.
+// This value is structured like: `my-cluster-id`.
+func (c *ProjectsLocationsConnectClustersCreateCall) ConnectClusterId(connectClusterId string) *ProjectsLocationsConnectClustersCreateCall {
+	c.urlParams_.Set("connectClusterId", connectClusterId)
+	return c
+}
+
+// RequestId sets the optional parameter "requestId": An optional request ID to
+// identify requests. Specify a unique request ID to avoid duplication of
+// requests. If a request times out or fails, retrying with the same ID allows
+// the server to recognize the previous attempt. For at least 60 minutes, the
+// server ignores duplicate requests bearing the same ID. For example, consider
+// a situation where you make an initial request and the request times out. If
+// you make the request again with the same request ID within 60 minutes of the
+// last request, the server checks if an original operation with the same
+// request ID was received. If so, the server ignores the second request. The
+// request ID must be a valid UUID. A zero UUID is not supported
+// (00000000-0000-0000-0000-000000000000).
+func (c *ProjectsLocationsConnectClustersCreateCall) RequestId(requestId string) *ProjectsLocationsConnectClustersCreateCall {
+	c.urlParams_.Set("requestId", requestId)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsConnectClustersCreateCall) Fields(s ...googleapi.Field) *ProjectsLocationsConnectClustersCreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsConnectClustersCreateCall) Context(ctx context.Context) *ProjectsLocationsConnectClustersCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsConnectClustersCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsConnectClustersCreateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.connectcluster)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/connectClusters")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "managedkafka.projects.locations.connectClusters.create", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "managedkafka.projects.locations.connectClusters.create" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsConnectClustersCreateCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "managedkafka.projects.locations.connectClusters.create", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsConnectClustersDeleteCall struct {
+	s          *Service
+	name       string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Delete: Deletes a single Connect cluster.
+//
+//   - name: The name of the Kafka Connect cluster to delete. Structured like
+//     `projects/{project}/locations/{location}/connectClusters/{connect_cluster_i
+//     d}`.
+func (r *ProjectsLocationsConnectClustersService) Delete(name string) *ProjectsLocationsConnectClustersDeleteCall {
+	c := &ProjectsLocationsConnectClustersDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// RequestId sets the optional parameter "requestId": An optional request ID to
+// identify requests. Specify a unique request ID to avoid duplication of
+// requests. If a request times out or fails, retrying with the same ID allows
+// the server to recognize the previous attempt. For at least 60 minutes, the
+// server ignores duplicate requests bearing the same ID. For example, consider
+// a situation where you make an initial request and the request times out. If
+// you make the request again with the same request ID within 60 minutes of the
+// last request, the server checks if an original operation with the same
+// request ID was received. If so, the server ignores the second request. The
+// request ID must be a valid UUID. A zero UUID is not supported
+// (00000000-0000-0000-0000-000000000000).
+func (c *ProjectsLocationsConnectClustersDeleteCall) RequestId(requestId string) *ProjectsLocationsConnectClustersDeleteCall {
+	c.urlParams_.Set("requestId", requestId)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsConnectClustersDeleteCall) Fields(s ...googleapi.Field) *ProjectsLocationsConnectClustersDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsConnectClustersDeleteCall) Context(ctx context.Context) *ProjectsLocationsConnectClustersDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsConnectClustersDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsConnectClustersDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("DELETE", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "managedkafka.projects.locations.connectClusters.delete", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "managedkafka.projects.locations.connectClusters.delete" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsConnectClustersDeleteCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "managedkafka.projects.locations.connectClusters.delete", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsConnectClustersGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Returns the properties of a single Kafka Connect cluster.
+//
+//   - name: The name of the Kafka Connect cluster whose configuration to return.
+//     Structured like
+//     `projects/{project}/locations/{location}/connectClusters/{connect_cluster_i
+//     d}`.
+func (r *ProjectsLocationsConnectClustersService) Get(name string) *ProjectsLocationsConnectClustersGetCall {
+	c := &ProjectsLocationsConnectClustersGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsConnectClustersGetCall) Fields(s ...googleapi.Field) *ProjectsLocationsConnectClustersGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsConnectClustersGetCall) IfNoneMatch(entityTag string) *ProjectsLocationsConnectClustersGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsConnectClustersGetCall) Context(ctx context.Context) *ProjectsLocationsConnectClustersGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsConnectClustersGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsConnectClustersGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "managedkafka.projects.locations.connectClusters.get", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "managedkafka.projects.locations.connectClusters.get" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *ConnectCluster.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsConnectClustersGetCall) Do(opts ...googleapi.CallOption) (*ConnectCluster, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ConnectCluster{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "managedkafka.projects.locations.connectClusters.get", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsConnectClustersListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists the Kafka Connect clusters in a given project and location.
+//
+//   - parent: The parent project/location whose Connect clusters are to be
+//     listed. Structured like `projects/{project}/locations/{location}`.
+func (r *ProjectsLocationsConnectClustersService) List(parent string) *ProjectsLocationsConnectClustersListCall {
+	c := &ProjectsLocationsConnectClustersListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// Filter sets the optional parameter "filter": Filter expression for the
+// result.
+func (c *ProjectsLocationsConnectClustersListCall) Filter(filter string) *ProjectsLocationsConnectClustersListCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// OrderBy sets the optional parameter "orderBy": Order by fields for the
+// result.
+func (c *ProjectsLocationsConnectClustersListCall) OrderBy(orderBy string) *ProjectsLocationsConnectClustersListCall {
+	c.urlParams_.Set("orderBy", orderBy)
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The maximum number of
+// Connect clusters to return. The service may return fewer than this value. If
+// unspecified, server will pick an appropriate default.
+func (c *ProjectsLocationsConnectClustersListCall) PageSize(pageSize int64) *ProjectsLocationsConnectClustersListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": A page token, received
+// from a previous `ListConnectClusters` call. Provide this to retrieve the
+// subsequent page. When paginating, all other parameters provided to
+// `ListConnectClusters` must match the call that provided the page token.
+func (c *ProjectsLocationsConnectClustersListCall) PageToken(pageToken string) *ProjectsLocationsConnectClustersListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsConnectClustersListCall) Fields(s ...googleapi.Field) *ProjectsLocationsConnectClustersListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsConnectClustersListCall) IfNoneMatch(entityTag string) *ProjectsLocationsConnectClustersListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsConnectClustersListCall) Context(ctx context.Context) *ProjectsLocationsConnectClustersListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsConnectClustersListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsConnectClustersListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/connectClusters")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "managedkafka.projects.locations.connectClusters.list", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "managedkafka.projects.locations.connectClusters.list" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *ListConnectClustersResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsConnectClustersListCall) Do(opts ...googleapi.CallOption) (*ListConnectClustersResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ListConnectClustersResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "managedkafka.projects.locations.connectClusters.list", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsLocationsConnectClustersListCall) Pages(ctx context.Context, f func(*ListConnectClustersResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+type ProjectsLocationsConnectClustersPatchCall struct {
+	s              *Service
+	name           string
+	connectcluster *ConnectCluster
+	urlParams_     gensupport.URLParams
+	ctx_           context.Context
+	header_        http.Header
+}
+
+// Patch: Updates the properties of a single Kafka Connect cluster.
+//
+//   - name: Identifier. The name of the Kafka Connect cluster. Structured like:
+//     projects/{project_number}/locations/{location}/connectClusters/{connect_clu
+//     ster_id}.
+func (r *ProjectsLocationsConnectClustersService) Patch(name string, connectcluster *ConnectCluster) *ProjectsLocationsConnectClustersPatchCall {
+	c := &ProjectsLocationsConnectClustersPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.connectcluster = connectcluster
+	return c
+}
+
+// RequestId sets the optional parameter "requestId": An optional request ID to
+// identify requests. Specify a unique request ID to avoid duplication of
+// requests. If a request times out or fails, retrying with the same ID allows
+// the server to recognize the previous attempt. For at least 60 minutes, the
+// server ignores duplicate requests bearing the same ID. For example, consider
+// a situation where you make an initial request and the request times out. If
+// you make the request again with the same request ID within 60 minutes of the
+// last request, the server checks if an original operation with the same
+// request ID was received. If so, the server ignores the second request. The
+// request ID must be a valid UUID. A zero UUID is not supported
+// (00000000-0000-0000-0000-000000000000).
+func (c *ProjectsLocationsConnectClustersPatchCall) RequestId(requestId string) *ProjectsLocationsConnectClustersPatchCall {
+	c.urlParams_.Set("requestId", requestId)
+	return c
+}
+
+// UpdateMask sets the optional parameter "updateMask": Required. Field mask is
+// used to specify the fields to be overwritten in the cluster resource by the
+// update. The fields specified in the update_mask are relative to the
+// resource, not the full request. A field will be overwritten if it is in the
+// mask. The mask is required and a value of * will update all fields.
+func (c *ProjectsLocationsConnectClustersPatchCall) UpdateMask(updateMask string) *ProjectsLocationsConnectClustersPatchCall {
+	c.urlParams_.Set("updateMask", updateMask)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsConnectClustersPatchCall) Fields(s ...googleapi.Field) *ProjectsLocationsConnectClustersPatchCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsConnectClustersPatchCall) Context(ctx context.Context) *ProjectsLocationsConnectClustersPatchCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsConnectClustersPatchCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsConnectClustersPatchCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.connectcluster)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PATCH", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "managedkafka.projects.locations.connectClusters.patch", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "managedkafka.projects.locations.connectClusters.patch" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsConnectClustersPatchCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "managedkafka.projects.locations.connectClusters.patch", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsConnectClustersConnectorsCreateCall struct {
+	s          *Service
+	parent     string
+	connector  *Connector
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Create: Creates a new connector in a given Connect cluster.
+//
+//   - parent: The parent Connect cluster in which to create the connector.
+//     Structured like
+//     `projects/{project}/locations/{location}/connectClusters/{connect_cluster_i
+//     d}`.
+func (r *ProjectsLocationsConnectClustersConnectorsService) Create(parent string, connector *Connector) *ProjectsLocationsConnectClustersConnectorsCreateCall {
+	c := &ProjectsLocationsConnectClustersConnectorsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.connector = connector
+	return c
+}
+
+// ConnectorId sets the optional parameter "connectorId": Required. The ID to
+// use for the connector, which will become the final component of the
+// connector's name. The ID must be 1-63 characters long, and match the regular
+// expression `[a-z]([-a-z0-9]*[a-z0-9])?` to comply with RFC 1035. This value
+// is structured like: `my-connector-id`.
+func (c *ProjectsLocationsConnectClustersConnectorsCreateCall) ConnectorId(connectorId string) *ProjectsLocationsConnectClustersConnectorsCreateCall {
+	c.urlParams_.Set("connectorId", connectorId)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsConnectClustersConnectorsCreateCall) Fields(s ...googleapi.Field) *ProjectsLocationsConnectClustersConnectorsCreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsConnectClustersConnectorsCreateCall) Context(ctx context.Context) *ProjectsLocationsConnectClustersConnectorsCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsConnectClustersConnectorsCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsConnectClustersConnectorsCreateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.connector)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/connectors")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "managedkafka.projects.locations.connectClusters.connectors.create", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "managedkafka.projects.locations.connectClusters.connectors.create" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Connector.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsConnectClustersConnectorsCreateCall) Do(opts ...googleapi.CallOption) (*Connector, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Connector{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "managedkafka.projects.locations.connectClusters.connectors.create", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsConnectClustersConnectorsDeleteCall struct {
+	s          *Service
+	name       string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Delete: Deletes a connector.
+//
+//   - name: The name of the connector to delete. Structured like:
+//     projects/{project}/locations/{location}/connectClusters/{connectCluster}/co
+//     nnectors/{connector}.
+func (r *ProjectsLocationsConnectClustersConnectorsService) Delete(name string) *ProjectsLocationsConnectClustersConnectorsDeleteCall {
+	c := &ProjectsLocationsConnectClustersConnectorsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsConnectClustersConnectorsDeleteCall) Fields(s ...googleapi.Field) *ProjectsLocationsConnectClustersConnectorsDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsConnectClustersConnectorsDeleteCall) Context(ctx context.Context) *ProjectsLocationsConnectClustersConnectorsDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsConnectClustersConnectorsDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsConnectClustersConnectorsDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("DELETE", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "managedkafka.projects.locations.connectClusters.connectors.delete", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "managedkafka.projects.locations.connectClusters.connectors.delete" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Empty.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsConnectClustersConnectorsDeleteCall) Do(opts ...googleapi.CallOption) (*Empty, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Empty{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "managedkafka.projects.locations.connectClusters.connectors.delete", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsConnectClustersConnectorsGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Returns the properties of a single connector.
+//
+//   - name: The name of the connector whose configuration to return. Structured
+//     like:
+//     projects/{project}/locations/{location}/connectClusters/{connectCluster}/co
+//     nnectors/{connector}.
+func (r *ProjectsLocationsConnectClustersConnectorsService) Get(name string) *ProjectsLocationsConnectClustersConnectorsGetCall {
+	c := &ProjectsLocationsConnectClustersConnectorsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsConnectClustersConnectorsGetCall) Fields(s ...googleapi.Field) *ProjectsLocationsConnectClustersConnectorsGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsConnectClustersConnectorsGetCall) IfNoneMatch(entityTag string) *ProjectsLocationsConnectClustersConnectorsGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsConnectClustersConnectorsGetCall) Context(ctx context.Context) *ProjectsLocationsConnectClustersConnectorsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsConnectClustersConnectorsGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsConnectClustersConnectorsGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "managedkafka.projects.locations.connectClusters.connectors.get", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "managedkafka.projects.locations.connectClusters.connectors.get" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Connector.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsConnectClustersConnectorsGetCall) Do(opts ...googleapi.CallOption) (*Connector, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Connector{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "managedkafka.projects.locations.connectClusters.connectors.get", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsConnectClustersConnectorsListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists the connectors in a given Connect cluster.
+//
+//   - parent: The parent Connect cluster whose connectors are to be listed.
+//     Structured like
+//     `projects/{project}/locations/{location}/connectClusters/{connect_cluster_i
+//     d}`.
+func (r *ProjectsLocationsConnectClustersConnectorsService) List(parent string) *ProjectsLocationsConnectClustersConnectorsListCall {
+	c := &ProjectsLocationsConnectClustersConnectorsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The maximum number of
+// connectors to return. The service may return fewer than this value. If
+// unspecified, server will pick an appropriate default.
+func (c *ProjectsLocationsConnectClustersConnectorsListCall) PageSize(pageSize int64) *ProjectsLocationsConnectClustersConnectorsListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": A page token, received
+// from a previous `ListConnectors` call. Provide this to retrieve the
+// subsequent page. When paginating, all other parameters provided to
+// `ListConnectors` must match the call that provided the page token.
+func (c *ProjectsLocationsConnectClustersConnectorsListCall) PageToken(pageToken string) *ProjectsLocationsConnectClustersConnectorsListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsConnectClustersConnectorsListCall) Fields(s ...googleapi.Field) *ProjectsLocationsConnectClustersConnectorsListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsConnectClustersConnectorsListCall) IfNoneMatch(entityTag string) *ProjectsLocationsConnectClustersConnectorsListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsConnectClustersConnectorsListCall) Context(ctx context.Context) *ProjectsLocationsConnectClustersConnectorsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsConnectClustersConnectorsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsConnectClustersConnectorsListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/connectors")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "managedkafka.projects.locations.connectClusters.connectors.list", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "managedkafka.projects.locations.connectClusters.connectors.list" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *ListConnectorsResponse.ServerResponse.Header or (if a response was returned
+// at all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *ProjectsLocationsConnectClustersConnectorsListCall) Do(opts ...googleapi.CallOption) (*ListConnectorsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ListConnectorsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "managedkafka.projects.locations.connectClusters.connectors.list", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsLocationsConnectClustersConnectorsListCall) Pages(ctx context.Context, f func(*ListConnectorsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+type ProjectsLocationsConnectClustersConnectorsPatchCall struct {
+	s          *Service
+	name       string
+	connector  *Connector
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Patch: Updates the properties of a connector.
+//
+//   - name: Identifier. The name of the connector. Structured like:
+//     projects/{project}/locations/{location}/connectClusters/{connect_cluster}/c
+//     onnectors/{connector}.
+func (r *ProjectsLocationsConnectClustersConnectorsService) Patch(name string, connector *Connector) *ProjectsLocationsConnectClustersConnectorsPatchCall {
+	c := &ProjectsLocationsConnectClustersConnectorsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.connector = connector
+	return c
+}
+
+// UpdateMask sets the optional parameter "updateMask": Required. Field mask is
+// used to specify the fields to be overwritten in the cluster resource by the
+// update. The fields specified in the update_mask are relative to the
+// resource, not the full request. A field will be overwritten if it is in the
+// mask. The mask is required and a value of * will update all fields.
+func (c *ProjectsLocationsConnectClustersConnectorsPatchCall) UpdateMask(updateMask string) *ProjectsLocationsConnectClustersConnectorsPatchCall {
+	c.urlParams_.Set("updateMask", updateMask)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsConnectClustersConnectorsPatchCall) Fields(s ...googleapi.Field) *ProjectsLocationsConnectClustersConnectorsPatchCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsConnectClustersConnectorsPatchCall) Context(ctx context.Context) *ProjectsLocationsConnectClustersConnectorsPatchCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsConnectClustersConnectorsPatchCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsConnectClustersConnectorsPatchCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.connector)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PATCH", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "managedkafka.projects.locations.connectClusters.connectors.patch", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "managedkafka.projects.locations.connectClusters.connectors.patch" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Connector.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsConnectClustersConnectorsPatchCall) Do(opts ...googleapi.CallOption) (*Connector, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Connector{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "managedkafka.projects.locations.connectClusters.connectors.patch", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsConnectClustersConnectorsPauseCall struct {
+	s                     *Service
+	name                  string
+	pauseconnectorrequest *PauseConnectorRequest
+	urlParams_            gensupport.URLParams
+	ctx_                  context.Context
+	header_               http.Header
+}
+
+// Pause: Pauses the connector and its tasks.
+//
+//   - name: The name of the connector to pause. Structured like:
+//     projects/{project}/locations/{location}/connectClusters/{connectCluster}/co
+//     nnectors/{connector}.
+func (r *ProjectsLocationsConnectClustersConnectorsService) Pause(name string, pauseconnectorrequest *PauseConnectorRequest) *ProjectsLocationsConnectClustersConnectorsPauseCall {
+	c := &ProjectsLocationsConnectClustersConnectorsPauseCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.pauseconnectorrequest = pauseconnectorrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsConnectClustersConnectorsPauseCall) Fields(s ...googleapi.Field) *ProjectsLocationsConnectClustersConnectorsPauseCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsConnectClustersConnectorsPauseCall) Context(ctx context.Context) *ProjectsLocationsConnectClustersConnectorsPauseCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsConnectClustersConnectorsPauseCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsConnectClustersConnectorsPauseCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.pauseconnectorrequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}:pause")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "managedkafka.projects.locations.connectClusters.connectors.pause", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "managedkafka.projects.locations.connectClusters.connectors.pause" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *PauseConnectorResponse.ServerResponse.Header or (if a response was returned
+// at all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *ProjectsLocationsConnectClustersConnectorsPauseCall) Do(opts ...googleapi.CallOption) (*PauseConnectorResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &PauseConnectorResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "managedkafka.projects.locations.connectClusters.connectors.pause", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsConnectClustersConnectorsRestartCall struct {
+	s                       *Service
+	name                    string
+	restartconnectorrequest *RestartConnectorRequest
+	urlParams_              gensupport.URLParams
+	ctx_                    context.Context
+	header_                 http.Header
+}
+
+// Restart: Restarts the connector.
+//
+//   - name: The name of the connector to restart. Structured like:
+//     projects/{project}/locations/{location}/connectClusters/{connectCluster}/co
+//     nnectors/{connector}.
+func (r *ProjectsLocationsConnectClustersConnectorsService) Restart(name string, restartconnectorrequest *RestartConnectorRequest) *ProjectsLocationsConnectClustersConnectorsRestartCall {
+	c := &ProjectsLocationsConnectClustersConnectorsRestartCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.restartconnectorrequest = restartconnectorrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsConnectClustersConnectorsRestartCall) Fields(s ...googleapi.Field) *ProjectsLocationsConnectClustersConnectorsRestartCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsConnectClustersConnectorsRestartCall) Context(ctx context.Context) *ProjectsLocationsConnectClustersConnectorsRestartCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsConnectClustersConnectorsRestartCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsConnectClustersConnectorsRestartCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.restartconnectorrequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}:restart")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "managedkafka.projects.locations.connectClusters.connectors.restart", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "managedkafka.projects.locations.connectClusters.connectors.restart" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *RestartConnectorResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsConnectClustersConnectorsRestartCall) Do(opts ...googleapi.CallOption) (*RestartConnectorResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &RestartConnectorResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "managedkafka.projects.locations.connectClusters.connectors.restart", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsConnectClustersConnectorsResumeCall struct {
+	s                      *Service
+	name                   string
+	resumeconnectorrequest *ResumeConnectorRequest
+	urlParams_             gensupport.URLParams
+	ctx_                   context.Context
+	header_                http.Header
+}
+
+// Resume: Resumes the connector and its tasks.
+//
+//   - name: The name of the connector to pause. Structured like:
+//     projects/{project}/locations/{location}/connectClusters/{connectCluster}/co
+//     nnectors/{connector}.
+func (r *ProjectsLocationsConnectClustersConnectorsService) Resume(name string, resumeconnectorrequest *ResumeConnectorRequest) *ProjectsLocationsConnectClustersConnectorsResumeCall {
+	c := &ProjectsLocationsConnectClustersConnectorsResumeCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.resumeconnectorrequest = resumeconnectorrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsConnectClustersConnectorsResumeCall) Fields(s ...googleapi.Field) *ProjectsLocationsConnectClustersConnectorsResumeCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsConnectClustersConnectorsResumeCall) Context(ctx context.Context) *ProjectsLocationsConnectClustersConnectorsResumeCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsConnectClustersConnectorsResumeCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsConnectClustersConnectorsResumeCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.resumeconnectorrequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}:resume")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "managedkafka.projects.locations.connectClusters.connectors.resume", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "managedkafka.projects.locations.connectClusters.connectors.resume" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *ResumeConnectorResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsConnectClustersConnectorsResumeCall) Do(opts ...googleapi.CallOption) (*ResumeConnectorResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ResumeConnectorResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "managedkafka.projects.locations.connectClusters.connectors.resume", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsConnectClustersConnectorsStopCall struct {
+	s                    *Service
+	name                 string
+	stopconnectorrequest *StopConnectorRequest
+	urlParams_           gensupport.URLParams
+	ctx_                 context.Context
+	header_              http.Header
+}
+
+// Stop: Stops the connector.
+//
+//   - name: The name of the connector to stop. Structured like:
+//     projects/{project}/locations/{location}/connectClusters/{connectCluster}/co
+//     nnectors/{connector}.
+func (r *ProjectsLocationsConnectClustersConnectorsService) Stop(name string, stopconnectorrequest *StopConnectorRequest) *ProjectsLocationsConnectClustersConnectorsStopCall {
+	c := &ProjectsLocationsConnectClustersConnectorsStopCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.stopconnectorrequest = stopconnectorrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsConnectClustersConnectorsStopCall) Fields(s ...googleapi.Field) *ProjectsLocationsConnectClustersConnectorsStopCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsConnectClustersConnectorsStopCall) Context(ctx context.Context) *ProjectsLocationsConnectClustersConnectorsStopCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsConnectClustersConnectorsStopCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsConnectClustersConnectorsStopCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.stopconnectorrequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}:stop")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "managedkafka.projects.locations.connectClusters.connectors.stop", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "managedkafka.projects.locations.connectClusters.connectors.stop" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *StopConnectorResponse.ServerResponse.Header or (if a response was returned
+// at all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *ProjectsLocationsConnectClustersConnectorsStopCall) Do(opts ...googleapi.CallOption) (*StopConnectorResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &StopConnectorResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "managedkafka.projects.locations.connectClusters.connectors.stop", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 

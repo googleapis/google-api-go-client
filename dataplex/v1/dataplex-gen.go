@@ -2676,9 +2676,8 @@ func (s *GoogleCloudDataplexV1DataQualityColumnResult) UnmarshalJSON(data []byte
 // GoogleCloudDataplexV1DataQualityDimension: A dimension captures data quality
 // intent about a defined subset of the rules specified.
 type GoogleCloudDataplexV1DataQualityDimension struct {
-	// Name: The dimension name a rule belongs to. Supported dimensions are
-	// "COMPLETENESS", "ACCURACY", "CONSISTENCY", "VALIDITY", "UNIQUENESS",
-	// "FRESHNESS", "VOLUME"
+	// Name: Optional. The dimension name a rule belongs to. Custom dimension name
+	// is supported with all uppercase letters and maximum length of 30 characters.
 	Name string `json:"name,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Name") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -2704,7 +2703,7 @@ type GoogleCloudDataplexV1DataQualityDimensionResult struct {
 	// Dimension: Output only. The dimension config specified in the
 	// DataQualitySpec, as is.
 	Dimension *GoogleCloudDataplexV1DataQualityDimension `json:"dimension,omitempty"`
-	// Passed: Whether the dimension passed or failed.
+	// Passed: Output only. Whether the dimension passed or failed.
 	Passed bool `json:"passed,omitempty"`
 	// Score: Output only. The dimension-level data quality score for this data
 	// scan job if and only if the 'dimension' field is set.The score ranges
@@ -2748,19 +2747,20 @@ type GoogleCloudDataplexV1DataQualityResult struct {
 	// have a corresponding DataQualityColumnResult if and only if there is at
 	// least one rule with the 'column' field set to it.
 	Columns []*GoogleCloudDataplexV1DataQualityColumnResult `json:"columns,omitempty"`
-	// Dimensions: A list of results at the dimension level.A dimension will have a
-	// corresponding DataQualityDimensionResult if and only if there is at least
-	// one rule with the 'dimension' field set to it.
+	// Dimensions: Output only. A list of results at the dimension level.A
+	// dimension will have a corresponding DataQualityDimensionResult if and only
+	// if there is at least one rule with the 'dimension' field set to it.
 	Dimensions []*GoogleCloudDataplexV1DataQualityDimensionResult `json:"dimensions,omitempty"`
-	// Passed: Overall data quality result -- true if all rules passed.
+	// Passed: Output only. Overall data quality result -- true if all rules
+	// passed.
 	Passed bool `json:"passed,omitempty"`
 	// PostScanActionsResult: Output only. The result of post scan actions.
 	PostScanActionsResult *GoogleCloudDataplexV1DataQualityResultPostScanActionsResult `json:"postScanActionsResult,omitempty"`
-	// RowCount: The count of rows processed.
+	// RowCount: Output only. The count of rows processed.
 	RowCount int64 `json:"rowCount,omitempty,string"`
-	// Rules: A list of all the rules in a job, and their results.
+	// Rules: Output only. A list of all the rules in a job, and their results.
 	Rules []*GoogleCloudDataplexV1DataQualityRuleResult `json:"rules,omitempty"`
-	// ScannedData: The data scanned for this result.
+	// ScannedData: Output only. The data scanned for this result.
 	ScannedData *GoogleCloudDataplexV1ScannedData `json:"scannedData,omitempty"`
 	// Score: Output only. The overall data quality score.The score ranges between
 	// 0, 100 (up to two decimal points).
@@ -3010,25 +3010,29 @@ type GoogleCloudDataplexV1DataQualityRuleResult struct {
 	// statement in a SQL assertion rule.This field is only valid for SQL assertion
 	// rules.
 	AssertionRowCount int64 `json:"assertionRowCount,omitempty,string"`
-	// EvaluatedCount: The number of rows a rule was evaluated against.This field
-	// is only valid for row-level type rules.Evaluated count can be configured to
-	// either include all rows (default) - with null rows automatically failing
-	// rule evaluation, or exclude null rows from the evaluated_count, by setting
-	// ignore_nulls = true.This field is not set for rule SqlAssertion.
+	// EvaluatedCount: Output only. The number of rows a rule was evaluated
+	// against.This field is only valid for row-level type rules.Evaluated count
+	// can be configured to either include all rows (default) - with null rows
+	// automatically failing rule evaluation, or exclude null rows from the
+	// evaluated_count, by setting ignore_nulls = true.This field is not set for
+	// rule SqlAssertion.
 	EvaluatedCount int64 `json:"evaluatedCount,omitempty,string"`
-	// FailingRowsQuery: The query to find rows that did not pass this rule.This
-	// field is only valid for row-level type rules.
+	// FailingRowsQuery: Output only. The query to find rows that did not pass this
+	// rule.This field is only valid for row-level type rules.
 	FailingRowsQuery string `json:"failingRowsQuery,omitempty"`
-	// NullCount: The number of rows with null values in the specified column.
+	// NullCount: Output only. The number of rows with null values in the specified
+	// column.
 	NullCount int64 `json:"nullCount,omitempty,string"`
-	// PassRatio: The ratio of passed_count / evaluated_count.This field is only
-	// valid for row-level type rules.
+	// PassRatio: Output only. The ratio of passed_count / evaluated_count.This
+	// field is only valid for row-level type rules.
 	PassRatio float64 `json:"passRatio,omitempty"`
-	// Passed: Whether the rule passed or failed.
+	// Passed: Output only. Whether the rule passed or failed.
 	Passed bool `json:"passed,omitempty"`
-	// PassedCount: This field is not set for rule SqlAssertion.
+	// PassedCount: Output only. The number of rows which passed a rule
+	// evaluation.This field is only valid for row-level type rules.This field is
+	// not set for rule SqlAssertion.
 	PassedCount int64 `json:"passedCount,omitempty,string"`
-	// Rule: The rule specified in the DataQualitySpec, as is.
+	// Rule: Output only. The rule specified in the DataQualitySpec, as is.
 	Rule *GoogleCloudDataplexV1DataQualityRule `json:"rule,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AssertionRowCount") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -4589,6 +4593,38 @@ type GoogleCloudDataplexV1EntryGroup struct {
 
 func (s GoogleCloudDataplexV1EntryGroup) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDataplexV1EntryGroup
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDataplexV1EntryLinkEvent: Payload associated with Entry related
+// log events.
+type GoogleCloudDataplexV1EntryLinkEvent struct {
+	// EventType: The type of the event.
+	//
+	// Possible values:
+	//   "EVENT_TYPE_UNSPECIFIED" - An unspecified event type.
+	//   "ENTRY_LINK_CREATE" - EntryLink create event.
+	//   "ENTRY_LINK_DELETE" - EntryLink delete event.
+	EventType string `json:"eventType,omitempty"`
+	// Message: The log message.
+	Message string `json:"message,omitempty"`
+	// Resource: Name of the resource.
+	Resource string `json:"resource,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "EventType") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "EventType") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDataplexV1EntryLinkEvent) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDataplexV1EntryLinkEvent
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 

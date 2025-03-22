@@ -5720,6 +5720,11 @@ type GoogleCloudDiscoveryengineV1alphaActionConfig struct {
 	// IsActionConfigured: Output only. The connector contains the necessary
 	// parameters and is configured to support actions.
 	IsActionConfigured bool `json:"isActionConfigured,omitempty"`
+	// ServiceName: Optional. The Service Directory resource name
+	// (projects/*/locations/*/namespaces/*/services/*) representing a VPC network
+	// endpoint used to connect to the data source's `instance_uri`, defined in
+	// DataConnector.params. Required when VPC Service Controls are enabled.
+	ServiceName string `json:"serviceName,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "ActionParams") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -5817,7 +5822,7 @@ func (s GoogleCloudDiscoveryengineV1alphaAdvancedCompleteQueryRequest) MarshalJS
 // Specification to boost suggestions based on the condtion of the suggestion.
 type GoogleCloudDiscoveryengineV1alphaAdvancedCompleteQueryRequestBoostSpec struct {
 	// ConditionBoostSpecs: Condition boost specifications. If a suggestion matches
-	// multiple conditions in the specifictions, boost values from these
+	// multiple conditions in the specifications, boost values from these
 	// specifications are all applied and combined in a non-linear way. Maximum
 	// number of specifications is 20. Note: Currently only support language
 	// condition boost.
@@ -16757,9 +16762,9 @@ type GoogleCloudDiscoveryengineV1alphaSearchRequest struct {
 	// retrieval documents. This overrides ServingConfig.ranking_expression. The
 	// syntax and supported features depend on the ranking_expression_backend
 	// value. If ranking_expression_backend is not provided, it defaults to BYOE.
-	// === BYOE === If ranking expression is not provided or set to BYOE, it should
-	// be a single function or multiple functions that are joined by "+". *
-	// ranking_expression = function, { " + ", function }; Supported functions: *
+	// === BYOE === If ranking_expression_backend is not provided or set to `BYOE`,
+	// it should be a single function or multiple functions that are joined by "+".
+	// * ranking_expression = function, { " + ", function }; Supported functions: *
 	// double * relevance_score * double * dotProduct(embedding_field_path)
 	// Function variables: * `relevance_score`: pre-defined keywords, used for
 	// measure relevance between query and document. * `embedding_field_path`: the
@@ -16767,9 +16772,9 @@ type GoogleCloudDiscoveryengineV1alphaSearchRequest struct {
 	// embedding function between embedding_field_path and query embedding vector.
 	// Example ranking expression: If document has an embedding field
 	// doc_embedding, the ranking expression could be `0.5 * relevance_score + 0.3
-	// * dotProduct(doc_embedding)`. === CLEARBOX === If ranking expression is set
-	// to CLEARBOX, the following expression types (and combinations of those
-	// chained using + or * operators) are supported: * double * signal *
+	// * dotProduct(doc_embedding)`. === CLEARBOX === If ranking_expression_backend
+	// is set to `CLEARBOX`, the following expression types (and combinations of
+	// those chained using + or * operators) are supported: * double * signal *
 	// log(signal) * exp(signal) * rr(signal, double > 0) -- reciprocal rank
 	// transformation with second argument being a denominator constant. *
 	// is_nan(signal) -- returns 0 if signal is NaN, 1 otherwise. *
@@ -16787,7 +16792,8 @@ type GoogleCloudDiscoveryengineV1alphaSearchRequest struct {
 	// expression evaluation.
 	//
 	// Possible values:
-	//   "UNKNOWN" - Default option for unspecified/unknown values.
+	//   "RANKING_EXPRESSION_BACKEND_UNSPECIFIED" - Default option for
+	// unspecified/unknown values.
 	//   "BYOE" - Bring your own embedding (BYOE), the default way to evaluate the
 	// ranking expression.
 	//   "CLEARBOX" - The expression is compiled into a Clearbox formula.
@@ -16901,7 +16907,7 @@ func (s GoogleCloudDiscoveryengineV1alphaSearchRequest) MarshalJSON() ([]byte, e
 // to boost certain documents.
 type GoogleCloudDiscoveryengineV1alphaSearchRequestBoostSpec struct {
 	// ConditionBoostSpecs: Condition boost specifications. If a document matches
-	// multiple conditions in the specifictions, boost scores from these
+	// multiple conditions in the specifications, boost scores from these
 	// specifications are all applied and combined in a non-linear way. Maximum
 	// number of specifications is 20.
 	ConditionBoostSpecs []*GoogleCloudDiscoveryengineV1alphaSearchRequestBoostSpecConditionBoostSpec `json:"conditionBoostSpecs,omitempty"`
@@ -23955,9 +23961,9 @@ type GoogleCloudDiscoveryengineV1betaSearchRequest struct {
 	// retrieval documents. This overrides ServingConfig.ranking_expression. The
 	// syntax and supported features depend on the ranking_expression_backend
 	// value. If ranking_expression_backend is not provided, it defaults to BYOE.
-	// === BYOE === If ranking expression is not provided or set to BYOE, it should
-	// be a single function or multiple functions that are joined by "+". *
-	// ranking_expression = function, { " + ", function }; Supported functions: *
+	// === BYOE === If ranking_expression_backend is not provided or set to `BYOE`,
+	// it should be a single function or multiple functions that are joined by "+".
+	// * ranking_expression = function, { " + ", function }; Supported functions: *
 	// double * relevance_score * double * dotProduct(embedding_field_path)
 	// Function variables: * `relevance_score`: pre-defined keywords, used for
 	// measure relevance between query and document. * `embedding_field_path`: the
@@ -23965,9 +23971,9 @@ type GoogleCloudDiscoveryengineV1betaSearchRequest struct {
 	// embedding function between embedding_field_path and query embedding vector.
 	// Example ranking expression: If document has an embedding field
 	// doc_embedding, the ranking expression could be `0.5 * relevance_score + 0.3
-	// * dotProduct(doc_embedding)`. === CLEARBOX === If ranking expression is set
-	// to CLEARBOX, the following expression types (and combinations of those
-	// chained using + or * operators) are supported: * double * signal *
+	// * dotProduct(doc_embedding)`. === CLEARBOX === If ranking_expression_backend
+	// is set to `CLEARBOX`, the following expression types (and combinations of
+	// those chained using + or * operators) are supported: * double * signal *
 	// log(signal) * exp(signal) * rr(signal, double > 0) -- reciprocal rank
 	// transformation with second argument being a denominator constant. *
 	// is_nan(signal) -- returns 0 if signal is NaN, 1 otherwise. *
@@ -23985,7 +23991,8 @@ type GoogleCloudDiscoveryengineV1betaSearchRequest struct {
 	// expression evaluation.
 	//
 	// Possible values:
-	//   "UNKNOWN" - Default option for unspecified/unknown values.
+	//   "RANKING_EXPRESSION_BACKEND_UNSPECIFIED" - Default option for
+	// unspecified/unknown values.
 	//   "BYOE" - Bring your own embedding (BYOE), the default way to evaluate the
 	// ranking expression.
 	//   "CLEARBOX" - The expression is compiled into a Clearbox formula.
@@ -24099,7 +24106,7 @@ func (s GoogleCloudDiscoveryengineV1betaSearchRequest) MarshalJSON() ([]byte, er
 // to boost certain documents.
 type GoogleCloudDiscoveryengineV1betaSearchRequestBoostSpec struct {
 	// ConditionBoostSpecs: Condition boost specifications. If a document matches
-	// multiple conditions in the specifictions, boost scores from these
+	// multiple conditions in the specifications, boost scores from these
 	// specifications are all applied and combined in a non-linear way. Maximum
 	// number of specifications is 20.
 	ConditionBoostSpecs []*GoogleCloudDiscoveryengineV1betaSearchRequestBoostSpecConditionBoostSpec `json:"conditionBoostSpecs,omitempty"`

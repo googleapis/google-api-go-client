@@ -174,6 +174,7 @@ type ProjectsService struct {
 
 func NewProjectsLocationsService(s *Service) *ProjectsLocationsService {
 	rs := &ProjectsLocationsService{s: s}
+	rs.CmekConfigs = NewProjectsLocationsCmekConfigsService(s)
 	rs.Collections = NewProjectsLocationsCollectionsService(s)
 	rs.DataStores = NewProjectsLocationsDataStoresService(s)
 	rs.Evaluations = NewProjectsLocationsEvaluationsService(s)
@@ -189,6 +190,8 @@ func NewProjectsLocationsService(s *Service) *ProjectsLocationsService {
 
 type ProjectsLocationsService struct {
 	s *Service
+
+	CmekConfigs *ProjectsLocationsCmekConfigsService
 
 	Collections *ProjectsLocationsCollectionsService
 
@@ -209,6 +212,15 @@ type ProjectsLocationsService struct {
 	SampleQuerySets *ProjectsLocationsSampleQuerySetsService
 
 	UserEvents *ProjectsLocationsUserEventsService
+}
+
+func NewProjectsLocationsCmekConfigsService(s *Service) *ProjectsLocationsCmekConfigsService {
+	rs := &ProjectsLocationsCmekConfigsService{s: s}
+	return rs
+}
+
+type ProjectsLocationsCmekConfigsService struct {
+	s *Service
 }
 
 func NewProjectsLocationsCollectionsService(s *Service) *ProjectsLocationsCollectionsService {
@@ -4906,6 +4918,11 @@ type GoogleCloudDiscoveryengineV1alphaActionConfig struct {
 	// IsActionConfigured: Output only. The connector contains the necessary
 	// parameters and is configured to support actions.
 	IsActionConfigured bool `json:"isActionConfigured,omitempty"`
+	// ServiceName: Optional. The Service Directory resource name
+	// (projects/*/locations/*/namespaces/*/services/*) representing a VPC network
+	// endpoint used to connect to the data source's `instance_uri`, defined in
+	// DataConnector.params. Required when VPC Service Controls are enabled.
+	ServiceName string `json:"serviceName,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "ActionParams") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -10171,9 +10188,9 @@ type GoogleCloudDiscoveryengineV1alphaSearchRequest struct {
 	// retrieval documents. This overrides ServingConfig.ranking_expression. The
 	// syntax and supported features depend on the ranking_expression_backend
 	// value. If ranking_expression_backend is not provided, it defaults to BYOE.
-	// === BYOE === If ranking expression is not provided or set to BYOE, it should
-	// be a single function or multiple functions that are joined by "+". *
-	// ranking_expression = function, { " + ", function }; Supported functions: *
+	// === BYOE === If ranking_expression_backend is not provided or set to `BYOE`,
+	// it should be a single function or multiple functions that are joined by "+".
+	// * ranking_expression = function, { " + ", function }; Supported functions: *
 	// double * relevance_score * double * dotProduct(embedding_field_path)
 	// Function variables: * `relevance_score`: pre-defined keywords, used for
 	// measure relevance between query and document. * `embedding_field_path`: the
@@ -10181,9 +10198,9 @@ type GoogleCloudDiscoveryengineV1alphaSearchRequest struct {
 	// embedding function between embedding_field_path and query embedding vector.
 	// Example ranking expression: If document has an embedding field
 	// doc_embedding, the ranking expression could be `0.5 * relevance_score + 0.3
-	// * dotProduct(doc_embedding)`. === CLEARBOX === If ranking expression is set
-	// to CLEARBOX, the following expression types (and combinations of those
-	// chained using + or * operators) are supported: * double * signal *
+	// * dotProduct(doc_embedding)`. === CLEARBOX === If ranking_expression_backend
+	// is set to `CLEARBOX`, the following expression types (and combinations of
+	// those chained using + or * operators) are supported: * double * signal *
 	// log(signal) * exp(signal) * rr(signal, double > 0) -- reciprocal rank
 	// transformation with second argument being a denominator constant. *
 	// is_nan(signal) -- returns 0 if signal is NaN, 1 otherwise. *
@@ -10201,7 +10218,8 @@ type GoogleCloudDiscoveryengineV1alphaSearchRequest struct {
 	// expression evaluation.
 	//
 	// Possible values:
-	//   "UNKNOWN" - Default option for unspecified/unknown values.
+	//   "RANKING_EXPRESSION_BACKEND_UNSPECIFIED" - Default option for
+	// unspecified/unknown values.
 	//   "BYOE" - Bring your own embedding (BYOE), the default way to evaluate the
 	// ranking expression.
 	//   "CLEARBOX" - The expression is compiled into a Clearbox formula.
@@ -10315,7 +10333,7 @@ func (s GoogleCloudDiscoveryengineV1alphaSearchRequest) MarshalJSON() ([]byte, e
 // to boost certain documents.
 type GoogleCloudDiscoveryengineV1alphaSearchRequestBoostSpec struct {
 	// ConditionBoostSpecs: Condition boost specifications. If a document matches
-	// multiple conditions in the specifictions, boost scores from these
+	// multiple conditions in the specifications, boost scores from these
 	// specifications are all applied and combined in a non-linear way. Maximum
 	// number of specifications is 20.
 	ConditionBoostSpecs []*GoogleCloudDiscoveryengineV1alphaSearchRequestBoostSpecConditionBoostSpec `json:"conditionBoostSpecs,omitempty"`
@@ -12115,7 +12133,7 @@ func (s GoogleCloudDiscoveryengineV1betaAdvancedCompleteQueryRequest) MarshalJSO
 // Specification to boost suggestions based on the condtion of the suggestion.
 type GoogleCloudDiscoveryengineV1betaAdvancedCompleteQueryRequestBoostSpec struct {
 	// ConditionBoostSpecs: Condition boost specifications. If a suggestion matches
-	// multiple conditions in the specifictions, boost values from these
+	// multiple conditions in the specifications, boost values from these
 	// specifications are all applied and combined in a non-linear way. Maximum
 	// number of specifications is 20. Note: Currently only support language
 	// condition boost.
@@ -15002,6 +15020,9 @@ type GoogleCloudDiscoveryengineV1betaCmekConfig struct {
 	// internal issue.
 	//   "ACTIVE_ROTATING" - The KMS key version is being rotated.
 	State string `json:"state,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
 	// ForceSendFields is a list of field names (e.g. "IsDefault") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -18519,6 +18540,32 @@ func (s GoogleCloudDiscoveryengineV1betaLanguageInfo) MarshalJSON() ([]byte, err
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudDiscoveryengineV1betaListCmekConfigsResponse: Response message
+// for CmekConfigService.ListCmekConfigs method.
+type GoogleCloudDiscoveryengineV1betaListCmekConfigsResponse struct {
+	// CmekConfigs: All the customer's CmekConfigs.
+	CmekConfigs []*GoogleCloudDiscoveryengineV1betaCmekConfig `json:"cmekConfigs,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "CmekConfigs") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CmekConfigs") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1betaListCmekConfigsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1betaListCmekConfigsResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudDiscoveryengineV1betaListControlsResponse: Response for
 // ListControls method.
 type GoogleCloudDiscoveryengineV1betaListControlsResponse struct {
@@ -20781,9 +20828,9 @@ type GoogleCloudDiscoveryengineV1betaSearchRequest struct {
 	// retrieval documents. This overrides ServingConfig.ranking_expression. The
 	// syntax and supported features depend on the ranking_expression_backend
 	// value. If ranking_expression_backend is not provided, it defaults to BYOE.
-	// === BYOE === If ranking expression is not provided or set to BYOE, it should
-	// be a single function or multiple functions that are joined by "+". *
-	// ranking_expression = function, { " + ", function }; Supported functions: *
+	// === BYOE === If ranking_expression_backend is not provided or set to `BYOE`,
+	// it should be a single function or multiple functions that are joined by "+".
+	// * ranking_expression = function, { " + ", function }; Supported functions: *
 	// double * relevance_score * double * dotProduct(embedding_field_path)
 	// Function variables: * `relevance_score`: pre-defined keywords, used for
 	// measure relevance between query and document. * `embedding_field_path`: the
@@ -20791,9 +20838,9 @@ type GoogleCloudDiscoveryengineV1betaSearchRequest struct {
 	// embedding function between embedding_field_path and query embedding vector.
 	// Example ranking expression: If document has an embedding field
 	// doc_embedding, the ranking expression could be `0.5 * relevance_score + 0.3
-	// * dotProduct(doc_embedding)`. === CLEARBOX === If ranking expression is set
-	// to CLEARBOX, the following expression types (and combinations of those
-	// chained using + or * operators) are supported: * double * signal *
+	// * dotProduct(doc_embedding)`. === CLEARBOX === If ranking_expression_backend
+	// is set to `CLEARBOX`, the following expression types (and combinations of
+	// those chained using + or * operators) are supported: * double * signal *
 	// log(signal) * exp(signal) * rr(signal, double > 0) -- reciprocal rank
 	// transformation with second argument being a denominator constant. *
 	// is_nan(signal) -- returns 0 if signal is NaN, 1 otherwise. *
@@ -20811,7 +20858,8 @@ type GoogleCloudDiscoveryengineV1betaSearchRequest struct {
 	// expression evaluation.
 	//
 	// Possible values:
-	//   "UNKNOWN" - Default option for unspecified/unknown values.
+	//   "RANKING_EXPRESSION_BACKEND_UNSPECIFIED" - Default option for
+	// unspecified/unknown values.
 	//   "BYOE" - Bring your own embedding (BYOE), the default way to evaluate the
 	// ranking expression.
 	//   "CLEARBOX" - The expression is compiled into a Clearbox formula.
@@ -20925,7 +20973,7 @@ func (s GoogleCloudDiscoveryengineV1betaSearchRequest) MarshalJSON() ([]byte, er
 // to boost certain documents.
 type GoogleCloudDiscoveryengineV1betaSearchRequestBoostSpec struct {
 	// ConditionBoostSpecs: Condition boost specifications. If a document matches
-	// multiple conditions in the specifictions, boost scores from these
+	// multiple conditions in the specifications, boost scores from these
 	// specifications are all applied and combined in a non-linear way. Maximum
 	// number of specifications is 20.
 	ConditionBoostSpecs []*GoogleCloudDiscoveryengineV1betaSearchRequestBoostSpecConditionBoostSpec `json:"conditionBoostSpecs,omitempty"`
@@ -24767,6 +24815,120 @@ func (c *ProjectsProvisionCall) Do(opts ...googleapi.CallOption) (*GoogleLongrun
 	return ret, nil
 }
 
+type ProjectsLocationsGetCmekConfigCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// GetCmekConfig: Gets the CmekConfig.
+//
+//   - name: Resource name of CmekConfig, such as
+//     `projects/*/locations/*/cmekConfig` or
+//     `projects/*/locations/*/cmekConfigs/*`. If the caller does not have
+//     permission to access the CmekConfig, regardless of whether or not it
+//     exists, a PERMISSION_DENIED error is returned.
+func (r *ProjectsLocationsService) GetCmekConfig(name string) *ProjectsLocationsGetCmekConfigCall {
+	c := &ProjectsLocationsGetCmekConfigCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsGetCmekConfigCall) Fields(s ...googleapi.Field) *ProjectsLocationsGetCmekConfigCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsGetCmekConfigCall) IfNoneMatch(entityTag string) *ProjectsLocationsGetCmekConfigCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsGetCmekConfigCall) Context(ctx context.Context) *ProjectsLocationsGetCmekConfigCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsGetCmekConfigCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsGetCmekConfigCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "discoveryengine.projects.locations.getCmekConfig", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "discoveryengine.projects.locations.getCmekConfig" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudDiscoveryengineV1betaCmekConfig.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsGetCmekConfigCall) Do(opts ...googleapi.CallOption) (*GoogleCloudDiscoveryengineV1betaCmekConfig, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudDiscoveryengineV1betaCmekConfig{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "discoveryengine.projects.locations.getCmekConfig", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
 type ProjectsLocationsObtainCrawlRateCall struct {
 	s                                                      *Service
 	location                                               string
@@ -25092,6 +25254,565 @@ func (c *ProjectsLocationsSetDedicatedCrawlRateCall) Do(opts ...googleapi.CallOp
 		return nil, err
 	}
 	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "discoveryengine.projects.locations.setDedicatedCrawlRate", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsUpdateCmekConfigCall struct {
+	s                                          *Service
+	name                                       string
+	googleclouddiscoveryenginev1betacmekconfig *GoogleCloudDiscoveryengineV1betaCmekConfig
+	urlParams_                                 gensupport.URLParams
+	ctx_                                       context.Context
+	header_                                    http.Header
+}
+
+// UpdateCmekConfig: Provisions a CMEK key for use in a location of a
+// customer's project. This method will also conduct location validation on the
+// provided cmekConfig to make sure the key is valid and can be used in the
+// selected location.
+//
+//   - name: The name of the CmekConfig of the form
+//     `projects/{project}/locations/{location}/cmekConfig` or
+//     `projects/{project}/locations/{location}/cmekConfigs/{cmekConfig}`.
+func (r *ProjectsLocationsService) UpdateCmekConfig(name string, googleclouddiscoveryenginev1betacmekconfig *GoogleCloudDiscoveryengineV1betaCmekConfig) *ProjectsLocationsUpdateCmekConfigCall {
+	c := &ProjectsLocationsUpdateCmekConfigCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.googleclouddiscoveryenginev1betacmekconfig = googleclouddiscoveryenginev1betacmekconfig
+	return c
+}
+
+// SetDefault sets the optional parameter "setDefault": Set the following
+// CmekConfig as the default to be used for child resources if one is not
+// specified.
+func (c *ProjectsLocationsUpdateCmekConfigCall) SetDefault(setDefault bool) *ProjectsLocationsUpdateCmekConfigCall {
+	c.urlParams_.Set("setDefault", fmt.Sprint(setDefault))
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsUpdateCmekConfigCall) Fields(s ...googleapi.Field) *ProjectsLocationsUpdateCmekConfigCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsUpdateCmekConfigCall) Context(ctx context.Context) *ProjectsLocationsUpdateCmekConfigCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsUpdateCmekConfigCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsUpdateCmekConfigCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googleclouddiscoveryenginev1betacmekconfig)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PATCH", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "discoveryengine.projects.locations.updateCmekConfig", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "discoveryengine.projects.locations.updateCmekConfig" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleLongrunningOperation.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsUpdateCmekConfigCall) Do(opts ...googleapi.CallOption) (*GoogleLongrunningOperation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleLongrunningOperation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "discoveryengine.projects.locations.updateCmekConfig", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsCmekConfigsDeleteCall struct {
+	s          *Service
+	name       string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Delete: De-provisions a CmekConfig.
+//
+//   - name: The resource name of the CmekConfig to delete, such as
+//     `projects/{project}/locations/{location}/cmekConfigs/{cmek_config}`.
+func (r *ProjectsLocationsCmekConfigsService) Delete(name string) *ProjectsLocationsCmekConfigsDeleteCall {
+	c := &ProjectsLocationsCmekConfigsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsCmekConfigsDeleteCall) Fields(s ...googleapi.Field) *ProjectsLocationsCmekConfigsDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsCmekConfigsDeleteCall) Context(ctx context.Context) *ProjectsLocationsCmekConfigsDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsCmekConfigsDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsCmekConfigsDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("DELETE", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "discoveryengine.projects.locations.cmekConfigs.delete", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "discoveryengine.projects.locations.cmekConfigs.delete" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleLongrunningOperation.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsCmekConfigsDeleteCall) Do(opts ...googleapi.CallOption) (*GoogleLongrunningOperation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleLongrunningOperation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "discoveryengine.projects.locations.cmekConfigs.delete", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsCmekConfigsGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Gets the CmekConfig.
+//
+//   - name: Resource name of CmekConfig, such as
+//     `projects/*/locations/*/cmekConfig` or
+//     `projects/*/locations/*/cmekConfigs/*`. If the caller does not have
+//     permission to access the CmekConfig, regardless of whether or not it
+//     exists, a PERMISSION_DENIED error is returned.
+func (r *ProjectsLocationsCmekConfigsService) Get(name string) *ProjectsLocationsCmekConfigsGetCall {
+	c := &ProjectsLocationsCmekConfigsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsCmekConfigsGetCall) Fields(s ...googleapi.Field) *ProjectsLocationsCmekConfigsGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsCmekConfigsGetCall) IfNoneMatch(entityTag string) *ProjectsLocationsCmekConfigsGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsCmekConfigsGetCall) Context(ctx context.Context) *ProjectsLocationsCmekConfigsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsCmekConfigsGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsCmekConfigsGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "discoveryengine.projects.locations.cmekConfigs.get", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "discoveryengine.projects.locations.cmekConfigs.get" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudDiscoveryengineV1betaCmekConfig.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsCmekConfigsGetCall) Do(opts ...googleapi.CallOption) (*GoogleCloudDiscoveryengineV1betaCmekConfig, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudDiscoveryengineV1betaCmekConfig{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "discoveryengine.projects.locations.cmekConfigs.get", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsCmekConfigsListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists all the CmekConfigs with the project.
+//
+//   - parent: The parent location resource name, such as
+//     `projects/{project}/locations/{location}`. If the caller does not have
+//     permission to list CmekConfigs under this location, regardless of whether
+//     or not a CmekConfig exists, a PERMISSION_DENIED error is returned.
+func (r *ProjectsLocationsCmekConfigsService) List(parent string) *ProjectsLocationsCmekConfigsListCall {
+	c := &ProjectsLocationsCmekConfigsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsCmekConfigsListCall) Fields(s ...googleapi.Field) *ProjectsLocationsCmekConfigsListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsCmekConfigsListCall) IfNoneMatch(entityTag string) *ProjectsLocationsCmekConfigsListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsCmekConfigsListCall) Context(ctx context.Context) *ProjectsLocationsCmekConfigsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsCmekConfigsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsCmekConfigsListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta/{+parent}/cmekConfigs")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "discoveryengine.projects.locations.cmekConfigs.list", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "discoveryengine.projects.locations.cmekConfigs.list" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudDiscoveryengineV1betaListCmekConfigsResponse.ServerResponse.Heade
+// r or (if a response was returned at all) in error.(*googleapi.Error).Header.
+// Use googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsCmekConfigsListCall) Do(opts ...googleapi.CallOption) (*GoogleCloudDiscoveryengineV1betaListCmekConfigsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudDiscoveryengineV1betaListCmekConfigsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "discoveryengine.projects.locations.cmekConfigs.list", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsCmekConfigsPatchCall struct {
+	s                                          *Service
+	name                                       string
+	googleclouddiscoveryenginev1betacmekconfig *GoogleCloudDiscoveryengineV1betaCmekConfig
+	urlParams_                                 gensupport.URLParams
+	ctx_                                       context.Context
+	header_                                    http.Header
+}
+
+// Patch: Provisions a CMEK key for use in a location of a customer's project.
+// This method will also conduct location validation on the provided cmekConfig
+// to make sure the key is valid and can be used in the selected location.
+//
+//   - name: The name of the CmekConfig of the form
+//     `projects/{project}/locations/{location}/cmekConfig` or
+//     `projects/{project}/locations/{location}/cmekConfigs/{cmekConfig}`.
+func (r *ProjectsLocationsCmekConfigsService) Patch(name string, googleclouddiscoveryenginev1betacmekconfig *GoogleCloudDiscoveryengineV1betaCmekConfig) *ProjectsLocationsCmekConfigsPatchCall {
+	c := &ProjectsLocationsCmekConfigsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.googleclouddiscoveryenginev1betacmekconfig = googleclouddiscoveryenginev1betacmekconfig
+	return c
+}
+
+// SetDefault sets the optional parameter "setDefault": Set the following
+// CmekConfig as the default to be used for child resources if one is not
+// specified.
+func (c *ProjectsLocationsCmekConfigsPatchCall) SetDefault(setDefault bool) *ProjectsLocationsCmekConfigsPatchCall {
+	c.urlParams_.Set("setDefault", fmt.Sprint(setDefault))
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsCmekConfigsPatchCall) Fields(s ...googleapi.Field) *ProjectsLocationsCmekConfigsPatchCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsCmekConfigsPatchCall) Context(ctx context.Context) *ProjectsLocationsCmekConfigsPatchCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsCmekConfigsPatchCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsCmekConfigsPatchCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googleclouddiscoveryenginev1betacmekconfig)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PATCH", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "discoveryengine.projects.locations.cmekConfigs.patch", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "discoveryengine.projects.locations.cmekConfigs.patch" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleLongrunningOperation.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsCmekConfigsPatchCall) Do(opts ...googleapi.CallOption) (*GoogleLongrunningOperation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleLongrunningOperation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "discoveryengine.projects.locations.cmekConfigs.patch", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 

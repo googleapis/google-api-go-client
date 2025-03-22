@@ -442,7 +442,7 @@ type DataPolicy struct {
 	// needs to be unique within a project. Used as {data_policy_id} in part of the
 	// resource name.
 	DataPolicyId string `json:"dataPolicyId,omitempty"`
-	// DataPolicyType: Type of data policy.
+	// DataPolicyType: Required. Data policy type. Type of data policy.
 	//
 	// Possible values:
 	//   "DATA_POLICY_TYPE_UNSPECIFIED" - Default value for the data policy type.

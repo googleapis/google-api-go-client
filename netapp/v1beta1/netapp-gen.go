@@ -2036,6 +2036,9 @@ type StoragePool struct {
 	CapacityGib int64 `json:"capacityGib,omitempty,string"`
 	// CreateTime: Output only. Create time of the storage pool
 	CreateTime string `json:"createTime,omitempty"`
+	// CustomPerformanceEnabled: Optional. True if using Independent Scaling of
+	// capacity and performance (Hyperdisk) By default set to false
+	CustomPerformanceEnabled bool `json:"customPerformanceEnabled,omitempty"`
 	// Description: Optional. Description of the storage pool
 	Description string `json:"description,omitempty"`
 	// EncryptionType: Output only. Specifies the current pool encryption key
@@ -2095,6 +2098,12 @@ type StoragePool struct {
 	State string `json:"state,omitempty"`
 	// StateDetails: Output only. State details of the storage pool
 	StateDetails string `json:"stateDetails,omitempty"`
+	// TotalIops: Optional. Custom Performance Total IOPS of the pool If not
+	// provided, it will be calculated based on the total_throughput_mibps
+	TotalIops int64 `json:"totalIops,omitempty,string"`
+	// TotalThroughputMibps: Optional. Custom Performance Total Throughput of the
+	// pool (in MiB/s)
+	TotalThroughputMibps int64 `json:"totalThroughputMibps,omitempty,string"`
 	// VolumeCapacityGib: Output only. Allocated size of all volumes in GIB in the
 	// storage pool
 	VolumeCapacityGib int64 `json:"volumeCapacityGib,omitempty,string"`
@@ -2136,7 +2145,7 @@ type SyncReplicationRequest struct {
 // TieringPolicy: Defines tiering policy for the volume.
 type TieringPolicy struct {
 	// CoolingThresholdDays: Optional. Time in days to mark the volume's data block
-	// as cold and make it eligible for tiering, can be range from 7-183. Default
+	// as cold and make it eligible for tiering, can be range from 2-183. Default
 	// is 31.
 	CoolingThresholdDays int64 `json:"coolingThresholdDays,omitempty"`
 	// TierAction: Optional. Flag indicating if the volume has tiering policy

@@ -2136,7 +2136,7 @@ type SyncReplicationRequest struct {
 // TieringPolicy: Defines tiering policy for the volume.
 type TieringPolicy struct {
 	// CoolingThresholdDays: Optional. Time in days to mark the volume's data block
-	// as cold and make it eligible for tiering, can be range from 7-183. Default
+	// as cold and make it eligible for tiering, can be range from 2-183. Default
 	// is 31.
 	CoolingThresholdDays int64 `json:"coolingThresholdDays,omitempty"`
 	// TierAction: Optional. Flag indicating if the volume has tiering policy

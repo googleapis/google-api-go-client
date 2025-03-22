@@ -178,19 +178,271 @@ type RepresentativesService struct {
 	s *Service
 }
 
-// AdministrationRegion: Describes information about a regional election
-// administrative area.
-type AdministrationRegion struct {
+type CivicinfoApiprotosV2DivisionByAddressResponse struct {
+	Divisions map[string]CivicinfoSchemaV2GeographicDivision `json:"divisions,omitempty"`
+	// NormalizedInput: The normalized version of the requested address.
+	NormalizedInput *CivicinfoSchemaV2SimpleAddressType `json:"normalizedInput,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "Divisions") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Divisions") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s CivicinfoApiprotosV2DivisionByAddressResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod CivicinfoApiprotosV2DivisionByAddressResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// CivicinfoApiprotosV2DivisionSearchResponse: The result of a division search
+// query.
+type CivicinfoApiprotosV2DivisionSearchResponse struct {
+	// Kind: Identifies what kind of resource this is. Value: the fixed string
+	// "civicinfo#divisionSearchResponse".
+	Kind    string                                      `json:"kind,omitempty"`
+	Results []*CivicinfoApiprotosV2DivisionSearchResult `json:"results,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "Kind") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Kind") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s CivicinfoApiprotosV2DivisionSearchResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod CivicinfoApiprotosV2DivisionSearchResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// CivicinfoApiprotosV2DivisionSearchResult: Represents a political geographic
+// division that matches the requested query.
+type CivicinfoApiprotosV2DivisionSearchResult struct {
+	// Aliases: Other Open Civic Data identifiers that refer to the same division
+	// -- for example, those that refer to other political divisions whose
+	// boundaries are defined to be coterminous with this one. For example,
+	// ocd-division/country:us/state:wy will include an alias of
+	// ocd-division/country:us/state:wy/cd:1, since Wyoming has only one
+	// Congressional district.
+	Aliases []string `json:"aliases,omitempty"`
+	// Name: The name of the division.
+	Name string `json:"name,omitempty"`
+	// OcdId: The unique Open Civic Data identifier for this division
+	OcdId string `json:"ocdId,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Aliases") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Aliases") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s CivicinfoApiprotosV2DivisionSearchResult) MarshalJSON() ([]byte, error) {
+	type NoMethod CivicinfoApiprotosV2DivisionSearchResult
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// CivicinfoApiprotosV2ElectionsQueryResponse: The list of elections available
+// for this version of the API.
+type CivicinfoApiprotosV2ElectionsQueryResponse struct {
+	// Elections: A list of available elections
+	Elections []*CivicinfoSchemaV2Election `json:"elections,omitempty"`
+	// Kind: Identifies what kind of resource this is. Value: the fixed string
+	// "civicinfo#electionsQueryResponse".
+	Kind string `json:"kind,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "Elections") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Elections") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s CivicinfoApiprotosV2ElectionsQueryResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod CivicinfoApiprotosV2ElectionsQueryResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+type CivicinfoApiprotosV2RepresentativeInfoData struct {
+	// Divisions: A map of political geographic divisions that contain the
+	// requested address, keyed by the unique Open Civic Data identifier for this
+	// division.
+	Divisions map[string]CivicinfoSchemaV2GeographicDivision `json:"divisions,omitempty"`
+	// Offices: Elected offices referenced by the divisions listed above. Will only
+	// be present if includeOffices was true in the request.
+	Offices []*CivicinfoSchemaV2Office `json:"offices,omitempty"`
+	// Officials: Officials holding the offices listed above. Will only be present
+	// if includeOffices was true in the request.
+	Officials []*CivicinfoSchemaV2Official `json:"officials,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "Divisions") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Divisions") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s CivicinfoApiprotosV2RepresentativeInfoData) MarshalJSON() ([]byte, error) {
+	type NoMethod CivicinfoApiprotosV2RepresentativeInfoData
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// CivicinfoApiprotosV2RepresentativeInfoResponse: The result of a
+// representative info lookup query.
+type CivicinfoApiprotosV2RepresentativeInfoResponse struct {
+	// Divisions: A map of political geographic divisions that contain the
+	// requested address, keyed by the unique Open Civic Data identifier for this
+	// division.
+	Divisions map[string]CivicinfoSchemaV2GeographicDivision `json:"divisions,omitempty"`
+	// Kind: Identifies what kind of resource this is. Value: the fixed string
+	// "civicinfo#representativeInfoResponse".
+	Kind string `json:"kind,omitempty"`
+	// NormalizedInput: The normalized version of the requested address
+	NormalizedInput *CivicinfoSchemaV2SimpleAddressType `json:"normalizedInput,omitempty"`
+	// Offices: Elected offices referenced by the divisions listed above. Will only
+	// be present if includeOffices was true in the request.
+	Offices []*CivicinfoSchemaV2Office `json:"offices,omitempty"`
+	// Officials: Officials holding the offices listed above. Will only be present
+	// if includeOffices was true in the request.
+	Officials []*CivicinfoSchemaV2Official `json:"officials,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "Divisions") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Divisions") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s CivicinfoApiprotosV2RepresentativeInfoResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod CivicinfoApiprotosV2RepresentativeInfoResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// CivicinfoApiprotosV2VoterInfoResponse: The result of a voter info lookup
+// query.
+type CivicinfoApiprotosV2VoterInfoResponse struct {
+	// Contests: Contests that will appear on the voter's ballot.
+	Contests []*CivicinfoSchemaV2Contest `json:"contests,omitempty"`
+	// DropOffLocations: Locations where a voter is eligible to drop off a
+	// completed ballot. The voter must have received and completed a ballot prior
+	// to arriving at the location. The location may not have ballots available on
+	// the premises. These locations could be open on or before election day as
+	// indicated in the pollingHours field.
+	DropOffLocations []*CivicinfoSchemaV2PollingLocation `json:"dropOffLocations,omitempty"`
+	// EarlyVoteSites: Locations where the voter is eligible to vote early, prior
+	// to election day.
+	EarlyVoteSites []*CivicinfoSchemaV2PollingLocation `json:"earlyVoteSites,omitempty"`
+	// Election: The election that was queried.
+	Election *CivicinfoSchemaV2Election `json:"election,omitempty"`
+	// Kind: Identifies what kind of resource this is. Value: the fixed string
+	// "civicinfo#voterInfoResponse".
+	Kind string `json:"kind,omitempty"`
+	// MailOnly: Specifies whether voters in the precinct vote only by mailing
+	// their ballots (with the possible option of dropping off their ballots as
+	// well).
+	MailOnly bool `json:"mailOnly,omitempty"`
+	// NormalizedInput: The normalized version of the requested address
+	NormalizedInput *CivicinfoSchemaV2SimpleAddressType `json:"normalizedInput,omitempty"`
+	// OtherElections: When there are multiple elections for a voter address, the
+	// otherElections field is populated in the API response and there are two
+	// possibilities: 1. If the earliest election is not the intended election,
+	// specify the election ID of the desired election in a second API request
+	// using the electionId field. 2. If these elections occur on the same day, the
+	// API doesn?t return any polling location, contest, or election official
+	// information to ensure that an additional query is made. For user-facing
+	// applications, we recommend displaying these elections to the user to
+	// disambiguate. A second API request using the electionId field should be made
+	// for the election that is relevant to the user.
+	OtherElections []*CivicinfoSchemaV2Election `json:"otherElections,omitempty"`
+	// PollingLocations: Locations where the voter is eligible to vote on election
+	// day.
+	PollingLocations []*CivicinfoSchemaV2PollingLocation `json:"pollingLocations,omitempty"`
+	PrecinctId       string                              `json:"precinctId,omitempty"`
+	// Precincts: The precincts that match this voter's address. Will only be
+	// returned for project IDs which have been allowlisted as "partner projects".
+	Precincts []*CivicinfoSchemaV2Precinct `json:"precincts,omitempty"`
+	// State: Local Election Information for the state that the voter votes in. For
+	// the US, there will only be one element in this array.
+	State []*CivicinfoSchemaV2AdministrationRegion `json:"state,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "Contests") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Contests") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s CivicinfoApiprotosV2VoterInfoResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod CivicinfoApiprotosV2VoterInfoResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// CivicinfoSchemaV2AdministrationRegion: Describes information about a
+// regional election administrative area.
+type CivicinfoSchemaV2AdministrationRegion struct {
 	// ElectionAdministrationBody: The election administration body for this area.
-	ElectionAdministrationBody *AdministrativeBody `json:"electionAdministrationBody,omitempty"`
+	ElectionAdministrationBody *CivicinfoSchemaV2AdministrativeBody `json:"electionAdministrationBody,omitempty"`
 	// LocalJurisdiction: The city or county that provides election information for
 	// this voter. This object can have the same elements as state.
-	LocalJurisdiction *AdministrationRegion `json:"local_jurisdiction,omitempty"`
+	LocalJurisdiction *CivicinfoSchemaV2AdministrationRegion `json:"local_jurisdiction,omitempty"`
 	// Name: The name of the jurisdiction.
 	Name string `json:"name,omitempty"`
 	// Sources: A list of sources for this area. If multiple sources are listed the
 	// data has been aggregated from those sources.
-	Sources []*Source `json:"sources,omitempty"`
+	Sources []*CivicinfoSchemaV2Source `json:"sources,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "ElectionAdministrationBody")
 	// to unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -204,14 +456,14 @@ type AdministrationRegion struct {
 	NullFields []string `json:"-"`
 }
 
-func (s AdministrationRegion) MarshalJSON() ([]byte, error) {
-	type NoMethod AdministrationRegion
+func (s CivicinfoSchemaV2AdministrationRegion) MarshalJSON() ([]byte, error) {
+	type NoMethod CivicinfoSchemaV2AdministrationRegion
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// AdministrativeBody: Information about an election administrative body (e.g.
-// County Board of Elections).
-type AdministrativeBody struct {
+// CivicinfoSchemaV2AdministrativeBody: Information about an election
+// administrative body (e.g. County Board of Elections).
+type CivicinfoSchemaV2AdministrativeBody struct {
 	// AbsenteeVotingInfoUrl: A URL provided by this administrative body for
 	// information on absentee voting.
 	AbsenteeVotingInfoUrl string `json:"absenteeVotingInfoUrl,omitempty"`
@@ -219,7 +471,7 @@ type AdministrativeBody struct {
 	// information to the voter.
 	BallotInfoUrl string `json:"ballotInfoUrl,omitempty"`
 	// CorrespondenceAddress: The mailing address of this administrative body.
-	CorrespondenceAddress *SimpleAddressType `json:"correspondenceAddress,omitempty"`
+	CorrespondenceAddress *CivicinfoSchemaV2SimpleAddressType `json:"correspondenceAddress,omitempty"`
 	// ElectionInfoUrl: A URL provided by this administrative body for looking up
 	// general election information.
 	ElectionInfoUrl string `json:"electionInfoUrl,omitempty"`
@@ -231,7 +483,7 @@ type AdministrativeBody struct {
 	ElectionNoticeUrl string `json:"electionNoticeUrl,omitempty"`
 	// ElectionOfficials: The election officials for this election administrative
 	// body.
-	ElectionOfficials []*ElectionOfficial `json:"electionOfficials,omitempty"`
+	ElectionOfficials []*CivicinfoSchemaV2ElectionOfficial `json:"electionOfficials,omitempty"`
 	// ElectionRegistrationConfirmationUrl: A URL provided by this administrative
 	// body for confirming that the voter is registered to vote.
 	ElectionRegistrationConfirmationUrl string `json:"electionRegistrationConfirmationUrl,omitempty"`
@@ -247,7 +499,7 @@ type AdministrativeBody struct {
 	// Name: The name of this election administrative body.
 	Name string `json:"name,omitempty"`
 	// PhysicalAddress: The physical address of this administrative body.
-	PhysicalAddress *SimpleAddressType `json:"physicalAddress,omitempty"`
+	PhysicalAddress *CivicinfoSchemaV2SimpleAddressType `json:"physicalAddress,omitempty"`
 	// VoterServices: A description of the services this administrative body may
 	// provide.
 	VoterServices []string `json:"voter_services,omitempty"`
@@ -267,17 +519,18 @@ type AdministrativeBody struct {
 	NullFields []string `json:"-"`
 }
 
-func (s AdministrativeBody) MarshalJSON() ([]byte, error) {
-	type NoMethod AdministrativeBody
+func (s CivicinfoSchemaV2AdministrativeBody) MarshalJSON() ([]byte, error) {
+	type NoMethod CivicinfoSchemaV2AdministrativeBody
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// Candidate: Information about a candidate running for elected office.
-type Candidate struct {
+// CivicinfoSchemaV2Candidate: Information about a candidate running for
+// elected office.
+type CivicinfoSchemaV2Candidate struct {
 	// CandidateUrl: The URL for the candidate's campaign web site.
 	CandidateUrl string `json:"candidateUrl,omitempty"`
 	// Channels: A list of known (social) media channels for this candidate.
-	Channels []*Channel `json:"channels,omitempty"`
+	Channels []*CivicinfoSchemaV2Channel `json:"channels,omitempty"`
 	// Email: The email address for the candidate's campaign.
 	Email string `json:"email,omitempty"`
 	// Name: The candidate's name. If this is a joint ticket it will indicate the
@@ -306,13 +559,13 @@ type Candidate struct {
 	NullFields []string `json:"-"`
 }
 
-func (s Candidate) MarshalJSON() ([]byte, error) {
-	type NoMethod Candidate
+func (s CivicinfoSchemaV2Candidate) MarshalJSON() ([]byte, error) {
+	type NoMethod CivicinfoSchemaV2Candidate
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// Channel: A social media or web channel for a candidate.
-type Channel struct {
+// CivicinfoSchemaV2Channel: A social media or web channel for a candidate.
+type CivicinfoSchemaV2Channel struct {
 	// Id: The unique public identifier for the candidate's channel.
 	Id string `json:"id,omitempty"`
 	// Type: The type of channel. The following is a list of types of channels, but
@@ -332,13 +585,14 @@ type Channel struct {
 	NullFields []string `json:"-"`
 }
 
-func (s Channel) MarshalJSON() ([]byte, error) {
-	type NoMethod Channel
+func (s CivicinfoSchemaV2Channel) MarshalJSON() ([]byte, error) {
+	type NoMethod CivicinfoSchemaV2Channel
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// Contest: Information about a contest that appears on a voter's ballot.
-type Contest struct {
+// CivicinfoSchemaV2Contest: Information about a contest that appears on a
+// voter's ballot.
+type CivicinfoSchemaV2Contest struct {
 	// BallotPlacement: A number specifying the position of this contest on the
 	// voter's ballot.
 	BallotPlacement int64 `json:"ballotPlacement,omitempty,string"`
@@ -346,9 +600,9 @@ type Contest struct {
 	// available.
 	BallotTitle string `json:"ballotTitle,omitempty"`
 	// Candidates: The candidate choices for this contest.
-	Candidates []*Candidate `json:"candidates,omitempty"`
+	Candidates []*CivicinfoSchemaV2Candidate `json:"candidates,omitempty"`
 	// District: Information about the electoral district that this contest is in.
-	District *ElectoralDistrict `json:"district,omitempty"`
+	District *CivicinfoSchemaV2ElectoralDistrict `json:"district,omitempty"`
 	// ElectorateSpecifications: A description of any additional eligibility
 	// requirements for voting in this contest.
 	ElectorateSpecifications string `json:"electorateSpecifications,omitempty"`
@@ -435,7 +689,7 @@ type Contest struct {
 	Roles []string `json:"roles,omitempty"`
 	// Sources: A list of sources for this contest. If multiple sources are listed,
 	// the data has been aggregated from those sources.
-	Sources []*Source `json:"sources,omitempty"`
+	Sources []*CivicinfoSchemaV2Source `json:"sources,omitempty"`
 	// Special: "Yes" or "No" depending on whether this a contest being held
 	// outside the normal election cycle.
 	Special string `json:"special,omitempty"`
@@ -456,97 +710,13 @@ type Contest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s Contest) MarshalJSON() ([]byte, error) {
-	type NoMethod Contest
+func (s CivicinfoSchemaV2Contest) MarshalJSON() ([]byte, error) {
+	type NoMethod CivicinfoSchemaV2Contest
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-type DivisionByAddressResponse struct {
-	Divisions map[string]GeographicDivision `json:"divisions,omitempty"`
-	// NormalizedInput: The normalized version of the requested address.
-	NormalizedInput *SimpleAddressType `json:"normalizedInput,omitempty"`
-
-	// ServerResponse contains the HTTP response code and headers from the server.
-	googleapi.ServerResponse `json:"-"`
-	// ForceSendFields is a list of field names (e.g. "Divisions") to
-	// unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
-	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Divisions") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
-	NullFields []string `json:"-"`
-}
-
-func (s DivisionByAddressResponse) MarshalJSON() ([]byte, error) {
-	type NoMethod DivisionByAddressResponse
-	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
-}
-
-// DivisionSearchResponse: The result of a division search query.
-type DivisionSearchResponse struct {
-	// Kind: Identifies what kind of resource this is. Value: the fixed string
-	// "civicinfo#divisionSearchResponse".
-	Kind    string                  `json:"kind,omitempty"`
-	Results []*DivisionSearchResult `json:"results,omitempty"`
-
-	// ServerResponse contains the HTTP response code and headers from the server.
-	googleapi.ServerResponse `json:"-"`
-	// ForceSendFields is a list of field names (e.g. "Kind") to unconditionally
-	// include in API requests. By default, fields with empty or default values are
-	// omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
-	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Kind") to include in API requests
-	// with the JSON null value. By default, fields with empty values are omitted
-	// from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
-	NullFields []string `json:"-"`
-}
-
-func (s DivisionSearchResponse) MarshalJSON() ([]byte, error) {
-	type NoMethod DivisionSearchResponse
-	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
-}
-
-// DivisionSearchResult: Represents a political geographic division that
-// matches the requested query.
-type DivisionSearchResult struct {
-	// Aliases: Other Open Civic Data identifiers that refer to the same division
-	// -- for example, those that refer to other political divisions whose
-	// boundaries are defined to be coterminous with this one. For example,
-	// ocd-division/country:us/state:wy will include an alias of
-	// ocd-division/country:us/state:wy/cd:1, since Wyoming has only one
-	// Congressional district.
-	Aliases []string `json:"aliases,omitempty"`
-	// Name: The name of the division.
-	Name string `json:"name,omitempty"`
-	// OcdId: The unique Open Civic Data identifier for this division
-	OcdId string `json:"ocdId,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "Aliases") to unconditionally
-	// include in API requests. By default, fields with empty or default values are
-	// omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
-	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Aliases") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
-	NullFields []string `json:"-"`
-}
-
-func (s DivisionSearchResult) MarshalJSON() ([]byte, error) {
-	type NoMethod DivisionSearchResult
-	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
-}
-
-// Election: Information about the election that was queried.
-type Election struct {
+// CivicinfoSchemaV2Election: Information about the election that was queried.
+type CivicinfoSchemaV2Election struct {
 	// ElectionDay: Day of the election in YYYY-MM-DD format.
 	ElectionDay string `json:"electionDay,omitempty"`
 	// Id: The unique ID of this election.
@@ -577,13 +747,14 @@ type Election struct {
 	NullFields []string `json:"-"`
 }
 
-func (s Election) MarshalJSON() ([]byte, error) {
-	type NoMethod Election
+func (s CivicinfoSchemaV2Election) MarshalJSON() ([]byte, error) {
+	type NoMethod CivicinfoSchemaV2Election
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// ElectionOfficial: Information about individual election officials.
-type ElectionOfficial struct {
+// CivicinfoSchemaV2ElectionOfficial: Information about individual election
+// officials.
+type CivicinfoSchemaV2ElectionOfficial struct {
 	// EmailAddress: The email address of the election official.
 	EmailAddress string `json:"emailAddress,omitempty"`
 	// FaxNumber: The fax number of the election official.
@@ -607,42 +778,14 @@ type ElectionOfficial struct {
 	NullFields []string `json:"-"`
 }
 
-func (s ElectionOfficial) MarshalJSON() ([]byte, error) {
-	type NoMethod ElectionOfficial
+func (s CivicinfoSchemaV2ElectionOfficial) MarshalJSON() ([]byte, error) {
+	type NoMethod CivicinfoSchemaV2ElectionOfficial
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// ElectionsQueryResponse: The list of elections available for this version of
-// the API.
-type ElectionsQueryResponse struct {
-	// Elections: A list of available elections
-	Elections []*Election `json:"elections,omitempty"`
-	// Kind: Identifies what kind of resource this is. Value: the fixed string
-	// "civicinfo#electionsQueryResponse".
-	Kind string `json:"kind,omitempty"`
-
-	// ServerResponse contains the HTTP response code and headers from the server.
-	googleapi.ServerResponse `json:"-"`
-	// ForceSendFields is a list of field names (e.g. "Elections") to
-	// unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
-	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Elections") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
-	NullFields []string `json:"-"`
-}
-
-func (s ElectionsQueryResponse) MarshalJSON() ([]byte, error) {
-	type NoMethod ElectionsQueryResponse
-	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
-}
-
-// ElectoralDistrict: Describes the geographic scope of a contest.
-type ElectoralDistrict struct {
+// CivicinfoSchemaV2ElectoralDistrict: Describes the geographic scope of a
+// contest.
+type CivicinfoSchemaV2ElectoralDistrict struct {
 	// Id: An identifier for this district, relative to its scope. For example, the
 	// 34th State Senate district would have id "34" and a scope of stateUpper.
 	Id string `json:"id,omitempty"`
@@ -682,13 +825,13 @@ type ElectoralDistrict struct {
 	NullFields []string `json:"-"`
 }
 
-func (s ElectoralDistrict) MarshalJSON() ([]byte, error) {
-	type NoMethod ElectoralDistrict
+func (s CivicinfoSchemaV2ElectoralDistrict) MarshalJSON() ([]byte, error) {
+	type NoMethod CivicinfoSchemaV2ElectoralDistrict
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GeographicDivision: Describes a political geography.
-type GeographicDivision struct {
+// CivicinfoSchemaV2GeographicDivision: Describes a political geography.
+type CivicinfoSchemaV2GeographicDivision struct {
 	// AlsoKnownAs: Any other valid OCD IDs that refer to the same
 	// division.\n\nBecause OCD IDs are meant to be human-readable and at least
 	// somewhat predictable, there are occasionally several identifiers for a
@@ -718,13 +861,14 @@ type GeographicDivision struct {
 	NullFields []string `json:"-"`
 }
 
-func (s GeographicDivision) MarshalJSON() ([]byte, error) {
-	type NoMethod GeographicDivision
+func (s CivicinfoSchemaV2GeographicDivision) MarshalJSON() ([]byte, error) {
+	type NoMethod CivicinfoSchemaV2GeographicDivision
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// Office: Information about an Office held by one or more Officials.
-type Office struct {
+// CivicinfoSchemaV2Office: Information about an Office held by one or more
+// Officials.
+type CivicinfoSchemaV2Office struct {
 	// DivisionId: The OCD ID of the division with which this office is associated.
 	DivisionId string `json:"divisionId,omitempty"`
 	// Levels: The levels of government of which this office is part. There may be
@@ -770,7 +914,7 @@ type Office struct {
 	Roles []string `json:"roles,omitempty"`
 	// Sources: A list of sources for this office. If multiple sources are listed,
 	// the data has been aggregated from those sources.
-	Sources []*Source `json:"sources,omitempty"`
+	Sources []*CivicinfoSchemaV2Source `json:"sources,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "DivisionId") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -784,17 +928,18 @@ type Office struct {
 	NullFields []string `json:"-"`
 }
 
-func (s Office) MarshalJSON() ([]byte, error) {
-	type NoMethod Office
+func (s CivicinfoSchemaV2Office) MarshalJSON() ([]byte, error) {
+	type NoMethod CivicinfoSchemaV2Office
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// Official: Information about a person holding an elected office.
-type Official struct {
+// CivicinfoSchemaV2Official: Information about a person holding an elected
+// office.
+type CivicinfoSchemaV2Official struct {
 	// Address: Addresses at which to contact the official.
-	Address []*SimpleAddressType `json:"address,omitempty"`
+	Address []*CivicinfoSchemaV2SimpleAddressType `json:"address,omitempty"`
 	// Channels: A list of known (social) media channels for this official.
-	Channels []*Channel `json:"channels,omitempty"`
+	Channels []*CivicinfoSchemaV2Channel `json:"channels,omitempty"`
 	// Emails: The direct email addresses for the official.
 	Emails []string `json:"emails,omitempty"`
 	// Name: The official's name.
@@ -820,17 +965,17 @@ type Official struct {
 	NullFields []string `json:"-"`
 }
 
-func (s Official) MarshalJSON() ([]byte, error) {
-	type NoMethod Official
+func (s CivicinfoSchemaV2Official) MarshalJSON() ([]byte, error) {
+	type NoMethod CivicinfoSchemaV2Official
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// PollingLocation: A location where a voter can vote. This may be an early
-// vote site, an election day voting location, or a drop off location for a
-// completed ballot.
-type PollingLocation struct {
+// CivicinfoSchemaV2PollingLocation: A location where a voter can vote. This
+// may be an early vote site, an election day voting location, or a drop off
+// location for a completed ballot.
+type CivicinfoSchemaV2PollingLocation struct {
 	// Address: The address of the location.
-	Address *SimpleAddressType `json:"address,omitempty"`
+	Address *CivicinfoSchemaV2SimpleAddressType `json:"address,omitempty"`
 	// EndDate: The last date that this early vote site or drop off location may be
 	// used. This field is not populated for polling locations.
 	EndDate string `json:"endDate,omitempty"`
@@ -850,7 +995,7 @@ type PollingLocation struct {
 	PollingHours string `json:"pollingHours,omitempty"`
 	// Sources: A list of sources for this location. If multiple sources are listed
 	// the data has been aggregated from those sources.
-	Sources []*Source `json:"sources,omitempty"`
+	Sources []*CivicinfoSchemaV2Source `json:"sources,omitempty"`
 	// StartDate: The first date that this early vote site or drop off location may
 	// be used. This field is not populated for polling locations.
 	StartDate string `json:"startDate,omitempty"`
@@ -870,13 +1015,13 @@ type PollingLocation struct {
 	NullFields []string `json:"-"`
 }
 
-func (s PollingLocation) MarshalJSON() ([]byte, error) {
-	type NoMethod PollingLocation
+func (s CivicinfoSchemaV2PollingLocation) MarshalJSON() ([]byte, error) {
+	type NoMethod CivicinfoSchemaV2PollingLocation
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-func (s *PollingLocation) UnmarshalJSON(data []byte) error {
-	type NoMethod PollingLocation
+func (s *CivicinfoSchemaV2PollingLocation) UnmarshalJSON(data []byte) error {
+	type NoMethod CivicinfoSchemaV2PollingLocation
 	var s1 struct {
 		Latitude  gensupport.JSONFloat64 `json:"latitude"`
 		Longitude gensupport.JSONFloat64 `json:"longitude"`
@@ -891,7 +1036,7 @@ func (s *PollingLocation) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-type Precinct struct {
+type CivicinfoSchemaV2Precinct struct {
 	// AdministrationRegionId: ID of the AdministrationRegion message for this
 	// precinct. Corresponds to LocalityId xml tag.
 	AdministrationRegionId string `json:"administrationRegionId,omitempty"`
@@ -939,84 +1084,13 @@ type Precinct struct {
 	NullFields []string `json:"-"`
 }
 
-func (s Precinct) MarshalJSON() ([]byte, error) {
-	type NoMethod Precinct
+func (s CivicinfoSchemaV2Precinct) MarshalJSON() ([]byte, error) {
+	type NoMethod CivicinfoSchemaV2Precinct
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-type RepresentativeInfoData struct {
-	// Divisions: A map of political geographic divisions that contain the
-	// requested address, keyed by the unique Open Civic Data identifier for this
-	// division.
-	Divisions map[string]GeographicDivision `json:"divisions,omitempty"`
-	// Offices: Elected offices referenced by the divisions listed above. Will only
-	// be present if includeOffices was true in the request.
-	Offices []*Office `json:"offices,omitempty"`
-	// Officials: Officials holding the offices listed above. Will only be present
-	// if includeOffices was true in the request.
-	Officials []*Official `json:"officials,omitempty"`
-
-	// ServerResponse contains the HTTP response code and headers from the server.
-	googleapi.ServerResponse `json:"-"`
-	// ForceSendFields is a list of field names (e.g. "Divisions") to
-	// unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
-	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Divisions") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
-	NullFields []string `json:"-"`
-}
-
-func (s RepresentativeInfoData) MarshalJSON() ([]byte, error) {
-	type NoMethod RepresentativeInfoData
-	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
-}
-
-// RepresentativeInfoResponse: The result of a representative info lookup
-// query.
-type RepresentativeInfoResponse struct {
-	// Divisions: A map of political geographic divisions that contain the
-	// requested address, keyed by the unique Open Civic Data identifier for this
-	// division.
-	Divisions map[string]GeographicDivision `json:"divisions,omitempty"`
-	// Kind: Identifies what kind of resource this is. Value: the fixed string
-	// "civicinfo#representativeInfoResponse".
-	Kind string `json:"kind,omitempty"`
-	// NormalizedInput: The normalized version of the requested address
-	NormalizedInput *SimpleAddressType `json:"normalizedInput,omitempty"`
-	// Offices: Elected offices referenced by the divisions listed above. Will only
-	// be present if includeOffices was true in the request.
-	Offices []*Office `json:"offices,omitempty"`
-	// Officials: Officials holding the offices listed above. Will only be present
-	// if includeOffices was true in the request.
-	Officials []*Official `json:"officials,omitempty"`
-
-	// ServerResponse contains the HTTP response code and headers from the server.
-	googleapi.ServerResponse `json:"-"`
-	// ForceSendFields is a list of field names (e.g. "Divisions") to
-	// unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
-	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Divisions") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
-	NullFields []string `json:"-"`
-}
-
-func (s RepresentativeInfoResponse) MarshalJSON() ([]byte, error) {
-	type NoMethod RepresentativeInfoResponse
-	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
-}
-
-// SimpleAddressType: A simple representation of an address.
-type SimpleAddressType struct {
+// CivicinfoSchemaV2SimpleAddressType: A simple representation of an address.
+type CivicinfoSchemaV2SimpleAddressType struct {
 	// City: The city or town for the address.
 	City string `json:"city,omitempty"`
 	// Line1: The street name and number of this address.
@@ -1044,14 +1118,14 @@ type SimpleAddressType struct {
 	NullFields []string `json:"-"`
 }
 
-func (s SimpleAddressType) MarshalJSON() ([]byte, error) {
-	type NoMethod SimpleAddressType
+func (s CivicinfoSchemaV2SimpleAddressType) MarshalJSON() ([]byte, error) {
+	type NoMethod CivicinfoSchemaV2SimpleAddressType
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// Source: Contains information about the data source for the element
-// containing it.
-type Source struct {
+// CivicinfoSchemaV2Source: Contains information about the data source for the
+// element containing it.
+type CivicinfoSchemaV2Source struct {
 	// Name: The name of the data source.
 	Name string `json:"name,omitempty"`
 	// Official: Whether this data comes from an official government source.
@@ -1069,74 +1143,8 @@ type Source struct {
 	NullFields []string `json:"-"`
 }
 
-func (s Source) MarshalJSON() ([]byte, error) {
-	type NoMethod Source
-	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
-}
-
-// VoterInfoResponse: The result of a voter info lookup query.
-type VoterInfoResponse struct {
-	// Contests: Contests that will appear on the voter's ballot.
-	Contests []*Contest `json:"contests,omitempty"`
-	// DropOffLocations: Locations where a voter is eligible to drop off a
-	// completed ballot. The voter must have received and completed a ballot prior
-	// to arriving at the location. The location may not have ballots available on
-	// the premises. These locations could be open on or before election day as
-	// indicated in the pollingHours field.
-	DropOffLocations []*PollingLocation `json:"dropOffLocations,omitempty"`
-	// EarlyVoteSites: Locations where the voter is eligible to vote early, prior
-	// to election day.
-	EarlyVoteSites []*PollingLocation `json:"earlyVoteSites,omitempty"`
-	// Election: The election that was queried.
-	Election *Election `json:"election,omitempty"`
-	// Kind: Identifies what kind of resource this is. Value: the fixed string
-	// "civicinfo#voterInfoResponse".
-	Kind string `json:"kind,omitempty"`
-	// MailOnly: Specifies whether voters in the precinct vote only by mailing
-	// their ballots (with the possible option of dropping off their ballots as
-	// well).
-	MailOnly bool `json:"mailOnly,omitempty"`
-	// NormalizedInput: The normalized version of the requested address
-	NormalizedInput *SimpleAddressType `json:"normalizedInput,omitempty"`
-	// OtherElections: When there are multiple elections for a voter address, the
-	// otherElections field is populated in the API response and there are two
-	// possibilities: 1. If the earliest election is not the intended election,
-	// specify the election ID of the desired election in a second API request
-	// using the electionId field. 2. If these elections occur on the same day, the
-	// API doesn?t return any polling location, contest, or election official
-	// information to ensure that an additional query is made. For user-facing
-	// applications, we recommend displaying these elections to the user to
-	// disambiguate. A second API request using the electionId field should be made
-	// for the election that is relevant to the user.
-	OtherElections []*Election `json:"otherElections,omitempty"`
-	// PollingLocations: Locations where the voter is eligible to vote on election
-	// day.
-	PollingLocations []*PollingLocation `json:"pollingLocations,omitempty"`
-	PrecinctId       string             `json:"precinctId,omitempty"`
-	// Precincts: The precincts that match this voter's address. Will only be
-	// returned for project IDs which have been allowlisted as "partner projects".
-	Precincts []*Precinct `json:"precincts,omitempty"`
-	// State: Local Election Information for the state that the voter votes in. For
-	// the US, there will only be one element in this array.
-	State []*AdministrationRegion `json:"state,omitempty"`
-
-	// ServerResponse contains the HTTP response code and headers from the server.
-	googleapi.ServerResponse `json:"-"`
-	// ForceSendFields is a list of field names (e.g. "Contests") to
-	// unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
-	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Contests") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
-	NullFields []string `json:"-"`
-}
-
-func (s VoterInfoResponse) MarshalJSON() ([]byte, error) {
-	type NoMethod VoterInfoResponse
+func (s CivicinfoSchemaV2Source) MarshalJSON() ([]byte, error) {
+	type NoMethod CivicinfoSchemaV2Source
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -1212,11 +1220,11 @@ func (c *DivisionsQueryDivisionByAddressCall) doRequest(alt string) (*http.Respo
 
 // Do executes the "civicinfo.divisions.queryDivisionByAddress" call.
 // Any non-2xx status code is an error. Response headers are in either
-// *DivisionByAddressResponse.ServerResponse.Header or (if a response was
-// returned at all) in error.(*googleapi.Error).Header. Use
+// *CivicinfoApiprotosV2DivisionByAddressResponse.ServerResponse.Header or (if
+// a response was returned at all) in error.(*googleapi.Error).Header. Use
 // googleapi.IsNotModified to check whether the returned error was because
 // http.StatusNotModified was returned.
-func (c *DivisionsQueryDivisionByAddressCall) Do(opts ...googleapi.CallOption) (*DivisionByAddressResponse, error) {
+func (c *DivisionsQueryDivisionByAddressCall) Do(opts ...googleapi.CallOption) (*CivicinfoApiprotosV2DivisionByAddressResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
@@ -1235,7 +1243,7 @@ func (c *DivisionsQueryDivisionByAddressCall) Do(opts ...googleapi.CallOption) (
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, gensupport.WrapError(err)
 	}
-	ret := &DivisionByAddressResponse{
+	ret := &CivicinfoApiprotosV2DivisionByAddressResponse{
 		ServerResponse: googleapi.ServerResponse{
 			Header:         res.Header,
 			HTTPStatusCode: res.StatusCode,
@@ -1325,11 +1333,11 @@ func (c *DivisionsSearchCall) doRequest(alt string) (*http.Response, error) {
 
 // Do executes the "civicinfo.divisions.search" call.
 // Any non-2xx status code is an error. Response headers are in either
-// *DivisionSearchResponse.ServerResponse.Header or (if a response was returned
-// at all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
-// check whether the returned error was because http.StatusNotModified was
-// returned.
-func (c *DivisionsSearchCall) Do(opts ...googleapi.CallOption) (*DivisionSearchResponse, error) {
+// *CivicinfoApiprotosV2DivisionSearchResponse.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *DivisionsSearchCall) Do(opts ...googleapi.CallOption) (*CivicinfoApiprotosV2DivisionSearchResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
@@ -1348,7 +1356,7 @@ func (c *DivisionsSearchCall) Do(opts ...googleapi.CallOption) (*DivisionSearchR
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, gensupport.WrapError(err)
 	}
-	ret := &DivisionSearchResponse{
+	ret := &CivicinfoApiprotosV2DivisionSearchResponse{
 		ServerResponse: googleapi.ServerResponse{
 			Header:         res.Header,
 			HTTPStatusCode: res.StatusCode,
@@ -1435,11 +1443,11 @@ func (c *ElectionsElectionQueryCall) doRequest(alt string) (*http.Response, erro
 
 // Do executes the "civicinfo.elections.electionQuery" call.
 // Any non-2xx status code is an error. Response headers are in either
-// *ElectionsQueryResponse.ServerResponse.Header or (if a response was returned
-// at all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
-// check whether the returned error was because http.StatusNotModified was
-// returned.
-func (c *ElectionsElectionQueryCall) Do(opts ...googleapi.CallOption) (*ElectionsQueryResponse, error) {
+// *CivicinfoApiprotosV2ElectionsQueryResponse.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ElectionsElectionQueryCall) Do(opts ...googleapi.CallOption) (*CivicinfoApiprotosV2ElectionsQueryResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
@@ -1458,7 +1466,7 @@ func (c *ElectionsElectionQueryCall) Do(opts ...googleapi.CallOption) (*Election
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, gensupport.WrapError(err)
 	}
-	ret := &ElectionsQueryResponse{
+	ret := &CivicinfoApiprotosV2ElectionsQueryResponse{
 		ServerResponse: googleapi.ServerResponse{
 			Header:         res.Header,
 			HTTPStatusCode: res.StatusCode,
@@ -1582,11 +1590,11 @@ func (c *ElectionsVoterInfoQueryCall) doRequest(alt string) (*http.Response, err
 
 // Do executes the "civicinfo.elections.voterInfoQuery" call.
 // Any non-2xx status code is an error. Response headers are in either
-// *VoterInfoResponse.ServerResponse.Header or (if a response was returned at
-// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
-// check whether the returned error was because http.StatusNotModified was
-// returned.
-func (c *ElectionsVoterInfoQueryCall) Do(opts ...googleapi.CallOption) (*VoterInfoResponse, error) {
+// *CivicinfoApiprotosV2VoterInfoResponse.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ElectionsVoterInfoQueryCall) Do(opts ...googleapi.CallOption) (*CivicinfoApiprotosV2VoterInfoResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
@@ -1605,7 +1613,7 @@ func (c *ElectionsVoterInfoQueryCall) Do(opts ...googleapi.CallOption) (*VoterIn
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, gensupport.WrapError(err)
 	}
-	ret := &VoterInfoResponse{
+	ret := &CivicinfoApiprotosV2VoterInfoResponse{
 		ServerResponse: googleapi.ServerResponse{
 			Header:         res.Header,
 			HTTPStatusCode: res.StatusCode,
@@ -1745,11 +1753,11 @@ func (c *RepresentativesRepresentativeInfoByAddressCall) doRequest(alt string) (
 
 // Do executes the "civicinfo.representatives.representativeInfoByAddress" call.
 // Any non-2xx status code is an error. Response headers are in either
-// *RepresentativeInfoResponse.ServerResponse.Header or (if a response was
-// returned at all) in error.(*googleapi.Error).Header. Use
+// *CivicinfoApiprotosV2RepresentativeInfoResponse.ServerResponse.Header or (if
+// a response was returned at all) in error.(*googleapi.Error).Header. Use
 // googleapi.IsNotModified to check whether the returned error was because
 // http.StatusNotModified was returned.
-func (c *RepresentativesRepresentativeInfoByAddressCall) Do(opts ...googleapi.CallOption) (*RepresentativeInfoResponse, error) {
+func (c *RepresentativesRepresentativeInfoByAddressCall) Do(opts ...googleapi.CallOption) (*CivicinfoApiprotosV2RepresentativeInfoResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
@@ -1768,7 +1776,7 @@ func (c *RepresentativesRepresentativeInfoByAddressCall) Do(opts ...googleapi.Ca
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, gensupport.WrapError(err)
 	}
-	ret := &RepresentativeInfoResponse{
+	ret := &CivicinfoApiprotosV2RepresentativeInfoResponse{
 		ServerResponse: googleapi.ServerResponse{
 			Header:         res.Header,
 			HTTPStatusCode: res.StatusCode,
@@ -1909,11 +1917,11 @@ func (c *RepresentativesRepresentativeInfoByDivisionCall) doRequest(alt string) 
 
 // Do executes the "civicinfo.representatives.representativeInfoByDivision" call.
 // Any non-2xx status code is an error. Response headers are in either
-// *RepresentativeInfoData.ServerResponse.Header or (if a response was returned
-// at all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
-// check whether the returned error was because http.StatusNotModified was
-// returned.
-func (c *RepresentativesRepresentativeInfoByDivisionCall) Do(opts ...googleapi.CallOption) (*RepresentativeInfoData, error) {
+// *CivicinfoApiprotosV2RepresentativeInfoData.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *RepresentativesRepresentativeInfoByDivisionCall) Do(opts ...googleapi.CallOption) (*CivicinfoApiprotosV2RepresentativeInfoData, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
@@ -1932,7 +1940,7 @@ func (c *RepresentativesRepresentativeInfoByDivisionCall) Do(opts ...googleapi.C
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, gensupport.WrapError(err)
 	}
-	ret := &RepresentativeInfoData{
+	ret := &CivicinfoApiprotosV2RepresentativeInfoData{
 		ServerResponse: googleapi.ServerResponse{
 			Header:         res.Header,
 			HTTPStatusCode: res.StatusCode,

@@ -4987,15 +4987,15 @@ func (c *AccountsReportsGenerateCall) Limit(limit int64) *AccountsReportsGenerat
 //	"MATCHED_AD_REQUESTS" - Requests that returned at least one ad.
 //	"TOTAL_IMPRESSIONS" - Impressions. An impression is counted for each ad
 //
-// request where at least one ad has been downloaded to the user’s device and
+// request where at least one ad has been downloaded to the user's device and
 // has begun to load. It is the number of ad units (for content ads) or search
 // queries (for search ads) that showed ads.
 //
 //	"IMPRESSIONS" - Impressions. An impression is counted for each ad request
 //
-// where at least one ad has been downloaded to the user’s device and has
-// begun to load. It is the number of ad units (for content ads) or search
-// queries (for search ads) that showed ads.
+// where at least one ad has been downloaded to the user's device and has begun
+// to load. It is the number of ad units (for content ads) or search queries
+// (for search ads) that showed ads.
 //
 //	"INDIVIDUAL_AD_IMPRESSIONS" - Ads shown. Different ad formats will display
 //
@@ -5091,7 +5091,13 @@ func (c *AccountsReportsGenerateCall) Limit(limit int64) *AccountsReportsGenerat
 // revenue shared traffic before any parent and child account revenue share is
 // applied.
 //
-//	"WEBSEARCH_RESULT_PAGES" - Number of results pages.
+//	"WEBSEARCH_RESULT_PAGES" - Number of results pages. This metric can only
+//
+// be used when generating a report in the Google timezone, not the account
+// timezone. Since the account timezone is the default for report generation,
+// this metric can only be used by explicitly specifying
+// `reportingTimeZone=GOOGLE_TIME_ZONE`.
+//
 //	"FUNNEL_REQUESTS" - Number of requests for non-ad units (for example a
 //
 // related search unit). For more information, see [Funnel
@@ -5571,15 +5577,15 @@ func (c *AccountsReportsGenerateCsvCall) Limit(limit int64) *AccountsReportsGene
 //	"MATCHED_AD_REQUESTS" - Requests that returned at least one ad.
 //	"TOTAL_IMPRESSIONS" - Impressions. An impression is counted for each ad
 //
-// request where at least one ad has been downloaded to the user’s device and
+// request where at least one ad has been downloaded to the user's device and
 // has begun to load. It is the number of ad units (for content ads) or search
 // queries (for search ads) that showed ads.
 //
 //	"IMPRESSIONS" - Impressions. An impression is counted for each ad request
 //
-// where at least one ad has been downloaded to the user’s device and has
-// begun to load. It is the number of ad units (for content ads) or search
-// queries (for search ads) that showed ads.
+// where at least one ad has been downloaded to the user's device and has begun
+// to load. It is the number of ad units (for content ads) or search queries
+// (for search ads) that showed ads.
 //
 //	"INDIVIDUAL_AD_IMPRESSIONS" - Ads shown. Different ad formats will display
 //
@@ -5675,7 +5681,13 @@ func (c *AccountsReportsGenerateCsvCall) Limit(limit int64) *AccountsReportsGene
 // revenue shared traffic before any parent and child account revenue share is
 // applied.
 //
-//	"WEBSEARCH_RESULT_PAGES" - Number of results pages.
+//	"WEBSEARCH_RESULT_PAGES" - Number of results pages. This metric can only
+//
+// be used when generating a report in the Google timezone, not the account
+// timezone. Since the account timezone is the default for report generation,
+// this metric can only be used by explicitly specifying
+// `reportingTimeZone=GOOGLE_TIME_ZONE`.
+//
 //	"FUNNEL_REQUESTS" - Number of requests for non-ad units (for example a
 //
 // related search unit). For more information, see [Funnel

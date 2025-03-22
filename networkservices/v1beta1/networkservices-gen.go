@@ -630,6 +630,12 @@ func (s ExtensionChain) MarshalJSON() ([]byte, error) {
 // ExtensionChainExtension: A single extension in the chain to execute for the
 // matching request.
 type ExtensionChainExtension struct {
+	// AllowDynamicForwarding: Optional. When set to `TRUE`, the response from an
+	// extension service is allowed to set the
+	// `com.google.envoy.dynamic_forwarding` namespace in the dynamic metadata.
+	// This field is not supported for plugin extensions. Setting it results in a
+	// validation error.
+	AllowDynamicForwarding bool `json:"allowDynamicForwarding,omitempty"`
 	// Authority: Optional. The `:authority` header in the gRPC request sent from
 	// Envoy to the extension service. Required for Callout extensions. This field
 	// is not supported for plugin extensions. Setting it results in a validation
@@ -657,8 +663,12 @@ type ExtensionChainExtension struct {
 	// `com.google.lb_traffic_extension.lbtrafficextension1.chain1.ext1`. The
 	// following variables are supported in the metadata: `{forwarding_rule_id}` -
 	// substituted with the forwarding rule's fully qualified resource name. This
-	// field is not supported for plugin extensions. Setting it results in a
-	// validation error.
+	// field is subject to following limitations: * The total size of the metadata
+	// must be less than 1KiB. * The total number of keys in the metadata must be
+	// less than 20. * The length of each key must be less than 64 characters. *
+	// The length of each value must be less than 1024 characters. * All values
+	// must be strings. This field is not supported for plugin extensions. Setting
+	// it results in a validation error.
 	Metadata googleapi.RawMessage `json:"metadata,omitempty"`
 	// Name: Required. The name for this extension. The name is logged as part of
 	// the HTTP request logs. The name must conform with RFC-1034, is restricted to
@@ -708,15 +718,15 @@ type ExtensionChainExtension struct {
 	// callout extensions. This field is not supported for plugin extensions.
 	// Setting it results in a validation error.
 	Timeout string `json:"timeout,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "Authority") to
+	// ForceSendFields is a list of field names (e.g. "AllowDynamicForwarding") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Authority") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
+	// NullFields is a list of field names (e.g. "AllowDynamicForwarding") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -2288,6 +2298,10 @@ type ListEndpointPoliciesResponse struct {
 	// results, call this method again using the value of `next_page_token` as
 	// `page_token`.
 	NextPageToken string `json:"nextPageToken,omitempty"`
+	// Unreachable: Unreachable resources. Populated when the request opts into
+	// return_partial_success and reading across collections e.g. when attempting
+	// to list all resources across all supported locations.
+	Unreachable []string `json:"unreachable,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
@@ -2383,6 +2397,10 @@ type ListGrpcRoutesResponse struct {
 	// results, call this method again using the value of `next_page_token` as
 	// `page_token`.
 	NextPageToken string `json:"nextPageToken,omitempty"`
+	// Unreachable: Unreachable resources. Populated when the request opts into
+	// return_partial_success and reading across collections e.g. when attempting
+	// to list all resources across all supported locations.
+	Unreachable []string `json:"unreachable,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
@@ -2413,6 +2431,10 @@ type ListHttpRoutesResponse struct {
 	// results, call this method again using the value of `next_page_token` as
 	// `page_token`.
 	NextPageToken string `json:"nextPageToken,omitempty"`
+	// Unreachable: Unreachable resources. Populated when the request opts into
+	// return_partial_success and reading across collections e.g. when attempting
+	// to list all resources across all supported locations.
+	Unreachable []string `json:"unreachable,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
@@ -2698,6 +2720,10 @@ type ListTcpRoutesResponse struct {
 	NextPageToken string `json:"nextPageToken,omitempty"`
 	// TcpRoutes: List of TcpRoute resources.
 	TcpRoutes []*TcpRoute `json:"tcpRoutes,omitempty"`
+	// Unreachable: Unreachable resources. Populated when the request opts into
+	// return_partial_success and reading across collections e.g. when attempting
+	// to list all resources across all supported locations.
+	Unreachable []string `json:"unreachable,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
@@ -2728,6 +2754,10 @@ type ListTlsRoutesResponse struct {
 	NextPageToken string `json:"nextPageToken,omitempty"`
 	// TlsRoutes: List of TlsRoute resources.
 	TlsRoutes []*TlsRoute `json:"tlsRoutes,omitempty"`
+	// Unreachable: Unreachable resources. Populated when the request opts into
+	// return_partial_success and reading across collections e.g. when attempting
+	// to list all resources across all supported locations.
+	Unreachable []string `json:"unreachable,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
@@ -2757,6 +2787,10 @@ type ListWasmPluginVersionsResponse struct {
 	// results, call this method again using the value of `next_page_token` as
 	// `page_token`.
 	NextPageToken string `json:"nextPageToken,omitempty"`
+	// Unreachable: Unreachable resources. Populated when the request attempts to
+	// list all resources across all supported locations, while some locations are
+	// temporarily unavailable.
+	Unreachable []string `json:"unreachable,omitempty"`
 	// WasmPluginVersions: List of `WasmPluginVersion` resources.
 	WasmPluginVersions []*WasmPluginVersion `json:"wasmPluginVersions,omitempty"`
 
@@ -2787,6 +2821,10 @@ type ListWasmPluginsResponse struct {
 	// results, call this method again using the value of `next_page_token` as
 	// `page_token`.
 	NextPageToken string `json:"nextPageToken,omitempty"`
+	// Unreachable: Unreachable resources. Populated when the request attempts to
+	// list all resources across all supported locations, while some locations are
+	// temporarily unavailable.
+	Unreachable []string `json:"unreachable,omitempty"`
 	// WasmPlugins: List of `WasmPlugin` resources.
 	WasmPlugins []*WasmPlugin `json:"wasmPlugins,omitempty"`
 
@@ -3163,9 +3201,9 @@ func (s RetryFilterPerRouteConfig) MarshalJSON() ([]byte, error) {
 }
 
 // ServiceBinding: ServiceBinding can be used to: - Bind a Service Directory
-// Service to be used in a BackendService resource. - Bind a Private Service
-// Connect producer service to be used in consumer Cloud Service Mesh or
-// Application Load Balancers.
+// Service to be used in a BackendService resource. This feature will be
+// deprecated soon. - Bind a Private Service Connect producer service to be
+// used in consumer Cloud Service Mesh or Application Load Balancers.
 type ServiceBinding struct {
 	// CreateTime: Output only. The timestamp when the resource was created.
 	CreateTime string `json:"createTime,omitempty"`
@@ -3179,12 +3217,14 @@ type ServiceBinding struct {
 	// `projects/*/locations/*/serviceBindings/`.
 	Name string `json:"name,omitempty"`
 	// Service: Optional. The full Service Directory Service name of the format
-	// `projects/*/locations/*/namespaces/*/services/*`. This field must be set.
+	// `projects/*/locations/*/namespaces/*/services/*`. This field is for Service
+	// Directory integration which will be deprecated soon.
 	Service string `json:"service,omitempty"`
 	// ServiceId: Output only. The unique identifier of the Service Directory
 	// Service against which the ServiceBinding resource is validated. This is
 	// populated when the Service Binding resource is used in another resource
-	// (like Backend Service). This is of the UUID4 format.
+	// (like Backend Service). This is of the UUID4 format. This field is for
+	// Service Directory integration which will be deprecated soon.
 	ServiceId string `json:"serviceId,omitempty"`
 	// UpdateTime: Output only. The timestamp when the resource was updated.
 	UpdateTime string `json:"updateTime,omitempty"`
@@ -3627,7 +3667,7 @@ func (s TlsRouteRouteAction) MarshalJSON() ([]byte, error) {
 type TlsRouteRouteDestination struct {
 	// ServiceName: Required. The URL of a BackendService to route traffic to.
 	ServiceName string `json:"serviceName,omitempty"`
-	// Weight: Optional. Specifies the proportion of requests forwareded to the
+	// Weight: Optional. Specifies the proportion of requests forwarded to the
 	// backend referenced by the service_name field. This is computed as: -
 	// weight/Sum(weights in destinations) Weights in all destinations does not
 	// need to sum up to 100.
@@ -5270,6 +5310,15 @@ func (c *ProjectsLocationsEndpointPoliciesListCall) PageToken(pageToken string) 
 	return c
 }
 
+// ReturnPartialSuccess sets the optional parameter "returnPartialSuccess": If
+// true, allow partial responses for multi-regional Aggregated List requests.
+// Otherwise if one of the locations is down or unreachable, the Aggregated
+// List request will fail.
+func (c *ProjectsLocationsEndpointPoliciesListCall) ReturnPartialSuccess(returnPartialSuccess bool) *ProjectsLocationsEndpointPoliciesListCall {
+	c.urlParams_.Set("returnPartialSuccess", fmt.Sprint(returnPartialSuccess))
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
 // details.
@@ -6693,6 +6742,15 @@ func (c *ProjectsLocationsGrpcRoutesListCall) PageToken(pageToken string) *Proje
 	return c
 }
 
+// ReturnPartialSuccess sets the optional parameter "returnPartialSuccess": If
+// true, allow partial responses for multi-regional Aggregated List requests.
+// Otherwise if one of the locations is down or unreachable, the Aggregated
+// List request will fail.
+func (c *ProjectsLocationsGrpcRoutesListCall) ReturnPartialSuccess(returnPartialSuccess bool) *ProjectsLocationsGrpcRoutesListCall {
+	c.urlParams_.Set("returnPartialSuccess", fmt.Sprint(returnPartialSuccess))
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
 // details.
@@ -7272,6 +7330,15 @@ func (c *ProjectsLocationsHttpRoutesListCall) PageSize(pageSize int64) *Projects
 // of data.
 func (c *ProjectsLocationsHttpRoutesListCall) PageToken(pageToken string) *ProjectsLocationsHttpRoutesListCall {
 	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// ReturnPartialSuccess sets the optional parameter "returnPartialSuccess": If
+// true, allow partial responses for multi-regional Aggregated List requests.
+// Otherwise if one of the locations is down or unreachable, the Aggregated
+// List request will fail.
+func (c *ProjectsLocationsHttpRoutesListCall) ReturnPartialSuccess(returnPartialSuccess bool) *ProjectsLocationsHttpRoutesListCall {
+	c.urlParams_.Set("returnPartialSuccess", fmt.Sprint(returnPartialSuccess))
 	return c
 }
 
@@ -11530,6 +11597,15 @@ func (c *ProjectsLocationsTcpRoutesListCall) PageToken(pageToken string) *Projec
 	return c
 }
 
+// ReturnPartialSuccess sets the optional parameter "returnPartialSuccess": If
+// true, allow partial responses for multi-regional Aggregated List requests.
+// Otherwise if one of the locations is down or unreachable, the Aggregated
+// List request will fail.
+func (c *ProjectsLocationsTcpRoutesListCall) ReturnPartialSuccess(returnPartialSuccess bool) *ProjectsLocationsTcpRoutesListCall {
+	c.urlParams_.Set("returnPartialSuccess", fmt.Sprint(returnPartialSuccess))
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
 // details.
@@ -12108,6 +12184,15 @@ func (c *ProjectsLocationsTlsRoutesListCall) PageSize(pageSize int64) *ProjectsL
 // of data.
 func (c *ProjectsLocationsTlsRoutesListCall) PageToken(pageToken string) *ProjectsLocationsTlsRoutesListCall {
 	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// ReturnPartialSuccess sets the optional parameter "returnPartialSuccess": If
+// true, allow partial responses for multi-regional Aggregated List requests.
+// Otherwise if one of the locations is down or unreachable, the Aggregated
+// List request will fail.
+func (c *ProjectsLocationsTlsRoutesListCall) ReturnPartialSuccess(returnPartialSuccess bool) *ProjectsLocationsTlsRoutesListCall {
+	c.urlParams_.Set("returnPartialSuccess", fmt.Sprint(returnPartialSuccess))
 	return c
 }
 

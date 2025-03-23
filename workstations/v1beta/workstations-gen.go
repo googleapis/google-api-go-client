@@ -908,7 +908,8 @@ type GceRegionalPersistentDisk struct {
 	// "pd-balanced" or "pd-ssd".
 	SizeGb int64 `json:"sizeGb,omitempty"`
 	// SourceSnapshot: Optional. Name of the snapshot to use as the source for the
-	// disk. If set, size_gb and fs_type must be empty.
+	// disk. If set, size_gb and fs_type must be empty. Must be formatted as ext4
+	// file system with no partitions.
 	SourceSnapshot string `json:"sourceSnapshot,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "DiskType") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -1766,8 +1767,9 @@ type Workstation struct {
 	// CreateTime: Output only. Time when this workstation was created.
 	CreateTime string `json:"createTime,omitempty"`
 	// Degraded: Output only. Whether this workstation is in degraded mode, in
-	// which case it may require user action to restore full functionality. Details
-	// can be found in conditions.
+	// which case it may require user action to restore full functionality. The
+	// conditions field contains detailed information about the status of the
+	// workstation.
 	Degraded bool `json:"degraded,omitempty"`
 	// DeleteTime: Output only. Time when this workstation was soft-deleted.
 	DeleteTime string `json:"deleteTime,omitempty"`
@@ -1890,8 +1892,9 @@ type WorkstationCluster struct {
 	// CreateTime: Output only. Time when this workstation cluster was created.
 	CreateTime string `json:"createTime,omitempty"`
 	// Degraded: Output only. Whether this workstation cluster is in degraded mode,
-	// in which case it may require user action to restore full functionality.
-	// Details can be found in conditions.
+	// in which case it may require user action to restore full functionality. The
+	// conditions field contains detailed information about the status of the
+	// cluster.
 	Degraded bool `json:"degraded,omitempty"`
 	// DeleteTime: Output only. Time when this workstation cluster was
 	// soft-deleted.
@@ -1928,8 +1931,9 @@ type WorkstationCluster struct {
 	// instances associated with this workstation cluster will be created. Must be
 	// part of the subnetwork specified for this workstation cluster.
 	Subnetwork string `json:"subnetwork,omitempty"`
-	// Tags: Optional. Tag keys/values directly bound to this resource. For
-	// example: "123/environment": "production", "123/costCenter": "marketing"
+	// Tags: Optional. Input only. Immutable. Tag keys/values directly bound to
+	// this resource. For example: "123/environment": "production",
+	// "123/costCenter": "marketing"
 	Tags map[string]string `json:"tags,omitempty"`
 	// Uid: Output only. A system-assigned unique identifier for this workstation
 	// cluster.
@@ -1974,8 +1978,8 @@ type WorkstationConfig struct {
 	AllowedPorts []*PortRange `json:"allowedPorts,omitempty"`
 	// Annotations: Optional. Client-specified annotations.
 	Annotations map[string]string `json:"annotations,omitempty"`
-	// Conditions: Output only. Status conditions describing the current resource
-	// state.
+	// Conditions: Output only. Status conditions describing the workstation
+	// configuration's current state.
 	Conditions []*Status `json:"conditions,omitempty"`
 	// Container: Optional. Container that runs upon startup for each workstation
 	// using this workstation configuration.
@@ -1983,9 +1987,10 @@ type WorkstationConfig struct {
 	// CreateTime: Output only. Time when this workstation configuration was
 	// created.
 	CreateTime string `json:"createTime,omitempty"`
-	// Degraded: Output only. Whether this resource is degraded, in which case it
-	// may require user action to restore full functionality. See also the
-	// conditions field.
+	// Degraded: Output only. Whether this workstation configuration is in degraded
+	// mode, in which case it may require user action to restore full
+	// functionality. The conditions field contains detailed information about the
+	// status of the configuration.
 	Degraded bool `json:"degraded,omitempty"`
 	// DeleteTime: Output only. Time when this workstation configuration was
 	// soft-deleted.

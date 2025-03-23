@@ -2524,6 +2524,14 @@ type AssignedTargetingOption struct {
 	// ContentStreamTypeDetails: Content duration details. This field will be
 	// populated when the TargetingType is `TARGETING_TYPE_CONTENT_STREAM_TYPE`.
 	ContentStreamTypeDetails *ContentStreamTypeAssignedTargetingOptionDetails `json:"contentStreamTypeDetails,omitempty"`
+	// ContentThemeExclusionDetails: Content theme details. This field will be
+	// populated when the targeting_type is
+	// `TARGETING_TYPE_CONTENT_THEME_EXCLUSION`. Content theme are targeting
+	// exclusions. Advertiser level content theme exclusions, if set, are always
+	// applied in serving (even though they aren't visible in resource settings).
+	// Resource settings can exclude content theme in addition to advertiser
+	// exclusions.
+	ContentThemeExclusionDetails *ContentThemeAssignedTargetingOptionDetails `json:"contentThemeExclusionDetails,omitempty"`
 	// DayAndTimeDetails: Day and time details. This field will be populated when
 	// the targeting_type is `TARGETING_TYPE_DAY_AND_TIME`.
 	DayAndTimeDetails *DayAndTimeAssignedTargetingOptionDetails `json:"dayAndTimeDetails,omitempty"`
@@ -2741,6 +2749,8 @@ type AssignedTargetingOption struct {
 	// position of a session. Only supported for Ad Group resources under YouTube
 	// Programmatic Reservation line items. Targeting of this type cannot be
 	// created or updated using the API.
+	//   "TARGETING_TYPE_CONTENT_THEME_EXCLUSION" - Filter website content by
+	// content themes (for example, religion).
 	TargetingType string `json:"targetingType,omitempty"`
 	// ThirdPartyVerifierDetails: Third party verification details. This field will
 	// be populated when the targeting_type is
@@ -5277,6 +5287,107 @@ func (s ContentStreamTypeTargetingOptionDetails) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// ContentThemeAssignedTargetingOptionDetails: Targeting details for content
+// theme. This will be populated in the details field of an
+// AssignedTargetingOption when targeting_type is
+// `TARGETING_TYPE_CONTENT_THEME_EXCLUSION`.
+type ContentThemeAssignedTargetingOptionDetails struct {
+	// ContentTheme: Output only. An enum for the DV360 content theme classifier.
+	//
+	// Possible values:
+	//   "CONTENT_THEME_UNSPECIFIED" - This enum is only a placeholder and doesn't
+	// specify a DV360 content theme.
+	//   "CONTENT_THEME_FIGHTING_VIDEO_GAMES" - Fighting video games.
+	//   "CONTENT_THEME_MATURE_GAMES" - Mature games.
+	//   "CONTENT_THEME_NOT_YET_DETERMINED_HEALTH_SOURCES" - Not yet determined
+	// health sources.
+	//   "CONTENT_THEME_NOT_YET_DETERMINED_NEWS_SOURCES" - Not yet determined news
+	// sources.
+	//   "CONTENT_THEME_POLITICS" - Politics.
+	//   "CONTENT_THEME_RECENT_NEWS" - Recent news.
+	//   "CONTENT_THEME_RELIGION" - Religion.
+	//   "CONTENT_THEME_UNPLEASANT_HEALTH_CONTENT" - Unpleasant health content.
+	//   "CONTENT_THEME_UNPLEASANT_NEWS" - Unpleasant news.
+	ContentTheme string `json:"contentTheme,omitempty"`
+	// ExcludedContentTheme: Required. An enum for the DV360 content theme
+	// classified to be EXCLUDED.
+	//
+	// Possible values:
+	//   "CONTENT_THEME_UNSPECIFIED" - This enum is only a placeholder and doesn't
+	// specify a DV360 content theme.
+	//   "CONTENT_THEME_FIGHTING_VIDEO_GAMES" - Fighting video games.
+	//   "CONTENT_THEME_MATURE_GAMES" - Mature games.
+	//   "CONTENT_THEME_NOT_YET_DETERMINED_HEALTH_SOURCES" - Not yet determined
+	// health sources.
+	//   "CONTENT_THEME_NOT_YET_DETERMINED_NEWS_SOURCES" - Not yet determined news
+	// sources.
+	//   "CONTENT_THEME_POLITICS" - Politics.
+	//   "CONTENT_THEME_RECENT_NEWS" - Recent news.
+	//   "CONTENT_THEME_RELIGION" - Religion.
+	//   "CONTENT_THEME_UNPLEASANT_HEALTH_CONTENT" - Unpleasant health content.
+	//   "CONTENT_THEME_UNPLEASANT_NEWS" - Unpleasant news.
+	ExcludedContentTheme string `json:"excludedContentTheme,omitempty"`
+	// ExcludedTargetingOptionId: Required. ID of the content theme to be EXCLUDED.
+	ExcludedTargetingOptionId string `json:"excludedTargetingOptionId,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ContentTheme") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ContentTheme") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ContentThemeAssignedTargetingOptionDetails) MarshalJSON() ([]byte, error) {
+	type NoMethod ContentThemeAssignedTargetingOptionDetails
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ContentThemeTargetingOptionDetails: Represents a targetable content theme.
+// This will be populated in the content_theme_details field of the
+// TargetingOption when targeting_type is
+// `TARGETING_TYPE_CONTENT_THEME_EXCLUSION`.
+type ContentThemeTargetingOptionDetails struct {
+	// ContentTheme: Output only. An enum for the DV360 content theme content
+	// classifier.
+	//
+	// Possible values:
+	//   "CONTENT_THEME_UNSPECIFIED" - This enum is only a placeholder and doesn't
+	// specify a DV360 content theme.
+	//   "CONTENT_THEME_FIGHTING_VIDEO_GAMES" - Fighting video games.
+	//   "CONTENT_THEME_MATURE_GAMES" - Mature games.
+	//   "CONTENT_THEME_NOT_YET_DETERMINED_HEALTH_SOURCES" - Not yet determined
+	// health sources.
+	//   "CONTENT_THEME_NOT_YET_DETERMINED_NEWS_SOURCES" - Not yet determined news
+	// sources.
+	//   "CONTENT_THEME_POLITICS" - Politics.
+	//   "CONTENT_THEME_RECENT_NEWS" - Recent news.
+	//   "CONTENT_THEME_RELIGION" - Religion.
+	//   "CONTENT_THEME_UNPLEASANT_HEALTH_CONTENT" - Unpleasant health content.
+	//   "CONTENT_THEME_UNPLEASANT_NEWS" - Unpleasant news.
+	ContentTheme string `json:"contentTheme,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ContentTheme") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ContentTheme") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ContentThemeTargetingOptionDetails) MarshalJSON() ([]byte, error) {
+	type NoMethod ContentThemeTargetingOptionDetails
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // ConversionCountingConfig: Settings that control how conversions are counted.
 // All post-click conversions will be counted. A percentage value can be set
 // for post-view conversions counting.
@@ -5503,6 +5614,8 @@ type CreateAssignedTargetingOptionsRequest struct {
 	// position of a session. Only supported for Ad Group resources under YouTube
 	// Programmatic Reservation line items. Targeting of this type cannot be
 	// created or updated using the API.
+	//   "TARGETING_TYPE_CONTENT_THEME_EXCLUSION" - Filter website content by
+	// content themes (for example, religion).
 	TargetingType string `json:"targetingType,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AssignedTargetingOptions")
 	// to unconditionally include in API requests. By default, fields with empty or
@@ -6745,6 +6858,8 @@ type DeleteAssignedTargetingOptionsRequest struct {
 	// position of a session. Only supported for Ad Group resources under YouTube
 	// Programmatic Reservation line items. Targeting of this type cannot be
 	// created or updated using the API.
+	//   "TARGETING_TYPE_CONTENT_THEME_EXCLUSION" - Filter website content by
+	// content themes (for example, religion).
 	TargetingType string `json:"targetingType,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AssignedTargetingOptionIds")
 	// to unconditionally include in API requests. By default, fields with empty or
@@ -13202,8 +13317,6 @@ type PartnerCost struct {
 	// TrustMetrics. Billed by the partner.
 	//   "PARTNER_COST_TYPE_VIZU" - The cost is charged for using Vizu. Billed by
 	// the partner.
-	//   "PARTNER_COST_TYPE_ADLINGO_FEE" - The cost is charged for using AdLingo.
-	// Billed through DV360.
 	//   "PARTNER_COST_TYPE_CUSTOM_FEE_1" - The cost is charged as custom fee 1.
 	// Billed by the partner.
 	//   "PARTNER_COST_TYPE_CUSTOM_FEE_2" - The cost is charged as custom fee 2.
@@ -14763,6 +14876,8 @@ type TargetingOption struct {
 	ContentOutstreamPositionDetails *ContentOutstreamPositionTargetingOptionDetails `json:"contentOutstreamPositionDetails,omitempty"`
 	// ContentStreamTypeDetails: Content stream type resource details.
 	ContentStreamTypeDetails *ContentStreamTypeTargetingOptionDetails `json:"contentStreamTypeDetails,omitempty"`
+	// ContentThemeDetails: Content theme details.
+	ContentThemeDetails *ContentThemeTargetingOptionDetails `json:"contentThemeDetails,omitempty"`
 	// DeviceMakeModelDetails: Device make and model resource details.
 	DeviceMakeModelDetails *DeviceMakeModelTargetingOptionDetails `json:"deviceMakeModelDetails,omitempty"`
 	// DeviceTypeDetails: Device type details.
@@ -14911,6 +15026,8 @@ type TargetingOption struct {
 	// position of a session. Only supported for Ad Group resources under YouTube
 	// Programmatic Reservation line items. Targeting of this type cannot be
 	// created or updated using the API.
+	//   "TARGETING_TYPE_CONTENT_THEME_EXCLUSION" - Filter website content by
+	// content themes (for example, religion).
 	TargetingType string `json:"targetingType,omitempty"`
 	// UserRewardedContentDetails: User rewarded content details.
 	UserRewardedContentDetails *UserRewardedContentTargetingOptionDetails `json:"userRewardedContentDetails,omitempty"`

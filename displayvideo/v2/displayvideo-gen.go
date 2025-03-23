@@ -11624,8 +11624,6 @@ type PartnerCost struct {
 	// TrustMetrics. Billed by the partner.
 	//   "PARTNER_COST_TYPE_VIZU" - The cost is charged for using Vizu. Billed by
 	// the partner.
-	//   "PARTNER_COST_TYPE_ADLINGO_FEE" - The cost is charged for using AdLingo.
-	// Billed through DV360.
 	//   "PARTNER_COST_TYPE_CUSTOM_FEE_1" - The cost is charged as custom fee 1.
 	// Billed by the partner.
 	//   "PARTNER_COST_TYPE_CUSTOM_FEE_2" - The cost is charged as custom fee 2.

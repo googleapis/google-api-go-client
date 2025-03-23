@@ -743,8 +743,8 @@ type AutoprovisioningNodePoolDefaults struct {
 	// https://cloud.google.com/kubernetes-engine/docs/concepts/node-images for
 	// available image types.
 	ImageType string `json:"imageType,omitempty"`
-	// InsecureKubeletReadonlyPortEnabled: Enable or disable Kubelet read only
-	// port.
+	// InsecureKubeletReadonlyPortEnabled: DEPRECATED. Use
+	// NodePoolAutoConfig.NodeKubeletConfig instead.
 	InsecureKubeletReadonlyPortEnabled bool `json:"insecureKubeletReadonlyPortEnabled,omitempty"`
 	// Management: Specifies the node management options for NAP created
 	// node-pools.
@@ -1234,7 +1234,12 @@ type Cluster struct {
 	LabelFingerprint string `json:"labelFingerprint,omitempty"`
 	// LegacyAbac: Configuration for the legacy ABAC authorization mode.
 	LegacyAbac *LegacyAbac `json:"legacyAbac,omitempty"`
-	Location   string      `json:"location,omitempty"`
+	// Location: Output only. The name of the Google Compute Engine zone
+	// (https://cloud.google.com/compute/docs/regions-zones/regions-zones#available)
+	// or region
+	// (https://cloud.google.com/compute/docs/regions-zones/regions-zones#available)
+	// in which the cluster resides.
+	Location string `json:"location,omitempty"`
 	// Locations: The list of Google Compute Engine zones
 	// (https://cloud.google.com/compute/docs/zones#available) in which the
 	// cluster's nodes should be located. This field provides a default value if
@@ -1274,7 +1279,7 @@ type Cluster struct {
 	MonitoringConfig *MonitoringConfig `json:"monitoringConfig,omitempty"`
 	// MonitoringService: The monitoring service the cluster should use to write
 	// metrics. Currently available options: *
-	// "monitoring.googleapis.com/kubernetes" - The Cloud Monitoring service with a
+	// `monitoring.googleapis.com/kubernetes` - The Cloud Monitoring service with a
 	// Kubernetes-native resource model * `monitoring.googleapis.com` - The legacy
 	// Cloud Monitoring service (no longer available as of GKE 1.15). * `none` - No
 	// metrics will be exported from the cluster. If left as an empty
@@ -1325,6 +1330,8 @@ type Cluster struct {
 	// This field is used by Google internal products that are built on top of the
 	// GKE cluster and take the ownership of the cluster.
 	ParentProductConfig *ParentProductConfig `json:"parentProductConfig,omitempty"`
+	// PodAutoscaling: The config for pod autoscaling.
+	PodAutoscaling *PodAutoscaling `json:"podAutoscaling,omitempty"`
 	// PrivateClusterConfig: Configuration for private cluster.
 	PrivateClusterConfig *PrivateClusterConfig `json:"privateClusterConfig,omitempty"`
 	// RbacBindingConfig: RBACBindingConfig allows user to restrict
@@ -1635,7 +1642,7 @@ type ClusterUpdate struct {
 	DesiredMonitoringConfig *MonitoringConfig `json:"desiredMonitoringConfig,omitempty"`
 	// DesiredMonitoringService: The monitoring service the cluster should use to
 	// write metrics. Currently available options: *
-	// "monitoring.googleapis.com/kubernetes" - The Cloud Monitoring service with a
+	// `monitoring.googleapis.com/kubernetes` - The Cloud Monitoring service with a
 	// Kubernetes-native resource model * `monitoring.googleapis.com` - The legacy
 	// Cloud Monitoring service (no longer available as of GKE 1.15). * `none` - No
 	// metrics will be exported from the cluster. If left as an empty
@@ -1689,6 +1696,8 @@ type ClusterUpdate struct {
 	// DesiredParentProductConfig: The desired parent product config for the
 	// cluster.
 	DesiredParentProductConfig *ParentProductConfig `json:"desiredParentProductConfig,omitempty"`
+	// DesiredPodAutoscaling: The desired config for pod autoscaling.
+	DesiredPodAutoscaling *PodAutoscaling `json:"desiredPodAutoscaling,omitempty"`
 	// DesiredPrivateClusterConfig: The desired private cluster configuration.
 	// master_global_access_config is the only field that can be changed via this
 	// field. See also ClusterUpdate.desired_enable_private_endpoint for modifying
@@ -1768,6 +1777,73 @@ type ClusterUpdate struct {
 
 func (s ClusterUpdate) MarshalJSON() ([]byte, error) {
 	type NoMethod ClusterUpdate
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ClusterUpgradeInfo: ClusterUpgradeInfo contains the upgrade information of a
+// cluster.
+type ClusterUpgradeInfo struct {
+	// AutoUpgradeStatus: The auto upgrade status.
+	//
+	// Possible values:
+	//   "UNKNOWN" - UNKNOWN indicates an unknown status.
+	//   "ACTIVE" - ACTIVE indicates an active status.
+	//   "MINOR_UPGRADE_PAUSED" - MINOR_UPGRADE_PAUSED indicates the minor version
+	// upgrade is paused.
+	//   "UPGRADE_PAUSED" - UPGRADE_PAUSED indicates the upgrade is paused.
+	AutoUpgradeStatus []string `json:"autoUpgradeStatus,omitempty"`
+	// EndOfExtendedSupportTimestamp: The cluster's current minor version's end of
+	// extended support timestamp.
+	EndOfExtendedSupportTimestamp string `json:"endOfExtendedSupportTimestamp,omitempty"`
+	// EndOfStandardSupportTimestamp: The cluster's current minor version's end of
+	// standard support timestamp.
+	EndOfStandardSupportTimestamp string `json:"endOfStandardSupportTimestamp,omitempty"`
+	// MinorTargetVersion: minor_target_version indicates the target version for
+	// minor upgrade.
+	MinorTargetVersion string `json:"minorTargetVersion,omitempty"`
+	// PatchTargetVersion: patch_target_version indicates the target version for
+	// patch upgrade.
+	PatchTargetVersion string `json:"patchTargetVersion,omitempty"`
+	// PausedReason: The auto upgrade paused reason.
+	//
+	// Possible values:
+	//   "AUTO_UPGRADE_PAUSED_REASON_UNSPECIFIED" -
+	// AUTO_UPGRADE_PAUSED_REASON_UNSPECIFIED indicates an unspecified reason.
+	//   "MAINTENANCE_WINDOW" - MAINTENANCE_WINDOW indicates the cluster is outside
+	// customer maintenance window.
+	//   "MAINTENANCE_EXCLUSION_NO_UPGRADES" - MAINTENANCE_EXCLUSION_NO_UPGRADES
+	// indicates the cluster is in a maintenance exclusion with scope NO_UPGRADES.
+	//   "MAINTENANCE_EXCLUSION_NO_MINOR_UPGRADES" -
+	// MAINTENANCE_EXCLUSION_NO_MINOR_UPGRADES indicates the cluster is in a
+	// maintenance exclusion with scope NO_MINOR_UPGRADES.
+	//   "CLUSTER_DISRUPTION_BUDGET" - CLUSTER_DISRUPTION_BUDGET indicates the
+	// cluster is outside the cluster disruption budget.
+	//   "CLUSTER_DISRUPTION_BUDGET_MINOR_UPGRADE" -
+	// CLUSTER_DISRUPTION_BUDGET_MINOR_UPGRADE indicates the cluster is outside the
+	// cluster disruption budget for minor version upgrade.
+	//   "SYSTEM_CONFIG" - SYSTEM_CONFIG indicates the cluster upgrade is paused by
+	// system config.
+	PausedReason []string `json:"pausedReason,omitempty"`
+	// UpgradeDetails: The list of past auto upgrades.
+	UpgradeDetails []*UpgradeDetails `json:"upgradeDetails,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "AutoUpgradeStatus") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AutoUpgradeStatus") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ClusterUpgradeInfo) MarshalJSON() ([]byte, error) {
+	type NoMethod ClusterUpgradeInfo
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -4878,6 +4954,68 @@ func (s NodePoolLoggingConfig) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// NodePoolUpgradeInfo: NodePoolUpgradeInfo contains the upgrade information of
+// a nodepool.
+type NodePoolUpgradeInfo struct {
+	// AutoUpgradeStatus: The auto upgrade status.
+	//
+	// Possible values:
+	//   "UNKNOWN" - UNKNOWN indicates an unknown status.
+	//   "ACTIVE" - ACTIVE indicates an active status.
+	//   "MINOR_UPGRADE_PAUSED" - MINOR_UPGRADE_PAUSED indicates the minor version
+	// upgrade is paused.
+	//   "UPGRADE_PAUSED" - UPGRADE_PAUSED indicates the upgrade is paused.
+	AutoUpgradeStatus []string `json:"autoUpgradeStatus,omitempty"`
+	// EndOfExtendedSupportTimestamp: The nodepool's current minor version's end of
+	// extended support timestamp.
+	EndOfExtendedSupportTimestamp string `json:"endOfExtendedSupportTimestamp,omitempty"`
+	// EndOfStandardSupportTimestamp: The nodepool's current minor version's end of
+	// standard support timestamp.
+	EndOfStandardSupportTimestamp string `json:"endOfStandardSupportTimestamp,omitempty"`
+	// MinorTargetVersion: minor_target_version indicates the target version for
+	// minor upgrade.
+	MinorTargetVersion string `json:"minorTargetVersion,omitempty"`
+	// PatchTargetVersion: patch_target_version indicates the target version for
+	// patch upgrade.
+	PatchTargetVersion string `json:"patchTargetVersion,omitempty"`
+	// PausedReason: The auto upgrade paused reason.
+	//
+	// Possible values:
+	//   "AUTO_UPGRADE_PAUSED_REASON_UNSPECIFIED" -
+	// AUTO_UPGRADE_PAUSED_REASON_UNSPECIFIED indicates an unspecified reason.
+	//   "MAINTENANCE_WINDOW" - MAINTENANCE_WINDOW indicates the cluster is outside
+	// customer maintenance window.
+	//   "MAINTENANCE_EXCLUSION_NO_UPGRADES" - MAINTENANCE_EXCLUSION_NO_UPGRADES
+	// indicates the cluster is in a maintenance exclusion with scope NO_UPGRADES.
+	//   "MAINTENANCE_EXCLUSION_NO_MINOR_UPGRADES" -
+	// MAINTENANCE_EXCLUSION_NO_MINOR_UPGRADES indicates the cluster is in a
+	// maintenance exclusion with scope NO_MINOR_UPGRADES.
+	//   "SYSTEM_CONFIG" - SYSTEM_CONFIG indicates the cluster upgrade is paused by
+	// system config.
+	PausedReason []string `json:"pausedReason,omitempty"`
+	// UpgradeDetails: The list of past auto upgrades.
+	UpgradeDetails []*UpgradeDetails `json:"upgradeDetails,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "AutoUpgradeStatus") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AutoUpgradeStatus") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s NodePoolUpgradeInfo) MarshalJSON() ([]byte, error) {
+	type NoMethod NodePoolUpgradeInfo
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // NodeTaint: Kubernetes taint is composed of three fields: key, value, and
 // effect. Effect can only be one of three types: NoSchedule, PreferNoSchedule
 // or NoExecute. See here
@@ -5272,6 +5410,37 @@ type PlacementPolicy struct {
 
 func (s PlacementPolicy) MarshalJSON() ([]byte, error) {
 	type NoMethod PlacementPolicy
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// PodAutoscaling: PodAutoscaling is used for configuration of parameters for
+// workload autoscaling.
+type PodAutoscaling struct {
+	// HpaProfile: Selected Horizontal Pod Autoscaling profile.
+	//
+	// Possible values:
+	//   "HPA_PROFILE_UNSPECIFIED" - HPA_PROFILE_UNSPECIFIED is used when no custom
+	// HPA profile is set.
+	//   "NONE" - Customers explicitly opt-out of HPA profiles.
+	//   "PERFORMANCE" - PERFORMANCE is used when customers opt-in to the
+	// performance HPA profile. In this profile we support a higher number of HPAs
+	// per cluster and faster metrics collection for workload autoscaling.
+	HpaProfile string `json:"hpaProfile,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "HpaProfile") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "HpaProfile") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s PodAutoscaling) MarshalJSON() ([]byte, error) {
+	type NoMethod PodAutoscaling
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -6029,6 +6198,8 @@ type SecurityBulletinEvent struct {
 	// ManualStepsRequired: If this field is specified, it means there are manual
 	// steps that the user must take to make their clusters safe.
 	ManualStepsRequired bool `json:"manualStepsRequired,omitempty"`
+	// MitigatedVersions: The GKE versions where this vulnerability is mitigated.
+	MitigatedVersions []string `json:"mitigatedVersions,omitempty"`
 	// PatchedVersions: The GKE versions where this vulnerability is patched.
 	PatchedVersions []string `json:"patchedVersions,omitempty"`
 	// ResourceTypeAffected: The resource type (node/control plane) that has the
@@ -6466,7 +6637,7 @@ type SetMonitoringServiceRequest struct {
 	ClusterId string `json:"clusterId,omitempty"`
 	// MonitoringService: Required. The monitoring service the cluster should use
 	// to write metrics. Currently available options: *
-	// "monitoring.googleapis.com/kubernetes" - The Cloud Monitoring service with a
+	// `monitoring.googleapis.com/kubernetes` - The Cloud Monitoring service with a
 	// Kubernetes-native resource model * `monitoring.googleapis.com` - The legacy
 	// Cloud Monitoring service (no longer available as of GKE 1.15). * `none` - No
 	// metrics will be exported from the cluster. If left as an empty
@@ -7310,6 +7481,51 @@ func (s UpgradeAvailableEvent) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// UpgradeDetails: UpgradeDetails contains detailed information of each
+// individual upgrade operation.
+type UpgradeDetails struct {
+	// EndTime: The end timestamp of the upgrade.
+	EndTime string `json:"endTime,omitempty"`
+	// InitialVersion: The version before the upgrade.
+	InitialVersion string `json:"initialVersion,omitempty"`
+	// StartTime: The start timestamp of the upgrade.
+	StartTime string `json:"startTime,omitempty"`
+	// StartType: The start type of the upgrade.
+	//
+	// Possible values:
+	//   "START_TYPE_UNSPECIFIED" - Upgrade start type is unspecified.
+	//   "AUTOMATIC" - Upgrade started automatically.
+	//   "MANUAL" - Upgrade started manually.
+	StartType string `json:"startType,omitempty"`
+	// State: Output only. The state of the upgrade.
+	//
+	// Possible values:
+	//   "UNKNOWN" - Upgrade state is unknown.
+	//   "FAILED" - Upgrade has failed with an error.
+	//   "SUCCEEDED" - Upgrade has succeeded.
+	//   "CANCELED" - Upgrade has been canceled.
+	//   "RUNNING" - Upgrade is running.
+	State string `json:"state,omitempty"`
+	// TargetVersion: The version after the upgrade.
+	TargetVersion string `json:"targetVersion,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "EndTime") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "EndTime") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s UpgradeDetails) MarshalJSON() ([]byte, error) {
+	type NoMethod UpgradeDetails
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // UpgradeEvent: UpgradeEvent is a notification sent to customers by the
 // cluster server when a resource is upgrading.
 type UpgradeEvent struct {
@@ -7666,17 +7882,17 @@ func (s VirtualNIC) MarshalJSON() ([]byte, error) {
 
 // WindowsNodeConfig: Parameters that can be configured on Windows nodes.
 // Windows Node Config that define the parameters that will be used to
-// configure the Windows node pool settings
+// configure the Windows node pool settings.
 type WindowsNodeConfig struct {
 	// OsVersion: OSVersion specifies the Windows node config to be used on the
-	// node
+	// node.
 	//
 	// Possible values:
-	//   "OS_VERSION_UNSPECIFIED" - When OSVersion is not specified
+	//   "OS_VERSION_UNSPECIFIED" - When OSVersion is not specified.
 	//   "OS_VERSION_LTSC2019" - LTSC2019 specifies to use LTSC2019 as the Windows
-	// Servercore Base Image
+	// Servercore Base Image.
 	//   "OS_VERSION_LTSC2022" - LTSC2022 specifies to use LTSC2022 as the Windows
-	// Servercore Base Image
+	// Servercore Base Image.
 	OsVersion string `json:"osVersion,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "OsVersion") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -8521,6 +8737,125 @@ func (c *ProjectsLocationsClustersDeleteCall) Do(opts ...googleapi.CallOption) (
 		return nil, err
 	}
 	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "container.projects.locations.clusters.delete", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsClustersFetchClusterUpgradeInfoCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// FetchClusterUpgradeInfo: Fetch upgrade information of a specific cluster.
+//
+//   - name: The name (project, location, cluster) of the cluster to get.
+//     Specified in the format `projects/*/locations/*/clusters/*` or
+//     `projects/*/zones/*/clusters/*`.
+func (r *ProjectsLocationsClustersService) FetchClusterUpgradeInfo(name string) *ProjectsLocationsClustersFetchClusterUpgradeInfoCall {
+	c := &ProjectsLocationsClustersFetchClusterUpgradeInfoCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Version sets the optional parameter "version": API request version that
+// initiates this operation.
+func (c *ProjectsLocationsClustersFetchClusterUpgradeInfoCall) Version(version string) *ProjectsLocationsClustersFetchClusterUpgradeInfoCall {
+	c.urlParams_.Set("version", version)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsClustersFetchClusterUpgradeInfoCall) Fields(s ...googleapi.Field) *ProjectsLocationsClustersFetchClusterUpgradeInfoCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsClustersFetchClusterUpgradeInfoCall) IfNoneMatch(entityTag string) *ProjectsLocationsClustersFetchClusterUpgradeInfoCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsClustersFetchClusterUpgradeInfoCall) Context(ctx context.Context) *ProjectsLocationsClustersFetchClusterUpgradeInfoCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsClustersFetchClusterUpgradeInfoCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsClustersFetchClusterUpgradeInfoCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}:fetchClusterUpgradeInfo")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "container.projects.locations.clusters.fetchClusterUpgradeInfo", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "container.projects.locations.clusters.fetchClusterUpgradeInfo" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *ClusterUpgradeInfo.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *ProjectsLocationsClustersFetchClusterUpgradeInfoCall) Do(opts ...googleapi.CallOption) (*ClusterUpgradeInfo, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ClusterUpgradeInfo{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "container.projects.locations.clusters.fetchClusterUpgradeInfo", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -10502,6 +10837,126 @@ func (c *ProjectsLocationsClustersNodePoolsDeleteCall) Do(opts ...googleapi.Call
 	return ret, nil
 }
 
+type ProjectsLocationsClustersNodePoolsFetchNodePoolUpgradeInfoCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// FetchNodePoolUpgradeInfo: Fetch upgrade information of a specific nodepool.
+//
+//   - name: The name (project, location, cluster, nodepool) of the nodepool to
+//     get. Specified in the format
+//     `projects/*/locations/*/clusters/*/nodePools/*` or
+//     `projects/*/zones/*/clusters/*/nodePools/*`.
+func (r *ProjectsLocationsClustersNodePoolsService) FetchNodePoolUpgradeInfo(name string) *ProjectsLocationsClustersNodePoolsFetchNodePoolUpgradeInfoCall {
+	c := &ProjectsLocationsClustersNodePoolsFetchNodePoolUpgradeInfoCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Version sets the optional parameter "version": API request version that
+// initiates this operation.
+func (c *ProjectsLocationsClustersNodePoolsFetchNodePoolUpgradeInfoCall) Version(version string) *ProjectsLocationsClustersNodePoolsFetchNodePoolUpgradeInfoCall {
+	c.urlParams_.Set("version", version)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsClustersNodePoolsFetchNodePoolUpgradeInfoCall) Fields(s ...googleapi.Field) *ProjectsLocationsClustersNodePoolsFetchNodePoolUpgradeInfoCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsClustersNodePoolsFetchNodePoolUpgradeInfoCall) IfNoneMatch(entityTag string) *ProjectsLocationsClustersNodePoolsFetchNodePoolUpgradeInfoCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsClustersNodePoolsFetchNodePoolUpgradeInfoCall) Context(ctx context.Context) *ProjectsLocationsClustersNodePoolsFetchNodePoolUpgradeInfoCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsClustersNodePoolsFetchNodePoolUpgradeInfoCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsClustersNodePoolsFetchNodePoolUpgradeInfoCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}:fetchNodePoolUpgradeInfo")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "container.projects.locations.clusters.nodePools.fetchNodePoolUpgradeInfo", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "container.projects.locations.clusters.nodePools.fetchNodePoolUpgradeInfo" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *NodePoolUpgradeInfo.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *ProjectsLocationsClustersNodePoolsFetchNodePoolUpgradeInfoCall) Do(opts ...googleapi.CallOption) (*NodePoolUpgradeInfo, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &NodePoolUpgradeInfo{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "container.projects.locations.clusters.nodePools.fetchNodePoolUpgradeInfo", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
 type ProjectsLocationsClustersNodePoolsGetCall struct {
 	s            *Service
 	name         string
@@ -12400,6 +12855,125 @@ func (c *ProjectsZonesClustersDeleteCall) Do(opts ...googleapi.CallOption) (*Ope
 		return nil, err
 	}
 	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "container.projects.zones.clusters.delete", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsZonesClustersFetchClusterUpgradeInfoCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// FetchClusterUpgradeInfo: Fetch upgrade information of a specific cluster.
+//
+//   - name: The name (project, location, cluster) of the cluster to get.
+//     Specified in the format `projects/*/locations/*/clusters/*` or
+//     `projects/*/zones/*/clusters/*`.
+func (r *ProjectsZonesClustersService) FetchClusterUpgradeInfo(name string) *ProjectsZonesClustersFetchClusterUpgradeInfoCall {
+	c := &ProjectsZonesClustersFetchClusterUpgradeInfoCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Version sets the optional parameter "version": API request version that
+// initiates this operation.
+func (c *ProjectsZonesClustersFetchClusterUpgradeInfoCall) Version(version string) *ProjectsZonesClustersFetchClusterUpgradeInfoCall {
+	c.urlParams_.Set("version", version)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsZonesClustersFetchClusterUpgradeInfoCall) Fields(s ...googleapi.Field) *ProjectsZonesClustersFetchClusterUpgradeInfoCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsZonesClustersFetchClusterUpgradeInfoCall) IfNoneMatch(entityTag string) *ProjectsZonesClustersFetchClusterUpgradeInfoCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsZonesClustersFetchClusterUpgradeInfoCall) Context(ctx context.Context) *ProjectsZonesClustersFetchClusterUpgradeInfoCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsZonesClustersFetchClusterUpgradeInfoCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsZonesClustersFetchClusterUpgradeInfoCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}:fetchClusterUpgradeInfo")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "container.projects.zones.clusters.fetchClusterUpgradeInfo", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "container.projects.zones.clusters.fetchClusterUpgradeInfo" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *ClusterUpgradeInfo.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *ProjectsZonesClustersFetchClusterUpgradeInfoCall) Do(opts ...googleapi.CallOption) (*ClusterUpgradeInfo, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ClusterUpgradeInfo{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "container.projects.zones.clusters.fetchClusterUpgradeInfo", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -14327,6 +14901,126 @@ func (c *ProjectsZonesClustersNodePoolsDeleteCall) Do(opts ...googleapi.CallOpti
 		return nil, err
 	}
 	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "container.projects.zones.clusters.nodePools.delete", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsZonesClustersNodePoolsFetchNodePoolUpgradeInfoCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// FetchNodePoolUpgradeInfo: Fetch upgrade information of a specific nodepool.
+//
+//   - name: The name (project, location, cluster, nodepool) of the nodepool to
+//     get. Specified in the format
+//     `projects/*/locations/*/clusters/*/nodePools/*` or
+//     `projects/*/zones/*/clusters/*/nodePools/*`.
+func (r *ProjectsZonesClustersNodePoolsService) FetchNodePoolUpgradeInfo(name string) *ProjectsZonesClustersNodePoolsFetchNodePoolUpgradeInfoCall {
+	c := &ProjectsZonesClustersNodePoolsFetchNodePoolUpgradeInfoCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Version sets the optional parameter "version": API request version that
+// initiates this operation.
+func (c *ProjectsZonesClustersNodePoolsFetchNodePoolUpgradeInfoCall) Version(version string) *ProjectsZonesClustersNodePoolsFetchNodePoolUpgradeInfoCall {
+	c.urlParams_.Set("version", version)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsZonesClustersNodePoolsFetchNodePoolUpgradeInfoCall) Fields(s ...googleapi.Field) *ProjectsZonesClustersNodePoolsFetchNodePoolUpgradeInfoCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsZonesClustersNodePoolsFetchNodePoolUpgradeInfoCall) IfNoneMatch(entityTag string) *ProjectsZonesClustersNodePoolsFetchNodePoolUpgradeInfoCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsZonesClustersNodePoolsFetchNodePoolUpgradeInfoCall) Context(ctx context.Context) *ProjectsZonesClustersNodePoolsFetchNodePoolUpgradeInfoCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsZonesClustersNodePoolsFetchNodePoolUpgradeInfoCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsZonesClustersNodePoolsFetchNodePoolUpgradeInfoCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}:fetchNodePoolUpgradeInfo")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "container.projects.zones.clusters.nodePools.fetchNodePoolUpgradeInfo", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "container.projects.zones.clusters.nodePools.fetchNodePoolUpgradeInfo" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *NodePoolUpgradeInfo.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *ProjectsZonesClustersNodePoolsFetchNodePoolUpgradeInfoCall) Do(opts ...googleapi.CallOption) (*NodePoolUpgradeInfo, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &NodePoolUpgradeInfo{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "container.projects.zones.clusters.nodePools.fetchNodePoolUpgradeInfo", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 

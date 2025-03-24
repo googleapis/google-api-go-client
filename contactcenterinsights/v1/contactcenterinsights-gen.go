@@ -1140,6 +1140,8 @@ type GoogleCloudContactcenterinsightsV1BulkDownloadFeedbackLabelsRequest struct 
 	MaxDownloadCount int64 `json:"maxDownloadCount,omitempty"`
 	// Parent: Required. The parent resource for new feedback labels.
 	Parent string `json:"parent,omitempty"`
+	// SheetsDestination: A sheets document destination.
+	SheetsDestination *GoogleCloudContactcenterinsightsV1BulkDownloadFeedbackLabelsRequestSheetsDestination `json:"sheetsDestination,omitempty"`
 	// TemplateQaScorecardId: Optional. If set, a template for labeling
 	// conversations and scorecard questions will be created from the
 	// conversation_filter and the questions under the scorecard(s). The feedback
@@ -1207,6 +1209,36 @@ func (s GoogleCloudContactcenterinsightsV1BulkDownloadFeedbackLabelsRequestGcsDe
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudContactcenterinsightsV1BulkDownloadFeedbackLabelsRequestSheetsDest
+// ination: Google Sheets document details to write the feedback labels to.
+type GoogleCloudContactcenterinsightsV1BulkDownloadFeedbackLabelsRequestSheetsDestination struct {
+	// SheetTitle: Optional. The title of the new sheet to write the feedback
+	// labels to.
+	SheetTitle string `json:"sheetTitle,omitempty"`
+	// SpreadsheetUri: Required. The Google Sheets document to write the feedback
+	// labels to. Retrieved from Google Sheets URI. E.g.
+	// `https://docs.google.com/spreadsheets/d/1234567890` The spreadsheet must be
+	// shared with the Insights P4SA. The spreadsheet ID written to will be
+	// returned as `file_names` in the BulkDownloadFeedbackLabelsMetadata.
+	SpreadsheetUri string `json:"spreadsheetUri,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "SheetTitle") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "SheetTitle") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudContactcenterinsightsV1BulkDownloadFeedbackLabelsRequestSheetsDestination) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudContactcenterinsightsV1BulkDownloadFeedbackLabelsRequestSheetsDestination
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudContactcenterinsightsV1BulkDownloadFeedbackLabelsResponse:
 // Response for the BulkDownloadFeedbackLabel endpoint.
 type GoogleCloudContactcenterinsightsV1BulkDownloadFeedbackLabelsResponse struct {
@@ -1217,6 +1249,8 @@ type GoogleCloudContactcenterinsightsV1BulkDownloadFeedbackLabelsResponse struct
 type GoogleCloudContactcenterinsightsV1BulkUploadFeedbackLabelsRequest struct {
 	// GcsSource: A cloud storage bucket source.
 	GcsSource *GoogleCloudContactcenterinsightsV1BulkUploadFeedbackLabelsRequestGcsSource `json:"gcsSource,omitempty"`
+	// SheetsSource: A sheets document source.
+	SheetsSource *GoogleCloudContactcenterinsightsV1BulkUploadFeedbackLabelsRequestSheetsSource `json:"sheetsSource,omitempty"`
 	// ValidateOnly: Optional. If set, upload will not happen and the labels will
 	// be validated. If not set, then default behavior will be to upload the labels
 	// after validation is complete.
@@ -1267,6 +1301,32 @@ type GoogleCloudContactcenterinsightsV1BulkUploadFeedbackLabelsRequestGcsSource 
 
 func (s GoogleCloudContactcenterinsightsV1BulkUploadFeedbackLabelsRequestGcsSource) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudContactcenterinsightsV1BulkUploadFeedbackLabelsRequestGcsSource
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudContactcenterinsightsV1BulkUploadFeedbackLabelsRequestSheetsSource
+// : Google Sheets document details to get the feedback label file from.
+type GoogleCloudContactcenterinsightsV1BulkUploadFeedbackLabelsRequestSheetsSource struct {
+	// SpreadsheetUri: Required. The Google Sheets document to write the feedback
+	// labels to. Retrieved from Google Sheets URI. E.g.
+	// `https://docs.google.com/spreadsheets/d/1234567890` The spreadsheet must be
+	// shared with the Insights P4SA.
+	SpreadsheetUri string `json:"spreadsheetUri,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "SpreadsheetUri") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "SpreadsheetUri") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudContactcenterinsightsV1BulkUploadFeedbackLabelsRequestSheetsSource) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudContactcenterinsightsV1BulkUploadFeedbackLabelsRequestSheetsSource
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -5137,6 +5197,34 @@ type GoogleCloudContactcenterinsightsV1QueryMetricsResponseSliceTimeSeries struc
 
 func (s GoogleCloudContactcenterinsightsV1QueryMetricsResponseSliceTimeSeries) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudContactcenterinsightsV1QueryMetricsResponseSliceTimeSeries
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudContactcenterinsightsV1QueryPerformanceOverviewMetadata: The
+// metadata for querying performance overview.
+type GoogleCloudContactcenterinsightsV1QueryPerformanceOverviewMetadata struct {
+}
+
+// GoogleCloudContactcenterinsightsV1QueryPerformanceOverviewResponse: The
+// response for querying performance overview.
+type GoogleCloudContactcenterinsightsV1QueryPerformanceOverviewResponse struct {
+	// SummaryText: The summary text of the performance.
+	SummaryText string `json:"summaryText,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "SummaryText") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "SummaryText") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudContactcenterinsightsV1QueryPerformanceOverviewResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudContactcenterinsightsV1QueryPerformanceOverviewResponse
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -9250,6 +9338,34 @@ type GoogleCloudContactcenterinsightsV1alpha1QueryMetricsResponseSliceTimeSeries
 
 func (s GoogleCloudContactcenterinsightsV1alpha1QueryMetricsResponseSliceTimeSeries) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudContactcenterinsightsV1alpha1QueryMetricsResponseSliceTimeSeries
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudContactcenterinsightsV1alpha1QueryPerformanceOverviewMetadata:
+// The metadata for querying performance overview.
+type GoogleCloudContactcenterinsightsV1alpha1QueryPerformanceOverviewMetadata struct {
+}
+
+// GoogleCloudContactcenterinsightsV1alpha1QueryPerformanceOverviewResponse:
+// The response for querying performance overview.
+type GoogleCloudContactcenterinsightsV1alpha1QueryPerformanceOverviewResponse struct {
+	// SummaryText: The summary text of the performance.
+	SummaryText string `json:"summaryText,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "SummaryText") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "SummaryText") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudContactcenterinsightsV1alpha1QueryPerformanceOverviewResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudContactcenterinsightsV1alpha1QueryPerformanceOverviewResponse
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 

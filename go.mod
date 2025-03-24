@@ -4,7 +4,7 @@ go 1.23.0
 
 require (
 	cloud.google.com/go/auth v0.15.0
-	cloud.google.com/go/auth/oauth2adapt v0.2.7
+	cloud.google.com/go/auth/oauth2adapt v0.2.8
 	cloud.google.com/go/compute/metadata v0.6.0
 	github.com/google/go-cmp v0.7.0
 	github.com/google/s2a-go v0.1.9
@@ -20,7 +20,7 @@ require (
 	google.golang.org/genproto/googleapis/bytestream v0.0.0-20250313205543-e70fdf4c4cb4
 	google.golang.org/genproto/googleapis/rpc v0.0.0-20250313205543-e70fdf4c4cb4
 	google.golang.org/grpc v1.71.0
-	google.golang.org/protobuf v1.36.5
+	google.golang.org/protobuf v1.36.6
 )
 
 require (

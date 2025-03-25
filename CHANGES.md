@@ -1,5 +1,22 @@
 # Changes
 
+## [0.228.0](https://github.com/googleapis/google-api-go-client/compare/v0.227.0...v0.228.0) (2025-03-25)
+
+
+### Features
+
+* **all:** Auto-regenerate discovery clients ([#3072](https://github.com/googleapis/google-api-go-client/issues/3072)) ([1987dc9](https://github.com/googleapis/google-api-go-client/commit/1987dc98a165f1903aa196b1e1168fbfab57d589))
+* **all:** Auto-regenerate discovery clients ([#3076](https://github.com/googleapis/google-api-go-client/issues/3076)) ([b041969](https://github.com/googleapis/google-api-go-client/commit/b04196929868221b7008cd2044eced383709967c))
+* **all:** Auto-regenerate discovery clients ([#3077](https://github.com/googleapis/google-api-go-client/issues/3077)) ([e5c4d37](https://github.com/googleapis/google-api-go-client/commit/e5c4d37cb6d560bd38cb8328723ae0555ba7e468))
+* **all:** Auto-regenerate discovery clients ([#3078](https://github.com/googleapis/google-api-go-client/issues/3078)) ([2eb9895](https://github.com/googleapis/google-api-go-client/commit/2eb98950640fec46384087222d97e15403d9d9a3))
+* **all:** Auto-regenerate discovery clients ([#3080](https://github.com/googleapis/google-api-go-client/issues/3080)) ([d67a105](https://github.com/googleapis/google-api-go-client/commit/d67a10510ebdbb87f0fd7744178e3008bcdf1d9b))
+* **all:** Auto-regenerate discovery clients ([#3081](https://github.com/googleapis/google-api-go-client/issues/3081)) ([d721547](https://github.com/googleapis/google-api-go-client/commit/d7215475a626266ad21f6d6537041b38212a54cc))
+
+
+### Bug Fixes
+
+* **googleapi:** Add JSON array support to CheckResponseWithBody ([#3075](https://github.com/googleapis/google-api-go-client/issues/3075)) ([ffcba91](https://github.com/googleapis/google-api-go-client/commit/ffcba91d985f21009b0a3186f006e7e6407c2478))
+
 ## [0.227.0](https://github.com/googleapis/google-api-go-client/compare/v0.226.0...v0.227.0) (2025-03-19)
 
 

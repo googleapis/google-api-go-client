@@ -366,6 +366,10 @@ type AutonomousDatabase struct {
 	// must be unique in the project. The name must begin with a letter and can
 	// contain a maximum of 30 alphanumeric characters.
 	Database string `json:"database,omitempty"`
+	// DisasterRecoverySupportedLocations: Output only. List of supported GCP
+	// region to clone the Autonomous Database for disaster recovery. Format:
+	// `project/{project}/locations/{location}`.
+	DisasterRecoverySupportedLocations []string `json:"disasterRecoverySupportedLocations,omitempty"`
 	// DisplayName: Optional. The display name for the Autonomous Database. The
 	// name does not have to be unique within your project.
 	DisplayName string `json:"displayName,omitempty"`
@@ -384,8 +388,16 @@ type AutonomousDatabase struct {
 	// Database in the following format:
 	// projects/{project}/global/networks/{network}
 	Network string `json:"network,omitempty"`
+	// PeerAutonomousDatabases: Output only. The peer Autonomous Database names of
+	// the given Autonomous Database.
+	PeerAutonomousDatabases []string `json:"peerAutonomousDatabases,omitempty"`
 	// Properties: Optional. The properties of the Autonomous Database.
 	Properties *AutonomousDatabaseProperties `json:"properties,omitempty"`
+	// SourceConfig: Optional. The source Autonomous Database configuration for the
+	// standby Autonomous Database. The source Autonomous Database is configured
+	// while creating the Peer Autonomous Database and can't be updated after
+	// creation.
+	SourceConfig *SourceConfig `json:"sourceConfig,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
@@ -747,6 +759,9 @@ type AutonomousDatabaseProperties struct {
 	CpuCoreCount int64 `json:"cpuCoreCount,omitempty"`
 	// CustomerContacts: Optional. The list of customer contacts.
 	CustomerContacts []*CustomerContact `json:"customerContacts,omitempty"`
+	// DataGuardRoleChangedTime: Output only. The date and time the Autonomous Data
+	// Guard role was changed for the standby Autonomous Database.
+	DataGuardRoleChangedTime string `json:"dataGuardRoleChangedTime,omitempty"`
 	// DataSafeState: Output only. The current state of the Data Safe registration
 	// for the Autonomous Database.
 	//
@@ -796,6 +811,9 @@ type AutonomousDatabaseProperties struct {
 	//   "APEX" - Autonomous Database with the Oracle APEX Application Development
 	// workload type.
 	DbWorkload string `json:"dbWorkload,omitempty"`
+	// DisasterRecoveryRoleChangedTime: Output only. The date and time the Disaster
+	// Recovery role was changed for the standby Autonomous Database.
+	DisasterRecoveryRoleChangedTime string `json:"disasterRecoveryRoleChangedTime,omitempty"`
 	// FailedDataRecoveryDuration: Output only. This field indicates the number of
 	// seconds of data loss during a Data Guard failover.
 	FailedDataRecoveryDuration string `json:"failedDataRecoveryDuration,omitempty"`
@@ -2689,6 +2707,34 @@ func (s ScheduledOperationDetails) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// SourceConfig: The source configuration for the standby Autonomnous Database.
+type SourceConfig struct {
+	// AutomaticBackupsReplicationEnabled: Optional. This field specifies if the
+	// replication of automatic backups is enabled when creating a Data Guard.
+	AutomaticBackupsReplicationEnabled bool `json:"automaticBackupsReplicationEnabled,omitempty"`
+	// AutonomousDatabase: Optional. The name of the primary Autonomous Database
+	// that is used to create a Peer Autonomous Database from a source.
+	AutonomousDatabase string `json:"autonomousDatabase,omitempty"`
+	// ForceSendFields is a list of field names (e.g.
+	// "AutomaticBackupsReplicationEnabled") to unconditionally include in API
+	// requests. By default, fields with empty or default values are omitted from
+	// API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g.
+	// "AutomaticBackupsReplicationEnabled") to include in API requests with the
+	// JSON null value. By default, fields with empty values are omitted from API
+	// requests. See https://pkg.go.dev/google.golang.org/api#hdr-NullFields for
+	// more details.
+	NullFields []string `json:"-"`
+}
+
+func (s SourceConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod SourceConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // StartAutonomousDatabaseRequest: The request for `AutonomousDatabase.Start`.
 type StartAutonomousDatabaseRequest struct {
 }
@@ -2729,6 +2775,29 @@ func (s Status) MarshalJSON() ([]byte, error) {
 
 // StopAutonomousDatabaseRequest: The request for `AutonomousDatabase.Stop`.
 type StopAutonomousDatabaseRequest struct {
+}
+
+// SwitchoverAutonomousDatabaseRequest: The request for
+// `AutonomousDatabase.Switchover`.
+type SwitchoverAutonomousDatabaseRequest struct {
+	// PeerAutonomousDatabase: Required. The peer database name to switch over to.
+	PeerAutonomousDatabase string `json:"peerAutonomousDatabase,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "PeerAutonomousDatabase") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "PeerAutonomousDatabase") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s SwitchoverAutonomousDatabaseRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod SwitchoverAutonomousDatabaseRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // TimeOfDay: Represents a time of day. The date and time zone are either not
@@ -2917,6 +2986,14 @@ type ProjectsLocationsListCall struct {
 func (r *ProjectsLocationsService) List(name string) *ProjectsLocationsListCall {
 	c := &ProjectsLocationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
+	return c
+}
+
+// ExtraLocationTypes sets the optional parameter "extraLocationTypes": A list
+// of extra location types that should be used as conditions for controlling
+// the visibility of the locations.
+func (c *ProjectsLocationsListCall) ExtraLocationTypes(extraLocationTypes ...string) *ProjectsLocationsListCall {
+	c.urlParams_.SetMulti("extraLocationTypes", append([]string{}, extraLocationTypes...))
 	return c
 }
 
@@ -4408,6 +4485,112 @@ func (c *ProjectsLocationsAutonomousDatabasesStopCall) Do(opts ...googleapi.Call
 		return nil, err
 	}
 	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "oracledatabase.projects.locations.autonomousDatabases.stop", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsAutonomousDatabasesSwitchoverCall struct {
+	s                                   *Service
+	name                                string
+	switchoverautonomousdatabaserequest *SwitchoverAutonomousDatabaseRequest
+	urlParams_                          gensupport.URLParams
+	ctx_                                context.Context
+	header_                             http.Header
+}
+
+// Switchover: Initiates a switchover of specified autonomous deatabase to the
+// associated peer database.
+//
+//   - name: The name of the Autonomous Database in the following format:
+//     projects/{project}/locations/{location}/autonomousDatabases/{autonomous_dat
+//     abase}.
+func (r *ProjectsLocationsAutonomousDatabasesService) Switchover(name string, switchoverautonomousdatabaserequest *SwitchoverAutonomousDatabaseRequest) *ProjectsLocationsAutonomousDatabasesSwitchoverCall {
+	c := &ProjectsLocationsAutonomousDatabasesSwitchoverCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.switchoverautonomousdatabaserequest = switchoverautonomousdatabaserequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsAutonomousDatabasesSwitchoverCall) Fields(s ...googleapi.Field) *ProjectsLocationsAutonomousDatabasesSwitchoverCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsAutonomousDatabasesSwitchoverCall) Context(ctx context.Context) *ProjectsLocationsAutonomousDatabasesSwitchoverCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsAutonomousDatabasesSwitchoverCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsAutonomousDatabasesSwitchoverCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.switchoverautonomousdatabaserequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}:switchover")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "oracledatabase.projects.locations.autonomousDatabases.switchover", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "oracledatabase.projects.locations.autonomousDatabases.switchover" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsAutonomousDatabasesSwitchoverCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "oracledatabase.projects.locations.autonomousDatabases.switchover", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 

@@ -1236,9 +1236,7 @@ func (s Location) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// MessageSet: LINT.ThenChange(
-// //depot/google3/third_party/protobuf/github/src/google/protobuf/bridge/messag
-// e_set.proto ) This is proto2's version of MessageSet.
+// MessageSet: This is proto2's version of MessageSet.
 type MessageSet struct {
 }
 

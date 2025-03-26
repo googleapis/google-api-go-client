@@ -968,6 +968,14 @@ type GoogleCloudAiplatformV1beta1GenerateContentResponseUsageMetadata struct {
 	// TotalTokenCount: Total token count for prompt, response candidates, and
 	// tool-use prompts (if present).
 	TotalTokenCount int64 `json:"totalTokenCount,omitempty"`
+	// TrafficType: Output only. Traffic type. This shows whether a request
+	// consumes Pay-As-You-Go or Provisioned Throughput quota.
+	//
+	// Possible values:
+	//   "TRAFFIC_TYPE_UNSPECIFIED" - Unspecified request traffic type.
+	//   "ON_DEMAND" - Type for Pay-As-You-Go traffic.
+	//   "PROVISIONED_THROUGHPUT" - Type for Provisioned Throughput traffic.
+	TrafficType string `json:"trafficType,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "CacheTokensDetails") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -1010,6 +1018,8 @@ type GoogleCloudAiplatformV1beta1GenerationConfig struct {
 	//   "MEDIA_RESOLUTION_HIGH" - Media resolution set to high (zoomed reframing
 	// with 256 tokens).
 	MediaResolution string `json:"mediaResolution,omitempty"`
+	// ModelConfig: Optional. Config for model selection.
+	ModelConfig *GoogleCloudAiplatformV1beta1GenerationConfigModelConfig `json:"modelConfig,omitempty"`
 	// PresencePenalty: Optional. Positive penalties.
 	PresencePenalty float64 `json:"presencePenalty,omitempty"`
 	// ResponseLogprobs: Optional. If true, export the logprobs results in
@@ -1088,6 +1098,36 @@ func (s *GoogleCloudAiplatformV1beta1GenerationConfig) UnmarshalJSON(data []byte
 	s.TopK = float64(s1.TopK)
 	s.TopP = float64(s1.TopP)
 	return nil
+}
+
+// GoogleCloudAiplatformV1beta1GenerationConfigModelConfig: Config for model
+// selection.
+type GoogleCloudAiplatformV1beta1GenerationConfigModelConfig struct {
+	// FeatureSelectionPreference: Required. Feature selection preference.
+	//
+	// Possible values:
+	//   "FEATURE_SELECTION_PREFERENCE_UNSPECIFIED" - Unspecified feature selection
+	// preference.
+	//   "PRIORITIZE_QUALITY" - Prefer higher quality over lower cost.
+	//   "BALANCED" - Balanced feature selection preference.
+	//   "PRIORITIZE_COST" - Prefer lower cost over higher quality.
+	FeatureSelectionPreference string `json:"featureSelectionPreference,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "FeatureSelectionPreference")
+	// to unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "FeatureSelectionPreference") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudAiplatformV1beta1GenerationConfigModelConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudAiplatformV1beta1GenerationConfigModelConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1beta1GenerationConfigRoutingConfig: The configuration

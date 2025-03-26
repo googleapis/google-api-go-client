@@ -206,7 +206,7 @@
       }
     }
   },
-  "revision": "20250312",
+  "revision": "20250323",
   "rootUrl": "https://firebaseml.googleapis.com/",
   "schemas": {
     "Date": {
@@ -865,6 +865,21 @@
           "description": "Total token count for prompt, response candidates, and tool-use prompts (if present).",
           "format": "int32",
           "type": "integer"
+        },
+        "trafficType": {
+          "description": "Output only. Traffic type. This shows whether a request consumes Pay-As-You-Go or Provisioned Throughput quota.",
+          "enum": [
+            "TRAFFIC_TYPE_UNSPECIFIED",
+            "ON_DEMAND",
+            "PROVISIONED_THROUGHPUT"
+          ],
+          "enumDescriptions": [
+            "Unspecified request traffic type.",
+            "Type for Pay-As-You-Go traffic.",
+            "Type for Provisioned Throughput traffic."
+          ],
+          "readOnly": true,
+          "type": "string"
         }
       },
       "type": "object"
@@ -912,6 +927,10 @@
             "Media resolution set to high (zoomed reframing with 256 tokens)."
           ],
           "type": "string"
+        },
+        "modelConfig": {
+          "$ref": "GoogleCloudAiplatformV1beta1GenerationConfigModelConfig",
+          "description": "Optional. Config for model selection."
         },
         "presencePenalty": {
           "description": "Optional. Positive penalties.",
@@ -983,6 +1002,29 @@
           "description": "Optional. If specified, nucleus sampling will be used.",
           "format": "float",
           "type": "number"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudAiplatformV1beta1GenerationConfigModelConfig": {
+      "description": "Config for model selection.",
+      "id": "GoogleCloudAiplatformV1beta1GenerationConfigModelConfig",
+      "properties": {
+        "featureSelectionPreference": {
+          "description": "Required. Feature selection preference.",
+          "enum": [
+            "FEATURE_SELECTION_PREFERENCE_UNSPECIFIED",
+            "PRIORITIZE_QUALITY",
+            "BALANCED",
+            "PRIORITIZE_COST"
+          ],
+          "enumDescriptions": [
+            "Unspecified feature selection preference.",
+            "Prefer higher quality over lower cost.",
+            "Balanced feature selection preference.",
+            "Prefer lower cost over higher quality."
+          ],
+          "type": "string"
         }
       },
       "type": "object"

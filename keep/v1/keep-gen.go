@@ -6,7 +6,7 @@
 
 // Package keep provides access to the Google Keep API.
 //
-// For product documentation, see: https://developers.google.com/keep/api
+// For product documentation, see: https://developers.google.com/workspace/keep/api
 //
 // # Library status
 //

@@ -487,7 +487,11 @@ func (s VerifyChallengeResponseRequest) MarshalJSON() ([]byte, error) {
 }
 
 // VerifyChallengeResponseResult: Result message for
-// VerifiedAccess.VerifyChallengeResponse.
+// VerifiedAccess.VerifyChallengeResponse. The response returned when
+// successful for Managed profiles on Unmanaged browsers will NOT have
+// devicePermanentId, keyTrustLevel, virtualDeviceId and customerId fields.
+// Managed profiles will INSTEAD have the profileCustomerId, virtualProfileId,
+// profilePermanentId and profileKeyTrustLevel fields.
 type VerifyChallengeResponseResult struct {
 	// AttestedDeviceId: Output only. Attested device ID (ADID).
 	AttestedDeviceId string `json:"attestedDeviceId,omitempty"`

@@ -5875,6 +5875,28 @@ type GoogleCloudDiscoveryengineV1DocumentProcessingConfigParsingConfigDigitalPar
 // GoogleCloudDiscoveryengineV1DocumentProcessingConfigParsingConfigLayoutParsin
 // gConfig: The layout parsing configurations for documents.
 type GoogleCloudDiscoveryengineV1DocumentProcessingConfigParsingConfigLayoutParsingConfig struct {
+	// EnableImageAnnotation: Optional. If true, the LLM based annotation is added
+	// to the image during parsing.
+	EnableImageAnnotation bool `json:"enableImageAnnotation,omitempty"`
+	// EnableTableAnnotation: Optional. If true, the LLM based annotation is added
+	// to the table during parsing.
+	EnableTableAnnotation bool `json:"enableTableAnnotation,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "EnableImageAnnotation") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "EnableImageAnnotation") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1DocumentProcessingConfigParsingConfigLayoutParsingConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1DocumentProcessingConfigParsingConfigLayoutParsingConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDiscoveryengineV1DocumentProcessingConfigParsingConfigOcrParsingCo
@@ -11378,6 +11400,8 @@ func (s GoogleCloudDiscoveryengineV1UserEvent) MarshalJSON() ([]byte, error) {
 
 // GoogleCloudDiscoveryengineV1UserInfo: Information of an end user.
 type GoogleCloudDiscoveryengineV1UserInfo struct {
+	// TimeZone: Optional. IANA time zone, e.g. Europe/Budapest.
+	TimeZone string `json:"timeZone,omitempty"`
 	// UserAgent: User agent as included in the HTTP header. The field must be a
 	// UTF-8 encoded string with a length limit of 1,000 characters. Otherwise, an
 	// `INVALID_ARGUMENT` error is returned. This should not be set when using the
@@ -11393,13 +11417,13 @@ type GoogleCloudDiscoveryengineV1UserInfo struct {
 	// with a length limit of 128 characters. Otherwise, an `INVALID_ARGUMENT`
 	// error is returned.
 	UserId string `json:"userId,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "UserAgent") to
+	// ForceSendFields is a list of field names (e.g. "TimeZone") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "UserAgent") to include in API
+	// NullFields is a list of field names (e.g. "TimeZone") to include in API
 	// requests with the JSON null value. By default, fields with empty values are
 	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
@@ -14253,6 +14277,28 @@ type GoogleCloudDiscoveryengineV1alphaDocumentProcessingConfigParsingConfigDigit
 // GoogleCloudDiscoveryengineV1alphaDocumentProcessingConfigParsingConfigLayoutP
 // arsingConfig: The layout parsing configurations for documents.
 type GoogleCloudDiscoveryengineV1alphaDocumentProcessingConfigParsingConfigLayoutParsingConfig struct {
+	// EnableImageAnnotation: Optional. If true, the LLM based annotation is added
+	// to the image during parsing.
+	EnableImageAnnotation bool `json:"enableImageAnnotation,omitempty"`
+	// EnableTableAnnotation: Optional. If true, the LLM based annotation is added
+	// to the table during parsing.
+	EnableTableAnnotation bool `json:"enableTableAnnotation,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "EnableImageAnnotation") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "EnableImageAnnotation") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1alphaDocumentProcessingConfigParsingConfigLayoutParsingConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1alphaDocumentProcessingConfigParsingConfigLayoutParsingConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDiscoveryengineV1alphaDocumentProcessingConfigParsingConfigOcrPars
@@ -18554,6 +18600,8 @@ func (s GoogleCloudDiscoveryengineV1alphaUpdateTargetSiteMetadata) MarshalJSON()
 
 // GoogleCloudDiscoveryengineV1alphaUserInfo: Information of an end user.
 type GoogleCloudDiscoveryengineV1alphaUserInfo struct {
+	// TimeZone: Optional. IANA time zone, e.g. Europe/Budapest.
+	TimeZone string `json:"timeZone,omitempty"`
 	// UserAgent: User agent as included in the HTTP header. The field must be a
 	// UTF-8 encoded string with a length limit of 1,000 characters. Otherwise, an
 	// `INVALID_ARGUMENT` error is returned. This should not be set when using the
@@ -18569,13 +18617,13 @@ type GoogleCloudDiscoveryengineV1alphaUserInfo struct {
 	// with a length limit of 128 characters. Otherwise, an `INVALID_ARGUMENT`
 	// error is returned.
 	UserId string `json:"userId,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "UserAgent") to
+	// ForceSendFields is a list of field names (e.g. "TimeZone") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "UserAgent") to include in API
+	// NullFields is a list of field names (e.g. "TimeZone") to include in API
 	// requests with the JSON null value. By default, fields with empty values are
 	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
@@ -19906,6 +19954,28 @@ type GoogleCloudDiscoveryengineV1betaDocumentProcessingConfigParsingConfigDigita
 // GoogleCloudDiscoveryengineV1betaDocumentProcessingConfigParsingConfigLayoutPa
 // rsingConfig: The layout parsing configurations for documents.
 type GoogleCloudDiscoveryengineV1betaDocumentProcessingConfigParsingConfigLayoutParsingConfig struct {
+	// EnableImageAnnotation: Optional. If true, the LLM based annotation is added
+	// to the image during parsing.
+	EnableImageAnnotation bool `json:"enableImageAnnotation,omitempty"`
+	// EnableTableAnnotation: Optional. If true, the LLM based annotation is added
+	// to the table during parsing.
+	EnableTableAnnotation bool `json:"enableTableAnnotation,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "EnableImageAnnotation") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "EnableImageAnnotation") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1betaDocumentProcessingConfigParsingConfigLayoutParsingConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1betaDocumentProcessingConfigParsingConfigLayoutParsingConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDiscoveryengineV1betaDocumentProcessingConfigParsingConfigOcrParsi
@@ -23069,6 +23139,8 @@ func (s GoogleCloudDiscoveryengineV1betaUpdateTargetSiteMetadata) MarshalJSON() 
 
 // GoogleCloudDiscoveryengineV1betaUserInfo: Information of an end user.
 type GoogleCloudDiscoveryengineV1betaUserInfo struct {
+	// TimeZone: Optional. IANA time zone, e.g. Europe/Budapest.
+	TimeZone string `json:"timeZone,omitempty"`
 	// UserAgent: User agent as included in the HTTP header. The field must be a
 	// UTF-8 encoded string with a length limit of 1,000 characters. Otherwise, an
 	// `INVALID_ARGUMENT` error is returned. This should not be set when using the
@@ -23084,13 +23156,13 @@ type GoogleCloudDiscoveryengineV1betaUserInfo struct {
 	// with a length limit of 128 characters. Otherwise, an `INVALID_ARGUMENT`
 	// error is returned.
 	UserId string `json:"userId,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "UserAgent") to
+	// ForceSendFields is a list of field names (e.g. "TimeZone") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "UserAgent") to include in API
+	// NullFields is a list of field names (e.g. "TimeZone") to include in API
 	// requests with the JSON null value. By default, fields with empty values are
 	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.

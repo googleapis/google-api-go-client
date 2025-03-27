@@ -6,7 +6,7 @@
 
 // Package gmailpostmastertools provides access to the Gmail Postmaster Tools API.
 //
-// For product documentation, see: https://developers.google.com/gmail/postmaster
+// For product documentation, see: https://developers.google.com/workspace/gmail/postmaster
 //
 // # Library status
 //

@@ -4121,6 +4121,7 @@ type ObjectMeta struct {
 	// `run.googleapis.com/encryption-key`: Revision, Execution. *
 	// `run.googleapis.com/execution-environment`: Revision, Execution. *
 	// `run.googleapis.com/gc-traffic-tags`: Service. *
+	// `run.googleapis.com/gpu-zonal-redundancy-disabled`: Revision. *
 	// `run.googleapis.com/health-check-disabled`: Revision. *
 	// `run.googleapis.com/ingress`: Service. * `run.googleapis.com/launch-stage`:
 	// Service, Job. * `run.googleapis.com/minScale`: Service *
@@ -4529,9 +4530,9 @@ type RevisionSpec struct {
 	// the running revision, and determines what permissions the revision has. If
 	// not provided, the revision will use the project's default service account.
 	ServiceAccountName string `json:"serviceAccountName,omitempty"`
-	// TimeoutSeconds: TimeoutSeconds holds the max duration the instance is
-	// allowed for responding to a request. Cloud Run: defaults to 300 seconds (5
-	// minutes). Maximum allowed value is 3600 seconds (1 hour).
+	// TimeoutSeconds: Optional. TimeoutSeconds holds the max duration the instance
+	// is allowed for responding to a request. Cloud Run: defaults to 300 seconds
+	// (5 minutes). Maximum allowed value is 3600 seconds (1 hour).
 	TimeoutSeconds int64     `json:"timeoutSeconds,omitempty"`
 	Volumes        []*Volume `json:"volumes,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "ContainerConcurrency") to
@@ -9512,6 +9513,14 @@ type ProjectsLocationsListCall struct {
 func (r *ProjectsLocationsService) List(name string) *ProjectsLocationsListCall {
 	c := &ProjectsLocationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
+	return c
+}
+
+// ExtraLocationTypes sets the optional parameter "extraLocationTypes": A list
+// of extra location types that should be used as conditions for controlling
+// the visibility of the locations.
+func (c *ProjectsLocationsListCall) ExtraLocationTypes(extraLocationTypes ...string) *ProjectsLocationsListCall {
+	c.urlParams_.SetMulti("extraLocationTypes", append([]string{}, extraLocationTypes...))
 	return c
 }
 

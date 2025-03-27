@@ -421,6 +421,45 @@ func (s GoogleCloudOsconfigV1__OSPolicyAssignmentOperationMetadata) MarshalJSON(
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudOsconfigV2__OperationMetadata: Represents the metadata of the
+// long-running operation.
+type GoogleCloudOsconfigV2__OperationMetadata struct {
+	// ApiVersion: Output only. API version used to start the operation.
+	ApiVersion string `json:"apiVersion,omitempty"`
+	// CreateTime: Output only. The time the operation was created.
+	CreateTime string `json:"createTime,omitempty"`
+	// EndTime: Output only. The time the operation finished running.
+	EndTime string `json:"endTime,omitempty"`
+	// RequestedCancellation: Output only. Identifies whether the user has
+	// requested cancellation of the operation. Operations that have been cancelled
+	// successfully have Operation.error value with a google.rpc.Status.code of 1,
+	// corresponding to `Code.CANCELLED`.
+	RequestedCancellation bool `json:"requestedCancellation,omitempty"`
+	// StatusMessage: Output only. Human-readable status of the operation, if any.
+	StatusMessage string `json:"statusMessage,omitempty"`
+	// Target: Output only. Server-defined resource path for the target of the
+	// operation.
+	Target string `json:"target,omitempty"`
+	// Verb: Output only. Name of the verb executed by the operation.
+	Verb string `json:"verb,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ApiVersion") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ApiVersion") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudOsconfigV2__OperationMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudOsconfigV2__OperationMetadata
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudOsconfigV2betaOrchestrationScopeLocationSelector: Selector
 // containing locations in scope.
 type GoogleCloudOsconfigV2betaOrchestrationScopeLocationSelector struct {
@@ -507,16 +546,14 @@ type GoogleCloudOsconfigV2betaPolicyOrchestratorIterationState struct {
 	FailedActions int64 `json:"failedActions,omitempty,string"`
 	// FinishTime: Output only. Finish time of the wave iteration.
 	FinishTime string `json:"finishTime,omitempty"`
+	// IterationId: Output only. Unique identifier of the iteration.
+	IterationId string `json:"iterationId,omitempty"`
 	// PerformedActions: Output only. Overall number of actions done by the
 	// orchestrator so far.
 	PerformedActions int64 `json:"performedActions,omitempty,string"`
 	// Progress: Output only. An estimated percentage of the progress. Number
 	// between 0 and 100.
 	Progress float64 `json:"progress,omitempty"`
-	// RolloutResource: Output only. Handle to the Progressive Rollouts API rollout
-	// resource, which contains detailed information about a particular
-	// orchestration iteration.
-	RolloutResource string `json:"rolloutResource,omitempty"`
 	// StartTime: Output only. Start time of the wave iteration.
 	StartTime string `json:"startTime,omitempty"`
 	// State: Output only. State of the iteration.
@@ -2466,7 +2503,19 @@ func (r *FoldersLocationsGlobalPolicyOrchestratorsService) Patch(name string, go
 }
 
 // UpdateMask sets the optional parameter "updateMask": The list of fields to
-// update.
+// merge into the existing policy orchestrator. A special ["*"] field mask can
+// be used to simply replace the entire resource. Otherwise, for all paths
+// referenced in the mask, following merge rules are used: * output only fields
+// are ignored, * primitive fields are replaced, * repeated fields are
+// replaced, * map fields are merged key by key, * message fields are cleared
+// if not set in the request, otherwise they are merged recursively (in
+// particular - message fields set to an empty message has no side effects) If
+// field mask is not specified, it is automatically inferred from the request
+// using following rules: * primitive fields are listed, if set to a
+// non-default value (as there is no way to distinguish between default and
+// unset value), * map and repeated fields are listed, * `google.protobuf.Any`
+// fields are listed, * other message fields are traversed recursively. Note:
+// implicit mask does not allow clearing fields.
 func (c *FoldersLocationsGlobalPolicyOrchestratorsPatchCall) UpdateMask(updateMask string) *FoldersLocationsGlobalPolicyOrchestratorsPatchCall {
 	c.urlParams_.Set("updateMask", updateMask)
 	return c
@@ -3585,7 +3634,19 @@ func (r *OrganizationsLocationsGlobalPolicyOrchestratorsService) Patch(name stri
 }
 
 // UpdateMask sets the optional parameter "updateMask": The list of fields to
-// update.
+// merge into the existing policy orchestrator. A special ["*"] field mask can
+// be used to simply replace the entire resource. Otherwise, for all paths
+// referenced in the mask, following merge rules are used: * output only fields
+// are ignored, * primitive fields are replaced, * repeated fields are
+// replaced, * map fields are merged key by key, * message fields are cleared
+// if not set in the request, otherwise they are merged recursively (in
+// particular - message fields set to an empty message has no side effects) If
+// field mask is not specified, it is automatically inferred from the request
+// using following rules: * primitive fields are listed, if set to a
+// non-default value (as there is no way to distinguish between default and
+// unset value), * map and repeated fields are listed, * `google.protobuf.Any`
+// fields are listed, * other message fields are traversed recursively. Note:
+// implicit mask does not allow clearing fields.
 func (c *OrganizationsLocationsGlobalPolicyOrchestratorsPatchCall) UpdateMask(updateMask string) *OrganizationsLocationsGlobalPolicyOrchestratorsPatchCall {
 	c.urlParams_.Set("updateMask", updateMask)
 	return c
@@ -4704,7 +4765,19 @@ func (r *ProjectsLocationsGlobalPolicyOrchestratorsService) Patch(name string, g
 }
 
 // UpdateMask sets the optional parameter "updateMask": The list of fields to
-// update.
+// merge into the existing policy orchestrator. A special ["*"] field mask can
+// be used to simply replace the entire resource. Otherwise, for all paths
+// referenced in the mask, following merge rules are used: * output only fields
+// are ignored, * primitive fields are replaced, * repeated fields are
+// replaced, * map fields are merged key by key, * message fields are cleared
+// if not set in the request, otherwise they are merged recursively (in
+// particular - message fields set to an empty message has no side effects) If
+// field mask is not specified, it is automatically inferred from the request
+// using following rules: * primitive fields are listed, if set to a
+// non-default value (as there is no way to distinguish between default and
+// unset value), * map and repeated fields are listed, * `google.protobuf.Any`
+// fields are listed, * other message fields are traversed recursively. Note:
+// implicit mask does not allow clearing fields.
 func (c *ProjectsLocationsGlobalPolicyOrchestratorsPatchCall) UpdateMask(updateMask string) *ProjectsLocationsGlobalPolicyOrchestratorsPatchCall {
 	c.urlParams_.Set("updateMask", updateMask)
 	return c

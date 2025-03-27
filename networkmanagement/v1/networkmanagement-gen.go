@@ -713,8 +713,8 @@ func (s CloudSQLInstanceInfo) MarshalJSON() ([]byte, error) {
 
 // ConnectivityTest: A Connectivity Test for a network reachability analysis.
 type ConnectivityTest struct {
-	// BypassFirewallChecks: Whether the test should skip firewall checking. If not
-	// provided, we assume false.
+	// BypassFirewallChecks: Whether the analysis should skip firewall checking.
+	// Default value is false.
 	BypassFirewallChecks bool `json:"bypassFirewallChecks,omitempty"`
 	// CreateTime: Output only. The time the test was created.
 	CreateTime string `json:"createTime,omitempty"`
@@ -722,16 +722,11 @@ type ConnectivityTest struct {
 	// of 512 characters.
 	Description string `json:"description,omitempty"`
 	// Destination: Required. Destination specification of the Connectivity Test.
-	// You can use a combination of destination IP address, Compute Engine VM
-	// instance, or VPC network to uniquely identify the destination location. Even
-	// if the destination IP address is not unique, the source IP location is
-	// unique. Usually, the analysis can infer the destination endpoint from route
-	// information. If the destination you specify is a VM instance and the
-	// instance has multiple network interfaces, then you must also specify either
-	// a destination IP address or VPC network to identify the destination
-	// interface. A reachability analysis proceeds even if the destination location
-	// is ambiguous. However, the result can include endpoints that you don't
-	// intend to test.
+	// You can use a combination of destination IP address, URI of a supported
+	// endpoint, project ID, or VPC network to identify the destination location.
+	// Reachability analysis proceeds even if the destination location is
+	// ambiguous. However, the test result might include endpoints or use a
+	// destination that you don't intend to test.
 	Destination *Endpoint `json:"destination,omitempty"`
 	// DisplayName: Output only. The display name of a Connectivity Test.
 	DisplayName string `json:"displayName,omitempty"`
@@ -764,19 +759,10 @@ type ConnectivityTest struct {
 	// source. Default value is false.
 	RoundTrip bool `json:"roundTrip,omitempty"`
 	// Source: Required. Source specification of the Connectivity Test. You can use
-	// a combination of source IP address, virtual machine (VM) instance, or
-	// Compute Engine network to uniquely identify the source location. Examples:
-	// If the source IP address is an internal IP address within a Google Cloud
-	// Virtual Private Cloud (VPC) network, then you must also specify the VPC
-	// network. Otherwise, specify the VM instance, which already contains its
-	// internal IP address and VPC network information. If the source of the test
-	// is within an on-premises network, then you must provide the destination VPC
-	// network. If the source endpoint is a Compute Engine VM instance with
-	// multiple network interfaces, the instance itself is not sufficient to
-	// identify the endpoint. So, you must also specify the source IP address or
-	// VPC network. A reachability analysis proceeds even if the source location is
-	// ambiguous. However, the test result may include endpoints that you don't
-	// intend to test.
+	// a combination of source IP address, URI of a supported endpoint, project ID,
+	// or VPC network to identify the source location. Reachability analysis might
+	// proceed even if the source location is ambiguous. However, the test result
+	// might include endpoints or use a source that you don't intend to test.
 	Source *Endpoint `json:"source,omitempty"`
 	// UpdateTime: Output only. The time the test's configuration was updated.
 	UpdateTime string `json:"updateTime,omitempty"`
@@ -1182,13 +1168,14 @@ type Endpoint struct {
 	// AppEngineVersion: An App Engine (https://cloud.google.com/appengine)
 	// [service
 	// version](https://cloud.google.com/appengine/docs/admin-api/reference/rest/v1/
-	// apps.services.versions).
+	// apps.services.versions). Applicable only to source endpoint.
 	AppEngineVersion *AppEngineVersionEndpoint `json:"appEngineVersion,omitempty"`
 	// CloudFunction: A Cloud Function (https://cloud.google.com/functions).
+	// Applicable only to source endpoint.
 	CloudFunction *CloudFunctionEndpoint `json:"cloudFunction,omitempty"`
 	// CloudRunRevision: A Cloud Run (https://cloud.google.com/run)
 	// [revision](https://cloud.google.com/run/docs/reference/rest/v1/namespaces.rev
-	// isions/get)
+	// isions/get) Applicable only to source endpoint.
 	CloudRunRevision *CloudRunRevisionEndpoint `json:"cloudRunRevision,omitempty"`
 	// CloudSqlInstance: A Cloud SQL (https://cloud.google.com/sql) instance URI.
 	CloudSqlInstance string `json:"cloudSqlInstance,omitempty"`
@@ -1196,7 +1183,8 @@ type Endpoint struct {
 	// the frontend configuration of a Google Cloud load balancer. Forwarding rules
 	// are also used for protocol forwarding, Private Service Connect and other
 	// network services to provide forwarding information in the control plane.
-	// Format: projects/{project}/global/forwardingRules/{id} or
+	// Applicable only to destination endpoint. Format:
+	// projects/{project}/global/forwardingRules/{id} or
 	// projects/{project}/regions/{region}/forwardingRules/{id}
 	ForwardingRule string `json:"forwardingRule,omitempty"`
 	// ForwardingRuleTarget: Output only. Specifies the type of the target of the
@@ -1246,7 +1234,7 @@ type Endpoint struct {
 	// Network load balancer.
 	//   "TCP_UDP_INTERNAL_LOAD_BALANCER" - Internal TCP/UDP load balancer.
 	LoadBalancerType string `json:"loadBalancerType,omitempty"`
-	// Network: A Compute Engine network URI.
+	// Network: A VPC network URI.
 	Network string `json:"network,omitempty"`
 	// NetworkType: Type of the network where the endpoint is located. Applicable
 	// only to source endpoint, as destination network type can be inferred from
@@ -1257,24 +1245,27 @@ type Endpoint struct {
 	//   "GCP_NETWORK" - A network hosted within Google Cloud. To receive more
 	// detailed output, specify the URI for the source or destination network.
 	//   "NON_GCP_NETWORK" - A network hosted outside of Google Cloud. This can be
-	// an on-premises network, or a network hosted by another cloud provider.
+	// an on-premises network, an internet resource or a network hosted by another
+	// cloud provider.
 	NetworkType string `json:"networkType,omitempty"`
 	// Port: The IP protocol port of the endpoint. Only applicable when protocol is
 	// TCP or UDP.
 	Port int64 `json:"port,omitempty"`
-	// ProjectId: Project ID where the endpoint is located. The Project ID can be
-	// derived from the URI if you provide a VM instance or network URI. The
-	// following are two cases where you must provide the project ID: 1. Only the
-	// IP address is specified, and the IP address is within a Google Cloud
-	// project. 2. When you are using Shared VPC and the IP address that you
-	// provide is from the service project. In this case, the network that the IP
-	// address resides in is defined in the host project.
+	// ProjectId: Project ID where the endpoint is located. The project ID can be
+	// derived from the URI if you provide a endpoint or network URI. The following
+	// are two cases where you may need to provide the project ID: 1. Only the IP
+	// address is specified, and the IP address is within a Google Cloud project.
+	// 2. When you are using Shared VPC and the IP address that you provide is from
+	// the service project. In this case, the network that the IP address resides
+	// in is defined in the host project.
 	ProjectId string `json:"projectId,omitempty"`
 	// RedisCluster: A Redis Cluster
-	// (https://cloud.google.com/memorystore/docs/cluster) URI.
+	// (https://cloud.google.com/memorystore/docs/cluster) URI. Applicable only to
+	// destination endpoint.
 	RedisCluster string `json:"redisCluster,omitempty"`
 	// RedisInstance: A Redis Instance
-	// (https://cloud.google.com/memorystore/docs/redis) URI.
+	// (https://cloud.google.com/memorystore/docs/redis) URI. Applicable only to
+	// destination endpoint.
 	RedisInstance string `json:"redisInstance,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AppEngineVersion") to
 	// unconditionally include in API requests. By default, fields with empty or

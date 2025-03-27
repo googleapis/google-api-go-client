@@ -2452,6 +2452,8 @@ type GoogleCloudRunV2Service struct {
 	// int64 value. As with most Google APIs, its JSON representation will be a
 	// `string` instead of an `integer`.
 	Generation int64 `json:"generation,omitempty,string"`
+	// IapEnabled: Optional. IAP settings on the Service.
+	IapEnabled bool `json:"iapEnabled,omitempty"`
 	// Ingress: Optional. Provides the ingress settings for this Service. On
 	// output, returns the currently observed ingress settings, or
 	// INGRESS_TRAFFIC_UNSPECIFIED if no revision is active.
@@ -2465,8 +2467,7 @@ type GoogleCloudRunV2Service struct {
 	//   "INGRESS_TRAFFIC_NONE" - No ingress traffic is allowed.
 	Ingress string `json:"ingress,omitempty"`
 	// InvokerIamDisabled: Optional. Disables IAM permission check for
-	// run.routes.invoke for callers of this service. This feature is available by
-	// invitation only. For more information, visit
+	// run.routes.invoke for callers of this service. For more information, visit
 	// https://cloud.google.com/run/docs/securing/managing-access#invoker_check.
 	InvokerIamDisabled bool `json:"invokerIamDisabled,omitempty"`
 	// Labels: Optional. Unstructured key value map that can be used to organize
@@ -2572,6 +2573,9 @@ type GoogleCloudRunV2Service struct {
 	// reach a serving state. See comments in `reconciling` for additional
 	// information on reconciliation process in Cloud Run.
 	TerminalCondition *GoogleCloudRunV2Condition `json:"terminalCondition,omitempty"`
+	// ThreatDetectionEnabled: Output only. True if Cloud Run Threat Detection
+	// monitoring is enabled for the parent project of this Service.
+	ThreatDetectionEnabled bool `json:"threatDetectionEnabled,omitempty"`
 	// Traffic: Optional. Specifies how to distribute traffic over a collection of
 	// Revisions belonging to the Service. If traffic is empty or not provided,
 	// defaults to 100% traffic to the latest `Ready` Revision.
@@ -3532,21 +3536,6 @@ type GoogleCloudRunV2WorkerPoolScaling struct {
 	// MaxInstanceCount: Optional. The maximum count of instances distributed among
 	// revisions based on the specified instance split percentages.
 	MaxInstanceCount int64 `json:"maxInstanceCount,omitempty"`
-	// MaxSurge: Optional. A maximum percentage of instances that will be moved in
-	// each step of traffic split changes. When set to a positive value, the server
-	// will bring up, at most, that percentage of new instances at a time before
-	// moving traffic to them. After moving traffic, the server will bring down
-	// instances of the old revision. This can reduce a spike of total active
-	// instances during changes from one revision to another but specifying how
-	// many extra instances can be brought up at a time.
-	MaxSurge int64 `json:"maxSurge,omitempty"`
-	// MaxUnavailable: Optional. A maximum percentage of instances that may be
-	// unavailable during changes from one revision to another. When set to a
-	// positive value, the server may bring down instances before bringing up new
-	// instances. This can prevent a spike of total active instances during changes
-	// from one revision by reducing the pool of instances before bringing up new
-	// ones. Some requests may be slow or fail to serve during the transition.
-	MaxUnavailable int64 `json:"maxUnavailable,omitempty"`
 	// MinInstanceCount: Optional. The minimum count of instances distributed among
 	// revisions based on the specified instance split percentages.
 	MinInstanceCount int64 `json:"minInstanceCount,omitempty"`
@@ -5817,6 +5806,7 @@ func (s GoogleTypeExpr) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// Proto2BridgeMessageSet: This is proto2's version of MessageSet.
 type Proto2BridgeMessageSet struct {
 }
 

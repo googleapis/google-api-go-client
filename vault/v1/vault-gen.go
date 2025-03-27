@@ -6,7 +6,7 @@
 
 // Package vault provides access to the Google Vault API.
 //
-// For product documentation, see: https://developers.google.com/vault
+// For product documentation, see: https://developers.google.com/workspace/vault
 //
 // # Library status
 //
@@ -1103,8 +1103,8 @@ func (s HangoutsChatExportOptions) MarshalJSON() ([]byte, error) {
 // HangoutsChatInfo: The Chat spaces to search
 type HangoutsChatInfo struct {
 	// RoomId: A list of Chat spaces IDs, as provided by the Chat API
-	// (https://developers.google.com/chat). There is a limit of exporting from 500
-	// Chat spaces per request.
+	// (https://developers.google.com/workspace/chat). There is a limit of
+	// exporting from 500 Chat spaces per request.
 	RoomId []string `json:"roomId,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "RoomId") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -1902,26 +1902,26 @@ type Query struct {
 	//   "SEARCH_METHOD_UNSPECIFIED" - A search method must be specified or else it
 	// is rejected.
 	//   "ACCOUNT" - Search the data of the accounts specified in
-	// [AccountInfo](https://developers.google.com/vault/reference/rest/v1/Query#acc
-	// ountinfo).
+	// [AccountInfo](https://developers.google.com/workspace/vault/reference/rest/v1
+	// /Query#accountinfo).
 	//   "ORG_UNIT" - Search the data of all accounts in the organizational unit
 	// specified in
-	// [OrgUnitInfo](https://developers.google.com/vault/reference/rest/v1/Query#org
-	// unitinfo).
+	// [OrgUnitInfo](https://developers.google.com/workspace/vault/reference/rest/v1
+	// /Query#orgunitinfo).
 	//   "TEAM_DRIVE" - Search the data in the Team Drive specified in
 	// **team_drive_info**.
 	//   "ENTIRE_ORG" - Search the data of all accounts in the organization.
 	// Supported only for Gmail. When specified, you don't need to specify
 	// **AccountInfo** or **OrgUnitInfo**.
 	//   "ROOM" - Search messages in the Chat spaces specified in
-	// [HangoutsChatInfo](https://developers.google.com/vault/reference/rest/v1/Quer
-	// y#hangoutschatinfo).
+	// [HangoutsChatInfo](https://developers.google.com/workspace/vault/reference/re
+	// st/v1/Query#hangoutschatinfo).
 	//   "SITES_URL" - Search for sites by the published site URLs specified in
-	// [SitesUrlInfo](https://developers.google.com/vault/reference/rest/v1/Query#si
-	// tesurlinfo).
+	// [SitesUrlInfo](https://developers.google.com/workspace/vault/reference/rest/v
+	// 1/Query#sitesurlinfo).
 	//   "SHARED_DRIVE" - Search the files in the shared drives specified in
-	// [SharedDriveInfo](https://developers.google.com/vault/reference/rest/v1/Query
-	// #shareddriveinfo).
+	// [SharedDriveInfo](https://developers.google.com/workspace/vault/reference/res
+	// t/v1/Query#shareddriveinfo).
 	//   "DRIVE_DOCUMENT" - Retrieve the documents specified in DriveDocumentInfo.
 	Method string `json:"method,omitempty"`
 	// OrgUnitInfo: Required when **SearchMethod** is **ORG_UNIT**.
@@ -1932,26 +1932,26 @@ type Query struct {
 	//   "SEARCH_METHOD_UNSPECIFIED" - A search method must be specified or else it
 	// is rejected.
 	//   "ACCOUNT" - Search the data of the accounts specified in
-	// [AccountInfo](https://developers.google.com/vault/reference/rest/v1/Query#acc
-	// ountinfo).
+	// [AccountInfo](https://developers.google.com/workspace/vault/reference/rest/v1
+	// /Query#accountinfo).
 	//   "ORG_UNIT" - Search the data of all accounts in the organizational unit
 	// specified in
-	// [OrgUnitInfo](https://developers.google.com/vault/reference/rest/v1/Query#org
-	// unitinfo).
+	// [OrgUnitInfo](https://developers.google.com/workspace/vault/reference/rest/v1
+	// /Query#orgunitinfo).
 	//   "TEAM_DRIVE" - Search the data in the Team Drive specified in
 	// **team_drive_info**.
 	//   "ENTIRE_ORG" - Search the data of all accounts in the organization.
 	// Supported only for Gmail. When specified, you don't need to specify
 	// **AccountInfo** or **OrgUnitInfo**.
 	//   "ROOM" - Search messages in the Chat spaces specified in
-	// [HangoutsChatInfo](https://developers.google.com/vault/reference/rest/v1/Quer
-	// y#hangoutschatinfo).
+	// [HangoutsChatInfo](https://developers.google.com/workspace/vault/reference/re
+	// st/v1/Query#hangoutschatinfo).
 	//   "SITES_URL" - Search for sites by the published site URLs specified in
-	// [SitesUrlInfo](https://developers.google.com/vault/reference/rest/v1/Query#si
-	// tesurlinfo).
+	// [SitesUrlInfo](https://developers.google.com/workspace/vault/reference/rest/v
+	// 1/Query#sitesurlinfo).
 	//   "SHARED_DRIVE" - Search the files in the shared drives specified in
-	// [SharedDriveInfo](https://developers.google.com/vault/reference/rest/v1/Query
-	// #shareddriveinfo).
+	// [SharedDriveInfo](https://developers.google.com/workspace/vault/reference/res
+	// t/v1/Query#shareddriveinfo).
 	//   "DRIVE_DOCUMENT" - Retrieve the documents specified in DriveDocumentInfo.
 	SearchMethod string `json:"searchMethod,omitempty"`
 	// SharedDriveInfo: Required when **SearchMethod** is **SHARED_DRIVE**.
@@ -2860,8 +2860,8 @@ func (r *MattersService) Get(matterId string) *MattersGetCall {
 //	"FULL" - Returns the basic details and a list of matter owners and
 //
 // collaborators (see
-// [MatterPermissions](https://developers.google.com/vault/reference/rest/v1/mat
-// ters#matterpermission)).
+// [MatterPermissions](https://developers.google.com/workspace/vault/reference/r
+// est/v1/matters#matterpermission)).
 func (c *MattersGetCall) View(view string) *MattersGetCall {
 	c.urlParams_.Set("view", view)
 	return c
@@ -3016,8 +3016,8 @@ func (c *MattersListCall) State(state string) *MattersListCall {
 //	"FULL" - Returns the basic details and a list of matter owners and
 //
 // collaborators (see
-// [MatterPermissions](https://developers.google.com/vault/reference/rest/v1/mat
-// ters#matterpermission)).
+// [MatterPermissions](https://developers.google.com/workspace/vault/reference/r
+// est/v1/matters#matterpermission)).
 func (c *MattersListCall) View(view string) *MattersListCall {
 	c.urlParams_.Set("view", view)
 	return c

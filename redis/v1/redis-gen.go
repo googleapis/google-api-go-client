@@ -4235,6 +4235,14 @@ func (r *ProjectsLocationsService) List(name string) *ProjectsLocationsListCall 
 	return c
 }
 
+// ExtraLocationTypes sets the optional parameter "extraLocationTypes": A list
+// of extra location types that should be used as conditions for controlling
+// the visibility of the locations.
+func (c *ProjectsLocationsListCall) ExtraLocationTypes(extraLocationTypes ...string) *ProjectsLocationsListCall {
+	c.urlParams_.SetMulti("extraLocationTypes", append([]string{}, extraLocationTypes...))
+	return c
+}
+
 // Filter sets the optional parameter "filter": A filter to narrow down results
 // to a preferred subset. The filtering language accepts strings like
 // "displayName=tokyo", and is documented in more detail in AIP-160
@@ -4385,7 +4393,7 @@ type ProjectsLocationsBackupCollectionsGetCall struct {
 //
 //   - name: Redis backupCollection resource name using the form:
 //     `projects/{project_id}/locations/{location_id}/backupCollections/{backup_co
-//     llection_id}` where `location_id` refers to a GCP region.
+//     llection_id}` where `location_id` refers to a Google Cloud region.
 func (r *ProjectsLocationsBackupCollectionsService) Get(name string) *ProjectsLocationsBackupCollectionsGetCall {
 	c := &ProjectsLocationsBackupCollectionsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4500,7 +4508,7 @@ type ProjectsLocationsBackupCollectionsListCall struct {
 //
 //   - parent: The resource name of the backupCollection location using the form:
 //     `projects/{project_id}/locations/{location_id}` where `location_id` refers
-//     to a GCP region.
+//     to a Google Cloud region.
 func (r *ProjectsLocationsBackupCollectionsService) List(parent string) *ProjectsLocationsBackupCollectionsListCall {
 	c := &ProjectsLocationsBackupCollectionsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -5131,7 +5139,7 @@ type ProjectsLocationsClustersBackupCall struct {
 //
 //   - name: Redis cluster resource name using the form:
 //     `projects/{project_id}/locations/{location_id}/clusters/{cluster_id}`
-//     where `location_id` refers to a GCP region.
+//     where `location_id` refers to a Google Cloud region.
 func (r *ProjectsLocationsClustersService) Backup(name string, backupclusterrequest *BackupClusterRequest) *ProjectsLocationsClustersBackupCall {
 	c := &ProjectsLocationsClustersBackupCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5242,7 +5250,7 @@ type ProjectsLocationsClustersCreateCall struct {
 //
 //   - parent: The resource name of the cluster location using the form:
 //     `projects/{project_id}/locations/{location_id}` where `location_id` refers
-//     to a GCP region.
+//     to a Google Cloud region.
 func (r *ProjectsLocationsClustersService) Create(parent string, cluster *Cluster) *ProjectsLocationsClustersCreateCall {
 	c := &ProjectsLocationsClustersCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -5364,7 +5372,7 @@ type ProjectsLocationsClustersDeleteCall struct {
 //
 //   - name: Redis cluster resource name using the form:
 //     `projects/{project_id}/locations/{location_id}/clusters/{cluster_id}`
-//     where `location_id` refers to a GCP region.
+//     where `location_id` refers to a Google Cloud region.
 func (r *ProjectsLocationsClustersService) Delete(name string) *ProjectsLocationsClustersDeleteCall {
 	c := &ProjectsLocationsClustersDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5470,7 +5478,7 @@ type ProjectsLocationsClustersGetCall struct {
 //
 //   - name: Redis cluster resource name using the form:
 //     `projects/{project_id}/locations/{location_id}/clusters/{cluster_id}`
-//     where `location_id` refers to a GCP region.
+//     where `location_id` refers to a Google Cloud region.
 func (r *ProjectsLocationsClustersService) Get(name string) *ProjectsLocationsClustersGetCall {
 	c := &ProjectsLocationsClustersGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5582,7 +5590,7 @@ type ProjectsLocationsClustersGetCertificateAuthorityCall struct {
 //
 //   - name: Redis cluster certificate authority resource name using the form:
 //     `projects/{project_id}/locations/{location_id}/clusters/{cluster_id}/certif
-//     icateAuthority` where `location_id` refers to a GCP region.
+//     icateAuthority` where `location_id` refers to a Google Cloud region.
 func (r *ProjectsLocationsClustersService) GetCertificateAuthority(name string) *ProjectsLocationsClustersGetCertificateAuthorityCall {
 	c := &ProjectsLocationsClustersGetCertificateAuthorityCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5698,7 +5706,7 @@ type ProjectsLocationsClustersListCall struct {
 //
 //   - parent: The resource name of the cluster location using the form:
 //     `projects/{project_id}/locations/{location_id}` where `location_id` refers
-//     to a GCP region.
+//     to a Google Cloud region.
 func (r *ProjectsLocationsClustersService) List(parent string) *ProjectsLocationsClustersListCall {
 	c := &ProjectsLocationsClustersListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -5971,7 +5979,7 @@ type ProjectsLocationsClustersRescheduleClusterMaintenanceCall struct {
 //
 //   - name: Redis Cluster instance resource name using the form:
 //     `projects/{project_id}/locations/{location_id}/clusters/{cluster_id}`
-//     where `location_id` refers to a GCP region.
+//     where `location_id` refers to a Google Cloud region.
 func (r *ProjectsLocationsClustersService) RescheduleClusterMaintenance(name string, rescheduleclustermaintenancerequest *RescheduleClusterMaintenanceRequest) *ProjectsLocationsClustersRescheduleClusterMaintenanceCall {
 	c := &ProjectsLocationsClustersRescheduleClusterMaintenanceCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name

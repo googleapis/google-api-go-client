@@ -277,6 +277,8 @@ type Activity struct {
 	// OwnerDomain: This is the domain that is affected by the report's event. For
 	// example domain of Admin console or the Drive application's document owner.
 	OwnerDomain string `json:"ownerDomain,omitempty"`
+	// ResourceDetails: Details of the resource on which the action was performed.
+	ResourceDetails []*ResourceDetails `json:"resourceDetails,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Actor") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
 	// omitted from API requests. See
@@ -297,6 +299,9 @@ func (s Activity) MarshalJSON() ([]byte, error) {
 
 // ActivityActor: User doing the action.
 type ActivityActor struct {
+	// ApplicationInfo: Details of the application that was the actor for the
+	// activity.
+	ApplicationInfo *ActivityActorApplicationInfo `json:"applicationInfo,omitempty"`
 	// CallerType: The type of actor.
 	CallerType string `json:"callerType,omitempty"`
 	// Email: The primary email address of the actor. May be absent if there is no
@@ -310,21 +315,49 @@ type ActivityActor struct {
 	// might be absent if the actor is not a Google Workspace user, or may be the
 	// number 105250506097979753968 which acts as a placeholder ID.
 	ProfileId string `json:"profileId,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "CallerType") to
+	// ForceSendFields is a list of field names (e.g. "ApplicationInfo") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "CallerType") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
+	// NullFields is a list of field names (e.g. "ApplicationInfo") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s ActivityActor) MarshalJSON() ([]byte, error) {
 	type NoMethod ActivityActor
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ActivityActorApplicationInfo: Details of the application that was the actor
+// for the activity.
+type ActivityActorApplicationInfo struct {
+	// ApplicationName: Name of the application used to perform the action.
+	ApplicationName string `json:"applicationName,omitempty"`
+	// Impersonation: Whether the application was impersonating a user.
+	Impersonation bool `json:"impersonation,omitempty"`
+	// OauthClientId: OAuth client id of the third party application used to
+	// perform the action.
+	OauthClientId string `json:"oauthClientId,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ApplicationName") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ApplicationName") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ActivityActorApplicationInfo) MarshalJSON() ([]byte, error) {
+	type NoMethod ActivityActorApplicationInfo
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -342,6 +375,8 @@ type ActivityEvents struct {
 	// information about `eventName` parameters, see the list of event names for
 	// various applications above in `applicationName`.
 	Parameters []*ActivityEventsParameters `json:"parameters,omitempty"`
+	// ResourceIds: Resource ids associated with the event.
+	ResourceIds []string `json:"resourceIds,omitempty"`
 	// Type: Type of event. The Google Workspace service or feature that an
 	// administrator changes is identified in the `type` property which identifies
 	// an event using the `eventName` property. For a full list of the API's `type`
@@ -480,6 +515,37 @@ func (s ActivityId) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// AppliedLabel: Details of the label applied on the resource.
+type AppliedLabel struct {
+	// FieldValues: List of fields which are part of the label and have been set by
+	// the user. If label has a field which was not set by the user, it would not
+	// be present in this list.
+	FieldValues []*FieldValue `json:"fieldValues,omitempty"`
+	// Id: Identifier of the label - Only the label id, not the full OnePlatform
+	// resource name.
+	Id string `json:"id,omitempty"`
+	// Reason: The reason why the label was applied on the resource.
+	Reason *Reason `json:"reason,omitempty"`
+	// Title: Title of the label
+	Title string `json:"title,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "FieldValues") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "FieldValues") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s AppliedLabel) MarshalJSON() ([]byte, error) {
+	type NoMethod AppliedLabel
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // Channel: A notification channel used to watch for resource changes.
 type Channel struct {
 	// Address: The address where notifications are delivered for this channel.
@@ -531,6 +597,212 @@ func (s Channel) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// Date: Represents a whole or partial calendar date, such as a birthday. The
+// time of day and time zone are either specified elsewhere or are
+// insignificant. The date is relative to the Gregorian Calendar. This can
+// represent one of the following: * A full date, with non-zero year, month,
+// and day values. * A month and day, with a zero year (for example, an
+// anniversary). * A year on its own, with a zero month and a zero day. * A
+// year and month, with a zero day (for example, a credit card expiration
+// date). Related types: * google.type.TimeOfDay * google.type.DateTime *
+// google.protobuf.Timestamp
+type Date struct {
+	// Day: Day of a month. Must be from 1 to 31 and valid for the year and month,
+	// or 0 to specify a year by itself or a year and month where the day isn't
+	// significant.
+	Day int64 `json:"day,omitempty"`
+	// Month: Month of a year. Must be from 1 to 12, or 0 to specify a year without
+	// a month and day.
+	Month int64 `json:"month,omitempty"`
+	// Year: Year of the date. Must be from 1 to 9999, or 0 to specify a date
+	// without a year.
+	Year int64 `json:"year,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Day") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Day") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s Date) MarshalJSON() ([]byte, error) {
+	type NoMethod Date
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// FieldValue: Details of the field value set by the user for the particular
+// label.
+type FieldValue struct {
+	// DateValue: Setting a date value.
+	DateValue *Date `json:"dateValue,omitempty"`
+	// DisplayName: Display name of the field
+	DisplayName string `json:"displayName,omitempty"`
+	// Id: Identifier of the field
+	Id string `json:"id,omitempty"`
+	// IntegerValue: Setting an integer value.
+	IntegerValue int64 `json:"integerValue,omitempty,string"`
+	// LongTextValue: Setting a long text value.
+	LongTextValue string `json:"longTextValue,omitempty"`
+	// Reason: The reason why the field was applied to the label.
+	Reason *Reason `json:"reason,omitempty"`
+	// SelectionListValue: Setting a selection list value by selecting multiple
+	// values from a dropdown.
+	SelectionListValue *FieldValueSelectionListValue `json:"selectionListValue,omitempty"`
+	// SelectionValue: Setting a selection value by selecting a single value from a
+	// dropdown.
+	SelectionValue *FieldValueSelectionValue `json:"selectionValue,omitempty"`
+	// TextListValue: Setting a text list value.
+	TextListValue *FieldValueTextListValue `json:"textListValue,omitempty"`
+	// TextValue: Setting a text value.
+	TextValue string `json:"textValue,omitempty"`
+	// Type: Type of the field
+	Type string `json:"type,omitempty"`
+	// UnsetValue: If the field is unset, this will be true.
+	UnsetValue bool `json:"unsetValue,omitempty"`
+	// UserListValue: Setting a user list value by selecting multiple users.
+	UserListValue *FieldValueUserListValue `json:"userListValue,omitempty"`
+	// UserValue: Setting a user value by selecting a single user.
+	UserValue *FieldValueUserValue `json:"userValue,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "DateValue") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DateValue") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s FieldValue) MarshalJSON() ([]byte, error) {
+	type NoMethod FieldValue
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// FieldValueSelectionListValue: Setting a selection list value by selecting
+// multiple values from a dropdown.
+type FieldValueSelectionListValue struct {
+	// Values: List of selections.
+	Values []*FieldValueSelectionValue `json:"values,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Values") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Values") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s FieldValueSelectionListValue) MarshalJSON() ([]byte, error) {
+	type NoMethod FieldValueSelectionListValue
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// FieldValueSelectionValue: Setting a selection value by selecting a single
+// value from a dropdown.
+type FieldValueSelectionValue struct {
+	// Badged: Whether the selection is badged.
+	Badged bool `json:"badged,omitempty"`
+	// DisplayName: Display name of the selection.
+	DisplayName string `json:"displayName,omitempty"`
+	// Id: Identifier of the selection.
+	Id string `json:"id,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Badged") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Badged") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s FieldValueSelectionValue) MarshalJSON() ([]byte, error) {
+	type NoMethod FieldValueSelectionValue
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// FieldValueTextListValue: Setting a text list value.
+type FieldValueTextListValue struct {
+	// Values: List of text values.
+	Values []string `json:"values,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Values") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Values") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s FieldValueTextListValue) MarshalJSON() ([]byte, error) {
+	type NoMethod FieldValueTextListValue
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// FieldValueUserListValue: Setting a user list value by selecting multiple
+// users.
+type FieldValueUserListValue struct {
+	// Values: List of users.
+	Values []*FieldValueUserValue `json:"values,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Values") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Values") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s FieldValueUserListValue) MarshalJSON() ([]byte, error) {
+	type NoMethod FieldValueUserListValue
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// FieldValueUserValue: Setting a user value by selecting a single user.
+type FieldValueUserValue struct {
+	// Email: Email of the user.
+	Email string `json:"email,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Email") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Email") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s FieldValueUserValue) MarshalJSON() ([]byte, error) {
+	type NoMethod FieldValueUserValue
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // NestedParameter: JSON template for a parameter used in various reports.
 type NestedParameter struct {
 	// BoolValue: Boolean value of the parameter.
@@ -562,6 +834,64 @@ type NestedParameter struct {
 
 func (s NestedParameter) MarshalJSON() ([]byte, error) {
 	type NoMethod NestedParameter
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// Reason: The reason why the label/field was applied.
+type Reason struct {
+	// ReasonType: The type of the reason.
+	ReasonType string `json:"reasonType,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ReasonType") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ReasonType") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s Reason) MarshalJSON() ([]byte, error) {
+	type NoMethod Reason
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ResourceDetails: Details of the resource on which the action was performed.
+type ResourceDetails struct {
+	// ApplicationId: Id of the application to which this resource belongs
+	ApplicationId int64 `json:"applicationId,omitempty,string"`
+	// AppliedLabels: List of labels applied on the resource
+	AppliedLabels []*AppliedLabel `json:"appliedLabels,omitempty"`
+	// Id: Identifier of the resource.
+	Id string `json:"id,omitempty"`
+	// OwnerEmail: Owner of the resource.
+	OwnerEmail string `json:"ownerEmail,omitempty"`
+	// Relation: Defines relationship of the resource to the events
+	Relation string `json:"relation,omitempty"`
+	// Title: Title of the resource. For instance, in case of a drive document,
+	// this would be the title of the document. In case of an email, this would be
+	// the subject.
+	Title string `json:"title,omitempty"`
+	// Type: Type of the resource - document, email, chat message
+	Type string `json:"type,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ApplicationId") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ApplicationId") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ResourceDetails) MarshalJSON() ([]byte, error) {
+	type NoMethod ResourceDetails
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 

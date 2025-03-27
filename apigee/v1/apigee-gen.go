@@ -5735,9 +5735,9 @@ type GoogleCloudApigeeV1Instance struct {
 	CreatedAt int64 `json:"createdAt,omitempty,string"`
 	// Description: Optional. Description of the instance.
 	Description string `json:"description,omitempty"`
-	// DiskEncryptionKeyName: Customer Managed Encryption Key (CMEK) used for disk
-	// and volume encryption. If not specified, a Google-Managed encryption key
-	// will be used. Use the following format:
+	// DiskEncryptionKeyName: Optional. Customer Managed Encryption Key (CMEK) used
+	// for disk and volume encryption. If not specified, a Google-Managed
+	// encryption key will be used. Use the following format:
 	// `projects/([^/]+)/locations/([^/]+)/keyRings/([^/]+)/cryptoKeys/([^/]+)`
 	DiskEncryptionKeyName string `json:"diskEncryptionKeyName,omitempty"`
 	// DisplayName: Optional. Display name for the instance.
@@ -7807,7 +7807,7 @@ func (s GoogleCloudApigeeV1OptimizedStatsResponse) MarshalJSON() ([]byte, error)
 }
 
 type GoogleCloudApigeeV1Organization struct {
-	// AddonsConfig: Addon configurations of the Apigee organization.
+	// AddonsConfig: Optional. Addon configurations of the Apigee organization.
 	AddonsConfig *GoogleCloudApigeeV1AddonsConfig `json:"addonsConfig,omitempty"`
 	// AnalyticsRegion: Required. DEPRECATED: This field will eventually be
 	// deprecated and replaced with a differently-named field. Primary Google Cloud
@@ -7815,14 +7815,14 @@ type GoogleCloudApigeeV1Organization struct {
 	// organization
 	// (https://cloud.google.com/apigee/docs/api-platform/get-started/create-org).
 	AnalyticsRegion string `json:"analyticsRegion,omitempty"`
-	// ApiConsumerDataEncryptionKeyName: Cloud KMS key name used for encrypting API
-	// consumer data. If not specified or BillingType (#BillingType) is
-	// `EVALUATION`, a Google-Managed encryption key will be used. Format:
+	// ApiConsumerDataEncryptionKeyName: Optional. Cloud KMS key name used for
+	// encrypting API consumer data. If not specified or BillingType (#BillingType)
+	// is `EVALUATION`, a Google-Managed encryption key will be used. Format:
 	// `projects/*/locations/*/keyRings/*/cryptoKeys/*`
 	ApiConsumerDataEncryptionKeyName string `json:"apiConsumerDataEncryptionKeyName,omitempty"`
-	// ApiConsumerDataLocation: This field is needed only for customers using
-	// non-default data residency regions. Apigee stores some control plane data
-	// only in single region. This field determines which single region Apigee
+	// ApiConsumerDataLocation: Optional. This field is needed only for customers
+	// using non-default data residency regions. Apigee stores some control plane
+	// data only in single region. This field determines which single region Apigee
 	// should use. For example: "us-west1" when control plane is in US or
 	// "europe-west2" when control plane is in EU.
 	ApiConsumerDataLocation string `json:"apiConsumerDataLocation,omitempty"`
@@ -7832,9 +7832,9 @@ type GoogleCloudApigeeV1Organization struct {
 	ApigeeProjectId string `json:"apigeeProjectId,omitempty"`
 	// Attributes: Not used by Apigee.
 	Attributes []string `json:"attributes,omitempty"`
-	// AuthorizedNetwork: Compute Engine network used for Service Networking to be
-	// peered with Apigee runtime instances. See Getting started with the Service
-	// Networking API
+	// AuthorizedNetwork: Optional. Compute Engine network used for Service
+	// Networking to be peered with Apigee runtime instances. See Getting started
+	// with the Service Networking API
 	// (https://cloud.google.com/service-infrastructure/docs/service-networking/getting-started).
 	// Valid only when RuntimeType (#RuntimeType) is set to `CLOUD`. The value must
 	// be set before the creation of a runtime instance and can be updated only
@@ -7854,8 +7854,8 @@ type GoogleCloudApigeeV1Organization struct {
 	// `projects/my-sharedvpc-host/global/networks/mynetwork` **Note:** Not
 	// supported for Apigee hybrid.
 	AuthorizedNetwork string `json:"authorizedNetwork,omitempty"`
-	// BillingType: Billing type of the Apigee organization. See Apigee pricing
-	// (https://cloud.google.com/apigee/pricing).
+	// BillingType: Optional. Billing type of the Apigee organization. See Apigee
+	// pricing (https://cloud.google.com/apigee/pricing).
 	//
 	// Possible values:
 	//   "BILLING_TYPE_UNSPECIFIED" - Billing type not specified.
@@ -7868,9 +7868,9 @@ type GoogleCloudApigeeV1Organization struct {
 	// CA of the Apigee organization. Valid only when RuntimeType (#RuntimeType) is
 	// `CLOUD`.
 	CaCertificate string `json:"caCertificate,omitempty"`
-	// ControlPlaneEncryptionKeyName: Cloud KMS key name used for encrypting
-	// control plane data that is stored in a multi region. Only used for the data
-	// residency region "US" or "EU". If not specified or BillingType
+	// ControlPlaneEncryptionKeyName: Optional. Cloud KMS key name used for
+	// encrypting control plane data that is stored in a multi region. Only used
+	// for the data residency region "US" or "EU". If not specified or BillingType
 	// (#BillingType) is `EVALUATION`, a Google-Managed encryption key will be
 	// used. Format: `projects/*/locations/*/keyRings/*/cryptoKeys/*`
 	ControlPlaneEncryptionKeyName string `json:"controlPlaneEncryptionKeyName,omitempty"`
@@ -7879,7 +7879,7 @@ type GoogleCloudApigeeV1Organization struct {
 	CreatedAt int64 `json:"createdAt,omitempty,string"`
 	// CustomerName: Not used by Apigee.
 	CustomerName string `json:"customerName,omitempty"`
-	// Description: Description of the Apigee organization.
+	// Description: Optional. Description of the Apigee organization.
 	Description string `json:"description,omitempty"`
 	// DisableVpcPeering: Optional. Flag that specifies whether the VPC Peering
 	// through Private Google Access should be disabled between the consumer
@@ -7893,8 +7893,8 @@ type GoogleCloudApigeeV1Organization struct {
 	// future. So, this will be a temporary flag to enable the transition. Not
 	// supported for Apigee hybrid.
 	DisableVpcPeering bool `json:"disableVpcPeering,omitempty"`
-	// DisplayName: Display name for the Apigee organization. Unused, but reserved
-	// for future use.
+	// DisplayName: Optional. Display name for the Apigee organization. Unused, but
+	// reserved for future use.
 	DisplayName string `json:"displayName,omitempty"`
 	// Environments: Output only. List of environments in the Apigee organization.
 	Environments []string `json:"environments,omitempty"`
@@ -7906,18 +7906,19 @@ type GoogleCloudApigeeV1Organization struct {
 	LastModifiedAt int64 `json:"lastModifiedAt,omitempty,string"`
 	// Name: Output only. Name of the Apigee organization.
 	Name string `json:"name,omitempty"`
-	// PortalDisabled: Configuration for the Portals settings.
+	// PortalDisabled: Optional. Configuration for the Portals settings.
 	PortalDisabled bool `json:"portalDisabled,omitempty"`
 	// ProjectId: Output only. Project ID associated with the Apigee organization.
 	ProjectId string `json:"projectId,omitempty"`
-	// Properties: Properties defined in the Apigee organization profile.
+	// Properties: Optional. Properties defined in the Apigee organization profile.
 	Properties *GoogleCloudApigeeV1Properties `json:"properties,omitempty"`
-	// RuntimeDatabaseEncryptionKeyName: Cloud KMS key name used for encrypting the
-	// data that is stored and replicated across runtime instances. Update is not
-	// allowed after the organization is created. If not specified or RuntimeType
-	// (#RuntimeType) is `TRIAL`, a Google-Managed encryption key will be used. For
-	// example: "projects/foo/locations/us/keyRings/bar/cryptoKeys/baz". **Note:**
-	// Not supported for Apigee hybrid.
+	// RuntimeDatabaseEncryptionKeyName: Optional. Cloud KMS key name used for
+	// encrypting the data that is stored and replicated across runtime instances.
+	// Update is not allowed after the organization is created. If not specified or
+	// RuntimeType (#RuntimeType) is `TRIAL`, a Google-Managed encryption key will
+	// be used. For example:
+	// "projects/foo/locations/us/keyRings/bar/cryptoKeys/baz". **Note:** Not
+	// supported for Apigee hybrid.
 	RuntimeDatabaseEncryptionKeyName string `json:"runtimeDatabaseEncryptionKeyName,omitempty"`
 	// RuntimeType: Required. Runtime type of the Apigee organization based on the
 	// Apigee subscription purchased.

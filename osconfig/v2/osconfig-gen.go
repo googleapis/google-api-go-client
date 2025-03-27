@@ -177,6 +177,7 @@ type FoldersService struct {
 
 func NewFoldersLocationsService(s *Service) *FoldersLocationsService {
 	rs := &FoldersLocationsService{s: s}
+	rs.Global = NewFoldersLocationsGlobalService(s)
 	rs.Operations = NewFoldersLocationsOperationsService(s)
 	return rs
 }
@@ -184,7 +185,30 @@ func NewFoldersLocationsService(s *Service) *FoldersLocationsService {
 type FoldersLocationsService struct {
 	s *Service
 
+	Global *FoldersLocationsGlobalService
+
 	Operations *FoldersLocationsOperationsService
+}
+
+func NewFoldersLocationsGlobalService(s *Service) *FoldersLocationsGlobalService {
+	rs := &FoldersLocationsGlobalService{s: s}
+	rs.PolicyOrchestrators = NewFoldersLocationsGlobalPolicyOrchestratorsService(s)
+	return rs
+}
+
+type FoldersLocationsGlobalService struct {
+	s *Service
+
+	PolicyOrchestrators *FoldersLocationsGlobalPolicyOrchestratorsService
+}
+
+func NewFoldersLocationsGlobalPolicyOrchestratorsService(s *Service) *FoldersLocationsGlobalPolicyOrchestratorsService {
+	rs := &FoldersLocationsGlobalPolicyOrchestratorsService{s: s}
+	return rs
+}
+
+type FoldersLocationsGlobalPolicyOrchestratorsService struct {
+	s *Service
 }
 
 func NewFoldersLocationsOperationsService(s *Service) *FoldersLocationsOperationsService {
@@ -210,6 +234,7 @@ type OrganizationsService struct {
 
 func NewOrganizationsLocationsService(s *Service) *OrganizationsLocationsService {
 	rs := &OrganizationsLocationsService{s: s}
+	rs.Global = NewOrganizationsLocationsGlobalService(s)
 	rs.Operations = NewOrganizationsLocationsOperationsService(s)
 	return rs
 }
@@ -217,7 +242,30 @@ func NewOrganizationsLocationsService(s *Service) *OrganizationsLocationsService
 type OrganizationsLocationsService struct {
 	s *Service
 
+	Global *OrganizationsLocationsGlobalService
+
 	Operations *OrganizationsLocationsOperationsService
+}
+
+func NewOrganizationsLocationsGlobalService(s *Service) *OrganizationsLocationsGlobalService {
+	rs := &OrganizationsLocationsGlobalService{s: s}
+	rs.PolicyOrchestrators = NewOrganizationsLocationsGlobalPolicyOrchestratorsService(s)
+	return rs
+}
+
+type OrganizationsLocationsGlobalService struct {
+	s *Service
+
+	PolicyOrchestrators *OrganizationsLocationsGlobalPolicyOrchestratorsService
+}
+
+func NewOrganizationsLocationsGlobalPolicyOrchestratorsService(s *Service) *OrganizationsLocationsGlobalPolicyOrchestratorsService {
+	rs := &OrganizationsLocationsGlobalPolicyOrchestratorsService{s: s}
+	return rs
+}
+
+type OrganizationsLocationsGlobalPolicyOrchestratorsService struct {
+	s *Service
 }
 
 func NewOrganizationsLocationsOperationsService(s *Service) *OrganizationsLocationsOperationsService {
@@ -243,6 +291,7 @@ type ProjectsService struct {
 
 func NewProjectsLocationsService(s *Service) *ProjectsLocationsService {
 	rs := &ProjectsLocationsService{s: s}
+	rs.Global = NewProjectsLocationsGlobalService(s)
 	rs.Operations = NewProjectsLocationsOperationsService(s)
 	return rs
 }
@@ -250,7 +299,30 @@ func NewProjectsLocationsService(s *Service) *ProjectsLocationsService {
 type ProjectsLocationsService struct {
 	s *Service
 
+	Global *ProjectsLocationsGlobalService
+
 	Operations *ProjectsLocationsOperationsService
+}
+
+func NewProjectsLocationsGlobalService(s *Service) *ProjectsLocationsGlobalService {
+	rs := &ProjectsLocationsGlobalService{s: s}
+	rs.PolicyOrchestrators = NewProjectsLocationsGlobalPolicyOrchestratorsService(s)
+	return rs
+}
+
+type ProjectsLocationsGlobalService struct {
+	s *Service
+
+	PolicyOrchestrators *ProjectsLocationsGlobalPolicyOrchestratorsService
+}
+
+func NewProjectsLocationsGlobalPolicyOrchestratorsService(s *Service) *ProjectsLocationsGlobalPolicyOrchestratorsService {
+	rs := &ProjectsLocationsGlobalPolicyOrchestratorsService{s: s}
+	return rs
+}
+
+type ProjectsLocationsGlobalPolicyOrchestratorsService struct {
+	s *Service
 }
 
 func NewProjectsLocationsOperationsService(s *Service) *ProjectsLocationsOperationsService {
@@ -273,6 +345,32 @@ type CancelOperationRequest struct {
 type Empty struct {
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
+}
+
+// FixedOrPercent: Message encapsulating a value that can be either absolute
+// ("fixed") or relative ("percent") to a value.
+type FixedOrPercent struct {
+	// Fixed: Specifies a fixed value.
+	Fixed int64 `json:"fixed,omitempty"`
+	// Percent: Specifies the relative value defined as a percentage, which will be
+	// multiplied by a reference value.
+	Percent int64 `json:"percent,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Fixed") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Fixed") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s FixedOrPercent) MarshalJSON() ([]byte, error) {
+	type NoMethod FixedOrPercent
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudOsconfigV1__OSPolicyAssignmentOperationMetadata: OS policy
@@ -320,6 +418,392 @@ type GoogleCloudOsconfigV1__OSPolicyAssignmentOperationMetadata struct {
 
 func (s GoogleCloudOsconfigV1__OSPolicyAssignmentOperationMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudOsconfigV1__OSPolicyAssignmentOperationMetadata
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudOsconfigV2OrchestrationScopeLocationSelector: Selector containing
+// locations in scope.
+type GoogleCloudOsconfigV2OrchestrationScopeLocationSelector struct {
+	// IncludedLocations: Optional. Names of the locations in scope. Format:
+	// `us-central1-a`
+	IncludedLocations []string `json:"includedLocations,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "IncludedLocations") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "IncludedLocations") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudOsconfigV2OrchestrationScopeLocationSelector) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudOsconfigV2OrchestrationScopeLocationSelector
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudOsconfigV2OrchestrationScopeResourceHierarchySelector: Selector
+// containing Cloud Resource Manager resource hierarchy nodes.
+type GoogleCloudOsconfigV2OrchestrationScopeResourceHierarchySelector struct {
+	// IncludedFolders: Optional. Names of the folders in scope. Format:
+	// `folders/{folder_id}`
+	IncludedFolders []string `json:"includedFolders,omitempty"`
+	// IncludedProjects: Optional. Names of the projects in scope. Format:
+	// `projects/{project_number}`
+	IncludedProjects []string `json:"includedProjects,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "IncludedFolders") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "IncludedFolders") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudOsconfigV2OrchestrationScopeResourceHierarchySelector) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudOsconfigV2OrchestrationScopeResourceHierarchySelector
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudOsconfigV2OrchestrationScopeSelector: Selector for the resources
+// in scope of orchestration.
+type GoogleCloudOsconfigV2OrchestrationScopeSelector struct {
+	// LocationSelector: Selector for selecting locations.
+	LocationSelector *GoogleCloudOsconfigV2OrchestrationScopeLocationSelector `json:"locationSelector,omitempty"`
+	// ResourceHierarchySelector: Selector for selecting resource hierarchy.
+	ResourceHierarchySelector *GoogleCloudOsconfigV2OrchestrationScopeResourceHierarchySelector `json:"resourceHierarchySelector,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "LocationSelector") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "LocationSelector") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudOsconfigV2OrchestrationScopeSelector) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudOsconfigV2OrchestrationScopeSelector
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudOsconfigV2PolicyOrchestratorIterationState: Describes the state
+// of a single iteration of the orchestrator.
+type GoogleCloudOsconfigV2PolicyOrchestratorIterationState struct {
+	// Error: Output only. Error thrown in the wave iteration.
+	Error *Status `json:"error,omitempty"`
+	// FailedActions: Output only. Number of orchestration actions which failed so
+	// far. For more details, query the Cloud Logs.
+	FailedActions int64 `json:"failedActions,omitempty,string"`
+	// FinishTime: Output only. Finish time of the wave iteration.
+	FinishTime string `json:"finishTime,omitempty"`
+	// IterationId: Output only. Unique identifier of the iteration.
+	IterationId string `json:"iterationId,omitempty"`
+	// PerformedActions: Output only. Overall number of actions done by the
+	// orchestrator so far.
+	PerformedActions int64 `json:"performedActions,omitempty,string"`
+	// Progress: Output only. An estimated percentage of the progress. Number
+	// between 0 and 100.
+	Progress float64 `json:"progress,omitempty"`
+	// StartTime: Output only. Start time of the wave iteration.
+	StartTime string `json:"startTime,omitempty"`
+	// State: Output only. State of the iteration.
+	//
+	// Possible values:
+	//   "STATE_UNSPECIFIED" - Default value. This value is unused.
+	//   "PROCESSING" - Iteration is in progress.
+	//   "COMPLETED" - Iteration completed, with all actions being successful.
+	//   "FAILED" - Iteration completed, with failures.
+	//   "CANCELLED" - Iteration was explicitly cancelled.
+	//   "UNKNOWN" - Impossible to determine current state of the iteration.
+	State string `json:"state,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Error") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Error") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudOsconfigV2PolicyOrchestratorIterationState) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudOsconfigV2PolicyOrchestratorIterationState
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+func (s *GoogleCloudOsconfigV2PolicyOrchestratorIterationState) UnmarshalJSON(data []byte) error {
+	type NoMethod GoogleCloudOsconfigV2PolicyOrchestratorIterationState
+	var s1 struct {
+		Progress gensupport.JSONFloat64 `json:"progress"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.Progress = float64(s1.Progress)
+	return nil
+}
+
+// GoogleCloudOsconfigV2PolicyOrchestratorOrchestrationState: Describes the
+// state of the orchestration process.
+type GoogleCloudOsconfigV2PolicyOrchestratorOrchestrationState struct {
+	// CurrentIterationState: Output only. Current Wave iteration state.
+	CurrentIterationState *GoogleCloudOsconfigV2PolicyOrchestratorIterationState `json:"currentIterationState,omitempty"`
+	// PreviousIterationState: Output only. Previous Wave iteration state.
+	PreviousIterationState *GoogleCloudOsconfigV2PolicyOrchestratorIterationState `json:"previousIterationState,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "CurrentIterationState") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CurrentIterationState") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudOsconfigV2PolicyOrchestratorOrchestrationState) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudOsconfigV2PolicyOrchestratorOrchestrationState
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudOsconfigV2__ListPolicyOrchestratorsResponse: Response for the
+// list policy orchestrator resources.
+type GoogleCloudOsconfigV2__ListPolicyOrchestratorsResponse struct {
+	// NextPageToken: A token, which can be sent as `page_token` to retrieve the
+	// next page. If this field is omitted, there are no subsequent pages.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+	// PolicyOrchestrators: The policy orchestrators for the specified parent
+	// resource.
+	PolicyOrchestrators []*GoogleCloudOsconfigV2__PolicyOrchestrator `json:"policyOrchestrators,omitempty"`
+	// Unreachable: Locations that could not be reached.
+	Unreachable []string `json:"unreachable,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "NextPageToken") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudOsconfigV2__ListPolicyOrchestratorsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudOsconfigV2__ListPolicyOrchestratorsResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudOsconfigV2__OperationMetadata: Represents the metadata of the
+// long-running operation.
+type GoogleCloudOsconfigV2__OperationMetadata struct {
+	// ApiVersion: Output only. API version used to start the operation.
+	ApiVersion string `json:"apiVersion,omitempty"`
+	// CreateTime: Output only. The time the operation was created.
+	CreateTime string `json:"createTime,omitempty"`
+	// EndTime: Output only. The time the operation finished running.
+	EndTime string `json:"endTime,omitempty"`
+	// RequestedCancellation: Output only. Identifies whether the user has
+	// requested cancellation of the operation. Operations that have been cancelled
+	// successfully have Operation.error value with a google.rpc.Status.code of 1,
+	// corresponding to `Code.CANCELLED`.
+	RequestedCancellation bool `json:"requestedCancellation,omitempty"`
+	// StatusMessage: Output only. Human-readable status of the operation, if any.
+	StatusMessage string `json:"statusMessage,omitempty"`
+	// Target: Output only. Server-defined resource path for the target of the
+	// operation.
+	Target string `json:"target,omitempty"`
+	// Verb: Output only. Name of the verb executed by the operation.
+	Verb string `json:"verb,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ApiVersion") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ApiVersion") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudOsconfigV2__OperationMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudOsconfigV2__OperationMetadata
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudOsconfigV2__OrchestratedResource: Represents a resource that is
+// being orchestrated by the policy orchestrator.
+type GoogleCloudOsconfigV2__OrchestratedResource struct {
+	// Id: Optional. ID of the resource to be used while generating set of affected
+	// resources. For UPSERT action the value is auto-generated during
+	// PolicyOrchestrator creation when not set. When the value is set it should
+	// following next restrictions: * Must contain only lowercase letters, numbers,
+	// and hyphens. * Must start with a letter. * Must be between 1-63 characters.
+	// * Must end with a number or a letter. * Must be unique within the project.
+	// For DELETE action, ID must be specified explicitly during PolicyOrchestrator
+	// creation.
+	Id string `json:"id,omitempty"`
+	// OsPolicyAssignmentV1Payload: Optional. OSPolicyAssignment resource to be
+	// created, updated or deleted. Name field is ignored and replace with a
+	// generated value. With this field set, orchestrator will perform actions on
+	// `project/{project}/locations/{zone}/osPolicyAssignments/{resource_id}`
+	// resources, where `project` and `zone` pairs come from the expanded scope,
+	// and `resource_id` comes from the `resource_id` field of orchestrator
+	// resource.
+	OsPolicyAssignmentV1Payload *OSPolicyAssignment `json:"osPolicyAssignmentV1Payload,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Id") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Id") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudOsconfigV2__OrchestratedResource) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudOsconfigV2__OrchestratedResource
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudOsconfigV2__OrchestrationScope: Defines a set of selectors which
+// drive which resources are in scope of policy orchestration.
+type GoogleCloudOsconfigV2__OrchestrationScope struct {
+	// Selectors: Optional. Selectors of the orchestration scope. There is a
+	// logical AND between each selector defined. When there is no explicit
+	// `ResourceHierarchySelector` selector specified, the scope is by default
+	// bounded to the parent of the policy orchestrator resource.
+	Selectors []*GoogleCloudOsconfigV2OrchestrationScopeSelector `json:"selectors,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Selectors") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Selectors") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudOsconfigV2__OrchestrationScope) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudOsconfigV2__OrchestrationScope
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudOsconfigV2__PolicyOrchestrator: PolicyOrchestrator helps managing
+// project+zone level policy resources (e.g. OS Policy Assignments), by
+// providing tools to create, update and delete them across projects and
+// locations, at scale. Policy orchestrator functions as an endless loop. Each
+// iteration orchestrator computes a set of resources that should be affected,
+// then progressively applies changes to them. If for some reason this set of
+// resources changes over time (e.g. new projects are added), the future loop
+// iterations will address that. Orchestrator can either upsert or delete
+// policy resources. For more details, see the description of the `action`, and
+// `orchestrated_resource` fields. Note that policy orchestrator do not
+// "manage" the resources it creates. Every iteration is independent and only
+// minimal history of past actions is retained (apart from Cloud Logging). If
+// orchestrator gets deleted, it does not affect the resources it created in
+// the past. Those will remain where they were. Same applies if projects are
+// removed from the orchestrator's scope.
+type GoogleCloudOsconfigV2__PolicyOrchestrator struct {
+	// Action: Required. Action to be done by the orchestrator in
+	// `projects/{project_id}/zones/{zone_id}` locations defined by the
+	// `orchestration_scope`. Allowed values: - `UPSERT` - Orchestrator will create
+	// or update target resources. - `DELETE` - Orchestrator will delete target
+	// resources, if they exist
+	Action string `json:"action,omitempty"`
+	// CreateTime: Output only. Timestamp when the policy orchestrator resource was
+	// created.
+	CreateTime string `json:"createTime,omitempty"`
+	// Description: Optional. Freeform text describing the purpose of the resource.
+	Description string `json:"description,omitempty"`
+	// Etag: Output only. This checksum is computed by the server based on the
+	// value of other fields, and may be sent on update and delete requests to
+	// ensure the client has an up-to-date value before proceeding.
+	Etag string `json:"etag,omitempty"`
+	// Labels: Optional. Labels as key value pairs
+	Labels map[string]string `json:"labels,omitempty"`
+	// Name: Immutable. Identifier. In form of *
+	// `organizations/{organization_id}/locations/global/policyOrchestrators/{orches
+	// trator_id}` *
+	// `folders/{folder_id}/locations/global/policyOrchestrators/{orchestrator_id}`
+	// *
+	// `projects/{project_id_or_number}/locations/global/policyOrchestrators/{orches
+	// trator_id}`
+	Name string `json:"name,omitempty"`
+	// OrchestratedResource: Required. Resource to be orchestrated by the policy
+	// orchestrator.
+	OrchestratedResource *GoogleCloudOsconfigV2__OrchestratedResource `json:"orchestratedResource,omitempty"`
+	// OrchestrationScope: Optional. Defines scope for the orchestration, in
+	// context of the enclosing PolicyOrchestrator resource. Scope is expanded into
+	// a list of pairs, in which the rollout action will take place. Expansion
+	// starts with a Folder resource parenting the PolicyOrchestrator resource: -
+	// All the descendant projects are listed. - List of project is cross joined
+	// with a list of all available zones. - Resulting list of pairs is filtered
+	// according to the selectors.
+	OrchestrationScope *GoogleCloudOsconfigV2__OrchestrationScope `json:"orchestrationScope,omitempty"`
+	// OrchestrationState: Output only. State of the orchestration.
+	OrchestrationState *GoogleCloudOsconfigV2PolicyOrchestratorOrchestrationState `json:"orchestrationState,omitempty"`
+	// Reconciling: Output only. Set to true, if the there are ongoing changes
+	// being applied by the orchestrator.
+	Reconciling bool `json:"reconciling,omitempty"`
+	// State: Optional. State of the orchestrator. Can be updated to change
+	// orchestrator behaviour. Allowed values: - `ACTIVE` - orchestrator is
+	// actively looking for actions to be taken. - `STOPPED` - orchestrator won't
+	// make any changes. Note: There might be more states added in the future. We
+	// use string here instead of an enum, to avoid the need of propagating new
+	// states to all the client code.
+	State string `json:"state,omitempty"`
+	// UpdateTime: Output only. Timestamp when the policy orchestrator resource was
+	// last modified.
+	UpdateTime string `json:"updateTime,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "Action") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Action") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudOsconfigV2__PolicyOrchestrator) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudOsconfigV2__PolicyOrchestrator
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -390,6 +874,224 @@ func (s ListOperationsResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// OSPolicy: An OS policy defines the desired state configuration for a VM.
+type OSPolicy struct {
+	// AllowNoResourceGroupMatch: This flag determines the OS policy compliance
+	// status when none of the resource groups within the policy are applicable for
+	// a VM. Set this value to `true` if the policy needs to be reported as
+	// compliant even if the policy has nothing to validate or enforce.
+	AllowNoResourceGroupMatch bool `json:"allowNoResourceGroupMatch,omitempty"`
+	// Description: Policy description. Length of the description is limited to
+	// 1024 characters.
+	Description string `json:"description,omitempty"`
+	// Id: Required. The id of the OS policy with the following restrictions: *
+	// Must contain only lowercase letters, numbers, and hyphens. * Must start with
+	// a letter. * Must be between 1-63 characters. * Must end with a number or a
+	// letter. * Must be unique within the assignment.
+	Id string `json:"id,omitempty"`
+	// Mode: Required. Policy mode
+	//
+	// Possible values:
+	//   "MODE_UNSPECIFIED" - Invalid mode
+	//   "VALIDATION" - This mode checks if the configuration resources in the
+	// policy are in their desired state. No actions are performed if they are not
+	// in the desired state. This mode is used for reporting purposes.
+	//   "ENFORCEMENT" - This mode checks if the configuration resources in the
+	// policy are in their desired state, and if not, enforces the desired state.
+	Mode string `json:"mode,omitempty"`
+	// ResourceGroups: Required. List of resource groups for the policy. For a
+	// particular VM, resource groups are evaluated in the order specified and the
+	// first resource group that is applicable is selected and the rest are
+	// ignored. If none of the resource groups are applicable for a VM, the VM is
+	// considered to be non-compliant w.r.t this policy. This behavior can be
+	// toggled by the flag `allow_no_resource_group_match`
+	ResourceGroups []*OSPolicyResourceGroup `json:"resourceGroups,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AllowNoResourceGroupMatch")
+	// to unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AllowNoResourceGroupMatch") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s OSPolicy) MarshalJSON() ([]byte, error) {
+	type NoMethod OSPolicy
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// OSPolicyAssignment: OS policy assignment is an API resource that is used to
+// apply a set of OS policies to a dynamically targeted group of Compute Engine
+// VM instances. An OS policy is used to define the desired state configuration
+// for a Compute Engine VM instance through a set of configuration resources
+// that provide capabilities such as installing or removing software packages,
+// or executing a script. For more information about the OS policy resource
+// definitions and examples, see OS policy and OS policy assignment
+// (https://cloud.google.com/compute/docs/os-configuration-management/working-with-os-policies).
+type OSPolicyAssignment struct {
+	// Baseline: Output only. Indicates that this revision has been successfully
+	// rolled out in this zone and new VMs will be assigned OS policies from this
+	// revision. For a given OS policy assignment, there is only one revision with
+	// a value of `true` for this field.
+	Baseline bool `json:"baseline,omitempty"`
+	// Deleted: Output only. Indicates that this revision deletes the OS policy
+	// assignment.
+	Deleted bool `json:"deleted,omitempty"`
+	// Description: OS policy assignment description. Length of the description is
+	// limited to 1024 characters.
+	Description string `json:"description,omitempty"`
+	// Etag: The etag for this OS policy assignment. If this is provided on update,
+	// it must match the server's etag.
+	Etag string `json:"etag,omitempty"`
+	// InstanceFilter: Required. Filter to select VMs.
+	InstanceFilter *OSPolicyAssignmentInstanceFilter `json:"instanceFilter,omitempty"`
+	// Name: Resource name. Format:
+	// `projects/{project_number}/locations/{location}/osPolicyAssignments/{os_polic
+	// y_assignment_id}` This field is ignored when you create an OS policy
+	// assignment.
+	Name string `json:"name,omitempty"`
+	// OsPolicies: Required. List of OS policies to be applied to the VMs.
+	OsPolicies []*OSPolicy `json:"osPolicies,omitempty"`
+	// Reconciling: Output only. Indicates that reconciliation is in progress for
+	// the revision. This value is `true` when the `rollout_state` is one of: *
+	// IN_PROGRESS * CANCELLING
+	Reconciling bool `json:"reconciling,omitempty"`
+	// RevisionCreateTime: Output only. The timestamp that the revision was
+	// created.
+	RevisionCreateTime string `json:"revisionCreateTime,omitempty"`
+	// RevisionId: Output only. The assignment revision ID A new revision is
+	// committed whenever a rollout is triggered for a OS policy assignment
+	RevisionId string `json:"revisionId,omitempty"`
+	// Rollout: Required. Rollout to deploy the OS policy assignment. A rollout is
+	// triggered in the following situations: 1) OSPolicyAssignment is created. 2)
+	// OSPolicyAssignment is updated and the update contains changes to one of the
+	// following fields: - instance_filter - os_policies 3) OSPolicyAssignment is
+	// deleted.
+	Rollout *OSPolicyAssignmentRollout `json:"rollout,omitempty"`
+	// RolloutState: Output only. OS policy assignment rollout state
+	//
+	// Possible values:
+	//   "ROLLOUT_STATE_UNSPECIFIED" - Invalid value
+	//   "IN_PROGRESS" - The rollout is in progress.
+	//   "CANCELLING" - The rollout is being cancelled.
+	//   "CANCELLED" - The rollout is cancelled.
+	//   "SUCCEEDED" - The rollout has completed successfully.
+	RolloutState string `json:"rolloutState,omitempty"`
+	// Uid: Output only. Server generated unique id for the OS policy assignment
+	// resource.
+	Uid string `json:"uid,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Baseline") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Baseline") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s OSPolicyAssignment) MarshalJSON() ([]byte, error) {
+	type NoMethod OSPolicyAssignment
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// OSPolicyAssignmentInstanceFilter: Filters to select target VMs for an
+// assignment. If more than one filter criteria is specified below, a VM will
+// be selected if and only if it satisfies all of them.
+type OSPolicyAssignmentInstanceFilter struct {
+	// All: Target all VMs in the project. If true, no other criteria is permitted.
+	All bool `json:"all,omitempty"`
+	// ExclusionLabels: List of label sets used for VM exclusion. If the list has
+	// more than one label set, the VM is excluded if any of the label sets are
+	// applicable for the VM.
+	ExclusionLabels []*OSPolicyAssignmentLabelSet `json:"exclusionLabels,omitempty"`
+	// InclusionLabels: List of label sets used for VM inclusion. If the list has
+	// more than one `LabelSet`, the VM is included if any of the label sets are
+	// applicable for the VM.
+	InclusionLabels []*OSPolicyAssignmentLabelSet `json:"inclusionLabels,omitempty"`
+	// Inventories: List of inventories to select VMs. A VM is selected if its
+	// inventory data matches at least one of the following inventories.
+	Inventories []*OSPolicyAssignmentInstanceFilterInventory `json:"inventories,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "All") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "All") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s OSPolicyAssignmentInstanceFilter) MarshalJSON() ([]byte, error) {
+	type NoMethod OSPolicyAssignmentInstanceFilter
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// OSPolicyAssignmentInstanceFilterInventory: VM inventory details.
+type OSPolicyAssignmentInstanceFilterInventory struct {
+	// OsShortName: Required. The OS short name
+	OsShortName string `json:"osShortName,omitempty"`
+	// OsVersion: The OS version Prefix matches are supported if asterisk(*) is
+	// provided as the last character. For example, to match all versions with a
+	// major version of `7`, specify the following value for this field `7.*` An
+	// empty string matches all OS versions.
+	OsVersion string `json:"osVersion,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "OsShortName") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "OsShortName") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s OSPolicyAssignmentInstanceFilterInventory) MarshalJSON() ([]byte, error) {
+	type NoMethod OSPolicyAssignmentInstanceFilterInventory
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// OSPolicyAssignmentLabelSet: Message representing label set. * A label is a
+// key value pair set for a VM. * A LabelSet is a set of labels. * Labels
+// within a LabelSet are ANDed. In other words, a LabelSet is applicable for a
+// VM only if it matches all the labels in the LabelSet. * Example: A LabelSet
+// with 2 labels: `env=prod` and `type=webserver` will only be applicable for
+// those VMs with both labels present.
+type OSPolicyAssignmentLabelSet struct {
+	// Labels: Labels are identified by key/value pairs in this map. A VM should
+	// contain all the key/value pairs specified in this map to be selected.
+	Labels map[string]string `json:"labels,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Labels") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Labels") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s OSPolicyAssignmentLabelSet) MarshalJSON() ([]byte, error) {
+	type NoMethod OSPolicyAssignmentLabelSet
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // OSPolicyAssignmentOperationMetadata: OS policy assignment operation metadata
 // provided by OS policy assignment API methods that return long running
 // operations.
@@ -435,6 +1137,734 @@ type OSPolicyAssignmentOperationMetadata struct {
 
 func (s OSPolicyAssignmentOperationMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod OSPolicyAssignmentOperationMetadata
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// OSPolicyAssignmentRollout: Message to configure the rollout at the zonal
+// level for the OS policy assignment.
+type OSPolicyAssignmentRollout struct {
+	// DisruptionBudget: Required. The maximum number (or percentage) of VMs per
+	// zone to disrupt at any given moment.
+	DisruptionBudget *FixedOrPercent `json:"disruptionBudget,omitempty"`
+	// MinWaitDuration: Required. This determines the minimum duration of time to
+	// wait after the configuration changes are applied through the current
+	// rollout. A VM continues to count towards the `disruption_budget` at least
+	// until this duration of time has passed after configuration changes are
+	// applied.
+	MinWaitDuration string `json:"minWaitDuration,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "DisruptionBudget") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DisruptionBudget") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s OSPolicyAssignmentRollout) MarshalJSON() ([]byte, error) {
+	type NoMethod OSPolicyAssignmentRollout
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// OSPolicyInventoryFilter: Filtering criteria to select VMs based on inventory
+// details.
+type OSPolicyInventoryFilter struct {
+	// OsShortName: Required. The OS short name
+	OsShortName string `json:"osShortName,omitempty"`
+	// OsVersion: The OS version Prefix matches are supported if asterisk(*) is
+	// provided as the last character. For example, to match all versions with a
+	// major version of `7`, specify the following value for this field `7.*` An
+	// empty string matches all OS versions.
+	OsVersion string `json:"osVersion,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "OsShortName") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "OsShortName") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s OSPolicyInventoryFilter) MarshalJSON() ([]byte, error) {
+	type NoMethod OSPolicyInventoryFilter
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// OSPolicyResource: An OS policy resource is used to define the desired state
+// configuration and provides a specific functionality like installing/removing
+// packages, executing a script etc. The system ensures that resources are
+// always in their desired state by taking necessary actions if they have
+// drifted from their desired state.
+type OSPolicyResource struct {
+	// Exec: Exec resource
+	Exec *OSPolicyResourceExecResource `json:"exec,omitempty"`
+	// File: File resource
+	File *OSPolicyResourceFileResource `json:"file,omitempty"`
+	// Id: Required. The id of the resource with the following restrictions: * Must
+	// contain only lowercase letters, numbers, and hyphens. * Must start with a
+	// letter. * Must be between 1-63 characters. * Must end with a number or a
+	// letter. * Must be unique within the OS policy.
+	Id string `json:"id,omitempty"`
+	// Pkg: Package resource
+	Pkg *OSPolicyResourcePackageResource `json:"pkg,omitempty"`
+	// Repository: Package repository resource
+	Repository *OSPolicyResourceRepositoryResource `json:"repository,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Exec") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Exec") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s OSPolicyResource) MarshalJSON() ([]byte, error) {
+	type NoMethod OSPolicyResource
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// OSPolicyResourceExecResource: A resource that allows executing scripts on
+// the VM. The `ExecResource` has 2 stages: `validate` and `enforce` and both
+// stages accept a script as an argument to execute. When the `ExecResource` is
+// applied by the agent, it first executes the script in the `validate` stage.
+// The `validate` stage can signal that the `ExecResource` is already in the
+// desired state by returning an exit code of `100`. If the `ExecResource` is
+// not in the desired state, it should return an exit code of `101`. Any other
+// exit code returned by this stage is considered an error. If the
+// `ExecResource` is not in the desired state based on the exit code from the
+// `validate` stage, the agent proceeds to execute the script from the
+// `enforce` stage. If the `ExecResource` is already in the desired state, the
+// `enforce` stage will not be run. Similar to `validate` stage, the `enforce`
+// stage should return an exit code of `100` to indicate that the resource in
+// now in its desired state. Any other exit code is considered an error. NOTE:
+// An exit code of `100` was chosen over `0` (and `101` vs `1`) to have an
+// explicit indicator of `in desired state`, `not in desired state` and errors.
+// Because, for example, Powershell will always return an exit code of `0`
+// unless an `exit` statement is provided in the script. So, for reasons of
+// consistency and being explicit, exit codes `100` and `101` were chosen.
+type OSPolicyResourceExecResource struct {
+	// Enforce: What to run to bring this resource into the desired state. An exit
+	// code of 100 indicates "success", any other exit code indicates a failure
+	// running enforce.
+	Enforce *OSPolicyResourceExecResourceExec `json:"enforce,omitempty"`
+	// Validate: Required. What to run to validate this resource is in the desired
+	// state. An exit code of 100 indicates "in desired state", and exit code of
+	// 101 indicates "not in desired state". Any other exit code indicates a
+	// failure running validate.
+	Validate *OSPolicyResourceExecResourceExec `json:"validate,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Enforce") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Enforce") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s OSPolicyResourceExecResource) MarshalJSON() ([]byte, error) {
+	type NoMethod OSPolicyResourceExecResource
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// OSPolicyResourceExecResourceExec: A file or script to execute.
+type OSPolicyResourceExecResourceExec struct {
+	// Args: Optional arguments to pass to the source during execution.
+	Args []string `json:"args,omitempty"`
+	// File: A remote or local file.
+	File *OSPolicyResourceFile `json:"file,omitempty"`
+	// Interpreter: Required. The script interpreter to use.
+	//
+	// Possible values:
+	//   "INTERPRETER_UNSPECIFIED" - Invalid value, the request will return
+	// validation error.
+	//   "NONE" - If an interpreter is not specified, the source is executed
+	// directly. This execution, without an interpreter, only succeeds for
+	// executables and scripts that have shebang lines.
+	//   "SHELL" - Indicates that the script runs with `/bin/sh` on Linux and
+	// `cmd.exe` on Windows.
+	//   "POWERSHELL" - Indicates that the script runs with PowerShell.
+	Interpreter string `json:"interpreter,omitempty"`
+	// OutputFilePath: Only recorded for enforce Exec. Path to an output file (that
+	// is created by this Exec) whose content will be recorded in
+	// OSPolicyResourceCompliance after a successful run. Absence or failure to
+	// read this file will result in this ExecResource being non-compliant. Output
+	// file size is limited to 500K bytes.
+	OutputFilePath string `json:"outputFilePath,omitempty"`
+	// Script: An inline script. The size of the script is limited to 32KiB.
+	Script string `json:"script,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Args") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Args") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s OSPolicyResourceExecResourceExec) MarshalJSON() ([]byte, error) {
+	type NoMethod OSPolicyResourceExecResourceExec
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// OSPolicyResourceFile: A remote or local file.
+type OSPolicyResourceFile struct {
+	// AllowInsecure: Defaults to false. When false, files are subject to
+	// validations based on the file type: Remote: A checksum must be specified.
+	// Cloud Storage: An object generation number must be specified.
+	AllowInsecure bool `json:"allowInsecure,omitempty"`
+	// Gcs: A Cloud Storage object.
+	Gcs *OSPolicyResourceFileGcs `json:"gcs,omitempty"`
+	// LocalPath: A local path within the VM to use.
+	LocalPath string `json:"localPath,omitempty"`
+	// Remote: A generic remote file.
+	Remote *OSPolicyResourceFileRemote `json:"remote,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AllowInsecure") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AllowInsecure") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s OSPolicyResourceFile) MarshalJSON() ([]byte, error) {
+	type NoMethod OSPolicyResourceFile
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// OSPolicyResourceFileGcs: Specifies a file available as a Cloud Storage
+// Object.
+type OSPolicyResourceFileGcs struct {
+	// Bucket: Required. Bucket of the Cloud Storage object.
+	Bucket string `json:"bucket,omitempty"`
+	// Generation: Generation number of the Cloud Storage object.
+	Generation int64 `json:"generation,omitempty,string"`
+	// Object: Required. Name of the Cloud Storage object.
+	Object string `json:"object,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Bucket") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Bucket") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s OSPolicyResourceFileGcs) MarshalJSON() ([]byte, error) {
+	type NoMethod OSPolicyResourceFileGcs
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// OSPolicyResourceFileRemote: Specifies a file available via some URI.
+type OSPolicyResourceFileRemote struct {
+	// Sha256Checksum: SHA256 checksum of the remote file.
+	Sha256Checksum string `json:"sha256Checksum,omitempty"`
+	// Uri: Required. URI from which to fetch the object. It should contain both
+	// the protocol and path following the format `{protocol}://{location}`.
+	Uri string `json:"uri,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Sha256Checksum") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Sha256Checksum") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s OSPolicyResourceFileRemote) MarshalJSON() ([]byte, error) {
+	type NoMethod OSPolicyResourceFileRemote
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// OSPolicyResourceFileResource: A resource that manages the state of a file.
+type OSPolicyResourceFileResource struct {
+	// Content: A a file with this content. The size of the content is limited to
+	// 32KiB.
+	Content string `json:"content,omitempty"`
+	// File: A remote or local source.
+	File *OSPolicyResourceFile `json:"file,omitempty"`
+	// Path: Required. The absolute path of the file within the VM.
+	Path string `json:"path,omitempty"`
+	// Permissions: Consists of three octal digits which represent, in order, the
+	// permissions of the owner, group, and other users for the file (similarly to
+	// the numeric mode used in the linux chmod utility). Each digit represents a
+	// three bit number with the 4 bit corresponding to the read permissions, the 2
+	// bit corresponds to the write bit, and the one bit corresponds to the execute
+	// permission. Default behavior is 755. Below are some examples of permissions
+	// and their associated values: read, write, and execute: 7 read and execute: 5
+	// read and write: 6 read only: 4
+	Permissions string `json:"permissions,omitempty"`
+	// State: Required. Desired state of the file.
+	//
+	// Possible values:
+	//   "DESIRED_STATE_UNSPECIFIED" - Unspecified is invalid.
+	//   "PRESENT" - Ensure file at path is present.
+	//   "ABSENT" - Ensure file at path is absent.
+	//   "CONTENTS_MATCH" - Ensure the contents of the file at path matches. If the
+	// file does not exist it will be created.
+	State string `json:"state,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Content") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Content") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s OSPolicyResourceFileResource) MarshalJSON() ([]byte, error) {
+	type NoMethod OSPolicyResourceFileResource
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// OSPolicyResourceGroup: Resource groups provide a mechanism to group OS
+// policy resources. Resource groups enable OS policy authors to create a
+// single OS policy to be applied to VMs running different operating Systems.
+// When the OS policy is applied to a target VM, the appropriate resource group
+// within the OS policy is selected based on the `OSFilter` specified within
+// the resource group.
+type OSPolicyResourceGroup struct {
+	// InventoryFilters: List of inventory filters for the resource group. The
+	// resources in this resource group are applied to the target VM if it
+	// satisfies at least one of the following inventory filters. For example, to
+	// apply this resource group to VMs running either `RHEL` or `CentOS` operating
+	// systems, specify 2 items for the list with following values:
+	// inventory_filters[0].os_short_name='rhel' and
+	// inventory_filters[1].os_short_name='centos' If the list is empty, this
+	// resource group will be applied to the target VM unconditionally.
+	InventoryFilters []*OSPolicyInventoryFilter `json:"inventoryFilters,omitempty"`
+	// Resources: Required. List of resources configured for this resource group.
+	// The resources are executed in the exact order specified here.
+	Resources []*OSPolicyResource `json:"resources,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "InventoryFilters") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "InventoryFilters") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s OSPolicyResourceGroup) MarshalJSON() ([]byte, error) {
+	type NoMethod OSPolicyResourceGroup
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// OSPolicyResourcePackageResource: A resource that manages a system package.
+type OSPolicyResourcePackageResource struct {
+	// Apt: A package managed by Apt.
+	Apt *OSPolicyResourcePackageResourceAPT `json:"apt,omitempty"`
+	// Deb: A deb package file.
+	Deb *OSPolicyResourcePackageResourceDeb `json:"deb,omitempty"`
+	// DesiredState: Required. The desired state the agent should maintain for this
+	// package.
+	//
+	// Possible values:
+	//   "DESIRED_STATE_UNSPECIFIED" - Unspecified is invalid.
+	//   "INSTALLED" - Ensure that the package is installed.
+	//   "REMOVED" - The agent ensures that the package is not installed and
+	// uninstalls it if detected.
+	DesiredState string `json:"desiredState,omitempty"`
+	// Googet: A package managed by GooGet.
+	Googet *OSPolicyResourcePackageResourceGooGet `json:"googet,omitempty"`
+	// Msi: An MSI package.
+	Msi *OSPolicyResourcePackageResourceMSI `json:"msi,omitempty"`
+	// Rpm: An rpm package file.
+	Rpm *OSPolicyResourcePackageResourceRPM `json:"rpm,omitempty"`
+	// Yum: A package managed by YUM.
+	Yum *OSPolicyResourcePackageResourceYUM `json:"yum,omitempty"`
+	// Zypper: A package managed by Zypper.
+	Zypper *OSPolicyResourcePackageResourceZypper `json:"zypper,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Apt") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Apt") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s OSPolicyResourcePackageResource) MarshalJSON() ([]byte, error) {
+	type NoMethod OSPolicyResourcePackageResource
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// OSPolicyResourcePackageResourceAPT: A package managed by APT. - install:
+// `apt-get update && apt-get -y install [name]` - remove: `apt-get -y remove
+// [name]`
+type OSPolicyResourcePackageResourceAPT struct {
+	// Name: Required. Package name.
+	Name string `json:"name,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Name") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Name") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s OSPolicyResourcePackageResourceAPT) MarshalJSON() ([]byte, error) {
+	type NoMethod OSPolicyResourcePackageResourceAPT
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// OSPolicyResourcePackageResourceDeb: A deb package file. dpkg packages only
+// support INSTALLED state.
+type OSPolicyResourcePackageResourceDeb struct {
+	// PullDeps: Whether dependencies should also be installed. - install when
+	// false: `dpkg -i package` - install when true: `apt-get update && apt-get -y
+	// install package.deb`
+	PullDeps bool `json:"pullDeps,omitempty"`
+	// Source: Required. A deb package.
+	Source *OSPolicyResourceFile `json:"source,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "PullDeps") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "PullDeps") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s OSPolicyResourcePackageResourceDeb) MarshalJSON() ([]byte, error) {
+	type NoMethod OSPolicyResourcePackageResourceDeb
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// OSPolicyResourcePackageResourceGooGet: A package managed by GooGet. -
+// install: `googet -noconfirm install package` - remove: `googet -noconfirm
+// remove package`
+type OSPolicyResourcePackageResourceGooGet struct {
+	// Name: Required. Package name.
+	Name string `json:"name,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Name") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Name") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s OSPolicyResourcePackageResourceGooGet) MarshalJSON() ([]byte, error) {
+	type NoMethod OSPolicyResourcePackageResourceGooGet
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// OSPolicyResourcePackageResourceMSI: An MSI package. MSI packages only
+// support INSTALLED state.
+type OSPolicyResourcePackageResourceMSI struct {
+	// Properties: Additional properties to use during installation. This should be
+	// in the format of Property=Setting. Appended to the defaults of
+	// `ACTION=INSTALL REBOOT=ReallySuppress`.
+	Properties []string `json:"properties,omitempty"`
+	// Source: Required. The MSI package.
+	Source *OSPolicyResourceFile `json:"source,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Properties") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Properties") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s OSPolicyResourcePackageResourceMSI) MarshalJSON() ([]byte, error) {
+	type NoMethod OSPolicyResourcePackageResourceMSI
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// OSPolicyResourcePackageResourceRPM: An RPM package file. RPM packages only
+// support INSTALLED state.
+type OSPolicyResourcePackageResourceRPM struct {
+	// PullDeps: Whether dependencies should also be installed. - install when
+	// false: `rpm --upgrade --replacepkgs package.rpm` - install when true: `yum
+	// -y install package.rpm` or `zypper -y install package.rpm`
+	PullDeps bool `json:"pullDeps,omitempty"`
+	// Source: Required. An rpm package.
+	Source *OSPolicyResourceFile `json:"source,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "PullDeps") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "PullDeps") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s OSPolicyResourcePackageResourceRPM) MarshalJSON() ([]byte, error) {
+	type NoMethod OSPolicyResourcePackageResourceRPM
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// OSPolicyResourcePackageResourceYUM: A package managed by YUM. - install:
+// `yum -y install package` - remove: `yum -y remove package`
+type OSPolicyResourcePackageResourceYUM struct {
+	// Name: Required. Package name.
+	Name string `json:"name,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Name") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Name") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s OSPolicyResourcePackageResourceYUM) MarshalJSON() ([]byte, error) {
+	type NoMethod OSPolicyResourcePackageResourceYUM
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// OSPolicyResourcePackageResourceZypper: A package managed by Zypper. -
+// install: `zypper -y install package` - remove: `zypper -y rm package`
+type OSPolicyResourcePackageResourceZypper struct {
+	// Name: Required. Package name.
+	Name string `json:"name,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Name") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Name") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s OSPolicyResourcePackageResourceZypper) MarshalJSON() ([]byte, error) {
+	type NoMethod OSPolicyResourcePackageResourceZypper
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// OSPolicyResourceRepositoryResource: A resource that manages a package
+// repository.
+type OSPolicyResourceRepositoryResource struct {
+	// Apt: An Apt Repository.
+	Apt *OSPolicyResourceRepositoryResourceAptRepository `json:"apt,omitempty"`
+	// Goo: A Goo Repository.
+	Goo *OSPolicyResourceRepositoryResourceGooRepository `json:"goo,omitempty"`
+	// Yum: A Yum Repository.
+	Yum *OSPolicyResourceRepositoryResourceYumRepository `json:"yum,omitempty"`
+	// Zypper: A Zypper Repository.
+	Zypper *OSPolicyResourceRepositoryResourceZypperRepository `json:"zypper,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Apt") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Apt") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s OSPolicyResourceRepositoryResource) MarshalJSON() ([]byte, error) {
+	type NoMethod OSPolicyResourceRepositoryResource
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// OSPolicyResourceRepositoryResourceAptRepository: Represents a single apt
+// package repository. These will be added to a repo file that will be managed
+// at `/etc/apt/sources.list.d/google_osconfig.list`.
+type OSPolicyResourceRepositoryResourceAptRepository struct {
+	// ArchiveType: Required. Type of archive files in this repository.
+	//
+	// Possible values:
+	//   "ARCHIVE_TYPE_UNSPECIFIED" - Unspecified is invalid.
+	//   "DEB" - Deb indicates that the archive contains binary files.
+	//   "DEB_SRC" - Deb-src indicates that the archive contains source files.
+	ArchiveType string `json:"archiveType,omitempty"`
+	// Components: Required. List of components for this repository. Must contain
+	// at least one item.
+	Components []string `json:"components,omitempty"`
+	// Distribution: Required. Distribution of this repository.
+	Distribution string `json:"distribution,omitempty"`
+	// GpgKey: URI of the key file for this repository. The agent maintains a
+	// keyring at `/etc/apt/trusted.gpg.d/osconfig_agent_managed.gpg`.
+	GpgKey string `json:"gpgKey,omitempty"`
+	// Uri: Required. URI for this repository.
+	Uri string `json:"uri,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ArchiveType") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ArchiveType") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s OSPolicyResourceRepositoryResourceAptRepository) MarshalJSON() ([]byte, error) {
+	type NoMethod OSPolicyResourceRepositoryResourceAptRepository
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// OSPolicyResourceRepositoryResourceGooRepository: Represents a Goo package
+// repository. These are added to a repo file that is managed at
+// `C:/ProgramData/GooGet/repos/google_osconfig.repo`.
+type OSPolicyResourceRepositoryResourceGooRepository struct {
+	// Name: Required. The name of the repository.
+	Name string `json:"name,omitempty"`
+	// Url: Required. The url of the repository.
+	Url string `json:"url,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Name") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Name") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s OSPolicyResourceRepositoryResourceGooRepository) MarshalJSON() ([]byte, error) {
+	type NoMethod OSPolicyResourceRepositoryResourceGooRepository
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// OSPolicyResourceRepositoryResourceYumRepository: Represents a single yum
+// package repository. These are added to a repo file that is managed at
+// `/etc/yum.repos.d/google_osconfig.repo`.
+type OSPolicyResourceRepositoryResourceYumRepository struct {
+	// BaseUrl: Required. The location of the repository directory.
+	BaseUrl string `json:"baseUrl,omitempty"`
+	// DisplayName: The display name of the repository.
+	DisplayName string `json:"displayName,omitempty"`
+	// GpgKeys: URIs of GPG keys.
+	GpgKeys []string `json:"gpgKeys,omitempty"`
+	// Id: Required. A one word, unique name for this repository. This is the `repo
+	// id` in the yum config file and also the `display_name` if `display_name` is
+	// omitted. This id is also used as the unique identifier when checking for
+	// resource conflicts.
+	Id string `json:"id,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "BaseUrl") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "BaseUrl") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s OSPolicyResourceRepositoryResourceYumRepository) MarshalJSON() ([]byte, error) {
+	type NoMethod OSPolicyResourceRepositoryResourceYumRepository
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// OSPolicyResourceRepositoryResourceZypperRepository: Represents a single
+// zypper package repository. These are added to a repo file that is managed at
+// `/etc/zypp/repos.d/google_osconfig.repo`.
+type OSPolicyResourceRepositoryResourceZypperRepository struct {
+	// BaseUrl: Required. The location of the repository directory.
+	BaseUrl string `json:"baseUrl,omitempty"`
+	// DisplayName: The display name of the repository.
+	DisplayName string `json:"displayName,omitempty"`
+	// GpgKeys: URIs of GPG keys.
+	GpgKeys []string `json:"gpgKeys,omitempty"`
+	// Id: Required. A one word, unique name for this repository. This is the `repo
+	// id` in the zypper config file and also the `display_name` if `display_name`
+	// is omitted. This id is also used as the unique identifier when checking for
+	// GuestPolicy conflicts.
+	Id string `json:"id,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "BaseUrl") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "BaseUrl") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s OSPolicyResourceRepositoryResourceZypperRepository) MarshalJSON() ([]byte, error) {
+	type NoMethod OSPolicyResourceRepositoryResourceZypperRepository
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -517,6 +1947,664 @@ type Status struct {
 func (s Status) MarshalJSON() ([]byte, error) {
 	type NoMethod Status
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+type FoldersLocationsGlobalPolicyOrchestratorsCreateCall struct {
+	s                                         *Service
+	parent                                    string
+	googlecloudosconfigv2__policyorchestrator *GoogleCloudOsconfigV2__PolicyOrchestrator
+	urlParams_                                gensupport.URLParams
+	ctx_                                      context.Context
+	header_                                   http.Header
+}
+
+// Create: Creates a new policy orchestrator under the given folder resource.
+// `name` field of the given orchestrator are ignored and instead replaced by a
+// product of `parent` and `policy_orchestrator_id`. Orchestrator state field
+// might be only set to `ACTIVE`, `STOPPED` or omitted (in which case, the
+// created resource will be in `ACTIVE` state anyway).
+//
+//   - parent: The parent resource name in the form of: *
+//     `organizations/{organization_id}/locations/global` *
+//     `folders/{folder_id}/locations/global` *
+//     `projects/{project_id_or_number}/locations/global`.
+func (r *FoldersLocationsGlobalPolicyOrchestratorsService) Create(parent string, googlecloudosconfigv2__policyorchestrator *GoogleCloudOsconfigV2__PolicyOrchestrator) *FoldersLocationsGlobalPolicyOrchestratorsCreateCall {
+	c := &FoldersLocationsGlobalPolicyOrchestratorsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.googlecloudosconfigv2__policyorchestrator = googlecloudosconfigv2__policyorchestrator
+	return c
+}
+
+// PolicyOrchestratorId sets the optional parameter "policyOrchestratorId":
+// Required. The logical identifier of the policy orchestrator, with the
+// following restrictions: * Must contain only lowercase letters, numbers, and
+// hyphens. * Must start with a letter. * Must be between 1-63 characters. *
+// Must end with a number or a letter. * Must be unique within the parent.
+func (c *FoldersLocationsGlobalPolicyOrchestratorsCreateCall) PolicyOrchestratorId(policyOrchestratorId string) *FoldersLocationsGlobalPolicyOrchestratorsCreateCall {
+	c.urlParams_.Set("policyOrchestratorId", policyOrchestratorId)
+	return c
+}
+
+// RequestId sets the optional parameter "requestId": An optional request ID to
+// identify requests. Specify a unique request ID so that if you must retry
+// your request, the server will know to ignore the request if it has already
+// been completed. The server will guarantee that for at least 60 minutes since
+// the first request. For example, consider a situation where you make an
+// initial request and the request times out. If you make the request again
+// with the same request ID, the server can check if original operation with
+// the same request ID was received, and if so, will ignore the second request.
+// This prevents clients from accidentally creating duplicate commitments. The
+// request ID must be a valid UUID with the exception that zero UUID is not
+// supported (00000000-0000-0000-0000-000000000000).
+func (c *FoldersLocationsGlobalPolicyOrchestratorsCreateCall) RequestId(requestId string) *FoldersLocationsGlobalPolicyOrchestratorsCreateCall {
+	c.urlParams_.Set("requestId", requestId)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *FoldersLocationsGlobalPolicyOrchestratorsCreateCall) Fields(s ...googleapi.Field) *FoldersLocationsGlobalPolicyOrchestratorsCreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *FoldersLocationsGlobalPolicyOrchestratorsCreateCall) Context(ctx context.Context) *FoldersLocationsGlobalPolicyOrchestratorsCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *FoldersLocationsGlobalPolicyOrchestratorsCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *FoldersLocationsGlobalPolicyOrchestratorsCreateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googlecloudosconfigv2__policyorchestrator)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+parent}/policyOrchestrators")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "osconfig.folders.locations.global.policyOrchestrators.create", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "osconfig.folders.locations.global.policyOrchestrators.create" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *FoldersLocationsGlobalPolicyOrchestratorsCreateCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "osconfig.folders.locations.global.policyOrchestrators.create", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type FoldersLocationsGlobalPolicyOrchestratorsDeleteCall struct {
+	s          *Service
+	name       string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Delete: Deletes an existing policy orchestrator resource, parented by a
+// folder.
+//
+// - name: Name of the resource to be deleted.
+func (r *FoldersLocationsGlobalPolicyOrchestratorsService) Delete(name string) *FoldersLocationsGlobalPolicyOrchestratorsDeleteCall {
+	c := &FoldersLocationsGlobalPolicyOrchestratorsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Etag sets the optional parameter "etag": The current etag of the policy
+// orchestrator. If an etag is provided and does not match the current etag of
+// the policy orchestrator, deletion will be blocked and an ABORTED error will
+// be returned.
+func (c *FoldersLocationsGlobalPolicyOrchestratorsDeleteCall) Etag(etag string) *FoldersLocationsGlobalPolicyOrchestratorsDeleteCall {
+	c.urlParams_.Set("etag", etag)
+	return c
+}
+
+// RequestId sets the optional parameter "requestId": An optional request ID to
+// identify requests. Specify a unique request ID so that if you must retry
+// your request, the server will know to ignore the request if it has already
+// been completed. The server will guarantee that for at least 60 minutes after
+// the first request. For example, consider a situation where you make an
+// initial request and the request times out. If you make the request again
+// with the same request ID, the server can check if original operation with
+// the same request ID was received, and if so, will ignore the second request.
+// This prevents clients from accidentally creating duplicate commitments. The
+// request ID must be a valid UUID with the exception that zero UUID is not
+// supported (00000000-0000-0000-0000-000000000000).
+func (c *FoldersLocationsGlobalPolicyOrchestratorsDeleteCall) RequestId(requestId string) *FoldersLocationsGlobalPolicyOrchestratorsDeleteCall {
+	c.urlParams_.Set("requestId", requestId)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *FoldersLocationsGlobalPolicyOrchestratorsDeleteCall) Fields(s ...googleapi.Field) *FoldersLocationsGlobalPolicyOrchestratorsDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *FoldersLocationsGlobalPolicyOrchestratorsDeleteCall) Context(ctx context.Context) *FoldersLocationsGlobalPolicyOrchestratorsDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *FoldersLocationsGlobalPolicyOrchestratorsDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *FoldersLocationsGlobalPolicyOrchestratorsDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("DELETE", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "osconfig.folders.locations.global.policyOrchestrators.delete", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "osconfig.folders.locations.global.policyOrchestrators.delete" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *FoldersLocationsGlobalPolicyOrchestratorsDeleteCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "osconfig.folders.locations.global.policyOrchestrators.delete", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type FoldersLocationsGlobalPolicyOrchestratorsGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Retrieves an existing policy orchestrator, parented by a folder.
+//
+// - name: The resource name.
+func (r *FoldersLocationsGlobalPolicyOrchestratorsService) Get(name string) *FoldersLocationsGlobalPolicyOrchestratorsGetCall {
+	c := &FoldersLocationsGlobalPolicyOrchestratorsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *FoldersLocationsGlobalPolicyOrchestratorsGetCall) Fields(s ...googleapi.Field) *FoldersLocationsGlobalPolicyOrchestratorsGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *FoldersLocationsGlobalPolicyOrchestratorsGetCall) IfNoneMatch(entityTag string) *FoldersLocationsGlobalPolicyOrchestratorsGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *FoldersLocationsGlobalPolicyOrchestratorsGetCall) Context(ctx context.Context) *FoldersLocationsGlobalPolicyOrchestratorsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *FoldersLocationsGlobalPolicyOrchestratorsGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *FoldersLocationsGlobalPolicyOrchestratorsGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "osconfig.folders.locations.global.policyOrchestrators.get", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "osconfig.folders.locations.global.policyOrchestrators.get" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudOsconfigV2__PolicyOrchestrator.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *FoldersLocationsGlobalPolicyOrchestratorsGetCall) Do(opts ...googleapi.CallOption) (*GoogleCloudOsconfigV2__PolicyOrchestrator, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudOsconfigV2__PolicyOrchestrator{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "osconfig.folders.locations.global.policyOrchestrators.get", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type FoldersLocationsGlobalPolicyOrchestratorsListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists the policy orchestrators under the given parent folder resource.
+//
+// - parent: The parent resource name.
+func (r *FoldersLocationsGlobalPolicyOrchestratorsService) List(parent string) *FoldersLocationsGlobalPolicyOrchestratorsListCall {
+	c := &FoldersLocationsGlobalPolicyOrchestratorsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// Filter sets the optional parameter "filter": Filtering results
+func (c *FoldersLocationsGlobalPolicyOrchestratorsListCall) Filter(filter string) *FoldersLocationsGlobalPolicyOrchestratorsListCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// OrderBy sets the optional parameter "orderBy": Hint for how to order the
+// results
+func (c *FoldersLocationsGlobalPolicyOrchestratorsListCall) OrderBy(orderBy string) *FoldersLocationsGlobalPolicyOrchestratorsListCall {
+	c.urlParams_.Set("orderBy", orderBy)
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": Requested page size. Server
+// may return fewer items than requested. If unspecified, server will pick an
+// appropriate default.
+func (c *FoldersLocationsGlobalPolicyOrchestratorsListCall) PageSize(pageSize int64) *FoldersLocationsGlobalPolicyOrchestratorsListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": A token identifying a
+// page of results the server should return.
+func (c *FoldersLocationsGlobalPolicyOrchestratorsListCall) PageToken(pageToken string) *FoldersLocationsGlobalPolicyOrchestratorsListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *FoldersLocationsGlobalPolicyOrchestratorsListCall) Fields(s ...googleapi.Field) *FoldersLocationsGlobalPolicyOrchestratorsListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *FoldersLocationsGlobalPolicyOrchestratorsListCall) IfNoneMatch(entityTag string) *FoldersLocationsGlobalPolicyOrchestratorsListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *FoldersLocationsGlobalPolicyOrchestratorsListCall) Context(ctx context.Context) *FoldersLocationsGlobalPolicyOrchestratorsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *FoldersLocationsGlobalPolicyOrchestratorsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *FoldersLocationsGlobalPolicyOrchestratorsListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+parent}/policyOrchestrators")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "osconfig.folders.locations.global.policyOrchestrators.list", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "osconfig.folders.locations.global.policyOrchestrators.list" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudOsconfigV2__ListPolicyOrchestratorsResponse.ServerResponse.Header
+//
+//	or (if a response was returned at all) in error.(*googleapi.Error).Header.
+//
+// Use googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *FoldersLocationsGlobalPolicyOrchestratorsListCall) Do(opts ...googleapi.CallOption) (*GoogleCloudOsconfigV2__ListPolicyOrchestratorsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudOsconfigV2__ListPolicyOrchestratorsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "osconfig.folders.locations.global.policyOrchestrators.list", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *FoldersLocationsGlobalPolicyOrchestratorsListCall) Pages(ctx context.Context, f func(*GoogleCloudOsconfigV2__ListPolicyOrchestratorsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+type FoldersLocationsGlobalPolicyOrchestratorsPatchCall struct {
+	s                                         *Service
+	name                                      string
+	googlecloudosconfigv2__policyorchestrator *GoogleCloudOsconfigV2__PolicyOrchestrator
+	urlParams_                                gensupport.URLParams
+	ctx_                                      context.Context
+	header_                                   http.Header
+}
+
+// Patch: Updates an existing policy orchestrator, parented by a folder.
+//
+//   - name: Immutable. Identifier. In form of *
+//     `organizations/{organization_id}/locations/global/policyOrchestrators/{orch
+//     estrator_id}` *
+//     `folders/{folder_id}/locations/global/policyOrchestrators/{orchestrator_id}
+//     ` *
+//     `projects/{project_id_or_number}/locations/global/policyOrchestrators/{orch
+//     estrator_id}`.
+func (r *FoldersLocationsGlobalPolicyOrchestratorsService) Patch(name string, googlecloudosconfigv2__policyorchestrator *GoogleCloudOsconfigV2__PolicyOrchestrator) *FoldersLocationsGlobalPolicyOrchestratorsPatchCall {
+	c := &FoldersLocationsGlobalPolicyOrchestratorsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.googlecloudosconfigv2__policyorchestrator = googlecloudosconfigv2__policyorchestrator
+	return c
+}
+
+// UpdateMask sets the optional parameter "updateMask": The list of fields to
+// merge into the existing policy orchestrator. A special ["*"] field mask can
+// be used to simply replace the entire resource. Otherwise, for all paths
+// referenced in the mask, following merge rules are used: * output only fields
+// are ignored, * primitive fields are replaced, * repeated fields are
+// replaced, * map fields are merged key by key, * message fields are cleared
+// if not set in the request, otherwise they are merged recursively (in
+// particular - message fields set to an empty message has no side effects) If
+// field mask is not specified, it is automatically inferred from the request
+// using following rules: * primitive fields are listed, if set to a
+// non-default value (as there is no way to distinguish between default and
+// unset value), * map and repeated fields are listed, * `google.protobuf.Any`
+// fields are listed, * other message fields are traversed recursively. Note:
+// implicit mask does not allow clearing fields.
+func (c *FoldersLocationsGlobalPolicyOrchestratorsPatchCall) UpdateMask(updateMask string) *FoldersLocationsGlobalPolicyOrchestratorsPatchCall {
+	c.urlParams_.Set("updateMask", updateMask)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *FoldersLocationsGlobalPolicyOrchestratorsPatchCall) Fields(s ...googleapi.Field) *FoldersLocationsGlobalPolicyOrchestratorsPatchCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *FoldersLocationsGlobalPolicyOrchestratorsPatchCall) Context(ctx context.Context) *FoldersLocationsGlobalPolicyOrchestratorsPatchCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *FoldersLocationsGlobalPolicyOrchestratorsPatchCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *FoldersLocationsGlobalPolicyOrchestratorsPatchCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googlecloudosconfigv2__policyorchestrator)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PATCH", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "osconfig.folders.locations.global.policyOrchestrators.patch", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "osconfig.folders.locations.global.policyOrchestrators.patch" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *FoldersLocationsGlobalPolicyOrchestratorsPatchCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "osconfig.folders.locations.global.policyOrchestrators.patch", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
 }
 
 type FoldersLocationsOperationsCancelCall struct {
@@ -993,6 +3081,665 @@ func (c *FoldersLocationsOperationsListCall) Pages(ctx context.Context, f func(*
 	}
 }
 
+type OrganizationsLocationsGlobalPolicyOrchestratorsCreateCall struct {
+	s                                         *Service
+	parent                                    string
+	googlecloudosconfigv2__policyorchestrator *GoogleCloudOsconfigV2__PolicyOrchestrator
+	urlParams_                                gensupport.URLParams
+	ctx_                                      context.Context
+	header_                                   http.Header
+}
+
+// Create: Creates a new policy orchestrator under the given organizations
+// resource. `name` field of the given orchestrator are ignored and instead
+// replaced by a product of `parent` and `policy_orchestrator_id`. Orchestrator
+// state field might be only set to `ACTIVE`, `STOPPED` or omitted (in which
+// case, the created resource will be in `ACTIVE` state anyway).
+//
+//   - parent: The parent resource name in the form of: *
+//     `organizations/{organization_id}/locations/global` *
+//     `folders/{folder_id}/locations/global` *
+//     `projects/{project_id_or_number}/locations/global`.
+func (r *OrganizationsLocationsGlobalPolicyOrchestratorsService) Create(parent string, googlecloudosconfigv2__policyorchestrator *GoogleCloudOsconfigV2__PolicyOrchestrator) *OrganizationsLocationsGlobalPolicyOrchestratorsCreateCall {
+	c := &OrganizationsLocationsGlobalPolicyOrchestratorsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.googlecloudosconfigv2__policyorchestrator = googlecloudosconfigv2__policyorchestrator
+	return c
+}
+
+// PolicyOrchestratorId sets the optional parameter "policyOrchestratorId":
+// Required. The logical identifier of the policy orchestrator, with the
+// following restrictions: * Must contain only lowercase letters, numbers, and
+// hyphens. * Must start with a letter. * Must be between 1-63 characters. *
+// Must end with a number or a letter. * Must be unique within the parent.
+func (c *OrganizationsLocationsGlobalPolicyOrchestratorsCreateCall) PolicyOrchestratorId(policyOrchestratorId string) *OrganizationsLocationsGlobalPolicyOrchestratorsCreateCall {
+	c.urlParams_.Set("policyOrchestratorId", policyOrchestratorId)
+	return c
+}
+
+// RequestId sets the optional parameter "requestId": An optional request ID to
+// identify requests. Specify a unique request ID so that if you must retry
+// your request, the server will know to ignore the request if it has already
+// been completed. The server will guarantee that for at least 60 minutes since
+// the first request. For example, consider a situation where you make an
+// initial request and the request times out. If you make the request again
+// with the same request ID, the server can check if original operation with
+// the same request ID was received, and if so, will ignore the second request.
+// This prevents clients from accidentally creating duplicate commitments. The
+// request ID must be a valid UUID with the exception that zero UUID is not
+// supported (00000000-0000-0000-0000-000000000000).
+func (c *OrganizationsLocationsGlobalPolicyOrchestratorsCreateCall) RequestId(requestId string) *OrganizationsLocationsGlobalPolicyOrchestratorsCreateCall {
+	c.urlParams_.Set("requestId", requestId)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *OrganizationsLocationsGlobalPolicyOrchestratorsCreateCall) Fields(s ...googleapi.Field) *OrganizationsLocationsGlobalPolicyOrchestratorsCreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *OrganizationsLocationsGlobalPolicyOrchestratorsCreateCall) Context(ctx context.Context) *OrganizationsLocationsGlobalPolicyOrchestratorsCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *OrganizationsLocationsGlobalPolicyOrchestratorsCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *OrganizationsLocationsGlobalPolicyOrchestratorsCreateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googlecloudosconfigv2__policyorchestrator)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+parent}/policyOrchestrators")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "osconfig.organizations.locations.global.policyOrchestrators.create", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "osconfig.organizations.locations.global.policyOrchestrators.create" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *OrganizationsLocationsGlobalPolicyOrchestratorsCreateCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "osconfig.organizations.locations.global.policyOrchestrators.create", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type OrganizationsLocationsGlobalPolicyOrchestratorsDeleteCall struct {
+	s          *Service
+	name       string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Delete: Deletes an existing policy orchestrator resource, parented by an
+// organization.
+//
+// - name: Name of the resource to be deleted.
+func (r *OrganizationsLocationsGlobalPolicyOrchestratorsService) Delete(name string) *OrganizationsLocationsGlobalPolicyOrchestratorsDeleteCall {
+	c := &OrganizationsLocationsGlobalPolicyOrchestratorsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Etag sets the optional parameter "etag": The current etag of the policy
+// orchestrator. If an etag is provided and does not match the current etag of
+// the policy orchestrator, deletion will be blocked and an ABORTED error will
+// be returned.
+func (c *OrganizationsLocationsGlobalPolicyOrchestratorsDeleteCall) Etag(etag string) *OrganizationsLocationsGlobalPolicyOrchestratorsDeleteCall {
+	c.urlParams_.Set("etag", etag)
+	return c
+}
+
+// RequestId sets the optional parameter "requestId": An optional request ID to
+// identify requests. Specify a unique request ID so that if you must retry
+// your request, the server will know to ignore the request if it has already
+// been completed. The server will guarantee that for at least 60 minutes after
+// the first request. For example, consider a situation where you make an
+// initial request and the request times out. If you make the request again
+// with the same request ID, the server can check if original operation with
+// the same request ID was received, and if so, will ignore the second request.
+// This prevents clients from accidentally creating duplicate commitments. The
+// request ID must be a valid UUID with the exception that zero UUID is not
+// supported (00000000-0000-0000-0000-000000000000).
+func (c *OrganizationsLocationsGlobalPolicyOrchestratorsDeleteCall) RequestId(requestId string) *OrganizationsLocationsGlobalPolicyOrchestratorsDeleteCall {
+	c.urlParams_.Set("requestId", requestId)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *OrganizationsLocationsGlobalPolicyOrchestratorsDeleteCall) Fields(s ...googleapi.Field) *OrganizationsLocationsGlobalPolicyOrchestratorsDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *OrganizationsLocationsGlobalPolicyOrchestratorsDeleteCall) Context(ctx context.Context) *OrganizationsLocationsGlobalPolicyOrchestratorsDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *OrganizationsLocationsGlobalPolicyOrchestratorsDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *OrganizationsLocationsGlobalPolicyOrchestratorsDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("DELETE", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "osconfig.organizations.locations.global.policyOrchestrators.delete", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "osconfig.organizations.locations.global.policyOrchestrators.delete" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *OrganizationsLocationsGlobalPolicyOrchestratorsDeleteCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "osconfig.organizations.locations.global.policyOrchestrators.delete", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type OrganizationsLocationsGlobalPolicyOrchestratorsGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Retrieves an existing policy orchestrator, parented by an organization.
+//
+// - name: The resource name.
+func (r *OrganizationsLocationsGlobalPolicyOrchestratorsService) Get(name string) *OrganizationsLocationsGlobalPolicyOrchestratorsGetCall {
+	c := &OrganizationsLocationsGlobalPolicyOrchestratorsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *OrganizationsLocationsGlobalPolicyOrchestratorsGetCall) Fields(s ...googleapi.Field) *OrganizationsLocationsGlobalPolicyOrchestratorsGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *OrganizationsLocationsGlobalPolicyOrchestratorsGetCall) IfNoneMatch(entityTag string) *OrganizationsLocationsGlobalPolicyOrchestratorsGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *OrganizationsLocationsGlobalPolicyOrchestratorsGetCall) Context(ctx context.Context) *OrganizationsLocationsGlobalPolicyOrchestratorsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *OrganizationsLocationsGlobalPolicyOrchestratorsGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *OrganizationsLocationsGlobalPolicyOrchestratorsGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "osconfig.organizations.locations.global.policyOrchestrators.get", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "osconfig.organizations.locations.global.policyOrchestrators.get" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudOsconfigV2__PolicyOrchestrator.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *OrganizationsLocationsGlobalPolicyOrchestratorsGetCall) Do(opts ...googleapi.CallOption) (*GoogleCloudOsconfigV2__PolicyOrchestrator, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudOsconfigV2__PolicyOrchestrator{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "osconfig.organizations.locations.global.policyOrchestrators.get", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type OrganizationsLocationsGlobalPolicyOrchestratorsListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists the policy orchestrators under the given parent organization
+// resource.
+//
+// - parent: The parent resource name.
+func (r *OrganizationsLocationsGlobalPolicyOrchestratorsService) List(parent string) *OrganizationsLocationsGlobalPolicyOrchestratorsListCall {
+	c := &OrganizationsLocationsGlobalPolicyOrchestratorsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// Filter sets the optional parameter "filter": Filtering results
+func (c *OrganizationsLocationsGlobalPolicyOrchestratorsListCall) Filter(filter string) *OrganizationsLocationsGlobalPolicyOrchestratorsListCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// OrderBy sets the optional parameter "orderBy": Hint for how to order the
+// results
+func (c *OrganizationsLocationsGlobalPolicyOrchestratorsListCall) OrderBy(orderBy string) *OrganizationsLocationsGlobalPolicyOrchestratorsListCall {
+	c.urlParams_.Set("orderBy", orderBy)
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": Requested page size. Server
+// may return fewer items than requested. If unspecified, server will pick an
+// appropriate default.
+func (c *OrganizationsLocationsGlobalPolicyOrchestratorsListCall) PageSize(pageSize int64) *OrganizationsLocationsGlobalPolicyOrchestratorsListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": A token identifying a
+// page of results the server should return.
+func (c *OrganizationsLocationsGlobalPolicyOrchestratorsListCall) PageToken(pageToken string) *OrganizationsLocationsGlobalPolicyOrchestratorsListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *OrganizationsLocationsGlobalPolicyOrchestratorsListCall) Fields(s ...googleapi.Field) *OrganizationsLocationsGlobalPolicyOrchestratorsListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *OrganizationsLocationsGlobalPolicyOrchestratorsListCall) IfNoneMatch(entityTag string) *OrganizationsLocationsGlobalPolicyOrchestratorsListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *OrganizationsLocationsGlobalPolicyOrchestratorsListCall) Context(ctx context.Context) *OrganizationsLocationsGlobalPolicyOrchestratorsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *OrganizationsLocationsGlobalPolicyOrchestratorsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *OrganizationsLocationsGlobalPolicyOrchestratorsListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+parent}/policyOrchestrators")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "osconfig.organizations.locations.global.policyOrchestrators.list", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "osconfig.organizations.locations.global.policyOrchestrators.list" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudOsconfigV2__ListPolicyOrchestratorsResponse.ServerResponse.Header
+//
+//	or (if a response was returned at all) in error.(*googleapi.Error).Header.
+//
+// Use googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *OrganizationsLocationsGlobalPolicyOrchestratorsListCall) Do(opts ...googleapi.CallOption) (*GoogleCloudOsconfigV2__ListPolicyOrchestratorsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudOsconfigV2__ListPolicyOrchestratorsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "osconfig.organizations.locations.global.policyOrchestrators.list", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *OrganizationsLocationsGlobalPolicyOrchestratorsListCall) Pages(ctx context.Context, f func(*GoogleCloudOsconfigV2__ListPolicyOrchestratorsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+type OrganizationsLocationsGlobalPolicyOrchestratorsPatchCall struct {
+	s                                         *Service
+	name                                      string
+	googlecloudosconfigv2__policyorchestrator *GoogleCloudOsconfigV2__PolicyOrchestrator
+	urlParams_                                gensupport.URLParams
+	ctx_                                      context.Context
+	header_                                   http.Header
+}
+
+// Patch: Updates an existing policy orchestrator, parented by an organization.
+//
+//   - name: Immutable. Identifier. In form of *
+//     `organizations/{organization_id}/locations/global/policyOrchestrators/{orch
+//     estrator_id}` *
+//     `folders/{folder_id}/locations/global/policyOrchestrators/{orchestrator_id}
+//     ` *
+//     `projects/{project_id_or_number}/locations/global/policyOrchestrators/{orch
+//     estrator_id}`.
+func (r *OrganizationsLocationsGlobalPolicyOrchestratorsService) Patch(name string, googlecloudosconfigv2__policyorchestrator *GoogleCloudOsconfigV2__PolicyOrchestrator) *OrganizationsLocationsGlobalPolicyOrchestratorsPatchCall {
+	c := &OrganizationsLocationsGlobalPolicyOrchestratorsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.googlecloudosconfigv2__policyorchestrator = googlecloudosconfigv2__policyorchestrator
+	return c
+}
+
+// UpdateMask sets the optional parameter "updateMask": The list of fields to
+// merge into the existing policy orchestrator. A special ["*"] field mask can
+// be used to simply replace the entire resource. Otherwise, for all paths
+// referenced in the mask, following merge rules are used: * output only fields
+// are ignored, * primitive fields are replaced, * repeated fields are
+// replaced, * map fields are merged key by key, * message fields are cleared
+// if not set in the request, otherwise they are merged recursively (in
+// particular - message fields set to an empty message has no side effects) If
+// field mask is not specified, it is automatically inferred from the request
+// using following rules: * primitive fields are listed, if set to a
+// non-default value (as there is no way to distinguish between default and
+// unset value), * map and repeated fields are listed, * `google.protobuf.Any`
+// fields are listed, * other message fields are traversed recursively. Note:
+// implicit mask does not allow clearing fields.
+func (c *OrganizationsLocationsGlobalPolicyOrchestratorsPatchCall) UpdateMask(updateMask string) *OrganizationsLocationsGlobalPolicyOrchestratorsPatchCall {
+	c.urlParams_.Set("updateMask", updateMask)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *OrganizationsLocationsGlobalPolicyOrchestratorsPatchCall) Fields(s ...googleapi.Field) *OrganizationsLocationsGlobalPolicyOrchestratorsPatchCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *OrganizationsLocationsGlobalPolicyOrchestratorsPatchCall) Context(ctx context.Context) *OrganizationsLocationsGlobalPolicyOrchestratorsPatchCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *OrganizationsLocationsGlobalPolicyOrchestratorsPatchCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *OrganizationsLocationsGlobalPolicyOrchestratorsPatchCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googlecloudosconfigv2__policyorchestrator)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PATCH", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "osconfig.organizations.locations.global.policyOrchestrators.patch", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "osconfig.organizations.locations.global.policyOrchestrators.patch" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *OrganizationsLocationsGlobalPolicyOrchestratorsPatchCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "osconfig.organizations.locations.global.policyOrchestrators.patch", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
 type OrganizationsLocationsOperationsCancelCall struct {
 	s                      *Service
 	name                   string
@@ -1465,6 +4212,665 @@ func (c *OrganizationsLocationsOperationsListCall) Pages(ctx context.Context, f 
 		}
 		c.PageToken(x.NextPageToken)
 	}
+}
+
+type ProjectsLocationsGlobalPolicyOrchestratorsCreateCall struct {
+	s                                         *Service
+	parent                                    string
+	googlecloudosconfigv2__policyorchestrator *GoogleCloudOsconfigV2__PolicyOrchestrator
+	urlParams_                                gensupport.URLParams
+	ctx_                                      context.Context
+	header_                                   http.Header
+}
+
+// Create: Creates a new policy orchestrator under the given project resource.
+// `name` field of the given orchestrator are ignored and instead replaced by a
+// product of `parent` and `policy_orchestrator_id`. Orchestrator state field
+// might be only set to `ACTIVE`, `STOPPED` or omitted (in which case, the
+// created resource will be in `ACTIVE` state anyway).
+//
+//   - parent: The parent resource name in the form of: *
+//     `organizations/{organization_id}/locations/global` *
+//     `folders/{folder_id}/locations/global` *
+//     `projects/{project_id_or_number}/locations/global`.
+func (r *ProjectsLocationsGlobalPolicyOrchestratorsService) Create(parent string, googlecloudosconfigv2__policyorchestrator *GoogleCloudOsconfigV2__PolicyOrchestrator) *ProjectsLocationsGlobalPolicyOrchestratorsCreateCall {
+	c := &ProjectsLocationsGlobalPolicyOrchestratorsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.googlecloudosconfigv2__policyorchestrator = googlecloudosconfigv2__policyorchestrator
+	return c
+}
+
+// PolicyOrchestratorId sets the optional parameter "policyOrchestratorId":
+// Required. The logical identifier of the policy orchestrator, with the
+// following restrictions: * Must contain only lowercase letters, numbers, and
+// hyphens. * Must start with a letter. * Must be between 1-63 characters. *
+// Must end with a number or a letter. * Must be unique within the parent.
+func (c *ProjectsLocationsGlobalPolicyOrchestratorsCreateCall) PolicyOrchestratorId(policyOrchestratorId string) *ProjectsLocationsGlobalPolicyOrchestratorsCreateCall {
+	c.urlParams_.Set("policyOrchestratorId", policyOrchestratorId)
+	return c
+}
+
+// RequestId sets the optional parameter "requestId": An optional request ID to
+// identify requests. Specify a unique request ID so that if you must retry
+// your request, the server will know to ignore the request if it has already
+// been completed. The server will guarantee that for at least 60 minutes since
+// the first request. For example, consider a situation where you make an
+// initial request and the request times out. If you make the request again
+// with the same request ID, the server can check if original operation with
+// the same request ID was received, and if so, will ignore the second request.
+// This prevents clients from accidentally creating duplicate commitments. The
+// request ID must be a valid UUID with the exception that zero UUID is not
+// supported (00000000-0000-0000-0000-000000000000).
+func (c *ProjectsLocationsGlobalPolicyOrchestratorsCreateCall) RequestId(requestId string) *ProjectsLocationsGlobalPolicyOrchestratorsCreateCall {
+	c.urlParams_.Set("requestId", requestId)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsGlobalPolicyOrchestratorsCreateCall) Fields(s ...googleapi.Field) *ProjectsLocationsGlobalPolicyOrchestratorsCreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsGlobalPolicyOrchestratorsCreateCall) Context(ctx context.Context) *ProjectsLocationsGlobalPolicyOrchestratorsCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsGlobalPolicyOrchestratorsCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsGlobalPolicyOrchestratorsCreateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googlecloudosconfigv2__policyorchestrator)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+parent}/policyOrchestrators")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "osconfig.projects.locations.global.policyOrchestrators.create", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "osconfig.projects.locations.global.policyOrchestrators.create" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsGlobalPolicyOrchestratorsCreateCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "osconfig.projects.locations.global.policyOrchestrators.create", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsGlobalPolicyOrchestratorsDeleteCall struct {
+	s          *Service
+	name       string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Delete: Deletes an existing policy orchestrator resource, parented by a
+// project.
+//
+// - name: Name of the resource to be deleted.
+func (r *ProjectsLocationsGlobalPolicyOrchestratorsService) Delete(name string) *ProjectsLocationsGlobalPolicyOrchestratorsDeleteCall {
+	c := &ProjectsLocationsGlobalPolicyOrchestratorsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Etag sets the optional parameter "etag": The current etag of the policy
+// orchestrator. If an etag is provided and does not match the current etag of
+// the policy orchestrator, deletion will be blocked and an ABORTED error will
+// be returned.
+func (c *ProjectsLocationsGlobalPolicyOrchestratorsDeleteCall) Etag(etag string) *ProjectsLocationsGlobalPolicyOrchestratorsDeleteCall {
+	c.urlParams_.Set("etag", etag)
+	return c
+}
+
+// RequestId sets the optional parameter "requestId": An optional request ID to
+// identify requests. Specify a unique request ID so that if you must retry
+// your request, the server will know to ignore the request if it has already
+// been completed. The server will guarantee that for at least 60 minutes after
+// the first request. For example, consider a situation where you make an
+// initial request and the request times out. If you make the request again
+// with the same request ID, the server can check if original operation with
+// the same request ID was received, and if so, will ignore the second request.
+// This prevents clients from accidentally creating duplicate commitments. The
+// request ID must be a valid UUID with the exception that zero UUID is not
+// supported (00000000-0000-0000-0000-000000000000).
+func (c *ProjectsLocationsGlobalPolicyOrchestratorsDeleteCall) RequestId(requestId string) *ProjectsLocationsGlobalPolicyOrchestratorsDeleteCall {
+	c.urlParams_.Set("requestId", requestId)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsGlobalPolicyOrchestratorsDeleteCall) Fields(s ...googleapi.Field) *ProjectsLocationsGlobalPolicyOrchestratorsDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsGlobalPolicyOrchestratorsDeleteCall) Context(ctx context.Context) *ProjectsLocationsGlobalPolicyOrchestratorsDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsGlobalPolicyOrchestratorsDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsGlobalPolicyOrchestratorsDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("DELETE", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "osconfig.projects.locations.global.policyOrchestrators.delete", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "osconfig.projects.locations.global.policyOrchestrators.delete" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsGlobalPolicyOrchestratorsDeleteCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "osconfig.projects.locations.global.policyOrchestrators.delete", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsGlobalPolicyOrchestratorsGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Retrieves an existing policy orchestrator, parented by a project.
+//
+// - name: The resource name.
+func (r *ProjectsLocationsGlobalPolicyOrchestratorsService) Get(name string) *ProjectsLocationsGlobalPolicyOrchestratorsGetCall {
+	c := &ProjectsLocationsGlobalPolicyOrchestratorsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsGlobalPolicyOrchestratorsGetCall) Fields(s ...googleapi.Field) *ProjectsLocationsGlobalPolicyOrchestratorsGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsGlobalPolicyOrchestratorsGetCall) IfNoneMatch(entityTag string) *ProjectsLocationsGlobalPolicyOrchestratorsGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsGlobalPolicyOrchestratorsGetCall) Context(ctx context.Context) *ProjectsLocationsGlobalPolicyOrchestratorsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsGlobalPolicyOrchestratorsGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsGlobalPolicyOrchestratorsGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "osconfig.projects.locations.global.policyOrchestrators.get", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "osconfig.projects.locations.global.policyOrchestrators.get" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudOsconfigV2__PolicyOrchestrator.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsGlobalPolicyOrchestratorsGetCall) Do(opts ...googleapi.CallOption) (*GoogleCloudOsconfigV2__PolicyOrchestrator, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudOsconfigV2__PolicyOrchestrator{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "osconfig.projects.locations.global.policyOrchestrators.get", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsGlobalPolicyOrchestratorsListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists the policy orchestrators under the given parent project
+// resource.
+//
+// - parent: The parent resource name.
+func (r *ProjectsLocationsGlobalPolicyOrchestratorsService) List(parent string) *ProjectsLocationsGlobalPolicyOrchestratorsListCall {
+	c := &ProjectsLocationsGlobalPolicyOrchestratorsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// Filter sets the optional parameter "filter": Filtering results
+func (c *ProjectsLocationsGlobalPolicyOrchestratorsListCall) Filter(filter string) *ProjectsLocationsGlobalPolicyOrchestratorsListCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// OrderBy sets the optional parameter "orderBy": Hint for how to order the
+// results
+func (c *ProjectsLocationsGlobalPolicyOrchestratorsListCall) OrderBy(orderBy string) *ProjectsLocationsGlobalPolicyOrchestratorsListCall {
+	c.urlParams_.Set("orderBy", orderBy)
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": Requested page size. Server
+// may return fewer items than requested. If unspecified, server will pick an
+// appropriate default.
+func (c *ProjectsLocationsGlobalPolicyOrchestratorsListCall) PageSize(pageSize int64) *ProjectsLocationsGlobalPolicyOrchestratorsListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": A token identifying a
+// page of results the server should return.
+func (c *ProjectsLocationsGlobalPolicyOrchestratorsListCall) PageToken(pageToken string) *ProjectsLocationsGlobalPolicyOrchestratorsListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsGlobalPolicyOrchestratorsListCall) Fields(s ...googleapi.Field) *ProjectsLocationsGlobalPolicyOrchestratorsListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsGlobalPolicyOrchestratorsListCall) IfNoneMatch(entityTag string) *ProjectsLocationsGlobalPolicyOrchestratorsListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsGlobalPolicyOrchestratorsListCall) Context(ctx context.Context) *ProjectsLocationsGlobalPolicyOrchestratorsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsGlobalPolicyOrchestratorsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsGlobalPolicyOrchestratorsListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+parent}/policyOrchestrators")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "osconfig.projects.locations.global.policyOrchestrators.list", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "osconfig.projects.locations.global.policyOrchestrators.list" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudOsconfigV2__ListPolicyOrchestratorsResponse.ServerResponse.Header
+//
+//	or (if a response was returned at all) in error.(*googleapi.Error).Header.
+//
+// Use googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsGlobalPolicyOrchestratorsListCall) Do(opts ...googleapi.CallOption) (*GoogleCloudOsconfigV2__ListPolicyOrchestratorsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudOsconfigV2__ListPolicyOrchestratorsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "osconfig.projects.locations.global.policyOrchestrators.list", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsLocationsGlobalPolicyOrchestratorsListCall) Pages(ctx context.Context, f func(*GoogleCloudOsconfigV2__ListPolicyOrchestratorsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+type ProjectsLocationsGlobalPolicyOrchestratorsPatchCall struct {
+	s                                         *Service
+	name                                      string
+	googlecloudosconfigv2__policyorchestrator *GoogleCloudOsconfigV2__PolicyOrchestrator
+	urlParams_                                gensupport.URLParams
+	ctx_                                      context.Context
+	header_                                   http.Header
+}
+
+// Patch: Updates an existing policy orchestrator, parented by a project.
+//
+//   - name: Immutable. Identifier. In form of *
+//     `organizations/{organization_id}/locations/global/policyOrchestrators/{orch
+//     estrator_id}` *
+//     `folders/{folder_id}/locations/global/policyOrchestrators/{orchestrator_id}
+//     ` *
+//     `projects/{project_id_or_number}/locations/global/policyOrchestrators/{orch
+//     estrator_id}`.
+func (r *ProjectsLocationsGlobalPolicyOrchestratorsService) Patch(name string, googlecloudosconfigv2__policyorchestrator *GoogleCloudOsconfigV2__PolicyOrchestrator) *ProjectsLocationsGlobalPolicyOrchestratorsPatchCall {
+	c := &ProjectsLocationsGlobalPolicyOrchestratorsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.googlecloudosconfigv2__policyorchestrator = googlecloudosconfigv2__policyorchestrator
+	return c
+}
+
+// UpdateMask sets the optional parameter "updateMask": The list of fields to
+// merge into the existing policy orchestrator. A special ["*"] field mask can
+// be used to simply replace the entire resource. Otherwise, for all paths
+// referenced in the mask, following merge rules are used: * output only fields
+// are ignored, * primitive fields are replaced, * repeated fields are
+// replaced, * map fields are merged key by key, * message fields are cleared
+// if not set in the request, otherwise they are merged recursively (in
+// particular - message fields set to an empty message has no side effects) If
+// field mask is not specified, it is automatically inferred from the request
+// using following rules: * primitive fields are listed, if set to a
+// non-default value (as there is no way to distinguish between default and
+// unset value), * map and repeated fields are listed, * `google.protobuf.Any`
+// fields are listed, * other message fields are traversed recursively. Note:
+// implicit mask does not allow clearing fields.
+func (c *ProjectsLocationsGlobalPolicyOrchestratorsPatchCall) UpdateMask(updateMask string) *ProjectsLocationsGlobalPolicyOrchestratorsPatchCall {
+	c.urlParams_.Set("updateMask", updateMask)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsGlobalPolicyOrchestratorsPatchCall) Fields(s ...googleapi.Field) *ProjectsLocationsGlobalPolicyOrchestratorsPatchCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsGlobalPolicyOrchestratorsPatchCall) Context(ctx context.Context) *ProjectsLocationsGlobalPolicyOrchestratorsPatchCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsGlobalPolicyOrchestratorsPatchCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsGlobalPolicyOrchestratorsPatchCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googlecloudosconfigv2__policyorchestrator)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PATCH", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "osconfig.projects.locations.global.policyOrchestrators.patch", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "osconfig.projects.locations.global.policyOrchestrators.patch" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsGlobalPolicyOrchestratorsPatchCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "osconfig.projects.locations.global.policyOrchestrators.patch", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
 }
 
 type ProjectsLocationsOperationsCancelCall struct {

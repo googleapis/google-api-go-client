@@ -3658,7 +3658,7 @@ type PrintServer struct {
 	DisplayName string `json:"displayName,omitempty"`
 	// Id: Immutable. ID of the print server. Leave empty when creating.
 	Id string `json:"id,omitempty"`
-	// Name: Immutable. Resource name of the print server. Leave empty when
+	// Name: Identifier. Resource name of the print server. Leave empty when
 	// creating. Format: `customers/{customer.id}/printServers/{print_server.id}`
 	Name string `json:"name,omitempty"`
 	// OrgUnitId: ID of the organization unit (OU) that owns this print server.
@@ -3814,7 +3814,7 @@ type Printer struct {
 	// MakeAndModel: Editable. Make and model of printer. e.g. Lexmark MS610de
 	// Value must be in format as seen in ListPrinterModels response.
 	MakeAndModel string `json:"makeAndModel,omitempty"`
-	// Name: The resource name of the Printer object, in the format
+	// Name: Identifier. The resource name of the Printer object, in the format
 	// customers/{customer-id}/printers/{printer-id} (During printer creation leave
 	// empty)
 	Name string `json:"name,omitempty"`
@@ -7935,7 +7935,7 @@ type CustomersChromePrintServersPatchCall struct {
 
 // Patch: Updates a print server's configuration.
 //
-//   - name: Immutable. Resource name of the print server. Leave empty when
+//   - name: Identifier. Resource name of the print server. Leave empty when
 //     creating. Format: `customers/{customer.id}/printServers/{print_server.id}`.
 func (r *CustomersChromePrintServersService) Patch(name string, printserver *PrintServer) *CustomersChromePrintServersPatchCall {
 	c := &CustomersChromePrintServersPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -8894,7 +8894,7 @@ type CustomersChromePrintersPatchCall struct {
 
 // Patch: Updates a `Printer` resource.
 //
-//   - name: The resource name of the Printer object, in the format
+//   - name: Identifier. The resource name of the Printer object, in the format
 //     customers/{customer-id}/printers/{printer-id} (During printer creation
 //     leave empty).
 func (r *CustomersChromePrintersService) Patch(name string, printer *Printer) *CustomersChromePrintersPatchCall {

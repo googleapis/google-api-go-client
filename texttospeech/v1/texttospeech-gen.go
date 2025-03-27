@@ -652,12 +652,11 @@ func (s Status) MarshalJSON() ([]byte, error) {
 type SynthesisInput struct {
 	// CustomPronunciations: Optional. The pronunciation customizations are applied
 	// to the input. If this is set, the input is synthesized using the given
-	// pronunciation customizations. The initial support is for English, French,
-	// Italian, German, and Spanish (EFIGS) languages, as provided in
-	// VoiceSelectionParams. Journey and Instant Clone voices aren't supported. In
-	// order to customize the pronunciation of a phrase, there must be an exact
-	// match of the phrase in the input types. If using SSML, the phrase must not
-	// be inside a phoneme tag.
+	// pronunciation customizations. The initial support is for en-us, with plans
+	// to expand to other locales in the future. Instant Clone voices aren't
+	// supported. In order to customize the pronunciation of a phrase, there must
+	// be an exact match of the phrase in the input types. If using SSML, the
+	// phrase must not be inside a phoneme tag.
 	CustomPronunciations *CustomPronunciations `json:"customPronunciations,omitempty"`
 	// MultiSpeakerMarkup: The multi-speaker input to be synthesized. Only
 	// applicable for multi-speaker synthesis.

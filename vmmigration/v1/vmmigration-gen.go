@@ -2087,6 +2087,16 @@ func (s ImageImportJob) MarshalJSON() ([]byte, error) {
 // ImageImportOsAdaptationParameters: Parameters affecting the OS adaptation
 // process.
 type ImageImportOsAdaptationParameters struct {
+	// BootConversion: Optional. By default the image will keep its existing boot
+	// option. Setting this property will trigger an internal process which will
+	// convert the image from using the existing boot option to another. The size
+	// of the boot disk might be increased to allow the conversion
+	//
+	// Possible values:
+	//   "BOOT_CONVERSION_UNSPECIFIED" - Unspecified conversion type.
+	//   "NONE" - No conversion.
+	//   "BIOS_TO_EFI" - Convert from BIOS to EFI.
+	BootConversion string `json:"bootConversion,omitempty"`
 	// Generalize: Optional. Set to true in order to generalize the imported image.
 	// The generalization process enables co-existence of multiple VMs created from
 	// the same image. For Windows, generalizing the image removes
@@ -2104,15 +2114,15 @@ type ImageImportOsAdaptationParameters struct {
 	//   "COMPUTE_ENGINE_LICENSE_TYPE_BYOL" - The license type is Bring Your Own
 	// License type.
 	LicenseType string `json:"licenseType,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "Generalize") to
+	// ForceSendFields is a list of field names (e.g. "BootConversion") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Generalize") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
+	// NullFields is a list of field names (e.g. "BootConversion") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -4215,6 +4225,14 @@ type ProjectsLocationsListCall struct {
 func (r *ProjectsLocationsService) List(name string) *ProjectsLocationsListCall {
 	c := &ProjectsLocationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
+	return c
+}
+
+// ExtraLocationTypes sets the optional parameter "extraLocationTypes": A list
+// of extra location types that should be used as conditions for controlling
+// the visibility of the locations.
+func (c *ProjectsLocationsListCall) ExtraLocationTypes(extraLocationTypes ...string) *ProjectsLocationsListCall {
+	c.urlParams_.SetMulti("extraLocationTypes", append([]string{}, extraLocationTypes...))
 	return c
 }
 

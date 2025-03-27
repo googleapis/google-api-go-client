@@ -496,7 +496,7 @@ type BinarySourceInfo struct {
 	// different than the binary itself. Historically if they've differed, we've
 	// stored the name of the source and its version in the package/version fields,
 	// but we should also store the binary package info, as that's what's actually
-	// installed. See b/175908657#comment15.
+	// installed.
 	BinaryVersion *PackageVersion `json:"binaryVersion,omitempty"`
 	// SourceVersion: The source package. Similar to the above, this is significant
 	// when the source is different than the binary itself. Since the top-level
@@ -1786,9 +1786,7 @@ func (s Layer) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// LayerDetails: Details about the layer a package was found in. This should be
-// the same as the LayerDetails message in
-// google3/third_party/scalibr/binary/proto/scan_result.proto.
+// LayerDetails: Details about the layer a package was found in.
 type LayerDetails struct {
 	// BaseImages: The base images the layer is found within.
 	BaseImages []*BaseImage `json:"baseImages,omitempty"`
@@ -2224,7 +2222,6 @@ type PackageData struct {
 	//   "SWIFT" - Swift packages from Swift Package Manager (SwiftPM).
 	PackageType string `json:"packageType,omitempty"`
 	// PatchedCve: CVEs that this package is no longer vulnerable to
-	// go/drydock-dd-custom-binary-scanning
 	PatchedCve []string `json:"patchedCve,omitempty"`
 	// SourceVersion: DEPRECATED
 	SourceVersion *PackageVersion `json:"sourceVersion,omitempty"`

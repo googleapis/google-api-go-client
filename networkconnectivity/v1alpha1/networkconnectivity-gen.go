@@ -650,6 +650,10 @@ type InternalRange struct {
 	CreateTime string `json:"createTime,omitempty"`
 	// Description: A description of this resource.
 	Description string `json:"description,omitempty"`
+	// ExcludeCidrRanges: Optional. ExcludeCidrRanges flag. Specifies a set of CIDR
+	// blocks that allows exclusion of particular CIDR ranges from the
+	// auto-allocation process, without having to reserve these blocks
+	ExcludeCidrRanges []string `json:"excludeCidrRanges,omitempty"`
 	// Immutable: Optional. Immutable ranges cannot have their fields modified,
 	// except for labels and description.
 	Immutable bool `json:"immutable,omitempty"`

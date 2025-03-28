@@ -3043,6 +3043,9 @@ type ListTimeSeriesResponse struct {
 	// different units (for example, because they come from different metric types,
 	// or a unit is absent), then unit will be "{not_a_unit}".
 	Unit string `json:"unit,omitempty"`
+	// Unreachable: Cloud regions that were unreachable which may have caused
+	// incomplete data to be returned.
+	Unreachable []string `json:"unreachable,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`

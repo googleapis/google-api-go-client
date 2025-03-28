@@ -461,6 +461,39 @@ func (s CheckInstanceUpgradabilityResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// ConfidentialInstanceConfig: A set of Confidential Instance options.
+type ConfidentialInstanceConfig struct {
+	// ConfidentialInstanceType: Optional. Defines the type of technology used by
+	// the confidential instance.
+	//
+	// Possible values:
+	//   "CONFIDENTIAL_INSTANCE_TYPE_UNSPECIFIED" - No type specified. Do not use
+	// this value.
+	//   "SEV" - AMD Secure Encrypted Virtualization.
+	//   "SEV_SNP" - AMD Secure Encrypted Virtualization - Secure Nested Paging.
+	//   "TDX" - Intel Trust Domain eXtension.
+	ConfidentialInstanceType string `json:"confidentialInstanceType,omitempty"`
+	// EnableConfidentialCompute: Optional. Defines whether the instance should
+	// have confidential compute enabled.
+	EnableConfidentialCompute bool `json:"enableConfidentialCompute,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ConfidentialInstanceType")
+	// to unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ConfidentialInstanceType") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ConfidentialInstanceConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod ConfidentialInstanceConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // Config: Response for getting WbI configurations in a location
 type Config struct {
 	// AvailableImages: Output only. The list of available images to create a WbI.
@@ -797,6 +830,8 @@ type GceSetup struct {
 	AcceleratorConfigs []*AcceleratorConfig `json:"acceleratorConfigs,omitempty"`
 	// BootDisk: Optional. The boot disk for the VM.
 	BootDisk *BootDisk `json:"bootDisk,omitempty"`
+	// ConfidentialInstanceConfig: Optional. Confidential instance configuration.
+	ConfidentialInstanceConfig *ConfidentialInstanceConfig `json:"confidentialInstanceConfig,omitempty"`
 	// ContainerImage: Optional. Use a container image to start the notebook
 	// instance.
 	ContainerImage *ContainerImage `json:"containerImage,omitempty"`

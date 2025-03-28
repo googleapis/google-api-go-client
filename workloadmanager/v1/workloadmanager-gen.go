@@ -2146,17 +2146,19 @@ func (s SapDiscoveryResourceInstancePropertiesAppInstance) MarshalJSON() ([]byte
 
 // SapDiscoveryResourceInstancePropertiesDiskMount: Disk mount on the instance.
 type SapDiscoveryResourceInstancePropertiesDiskMount struct {
+	// DiskNames: Optional. Names of the disks providing this mount point.
+	DiskNames []string `json:"diskNames,omitempty"`
 	// MountPoint: Optional. Filesystem mount point.
 	MountPoint string `json:"mountPoint,omitempty"`
 	// Name: Optional. Name of the disk.
 	Name string `json:"name,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "MountPoint") to
+	// ForceSendFields is a list of field names (e.g. "DiskNames") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "MountPoint") to include in API
+	// NullFields is a list of field names (e.g. "DiskNames") to include in API
 	// requests with the JSON null value. By default, fields with empty values are
 	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.

@@ -262,6 +262,8 @@ type AvroFileFormat struct {
 // BackfillAllStrategy: Backfill strategy to automatically backfill the
 // Stream's objects. Specific objects can be excluded.
 type BackfillAllStrategy struct {
+	// MongodbExcludedObjects: MongoDB data source objects to avoid backfilling
+	MongodbExcludedObjects *MongodbCluster `json:"mongodbExcludedObjects,omitempty"`
 	// MysqlExcludedObjects: MySQL data source objects to avoid backfilling.
 	MysqlExcludedObjects *MysqlRdbms `json:"mysqlExcludedObjects,omitempty"`
 	// OracleExcludedObjects: Oracle data source objects to avoid backfilling.
@@ -274,15 +276,15 @@ type BackfillAllStrategy struct {
 	SalesforceExcludedObjects *SalesforceOrg `json:"salesforceExcludedObjects,omitempty"`
 	// SqlServerExcludedObjects: SQLServer data source objects to avoid backfilling
 	SqlServerExcludedObjects *SqlServerRdbms `json:"sqlServerExcludedObjects,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "MysqlExcludedObjects") to
+	// ForceSendFields is a list of field names (e.g. "MongodbExcludedObjects") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "MysqlExcludedObjects") to include
-	// in API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. See
+	// NullFields is a list of field names (e.g. "MongodbExcludedObjects") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -502,6 +504,8 @@ type ConnectionProfile struct {
 	GcsProfile *GcsProfile `json:"gcsProfile,omitempty"`
 	// Labels: Labels.
 	Labels map[string]string `json:"labels,omitempty"`
+	// MongodbProfile: MongoDB Connection Profile configuration.
+	MongodbProfile *MongodbProfile `json:"mongodbProfile,omitempty"`
 	// MysqlProfile: MySQL ConnectionProfile configuration.
 	MysqlProfile *MysqlProfile `json:"mysqlProfile,omitempty"`
 	// Name: Output only. Identifier. The resource's name.
@@ -623,6 +627,9 @@ type DiscoverConnectionProfileRequest struct {
 	// HierarchyDepth: The number of hierarchy levels below the current level to be
 	// retrieved.
 	HierarchyDepth int64 `json:"hierarchyDepth,omitempty"`
+	// MongodbCluster: MongoDB cluster to enrich with child data objects and
+	// metadata.
+	MongodbCluster *MongodbCluster `json:"mongodbCluster,omitempty"`
 	// MysqlRdbms: MySQL RDBMS to enrich with child data objects and metadata.
 	MysqlRdbms *MysqlRdbms `json:"mysqlRdbms,omitempty"`
 	// OracleRdbms: Oracle RDBMS to enrich with child data objects and metadata.
@@ -630,6 +637,9 @@ type DiscoverConnectionProfileRequest struct {
 	// PostgresqlRdbms: PostgreSQL RDBMS to enrich with child data objects and
 	// metadata.
 	PostgresqlRdbms *PostgresqlRdbms `json:"postgresqlRdbms,omitempty"`
+	// SalesforceOrg: Salesforce organization to enrich with child data objects and
+	// metadata.
+	SalesforceOrg *SalesforceOrg `json:"salesforceOrg,omitempty"`
 	// SqlServerRdbms: SQLServer RDBMS to enrich with child data objects and
 	// metadata.
 	SqlServerRdbms *SqlServerRdbms `json:"sqlServerRdbms,omitempty"`
@@ -653,26 +663,30 @@ func (s DiscoverConnectionProfileRequest) MarshalJSON() ([]byte, error) {
 
 // DiscoverConnectionProfileResponse: Response from a discover request.
 type DiscoverConnectionProfileResponse struct {
+	// MongodbCluster: Enriched MongoDB cluster.
+	MongodbCluster *MongodbCluster `json:"mongodbCluster,omitempty"`
 	// MysqlRdbms: Enriched MySQL RDBMS object.
 	MysqlRdbms *MysqlRdbms `json:"mysqlRdbms,omitempty"`
 	// OracleRdbms: Enriched Oracle RDBMS object.
 	OracleRdbms *OracleRdbms `json:"oracleRdbms,omitempty"`
 	// PostgresqlRdbms: Enriched PostgreSQL RDBMS object.
 	PostgresqlRdbms *PostgresqlRdbms `json:"postgresqlRdbms,omitempty"`
+	// SalesforceOrg: Enriched Salesforce organization.
+	SalesforceOrg *SalesforceOrg `json:"salesforceOrg,omitempty"`
 	// SqlServerRdbms: Enriched SQLServer RDBMS object.
 	SqlServerRdbms *SqlServerRdbms `json:"sqlServerRdbms,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-	// ForceSendFields is a list of field names (e.g. "MysqlRdbms") to
+	// ForceSendFields is a list of field names (e.g. "MongodbCluster") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "MysqlRdbms") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
+	// NullFields is a list of field names (e.g. "MongodbCluster") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -843,6 +857,31 @@ func (s GcsProfile) MarshalJSON() ([]byte, error) {
 
 // Gtid: Use GTID based replication.
 type Gtid struct {
+}
+
+// HostAddress: A HostAddress represents a transport end point, which is the
+// combination of an IP address or hostname and a port number.
+type HostAddress struct {
+	// Hostname: Required. Hostname for the connection.
+	Hostname string `json:"hostname,omitempty"`
+	// Port: Optional. Port for the connection.
+	Port int64 `json:"port,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Hostname") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Hostname") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s HostAddress) MarshalJSON() ([]byte, error) {
+	type NoMethod HostAddress
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // JsonFileFormat: JSON file format configuration.
@@ -1179,6 +1218,184 @@ func (s LookupStreamObjectRequest) MarshalJSON() ([]byte, error) {
 // Merge: Merge mode defines that all changes to a table will be merged at the
 // destination table.
 type Merge struct {
+}
+
+// MongodbCluster: MongoDB Cluster structure.
+type MongodbCluster struct {
+	// Databases: MongoDB databases in the cluster.
+	Databases []*MongodbDatabase `json:"databases,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Databases") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Databases") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s MongodbCluster) MarshalJSON() ([]byte, error) {
+	type NoMethod MongodbCluster
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// MongodbCollection: MongoDB Collection.
+type MongodbCollection struct {
+	// Collection: Collection name.
+	Collection string `json:"collection,omitempty"`
+	// Fields: Fields in the collection.
+	Fields []*MongodbField `json:"fields,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Collection") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Collection") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s MongodbCollection) MarshalJSON() ([]byte, error) {
+	type NoMethod MongodbCollection
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// MongodbDatabase: MongoDB Database.
+type MongodbDatabase struct {
+	// Collections: Collections in the database.
+	Collections []*MongodbCollection `json:"collections,omitempty"`
+	// Database: Database name.
+	Database string `json:"database,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Collections") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Collections") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s MongodbDatabase) MarshalJSON() ([]byte, error) {
+	type NoMethod MongodbDatabase
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// MongodbField: MongoDB Field.
+type MongodbField struct {
+	// Field: Field name.
+	Field string `json:"field,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Field") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Field") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s MongodbField) MarshalJSON() ([]byte, error) {
+	type NoMethod MongodbField
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// MongodbObjectIdentifier: MongoDB data source object identifier.
+type MongodbObjectIdentifier struct {
+	// Collection: Required. The collection name.
+	Collection string `json:"collection,omitempty"`
+	// Database: Required. The database name.
+	Database string `json:"database,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Collection") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Collection") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s MongodbObjectIdentifier) MarshalJSON() ([]byte, error) {
+	type NoMethod MongodbObjectIdentifier
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// MongodbProfile: MongoDB profile.
+type MongodbProfile struct {
+	// HostAddresses: Required. List of host addresses for a MongoDB cluster.
+	HostAddresses []*HostAddress `json:"hostAddresses,omitempty"`
+	// Password: Optional. Password for the MongoDB connection. Mutually exclusive
+	// with the `secret_manager_stored_password` field.
+	Password string `json:"password,omitempty"`
+	// ReplicaSet: Optional. Name of the replica set. Only needed for self hosted
+	// replica set type MongoDB cluster.
+	ReplicaSet string `json:"replicaSet,omitempty"`
+	// SecretManagerStoredPassword: Optional. A reference to a Secret Manager
+	// resource name storing the SQLServer connection password. Mutually exclusive
+	// with the `password` field.
+	SecretManagerStoredPassword string `json:"secretManagerStoredPassword,omitempty"`
+	// SrvConnectionFormat: Srv connection format.
+	SrvConnectionFormat *SrvConnectionFormat `json:"srvConnectionFormat,omitempty"`
+	// StandardConnectionFormat: Standard connection format.
+	StandardConnectionFormat *StandardConnectionFormat `json:"standardConnectionFormat,omitempty"`
+	// Username: Required. Username for the MongoDB connection.
+	Username string `json:"username,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "HostAddresses") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "HostAddresses") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s MongodbProfile) MarshalJSON() ([]byte, error) {
+	type NoMethod MongodbProfile
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// MongodbSourceConfig: MongoDB source configuration.
+type MongodbSourceConfig struct {
+	// ExcludeObjects: MongoDB collections to exclude from the stream.
+	ExcludeObjects *MongodbCluster `json:"excludeObjects,omitempty"`
+	// IncludeObjects: MongoDB collections to include in the stream.
+	IncludeObjects *MongodbCluster `json:"includeObjects,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ExcludeObjects") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ExcludeObjects") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s MongodbSourceConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod MongodbSourceConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // MostRecentStartPosition: CDC strategy to start replicating from the most
@@ -2547,6 +2764,8 @@ func (s SingleTargetDataset) MarshalJSON() ([]byte, error) {
 
 // SourceConfig: The configuration of the stream source.
 type SourceConfig struct {
+	// MongodbSourceConfig: MongoDB data source configuration.
+	MongodbSourceConfig *MongodbSourceConfig `json:"mongodbSourceConfig,omitempty"`
 	// MysqlSourceConfig: MySQL data source configuration.
 	MysqlSourceConfig *MysqlSourceConfig `json:"mysqlSourceConfig,omitempty"`
 	// OracleSourceConfig: Oracle data source configuration.
@@ -2560,15 +2779,15 @@ type SourceConfig struct {
 	SourceConnectionProfile string `json:"sourceConnectionProfile,omitempty"`
 	// SqlServerSourceConfig: SQLServer data source configuration.
 	SqlServerSourceConfig *SqlServerSourceConfig `json:"sqlServerSourceConfig,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "MysqlSourceConfig") to
+	// ForceSendFields is a list of field names (e.g. "MongodbSourceConfig") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "MysqlSourceConfig") to include in
-	// API requests with the JSON null value. By default, fields with empty values
-	// are omitted from API requests. See
+	// NullFields is a list of field names (e.g. "MongodbSourceConfig") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -2604,6 +2823,8 @@ func (s SourceHierarchyDatasets) MarshalJSON() ([]byte, error) {
 // SourceObjectIdentifier: Represents an identifier of an object in the data
 // source.
 type SourceObjectIdentifier struct {
+	// MongodbIdentifier: MongoDB data source object identifier.
+	MongodbIdentifier *MongodbObjectIdentifier `json:"mongodbIdentifier,omitempty"`
 	// MysqlIdentifier: Mysql data source object identifier.
 	MysqlIdentifier *MysqlObjectIdentifier `json:"mysqlIdentifier,omitempty"`
 	// OracleIdentifier: Oracle data source object identifier.
@@ -2614,13 +2835,13 @@ type SourceObjectIdentifier struct {
 	SalesforceIdentifier *SalesforceObjectIdentifier `json:"salesforceIdentifier,omitempty"`
 	// SqlServerIdentifier: SQLServer data source object identifier.
 	SqlServerIdentifier *SqlServerObjectIdentifier `json:"sqlServerIdentifier,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "MysqlIdentifier") to
+	// ForceSendFields is a list of field names (e.g. "MongodbIdentifier") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "MysqlIdentifier") to include in
+	// NullFields is a list of field names (e.g. "MongodbIdentifier") to include in
 	// API requests with the JSON null value. By default, fields with empty values
 	// are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
@@ -2888,6 +3109,14 @@ func (s SqlServerTable) MarshalJSON() ([]byte, error) {
 // SqlServerTransactionLogs: Configuration to use Transaction Logs CDC read
 // method.
 type SqlServerTransactionLogs struct {
+}
+
+// SrvConnectionFormat: Srv connection format.
+type SrvConnectionFormat struct {
+}
+
+// StandardConnectionFormat: Standard connection format.
+type StandardConnectionFormat struct {
 }
 
 // StartBackfillJobRequest: Request for manually initiating a backfill job for
@@ -3533,6 +3762,14 @@ type ProjectsLocationsListCall struct {
 func (r *ProjectsLocationsService) List(name string) *ProjectsLocationsListCall {
 	c := &ProjectsLocationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
+	return c
+}
+
+// ExtraLocationTypes sets the optional parameter "extraLocationTypes": A list
+// of extra location types that should be used as conditions for controlling
+// the visibility of the locations.
+func (c *ProjectsLocationsListCall) ExtraLocationTypes(extraLocationTypes ...string) *ProjectsLocationsListCall {
+	c.urlParams_.SetMulti("extraLocationTypes", append([]string{}, extraLocationTypes...))
 	return c
 }
 

@@ -2772,6 +2772,10 @@ func (s LookupMigrationJobObjectRequest) MarshalJSON() ([]byte, error) {
 type MachineConfig struct {
 	// CpuCount: The number of CPU's in the VM instance.
 	CpuCount int64 `json:"cpuCount,omitempty"`
+	// MachineType: Optional. Machine type of the VM instance. E.g. "n2-highmem-4",
+	// "n2-highmem-8", "c4a-highmem-4-lssd". cpu_count must match the number of
+	// vCPUs in the machine type.
+	MachineType string `json:"machineType,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "CpuCount") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -3061,6 +3065,9 @@ type MigrationJob struct {
 	// SqlserverHomogeneousMigrationJobConfig: Optional. Configuration for SQL
 	// Server homogeneous migration.
 	SqlserverHomogeneousMigrationJobConfig *SqlServerHomogeneousMigrationJobConfig `json:"sqlserverHomogeneousMigrationJobConfig,omitempty"`
+	// SqlserverToPostgresConfig: Configuration for heterogeneous **SQL Server to
+	// Cloud SQL for PostgreSQL** migrations.
+	SqlserverToPostgresConfig *SqlServerToPostgresConfig `json:"sqlserverToPostgresConfig,omitempty"`
 	// State: The current migration job state.
 	//
 	// Possible values:
@@ -4809,6 +4816,8 @@ type SqlServerConnectionProfile struct {
 	// CloudSqlId: If the source is a Cloud SQL database, use this field to provide
 	// the Cloud SQL instance ID of the source.
 	CloudSqlId string `json:"cloudSqlId,omitempty"`
+	// Database: Required. The name of the specific database within the host.
+	Database string `json:"database,omitempty"`
 	// ForwardSshConnectivity: Forward SSH tunnel connectivity.
 	ForwardSshConnectivity *ForwardSshTunnelConnectivity `json:"forwardSshConnectivity,omitempty"`
 	// Host: Required. The IP or hostname of the source SQL Server database.
@@ -4947,6 +4956,63 @@ type SqlServerHomogeneousMigrationJobConfig struct {
 
 func (s SqlServerHomogeneousMigrationJobConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod SqlServerHomogeneousMigrationJobConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// SqlServerSourceConfig: Configuration for SQL Server as a source in a
+// migration.
+type SqlServerSourceConfig struct {
+	// CdcStartPosition: Optional. The log sequence number (LSN) to start CDC data
+	// migration from.
+	CdcStartPosition string `json:"cdcStartPosition,omitempty"`
+	// MaxConcurrentCdcConnections: Optional. Maximum number of connections
+	// Database Migration Service will open to the source for CDC phase.
+	MaxConcurrentCdcConnections int64 `json:"maxConcurrentCdcConnections,omitempty"`
+	// MaxConcurrentFullDumpConnections: Optional. Maximum number of connections
+	// Database Migration Service will open to the source for full dump phase.
+	MaxConcurrentFullDumpConnections int64 `json:"maxConcurrentFullDumpConnections,omitempty"`
+	// SkipFullDump: Optional. Whether to skip full dump or not.
+	SkipFullDump bool `json:"skipFullDump,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "CdcStartPosition") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CdcStartPosition") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s SqlServerSourceConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod SqlServerSourceConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// SqlServerToPostgresConfig: Configuration for heterogeneous **SQL Server to
+// Cloud SQL for PostgreSQL** migrations.
+type SqlServerToPostgresConfig struct {
+	// PostgresDestinationConfig: Optional. Configuration for Postgres destination.
+	PostgresDestinationConfig *PostgresDestinationConfig `json:"postgresDestinationConfig,omitempty"`
+	// SqlserverSourceConfig: Optional. Configuration for SQL Server source.
+	SqlserverSourceConfig *SqlServerSourceConfig `json:"sqlserverSourceConfig,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "PostgresDestinationConfig")
+	// to unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "PostgresDestinationConfig") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s SqlServerToPostgresConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod SqlServerToPostgresConfig
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 

@@ -1223,7 +1223,7 @@ type GoogleCloudDataplexV1AssetDiscoverySpec struct {
 	// Schedule: Optional. Cron schedule (https://en.wikipedia.org/wiki/Cron) for
 	// running discovery periodically. Successive discovery runs must be scheduled
 	// at least 60 minutes apart. The default value is to run discovery every 60
-	// minutes. To explicitly set a timezone to the cron tab, apply a prefix in the
+	// minutes.To explicitly set a timezone to the cron tab, apply a prefix in the
 	// cron tab: "CRON_TZ=${IANA_TIME_ZONE}" or TZ=${IANA_TIME_ZONE}". The
 	// ${IANA_TIME_ZONE} may only be a valid string from IANA time zone database.
 	// For example, CRON_TZ=America/New_York 1 * * * *, or TZ=America/New_York 1 *
@@ -1864,6 +1864,8 @@ func (s GoogleCloudDataplexV1DataAttributeBindingPath) MarshalJSON() ([]byte, er
 type GoogleCloudDataplexV1DataDiscoveryResult struct {
 	// BigqueryPublishing: Output only. Configuration for metadata publishing.
 	BigqueryPublishing *GoogleCloudDataplexV1DataDiscoveryResultBigQueryPublishing `json:"bigqueryPublishing,omitempty"`
+	// ScanStatistics: Output only. Statistics of the DataDiscoveryScan.
+	ScanStatistics *GoogleCloudDataplexV1DataDiscoveryResultScanStatistics `json:"scanStatistics,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "BigqueryPublishing") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -1888,6 +1890,8 @@ type GoogleCloudDataplexV1DataDiscoveryResultBigQueryPublishing struct {
 	// Dataset: Output only. The BigQuery dataset the discovered tables are
 	// published to.
 	Dataset string `json:"dataset,omitempty"`
+	// Location: Output only. The location of the BigQuery publishing dataset.
+	Location string `json:"location,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Dataset") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
 	// omitted from API requests. See
@@ -1903,6 +1907,45 @@ type GoogleCloudDataplexV1DataDiscoveryResultBigQueryPublishing struct {
 
 func (s GoogleCloudDataplexV1DataDiscoveryResultBigQueryPublishing) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDataplexV1DataDiscoveryResultBigQueryPublishing
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDataplexV1DataDiscoveryResultScanStatistics: Statistics of the
+// DataDiscoveryScan.
+type GoogleCloudDataplexV1DataDiscoveryResultScanStatistics struct {
+	// DataProcessedBytes: The data processed in bytes.
+	DataProcessedBytes int64 `json:"dataProcessedBytes,omitempty,string"`
+	// FilesExcluded: The number of files excluded.
+	FilesExcluded int64 `json:"filesExcluded,omitempty"`
+	// FilesetsCreated: The number of filesets created.
+	FilesetsCreated int64 `json:"filesetsCreated,omitempty"`
+	// FilesetsDeleted: The number of filesets deleted.
+	FilesetsDeleted int64 `json:"filesetsDeleted,omitempty"`
+	// FilesetsUpdated: The number of filesets updated.
+	FilesetsUpdated int64 `json:"filesetsUpdated,omitempty"`
+	// ScannedFileCount: The number of files scanned.
+	ScannedFileCount int64 `json:"scannedFileCount,omitempty"`
+	// TablesCreated: The number of tables created.
+	TablesCreated int64 `json:"tablesCreated,omitempty"`
+	// TablesDeleted: The number of tables deleted.
+	TablesDeleted int64 `json:"tablesDeleted,omitempty"`
+	// TablesUpdated: The number of tables updated.
+	TablesUpdated int64 `json:"tablesUpdated,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "DataProcessedBytes") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DataProcessedBytes") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDataplexV1DataDiscoveryResultScanStatistics) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDataplexV1DataDiscoveryResultScanStatistics
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -6093,6 +6136,10 @@ func (s GoogleCloudDataplexV1ListZonesResponse) MarshalJSON() ([]byte, error) {
 type GoogleCloudDataplexV1MetadataJob struct {
 	// CreateTime: Output only. The time when the metadata job was created.
 	CreateTime string `json:"createTime,omitempty"`
+	// ExportResult: Output only. Export job result.
+	ExportResult *GoogleCloudDataplexV1MetadataJobExportJobResult `json:"exportResult,omitempty"`
+	// ExportSpec: Export job specification.
+	ExportSpec *GoogleCloudDataplexV1MetadataJobExportJobSpec `json:"exportSpec,omitempty"`
 	// ImportResult: Output only. Import job result.
 	ImportResult *GoogleCloudDataplexV1MetadataJobImportJobResult `json:"importResult,omitempty"`
 	// ImportSpec: Import job specification.
@@ -6111,6 +6158,7 @@ type GoogleCloudDataplexV1MetadataJob struct {
 	// Possible values:
 	//   "TYPE_UNSPECIFIED" - Unspecified.
 	//   "IMPORT" - Import job.
+	//   "EXPORT" - Export job type.
 	Type string `json:"type,omitempty"`
 	// Uid: Output only. A system-generated, globally unique ID for the metadata
 	// job. If the metadata job is deleted and then re-created with the same name,
@@ -6136,6 +6184,108 @@ type GoogleCloudDataplexV1MetadataJob struct {
 
 func (s GoogleCloudDataplexV1MetadataJob) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDataplexV1MetadataJob
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDataplexV1MetadataJobExportJobResult: Export Job Results. The
+// result is based on the snapshot at the time when the job is created.
+type GoogleCloudDataplexV1MetadataJobExportJobResult struct {
+	// ErrorMessage: Output only. The error message if the export job failed.
+	ErrorMessage string `json:"errorMessage,omitempty"`
+	// ExportedEntries: Output only. The number of entries that have been exported.
+	ExportedEntries int64 `json:"exportedEntries,omitempty,string"`
+	// ForceSendFields is a list of field names (e.g. "ErrorMessage") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ErrorMessage") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDataplexV1MetadataJobExportJobResult) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDataplexV1MetadataJobExportJobResult
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDataplexV1MetadataJobExportJobSpec: Export job specification.
+type GoogleCloudDataplexV1MetadataJobExportJobSpec struct {
+	// OutputPath: Required. The root path of the exported metadata. Must be in the
+	// format: "gs://" Or specify a customized prefix after the bucket:
+	// "gs://///.../". The length limit of the customized prefix is 128 characters.
+	// The bucket must be in the same VPC-SC perimeter with the job.
+	OutputPath string `json:"outputPath,omitempty"`
+	// Scope: Required. Selects the entries to be exported by this job.
+	Scope *GoogleCloudDataplexV1MetadataJobExportJobSpecExportJobScope `json:"scope,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "OutputPath") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "OutputPath") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDataplexV1MetadataJobExportJobSpec) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDataplexV1MetadataJobExportJobSpec
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDataplexV1MetadataJobExportJobSpecExportJobScope: Scope of the
+// export job.
+type GoogleCloudDataplexV1MetadataJobExportJobSpecExportJobScope struct {
+	// AspectTypes: The aspect types that are in scope for the export job.
+	// Optional. If specified, only aspects of the specified types will be affected
+	// by the job. Must follow the format: "projects//locations//aspectTypes/"
+	AspectTypes []string `json:"aspectTypes,omitempty"`
+	// EntryGroups: The entry groups that are in scope for the export job.
+	// Optional. If specified, only entries in the specified entry groups will be
+	// exported by the job. Must be in the VPC-SC perimeter of the job. The
+	// location of the entry groups must be the same as the job. Either projects or
+	// entry_groups can be specified when organization_level_export is set to
+	// false. Must follow the format: "projects//locations//entryGroups/"
+	EntryGroups []string `json:"entryGroups,omitempty"`
+	// EntryTypes: If specified, only entries of the specified types will be
+	// affected by the job. Must follow the format:
+	// "projects//locations//entryTypes/"
+	EntryTypes []string `json:"entryTypes,omitempty"`
+	// OrganizationLevel: Indicating if it is an organization level export job. -
+	// When set to true, exports all entries from entry groups and projects sharing
+	// the same organization id of the Metadata Job. Only projects and entry groups
+	// in the VPC-SC perimeter will be exported. The projects and entry groups are
+	// ignored. - When set to false, one of the projects or entry groups must be
+	// specified. - Default to false.
+	OrganizationLevel bool `json:"organizationLevel,omitempty"`
+	// Projects: The projects that are in the scope of the export job. Can either
+	// be project numbers or project IDs. If specified, only the entries from the
+	// specified projects will be exported. The projects must be in the same
+	// organization and in the VPC-SC perimeter. Either projects or entry_groups
+	// can be specified when organization_level_export is set to false. Must follow
+	// the format: "projects/"
+	Projects []string `json:"projects,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AspectTypes") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AspectTypes") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDataplexV1MetadataJobExportJobSpecExportJobScope) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDataplexV1MetadataJobExportJobSpecExportJobScope
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -7677,7 +7827,7 @@ type GoogleCloudDataplexV1ZoneDiscoverySpec struct {
 	// Schedule: Optional. Cron schedule (https://en.wikipedia.org/wiki/Cron) for
 	// running discovery periodically. Successive discovery runs must be scheduled
 	// at least 60 minutes apart. The default value is to run discovery every 60
-	// minutes. To explicitly set a timezone to the cron tab, apply a prefix in the
+	// minutes.To explicitly set a timezone to the cron tab, apply a prefix in the
 	// cron tab: "CRON_TZ=${IANA_TIME_ZONE}" or TZ=${IANA_TIME_ZONE}". The
 	// ${IANA_TIME_ZONE} may only be a valid string from IANA time zone database.
 	// For example, CRON_TZ=America/New_York 1 * * * *, or TZ=America/New_York 1 *
@@ -9316,6 +9466,14 @@ type ProjectsLocationsListCall struct {
 func (r *ProjectsLocationsService) List(name string) *ProjectsLocationsListCall {
 	c := &ProjectsLocationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
+	return c
+}
+
+// ExtraLocationTypes sets the optional parameter "extraLocationTypes": A list
+// of extra location types that should be used as conditions for controlling
+// the visibility of the locations.
+func (c *ProjectsLocationsListCall) ExtraLocationTypes(extraLocationTypes ...string) *ProjectsLocationsListCall {
+	c.urlParams_.SetMulti("extraLocationTypes", append([]string{}, extraLocationTypes...))
 	return c
 }
 

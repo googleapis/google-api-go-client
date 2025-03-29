@@ -1322,12 +1322,24 @@ type QueuedResource struct {
 	Guaranteed *Guaranteed `json:"guaranteed,omitempty"`
 	// Name: Output only. Immutable. The name of the QueuedResource.
 	Name string `json:"name,omitempty"`
+	// ProvisioningModel: Optional. The provisioning model for the resource.
+	//
+	// Possible values:
+	//   "PROVISIONING_MODEL_UNSPECIFIED" - Provisioning model is unknown.
+	//   "STANDARD" - Standard provisioning with user controlled runtime.
+	//   "SPOT" - Spot provisioning with no guaranteed runtime.
+	//   "RESERVATION_BOUND" - Reservation provisioning with runtime bound to the
+	// lifetime of the consumed reservation.
+	//   "FLEX_START" - Provisioning with DWS Flex Start with max run duration.
+	ProvisioningModel string `json:"provisioningModel,omitempty"`
 	// QueueingPolicy: The queueing policy of the QueuedRequest.
 	QueueingPolicy *QueueingPolicy `json:"queueingPolicy,omitempty"`
 	// ReservationName: Name of the reservation in which the resource should be
 	// provisioned. Format:
 	// projects/{project}/locations/{zone}/reservations/{reservation}
 	ReservationName string `json:"reservationName,omitempty"`
+	// RunDuration: Optional. The duration of the requested resource.
+	RunDuration *RunDuration `json:"runDuration,omitempty"`
 	// Spot: Optional. The Spot tier.
 	Spot *Spot `json:"spot,omitempty"`
 	// State: Output only. State of the QueuedResource request.
@@ -1509,6 +1521,31 @@ func (s Reservation) MarshalJSON() ([]byte, error) {
 
 // ResetQueuedResourceRequest: Request for ResetQueuedResource.
 type ResetQueuedResourceRequest struct {
+}
+
+// RunDuration: Defines the maximum lifetime of the requested resource.
+type RunDuration struct {
+	// MaxRunDuration: The maximum duration of the requested resource.
+	MaxRunDuration string `json:"maxRunDuration,omitempty"`
+	// TerminationTime: The time at which the requested resource will be
+	// terminated.
+	TerminationTime string `json:"terminationTime,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "MaxRunDuration") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "MaxRunDuration") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s RunDuration) MarshalJSON() ([]byte, error) {
+	type NoMethod RunDuration
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // RuntimeVersion: A runtime version that a Node can be configured with.
@@ -2113,6 +2150,14 @@ type ProjectsLocationsListCall struct {
 func (r *ProjectsLocationsService) List(name string) *ProjectsLocationsListCall {
 	c := &ProjectsLocationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
+	return c
+}
+
+// ExtraLocationTypes sets the optional parameter "extraLocationTypes": A list
+// of extra location types that should be used as conditions for controlling
+// the visibility of the locations.
+func (c *ProjectsLocationsListCall) ExtraLocationTypes(extraLocationTypes ...string) *ProjectsLocationsListCall {
+	c.urlParams_.SetMulti("extraLocationTypes", append([]string{}, extraLocationTypes...))
 	return c
 }
 

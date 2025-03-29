@@ -431,6 +431,15 @@ func (s AndroidMatrix) MarshalJSON() ([]byte, error) {
 
 // AndroidModel: A description of an Android device tests may be run on.
 type AndroidModel struct {
+	// AccessDeniedReasons: Reasons for access denial. This model is accessible if
+	// this list is empty, otherwise the model is viewable only.
+	//
+	// Possible values:
+	//   "ACCESS_DENIED_REASON_UNSPECIFIED" - Do not use. For proto versioning
+	// only.
+	//   "EULA_NOT_ACCEPTED" - The model is for viewing purposes only. Access and
+	// utilization require acceptance of an End User License Agreement (EULA).
+	AccessDeniedReasons []string `json:"accessDeniedReasons,omitempty"`
 	// Brand: The company that this device is branded with. Example: "Google",
 	// "Samsung".
 	Brand string `json:"brand,omitempty"`
@@ -490,15 +499,15 @@ type AndroidModel struct {
 	Tags []string `json:"tags,omitempty"`
 	// ThumbnailUrl: URL of a thumbnail image (photo) of the device.
 	ThumbnailUrl string `json:"thumbnailUrl,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "Brand") to unconditionally
-	// include in API requests. By default, fields with empty or default values are
-	// omitted from API requests. See
+	// ForceSendFields is a list of field names (e.g. "AccessDeniedReasons") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Brand") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
+	// NullFields is a list of field names (e.g. "AccessDeniedReasons") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -4239,6 +4248,14 @@ type TestEnvironmentCatalogGetCall struct {
 func (r *TestEnvironmentCatalogService) Get(environmentType string) *TestEnvironmentCatalogGetCall {
 	c := &TestEnvironmentCatalogGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.environmentType = environmentType
+	return c
+}
+
+// IncludeViewableModels sets the optional parameter "includeViewableModels":
+// Whether to include viewable only models in the response. This is only
+// applicable for Android models.
+func (c *TestEnvironmentCatalogGetCall) IncludeViewableModels(includeViewableModels bool) *TestEnvironmentCatalogGetCall {
+	c.urlParams_.Set("includeViewableModels", fmt.Sprint(includeViewableModels))
 	return c
 }
 

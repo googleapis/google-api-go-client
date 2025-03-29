@@ -416,7 +416,9 @@ type Backup struct {
 	// assigned when the resource is created, and it is retained until it is
 	// deleted.
 	Uid string `json:"uid,omitempty"`
-	// UpdateTime: Output only. Update time stamp
+	// UpdateTime: Output only. Update time stamp Users should not infer any
+	// meaning from this field. Its value is generally unrelated to the timing of
+	// the backup creation operation.
 	UpdateTime string `json:"updateTime,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
@@ -4940,6 +4942,14 @@ type ProjectsLocationsListCall struct {
 func (r *ProjectsLocationsService) List(name string) *ProjectsLocationsListCall {
 	c := &ProjectsLocationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
+	return c
+}
+
+// ExtraLocationTypes sets the optional parameter "extraLocationTypes": A list
+// of extra location types that should be used as conditions for controlling
+// the visibility of the locations.
+func (c *ProjectsLocationsListCall) ExtraLocationTypes(extraLocationTypes ...string) *ProjectsLocationsListCall {
+	c.urlParams_.SetMulti("extraLocationTypes", append([]string{}, extraLocationTypes...))
 	return c
 }
 

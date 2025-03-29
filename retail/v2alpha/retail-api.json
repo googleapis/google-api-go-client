@@ -2800,7 +2800,7 @@
       }
     }
   },
-  "revision": "20250320",
+  "revision": "20250327",
   "rootUrl": "https://retail.googleapis.com/",
   "schemas": {
     "GoogleApiHttpBody": {
@@ -5603,7 +5603,7 @@
           "type": "array"
         },
         "placeId": {
-          "description": "Required. The place ID for the current set of inventory information.",
+          "description": "Optional. The place ID for the current set of inventory information.",
           "type": "string"
         },
         "priceInfo": {

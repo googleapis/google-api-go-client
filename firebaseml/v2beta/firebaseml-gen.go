@@ -1056,6 +1056,9 @@ type GoogleCloudAiplatformV1beta1GenerationConfig struct {
 	StopSequences []string `json:"stopSequences,omitempty"`
 	// Temperature: Optional. Controls the randomness of predictions.
 	Temperature float64 `json:"temperature,omitempty"`
+	// ThinkingConfig: Optional. Config for thinking features. An error will be
+	// returned if this field is set for models that don't support thinking.
+	ThinkingConfig *GoogleCloudAiplatformV1beta1GenerationConfigThinkingConfig `json:"thinkingConfig,omitempty"`
 	// TopK: Optional. If specified, top-k sampling will be used.
 	TopK float64 `json:"topK,omitempty"`
 	// TopP: Optional. If specified, nucleus sampling will be used.
@@ -1209,6 +1212,33 @@ func (s GoogleCloudAiplatformV1beta1GenerationConfigRoutingConfigManualRoutingMo
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudAiplatformV1beta1GenerationConfigThinkingConfig: Config for
+// thinking features.
+type GoogleCloudAiplatformV1beta1GenerationConfigThinkingConfig struct {
+	// EnableThinking: Optional. Indicates whether to enable thinking mode. If
+	// true, the model will enable thinking mode.
+	EnableThinking bool `json:"enableThinking,omitempty"`
+	// ThinkingBudget: Optional. Indicates the thinking budget in tokens. This is
+	// only applied when enable_thinking is true.
+	ThinkingBudget int64 `json:"thinkingBudget,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "EnableThinking") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "EnableThinking") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudAiplatformV1beta1GenerationConfigThinkingConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudAiplatformV1beta1GenerationConfigThinkingConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudAiplatformV1beta1GoogleSearchRetrieval: Tool to retrieve public
 // web data for grounding, powered by Google.
 type GoogleCloudAiplatformV1beta1GoogleSearchRetrieval struct {
@@ -1261,21 +1291,24 @@ func (s GoogleCloudAiplatformV1beta1GroundingChunk) MarshalJSON() ([]byte, error
 // GoogleCloudAiplatformV1beta1GroundingChunkRetrievedContext: Chunk from
 // context retrieved by the retrieval tools.
 type GoogleCloudAiplatformV1beta1GroundingChunkRetrievedContext struct {
+	// RagChunk: Additional context for the RAG retrieval result. This is only
+	// populated when using the RAG retrieval tool.
+	RagChunk *GoogleCloudAiplatformV1beta1RagChunk `json:"ragChunk,omitempty"`
 	// Text: Text of the attribution.
 	Text string `json:"text,omitempty"`
 	// Title: Title of the attribution.
 	Title string `json:"title,omitempty"`
 	// Uri: URI reference of the attribution.
 	Uri string `json:"uri,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "Text") to unconditionally
-	// include in API requests. By default, fields with empty or default values are
-	// omitted from API requests. See
+	// ForceSendFields is a list of field names (e.g. "RagChunk") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Text") to include in API requests
-	// with the JSON null value. By default, fields with empty values are omitted
-	// from API requests. See
+	// NullFields is a list of field names (e.g. "RagChunk") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -1587,6 +1620,57 @@ type GoogleCloudAiplatformV1beta1PrebuiltVoiceConfig struct {
 
 func (s GoogleCloudAiplatformV1beta1PrebuiltVoiceConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1beta1PrebuiltVoiceConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudAiplatformV1beta1RagChunk: A RagChunk includes the content of a
+// chunk of a RagFile, and associated metadata.
+type GoogleCloudAiplatformV1beta1RagChunk struct {
+	// PageSpan: If populated, represents where the chunk starts and ends in the
+	// document.
+	PageSpan *GoogleCloudAiplatformV1beta1RagChunkPageSpan `json:"pageSpan,omitempty"`
+	// Text: The content of the chunk.
+	Text string `json:"text,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "PageSpan") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "PageSpan") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudAiplatformV1beta1RagChunk) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudAiplatformV1beta1RagChunk
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudAiplatformV1beta1RagChunkPageSpan: Represents where the chunk
+// starts and ends in the document.
+type GoogleCloudAiplatformV1beta1RagChunkPageSpan struct {
+	// FirstPage: Page where chunk starts in the document. Inclusive. 1-indexed.
+	FirstPage int64 `json:"firstPage,omitempty"`
+	// LastPage: Page where chunk ends in the document. Inclusive. 1-indexed.
+	LastPage int64 `json:"lastPage,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "FirstPage") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "FirstPage") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudAiplatformV1beta1RagChunkPageSpan) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudAiplatformV1beta1RagChunkPageSpan
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 

@@ -367,6 +367,28 @@ func (s *AdaptiveProtection) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+// AffectedResources: Details about resources affected by this finding.
+type AffectedResources struct {
+	// Count: The count of resources affected by the finding.
+	Count int64 `json:"count,omitempty,string"`
+	// ForceSendFields is a list of field names (e.g. "Count") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Count") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s AffectedResources) MarshalJSON() ([]byte, error) {
+	type NoMethod AffectedResources
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // Allowed: Allowed IP rule.
 type Allowed struct {
 	// IpRules: Optional. Optional list of allowed IP rules.
@@ -2178,6 +2200,8 @@ type Finding struct {
 	// Access: Access details associated with the finding, such as more information
 	// on the caller, which method was accessed, and from where.
 	Access *Access `json:"access,omitempty"`
+	// AffectedResources: AffectedResources associated with the finding.
+	AffectedResources *AffectedResources `json:"affectedResources,omitempty"`
 	// Application: Represents an application associated with the finding.
 	Application *Application `json:"application,omitempty"`
 	// AttackExposure: The results of an attack path simulation relevant to this
@@ -3900,6 +3924,29 @@ func (s *GoogleCloudSecuritycenterV2AdaptiveProtection) UnmarshalJSON(data []byt
 	return nil
 }
 
+// GoogleCloudSecuritycenterV2AffectedResources: Details about resources
+// affected by this finding.
+type GoogleCloudSecuritycenterV2AffectedResources struct {
+	// Count: The count of resources affected by the finding.
+	Count int64 `json:"count,omitempty,string"`
+	// ForceSendFields is a list of field names (e.g. "Count") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Count") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudSecuritycenterV2AffectedResources) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudSecuritycenterV2AffectedResources
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudSecuritycenterV2Allowed: Allowed IP rule.
 type GoogleCloudSecuritycenterV2Allowed struct {
 	// IpRules: Optional. Optional list of allowed IP rules.
@@ -5534,6 +5581,8 @@ type GoogleCloudSecuritycenterV2Finding struct {
 	// Access: Access details associated with the finding, such as more information
 	// on the caller, which method was accessed, and from where.
 	Access *GoogleCloudSecuritycenterV2Access `json:"access,omitempty"`
+	// AffectedResources: AffectedResources associated with the finding.
+	AffectedResources *GoogleCloudSecuritycenterV2AffectedResources `json:"affectedResources,omitempty"`
 	// Application: Represents an application associated with the finding.
 	Application *GoogleCloudSecuritycenterV2Application `json:"application,omitempty"`
 	// AttackExposure: The results of an attack path simulation relevant to this
@@ -6775,7 +6824,13 @@ type GoogleCloudSecuritycenterV2MitreAttack struct {
 	//
 	// Possible values:
 	//   "TECHNIQUE_UNSPECIFIED" - Unspecified value.
+	//   "DATA_OBFUSCATION" - T1001
+	//   "DATA_OBFUSCATION_STEGANOGRAPHY" - T1001.002
 	//   "AUTOMATED_EXFILTRATION" - T1020
+	//   "OBFUSCATED_FILES_OR_INFO" - T1027
+	//   "STEGANOGRAPHY" - T1027.003
+	//   "COMPILE_AFTER_DELIVERY" - T1027.004
+	//   "COMMAND_OBFUSCATION" - T1027.010
 	//   "MASQUERADING" - T1036
 	//   "MATCH_LEGITIMATE_NAME_OR_LOCATION" - T1036.005
 	//   "BOOT_OR_LOGON_INITIALIZATION_SCRIPTS" - T1037
@@ -6804,18 +6859,24 @@ type GoogleCloudSecuritycenterV2MitreAttack struct {
 	//   "ADDITIONAL_CLOUD_ROLES" - T1098.003
 	//   "SSH_AUTHORIZED_KEYS" - T1098.004
 	//   "ADDITIONAL_CONTAINER_CLUSTER_ROLES" - T1098.006
+	//   "MULTI_STAGE_CHANNELS" - T1104
 	//   "INGRESS_TOOL_TRANSFER" - T1105
 	//   "NATIVE_API" - T1106
 	//   "BRUTE_FORCE" - T1110
 	//   "SHARED_MODULES" - T1129
+	//   "DATA_ENCODING" - T1132
+	//   "STANDARD_ENCODING" - T1132.001
 	//   "ACCESS_TOKEN_MANIPULATION" - T1134
 	//   "TOKEN_IMPERSONATION_OR_THEFT" - T1134.001
+	//   "CREATE_ACCOUNT" - T1136
+	//   "LOCAL_ACCOUNT" - T1136.001
 	//   "EXPLOIT_PUBLIC_FACING_APPLICATION" - T1190
 	//   "USER_EXECUTION" - T1204
 	//   "DOMAIN_POLICY_MODIFICATION" - T1484
 	//   "DATA_DESTRUCTION" - T1485
 	//   "SERVICE_STOP" - T1489
 	//   "INHIBIT_SYSTEM_RECOVERY" - T1490
+	//   "FIRMWARE_CORRUPTION" - T1495
 	//   "RESOURCE_HIJACKING" - T1496
 	//   "NETWORK_DENIAL_OF_SERVICE" - T1498
 	//   "CLOUD_SERVICE_DISCOVERY" - T1526
@@ -6824,11 +6885,17 @@ type GoogleCloudSecuritycenterV2MitreAttack struct {
 	//   "STEAL_WEB_SESSION_COOKIE" - T1539
 	//   "CREATE_OR_MODIFY_SYSTEM_PROCESS" - T1543
 	//   "EVENT_TRIGGERED_EXECUTION" - T1546
+	//   "BOOT_OR_LOGON_AUTOSTART_EXECUTION" - T1547
+	//   "KERNEL_MODULES_AND_EXTENSIONS" - T1547.006
 	//   "ABUSE_ELEVATION_CONTROL_MECHANISM" - T1548
 	//   "UNSECURED_CREDENTIALS" - T1552
+	//   "COMPROMISE_HOST_SOFTWARE_BINARY" - T1554
 	//   "MODIFY_AUTHENTICATION_PROCESS" - T1556
 	//   "IMPAIR_DEFENSES" - T1562
 	//   "DISABLE_OR_MODIFY_TOOLS" - T1562.001
+	//   "HIDE_ARTIFACTS" - T1564
+	//   "HIDDEN_FILES_AND_DIRECTORIES" - T1564.001
+	//   "HIDDEN_USERS" - T1564.002
 	//   "EXFILTRATION_OVER_WEB_SERVICE" - T1567
 	//   "EXFILTRATION_TO_CLOUD_STORAGE" - T1567.002
 	//   "DYNAMIC_RESOLUTION" - T1568
@@ -6839,6 +6906,7 @@ type GoogleCloudSecuritycenterV2MitreAttack struct {
 	//   "OBTAIN_CAPABILITIES" - T1588
 	//   "ACTIVE_SCANNING" - T1595
 	//   "SCANNING_IP_BLOCKS" - T1595.001
+	//   "STAGE_CAPABILITIES" - T1608
 	//   "CONTAINER_ADMINISTRATION_COMMAND" - T1609
 	//   "DEPLOY_CONTAINER" - T1610
 	//   "ESCAPE_TO_HOST" - T1611
@@ -6874,7 +6942,13 @@ type GoogleCloudSecuritycenterV2MitreAttack struct {
 	//
 	// Possible values:
 	//   "TECHNIQUE_UNSPECIFIED" - Unspecified value.
+	//   "DATA_OBFUSCATION" - T1001
+	//   "DATA_OBFUSCATION_STEGANOGRAPHY" - T1001.002
 	//   "AUTOMATED_EXFILTRATION" - T1020
+	//   "OBFUSCATED_FILES_OR_INFO" - T1027
+	//   "STEGANOGRAPHY" - T1027.003
+	//   "COMPILE_AFTER_DELIVERY" - T1027.004
+	//   "COMMAND_OBFUSCATION" - T1027.010
 	//   "MASQUERADING" - T1036
 	//   "MATCH_LEGITIMATE_NAME_OR_LOCATION" - T1036.005
 	//   "BOOT_OR_LOGON_INITIALIZATION_SCRIPTS" - T1037
@@ -6903,18 +6977,24 @@ type GoogleCloudSecuritycenterV2MitreAttack struct {
 	//   "ADDITIONAL_CLOUD_ROLES" - T1098.003
 	//   "SSH_AUTHORIZED_KEYS" - T1098.004
 	//   "ADDITIONAL_CONTAINER_CLUSTER_ROLES" - T1098.006
+	//   "MULTI_STAGE_CHANNELS" - T1104
 	//   "INGRESS_TOOL_TRANSFER" - T1105
 	//   "NATIVE_API" - T1106
 	//   "BRUTE_FORCE" - T1110
 	//   "SHARED_MODULES" - T1129
+	//   "DATA_ENCODING" - T1132
+	//   "STANDARD_ENCODING" - T1132.001
 	//   "ACCESS_TOKEN_MANIPULATION" - T1134
 	//   "TOKEN_IMPERSONATION_OR_THEFT" - T1134.001
+	//   "CREATE_ACCOUNT" - T1136
+	//   "LOCAL_ACCOUNT" - T1136.001
 	//   "EXPLOIT_PUBLIC_FACING_APPLICATION" - T1190
 	//   "USER_EXECUTION" - T1204
 	//   "DOMAIN_POLICY_MODIFICATION" - T1484
 	//   "DATA_DESTRUCTION" - T1485
 	//   "SERVICE_STOP" - T1489
 	//   "INHIBIT_SYSTEM_RECOVERY" - T1490
+	//   "FIRMWARE_CORRUPTION" - T1495
 	//   "RESOURCE_HIJACKING" - T1496
 	//   "NETWORK_DENIAL_OF_SERVICE" - T1498
 	//   "CLOUD_SERVICE_DISCOVERY" - T1526
@@ -6923,11 +7003,17 @@ type GoogleCloudSecuritycenterV2MitreAttack struct {
 	//   "STEAL_WEB_SESSION_COOKIE" - T1539
 	//   "CREATE_OR_MODIFY_SYSTEM_PROCESS" - T1543
 	//   "EVENT_TRIGGERED_EXECUTION" - T1546
+	//   "BOOT_OR_LOGON_AUTOSTART_EXECUTION" - T1547
+	//   "KERNEL_MODULES_AND_EXTENSIONS" - T1547.006
 	//   "ABUSE_ELEVATION_CONTROL_MECHANISM" - T1548
 	//   "UNSECURED_CREDENTIALS" - T1552
+	//   "COMPROMISE_HOST_SOFTWARE_BINARY" - T1554
 	//   "MODIFY_AUTHENTICATION_PROCESS" - T1556
 	//   "IMPAIR_DEFENSES" - T1562
 	//   "DISABLE_OR_MODIFY_TOOLS" - T1562.001
+	//   "HIDE_ARTIFACTS" - T1564
+	//   "HIDDEN_FILES_AND_DIRECTORIES" - T1564.001
+	//   "HIDDEN_USERS" - T1564.002
 	//   "EXFILTRATION_OVER_WEB_SERVICE" - T1567
 	//   "EXFILTRATION_TO_CLOUD_STORAGE" - T1567.002
 	//   "DYNAMIC_RESOLUTION" - T1568
@@ -6938,6 +7024,7 @@ type GoogleCloudSecuritycenterV2MitreAttack struct {
 	//   "OBTAIN_CAPABILITIES" - T1588
 	//   "ACTIVE_SCANNING" - T1595
 	//   "SCANNING_IP_BLOCKS" - T1595.001
+	//   "STAGE_CAPABILITIES" - T1608
 	//   "CONTAINER_ADMINISTRATION_COMMAND" - T1609
 	//   "DEPLOY_CONTAINER" - T1610
 	//   "ESCAPE_TO_HOST" - T1611
@@ -8986,7 +9073,13 @@ type MitreAttack struct {
 	//
 	// Possible values:
 	//   "TECHNIQUE_UNSPECIFIED" - Unspecified value.
+	//   "DATA_OBFUSCATION" - T1001
+	//   "DATA_OBFUSCATION_STEGANOGRAPHY" - T1001.002
 	//   "AUTOMATED_EXFILTRATION" - T1020
+	//   "OBFUSCATED_FILES_OR_INFO" - T1027
+	//   "STEGANOGRAPHY" - T1027.003
+	//   "COMPILE_AFTER_DELIVERY" - T1027.004
+	//   "COMMAND_OBFUSCATION" - T1027.010
 	//   "MASQUERADING" - T1036
 	//   "MATCH_LEGITIMATE_NAME_OR_LOCATION" - T1036.005
 	//   "BOOT_OR_LOGON_INITIALIZATION_SCRIPTS" - T1037
@@ -9015,18 +9108,24 @@ type MitreAttack struct {
 	//   "ADDITIONAL_CLOUD_ROLES" - T1098.003
 	//   "SSH_AUTHORIZED_KEYS" - T1098.004
 	//   "ADDITIONAL_CONTAINER_CLUSTER_ROLES" - T1098.006
+	//   "MULTI_STAGE_CHANNELS" - T1104
 	//   "INGRESS_TOOL_TRANSFER" - T1105
 	//   "NATIVE_API" - T1106
 	//   "BRUTE_FORCE" - T1110
 	//   "SHARED_MODULES" - T1129
+	//   "DATA_ENCODING" - T1132
+	//   "STANDARD_ENCODING" - T1132.001
 	//   "ACCESS_TOKEN_MANIPULATION" - T1134
 	//   "TOKEN_IMPERSONATION_OR_THEFT" - T1134.001
+	//   "CREATE_ACCOUNT" - T1136
+	//   "LOCAL_ACCOUNT" - T1136.001
 	//   "EXPLOIT_PUBLIC_FACING_APPLICATION" - T1190
 	//   "USER_EXECUTION" - T1204
 	//   "DOMAIN_POLICY_MODIFICATION" - T1484
 	//   "DATA_DESTRUCTION" - T1485
 	//   "SERVICE_STOP" - T1489
 	//   "INHIBIT_SYSTEM_RECOVERY" - T1490
+	//   "FIRMWARE_CORRUPTION" - T1495
 	//   "RESOURCE_HIJACKING" - T1496
 	//   "NETWORK_DENIAL_OF_SERVICE" - T1498
 	//   "CLOUD_SERVICE_DISCOVERY" - T1526
@@ -9035,11 +9134,17 @@ type MitreAttack struct {
 	//   "STEAL_WEB_SESSION_COOKIE" - T1539
 	//   "CREATE_OR_MODIFY_SYSTEM_PROCESS" - T1543
 	//   "EVENT_TRIGGERED_EXECUTION" - T1546
+	//   "BOOT_OR_LOGON_AUTOSTART_EXECUTION" - T1547
+	//   "KERNEL_MODULES_AND_EXTENSIONS" - T1547.006
 	//   "ABUSE_ELEVATION_CONTROL_MECHANISM" - T1548
 	//   "UNSECURED_CREDENTIALS" - T1552
+	//   "COMPROMISE_HOST_SOFTWARE_BINARY" - T1554
 	//   "MODIFY_AUTHENTICATION_PROCESS" - T1556
 	//   "IMPAIR_DEFENSES" - T1562
 	//   "DISABLE_OR_MODIFY_TOOLS" - T1562.001
+	//   "HIDE_ARTIFACTS" - T1564
+	//   "HIDDEN_FILES_AND_DIRECTORIES" - T1564.001
+	//   "HIDDEN_USERS" - T1564.002
 	//   "EXFILTRATION_OVER_WEB_SERVICE" - T1567
 	//   "EXFILTRATION_TO_CLOUD_STORAGE" - T1567.002
 	//   "DYNAMIC_RESOLUTION" - T1568
@@ -9050,6 +9155,7 @@ type MitreAttack struct {
 	//   "OBTAIN_CAPABILITIES" - T1588
 	//   "ACTIVE_SCANNING" - T1595
 	//   "SCANNING_IP_BLOCKS" - T1595.001
+	//   "STAGE_CAPABILITIES" - T1608
 	//   "CONTAINER_ADMINISTRATION_COMMAND" - T1609
 	//   "DEPLOY_CONTAINER" - T1610
 	//   "ESCAPE_TO_HOST" - T1611
@@ -9085,7 +9191,13 @@ type MitreAttack struct {
 	//
 	// Possible values:
 	//   "TECHNIQUE_UNSPECIFIED" - Unspecified value.
+	//   "DATA_OBFUSCATION" - T1001
+	//   "DATA_OBFUSCATION_STEGANOGRAPHY" - T1001.002
 	//   "AUTOMATED_EXFILTRATION" - T1020
+	//   "OBFUSCATED_FILES_OR_INFO" - T1027
+	//   "STEGANOGRAPHY" - T1027.003
+	//   "COMPILE_AFTER_DELIVERY" - T1027.004
+	//   "COMMAND_OBFUSCATION" - T1027.010
 	//   "MASQUERADING" - T1036
 	//   "MATCH_LEGITIMATE_NAME_OR_LOCATION" - T1036.005
 	//   "BOOT_OR_LOGON_INITIALIZATION_SCRIPTS" - T1037
@@ -9114,18 +9226,24 @@ type MitreAttack struct {
 	//   "ADDITIONAL_CLOUD_ROLES" - T1098.003
 	//   "SSH_AUTHORIZED_KEYS" - T1098.004
 	//   "ADDITIONAL_CONTAINER_CLUSTER_ROLES" - T1098.006
+	//   "MULTI_STAGE_CHANNELS" - T1104
 	//   "INGRESS_TOOL_TRANSFER" - T1105
 	//   "NATIVE_API" - T1106
 	//   "BRUTE_FORCE" - T1110
 	//   "SHARED_MODULES" - T1129
+	//   "DATA_ENCODING" - T1132
+	//   "STANDARD_ENCODING" - T1132.001
 	//   "ACCESS_TOKEN_MANIPULATION" - T1134
 	//   "TOKEN_IMPERSONATION_OR_THEFT" - T1134.001
+	//   "CREATE_ACCOUNT" - T1136
+	//   "LOCAL_ACCOUNT" - T1136.001
 	//   "EXPLOIT_PUBLIC_FACING_APPLICATION" - T1190
 	//   "USER_EXECUTION" - T1204
 	//   "DOMAIN_POLICY_MODIFICATION" - T1484
 	//   "DATA_DESTRUCTION" - T1485
 	//   "SERVICE_STOP" - T1489
 	//   "INHIBIT_SYSTEM_RECOVERY" - T1490
+	//   "FIRMWARE_CORRUPTION" - T1495
 	//   "RESOURCE_HIJACKING" - T1496
 	//   "NETWORK_DENIAL_OF_SERVICE" - T1498
 	//   "CLOUD_SERVICE_DISCOVERY" - T1526
@@ -9134,11 +9252,17 @@ type MitreAttack struct {
 	//   "STEAL_WEB_SESSION_COOKIE" - T1539
 	//   "CREATE_OR_MODIFY_SYSTEM_PROCESS" - T1543
 	//   "EVENT_TRIGGERED_EXECUTION" - T1546
+	//   "BOOT_OR_LOGON_AUTOSTART_EXECUTION" - T1547
+	//   "KERNEL_MODULES_AND_EXTENSIONS" - T1547.006
 	//   "ABUSE_ELEVATION_CONTROL_MECHANISM" - T1548
 	//   "UNSECURED_CREDENTIALS" - T1552
+	//   "COMPROMISE_HOST_SOFTWARE_BINARY" - T1554
 	//   "MODIFY_AUTHENTICATION_PROCESS" - T1556
 	//   "IMPAIR_DEFENSES" - T1562
 	//   "DISABLE_OR_MODIFY_TOOLS" - T1562.001
+	//   "HIDE_ARTIFACTS" - T1564
+	//   "HIDDEN_FILES_AND_DIRECTORIES" - T1564.001
+	//   "HIDDEN_USERS" - T1564.002
 	//   "EXFILTRATION_OVER_WEB_SERVICE" - T1567
 	//   "EXFILTRATION_TO_CLOUD_STORAGE" - T1567.002
 	//   "DYNAMIC_RESOLUTION" - T1568
@@ -9149,6 +9273,7 @@ type MitreAttack struct {
 	//   "OBTAIN_CAPABILITIES" - T1588
 	//   "ACTIVE_SCANNING" - T1595
 	//   "SCANNING_IP_BLOCKS" - T1595.001
+	//   "STAGE_CAPABILITIES" - T1608
 	//   "CONTAINER_ADMINISTRATION_COMMAND" - T1609
 	//   "DEPLOY_CONTAINER" - T1610
 	//   "ESCAPE_TO_HOST" - T1611

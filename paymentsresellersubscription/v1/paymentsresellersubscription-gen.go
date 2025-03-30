@@ -1159,6 +1159,37 @@ func (s GoogleCloudPaymentsResellerSubscriptionV1PromotionIntroductoryPricingDet
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudPaymentsResellerSubscriptionV1ResumeSubscriptionRequest: Request
+// to resume a suspended subscription.
+type GoogleCloudPaymentsResellerSubscriptionV1ResumeSubscriptionRequest struct {
+}
+
+// GoogleCloudPaymentsResellerSubscriptionV1ResumeSubscriptionResponse:
+// Response that contains the resumed subscription.
+type GoogleCloudPaymentsResellerSubscriptionV1ResumeSubscriptionResponse struct {
+	// Subscription: The resumed subscription resource.
+	Subscription *GoogleCloudPaymentsResellerSubscriptionV1Subscription `json:"subscription,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "Subscription") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Subscription") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudPaymentsResellerSubscriptionV1ResumeSubscriptionResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudPaymentsResellerSubscriptionV1ResumeSubscriptionResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudPaymentsResellerSubscriptionV1ServicePeriod: A description of
 // what time period or moment in time the product or service is being delivered
 // over.
@@ -1595,6 +1626,37 @@ type GoogleCloudPaymentsResellerSubscriptionV1SubscriptionUpgradeDowngradeDetail
 
 func (s GoogleCloudPaymentsResellerSubscriptionV1SubscriptionUpgradeDowngradeDetails) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudPaymentsResellerSubscriptionV1SubscriptionUpgradeDowngradeDetails
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudPaymentsResellerSubscriptionV1SuspendSubscriptionRequest: Request
+// to suspend a subscription.
+type GoogleCloudPaymentsResellerSubscriptionV1SuspendSubscriptionRequest struct {
+}
+
+// GoogleCloudPaymentsResellerSubscriptionV1SuspendSubscriptionResponse:
+// Response that contains the suspended subscription.
+type GoogleCloudPaymentsResellerSubscriptionV1SuspendSubscriptionResponse struct {
+	// Subscription: The suspended subscription resource.
+	Subscription *GoogleCloudPaymentsResellerSubscriptionV1Subscription `json:"subscription,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "Subscription") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Subscription") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudPaymentsResellerSubscriptionV1SuspendSubscriptionResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudPaymentsResellerSubscriptionV1SuspendSubscriptionResponse
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -2925,6 +2987,220 @@ func (c *PartnersSubscriptionsProvisionCall) Do(opts ...googleapi.CallOption) (*
 		return nil, err
 	}
 	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "paymentsresellersubscription.partners.subscriptions.provision", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type PartnersSubscriptionsResumeCall struct {
+	s                                                                  *Service
+	name                                                               string
+	googlecloudpaymentsresellersubscriptionv1resumesubscriptionrequest *GoogleCloudPaymentsResellerSubscriptionV1ResumeSubscriptionRequest
+	urlParams_                                                         gensupport.URLParams
+	ctx_                                                               context.Context
+	header_                                                            http.Header
+}
+
+// Resume: Resumes a suspended subscription. The new billing cycle will start
+// at the time of the request. It should be called directly by the partner
+// using service accounts.
+//
+//   - name: The name of the subscription resource to be resumed. It will have
+//     the format of "partners/{partner_id}/subscriptions/{subscription_id}".
+func (r *PartnersSubscriptionsService) Resume(name string, googlecloudpaymentsresellersubscriptionv1resumesubscriptionrequest *GoogleCloudPaymentsResellerSubscriptionV1ResumeSubscriptionRequest) *PartnersSubscriptionsResumeCall {
+	c := &PartnersSubscriptionsResumeCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.googlecloudpaymentsresellersubscriptionv1resumesubscriptionrequest = googlecloudpaymentsresellersubscriptionv1resumesubscriptionrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *PartnersSubscriptionsResumeCall) Fields(s ...googleapi.Field) *PartnersSubscriptionsResumeCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *PartnersSubscriptionsResumeCall) Context(ctx context.Context) *PartnersSubscriptionsResumeCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *PartnersSubscriptionsResumeCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *PartnersSubscriptionsResumeCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googlecloudpaymentsresellersubscriptionv1resumesubscriptionrequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}:resume")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "paymentsresellersubscription.partners.subscriptions.resume", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "paymentsresellersubscription.partners.subscriptions.resume" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudPaymentsResellerSubscriptionV1ResumeSubscriptionResponse.ServerRe
+// sponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *PartnersSubscriptionsResumeCall) Do(opts ...googleapi.CallOption) (*GoogleCloudPaymentsResellerSubscriptionV1ResumeSubscriptionResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudPaymentsResellerSubscriptionV1ResumeSubscriptionResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "paymentsresellersubscription.partners.subscriptions.resume", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type PartnersSubscriptionsSuspendCall struct {
+	s                                                                   *Service
+	name                                                                string
+	googlecloudpaymentsresellersubscriptionv1suspendsubscriptionrequest *GoogleCloudPaymentsResellerSubscriptionV1SuspendSubscriptionRequest
+	urlParams_                                                          gensupport.URLParams
+	ctx_                                                                context.Context
+	header_                                                             http.Header
+}
+
+// Suspend: Suspends a subscription. Contract terms may dictate if a prorated
+// refund will be issued upon suspension. It should be called directly by the
+// partner using service accounts.
+//
+//   - name: The name of the subscription resource to be suspended. It will have
+//     the format of "partners/{partner_id}/subscriptions/{subscription_id}".
+func (r *PartnersSubscriptionsService) Suspend(name string, googlecloudpaymentsresellersubscriptionv1suspendsubscriptionrequest *GoogleCloudPaymentsResellerSubscriptionV1SuspendSubscriptionRequest) *PartnersSubscriptionsSuspendCall {
+	c := &PartnersSubscriptionsSuspendCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.googlecloudpaymentsresellersubscriptionv1suspendsubscriptionrequest = googlecloudpaymentsresellersubscriptionv1suspendsubscriptionrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *PartnersSubscriptionsSuspendCall) Fields(s ...googleapi.Field) *PartnersSubscriptionsSuspendCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *PartnersSubscriptionsSuspendCall) Context(ctx context.Context) *PartnersSubscriptionsSuspendCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *PartnersSubscriptionsSuspendCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *PartnersSubscriptionsSuspendCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googlecloudpaymentsresellersubscriptionv1suspendsubscriptionrequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}:suspend")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "paymentsresellersubscription.partners.subscriptions.suspend", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "paymentsresellersubscription.partners.subscriptions.suspend" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudPaymentsResellerSubscriptionV1SuspendSubscriptionResponse.ServerR
+// esponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *PartnersSubscriptionsSuspendCall) Do(opts ...googleapi.CallOption) (*GoogleCloudPaymentsResellerSubscriptionV1SuspendSubscriptionResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudPaymentsResellerSubscriptionV1SuspendSubscriptionResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "paymentsresellersubscription.partners.subscriptions.suspend", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 

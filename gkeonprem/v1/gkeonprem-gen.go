@@ -3897,6 +3897,8 @@ type VmwareAdminCluster struct {
 	CreateTime string `json:"createTime,omitempty"`
 	// Description: A human readable description of this VMware admin cluster.
 	Description string `json:"description,omitempty"`
+	// EnableAdvancedCluster: Enable advanced cluster.
+	EnableAdvancedCluster bool `json:"enableAdvancedCluster,omitempty"`
 	// Endpoint: Output only. The DNS name of VMware admin cluster's API server.
 	Endpoint string `json:"endpoint,omitempty"`
 	// Etag: This checksum is computed by the server based on the value of other
@@ -4450,6 +4452,8 @@ type VmwareCluster struct {
 	Description string `json:"description,omitempty"`
 	// DisableBundledIngress: Disable bundled ingress.
 	DisableBundledIngress bool `json:"disableBundledIngress,omitempty"`
+	// EnableAdvancedCluster: Enable advanced cluster.
+	EnableAdvancedCluster bool `json:"enableAdvancedCluster,omitempty"`
 	// EnableControlPlaneV2: Enable control plane V2. Default to false.
 	EnableControlPlaneV2 bool `json:"enableControlPlaneV2,omitempty"`
 	// Endpoint: Output only. The DNS name of VMware user cluster's API server.
@@ -5506,6 +5510,14 @@ type ProjectsLocationsListCall struct {
 func (r *ProjectsLocationsService) List(name string) *ProjectsLocationsListCall {
 	c := &ProjectsLocationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
+	return c
+}
+
+// ExtraLocationTypes sets the optional parameter "extraLocationTypes": A list
+// of extra location types that should be used as conditions for controlling
+// the visibility of the locations.
+func (c *ProjectsLocationsListCall) ExtraLocationTypes(extraLocationTypes ...string) *ProjectsLocationsListCall {
+	c.urlParams_.SetMulti("extraLocationTypes", append([]string{}, extraLocationTypes...))
 	return c
 }
 

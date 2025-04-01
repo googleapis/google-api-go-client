@@ -440,7 +440,9 @@ type Instance struct {
 	//   "CREATING" - The instance is being created.
 	//   "ACTIVE" - The instance is available for use.
 	//   "DELETING" - The instance is being deleted.
-	//   "FAILED" - The instance is not usable.
+	//   "FAILED" - LINT.IfChange The instance is not usable.
+	// LINT.ThenChange(//depot/google3/configs/monitoring/boq/daos_clh/cloud_precomp
+	// utes_lib.py)
 	//   "UPGRADING" - The instance is being upgraded.
 	//   "REPAIRING" - The instance is being repaired. This should only be used by
 	// instances using the `PERSISTENT` deployment type.
@@ -959,6 +961,14 @@ type ProjectsLocationsListCall struct {
 func (r *ProjectsLocationsService) List(name string) *ProjectsLocationsListCall {
 	c := &ProjectsLocationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
+	return c
+}
+
+// ExtraLocationTypes sets the optional parameter "extraLocationTypes": A list
+// of extra location types that should be used as conditions for controlling
+// the visibility of the locations.
+func (c *ProjectsLocationsListCall) ExtraLocationTypes(extraLocationTypes ...string) *ProjectsLocationsListCall {
+	c.urlParams_.SetMulti("extraLocationTypes", append([]string{}, extraLocationTypes...))
 	return c
 }
 

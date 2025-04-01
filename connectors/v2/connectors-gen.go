@@ -2617,6 +2617,22 @@ func (r *ProjectsLocationsConnectionsActionsService) Get(name string) *ProjectsL
 	return c
 }
 
+// View sets the optional parameter "view": Specified view of the action
+// schema.
+//
+// Possible values:
+//
+//	"ACTION_SCHEMA_VIEW_UNSPECIFIED" - VIEW_UNSPECIFIED. The unset value.
+//
+// Defaults to BASIC View.
+//
+//	"ACTION_SCHEMA_VIEW_BASIC" - Return basic action schema.
+//	"ACTION_SCHEMA_VIEW_ENRICHED" - Return enriched action schema.
+func (c *ProjectsLocationsConnectionsActionsGetCall) View(view string) *ProjectsLocationsConnectionsActionsGetCall {
+	c.urlParams_.Set("view", view)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
 // details.

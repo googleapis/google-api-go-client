@@ -1813,6 +1813,10 @@ type Proto2FileDescriptorProto struct {
 	MessageType []*Proto2DescriptorProto `json:"messageType,omitempty"`
 	// Name: file name, relative to root of source tree
 	Name string `json:"name,omitempty"`
+	// OptionDependency: Names of files imported by this file purely for the
+	// purpose of providing option extensions. These are excluded from the
+	// dependency list above.
+	OptionDependency []string `json:"optionDependency,omitempty"`
 	// Package: e.g. "foo", "foo.bar", etc.
 	Package string `json:"package,omitempty"`
 	// Syntax: The syntax of the proto file. The supported values are "proto2",

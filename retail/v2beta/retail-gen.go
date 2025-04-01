@@ -5117,7 +5117,7 @@ type GoogleCloudRetailV2betaLocalInventory struct {
 	// an INVALID_ARGUMENT error is returned. All the elements must be distinct.
 	// Otherwise, an INVALID_ARGUMENT error is returned.
 	FulfillmentTypes []string `json:"fulfillmentTypes,omitempty"`
-	// PlaceId: Required. The place ID for the current set of inventory
+	// PlaceId: Optional. The place ID for the current set of inventory
 	// information.
 	PlaceId string `json:"placeId,omitempty"`
 	// PriceInfo: Optional. Product price and cost information. Google Merchant

@@ -1313,6 +1313,8 @@ type ConnectorInfraConfig struct {
 	// ProvisionCloudSpanner: Indicate whether cloud spanner is required for
 	// connector job.
 	ProvisionCloudSpanner bool `json:"provisionCloudSpanner,omitempty"`
+	// ProvisionMemstore: Indicate whether memstore is required for connector job.
+	ProvisionMemstore bool `json:"provisionMemstore,omitempty"`
 	// RatelimitThreshold: Max QPS supported by the connector version before
 	// throttling of requests.
 	RatelimitThreshold int64 `json:"ratelimitThreshold,omitempty,string"`
@@ -3509,6 +3511,8 @@ type ListManagedZonesResponse struct {
 	ManagedZones []*ManagedZone `json:"managedZones,omitempty"`
 	// NextPageToken: Next page token.
 	NextPageToken string `json:"nextPageToken,omitempty"`
+	// Unreachable: Locations that could not be reached.
+	Unreachable []string `json:"unreachable,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
@@ -6347,6 +6351,14 @@ type ProjectsLocationsListCall struct {
 func (r *ProjectsLocationsService) List(name string) *ProjectsLocationsListCall {
 	c := &ProjectsLocationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
+	return c
+}
+
+// ExtraLocationTypes sets the optional parameter "extraLocationTypes": A list
+// of extra location types that should be used as conditions for controlling
+// the visibility of the locations.
+func (c *ProjectsLocationsListCall) ExtraLocationTypes(extraLocationTypes ...string) *ProjectsLocationsListCall {
+	c.urlParams_.SetMulti("extraLocationTypes", append([]string{}, extraLocationTypes...))
 	return c
 }
 
@@ -12407,6 +12419,13 @@ func (c *ProjectsLocationsGlobalManagedZonesListCall) PageSize(pageSize int64) *
 // PageToken sets the optional parameter "pageToken": Page token.
 func (c *ProjectsLocationsGlobalManagedZonesListCall) PageToken(pageToken string) *ProjectsLocationsGlobalManagedZonesListCall {
 	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// ReturnPartialSuccess sets the optional parameter "returnPartialSuccess": If
+// true, allow partial responses for multi-regional Aggregated List requests.
+func (c *ProjectsLocationsGlobalManagedZonesListCall) ReturnPartialSuccess(returnPartialSuccess bool) *ProjectsLocationsGlobalManagedZonesListCall {
+	c.urlParams_.Set("returnPartialSuccess", fmt.Sprint(returnPartialSuccess))
 	return c
 }
 

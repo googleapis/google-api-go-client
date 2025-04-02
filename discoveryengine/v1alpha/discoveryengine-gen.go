@@ -1255,6 +1255,14 @@ type ApiservingMediaResponseInfo struct {
 	// for blobstore2. This should be of the form
 	// uploader_service.DataStorageTransform.
 	DataStorageTransform string `json:"dataStorageTransform,omitempty"`
+	// DestinationBlobMintIndex: For the first notification of a |diff_encoded|
+	// HttpRequestInfo, this is the index of the blob mint that Scotty should use
+	// when writing the resulting blob. This field is optional. It's not required
+	// ever, even if `original_object_blob_mint_index` is set. In situations like
+	// that, we will use the destination blob's mint for the destination blob and
+	// regular blob ACL checks for the original object. Note: This field is only
+	// for use by Drive API for diff uploads.
+	DestinationBlobMintIndex int64 `json:"destinationBlobMintIndex,omitempty"`
 	// DynamicDropTarget: Specifies the Scotty Drop Target to use for uploads. If
 	// present in a media response, Scotty does not upload to a standard drop zone.
 	// Instead, Scotty saves the upload directly to the location specified in this
@@ -1276,6 +1284,14 @@ type ApiservingMediaResponseInfo struct {
 	// (//depot/google3/gdata/rosy/proto/data.proto?l=413). See
 	// go/esf-scotty-diff-upload for more information.
 	MediaForDiff *GdataMedia `json:"mediaForDiff,omitempty"`
+	// OriginalObjectBlobMintIndex: For the first notification of a |diff_encoded|
+	// HttpRequestInfo, this is the index of the blob mint that Scotty should use
+	// when reading the original blob. This field is optional. It's not required
+	// ever, even if `destination_blob_mint_index` is set. In situations like that,
+	// we will use the destination blob's mint for the destination blob and regular
+	// blob ACL checks for the original object. Note: This field is only for use by
+	// Drive API for diff uploads.
+	OriginalObjectBlobMintIndex int64 `json:"originalObjectBlobMintIndex,omitempty"`
 	// RequestClass: Request class to use for all Blobstore operations for this
 	// request.
 	//
@@ -10405,6 +10421,8 @@ type GoogleCloudDiscoveryengineV1alphaDataConnector struct {
 	// preventing the request from reaching downstream services (except for some
 	// connector types).
 	RealtimeState string `json:"realtimeState,omitempty"`
+	// RealtimeSyncConfig: Optional. The configuration for realtime sync.
+	RealtimeSyncConfig *GoogleCloudDiscoveryengineV1alphaDataConnectorRealtimeSyncConfig `json:"realtimeSyncConfig,omitempty"`
 	// RefreshInterval: Required. The refresh interval for data sync. If duration
 	// is set to 0, the data will be synced in real time. The streaming feature is
 	// not supported yet. The minimum is 30 minutes and maximum is 7 days.
@@ -10463,6 +10481,34 @@ type GoogleCloudDiscoveryengineV1alphaDataConnector struct {
 
 func (s GoogleCloudDiscoveryengineV1alphaDataConnector) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDiscoveryengineV1alphaDataConnector
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1alphaDataConnectorRealtimeSyncConfig: The
+// configuration for realtime sync to store additional params for realtime
+// sync.
+type GoogleCloudDiscoveryengineV1alphaDataConnectorRealtimeSyncConfig struct {
+	// RealtimeSyncSecret: Optional. The ID of the Secret Manager secret used for
+	// webhook secret.
+	RealtimeSyncSecret string `json:"realtimeSyncSecret,omitempty"`
+	// WebhookUri: Optional. Webhook url for the connector to specify additional
+	// params for realtime sync.
+	WebhookUri string `json:"webhookUri,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "RealtimeSyncSecret") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "RealtimeSyncSecret") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1alphaDataConnectorRealtimeSyncConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1alphaDataConnectorRealtimeSyncConfig
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -28822,10 +28868,10 @@ func (r *ProjectsLocationsCollectionsService) UpdateDataConnector(name string, g
 // UpdateMask sets the optional parameter "updateMask": Indicates which fields
 // in the provided DataConnector to update. Supported field paths include: -
 // refresh_interval - params - auto_run_disabled - action_config -
-// destination_configs - blocking_reasons Note: Support for these fields may
-// vary depending on the connector type. For example, not all connectors
-// support `destination_configs`. If an unsupported or unknown field path is
-// provided, the request will return an INVALID_ARGUMENT error.
+// destination_configs - blocking_reasons - sync_mode Note: Support for these
+// fields may vary depending on the connector type. For example, not all
+// connectors support `destination_configs`. If an unsupported or unknown field
+// path is provided, the request will return an INVALID_ARGUMENT error.
 func (c *ProjectsLocationsCollectionsUpdateDataConnectorCall) UpdateMask(updateMask string) *ProjectsLocationsCollectionsUpdateDataConnectorCall {
 	c.urlParams_.Set("updateMask", updateMask)
 	return c

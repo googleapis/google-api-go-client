@@ -6,7 +6,7 @@
 
 // Package slides provides access to the Google Slides API.
 //
-// For product documentation, see: https://developers.google.com/slides/
+// For product documentation, see: https://developers.google.com/workspace/slides/
 //
 // # Library status
 //
@@ -3765,7 +3765,8 @@ func (s *Shadow) UnmarshalJSON(data []byte) error {
 
 // Shape: A PageElement kind representing a generic shape that doesn't have a
 // more specific classification. For more information, see Size and position
-// page elements (https://developers.google.com/slides/api/guides/transform).
+// page elements
+// (https://developers.google.com/workspace/slides/api/guides/transform).
 type Shape struct {
 	// Placeholder: Placeholders are page elements that inherit from corresponding
 	// placeholders on layouts and masters. If set, the shape is a placeholder
@@ -4408,6 +4409,11 @@ type SubstringMatchCriteria struct {
 	// MatchCase: Indicates whether the search should respect case: - `True`: the
 	// search is case sensitive. - `False`: the search is case insensitive.
 	MatchCase bool `json:"matchCase,omitempty"`
+	// SearchByRegex: Optional. True if the find value should be treated as a
+	// regular expression. Any backslashes in the pattern should be escaped. -
+	// `True`: the search text is treated as a regular expressions. - `False`: the
+	// search text is treated as a substring for matching.
+	SearchByRegex bool `json:"searchByRegex,omitempty"`
 	// Text: The text to search for in the shape or table.
 	Text string `json:"text,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "MatchCase") to

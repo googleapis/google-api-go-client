@@ -6,7 +6,7 @@
 
 // Package alertcenter provides access to the Google Workspace Alert Center API.
 //
-// For product documentation, see: https://developers.google.com/admin-sdk/alertcenter/
+// For product documentation, see: https://developers.google.com/workspace/admin/alertcenter/
 //
 // # Library status
 //
@@ -487,7 +487,7 @@ type Alert struct {
 	// Type: Required. The type of the alert. This is output only after alert is
 	// created. For a list of available alert types see Google Workspace Alert
 	// types
-	// (https://developers.google.com/admin-sdk/alertcenter/reference/alert-types).
+	// (https://developers.google.com/workspace/admin/alertcenter/reference/alert-types).
 	Type string `json:"type,omitempty"`
 	// UpdateTime: Output only. The time this alert was last updated.
 	UpdateTime string `json:"updateTime,omitempty"`
@@ -1518,7 +1518,7 @@ func (s MergeInfo) MarshalJSON() ([]byte, error) {
 
 // Notification: Settings for callback notifications. For more details see
 // Google Workspace Alert Notification
-// (https://developers.google.com/admin-sdk/alertcenter/guides/notifications).
+// (https://developers.google.com/workspace/admin/alertcenter/guides/notifications).
 type Notification struct {
 	// CloudPubsubTopic: A Google Cloud Pub/sub topic destination.
 	CloudPubsubTopic *CloudPubsubTopic `json:"cloudPubsubTopic,omitempty"`
@@ -1542,7 +1542,8 @@ func (s Notification) MarshalJSON() ([]byte, error) {
 
 // PhishingSpike: Alert for a spike in user reported phishing. *Warning*: This
 // type has been deprecated. Use MailPhishing
-// (/admin-sdk/alertcenter/reference/rest/v1beta1/MailPhishing) instead.
+// (https://developers.google.com/workspace/admin/alertcenter/reference/rest/v1beta1/MailPhishing)
+// instead.
 type PhishingSpike struct {
 	// DomainId: The domain ID.
 	DomainId *DomainId `json:"domainId,omitempty"`
@@ -3003,9 +3004,9 @@ func (c *AlertsListCall) CustomerId(customerId string) *AlertsListCall {
 
 // Filter sets the optional parameter "filter": A query string for filtering
 // alert results. For more details, see Query filters
-// (https://developers.google.com/admin-sdk/alertcenter/guides/query-filters)
+// (https://developers.google.com/workspace/admin/alertcenter/guides/query-filters)
 // and Supported query filter fields
-// (https://developers.google.com/admin-sdk/alertcenter/reference/filter-fields#alerts.list).
+// (https://developers.google.com/workspace/admin/alertcenter/reference/filter-fields#alerts.list).
 func (c *AlertsListCall) Filter(filter string) *AlertsListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
@@ -3403,9 +3404,9 @@ func (c *AlertsFeedbackListCall) CustomerId(customerId string) *AlertsFeedbackLi
 
 // Filter sets the optional parameter "filter": A query string for filtering
 // alert feedback results. For more details, see Query filters
-// (https://developers.google.com/admin-sdk/alertcenter/guides/query-filters)
+// (https://developers.google.com/workspace/admin/alertcenter/guides/query-filters)
 // and Supported query filter fields
-// (https://developers.google.com/admin-sdk/alertcenter/reference/filter-fields#alerts.feedback.list).
+// (https://developers.google.com/workspace/admin/alertcenter/reference/filter-fields#alerts.feedback.list).
 func (c *AlertsFeedbackListCall) Filter(filter string) *AlertsFeedbackListCall {
 	c.urlParams_.Set("filter", filter)
 	return c

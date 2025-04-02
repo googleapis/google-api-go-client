@@ -6,7 +6,7 @@
 
 // Package docs provides access to the Google Docs API.
 //
-// For product documentation, see: https://developers.google.com/docs/
+// For product documentation, see: https://developers.google.com/workspace/docs/
 //
 // # Library status
 //
@@ -4570,6 +4570,11 @@ type SubstringMatchCriteria struct {
 	// MatchCase: Indicates whether the search should respect case: - `True`: the
 	// search is case sensitive. - `False`: the search is case insensitive.
 	MatchCase bool `json:"matchCase,omitempty"`
+	// SearchByRegex: Optional. True if the find value should be treated as a
+	// regular expression. Any backslashes in the pattern should be escaped. -
+	// `True`: the search text is treated as a regular expressions. - `False`: the
+	// search text is treated as a substring for matching.
+	SearchByRegex bool `json:"searchByRegex,omitempty"`
 	// Text: The text to search for in the document.
 	Text string `json:"text,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "MatchCase") to

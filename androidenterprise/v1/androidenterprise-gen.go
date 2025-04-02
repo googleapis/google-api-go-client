@@ -1331,7 +1331,6 @@ func (s EnterpriseAuthenticationAppLinkConfig) MarshalJSON() ([]byte, error) {
 }
 
 // EnterpriseUpgradeEvent: An event generated when an enterprise is upgraded.
-// **Note:** This feature is not generally available.
 type EnterpriseUpgradeEvent struct {
 	// UpgradeState: The upgrade state.
 	//
@@ -2152,8 +2151,7 @@ type Notification struct {
 	// EnterpriseId: The ID of the enterprise for which the notification is sent.
 	// This will always be present.
 	EnterpriseId string `json:"enterpriseId,omitempty"`
-	// EnterpriseUpgradeEvent: Notifications about enterprise upgrade. **Note:**
-	// This feature is not generally available.
+	// EnterpriseUpgradeEvent: Notifications about enterprise upgrade.
 	EnterpriseUpgradeEvent *EnterpriseUpgradeEvent `json:"enterpriseUpgradeEvent,omitempty"`
 	// InstallFailureEvent: Notifications about an app installation failure.
 	InstallFailureEvent *InstallFailureEvent `json:"installFailureEvent,omitempty"`
@@ -2177,8 +2175,7 @@ type Notification struct {
 	// change.
 	//   "newDevice" - Notification about a new device.
 	//   "deviceReportUpdate" - Notification about an updated device report.
-	//   "enterpriseUpgrade" - Notification about an enterprise upgrade. **Note:**
-	// This feature is not generally available.
+	//   "enterpriseUpgrade" - Notification about an enterprise upgrade.
 	NotificationType string `json:"notificationType,omitempty"`
 	// ProductApprovalEvent: Notifications about changes to a product's approval
 	// status.

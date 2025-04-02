@@ -2573,8 +2573,9 @@ type Enterprise struct {
 	// report.
 	//   "COMMAND" - A notification sent when a device command has completed.
 	//   "USAGE_LOGS" - A notification sent when device sends BatchUsageLogEvents.
-	//   "ENTERPRISE_UPGRADE" - A notification sent when an enterprise is
-	// upgraded.Note: This feature is not generally available.
+	//   "ENTERPRISE_UPGRADE" - A notification sent for an enterprise upgrade. An
+	// enterprise upgrade is a process that upgrades a managed Google Play Accounts
+	// enterprise to a managed Google domain.
 	EnabledNotificationTypes []string `json:"enabledNotificationTypes,omitempty"`
 	// EnterpriseDisplayName: The name of the enterprise displayed to users. This
 	// field has a maximum length of 100 characters.

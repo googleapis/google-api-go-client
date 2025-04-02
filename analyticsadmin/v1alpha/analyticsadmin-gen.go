@@ -227,6 +227,7 @@ func NewPropertiesService(s *Service) *PropertiesService {
 	rs.FirebaseLinks = NewPropertiesFirebaseLinksService(s)
 	rs.GoogleAdsLinks = NewPropertiesGoogleAdsLinksService(s)
 	rs.KeyEvents = NewPropertiesKeyEventsService(s)
+	rs.ReportingDataAnnotations = NewPropertiesReportingDataAnnotationsService(s)
 	rs.RollupPropertySourceLinks = NewPropertiesRollupPropertySourceLinksService(s)
 	rs.SearchAds360Links = NewPropertiesSearchAds360LinksService(s)
 	rs.SubpropertyEventFilters = NewPropertiesSubpropertyEventFiltersService(s)
@@ -267,6 +268,8 @@ type PropertiesService struct {
 	GoogleAdsLinks *PropertiesGoogleAdsLinksService
 
 	KeyEvents *PropertiesKeyEventsService
+
+	ReportingDataAnnotations *PropertiesReportingDataAnnotationsService
 
 	RollupPropertySourceLinks *PropertiesRollupPropertySourceLinksService
 
@@ -464,6 +467,15 @@ func NewPropertiesKeyEventsService(s *Service) *PropertiesKeyEventsService {
 }
 
 type PropertiesKeyEventsService struct {
+	s *Service
+}
+
+func NewPropertiesReportingDataAnnotationsService(s *Service) *PropertiesReportingDataAnnotationsService {
+	rs := &PropertiesReportingDataAnnotationsService{s: s}
+	return rs
+}
+
+type PropertiesReportingDataAnnotationsService struct {
 	s *Service
 }
 
@@ -2326,6 +2338,9 @@ type GoogleAnalyticsAdminV1alphaChangeHistoryChangeChangeHistoryResource struct 
 	MeasurementProtocolSecret *GoogleAnalyticsAdminV1alphaMeasurementProtocolSecret `json:"measurementProtocolSecret,omitempty"`
 	// Property: A snapshot of a Property resource in change history.
 	Property *GoogleAnalyticsAdminV1alphaProperty `json:"property,omitempty"`
+	// ReportingDataAnnotation: A snapshot of a ReportingDataAnnotation resource in
+	// change history.
+	ReportingDataAnnotation *GoogleAnalyticsAdminV1alphaReportingDataAnnotation `json:"reportingDataAnnotation,omitempty"`
 	// SearchAds360Link: A snapshot of a SearchAds360Link resource in change
 	// history.
 	SearchAds360Link *GoogleAnalyticsAdminV1alphaSearchAds360Link `json:"searchAds360Link,omitempty"`
@@ -4998,6 +5013,35 @@ func (s GoogleAnalyticsAdminV1alphaListPropertiesResponse) MarshalJSON() ([]byte
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GoogleAnalyticsAdminV1alphaListReportingDataAnnotationsResponse: Response
+// message for ListReportingDataAnnotation RPC.
+type GoogleAnalyticsAdminV1alphaListReportingDataAnnotationsResponse struct {
+	// NextPageToken: A token, which can be sent as `page_token` to retrieve the
+	// next page. If this field is omitted, there are no subsequent pages.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+	// ReportingDataAnnotations: List of Reporting Data Annotations.
+	ReportingDataAnnotations []*GoogleAnalyticsAdminV1alphaReportingDataAnnotation `json:"reportingDataAnnotations,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "NextPageToken") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleAnalyticsAdminV1alphaListReportingDataAnnotationsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleAnalyticsAdminV1alphaListReportingDataAnnotationsResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GoogleAnalyticsAdminV1alphaListRollupPropertySourceLinksResponse: Response
 // message for ListRollupPropertySourceLinks RPC.
 type GoogleAnalyticsAdminV1alphaListRollupPropertySourceLinksResponse struct {
@@ -5591,6 +5635,93 @@ func (s GoogleAnalyticsAdminV1alphaReorderEventEditRulesRequest) MarshalJSON() (
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GoogleAnalyticsAdminV1alphaReportingDataAnnotation: A Reporting Data
+// Annotation is a comment connected to certain dates for reporting data.
+type GoogleAnalyticsAdminV1alphaReportingDataAnnotation struct {
+	// AnnotationDate: If set, the Reporting Data Annotation is for a specific date
+	// represented by this field. The date must be a valid date with year, month
+	// and day set. The date may be in the past, present, or future.
+	AnnotationDate *GoogleTypeDate `json:"annotationDate,omitempty"`
+	// AnnotationDateRange: If set, the Reporting Data Annotation is for a range of
+	// dates represented by this field.
+	AnnotationDateRange *GoogleAnalyticsAdminV1alphaReportingDataAnnotationDateRange `json:"annotationDateRange,omitempty"`
+	// Color: Required. The color used for display of this Reporting Data
+	// Annotation.
+	//
+	// Possible values:
+	//   "COLOR_UNSPECIFIED" - Color unknown or not specified.
+	//   "PURPLE" - Purple color.
+	//   "BROWN" - Brown color.
+	//   "BLUE" - Blue color.
+	//   "GREEN" - Green color.
+	//   "RED" - Red color.
+	//   "CYAN" - Cyan color.
+	//   "ORANGE" - Orange color. (Only used for system-generated annotations)
+	Color string `json:"color,omitempty"`
+	// Description: Optional. Description for this Reporting Data Annotation.
+	Description string `json:"description,omitempty"`
+	// Name: Required. Identifier. Resource name of this Reporting Data Annotation.
+	// Format:
+	// 'properties/{property_id}/reportingDataAnnotations/{reporting_data_annotation
+	// }' Format: 'properties/123/reportingDataAnnotations/456'
+	Name string `json:"name,omitempty"`
+	// SystemGenerated: Output only. If true, this annotation was generated by the
+	// Google Analytics system. System-generated annotations cannot be updated or
+	// deleted.
+	SystemGenerated bool `json:"systemGenerated,omitempty"`
+	// Title: Required. Human-readable title for this Reporting Data Annotation.
+	Title string `json:"title,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "AnnotationDate") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AnnotationDate") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleAnalyticsAdminV1alphaReportingDataAnnotation) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleAnalyticsAdminV1alphaReportingDataAnnotation
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleAnalyticsAdminV1alphaReportingDataAnnotationDateRange: Represents a
+// Reporting Data Annotation's date range, both start and end dates are
+// inclusive. Time zones are based on the parent property.
+type GoogleAnalyticsAdminV1alphaReportingDataAnnotationDateRange struct {
+	// EndDate: Required. The end date for this range. Must be a valid date with
+	// year, month, and day set. This date must be greater than or equal to the
+	// start date.
+	EndDate *GoogleTypeDate `json:"endDate,omitempty"`
+	// StartDate: Required. The start date for this range. Must be a valid date
+	// with year, month, and day set. The date may be in the past, present, or
+	// future.
+	StartDate *GoogleTypeDate `json:"startDate,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "EndDate") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "EndDate") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleAnalyticsAdminV1alphaReportingDataAnnotationDateRange) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleAnalyticsAdminV1alphaReportingDataAnnotationDateRange
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GoogleAnalyticsAdminV1alphaRollupPropertySourceLink: A link that references
 // a source property under the parent rollup property.
 type GoogleAnalyticsAdminV1alphaRollupPropertySourceLink struct {
@@ -5932,6 +6063,7 @@ type GoogleAnalyticsAdminV1alphaSearchChangeHistoryEventsRequest struct {
 	//   "EVENT_CREATE_RULE" - EventCreateRule resource
 	//   "KEY_EVENT" - KeyEvent resource
 	//   "CALCULATED_METRIC" - CalculatedMetric resource
+	//   "REPORTING_DATA_ANNOTATION" - ReportingDataAnnotation resource
 	ResourceType []string `json:"resourceType,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Action") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -6239,6 +6371,44 @@ func (s GoogleAnalyticsAdminV1alphaUpdateAccessBindingRequest) MarshalJSON() ([]
 type GoogleProtobufEmpty struct {
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
+}
+
+// GoogleTypeDate: Represents a whole or partial calendar date, such as a
+// birthday. The time of day and time zone are either specified elsewhere or
+// are insignificant. The date is relative to the Gregorian Calendar. This can
+// represent one of the following: * A full date, with non-zero year, month,
+// and day values. * A month and day, with a zero year (for example, an
+// anniversary). * A year on its own, with a zero month and a zero day. * A
+// year and month, with a zero day (for example, a credit card expiration
+// date). Related types: * google.type.TimeOfDay * google.type.DateTime *
+// google.protobuf.Timestamp
+type GoogleTypeDate struct {
+	// Day: Day of a month. Must be from 1 to 31 and valid for the year and month,
+	// or 0 to specify a year by itself or a year and month where the day isn't
+	// significant.
+	Day int64 `json:"day,omitempty"`
+	// Month: Month of a year. Must be from 1 to 12, or 0 to specify a year without
+	// a month and day.
+	Month int64 `json:"month,omitempty"`
+	// Year: Year of the date. Must be from 1 to 9999, or 0 to specify a date
+	// without a year.
+	Year int64 `json:"year,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Day") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Day") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleTypeDate) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleTypeDate
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type AccountSummariesListCall struct {
@@ -23042,6 +23212,614 @@ func (c *PropertiesKeyEventsPatchCall) Do(opts ...googleapi.CallOption) (*Google
 		return nil, err
 	}
 	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "analyticsadmin.properties.keyEvents.patch", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type PropertiesReportingDataAnnotationsCreateCall struct {
+	s                                                  *Service
+	parent                                             string
+	googleanalyticsadminv1alphareportingdataannotation *GoogleAnalyticsAdminV1alphaReportingDataAnnotation
+	urlParams_                                         gensupport.URLParams
+	ctx_                                               context.Context
+	header_                                            http.Header
+}
+
+// Create: Creates a Reporting Data Annotation.
+//
+//   - parent: The property for which to create a Reporting Data Annotation.
+//     Format: properties/property_id Example: properties/123.
+func (r *PropertiesReportingDataAnnotationsService) Create(parent string, googleanalyticsadminv1alphareportingdataannotation *GoogleAnalyticsAdminV1alphaReportingDataAnnotation) *PropertiesReportingDataAnnotationsCreateCall {
+	c := &PropertiesReportingDataAnnotationsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.googleanalyticsadminv1alphareportingdataannotation = googleanalyticsadminv1alphareportingdataannotation
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *PropertiesReportingDataAnnotationsCreateCall) Fields(s ...googleapi.Field) *PropertiesReportingDataAnnotationsCreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *PropertiesReportingDataAnnotationsCreateCall) Context(ctx context.Context) *PropertiesReportingDataAnnotationsCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *PropertiesReportingDataAnnotationsCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *PropertiesReportingDataAnnotationsCreateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googleanalyticsadminv1alphareportingdataannotation)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+parent}/reportingDataAnnotations")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "analyticsadmin.properties.reportingDataAnnotations.create", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "analyticsadmin.properties.reportingDataAnnotations.create" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleAnalyticsAdminV1alphaReportingDataAnnotation.ServerResponse.Header or
+// (if a response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *PropertiesReportingDataAnnotationsCreateCall) Do(opts ...googleapi.CallOption) (*GoogleAnalyticsAdminV1alphaReportingDataAnnotation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleAnalyticsAdminV1alphaReportingDataAnnotation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "analyticsadmin.properties.reportingDataAnnotations.create", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type PropertiesReportingDataAnnotationsDeleteCall struct {
+	s          *Service
+	name       string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Delete: Deletes a Reporting Data Annotation.
+//
+//   - name: Resource name of the Reporting Data Annotation to delete. Format:
+//     properties/property_id/reportingDataAnnotations/reporting_data_annotation
+//     Example: properties/123/reportingDataAnnotations/456.
+func (r *PropertiesReportingDataAnnotationsService) Delete(name string) *PropertiesReportingDataAnnotationsDeleteCall {
+	c := &PropertiesReportingDataAnnotationsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *PropertiesReportingDataAnnotationsDeleteCall) Fields(s ...googleapi.Field) *PropertiesReportingDataAnnotationsDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *PropertiesReportingDataAnnotationsDeleteCall) Context(ctx context.Context) *PropertiesReportingDataAnnotationsDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *PropertiesReportingDataAnnotationsDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *PropertiesReportingDataAnnotationsDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("DELETE", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "analyticsadmin.properties.reportingDataAnnotations.delete", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "analyticsadmin.properties.reportingDataAnnotations.delete" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleProtobufEmpty.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *PropertiesReportingDataAnnotationsDeleteCall) Do(opts ...googleapi.CallOption) (*GoogleProtobufEmpty, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleProtobufEmpty{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "analyticsadmin.properties.reportingDataAnnotations.delete", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type PropertiesReportingDataAnnotationsGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Lookup a single Reporting Data Annotation.
+//
+//   - name: Resource name of the Reporting Data Annotation to lookup. Format:
+//     properties/property_id/reportingDataAnnotations/reportingDataAnnotation
+//     Example: properties/123/reportingDataAnnotations/456.
+func (r *PropertiesReportingDataAnnotationsService) Get(name string) *PropertiesReportingDataAnnotationsGetCall {
+	c := &PropertiesReportingDataAnnotationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *PropertiesReportingDataAnnotationsGetCall) Fields(s ...googleapi.Field) *PropertiesReportingDataAnnotationsGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *PropertiesReportingDataAnnotationsGetCall) IfNoneMatch(entityTag string) *PropertiesReportingDataAnnotationsGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *PropertiesReportingDataAnnotationsGetCall) Context(ctx context.Context) *PropertiesReportingDataAnnotationsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *PropertiesReportingDataAnnotationsGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *PropertiesReportingDataAnnotationsGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "analyticsadmin.properties.reportingDataAnnotations.get", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "analyticsadmin.properties.reportingDataAnnotations.get" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleAnalyticsAdminV1alphaReportingDataAnnotation.ServerResponse.Header or
+// (if a response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *PropertiesReportingDataAnnotationsGetCall) Do(opts ...googleapi.CallOption) (*GoogleAnalyticsAdminV1alphaReportingDataAnnotation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleAnalyticsAdminV1alphaReportingDataAnnotation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "analyticsadmin.properties.reportingDataAnnotations.get", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type PropertiesReportingDataAnnotationsListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: List all Reporting Data Annotations on a property.
+//
+//   - parent: Resource name of the property. Format: properties/property_id
+//     Example: properties/123.
+func (r *PropertiesReportingDataAnnotationsService) List(parent string) *PropertiesReportingDataAnnotationsListCall {
+	c := &PropertiesReportingDataAnnotationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// Filter sets the optional parameter "filter": Filter that restricts which
+// reporting data annotations under the parent property are listed. Supported
+// fields are: * 'name' * `title` * `description` * `annotation_date` *
+// `annotation_date_range` * `color` Additionally, this API provides the
+// following helper functions: * annotation_duration() : the duration that this
+// annotation marks, durations
+// (https://github.com/protocolbuffers/protobuf/blob/main/src/google/protobuf/duration.proto).
+// expect a numeric representation of seconds followed by an `s` suffix. *
+// is_annotation_in_range(start_date, end_date) : if the annotation is in the
+// range specified by the `start_date` and `end_date`. The dates are in
+// ISO-8601 format, for example `2031-06-28`. Supported operations: * `=` :
+// equals * `!=` : not equals * `<` : less than * `>` : greater than * `<=` :
+// less than or equals * `>=` : greater than or equals * `:` : has operator *
+// `=~` : regular expression (https://github.com/google/re2/wiki/Syntax) match
+// * `!~` : regular expression (https://github.com/google/re2/wiki/Syntax) does
+// not match * `NOT` : Logical not * `AND` : Logical and * `OR` : Logical or
+// Examples: 1. `title="Holiday Sale" 2. `description=~"[Bb]ig
+// [Gg]ame.*[Ss]ale" 3. `is_annotation_in_range("2025-12-25", "2026-01-16") =
+// true` 4. `annotation_duration() >= 172800s AND title:BOGO`
+func (c *PropertiesReportingDataAnnotationsListCall) Filter(filter string) *PropertiesReportingDataAnnotationsListCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The maximum number of
+// resources to return. The service may return fewer than this value, even if
+// there are additional pages. If unspecified, at most 50 resources will be
+// returned. The maximum value is 200; (higher values will be coerced to the
+// maximum)
+func (c *PropertiesReportingDataAnnotationsListCall) PageSize(pageSize int64) *PropertiesReportingDataAnnotationsListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": A page token, received
+// from a previous `ListReportingDataAnnotations` call. Provide this to
+// retrieve the subsequent page. When paginating, all other parameters provided
+// to `ListReportingDataAnnotations` must match the call that provided the page
+// token.
+func (c *PropertiesReportingDataAnnotationsListCall) PageToken(pageToken string) *PropertiesReportingDataAnnotationsListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *PropertiesReportingDataAnnotationsListCall) Fields(s ...googleapi.Field) *PropertiesReportingDataAnnotationsListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *PropertiesReportingDataAnnotationsListCall) IfNoneMatch(entityTag string) *PropertiesReportingDataAnnotationsListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *PropertiesReportingDataAnnotationsListCall) Context(ctx context.Context) *PropertiesReportingDataAnnotationsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *PropertiesReportingDataAnnotationsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *PropertiesReportingDataAnnotationsListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+parent}/reportingDataAnnotations")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "analyticsadmin.properties.reportingDataAnnotations.list", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "analyticsadmin.properties.reportingDataAnnotations.list" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleAnalyticsAdminV1alphaListReportingDataAnnotationsResponse.ServerRespon
+// se.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *PropertiesReportingDataAnnotationsListCall) Do(opts ...googleapi.CallOption) (*GoogleAnalyticsAdminV1alphaListReportingDataAnnotationsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleAnalyticsAdminV1alphaListReportingDataAnnotationsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "analyticsadmin.properties.reportingDataAnnotations.list", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *PropertiesReportingDataAnnotationsListCall) Pages(ctx context.Context, f func(*GoogleAnalyticsAdminV1alphaListReportingDataAnnotationsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+type PropertiesReportingDataAnnotationsPatchCall struct {
+	s                                                  *Service
+	name                                               string
+	googleanalyticsadminv1alphareportingdataannotation *GoogleAnalyticsAdminV1alphaReportingDataAnnotation
+	urlParams_                                         gensupport.URLParams
+	ctx_                                               context.Context
+	header_                                            http.Header
+}
+
+// Patch: Updates a Reporting Data Annotation.
+//
+//   - name: Identifier. Resource name of this Reporting Data Annotation. Format:
+//     'properties/{property_id}/reportingDataAnnotations/{reporting_data_annotati
+//     on}' Format: 'properties/123/reportingDataAnnotations/456'.
+func (r *PropertiesReportingDataAnnotationsService) Patch(name string, googleanalyticsadminv1alphareportingdataannotation *GoogleAnalyticsAdminV1alphaReportingDataAnnotation) *PropertiesReportingDataAnnotationsPatchCall {
+	c := &PropertiesReportingDataAnnotationsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.googleanalyticsadminv1alphareportingdataannotation = googleanalyticsadminv1alphareportingdataannotation
+	return c
+}
+
+// UpdateMask sets the optional parameter "updateMask": The list of fields to
+// update. Field names must be in snake case (for example, "field_to_update").
+// Omitted fields will not be updated. To replace the entire entity, use one
+// path with the string "*" to match all fields.
+func (c *PropertiesReportingDataAnnotationsPatchCall) UpdateMask(updateMask string) *PropertiesReportingDataAnnotationsPatchCall {
+	c.urlParams_.Set("updateMask", updateMask)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *PropertiesReportingDataAnnotationsPatchCall) Fields(s ...googleapi.Field) *PropertiesReportingDataAnnotationsPatchCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *PropertiesReportingDataAnnotationsPatchCall) Context(ctx context.Context) *PropertiesReportingDataAnnotationsPatchCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *PropertiesReportingDataAnnotationsPatchCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *PropertiesReportingDataAnnotationsPatchCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googleanalyticsadminv1alphareportingdataannotation)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PATCH", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "analyticsadmin.properties.reportingDataAnnotations.patch", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "analyticsadmin.properties.reportingDataAnnotations.patch" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleAnalyticsAdminV1alphaReportingDataAnnotation.ServerResponse.Header or
+// (if a response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *PropertiesReportingDataAnnotationsPatchCall) Do(opts ...googleapi.CallOption) (*GoogleAnalyticsAdminV1alphaReportingDataAnnotation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleAnalyticsAdminV1alphaReportingDataAnnotation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "analyticsadmin.properties.reportingDataAnnotations.patch", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 

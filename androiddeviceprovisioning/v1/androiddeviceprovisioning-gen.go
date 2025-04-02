@@ -1046,6 +1046,8 @@ type Empty struct {
 // FindDevicesByDeviceIdentifierRequest: Request to find devices.
 type FindDevicesByDeviceIdentifierRequest struct {
 	// DeviceIdentifier: Required. Required. The device identifier to search for.
+	// If serial number is provided then case insensitive serial number matches are
+	// allowed.
 	DeviceIdentifier *DeviceIdentifier `json:"deviceIdentifier,omitempty"`
 	// Limit: Required. The maximum number of devices to show in a page of results.
 	// Must be between 1 and 100 inclusive.

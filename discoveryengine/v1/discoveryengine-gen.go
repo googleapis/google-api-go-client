@@ -5554,6 +5554,8 @@ type GoogleCloudDiscoveryengineV1DisableAdvancedSiteSearchResponse struct {
 // GoogleCloudDiscoveryengineV1Document: Document captures all raw metadata
 // information of items to be recommended or searched.
 type GoogleCloudDiscoveryengineV1Document struct {
+	// AclInfo: Access control information for the document.
+	AclInfo *GoogleCloudDiscoveryengineV1DocumentAclInfo `json:"aclInfo,omitempty"`
 	// Content: The unstructured data linked to this document. Content must be set
 	// if this document is under a `CONTENT_REQUIRED` data store.
 	Content *GoogleCloudDiscoveryengineV1DocumentContent `json:"content,omitempty"`
@@ -5596,13 +5598,13 @@ type GoogleCloudDiscoveryengineV1Document struct {
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-	// ForceSendFields is a list of field names (e.g. "Content") to unconditionally
+	// ForceSendFields is a list of field names (e.g. "AclInfo") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
 	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Content") to include in API
+	// NullFields is a list of field names (e.g. "AclInfo") to include in API
 	// requests with the JSON null value. By default, fields with empty values are
 	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
@@ -5611,6 +5613,62 @@ type GoogleCloudDiscoveryengineV1Document struct {
 
 func (s GoogleCloudDiscoveryengineV1Document) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDiscoveryengineV1Document
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1DocumentAclInfo: ACL Information of the
+// Document.
+type GoogleCloudDiscoveryengineV1DocumentAclInfo struct {
+	// Readers: Readers of the document.
+	Readers []*GoogleCloudDiscoveryengineV1DocumentAclInfoAccessRestriction `json:"readers,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Readers") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Readers") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1DocumentAclInfo) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1DocumentAclInfo
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1DocumentAclInfoAccessRestriction: AclRestriction
+// to model complex inheritance restrictions. Example: Modeling a "Both Permit"
+// inheritance, where to access a child document, user needs to have access to
+// parent document. Document Hierarchy - Space_S --> Page_P. Readers: Space_S:
+// group_1, user_1 Page_P: group_2, group_3, user_2 Space_S ACL Restriction - {
+// "acl_info": { "readers": [ { "principals": [ { "group_id": "group_1" }, {
+// "user_id": "user_1" } ] } ] } } Page_P ACL Restriction. { "acl_info": {
+// "readers": [ { "principals": [ { "group_id": "group_2" }, { "group_id":
+// "group_3" }, { "user_id": "user_2" } ], }, { "principals": [ { "group_id":
+// "group_1" }, { "user_id": "user_1" } ], } ] } }
+type GoogleCloudDiscoveryengineV1DocumentAclInfoAccessRestriction struct {
+	// IdpWide: All users within the Identity Provider.
+	IdpWide bool `json:"idpWide,omitempty"`
+	// Principals: List of principals.
+	Principals []*GoogleCloudDiscoveryengineV1Principal `json:"principals,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "IdpWide") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "IdpWide") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1DocumentAclInfoAccessRestriction) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1DocumentAclInfoAccessRestriction
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -7773,6 +7831,37 @@ type GoogleCloudDiscoveryengineV1PanelInfo struct {
 
 func (s GoogleCloudDiscoveryengineV1PanelInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDiscoveryengineV1PanelInfo
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1Principal: Principal identifier of a user or a
+// group.
+type GoogleCloudDiscoveryengineV1Principal struct {
+	// GroupId: Group identifier. For Google Workspace user account, group_id
+	// should be the google workspace group email. For non-google identity provider
+	// user account, group_id is the mapped group identifier configured during the
+	// workforcepool config.
+	GroupId string `json:"groupId,omitempty"`
+	// UserId: User identifier. For Google Workspace user account, user_id should
+	// be the google workspace user email. For non-google identity provider user
+	// account, user_id is the mapped user identifier configured during the
+	// workforcepool config.
+	UserId string `json:"userId,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "GroupId") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "GroupId") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1Principal) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1Principal
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -13482,6 +13571,8 @@ type GoogleCloudDiscoveryengineV1alphaDataConnector struct {
 	// preventing the request from reaching downstream services (except for some
 	// connector types).
 	RealtimeState string `json:"realtimeState,omitempty"`
+	// RealtimeSyncConfig: Optional. The configuration for realtime sync.
+	RealtimeSyncConfig *GoogleCloudDiscoveryengineV1alphaDataConnectorRealtimeSyncConfig `json:"realtimeSyncConfig,omitempty"`
 	// RefreshInterval: Required. The refresh interval for data sync. If duration
 	// is set to 0, the data will be synced in real time. The streaming feature is
 	// not supported yet. The minimum is 30 minutes and maximum is 7 days.
@@ -13537,6 +13628,34 @@ type GoogleCloudDiscoveryengineV1alphaDataConnector struct {
 
 func (s GoogleCloudDiscoveryengineV1alphaDataConnector) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDiscoveryengineV1alphaDataConnector
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1alphaDataConnectorRealtimeSyncConfig: The
+// configuration for realtime sync to store additional params for realtime
+// sync.
+type GoogleCloudDiscoveryengineV1alphaDataConnectorRealtimeSyncConfig struct {
+	// RealtimeSyncSecret: Optional. The ID of the Secret Manager secret used for
+	// webhook secret.
+	RealtimeSyncSecret string `json:"realtimeSyncSecret,omitempty"`
+	// WebhookUri: Optional. Webhook url for the connector to specify additional
+	// params for realtime sync.
+	WebhookUri string `json:"webhookUri,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "RealtimeSyncSecret") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "RealtimeSyncSecret") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1alphaDataConnectorRealtimeSyncConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1alphaDataConnectorRealtimeSyncConfig
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 

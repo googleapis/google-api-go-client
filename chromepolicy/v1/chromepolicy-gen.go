@@ -1647,6 +1647,13 @@ type Proto2DescriptorProto struct {
 	Name       string                        `json:"name,omitempty"`
 	NestedType []*Proto2DescriptorProto      `json:"nestedType,omitempty"`
 	OneofDecl  []*Proto2OneofDescriptorProto `json:"oneofDecl,omitempty"`
+	// Visibility: Support for `export` and `local` keywords on enums.
+	//
+	// Possible values:
+	//   "VISIBILITY_UNSET"
+	//   "VISIBILITY_LOCAL"
+	//   "VISIBILITY_EXPORT"
+	Visibility string `json:"visibility,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "EnumType") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -1669,6 +1676,13 @@ func (s Proto2DescriptorProto) MarshalJSON() ([]byte, error) {
 type Proto2EnumDescriptorProto struct {
 	Name  string                            `json:"name,omitempty"`
 	Value []*Proto2EnumValueDescriptorProto `json:"value,omitempty"`
+	// Visibility: Support for `export` and `local` keywords on enums.
+	//
+	// Possible values:
+	//   "VISIBILITY_UNSET"
+	//   "VISIBILITY_LOCAL"
+	//   "VISIBILITY_EXPORT"
+	Visibility string `json:"visibility,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Name") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
 	// omitted from API requests. See

@@ -2351,8 +2351,8 @@ type CommentSnippet struct {
 	// CanRate: Whether the current viewer can rate this comment.
 	CanRate bool `json:"canRate,omitempty"`
 	// ChannelId: The id of the corresponding YouTube channel. In case of a channel
-	// comment this is the channel the comment refers to. In case of a video
-	// comment it's the video's channel.
+	// comment this is the channel the comment refers to. In case of a video or
+	// post comment it's the video/post's channel.
 	ChannelId string `json:"channelId,omitempty"`
 	// LikeCount: The total number of likes this comment has received.
 	LikeCount int64 `json:"likeCount,omitempty"`
@@ -2365,8 +2365,10 @@ type CommentSnippet struct {
 	//   "likelySpam"
 	//   "rejected" - The comment is unfit for display.
 	ModerationStatus string `json:"moderationStatus,omitempty"`
-	// ParentId: The unique id of the parent comment, only set for replies.
+	// ParentId: The unique id of the top-level comment, only set for replies.
 	ParentId string `json:"parentId,omitempty"`
+	// PostId: The ID of the post the comment refers to, if any.
+	PostId string `json:"postId,omitempty"`
 	// PublishedAt: The date and time when the comment was originally published.
 	PublishedAt string `json:"publishedAt,omitempty"`
 	// TextDisplay: The comment's text. The format is either plain text or HTML
@@ -2409,9 +2411,10 @@ func (s CommentSnippet) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// CommentSnippetAuthorChannelId: The id of the author's YouTube channel, if
-// any.
+// CommentSnippetAuthorChannelId: Contains the id of the author's YouTube
+// channel, if any.
 type CommentSnippetAuthorChannelId struct {
+	// Value: The id of the author's YouTube channel.
 	Value string `json:"value,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Value") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -2539,19 +2542,20 @@ type CommentThreadSnippet struct {
 	// viewer specific - other viewers may see a different value for this field.
 	CanReply bool `json:"canReply,omitempty"`
 	// ChannelId: The YouTube channel the comments in the thread refer to or the
-	// channel with the video the comments refer to. If video_id isn't set the
-	// comments refer to the channel itself.
+	// channel with the video the comments refer to. If neither video_id nor
+	// post_id is set the comments refer to the channel itself.
 	ChannelId string `json:"channelId,omitempty"`
 	// IsPublic: Whether the thread (and therefore all its comments) is visible to
 	// all YouTube users.
 	IsPublic bool `json:"isPublic,omitempty"`
+	// PostId: The ID of the post the comments refer to, if any.
+	PostId string `json:"postId,omitempty"`
 	// TopLevelComment: The top level comment of this thread.
 	TopLevelComment *Comment `json:"topLevelComment,omitempty"`
 	// TotalReplyCount: The total number of replies (not including the top level
 	// comment).
 	TotalReplyCount int64 `json:"totalReplyCount,omitempty"`
-	// VideoId: The ID of the video the comments refer to, if any. No video_id
-	// implies a channel discussion comment.
+	// VideoId: The ID of the video the comments refer to, if any.
 	VideoId string `json:"videoId,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "CanReply") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -10953,6 +10957,13 @@ func (c *CommentThreadsListCall) Order(order string) *CommentThreadsListCall {
 // pages that could be retrieved.
 func (c *CommentThreadsListCall) PageToken(pageToken string) *CommentThreadsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// PostId sets the optional parameter "postId": Returns the comment threads of
+// the specified post.
+func (c *CommentThreadsListCall) PostId(postId string) *CommentThreadsListCall {
+	c.urlParams_.Set("postId", postId)
 	return c
 }
 

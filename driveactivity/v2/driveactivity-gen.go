@@ -6,7 +6,7 @@
 
 // Package driveactivity provides access to the Drive Activity API.
 //
-// For product documentation, see: https://developers.google.com/drive/activity/
+// For product documentation, see: https://developers.google.com/workspace/drive/activity/
 //
 // # Library status
 //
@@ -747,7 +747,7 @@ type DriveItem struct {
 	// instead.
 	Folder *Folder `json:"folder,omitempty"`
 	// MimeType: The MIME type of the Drive item. See
-	// https://developers.google.com/drive/v3/web/mime-types.
+	// https://developers.google.com/workspace/drive/v3/web/mime-types.
 	MimeType string `json:"mimeType,omitempty"`
 	// Name: The target Drive item. The format is `items/ITEM_ID`.
 	Name string `json:"name,omitempty"`
@@ -913,12 +913,12 @@ type File struct {
 type FileComment struct {
 	// LegacyCommentId: The comment in the discussion thread. This identifier is an
 	// opaque string compatible with the Drive API; see
-	// https://developers.google.com/drive/v3/reference/comments/get
+	// https://developers.google.com/workspace/drive/v3/reference/comments/get
 	LegacyCommentId string `json:"legacyCommentId,omitempty"`
 	// LegacyDiscussionId: The discussion thread to which the comment was added.
 	// This identifier is an opaque string compatible with the Drive API and
 	// references the first comment in a discussion; see
-	// https://developers.google.com/drive/v3/reference/comments/get
+	// https://developers.google.com/workspace/drive/v3/reference/comments/get
 	LegacyDiscussionId string `json:"legacyDiscussionId,omitempty"`
 	// LinkToDiscussion: The link to the discussion thread containing this comment,
 	// for example, `https://docs.google.com/DOCUMENT_ID/edit?disco=THREAD_ID`.
@@ -1152,8 +1152,8 @@ type Permission struct {
 	// Group: The group to whom this permission applies.
 	Group *Group `json:"group,omitempty"`
 	// Role: Indicates the Google Drive permissions role
-	// (https://developers.google.com/drive/web/manage-sharing#roles). The role
-	// determines a user's ability to read, write, and comment on items.
+	// (https://developers.google.com/workspace/drive/web/manage-sharing#roles).
+	// The role determines a user's ability to read, write, and comment on items.
 	//
 	// Possible values:
 	//   "ROLE_UNSPECIFIED" - The role is not available.
@@ -1576,7 +1576,7 @@ func (s SystemEvent) MarshalJSON() ([]byte, error) {
 
 // Target: Information about the target of activity. For more information on
 // how activity history is shared with users, see Activity history visibility
-// (https://developers.google.com/drive/activity/v2#activityhistory).
+// (https://developers.google.com/workspace/drive/activity/v2#activityhistory).
 type Target struct {
 	// Drive: The target is a shared drive.
 	Drive *Drive `json:"drive,omitempty"`

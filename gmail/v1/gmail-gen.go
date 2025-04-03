@@ -6,7 +6,7 @@
 
 // Package gmail provides access to the Gmail API.
 //
-// For product documentation, see: https://developers.google.com/gmail/api/
+// For product documentation, see: https://developers.google.com/workspace/gmail/api/
 //
 // # Library status
 //
@@ -1177,11 +1177,12 @@ type LanguageSettings struct {
 	// or Japanese respectively). The set of languages supported by Gmail evolves
 	// over time, so please refer to the "Language" dropdown in the Gmail settings
 	// for all available options, as described in the language settings help
-	// article. A table of sample values is also provided in the Managing Language
-	// Settings guide Not all Gmail clients can display the same set of languages.
-	// In the case that a user's display language is not available for use on a
-	// particular client, said client automatically chooses to display in the
-	// closest supported variant (or a reasonable default).
+	// article. For a table of sample values, see Manage language settings
+	// (https://developers.google.com/workspace/gmail/api/guides/language-settings).
+	// Not all Gmail clients can display the same set of languages. In the case
+	// that a user's display language is not available for use on a particular
+	// client, said client automatically chooses to display in the closest
+	// supported variant (or a reasonable default).
 	DisplayLanguage string `json:"displayLanguage,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
@@ -1290,8 +1291,9 @@ func (s ListDelegatesResponse) MarshalJSON() ([]byte, error) {
 
 type ListDraftsResponse struct {
 	// Drafts: List of drafts. Note that the `Message` property in each `Draft`
-	// resource only contains an `id` and a `threadId`. The messages.get method can
-	// fetch additional message details.
+	// resource only contains an `id` and a `threadId`. The `messages.get`
+	// (https://developers.google.com/workspace/gmail/api/v1/reference/users/messages/get)
+	// method can fetch additional message details.
 	Drafts []*Draft `json:"drafts,omitempty"`
 	// NextPageToken: Token to retrieve the next page of results in the list.
 	NextPageToken string `json:"nextPageToken,omitempty"`
@@ -1401,7 +1403,9 @@ func (s ListHistoryResponse) MarshalJSON() ([]byte, error) {
 type ListLabelsResponse struct {
 	// Labels: List of labels. Note that each label resource only contains an `id`,
 	// `name`, `messageListVisibility`, `labelListVisibility`, and `type`. The
-	// labels.get method can fetch additional label details.
+	// `labels.get`
+	// (https://developers.google.com/workspace/gmail/api/v1/reference/users/labels/get)
+	// method can fetch additional label details.
 	Labels []*Label `json:"labels,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
@@ -1510,7 +1514,9 @@ type ListThreadsResponse struct {
 	ResultSizeEstimate int64 `json:"resultSizeEstimate,omitempty"`
 	// Threads: List of threads. Note that each thread resource does not contain a
 	// list of `messages`. The list of `messages` for a given thread can be fetched
-	// using the threads.get method.
+	// using the `threads.get`
+	// (https://developers.google.com/workspace/gmail/api/v1/reference/users/threads/get)
+	// method.
 	Threads []*Thread `json:"threads,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
@@ -4971,7 +4977,7 @@ func (c *UsersMessagesListCall) IncludeSpamTrash(includeSpamTrash bool) *UsersMe
 // labels that match all of the specified label IDs. Messages in a thread might
 // have labels that other messages in the same thread don't have. To learn
 // more, see Manage labels on messages and threads
-// (https://developers.google.com/gmail/api/guides/labels#manage_labels_on_messages_threads).
+// (https://developers.google.com/workspace/gmail/api/guides/labels#manage_labels_on_messages_threads).
 func (c *UsersMessagesListCall) LabelIds(labelIds ...string) *UsersMessagesListCall {
 	c.urlParams_.SetMulti("labelIds", append([]string{}, labelIds...))
 	return c
@@ -5234,7 +5240,7 @@ type UsersMessagesSendCall struct {
 
 // Send: Sends the specified message to the recipients in the `To`, `Cc`, and
 // `Bcc` headers. For example usage, see Sending email
-// (https://developers.google.com/gmail/api/guides/sending).
+// (https://developers.google.com/workspace/gmail/api/guides/sending).
 //
 //   - userId: The user's email address. The special value `me` can be used to
 //     indicate the authenticated user.

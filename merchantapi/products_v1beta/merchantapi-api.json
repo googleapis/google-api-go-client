@@ -187,7 +187,7 @@
                   "type": "string"
                 },
                 "name": {
-                  "description": "Identifier. The name of the product input. Format: `\"{productinput.name=accounts/{account}/productInputs/{productinput}}\"` where the last section `productinput` consists of 4 parts: channel~content_language~feed_label~offer_id example for product input name is \"accounts/123/productInputs/online~en~US~sku123\"",
+                  "description": "Identifier. The name of the product input. Format: accounts/{account}/productInputs/{productinput} where the last section `productinput` consists of 4 parts: channel~content_language~feed_label~offer_id example for product input name is \"accounts/123/productInputs/online~en~US~sku123\"",
                   "location": "path",
                   "pattern": "^accounts/[^/]+/productInputs/[^/]+$",
                   "required": true,
@@ -225,7 +225,7 @@
               ],
               "parameters": {
                 "name": {
-                  "description": "Required. The name of the product to retrieve. Format: `accounts/{account}/products/{product}` where the last section `product` consists of 4 parts: channel~content_language~feed_label~offer_id example for product name is \"accounts/123/products/online~en~US~sku123\"",
+                  "description": "Required. The name of the product to retrieve. Format: `accounts/{account}/products/{product}` where the last section `product` consists of 4 parts: `channel~content_language~feed_label~offer_id` example for product name is `accounts/123/products/online~en~US~sku123`",
                   "location": "path",
                   "pattern": "^accounts/[^/]+/products/[^/]+$",
                   "required": true,
@@ -241,7 +241,7 @@
               ]
             },
             "list": {
-              "description": "Lists the processed products in your Merchant Center account. The response might contain fewer items than specified by pageSize. Rely on pageToken to determine if there are more items to be requested. After inserting, updating, or deleting a product input, it may take several minutes before the updated processed product can be retrieved.",
+              "description": "Lists the processed products in your Merchant Center account. The response might contain fewer items than specified by `pageSize`. Rely on `pageToken` to determine if there are more items to be requested. After inserting, updating, or deleting a product input, it may take several minutes before the updated processed product can be retrieved.",
               "flatPath": "products/v1beta/accounts/{accountsId}/products",
               "httpMethod": "GET",
               "id": "merchantapi.accounts.products.list",
@@ -261,7 +261,7 @@
                   "type": "string"
                 },
                 "parent": {
-                  "description": "Required. The account to list processed products for. Format: accounts/{account}",
+                  "description": "Required. The account to list processed products for. Format: `accounts/{account}`",
                   "location": "path",
                   "pattern": "^accounts/[^/]+$",
                   "required": true,
@@ -281,7 +281,7 @@
       }
     }
   },
-  "revision": "20250317",
+  "revision": "20250401",
   "rootUrl": "https://merchantapi.googleapis.com/",
   "schemas": {
     "Attributes": {
@@ -1198,7 +1198,7 @@
       "type": "object"
     },
     "Product": {
-      "description": "The processed product, built from multiple product inputs after applying rules and supplemental data sources. This processed product matches what is shown in your Merchant Center account and in Shopping ads and other surfaces across Google. Each product is built from exactly one primary data source product input, and multiple supplemental data source inputs. After inserting, updating, or deleting a product input, it may take several minutes before the updated processed product can be retrieved. All fields in the processed product and its sub-messages match the name of their corresponding attribute in the [Product data specification](https://support.google.com/merchants/answer/7052112) with some exceptions.",
+      "description": "The processed product, built from multiple product inputs after applying rules and supplemental data sources. This processed product matches what is shown in your Merchant Center account. Each product is built from exactly one primary data source product input, and multiple supplemental data source inputs. After inserting, updating, or deleting a product input, it may take several minutes before the updated processed product can be retrieved. All fields in the processed product and its sub-messages match the name of their corresponding attribute in the [Product data specification](https://support.google.com/merchants/answer/7052112) with some exceptions.",
       "id": "Product",
       "properties": {
         "attributes": {
@@ -1245,7 +1245,7 @@
           "type": "string"
         },
         "name": {
-          "description": "The name of the product. Format: `\"{product.name=accounts/{account}/products/{product}}\"` where the last section `product` consists of 4 parts: channel~content_language~feed_label~offer_id example for product name is \"accounts/123/products/online~en~US~sku123\"",
+          "description": "The name of the product. Format: `accounts/{account}/products/{product}` where the last section `product` consists of 4 parts: `channel~content_language~feed_label~offer_id` example for product name is `accounts/123/products/online~en~US~sku123`",
           "type": "string"
         },
         "offerId": {
@@ -1426,7 +1426,7 @@
           "type": "string"
         },
         "name": {
-          "description": "Identifier. The name of the product input. Format: `\"{productinput.name=accounts/{account}/productInputs/{productinput}}\"` where the last section `productinput` consists of 4 parts: channel~content_language~feed_label~offer_id example for product input name is \"accounts/123/productInputs/online~en~US~sku123\"",
+          "description": "Identifier. The name of the product input. Format: accounts/{account}/productInputs/{productinput} where the last section `productinput` consists of 4 parts: channel~content_language~feed_label~offer_id example for product input name is \"accounts/123/productInputs/online~en~US~sku123\"",
           "type": "string"
         },
         "offerId": {

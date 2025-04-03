@@ -141,6 +141,12 @@ const (
 	// Private Service: https://www.googleapis.com/auth/chat.bot
 	ChatBotScope = "https://www.googleapis.com/auth/chat.bot"
 
+	// View, create, and delete custom emoji in Google Chat
+	ChatCustomemojisScope = "https://www.googleapis.com/auth/chat.customemojis"
+
+	// View custom emoji in Google Chat
+	ChatCustomemojisReadonlyScope = "https://www.googleapis.com/auth/chat.customemojis.readonly"
+
 	// Delete conversations and spaces and remove access to associated files in
 	// Google Chat
 	ChatDeleteScope = "https://www.googleapis.com/auth/chat.delete"
@@ -211,6 +217,8 @@ func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, err
 		"https://www.googleapis.com/auth/chat.app.spaces",
 		"https://www.googleapis.com/auth/chat.app.spaces.create",
 		"https://www.googleapis.com/auth/chat.bot",
+		"https://www.googleapis.com/auth/chat.customemojis",
+		"https://www.googleapis.com/auth/chat.customemojis.readonly",
 		"https://www.googleapis.com/auth/chat.delete",
 		"https://www.googleapis.com/auth/chat.import",
 		"https://www.googleapis.com/auth/chat.memberships",
@@ -240,6 +248,7 @@ func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, err
 		return nil, err
 	}
 	s := &Service{client: client, BasePath: basePath, logger: internaloption.GetLogger(opts)}
+	s.CustomEmojis = NewCustomEmojisService(s)
 	s.Media = NewMediaService(s)
 	s.Spaces = NewSpacesService(s)
 	s.Users = NewUsersService(s)
@@ -270,6 +279,8 @@ type Service struct {
 	BasePath  string // API endpoint base URL
 	UserAgent string // optional additional User-Agent fragment
 
+	CustomEmojis *CustomEmojisService
+
 	Media *MediaService
 
 	Spaces *SpacesService
@@ -282,6 +293,15 @@ func (s *Service) userAgent() string {
 		return googleapi.UserAgent
 	}
 	return googleapi.UserAgent + " " + s.UserAgent
+}
+
+func NewCustomEmojisService(s *Service) *CustomEmojisService {
+	rs := &CustomEmojisService{s: s}
+	return rs
+}
+
+type CustomEmojisService struct {
+	s *Service
 }
 
 func NewMediaService(s *Service) *MediaService {
@@ -1291,19 +1311,40 @@ func (s CompleteImportSpaceResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// CustomEmoji: Represents a custom emoji.
+// CustomEmoji: Represents a custom emoji
+// (https://support.google.com/chat/answer/12800149).
 type CustomEmoji struct {
+	// EmojiName: Optional. Immutable. User-provided name for the custom emoji,
+	// which is unique within the organization. Required when the custom emoji is
+	// created, output only otherwise. Emoji names must start and end with colons,
+	// must be lowercase and can only contain alphanumeric characters, hyphens, and
+	// underscores. Hyphens and underscores should be used to separate words and
+	// cannot be used consecutively. Example: `:valid-emoji-name:`
+	EmojiName string `json:"emojiName,omitempty"`
+	// Name: Identifier. The resource name of the custom emoji, assigned by the
+	// server. Format: `customEmojis/{customEmoji}`
+	Name string `json:"name,omitempty"`
+	// Payload: Optional. Input only. Payload data. Required when the custom emoji
+	// is created.
+	Payload *CustomEmojiPayload `json:"payload,omitempty"`
+	// TemporaryImageUri: Output only. A temporary image URL for the custom emoji,
+	// valid for at least 10 minutes. Note that this is not populated in the
+	// response when the custom emoji is created.
+	TemporaryImageUri string `json:"temporaryImageUri,omitempty"`
 	// Uid: Output only. Unique key for the custom emoji resource.
 	Uid string `json:"uid,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "Uid") to unconditionally
-	// include in API requests. By default, fields with empty or default values are
-	// omitted from API requests. See
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "EmojiName") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Uid") to include in API requests
-	// with the JSON null value. By default, fields with empty values are omitted
-	// from API requests. See
+	// NullFields is a list of field names (e.g. "EmojiName") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -1332,6 +1373,33 @@ type CustomEmojiMetadata struct {
 
 func (s CustomEmojiMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod CustomEmojiMetadata
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// CustomEmojiPayload: Payload data for the custom emoji.
+type CustomEmojiPayload struct {
+	// FileContent: Required. Input only. The image used for the custom emoji. The
+	// payload must be under 256 KB and the dimension of the image must be square
+	// and between 64 and 500 pixels. The restrictions are subject to change.
+	FileContent string `json:"fileContent,omitempty"`
+	// Filename: Required. Input only. The image file name. Supported file
+	// extensions: `.png`, `.jpg`, `.gif`.
+	Filename string `json:"filename,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "FileContent") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "FileContent") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s CustomEmojiPayload) MarshalJSON() ([]byte, error) {
+	type NoMethod CustomEmojiPayload
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -4061,6 +4129,34 @@ func (s KeyValue) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// ListCustomEmojisResponse: A response to list custom emojis.
+type ListCustomEmojisResponse struct {
+	// CustomEmojis: Unordered list. List of custom emojis.
+	CustomEmojis []*CustomEmoji `json:"customEmojis,omitempty"`
+	// NextPageToken: A token that you can send as `pageToken` to retrieve the next
+	// page of results. If empty, there are no subsequent pages.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "CustomEmojis") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CustomEmojis") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ListCustomEmojisResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ListCustomEmojisResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // ListMembershipsResponse: Response to list memberships of the space.
 type ListMembershipsResponse struct {
 	// Memberships: Unordered list. List of memberships in the requested (or first)
@@ -6177,6 +6273,499 @@ type WidgetMarkup struct {
 func (s WidgetMarkup) MarshalJSON() ([]byte, error) {
 	type NoMethod WidgetMarkup
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+type CustomEmojisCreateCall struct {
+	s           *Service
+	customemoji *CustomEmoji
+	urlParams_  gensupport.URLParams
+	ctx_        context.Context
+	header_     http.Header
+}
+
+// Create: Creates a custom emoji. Custom emojis are only available for Google
+// Workspace accounts, and the administrator must turn custom emojis on for the
+// organization. For more information, see Learn about custom emojis in Google
+// Chat (https://support.google.com/chat/answer/12800149) and Manage custom
+// emoji permissions (https://support.google.com/a/answer/12850085). Requires
+// user authentication
+// (https://developers.google.com/workspace/chat/authenticate-authorize-chat-user).
+func (r *CustomEmojisService) Create(customemoji *CustomEmoji) *CustomEmojisCreateCall {
+	c := &CustomEmojisCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.customemoji = customemoji
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *CustomEmojisCreateCall) Fields(s ...googleapi.Field) *CustomEmojisCreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *CustomEmojisCreateCall) Context(ctx context.Context) *CustomEmojisCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *CustomEmojisCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *CustomEmojisCreateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.customemoji)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/customEmojis")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "chat.customEmojis.create", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "chat.customEmojis.create" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *CustomEmoji.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *CustomEmojisCreateCall) Do(opts ...googleapi.CallOption) (*CustomEmoji, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &CustomEmoji{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "chat.customEmojis.create", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type CustomEmojisDeleteCall struct {
+	s          *Service
+	name       string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Delete: Deletes a custom emoji. By default, users can only delete custom
+// emoji they created. Emoji managers
+// (https://support.google.com/a/answer/12850085) assigned by the administrator
+// can delete any custom emoji in the organization. See Learn about custom
+// emojis in Google Chat (https://support.google.com/chat/answer/12800149).
+// Custom emojis are only available for Google Workspace accounts, and the
+// administrator must turn custom emojis on for the organization. For more
+// information, see Learn about custom emojis in Google Chat
+// (https://support.google.com/chat/answer/12800149) and Manage custom emoji
+// permissions (https://support.google.com/a/answer/12850085). Requires user
+// authentication
+// (https://developers.google.com/workspace/chat/authenticate-authorize-chat-user).
+//
+//   - name: Resource name of the custom emoji to delete. Format:
+//     `customEmojis/{customEmoji}` You can use the emoji name as an alias for
+//     `{customEmoji}`. For example, `customEmojis/:example-emoji:` where
+//     `:example-emoji:` is the emoji name for a custom emoji.
+func (r *CustomEmojisService) Delete(name string) *CustomEmojisDeleteCall {
+	c := &CustomEmojisDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *CustomEmojisDeleteCall) Fields(s ...googleapi.Field) *CustomEmojisDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *CustomEmojisDeleteCall) Context(ctx context.Context) *CustomEmojisDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *CustomEmojisDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *CustomEmojisDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("DELETE", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "chat.customEmojis.delete", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "chat.customEmojis.delete" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Empty.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *CustomEmojisDeleteCall) Do(opts ...googleapi.CallOption) (*Empty, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Empty{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "chat.customEmojis.delete", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type CustomEmojisGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Returns details about a custom emoji. Custom emojis are only available
+// for Google Workspace accounts, and the administrator must turn custom emojis
+// on for the organization. For more information, see Learn about custom emojis
+// in Google Chat (https://support.google.com/chat/answer/12800149) and Manage
+// custom emoji permissions (https://support.google.com/a/answer/12850085).
+// Requires user authentication
+// (https://developers.google.com/workspace/chat/authenticate-authorize-chat-user).
+//
+//   - name: Resource name of the custom emoji. Format:
+//     `customEmojis/{customEmoji}` You can use the emoji name as an alias for
+//     `{customEmoji}`. For example, `customEmojis/:example-emoji:` where
+//     `:example-emoji:` is the emoji name for a custom emoji.
+func (r *CustomEmojisService) Get(name string) *CustomEmojisGetCall {
+	c := &CustomEmojisGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *CustomEmojisGetCall) Fields(s ...googleapi.Field) *CustomEmojisGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *CustomEmojisGetCall) IfNoneMatch(entityTag string) *CustomEmojisGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *CustomEmojisGetCall) Context(ctx context.Context) *CustomEmojisGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *CustomEmojisGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *CustomEmojisGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "chat.customEmojis.get", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "chat.customEmojis.get" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *CustomEmoji.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *CustomEmojisGetCall) Do(opts ...googleapi.CallOption) (*CustomEmoji, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &CustomEmoji{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "chat.customEmojis.get", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type CustomEmojisListCall struct {
+	s            *Service
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists custom emojis visible to the authenticated user. Custom emojis
+// are only available for Google Workspace accounts, and the administrator must
+// turn custom emojis on for the organization. For more information, see Learn
+// about custom emojis in Google Chat
+// (https://support.google.com/chat/answer/12800149) and Manage custom emoji
+// permissions (https://support.google.com/a/answer/12850085). Requires user
+// authentication
+// (https://developers.google.com/workspace/chat/authenticate-authorize-chat-user).
+func (r *CustomEmojisService) List() *CustomEmojisListCall {
+	c := &CustomEmojisListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	return c
+}
+
+// Filter sets the optional parameter "filter": A query filter. Supports
+// filtering by creator. To filter by creator, you must specify a valid value.
+// Currently only `creator("users/me")` and `NOT creator("users/me")` are
+// accepted to filter custom emojis by whether they were created by the calling
+// user or not. For example, the following query returns custom emojis created
+// by the caller: ``` creator("users/me") ``` Invalid queries are rejected with
+// an `INVALID_ARGUMENT` error.
+func (c *CustomEmojisListCall) Filter(filter string) *CustomEmojisListCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The maximum number of
+// custom emojis returned. The service can return fewer custom emojis than this
+// value. If unspecified, the default value is 25. The maximum value is 200;
+// values above 200 are changed to 200.
+func (c *CustomEmojisListCall) PageSize(pageSize int64) *CustomEmojisListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": (If resuming from a
+// previous query.) A page token received from a previous list custom emoji
+// call. Provide this to retrieve the subsequent page. When paginating, the
+// filter value should match the call that provided the page token. Passing a
+// different value might lead to unexpected results.
+func (c *CustomEmojisListCall) PageToken(pageToken string) *CustomEmojisListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *CustomEmojisListCall) Fields(s ...googleapi.Field) *CustomEmojisListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *CustomEmojisListCall) IfNoneMatch(entityTag string) *CustomEmojisListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *CustomEmojisListCall) Context(ctx context.Context) *CustomEmojisListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *CustomEmojisListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *CustomEmojisListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/customEmojis")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "chat.customEmojis.list", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "chat.customEmojis.list" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *ListCustomEmojisResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *CustomEmojisListCall) Do(opts ...googleapi.CallOption) (*ListCustomEmojisResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ListCustomEmojisResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "chat.customEmojis.list", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *CustomEmojisListCall) Pages(ctx context.Context, f func(*ListCustomEmojisResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
 }
 
 type MediaDownloadCall struct {
@@ -9875,8 +10464,8 @@ func (r *SpacesMessagesReactionsService) List(parent string) *SpacesMessagesReac
 // emoji.custom_emoji.uid = "{uid}" emoji.unicode = "🙂" OR user.name =
 // "users/{user}" emoji.unicode = "🙂" OR emoji.custom_emoji.uid = "{uid}" OR
 // user.name = "users/{user}" emoji.unicode = "🙂" OR emoji.custom_emoji.uid
-// = "{uid}" AND user.name = "users/{user}" ``` Invalid queries are rejected by
-// the server with an `INVALID_ARGUMENT` error.
+// = "{uid}" AND user.name = "users/{user}" ``` Invalid queries are rejected
+// with an `INVALID_ARGUMENT` error.
 func (c *SpacesMessagesReactionsListCall) Filter(filter string) *SpacesMessagesReactionsListCall {
 	c.urlParams_.Set("filter", filter)
 	return c

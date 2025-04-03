@@ -1020,13 +1020,12 @@ func (s Price) MarshalJSON() ([]byte, error) {
 
 // Product: The processed product, built from multiple product inputs after
 // applying rules and supplemental data sources. This processed product matches
-// what is shown in your Merchant Center account and in Shopping ads and other
-// surfaces across Google. Each product is built from exactly one primary data
-// source product input, and multiple supplemental data source inputs. After
-// inserting, updating, or deleting a product input, it may take several
-// minutes before the updated processed product can be retrieved. All fields in
-// the processed product and its sub-messages match the name of their
-// corresponding attribute in the Product data specification
+// what is shown in your Merchant Center account. Each product is built from
+// exactly one primary data source product input, and multiple supplemental
+// data source inputs. After inserting, updating, or deleting a product input,
+// it may take several minutes before the updated processed product can be
+// retrieved. All fields in the processed product and its sub-messages match
+// the name of their corresponding attribute in the Product data specification
 // (https://support.google.com/merchants/answer/7052112) with some exceptions.
 type Product struct {
 	// Attributes: Output only. A list of product attributes.
@@ -1054,10 +1053,9 @@ type Product struct {
 	// FeedLabel: Output only. The feed label for the product.
 	FeedLabel string `json:"feedLabel,omitempty"`
 	// Name: The name of the product. Format:
-	// "{product.name=accounts/{account}/products/{product}}" where the last
-	// section `product` consists of 4 parts:
-	// channel~content_language~feed_label~offer_id example for product name is
-	// "accounts/123/products/online~en~US~sku123"
+	// `accounts/{account}/products/{product}` where the last section `product`
+	// consists of 4 parts: `channel~content_language~feed_label~offer_id` example
+	// for product name is `accounts/123/products/online~en~US~sku123`
 	Name string `json:"name,omitempty"`
 	// OfferId: Output only. Your unique identifier for the product. This is the
 	// same for the product input and processed product. Leading and trailing
@@ -1282,8 +1280,8 @@ type ProductInput struct {
 	// for the product.
 	FeedLabel string `json:"feedLabel,omitempty"`
 	// Name: Identifier. The name of the product input. Format:
-	// "{productinput.name=accounts/{account}/productInputs/{productinput}}"
-	// where the last section `productinput` consists of 4 parts:
+	// accounts/{account}/productInputs/{productinput} where the last section
+	// `productinput` consists of 4 parts:
 	// channel~content_language~feed_label~offer_id example for product input name
 	// is "accounts/123/productInputs/online~en~US~sku123"
 	Name string `json:"name,omitempty"`
@@ -2099,8 +2097,8 @@ type AccountsProductInputsPatchCall struct {
 // minutes before the processed product can be retrieved.
 //
 //   - name: Identifier. The name of the product input. Format:
-//     "{productinput.name=accounts/{account}/productInputs/{productinput}}"
-//     where the last section `productinput` consists of 4 parts:
+//     accounts/{account}/productInputs/{productinput} where the last section
+//     `productinput` consists of 4 parts:
 //     channel~content_language~feed_label~offer_id example for product input
 //     name is "accounts/123/productInputs/online~en~US~sku123".
 func (r *AccountsProductInputsService) Patch(name string, productinput *ProductInput) *AccountsProductInputsPatchCall {
@@ -2232,8 +2230,8 @@ type AccountsProductsGetCall struct {
 //
 //   - name: The name of the product to retrieve. Format:
 //     `accounts/{account}/products/{product}` where the last section `product`
-//     consists of 4 parts: channel~content_language~feed_label~offer_id example
-//     for product name is "accounts/123/products/online~en~US~sku123".
+//     consists of 4 parts: `channel~content_language~feed_label~offer_id`
+//     example for product name is `accounts/123/products/online~en~US~sku123`.
 func (r *AccountsProductsService) Get(name string) *AccountsProductsGetCall {
 	c := &AccountsProductsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2341,13 +2339,13 @@ type AccountsProductsListCall struct {
 }
 
 // List: Lists the processed products in your Merchant Center account. The
-// response might contain fewer items than specified by pageSize. Rely on
-// pageToken to determine if there are more items to be requested. After
+// response might contain fewer items than specified by `pageSize`. Rely on
+// `pageToken` to determine if there are more items to be requested. After
 // inserting, updating, or deleting a product input, it may take several
 // minutes before the updated processed product can be retrieved.
 //
 //   - parent: The account to list processed products for. Format:
-//     accounts/{account}.
+//     `accounts/{account}`.
 func (r *AccountsProductsService) List(parent string) *AccountsProductsListCall {
 	c := &AccountsProductsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent

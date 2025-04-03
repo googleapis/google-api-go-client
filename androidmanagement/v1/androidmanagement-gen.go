@@ -2654,6 +2654,37 @@ func (s Enterprise) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// EnterpriseUpgradeEvent: An event sent for an enterprise upgrade. An
+// enterprise upgrade is a process that upgrades a managed Google Play Accounts
+// enterprise to a managed Google domain.
+type EnterpriseUpgradeEvent struct {
+	// Enterprise: The name of upgraded enterprise in the format
+	// "enterprises/{enterprise}"
+	Enterprise string `json:"enterprise,omitempty"`
+	// UpgradeState: Output only. The upgrade state of the enterprise.
+	//
+	// Possible values:
+	//   "UPGRADE_STATE_UNSPECIFIED" - Unspecified. This value is not used.
+	//   "UPGRADE_STATE_SUCCEEDED" - The upgrade has succeeded.
+	UpgradeState string `json:"upgradeState,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Enterprise") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Enterprise") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s EnterpriseUpgradeEvent) MarshalJSON() ([]byte, error) {
+	type NoMethod EnterpriseUpgradeEvent
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // ExtensionConfig: Configuration to enable an app as an extension app, with
 // the capability of interacting with Android Device Policy offline. For
 // Android versions 11 and above, extension apps are exempt from battery

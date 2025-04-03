@@ -1184,6 +1184,13 @@ type CourseWork struct {
 	// Present only when a category has been chosen for the coursework. May be used
 	// in calculating the overall grade. Read-only.
 	GradeCategory *GradeCategory `json:"gradeCategory,omitempty"`
+	// GradingPeriodId: Identifier of the grading period associated with the
+	// coursework. * At creation, if unspecified, the grading period ID will be set
+	// based on the `dueDate` (or `scheduledTime` if no `dueDate` is set). * To
+	// indicate no association to any grading period, set this field to an empty
+	// string (""). * If specified, it must match an existing grading period ID in
+	// the course.
+	GradingPeriodId string `json:"gradingPeriodId,omitempty"`
 	// Id: Classroom-assigned identifier of this course work, unique per course.
 	// Read-only.
 	Id string `json:"id,omitempty"`
@@ -1792,6 +1799,72 @@ type GradebookSettings struct {
 
 func (s GradebookSettings) MarshalJSON() ([]byte, error) {
 	type NoMethod GradebookSettings
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GradingPeriod: An individual grading period. Grading periods must not have
+// overlapping date ranges and must be listed in chronological order. For
+// example, if the end_date of a grading period is 2024-01-25, then the
+// start_date of the next grading period must be 2024-01-26 or later. Each
+// grading period must have a unique title within a course.
+type GradingPeriod struct {
+	// EndDate: Required. End date, in UTC, of the grading period. Inclusive.
+	EndDate *Date `json:"endDate,omitempty"`
+	// Id: Output only. System generated grading period ID. Read-only.
+	Id string `json:"id,omitempty"`
+	// StartDate: Required. Start date, in UTC, of the grading period. Inclusive.
+	StartDate *Date `json:"startDate,omitempty"`
+	// Title: Required. Title of the grading period. For example, “Semester 1”.
+	Title string `json:"title,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "EndDate") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "EndDate") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GradingPeriod) MarshalJSON() ([]byte, error) {
+	type NoMethod GradingPeriod
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GradingPeriodSettings: Grading period settings that include all the
+// individual grading periods in a course.
+type GradingPeriodSettings struct {
+	// ApplyToExistingCoursework: Supports toggling the application of grading
+	// periods on existing stream items. Once set, this value is persisted meaning
+	// that it does not need to be set in every request to update
+	// `GradingPeriodSettings`. If not previously set, the default is False.
+	ApplyToExistingCoursework bool `json:"applyToExistingCoursework,omitempty"`
+	// GradingPeriods: The list of grading periods in a specific course. Grading
+	// periods must not have overlapping date ranges and must be listed in
+	// chronological order. Each grading period must have a unique title within a
+	// course.
+	GradingPeriods []*GradingPeriod `json:"gradingPeriods,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "ApplyToExistingCoursework")
+	// to unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ApplyToExistingCoursework") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GradingPeriodSettings) MarshalJSON() ([]byte, error) {
+	type NoMethod GradingPeriodSettings
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -3552,6 +3625,120 @@ func (c *CoursesGetCall) Do(opts ...googleapi.CallOption) (*Course, error) {
 	return ret, nil
 }
 
+type CoursesGetGradingPeriodSettingsCall struct {
+	s            *Service
+	courseId     string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// GetGradingPeriodSettings: Returns the grading period settings in a course.
+// This method returns the following error codes: * `PERMISSION_DENIED` if the
+// requesting user isn't permitted to access the grading period settings in the
+// requested course or for access errors. * `NOT_FOUND` if the requested course
+// does not exist.
+//
+// - courseId: The identifier of the course.
+func (r *CoursesService) GetGradingPeriodSettings(courseId string) *CoursesGetGradingPeriodSettingsCall {
+	c := &CoursesGetGradingPeriodSettingsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.courseId = courseId
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *CoursesGetGradingPeriodSettingsCall) Fields(s ...googleapi.Field) *CoursesGetGradingPeriodSettingsCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *CoursesGetGradingPeriodSettingsCall) IfNoneMatch(entityTag string) *CoursesGetGradingPeriodSettingsCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *CoursesGetGradingPeriodSettingsCall) Context(ctx context.Context) *CoursesGetGradingPeriodSettingsCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *CoursesGetGradingPeriodSettingsCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *CoursesGetGradingPeriodSettingsCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/courses/{courseId}/gradingPeriodSettings")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"courseId": c.courseId,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "classroom.courses.getGradingPeriodSettings", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "classroom.courses.getGradingPeriodSettings" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GradingPeriodSettings.ServerResponse.Header or (if a response was returned
+// at all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *CoursesGetGradingPeriodSettingsCall) Do(opts ...googleapi.CallOption) (*GradingPeriodSettings, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GradingPeriodSettings{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "classroom.courses.getGradingPeriodSettings", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
 type CoursesListCall struct {
 	s            *Service
 	urlParams_   gensupport.URLParams
@@ -3984,6 +4171,135 @@ func (c *CoursesUpdateCall) Do(opts ...googleapi.CallOption) (*Course, error) {
 		return nil, err
 	}
 	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "classroom.courses.update", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type CoursesUpdateGradingPeriodSettingsCall struct {
+	s                     *Service
+	courseId              string
+	gradingperiodsettings *GradingPeriodSettings
+	urlParams_            gensupport.URLParams
+	ctx_                  context.Context
+	header_               http.Header
+}
+
+// UpdateGradingPeriodSettings: Updates grading period settings of a course.
+// Individual grading periods can be added, removed, or modified using this
+// method. The requesting user and course owner must be eligible to modify
+// Grading Periods. For details, see licensing requirements
+// (https://developers.google.com/classroom/grading-periods/manage-grading-periods#licensing_requirements).
+// This method returns the following error codes: * `PERMISSION_DENIED` if the
+// requesting user is not permitted to modify the grading period settings in a
+// course or for access errors: * UserIneligibleToUpdateGradingPeriodSettings *
+// `INVALID_ARGUMENT` if the request is malformed. * `NOT_FOUND` if the
+// requested course does not exist.
+//
+// - courseId: The identifier of the course.
+func (r *CoursesService) UpdateGradingPeriodSettings(courseId string, gradingperiodsettings *GradingPeriodSettings) *CoursesUpdateGradingPeriodSettingsCall {
+	c := &CoursesUpdateGradingPeriodSettingsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.courseId = courseId
+	c.gradingperiodsettings = gradingperiodsettings
+	return c
+}
+
+// UpdateMask sets the optional parameter "updateMask": Mask that identifies
+// which fields in the GradingPeriodSettings to update. The
+// GradingPeriodSettings `grading_periods` list will be fully replaced by the
+// grading periods specified in the update request. For example: * Grading
+// periods included in the list without an ID are considered additions, and a
+// new ID will be assigned when the request is made. * Grading periods that
+// currently exist, but are missing from the request will be considered
+// deletions. * Grading periods with an existing ID and modified data are
+// considered edits. Unmodified data will be left as is. * Grading periods
+// included with an unknown ID will result in an error. The following fields
+// may be specified: * `grading_periods` * `apply_to_existing_coursework`
+func (c *CoursesUpdateGradingPeriodSettingsCall) UpdateMask(updateMask string) *CoursesUpdateGradingPeriodSettingsCall {
+	c.urlParams_.Set("updateMask", updateMask)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *CoursesUpdateGradingPeriodSettingsCall) Fields(s ...googleapi.Field) *CoursesUpdateGradingPeriodSettingsCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *CoursesUpdateGradingPeriodSettingsCall) Context(ctx context.Context) *CoursesUpdateGradingPeriodSettingsCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *CoursesUpdateGradingPeriodSettingsCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *CoursesUpdateGradingPeriodSettingsCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.gradingperiodsettings)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/courses/{courseId}/gradingPeriodSettings")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PATCH", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"courseId": c.courseId,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "classroom.courses.updateGradingPeriodSettings", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "classroom.courses.updateGradingPeriodSettings" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GradingPeriodSettings.ServerResponse.Header or (if a response was returned
+// at all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *CoursesUpdateGradingPeriodSettingsCall) Do(opts ...googleapi.CallOption) (*GradingPeriodSettings, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GradingPeriodSettings{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "classroom.courses.updateGradingPeriodSettings", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -6805,9 +7121,7 @@ func (r *CoursesCourseWorkService) Patch(courseId string, id string, coursework 
 // object, an `INVALID_ARGUMENT` error is returned. The following fields may be
 // specified by teachers: * `title` * `description` * `state` * `due_date` *
 // `due_time` * `max_points` * `scheduled_time` *
-// `submission_modification_mode` * `topic_id` * `grading_period_id` Available
-// in V1_20240401_PREVIEW
-// (https://developers.google.com/classroom/reference/preview) and later.
+// `submission_modification_mode` * `topic_id` * `grading_period_id`
 func (c *CoursesCourseWorkPatchCall) UpdateMask(updateMask string) *CoursesCourseWorkPatchCall {
 	c.urlParams_.Set("updateMask", updateMask)
 	return c

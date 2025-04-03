@@ -1178,6 +1178,7 @@ type BackupPlan struct {
 	//   "ACTIVE" - The resource has been created and is fully usable.
 	//   "DELETING" - The resource is being deleted.
 	//   "INACTIVE" - The resource has been created but is not usable.
+	//   "UPDATING" - The resource is being updated.
 	State string `json:"state,omitempty"`
 	// UpdateTime: Output only. When the `BackupPlan` was last updated.
 	UpdateTime string `json:"updateTime,omitempty"`
@@ -4264,6 +4265,14 @@ type ProjectsLocationsListCall struct {
 func (r *ProjectsLocationsService) List(name string) *ProjectsLocationsListCall {
 	c := &ProjectsLocationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
+	return c
+}
+
+// ExtraLocationTypes sets the optional parameter "extraLocationTypes": A list
+// of extra location types that should be used as conditions for controlling
+// the visibility of the locations.
+func (c *ProjectsLocationsListCall) ExtraLocationTypes(extraLocationTypes ...string) *ProjectsLocationsListCall {
+	c.urlParams_.SetMulti("extraLocationTypes", append([]string{}, extraLocationTypes...))
 	return c
 }
 

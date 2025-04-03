@@ -6,7 +6,7 @@
 
 // Package drivelabels provides access to the Drive Labels API.
 //
-// For product documentation, see: https://developers.google.com/drive/labels
+// For product documentation, see: https://developers.google.com/workspace/drive/labels
 //
 // # Library status
 //

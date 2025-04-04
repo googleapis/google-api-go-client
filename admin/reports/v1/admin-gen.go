@@ -861,14 +861,10 @@ func (s Reason) MarshalJSON() ([]byte, error) {
 
 // ResourceDetails: Details of the resource on which the action was performed.
 type ResourceDetails struct {
-	// ApplicationId: Id of the application to which this resource belongs
-	ApplicationId int64 `json:"applicationId,omitempty,string"`
 	// AppliedLabels: List of labels applied on the resource
 	AppliedLabels []*AppliedLabel `json:"appliedLabels,omitempty"`
 	// Id: Identifier of the resource.
 	Id string `json:"id,omitempty"`
-	// OwnerEmail: Owner of the resource.
-	OwnerEmail string `json:"ownerEmail,omitempty"`
 	// Relation: Defines relationship of the resource to the events
 	Relation string `json:"relation,omitempty"`
 	// Title: Title of the resource. For instance, in case of a drive document,
@@ -877,13 +873,13 @@ type ResourceDetails struct {
 	Title string `json:"title,omitempty"`
 	// Type: Type of the resource - document, email, chat message
 	Type string `json:"type,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "ApplicationId") to
+	// ForceSendFields is a list of field names (e.g. "AppliedLabels") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "ApplicationId") to include in API
+	// NullFields is a list of field names (e.g. "AppliedLabels") to include in API
 	// requests with the JSON null value. By default, fields with empty values are
 	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.

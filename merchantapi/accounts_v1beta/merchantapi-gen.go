@@ -1984,6 +1984,15 @@ type OnlineReturnPolicy struct {
 	// reason categories. This would be treated as a free restocking fee if the
 	// value is not set.
 	RestockingFee *RestockingFee `json:"restockingFee,omitempty"`
+	// ReturnLabelSource: The field specifies the return label source. This field
+	// is required when return method is BY_MAIL.
+	//
+	// Possible values:
+	//   "RETURN_LABEL_SOURCE_UNSPECIFIED" - Default value. This value is unused.
+	//   "DOWNLOAD_AND_PRINT" - Download and print.
+	//   "IN_THE_PACKAGE" - Label include in the package.
+	//   "CUSTOMER_RESPONSIBILITY" - Customer to provide.
+	ReturnLabelSource string `json:"returnLabelSource,omitempty"`
 	// ReturnMethods: Optional. The return methods of how customers can return an
 	// item. This value is required to not be empty unless the type of return
 	// policy is noReturns.
@@ -2814,7 +2823,7 @@ func (s Service) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// ShippingSettings: The merchant account's shipping setting
+// ShippingSettings: The merchant account's shipping settings
 // (https://support.google.com/merchants/answer/6069284).
 type ShippingSettings struct {
 	// Etag: Required. This field is used for avoid async issue. Make sure shipping
@@ -2828,8 +2837,8 @@ type ShippingSettings struct {
 	// fail because the etag changes every time the shipping setting data changes.
 	// User should repeate step 2-4 with the new etag.
 	Etag string `json:"etag,omitempty"`
-	// Name: Identifier. The resource name of the shipping setting. Format:
-	// `accounts/{account}/shippingSetting`
+	// Name: Identifier. The resource name of the shipping settings. Format:
+	// `accounts/{account}/shippingSettings`
 	Name string `json:"name,omitempty"`
 	// Services: Optional. The target account's list of services.
 	Services []*Service `json:"services,omitempty"`
@@ -2992,8 +3001,8 @@ func (s Table) MarshalJSON() ([]byte, error) {
 
 // TermsOfService: The `TermsOfService` message represents a specific version
 // of the terms of service that merchants must accept to access certain
-// features or services (see
-// https://support.google.com/merchants/answer/160173). This message is
+// features or services. For more information, see Terms of Service
+// (https://support.google.com/merchants/answer/160173). This message is
 // important for the onboarding process, ensuring that merchants agree to the
 // necessary legal agreements for using the service. Merchants can retrieve the
 // latest terms of service for a given `kind` and `region` through
@@ -3443,9 +3452,9 @@ type AccountsCreateAndConfigureCall struct {
 	header_                          http.Header
 }
 
-// CreateAndConfigure: Creates a standalone Merchant Center account with
-// additional configuration. Adds the user that makes the request as an admin
-// for the new account.
+// CreateAndConfigure: Creates a Merchant Center account with additional
+// configuration. Adds the user that makes the request as an admin for the new
+// account.
 func (r *AccountsService) CreateAndConfigure(createandconfigureaccountrequest *CreateAndConfigureAccountRequest) *AccountsCreateAndConfigureCall {
 	c := &AccountsCreateAndConfigureCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.createandconfigureaccountrequest = createandconfigureaccountrequest
@@ -7257,7 +7266,7 @@ type AccountsShippingSettingsGetShippingSettingsCall struct {
 // GetShippingSettings: Retrieve shipping setting information.
 //
 //   - name: The name of the shipping setting to retrieve. Format:
-//     `accounts/{account}/shippingsetting`.
+//     `accounts/{account}/shippingsettings`.
 func (r *AccountsShippingSettingsService) GetShippingSettings(name string) *AccountsShippingSettingsGetShippingSettingsCall {
 	c := &AccountsShippingSettingsGetShippingSettingsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -7474,7 +7483,7 @@ type AccountsTermsOfServiceAgreementStatesGetCall struct {
 // Get: Returns the state of a terms of service agreement.
 //
 //   - name: The resource name of the terms of service version. Format:
-//     `accounts/{account}/termsOfServiceAgreementState/{identifier}` The
+//     `accounts/{account}/termsOfServiceAgreementStates/{identifier}` The
 //     identifier format is: `{TermsOfServiceKind}-{country}`.
 func (r *AccountsTermsOfServiceAgreementStatesService) Get(nameid string) *AccountsTermsOfServiceAgreementStatesGetCall {
 	c := &AccountsTermsOfServiceAgreementStatesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}

@@ -488,6 +488,38 @@ func (s *Attributes) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+// AutomatedDiscounts: Information regarding Automated Discounts.
+type AutomatedDiscounts struct {
+	// GadPrice: The current sale price for products with a price optimized using
+	// Google Automated Discounts (GAD). Absent if the information about the
+	// GAD_price of the product is not available.
+	GadPrice *Price `json:"gadPrice,omitempty"`
+	// PriorPrice: The price prior to the application of the first price reduction
+	// Absent if the information about the prior price of the product is not
+	// available.
+	PriorPrice *Price `json:"priorPrice,omitempty"`
+	// PriorPriceProgressive: The price prior to the application of consecutive
+	// price reductions Absent if the information about the prior price of the
+	// product is not available.
+	PriorPriceProgressive *Price `json:"priorPriceProgressive,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "GadPrice") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "GadPrice") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s AutomatedDiscounts) MarshalJSON() ([]byte, error) {
+	type NoMethod AutomatedDiscounts
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // Certification: Product certification
 // (https://support.google.com/merchants/answer/13528839), initially introduced
 // for EU energy efficiency labeling compliance using the EU EPREL database.
@@ -1030,6 +1062,9 @@ func (s Price) MarshalJSON() ([]byte, error) {
 type Product struct {
 	// Attributes: Output only. A list of product attributes.
 	Attributes *Attributes `json:"attributes,omitempty"`
+	// AutomatedDiscounts: Output only. The automated discounts information for the
+	// product.
+	AutomatedDiscounts *AutomatedDiscounts `json:"automatedDiscounts,omitempty"`
 	// Channel: Output only. The channel
 	// (https://support.google.com/merchants/answer/7361332) of the product.
 	//

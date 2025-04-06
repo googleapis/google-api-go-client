@@ -124,7 +124,7 @@
                   "type": "string"
                 },
                 "name": {
-                  "description": "Required. The name of the product input resource to delete. Format: accounts/{account}/productInputs/{product} where the last section `product` consists of 4 parts: channel~content_language~feed_label~offer_id example for product name is \"accounts/123/productInputs/online~en~US~sku123\"",
+                  "description": "Required. The name of the product input resource to delete. Format: `accounts/{account}/productInputs/{product}` where the last section `product` consists of 4 parts: `channel~content_language~feed_label~offer_id` example for product name is `accounts/123/productInputs/online~en~US~sku123`.",
                   "location": "path",
                   "pattern": "^accounts/[^/]+/productInputs/[^/]+$",
                   "required": true,
@@ -154,7 +154,7 @@
                   "type": "string"
                 },
                 "parent": {
-                  "description": "Required. The account where this product will be inserted. Format: accounts/{account}",
+                  "description": "Required. The account where this product will be inserted. Format: `accounts/{account}`",
                   "location": "path",
                   "pattern": "^accounts/[^/]+$",
                   "required": true,
@@ -187,7 +187,7 @@
                   "type": "string"
                 },
                 "name": {
-                  "description": "Identifier. The name of the product input. Format: accounts/{account}/productInputs/{productinput} where the last section `productinput` consists of 4 parts: channel~content_language~feed_label~offer_id example for product input name is \"accounts/123/productInputs/online~en~US~sku123\"",
+                  "description": "Identifier. The name of the product input. Format: `accounts/{account}/productInputs/{productinput}` where the last section `productinput` consists of 4 parts: `channel~content_language~feed_label~offer_id` example for product input name is `accounts/123/productInputs/online~en~US~sku123`",
                   "location": "path",
                   "pattern": "^accounts/[^/]+/productInputs/[^/]+$",
                   "required": true,
@@ -281,7 +281,7 @@
       }
     }
   },
-  "revision": "20250403",
+  "revision": "20250404",
   "rootUrl": "https://merchantapi.googleapis.com/",
   "schemas": {
     "Attributes": {
@@ -1439,7 +1439,7 @@
           "type": "string"
         },
         "customAttributes": {
-          "description": "Optional. A list of custom (merchant-provided) attributes. It can also be used for submitting any attribute of the data specification in its generic form (for example, `{ \"name\": \"size type\", \"value\": \"regular\" }`). This is useful for submitting attributes not explicitly exposed by the API, such as additional attributes used for Buy on Google. Maximum allowed number of characters for each custom attribute is 10240 (represents sum of characters for name and value). Maximum 2500 custom attributes can be set per product, with total size of 102.4kB. Underscores in custom attribute names are replaced by spaces upon insertion.",
+          "description": "Optional. A list of custom (merchant-provided) attributes. It can also be used for submitting any attribute of the data specification in its generic form (for example, `{ \"name\": \"size type\", \"value\": \"regular\" }`). This is useful for submitting attributes not explicitly exposed by the API. Maximum allowed number of characters for each custom attribute is 10240 (represents sum of characters for name and value). Maximum 2500 custom attributes can be set per product, with total size of 102.4kB. Underscores in custom attribute names are replaced by spaces upon insertion.",
           "items": {
             "$ref": "CustomAttribute"
           },
@@ -1450,7 +1450,7 @@
           "type": "string"
         },
         "name": {
-          "description": "Identifier. The name of the product input. Format: accounts/{account}/productInputs/{productinput} where the last section `productinput` consists of 4 parts: channel~content_language~feed_label~offer_id example for product input name is \"accounts/123/productInputs/online~en~US~sku123\"",
+          "description": "Identifier. The name of the product input. Format: `accounts/{account}/productInputs/{productinput}` where the last section `productinput` consists of 4 parts: `channel~content_language~feed_label~offer_id` example for product input name is `accounts/123/productInputs/online~en~US~sku123`",
           "type": "string"
         },
         "offerId": {
@@ -1458,7 +1458,7 @@
           "type": "string"
         },
         "product": {
-          "description": "Output only. The name of the processed product. Format: `\"{product.name=accounts/{account}/products/{product}}\"`",
+          "description": "Output only. The name of the processed product. Format: `accounts/{account}/products/{product}`",
           "readOnly": true,
           "type": "string"
         },

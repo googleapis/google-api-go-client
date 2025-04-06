@@ -1304,21 +1304,20 @@ type ProductInput struct {
 	// It can also be used for submitting any attribute of the data specification
 	// in its generic form (for example, `{ "name": "size type", "value": "regular"
 	// }`). This is useful for submitting attributes not explicitly exposed by the
-	// API, such as additional attributes used for Buy on Google. Maximum allowed
-	// number of characters for each custom attribute is 10240 (represents sum of
-	// characters for name and value). Maximum 2500 custom attributes can be set
-	// per product, with total size of 102.4kB. Underscores in custom attribute
-	// names are replaced by spaces upon insertion.
+	// API. Maximum allowed number of characters for each custom attribute is 10240
+	// (represents sum of characters for name and value). Maximum 2500 custom
+	// attributes can be set per product, with total size of 102.4kB. Underscores
+	// in custom attribute names are replaced by spaces upon insertion.
 	CustomAttributes []*CustomAttribute `json:"customAttributes,omitempty"`
 	// FeedLabel: Required. Immutable. The feed label
 	// (https://developers.google.com/shopping-content/guides/products/feed-labels)
 	// for the product.
 	FeedLabel string `json:"feedLabel,omitempty"`
 	// Name: Identifier. The name of the product input. Format:
-	// accounts/{account}/productInputs/{productinput} where the last section
+	// `accounts/{account}/productInputs/{productinput}` where the last section
 	// `productinput` consists of 4 parts:
-	// channel~content_language~feed_label~offer_id example for product input name
-	// is "accounts/123/productInputs/online~en~US~sku123"
+	// `channel~content_language~feed_label~offer_id` example for product input
+	// name is `accounts/123/productInputs/online~en~US~sku123`
 	Name string `json:"name,omitempty"`
 	// OfferId: Required. Immutable. Your unique identifier for the product. This
 	// is the same for the product input and processed product. Leading and
@@ -1327,7 +1326,7 @@ type ProductInput struct {
 	// (https://support.google.com/merchants/answer/188494#id) for details.
 	OfferId string `json:"offerId,omitempty"`
 	// Product: Output only. The name of the processed product. Format:
-	// "{product.name=accounts/{account}/products/{product}}"
+	// `accounts/{account}/products/{product}`
 	Product string `json:"product,omitempty"`
 	// VersionNumber: Optional. Represents the existing version (freshness) of the
 	// product, which can be used to preserve the right order when multiple updates
@@ -1902,10 +1901,10 @@ type AccountsProductInputsDeleteCall struct {
 // minutes before the processed product can be retrieved.
 //
 //   - name: The name of the product input resource to delete. Format:
-//     accounts/{account}/productInputs/{product} where the last section
+//     `accounts/{account}/productInputs/{product}` where the last section
 //     `product` consists of 4 parts:
-//     channel~content_language~feed_label~offer_id example for product name is
-//     "accounts/123/productInputs/online~en~US~sku123".
+//     `channel~content_language~feed_label~offer_id` example for product name is
+//     `accounts/123/productInputs/online~en~US~sku123`.
 func (r *AccountsProductInputsService) Delete(name string) *AccountsProductInputsDeleteCall {
 	c := &AccountsProductInputsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2016,7 +2015,7 @@ type AccountsProductInputsInsertCall struct {
 // retrieved.
 //
 //   - parent: The account where this product will be inserted. Format:
-//     accounts/{account}.
+//     `accounts/{account}`.
 func (r *AccountsProductInputsService) Insert(parent string, productinput *ProductInput) *AccountsProductInputsInsertCall {
 	c := &AccountsProductInputsInsertCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -2132,10 +2131,10 @@ type AccountsProductInputsPatchCall struct {
 // minutes before the processed product can be retrieved.
 //
 //   - name: Identifier. The name of the product input. Format:
-//     accounts/{account}/productInputs/{productinput} where the last section
+//     `accounts/{account}/productInputs/{productinput}` where the last section
 //     `productinput` consists of 4 parts:
-//     channel~content_language~feed_label~offer_id example for product input
-//     name is "accounts/123/productInputs/online~en~US~sku123".
+//     `channel~content_language~feed_label~offer_id` example for product input
+//     name is `accounts/123/productInputs/online~en~US~sku123`.
 func (r *AccountsProductInputsService) Patch(name string, productinput *ProductInput) *AccountsProductInputsPatchCall {
 	c := &AccountsProductInputsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name

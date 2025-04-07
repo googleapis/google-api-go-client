@@ -1274,6 +1274,8 @@ type EventAnnotation struct {
 	//   "CLOUD_ALERTING_ALERT" - Alerts from Cloud Alerting
 	//   "SERVICE_HEALTH_INCIDENT" - Incidents from Service Health
 	//   "SAP_BACKINT" - Agent for SAP Backint related events.
+	//   "SAP_AVAILABILITY" - Agent for SAP availability related events.
+	//   "SAP_OPERATIONS" - Agent for SAP operations related events.
 	EventType string `json:"eventType,omitempty"`
 	// Filter: string filtering the events - event dependant. Example values:
 	// "resource.labels.pod_name = 'pod-1'"

@@ -6,7 +6,7 @@
 
 // Package drive provides access to the Google Drive API.
 //
-// For product documentation, see: https://developers.google.com/drive/
+// For product documentation, see: https://developers.google.com/workspace/drive/
 //
 // # Library status
 //
@@ -1053,7 +1053,7 @@ func (s ChildReference) MarshalJSON() ([]byte, error) {
 type Comment struct {
 	// Anchor: A region of the document represented as a JSON string. For details
 	// on defining anchor properties, refer to Add comments and replies
-	// (https://developers.google.com/drive/api/v2/manage-comments).
+	// (https://developers.google.com/workspace/drive/api/v2/manage-comments).
 	Anchor string `json:"anchor,omitempty"`
 	// Author: Output only. The author of the comment. The author's email address
 	// and permission ID will not be populated.
@@ -6254,7 +6254,7 @@ type DrivesListCall struct {
 // List:  Lists the user's shared drives. This method accepts the `q`
 // parameter, which is a search query combining one or more search terms. For
 // more information, see the Search for shared drives
-// (/drive/api/guides/search-shareddrives) guide.
+// (/workspace/drive/api/guides/search-shareddrives) guide.
 func (r *DrivesService) List() *DrivesListCall {
 	c := &DrivesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	return c
@@ -7230,9 +7230,9 @@ type FilesGetCall struct {
 // parameter `alt=media`, then the response includes the file contents in the
 // response body. Downloading content with `alt=media` only works if the file
 // is stored in Drive. To download Google Docs, Sheets, and Slides use
-// `files.export` (/drive/api/reference/rest/v2/files/export) instead. For more
-// information, see Download & export files
-// (/drive/api/guides/manage-downloads).
+// `files.export` (/workspace/drive/api/reference/rest/v2/files/export)
+// instead. For more information, see Download & export files
+// (/workspace/drive/api/guides/manage-downloads).
 //
 // - fileId: The ID for the file in question.
 func (r *FilesService) Get(fileId string) *FilesGetCall {
@@ -7429,7 +7429,7 @@ type FilesInsertCall struct {
 // MIME type, rather than the literal `*/*` value. The literal `*/*` is only
 // used to indicate that any valid MIME type can be uploaded. For more
 // information on uploading files, see Upload file data
-// (/drive/api/guides/manage-uploads). Apps creating shortcuts with
+// (/workspace/drive/api/guides/manage-uploads). Apps creating shortcuts with
 // `files.insert` must specify the MIME type
 // `application/vnd.google-apps.shortcut`. Apps should specify a file extension
 // in the `title` property when inserting files with the API. For example, an
@@ -7701,10 +7701,11 @@ type FilesListCall struct {
 
 // List:  Lists the user's files. This method accepts the `q` parameter, which
 // is a search query combining one or more search terms. For more information,
-// see the Search for files & folders (/drive/api/guides/search-files) guide.
-// *Note:* This method returns *all* files by default, including trashed files.
-// If you don't want trashed files to appear in the list, use the
-// `trashed=false` query parameter to remove trashed files from the results.
+// see the Search for files & folders
+// (/workspace/drive/api/guides/search-files) guide. *Note:* This method
+// returns *all* files by default, including trashed files. If you don't want
+// trashed files to appear in the list, use the `trashed=false` query parameter
+// to remove trashed files from the results.
 func (r *FilesService) List() *FilesListCall {
 	c := &FilesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	return c
@@ -8876,7 +8877,7 @@ type FilesUpdateCall struct {
 // valid MIME type, rather than the literal `*/*` value. The literal `*/*` is
 // only used to indicate that any valid MIME type can be uploaded. For more
 // information on uploading files, see Upload file data
-// (/drive/api/guides/manage-uploads).
+// (/workspace/drive/api/guides/manage-uploads).
 //
 // - fileId: The ID of the file to update.
 func (r *FilesService) Update(fileId string, file *File) *FilesUpdateCall {

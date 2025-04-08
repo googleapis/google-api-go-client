@@ -6,7 +6,7 @@
 
 // Package drive provides access to the Google Drive API.
 //
-// For product documentation, see: https://developers.google.com/drive/
+// For product documentation, see: https://developers.google.com/workspace/drive/
 //
 // # Library status
 //
@@ -849,7 +849,7 @@ func (s Channel) MarshalJSON() ([]byte, error) {
 type Comment struct {
 	// Anchor: A region of the document represented as a JSON string. For details
 	// on defining anchor properties, refer to Manage comments and replies
-	// (https://developers.google.com/drive/api/v3/manage-comments).
+	// (https://developers.google.com/workspace/drive/api/v3/manage-comments).
 	Anchor string `json:"anchor,omitempty"`
 	// Author: Output only. The author of the comment. The author's email address
 	// and permission ID will not be populated.
@@ -2444,10 +2444,10 @@ func (s Operation) MarshalJSON() ([]byte, error) {
 // domain, or the world access to a file or a folder hierarchy. By default,
 // permissions requests only return a subset of fields. Permission kind, ID,
 // type, and role are always returned. To retrieve specific fields, see
-// https://developers.google.com/drive/api/guides/fields-parameter. Some
-// resource methods (such as `permissions.update`) require a `permissionId`.
-// Use the `permissions.list` method to retrieve the ID for a file, folder, or
-// shared drive.
+// https://developers.google.com/workspace/drive/api/guides/fields-parameter.
+// Some resource methods (such as `permissions.update`) require a
+// `permissionId`. Use the `permissions.list` method to retrieve the ID for a
+// file, folder, or shared drive.
 type Permission struct {
 	// AllowFileDiscovery: Whether the permission allows the file to be discovered
 	// through search. This is only applicable for permissions of type `domain` or
@@ -3254,10 +3254,10 @@ type AboutGetCall struct {
 
 // Get: Gets information about the user, the user's Drive, and system
 // capabilities. For more information, see Return user info
-// (https://developers.google.com/drive/api/guides/user-info). Required: The
-// `fields` parameter must be set. To return the exact fields you need, see
-// Return specific fields
-// (https://developers.google.com/drive/api/guides/fields-parameter).
+// (https://developers.google.com/workspace/drive/api/guides/user-info).
+// Required: The `fields` parameter must be set. To return the exact fields you
+// need, see Return specific fields
+// (https://developers.google.com/workspace/drive/api/guides/fields-parameter).
 func (r *AboutService) Get() *AboutGetCall {
 	c := &AboutGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	return c
@@ -3704,7 +3704,7 @@ type AppsGetCall struct {
 }
 
 // Get: Gets a specific app. For more information, see Return user info
-// (https://developers.google.com/drive/api/guides/user-info).
+// (https://developers.google.com/workspace/drive/api/guides/user-info).
 //
 // - appId: The ID of the app.
 func (r *AppsService) Get(appId string) *AppsGetCall {
@@ -3813,7 +3813,7 @@ type AppsListCall struct {
 }
 
 // List: Lists a user's installed apps. For more information, see Return user
-// info (https://developers.google.com/drive/api/guides/user-info).
+// info (https://developers.google.com/workspace/drive/api/guides/user-info).
 func (r *AppsService) List() *AppsListCall {
 	c := &AppsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	return c
@@ -3945,7 +3945,7 @@ type ChangesGetStartPageTokenCall struct {
 
 // GetStartPageToken: Gets the starting pageToken for listing future changes.
 // For more information, see Retrieve changes
-// (https://developers.google.com/drive/api/guides/manage-changes).
+// (https://developers.google.com/workspace/drive/api/guides/manage-changes).
 func (r *ChangesService) GetStartPageToken() *ChangesGetStartPageTokenCall {
 	c := &ChangesGetStartPageTokenCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	return c
@@ -4078,7 +4078,7 @@ type ChangesListCall struct {
 
 // List: Lists the changes for a user or shared drive. For more information,
 // see Retrieve changes
-// (https://developers.google.com/drive/api/guides/manage-changes).
+// (https://developers.google.com/workspace/drive/api/guides/manage-changes).
 //
 //   - pageToken: The token for continuing a previous list request on the next
 //     page. This should be set to the value of 'nextPageToken' from the previous
@@ -4288,7 +4288,7 @@ type ChangesWatchCall struct {
 
 // Watch: Subscribes to changes for a user. For more information, see
 // Notifications for resource changes
-// (https://developers.google.com/drive/api/guides/push).
+// (https://developers.google.com/workspace/drive/api/guides/push).
 //
 //   - pageToken: The token for continuing a previous list request on the next
 //     page. This should be set to the value of 'nextPageToken' from the previous
@@ -4492,7 +4492,7 @@ type ChannelsStopCall struct {
 
 // Stop: Stops watching resources through this channel. For more information,
 // see Notifications for resource changes
-// (https://developers.google.com/drive/api/guides/push).
+// (https://developers.google.com/workspace/drive/api/guides/push).
 func (r *ChannelsService) Stop(channel *Channel) *ChannelsStopCall {
 	c := &ChannelsStopCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.channel = channel
@@ -4567,10 +4567,10 @@ type CommentsCreateCall struct {
 
 // Create: Creates a comment on a file. For more information, see Manage
 // comments and replies
-// (https://developers.google.com/drive/api/guides/manage-comments). Required:
-// The `fields` parameter must be set. To return the exact fields you need, see
-// Return specific fields
-// (https://developers.google.com/drive/api/guides/fields-parameter).
+// (https://developers.google.com/workspace/drive/api/guides/manage-comments).
+// Required: The `fields` parameter must be set. To return the exact fields you
+// need, see Return specific fields
+// (https://developers.google.com/workspace/drive/api/guides/fields-parameter).
 //
 // - fileId: The ID of the file.
 func (r *CommentsService) Create(fileId string, comment *Comment) *CommentsCreateCall {
@@ -4674,10 +4674,11 @@ type CommentsDeleteCall struct {
 }
 
 // Delete: Deletes a comment. For more information, see Manage comments and
-// replies (https://developers.google.com/drive/api/guides/manage-comments).
+// replies
+// (https://developers.google.com/workspace/drive/api/guides/manage-comments).
 // Required: The `fields` parameter must be set. To return the exact fields you
 // need, see Return specific fields
-// (https://developers.google.com/drive/api/guides/fields-parameter).
+// (https://developers.google.com/workspace/drive/api/guides/fields-parameter).
 //
 // - commentId: The ID of the comment.
 // - fileId: The ID of the file.
@@ -4756,10 +4757,11 @@ type CommentsGetCall struct {
 }
 
 // Get: Gets a comment by ID. For more information, see Manage comments and
-// replies (https://developers.google.com/drive/api/guides/manage-comments).
+// replies
+// (https://developers.google.com/workspace/drive/api/guides/manage-comments).
 // Required: The `fields` parameter must be set. To return the exact fields you
 // need, see Return specific fields
-// (https://developers.google.com/drive/api/guides/fields-parameter).
+// (https://developers.google.com/workspace/drive/api/guides/fields-parameter).
 //
 // - commentId: The ID of the comment.
 // - fileId: The ID of the file.
@@ -4880,10 +4882,11 @@ type CommentsListCall struct {
 }
 
 // List: Lists a file's comments. For more information, see Manage comments and
-// replies (https://developers.google.com/drive/api/guides/manage-comments).
+// replies
+// (https://developers.google.com/workspace/drive/api/guides/manage-comments).
 // Required: The `fields` parameter must be set. To return the exact fields you
 // need, see Return specific fields
-// (https://developers.google.com/drive/api/guides/fields-parameter).
+// (https://developers.google.com/workspace/drive/api/guides/fields-parameter).
 //
 // - fileId: The ID of the file.
 func (r *CommentsService) List(fileId string) *CommentsListCall {
@@ -5047,10 +5050,10 @@ type CommentsUpdateCall struct {
 
 // Update: Updates a comment with patch semantics. For more information, see
 // Manage comments and replies
-// (https://developers.google.com/drive/api/guides/manage-comments). Required:
-// The `fields` parameter must be set. To return the exact fields you need, see
-// Return specific fields
-// (https://developers.google.com/drive/api/guides/fields-parameter).
+// (https://developers.google.com/workspace/drive/api/guides/manage-comments).
+// Required: The `fields` parameter must be set. To return the exact fields you
+// need, see Return specific fields
+// (https://developers.google.com/workspace/drive/api/guides/fields-parameter).
 //
 // - commentId: The ID of the comment.
 // - fileId: The ID of the file.
@@ -5567,7 +5570,7 @@ type DrivesListCall struct {
 // List:  Lists the user's shared drives. This method accepts the `q`
 // parameter, which is a search query combining one or more search terms. For
 // more information, see the Search for shared drives
-// (/drive/api/guides/search-shareddrives) guide.
+// (/workspace/drive/api/guides/search-shareddrives) guide.
 func (r *DrivesService) List() *DrivesListCall {
 	c := &DrivesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	return c
@@ -6104,7 +6107,7 @@ type FilesCreateCall struct {
 // MIME type, rather than the literal `*/*` value. The literal `*/*` is only
 // used to indicate that any valid MIME type can be uploaded. For more
 // information on uploading files, see Upload file data
-// (/drive/api/guides/manage-uploads). Apps creating shortcuts with
+// (/workspace/drive/api/guides/manage-uploads). Apps creating shortcuts with
 // `files.create` must specify the MIME type
 // `application/vnd.google-apps.shortcut`. Apps should specify a file extension
 // in the `name` property when inserting files with the API. For example, an
@@ -6879,9 +6882,9 @@ type FilesGetCall struct {
 // parameter `alt=media`, then the response includes the file contents in the
 // response body. Downloading content with `alt=media` only works if the file
 // is stored in Drive. To download Google Docs, Sheets, and Slides use
-// `files.export` (/drive/api/reference/rest/v3/files/export) instead. For more
-// information, see Download & export files
-// (/drive/api/guides/manage-downloads).
+// `files.export` (/workspace/drive/api/reference/rest/v3/files/export)
+// instead. For more information, see Download & export files
+// (/workspace/drive/api/guides/manage-downloads).
 //
 // - fileId: The ID of the file.
 func (r *FilesService) Get(fileId string) *FilesGetCall {
@@ -7046,10 +7049,11 @@ type FilesListCall struct {
 
 // List:  Lists the user's files. This method accepts the `q` parameter, which
 // is a search query combining one or more search terms. For more information,
-// see the Search for files & folders (/drive/api/guides/search-files) guide.
-// *Note:* This method returns *all* files by default, including trashed files.
-// If you don't want trashed files to appear in the list, use the
-// `trashed=false` query parameter to remove trashed files from the results.
+// see the Search for files & folders
+// (/workspace/drive/api/guides/search-files) guide. *Note:* This method
+// returns *all* files by default, including trashed files. If you don't want
+// trashed files to appear in the list, use the `trashed=false` query parameter
+// to remove trashed files from the results.
 func (r *FilesService) List() *FilesListCall {
 	c := &FilesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	return c
@@ -7564,7 +7568,7 @@ type FilesUpdateCall struct {
 // valid MIME type, rather than the literal `*/*` value. The literal `*/*` is
 // only used to indicate that any valid MIME type can be uploaded. For more
 // information on uploading files, see Upload file data
-// (/drive/api/guides/manage-uploads).
+// (/workspace/drive/api/guides/manage-uploads).
 //
 // - fileId: The ID of the file.
 func (r *FilesService) Update(fileId string, file *File) *FilesUpdateCall {

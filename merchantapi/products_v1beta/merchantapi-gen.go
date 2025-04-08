@@ -488,6 +488,38 @@ func (s *Attributes) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+// AutomatedDiscounts: Information regarding Automated Discounts.
+type AutomatedDiscounts struct {
+	// GadPrice: The current sale price for products with a price optimized using
+	// Google Automated Discounts (GAD). Absent if the information about the
+	// GAD_price of the product is not available.
+	GadPrice *Price `json:"gadPrice,omitempty"`
+	// PriorPrice: The price prior to the application of the first price reduction
+	// Absent if the information about the prior price of the product is not
+	// available.
+	PriorPrice *Price `json:"priorPrice,omitempty"`
+	// PriorPriceProgressive: The price prior to the application of consecutive
+	// price reductions Absent if the information about the prior price of the
+	// product is not available.
+	PriorPriceProgressive *Price `json:"priorPriceProgressive,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "GadPrice") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "GadPrice") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s AutomatedDiscounts) MarshalJSON() ([]byte, error) {
+	type NoMethod AutomatedDiscounts
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // Certification: Product certification
 // (https://support.google.com/merchants/answer/13528839), initially introduced
 // for EU energy efficiency labeling compliance using the EU EPREL database.
@@ -1020,17 +1052,19 @@ func (s Price) MarshalJSON() ([]byte, error) {
 
 // Product: The processed product, built from multiple product inputs after
 // applying rules and supplemental data sources. This processed product matches
-// what is shown in your Merchant Center account and in Shopping ads and other
-// surfaces across Google. Each product is built from exactly one primary data
-// source product input, and multiple supplemental data source inputs. After
-// inserting, updating, or deleting a product input, it may take several
-// minutes before the updated processed product can be retrieved. All fields in
-// the processed product and its sub-messages match the name of their
-// corresponding attribute in the Product data specification
+// what is shown in your Merchant Center account. Each product is built from
+// exactly one primary data source product input, and multiple supplemental
+// data source inputs. After inserting, updating, or deleting a product input,
+// it may take several minutes before the updated processed product can be
+// retrieved. All fields in the processed product and its sub-messages match
+// the name of their corresponding attribute in the Product data specification
 // (https://support.google.com/merchants/answer/7052112) with some exceptions.
 type Product struct {
 	// Attributes: Output only. A list of product attributes.
 	Attributes *Attributes `json:"attributes,omitempty"`
+	// AutomatedDiscounts: Output only. The automated discounts information for the
+	// product.
+	AutomatedDiscounts *AutomatedDiscounts `json:"automatedDiscounts,omitempty"`
 	// Channel: Output only. The channel
 	// (https://support.google.com/merchants/answer/7361332) of the product.
 	//
@@ -1054,10 +1088,9 @@ type Product struct {
 	// FeedLabel: Output only. The feed label for the product.
 	FeedLabel string `json:"feedLabel,omitempty"`
 	// Name: The name of the product. Format:
-	// "{product.name=accounts/{account}/products/{product}}" where the last
-	// section `product` consists of 4 parts:
-	// channel~content_language~feed_label~offer_id example for product name is
-	// "accounts/123/products/online~en~US~sku123"
+	// `accounts/{account}/products/{product}` where the last section `product`
+	// consists of 4 parts: `channel~content_language~feed_label~offer_id` example
+	// for product name is `accounts/123/products/online~en~US~sku123`
 	Name string `json:"name,omitempty"`
 	// OfferId: Output only. Your unique identifier for the product. This is the
 	// same for the product input and processed product. Leading and trailing
@@ -1271,21 +1304,20 @@ type ProductInput struct {
 	// It can also be used for submitting any attribute of the data specification
 	// in its generic form (for example, `{ "name": "size type", "value": "regular"
 	// }`). This is useful for submitting attributes not explicitly exposed by the
-	// API, such as additional attributes used for Buy on Google. Maximum allowed
-	// number of characters for each custom attribute is 10240 (represents sum of
-	// characters for name and value). Maximum 2500 custom attributes can be set
-	// per product, with total size of 102.4kB. Underscores in custom attribute
-	// names are replaced by spaces upon insertion.
+	// API. Maximum allowed number of characters for each custom attribute is 10240
+	// (represents sum of characters for name and value). Maximum 2500 custom
+	// attributes can be set per product, with total size of 102.4kB. Underscores
+	// in custom attribute names are replaced by spaces upon insertion.
 	CustomAttributes []*CustomAttribute `json:"customAttributes,omitempty"`
 	// FeedLabel: Required. Immutable. The feed label
 	// (https://developers.google.com/shopping-content/guides/products/feed-labels)
 	// for the product.
 	FeedLabel string `json:"feedLabel,omitempty"`
 	// Name: Identifier. The name of the product input. Format:
-	// "{productinput.name=accounts/{account}/productInputs/{productinput}}"
-	// where the last section `productinput` consists of 4 parts:
-	// channel~content_language~feed_label~offer_id example for product input name
-	// is "accounts/123/productInputs/online~en~US~sku123"
+	// `accounts/{account}/productInputs/{productinput}` where the last section
+	// `productinput` consists of 4 parts:
+	// `channel~content_language~feed_label~offer_id` example for product input
+	// name is `accounts/123/productInputs/online~en~US~sku123`
 	Name string `json:"name,omitempty"`
 	// OfferId: Required. Immutable. Your unique identifier for the product. This
 	// is the same for the product input and processed product. Leading and
@@ -1294,7 +1326,7 @@ type ProductInput struct {
 	// (https://support.google.com/merchants/answer/188494#id) for details.
 	OfferId string `json:"offerId,omitempty"`
 	// Product: Output only. The name of the processed product. Format:
-	// "{product.name=accounts/{account}/products/{product}}"
+	// `accounts/{account}/products/{product}`
 	Product string `json:"product,omitempty"`
 	// VersionNumber: Optional. Represents the existing version (freshness) of the
 	// product, which can be used to preserve the right order when multiple updates
@@ -1869,10 +1901,10 @@ type AccountsProductInputsDeleteCall struct {
 // minutes before the processed product can be retrieved.
 //
 //   - name: The name of the product input resource to delete. Format:
-//     accounts/{account}/productInputs/{product} where the last section
+//     `accounts/{account}/productInputs/{product}` where the last section
 //     `product` consists of 4 parts:
-//     channel~content_language~feed_label~offer_id example for product name is
-//     "accounts/123/productInputs/online~en~US~sku123".
+//     `channel~content_language~feed_label~offer_id` example for product name is
+//     `accounts/123/productInputs/online~en~US~sku123`.
 func (r *AccountsProductInputsService) Delete(name string) *AccountsProductInputsDeleteCall {
 	c := &AccountsProductInputsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -1983,7 +2015,7 @@ type AccountsProductInputsInsertCall struct {
 // retrieved.
 //
 //   - parent: The account where this product will be inserted. Format:
-//     accounts/{account}.
+//     `accounts/{account}`.
 func (r *AccountsProductInputsService) Insert(parent string, productinput *ProductInput) *AccountsProductInputsInsertCall {
 	c := &AccountsProductInputsInsertCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -2099,10 +2131,10 @@ type AccountsProductInputsPatchCall struct {
 // minutes before the processed product can be retrieved.
 //
 //   - name: Identifier. The name of the product input. Format:
-//     "{productinput.name=accounts/{account}/productInputs/{productinput}}"
-//     where the last section `productinput` consists of 4 parts:
-//     channel~content_language~feed_label~offer_id example for product input
-//     name is "accounts/123/productInputs/online~en~US~sku123".
+//     `accounts/{account}/productInputs/{productinput}` where the last section
+//     `productinput` consists of 4 parts:
+//     `channel~content_language~feed_label~offer_id` example for product input
+//     name is `accounts/123/productInputs/online~en~US~sku123`.
 func (r *AccountsProductInputsService) Patch(name string, productinput *ProductInput) *AccountsProductInputsPatchCall {
 	c := &AccountsProductInputsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2232,8 +2264,8 @@ type AccountsProductsGetCall struct {
 //
 //   - name: The name of the product to retrieve. Format:
 //     `accounts/{account}/products/{product}` where the last section `product`
-//     consists of 4 parts: channel~content_language~feed_label~offer_id example
-//     for product name is "accounts/123/products/online~en~US~sku123".
+//     consists of 4 parts: `channel~content_language~feed_label~offer_id`
+//     example for product name is `accounts/123/products/online~en~US~sku123`.
 func (r *AccountsProductsService) Get(name string) *AccountsProductsGetCall {
 	c := &AccountsProductsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2341,13 +2373,13 @@ type AccountsProductsListCall struct {
 }
 
 // List: Lists the processed products in your Merchant Center account. The
-// response might contain fewer items than specified by pageSize. Rely on
-// pageToken to determine if there are more items to be requested. After
+// response might contain fewer items than specified by `pageSize`. Rely on
+// `pageToken` to determine if there are more items to be requested. After
 // inserting, updating, or deleting a product input, it may take several
 // minutes before the updated processed product can be retrieved.
 //
 //   - parent: The account to list processed products for. Format:
-//     accounts/{account}.
+//     `accounts/{account}`.
 func (r *AccountsProductsService) List(parent string) *AccountsProductsListCall {
 	c := &AccountsProductsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent

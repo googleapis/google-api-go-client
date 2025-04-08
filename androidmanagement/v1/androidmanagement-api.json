@@ -1202,7 +1202,7 @@
       }
     }
   },
-  "revision": "20250331",
+  "revision": "20250402",
   "rootUrl": "https://androidmanagement.googleapis.com/",
   "schemas": {
     "AdbShellCommandEvent": {
@@ -3293,6 +3293,30 @@
             "$ref": "TermsAndConditions"
           },
           "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "EnterpriseUpgradeEvent": {
+      "description": "An event sent for an enterprise upgrade. An enterprise upgrade is a process that upgrades a managed Google Play Accounts enterprise to a managed Google domain.",
+      "id": "EnterpriseUpgradeEvent",
+      "properties": {
+        "enterprise": {
+          "description": "The name of upgraded enterprise in the format \"enterprises/{enterprise}\"",
+          "type": "string"
+        },
+        "upgradeState": {
+          "description": "Output only. The upgrade state of the enterprise.",
+          "enum": [
+            "UPGRADE_STATE_UNSPECIFIED",
+            "UPGRADE_STATE_SUCCEEDED"
+          ],
+          "enumDescriptions": [
+            "Unspecified. This value is not used.",
+            "The upgrade has succeeded."
+          ],
+          "readOnly": true,
+          "type": "string"
         }
       },
       "type": "object"

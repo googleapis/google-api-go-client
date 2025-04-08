@@ -1120,6 +1120,9 @@ type Operation struct {
 	// SelfLinkWithId: [Output Only] Server-defined URL for this resource with the
 	// resource id.
 	SelfLinkWithId string `json:"selfLinkWithId,omitempty"`
+	// SetAutoscalerLinkOperationMetadata: This field is used internally by the
+	// Autoscaler team and should not be promoted to "alpha/beta/v1".
+	SetAutoscalerLinkOperationMetadata *SetAutoscalerLinkOperationMetadata `json:"setAutoscalerLinkOperationMetadata,omitempty"`
 	// SetCommonInstanceMetadataOperationMetadata: [Output Only] If the operation
 	// is for projects.setCommonInstanceMetadata, this field will contain
 	// information on all underlying zonal actions and their state.
@@ -2084,6 +2087,27 @@ type ResourcesListResponse struct {
 
 func (s ResourcesListResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ResourcesListResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+type SetAutoscalerLinkOperationMetadata struct {
+	// ZonalIgmIds: List of zonal IGM IDs part of the RMIG.
+	ZonalIgmIds googleapi.Int64s `json:"zonalIgmIds,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ZonalIgmIds") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ZonalIgmIds") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s SetAutoscalerLinkOperationMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod SetAutoscalerLinkOperationMetadata
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 

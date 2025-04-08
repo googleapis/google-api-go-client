@@ -159,6 +159,7 @@ func (s *Service) userAgent() string {
 func NewAccountsService(s *Service) *AccountsService {
 	rs := &AccountsService{s: s}
 	rs.LfpInventories = NewAccountsLfpInventoriesService(s)
+	rs.LfpMerchantStates = NewAccountsLfpMerchantStatesService(s)
 	rs.LfpSales = NewAccountsLfpSalesService(s)
 	rs.LfpStores = NewAccountsLfpStoresService(s)
 	return rs
@@ -168,6 +169,8 @@ type AccountsService struct {
 	s *Service
 
 	LfpInventories *AccountsLfpInventoriesService
+
+	LfpMerchantStates *AccountsLfpMerchantStatesService
 
 	LfpSales *AccountsLfpSalesService
 
@@ -180,6 +183,15 @@ func NewAccountsLfpInventoriesService(s *Service) *AccountsLfpInventoriesService
 }
 
 type AccountsLfpInventoriesService struct {
+	s *Service
+}
+
+func NewAccountsLfpMerchantStatesService(s *Service) *AccountsLfpMerchantStatesService {
+	rs := &AccountsLfpMerchantStatesService{s: s}
+	return rs
+}
+
+type AccountsLfpMerchantStatesService struct {
 	s *Service
 }
 
@@ -201,6 +213,73 @@ type AccountsLfpStoresService struct {
 	s *Service
 }
 
+// CountrySettings: Country-specific settings for the merchant.
+type CountrySettings struct {
+	// FreeLocalListingsEnabled: True if this merchant has enabled free local
+	// listings in MC.
+	FreeLocalListingsEnabled bool `json:"freeLocalListingsEnabled,omitempty"`
+	// InstockServingVerificationState: Output only. The verification state of this
+	// merchant's instock serving feature.
+	//
+	// Possible values:
+	//   "VERIFICATION_STATE_UNSPECIFIED" - Verification state unspecified.
+	//   "VERIFICATION_STATE_NOT_APPROVED" - Verification state not approved.
+	//   "VERIFICATION_STATE_IN_PROGRESS" - Verification state in progress.
+	//   "VERIFICATION_STATE_APPROVED" - Verification state approved.
+	InstockServingVerificationState string `json:"instockServingVerificationState,omitempty"`
+	// InventoryVerificationState: Output only. The verification state of this
+	// merchant's inventory check.
+	//
+	// Possible values:
+	//   "VERIFICATION_STATE_UNSPECIFIED" - Verification state unspecified.
+	//   "VERIFICATION_STATE_NOT_APPROVED" - Verification state not approved.
+	//   "VERIFICATION_STATE_IN_PROGRESS" - Verification state in progress.
+	//   "VERIFICATION_STATE_APPROVED" - Verification state approved.
+	InventoryVerificationState string `json:"inventoryVerificationState,omitempty"`
+	// LocalInventoryAdsEnabled: True if this merchant has enabled local inventory
+	// ads in MC.
+	LocalInventoryAdsEnabled bool `json:"localInventoryAdsEnabled,omitempty"`
+	// PickupServingVerificationState: Output only. The verification state of this
+	// merchant's pickup serving feature.
+	//
+	// Possible values:
+	//   "VERIFICATION_STATE_UNSPECIFIED" - Verification state unspecified.
+	//   "VERIFICATION_STATE_NOT_APPROVED" - Verification state not approved.
+	//   "VERIFICATION_STATE_IN_PROGRESS" - Verification state in progress.
+	//   "VERIFICATION_STATE_APPROVED" - Verification state approved.
+	PickupServingVerificationState string `json:"pickupServingVerificationState,omitempty"`
+	// ProductPageType: Output only. The product page type selected by this
+	// merchant.
+	//
+	// Possible values:
+	//   "PRODUCT_PAGE_TYPE_UNSPECIFIED" - Product page type unspecified.
+	//   "GOOGLE_HOSTED" - Google hosted product page.
+	//   "MERCHANT_HOSTED" - Merchant hosted product page.
+	//   "MERCHANT_HOSTED_STORE_SPECIFIC" - Merchant hosted store specific product
+	// page.
+	ProductPageType string `json:"productPageType,omitempty"`
+	// RegionCode: Required. The CLDR territory code
+	// (https://github.com/unicode-org/cldr/blob/latest/common/main/en.xml) for the
+	// country for which these settings are defined.
+	RegionCode string `json:"regionCode,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "FreeLocalListingsEnabled")
+	// to unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "FreeLocalListingsEnabled") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s CountrySettings) MarshalJSON() ([]byte, error) {
+	type NoMethod CountrySettings
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // Empty: A generic empty message that you can re-use to avoid defining
 // duplicated empty messages in your APIs. A typical example is to use it as
 // the request or the response type of an API method. For instance: service Foo
@@ -208,6 +287,40 @@ type AccountsLfpStoresService struct {
 type Empty struct {
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
+}
+
+// InventoryStats: The inventory statistics for a merchant.
+type InventoryStats struct {
+	// SubmittedEntries: Number of entries (understanding entry as a pair of
+	// product and store) that were built based on provided inventories/sales and
+	// submitted to Google.
+	SubmittedEntries int64 `json:"submittedEntries,omitempty,string"`
+	// SubmittedInStockEntries: Number of submitted in stock entries.
+	SubmittedInStockEntries int64 `json:"submittedInStockEntries,omitempty,string"`
+	// SubmittedProducts: Number of products from provided inventories/sales that
+	// were created from matches to existing online products provided by the
+	// merchant or to the Google catalog.
+	SubmittedProducts int64 `json:"submittedProducts,omitempty,string"`
+	// UnsubmittedEntries: Number of entries that were built based on provided
+	// inventories/sales and couldn't be submitted to Google due to errors like
+	// missing product.
+	UnsubmittedEntries int64 `json:"unsubmittedEntries,omitempty,string"`
+	// ForceSendFields is a list of field names (e.g. "SubmittedEntries") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "SubmittedEntries") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s InventoryStats) MarshalJSON() ([]byte, error) {
+	type NoMethod InventoryStats
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // LfpInventory: Local Inventory for the merchant.
@@ -281,6 +394,41 @@ type LfpInventory struct {
 
 func (s LfpInventory) MarshalJSON() ([]byte, error) {
 	type NoMethod LfpInventory
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// LfpMerchantState: The LFP state of a merchant.
+type LfpMerchantState struct {
+	// CountrySettings: Country-specific settings for the merchant.
+	CountrySettings []*CountrySettings `json:"countrySettings,omitempty"`
+	// InventoryStats: The inventory statistics for the merchant.
+	InventoryStats *InventoryStats `json:"inventoryStats,omitempty"`
+	// LinkedGbps: Number of GBPs (https://www.google.com/business/) this merchant
+	// has access to.
+	LinkedGbps int64 `json:"linkedGbps,omitempty,string"`
+	// Name: Identifier. The name of the `LfpMerchantState` resource. Format:
+	// `accounts/{account}/lfpMerchantStates/{target_merchant}`
+	Name string `json:"name,omitempty"`
+	// StoreStates: Output only. The state per store from the specified merchant.
+	StoreStates []*LfpStoreState `json:"storeStates,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "CountrySettings") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CountrySettings") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s LfpMerchantState) MarshalJSON() ([]byte, error) {
+	type NoMethod LfpMerchantState
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -418,6 +566,40 @@ type LfpStore struct {
 
 func (s LfpStore) MarshalJSON() ([]byte, error) {
 	type NoMethod LfpStore
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// LfpStoreState: The state of a specific merchant's store.
+type LfpStoreState struct {
+	// MatchingState: Output only. The store matching state.
+	//
+	// Possible values:
+	//   "STORE_MATCHING_STATE_UNSPECIFIED" - Store matching state unspecified.
+	//   "STORE_MATCHING_STATE_MATCHED" - The `LfpStore` is successfully matched
+	// with a Google Business Profile store.
+	//   "STORE_MATCHING_STATE_FAILED" - The `LfpStore` is not matched with a
+	// Google Business Profile store.
+	MatchingState string `json:"matchingState,omitempty"`
+	// MatchingStateHint: The hint of why the matching has failed (only set if
+	// matching_state is FAILED).
+	MatchingStateHint string `json:"matchingStateHint,omitempty"`
+	// StoreCode: Required. Immutable. The identifier of this store.
+	StoreCode string `json:"storeCode,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "MatchingState") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "MatchingState") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s LfpStoreState) MarshalJSON() ([]byte, error) {
+	type NoMethod LfpStoreState
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -709,6 +891,117 @@ func (c *AccountsLfpInventoriesInsertCall) Do(opts ...googleapi.CallOption) (*Lf
 		return nil, err
 	}
 	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "merchantapi.accounts.lfpInventories.insert", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type AccountsLfpMerchantStatesGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Gets the LFP state of a merchant
+//
+//   - name: The name of the state to retrieve. Format:
+//     `accounts/{account}/lfpMerchantStates/{target_merchant}`.
+func (r *AccountsLfpMerchantStatesService) Get(name string) *AccountsLfpMerchantStatesGetCall {
+	c := &AccountsLfpMerchantStatesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *AccountsLfpMerchantStatesGetCall) Fields(s ...googleapi.Field) *AccountsLfpMerchantStatesGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *AccountsLfpMerchantStatesGetCall) IfNoneMatch(entityTag string) *AccountsLfpMerchantStatesGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *AccountsLfpMerchantStatesGetCall) Context(ctx context.Context) *AccountsLfpMerchantStatesGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *AccountsLfpMerchantStatesGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *AccountsLfpMerchantStatesGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "lfp/v1beta/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "merchantapi.accounts.lfpMerchantStates.get", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "merchantapi.accounts.lfpMerchantStates.get" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *LfpMerchantState.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *AccountsLfpMerchantStatesGetCall) Do(opts ...googleapi.CallOption) (*LfpMerchantState, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &LfpMerchantState{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "merchantapi.accounts.lfpMerchantStates.get", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 

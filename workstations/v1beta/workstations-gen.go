@@ -853,7 +853,8 @@ type GcePersistentDisk struct {
 	// false. Updating source_snapshot will update content in the ephemeral
 	// directory after the workstation is restarted. Only file systems supported by
 	// Container-Optimized OS (COS) are explicitly supported. For a list of
-	// supported file systems, please refer to the COS documentation
+	// supported file systems, see the filesystems available in Container-Optimized
+	// OS
 	// (https://cloud.google.com/container-optimized-os/docs/concepts/supported-filesystems).
 	// This field is mutable.
 	SourceSnapshot string `json:"sourceSnapshot,omitempty"`
@@ -2975,6 +2976,13 @@ func (r *ProjectsLocationsWorkstationClustersService) List(parent string) *Proje
 	return c
 }
 
+// Filter sets the optional parameter "filter": Filter the WorkstationClusters
+// to be listed. Possible filters are described in https://google.aip.dev/160.
+func (c *ProjectsLocationsWorkstationClustersListCall) Filter(filter string) *ProjectsLocationsWorkstationClustersListCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
 // PageSize sets the optional parameter "pageSize": Maximum number of items to
 // return.
 func (c *ProjectsLocationsWorkstationClustersListCall) PageSize(pageSize int64) *ProjectsLocationsWorkstationClustersListCall {
@@ -3718,6 +3726,13 @@ type ProjectsLocationsWorkstationClustersWorkstationConfigsListCall struct {
 func (r *ProjectsLocationsWorkstationClustersWorkstationConfigsService) List(parent string) *ProjectsLocationsWorkstationClustersWorkstationConfigsListCall {
 	c := &ProjectsLocationsWorkstationClustersWorkstationConfigsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
+	return c
+}
+
+// Filter sets the optional parameter "filter": Filter the WorkstationConfigs
+// to be listed. Possible filters are described in https://google.aip.dev/160.
+func (c *ProjectsLocationsWorkstationClustersWorkstationConfigsListCall) Filter(filter string) *ProjectsLocationsWorkstationClustersWorkstationConfigsListCall {
+	c.urlParams_.Set("filter", filter)
 	return c
 }
 
@@ -4927,6 +4942,13 @@ type ProjectsLocationsWorkstationClustersWorkstationConfigsWorkstationsListCall 
 func (r *ProjectsLocationsWorkstationClustersWorkstationConfigsWorkstationsService) List(parent string) *ProjectsLocationsWorkstationClustersWorkstationConfigsWorkstationsListCall {
 	c := &ProjectsLocationsWorkstationClustersWorkstationConfigsWorkstationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
+	return c
+}
+
+// Filter sets the optional parameter "filter": Filter the Workstations to be
+// listed. Possible filters are described in https://google.aip.dev/160.
+func (c *ProjectsLocationsWorkstationClustersWorkstationConfigsWorkstationsListCall) Filter(filter string) *ProjectsLocationsWorkstationClustersWorkstationConfigsWorkstationsListCall {
+	c.urlParams_.Set("filter", filter)
 	return c
 }
 

@@ -2628,7 +2628,7 @@ type GoogleCloudDataplexV1DataProfileSpecPostScanActionsBigQueryExport struct {
 	// ResultsTable: Optional. The BigQuery table to export DataProfileScan results
 	// to. Format:
 	// //bigquery.googleapis.com/projects/PROJECT_ID/datasets/DATASET_ID/tables/TABL
-	// E_ID
+	// E_ID or projects/PROJECT_ID/datasets/DATASET_ID/tables/TABLE_ID
 	ResultsTable string `json:"resultsTable,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "ResultsTable") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -3440,7 +3440,7 @@ type GoogleCloudDataplexV1DataQualitySpecPostScanActionsBigQueryExport struct {
 	// ResultsTable: Optional. The BigQuery table to export DataQualityScan results
 	// to. Format:
 	// //bigquery.googleapis.com/projects/PROJECT_ID/datasets/DATASET_ID/tables/TABL
-	// E_ID
+	// E_ID or projects/PROJECT_ID/datasets/DATASET_ID/tables/TABLE_ID
 	ResultsTable string `json:"resultsTable,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "ResultsTable") to
 	// unconditionally include in API requests. By default, fields with empty or

@@ -3137,8 +3137,9 @@ func (s *Color) UnmarshalJSON(data []byte) error {
 // ColorStyle: A color value.
 type ColorStyle struct {
 	// RgbColor: RGB color. The `alpha`
-	// (/sheets/api/reference/rest/v4/spreadsheets/other#Color.FIELDS.alpha) value
-	// in the `Color` (/sheets/api/reference/rest/v4/spreadsheets/other#color)
+	// (https://developers.google.com/workspace/sheets/api/reference/rest/v4/spreadsheets/other#Color.FIELDS.alpha)
+	// value in the `Color`
+	// (https://developers.google.com/workspace/sheets/api/reference/rest/v4/spreadsheets/other#color)
 	// object isn't generally supported.
 	RgbColor *Color `json:"rgbColor,omitempty"`
 	// ThemeColor: Theme color.

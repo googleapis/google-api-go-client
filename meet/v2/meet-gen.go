@@ -6,7 +6,7 @@
 
 // Package meet provides access to the Google Meet API.
 //
-// For product documentation, see: https://developers.google.com/meet/api
+// For product documentation, see: https://developers.google.com/workspace/meet/api
 //
 // # Library status
 //
@@ -779,7 +779,7 @@ type Space struct {
 	// `{space}` is the resource identifier for the space. It's a unique,
 	// server-generated ID and is case sensitive. For example, `jQCFfuBOdN5z`. For
 	// more information, see How Meet identifies a meeting space
-	// (https://developers.google.com/meet/api/guides/meeting-spaces#identify-meeting-space).
+	// (https://developers.google.com/workspace/meet/api/guides/meeting-spaces#identify-meeting-space).
 	Name string `json:"name,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
@@ -2631,13 +2631,13 @@ type SpacesEndActiveConferenceCall struct {
 
 // EndActiveConference: Ends an active conference (if there's one). For an
 // example, see End active conference
-// (https://developers.google.com/meet/api/guides/meeting-spaces#end-active-conference).
+// (https://developers.google.com/workspace/meet/api/guides/meeting-spaces#end-active-conference).
 //
 //   - name: Resource name of the space. Format: `spaces/{space}`. `{space}` is
 //     the resource identifier for the space. It's a unique, server-generated ID
 //     and is case sensitive. For example, `jQCFfuBOdN5z`. For more information,
 //     see How Meet identifies a meeting space
-//     (https://developers.google.com/meet/api/guides/meeting-spaces#identify-meeting-space).
+//     (https://developers.google.com/workspace/meet/api/guides/meeting-spaces#identify-meeting-space).
 func (r *SpacesService) EndActiveConference(nameid string, endactiveconferencerequest *EndActiveConferenceRequest) *SpacesEndActiveConferenceCall {
 	c := &SpacesEndActiveConferenceCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.nameid = nameid
@@ -2740,7 +2740,7 @@ type SpacesGetCall struct {
 
 // Get: Gets details about a meeting space. For an example, see Get a meeting
 // space
-// (https://developers.google.com/meet/api/guides/meeting-spaces#get-meeting-space).
+// (https://developers.google.com/workspace/meet/api/guides/meeting-spaces#get-meeting-space).
 //
 //   - name: Resource name of the space. Format: `spaces/{space}` or
 //     `spaces/{meetingCode}`. `{space}` is the resource identifier for the
@@ -2754,7 +2754,7 @@ type SpacesGetCall struct {
 //     information, see Learn about meeting codes in Google Meet
 //     (https://support.google.com/meet/answer/10710509). For more information,
 //     see How Meet identifies a meeting space
-//     (https://developers.google.com/meet/api/guides/meeting-spaces#identify-meeting-space).
+//     (https://developers.google.com/workspace/meet/api/guides/meeting-spaces#identify-meeting-space).
 func (r *SpacesService) Get(nameid string) *SpacesGetCall {
 	c := &SpacesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.nameid = nameid
@@ -2863,13 +2863,13 @@ type SpacesPatchCall struct {
 
 // Patch: Updates details about a meeting space. For an example, see Update a
 // meeting space
-// (https://developers.google.com/meet/api/guides/meeting-spaces#update-meeting-space).
+// (https://developers.google.com/workspace/meet/api/guides/meeting-spaces#update-meeting-space).
 //
 //   - name: Immutable. Resource name of the space. Format: `spaces/{space}`.
 //     `{space}` is the resource identifier for the space. It's a unique,
 //     server-generated ID and is case sensitive. For example, `jQCFfuBOdN5z`.
 //     For more information, see How Meet identifies a meeting space
-//     (https://developers.google.com/meet/api/guides/meeting-spaces#identify-meeting-space).
+//     (https://developers.google.com/workspace/meet/api/guides/meeting-spaces#identify-meeting-space).
 func (r *SpacesService) Patch(nameid string, space *Space) *SpacesPatchCall {
 	c := &SpacesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.nameid = nameid

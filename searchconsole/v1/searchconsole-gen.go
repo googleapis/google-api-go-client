@@ -1042,6 +1042,8 @@ type SearchAnalyticsQueryRequest struct {
 	//   "DATA_STATE_UNSPECIFIED" - Default value, should not be used.
 	//   "FINAL" - Include full final data only, without partial.
 	//   "ALL" - Include all data, full and partial.
+	//   "HOURLY_ALL" - Include hourly data, full and partial. Required when
+	// grouping by HOUR.
 	DataState string `json:"dataState,omitempty"`
 	// DimensionFilterGroups: [Optional] Zero or more filters to apply to the
 	// dimension grouping values; for example, 'query contains \"buy\"' to see only
@@ -1054,12 +1056,18 @@ type SearchAnalyticsQueryRequest struct {
 	// the order that you supply these dimensions.
 	//
 	// Possible values:
-	//   "DATE"
-	//   "QUERY"
-	//   "PAGE"
-	//   "COUNTRY"
-	//   "DEVICE"
-	//   "SEARCH_APPEARANCE"
+	//   "DATE" - Group by date, which is returned in YYYY-MM-DD format, in PT time
+	// (UTC - 7:00/8:00).
+	//   "QUERY" - Group by query string.
+	//   "PAGE" - Group by page, a URI string.
+	//   "COUNTRY" - Group by country, specified by 3-letter country code ([ISO
+	// 3166-1 alpha-3](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-3)).
+	//   "DEVICE" - Group by device type (DESKTOP, MOBILE and TABLET).
+	//   "SEARCH_APPEARANCE" - Group by search result feature.
+	//   "HOUR" - Group by hour, which is returned in YYYY-MM-DDThh:mm:ss[+|-]hh:mm
+	// format (ISO-8601 extended offset date-time format) in PT time (UTC -
+	// 7:00/8:00). Data is available up to 10 days. Requires setting the dataState
+	// to HOURLY_ALL.
 	Dimensions []string `json:"dimensions,omitempty"`
 	// EndDate: [Required] End date of the requested date range, in YYYY-MM-DD
 	// format, in PST (UTC - 8:00). Must be greater than or equal to the start

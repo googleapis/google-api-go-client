@@ -509,6 +509,9 @@ func (s Percentiles) MarshalJSON() ([]byte, error) {
 // request includes all necessary context to load a particular user experience
 // history record.
 type QueryHistoryRequest struct {
+	// CollectionPeriodCount: The number of collection periods to return. If not
+	// specified, the default is 25. If present, must be in the range [1, 40].
+	CollectionPeriodCount int64 `json:"collectionPeriodCount,omitempty"`
 	// FormFactor: The form factor is a query dimension that specifies the device
 	// class that the record's data should belong to. Note: If no form factor is
 	// specified, then a special record with aggregated data over all form factors
@@ -534,15 +537,15 @@ type QueryHistoryRequest struct {
 	// url. Examples: "https://example.com/",
 	// "https://cloud.google.com/why-google-cloud/"
 	Url string `json:"url,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "FormFactor") to
+	// ForceSendFields is a list of field names (e.g. "CollectionPeriodCount") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "FormFactor") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
+	// NullFields is a list of field names (e.g. "CollectionPeriodCount") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }

@@ -8653,40 +8653,6 @@
         }
       }
     },
-    "sdfuploadtasks": {
-      "resources": {
-        "operations": {
-          "methods": {
-            "get": {
-              "description": "Gets the latest state of an asynchronous SDF download task operation. Clients should poll this method at intervals of 30 seconds.",
-              "flatPath": "v3/sdfuploadtasks/operations/{operationsId}",
-              "httpMethod": "GET",
-              "id": "displayvideo.sdfuploadtasks.operations.get",
-              "parameterOrder": [
-                "name"
-              ],
-              "parameters": {
-                "name": {
-                  "description": "The name of the operation resource.",
-                  "location": "path",
-                  "pattern": "^sdfuploadtasks/operations/[^/]+$",
-                  "required": true,
-                  "type": "string"
-                }
-              },
-              "path": "v3/{+name}",
-              "response": {
-                "$ref": "Operation"
-              },
-              "scopes": [
-                "https://www.googleapis.com/auth/display-video",
-                "https://www.googleapis.com/auth/doubleclickbidmanager"
-              ]
-            }
-          }
-        }
-      }
-    },
     "targetingTypes": {
       "resources": {
         "targetingOptions": {
@@ -9302,7 +9268,7 @@
       }
     }
   },
-  "revision": "20250320",
+  "revision": "20250408",
   "rootUrl": "https://displayvideo.googleapis.com/",
   "schemas": {
     "ActiveViewVideoViewabilityMetricConfig": {

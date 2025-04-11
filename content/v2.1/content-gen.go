@@ -7926,7 +7926,10 @@ func (s *PriceInsights) UnmarshalJSON(data []byte) error {
 // Product:  Required product attributes are primarily defined by the product
 // data specification. See the Product Data Specification Help Center article
 // for information. Product data. After inserting, updating, or deleting a
-// product, it may take several minutes before changes take effect.
+// product, it may take several minutes before changes take effect. The
+// following reference documentation lists the field names in the **camelCase**
+// casing style while the Products Data Specification lists the names in the
+// **snake_case** casing style.
 type Product struct {
 	// AdditionalImageLinks: Additional URLs of images of the item.
 	AdditionalImageLinks []string `json:"additionalImageLinks,omitempty"`

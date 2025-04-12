@@ -781,7 +781,8 @@ func (s GoogleChromePolicyVersionsV1ModifyOrgUnitPolicyRequest) MarshalJSON() ([
 }
 
 // GoogleChromePolicyVersionsV1NetworkSetting: A network setting contains
-// network configurations.
+// network configurations. It adheres to the PolicyAPI formats defined under
+// the namespace chrome.networks.{wifi/ethernet/cellular/vpn}.Details
 type GoogleChromePolicyVersionsV1NetworkSetting struct {
 	// PolicySchema: The fully qualified name of the network setting.
 	PolicySchema string `json:"policySchema,omitempty"`

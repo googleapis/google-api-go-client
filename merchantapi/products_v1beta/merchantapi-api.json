@@ -281,7 +281,7 @@
       }
     }
   },
-  "revision": "20250408",
+  "revision": "20250409",
   "rootUrl": "https://merchantapi.googleapis.com/",
   "schemas": {
     "Attributes": {
@@ -741,11 +741,11 @@
         },
         "priorPrice": {
           "$ref": "Price",
-          "description": "The price prior to the application of the first price reduction Absent if the information about the prior price of the product is not available."
+          "description": "The price prior to the application of the first price reduction. Absent if the information about the prior price of the product is not available."
         },
         "priorPriceProgressive": {
           "$ref": "Price",
-          "description": "The price prior to the application of consecutive price reductions Absent if the information about the prior price of the product is not available."
+          "description": "The price prior to the application of consecutive price reductions. Absent if the information about the prior price of the product is not available."
         }
       },
       "type": "object"

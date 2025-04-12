@@ -976,10 +976,6 @@ type ContainerVersionHeader struct {
 	NumCustomTemplates string `json:"numCustomTemplates,omitempty"`
 	// NumGtagConfigs: Number of Google tag configs in the container version.
 	NumGtagConfigs string `json:"numGtagConfigs,omitempty"`
-	// NumMacros: Number of macros in the container version.
-	NumMacros string `json:"numMacros,omitempty"`
-	// NumRules: Number of rules in the container version.
-	NumRules string `json:"numRules,omitempty"`
 	// NumTags: Number of tags in the container version.
 	NumTags string `json:"numTags,omitempty"`
 	// NumTransformations: Number of transformations in the container version.
@@ -2432,9 +2428,6 @@ func (s SyncWorkspaceResponse) MarshalJSON() ([]byte, error) {
 type Tag struct {
 	// AccountId: GTM Account ID.
 	AccountId string `json:"accountId,omitempty"`
-	// BlockingRuleId: Blocking rule IDs. If any of the listed rules evaluate to
-	// true, the tag will not fire.
-	BlockingRuleId []string `json:"blockingRuleId,omitempty"`
 	// BlockingTriggerId: Blocking trigger IDs. If any of the listed triggers
 	// evaluate to true, the tag will not fire.
 	BlockingTriggerId []string `json:"blockingTriggerId,omitempty"`
@@ -2445,9 +2438,6 @@ type Tag struct {
 	// Fingerprint: The fingerprint of the GTM Tag as computed at storage time.
 	// This value is recomputed whenever the tag is modified.
 	Fingerprint string `json:"fingerprint,omitempty"`
-	// FiringRuleId: Firing rule IDs. A tag will fire when any of the listed rules
-	// are true and all of its blockingRuleIds (if any specified) are false.
-	FiringRuleId []string `json:"firingRuleId,omitempty"`
 	// FiringTriggerId: Firing trigger IDs. A tag will fire when any of the listed
 	// triggers are true and all of its blockingTriggerIds (if any specified) are
 	// false.

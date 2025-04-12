@@ -656,14 +656,10 @@ type ContainerVersion struct {
 	Fingerprint string `json:"fingerprint,omitempty"`
 	// Folder: The folders in the container that this version was taken from.
 	Folder []*Folder `json:"folder,omitempty"`
-	// Macro: The macros in the container that this version was taken from.
-	Macro []*Macro `json:"macro,omitempty"`
 	// Name: Container version display name.
 	Name string `json:"name,omitempty"`
 	// Notes: User notes on how to apply this container version in the container.
 	Notes string `json:"notes,omitempty"`
-	// Rule: The rules in the container that this version was taken from.
-	Rule []*Rule `json:"rule,omitempty"`
 	// Tag: The tags in the container that this version was taken from.
 	Tag []*Tag `json:"tag,omitempty"`
 	// Trigger: The triggers in the container that this version was taken from.
@@ -705,10 +701,6 @@ type ContainerVersionHeader struct {
 	Deleted bool `json:"deleted,omitempty"`
 	// Name: Container version display name.
 	Name string `json:"name,omitempty"`
-	// NumMacros: Number of macros in the container version.
-	NumMacros string `json:"numMacros,omitempty"`
-	// NumRules: Number of rules in the container version.
-	NumRules string `json:"numRules,omitempty"`
 	// NumTags: Number of tags in the container version.
 	NumTags string `json:"numTags,omitempty"`
 	// NumTriggers: Number of triggers in the container version.
@@ -1140,58 +1132,6 @@ func (s ListVariablesResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// Macro: Represents a Google Tag Manager Macro.
-type Macro struct {
-	// AccountId: GTM Account ID.
-	AccountId string `json:"accountId,omitempty"`
-	// ContainerId: GTM Container ID.
-	ContainerId string `json:"containerId,omitempty"`
-	// DisablingRuleId: For mobile containers only: A list of rule IDs for
-	// disabling conditional macros; the macro is enabled if one of the enabling
-	// rules is true while all the disabling rules are false. Treated as an
-	// unordered set.
-	DisablingRuleId []string `json:"disablingRuleId,omitempty"`
-	// EnablingRuleId: For mobile containers only: A list of rule IDs for enabling
-	// conditional macros; the macro is enabled if one of the enabling rules is
-	// true while all the disabling rules are false. Treated as an unordered set.
-	EnablingRuleId []string `json:"enablingRuleId,omitempty"`
-	// Fingerprint: The fingerprint of the GTM Macro as computed at storage time.
-	// This value is recomputed whenever the macro is modified.
-	Fingerprint string `json:"fingerprint,omitempty"`
-	// MacroId: The Macro ID uniquely identifies the GTM Macro.
-	MacroId string `json:"macroId,omitempty"`
-	// Name: Macro display name.
-	Name string `json:"name,omitempty"`
-	// Notes: User notes on how to apply this macro in the container.
-	Notes string `json:"notes,omitempty"`
-	// Parameter: The macro's parameters.
-	Parameter []*Parameter `json:"parameter,omitempty"`
-	// ParentFolderId: Parent folder id.
-	ParentFolderId string `json:"parentFolderId,omitempty"`
-	// ScheduleEndMs: The end timestamp in milliseconds to schedule a macro.
-	ScheduleEndMs int64 `json:"scheduleEndMs,omitempty,string"`
-	// ScheduleStartMs: The start timestamp in milliseconds to schedule a macro.
-	ScheduleStartMs int64 `json:"scheduleStartMs,omitempty,string"`
-	// Type: GTM Macro Type.
-	Type string `json:"type,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "AccountId") to
-	// unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
-	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "AccountId") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
-	NullFields []string `json:"-"`
-}
-
-func (s Macro) MarshalJSON() ([]byte, error) {
-	type NoMethod Macro
-	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
-}
-
 // Parameter: Represents a Google Tag Manager Parameter.
 type Parameter struct {
 	// Key: The named key that uniquely identifies a parameter. Required for
@@ -1268,42 +1208,6 @@ func (s PublishContainerVersionResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// Rule: Represents a Google Tag Manager Rule.
-type Rule struct {
-	// AccountId: GTM Account ID.
-	AccountId string `json:"accountId,omitempty"`
-	// Condition: The list of conditions that make up this rule (implicit AND
-	// between them).
-	Condition []*Condition `json:"condition,omitempty"`
-	// ContainerId: GTM Container ID.
-	ContainerId string `json:"containerId,omitempty"`
-	// Fingerprint: The fingerprint of the GTM Rule as computed at storage time.
-	// This value is recomputed whenever the rule is modified.
-	Fingerprint string `json:"fingerprint,omitempty"`
-	// Name: Rule display name.
-	Name string `json:"name,omitempty"`
-	// Notes: User notes on how to apply this rule in the container.
-	Notes string `json:"notes,omitempty"`
-	// RuleId: The Rule ID uniquely identifies the GTM Rule.
-	RuleId string `json:"ruleId,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "AccountId") to
-	// unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
-	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "AccountId") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
-	NullFields []string `json:"-"`
-}
-
-func (s Rule) MarshalJSON() ([]byte, error) {
-	type NoMethod Rule
-	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
-}
-
 type SetupTag struct {
 	// StopOnSetupFailure: If true, fire the main tag if and only if the setup tag
 	// fires successfully. If false, fire the main tag regardless of setup tag
@@ -1333,9 +1237,6 @@ func (s SetupTag) MarshalJSON() ([]byte, error) {
 type Tag struct {
 	// AccountId: GTM Account ID.
 	AccountId string `json:"accountId,omitempty"`
-	// BlockingRuleId: Blocking rule IDs. If any of the listed rules evaluate to
-	// true, the tag will not fire.
-	BlockingRuleId []string `json:"blockingRuleId,omitempty"`
 	// BlockingTriggerId: Blocking trigger IDs. If any of the listed triggers
 	// evaluate to true, the tag will not fire.
 	BlockingTriggerId []string `json:"blockingTriggerId,omitempty"`
@@ -1344,9 +1245,6 @@ type Tag struct {
 	// Fingerprint: The fingerprint of the GTM Tag as computed at storage time.
 	// This value is recomputed whenever the tag is modified.
 	Fingerprint string `json:"fingerprint,omitempty"`
-	// FiringRuleId: Firing rule IDs. A tag will fire when any of the listed rules
-	// are true and all of its blockingRuleIds (if any specified) are false.
-	FiringRuleId []string `json:"firingRuleId,omitempty"`
 	// FiringTriggerId: Firing trigger IDs. A tag will fire when any of the listed
 	// triggers are true and all of its blockingTriggerIds (if any specified) are
 	// false.

@@ -494,12 +494,12 @@ type AutomatedDiscounts struct {
 	// Google Automated Discounts (GAD). Absent if the information about the
 	// GAD_price of the product is not available.
 	GadPrice *Price `json:"gadPrice,omitempty"`
-	// PriorPrice: The price prior to the application of the first price reduction
+	// PriorPrice: The price prior to the application of the first price reduction.
 	// Absent if the information about the prior price of the product is not
 	// available.
 	PriorPrice *Price `json:"priorPrice,omitempty"`
 	// PriorPriceProgressive: The price prior to the application of consecutive
-	// price reductions Absent if the information about the prior price of the
+	// price reductions. Absent if the information about the prior price of the
 	// product is not available.
 	PriorPriceProgressive *Price `json:"priorPriceProgressive,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "GadPrice") to

@@ -6,7 +6,7 @@
 
 // Package calendar provides access to the Calendar API.
 //
-// For product documentation, see: https://developers.google.com/google-apps/calendar/firstapp
+// For product documentation, see: https://developers.google.com/workspace/calendar/firstapp
 //
 // # Library status
 //

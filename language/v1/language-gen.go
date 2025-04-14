@@ -840,6 +840,7 @@ type CpuMetric struct {
 	//   "UNKNOWN_CPU_TYPE"
 	//   "A2" - GPU-based machine, skip quota reporting.
 	//   "A3" - GPU-based machine, skip quota reporting.
+	//   "A4" - GPU-based machine, skip quota reporting.
 	//   "C2" - COMPUTE_OPTIMIZED
 	//   "C2D"
 	//   "CUSTOM"
@@ -894,6 +895,7 @@ type CpuMetric struct {
 	//   "A3_MEGAGPU_8G"
 	//   "A3_ULTRAGPU_8G"
 	//   "A3_EDGEGPU_8G"
+	//   "A4_HIGHGPU_8G"
 	//   "E2_STANDARD_2"
 	//   "E2_STANDARD_4"
 	//   "E2_STANDARD_8"
@@ -1415,6 +1417,7 @@ type GpuMetric struct {
 	//   "A3_MEGAGPU_8G"
 	//   "A3_ULTRAGPU_8G"
 	//   "A3_EDGEGPU_8G"
+	//   "A4_HIGHGPU_8G"
 	//   "E2_STANDARD_2"
 	//   "E2_STANDARD_4"
 	//   "E2_STANDARD_8"
@@ -1851,6 +1854,7 @@ type RamMetric struct {
 	//   "A3_MEGAGPU_8G"
 	//   "A3_ULTRAGPU_8G"
 	//   "A3_EDGEGPU_8G"
+	//   "A4_HIGHGPU_8G"
 	//   "E2_STANDARD_2"
 	//   "E2_STANDARD_4"
 	//   "E2_STANDARD_8"
@@ -1986,6 +1990,7 @@ type RamMetric struct {
 	//   "UNKNOWN_RAM_TYPE"
 	//   "A2"
 	//   "A3"
+	//   "A4"
 	//   "C2" - COMPUTE_OPTIMIZED
 	//   "C2D"
 	//   "CUSTOM"
@@ -3494,6 +3499,7 @@ type XPSImageModelServingSpecModelThroughputEstimation struct {
 	//   "NVIDIA_H100_80GB" - Nvidia H100 80Gb GPU.
 	//   "NVIDIA_H100_MEGA_80GB" - Nvidia H100 80Gb GPU.
 	//   "NVIDIA_H200_141GB" - Nvidia H200 141Gb GPU.
+	//   "NVIDIA_B200" - Nvidia B200 GPU.
 	//   "TPU_V2" - TPU v2 (JellyFish).
 	//   "TPU_V3" - TPU v3 (DragonFish).
 	//   "TPU_V4_POD" - TPU_v4 (PufferFish).

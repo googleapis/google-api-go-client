@@ -329,12 +329,10 @@ type Accepted struct {
 	// TermsOfService: The accepted termsOfService
 	// (google.shopping.merchant.accounts.v1main.TermsOfService).
 	TermsOfService string `json:"termsOfService,omitempty"`
-	// ValidUntil: When set, it states that the accepted TermsOfService
-	// (google.shopping.merchant.accounts.v1main.TermsOfService) is only valid
-	// until the end of this date (in UTC). A new one must be accepted before then.
-	// The information of the required TermsOfService
-	// (google.shopping.merchant.accounts.v1main.TermsOfService) is found in the
-	// Required (Required) message.
+	// ValidUntil: When set, it states that the accepted `TermsOfService` is only
+	// valid until the end of this date (in UTC). A new one must be accepted before
+	// then. The information of the required `TermsOfService` is found in the
+	// `Required` message.
 	ValidUntil *Date `json:"validUntil,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AcceptedBy") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -2586,13 +2584,10 @@ func (s Region) MarshalJSON() ([]byte, error) {
 
 // Required: Describes the terms of service which are required to be accepted.
 type Required struct {
-	// TermsOfService: The termsOfService
-	// (google.shopping.merchant.accounts.v1main.TermsOfService) that need to be
-	// accepted.
+	// TermsOfService: The `TermsOfService` that need to be accepted.
 	TermsOfService string `json:"termsOfService,omitempty"`
 	// TosFileUri: Full URL to the terms of service file. This field is the same as
-	// TermsOfService.file_uri (TermsOfService.file_uri), it is added here for
-	// convenience only.
+	// `TermsOfService.file_uri`, it is added here for convenience only.
 	TosFileUri string `json:"tosFileUri,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "TermsOfService") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -3055,21 +3050,18 @@ func (s TermsOfService) MarshalJSON() ([]byte, error) {
 
 // TermsOfServiceAgreementState: This resource represents the agreement state
 // for a given account and terms of service kind. The state is as follows: * If
-// the merchant has accepted a terms of service: accepted
-// (TermsOfServiceAggrementState.accepted) will be populated, otherwise it will
-// be empty * If the merchant must sign a terms of service: required
-// (TermsOfServiceAggrementState.required) will be populated, otherwise it will
-// be empty. Note that both required (TermsOfServiceAggrementState.required)
-// and accepted (TermsOfServiceAggrementState.accepted) can be present. In this
-// case the `accepted` terms of services will have an expiration date set in
-// the valid_until (Accepted.valid_until) field. The `required` terms of
-// services need to be accepted before `valid_until` in order for the account
-// to continue having a valid agreement. When accepting new terms of services
-// we expect 3Ps to display the text associated with the given terms of service
-// agreement (the url to the file containing the text is added in the Required
-// message below as tos_file_uri (Accepted.tos_file_uri). The actual acceptance
-// of the terms of service is done by calling accept on the TermsOfService
-// (TermsOfService) resource.
+// the merchant has accepted a terms of service, `accepted` will be populated,
+// otherwise it will be empty * If the merchant must sign a terms of service,
+// `required` will be populated, otherwise it will be empty. Note that both
+// `required` and `accepted` can be present. In this case the `accepted` terms
+// of services will have an expiration date set in the `valid_until` field. The
+// `required` terms of services need to be accepted before `valid_until` in
+// order for the account to continue having a valid agreement. When accepting
+// new terms of services we expect 3Ps to display the text associated with the
+// given terms of service agreement (the url to the file containing the text is
+// added in the Required message below as `tos_file_uri`. The actual acceptance
+// of the terms of service is done by calling accept on the `TermsOfService`
+// resource.
 type TermsOfServiceAgreementState struct {
 	// Accepted: The accepted terms of service of this kind and for the associated
 	// region_code
@@ -5800,7 +5792,7 @@ func (c *AccountsIssuesListCall) LanguageCode(languageCode string) *AccountsIssu
 
 // PageSize sets the optional parameter "pageSize": The maximum number of
 // issues to return. The service may return fewer than this value. If
-// unspecified, at most 50 users will be returned. The maximum value is 100;
+// unspecified, at most 50 issues will be returned. The maximum value is 100;
 // values above 100 will be coerced to 100
 func (c *AccountsIssuesListCall) PageSize(pageSize int64) *AccountsIssuesListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
@@ -8307,7 +8299,7 @@ func (r *TermsOfServiceService) Accept(name string) *TermsOfServiceAcceptCall {
 }
 
 // Account sets the optional parameter "account": Required. The account for
-// which to accept the ToS.
+// which to accept the ToS. Format: `accounts/{account}`
 func (c *TermsOfServiceAcceptCall) Account(account string) *TermsOfServiceAcceptCall {
 	c.urlParams_.Set("account", account)
 	return c

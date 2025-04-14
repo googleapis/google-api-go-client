@@ -241,6 +241,9 @@ type BulkCheckRequest struct {
 	// DefaultTarget: If specified, will be used in any given template statement
 	// that doesn’t specify a target.
 	DefaultTarget *Asset `json:"defaultTarget,omitempty"`
+	// ReturnRelationExtensions: Same configuration as in CheckRequest; all
+	// statement checks will use the same configuration.
+	ReturnRelationExtensions bool `json:"returnRelationExtensions,omitempty"`
 	// Statements: List of statements to check. For each statement, you can omit a
 	// field if the corresponding default_* field below was supplied. Minimum 1
 	// statement; maximum 1,000 statements. Any additional statements will be
@@ -380,6 +383,13 @@ type CheckResponse struct {
 	// MaxAge: From serving time, how much longer the response should be considered
 	// valid barring further updates. REQUIRED
 	MaxAge string `json:"maxAge,omitempty"`
+	// RelationExtensions: Statements may specify relation level
+	// extensions/payloads to express more details when declaring permissions to
+	// grant from the source asset to the target asset. When requested, the API
+	// will return relation_extensions specified in any and all statements linking
+	// the requested source and target assets by the relation specified in the
+	// request.
+	RelationExtensions []googleapi.RawMessage `json:"relationExtensions,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
@@ -471,6 +481,20 @@ type Statement struct {
 	// list of supported relations. Example:
 	// `delegate_permission/common.handle_all_urls` REQUIRED
 	Relation string `json:"relation,omitempty"`
+	// RelationExtensions: Statements may specify relation level
+	// extensions/payloads to express more details when declaring permissions to
+	// grant from the source asset to the target asset. These relation extensions
+	// should be specified in the `relation_extensions` object, keyed by the
+	// relation type they're associated with. { relation:
+	// ["delegate_permission/common.handle_all_urls"], target: {...},
+	// relation_extensions: { "delegate_permission/common.handle_all_urls": {
+	// ...handle_all_urls specific payload specified here... } } } When requested,
+	// and specified in the statement file, the API will return relation_extensions
+	// associated with the statement's relation type. i.e. the API will only return
+	// relation_extensions specified for
+	// "delegate_permission/common.handle_all_urls" if this statement object's
+	// relation type is "delegate_permission/common.handle_all_urls".
+	RelationExtensions googleapi.RawMessage `json:"relationExtensions,omitempty"`
 	// Source: Every statement has a source asset. REQUIRED
 	Source *Asset `json:"source,omitempty"`
 	// Target: Every statement has a target asset. REQUIRED
@@ -706,6 +730,20 @@ func (c *AssetlinksCheckCall) Relation(relation string) *AssetlinksCheckCall {
 	return c
 }
 
+// ReturnRelationExtensions sets the optional parameter
+// "returnRelationExtensions": Whether to return relation_extensions payloads
+// specified in the source Digital Asset Links statements linking the requested
+// source and target assets by the requested relation type. If this is set to
+// `false` (default), relation_extensions specified will not be returned, even
+// if they are specified in the DAL statement file. If set to `true`, the API
+// will propagate any and all relation_extensions, across statements, linking
+// the source and target assets by the requested relation type, if specified in
+// the DAL statement file.
+func (c *AssetlinksCheckCall) ReturnRelationExtensions(returnRelationExtensions bool) *AssetlinksCheckCall {
+	c.urlParams_.Set("returnRelationExtensions", fmt.Sprint(returnRelationExtensions))
+	return c
+}
+
 // SourceAndroidAppCertificateSha256Fingerprint sets the optional parameter
 // "source.androidApp.certificate.sha256Fingerprint": The uppercase SHA-265
 // fingerprint of the certificate. From the PEM certificate, it can be acquired
@@ -931,6 +969,18 @@ func (r *StatementsService) List() *StatementsListCall {
 // relation `delegate_permission/common.handle_all_urls`.
 func (c *StatementsListCall) Relation(relation string) *StatementsListCall {
 	c.urlParams_.Set("relation", relation)
+	return c
+}
+
+// ReturnRelationExtensions sets the optional parameter
+// "returnRelationExtensions": Whether to return any relation_extensions
+// payloads specified in the source digital asset links statements. If this is
+// set to `false` (default), relation_extensions specified will not be
+// returned, even if they are specified in the DAL statement file. If set to
+// `true`, the API will propagate relation_extensions associated with each
+// statement's relation type, if specified in the DAL statement file.
+func (c *StatementsListCall) ReturnRelationExtensions(returnRelationExtensions bool) *StatementsListCall {
+	c.urlParams_.Set("returnRelationExtensions", fmt.Sprint(returnRelationExtensions))
 	return c
 }
 

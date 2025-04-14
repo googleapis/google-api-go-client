@@ -494,12 +494,12 @@ type AutomatedDiscounts struct {
 	// Google Automated Discounts (GAD). Absent if the information about the
 	// GAD_price of the product is not available.
 	GadPrice *Price `json:"gadPrice,omitempty"`
-	// PriorPrice: The price prior to the application of the first price reduction
+	// PriorPrice: The price prior to the application of the first price reduction.
 	// Absent if the information about the prior price of the product is not
 	// available.
 	PriorPrice *Price `json:"priorPrice,omitempty"`
 	// PriorPriceProgressive: The price prior to the application of consecutive
-	// price reductions Absent if the information about the prior price of the
+	// price reductions. Absent if the information about the prior price of the
 	// product is not available.
 	PriorPriceProgressive *Price `json:"priorPriceProgressive,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "GadPrice") to
@@ -1284,8 +1284,12 @@ func (s *ProductDimension) UnmarshalJSON(data []byte) error {
 // inserting, updating, or deleting a product input, it may take several
 // minutes before the processed product can be retrieved. All fields in the
 // product input and its sub-messages match the English name of their
-// corresponding attribute in the vertical spec with some exceptions
-// (https://support.google.com/merchants/answer/7052112).
+// corresponding attribute in the Products Data Specification
+// (https://support.google.com/merchants/answer/188494) with some exceptions
+// (https://support.google.com/merchants/answer/7052112). The following
+// reference documentation lists the field names in the **camelCase** casing
+// style while the Products Data Specification lists the names in the
+// **snake_case** casing style.
 type ProductInput struct {
 	// Attributes: Optional. A list of product attributes.
 	Attributes *Attributes `json:"attributes,omitempty"`

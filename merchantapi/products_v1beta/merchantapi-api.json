@@ -281,7 +281,7 @@
       }
     }
   },
-  "revision": "20250409",
+  "revision": "20250412",
   "rootUrl": "https://merchantapi.googleapis.com/",
   "schemas": {
     "Attributes": {
@@ -698,10 +698,12 @@
           "type": "array"
         },
         "taxCategory": {
+          "deprecated": true,
           "description": "The tax category of the product.",
           "type": "string"
         },
         "taxes": {
+          "deprecated": true,
           "description": "Tax information.",
           "items": {
             "$ref": "Tax"

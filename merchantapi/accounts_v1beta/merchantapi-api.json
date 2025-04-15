@@ -180,31 +180,6 @@
             "https://www.googleapis.com/auth/content"
           ]
         },
-        "getAutomaticImprovements": {
-          "description": "Retrieves the automatic improvements of an account.",
-          "flatPath": "accounts/v1beta/accounts/{accountsId}/automaticImprovements",
-          "httpMethod": "GET",
-          "id": "merchantapi.accounts.getAutomaticImprovements",
-          "parameterOrder": [
-            "name"
-          ],
-          "parameters": {
-            "name": {
-              "description": "Required. The resource name of the automatic improvements. Format: `accounts/{account}/automaticImprovements`",
-              "location": "path",
-              "pattern": "^accounts/[^/]+/automaticImprovements$",
-              "required": true,
-              "type": "string"
-            }
-          },
-          "path": "accounts/v1beta/{+name}",
-          "response": {
-            "$ref": "AutomaticImprovements"
-          },
-          "scopes": [
-            "https://www.googleapis.com/auth/content"
-          ]
-        },
         "list": {
           "description": "Lists accounts accessible to the calling user and matching the constraints of the request such as page size or filters. This is not just listing the sub-accounts of an MCA, but all accounts the calling user has access to including other MCAs, linked accounts, standalone accounts and so on. If no filter is provided, then it returns all the accounts the user has access to. This method is eventually consistent, meaning changes such as creating, updating an account or a change of relationships between accounts may not show up in the results immediately. Instead, these changes propagate over a short period, after which the updated information can match the associated predicates. That means, that searching by account name might not return a recently changed account even though it satisfies the predicate.",
           "flatPath": "accounts/v1beta/accounts",
@@ -306,40 +281,6 @@
           "scopes": [
             "https://www.googleapis.com/auth/content"
           ]
-        },
-        "updateAutomaticImprovements": {
-          "description": "Updates the automatic improvements of an account.",
-          "flatPath": "accounts/v1beta/accounts/{accountsId}/automaticImprovements",
-          "httpMethod": "PATCH",
-          "id": "merchantapi.accounts.updateAutomaticImprovements",
-          "parameterOrder": [
-            "name"
-          ],
-          "parameters": {
-            "name": {
-              "description": "Identifier. The resource name of the automatic improvements. Format: `accounts/{account}/automaticImprovements`.",
-              "location": "path",
-              "pattern": "^accounts/[^/]+/automaticImprovements$",
-              "required": true,
-              "type": "string"
-            },
-            "updateMask": {
-              "description": "Required. List of fields being updated. The following fields are supported (in both `snake_case` and `lowerCamelCase`): - `item_updates` - `item_updates.account_level_settings` - `image_improvements` - `image_improvements.account_level_settings` - `shipping_improvements` - `shipping_improvements.allow_shipping_improvements`",
-              "format": "google-fieldmask",
-              "location": "query",
-              "type": "string"
-            }
-          },
-          "path": "accounts/v1beta/{+name}",
-          "request": {
-            "$ref": "AutomaticImprovements"
-          },
-          "response": {
-            "$ref": "AutomaticImprovements"
-          },
-          "scopes": [
-            "https://www.googleapis.com/auth/content"
-          ]
         }
       },
       "resources": {
@@ -399,6 +340,69 @@
               },
               "response": {
                 "$ref": "AutofeedSettings"
+              },
+              "scopes": [
+                "https://www.googleapis.com/auth/content"
+              ]
+            }
+          }
+        },
+        "automaticImprovements": {
+          "methods": {
+            "getAutomaticImprovements": {
+              "description": "Retrieves the automatic improvements of an account.",
+              "flatPath": "accounts/v1beta/accounts/{accountsId}/automaticImprovements",
+              "httpMethod": "GET",
+              "id": "merchantapi.accounts.automaticImprovements.getAutomaticImprovements",
+              "parameterOrder": [
+                "name"
+              ],
+              "parameters": {
+                "name": {
+                  "description": "Required. The resource name of the automatic improvements. Format: `accounts/{account}/automaticImprovements`",
+                  "location": "path",
+                  "pattern": "^accounts/[^/]+/automaticImprovements$",
+                  "required": true,
+                  "type": "string"
+                }
+              },
+              "path": "accounts/v1beta/{+name}",
+              "response": {
+                "$ref": "AutomaticImprovements"
+              },
+              "scopes": [
+                "https://www.googleapis.com/auth/content"
+              ]
+            },
+            "updateAutomaticImprovements": {
+              "description": "Updates the automatic improvements of an account.",
+              "flatPath": "accounts/v1beta/accounts/{accountsId}/automaticImprovements",
+              "httpMethod": "PATCH",
+              "id": "merchantapi.accounts.automaticImprovements.updateAutomaticImprovements",
+              "parameterOrder": [
+                "name"
+              ],
+              "parameters": {
+                "name": {
+                  "description": "Identifier. The resource name of the automatic improvements. Format: `accounts/{account}/automaticImprovements`.",
+                  "location": "path",
+                  "pattern": "^accounts/[^/]+/automaticImprovements$",
+                  "required": true,
+                  "type": "string"
+                },
+                "updateMask": {
+                  "description": "Required. List of fields being updated. The following fields are supported (in both `snake_case` and `lowerCamelCase`): - `item_updates` - `item_updates.account_level_settings` - `image_improvements` - `image_improvements.account_level_settings` - `shipping_improvements` - `shipping_improvements.allow_shipping_improvements`",
+                  "format": "google-fieldmask",
+                  "location": "query",
+                  "type": "string"
+                }
+              },
+              "path": "accounts/v1beta/{+name}",
+              "request": {
+                "$ref": "AutomaticImprovements"
+              },
+              "response": {
+                "$ref": "AutomaticImprovements"
               },
               "scopes": [
                 "https://www.googleapis.com/auth/content"
@@ -1476,7 +1480,7 @@
       }
     }
   },
-  "revision": "20250408",
+  "revision": "20250412",
   "rootUrl": "https://merchantapi.googleapis.com/",
   "schemas": {
     "Accepted": {

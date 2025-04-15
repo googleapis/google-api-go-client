@@ -569,7 +569,7 @@ type RegionalInventory struct {
 	Account int64 `json:"account,omitempty,string"`
 	// Availability: Availability of the product in this region. For accepted
 	// attribute values, see the regional product inventory data specification
-	// (https://support.google.com/merchants/answer/3061342)
+	// (https://support.google.com/merchants/answer/6324448).
 	Availability string `json:"availability,omitempty"`
 	// CustomAttributes: A list of custom (merchant-provided) attributes. You can
 	// also use `CustomAttribute` to submit any attribute of the data specification

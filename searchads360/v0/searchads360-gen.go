@@ -5782,7 +5782,7 @@ func (s GoogleAdsSearchads360V0Resources__AssetGroupSignal) MarshalJSON() ([]byt
 }
 
 // GoogleAdsSearchads360V0Resources__AssetGroupTopCombinationView: A view on
-// the usage of ad group ad asset combination.
+// the usage of asset group asset top combinations.
 type GoogleAdsSearchads360V0Resources__AssetGroupTopCombinationView struct {
 	// AssetGroupTopCombinations: Output only. The top combinations of assets that
 	// served together.
@@ -7187,7 +7187,9 @@ type GoogleAdsSearchads360V0Resources__ConversionAction struct {
 	// products and services after interacting with an ad. Read only.
 	//   "LEAD_FORM_SUBMIT" - Conversions reported when a user submits a lead form.
 	// Read only.
-	//   "SALESFORCE" - Conversions that come from Salesforce. Read only.
+	//   "SALESFORCE" - Deprecated: The Salesforce integration will be going away
+	// and replaced with an improved way to import your conversions from
+	// Salesforce. - see https://support.google.com/google-ads/answer/14728349
 	//   "SEARCH_ADS_360" - Conversions imported from Search Ads 360 Floodlight
 	// data. Read only.
 	//   "SMART_CAMPAIGN_AD_CLICKS_TO_CALL" - Call conversions that occur on Smart
@@ -7475,6 +7477,22 @@ func (s GoogleAdsSearchads360V0Resources__CustomColumn) MarshalJSON() ([]byte, e
 
 // GoogleAdsSearchads360V0Resources__Customer: A customer.
 type GoogleAdsSearchads360V0Resources__Customer struct {
+	// AccountLevel: Output only. The account level of the customer: Manager,
+	// Sub-manager, Associate manager, Service account.
+	//
+	// Possible values:
+	//   "UNSPECIFIED" - Not specified.
+	//   "UNKNOWN" - Used for return value only. Represents value unknown in this
+	// version.
+	//   "CLIENT_ACCOUNT_FACEBOOK" - Client account (Facebook)
+	//   "CLIENT_ACCOUNT_GOOGLE_ADS" - Client account (Google Ads)
+	//   "CLIENT_ACCOUNT_MICROSOFT" - Client account (Microsoft)
+	//   "CLIENT_ACCOUNT_YAHOO_JAPAN" - Client account (Yahoo Japan)
+	//   "CLIENT_ACCOUNT_ENGINE_TRACK" - Client account (Engine Track)
+	//   "MANAGER" - Top-level manager.
+	//   "SUB_MANAGER" - Sub manager.
+	//   "ASSOCIATE_MANAGER" - Associate manager.
+	AccountLevel string `json:"accountLevel,omitempty"`
 	// AccountStatus: Output only. Account status, for example, Enabled, Paused,
 	// Removed, etc.
 	//
@@ -7503,6 +7521,12 @@ type GoogleAdsSearchads360V0Resources__Customer struct {
 	//   "SEARCH_ADS_360" - Search Ads 360 manager account.
 	//   "YAHOO_JAPAN" - Yahoo Japan account.
 	AccountType string `json:"accountType,omitempty"`
+	// AssociateManagerDescriptiveName: Output only. The descriptive name of the
+	// associate manager.
+	AssociateManagerDescriptiveName string `json:"associateManagerDescriptiveName,omitempty"`
+	// AssociateManagerId: Output only. The customer ID of the associate manager. A
+	// 0 value indicates that the customer has no SA360 associate manager.
+	AssociateManagerId int64 `json:"associateManagerId,omitempty,string"`
 	// AutoTaggingEnabled: Whether auto-tagging is enabled for the customer.
 	AutoTaggingEnabled bool `json:"autoTaggingEnabled,omitempty"`
 	// ConversionTrackingSetting: Output only. Conversion tracking setting for a
@@ -7532,6 +7556,11 @@ type GoogleAdsSearchads360V0Resources__Customer struct {
 	LastModifiedTime string `json:"lastModifiedTime,omitempty"`
 	// Manager: Output only. Whether the customer is a manager.
 	Manager bool `json:"manager,omitempty"`
+	// ManagerDescriptiveName: Output only. The descriptive name of the manager.
+	ManagerDescriptiveName string `json:"managerDescriptiveName,omitempty"`
+	// ManagerId: Output only. The customer ID of the manager. A 0 value indicates
+	// that the customer has no SA360 manager.
+	ManagerId int64 `json:"managerId,omitempty,string"`
 	// ResourceName: Immutable. The resource name of the customer. Customer
 	// resource names have the form: `customers/{customer_id}`
 	ResourceName string `json:"resourceName,omitempty"`
@@ -7549,18 +7578,24 @@ type GoogleAdsSearchads360V0Resources__Customer struct {
 	//   "CLOSED" - Indicates a closed account unable to serve ads. Test account
 	// will also have CLOSED status. Status is permanent and may not be reopened.
 	Status string `json:"status,omitempty"`
+	// SubManagerDescriptiveName: Output only. The descriptive name of the sub
+	// manager.
+	SubManagerDescriptiveName string `json:"subManagerDescriptiveName,omitempty"`
+	// SubManagerId: Output only. The customer ID of the sub manager. A 0 value
+	// indicates that the customer has no sub SA360 manager.
+	SubManagerId int64 `json:"subManagerId,omitempty,string"`
 	// TimeZone: Immutable. The local timezone ID of the customer.
 	TimeZone string `json:"timeZone,omitempty"`
 	// TrackingUrlTemplate: The URL template for constructing a tracking URL out of
 	// parameters.
 	TrackingUrlTemplate string `json:"trackingUrlTemplate,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "AccountStatus") to
+	// ForceSendFields is a list of field names (e.g. "AccountLevel") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "AccountStatus") to include in API
+	// NullFields is a list of field names (e.g. "AccountLevel") to include in API
 	// requests with the JSON null value. By default, fields with empty values are
 	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.

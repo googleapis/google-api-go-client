@@ -2718,8 +2718,8 @@ type GoogleCloudDiscoveryengineV1Condition struct {
 	// Maximum of 10 time ranges.
 	ActiveTimeRange []*GoogleCloudDiscoveryengineV1ConditionTimeRange `json:"activeTimeRange,omitempty"`
 	// QueryRegex: Optional. Query regex to match the whole search query. Cannot be
-	// set when Condition.query_terms is set. This is currently supporting
-	// promotion use case.
+	// set when Condition.query_terms is set. Only supported for Basic Site Search
+	// promotion serving controls.
 	QueryRegex string `json:"queryRegex,omitempty"`
 	// QueryTerms: Search only A list of terms to match the query on. Cannot be set
 	// when Condition.query_regex is set. Maximum of 10 query terms.
@@ -4776,6 +4776,9 @@ type GoogleCloudDiscoveryengineV1SearchLinkPromotion struct {
 	// Description: Optional. The Promotion description. Maximum length: 200
 	// characters.
 	Description string `json:"description,omitempty"`
+	// Document: Optional. The Document the user wants to promote. For site search,
+	// leave unset and only populate uri. Can be set along with uri.
+	Document string `json:"document,omitempty"`
 	// Enabled: Optional. The enabled promotion will be returned for any serving
 	// configs associated with the parent of the control this promotion is attached
 	// to. This flag is used for basic site search only.
@@ -5435,6 +5438,8 @@ type GoogleCloudDiscoveryengineV1TargetSite struct {
 	// deleted. This is a transitioning state which will resulted in either: 1.
 	// target site deleted if unindexing is successful; 2. state reverts to
 	// SUCCEEDED if the unindexing fails.
+	//   "CANCELLABLE" - The target site change is pending but cancellable.
+	//   "CANCELLED" - The target site change is cancelled.
 	IndexingStatus string `json:"indexingStatus,omitempty"`
 	// Name: Output only. The fully qualified resource name of the target site.
 	// `projects/{project}/locations/{location}/collections/{collection}/dataStores/
@@ -8720,10 +8725,18 @@ func (s GoogleCloudDiscoveryengineV1alphaCheckRequirementResponseMetricQueryResu
 // GoogleCloudDiscoveryengineV1alphaChunk: Chunk captures all raw metadata
 // information of items to be recommended or searched in the chunk mode.
 type GoogleCloudDiscoveryengineV1alphaChunk struct {
+	// AnnotationContents: Output only. Annotation contents if the current chunk
+	// contains annotations.
+	AnnotationContents []string `json:"annotationContents,omitempty"`
 	// ChunkMetadata: Output only. Metadata of the current chunk.
 	ChunkMetadata *GoogleCloudDiscoveryengineV1alphaChunkChunkMetadata `json:"chunkMetadata,omitempty"`
 	// Content: Content is a string from a document (parsed content).
 	Content string `json:"content,omitempty"`
+	// DataUrls: Output only. Image Data URLs if the current chunk contains images.
+	// Data URLs are composed of four parts: a prefix (data:), a MIME type
+	// indicating the type of data, an optional base64 token if non-textual, and
+	// the data itself: data:,
+	DataUrls []string `json:"dataUrls,omitempty"`
 	// DerivedStructData: Output only. This field is OUTPUT_ONLY. It contains
 	// derived data that are not in the original input document.
 	DerivedStructData googleapi.RawMessage `json:"derivedStructData,omitempty"`
@@ -8746,15 +8759,15 @@ type GoogleCloudDiscoveryengineV1alphaChunk struct {
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-	// ForceSendFields is a list of field names (e.g. "ChunkMetadata") to
+	// ForceSendFields is a list of field names (e.g. "AnnotationContents") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "ChunkMetadata") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
+	// NullFields is a list of field names (e.g. "AnnotationContents") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -9163,8 +9176,8 @@ type GoogleCloudDiscoveryengineV1alphaCondition struct {
 	// Maximum of 10 time ranges.
 	ActiveTimeRange []*GoogleCloudDiscoveryengineV1alphaConditionTimeRange `json:"activeTimeRange,omitempty"`
 	// QueryRegex: Optional. Query regex to match the whole search query. Cannot be
-	// set when Condition.query_terms is set. This is currently supporting
-	// promotion use case.
+	// set when Condition.query_terms is set. Only supported for Basic Site Search
+	// promotion serving controls.
 	QueryRegex string `json:"queryRegex,omitempty"`
 	// QueryTerms: Search only A list of terms to match the query on. Cannot be set
 	// when Condition.query_regex is set. Maximum of 10 query terms.
@@ -11130,8 +11143,9 @@ type GoogleCloudDiscoveryengineV1alphaDisableAdvancedSiteSearchResponse struct {
 type GoogleCloudDiscoveryengineV1alphaDocument struct {
 	// AclInfo: Access control information for the document.
 	AclInfo *GoogleCloudDiscoveryengineV1alphaDocumentAclInfo `json:"aclInfo,omitempty"`
-	// Content: The unstructured data linked to this document. Content must be set
-	// if this document is under a `CONTENT_REQUIRED` data store.
+	// Content: The unstructured data linked to this document. Content can only be
+	// set and must be set if this document is under a `CONTENT_REQUIRED` data
+	// store.
 	Content *GoogleCloudDiscoveryengineV1alphaDocumentContent `json:"content,omitempty"`
 	// DerivedStructData: Output only. This field is OUTPUT_ONLY. It contains
 	// derived data that are not in the original input document.
@@ -11252,10 +11266,15 @@ func (s GoogleCloudDiscoveryengineV1alphaDocumentAclInfoAccessRestriction) Marsh
 type GoogleCloudDiscoveryengineV1alphaDocumentContent struct {
 	// MimeType: The MIME type of the content. Supported types: * `application/pdf`
 	// (PDF, only native PDFs are supported for now) * `text/html` (HTML) *
+	// `text/plain` (TXT) * `text/xml` (XML) * `application/json` (JSON) *
 	// `application/vnd.openxmlformats-officedocument.wordprocessingml.document`
 	// (DOCX) *
 	// `application/vnd.openxmlformats-officedocument.presentationml.presentation`
-	// (PPTX) * `text/plain` (TXT) See
+	// (PPTX) * `application/vnd.openxmlformats-officedocument.spreadsheetml.sheet`
+	// (XLSX) * `application/vnd.ms-excel.sheet.macroenabled.12` (XLSM) The
+	// following types are supported only if layout parser is enabled in the data
+	// store: * `image/bmp` (BMP) * `image/gif` (GIF) * `image/jpeg` (JPEG) *
+	// `image/png` (PNG) * `image/tiff` (TIFF) See
 	// https://www.iana.org/assignments/media-types/media-types.xhtml.
 	MimeType string `json:"mimeType,omitempty"`
 	// RawBytes: The content represented as a stream of bytes. The maximum length
@@ -12752,6 +12771,40 @@ type GoogleCloudDiscoveryengineV1alphaGcsSource struct {
 
 func (s GoogleCloudDiscoveryengineV1alphaGcsSource) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDiscoveryengineV1alphaGcsSource
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1alphaGetConnectorSecretResponse: Response
+// message for DataConnectorService.GetConnectorSecret.
+type GoogleCloudDiscoveryengineV1alphaGetConnectorSecretResponse struct {
+	// App: The app name of the associated Connector.
+	App string `json:"app,omitempty"`
+	// ClientId: The client id of the associated Connector.
+	ClientId string `json:"clientId,omitempty"`
+	// Instance: The instance name of the associated Connector.
+	Instance string `json:"instance,omitempty"`
+	// RedirectUri: The redirect url of the associated Connector.
+	RedirectUri string `json:"redirectUri,omitempty"`
+	// TenantId: The tenant id of the associated Connector.
+	TenantId string `json:"tenantId,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "App") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "App") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1alphaGetConnectorSecretResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1alphaGetConnectorSecretResponse
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -16697,6 +16750,9 @@ type GoogleCloudDiscoveryengineV1alphaSearchLinkPromotion struct {
 	// Description: Optional. The Promotion description. Maximum length: 200
 	// characters.
 	Description string `json:"description,omitempty"`
+	// Document: Optional. The Document the user wants to promote. For site search,
+	// leave unset and only populate uri. Can be set along with uri.
+	Document string `json:"document,omitempty"`
 	// Enabled: Optional. The enabled promotion will be returned for any serving
 	// configs associated with the parent of the control this promotion is attached
 	// to. This flag is used for basic site search only.
@@ -19784,6 +19840,8 @@ type GoogleCloudDiscoveryengineV1alphaTargetSite struct {
 	// deleted. This is a transitioning state which will resulted in either: 1.
 	// target site deleted if unindexing is successful; 2. state reverts to
 	// SUCCEEDED if the unindexing fails.
+	//   "CANCELLABLE" - The target site change is pending but cancellable.
+	//   "CANCELLED" - The target site change is cancelled.
 	IndexingStatus string `json:"indexingStatus,omitempty"`
 	// Name: Output only. The fully qualified resource name of the target site.
 	// `projects/{project}/locations/{location}/collections/{collection}/dataStores/
@@ -21357,8 +21415,8 @@ type GoogleCloudDiscoveryengineV1betaCondition struct {
 	// Maximum of 10 time ranges.
 	ActiveTimeRange []*GoogleCloudDiscoveryengineV1betaConditionTimeRange `json:"activeTimeRange,omitempty"`
 	// QueryRegex: Optional. Query regex to match the whole search query. Cannot be
-	// set when Condition.query_terms is set. This is currently supporting
-	// promotion use case.
+	// set when Condition.query_terms is set. Only supported for Basic Site Search
+	// promotion serving controls.
 	QueryRegex string `json:"queryRegex,omitempty"`
 	// QueryTerms: Search only A list of terms to match the query on. Cannot be set
 	// when Condition.query_regex is set. Maximum of 10 query terms.
@@ -23923,6 +23981,9 @@ type GoogleCloudDiscoveryengineV1betaSearchLinkPromotion struct {
 	// Description: Optional. The Promotion description. Maximum length: 200
 	// characters.
 	Description string `json:"description,omitempty"`
+	// Document: Optional. The Document the user wants to promote. For site search,
+	// leave unset and only populate uri. Can be set along with uri.
+	Document string `json:"document,omitempty"`
 	// Enabled: Optional. The enabled promotion will be returned for any serving
 	// configs associated with the parent of the control this promotion is attached
 	// to. This flag is used for basic site search only.
@@ -25427,6 +25488,8 @@ type GoogleCloudDiscoveryengineV1betaTargetSite struct {
 	// deleted. This is a transitioning state which will resulted in either: 1.
 	// target site deleted if unindexing is successful; 2. state reverts to
 	// SUCCEEDED if the unindexing fails.
+	//   "CANCELLABLE" - The target site change is pending but cancellable.
+	//   "CANCELLED" - The target site change is cancelled.
 	IndexingStatus string `json:"indexingStatus,omitempty"`
 	// Name: Output only. The fully qualified resource name of the target site.
 	// `projects/{project}/locations/{location}/collections/{collection}/dataStores/
@@ -28868,6 +28931,7 @@ func (r *ProjectsLocationsCollectionsService) UpdateDataConnector(name string, g
 // UpdateMask sets the optional parameter "updateMask": Indicates which fields
 // in the provided DataConnector to update. Supported field paths include: -
 // refresh_interval - params - auto_run_disabled - action_config -
+// action_config.action_params - action_config.service_name -
 // destination_configs - blocking_reasons - sync_mode Note: Support for these
 // fields may vary depending on the connector type. For example, not all
 // connectors support `destination_configs`. If an unsupported or unknown field
@@ -28959,6 +29023,116 @@ func (c *ProjectsLocationsCollectionsUpdateDataConnectorCall) Do(opts ...googlea
 		return nil, err
 	}
 	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "discoveryengine.projects.locations.collections.updateDataConnector", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsCollectionsDataConnectorGetConnectorSecretCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// GetConnectorSecret: Get the secret for the associated connector.
+//
+// - name: The full resource name of the associated data connector.
+func (r *ProjectsLocationsCollectionsDataConnectorService) GetConnectorSecret(name string) *ProjectsLocationsCollectionsDataConnectorGetConnectorSecretCall {
+	c := &ProjectsLocationsCollectionsDataConnectorGetConnectorSecretCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsCollectionsDataConnectorGetConnectorSecretCall) Fields(s ...googleapi.Field) *ProjectsLocationsCollectionsDataConnectorGetConnectorSecretCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsCollectionsDataConnectorGetConnectorSecretCall) IfNoneMatch(entityTag string) *ProjectsLocationsCollectionsDataConnectorGetConnectorSecretCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsCollectionsDataConnectorGetConnectorSecretCall) Context(ctx context.Context) *ProjectsLocationsCollectionsDataConnectorGetConnectorSecretCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsCollectionsDataConnectorGetConnectorSecretCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsCollectionsDataConnectorGetConnectorSecretCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+name}:getConnectorSecret")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "discoveryengine.projects.locations.collections.dataConnector.getConnectorSecret", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "discoveryengine.projects.locations.collections.dataConnector.getConnectorSecret" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudDiscoveryengineV1alphaGetConnectorSecretResponse.ServerResponse.H
+// eader or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsCollectionsDataConnectorGetConnectorSecretCall) Do(opts ...googleapi.CallOption) (*GoogleCloudDiscoveryengineV1alphaGetConnectorSecretResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudDiscoveryengineV1alphaGetConnectorSecretResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "discoveryengine.projects.locations.collections.dataConnector.getConnectorSecret", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -31238,6 +31412,13 @@ type ProjectsLocationsCollectionsDataStoresBranchesDocumentsGetProcessedDocument
 func (r *ProjectsLocationsCollectionsDataStoresBranchesDocumentsService) GetProcessedDocument(name string) *ProjectsLocationsCollectionsDataStoresBranchesDocumentsGetProcessedDocumentCall {
 	c := &ProjectsLocationsCollectionsDataStoresBranchesDocumentsGetProcessedDocumentCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
+	return c
+}
+
+// ImageId sets the optional parameter "imageId": Specifies config for
+// IMAGE_BYTES.
+func (c *ProjectsLocationsCollectionsDataStoresBranchesDocumentsGetProcessedDocumentCall) ImageId(imageId string) *ProjectsLocationsCollectionsDataStoresBranchesDocumentsGetProcessedDocumentCall {
+	c.urlParams_.Set("imageId", imageId)
 	return c
 }
 
@@ -46959,6 +47140,13 @@ type ProjectsLocationsDataStoresBranchesDocumentsGetProcessedDocumentCall struct
 func (r *ProjectsLocationsDataStoresBranchesDocumentsService) GetProcessedDocument(name string) *ProjectsLocationsDataStoresBranchesDocumentsGetProcessedDocumentCall {
 	c := &ProjectsLocationsDataStoresBranchesDocumentsGetProcessedDocumentCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
+	return c
+}
+
+// ImageId sets the optional parameter "imageId": Specifies config for
+// IMAGE_BYTES.
+func (c *ProjectsLocationsDataStoresBranchesDocumentsGetProcessedDocumentCall) ImageId(imageId string) *ProjectsLocationsDataStoresBranchesDocumentsGetProcessedDocumentCall {
+	c.urlParams_.Set("imageId", imageId)
 	return c
 }
 

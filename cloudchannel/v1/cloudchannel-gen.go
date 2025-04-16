@@ -4381,10 +4381,14 @@ type GoogleCloudChannelV1alpha1OpportunityEvent struct {
 	//   "TYPE_UNSPECIFIED" - Not used.
 	//   "CREATED" - New opportunity created.
 	//   "UPDATED" - Existing opportunity updated.
+	//   "PARTNER_DETACHED" - Partner has been detached from the opportunity and
+	// can no longer access it.
 	EventType string `json:"eventType,omitempty"`
 	// Opportunity: Resource name of the opportunity. Format:
 	// opportunities/{opportunity}
 	Opportunity string `json:"opportunity,omitempty"`
+	// Partner: Resource name of the partner. Format: partners/{partner}
+	Partner string `json:"partner,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "EventType") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See

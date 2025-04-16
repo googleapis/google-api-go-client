@@ -657,8 +657,8 @@ func (s GoogleCloudAiplatformV1beta1FileData) MarshalJSON() ([]byte, error) {
 // [FunctionDeclaration.name] and a structured JSON object containing the
 // parameters and their values.
 type GoogleCloudAiplatformV1beta1FunctionCall struct {
-	// Args: Optional. Required. The function parameters and values in JSON object
-	// format. See [FunctionDeclaration.parameters] for parameter details.
+	// Args: Optional. The function parameters and values in JSON object format.
+	// See [FunctionDeclaration.parameters] for parameter details.
 	Args googleapi.RawMessage `json:"args,omitempty"`
 	// Id: Optional. The unique id of the function call. If populated, the client
 	// to execute the `function_call` and return the response with the matching
@@ -1192,7 +1192,8 @@ func (s GoogleCloudAiplatformV1beta1GenerationConfigRoutingConfigAutoRoutingMode
 // When manual routing is set, the specified model will be used directly.
 type GoogleCloudAiplatformV1beta1GenerationConfigRoutingConfigManualRoutingMode struct {
 	// ModelName: The model name to use. Only the public LLM models are accepted.
-	// e.g. 'gemini-1.5-pro-001'.
+	// See Supported models
+	// (https://cloud.google.com/vertex-ai/generative-ai/docs/model-reference/inference#supported-models).
 	ModelName string `json:"modelName,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "ModelName") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -1215,19 +1216,16 @@ func (s GoogleCloudAiplatformV1beta1GenerationConfigRoutingConfigManualRoutingMo
 // GoogleCloudAiplatformV1beta1GenerationConfigThinkingConfig: Config for
 // thinking features.
 type GoogleCloudAiplatformV1beta1GenerationConfigThinkingConfig struct {
-	// EnableThinking: Optional. Indicates whether to enable thinking mode. If
-	// true, the model will enable thinking mode.
-	EnableThinking bool `json:"enableThinking,omitempty"`
 	// ThinkingBudget: Optional. Indicates the thinking budget in tokens. This is
 	// only applied when enable_thinking is true.
 	ThinkingBudget int64 `json:"thinkingBudget,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "EnableThinking") to
+	// ForceSendFields is a list of field names (e.g. "ThinkingBudget") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "EnableThinking") to include in
+	// NullFields is a list of field names (e.g. "ThinkingBudget") to include in
 	// API requests with the JSON null value. By default, fields with empty values
 	// are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
@@ -1815,8 +1813,8 @@ func (s GoogleCloudAiplatformV1beta1RagRetrievalConfigRanking) MarshalJSON() ([]
 // GoogleCloudAiplatformV1beta1RagRetrievalConfigRankingLlmRanker: Config for
 // LlmRanker.
 type GoogleCloudAiplatformV1beta1RagRetrievalConfigRankingLlmRanker struct {
-	// ModelName: Optional. The model name used for ranking. Format:
-	// `gemini-1.5-pro`
+	// ModelName: Optional. The model name used for ranking. See Supported models
+	// (https://cloud.google.com/vertex-ai/generative-ai/docs/model-reference/inference#supported-models).
 	ModelName string `json:"modelName,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "ModelName") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -2246,15 +2244,18 @@ func (s GoogleCloudAiplatformV1beta1Segment) MarshalJSON() ([]byte, error) {
 
 // GoogleCloudAiplatformV1beta1SpeechConfig: The speech generation config.
 type GoogleCloudAiplatformV1beta1SpeechConfig struct {
+	// LanguageCode: Optional. Language code (ISO 639. e.g. en-US) for the speech
+	// synthesization.
+	LanguageCode string `json:"languageCode,omitempty"`
 	// VoiceConfig: The configuration for the speaker to use.
 	VoiceConfig *GoogleCloudAiplatformV1beta1VoiceConfig `json:"voiceConfig,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "VoiceConfig") to
+	// ForceSendFields is a list of field names (e.g. "LanguageCode") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "VoiceConfig") to include in API
+	// NullFields is a list of field names (e.g. "LanguageCode") to include in API
 	// requests with the JSON null value. By default, fields with empty values are
 	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.

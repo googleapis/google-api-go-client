@@ -195,6 +195,7 @@ type OrganizationsLocationsOperationsService struct {
 
 func NewOrganizationsLocationsWorkloadsService(s *Service) *OrganizationsLocationsWorkloadsService {
 	rs := &OrganizationsLocationsWorkloadsService{s: s}
+	rs.Updates = NewOrganizationsLocationsWorkloadsUpdatesService(s)
 	rs.Violations = NewOrganizationsLocationsWorkloadsViolationsService(s)
 	return rs
 }
@@ -202,7 +203,18 @@ func NewOrganizationsLocationsWorkloadsService(s *Service) *OrganizationsLocatio
 type OrganizationsLocationsWorkloadsService struct {
 	s *Service
 
+	Updates *OrganizationsLocationsWorkloadsUpdatesService
+
 	Violations *OrganizationsLocationsWorkloadsViolationsService
+}
+
+func NewOrganizationsLocationsWorkloadsUpdatesService(s *Service) *OrganizationsLocationsWorkloadsUpdatesService {
+	rs := &OrganizationsLocationsWorkloadsUpdatesService{s: s}
+	return rs
+}
+
+type OrganizationsLocationsWorkloadsUpdatesService struct {
+	s *Service
 }
 
 func NewOrganizationsLocationsWorkloadsViolationsService(s *Service) *OrganizationsLocationsWorkloadsViolationsService {
@@ -285,6 +297,87 @@ type GoogleCloudAssuredworkloadsV1AnalyzeWorkloadMoveResponse struct {
 
 func (s GoogleCloudAssuredworkloadsV1AnalyzeWorkloadMoveResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAssuredworkloadsV1AnalyzeWorkloadMoveResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudAssuredworkloadsV1ApplyWorkloadUpdateOperationMetadata: Operation
+// metadata to give request details of ApplyWorkloadUpdate.
+type GoogleCloudAssuredworkloadsV1ApplyWorkloadUpdateOperationMetadata struct {
+	// Action: Optional. The time the operation was created.
+	//
+	// Possible values:
+	//   "WORKLOAD_UPDATE_ACTION_UNSPECIFIED" - Unspecified value.
+	//   "APPLY" - The update is applied.
+	Action string `json:"action,omitempty"`
+	// CreateTime: Optional. Output only. The time the operation was created.
+	CreateTime string `json:"createTime,omitempty"`
+	// UpdateName: Required. The resource name of the update
+	UpdateName string `json:"updateName,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Action") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Action") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudAssuredworkloadsV1ApplyWorkloadUpdateOperationMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudAssuredworkloadsV1ApplyWorkloadUpdateOperationMetadata
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudAssuredworkloadsV1ApplyWorkloadUpdateRequest: Request to apply
+// update to a workload.
+type GoogleCloudAssuredworkloadsV1ApplyWorkloadUpdateRequest struct {
+	// Action: The action to be performed on the update.
+	//
+	// Possible values:
+	//   "WORKLOAD_UPDATE_ACTION_UNSPECIFIED" - Unspecified value.
+	//   "APPLY" - The update is applied.
+	Action string `json:"action,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Action") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Action") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudAssuredworkloadsV1ApplyWorkloadUpdateRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudAssuredworkloadsV1ApplyWorkloadUpdateRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudAssuredworkloadsV1ApplyWorkloadUpdateResponse: Response for
+// ApplyWorkloadUpdate endpoint.
+type GoogleCloudAssuredworkloadsV1ApplyWorkloadUpdateResponse struct {
+	// AppliedUpdate: The update that was applied.
+	AppliedUpdate *GoogleCloudAssuredworkloadsV1WorkloadUpdate `json:"appliedUpdate,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AppliedUpdate") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AppliedUpdate") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudAssuredworkloadsV1ApplyWorkloadUpdateResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudAssuredworkloadsV1ApplyWorkloadUpdateResponse
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -384,6 +477,13 @@ func (s GoogleCloudAssuredworkloadsV1CreateWorkloadOperationMetadata) MarshalJSO
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudAssuredworkloadsV1EnableComplianceUpdatesResponse: Response for
+// EnableComplianceUpdates endpoint.
+type GoogleCloudAssuredworkloadsV1EnableComplianceUpdatesResponse struct {
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+}
+
 // GoogleCloudAssuredworkloadsV1EnableResourceMonitoringResponse: Response for
 // EnableResourceMonitoring endpoint.
 type GoogleCloudAssuredworkloadsV1EnableResourceMonitoringResponse struct {
@@ -416,6 +516,34 @@ type GoogleCloudAssuredworkloadsV1ListViolationsResponse struct {
 
 func (s GoogleCloudAssuredworkloadsV1ListViolationsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAssuredworkloadsV1ListViolationsResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudAssuredworkloadsV1ListWorkloadUpdatesResponse: Response of
+// listing the compliance updates per workload with pagination.
+type GoogleCloudAssuredworkloadsV1ListWorkloadUpdatesResponse struct {
+	// NextPageToken: The next page token. Return empty if reached the last page.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+	// WorkloadUpdates: The list of workload updates for a given workload.
+	WorkloadUpdates []*GoogleCloudAssuredworkloadsV1WorkloadUpdate `json:"workloadUpdates,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "NextPageToken") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudAssuredworkloadsV1ListWorkloadUpdatesResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudAssuredworkloadsV1ListWorkloadUpdatesResponse
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -554,6 +682,127 @@ func (s GoogleCloudAssuredworkloadsV1MutatePartnerPermissionsRequest) MarshalJSO
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudAssuredworkloadsV1OrgPolicy: This assured workload service object
+// is used to represent the org policy attached to a resource. It servces the
+// same purpose as the orgpolicy.v2.Policy object but with functionality that
+// is limited to what is supported by Assured Workloads(e.g. only one rule
+// under one OrgPolicy object, no conditions, etc).
+type GoogleCloudAssuredworkloadsV1OrgPolicy struct {
+	// Constraint: The constraint name of the OrgPolicy. e.g.
+	// "constraints/gcp.resourceLocations".
+	Constraint string `json:"constraint,omitempty"`
+	// Inherit: If `inherit` is true, policy rules of the lowest ancestor in the
+	// resource hierarchy chain are inherited. If it is false, policy rules are not
+	// inherited.
+	Inherit bool `json:"inherit,omitempty"`
+	// Reset: Ignores policies set above this resource and restores to the
+	// `constraint_default` value. `reset` can only be true when `rules` is empty
+	// and `inherit` is false.
+	Reset bool `json:"reset,omitempty"`
+	// Resource: Resource that the OrgPolicy attaches to. Format: folders/123"
+	// projects/123".
+	Resource string `json:"resource,omitempty"`
+	// Rule: The rule of the OrgPolicy.
+	Rule *GoogleCloudAssuredworkloadsV1OrgPolicyPolicyRule `json:"rule,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Constraint") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Constraint") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudAssuredworkloadsV1OrgPolicy) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudAssuredworkloadsV1OrgPolicy
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudAssuredworkloadsV1OrgPolicyPolicyRule: A rule used to express
+// this policy.
+type GoogleCloudAssuredworkloadsV1OrgPolicyPolicyRule struct {
+	// AllowAll: ListPolicy only when all values are allowed.
+	AllowAll bool `json:"allowAll,omitempty"`
+	// DenyAll: ListPolicy only when all values are denied.
+	DenyAll bool `json:"denyAll,omitempty"`
+	// Enforce: BooleanPolicy only.
+	Enforce bool `json:"enforce,omitempty"`
+	// Values: ListPolicy only when custom values are specified.
+	Values *GoogleCloudAssuredworkloadsV1OrgPolicyPolicyRuleStringValues `json:"values,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AllowAll") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AllowAll") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudAssuredworkloadsV1OrgPolicyPolicyRule) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudAssuredworkloadsV1OrgPolicyPolicyRule
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudAssuredworkloadsV1OrgPolicyPolicyRuleStringValues: The values
+// allowed for a ListPolicy.
+type GoogleCloudAssuredworkloadsV1OrgPolicyPolicyRuleStringValues struct {
+	// AllowedValues: List of values allowed at this resource.
+	AllowedValues []string `json:"allowedValues,omitempty"`
+	// DeniedValues: List of values denied at this resource.
+	DeniedValues []string `json:"deniedValues,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AllowedValues") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AllowedValues") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudAssuredworkloadsV1OrgPolicyPolicyRuleStringValues) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudAssuredworkloadsV1OrgPolicyPolicyRuleStringValues
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudAssuredworkloadsV1OrgPolicyUpdate: Represents an update for an
+// org policy control applied on an Assured Workload resource. The inherited
+// org policy is not considered.
+type GoogleCloudAssuredworkloadsV1OrgPolicyUpdate struct {
+	// AppliedPolicy: The org policy currently applied on the assured workload
+	// resource.
+	AppliedPolicy *GoogleCloudAssuredworkloadsV1OrgPolicy `json:"appliedPolicy,omitempty"`
+	// SuggestedPolicy: The suggested org policy that replaces the applied policy.
+	SuggestedPolicy *GoogleCloudAssuredworkloadsV1OrgPolicy `json:"suggestedPolicy,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AppliedPolicy") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AppliedPolicy") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudAssuredworkloadsV1OrgPolicyUpdate) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudAssuredworkloadsV1OrgPolicyUpdate
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudAssuredworkloadsV1RestrictAllowedResourcesRequest: Request for
 // restricting list of available resources in Workload environment.
 type GoogleCloudAssuredworkloadsV1RestrictAllowedResourcesRequest struct {
@@ -597,6 +846,28 @@ func (s GoogleCloudAssuredworkloadsV1RestrictAllowedResourcesRequest) MarshalJSO
 type GoogleCloudAssuredworkloadsV1RestrictAllowedResourcesResponse struct {
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
+}
+
+// GoogleCloudAssuredworkloadsV1UpdateDetails: The details of the update.
+type GoogleCloudAssuredworkloadsV1UpdateDetails struct {
+	// OrgPolicyUpdate: Update to one org policy, e.g. gcp.resourceLocation.
+	OrgPolicyUpdate *GoogleCloudAssuredworkloadsV1OrgPolicyUpdate `json:"orgPolicyUpdate,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "OrgPolicyUpdate") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "OrgPolicyUpdate") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudAssuredworkloadsV1UpdateDetails) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudAssuredworkloadsV1UpdateDetails
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAssuredworkloadsV1Violation: Workload monitoring Violation.
@@ -1295,6 +1566,46 @@ func (s GoogleCloudAssuredworkloadsV1WorkloadSaaEnrollmentResponse) MarshalJSON(
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudAssuredworkloadsV1WorkloadUpdate: A workload update is a change
+// to the workload's compliance configuration.
+type GoogleCloudAssuredworkloadsV1WorkloadUpdate struct {
+	// CreateTime: The time the update was created.
+	CreateTime string `json:"createTime,omitempty"`
+	// Details: The details of the update.
+	Details *GoogleCloudAssuredworkloadsV1UpdateDetails `json:"details,omitempty"`
+	// Name: Output only. Immutable. Identifier. Resource name of the
+	// WorkloadUpdate. Format:
+	// organizations/{organization}/locations/{location}/workloads/{workload}/update
+	// s/{update}
+	Name string `json:"name,omitempty"`
+	// State: Output only. The state of the update.
+	//
+	// Possible values:
+	//   "STATE_UNSPECIFIED" - Unspecified.
+	//   "AVAILABLE" - The update is available to be applied.
+	//   "APPLIED" - The update has been applied.
+	//   "WITHDRAWN" - The update has been withdrawn by the service.
+	State string `json:"state,omitempty"`
+	// UpdateTime: The time the update was last updated.
+	UpdateTime string `json:"updateTime,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "CreateTime") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CreateTime") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudAssuredworkloadsV1WorkloadUpdate) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudAssuredworkloadsV1WorkloadUpdate
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudAssuredworkloadsV1WorkloadWorkloadOptions: Options to be set for
 // the given created workload.
 type GoogleCloudAssuredworkloadsV1WorkloadWorkloadOptions struct {
@@ -1742,7 +2053,7 @@ func (c *OrganizationsLocationsWorkloadsAnalyzeWorkloadMoveCall) AssetTypes(asse
 }
 
 // PageSize sets the optional parameter "pageSize": Page size. If a value is
-// not specified, the default value of 10 is used.
+// not specified, the default value of 10 is used. The maximum value is 50.
 func (c *OrganizationsLocationsWorkloadsAnalyzeWorkloadMoveCall) PageSize(pageSize int64) *OrganizationsLocationsWorkloadsAnalyzeWorkloadMoveCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
@@ -2101,6 +2412,111 @@ func (c *OrganizationsLocationsWorkloadsDeleteCall) Do(opts ...googleapi.CallOpt
 		return nil, err
 	}
 	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "assuredworkloads.organizations.locations.workloads.delete", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type OrganizationsLocationsWorkloadsEnableComplianceUpdatesCall struct {
+	s          *Service
+	name       string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// EnableComplianceUpdates: This endpoint enables Assured Workloads service to
+// offer compliance updates for the folder based assured workload. It sets up
+// an Assured Workloads Service Agent, having permissions to read compliance
+// controls (for example: Org Policies) applied on the workload. The caller
+// must have `resourcemanager.folders.getIamPolicy` and
+// `resourcemanager.folders.setIamPolicy` permissions on the assured workload
+// folder.
+//
+//   - name: The `name` field is used to identify the workload. Format:
+//     organizations/{org_id}/locations/{location_id}/workloads/{workload_id}.
+func (r *OrganizationsLocationsWorkloadsService) EnableComplianceUpdates(name string) *OrganizationsLocationsWorkloadsEnableComplianceUpdatesCall {
+	c := &OrganizationsLocationsWorkloadsEnableComplianceUpdatesCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *OrganizationsLocationsWorkloadsEnableComplianceUpdatesCall) Fields(s ...googleapi.Field) *OrganizationsLocationsWorkloadsEnableComplianceUpdatesCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *OrganizationsLocationsWorkloadsEnableComplianceUpdatesCall) Context(ctx context.Context) *OrganizationsLocationsWorkloadsEnableComplianceUpdatesCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *OrganizationsLocationsWorkloadsEnableComplianceUpdatesCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *OrganizationsLocationsWorkloadsEnableComplianceUpdatesCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}:enableComplianceUpdates")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PUT", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "assuredworkloads.organizations.locations.workloads.enableComplianceUpdates", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "assuredworkloads.organizations.locations.workloads.enableComplianceUpdates" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudAssuredworkloadsV1EnableComplianceUpdatesResponse.ServerResponse.
+// Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *OrganizationsLocationsWorkloadsEnableComplianceUpdatesCall) Do(opts ...googleapi.CallOption) (*GoogleCloudAssuredworkloadsV1EnableComplianceUpdatesResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudAssuredworkloadsV1EnableComplianceUpdatesResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "assuredworkloads.organizations.locations.workloads.enableComplianceUpdates", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -2805,6 +3221,258 @@ func (c *OrganizationsLocationsWorkloadsRestrictAllowedResourcesCall) Do(opts ..
 	}
 	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "assuredworkloads.organizations.locations.workloads.restrictAllowedResources", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
+}
+
+type OrganizationsLocationsWorkloadsUpdatesApplyCall struct {
+	s                                                       *Service
+	name                                                    string
+	googlecloudassuredworkloadsv1applyworkloadupdaterequest *GoogleCloudAssuredworkloadsV1ApplyWorkloadUpdateRequest
+	urlParams_                                              gensupport.URLParams
+	ctx_                                                    context.Context
+	header_                                                 http.Header
+}
+
+// Apply: This endpoint creates a new operation to apply the given update.
+//
+//   - name: The resource name of the update. Format:
+//     organizations/{org_id}/locations/{location_id}/workloads/{workload_id}/upda
+//     tes/{update_id}.
+func (r *OrganizationsLocationsWorkloadsUpdatesService) Apply(name string, googlecloudassuredworkloadsv1applyworkloadupdaterequest *GoogleCloudAssuredworkloadsV1ApplyWorkloadUpdateRequest) *OrganizationsLocationsWorkloadsUpdatesApplyCall {
+	c := &OrganizationsLocationsWorkloadsUpdatesApplyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.googlecloudassuredworkloadsv1applyworkloadupdaterequest = googlecloudassuredworkloadsv1applyworkloadupdaterequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *OrganizationsLocationsWorkloadsUpdatesApplyCall) Fields(s ...googleapi.Field) *OrganizationsLocationsWorkloadsUpdatesApplyCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *OrganizationsLocationsWorkloadsUpdatesApplyCall) Context(ctx context.Context) *OrganizationsLocationsWorkloadsUpdatesApplyCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *OrganizationsLocationsWorkloadsUpdatesApplyCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *OrganizationsLocationsWorkloadsUpdatesApplyCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googlecloudassuredworkloadsv1applyworkloadupdaterequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}:apply")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "assuredworkloads.organizations.locations.workloads.updates.apply", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "assuredworkloads.organizations.locations.workloads.updates.apply" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleLongrunningOperation.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *OrganizationsLocationsWorkloadsUpdatesApplyCall) Do(opts ...googleapi.CallOption) (*GoogleLongrunningOperation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleLongrunningOperation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "assuredworkloads.organizations.locations.workloads.updates.apply", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type OrganizationsLocationsWorkloadsUpdatesListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: This endpoint lists all updates for the given workload.
+//
+//   - parent:
+//     organizations/{org_id}/locations/{location_id}/workloads/{workload_id}.
+func (r *OrganizationsLocationsWorkloadsUpdatesService) List(parent string) *OrganizationsLocationsWorkloadsUpdatesListCall {
+	c := &OrganizationsLocationsWorkloadsUpdatesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": Page size. The default
+// value is 20 and the max allowed value is 100.
+func (c *OrganizationsLocationsWorkloadsUpdatesListCall) PageSize(pageSize int64) *OrganizationsLocationsWorkloadsUpdatesListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": Page token returned from
+// previous request.
+func (c *OrganizationsLocationsWorkloadsUpdatesListCall) PageToken(pageToken string) *OrganizationsLocationsWorkloadsUpdatesListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *OrganizationsLocationsWorkloadsUpdatesListCall) Fields(s ...googleapi.Field) *OrganizationsLocationsWorkloadsUpdatesListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *OrganizationsLocationsWorkloadsUpdatesListCall) IfNoneMatch(entityTag string) *OrganizationsLocationsWorkloadsUpdatesListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *OrganizationsLocationsWorkloadsUpdatesListCall) Context(ctx context.Context) *OrganizationsLocationsWorkloadsUpdatesListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *OrganizationsLocationsWorkloadsUpdatesListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *OrganizationsLocationsWorkloadsUpdatesListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/updates")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "assuredworkloads.organizations.locations.workloads.updates.list", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "assuredworkloads.organizations.locations.workloads.updates.list" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudAssuredworkloadsV1ListWorkloadUpdatesResponse.ServerResponse.Head
+// er or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *OrganizationsLocationsWorkloadsUpdatesListCall) Do(opts ...googleapi.CallOption) (*GoogleCloudAssuredworkloadsV1ListWorkloadUpdatesResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudAssuredworkloadsV1ListWorkloadUpdatesResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "assuredworkloads.organizations.locations.workloads.updates.list", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *OrganizationsLocationsWorkloadsUpdatesListCall) Pages(ctx context.Context, f func(*GoogleCloudAssuredworkloadsV1ListWorkloadUpdatesResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
 }
 
 type OrganizationsLocationsWorkloadsViolationsAcknowledgeCall struct {

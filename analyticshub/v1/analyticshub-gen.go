@@ -260,37 +260,6 @@ type ProjectsLocationsSubscriptionsService struct {
 	s *Service
 }
 
-// AnalyticsHubSubscriptionInfo: Information about an associated Analytics Hub
-// subscription
-// (https://cloud.google.com/bigquery/docs/analytics-hub-manage-subscriptions).
-type AnalyticsHubSubscriptionInfo struct {
-	// Listing: Optional. The name of the associated Analytics Hub listing
-	// resource. Pattern:
-	// "projects/{project}/locations/{location}/dataExchanges/{data_exchange}/listin
-	// gs/{listing}"
-	Listing string `json:"listing,omitempty"`
-	// Subscription: Optional. The name of the associated Analytics Hub
-	// subscription resource. Pattern:
-	// "projects/{project}/locations/{location}/subscriptions/{subscription}"
-	Subscription string `json:"subscription,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "Listing") to unconditionally
-	// include in API requests. By default, fields with empty or default values are
-	// omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
-	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Listing") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
-	NullFields []string `json:"-"`
-}
-
-func (s AnalyticsHubSubscriptionInfo) MarshalJSON() ([]byte, error) {
-	type NoMethod AnalyticsHubSubscriptionInfo
-	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
-}
-
 // AuditConfig: Specifies the audit configuration for a service. The
 // configuration determines which permission types are logged, and what
 // identities, if any, are exempted from logging. An AuditConfig must have one
@@ -413,27 +382,6 @@ type BigQueryConfig struct {
 	// (https://cloud.google.com/iam/docs/service-agents),
 	// service-{project_number}@gcp-sa-pubsub.iam.gserviceaccount.com, is used.
 	ServiceAccountEmail string `json:"serviceAccountEmail,omitempty"`
-	// State: Output only. An output-only field that indicates whether or not the
-	// subscription can receive messages.
-	//
-	// Possible values:
-	//   "STATE_UNSPECIFIED" - Default value. This value is unused.
-	//   "ACTIVE" - The subscription can actively send messages to BigQuery
-	//   "PERMISSION_DENIED" - Cannot write to the BigQuery table because of
-	// permission denied errors. This can happen if - Pub/Sub SA has not been
-	// granted the [appropriate BigQuery IAM
-	// permissions](https://cloud.google.com/pubsub/docs/create-subscription#assign_
-	// bigquery_service_account) - bigquery.googleapis.com API is not enabled for
-	// the project
-	// ([instructions](https://cloud.google.com/service-usage/docs/enable-disable))
-	//   "NOT_FOUND" - Cannot write to the BigQuery table because it does not
-	// exist.
-	//   "SCHEMA_MISMATCH" - Cannot write to the BigQuery table due to a schema
-	// mismatch.
-	//   "IN_TRANSIT_LOCATION_RESTRICTION" - Cannot write to the destination
-	// because enforce_in_transit is set to true and the destination locations are
-	// not in the allowed regions.
-	State string `json:"state,omitempty"`
 	// Table: Optional. The name of the table to which to write data, of the form
 	// {projectId}.{datasetId}.{tableId}
 	Table string `json:"table,omitempty"`
@@ -629,9 +577,12 @@ type CloudStorageConfig struct {
 	// file before a new file is created. Min 1 KB, max 10 GiB. The max_bytes limit
 	// may be exceeded in cases where messages are larger than the limit.
 	MaxBytes int64 `json:"maxBytes,omitempty,string"`
-	// MaxDuration: Optional. The maximum duration that can elapse before a new
-	// Cloud Storage file is created. Min 1 minute, max 10 minutes, default 5
-	// minutes. May not exceed the subscription's acknowledgment deadline.
+	// MaxDuration: Optional. File batching settings. If no max_duration setting is
+	// specified, a max_duration of 5 minutes will be set by default. max_duration
+	// is required regardless of whether other file batching settings are
+	// specified. The maximum duration that can elapse before a new Cloud Storage
+	// file is created. Min 1 minute, max 10 minutes, default 5 minutes. May not
+	// exceed the subscription's acknowledgement deadline.
 	MaxDuration string `json:"maxDuration,omitempty"`
 	// MaxMessages: Optional. The maximum number of messages that can be written to
 	// a Cloud Storage file before a new file is created. Min 1000 messages.
@@ -643,22 +594,6 @@ type CloudStorageConfig struct {
 	// (https://cloud.google.com/iam/docs/service-agents),
 	// service-{project_number}@gcp-sa-pubsub.iam.gserviceaccount.com, is used.
 	ServiceAccountEmail string `json:"serviceAccountEmail,omitempty"`
-	// State: Output only. An output-only field that indicates whether or not the
-	// subscription can receive messages.
-	//
-	// Possible values:
-	//   "STATE_UNSPECIFIED" - Default value. This value is unused.
-	//   "ACTIVE" - The subscription can actively send messages to Cloud Storage.
-	//   "PERMISSION_DENIED" - Cannot write to the Cloud Storage bucket because of
-	// permission denied errors.
-	//   "NOT_FOUND" - Cannot write to the Cloud Storage bucket because it does not
-	// exist.
-	//   "IN_TRANSIT_LOCATION_RESTRICTION" - Cannot write to the destination
-	// because enforce_in_transit is set to true and the destination locations are
-	// not in the allowed regions.
-	//   "SCHEMA_MISMATCH" - Cannot write to the Cloud Storage bucket due to an
-	// incompatibility between the topic schema and subscription settings.
-	State string `json:"state,omitempty"`
 	// TextConfig: Optional. If set, message data will be written to Cloud Storage
 	// in text format.
 	TextConfig *TextConfig `json:"textConfig,omitempty"`
@@ -829,7 +764,7 @@ type DeadLetterPolicy struct {
 	// MaxDeliveryAttempts: Optional. The maximum number of delivery attempts for
 	// any message. The value must be between 5 and 100. The number of delivery
 	// attempts is defined as 1 + (the sum of number of NACKs and number of times
-	// the acknowledgment deadline has been exceeded for the message). A NACK is
+	// the acknowledgement deadline has been exceeded for the message). A NACK is
 	// any call to ModifyAckDeadline with a 0 deadline. Note that client libraries
 	// may automatically extend ack_deadlines. This field will be honored on a best
 	// effort basis. If this parameter is 0, a default value of 5 is used.
@@ -1191,8 +1126,9 @@ func (s GoogleCloudBigqueryAnalyticshubV1SubscriptionCommercialInfoGoogleCloudMa
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GooglePubsubV1Subscription: A subscription resource. If none of
-// `push_config`, `bigquery_config`, or `cloud_storage_config` is set, then the
+// GooglePubsubV1Subscription: Defines the destination Pub/Sub subscription. If
+// none of `push_config`, `bigquery_config`, `cloud_storage_config`,
+// `pubsub_export_config`, or `pubsublite_export_config` is set, then the
 // subscriber will pull and ack messages using API methods. At most one of
 // these fields may be set.
 type GooglePubsubV1Subscription struct {
@@ -1212,10 +1148,6 @@ type GooglePubsubV1Subscription struct {
 	// the push endpoint. If the subscriber never acknowledges the message, the
 	// Pub/Sub system will eventually redeliver the message.
 	AckDeadlineSeconds int64 `json:"ackDeadlineSeconds,omitempty"`
-	// AnalyticsHubSubscriptionInfo: Output only. Information about the associated
-	// Analytics Hub subscription. Only set if the subscritpion is created by
-	// Analytics Hub.
-	AnalyticsHubSubscriptionInfo *AnalyticsHubSubscriptionInfo `json:"analyticsHubSubscriptionInfo,omitempty"`
 	// BigqueryConfig: Optional. If delivery to BigQuery is used with this
 	// subscription, this field is used to configure it.
 	BigqueryConfig *BigQueryConfig `json:"bigqueryConfig,omitempty"`
@@ -1238,7 +1170,7 @@ type GooglePubsubV1Subscription struct {
 	// EnableExactlyOnceDelivery: Optional. If true, Pub/Sub provides the following
 	// guarantees for the delivery of a message with a given value of `message_id`
 	// on this subscription: * The message sent to a subscriber is guaranteed not
-	// to be resent before the message's acknowledgment deadline expires. * An
+	// to be resent before the message's acknowledgement deadline expires. * An
 	// acknowledged message will not be resent to a subscriber. Note that
 	// subscribers may still receive multiple copies of a message when
 	// `enable_exactly_once_delivery` is true if the message was published multiple
@@ -1296,26 +1228,8 @@ type GooglePubsubV1Subscription struct {
 	// delivery for this subscription. If not set, the default retry policy is
 	// applied. This generally implies that messages will be retried as soon as
 	// possible for healthy subscribers. RetryPolicy will be triggered on NACKs or
-	// acknowledgment deadline exceeded events for a given message.
+	// acknowledgement deadline exceeded events for a given message.
 	RetryPolicy *RetryPolicy `json:"retryPolicy,omitempty"`
-	// State: Output only. An output-only field indicating whether or not the
-	// subscription can receive messages.
-	//
-	// Possible values:
-	//   "STATE_UNSPECIFIED" - Default value. This value is unused.
-	//   "ACTIVE" - The subscription can actively receive messages
-	//   "RESOURCE_ERROR" - The subscription cannot receive messages because of an
-	// error with the resource to which it pushes messages. See the more detailed
-	// error state in the corresponding configuration.
-	State string `json:"state,omitempty"`
-	// TopicMessageRetentionDuration: Output only. Indicates the minimum duration
-	// for which a message is retained after it is published to the subscription's
-	// topic. If this field is set, messages published to the subscription's topic
-	// in the last `topic_message_retention_duration` are always available to
-	// subscribers. See the `message_retention_duration` field in `Topic`. This
-	// field is set only in responses from the server; it is ignored if it is set
-	// in any requests.
-	TopicMessageRetentionDuration string `json:"topicMessageRetentionDuration,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AckDeadlineSeconds") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -1928,8 +1842,9 @@ func (s Policy) MarshalJSON() ([]byte, error) {
 // PubSubTopicSource: Pub/Sub topic source.
 type PubSubTopicSource struct {
 	// DataAffinityRegions: Optional. Region hint on where the data might be
-	// published. Data affinity regions are modifiable. See go/regions for full
-	// listing of possible Cloud regions.
+	// published. Data affinity regions are modifiable. See
+	// https://cloud.google.com/about/locations for full listing of possible Cloud
+	// regions.
 	DataAffinityRegions []string `json:"dataAffinityRegions,omitempty"`
 	// Topic: Required. Resource name of the Pub/Sub topic source for this listing.
 	// e.g. projects/myproject/topics/topicId
@@ -2121,7 +2036,7 @@ func (s RestrictedExportPolicy) MarshalJSON() ([]byte, error) {
 // RetryPolicy: A policy that specifies how Pub/Sub retries message delivery.
 // Retry delay will be exponential based on provided minimum and maximum
 // backoffs. https://en.wikipedia.org/wiki/Exponential_backoff. RetryPolicy
-// will be triggered on NACKs or acknowledgment deadline exceeded events for a
+// will be triggered on NACKs or acknowledgement deadline exceeded events for a
 // given message. Retry Policy is implemented on a best effort basis. At times,
 // the delay between consecutive deliveries may not match the configuration.
 // That is, delay can be more or less than configured backoff.
@@ -2717,8 +2632,7 @@ func (r *ProjectsLocationsDataExchangesService) Create(parent string, dataexchan
 
 // DataExchangeId sets the optional parameter "dataExchangeId": Required. The
 // ID of the data exchange. Must contain only Unicode letters, numbers (0-9),
-// underscores (_). Should not use characters that require URL-escaping, or
-// characters outside of ASCII, spaces. Max length: 100 bytes.
+// underscores (_). Max length: 100 bytes.
 func (c *ProjectsLocationsDataExchangesCreateCall) DataExchangeId(dataExchangeId string) *ProjectsLocationsDataExchangesCreateCall {
 	c.urlParams_.Set("dataExchangeId", dataExchangeId)
 	return c
@@ -3877,8 +3791,7 @@ func (r *ProjectsLocationsDataExchangesListingsService) Create(parent string, li
 
 // ListingId sets the optional parameter "listingId": Required. The ID of the
 // listing to create. Must contain only Unicode letters, numbers (0-9),
-// underscores (_). Should not use characters that require URL-escaping, or
-// characters outside of ASCII, spaces. Max length: 100 bytes.
+// underscores (_). Max length: 100 bytes.
 func (c *ProjectsLocationsDataExchangesListingsCreateCall) ListingId(listingId string) *ProjectsLocationsDataExchangesListingsCreateCall {
 	c.urlParams_.Set("listingId", listingId)
 	return c

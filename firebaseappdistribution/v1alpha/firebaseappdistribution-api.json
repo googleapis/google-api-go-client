@@ -436,7 +436,7 @@
               ]
             },
             "updateTestConfig": {
-              "description": "Updates a release.",
+              "description": "Updates automated test configuration.",
               "flatPath": "v1alpha/projects/{projectsId}/apps/{appsId}/testConfig",
               "httpMethod": "PATCH",
               "id": "firebaseappdistribution.projects.apps.updateTestConfig",
@@ -831,7 +831,7 @@
       }
     }
   },
-  "revision": "20250314",
+  "revision": "20250414",
   "rootUrl": "https://firebaseappdistribution.googleapis.com/",
   "schemas": {
     "AndroidxCrawlerOutputPoint": {
@@ -959,7 +959,6 @@
       "type": "object"
     },
     "GoogleFirebaseAppdistroV1alphaAiInstructions": {
-      "description": "Instructions for AI driven test",
       "id": "GoogleFirebaseAppdistroV1alphaAiInstructions",
       "properties": {
         "steps": {

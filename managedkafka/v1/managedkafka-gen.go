@@ -1131,7 +1131,9 @@ type StopConnectorResponse struct {
 // backoffs. https://en.wikipedia.org/wiki/Exponential_backoff. Note that the
 // delay between consecutive task restarts may not always precisely match the
 // configured settings. This can happen when the ConnectCluster is in
-// rebalancing state or if the ConnectCluster is unresponsive etc.
+// rebalancing state or if the ConnectCluster is unresponsive etc. The default
+// values for minimum and maximum backoffs are 60 seconds and 30 minutes
+// respectively.
 type TaskRetryPolicy struct {
 	// MaximumBackoff: Optional. The maximum amount of time to wait before retrying
 	// a failed task. This sets an upper bound for the backoff delay.

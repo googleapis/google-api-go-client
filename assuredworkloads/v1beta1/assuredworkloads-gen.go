@@ -2142,7 +2142,7 @@ func (c *OrganizationsLocationsWorkloadsAnalyzeWorkloadMoveCall) AssetTypes(asse
 }
 
 // PageSize sets the optional parameter "pageSize": Page size. If a value is
-// not specified, the default value of 10 is used.
+// not specified, the default value of 10 is used. The maximum value is 50.
 func (c *OrganizationsLocationsWorkloadsAnalyzeWorkloadMoveCall) PageSize(pageSize int64) *OrganizationsLocationsWorkloadsAnalyzeWorkloadMoveCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c

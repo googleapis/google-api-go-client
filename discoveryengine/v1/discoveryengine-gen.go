@@ -3868,10 +3868,18 @@ func (s *GoogleCloudDiscoveryengineV1CheckGroundingSpec) UnmarshalJSON(data []by
 // GoogleCloudDiscoveryengineV1Chunk: Chunk captures all raw metadata
 // information of items to be recommended or searched in the chunk mode.
 type GoogleCloudDiscoveryengineV1Chunk struct {
+	// AnnotationContents: Output only. Annotation contents if the current chunk
+	// contains annotations.
+	AnnotationContents []string `json:"annotationContents,omitempty"`
 	// ChunkMetadata: Output only. Metadata of the current chunk.
 	ChunkMetadata *GoogleCloudDiscoveryengineV1ChunkChunkMetadata `json:"chunkMetadata,omitempty"`
 	// Content: Content is a string from a document (parsed content).
 	Content string `json:"content,omitempty"`
+	// DataUrls: Output only. Image Data URLs if the current chunk contains images.
+	// Data URLs are composed of four parts: a prefix (data:), a MIME type
+	// indicating the type of data, an optional base64 token if non-textual, and
+	// the data itself: data:,
+	DataUrls []string `json:"dataUrls,omitempty"`
 	// DerivedStructData: Output only. This field is OUTPUT_ONLY. It contains
 	// derived data that are not in the original input document.
 	DerivedStructData googleapi.RawMessage `json:"derivedStructData,omitempty"`
@@ -3891,15 +3899,15 @@ type GoogleCloudDiscoveryengineV1Chunk struct {
 	// similarity. Higher score indicates higher chunk relevance. The score is in
 	// range [-1.0, 1.0]. Only populated on SearchResponse.
 	RelevanceScore float64 `json:"relevanceScore,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "ChunkMetadata") to
+	// ForceSendFields is a list of field names (e.g. "AnnotationContents") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "ChunkMetadata") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
+	// NullFields is a list of field names (e.g. "AnnotationContents") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -4263,8 +4271,8 @@ type GoogleCloudDiscoveryengineV1Condition struct {
 	// Maximum of 10 time ranges.
 	ActiveTimeRange []*GoogleCloudDiscoveryengineV1ConditionTimeRange `json:"activeTimeRange,omitempty"`
 	// QueryRegex: Optional. Query regex to match the whole search query. Cannot be
-	// set when Condition.query_terms is set. This is currently supporting
-	// promotion use case.
+	// set when Condition.query_terms is set. Only supported for Basic Site Search
+	// promotion serving controls.
 	QueryRegex string `json:"queryRegex,omitempty"`
 	// QueryTerms: Search only A list of terms to match the query on. Cannot be set
 	// when Condition.query_regex is set. Maximum of 10 query terms.
@@ -5556,8 +5564,9 @@ type GoogleCloudDiscoveryengineV1DisableAdvancedSiteSearchResponse struct {
 type GoogleCloudDiscoveryengineV1Document struct {
 	// AclInfo: Access control information for the document.
 	AclInfo *GoogleCloudDiscoveryengineV1DocumentAclInfo `json:"aclInfo,omitempty"`
-	// Content: The unstructured data linked to this document. Content must be set
-	// if this document is under a `CONTENT_REQUIRED` data store.
+	// Content: The unstructured data linked to this document. Content can only be
+	// set and must be set if this document is under a `CONTENT_REQUIRED` data
+	// store.
 	Content *GoogleCloudDiscoveryengineV1DocumentContent `json:"content,omitempty"`
 	// DerivedStructData: Output only. This field is OUTPUT_ONLY. It contains
 	// derived data that are not in the original input document.
@@ -5677,10 +5686,15 @@ func (s GoogleCloudDiscoveryengineV1DocumentAclInfoAccessRestriction) MarshalJSO
 type GoogleCloudDiscoveryengineV1DocumentContent struct {
 	// MimeType: The MIME type of the content. Supported types: * `application/pdf`
 	// (PDF, only native PDFs are supported for now) * `text/html` (HTML) *
+	// `text/plain` (TXT) * `text/xml` (XML) * `application/json` (JSON) *
 	// `application/vnd.openxmlformats-officedocument.wordprocessingml.document`
 	// (DOCX) *
 	// `application/vnd.openxmlformats-officedocument.presentationml.presentation`
-	// (PPTX) * `text/plain` (TXT) See
+	// (PPTX) * `application/vnd.openxmlformats-officedocument.spreadsheetml.sheet`
+	// (XLSX) * `application/vnd.ms-excel.sheet.macroenabled.12` (XLSM) The
+	// following types are supported only if layout parser is enabled in the data
+	// store: * `image/bmp` (BMP) * `image/gif` (GIF) * `image/jpeg` (JPEG) *
+	// `image/png` (PNG) * `image/tiff` (TIFF) See
 	// https://www.iana.org/assignments/media-types/media-types.xhtml.
 	MimeType string `json:"mimeType,omitempty"`
 	// RawBytes: The content represented as a stream of bytes. The maximum length
@@ -8851,6 +8865,9 @@ type GoogleCloudDiscoveryengineV1SearchLinkPromotion struct {
 	// Description: Optional. The Promotion description. Maximum length: 200
 	// characters.
 	Description string `json:"description,omitempty"`
+	// Document: Optional. The Document the user wants to promote. For site search,
+	// leave unset and only populate uri. Can be set along with uri.
+	Document string `json:"document,omitempty"`
 	// Enabled: Optional. The enabled promotion will be returned for any serving
 	// configs associated with the parent of the control this promotion is attached
 	// to. This flag is used for basic site search only.
@@ -10918,6 +10935,8 @@ type GoogleCloudDiscoveryengineV1TargetSite struct {
 	// deleted. This is a transitioning state which will resulted in either: 1.
 	// target site deleted if unindexing is successful; 2. state reverts to
 	// SUCCEEDED if the unindexing fails.
+	//   "CANCELLABLE" - The target site change is pending but cancellable.
+	//   "CANCELLED" - The target site change is cancelled.
 	IndexingStatus string `json:"indexingStatus,omitempty"`
 	// Name: Output only. The fully qualified resource name of the target site.
 	// `projects/{project}/locations/{location}/collections/{collection}/dataStores/
@@ -12647,8 +12666,8 @@ type GoogleCloudDiscoveryengineV1alphaCondition struct {
 	// Maximum of 10 time ranges.
 	ActiveTimeRange []*GoogleCloudDiscoveryengineV1alphaConditionTimeRange `json:"activeTimeRange,omitempty"`
 	// QueryRegex: Optional. Query regex to match the whole search query. Cannot be
-	// set when Condition.query_terms is set. This is currently supporting
-	// promotion use case.
+	// set when Condition.query_terms is set. Only supported for Basic Site Search
+	// promotion serving controls.
 	QueryRegex string `json:"queryRegex,omitempty"`
 	// QueryTerms: Search only A list of terms to match the query on. Cannot be set
 	// when Condition.query_regex is set. Maximum of 10 query terms.
@@ -16775,6 +16794,9 @@ type GoogleCloudDiscoveryengineV1alphaSearchLinkPromotion struct {
 	// Description: Optional. The Promotion description. Maximum length: 200
 	// characters.
 	Description string `json:"description,omitempty"`
+	// Document: Optional. The Document the user wants to promote. For site search,
+	// leave unset and only populate uri. Can be set along with uri.
+	Document string `json:"document,omitempty"`
 	// Enabled: Optional. The enabled promotion will be returned for any serving
 	// configs associated with the parent of the control this promotion is attached
 	// to. This flag is used for basic site search only.
@@ -18396,6 +18418,8 @@ type GoogleCloudDiscoveryengineV1alphaTargetSite struct {
 	// deleted. This is a transitioning state which will resulted in either: 1.
 	// target site deleted if unindexing is successful; 2. state reverts to
 	// SUCCEEDED if the unindexing fails.
+	//   "CANCELLABLE" - The target site change is pending but cancellable.
+	//   "CANCELLED" - The target site change is cancelled.
 	IndexingStatus string `json:"indexingStatus,omitempty"`
 	// Name: Output only. The fully qualified resource name of the target site.
 	// `projects/{project}/locations/{location}/collections/{collection}/dataStores/
@@ -18946,8 +18970,8 @@ type GoogleCloudDiscoveryengineV1betaCondition struct {
 	// Maximum of 10 time ranges.
 	ActiveTimeRange []*GoogleCloudDiscoveryengineV1betaConditionTimeRange `json:"activeTimeRange,omitempty"`
 	// QueryRegex: Optional. Query regex to match the whole search query. Cannot be
-	// set when Condition.query_terms is set. This is currently supporting
-	// promotion use case.
+	// set when Condition.query_terms is set. Only supported for Basic Site Search
+	// promotion serving controls.
 	QueryRegex string `json:"queryRegex,omitempty"`
 	// QueryTerms: Search only A list of terms to match the query on. Cannot be set
 	// when Condition.query_regex is set. Maximum of 10 query terms.
@@ -21512,6 +21536,9 @@ type GoogleCloudDiscoveryengineV1betaSearchLinkPromotion struct {
 	// Description: Optional. The Promotion description. Maximum length: 200
 	// characters.
 	Description string `json:"description,omitempty"`
+	// Document: Optional. The Document the user wants to promote. For site search,
+	// leave unset and only populate uri. Can be set along with uri.
+	Document string `json:"document,omitempty"`
 	// Enabled: Optional. The enabled promotion will be returned for any serving
 	// configs associated with the parent of the control this promotion is attached
 	// to. This flag is used for basic site search only.
@@ -23016,6 +23043,8 @@ type GoogleCloudDiscoveryengineV1betaTargetSite struct {
 	// deleted. This is a transitioning state which will resulted in either: 1.
 	// target site deleted if unindexing is successful; 2. state reverts to
 	// SUCCEEDED if the unindexing fails.
+	//   "CANCELLABLE" - The target site change is pending but cancellable.
+	//   "CANCELLED" - The target site change is cancelled.
 	IndexingStatus string `json:"indexingStatus,omitempty"`
 	// Name: Output only. The fully qualified resource name of the target site.
 	// `projects/{project}/locations/{location}/collections/{collection}/dataStores/

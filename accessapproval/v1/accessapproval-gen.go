@@ -271,6 +271,12 @@ type AccessApprovalSettings struct {
 	// active_key_version (this field will always be unset for the organization
 	// since organizations do not have ancestors).
 	AncestorHasActiveKeyVersion bool `json:"ancestorHasActiveKeyVersion,omitempty"`
+	// ApprovalPolicy: Optional. Policy for approval. This contains all policies.
+	ApprovalPolicy *CustomerApprovalApprovalPolicy `json:"approvalPolicy,omitempty"`
+	// EffectiveApprovalPolicy: Output only. Policy for approval included inherited
+	// settings to understand the exact policy applied to this resource. This is a
+	// read-only field.
+	EffectiveApprovalPolicy *CustomerApprovalApprovalPolicy `json:"effectiveApprovalPolicy,omitempty"`
 	// EnrolledAncestor: Output only. This field is read only (not settable via
 	// UpdateAccessApprovalSettings method). If the field is true, that indicates
 	// that at least one service is enrolled for Access Approval in one or more
@@ -524,6 +530,9 @@ type ApproveDecision struct {
 	// InvalidateTime: If set, denotes the timestamp at which the approval is
 	// invalidated.
 	InvalidateTime string `json:"invalidateTime,omitempty"`
+	// PolicyApproved: True when the request has been approved by the customer's
+	// defined policy.
+	PolicyApproved bool `json:"policyApproved,omitempty"`
 	// SignatureInfo: The signature for the ApprovalRequest and details on how it
 	// was signed.
 	SignatureInfo *SignatureInfo `json:"signatureInfo,omitempty"`
@@ -566,6 +575,44 @@ type AugmentedInfo struct {
 
 func (s AugmentedInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod AugmentedInfo
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// CustomerApprovalApprovalPolicy: Represents all the policies that can be set
+// for Customer Approval.
+type CustomerApprovalApprovalPolicy struct {
+	// JustificationBasedApprovalPolicy: Optional. Policy for approval based on the
+	// justification given.
+	//
+	// Possible values:
+	//   "JUSTIFICATION_BASED_APPROVAL_POLICY_UNSPECIFIED" - Default value for
+	// proto.
+	//   "JUSTIFICATION_BASED_APPROVAL_ENABLED_ALL" - Instant approval is enabled
+	// for all accesses.
+	//   "JUSTIFICATION_BASED_APPROVAL_ENABLED_EXTERNAL_JUSTIFICATIONS" - Instant
+	// approval is enabled for external justifications.
+	//   "JUSTIFICATION_BASED_APPROVAL_NOT_ENABLED" - Instant approval is not
+	// enabled for any accesses.
+	//   "JUSTIFICATION_BASED_APPROVAL_INHERITED" - Instant approval is inherited
+	// from the parent.
+	JustificationBasedApprovalPolicy string `json:"justificationBasedApprovalPolicy,omitempty"`
+	// ForceSendFields is a list of field names (e.g.
+	// "JustificationBasedApprovalPolicy") to unconditionally include in API
+	// requests. By default, fields with empty or default values are omitted from
+	// API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g.
+	// "JustificationBasedApprovalPolicy") to include in API requests with the JSON
+	// null value. By default, fields with empty values are omitted from API
+	// requests. See https://pkg.go.dev/google.golang.org/api#hdr-NullFields for
+	// more details.
+	NullFields []string `json:"-"`
+}
+
+func (s CustomerApprovalApprovalPolicy) MarshalJSON() ([]byte, error) {
+	type NoMethod CustomerApprovalApprovalPolicy
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 

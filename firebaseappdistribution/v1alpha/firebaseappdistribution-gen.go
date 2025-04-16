@@ -451,8 +451,6 @@ func (s GoogleFirebaseAppdistroV1alphaAabCertificate) MarshalJSON() ([]byte, err
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleFirebaseAppdistroV1alphaAiInstructions: Instructions for AI driven
-// test
 type GoogleFirebaseAppdistroV1alphaAiInstructions struct {
 	// Steps: Required. Steps to be accomplished by the AI
 	Steps []*GoogleFirebaseAppdistroV1alphaAiStep `json:"steps,omitempty"`
@@ -2837,7 +2835,7 @@ type ProjectsAppsUpdateTestConfigCall struct {
 	header_                                  http.Header
 }
 
-// UpdateTestConfig: Updates a release.
+// UpdateTestConfig: Updates automated test configuration.
 //
 //   - name: Identifier. The name of the test configuration resource. Format:
 //     `projects/{project_number}/apps/{app_id}/testConfig`.

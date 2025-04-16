@@ -656,9 +656,9 @@ func (s AppMakerSqlSetupNotification) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// AppSettingsChanged: * Alerts from AppSettingsChanged bucket Rules configured
-// by Admin which contain the below rules. Calendar settings changed Drive
-// settings changed Email settings changed Mobile settings changed
+// AppSettingsChanged: Alerts from AppSettingsChanged bucket Rules configured
+// by Admin which contain the following rules: - Calendar settings changed -
+// Drive settings changed - Email settings changed - Mobile settings changed
 type AppSettingsChanged struct {
 	// AlertDetails: Any other associated alert details, for example,
 	// AlertConfiguration.
@@ -1593,7 +1593,7 @@ func (s PredefinedDetectorInfo) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// PrimaryAdminChangedEvent: * Event occurred when primary admin changed in
+// PrimaryAdminChangedEvent: Event occurred when primary admin changed in
 // customer's account. The event are being received from insight forwarder
 type PrimaryAdminChangedEvent struct {
 	// Domain: domain in which actioned occurred
@@ -1788,6 +1788,7 @@ type RuleViolationInfo struct {
 	//   "CHROME_WARN_PAGE_PRINT" - Warn user about printed page.
 	//   "CHROME_BLOCK_URL_VISITED" - Block Chrome URL visit.
 	//   "CHROME_WARN_URL_VISITED" - Warn user about Chrome URL visited.
+	//   "CHROME_BLOCK_SCREENSHOT" - Block screenshot alert.
 	//   "CHROME_STORE_CONTENT" - Store the content that violated the rule.
 	//   "DELETE_WEBPROTECT_EVIDENCE" - Delete web protect evidence file
 	//   "CHAT_BLOCK_CONTENT" - Chat actions. Block Chat content to be sent out.
@@ -1834,6 +1835,7 @@ type RuleViolationInfo struct {
 	//   "CHROME_WARN_PAGE_PRINT" - Warn user about printed page.
 	//   "CHROME_BLOCK_URL_VISITED" - Block Chrome URL visit.
 	//   "CHROME_WARN_URL_VISITED" - Warn user about Chrome URL visited.
+	//   "CHROME_BLOCK_SCREENSHOT" - Block screenshot alert.
 	//   "CHROME_STORE_CONTENT" - Store the content that violated the rule.
 	//   "DELETE_WEBPROTECT_EVIDENCE" - Delete web protect evidence file
 	//   "CHAT_BLOCK_CONTENT" - Chat actions. Block Chat content to be sent out.
@@ -1864,7 +1866,7 @@ func (s RuleViolationInfo) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// SSOProfileCreatedEvent: * Event occurred when SSO Profile created in
+// SSOProfileCreatedEvent: Event occurred when SSO Profile created in
 // customer's account. The event are being received from insight forwarder
 type SSOProfileCreatedEvent struct {
 	// InboundSsoProfileName: sso profile name which got created
@@ -1887,7 +1889,7 @@ func (s SSOProfileCreatedEvent) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// SSOProfileDeletedEvent: * Event occurred when SSO Profile deleted in
+// SSOProfileDeletedEvent: Event occurred when SSO Profile deleted in
 // customer's account. The event are being received from insight forwarder
 type SSOProfileDeletedEvent struct {
 	// InboundSsoProfileName: sso profile name which got deleted
@@ -1910,7 +1912,7 @@ func (s SSOProfileDeletedEvent) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// SSOProfileUpdatedEvent: * Event occurred when SSO Profile updated in
+// SSOProfileUpdatedEvent: Event occurred when SSO Profile updated in
 // customer's account. The event are being received from insight forwarder
 type SSOProfileUpdatedEvent struct {
 	// InboundSsoProfileChanges: changes made to sso profile
@@ -2057,7 +2059,7 @@ func (s Status) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// SuperAdminPasswordResetEvent: * Event occurred when password was reset for
+// SuperAdminPasswordResetEvent: Event occurred when password was reset for
 // super admin in customer's account. The event are being received from insight
 // forwarder
 type SuperAdminPasswordResetEvent struct {
@@ -2291,10 +2293,10 @@ func (s User) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// UserChanges: * Alerts from UserChanges bucket Rules for predefined rules
-// which contain the below rules. Suspended user made active New user Added
-// User suspended (by admin) User granted admin privileges User admin
-// privileges revoked User deleted Users password changed
+// UserChanges: Alerts from UserChanges bucket Rules for predefined rules which
+// contain the following rules: - Suspended user made active - New user added -
+// User suspended (by admin) - User granted admin privileges - User admin
+// privileges revoked - User deleted - Users password changed
 type UserChanges struct {
 	// Name: Rule name
 	Name string `json:"name,omitempty"`
@@ -2337,6 +2339,49 @@ type UserDefinedDetectorInfo struct {
 
 func (s UserDefinedDetectorInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod UserDefinedDetectorInfo
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// VaultAcceleratedDeletion: Alert that is triggered when a Vault accelerated
+// deletion request is created or canceled.
+type VaultAcceleratedDeletion struct {
+	// ActionType: The action can be one of create and cancel
+	//
+	// Possible values:
+	//   "VAULT_ACCELERATED_DELETION_ACTION_TYPE_UNSPECIFIED" - Unspecified action
+	// type
+	//   "VAULT_ACCELERATED_DELETION_ACTION_TYPE_CREATE" - AD Create action type
+	//   "VAULT_ACCELERATED_DELETION_ACTION_TYPE_CANCEL" - AD Cancel action type
+	ActionType string `json:"actionType,omitempty"`
+	// AppType: Currentlty only Gmail is supported as app type
+	//
+	// Possible values:
+	//   "VAULT_ACCELERATED_DELETION_APP_TYPE_UNSPECIFIED" - Unspecified app type
+	//   "VAULT_ACCELERATED_DELETION_APP_TYPE_GMAIL" - Gmail app type
+	AppType string `json:"appType,omitempty"`
+	// CreateTime: The UTC timestamp of when the AD request was created
+	CreateTime string `json:"createTime,omitempty"`
+	// DeletionRequestId: Accelerated deletion request ID intended to be used to
+	// construct the Vault UI link to the AD request
+	DeletionRequestId string `json:"deletionRequestId,omitempty"`
+	// MatterId: Matter ID of the accelerated deletion request intended to be used
+	// to construct the Vault UI link to the AD request
+	MatterId string `json:"matterId,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ActionType") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ActionType") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s VaultAcceleratedDeletion) MarshalJSON() ([]byte, error) {
+	type NoMethod VaultAcceleratedDeletion
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 

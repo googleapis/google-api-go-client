@@ -902,7 +902,7 @@ func (a *API) GenerateCode() ([]byte, error) {
 	for _, res := range a.doc.Resources { // add top level resources.
 		pn("s.%s = New%s(s)", resourceGoField(res, nil), resourceGoType(res))
 	}
-	pn("if err != nil { return nil, err }")
+
 	pn(`if endpoint != "" { s.BasePath = endpoint }`)
 	pn("return s, nil")
 	pn("}\n")

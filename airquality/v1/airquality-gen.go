@@ -123,9 +123,6 @@ func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, err
 	s.Forecast = NewForecastService(s)
 	s.History = NewHistoryService(s)
 	s.MapTypes = NewMapTypesService(s)
-	if err != nil {
-		return nil, err
-	}
 	if endpoint != "" {
 		s.BasePath = endpoint
 	}

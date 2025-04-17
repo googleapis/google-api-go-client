@@ -132,9 +132,6 @@ func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, err
 	s.Reviews = NewReviewsService(s)
 	s.Systemapks = NewSystemapksService(s)
 	s.Users = NewUsersService(s)
-	if err != nil {
-		return nil, err
-	}
 	if endpoint != "" {
 		s.BasePath = endpoint
 	}

@@ -132,9 +132,6 @@ func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, err
 	s.CustomerUsageReports = NewCustomerUsageReportsService(s)
 	s.EntityUsageReports = NewEntityUsageReportsService(s)
 	s.UserUsageReport = NewUserUsageReportService(s)
-	if err != nil {
-		return nil, err
-	}
 	if endpoint != "" {
 		s.BasePath = endpoint
 	}

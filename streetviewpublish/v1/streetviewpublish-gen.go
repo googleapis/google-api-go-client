@@ -122,9 +122,6 @@ func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, err
 	s.PhotoSequence = NewPhotoSequenceService(s)
 	s.PhotoSequences = NewPhotoSequencesService(s)
 	s.Photos = NewPhotosService(s)
-	if err != nil {
-		return nil, err
-	}
 	if endpoint != "" {
 		s.BasePath = endpoint
 	}

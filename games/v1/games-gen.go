@@ -144,9 +144,6 @@ func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, err
 	s.Scores = NewScoresService(s)
 	s.Snapshots = NewSnapshotsService(s)
 	s.Stats = NewStatsService(s)
-	if err != nil {
-		return nil, err
-	}
 	if endpoint != "" {
 		s.BasePath = endpoint
 	}

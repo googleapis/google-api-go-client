@@ -224,9 +224,6 @@ func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, err
 	s.Invitations = NewInvitationsService(s)
 	s.Registrations = NewRegistrationsService(s)
 	s.UserProfiles = NewUserProfilesService(s)
-	if err != nil {
-		return nil, err
-	}
 	if endpoint != "" {
 		s.BasePath = endpoint
 	}

@@ -136,9 +136,6 @@ func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, err
 	s.SkuGroups = NewSkuGroupsService(s)
 	s.Skus = NewSkusService(s)
 	s.V1beta = NewV1betaService(s)
-	if err != nil {
-		return nil, err
-	}
 	if endpoint != "" {
 		s.BasePath = endpoint
 	}

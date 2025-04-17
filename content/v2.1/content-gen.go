@@ -148,9 +148,6 @@ func NewService(ctx context.Context, opts ...option.ClientOption) (*APIService, 
 	s.Returnpolicyonline = NewReturnpolicyonlineService(s)
 	s.Shippingsettings = NewShippingsettingsService(s)
 	s.Shoppingadsprogram = NewShoppingadsprogramService(s)
-	if err != nil {
-		return nil, err
-	}
 	if endpoint != "" {
 		s.BasePath = endpoint
 	}

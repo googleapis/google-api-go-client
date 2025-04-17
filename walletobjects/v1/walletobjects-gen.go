@@ -138,9 +138,6 @@ func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, err
 	s.Transitclass = NewTransitclassService(s)
 	s.Transitobject = NewTransitobjectService(s)
 	s.Walletobjects = NewWalletobjectsService(s)
-	if err != nil {
-		return nil, err
-	}
 	if endpoint != "" {
 		s.BasePath = endpoint
 	}

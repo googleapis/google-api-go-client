@@ -110,9 +110,6 @@ func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, err
 	s.Divisions = NewDivisionsService(s)
 	s.Elections = NewElectionsService(s)
 	s.Representatives = NewRepresentativesService(s)
-	if err != nil {
-		return nil, err
-	}
 	if endpoint != "" {
 		s.BasePath = endpoint
 	}

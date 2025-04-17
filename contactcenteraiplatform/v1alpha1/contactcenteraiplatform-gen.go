@@ -120,9 +120,6 @@ func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, err
 	}
 	s := &Service{client: client, BasePath: basePath, logger: internaloption.GetLogger(opts)}
 	s.Projects = NewProjectsService(s)
-	if err != nil {
-		return nil, err
-	}
 	if endpoint != "" {
 		s.BasePath = endpoint
 	}
@@ -265,6 +262,9 @@ type ContactCenter struct {
 	// AdminUser: Optional. Info about the first admin user, such as given name and
 	// family name.
 	AdminUser *AdminUser `json:"adminUser,omitempty"`
+	// AdvancedReportingEnabled: Optional. Whether the advanced reporting feature
+	// is enabled.
+	AdvancedReportingEnabled bool `json:"advancedReportingEnabled,omitempty"`
 	// CcaipManagedUsers: Optional. Whether to enable users to be created in the
 	// CCAIP-instance concurrently to having users in Cloud identity
 	CcaipManagedUsers bool `json:"ccaipManagedUsers,omitempty"`

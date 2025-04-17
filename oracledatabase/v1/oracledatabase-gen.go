@@ -120,9 +120,6 @@ func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, err
 	}
 	s := &Service{client: client, BasePath: basePath, logger: internaloption.GetLogger(opts)}
 	s.Projects = NewProjectsService(s)
-	if err != nil {
-		return nil, err
-	}
 	if endpoint != "" {
 		s.BasePath = endpoint
 	}
@@ -720,6 +717,9 @@ type AutonomousDatabaseProperties struct {
 	// AllocatedStorageSizeTb: Output only. The amount of storage currently
 	// allocated for the database tables and billed for, rounded up in terabytes.
 	AllocatedStorageSizeTb float64 `json:"allocatedStorageSizeTb,omitempty"`
+	// AllowlistedIps: Optional. The list of allowlisted IP addresses for the
+	// Autonomous Database.
+	AllowlistedIps []string `json:"allowlistedIps,omitempty"`
 	// ApexDetails: Output only. The details for the Oracle APEX Application
 	// Development.
 	ApexDetails *AutonomousDatabaseApex `json:"apexDetails,omitempty"`

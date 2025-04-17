@@ -138,9 +138,6 @@ func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, err
 	s.TagBindings = NewTagBindingsService(s)
 	s.TagKeys = NewTagKeysService(s)
 	s.TagValues = NewTagValuesService(s)
-	if err != nil {
-		return nil, err
-	}
 	if endpoint != "" {
 		s.BasePath = endpoint
 	}

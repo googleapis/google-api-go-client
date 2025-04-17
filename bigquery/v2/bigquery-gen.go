@@ -162,9 +162,6 @@ func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, err
 	s.RowAccessPolicies = NewRowAccessPoliciesService(s)
 	s.Tabledata = NewTabledataService(s)
 	s.Tables = NewTablesService(s)
-	if err != nil {
-		return nil, err
-	}
 	if endpoint != "" {
 		s.BasePath = endpoint
 	}

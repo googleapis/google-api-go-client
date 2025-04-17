@@ -133,9 +133,6 @@ func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, err
 	s.Installer = NewInstallerService(s)
 	s.Nodes = NewNodesService(s)
 	s.Policies = NewPoliciesService(s)
-	if err != nil {
-		return nil, err
-	}
 	if endpoint != "" {
 		s.BasePath = endpoint
 	}

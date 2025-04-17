@@ -152,9 +152,6 @@ func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, err
 	s.Sdfdownloadtasks = NewSdfdownloadtasksService(s)
 	s.TargetingTypes = NewTargetingTypesService(s)
 	s.Users = NewUsersService(s)
-	if err != nil {
-		return nil, err
-	}
 	if endpoint != "" {
 		s.BasePath = endpoint
 	}

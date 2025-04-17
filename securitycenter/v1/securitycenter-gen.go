@@ -122,9 +122,6 @@ func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, err
 	s.Folders = NewFoldersService(s)
 	s.Organizations = NewOrganizationsService(s)
 	s.Projects = NewProjectsService(s)
-	if err != nil {
-		return nil, err
-	}
 	if endpoint != "" {
 		s.BasePath = endpoint
 	}
@@ -2212,50 +2209,6 @@ type Compliance struct {
 
 func (s Compliance) MarshalJSON() ([]byte, error) {
 	type NoMethod Compliance
-	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
-}
-
-// ComplianceSnapshot: Result containing the properties and count of a
-// ComplianceSnapshot request.
-type ComplianceSnapshot struct {
-	// Category: The category of Findings matching.
-	Category string `json:"category,omitempty"`
-	// CloudProvider: The cloud provider for the compliance snapshot.
-	//
-	// Possible values:
-	//   "CLOUD_PROVIDER_UNSPECIFIED" - The cloud provider is unspecified.
-	//   "GOOGLE_CLOUD_PLATFORM" - The cloud provider is Google Cloud Platform.
-	//   "AMAZON_WEB_SERVICES" - The cloud provider is Amazon Web Services.
-	//   "MICROSOFT_AZURE" - The cloud provider is Microsoft Azure.
-	CloudProvider string `json:"cloudProvider,omitempty"`
-	// ComplianceStandard: The compliance standard (ie CIS).
-	ComplianceStandard string `json:"complianceStandard,omitempty"`
-	// ComplianceVersion: The compliance version (ie 1.3) in CIS 1.3.
-	ComplianceVersion string `json:"complianceVersion,omitempty"`
-	// Count: Total count of findings for the given properties.
-	Count int64 `json:"count,omitempty,string"`
-	// LeafContainerResource: The leaf container resource name that is closest to
-	// the snapshot.
-	LeafContainerResource string `json:"leafContainerResource,omitempty"`
-	// Name: The compliance snapshot name. Format: //sources//complianceSnapshots/
-	Name string `json:"name,omitempty"`
-	// SnapshotTime: The snapshot time of the snapshot.
-	SnapshotTime string `json:"snapshotTime,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "Category") to
-	// unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
-	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Category") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
-	NullFields []string `json:"-"`
-}
-
-func (s ComplianceSnapshot) MarshalJSON() ([]byte, error) {
-	type NoMethod ComplianceSnapshot
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -7874,6 +7827,8 @@ type GoogleCloudSecuritycenterV2MitreAttack struct {
 	//   "BOOT_OR_LOGON_INITIALIZATION_SCRIPTS" - T1037
 	//   "STARTUP_ITEMS" - T1037.005
 	//   "NETWORK_SERVICE_DISCOVERY" - T1046
+	//   "SCHEDULED_TASK_JOB" - T1053
+	//   "CONTAINER_ORCHESTRATION_JOB" - T1053.007
 	//   "PROCESS_DISCOVERY" - T1057
 	//   "COMMAND_AND_SCRIPTING_INTERPRETER" - T1059
 	//   "UNIX_SHELL" - T1059.004
@@ -7920,6 +7875,7 @@ type GoogleCloudSecuritycenterV2MitreAttack struct {
 	//   "CLOUD_SERVICE_DISCOVERY" - T1526
 	//   "STEAL_APPLICATION_ACCESS_TOKEN" - T1528
 	//   "ACCOUNT_ACCESS_REMOVAL" - T1531
+	//   "TRANSFER_DATA_TO_CLOUD_ACCOUNT" - T1537
 	//   "STEAL_WEB_SESSION_COOKIE" - T1539
 	//   "CREATE_OR_MODIFY_SYSTEM_PROCESS" - T1543
 	//   "EVENT_TRIGGERED_EXECUTION" - T1546
@@ -7992,6 +7948,8 @@ type GoogleCloudSecuritycenterV2MitreAttack struct {
 	//   "BOOT_OR_LOGON_INITIALIZATION_SCRIPTS" - T1037
 	//   "STARTUP_ITEMS" - T1037.005
 	//   "NETWORK_SERVICE_DISCOVERY" - T1046
+	//   "SCHEDULED_TASK_JOB" - T1053
+	//   "CONTAINER_ORCHESTRATION_JOB" - T1053.007
 	//   "PROCESS_DISCOVERY" - T1057
 	//   "COMMAND_AND_SCRIPTING_INTERPRETER" - T1059
 	//   "UNIX_SHELL" - T1059.004
@@ -8038,6 +7996,7 @@ type GoogleCloudSecuritycenterV2MitreAttack struct {
 	//   "CLOUD_SERVICE_DISCOVERY" - T1526
 	//   "STEAL_APPLICATION_ACCESS_TOKEN" - T1528
 	//   "ACCOUNT_ACCESS_REMOVAL" - T1531
+	//   "TRANSFER_DATA_TO_CLOUD_ACCOUNT" - T1537
 	//   "STEAL_WEB_SESSION_COOKIE" - T1539
 	//   "CREATE_OR_MODIFY_SYSTEM_PROCESS" - T1543
 	//   "EVENT_TRIGGERED_EXECUTION" - T1546
@@ -10620,6 +10579,8 @@ type MitreAttack struct {
 	//   "BOOT_OR_LOGON_INITIALIZATION_SCRIPTS" - T1037
 	//   "STARTUP_ITEMS" - T1037.005
 	//   "NETWORK_SERVICE_DISCOVERY" - T1046
+	//   "SCHEDULED_TASK_JOB" - T1053
+	//   "CONTAINER_ORCHESTRATION_JOB" - T1053.007
 	//   "PROCESS_DISCOVERY" - T1057
 	//   "COMMAND_AND_SCRIPTING_INTERPRETER" - T1059
 	//   "UNIX_SHELL" - T1059.004
@@ -10666,6 +10627,7 @@ type MitreAttack struct {
 	//   "CLOUD_SERVICE_DISCOVERY" - T1526
 	//   "STEAL_APPLICATION_ACCESS_TOKEN" - T1528
 	//   "ACCOUNT_ACCESS_REMOVAL" - T1531
+	//   "TRANSFER_DATA_TO_CLOUD_ACCOUNT" - T1537
 	//   "STEAL_WEB_SESSION_COOKIE" - T1539
 	//   "CREATE_OR_MODIFY_SYSTEM_PROCESS" - T1543
 	//   "EVENT_TRIGGERED_EXECUTION" - T1546
@@ -10738,6 +10700,8 @@ type MitreAttack struct {
 	//   "BOOT_OR_LOGON_INITIALIZATION_SCRIPTS" - T1037
 	//   "STARTUP_ITEMS" - T1037.005
 	//   "NETWORK_SERVICE_DISCOVERY" - T1046
+	//   "SCHEDULED_TASK_JOB" - T1053
+	//   "CONTAINER_ORCHESTRATION_JOB" - T1053.007
 	//   "PROCESS_DISCOVERY" - T1057
 	//   "COMMAND_AND_SCRIPTING_INTERPRETER" - T1059
 	//   "UNIX_SHELL" - T1059.004
@@ -10784,6 +10748,7 @@ type MitreAttack struct {
 	//   "CLOUD_SERVICE_DISCOVERY" - T1526
 	//   "STEAL_APPLICATION_ACCESS_TOKEN" - T1528
 	//   "ACCOUNT_ACCESS_REMOVAL" - T1531
+	//   "TRANSFER_DATA_TO_CLOUD_ACCOUNT" - T1537
 	//   "STEAL_WEB_SESSION_COOKIE" - T1539
 	//   "CREATE_OR_MODIFY_SYSTEM_PROCESS" - T1543
 	//   "EVENT_TRIGGERED_EXECUTION" - T1546

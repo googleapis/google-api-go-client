@@ -123,9 +123,6 @@ func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, err
 	s.Events = NewEventsService(s)
 	s.Players = NewPlayersService(s)
 	s.Scores = NewScoresService(s)
-	if err != nil {
-		return nil, err
-	}
 	if endpoint != "" {
 		s.BasePath = endpoint
 	}

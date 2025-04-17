@@ -6,7 +6,7 @@
 
 // Package storagebatchoperations provides access to the Storage Batch Operations API.
 //
-// For product documentation, see: https://cloud.google.com/storage/docs/metadata
+// For product documentation, see: https://cloud.google.com/storage/docs/batch-operations/overview
 //
 // # Library status
 //
@@ -120,9 +120,6 @@ func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, err
 	}
 	s := &Service{client: client, BasePath: basePath, logger: internaloption.GetLogger(opts)}
 	s.Projects = NewProjectsService(s)
-	if err != nil {
-		return nil, err
-	}
 	if endpoint != "" {
 		s.BasePath = endpoint
 	}
@@ -257,9 +254,9 @@ func (s BucketList) MarshalJSON() ([]byte, error) {
 type CancelJobRequest struct {
 	// RequestId: Optional. An optional request ID to identify requests. Specify a
 	// unique request ID in case you need to retry your request. Requests with same
-	// `request_id` will ignored for at least 60 minutes since the first request.
-	// The request ID must be a valid UUID with the exception that zero UUID is not
-	// supported (00000000-0000-0000-0000-000000000000).
+	// `request_id` will be ignored for at least 60 minutes since the first
+	// request. The request ID must be a valid UUID with the exception that zero
+	// UUID is not supported (00000000-0000-0000-0000-000000000000).
 	RequestId string `json:"requestId,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "RequestId") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -721,11 +718,11 @@ type Manifest struct {
 	// the file must include the object details i.e. BucketId and Name. Generation
 	// may optionally be specified. When it is not specified the live object is
 	// acted upon. `manifest_location` should either be 1) An absolute path to the
-	// object in the format of gs://bucket_name/path/file_name.csv. 2) An absolute
-	// path with a single wildcard character in the file name, for example
-	// gs://bucket_name/path/file_name*.csv. If manifest location is specified with
-	// a wildcard, objects in all manifest files matching the pattern will be acted
-	// upon.
+	// object in the format of `gs://bucket_name/path/file_name.csv`. 2) An
+	// absolute path with a single wildcard character in the file name, for example
+	// `gs://bucket_name/path/file_name*.csv`. If manifest location is specified
+	// with a wildcard, objects in all manifest files matching the pattern will be
+	// acted upon.
 	ManifestLocation string `json:"manifestLocation,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "ManifestLocation") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -1421,8 +1418,8 @@ func (c *ProjectsLocationsJobsCreateCall) JobId(jobId string) *ProjectsLocations
 
 // RequestId sets the optional parameter "requestId": An optional request ID to
 // identify requests. Specify a unique request ID in case you need to retry
-// your request. Requests with same `request_id` will ignored for at least 60
-// minutes since the first request. The request ID must be a valid UUID with
+// your request. Requests with same `request_id` will be ignored for at least
+// 60 minutes since the first request. The request ID must be a valid UUID with
 // the exception that zero UUID is not supported
 // (00000000-0000-0000-0000-000000000000).
 func (c *ProjectsLocationsJobsCreateCall) RequestId(requestId string) *ProjectsLocationsJobsCreateCall {
@@ -1534,8 +1531,8 @@ func (r *ProjectsLocationsJobsService) Delete(name string) *ProjectsLocationsJob
 
 // RequestId sets the optional parameter "requestId": An optional request ID to
 // identify requests. Specify a unique request ID in case you need to retry
-// your request. Requests with same `request_id` will ignored for at least 60
-// minutes since the first request. The request ID must be a valid UUID with
+// your request. Requests with same `request_id` will be ignored for at least
+// 60 minutes since the first request. The request ID must be a valid UUID with
 // the exception that zero UUID is not supported
 // (00000000-0000-0000-0000-000000000000).
 func (c *ProjectsLocationsJobsDeleteCall) RequestId(requestId string) *ProjectsLocationsJobsDeleteCall {

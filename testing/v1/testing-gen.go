@@ -132,9 +132,6 @@ func NewService(ctx context.Context, opts ...option.ClientOption) (*APIService, 
 	s.ApplicationDetailService = NewApplicationDetailServiceService(s)
 	s.Projects = NewProjectsService(s)
 	s.TestEnvironmentCatalog = NewTestEnvironmentCatalogService(s)
-	if err != nil {
-		return nil, err
-	}
 	if endpoint != "" {
 		s.BasePath = endpoint
 	}

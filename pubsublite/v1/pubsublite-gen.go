@@ -122,9 +122,6 @@ func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, err
 	s.Admin = NewAdminService(s)
 	s.Cursor = NewCursorService(s)
 	s.TopicStats = NewTopicStatsService(s)
-	if err != nil {
-		return nil, err
-	}
 	if endpoint != "" {
 		s.BasePath = endpoint
 	}

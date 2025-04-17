@@ -121,9 +121,6 @@ func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, err
 	s.Conversion = NewConversionService(s)
 	s.Reports = NewReportsService(s)
 	s.SavedColumns = NewSavedColumnsService(s)
-	if err != nil {
-		return nil, err
-	}
 	if endpoint != "" {
 		s.BasePath = endpoint
 	}

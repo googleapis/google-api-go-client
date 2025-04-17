@@ -120,9 +120,6 @@ func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, err
 	}
 	s := &Service{client: client, BasePath: basePath, logger: internaloption.GetLogger(opts)}
 	s.Projects = NewProjectsService(s)
-	if err != nil {
-		return nil, err
-	}
 	if endpoint != "" {
 		s.BasePath = endpoint
 	}
@@ -540,6 +537,7 @@ type GoogleCloudRunV2Condition struct {
 	//   "POSTPONED_RETRY" - System will retry later; current attempt failed.
 	//   "INTERNAL" - An internal error occurred. Further information may be in the
 	// message.
+	//   "VPC_NETWORK_NOT_FOUND" - User-provided VPC network was not found.
 	Reason string `json:"reason,omitempty"`
 	// RevisionReason: Output only. A reason for the revision condition.
 	//
@@ -2858,6 +2856,9 @@ type GoogleCloudRunV2Task struct {
 	// Generation: Output only. A number that monotonically increases every time
 	// the user modifies the desired state.
 	Generation int64 `json:"generation,omitempty,string"`
+	// GpuZonalRedundancyDisabled: Optional. Output only. True if GPU zonal
+	// redundancy is disabled on this task.
+	GpuZonalRedundancyDisabled bool `json:"gpuZonalRedundancyDisabled,omitempty"`
 	// Index: Output only. Index of the Task, unique per execution, and beginning
 	// at 0.
 	Index int64 `json:"index,omitempty"`
@@ -5806,7 +5807,15 @@ func (s GoogleTypeExpr) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// Proto2BridgeMessageSet: This is proto2's version of MessageSet.
+// Proto2BridgeMessageSet: This is proto2's version of MessageSet. DEPRECATED:
+// DO NOT USE FOR NEW FIELDS. If you are using editions or proto2, please make
+// your own extendable messages for your use case. If you are using proto3,
+// please use `Any` instead. MessageSet was the implementation of extensions
+// for proto1. When proto2 was introduced, extensions were implemented as a
+// first-class feature. This schema for MessageSet was meant to be a "bridge"
+// solution to migrate MessageSet-bearing messages from proto1 to proto2. This
+// schema has been open-sourced only to facilitate the migration of Google
+// products with MessageSet-bearing messages to open-source environments.
 type Proto2BridgeMessageSet struct {
 }
 

@@ -397,9 +397,6 @@ func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, err
 	s.ArchiveJobs = NewArchiveJobsService(s)
 	s.Authorization = NewAuthorizationService(s)
 	s.PortabilityArchive = NewPortabilityArchiveService(s)
-	if err != nil {
-		return nil, err
-	}
 	if endpoint != "" {
 		s.BasePath = endpoint
 	}

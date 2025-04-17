@@ -16057,6 +16057,15 @@ func (r *RegionNetworkFirewallPoliciesService) AddAssociation(project string, re
 	return c
 }
 
+// AssociatedPolicyToBeReplaced sets the optional parameter
+// "associatedPolicyToBeReplaced": Name of the firewall policy associated with
+// the target network to swap association with. This field is mutually
+// exclusive with 'replace_existing_association'.
+func (c *RegionNetworkFirewallPoliciesAddAssociationCall) AssociatedPolicyToBeReplaced(associatedPolicyToBeReplaced string) *RegionNetworkFirewallPoliciesAddAssociationCall {
+	c.urlParams_.Set("associatedPolicyToBeReplaced", associatedPolicyToBeReplaced)
+	return c
+}
+
 // ReplaceExistingAssociation sets the optional parameter
 // "replaceExistingAssociation": Indicates whether or not to replace it if an
 // association already exists. This is false by default, in which case an error
@@ -17626,6 +17635,133 @@ func (c *RegionNetworkFirewallPoliciesPatchCall) Do(opts ...googleapi.CallOption
 		return nil, err
 	}
 	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "compute.regionNetworkFirewallPolicies.patch", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type RegionNetworkFirewallPoliciesPatchAssociationCall struct {
+	s                         *Service
+	project                   string
+	region                    string
+	firewallPolicy            string
+	firewallpolicyassociation *FirewallPolicyAssociation
+	urlParams_                gensupport.URLParams
+	ctx_                      context.Context
+	header_                   http.Header
+}
+
+// PatchAssociation: Updates an association for the specified network firewall
+// policy.
+//
+// - firewallPolicy: Name of the firewall policy to update.
+// - project: Project ID for this request.
+// - region: Name of the region scoping this request.
+func (r *RegionNetworkFirewallPoliciesService) PatchAssociation(project string, region string, firewallPolicy string, firewallpolicyassociation *FirewallPolicyAssociation) *RegionNetworkFirewallPoliciesPatchAssociationCall {
+	c := &RegionNetworkFirewallPoliciesPatchAssociationCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.project = project
+	c.region = region
+	c.firewallPolicy = firewallPolicy
+	c.firewallpolicyassociation = firewallpolicyassociation
+	return c
+}
+
+// RequestId sets the optional parameter "requestId": An optional request ID to
+// identify requests. Specify a unique request ID so that if you must retry
+// your request, the server will know to ignore the request if it has already
+// been completed. For example, consider a situation where you make an initial
+// request and the request times out. If you make the request again with the
+// same request ID, the server can check if original operation with the same
+// request ID was received, and if so, will ignore the second request. This
+// prevents clients from accidentally creating duplicate commitments. The
+// request ID must be a valid UUID with the exception that zero UUID is not
+// supported ( 00000000-0000-0000-0000-000000000000).
+func (c *RegionNetworkFirewallPoliciesPatchAssociationCall) RequestId(requestId string) *RegionNetworkFirewallPoliciesPatchAssociationCall {
+	c.urlParams_.Set("requestId", requestId)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *RegionNetworkFirewallPoliciesPatchAssociationCall) Fields(s ...googleapi.Field) *RegionNetworkFirewallPoliciesPatchAssociationCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *RegionNetworkFirewallPoliciesPatchAssociationCall) Context(ctx context.Context) *RegionNetworkFirewallPoliciesPatchAssociationCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *RegionNetworkFirewallPoliciesPatchAssociationCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *RegionNetworkFirewallPoliciesPatchAssociationCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.firewallpolicyassociation)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "projects/{project}/regions/{region}/firewallPolicies/{firewallPolicy}/patchAssociation")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"project":        c.project,
+		"region":         c.region,
+		"firewallPolicy": c.firewallPolicy,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "compute.regionNetworkFirewallPolicies.patchAssociation", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "compute.regionNetworkFirewallPolicies.patchAssociation" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *RegionNetworkFirewallPoliciesPatchAssociationCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "compute.regionNetworkFirewallPolicies.patchAssociation", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 

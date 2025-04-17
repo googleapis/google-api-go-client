@@ -120,9 +120,6 @@ func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, err
 	}
 	s := &Service{client: client, BasePath: basePath, logger: internaloption.GetLogger(opts)}
 	s.Projects = NewProjectsService(s)
-	if err != nil {
-		return nil, err
-	}
 	if endpoint != "" {
 		s.BasePath = endpoint
 	}
@@ -403,6 +400,9 @@ func (s ActiveDirectory) MarshalJSON() ([]byte, error) {
 
 // Backup: A NetApp Backup.
 type Backup struct {
+	// BackupRegion: Output only. Region in which backup is stored. Format:
+	// `projects/{project_id}/locations/{location}`
+	BackupRegion string `json:"backupRegion,omitempty"`
 	// BackupType: Output only. Type of backup, manually created or created by a
 	// backup policy.
 	//
@@ -453,6 +453,9 @@ type Backup struct {
 	// or restoring existing volumes.
 	//   "UPDATING" - Backup is being updated.
 	State string `json:"state,omitempty"`
+	// VolumeRegion: Output only. Region of the volume from which the backup was
+	// created. Format: `projects/{project_id}/locations/{location}`
+	VolumeRegion string `json:"volumeRegion,omitempty"`
 	// VolumeUsageBytes: Output only. Size of the file system when the backup was
 	// created. When creating a new volume from the backup, the volume capacity
 	// will have to be at least as big.
@@ -460,13 +463,13 @@ type Backup struct {
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-	// ForceSendFields is a list of field names (e.g. "BackupType") to
+	// ForceSendFields is a list of field names (e.g. "BackupRegion") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "BackupType") to include in API
+	// NullFields is a list of field names (e.g. "BackupRegion") to include in API
 	// requests with the JSON null value. By default, fields with empty values are
 	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
@@ -572,15 +575,37 @@ func (s BackupPolicy) MarshalJSON() ([]byte, error) {
 
 // BackupVault: A NetApp BackupVault.
 type BackupVault struct {
+	// BackupRegion: Optional. Region where the backups are stored. Format:
+	// `projects/{project_id}/locations/{location}`
+	BackupRegion string `json:"backupRegion,omitempty"`
+	// BackupVaultType: Optional. Type of backup vault to be created. Default is
+	// IN_REGION.
+	//
+	// Possible values:
+	//   "BACKUP_VAULT_TYPE_UNSPECIFIED" - BackupVault type not set.
+	//   "IN_REGION" - BackupVault type is IN_REGION.
+	//   "CROSS_REGION" - BackupVault type is CROSS_REGION.
+	BackupVaultType string `json:"backupVaultType,omitempty"`
 	// CreateTime: Output only. Create time of the backup vault.
 	CreateTime string `json:"createTime,omitempty"`
 	// Description: Description of the backup vault.
 	Description string `json:"description,omitempty"`
+	// DestinationBackupVault: Output only. Name of the Backup vault created in
+	// backup region. Format:
+	// `projects/{project_id}/locations/{location}/backupVaults/{backup_vault_id}`
+	DestinationBackupVault string `json:"destinationBackupVault,omitempty"`
 	// Labels: Resource labels to represent user provided metadata.
 	Labels map[string]string `json:"labels,omitempty"`
 	// Name: Identifier. The resource name of the backup vault. Format:
 	// `projects/{project_id}/locations/{location}/backupVaults/{backup_vault_id}`.
 	Name string `json:"name,omitempty"`
+	// SourceBackupVault: Output only. Name of the Backup vault created in source
+	// region. Format:
+	// `projects/{project_id}/locations/{location}/backupVaults/{backup_vault_id}`
+	SourceBackupVault string `json:"sourceBackupVault,omitempty"`
+	// SourceRegion: Output only. Region in which the backup vault is created.
+	// Format: `projects/{project_id}/locations/{location}`
+	SourceRegion string `json:"sourceRegion,omitempty"`
 	// State: Output only. The backup vault state.
 	//
 	// Possible values:
@@ -594,13 +619,13 @@ type BackupVault struct {
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-	// ForceSendFields is a list of field names (e.g. "CreateTime") to
+	// ForceSendFields is a list of field names (e.g. "BackupRegion") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "CreateTime") to include in API
+	// NullFields is a list of field names (e.g. "BackupRegion") to include in API
 	// requests with the JSON null value. By default, fields with empty values are
 	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
@@ -2635,6 +2660,14 @@ type ProjectsLocationsListCall struct {
 func (r *ProjectsLocationsService) List(name string) *ProjectsLocationsListCall {
 	c := &ProjectsLocationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
+	return c
+}
+
+// ExtraLocationTypes sets the optional parameter "extraLocationTypes": A list
+// of extra location types that should be used as conditions for controlling
+// the visibility of the locations.
+func (c *ProjectsLocationsListCall) ExtraLocationTypes(extraLocationTypes ...string) *ProjectsLocationsListCall {
+	c.urlParams_.SetMulti("extraLocationTypes", append([]string{}, extraLocationTypes...))
 	return c
 }
 

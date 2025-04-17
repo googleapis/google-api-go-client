@@ -140,9 +140,6 @@ func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, err
 	s.Labels = NewLabelsService(s)
 	s.Limits = NewLimitsService(s)
 	s.Users = NewUsersService(s)
-	if err != nil {
-		return nil, err
-	}
 	if endpoint != "" {
 		s.BasePath = endpoint
 	}

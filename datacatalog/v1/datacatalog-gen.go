@@ -123,9 +123,6 @@ func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, err
 	s.Entries = NewEntriesService(s)
 	s.Organizations = NewOrganizationsService(s)
 	s.Projects = NewProjectsService(s)
-	if err != nil {
-		return nil, err
-	}
 	if endpoint != "" {
 		s.BasePath = endpoint
 	}
@@ -2189,6 +2186,10 @@ type GoogleCloudDatacatalogV1MigrationConfig struct {
 	//   "TAG_TEMPLATE_MIGRATION_DISABLED" - Migration of Tag Templates from Data
 	// Catalog to Dataplex is disabled.
 	TagTemplateMigration string `json:"tagTemplateMigration,omitempty"`
+	// TemplateMigrationEnabledTime: The time when the Tag Template migration was
+	// enabled. If the Tag Template migration is not enabled, this field is not
+	// set.
+	TemplateMigrationEnabledTime string `json:"templateMigrationEnabledTime,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`

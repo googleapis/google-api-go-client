@@ -130,9 +130,6 @@ func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, err
 	s.AccountSummaries = NewAccountSummariesService(s)
 	s.Accounts = NewAccountsService(s)
 	s.Properties = NewPropertiesService(s)
-	if err != nil {
-		return nil, err
-	}
 	if endpoint != "" {
 		s.BasePath = endpoint
 	}

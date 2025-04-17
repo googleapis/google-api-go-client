@@ -195,9 +195,6 @@ func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, err
 	s.Processes = NewProcessesService(s)
 	s.Projects = NewProjectsService(s)
 	s.Scripts = NewScriptsService(s)
-	if err != nil {
-		return nil, err
-	}
 	if endpoint != "" {
 		s.BasePath = endpoint
 	}

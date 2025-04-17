@@ -132,9 +132,6 @@ func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, err
 	s.Sites = NewSitesService(s)
 	s.UrlInspection = NewUrlInspectionService(s)
 	s.UrlTestingTools = NewUrlTestingToolsService(s)
-	if err != nil {
-		return nil, err
-	}
 	if endpoint != "" {
 		s.BasePath = endpoint
 	}

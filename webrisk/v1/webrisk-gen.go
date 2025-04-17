@@ -123,9 +123,6 @@ func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, err
 	s.Projects = NewProjectsService(s)
 	s.ThreatLists = NewThreatListsService(s)
 	s.Uris = NewUrisService(s)
-	if err != nil {
-		return nil, err
-	}
 	if endpoint != "" {
 		s.BasePath = endpoint
 	}

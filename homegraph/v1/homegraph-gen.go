@@ -120,9 +120,6 @@ func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, err
 	s := &Service{client: client, BasePath: basePath, logger: internaloption.GetLogger(opts)}
 	s.AgentUsers = NewAgentUsersService(s)
 	s.Devices = NewDevicesService(s)
-	if err != nil {
-		return nil, err
-	}
 	if endpoint != "" {
 		s.BasePath = endpoint
 	}
@@ -514,7 +511,7 @@ func (s ReportStateAndNotificationDevice) MarshalJSON() ([]byte, error) {
 // example). Example: ```json { "requestId":
 // "ff36a3cc-ec34-11e6-b1a0-64510650abcf", "agentUserId": "1234", "payload": {
 // "devices": { "states": { "123": { "on": true }, "456": { "on": true,
-// "brightness": 10 } }, } } } ```
+// "brightness": 10 }, }, } } } ```
 type ReportStateAndNotificationRequest struct {
 	// AgentUserId: Required. Third-party user ID.
 	AgentUserId string `json:"agentUserId,omitempty"`

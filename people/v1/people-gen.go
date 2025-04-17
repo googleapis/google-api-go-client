@@ -171,9 +171,6 @@ func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, err
 	s.ContactGroups = NewContactGroupsService(s)
 	s.OtherContacts = NewOtherContactsService(s)
 	s.People = NewPeopleService(s)
-	if err != nil {
-		return nil, err
-	}
 	if endpoint != "" {
 		s.BasePath = endpoint
 	}

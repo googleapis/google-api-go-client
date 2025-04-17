@@ -151,9 +151,6 @@ func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, err
 	s.Metadata = NewMetadataService(s)
 	s.Provisioning = NewProvisioningService(s)
 	s.UserDeletion = NewUserDeletionService(s)
-	if err != nil {
-		return nil, err
-	}
 	if endpoint != "" {
 		s.BasePath = endpoint
 	}

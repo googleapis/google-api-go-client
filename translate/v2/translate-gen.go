@@ -130,9 +130,6 @@ func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, err
 	s.Detections = NewDetectionsService(s)
 	s.Languages = NewLanguagesService(s)
 	s.Translations = NewTranslationsService(s)
-	if err != nil {
-		return nil, err
-	}
 	if endpoint != "" {
 		s.BasePath = endpoint
 	}

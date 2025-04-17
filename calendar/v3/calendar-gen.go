@@ -197,9 +197,6 @@ func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, err
 	s.Events = NewEventsService(s)
 	s.Freebusy = NewFreebusyService(s)
 	s.Settings = NewSettingsService(s)
-	if err != nil {
-		return nil, err
-	}
 	if endpoint != "" {
 		s.BasePath = endpoint
 	}

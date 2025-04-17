@@ -197,9 +197,6 @@ func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, err
 	s.UserRolePermissions = NewUserRolePermissionsService(s)
 	s.UserRoles = NewUserRolesService(s)
 	s.VideoFormats = NewVideoFormatsService(s)
-	if err != nil {
-		return nil, err
-	}
 	if endpoint != "" {
 		s.BasePath = endpoint
 	}

@@ -132,9 +132,6 @@ func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, err
 	s.DefaultSupportedIdps = NewDefaultSupportedIdpsService(s)
 	s.Projects = NewProjectsService(s)
 	s.V2 = NewV2Service(s)
-	if err != nil {
-		return nil, err
-	}
 	if endpoint != "" {
 		s.BasePath = endpoint
 	}

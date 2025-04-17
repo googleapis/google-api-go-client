@@ -129,9 +129,6 @@ func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, err
 	s := &Service{client: client, BasePath: basePath, logger: internaloption.GetLogger(opts)}
 	s.Tasklists = NewTasklistsService(s)
 	s.Tasks = NewTasksService(s)
-	if err != nil {
-		return nil, err
-	}
 	if endpoint != "" {
 		s.BasePath = endpoint
 	}
@@ -1507,8 +1504,8 @@ type TasksListCall struct {
 	header_      http.Header
 }
 
-// List: Returns all tasks in the specified task list. Does not return assigned
-// tasks be default (from Docs, Chat Spaces). A user can have up to 20,000
+// List: Returns all tasks in the specified task list. Doesn't return assigned
+// tasks by default (from Docs, Chat Spaces). A user can have up to 20,000
 // non-hidden tasks per list and up to 100,000 tasks in total at a time.
 //
 // - tasklist: Task list identifier.

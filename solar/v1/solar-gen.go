@@ -122,9 +122,6 @@ func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, err
 	s.BuildingInsights = NewBuildingInsightsService(s)
 	s.DataLayers = NewDataLayersService(s)
 	s.GeoTiff = NewGeoTiffService(s)
-	if err != nil {
-		return nil, err
-	}
 	if endpoint != "" {
 		s.BasePath = endpoint
 	}

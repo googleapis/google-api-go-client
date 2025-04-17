@@ -125,9 +125,6 @@ func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, err
 	s.Permissions = NewPermissionsService(s)
 	s.Projects = NewProjectsService(s)
 	s.Roles = NewRolesService(s)
-	if err != nil {
-		return nil, err
-	}
 	if endpoint != "" {
 		s.BasePath = endpoint
 	}
@@ -1235,21 +1232,23 @@ type GoogleIamAdminV1WorkforcePoolProviderExtraAttributesOAuth2Client struct {
 	// Possible values:
 	//   "ATTRIBUTES_TYPE_UNSPECIFIED" - No AttributesType specified.
 	//   "AZURE_AD_GROUPS_MAIL" - Used to get the user's group claims from the
-	// Microsoft Entra ID identity provider using configuration provided in
-	// ExtraAttributesOAuth2Client and `mail` property of the
+	// Microsoft Entra ID identity provider using the configuration provided in
+	// ExtraAttributesOAuth2Client. The `mail` property of the
 	// `microsoft.graph.group` object is used for claim mapping. See
 	// https://learn.microsoft.com/en-us/graph/api/resources/group?view=graph-rest-1.0#properties
-	// for more details on `microsoft.graph.group` properties. The attributes
-	// obtained from idntity provider are mapped to `assertion.groups`.
+	// for more details on `microsoft.graph.group` properties. The group mail
+	// addresses of the user's groups that are returned from Microsoft Entra ID can
+	// be mapped by using the following attributes: * OIDC: `assertion.groups` *
+	// SAML: `assertion.attributes.groups`
 	//   "AZURE_AD_GROUPS_ID" - Used to get the user's group claims from the
-	// Microsoft Entra ID identity provider using configuration provided in
-	// ExtraAttributesOAuth2Client and `id` property of the `microsoft.graph.group`
-	// object is used for claim mapping. See
+	// Microsoft Entra ID identity provider using the configuration provided in
+	// ExtraAttributesOAuth2Client. The `id` property of the
+	// `microsoft.graph.group` object is used for claim mapping. See
 	// https://learn.microsoft.com/en-us/graph/api/resources/group?view=graph-rest-1.0#properties
-	// for more details on `microsoft.graph.group` properties. The group IDs
-	// obtained from Microsoft Entra ID are present in `assertion. groups` for OIDC
-	// providers and `assertion.attributes.groups` for SAML providers for attribute
-	// mapping.
+	// for more details on `microsoft.graph.group` properties. The group IDs of the
+	// user's groups that are returned from Microsoft Entra ID can be mapped by
+	// using the following attributes: * OIDC: `assertion.groups` * SAML:
+	// `assertion.attributes.groups`
 	AttributesType string `json:"attributesType,omitempty"`
 	// ClientId: Required. The OAuth 2.0 client ID for retrieving extra attributes
 	// from the identity provider. Required to get the Access Token using client
@@ -2305,7 +2304,10 @@ type Oidc struct {
 	// https://iam.googleapis.com/projects//locations//workloadIdentityPools//providers/
 	// ```
 	AllowedAudiences []string `json:"allowedAudiences,omitempty"`
-	// IssuerUri: Required. The OIDC issuer URL. Must be an HTTPS endpoint.
+	// IssuerUri: Required. The OIDC issuer URL. Must be an HTTPS endpoint. Used
+	// per OpenID Connect Discovery 1.0 spec to locate the provider's public keys
+	// (via `jwks_uri`) for verifying tokens like the OIDC ID token. These public
+	// key types must be 'EC' or 'RSA'.
 	IssuerUri string `json:"issuerUri,omitempty"`
 	// JwksJson: Optional. OIDC JWKs in JSON String format. For details on the
 	// definition of a JWK, see https://tools.ietf.org/html/rfc7517. If not set,
@@ -4127,6 +4129,8 @@ type WorkloadIdentityPoolProvider struct {
 	// soft-deleted provider using UndeleteWorkloadIdentityPoolProvider. You cannot
 	// reuse the ID of a soft-deleted provider until it is permanently deleted.
 	State string `json:"state,omitempty"`
+	// X509: An X.509-type identity provider.
+	X509 *X509 `json:"x509,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
@@ -4195,6 +4199,34 @@ type WorkloadIdentityPoolProviderKey struct {
 
 func (s WorkloadIdentityPoolProviderKey) MarshalJSON() ([]byte, error) {
 	type NoMethod WorkloadIdentityPoolProviderKey
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// X509: An X.509-type identity provider represents a CA. It is trusted to
+// assert a client identity if the client has a certificate that chains up to
+// this CA.
+type X509 struct {
+	// TrustStore: Required. A Trust store, use this trust store as a wrapper to
+	// config the trust anchor and optional intermediate cas to help build the
+	// trust chain for the incoming end entity certificate. Follow the x509
+	// guidelines to define those PEM encoded certs. Only 1 trust store is
+	// currently supported.
+	TrustStore *TrustStore `json:"trustStore,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "TrustStore") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "TrustStore") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s X509) MarshalJSON() ([]byte, error) {
+	type NoMethod X509
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 

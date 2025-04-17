@@ -252,9 +252,6 @@ func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, err
 	s.Media = NewMediaService(s)
 	s.Spaces = NewSpacesService(s)
 	s.Users = NewUsersService(s)
-	if err != nil {
-		return nil, err
-	}
 	if endpoint != "" {
 		s.BasePath = endpoint
 	}

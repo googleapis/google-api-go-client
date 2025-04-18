@@ -390,7 +390,9 @@ type Account struct {
 	// TimeZone: Required. The time zone of the account. On writes, `time_zone`
 	// sets both the `reporting_time_zone` and the `display_time_zone`. For reads,
 	// `time_zone` always returns the `display_time_zone`. If `display_time_zone`
-	// doesn't exist for your account, `time_zone` is empty.
+	// doesn't exist for your account, `time_zone` is empty. The `version` field is
+	// not supported, won't be set in responses and will be silently ignored if
+	// specified in requests.
 	TimeZone *TimeZone `json:"timeZone,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
@@ -2768,8 +2770,8 @@ type Service struct {
 	// Active: Required. A boolean exposing the active status of the shipping
 	// service.
 	Active bool `json:"active,omitempty"`
-	// CurrencyCode: The CLDR code of the currency to which this service applies.
-	// Must match that of the prices in rate groups.
+	// CurrencyCode: Required. The CLDR code of the currency to which this service
+	// applies. Must match that of the prices in rate groups.
 	CurrencyCode string `json:"currencyCode,omitempty"`
 	// DeliveryCountries: Required. The CLDR territory code of the countries to
 	// which the service applies.
@@ -7368,7 +7370,7 @@ func (c *AccountsShippingSettingsGetShippingSettingsCall) Do(opts ...googleapi.C
 
 type AccountsShippingSettingsInsertCall struct {
 	s                *APIService
-	parent           string
+	parentid         string
 	shippingsettings *ShippingSettings
 	urlParams_       gensupport.URLParams
 	ctx_             context.Context
@@ -7378,11 +7380,13 @@ type AccountsShippingSettingsInsertCall struct {
 // Insert: Replace the shipping setting of a merchant with the request shipping
 // setting. Executing this method requires admin access.
 //
-//   - parent: The account where this product will be inserted. Format:
-//     accounts/{account}.
-func (r *AccountsShippingSettingsService) Insert(parent string, shippingsettings *ShippingSettings) *AccountsShippingSettingsInsertCall {
+//   - parent: The account for which this shipping setting will be inserted. If
+//     you are using an advanced account, you must specify the unique identifier
+//     of the sub-account for which you want to insert the shipping setting.
+//     Format: `accounts/{ACCOUNT_ID}`.
+func (r *AccountsShippingSettingsService) Insert(parentid string, shippingsettings *ShippingSettings) *AccountsShippingSettingsInsertCall {
 	c := &AccountsShippingSettingsInsertCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.parent = parent
+	c.parentid = parentid
 	c.shippingsettings = shippingsettings
 	return c
 }
@@ -7426,7 +7430,7 @@ func (c *AccountsShippingSettingsInsertCall) doRequest(alt string) (*http.Respon
 	}
 	req.Header = reqHeaders
 	googleapi.Expand(req.URL, map[string]string{
-		"parent": c.parent,
+		"parent": c.parentid,
 	})
 	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "merchantapi.accounts.shippingSettings.insert", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)

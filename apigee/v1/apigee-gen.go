@@ -4277,7 +4277,8 @@ type GoogleCloudApigeeV1DeveloperApp struct {
 	ApiProducts []string `json:"apiProducts,omitempty"`
 	// AppFamily: Developer app family.
 	AppFamily string `json:"appFamily,omitempty"`
-	// AppId: ID of the developer app.
+	// AppId: ID of the developer app. This ID is not user specified but is
+	// automatically generated on app creation. appId is a UUID.
 	AppId string `json:"appId,omitempty"`
 	// Attributes: List of attributes for the developer app.
 	Attributes []*GoogleCloudApigeeV1Attribute `json:"attributes,omitempty"`
@@ -35373,7 +35374,8 @@ type OrganizationsEnvironmentsKeystoresAliasesUpdateCall struct {
 	header_           http.Header
 }
 
-// Update: Updates the certificate in an alias.
+// Update: Updates the certificate in an alias. The updated certificate must be
+// in PEM- or DER-encoded X.509 format.
 //
 //   - name: Name of the alias. Use the following format in your request:
 //     `organizations/{org}/environments/{env}/keystores/{keystore}/aliases/{alias

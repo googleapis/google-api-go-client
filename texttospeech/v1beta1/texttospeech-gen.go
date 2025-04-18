@@ -278,9 +278,9 @@ type AudioConfig struct {
 	// and return google.rpc.Code.INVALID_ARGUMENT.
 	SampleRateHertz int64 `json:"sampleRateHertz,omitempty"`
 	// SpeakingRate: Optional. Input only. Speaking rate/speed, in the range [0.25,
-	// 4.0]. 1.0 is the normal native speed supported by the specific voice. 2.0 is
+	// 2.0]. 1.0 is the normal native speed supported by the specific voice. 2.0 is
 	// twice as fast, and 0.5 is half as fast. If unset(0.0), defaults to the
-	// native 1.0 speed. Any other values < 0.25 or > 4.0 will return an error.
+	// native 1.0 speed. Any other values < 0.25 or > 2.0 will return an error.
 	SpeakingRate float64 `json:"speakingRate,omitempty"`
 	// VolumeGainDb: Optional. Input only. Volume gain (in dB) of the normal native
 	// volume supported by the specific voice, in the range [-96.0, 16.0]. If

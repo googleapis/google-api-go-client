@@ -168,8 +168,10 @@ type ProjectsService struct {
 
 func NewProjectsLocationsService(s *Service) *ProjectsLocationsService {
 	rs := &ProjectsLocationsService{s: s}
+	rs.BackupChannels = NewProjectsLocationsBackupChannelsService(s)
 	rs.BackupPlans = NewProjectsLocationsBackupPlansService(s)
 	rs.Operations = NewProjectsLocationsOperationsService(s)
+	rs.RestoreChannels = NewProjectsLocationsRestoreChannelsService(s)
 	rs.RestorePlans = NewProjectsLocationsRestorePlansService(s)
 	return rs
 }
@@ -177,11 +179,36 @@ func NewProjectsLocationsService(s *Service) *ProjectsLocationsService {
 type ProjectsLocationsService struct {
 	s *Service
 
+	BackupChannels *ProjectsLocationsBackupChannelsService
+
 	BackupPlans *ProjectsLocationsBackupPlansService
 
 	Operations *ProjectsLocationsOperationsService
 
+	RestoreChannels *ProjectsLocationsRestoreChannelsService
+
 	RestorePlans *ProjectsLocationsRestorePlansService
+}
+
+func NewProjectsLocationsBackupChannelsService(s *Service) *ProjectsLocationsBackupChannelsService {
+	rs := &ProjectsLocationsBackupChannelsService{s: s}
+	rs.BackupPlanBindings = NewProjectsLocationsBackupChannelsBackupPlanBindingsService(s)
+	return rs
+}
+
+type ProjectsLocationsBackupChannelsService struct {
+	s *Service
+
+	BackupPlanBindings *ProjectsLocationsBackupChannelsBackupPlanBindingsService
+}
+
+func NewProjectsLocationsBackupChannelsBackupPlanBindingsService(s *Service) *ProjectsLocationsBackupChannelsBackupPlanBindingsService {
+	rs := &ProjectsLocationsBackupChannelsBackupPlanBindingsService{s: s}
+	return rs
+}
+
+type ProjectsLocationsBackupChannelsBackupPlanBindingsService struct {
+	s *Service
 }
 
 func NewProjectsLocationsBackupPlansService(s *Service) *ProjectsLocationsBackupPlansService {
@@ -223,6 +250,27 @@ func NewProjectsLocationsOperationsService(s *Service) *ProjectsLocationsOperati
 }
 
 type ProjectsLocationsOperationsService struct {
+	s *Service
+}
+
+func NewProjectsLocationsRestoreChannelsService(s *Service) *ProjectsLocationsRestoreChannelsService {
+	rs := &ProjectsLocationsRestoreChannelsService{s: s}
+	rs.RestorePlanBindings = NewProjectsLocationsRestoreChannelsRestorePlanBindingsService(s)
+	return rs
+}
+
+type ProjectsLocationsRestoreChannelsService struct {
+	s *Service
+
+	RestorePlanBindings *ProjectsLocationsRestoreChannelsRestorePlanBindingsService
+}
+
+func NewProjectsLocationsRestoreChannelsRestorePlanBindingsService(s *Service) *ProjectsLocationsRestoreChannelsRestorePlanBindingsService {
+	rs := &ProjectsLocationsRestoreChannelsRestorePlanBindingsService{s: s}
+	return rs
+}
+
+type ProjectsLocationsRestoreChannelsRestorePlanBindingsService struct {
 	s *Service
 }
 
@@ -477,6 +525,67 @@ func (s Backup) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// BackupChannel: A BackupChannel imposes constraints on where clusters can be
+// backed up. The BackupChannel should be in the same project and region as the
+// cluster being backed up. The backup can be created only in
+// destination_project.
+type BackupChannel struct {
+	// CreateTime: Output only. The timestamp when this BackupChannel resource was
+	// created.
+	CreateTime string `json:"createTime,omitempty"`
+	// Description: Optional. User specified descriptive string for this
+	// BackupChannel.
+	Description string `json:"description,omitempty"`
+	// DestinationProject: Required. Immutable. The project where Backups are
+	// allowed to be stored. The format is `projects/{project}`. Currently,
+	// {project} can only be the project number. Support for project IDs will be
+	// added in the future.
+	DestinationProject string `json:"destinationProject,omitempty"`
+	// DestinationProjectId: Output only. The project_id where Backups are allowed
+	// to be stored. Example Project ID: "my-project-id". This will be an
+	// OUTPUT_ONLY field to return the project_id of the destination project.
+	DestinationProjectId string `json:"destinationProjectId,omitempty"`
+	// Etag: Output only. `etag` is used for optimistic concurrency control as a
+	// way to help prevent simultaneous updates of a BackupChannel from overwriting
+	// each other. It is strongly suggested that systems make use of the 'etag' in
+	// the read-modify-write cycle to perform BackupChannel updates in order to
+	// avoid race conditions: An `etag` is returned in the response to
+	// `GetBackupChannel`, and systems are expected to put that etag in the request
+	// to `UpdateBackupChannel` or `DeleteBackupChannel` to ensure that their
+	// change will be applied to the same version of the resource.
+	Etag string `json:"etag,omitempty"`
+	// Labels: Optional. A set of custom labels supplied by user.
+	Labels map[string]string `json:"labels,omitempty"`
+	// Name: Identifier. The fully qualified name of the BackupChannel.
+	// `projects/*/locations/*/backupChannels/*`
+	Name string `json:"name,omitempty"`
+	// Uid: Output only. Server generated global unique identifier of UUID
+	// (https://en.wikipedia.org/wiki/Universally_unique_identifier) format.
+	Uid string `json:"uid,omitempty"`
+	// UpdateTime: Output only. The timestamp when this BackupChannel resource was
+	// last updated.
+	UpdateTime string `json:"updateTime,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "CreateTime") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CreateTime") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s BackupChannel) MarshalJSON() ([]byte, error) {
+	type NoMethod BackupChannel
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // BackupConfig: BackupConfig defines the configuration of Backups created via
 // this BackupPlan.
 type BackupConfig struct {
@@ -622,6 +731,114 @@ type BackupPlan struct {
 
 func (s BackupPlan) MarshalJSON() ([]byte, error) {
 	type NoMethod BackupPlan
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// BackupPlanBinding: A BackupPlanBinding binds a BackupPlan with a
+// BackupChannel. This resource is created automatically when a BackupPlan is
+// created using a BackupChannel. This also serves as a holder for
+// cross-project fields that need to be displayed in the current project.
+type BackupPlanBinding struct {
+	// BackupPlan: Output only. Immutable. The fully qualified name of the
+	// BackupPlan bound with the parent BackupChannel.
+	// `projects/*/locations/*/backupPlans/{backup_plan}`
+	BackupPlan string `json:"backupPlan,omitempty"`
+	// BackupPlanDetails: Output only. Contains details about the backup
+	// plan/backup.
+	BackupPlanDetails *BackupPlanDetails `json:"backupPlanDetails,omitempty"`
+	// Cluster: Output only. Immutable. The fully qualified name of the cluster
+	// that is being backed up Valid formats: - `projects/*/locations/*/clusters/*`
+	// - `projects/*/zones/*/clusters/*`
+	Cluster string `json:"cluster,omitempty"`
+	// CreateTime: Output only. The timestamp when this binding was created.
+	CreateTime string `json:"createTime,omitempty"`
+	// Etag: Output only. `etag` is used for optimistic concurrency control as a
+	// way to help prevent simultaneous updates of a BackupPlanBinding from
+	// overwriting each other. It is strongly suggested that systems make use of
+	// the 'etag' in the read-modify-write cycle to perform BackupPlanBinding
+	// updates in order to avoid race conditions: An `etag` is returned in the
+	// response to `GetBackupPlanBinding`, and systems are expected to put that
+	// etag in the request to `UpdateBackupPlanBinding` or
+	// `DeleteBackupPlanBinding` to ensure that their change will be applied to the
+	// same version of the resource.
+	Etag string `json:"etag,omitempty"`
+	// Name: Identifier. The fully qualified name of the BackupPlanBinding.
+	// `projects/*/locations/*/backupChannels/*/backupPlanBindings/*`
+	Name string `json:"name,omitempty"`
+	// Uid: Output only. Server generated global unique identifier of UUID4
+	// (https://en.wikipedia.org/wiki/Universally_unique_identifier)
+	Uid string `json:"uid,omitempty"`
+	// UpdateTime: Output only. The timestamp when this binding was created.
+	UpdateTime string `json:"updateTime,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "BackupPlan") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "BackupPlan") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s BackupPlanBinding) MarshalJSON() ([]byte, error) {
+	type NoMethod BackupPlanBinding
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// BackupPlanDetails: Contains metadata about the backup plan/backup.
+type BackupPlanDetails struct {
+	// LastSuccessfulBackup: Output only. The fully qualified name of the last
+	// successful Backup created under this BackupPlan.
+	// `projects/*/locations/*/backupPlans/*/backups/*`
+	LastSuccessfulBackup string `json:"lastSuccessfulBackup,omitempty"`
+	// LastSuccessfulBackupTime: Output only. Completion time of the last
+	// successful Backup. This is sourced from a successful Backup's complete_time
+	// field.
+	LastSuccessfulBackupTime string `json:"lastSuccessfulBackupTime,omitempty"`
+	// NextScheduledBackupTime: Output only. Start time of next scheduled backup
+	// under this BackupPlan by either cron_schedule or rpo config. This is sourced
+	// from BackupPlan.
+	NextScheduledBackupTime string `json:"nextScheduledBackupTime,omitempty"`
+	// ProtectedPodCount: Output only. The number of Kubernetes Pods backed up in
+	// the last successful Backup created via this BackupPlan.
+	ProtectedPodCount int64 `json:"protectedPodCount,omitempty"`
+	// RpoRiskLevel: Output only. A number that represents the current risk level
+	// of this BackupPlan from RPO perspective with 1 being no risk and 5 being
+	// highest risk.
+	RpoRiskLevel int64 `json:"rpoRiskLevel,omitempty"`
+	// State: Output only. State of the BackupPlan.
+	//
+	// Possible values:
+	//   "STATE_UNSPECIFIED" - Default first value for Enums.
+	//   "CLUSTER_PENDING" - Waiting for cluster state to be RUNNING.
+	//   "PROVISIONING" - The BackupPlan is in the process of being created.
+	//   "READY" - The BackupPlan has successfully been created and is ready for
+	// Backups.
+	//   "FAILED" - BackupPlan creation has failed.
+	//   "DEACTIVATED" - The BackupPlan has been deactivated.
+	//   "DELETING" - The BackupPlan is in the process of being deleted.
+	State string `json:"state,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "LastSuccessfulBackup") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "LastSuccessfulBackup") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s BackupPlanDetails) MarshalJSON() ([]byte, error) {
+	type NoMethod BackupPlanDetails
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -1033,6 +1250,7 @@ func (s Filter) MarshalJSON() ([]byte, error) {
 // GetBackupIndexDownloadUrlResponse: Response message for
 // GetBackupIndexDownloadUrl.
 type GetBackupIndexDownloadUrlResponse struct {
+	// SignedUrl: Required. The signed URL for downloading the backup index.
 	SignedUrl string `json:"signedUrl,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
@@ -1226,6 +1444,69 @@ func (s GroupKindDependency) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// ListBackupChannelsResponse: Response message for ListBackupChannels.
+type ListBackupChannelsResponse struct {
+	// BackupChannels: The list of BackupChannels matching the given criteria.
+	BackupChannels []*BackupChannel `json:"backupChannels,omitempty"`
+	// NextPageToken: A token which may be sent as page_token in a subsequent
+	// `ListBackupChannels` call to retrieve the next page of results. If this
+	// field is omitted or empty, then there are no more results to return.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+	// Unreachable: Locations that could not be reached.
+	Unreachable []string `json:"unreachable,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "BackupChannels") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "BackupChannels") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ListBackupChannelsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ListBackupChannelsResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ListBackupPlanBindingsResponse: Response message for ListBackupPlanBindings.
+type ListBackupPlanBindingsResponse struct {
+	// BackupPlanBindings: The list of BackupPlanBindings matching the given
+	// criteria.
+	BackupPlanBindings []*BackupPlanBinding `json:"backupPlanBindings,omitempty"`
+	// NextPageToken: A token which may be sent as page_token in a subsequent
+	// `ListBackupPlanBindingss` call to retrieve the next page of results. If this
+	// field is omitted or empty, then there are no more results to return.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+	// Unreachable: Locations that could not be reached.
+	Unreachable []string `json:"unreachable,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "BackupPlanBindings") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "BackupPlanBindings") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ListBackupPlanBindingsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ListBackupPlanBindingsResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // ListBackupPlansResponse: Response message for ListBackupPlans.
 type ListBackupPlansResponse struct {
 	// BackupPlans: The list of BackupPlans matching the given criteria.
@@ -1313,6 +1594,70 @@ type ListLocationsResponse struct {
 
 func (s ListLocationsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListLocationsResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ListRestoreChannelsResponse: Response message for ListRestoreChannels.
+type ListRestoreChannelsResponse struct {
+	// NextPageToken: A token which may be sent as page_token in a subsequent
+	// `ListRestoreChannels` call to retrieve the next page of results. If this
+	// field is omitted or empty, then there are no more results to return.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+	// RestoreChannels: The list of RestoreChannels matching the given criteria.
+	RestoreChannels []*RestoreChannel `json:"restoreChannels,omitempty"`
+	// Unreachable: Locations that could not be reached.
+	Unreachable []string `json:"unreachable,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "NextPageToken") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ListRestoreChannelsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ListRestoreChannelsResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ListRestorePlanBindingsResponse: Response message for
+// ListRestorePlanBindings.
+type ListRestorePlanBindingsResponse struct {
+	// NextPageToken: A token which may be sent as page_token in a subsequent
+	// `ListRestorePlanBindings` call to retrieve the next page of results. If this
+	// field is omitted or empty, then there are no more results to return.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+	// RestorePlanBindings: The list of RestorePlanBindings matching the given
+	// criteria.
+	RestorePlanBindings []*RestorePlanBinding `json:"restorePlanBindings,omitempty"`
+	// Unreachable: Unordered list. Locations that could not be reached.
+	Unreachable []string `json:"unreachable,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "NextPageToken") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ListRestorePlanBindingsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ListRestorePlanBindingsResponse
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -1867,6 +2212,65 @@ func (s Restore) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// RestoreChannel: A RestoreChannel imposes constraints on where backups can be
+// restored. The RestoreChannel should be in the same project and region as the
+// backups. The backups can only be restored in the `destination_project`.
+type RestoreChannel struct {
+	// CreateTime: Output only. The timestamp when this RestoreChannel was created.
+	CreateTime string `json:"createTime,omitempty"`
+	// Description: Optional. User specified descriptive string for this
+	// RestoreChannel.
+	Description string `json:"description,omitempty"`
+	// DestinationProject: Required. Immutable. The project into which the backups
+	// will be restored. The format is `projects/{project}`. Currently, {project}
+	// can only be the project number. Support for project IDs will be added in the
+	// future.
+	DestinationProject string `json:"destinationProject,omitempty"`
+	// DestinationProjectId: Output only. The project_id where backups will be
+	// restored. Example Project ID: "my-project-id". This will be an OUTPUT_ONLY
+	// field to return the project_id of the destination project.
+	DestinationProjectId string `json:"destinationProjectId,omitempty"`
+	// Etag: Output only. `etag` is used for optimistic concurrency control as a
+	// way to help prevent simultaneous updates of a RestoreChannel from
+	// overwriting each other. It is strongly suggested that systems make use of
+	// the 'etag' in the read-modify-write cycle to perform RestoreChannel updates
+	// in order to avoid race conditions: An `etag` is returned in the response to
+	// `GetRestoreChannel`, and systems are expected to put that etag in the
+	// request to `UpdateRestoreChannel` or `DeleteRestoreChannel` to ensure that
+	// their change will be applied to the same version of the resource.
+	Etag string `json:"etag,omitempty"`
+	// Labels: Optional. A set of custom labels supplied by user.
+	Labels map[string]string `json:"labels,omitempty"`
+	// Name: Identifier. The fully qualified name of the RestoreChannel.
+	// `projects/*/locations/*/restoreChannels/*`
+	Name string `json:"name,omitempty"`
+	// Uid: Output only. Server generated global unique identifier of UUID
+	// (https://en.wikipedia.org/wiki/Universally_unique_identifier) format.
+	Uid string `json:"uid,omitempty"`
+	// UpdateTime: Output only. The timestamp when this RestoreChannel was last
+	// updated.
+	UpdateTime string `json:"updateTime,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "CreateTime") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CreateTime") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s RestoreChannel) MarshalJSON() ([]byte, error) {
+	type NoMethod RestoreChannel
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // RestoreConfig: Configuration of a restore.
 type RestoreConfig struct {
 	// AllNamespaces: Restore all namespaced resources in the Backup if set to
@@ -2107,6 +2511,59 @@ type RestorePlan struct {
 
 func (s RestorePlan) MarshalJSON() ([]byte, error) {
 	type NoMethod RestorePlan
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// RestorePlanBinding: A RestorePlanBinding binds a RestorePlan with a
+// RestoreChannel. This resource is created automatically when a RestorePlan is
+// created using a RestoreChannel. This also serves as a holder for
+// cross-project fields that need to be displayed in the current project.
+type RestorePlanBinding struct {
+	// BackupPlan: Output only. The fully qualified name of the BackupPlan bound to
+	// the specified RestorePlan.
+	// `projects/*/locations/*/backukpPlans/{backup_plan}`
+	BackupPlan string `json:"backupPlan,omitempty"`
+	// CreateTime: Output only. The timestamp when this binding was created.
+	CreateTime string `json:"createTime,omitempty"`
+	// Etag: Output only. `etag` is used for optimistic concurrency control as a
+	// way to help prevent simultaneous updates of a RestorePlanBinding from
+	// overwriting each other. It is strongly suggested that systems make use of
+	// the 'etag' in the read-modify-write cycle to perform RestorePlanBinding
+	// updates in order to avoid race conditions: An `etag` is returned in the
+	// response to `GetRestorePlanBinding`, and systems are expected to put that
+	// etag in the request to `UpdateRestorePlanBinding` or
+	// `DeleteRestorePlanBinding` to ensure that their change will be applied to
+	// the same version of the resource.
+	Etag string `json:"etag,omitempty"`
+	// Name: Identifier. The fully qualified name of the RestorePlanBinding.
+	// `projects/*/locations/*/restoreChannels/*/restorePlanBindings/*`
+	Name string `json:"name,omitempty"`
+	// RestorePlan: Output only. The fully qualified name of the RestorePlan bound
+	// to this RestoreChannel. `projects/*/locations/*/restorePlans/{restore_plan}`
+	RestorePlan string `json:"restorePlan,omitempty"`
+	// Uid: Output only. Server generated global unique identifier of UUID4
+	// (https://en.wikipedia.org/wiki/Universally_unique_identifier)
+	Uid string `json:"uid,omitempty"`
+	// UpdateTime: Output only. The timestamp when this binding was created.
+	UpdateTime string `json:"updateTime,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "BackupPlan") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "BackupPlan") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s RestorePlanBinding) MarshalJSON() ([]byte, error) {
+	type NoMethod RestorePlanBinding
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -3012,6 +3469,911 @@ func (c *ProjectsLocationsListCall) Do(opts ...googleapi.CallOption) (*ListLocat
 // A non-nil error returned from f will halt the iteration.
 // The provided context supersedes any context provided to the Context method.
 func (c *ProjectsLocationsListCall) Pages(ctx context.Context, f func(*ListLocationsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+type ProjectsLocationsBackupChannelsCreateCall struct {
+	s             *Service
+	parent        string
+	backupchannel *BackupChannel
+	urlParams_    gensupport.URLParams
+	ctx_          context.Context
+	header_       http.Header
+}
+
+// Create: Creates a new BackupChannel in a given location.
+//
+//   - parent: The location within which to create the BackupChannel. Format:
+//     `projects/*/locations/*`.
+func (r *ProjectsLocationsBackupChannelsService) Create(parent string, backupchannel *BackupChannel) *ProjectsLocationsBackupChannelsCreateCall {
+	c := &ProjectsLocationsBackupChannelsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.backupchannel = backupchannel
+	return c
+}
+
+// BackupChannelId sets the optional parameter "backupChannelId": The
+// client-provided short name for the BackupChannel resource. This name must: -
+// be between 1 and 63 characters long (inclusive) - consist of only lower-case
+// ASCII letters, numbers, and dashes - start with a lower-case letter - end
+// with a lower-case letter or number - be unique within the set of
+// BackupChannels in this location If the user does not provide a name, a uuid
+// will be used as the name.
+func (c *ProjectsLocationsBackupChannelsCreateCall) BackupChannelId(backupChannelId string) *ProjectsLocationsBackupChannelsCreateCall {
+	c.urlParams_.Set("backupChannelId", backupChannelId)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsBackupChannelsCreateCall) Fields(s ...googleapi.Field) *ProjectsLocationsBackupChannelsCreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsBackupChannelsCreateCall) Context(ctx context.Context) *ProjectsLocationsBackupChannelsCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsBackupChannelsCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsBackupChannelsCreateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.backupchannel)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/backupChannels")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "gkebackup.projects.locations.backupChannels.create", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "gkebackup.projects.locations.backupChannels.create" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleLongrunningOperation.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsBackupChannelsCreateCall) Do(opts ...googleapi.CallOption) (*GoogleLongrunningOperation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleLongrunningOperation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "gkebackup.projects.locations.backupChannels.create", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsBackupChannelsDeleteCall struct {
+	s          *Service
+	name       string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Delete: Deletes an existing BackupChannel.
+//
+//   - name: Fully qualified BackupChannel name. Format:
+//     `projects/*/locations/*/backupChannels/*`.
+func (r *ProjectsLocationsBackupChannelsService) Delete(name string) *ProjectsLocationsBackupChannelsDeleteCall {
+	c := &ProjectsLocationsBackupChannelsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Etag sets the optional parameter "etag": If provided, this value must match
+// the current value of the target BackupChannel's etag field or the request is
+// rejected.
+func (c *ProjectsLocationsBackupChannelsDeleteCall) Etag(etag string) *ProjectsLocationsBackupChannelsDeleteCall {
+	c.urlParams_.Set("etag", etag)
+	return c
+}
+
+// Force sets the optional parameter "force": If set to true, any
+// BackupPlanAssociations below this BackupChannel will also be deleted.
+// Otherwise, the request will only succeed if the BackupChannel has no
+// BackupPlanAssociations.
+func (c *ProjectsLocationsBackupChannelsDeleteCall) Force(force bool) *ProjectsLocationsBackupChannelsDeleteCall {
+	c.urlParams_.Set("force", fmt.Sprint(force))
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsBackupChannelsDeleteCall) Fields(s ...googleapi.Field) *ProjectsLocationsBackupChannelsDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsBackupChannelsDeleteCall) Context(ctx context.Context) *ProjectsLocationsBackupChannelsDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsBackupChannelsDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsBackupChannelsDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("DELETE", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "gkebackup.projects.locations.backupChannels.delete", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "gkebackup.projects.locations.backupChannels.delete" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleLongrunningOperation.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsBackupChannelsDeleteCall) Do(opts ...googleapi.CallOption) (*GoogleLongrunningOperation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleLongrunningOperation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "gkebackup.projects.locations.backupChannels.delete", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsBackupChannelsGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Retrieve the details of a single BackupChannel.
+//
+//   - name: Fully qualified BackupChannel name. Format:
+//     `projects/*/locations/*/backupChannels/*`.
+func (r *ProjectsLocationsBackupChannelsService) Get(name string) *ProjectsLocationsBackupChannelsGetCall {
+	c := &ProjectsLocationsBackupChannelsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsBackupChannelsGetCall) Fields(s ...googleapi.Field) *ProjectsLocationsBackupChannelsGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsBackupChannelsGetCall) IfNoneMatch(entityTag string) *ProjectsLocationsBackupChannelsGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsBackupChannelsGetCall) Context(ctx context.Context) *ProjectsLocationsBackupChannelsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsBackupChannelsGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsBackupChannelsGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "gkebackup.projects.locations.backupChannels.get", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "gkebackup.projects.locations.backupChannels.get" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *BackupChannel.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsBackupChannelsGetCall) Do(opts ...googleapi.CallOption) (*BackupChannel, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &BackupChannel{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "gkebackup.projects.locations.backupChannels.get", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsBackupChannelsListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists BackupChannels in a given location.
+//
+//   - parent: The location that contains the BackupChannels to list. Format:
+//     `projects/*/locations/*`.
+func (r *ProjectsLocationsBackupChannelsService) List(parent string) *ProjectsLocationsBackupChannelsListCall {
+	c := &ProjectsLocationsBackupChannelsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// Filter sets the optional parameter "filter": Field match expression used to
+// filter the results.
+func (c *ProjectsLocationsBackupChannelsListCall) Filter(filter string) *ProjectsLocationsBackupChannelsListCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// OrderBy sets the optional parameter "orderBy": Field by which to sort the
+// results.
+func (c *ProjectsLocationsBackupChannelsListCall) OrderBy(orderBy string) *ProjectsLocationsBackupChannelsListCall {
+	c.urlParams_.Set("orderBy", orderBy)
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The target number of
+// results to return in a single response. If not specified, a default value
+// will be chosen by the service. Note that the response may include a partial
+// list and a caller should only rely on the response's next_page_token to
+// determine if there are more instances left to be queried.
+func (c *ProjectsLocationsBackupChannelsListCall) PageSize(pageSize int64) *ProjectsLocationsBackupChannelsListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": The value of
+// next_page_token received from a previous `ListBackupChannels` call. Provide
+// this to retrieve the subsequent page in a multi-page list of results. When
+// paginating, all other parameters provided to `ListBackupChannels` must match
+// the call that provided the page token.
+func (c *ProjectsLocationsBackupChannelsListCall) PageToken(pageToken string) *ProjectsLocationsBackupChannelsListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsBackupChannelsListCall) Fields(s ...googleapi.Field) *ProjectsLocationsBackupChannelsListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsBackupChannelsListCall) IfNoneMatch(entityTag string) *ProjectsLocationsBackupChannelsListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsBackupChannelsListCall) Context(ctx context.Context) *ProjectsLocationsBackupChannelsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsBackupChannelsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsBackupChannelsListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/backupChannels")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "gkebackup.projects.locations.backupChannels.list", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "gkebackup.projects.locations.backupChannels.list" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *ListBackupChannelsResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsBackupChannelsListCall) Do(opts ...googleapi.CallOption) (*ListBackupChannelsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ListBackupChannelsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "gkebackup.projects.locations.backupChannels.list", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsLocationsBackupChannelsListCall) Pages(ctx context.Context, f func(*ListBackupChannelsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+type ProjectsLocationsBackupChannelsPatchCall struct {
+	s             *Service
+	name          string
+	backupchannel *BackupChannel
+	urlParams_    gensupport.URLParams
+	ctx_          context.Context
+	header_       http.Header
+}
+
+// Patch: Update a BackupChannel.
+//
+//   - name: Identifier. The fully qualified name of the BackupChannel.
+//     `projects/*/locations/*/backupChannels/*`.
+func (r *ProjectsLocationsBackupChannelsService) Patch(name string, backupchannel *BackupChannel) *ProjectsLocationsBackupChannelsPatchCall {
+	c := &ProjectsLocationsBackupChannelsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.backupchannel = backupchannel
+	return c
+}
+
+// UpdateMask sets the optional parameter "updateMask": This is used to specify
+// the fields to be overwritten in the BackupChannel targeted for update. The
+// values for each of these updated fields will be taken from the
+// `backup_channel` provided with this request. Field names are relative to the
+// root of the resource (e.g., `description`, `labels`, etc.) If no
+// `update_mask` is provided, all fields in `backup_channel` will be written to
+// the target BackupChannel resource. Note that OUTPUT_ONLY and IMMUTABLE
+// fields in `backup_channel` are ignored and are not used to update the target
+// BackupChannel.
+func (c *ProjectsLocationsBackupChannelsPatchCall) UpdateMask(updateMask string) *ProjectsLocationsBackupChannelsPatchCall {
+	c.urlParams_.Set("updateMask", updateMask)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsBackupChannelsPatchCall) Fields(s ...googleapi.Field) *ProjectsLocationsBackupChannelsPatchCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsBackupChannelsPatchCall) Context(ctx context.Context) *ProjectsLocationsBackupChannelsPatchCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsBackupChannelsPatchCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsBackupChannelsPatchCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.backupchannel)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PATCH", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "gkebackup.projects.locations.backupChannels.patch", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "gkebackup.projects.locations.backupChannels.patch" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleLongrunningOperation.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsBackupChannelsPatchCall) Do(opts ...googleapi.CallOption) (*GoogleLongrunningOperation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleLongrunningOperation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "gkebackup.projects.locations.backupChannels.patch", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsBackupChannelsBackupPlanBindingsGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Retrieve the details of a single BackupPlanBinding.
+//
+//   - name: Fully qualified BackupPlanBinding name. Format:
+//     `projects/*/locations/*/backupChannels/*/backupPlanBindings/*`.
+func (r *ProjectsLocationsBackupChannelsBackupPlanBindingsService) Get(name string) *ProjectsLocationsBackupChannelsBackupPlanBindingsGetCall {
+	c := &ProjectsLocationsBackupChannelsBackupPlanBindingsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsBackupChannelsBackupPlanBindingsGetCall) Fields(s ...googleapi.Field) *ProjectsLocationsBackupChannelsBackupPlanBindingsGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsBackupChannelsBackupPlanBindingsGetCall) IfNoneMatch(entityTag string) *ProjectsLocationsBackupChannelsBackupPlanBindingsGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsBackupChannelsBackupPlanBindingsGetCall) Context(ctx context.Context) *ProjectsLocationsBackupChannelsBackupPlanBindingsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsBackupChannelsBackupPlanBindingsGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsBackupChannelsBackupPlanBindingsGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "gkebackup.projects.locations.backupChannels.backupPlanBindings.get", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "gkebackup.projects.locations.backupChannels.backupPlanBindings.get" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *BackupPlanBinding.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *ProjectsLocationsBackupChannelsBackupPlanBindingsGetCall) Do(opts ...googleapi.CallOption) (*BackupPlanBinding, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &BackupPlanBinding{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "gkebackup.projects.locations.backupChannels.backupPlanBindings.get", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsBackupChannelsBackupPlanBindingsListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists BackupPlanBindings in a given location.
+//
+//   - parent: The BackupChannel that contains the BackupPlanBindings to list.
+//     Format: `projects/*/locations/*/backupChannels/*`.
+func (r *ProjectsLocationsBackupChannelsBackupPlanBindingsService) List(parent string) *ProjectsLocationsBackupChannelsBackupPlanBindingsListCall {
+	c := &ProjectsLocationsBackupChannelsBackupPlanBindingsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// Filter sets the optional parameter "filter": Field match expression used to
+// filter the results.
+func (c *ProjectsLocationsBackupChannelsBackupPlanBindingsListCall) Filter(filter string) *ProjectsLocationsBackupChannelsBackupPlanBindingsListCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// OrderBy sets the optional parameter "orderBy": Field by which to sort the
+// results.
+func (c *ProjectsLocationsBackupChannelsBackupPlanBindingsListCall) OrderBy(orderBy string) *ProjectsLocationsBackupChannelsBackupPlanBindingsListCall {
+	c.urlParams_.Set("orderBy", orderBy)
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The target number of
+// results to return in a single response. If not specified, a default value
+// will be chosen by the service. Note that the response may include a partial
+// list and a caller should only rely on the response's next_page_token to
+// determine if there are more instances left to be queried.
+func (c *ProjectsLocationsBackupChannelsBackupPlanBindingsListCall) PageSize(pageSize int64) *ProjectsLocationsBackupChannelsBackupPlanBindingsListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": The value of
+// next_page_token received from a previous `ListBackupPlanBindings` call.
+// Provide this to retrieve the subsequent page in a multi-page list of
+// results. When paginating, all other parameters provided to
+// `ListBackupPlanBindings` must match the call that provided the page token.
+func (c *ProjectsLocationsBackupChannelsBackupPlanBindingsListCall) PageToken(pageToken string) *ProjectsLocationsBackupChannelsBackupPlanBindingsListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsBackupChannelsBackupPlanBindingsListCall) Fields(s ...googleapi.Field) *ProjectsLocationsBackupChannelsBackupPlanBindingsListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsBackupChannelsBackupPlanBindingsListCall) IfNoneMatch(entityTag string) *ProjectsLocationsBackupChannelsBackupPlanBindingsListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsBackupChannelsBackupPlanBindingsListCall) Context(ctx context.Context) *ProjectsLocationsBackupChannelsBackupPlanBindingsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsBackupChannelsBackupPlanBindingsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsBackupChannelsBackupPlanBindingsListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/backupPlanBindings")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "gkebackup.projects.locations.backupChannels.backupPlanBindings.list", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "gkebackup.projects.locations.backupChannels.backupPlanBindings.list" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *ListBackupPlanBindingsResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsBackupChannelsBackupPlanBindingsListCall) Do(opts ...googleapi.CallOption) (*ListBackupPlanBindingsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ListBackupPlanBindingsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "gkebackup.projects.locations.backupChannels.backupPlanBindings.list", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsLocationsBackupChannelsBackupPlanBindingsListCall) Pages(ctx context.Context, f func(*ListBackupPlanBindingsResponse) error) error {
 	c.ctx_ = ctx
 	defer c.PageToken(c.urlParams_.Get("pageToken"))
 	for {
@@ -6165,6 +7527,902 @@ func (c *ProjectsLocationsOperationsListCall) Do(opts ...googleapi.CallOption) (
 // A non-nil error returned from f will halt the iteration.
 // The provided context supersedes any context provided to the Context method.
 func (c *ProjectsLocationsOperationsListCall) Pages(ctx context.Context, f func(*GoogleLongrunningListOperationsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+type ProjectsLocationsRestoreChannelsCreateCall struct {
+	s              *Service
+	parent         string
+	restorechannel *RestoreChannel
+	urlParams_     gensupport.URLParams
+	ctx_           context.Context
+	header_        http.Header
+}
+
+// Create: Creates a new RestoreChannel in a given location.
+//
+//   - parent: The location within which to create the RestoreChannel. Format:
+//     `projects/*/locations/*`.
+func (r *ProjectsLocationsRestoreChannelsService) Create(parent string, restorechannel *RestoreChannel) *ProjectsLocationsRestoreChannelsCreateCall {
+	c := &ProjectsLocationsRestoreChannelsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.restorechannel = restorechannel
+	return c
+}
+
+// RestoreChannelId sets the optional parameter "restoreChannelId": The
+// client-provided short name for the RestoreChannel resource. This name must:
+// - be between 1 and 63 characters long (inclusive) - consist of only
+// lower-case ASCII letters, numbers, and dashes - start with a lower-case
+// letter - end with a lower-case letter or number - be unique within the set
+// of RestoreChannels in this location If the user does not provide a name, a
+// uuid will be used as the name.
+func (c *ProjectsLocationsRestoreChannelsCreateCall) RestoreChannelId(restoreChannelId string) *ProjectsLocationsRestoreChannelsCreateCall {
+	c.urlParams_.Set("restoreChannelId", restoreChannelId)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsRestoreChannelsCreateCall) Fields(s ...googleapi.Field) *ProjectsLocationsRestoreChannelsCreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsRestoreChannelsCreateCall) Context(ctx context.Context) *ProjectsLocationsRestoreChannelsCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsRestoreChannelsCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsRestoreChannelsCreateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.restorechannel)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/restoreChannels")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "gkebackup.projects.locations.restoreChannels.create", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "gkebackup.projects.locations.restoreChannels.create" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleLongrunningOperation.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsRestoreChannelsCreateCall) Do(opts ...googleapi.CallOption) (*GoogleLongrunningOperation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleLongrunningOperation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "gkebackup.projects.locations.restoreChannels.create", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsRestoreChannelsDeleteCall struct {
+	s          *Service
+	name       string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Delete: Deletes an existing RestoreChannel.
+//
+//   - name: Fully qualified RestoreChannel name. Format:
+//     `projects/*/locations/*/restoreChannels/*`.
+func (r *ProjectsLocationsRestoreChannelsService) Delete(name string) *ProjectsLocationsRestoreChannelsDeleteCall {
+	c := &ProjectsLocationsRestoreChannelsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Etag sets the optional parameter "etag": If provided, this value must match
+// the current value of the target RestoreChannel's etag field or the request
+// is rejected.
+func (c *ProjectsLocationsRestoreChannelsDeleteCall) Etag(etag string) *ProjectsLocationsRestoreChannelsDeleteCall {
+	c.urlParams_.Set("etag", etag)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsRestoreChannelsDeleteCall) Fields(s ...googleapi.Field) *ProjectsLocationsRestoreChannelsDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsRestoreChannelsDeleteCall) Context(ctx context.Context) *ProjectsLocationsRestoreChannelsDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsRestoreChannelsDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsRestoreChannelsDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("DELETE", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "gkebackup.projects.locations.restoreChannels.delete", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "gkebackup.projects.locations.restoreChannels.delete" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleLongrunningOperation.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsRestoreChannelsDeleteCall) Do(opts ...googleapi.CallOption) (*GoogleLongrunningOperation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleLongrunningOperation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "gkebackup.projects.locations.restoreChannels.delete", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsRestoreChannelsGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Retrieve the details of a single RestoreChannel.
+//
+//   - name: Fully qualified RestoreChannel name. Format:
+//     `projects/*/locations/*/restoreChannels/*`.
+func (r *ProjectsLocationsRestoreChannelsService) Get(name string) *ProjectsLocationsRestoreChannelsGetCall {
+	c := &ProjectsLocationsRestoreChannelsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsRestoreChannelsGetCall) Fields(s ...googleapi.Field) *ProjectsLocationsRestoreChannelsGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsRestoreChannelsGetCall) IfNoneMatch(entityTag string) *ProjectsLocationsRestoreChannelsGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsRestoreChannelsGetCall) Context(ctx context.Context) *ProjectsLocationsRestoreChannelsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsRestoreChannelsGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsRestoreChannelsGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "gkebackup.projects.locations.restoreChannels.get", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "gkebackup.projects.locations.restoreChannels.get" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *RestoreChannel.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsRestoreChannelsGetCall) Do(opts ...googleapi.CallOption) (*RestoreChannel, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &RestoreChannel{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "gkebackup.projects.locations.restoreChannels.get", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsRestoreChannelsListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists RestoreChannels in a given location.
+//
+//   - parent: The location that contains the RestoreChannels to list. Format:
+//     `projects/*/locations/*`.
+func (r *ProjectsLocationsRestoreChannelsService) List(parent string) *ProjectsLocationsRestoreChannelsListCall {
+	c := &ProjectsLocationsRestoreChannelsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// Filter sets the optional parameter "filter": Field match expression used to
+// filter the results.
+func (c *ProjectsLocationsRestoreChannelsListCall) Filter(filter string) *ProjectsLocationsRestoreChannelsListCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// OrderBy sets the optional parameter "orderBy": Field by which to sort the
+// results.
+func (c *ProjectsLocationsRestoreChannelsListCall) OrderBy(orderBy string) *ProjectsLocationsRestoreChannelsListCall {
+	c.urlParams_.Set("orderBy", orderBy)
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The target number of
+// results to return in a single response. If not specified, a default value
+// will be chosen by the service. Note that the response may include a partial
+// list and a caller should only rely on the response's next_page_token to
+// determine if there are more instances left to be queried.
+func (c *ProjectsLocationsRestoreChannelsListCall) PageSize(pageSize int64) *ProjectsLocationsRestoreChannelsListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": The value of
+// next_page_token received from a previous `ListRestoreChannels` call. Provide
+// this to retrieve the subsequent page in a multi-page list of results. When
+// paginating, all other parameters provided to `ListRestoreChannels` must
+// match the call that provided the page token.
+func (c *ProjectsLocationsRestoreChannelsListCall) PageToken(pageToken string) *ProjectsLocationsRestoreChannelsListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsRestoreChannelsListCall) Fields(s ...googleapi.Field) *ProjectsLocationsRestoreChannelsListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsRestoreChannelsListCall) IfNoneMatch(entityTag string) *ProjectsLocationsRestoreChannelsListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsRestoreChannelsListCall) Context(ctx context.Context) *ProjectsLocationsRestoreChannelsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsRestoreChannelsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsRestoreChannelsListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/restoreChannels")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "gkebackup.projects.locations.restoreChannels.list", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "gkebackup.projects.locations.restoreChannels.list" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *ListRestoreChannelsResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsRestoreChannelsListCall) Do(opts ...googleapi.CallOption) (*ListRestoreChannelsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ListRestoreChannelsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "gkebackup.projects.locations.restoreChannels.list", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsLocationsRestoreChannelsListCall) Pages(ctx context.Context, f func(*ListRestoreChannelsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+type ProjectsLocationsRestoreChannelsPatchCall struct {
+	s              *Service
+	name           string
+	restorechannel *RestoreChannel
+	urlParams_     gensupport.URLParams
+	ctx_           context.Context
+	header_        http.Header
+}
+
+// Patch: Update a RestoreChannel.
+//
+//   - name: Identifier. The fully qualified name of the RestoreChannel.
+//     `projects/*/locations/*/restoreChannels/*`.
+func (r *ProjectsLocationsRestoreChannelsService) Patch(name string, restorechannel *RestoreChannel) *ProjectsLocationsRestoreChannelsPatchCall {
+	c := &ProjectsLocationsRestoreChannelsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.restorechannel = restorechannel
+	return c
+}
+
+// UpdateMask sets the optional parameter "updateMask": This is used to specify
+// the fields to be overwritten in the RestoreChannel targeted for update. The
+// values for each of these updated fields will be taken from the
+// `restore_channel` provided with this request. Field names are relative to
+// the root of the resource (e.g., `description`, `destination_project_id`,
+// etc.) If no `update_mask` is provided, all fields in `restore_channel` will
+// be written to the target RestoreChannel resource. Note that OUTPUT_ONLY and
+// IMMUTABLE fields in `restore_channel` are ignored and are not used to update
+// the target RestoreChannel.
+func (c *ProjectsLocationsRestoreChannelsPatchCall) UpdateMask(updateMask string) *ProjectsLocationsRestoreChannelsPatchCall {
+	c.urlParams_.Set("updateMask", updateMask)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsRestoreChannelsPatchCall) Fields(s ...googleapi.Field) *ProjectsLocationsRestoreChannelsPatchCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsRestoreChannelsPatchCall) Context(ctx context.Context) *ProjectsLocationsRestoreChannelsPatchCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsRestoreChannelsPatchCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsRestoreChannelsPatchCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.restorechannel)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PATCH", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "gkebackup.projects.locations.restoreChannels.patch", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "gkebackup.projects.locations.restoreChannels.patch" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleLongrunningOperation.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsRestoreChannelsPatchCall) Do(opts ...googleapi.CallOption) (*GoogleLongrunningOperation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleLongrunningOperation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "gkebackup.projects.locations.restoreChannels.patch", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsRestoreChannelsRestorePlanBindingsGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Retrieve the details of a single RestorePlanBinding.
+//
+//   - name: Fully qualified RestorePlanBinding name. Format:
+//     `projects/*/locations/*/restoreChannels/*/restorePlanBindings/*`.
+func (r *ProjectsLocationsRestoreChannelsRestorePlanBindingsService) Get(name string) *ProjectsLocationsRestoreChannelsRestorePlanBindingsGetCall {
+	c := &ProjectsLocationsRestoreChannelsRestorePlanBindingsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsRestoreChannelsRestorePlanBindingsGetCall) Fields(s ...googleapi.Field) *ProjectsLocationsRestoreChannelsRestorePlanBindingsGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsRestoreChannelsRestorePlanBindingsGetCall) IfNoneMatch(entityTag string) *ProjectsLocationsRestoreChannelsRestorePlanBindingsGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsRestoreChannelsRestorePlanBindingsGetCall) Context(ctx context.Context) *ProjectsLocationsRestoreChannelsRestorePlanBindingsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsRestoreChannelsRestorePlanBindingsGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsRestoreChannelsRestorePlanBindingsGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "gkebackup.projects.locations.restoreChannels.restorePlanBindings.get", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "gkebackup.projects.locations.restoreChannels.restorePlanBindings.get" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *RestorePlanBinding.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *ProjectsLocationsRestoreChannelsRestorePlanBindingsGetCall) Do(opts ...googleapi.CallOption) (*RestorePlanBinding, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &RestorePlanBinding{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "gkebackup.projects.locations.restoreChannels.restorePlanBindings.get", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsRestoreChannelsRestorePlanBindingsListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists RestorePlanBindings in a given location.
+//
+//   - parent: The RestoreChannel that contains the ListRestorePlanBindings to
+//     list. Format: `projects/*/locations/*/restoreChannels/*`.
+func (r *ProjectsLocationsRestoreChannelsRestorePlanBindingsService) List(parent string) *ProjectsLocationsRestoreChannelsRestorePlanBindingsListCall {
+	c := &ProjectsLocationsRestoreChannelsRestorePlanBindingsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// Filter sets the optional parameter "filter": Field match expression used to
+// filter the results.
+func (c *ProjectsLocationsRestoreChannelsRestorePlanBindingsListCall) Filter(filter string) *ProjectsLocationsRestoreChannelsRestorePlanBindingsListCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// OrderBy sets the optional parameter "orderBy": Field by which to sort the
+// results.
+func (c *ProjectsLocationsRestoreChannelsRestorePlanBindingsListCall) OrderBy(orderBy string) *ProjectsLocationsRestoreChannelsRestorePlanBindingsListCall {
+	c.urlParams_.Set("orderBy", orderBy)
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The target number of
+// results to return in a single response. If not specified, a default value
+// will be chosen by the service. Note that the response may include a partial
+// list and a caller should only rely on the response's next_page_token to
+// determine if there are more instances left to be queried.
+func (c *ProjectsLocationsRestoreChannelsRestorePlanBindingsListCall) PageSize(pageSize int64) *ProjectsLocationsRestoreChannelsRestorePlanBindingsListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": The value of
+// next_page_token received from a previous `ListRestorePlanBindings` call.
+// Provide this to retrieve the subsequent page in a multi-page list of
+// results. When paginating, all other parameters provided to
+// `ListRestorePlanBindings` must match the call that provided the page token.
+func (c *ProjectsLocationsRestoreChannelsRestorePlanBindingsListCall) PageToken(pageToken string) *ProjectsLocationsRestoreChannelsRestorePlanBindingsListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsRestoreChannelsRestorePlanBindingsListCall) Fields(s ...googleapi.Field) *ProjectsLocationsRestoreChannelsRestorePlanBindingsListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsRestoreChannelsRestorePlanBindingsListCall) IfNoneMatch(entityTag string) *ProjectsLocationsRestoreChannelsRestorePlanBindingsListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsRestoreChannelsRestorePlanBindingsListCall) Context(ctx context.Context) *ProjectsLocationsRestoreChannelsRestorePlanBindingsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsRestoreChannelsRestorePlanBindingsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsRestoreChannelsRestorePlanBindingsListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/restorePlanBindings")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "gkebackup.projects.locations.restoreChannels.restorePlanBindings.list", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "gkebackup.projects.locations.restoreChannels.restorePlanBindings.list" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *ListRestorePlanBindingsResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsRestoreChannelsRestorePlanBindingsListCall) Do(opts ...googleapi.CallOption) (*ListRestorePlanBindingsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ListRestorePlanBindingsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "gkebackup.projects.locations.restoreChannels.restorePlanBindings.list", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsLocationsRestoreChannelsRestorePlanBindingsListCall) Pages(ctx context.Context, f func(*ListRestorePlanBindingsResponse) error) error {
 	c.ctx_ = ctx
 	defer c.PageToken(c.urlParams_.Get("pageToken"))
 	for {

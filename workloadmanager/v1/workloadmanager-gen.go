@@ -658,7 +658,7 @@ type Empty struct {
 	googleapi.ServerResponse `json:"-"`
 }
 
-// Evaluation: LINT.IfChange Message describing Evaluation object
+// Evaluation: Message describing Evaluation object
 type Evaluation struct {
 	// BigQueryDestination: Optional. BigQuery destination
 	BigQueryDestination *BigQueryDestination `json:"bigQueryDestination,omitempty"`
@@ -3009,6 +3009,14 @@ type ProjectsLocationsListCall struct {
 func (r *ProjectsLocationsService) List(name string) *ProjectsLocationsListCall {
 	c := &ProjectsLocationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
+	return c
+}
+
+// ExtraLocationTypes sets the optional parameter "extraLocationTypes": A list
+// of extra location types that should be used as conditions for controlling
+// the visibility of the locations.
+func (c *ProjectsLocationsListCall) ExtraLocationTypes(extraLocationTypes ...string) *ProjectsLocationsListCall {
+	c.urlParams_.SetMulti("extraLocationTypes", append([]string{}, extraLocationTypes...))
 	return c
 }
 

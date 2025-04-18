@@ -1209,7 +1209,7 @@ type Resource struct {
 	// policies. For create operations, GCP service is expected to pass resource
 	// from customer request as is. For update/patch operations, GCP service is
 	// expected to compute the next state with the patch provided by the user. See
-	// go/custom-constraints-org-policy-integration-guide for additional details.
+	// go/federated-custom-org-policy-integration-guide for additional details.
 	ExpectedNextState googleapi.RawMessage `json:"expectedNextState,omitempty"`
 	// Labels: The service defined labels of the resource on which the conditions
 	// will be evaluated. The semantics - including the key names - are vague to

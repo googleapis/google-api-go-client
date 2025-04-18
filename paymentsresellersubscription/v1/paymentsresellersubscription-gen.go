@@ -98,14 +98,14 @@ const mtlsBasePath = "https://paymentsresellersubscription.mtls.googleapis.com/"
 
 // OAuth2 scopes used by this API.
 const (
-	// Associate you with your personal info on Google
-	OpenIDScope = "openid"
+	// See and/or control the devices that you selected
+	SdmServiceScope = "https://www.googleapis.com/auth/sdm.service"
 )
 
 // NewService creates a new Service.
 func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, error) {
 	scopesOption := internaloption.WithDefaultScopes(
-		"openid",
+		"https://www.googleapis.com/auth/sdm.service",
 	)
 	// NOTE: prepend, so we don't override user-specified scopes.
 	opts = append([]option.ClientOption{scopesOption}, opts...)

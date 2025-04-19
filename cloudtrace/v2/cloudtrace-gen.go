@@ -765,7 +765,8 @@ type ProjectsTracesBatchWriteCall struct {
 }
 
 // BatchWrite: Batch writes new spans to new or existing traces. You cannot
-// update existing spans.
+// update existing spans. If a span ID already exists, an additional copy of
+// the span will be stored.
 //
 //   - name: The name of the project where the spans belong. The format is
 //     `projects/[PROJECT_ID]`.
@@ -869,7 +870,8 @@ type ProjectsTracesSpansCreateSpanCall struct {
 	header_    http.Header
 }
 
-// CreateSpan: Creates a new span.
+// CreateSpan: Creates a new span. If a span ID already exists, an additional
+// copy of the span will be stored.
 //
 //   - name: The resource name of the span in the following format: *
 //     `projects/[PROJECT_ID]/traces/[TRACE_ID]/spans/[SPAN_ID]` `[TRACE_ID]` is

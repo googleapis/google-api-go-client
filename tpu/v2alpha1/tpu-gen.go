@@ -386,6 +386,10 @@ type BootDiskConfig struct {
 	// EnableConfidentialCompute: Optional. Whether the boot disk will be created
 	// with confidential compute mode.
 	EnableConfidentialCompute bool `json:"enableConfidentialCompute,omitempty"`
+	// SourceImage: Optional. Image from which boot disk is to be created. If not
+	// specified, the default image for the runtime version will be used. Example:
+	// `projects/$PROJECT_ID/global/images/$IMAGE_NAME`.
+	SourceImage string `json:"sourceImage,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "CustomerEncryptionKey") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -1576,6 +1580,15 @@ func (s RuntimeVersion) MarshalJSON() ([]byte, error) {
 type SchedulingConfig struct {
 	// Preemptible: Defines whether the node is preemptible.
 	Preemptible bool `json:"preemptible,omitempty"`
+	// ProvisioningModel: Optional. Defines the provisioning model for the node.
+	//
+	// Possible values:
+	//   "PROVISIONING_MODEL_UNSPECIFIED" - Provisioning model is unknown.
+	//   "STANDARD" - Standard provisioning with user controlled runtime.
+	//   "SPOT" - Spot provisioning with no guaranteed runtime.
+	//   "RESERVATION_BOUND" - Reservation provisioning with runtime bound to the
+	// lifetime of the consumed reservation.
+	ProvisioningModel string `json:"provisioningModel,omitempty"`
 	// Reserved: Whether the node is created under a reservation.
 	Reserved bool `json:"reserved,omitempty"`
 	// Spot: Optional. Defines whether the node is Spot VM.

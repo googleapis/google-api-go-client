@@ -13015,6 +13015,43 @@ func (s GoogleCloudDialogflowV2beta1CreateMessageRequest) MarshalJSON() ([]byte,
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudDialogflowV2beta1CustomPronunciationParams: Pronunciation
+// customization for a phrase.
+type GoogleCloudDialogflowV2beta1CustomPronunciationParams struct {
+	// PhoneticEncoding: The phonetic encoding of the phrase.
+	//
+	// Possible values:
+	//   "PHONETIC_ENCODING_UNSPECIFIED" - Not specified.
+	//   "PHONETIC_ENCODING_IPA" - IPA, such as apple -> ˈæpəl.
+	// https://en.wikipedia.org/wiki/International_Phonetic_Alphabet
+	//   "PHONETIC_ENCODING_X_SAMPA" - X-SAMPA, such as apple -> "{p@l".
+	// https://en.wikipedia.org/wiki/X-SAMPA
+	PhoneticEncoding string `json:"phoneticEncoding,omitempty"`
+	// Phrase: The phrase to which the customization is applied. The phrase can be
+	// multiple words, such as proper nouns, but shouldn't span the length of the
+	// sentence.
+	Phrase string `json:"phrase,omitempty"`
+	// Pronunciation: The pronunciation of the phrase. This must be in the phonetic
+	// encoding specified above.
+	Pronunciation string `json:"pronunciation,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "PhoneticEncoding") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "PhoneticEncoding") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDialogflowV2beta1CustomPronunciationParams) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDialogflowV2beta1CustomPronunciationParams
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudDialogflowV2beta1DetectIntentRequest: The request to detect
 // user's intent.
 type GoogleCloudDialogflowV2beta1DetectIntentRequest struct {
@@ -19885,7 +19922,6 @@ type GoogleCloudDialogflowV2beta1StreamingRecognitionResult struct {
 	// Possible values:
 	//   "MESSAGE_TYPE_UNSPECIFIED" - Not specified. Should never be used.
 	//   "TRANSCRIPT" - Message contains a (possibly partial) transcript.
-	//   "DTMF_DIGITS" - Message contains DTMF digits.
 	//   "END_OF_SINGLE_UTTERANCE" - This event indicates that the server has
 	// detected the end of the user's speech utterance and expects no additional
 	// speech. Therefore, the server will not process additional audio (although it
@@ -19894,6 +19930,7 @@ type GoogleCloudDialogflowV2beta1StreamingRecognitionResult struct {
 	// additional results until the server closes the gRPC connection. This message
 	// is only sent if `single_utterance` was set to `true`, and is not used
 	// otherwise.
+	//   "DTMF_DIGITS" - Message contains DTMF digits.
 	//   "PARTIAL_DTMF_DIGITS" - Message contains DTMF digits. Before a message
 	// with DTMF_DIGITS is sent, a message with PARTIAL_DTMF_DIGITS may be sent
 	// with DTMF digits collected up to the time of sending, which represents an
@@ -20795,6 +20832,9 @@ type GoogleCloudDialogflowV2beta1SynthesizeSpeechConfig struct {
 	// increase 20 semitones from the original pitch. -20 means decrease 20
 	// semitones from the original pitch.
 	Pitch float64 `json:"pitch,omitempty"`
+	// Pronunciations: Optional. The custom pronunciations for the synthesized
+	// audio.
+	Pronunciations []*GoogleCloudDialogflowV2beta1CustomPronunciationParams `json:"pronunciations,omitempty"`
 	// SpeakingRate: Optional. Speaking rate/speed, in the range [0.25, 4.0]. 1.0
 	// is the normal native speed supported by the specific voice. 2.0 is twice as
 	// fast, and 0.5 is half as fast. If unset(0.0), defaults to the native 1.0

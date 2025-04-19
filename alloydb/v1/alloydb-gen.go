@@ -329,6 +329,9 @@ type Backup struct {
 	// ClusterUid: Output only. The system-generated UID of the cluster which was
 	// used to create this resource.
 	ClusterUid string `json:"clusterUid,omitempty"`
+	// CreateCompletionTime: Output only. Timestamp when the resource finished
+	// being created.
+	CreateCompletionTime string `json:"createCompletionTime,omitempty"`
 	// CreateTime: Output only. Create time stamp
 	CreateTime string `json:"createTime,omitempty"`
 	// DatabaseVersion: Output only. The database engine major version of the
@@ -2328,7 +2331,16 @@ type PscAutoConnectionConfig struct {
 	// network might be hosted a different project than the consumer project.
 	ConsumerNetwork string `json:"consumerNetwork,omitempty"`
 	// ConsumerNetworkStatus: Output only. The status of the service connection
-	// policy.
+	// policy. Possible values: "STATE_UNSPECIFIED" - Default state, when
+	// Connection Map is created initially. "VALID" - Set when policy and map
+	// configuration is valid, and their matching can lead to allowing creation of
+	// PSC Connections subject to other constraints like connections limit.
+	// "CONNECTION_POLICY_MISSING" - No Service Connection Policy found for this
+	// network and Service Class "POLICY_LIMIT_REACHED" - Service Connection Policy
+	// limit reached for this network and Service Class
+	// "CONSUMER_INSTANCE_PROJECT_NOT_ALLOWLISTED" - The consumer instance project
+	// is not in AllowedGoogleProducersResourceHierarchyLevels of the matching
+	// ServiceConnectionPolicy.
 	ConsumerNetworkStatus string `json:"consumerNetworkStatus,omitempty"`
 	// ConsumerProject: The consumer project to which the PSC service automation
 	// endpoint will be created.
@@ -2337,6 +2349,13 @@ type PscAutoConnectionConfig struct {
 	// endpoint.
 	IpAddress string `json:"ipAddress,omitempty"`
 	// Status: Output only. The status of the PSC service automation connection.
+	// Possible values: "STATE_UNSPECIFIED" - An invalid state as the default case.
+	// "ACTIVE" - The connection has been created successfully. "FAILED" - The
+	// connection is not functional since some resources on the connection fail to
+	// be created. "CREATING" - The connection is being created. "DELETING" - The
+	// connection is being deleted. "CREATE_REPAIRING" - The connection is being
+	// repaired to complete creation. "DELETE_REPAIRING" - The connection is being
+	// repaired to complete deletion.
 	Status string `json:"status,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "ConsumerNetwork") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -2623,7 +2642,7 @@ func (s RestartInstanceRequest) MarshalJSON() ([]byte, error) {
 }
 
 // RestoreClusterRequest: Message for restoring a Cluster from a backup or
-// another cluster at a given point in time.
+// another cluster at a given point in time. NEXT_ID: 11
 type RestoreClusterRequest struct {
 	// BackupSource: Backup source.
 	BackupSource *BackupSource `json:"backupSource,omitempty"`

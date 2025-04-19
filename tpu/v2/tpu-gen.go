@@ -1025,6 +1025,8 @@ type Node struct {
 	// Tags: Tags to apply to the TPU Node. Tags are used to identify valid sources
 	// or targets for network firewalls.
 	Tags []string `json:"tags,omitempty"`
+	// UpcomingMaintenance: Output only. Upcoming maintenance on this TPU node.
+	UpcomingMaintenance *UpcomingMaintenance `json:"upcomingMaintenance,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
@@ -1565,6 +1567,53 @@ type Tpu struct {
 
 func (s Tpu) MarshalJSON() ([]byte, error) {
 	type NoMethod Tpu
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// UpcomingMaintenance: Upcoming Maintenance notification information.
+type UpcomingMaintenance struct {
+	// CanReschedule: Indicates if the maintenance can be customer triggered.
+	CanReschedule bool `json:"canReschedule,omitempty"`
+	// LatestWindowStartTime: The latest time for the planned maintenance window to
+	// start. This timestamp value is in RFC3339 text format.
+	LatestWindowStartTime string `json:"latestWindowStartTime,omitempty"`
+	// MaintenanceStatus: The status of the maintenance.
+	//
+	// Possible values:
+	//   "UNKNOWN" - Unknown maintenance status. Do not use this value.
+	//   "PENDING" - There is pending maintenance.
+	//   "ONGOING" - There is ongoing maintenance on this VM.
+	MaintenanceStatus string `json:"maintenanceStatus,omitempty"`
+	// Type: Defines the type of maintenance.
+	//
+	// Possible values:
+	//   "UNKNOWN_TYPE" - No type specified. Do not use this value.
+	//   "SCHEDULED" - Scheduled maintenance (e.g. maintenance after uptime
+	// guarantee is complete).
+	//   "UNSCHEDULED" - Unscheduled maintenance (e.g. emergency maintenance during
+	// uptime guarantee).
+	Type string `json:"type,omitempty"`
+	// WindowEndTime: The time by which the maintenance disruption will be
+	// completed. This timestamp value is in RFC3339 text format.
+	WindowEndTime string `json:"windowEndTime,omitempty"`
+	// WindowStartTime: The current start time of the maintenance window. This
+	// timestamp value is in RFC3339 text format.
+	WindowStartTime string `json:"windowStartTime,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "CanReschedule") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CanReschedule") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s UpcomingMaintenance) MarshalJSON() ([]byte, error) {
+	type NoMethod UpcomingMaintenance
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 

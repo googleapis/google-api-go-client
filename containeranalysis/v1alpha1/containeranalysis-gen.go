@@ -6612,7 +6612,7 @@ func (s StorageSource) MarshalJSON() ([]byte, error) {
 // Subject: Subject refers to the subject of the intoto statement
 type Subject struct {
 	// Digest: "": "" Algorithms can be e.g. sha256, sha512 See
-	// https://github.com/in-toto/attestation/blob/main/spec/field_types.md#DigestSet
+	// https://github.com/in-toto/attestation/blob/main/spec/v1/digest_set.md.
 	Digest map[string]string `json:"digest,omitempty"`
 	// Name: name is the name of the Subject used here
 	Name string `json:"name,omitempty"`

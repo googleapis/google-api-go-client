@@ -1749,6 +1749,27 @@ func (s SetIamPolicyRequest) MarshalJSON() ([]byte, error) {
 // SetupFunctionUpgradeConfigRequest: Request for the
 // `SetupFunctionUpgradeConfig` method.
 type SetupFunctionUpgradeConfigRequest struct {
+	// TriggerServiceAccount: Optional. The trigger's service account. The service
+	// account must have permission to invoke Cloud Run services, the permission is
+	// `run.routes.invoke`. If empty, defaults to the Compute Engine default
+	// service account: `{project_number}-compute@developer.gserviceaccount.com`.
+	TriggerServiceAccount string `json:"triggerServiceAccount,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "TriggerServiceAccount") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "TriggerServiceAccount") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s SetupFunctionUpgradeConfigRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod SetupFunctionUpgradeConfigRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Source: The location of the function source code.

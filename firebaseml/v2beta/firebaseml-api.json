@@ -206,7 +206,7 @@
       }
     }
   },
-  "revision": "20250412",
+  "revision": "20250416",
   "rootUrl": "https://firebaseml.googleapis.com/",
   "schemas": {
     "Date": {
@@ -1568,13 +1568,21 @@
             "HARM_CATEGORY_SEXUALLY_EXPLICIT",
             "HARM_CATEGORY_CIVIC_INTEGRITY"
           ],
+          "enumDeprecated": [
+            false,
+            false,
+            false,
+            false,
+            false,
+            true
+          ],
           "enumDescriptions": [
             "The harm category is unspecified.",
             "The harm category is hate speech.",
             "The harm category is dangerous content.",
             "The harm category is harassment.",
             "The harm category is sexually explicit content.",
-            "The harm category is civic integrity."
+            "Deprecated: Election filter is not longer supported. The harm category is civic integrity."
           ],
           "readOnly": true,
           "type": "string"
@@ -1646,13 +1654,21 @@
             "HARM_CATEGORY_SEXUALLY_EXPLICIT",
             "HARM_CATEGORY_CIVIC_INTEGRITY"
           ],
+          "enumDeprecated": [
+            false,
+            false,
+            false,
+            false,
+            false,
+            true
+          ],
           "enumDescriptions": [
             "The harm category is unspecified.",
             "The harm category is hate speech.",
             "The harm category is dangerous content.",
             "The harm category is harassment.",
             "The harm category is sexually explicit content.",
-            "The harm category is civic integrity."
+            "Deprecated: Election filter is not longer supported. The harm category is civic integrity."
           ],
           "type": "string"
         },

@@ -1072,6 +1072,11 @@ type EncryptionConfig struct {
 	// format:projects/{project_number}/locations/{location_id}/keyRings/{key_ring_i
 	// d}/cryptoKeys/{crypto_key_id}.
 	KmsKey string `json:"kmsKey,omitempty"`
+	// KmsKeys: Optional. The list of fully qualified customer provided Cloud KMS
+	// key names for the multi-regional service. Each key must be in the following
+	// format:projects/{project_number}/locations/{location_id}/keyRings/{key_ring_i
+	// d}/cryptoKeys/{crypto_key_id}.
+	KmsKeys []string `json:"kmsKeys,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "KmsKey") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
 	// omitted from API requests. See

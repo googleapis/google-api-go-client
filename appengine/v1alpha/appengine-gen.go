@@ -2962,6 +2962,14 @@ func (r *AppsLocationsService) List(appsId string) *AppsLocationsListCall {
 	return c
 }
 
+// ExtraLocationTypes sets the optional parameter "extraLocationTypes": A list
+// of extra location types that should be used as conditions for controlling
+// the visibility of the locations.
+func (c *AppsLocationsListCall) ExtraLocationTypes(extraLocationTypes ...string) *AppsLocationsListCall {
+	c.urlParams_.SetMulti("extraLocationTypes", append([]string{}, extraLocationTypes...))
+	return c
+}
+
 // Filter sets the optional parameter "filter": A filter to narrow down results
 // to a preferred subset. The filtering language accepts strings like
 // "displayName=tokyo", and is documented in more detail in AIP-160
@@ -3495,6 +3503,14 @@ type ProjectsLocationsListCall struct {
 func (r *ProjectsLocationsService) List(projectsId string) *ProjectsLocationsListCall {
 	c := &ProjectsLocationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectsId = projectsId
+	return c
+}
+
+// ExtraLocationTypes sets the optional parameter "extraLocationTypes": A list
+// of extra location types that should be used as conditions for controlling
+// the visibility of the locations.
+func (c *ProjectsLocationsListCall) ExtraLocationTypes(extraLocationTypes ...string) *ProjectsLocationsListCall {
+	c.urlParams_.SetMulti("extraLocationTypes", append([]string{}, extraLocationTypes...))
 	return c
 }
 

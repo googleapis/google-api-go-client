@@ -922,16 +922,16 @@ type DropInfo struct {
 	// policy-based VPN tunnel remote selector.
 	//   "PRIVATE_TRAFFIC_TO_INTERNET" - Packet with internal destination address
 	// sent to the internet gateway.
-	//   "PRIVATE_GOOGLE_ACCESS_DISALLOWED" - Instance with only an internal IP
-	// address tries to access Google API and services, but private Google access
-	// is not enabled in the subnet.
+	//   "PRIVATE_GOOGLE_ACCESS_DISALLOWED" - Endpoint with only an internal IP
+	// address tries to access Google API and services, but Private Google Access
+	// is not enabled in the subnet or is not applicable.
 	//   "PRIVATE_GOOGLE_ACCESS_VIA_VPN_TUNNEL_UNSUPPORTED" - Source endpoint tries
 	// to access Google API and services through the VPN tunnel to another network,
 	// but Private Google Access needs to be enabled in the source endpoint
 	// network.
-	//   "NO_EXTERNAL_ADDRESS" - Instance with only an internal IP address tries to
-	// access external hosts, but Cloud NAT is not enabled in the subnet, unless
-	// special configurations on a VM allow this connection.
+	//   "NO_EXTERNAL_ADDRESS" - Endpoint with only an internal IP address tries to
+	// access external hosts, but there is no matching Cloud NAT gateway in the
+	// subnet.
 	//   "UNKNOWN_INTERNAL_ADDRESS" - Destination internal address cannot be
 	// resolved to a known target. If this is a shared VPC scenario, verify if the
 	// service project ID is provided as test input. Otherwise, verify if the IP
@@ -1101,6 +1101,17 @@ type DropInfo struct {
 	//   "PRIVATE_NAT_TO_PSC_ENDPOINT_UNSUPPORTED" - Sending packets processed by
 	// the Private NAT Gateways to the Private Service Connect endpoints is not
 	// supported.
+	//   "PSC_PORT_MAPPING_PORT_MISMATCH" - Packet is sent to the PSC port mapping
+	// service, but its destination port does not match any port mapping rules.
+	//   "PSC_PORT_MAPPING_WITHOUT_PSC_CONNECTION_UNSUPPORTED" - Sending packets
+	// directly to the PSC port mapping service without going through the PSC
+	// connection is not supported.
+	//   "UNSUPPORTED_ROUTE_MATCHED_FOR_NAT64_DESTINATION" - Packet with
+	// destination IP address within the reserved NAT64 range is dropped due to
+	// matching a route of an unsupported type.
+	//   "TRAFFIC_FROM_HYBRID_ENDPOINT_TO_INTERNET_DISALLOWED" - Packet could be
+	// dropped because hybrid endpoint like a VPN gateway or Interconnect is not
+	// allowed to send traffic to the Internet.
 	Cause string `json:"cause,omitempty"`
 	// DestinationIp: Destination IP address of the dropped packet (if relevant).
 	DestinationIp string `json:"destinationIp,omitempty"`
@@ -1602,6 +1613,8 @@ type GoogleServiceInfo struct {
 	// https://cloud.google.com/vpc/docs/configure-private-service-connect-apis
 	//   "GOOGLE_API_VPC_SC" - Google API via VPC Service Controls.
 	// https://cloud.google.com/vpc/docs/configure-private-service-connect-apis
+	//   "SERVERLESS_VPC_ACCESS" - Google API via Serverless VPC Access.
+	// https://cloud.google.com/vpc/docs/serverless-vpc-access
 	GoogleServiceType string `json:"googleServiceType,omitempty"`
 	// SourceIp: Source IP address.
 	SourceIp string `json:"sourceIp,omitempty"`
@@ -2309,18 +2322,22 @@ type ProbingDetails struct {
 	//   "NO_SOURCE_LOCATION" - No valid source endpoint could be derived from the
 	// request.
 	AbortCause string `json:"abortCause,omitempty"`
-	// DestinationEgressLocation: The EdgeLocation from which a packet destined
-	// for/originating from the internet will egress/ingress the Google network.
-	// This will only be populated for a connectivity test which has an internet
-	// destination/source address. The absence of this field *must not* be used as
-	// an indication that the destination/source is part of the Google network.
+	// DestinationEgressLocation: The EdgeLocation from which a packet, destined to
+	// the internet, will egress the Google network. This will only be populated
+	// for a connectivity test which has an internet destination address. The
+	// absence of this field *must not* be used as an indication that the
+	// destination is part of the Google network.
 	DestinationEgressLocation *EdgeLocation `json:"destinationEgressLocation,omitempty"`
+	// EdgeResponses: Probing results for all edge devices.
+	EdgeResponses []*SingleEdgeResponse `json:"edgeResponses,omitempty"`
 	// EndpointInfo: The source and destination endpoints derived from the test
 	// input and used for active probing.
 	EndpointInfo *EndpointInfo `json:"endpointInfo,omitempty"`
 	// Error: Details about an internal failure or the cancellation of active
 	// probing.
 	Error *Status `json:"error,omitempty"`
+	// ProbedAllDevices: Whether all relevant edge devices were probed.
+	ProbedAllDevices bool `json:"probedAllDevices,omitempty"`
 	// ProbingLatency: Latency as measured by active probing in one direction: from
 	// the source to the destination endpoint.
 	ProbingLatency *LatencyDistribution `json:"probingLatency,omitempty"`
@@ -2749,6 +2766,55 @@ func (s SetIamPolicyRequest) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// SingleEdgeResponse: Probing results for a single edge device.
+type SingleEdgeResponse struct {
+	// DestinationEgressLocation: The EdgeLocation from which a packet, destined to
+	// the internet, will egress the Google network. This will only be populated
+	// for a connectivity test which has an internet destination address. The
+	// absence of this field *must not* be used as an indication that the
+	// destination is part of the Google network.
+	DestinationEgressLocation *EdgeLocation `json:"destinationEgressLocation,omitempty"`
+	// DestinationRouter: Router name in the format '{router}.{metroshard}'. For
+	// example: pf01.aaa01, pr02.aaa01.
+	DestinationRouter string `json:"destinationRouter,omitempty"`
+	// ProbingLatency: Latency as measured by active probing in one direction: from
+	// the source to the destination endpoint.
+	ProbingLatency *LatencyDistribution `json:"probingLatency,omitempty"`
+	// Result: The overall result of active probing for this egress device.
+	//
+	// Possible values:
+	//   "PROBING_RESULT_UNSPECIFIED" - No result was specified.
+	//   "REACHABLE" - At least 95% of packets reached the destination.
+	//   "UNREACHABLE" - No packets reached the destination.
+	//   "REACHABILITY_INCONSISTENT" - Less than 95% of packets reached the
+	// destination.
+	//   "UNDETERMINED" - Reachability could not be determined. Possible reasons
+	// are: * The user lacks permission to access some of the network resources
+	// required to run the test. * No valid source endpoint could be derived from
+	// the request. * An internal error occurred.
+	Result string `json:"result,omitempty"`
+	// SentProbeCount: Number of probes sent.
+	SentProbeCount int64 `json:"sentProbeCount,omitempty"`
+	// SuccessfulProbeCount: Number of probes that reached the destination.
+	SuccessfulProbeCount int64 `json:"successfulProbeCount,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "DestinationEgressLocation")
+	// to unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DestinationEgressLocation") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s SingleEdgeResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod SingleEdgeResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // Status: The `Status` type defines a logical error model that is suitable for
 // different programming environments, including REST APIs and RPC APIs. It is
 // used by gRPC (https://github.com/grpc). Each `Status` message contains three
@@ -3159,7 +3225,8 @@ type VpcFlowLogsConfig struct {
 	// fig_id}`
 	Name string `json:"name,omitempty"`
 	// State: Optional. The state of the VPC Flow Log configuration. Default value
-	// is ENABLED. When creating a new configuration, it must be enabled.
+	// is ENABLED. When creating a new configuration, it must be enabled. Setting
+	// state=DISABLED will pause the log generation for this config.
 	//
 	// Possible values:
 	//   "STATE_UNSPECIFIED" - If not specified, will default to ENABLED.
@@ -3421,6 +3488,14 @@ type ProjectsLocationsListCall struct {
 func (r *ProjectsLocationsService) List(name string) *ProjectsLocationsListCall {
 	c := &ProjectsLocationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
+	return c
+}
+
+// ExtraLocationTypes sets the optional parameter "extraLocationTypes": A list
+// of extra location types that should be used as conditions for controlling
+// the visibility of the locations.
+func (c *ProjectsLocationsListCall) ExtraLocationTypes(extraLocationTypes ...string) *ProjectsLocationsListCall {
+	c.urlParams_.SetMulti("extraLocationTypes", append([]string{}, extraLocationTypes...))
 	return c
 }
 

@@ -961,13 +961,11 @@ type SpaceConfig struct {
 	//   "RESTRICTED" - Only invitees can join without knocking. Everyone else must
 	// knock.
 	AccessType string `json:"accessType,omitempty"`
-	// ArtifactConfig: Developer Preview
-	// (https://developers.google.com/workspace/preview): Configuration pertaining
-	// to the auto-generated artifacts that the meeting supports.
+	// ArtifactConfig: Configuration pertaining to the auto-generated artifacts
+	// that the meeting supports.
 	ArtifactConfig *ArtifactConfig `json:"artifactConfig,omitempty"`
-	// AttendanceReportGenerationType: Developer Preview
-	// (https://developers.google.com/workspace/preview): Whether attendance report
-	// is enabled for the meeting space.
+	// AttendanceReportGenerationType: Whether attendance report is enabled for the
+	// meeting space.
 	//
 	// Possible values:
 	//   "ATTENDANCE_REPORT_GENERATION_TYPE_UNSPECIFIED" - Default value specified
@@ -986,9 +984,8 @@ type SpaceConfig struct {
 	// that created the space can be used to join meetings in this space. Apps can
 	// use the Meet Embed SDK Web or mobile Meet SDKs to create owned entry points.
 	EntryPointAccess string `json:"entryPointAccess,omitempty"`
-	// Moderation: Developer Preview
-	// (https://developers.google.com/workspace/preview): The pre-configured
-	// moderation mode for the Meeting. Default: Controlled by the user's policies.
+	// Moderation: The pre-configured moderation mode for the Meeting. Default:
+	// Controlled by the user's policies.
 	//
 	// Possible values:
 	//   "MODERATION_UNSPECIFIED" - Moderation type is not specified. This is used
@@ -997,10 +994,9 @@ type SpaceConfig struct {
 	//   "OFF" - Moderation is off.
 	//   "ON" - Moderation is on.
 	Moderation string `json:"moderation,omitempty"`
-	// ModerationRestrictions: Developer Preview
-	// (https://developers.google.com/workspace/preview): When moderation.ON, these
-	// restrictions go into effect for the meeting. When moderation.OFF, will be
-	// reset to default ModerationRestrictions.
+	// ModerationRestrictions: When moderation.ON, these restrictions go into
+	// effect for the meeting. When moderation.OFF, will be reset to default
+	// ModerationRestrictions.
 	ModerationRestrictions *ModerationRestrictions `json:"moderationRestrictions,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AccessType") to
 	// unconditionally include in API requests. By default, fields with empty or

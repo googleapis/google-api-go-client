@@ -229,6 +229,7 @@ type ProjectsLocationsAuthorizedViewSetsService struct {
 func NewProjectsLocationsAuthorizedViewSetsAuthorizedViewsService(s *Service) *ProjectsLocationsAuthorizedViewSetsAuthorizedViewsService {
 	rs := &ProjectsLocationsAuthorizedViewSetsAuthorizedViewsService{s: s}
 	rs.Conversations = NewProjectsLocationsAuthorizedViewSetsAuthorizedViewsConversationsService(s)
+	rs.Operations = NewProjectsLocationsAuthorizedViewSetsAuthorizedViewsOperationsService(s)
 	return rs
 }
 
@@ -236,14 +237,49 @@ type ProjectsLocationsAuthorizedViewSetsAuthorizedViewsService struct {
 	s *Service
 
 	Conversations *ProjectsLocationsAuthorizedViewSetsAuthorizedViewsConversationsService
+
+	Operations *ProjectsLocationsAuthorizedViewSetsAuthorizedViewsOperationsService
 }
 
 func NewProjectsLocationsAuthorizedViewSetsAuthorizedViewsConversationsService(s *Service) *ProjectsLocationsAuthorizedViewSetsAuthorizedViewsConversationsService {
 	rs := &ProjectsLocationsAuthorizedViewSetsAuthorizedViewsConversationsService{s: s}
+	rs.Analyses = NewProjectsLocationsAuthorizedViewSetsAuthorizedViewsConversationsAnalysesService(s)
+	rs.FeedbackLabels = NewProjectsLocationsAuthorizedViewSetsAuthorizedViewsConversationsFeedbackLabelsService(s)
 	return rs
 }
 
 type ProjectsLocationsAuthorizedViewSetsAuthorizedViewsConversationsService struct {
+	s *Service
+
+	Analyses *ProjectsLocationsAuthorizedViewSetsAuthorizedViewsConversationsAnalysesService
+
+	FeedbackLabels *ProjectsLocationsAuthorizedViewSetsAuthorizedViewsConversationsFeedbackLabelsService
+}
+
+func NewProjectsLocationsAuthorizedViewSetsAuthorizedViewsConversationsAnalysesService(s *Service) *ProjectsLocationsAuthorizedViewSetsAuthorizedViewsConversationsAnalysesService {
+	rs := &ProjectsLocationsAuthorizedViewSetsAuthorizedViewsConversationsAnalysesService{s: s}
+	return rs
+}
+
+type ProjectsLocationsAuthorizedViewSetsAuthorizedViewsConversationsAnalysesService struct {
+	s *Service
+}
+
+func NewProjectsLocationsAuthorizedViewSetsAuthorizedViewsConversationsFeedbackLabelsService(s *Service) *ProjectsLocationsAuthorizedViewSetsAuthorizedViewsConversationsFeedbackLabelsService {
+	rs := &ProjectsLocationsAuthorizedViewSetsAuthorizedViewsConversationsFeedbackLabelsService{s: s}
+	return rs
+}
+
+type ProjectsLocationsAuthorizedViewSetsAuthorizedViewsConversationsFeedbackLabelsService struct {
+	s *Service
+}
+
+func NewProjectsLocationsAuthorizedViewSetsAuthorizedViewsOperationsService(s *Service) *ProjectsLocationsAuthorizedViewSetsAuthorizedViewsOperationsService {
+	rs := &ProjectsLocationsAuthorizedViewSetsAuthorizedViewsOperationsService{s: s}
+	return rs
+}
+
+type ProjectsLocationsAuthorizedViewSetsAuthorizedViewsOperationsService struct {
 	s *Service
 }
 
@@ -1123,6 +1159,7 @@ type GoogleCloudContactcenterinsightsV1BulkDownloadFeedbackLabelsRequest struct 
 	// latest scorecard revision.
 	//   "TOPIC_MODELING" - Downloaded file will contain only Topic Modeling
 	// labels.
+	//   "AGENT_ASSIST_SUMMARY" - Agent Assist Summarization labels.
 	FeedbackLabelType string `json:"feedbackLabelType,omitempty"`
 	// Filter: Optional. A filter to reduce results to a specific subset. Supports
 	// disjunctions (OR) and conjunctions (AND). Supported fields: *
@@ -2979,16 +3016,19 @@ func (s *GoogleCloudContactcenterinsightsV1FaqAnswerData) UnmarshalJSON(data []b
 // GoogleCloudContactcenterinsightsV1FeedbackLabel: Represents a conversation,
 // resource, and label provided by the user. Can take the form of a string
 // label or a QaAnswer label. QaAnswer labels are used for Quality AI example
-// conversations. String labels are used for Topic Modeling.
+// conversations. String labels are used for Topic Modeling. AgentAssistSummary
+// labels are used for Agent Assist Summarization.
 type GoogleCloudContactcenterinsightsV1FeedbackLabel struct {
 	// CreateTime: Output only. Create time of the label.
 	CreateTime string `json:"createTime,omitempty"`
 	// Label: String label used for Topic Modeling.
 	Label string `json:"label,omitempty"`
-	// LabeledResource: Resource name of the resource to be labeled. Supported
-	// resources: -
-	// qaScorecards/{scorecard}/revisions/{revision}/qaQuestions/{question} -
-	// issueModels/{issue_model}
+	// LabeledResource: Name of the resource to be labeled. Supported resources
+	// are: *
+	// `projects/{project}/locations/{location}/qaScorecards/{scorecard}/revisions/{
+	// revision}/qaQuestions/{question}` *
+	// `projects/{project}/locations/{location}/issueModels/{issue_model}` *
+	// `projects/{project}/locations/{location}/generators/{generator_id}`
 	LabeledResource string `json:"labeledResource,omitempty"`
 	// Name: Immutable. Resource name of the FeedbackLabel. Format:
 	// projects/{project}/locations/{location}/conversations/{conversation}/feedback
@@ -7910,15 +7950,18 @@ func (s *GoogleCloudContactcenterinsightsV1alpha1FaqAnswerData) UnmarshalJSON(da
 // conversation, resource, and label provided by the user. Can take the form of
 // a string label or a QaAnswer label. QaAnswer labels are used for Quality AI
 // example conversations. String labels are used for Topic Modeling.
+// AgentAssistSummary labels are used for Agent Assist Summarization.
 type GoogleCloudContactcenterinsightsV1alpha1FeedbackLabel struct {
 	// CreateTime: Output only. Create time of the label.
 	CreateTime string `json:"createTime,omitempty"`
 	// Label: String label used for Topic Modeling.
 	Label string `json:"label,omitempty"`
-	// LabeledResource: Resource name of the resource to be labeled. Supported
-	// resources: -
-	// qaScorecards/{scorecard}/revisions/{revision}/qaQuestions/{question} -
-	// issueModels/{issue_model}
+	// LabeledResource: Name of the resource to be labeled. Supported resources
+	// are: *
+	// `projects/{project}/locations/{location}/qaScorecards/{scorecard}/revisions/{
+	// revision}/qaQuestions/{question}` *
+	// `projects/{project}/locations/{location}/issueModels/{issue_model}` *
+	// `projects/{project}/locations/{location}/generators/{generator_id}`
 	LabeledResource string `json:"labeledResource,omitempty"`
 	// Name: Immutable. Resource name of the FeedbackLabel. Format:
 	// projects/{project}/locations/{location}/conversations/{conversation}/feedback
@@ -11524,6 +11567,110 @@ func (c *ProjectsLocationsAuthorizedViewSetsAuthorizedViewsQueryMetricsCall) Do(
 	return ret, nil
 }
 
+type ProjectsLocationsAuthorizedViewSetsAuthorizedViewsConversationsBulkAnalyzeCall struct {
+	s                                                                 *Service
+	parent                                                            string
+	googlecloudcontactcenterinsightsv1bulkanalyzeconversationsrequest *GoogleCloudContactcenterinsightsV1BulkAnalyzeConversationsRequest
+	urlParams_                                                        gensupport.URLParams
+	ctx_                                                              context.Context
+	header_                                                           http.Header
+}
+
+// BulkAnalyze: Analyzes multiple conversations in a single request.
+//
+// - parent: The parent resource to create analyses in.
+func (r *ProjectsLocationsAuthorizedViewSetsAuthorizedViewsConversationsService) BulkAnalyze(parent string, googlecloudcontactcenterinsightsv1bulkanalyzeconversationsrequest *GoogleCloudContactcenterinsightsV1BulkAnalyzeConversationsRequest) *ProjectsLocationsAuthorizedViewSetsAuthorizedViewsConversationsBulkAnalyzeCall {
+	c := &ProjectsLocationsAuthorizedViewSetsAuthorizedViewsConversationsBulkAnalyzeCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.googlecloudcontactcenterinsightsv1bulkanalyzeconversationsrequest = googlecloudcontactcenterinsightsv1bulkanalyzeconversationsrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsAuthorizedViewSetsAuthorizedViewsConversationsBulkAnalyzeCall) Fields(s ...googleapi.Field) *ProjectsLocationsAuthorizedViewSetsAuthorizedViewsConversationsBulkAnalyzeCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsAuthorizedViewSetsAuthorizedViewsConversationsBulkAnalyzeCall) Context(ctx context.Context) *ProjectsLocationsAuthorizedViewSetsAuthorizedViewsConversationsBulkAnalyzeCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsAuthorizedViewSetsAuthorizedViewsConversationsBulkAnalyzeCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsAuthorizedViewSetsAuthorizedViewsConversationsBulkAnalyzeCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googlecloudcontactcenterinsightsv1bulkanalyzeconversationsrequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/conversations:bulkAnalyze")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "contactcenterinsights.projects.locations.authorizedViewSets.authorizedViews.conversations.bulkAnalyze", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "contactcenterinsights.projects.locations.authorizedViewSets.authorizedViews.conversations.bulkAnalyze" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleLongrunningOperation.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsAuthorizedViewSetsAuthorizedViewsConversationsBulkAnalyzeCall) Do(opts ...googleapi.CallOption) (*GoogleLongrunningOperation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleLongrunningOperation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "contactcenterinsights.projects.locations.authorizedViewSets.authorizedViews.conversations.bulkAnalyze", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
 type ProjectsLocationsAuthorizedViewSetsAuthorizedViewsConversationsCalculateStatsCall struct {
 	s            *Service
 	location     string
@@ -11640,6 +11787,1862 @@ func (c *ProjectsLocationsAuthorizedViewSetsAuthorizedViewsConversationsCalculat
 	}
 	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "contactcenterinsights.projects.locations.authorizedViewSets.authorizedViews.conversations.calculateStats", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
+}
+
+type ProjectsLocationsAuthorizedViewSetsAuthorizedViewsConversationsDeleteCall struct {
+	s          *Service
+	name       string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Delete: Deletes a conversation.
+//
+// - name: The name of the conversation to delete.
+func (r *ProjectsLocationsAuthorizedViewSetsAuthorizedViewsConversationsService) Delete(name string) *ProjectsLocationsAuthorizedViewSetsAuthorizedViewsConversationsDeleteCall {
+	c := &ProjectsLocationsAuthorizedViewSetsAuthorizedViewsConversationsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Force sets the optional parameter "force": If set to true, all of this
+// conversation's analyses will also be deleted. Otherwise, the request will
+// only succeed if the conversation has no analyses.
+func (c *ProjectsLocationsAuthorizedViewSetsAuthorizedViewsConversationsDeleteCall) Force(force bool) *ProjectsLocationsAuthorizedViewSetsAuthorizedViewsConversationsDeleteCall {
+	c.urlParams_.Set("force", fmt.Sprint(force))
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsAuthorizedViewSetsAuthorizedViewsConversationsDeleteCall) Fields(s ...googleapi.Field) *ProjectsLocationsAuthorizedViewSetsAuthorizedViewsConversationsDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsAuthorizedViewSetsAuthorizedViewsConversationsDeleteCall) Context(ctx context.Context) *ProjectsLocationsAuthorizedViewSetsAuthorizedViewsConversationsDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsAuthorizedViewSetsAuthorizedViewsConversationsDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsAuthorizedViewSetsAuthorizedViewsConversationsDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("DELETE", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "contactcenterinsights.projects.locations.authorizedViewSets.authorizedViews.conversations.delete", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "contactcenterinsights.projects.locations.authorizedViewSets.authorizedViews.conversations.delete" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleProtobufEmpty.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *ProjectsLocationsAuthorizedViewSetsAuthorizedViewsConversationsDeleteCall) Do(opts ...googleapi.CallOption) (*GoogleProtobufEmpty, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleProtobufEmpty{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "contactcenterinsights.projects.locations.authorizedViewSets.authorizedViews.conversations.delete", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsAuthorizedViewSetsAuthorizedViewsConversationsGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Gets a conversation.
+//
+// - name: The name of the conversation to get.
+func (r *ProjectsLocationsAuthorizedViewSetsAuthorizedViewsConversationsService) Get(name string) *ProjectsLocationsAuthorizedViewSetsAuthorizedViewsConversationsGetCall {
+	c := &ProjectsLocationsAuthorizedViewSetsAuthorizedViewsConversationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// View sets the optional parameter "view": The level of details of the
+// conversation. Default is `FULL`.
+//
+// Possible values:
+//
+//	"CONVERSATION_VIEW_UNSPECIFIED" - The conversation view is not specified.
+//
+// * Defaults to `FULL` in `GetConversationRequest`. * Defaults to `BASIC` in
+// `ListConversationsRequest`.
+//
+//	"FULL" - Populates all fields in the conversation.
+//	"BASIC" - Populates all fields in the conversation except the transcript.
+func (c *ProjectsLocationsAuthorizedViewSetsAuthorizedViewsConversationsGetCall) View(view string) *ProjectsLocationsAuthorizedViewSetsAuthorizedViewsConversationsGetCall {
+	c.urlParams_.Set("view", view)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsAuthorizedViewSetsAuthorizedViewsConversationsGetCall) Fields(s ...googleapi.Field) *ProjectsLocationsAuthorizedViewSetsAuthorizedViewsConversationsGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsAuthorizedViewSetsAuthorizedViewsConversationsGetCall) IfNoneMatch(entityTag string) *ProjectsLocationsAuthorizedViewSetsAuthorizedViewsConversationsGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsAuthorizedViewSetsAuthorizedViewsConversationsGetCall) Context(ctx context.Context) *ProjectsLocationsAuthorizedViewSetsAuthorizedViewsConversationsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsAuthorizedViewSetsAuthorizedViewsConversationsGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsAuthorizedViewSetsAuthorizedViewsConversationsGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "contactcenterinsights.projects.locations.authorizedViewSets.authorizedViews.conversations.get", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "contactcenterinsights.projects.locations.authorizedViewSets.authorizedViews.conversations.get" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudContactcenterinsightsV1Conversation.ServerResponse.Header or (if
+// a response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsAuthorizedViewSetsAuthorizedViewsConversationsGetCall) Do(opts ...googleapi.CallOption) (*GoogleCloudContactcenterinsightsV1Conversation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudContactcenterinsightsV1Conversation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "contactcenterinsights.projects.locations.authorizedViewSets.authorizedViews.conversations.get", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsAuthorizedViewSetsAuthorizedViewsConversationsListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists conversations.
+//
+// - parent: The parent resource of the conversation.
+func (r *ProjectsLocationsAuthorizedViewSetsAuthorizedViewsConversationsService) List(parent string) *ProjectsLocationsAuthorizedViewSetsAuthorizedViewsConversationsListCall {
+	c := &ProjectsLocationsAuthorizedViewSetsAuthorizedViewsConversationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// Filter sets the optional parameter "filter": A filter to reduce results to a
+// specific subset. Useful for querying conversations with specific properties.
+func (c *ProjectsLocationsAuthorizedViewSetsAuthorizedViewsConversationsListCall) Filter(filter string) *ProjectsLocationsAuthorizedViewSetsAuthorizedViewsConversationsListCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// OrderBy sets the optional parameter "orderBy": The attribute by which to
+// order conversations in the response. If empty, conversations will be ordered
+// by descending creation time. Supported values are one of the following: *
+// create_time * customer_satisfaction_rating * duration * latest_analysis *
+// start_time * turn_count The default sort order is ascending. To specify
+// order, append `asc` or `desc` (`create_time desc`). For more details, see
+// Google AIPs Ordering (https://google.aip.dev/132#ordering).
+func (c *ProjectsLocationsAuthorizedViewSetsAuthorizedViewsConversationsListCall) OrderBy(orderBy string) *ProjectsLocationsAuthorizedViewSetsAuthorizedViewsConversationsListCall {
+	c.urlParams_.Set("orderBy", orderBy)
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The maximum number of
+// conversations to return in the response. A valid page size ranges from 0 to
+// 100,000 inclusive. If the page size is zero or unspecified, a default page
+// size of 100 will be chosen. Note that a call might return fewer results than
+// the requested page size.
+func (c *ProjectsLocationsAuthorizedViewSetsAuthorizedViewsConversationsListCall) PageSize(pageSize int64) *ProjectsLocationsAuthorizedViewSetsAuthorizedViewsConversationsListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": The value returned by the
+// last `ListConversationsResponse`. This value indicates that this is a
+// continuation of a prior `ListConversations` call and that the system should
+// return the next page of data.
+func (c *ProjectsLocationsAuthorizedViewSetsAuthorizedViewsConversationsListCall) PageToken(pageToken string) *ProjectsLocationsAuthorizedViewSetsAuthorizedViewsConversationsListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// View sets the optional parameter "view": The level of details of the
+// conversation. Default is `BASIC`.
+//
+// Possible values:
+//
+//	"CONVERSATION_VIEW_UNSPECIFIED" - The conversation view is not specified.
+//
+// * Defaults to `FULL` in `GetConversationRequest`. * Defaults to `BASIC` in
+// `ListConversationsRequest`.
+//
+//	"FULL" - Populates all fields in the conversation.
+//	"BASIC" - Populates all fields in the conversation except the transcript.
+func (c *ProjectsLocationsAuthorizedViewSetsAuthorizedViewsConversationsListCall) View(view string) *ProjectsLocationsAuthorizedViewSetsAuthorizedViewsConversationsListCall {
+	c.urlParams_.Set("view", view)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsAuthorizedViewSetsAuthorizedViewsConversationsListCall) Fields(s ...googleapi.Field) *ProjectsLocationsAuthorizedViewSetsAuthorizedViewsConversationsListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsAuthorizedViewSetsAuthorizedViewsConversationsListCall) IfNoneMatch(entityTag string) *ProjectsLocationsAuthorizedViewSetsAuthorizedViewsConversationsListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsAuthorizedViewSetsAuthorizedViewsConversationsListCall) Context(ctx context.Context) *ProjectsLocationsAuthorizedViewSetsAuthorizedViewsConversationsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsAuthorizedViewSetsAuthorizedViewsConversationsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsAuthorizedViewSetsAuthorizedViewsConversationsListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/conversations")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "contactcenterinsights.projects.locations.authorizedViewSets.authorizedViews.conversations.list", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "contactcenterinsights.projects.locations.authorizedViewSets.authorizedViews.conversations.list" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudContactcenterinsightsV1ListConversationsResponse.ServerResponse.H
+// eader or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsAuthorizedViewSetsAuthorizedViewsConversationsListCall) Do(opts ...googleapi.CallOption) (*GoogleCloudContactcenterinsightsV1ListConversationsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudContactcenterinsightsV1ListConversationsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "contactcenterinsights.projects.locations.authorizedViewSets.authorizedViews.conversations.list", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsLocationsAuthorizedViewSetsAuthorizedViewsConversationsListCall) Pages(ctx context.Context, f func(*GoogleCloudContactcenterinsightsV1ListConversationsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+type ProjectsLocationsAuthorizedViewSetsAuthorizedViewsConversationsAnalysesCreateCall struct {
+	s                                          *Service
+	parent                                     string
+	googlecloudcontactcenterinsightsv1analysis *GoogleCloudContactcenterinsightsV1Analysis
+	urlParams_                                 gensupport.URLParams
+	ctx_                                       context.Context
+	header_                                    http.Header
+}
+
+// Create: Creates an analysis. The long running operation is done when the
+// analysis has completed.
+//
+// - parent: The parent resource of the analysis.
+func (r *ProjectsLocationsAuthorizedViewSetsAuthorizedViewsConversationsAnalysesService) Create(parent string, googlecloudcontactcenterinsightsv1analysis *GoogleCloudContactcenterinsightsV1Analysis) *ProjectsLocationsAuthorizedViewSetsAuthorizedViewsConversationsAnalysesCreateCall {
+	c := &ProjectsLocationsAuthorizedViewSetsAuthorizedViewsConversationsAnalysesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.googlecloudcontactcenterinsightsv1analysis = googlecloudcontactcenterinsightsv1analysis
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsAuthorizedViewSetsAuthorizedViewsConversationsAnalysesCreateCall) Fields(s ...googleapi.Field) *ProjectsLocationsAuthorizedViewSetsAuthorizedViewsConversationsAnalysesCreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsAuthorizedViewSetsAuthorizedViewsConversationsAnalysesCreateCall) Context(ctx context.Context) *ProjectsLocationsAuthorizedViewSetsAuthorizedViewsConversationsAnalysesCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsAuthorizedViewSetsAuthorizedViewsConversationsAnalysesCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsAuthorizedViewSetsAuthorizedViewsConversationsAnalysesCreateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googlecloudcontactcenterinsightsv1analysis)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/analyses")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "contactcenterinsights.projects.locations.authorizedViewSets.authorizedViews.conversations.analyses.create", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "contactcenterinsights.projects.locations.authorizedViewSets.authorizedViews.conversations.analyses.create" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleLongrunningOperation.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsAuthorizedViewSetsAuthorizedViewsConversationsAnalysesCreateCall) Do(opts ...googleapi.CallOption) (*GoogleLongrunningOperation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleLongrunningOperation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "contactcenterinsights.projects.locations.authorizedViewSets.authorizedViews.conversations.analyses.create", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsAuthorizedViewSetsAuthorizedViewsConversationsAnalysesDeleteCall struct {
+	s          *Service
+	name       string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Delete: Deletes an analysis.
+//
+// - name: The name of the analysis to delete.
+func (r *ProjectsLocationsAuthorizedViewSetsAuthorizedViewsConversationsAnalysesService) Delete(name string) *ProjectsLocationsAuthorizedViewSetsAuthorizedViewsConversationsAnalysesDeleteCall {
+	c := &ProjectsLocationsAuthorizedViewSetsAuthorizedViewsConversationsAnalysesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsAuthorizedViewSetsAuthorizedViewsConversationsAnalysesDeleteCall) Fields(s ...googleapi.Field) *ProjectsLocationsAuthorizedViewSetsAuthorizedViewsConversationsAnalysesDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsAuthorizedViewSetsAuthorizedViewsConversationsAnalysesDeleteCall) Context(ctx context.Context) *ProjectsLocationsAuthorizedViewSetsAuthorizedViewsConversationsAnalysesDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsAuthorizedViewSetsAuthorizedViewsConversationsAnalysesDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsAuthorizedViewSetsAuthorizedViewsConversationsAnalysesDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("DELETE", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "contactcenterinsights.projects.locations.authorizedViewSets.authorizedViews.conversations.analyses.delete", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "contactcenterinsights.projects.locations.authorizedViewSets.authorizedViews.conversations.analyses.delete" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleProtobufEmpty.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *ProjectsLocationsAuthorizedViewSetsAuthorizedViewsConversationsAnalysesDeleteCall) Do(opts ...googleapi.CallOption) (*GoogleProtobufEmpty, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleProtobufEmpty{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "contactcenterinsights.projects.locations.authorizedViewSets.authorizedViews.conversations.analyses.delete", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsAuthorizedViewSetsAuthorizedViewsConversationsAnalysesGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Gets an analysis.
+//
+// - name: The name of the analysis to get.
+func (r *ProjectsLocationsAuthorizedViewSetsAuthorizedViewsConversationsAnalysesService) Get(name string) *ProjectsLocationsAuthorizedViewSetsAuthorizedViewsConversationsAnalysesGetCall {
+	c := &ProjectsLocationsAuthorizedViewSetsAuthorizedViewsConversationsAnalysesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsAuthorizedViewSetsAuthorizedViewsConversationsAnalysesGetCall) Fields(s ...googleapi.Field) *ProjectsLocationsAuthorizedViewSetsAuthorizedViewsConversationsAnalysesGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsAuthorizedViewSetsAuthorizedViewsConversationsAnalysesGetCall) IfNoneMatch(entityTag string) *ProjectsLocationsAuthorizedViewSetsAuthorizedViewsConversationsAnalysesGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsAuthorizedViewSetsAuthorizedViewsConversationsAnalysesGetCall) Context(ctx context.Context) *ProjectsLocationsAuthorizedViewSetsAuthorizedViewsConversationsAnalysesGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsAuthorizedViewSetsAuthorizedViewsConversationsAnalysesGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsAuthorizedViewSetsAuthorizedViewsConversationsAnalysesGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "contactcenterinsights.projects.locations.authorizedViewSets.authorizedViews.conversations.analyses.get", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "contactcenterinsights.projects.locations.authorizedViewSets.authorizedViews.conversations.analyses.get" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudContactcenterinsightsV1Analysis.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsAuthorizedViewSetsAuthorizedViewsConversationsAnalysesGetCall) Do(opts ...googleapi.CallOption) (*GoogleCloudContactcenterinsightsV1Analysis, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudContactcenterinsightsV1Analysis{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "contactcenterinsights.projects.locations.authorizedViewSets.authorizedViews.conversations.analyses.get", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsAuthorizedViewSetsAuthorizedViewsConversationsAnalysesListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists analyses.
+//
+// - parent: The parent resource of the analyses.
+func (r *ProjectsLocationsAuthorizedViewSetsAuthorizedViewsConversationsAnalysesService) List(parent string) *ProjectsLocationsAuthorizedViewSetsAuthorizedViewsConversationsAnalysesListCall {
+	c := &ProjectsLocationsAuthorizedViewSetsAuthorizedViewsConversationsAnalysesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// Filter sets the optional parameter "filter": A filter to reduce results to a
+// specific subset. Useful for querying conversations with specific properties.
+func (c *ProjectsLocationsAuthorizedViewSetsAuthorizedViewsConversationsAnalysesListCall) Filter(filter string) *ProjectsLocationsAuthorizedViewSetsAuthorizedViewsConversationsAnalysesListCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The maximum number of
+// analyses to return in the response. If this value is zero, the service will
+// select a default size. A call might return fewer objects than requested. A
+// non-empty `next_page_token` in the response indicates that more data is
+// available.
+func (c *ProjectsLocationsAuthorizedViewSetsAuthorizedViewsConversationsAnalysesListCall) PageSize(pageSize int64) *ProjectsLocationsAuthorizedViewSetsAuthorizedViewsConversationsAnalysesListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": The value returned by the
+// last `ListAnalysesResponse`; indicates that this is a continuation of a
+// prior `ListAnalyses` call and the system should return the next page of
+// data.
+func (c *ProjectsLocationsAuthorizedViewSetsAuthorizedViewsConversationsAnalysesListCall) PageToken(pageToken string) *ProjectsLocationsAuthorizedViewSetsAuthorizedViewsConversationsAnalysesListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsAuthorizedViewSetsAuthorizedViewsConversationsAnalysesListCall) Fields(s ...googleapi.Field) *ProjectsLocationsAuthorizedViewSetsAuthorizedViewsConversationsAnalysesListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsAuthorizedViewSetsAuthorizedViewsConversationsAnalysesListCall) IfNoneMatch(entityTag string) *ProjectsLocationsAuthorizedViewSetsAuthorizedViewsConversationsAnalysesListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsAuthorizedViewSetsAuthorizedViewsConversationsAnalysesListCall) Context(ctx context.Context) *ProjectsLocationsAuthorizedViewSetsAuthorizedViewsConversationsAnalysesListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsAuthorizedViewSetsAuthorizedViewsConversationsAnalysesListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsAuthorizedViewSetsAuthorizedViewsConversationsAnalysesListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/analyses")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "contactcenterinsights.projects.locations.authorizedViewSets.authorizedViews.conversations.analyses.list", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "contactcenterinsights.projects.locations.authorizedViewSets.authorizedViews.conversations.analyses.list" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudContactcenterinsightsV1ListAnalysesResponse.ServerResponse.Header
+//
+//	or (if a response was returned at all) in error.(*googleapi.Error).Header.
+//
+// Use googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsAuthorizedViewSetsAuthorizedViewsConversationsAnalysesListCall) Do(opts ...googleapi.CallOption) (*GoogleCloudContactcenterinsightsV1ListAnalysesResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudContactcenterinsightsV1ListAnalysesResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "contactcenterinsights.projects.locations.authorizedViewSets.authorizedViews.conversations.analyses.list", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsLocationsAuthorizedViewSetsAuthorizedViewsConversationsAnalysesListCall) Pages(ctx context.Context, f func(*GoogleCloudContactcenterinsightsV1ListAnalysesResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+type ProjectsLocationsAuthorizedViewSetsAuthorizedViewsConversationsFeedbackLabelsCreateCall struct {
+	s                                               *Service
+	parent                                          string
+	googlecloudcontactcenterinsightsv1feedbacklabel *GoogleCloudContactcenterinsightsV1FeedbackLabel
+	urlParams_                                      gensupport.URLParams
+	ctx_                                            context.Context
+	header_                                         http.Header
+}
+
+// Create: Create feedback label.
+//
+// - parent: The parent resource of the feedback label.
+func (r *ProjectsLocationsAuthorizedViewSetsAuthorizedViewsConversationsFeedbackLabelsService) Create(parent string, googlecloudcontactcenterinsightsv1feedbacklabel *GoogleCloudContactcenterinsightsV1FeedbackLabel) *ProjectsLocationsAuthorizedViewSetsAuthorizedViewsConversationsFeedbackLabelsCreateCall {
+	c := &ProjectsLocationsAuthorizedViewSetsAuthorizedViewsConversationsFeedbackLabelsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.googlecloudcontactcenterinsightsv1feedbacklabel = googlecloudcontactcenterinsightsv1feedbacklabel
+	return c
+}
+
+// FeedbackLabelId sets the optional parameter "feedbackLabelId": The ID of the
+// feedback label to create. If one is not specified it will be generated by
+// the server.
+func (c *ProjectsLocationsAuthorizedViewSetsAuthorizedViewsConversationsFeedbackLabelsCreateCall) FeedbackLabelId(feedbackLabelId string) *ProjectsLocationsAuthorizedViewSetsAuthorizedViewsConversationsFeedbackLabelsCreateCall {
+	c.urlParams_.Set("feedbackLabelId", feedbackLabelId)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsAuthorizedViewSetsAuthorizedViewsConversationsFeedbackLabelsCreateCall) Fields(s ...googleapi.Field) *ProjectsLocationsAuthorizedViewSetsAuthorizedViewsConversationsFeedbackLabelsCreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsAuthorizedViewSetsAuthorizedViewsConversationsFeedbackLabelsCreateCall) Context(ctx context.Context) *ProjectsLocationsAuthorizedViewSetsAuthorizedViewsConversationsFeedbackLabelsCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsAuthorizedViewSetsAuthorizedViewsConversationsFeedbackLabelsCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsAuthorizedViewSetsAuthorizedViewsConversationsFeedbackLabelsCreateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googlecloudcontactcenterinsightsv1feedbacklabel)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/feedbackLabels")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "contactcenterinsights.projects.locations.authorizedViewSets.authorizedViews.conversations.feedbackLabels.create", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "contactcenterinsights.projects.locations.authorizedViewSets.authorizedViews.conversations.feedbackLabels.create" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudContactcenterinsightsV1FeedbackLabel.ServerResponse.Header or
+// (if a response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsAuthorizedViewSetsAuthorizedViewsConversationsFeedbackLabelsCreateCall) Do(opts ...googleapi.CallOption) (*GoogleCloudContactcenterinsightsV1FeedbackLabel, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudContactcenterinsightsV1FeedbackLabel{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "contactcenterinsights.projects.locations.authorizedViewSets.authorizedViews.conversations.feedbackLabels.create", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsAuthorizedViewSetsAuthorizedViewsConversationsFeedbackLabelsDeleteCall struct {
+	s          *Service
+	name       string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Delete: Delete feedback label.
+//
+// - name: The name of the feedback label to delete.
+func (r *ProjectsLocationsAuthorizedViewSetsAuthorizedViewsConversationsFeedbackLabelsService) Delete(name string) *ProjectsLocationsAuthorizedViewSetsAuthorizedViewsConversationsFeedbackLabelsDeleteCall {
+	c := &ProjectsLocationsAuthorizedViewSetsAuthorizedViewsConversationsFeedbackLabelsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsAuthorizedViewSetsAuthorizedViewsConversationsFeedbackLabelsDeleteCall) Fields(s ...googleapi.Field) *ProjectsLocationsAuthorizedViewSetsAuthorizedViewsConversationsFeedbackLabelsDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsAuthorizedViewSetsAuthorizedViewsConversationsFeedbackLabelsDeleteCall) Context(ctx context.Context) *ProjectsLocationsAuthorizedViewSetsAuthorizedViewsConversationsFeedbackLabelsDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsAuthorizedViewSetsAuthorizedViewsConversationsFeedbackLabelsDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsAuthorizedViewSetsAuthorizedViewsConversationsFeedbackLabelsDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("DELETE", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "contactcenterinsights.projects.locations.authorizedViewSets.authorizedViews.conversations.feedbackLabels.delete", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "contactcenterinsights.projects.locations.authorizedViewSets.authorizedViews.conversations.feedbackLabels.delete" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleProtobufEmpty.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *ProjectsLocationsAuthorizedViewSetsAuthorizedViewsConversationsFeedbackLabelsDeleteCall) Do(opts ...googleapi.CallOption) (*GoogleProtobufEmpty, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleProtobufEmpty{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "contactcenterinsights.projects.locations.authorizedViewSets.authorizedViews.conversations.feedbackLabels.delete", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsAuthorizedViewSetsAuthorizedViewsConversationsFeedbackLabelsGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Get feedback label.
+//
+// - name: The name of the feedback label to get.
+func (r *ProjectsLocationsAuthorizedViewSetsAuthorizedViewsConversationsFeedbackLabelsService) Get(name string) *ProjectsLocationsAuthorizedViewSetsAuthorizedViewsConversationsFeedbackLabelsGetCall {
+	c := &ProjectsLocationsAuthorizedViewSetsAuthorizedViewsConversationsFeedbackLabelsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsAuthorizedViewSetsAuthorizedViewsConversationsFeedbackLabelsGetCall) Fields(s ...googleapi.Field) *ProjectsLocationsAuthorizedViewSetsAuthorizedViewsConversationsFeedbackLabelsGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsAuthorizedViewSetsAuthorizedViewsConversationsFeedbackLabelsGetCall) IfNoneMatch(entityTag string) *ProjectsLocationsAuthorizedViewSetsAuthorizedViewsConversationsFeedbackLabelsGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsAuthorizedViewSetsAuthorizedViewsConversationsFeedbackLabelsGetCall) Context(ctx context.Context) *ProjectsLocationsAuthorizedViewSetsAuthorizedViewsConversationsFeedbackLabelsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsAuthorizedViewSetsAuthorizedViewsConversationsFeedbackLabelsGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsAuthorizedViewSetsAuthorizedViewsConversationsFeedbackLabelsGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "contactcenterinsights.projects.locations.authorizedViewSets.authorizedViews.conversations.feedbackLabels.get", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "contactcenterinsights.projects.locations.authorizedViewSets.authorizedViews.conversations.feedbackLabels.get" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudContactcenterinsightsV1FeedbackLabel.ServerResponse.Header or
+// (if a response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsAuthorizedViewSetsAuthorizedViewsConversationsFeedbackLabelsGetCall) Do(opts ...googleapi.CallOption) (*GoogleCloudContactcenterinsightsV1FeedbackLabel, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudContactcenterinsightsV1FeedbackLabel{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "contactcenterinsights.projects.locations.authorizedViewSets.authorizedViews.conversations.feedbackLabels.get", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsAuthorizedViewSetsAuthorizedViewsConversationsFeedbackLabelsListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: List feedback labels.
+//
+// - parent: The parent resource of the feedback labels.
+func (r *ProjectsLocationsAuthorizedViewSetsAuthorizedViewsConversationsFeedbackLabelsService) List(parent string) *ProjectsLocationsAuthorizedViewSetsAuthorizedViewsConversationsFeedbackLabelsListCall {
+	c := &ProjectsLocationsAuthorizedViewSetsAuthorizedViewsConversationsFeedbackLabelsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// Filter sets the optional parameter "filter": A filter to reduce results to a
+// specific subset. Supports disjunctions (OR) and conjunctions (AND).
+// Automatically sorts by conversation ID. To sort by all feedback labels in a
+// project see ListAllFeedbackLabels. Supported fields: * `issue_model_id` *
+// `qa_question_id` * `qa_scorecard_id` * `min_create_time` * `max_create_time`
+// * `min_update_time` * `max_update_time` * `feedback_label_type`: QUALITY_AI,
+// TOPIC_MODELING
+func (c *ProjectsLocationsAuthorizedViewSetsAuthorizedViewsConversationsFeedbackLabelsListCall) Filter(filter string) *ProjectsLocationsAuthorizedViewSetsAuthorizedViewsConversationsFeedbackLabelsListCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The maximum number of
+// feedback labels to return in the response. A valid page size ranges from 0
+// to 100,000 inclusive. If the page size is zero or unspecified, a default
+// page size of 100 will be chosen. Note that a call might return fewer results
+// than the requested page size.
+func (c *ProjectsLocationsAuthorizedViewSetsAuthorizedViewsConversationsFeedbackLabelsListCall) PageSize(pageSize int64) *ProjectsLocationsAuthorizedViewSetsAuthorizedViewsConversationsFeedbackLabelsListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": The value returned by the
+// last `ListFeedbackLabelsResponse`. This value indicates that this is a
+// continuation of a prior `ListFeedbackLabels` call and that the system should
+// return the next page of data.
+func (c *ProjectsLocationsAuthorizedViewSetsAuthorizedViewsConversationsFeedbackLabelsListCall) PageToken(pageToken string) *ProjectsLocationsAuthorizedViewSetsAuthorizedViewsConversationsFeedbackLabelsListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsAuthorizedViewSetsAuthorizedViewsConversationsFeedbackLabelsListCall) Fields(s ...googleapi.Field) *ProjectsLocationsAuthorizedViewSetsAuthorizedViewsConversationsFeedbackLabelsListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsAuthorizedViewSetsAuthorizedViewsConversationsFeedbackLabelsListCall) IfNoneMatch(entityTag string) *ProjectsLocationsAuthorizedViewSetsAuthorizedViewsConversationsFeedbackLabelsListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsAuthorizedViewSetsAuthorizedViewsConversationsFeedbackLabelsListCall) Context(ctx context.Context) *ProjectsLocationsAuthorizedViewSetsAuthorizedViewsConversationsFeedbackLabelsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsAuthorizedViewSetsAuthorizedViewsConversationsFeedbackLabelsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsAuthorizedViewSetsAuthorizedViewsConversationsFeedbackLabelsListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/feedbackLabels")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "contactcenterinsights.projects.locations.authorizedViewSets.authorizedViews.conversations.feedbackLabels.list", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "contactcenterinsights.projects.locations.authorizedViewSets.authorizedViews.conversations.feedbackLabels.list" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudContactcenterinsightsV1ListFeedbackLabelsResponse.ServerResponse.
+// Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsAuthorizedViewSetsAuthorizedViewsConversationsFeedbackLabelsListCall) Do(opts ...googleapi.CallOption) (*GoogleCloudContactcenterinsightsV1ListFeedbackLabelsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudContactcenterinsightsV1ListFeedbackLabelsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "contactcenterinsights.projects.locations.authorizedViewSets.authorizedViews.conversations.feedbackLabels.list", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsLocationsAuthorizedViewSetsAuthorizedViewsConversationsFeedbackLabelsListCall) Pages(ctx context.Context, f func(*GoogleCloudContactcenterinsightsV1ListFeedbackLabelsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+type ProjectsLocationsAuthorizedViewSetsAuthorizedViewsConversationsFeedbackLabelsPatchCall struct {
+	s                                               *Service
+	name                                            string
+	googlecloudcontactcenterinsightsv1feedbacklabel *GoogleCloudContactcenterinsightsV1FeedbackLabel
+	urlParams_                                      gensupport.URLParams
+	ctx_                                            context.Context
+	header_                                         http.Header
+}
+
+// Patch: Update feedback label.
+//
+//   - name: Immutable. Resource name of the FeedbackLabel. Format:
+//     projects/{project}/locations/{location}/conversations/{conversation}/feedba
+//     ckLabels/{feedback_label}.
+func (r *ProjectsLocationsAuthorizedViewSetsAuthorizedViewsConversationsFeedbackLabelsService) Patch(name string, googlecloudcontactcenterinsightsv1feedbacklabel *GoogleCloudContactcenterinsightsV1FeedbackLabel) *ProjectsLocationsAuthorizedViewSetsAuthorizedViewsConversationsFeedbackLabelsPatchCall {
+	c := &ProjectsLocationsAuthorizedViewSetsAuthorizedViewsConversationsFeedbackLabelsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.googlecloudcontactcenterinsightsv1feedbacklabel = googlecloudcontactcenterinsightsv1feedbacklabel
+	return c
+}
+
+// UpdateMask sets the optional parameter "updateMask": Required. The list of
+// fields to be updated.
+func (c *ProjectsLocationsAuthorizedViewSetsAuthorizedViewsConversationsFeedbackLabelsPatchCall) UpdateMask(updateMask string) *ProjectsLocationsAuthorizedViewSetsAuthorizedViewsConversationsFeedbackLabelsPatchCall {
+	c.urlParams_.Set("updateMask", updateMask)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsAuthorizedViewSetsAuthorizedViewsConversationsFeedbackLabelsPatchCall) Fields(s ...googleapi.Field) *ProjectsLocationsAuthorizedViewSetsAuthorizedViewsConversationsFeedbackLabelsPatchCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsAuthorizedViewSetsAuthorizedViewsConversationsFeedbackLabelsPatchCall) Context(ctx context.Context) *ProjectsLocationsAuthorizedViewSetsAuthorizedViewsConversationsFeedbackLabelsPatchCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsAuthorizedViewSetsAuthorizedViewsConversationsFeedbackLabelsPatchCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsAuthorizedViewSetsAuthorizedViewsConversationsFeedbackLabelsPatchCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googlecloudcontactcenterinsightsv1feedbacklabel)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PATCH", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "contactcenterinsights.projects.locations.authorizedViewSets.authorizedViews.conversations.feedbackLabels.patch", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "contactcenterinsights.projects.locations.authorizedViewSets.authorizedViews.conversations.feedbackLabels.patch" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudContactcenterinsightsV1FeedbackLabel.ServerResponse.Header or
+// (if a response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsAuthorizedViewSetsAuthorizedViewsConversationsFeedbackLabelsPatchCall) Do(opts ...googleapi.CallOption) (*GoogleCloudContactcenterinsightsV1FeedbackLabel, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudContactcenterinsightsV1FeedbackLabel{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "contactcenterinsights.projects.locations.authorizedViewSets.authorizedViews.conversations.feedbackLabels.patch", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsAuthorizedViewSetsAuthorizedViewsOperationsCancelCall struct {
+	s          *Service
+	name       string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Cancel: Starts asynchronous cancellation on a long-running operation. The
+// server makes a best effort to cancel the operation, but success is not
+// guaranteed. If the server doesn't support this method, it returns
+// `google.rpc.Code.UNIMPLEMENTED`. Clients can use Operations.GetOperation or
+// other methods to check whether the cancellation succeeded or whether the
+// operation completed despite cancellation. On successful cancellation, the
+// operation is not deleted; instead, it becomes an operation with an
+// Operation.error value with a google.rpc.Status.code of `1`, corresponding to
+// `Code.CANCELLED`.
+//
+// - name: The name of the operation resource to be cancelled.
+func (r *ProjectsLocationsAuthorizedViewSetsAuthorizedViewsOperationsService) Cancel(name string) *ProjectsLocationsAuthorizedViewSetsAuthorizedViewsOperationsCancelCall {
+	c := &ProjectsLocationsAuthorizedViewSetsAuthorizedViewsOperationsCancelCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsAuthorizedViewSetsAuthorizedViewsOperationsCancelCall) Fields(s ...googleapi.Field) *ProjectsLocationsAuthorizedViewSetsAuthorizedViewsOperationsCancelCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsAuthorizedViewSetsAuthorizedViewsOperationsCancelCall) Context(ctx context.Context) *ProjectsLocationsAuthorizedViewSetsAuthorizedViewsOperationsCancelCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsAuthorizedViewSetsAuthorizedViewsOperationsCancelCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsAuthorizedViewSetsAuthorizedViewsOperationsCancelCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}:cancel")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "contactcenterinsights.projects.locations.authorizedViewSets.authorizedViews.operations.cancel", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "contactcenterinsights.projects.locations.authorizedViewSets.authorizedViews.operations.cancel" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleProtobufEmpty.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *ProjectsLocationsAuthorizedViewSetsAuthorizedViewsOperationsCancelCall) Do(opts ...googleapi.CallOption) (*GoogleProtobufEmpty, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleProtobufEmpty{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "contactcenterinsights.projects.locations.authorizedViewSets.authorizedViews.operations.cancel", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsAuthorizedViewSetsAuthorizedViewsOperationsGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Gets the latest state of a long-running operation. Clients can use this
+// method to poll the operation result at intervals as recommended by the API
+// service.
+//
+// - name: The name of the operation resource.
+func (r *ProjectsLocationsAuthorizedViewSetsAuthorizedViewsOperationsService) Get(name string) *ProjectsLocationsAuthorizedViewSetsAuthorizedViewsOperationsGetCall {
+	c := &ProjectsLocationsAuthorizedViewSetsAuthorizedViewsOperationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsAuthorizedViewSetsAuthorizedViewsOperationsGetCall) Fields(s ...googleapi.Field) *ProjectsLocationsAuthorizedViewSetsAuthorizedViewsOperationsGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsAuthorizedViewSetsAuthorizedViewsOperationsGetCall) IfNoneMatch(entityTag string) *ProjectsLocationsAuthorizedViewSetsAuthorizedViewsOperationsGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsAuthorizedViewSetsAuthorizedViewsOperationsGetCall) Context(ctx context.Context) *ProjectsLocationsAuthorizedViewSetsAuthorizedViewsOperationsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsAuthorizedViewSetsAuthorizedViewsOperationsGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsAuthorizedViewSetsAuthorizedViewsOperationsGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "contactcenterinsights.projects.locations.authorizedViewSets.authorizedViews.operations.get", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "contactcenterinsights.projects.locations.authorizedViewSets.authorizedViews.operations.get" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleLongrunningOperation.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsAuthorizedViewSetsAuthorizedViewsOperationsGetCall) Do(opts ...googleapi.CallOption) (*GoogleLongrunningOperation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleLongrunningOperation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "contactcenterinsights.projects.locations.authorizedViewSets.authorizedViews.operations.get", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsAuthorizedViewSetsAuthorizedViewsOperationsListCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists operations that match the specified filter in the request. If
+// the server doesn't support this method, it returns `UNIMPLEMENTED`.
+//
+// - name: The name of the operation's parent resource.
+func (r *ProjectsLocationsAuthorizedViewSetsAuthorizedViewsOperationsService) List(name string) *ProjectsLocationsAuthorizedViewSetsAuthorizedViewsOperationsListCall {
+	c := &ProjectsLocationsAuthorizedViewSetsAuthorizedViewsOperationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Filter sets the optional parameter "filter": The standard list filter.
+func (c *ProjectsLocationsAuthorizedViewSetsAuthorizedViewsOperationsListCall) Filter(filter string) *ProjectsLocationsAuthorizedViewSetsAuthorizedViewsOperationsListCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The standard list page
+// size.
+func (c *ProjectsLocationsAuthorizedViewSetsAuthorizedViewsOperationsListCall) PageSize(pageSize int64) *ProjectsLocationsAuthorizedViewSetsAuthorizedViewsOperationsListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": The standard list page
+// token.
+func (c *ProjectsLocationsAuthorizedViewSetsAuthorizedViewsOperationsListCall) PageToken(pageToken string) *ProjectsLocationsAuthorizedViewSetsAuthorizedViewsOperationsListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsAuthorizedViewSetsAuthorizedViewsOperationsListCall) Fields(s ...googleapi.Field) *ProjectsLocationsAuthorizedViewSetsAuthorizedViewsOperationsListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsAuthorizedViewSetsAuthorizedViewsOperationsListCall) IfNoneMatch(entityTag string) *ProjectsLocationsAuthorizedViewSetsAuthorizedViewsOperationsListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsAuthorizedViewSetsAuthorizedViewsOperationsListCall) Context(ctx context.Context) *ProjectsLocationsAuthorizedViewSetsAuthorizedViewsOperationsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsAuthorizedViewSetsAuthorizedViewsOperationsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsAuthorizedViewSetsAuthorizedViewsOperationsListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}/operations")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "contactcenterinsights.projects.locations.authorizedViewSets.authorizedViews.operations.list", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "contactcenterinsights.projects.locations.authorizedViewSets.authorizedViews.operations.list" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleLongrunningListOperationsResponse.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsAuthorizedViewSetsAuthorizedViewsOperationsListCall) Do(opts ...googleapi.CallOption) (*GoogleLongrunningListOperationsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleLongrunningListOperationsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "contactcenterinsights.projects.locations.authorizedViewSets.authorizedViews.operations.list", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsLocationsAuthorizedViewSetsAuthorizedViewsOperationsListCall) Pages(ctx context.Context, f func(*GoogleLongrunningListOperationsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
 }
 
 type ProjectsLocationsConversationsBulkAnalyzeCall struct {

@@ -1968,7 +1968,8 @@ type GoogleCloudAiplatformV1beta1SafetyRating struct {
 	//   "HARM_CATEGORY_HARASSMENT" - The harm category is harassment.
 	//   "HARM_CATEGORY_SEXUALLY_EXPLICIT" - The harm category is sexually explicit
 	// content.
-	//   "HARM_CATEGORY_CIVIC_INTEGRITY" - The harm category is civic integrity.
+	//   "HARM_CATEGORY_CIVIC_INTEGRITY" - Deprecated: Election filter is not
+	// longer supported. The harm category is civic integrity.
 	Category string `json:"category,omitempty"`
 	// Probability: Output only. Harm probability levels in the content.
 	//
@@ -2038,7 +2039,8 @@ type GoogleCloudAiplatformV1beta1SafetySetting struct {
 	//   "HARM_CATEGORY_HARASSMENT" - The harm category is harassment.
 	//   "HARM_CATEGORY_SEXUALLY_EXPLICIT" - The harm category is sexually explicit
 	// content.
-	//   "HARM_CATEGORY_CIVIC_INTEGRITY" - The harm category is civic integrity.
+	//   "HARM_CATEGORY_CIVIC_INTEGRITY" - Deprecated: Election filter is not
+	// longer supported. The harm category is civic integrity.
 	Category string `json:"category,omitempty"`
 	// Method: Optional. Specify if the threshold is used for probability or
 	// severity score. If not specified, the threshold is used for probability

@@ -2565,6 +2565,9 @@ type DiscoveryClient struct {
 	Labels map[string]string `json:"labels,omitempty"`
 	// Name: Output only. Identifier. Full name of this discovery client.
 	Name string `json:"name,omitempty"`
+	// RecommendedVersions: Output only. The recommended versions of the discovery
+	// client.
+	RecommendedVersions []*DiscoveryClientDiscoveryClientRecommendedVersion `json:"recommendedVersions,omitempty"`
 	// ServiceAccount: Required. Service account used by the discovery client for
 	// various operation.
 	ServiceAccount string `json:"serviceAccount,omitempty"`
@@ -2613,6 +2616,31 @@ type DiscoveryClient struct {
 
 func (s DiscoveryClient) MarshalJSON() ([]byte, error) {
 	type NoMethod DiscoveryClient
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// DiscoveryClientDiscoveryClientRecommendedVersion: Discovery client
+// recommended version.
+type DiscoveryClientDiscoveryClientRecommendedVersion struct {
+	// Uri: The URI of the discovery client version.
+	Uri string `json:"uri,omitempty"`
+	// Version: The version of the discovery client.
+	Version string `json:"version,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Uri") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Uri") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s DiscoveryClientDiscoveryClientRecommendedVersion) MarshalJSON() ([]byte, error) {
+	type NoMethod DiscoveryClientDiscoveryClientRecommendedVersion
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 

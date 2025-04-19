@@ -223,7 +223,7 @@ type DataSource struct {
 	// (https://support.google.com/merchants/answer/7045996) data source.
 	MerchantReviewDataSource *MerchantReviewDataSource `json:"merchantReviewDataSource,omitempty"`
 	// Name: Identifier. The name of the data source. Format:
-	// `{datasource.name=accounts/{account}/dataSources/{datasource}}`
+	// `accounts/{account}/dataSources/{datasource}`
 	Name string `json:"name,omitempty"`
 	// PrimaryProductDataSource: The primary data source
 	// (https://support.google.com/merchants/answer/7439058) for local and online
@@ -1579,7 +1579,7 @@ type AccountsDataSourcesPatchCall struct {
 // set in the update mask but not provided in the resource will be deleted.
 //
 //   - name: Identifier. The name of the data source. Format:
-//     `{datasource.name=accounts/{account}/dataSources/{datasource}}`.
+//     `accounts/{account}/dataSources/{datasource}`.
 func (r *AccountsDataSourcesService) Patch(name string, datasource *DataSource) *AccountsDataSourcesPatchCall {
 	c := &AccountsDataSourcesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name

@@ -20622,7 +20622,6 @@ type GoogleCloudDialogflowV2beta1StreamingRecognitionResult struct {
 	// Possible values:
 	//   "MESSAGE_TYPE_UNSPECIFIED" - Not specified. Should never be used.
 	//   "TRANSCRIPT" - Message contains a (possibly partial) transcript.
-	//   "DTMF_DIGITS" - Message contains DTMF digits.
 	//   "END_OF_SINGLE_UTTERANCE" - This event indicates that the server has
 	// detected the end of the user's speech utterance and expects no additional
 	// speech. Therefore, the server will not process additional audio (although it
@@ -20631,6 +20630,7 @@ type GoogleCloudDialogflowV2beta1StreamingRecognitionResult struct {
 	// additional results until the server closes the gRPC connection. This message
 	// is only sent if `single_utterance` was set to `true`, and is not used
 	// otherwise.
+	//   "DTMF_DIGITS" - Message contains DTMF digits.
 	//   "PARTIAL_DTMF_DIGITS" - Message contains DTMF digits. Before a message
 	// with DTMF_DIGITS is sent, a message with PARTIAL_DTMF_DIGITS may be sent
 	// with DTMF digits collected up to the time of sending, which represents an

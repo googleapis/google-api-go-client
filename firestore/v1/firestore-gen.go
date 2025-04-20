@@ -186,6 +186,7 @@ func NewProjectsDatabasesService(s *Service) *ProjectsDatabasesService {
 	rs.CollectionGroups = NewProjectsDatabasesCollectionGroupsService(s)
 	rs.Documents = NewProjectsDatabasesDocumentsService(s)
 	rs.Operations = NewProjectsDatabasesOperationsService(s)
+	rs.UserCreds = NewProjectsDatabasesUserCredsService(s)
 	return rs
 }
 
@@ -199,6 +200,8 @@ type ProjectsDatabasesService struct {
 	Documents *ProjectsDatabasesDocumentsService
 
 	Operations *ProjectsDatabasesOperationsService
+
+	UserCreds *ProjectsDatabasesUserCredsService
 }
 
 func NewProjectsDatabasesBackupSchedulesService(s *Service) *ProjectsDatabasesBackupSchedulesService {
@@ -258,6 +261,15 @@ func NewProjectsDatabasesOperationsService(s *Service) *ProjectsDatabasesOperati
 }
 
 type ProjectsDatabasesOperationsService struct {
+	s *Service
+}
+
+func NewProjectsDatabasesUserCredsService(s *Service) *ProjectsDatabasesUserCredsService {
+	rs := &ProjectsDatabasesUserCredsService{s: s}
+	return rs
+}
+
+type ProjectsDatabasesUserCredsService struct {
 	s *Service
 }
 
@@ -1752,6 +1764,14 @@ type GoogleFirestoreAdminV1Database struct {
 	// CreateTime: Output only. The timestamp at which this database was created.
 	// Databases created before 2016 do not populate create_time.
 	CreateTime string `json:"createTime,omitempty"`
+	// DatabaseEdition: Immutable. The edition of the database.
+	//
+	// Possible values:
+	//   "DATABASE_EDITION_UNSPECIFIED" - Not used.
+	//   "STANDARD" - Standard edition. This is the default setting if not
+	// specified.
+	//   "ENTERPRISE" - Enterprise edition.
+	DatabaseEdition string `json:"databaseEdition,omitempty"`
 	// DeleteProtectionState: State of delete protection for the database.
 	//
 	// Possible values:
@@ -1775,6 +1795,15 @@ type GoogleFirestoreAdminV1Database struct {
 	// fields, and may be sent on update and delete requests to ensure the client
 	// has an up-to-date value before proceeding.
 	Etag string `json:"etag,omitempty"`
+	// FreeTier: Output only. Background: Free tier is the ability of a Firestore
+	// database to use a small amount of resources every day without being charged.
+	// Once usage exceeds the free tier limit further usage is charged. Whether
+	// this database can make use of the free tier. Only one database per project
+	// can be eligible for the free tier. The first (or next) database that is
+	// created in a project without a free tier database will be marked as eligible
+	// for the free tier. Databases that are created while there is a free tier
+	// database will not be eligible for the free tier.
+	FreeTier bool `json:"freeTier,omitempty"`
 	// KeyPrefix: Output only. The key_prefix for this database. This key_prefix is
 	// used, in combination with the project ID ("~") to construct the application
 	// ID that is returned from the Cloud Datastore APIs in Google App Engine first
@@ -1805,6 +1834,10 @@ type GoogleFirestoreAdminV1Database struct {
 	PreviousId string `json:"previousId,omitempty"`
 	// SourceInfo: Output only. Information about the provenance of this database.
 	SourceInfo *GoogleFirestoreAdminV1SourceInfo `json:"sourceInfo,omitempty"`
+	// Tags: Optional. Input only. Immutable. Tag keys/values directly bound to
+	// this resource. For example: "123/environment": "production",
+	// "123/costCenter": "marketing"
+	Tags map[string]string `json:"tags,omitempty"`
 	// Type: The type of the database. See
 	// https://cloud.google.com/datastore/docs/firestore-or-datastore for
 	// information about how to choose.
@@ -1850,6 +1883,16 @@ func (s GoogleFirestoreAdminV1Database) MarshalJSON() ([]byte, error) {
 // GoogleFirestoreAdminV1DeleteDatabaseMetadata: Metadata related to the delete
 // database operation.
 type GoogleFirestoreAdminV1DeleteDatabaseMetadata struct {
+}
+
+// GoogleFirestoreAdminV1DisableUserCredsRequest: The request for
+// FirestoreAdmin.DisableUserCreds.
+type GoogleFirestoreAdminV1DisableUserCredsRequest struct {
+}
+
+// GoogleFirestoreAdminV1EnableUserCredsRequest: The request for
+// FirestoreAdmin.EnableUserCreds.
+type GoogleFirestoreAdminV1EnableUserCredsRequest struct {
 }
 
 // GoogleFirestoreAdminV1EncryptionConfig: Encryption configuration for a new
@@ -2219,7 +2262,24 @@ type GoogleFirestoreAdminV1Index struct {
 	// This is the default.
 	//   "DATASTORE_MODE_API" - The index can only be used by the Firestore in
 	// Datastore Mode query API.
+	//   "MONGODB_COMPATIBLE_API" - The index can only be used by the
+	// MONGODB_COMPATIBLE_API.
 	ApiScope string `json:"apiScope,omitempty"`
+	// Density: Immutable. The density configuration of the index.
+	//
+	// Possible values:
+	//   "DENSITY_UNSPECIFIED" - Unspecified. It will use database default setting.
+	// This value is input only.
+	//   "SPARSE_ALL" - In order for an index entry to be added, the document must
+	// contain all fields specified in the index. This is the only allowed value
+	// for indexes having ApiScope `ANY_API` and `DATASTORE_MODE_API`.
+	//   "SPARSE_ANY" - In order for an index entry to be added, the document must
+	// contain at least one of the fields specified in the index. Non-existent
+	// fields are treated as having a NULL value when generating index entries.
+	//   "DENSE" - An index entry will be added regardless of whether the document
+	// contains any of the fields specified in the index. Non-existent fields are
+	// treated as having a NULL value when generating index entries.
+	Density string `json:"density,omitempty"`
 	// Fields: The fields supported by this index. For composite indexes, this
 	// requires a minimum of 2 and a maximum of 100 fields. The last field entry is
 	// always for the field path `__name__`. If, on creation, `__name__` was not
@@ -2230,6 +2290,14 @@ type GoogleFirestoreAdminV1Index struct {
 	// exactly one entry with a field path equal to the field path of the
 	// associated field.
 	Fields []*GoogleFirestoreAdminV1IndexField `json:"fields,omitempty"`
+	// Multikey: Optional. Whether the index is multikey. By default, the index is
+	// not multikey. For non-multikey indexes, none of the paths in the index
+	// definition reach or traverse an array, except via an explicit array index.
+	// For multikey indexes, at most one of the paths in the index definition reach
+	// or traverse an array, except via an explicit array index. Violations will
+	// result in errors. Note this field only applies to index with
+	// MONGODB_COMPATIBLE_API ApiScope.
+	Multikey bool `json:"multikey,omitempty"`
 	// Name: Output only. A server defined name for this index. The form of this
 	// name for composite indexes will be:
 	// `projects/{project_id}/databases/{database_id}/collectionGroups/{collection_i
@@ -2256,6 +2324,8 @@ type GoogleFirestoreAdminV1Index struct {
 	//   "COLLECTION_RECURSIVE" - Include all the collections's ancestor in the
 	// index. Only available for Datastore Mode databases.
 	QueryScope string `json:"queryScope,omitempty"`
+	// ShardCount: Optional. The number of shards for the index.
+	ShardCount int64 `json:"shardCount,omitempty"`
 	// State: Output only. The serving state of the index.
 	//
 	// Possible values:
@@ -2606,6 +2676,32 @@ func (s GoogleFirestoreAdminV1ListIndexesResponse) MarshalJSON() ([]byte, error)
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GoogleFirestoreAdminV1ListUserCredsResponse: The response for
+// FirestoreAdmin.ListUserCreds.
+type GoogleFirestoreAdminV1ListUserCredsResponse struct {
+	// UserCreds: The user creds for the database.
+	UserCreds []*GoogleFirestoreAdminV1UserCreds `json:"userCreds,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "UserCreds") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "UserCreds") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleFirestoreAdminV1ListUserCredsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleFirestoreAdminV1ListUserCredsResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GoogleFirestoreAdminV1LocationMetadata: The metadata message for
 // google.cloud.location.Location.metadata.
 type GoogleFirestoreAdminV1LocationMetadata struct {
@@ -2634,6 +2730,35 @@ type GoogleFirestoreAdminV1Progress struct {
 
 func (s GoogleFirestoreAdminV1Progress) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleFirestoreAdminV1Progress
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleFirestoreAdminV1ResetUserPasswordRequest: The request for
+// FirestoreAdmin.ResetUserPassword.
+type GoogleFirestoreAdminV1ResetUserPasswordRequest struct {
+}
+
+// GoogleFirestoreAdminV1ResourceIdentity: Describes a Resource Identity
+// principal.
+type GoogleFirestoreAdminV1ResourceIdentity struct {
+	// Principal: Output only. Principal identifier string. See:
+	// https://cloud.google.com/iam/docs/principal-identifiers
+	Principal string `json:"principal,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Principal") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Principal") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleFirestoreAdminV1ResourceIdentity) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleFirestoreAdminV1ResourceIdentity
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -2704,6 +2829,10 @@ type GoogleFirestoreAdminV1RestoreDatabaseRequest struct {
 	// database. If this field is not specified, the restored database will use the
 	// same encryption configuration as the backup, namely use_source_encryption.
 	EncryptionConfig *GoogleFirestoreAdminV1EncryptionConfig `json:"encryptionConfig,omitempty"`
+	// Tags: Optional. Immutable. Tags to be bound to the restored database. The
+	// tags should be provided in the format of `tagKeys/{tag_key_id} ->
+	// tagValues/{tag_value_id}`.
+	Tags map[string]string `json:"tags,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Backup") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
 	// omitted from API requests. See
@@ -2855,6 +2984,50 @@ func (s GoogleFirestoreAdminV1TtlConfigDelta) MarshalJSON() ([]byte, error) {
 // GoogleFirestoreAdminV1UpdateDatabaseMetadata: Metadata related to the update
 // database operation.
 type GoogleFirestoreAdminV1UpdateDatabaseMetadata struct {
+}
+
+// GoogleFirestoreAdminV1UserCreds: A Cloud Firestore User Creds.
+type GoogleFirestoreAdminV1UserCreds struct {
+	// CreateTime: Output only. The time the user creds were created.
+	CreateTime string `json:"createTime,omitempty"`
+	// Name: Identifier. The resource name of the UserCreds. Format:
+	// `projects/{project}/databases/{database}/userCreds/{user_creds}`
+	Name string `json:"name,omitempty"`
+	// ResourceIdentity: Resource Identity descriptor.
+	ResourceIdentity *GoogleFirestoreAdminV1ResourceIdentity `json:"resourceIdentity,omitempty"`
+	// SecurePassword: Output only. The plaintext server-generated password for the
+	// user creds. Only populated in responses for CreateUserCreds and
+	// ResetUserPassword.
+	SecurePassword string `json:"securePassword,omitempty"`
+	// State: Output only. Whether the user creds are enabled or disabled. Defaults
+	// to ENABLED on creation.
+	//
+	// Possible values:
+	//   "STATE_UNSPECIFIED" - The default value. Should not be used.
+	//   "ENABLED" - The user creds are enabled.
+	//   "DISABLED" - The user creds are disabled.
+	State string `json:"state,omitempty"`
+	// UpdateTime: Output only. The time the user creds were last updated.
+	UpdateTime string `json:"updateTime,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "CreateTime") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CreateTime") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleFirestoreAdminV1UserCreds) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleFirestoreAdminV1UserCreds
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleFirestoreAdminV1VectorConfig: The index configuration to support
@@ -9337,6 +9510,759 @@ func (c *ProjectsDatabasesOperationsListCall) Pages(ctx context.Context, f func(
 	}
 }
 
+type ProjectsDatabasesUserCredsCreateCall struct {
+	s                               *Service
+	parent                          string
+	googlefirestoreadminv1usercreds *GoogleFirestoreAdminV1UserCreds
+	urlParams_                      gensupport.URLParams
+	ctx_                            context.Context
+	header_                         http.Header
+}
+
+// Create: Create a user creds.
+//
+//   - parent: A parent name of the form
+//     `projects/{project_id}/databases/{database_id}`.
+func (r *ProjectsDatabasesUserCredsService) Create(parent string, googlefirestoreadminv1usercreds *GoogleFirestoreAdminV1UserCreds) *ProjectsDatabasesUserCredsCreateCall {
+	c := &ProjectsDatabasesUserCredsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.googlefirestoreadminv1usercreds = googlefirestoreadminv1usercreds
+	return c
+}
+
+// UserCredsId sets the optional parameter "userCredsId": Required. The ID to
+// use for the user creds, which will become the final component of the user
+// creds's resource name. This value should be 4-63 characters. Valid
+// characters are /a-z-/ with first character a letter and the last a letter or
+// a number. Must not be UUID-like /[0-9a-f]{8}(-[0-9a-f]{4}){3}-[0-9a-f]{12}/.
+func (c *ProjectsDatabasesUserCredsCreateCall) UserCredsId(userCredsId string) *ProjectsDatabasesUserCredsCreateCall {
+	c.urlParams_.Set("userCredsId", userCredsId)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsDatabasesUserCredsCreateCall) Fields(s ...googleapi.Field) *ProjectsDatabasesUserCredsCreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsDatabasesUserCredsCreateCall) Context(ctx context.Context) *ProjectsDatabasesUserCredsCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsDatabasesUserCredsCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsDatabasesUserCredsCreateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googlefirestoreadminv1usercreds)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/userCreds")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "firestore.projects.databases.userCreds.create", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "firestore.projects.databases.userCreds.create" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleFirestoreAdminV1UserCreds.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsDatabasesUserCredsCreateCall) Do(opts ...googleapi.CallOption) (*GoogleFirestoreAdminV1UserCreds, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleFirestoreAdminV1UserCreds{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "firestore.projects.databases.userCreds.create", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsDatabasesUserCredsDeleteCall struct {
+	s          *Service
+	name       string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Delete: Deletes a user creds.
+//
+//   - name: A name of the form
+//     `projects/{project_id}/databases/{database_id}/userCreds/{user_creds_id}`.
+func (r *ProjectsDatabasesUserCredsService) Delete(name string) *ProjectsDatabasesUserCredsDeleteCall {
+	c := &ProjectsDatabasesUserCredsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsDatabasesUserCredsDeleteCall) Fields(s ...googleapi.Field) *ProjectsDatabasesUserCredsDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsDatabasesUserCredsDeleteCall) Context(ctx context.Context) *ProjectsDatabasesUserCredsDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsDatabasesUserCredsDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsDatabasesUserCredsDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("DELETE", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "firestore.projects.databases.userCreds.delete", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "firestore.projects.databases.userCreds.delete" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Empty.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsDatabasesUserCredsDeleteCall) Do(opts ...googleapi.CallOption) (*Empty, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Empty{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "firestore.projects.databases.userCreds.delete", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsDatabasesUserCredsDisableCall struct {
+	s                                             *Service
+	name                                          string
+	googlefirestoreadminv1disableusercredsrequest *GoogleFirestoreAdminV1DisableUserCredsRequest
+	urlParams_                                    gensupport.URLParams
+	ctx_                                          context.Context
+	header_                                       http.Header
+}
+
+// Disable: Disables a user creds. No-op if the user creds are already
+// disabled.
+//
+//   - name: A name of the form
+//     `projects/{project_id}/databases/{database_id}/userCreds/{user_creds_id}`.
+func (r *ProjectsDatabasesUserCredsService) Disable(name string, googlefirestoreadminv1disableusercredsrequest *GoogleFirestoreAdminV1DisableUserCredsRequest) *ProjectsDatabasesUserCredsDisableCall {
+	c := &ProjectsDatabasesUserCredsDisableCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.googlefirestoreadminv1disableusercredsrequest = googlefirestoreadminv1disableusercredsrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsDatabasesUserCredsDisableCall) Fields(s ...googleapi.Field) *ProjectsDatabasesUserCredsDisableCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsDatabasesUserCredsDisableCall) Context(ctx context.Context) *ProjectsDatabasesUserCredsDisableCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsDatabasesUserCredsDisableCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsDatabasesUserCredsDisableCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googlefirestoreadminv1disableusercredsrequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}:disable")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "firestore.projects.databases.userCreds.disable", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "firestore.projects.databases.userCreds.disable" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleFirestoreAdminV1UserCreds.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsDatabasesUserCredsDisableCall) Do(opts ...googleapi.CallOption) (*GoogleFirestoreAdminV1UserCreds, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleFirestoreAdminV1UserCreds{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "firestore.projects.databases.userCreds.disable", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsDatabasesUserCredsEnableCall struct {
+	s                                            *Service
+	name                                         string
+	googlefirestoreadminv1enableusercredsrequest *GoogleFirestoreAdminV1EnableUserCredsRequest
+	urlParams_                                   gensupport.URLParams
+	ctx_                                         context.Context
+	header_                                      http.Header
+}
+
+// Enable: Enables a user creds. No-op if the user creds are already enabled.
+//
+//   - name: A name of the form
+//     `projects/{project_id}/databases/{database_id}/userCreds/{user_creds_id}`.
+func (r *ProjectsDatabasesUserCredsService) Enable(name string, googlefirestoreadminv1enableusercredsrequest *GoogleFirestoreAdminV1EnableUserCredsRequest) *ProjectsDatabasesUserCredsEnableCall {
+	c := &ProjectsDatabasesUserCredsEnableCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.googlefirestoreadminv1enableusercredsrequest = googlefirestoreadminv1enableusercredsrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsDatabasesUserCredsEnableCall) Fields(s ...googleapi.Field) *ProjectsDatabasesUserCredsEnableCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsDatabasesUserCredsEnableCall) Context(ctx context.Context) *ProjectsDatabasesUserCredsEnableCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsDatabasesUserCredsEnableCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsDatabasesUserCredsEnableCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googlefirestoreadminv1enableusercredsrequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}:enable")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "firestore.projects.databases.userCreds.enable", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "firestore.projects.databases.userCreds.enable" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleFirestoreAdminV1UserCreds.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsDatabasesUserCredsEnableCall) Do(opts ...googleapi.CallOption) (*GoogleFirestoreAdminV1UserCreds, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleFirestoreAdminV1UserCreds{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "firestore.projects.databases.userCreds.enable", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsDatabasesUserCredsGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Gets a user creds resource. Note that the returned resource does not
+// contain the secret value itself.
+//
+//   - name: A name of the form
+//     `projects/{project_id}/databases/{database_id}/userCreds/{user_creds_id}`.
+func (r *ProjectsDatabasesUserCredsService) Get(name string) *ProjectsDatabasesUserCredsGetCall {
+	c := &ProjectsDatabasesUserCredsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsDatabasesUserCredsGetCall) Fields(s ...googleapi.Field) *ProjectsDatabasesUserCredsGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsDatabasesUserCredsGetCall) IfNoneMatch(entityTag string) *ProjectsDatabasesUserCredsGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsDatabasesUserCredsGetCall) Context(ctx context.Context) *ProjectsDatabasesUserCredsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsDatabasesUserCredsGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsDatabasesUserCredsGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "firestore.projects.databases.userCreds.get", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "firestore.projects.databases.userCreds.get" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleFirestoreAdminV1UserCreds.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsDatabasesUserCredsGetCall) Do(opts ...googleapi.CallOption) (*GoogleFirestoreAdminV1UserCreds, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleFirestoreAdminV1UserCreds{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "firestore.projects.databases.userCreds.get", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsDatabasesUserCredsListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: List all user creds in the database. Note that the returned resource
+// does not contain the secret value itself.
+//
+//   - parent: A parent database name of the form
+//     `projects/{project_id}/databases/{database_id}`.
+func (r *ProjectsDatabasesUserCredsService) List(parent string) *ProjectsDatabasesUserCredsListCall {
+	c := &ProjectsDatabasesUserCredsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsDatabasesUserCredsListCall) Fields(s ...googleapi.Field) *ProjectsDatabasesUserCredsListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsDatabasesUserCredsListCall) IfNoneMatch(entityTag string) *ProjectsDatabasesUserCredsListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsDatabasesUserCredsListCall) Context(ctx context.Context) *ProjectsDatabasesUserCredsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsDatabasesUserCredsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsDatabasesUserCredsListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/userCreds")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "firestore.projects.databases.userCreds.list", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "firestore.projects.databases.userCreds.list" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleFirestoreAdminV1ListUserCredsResponse.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsDatabasesUserCredsListCall) Do(opts ...googleapi.CallOption) (*GoogleFirestoreAdminV1ListUserCredsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleFirestoreAdminV1ListUserCredsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "firestore.projects.databases.userCreds.list", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsDatabasesUserCredsResetPasswordCall struct {
+	s                                              *Service
+	name                                           string
+	googlefirestoreadminv1resetuserpasswordrequest *GoogleFirestoreAdminV1ResetUserPasswordRequest
+	urlParams_                                     gensupport.URLParams
+	ctx_                                           context.Context
+	header_                                        http.Header
+}
+
+// ResetPassword: Resets the password of a user creds.
+//
+//   - name: A name of the form
+//     `projects/{project_id}/databases/{database_id}/userCreds/{user_creds_id}`.
+func (r *ProjectsDatabasesUserCredsService) ResetPassword(name string, googlefirestoreadminv1resetuserpasswordrequest *GoogleFirestoreAdminV1ResetUserPasswordRequest) *ProjectsDatabasesUserCredsResetPasswordCall {
+	c := &ProjectsDatabasesUserCredsResetPasswordCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.googlefirestoreadminv1resetuserpasswordrequest = googlefirestoreadminv1resetuserpasswordrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsDatabasesUserCredsResetPasswordCall) Fields(s ...googleapi.Field) *ProjectsDatabasesUserCredsResetPasswordCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsDatabasesUserCredsResetPasswordCall) Context(ctx context.Context) *ProjectsDatabasesUserCredsResetPasswordCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsDatabasesUserCredsResetPasswordCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsDatabasesUserCredsResetPasswordCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googlefirestoreadminv1resetuserpasswordrequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}:resetPassword")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "firestore.projects.databases.userCreds.resetPassword", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "firestore.projects.databases.userCreds.resetPassword" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleFirestoreAdminV1UserCreds.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsDatabasesUserCredsResetPasswordCall) Do(opts ...googleapi.CallOption) (*GoogleFirestoreAdminV1UserCreds, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleFirestoreAdminV1UserCreds{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "firestore.projects.databases.userCreds.resetPassword", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
 type ProjectsLocationsGetCall struct {
 	s            *Service
 	name         string
@@ -9461,6 +10387,14 @@ type ProjectsLocationsListCall struct {
 func (r *ProjectsLocationsService) List(name string) *ProjectsLocationsListCall {
 	c := &ProjectsLocationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
+	return c
+}
+
+// ExtraLocationTypes sets the optional parameter "extraLocationTypes": A list
+// of extra location types that should be used as conditions for controlling
+// the visibility of the locations.
+func (c *ProjectsLocationsListCall) ExtraLocationTypes(extraLocationTypes ...string) *ProjectsLocationsListCall {
+	c.urlParams_.SetMulti("extraLocationTypes", append([]string{}, extraLocationTypes...))
 	return c
 }
 

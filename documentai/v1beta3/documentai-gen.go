@@ -2790,6 +2790,9 @@ type GoogleCloudDocumentaiV1beta3Document struct {
 	// bytes. Note: As with all `bytes` fields, protobuffers use a pure binary
 	// representation, whereas JSON representations use base64.
 	Content string `json:"content,omitempty"`
+	// Docid: Optional. An internal identifier for document. Should be loggable (no
+	// PII).
+	Docid string `json:"docid,omitempty"`
 	// DocumentLayout: Parsed layout of the document.
 	DocumentLayout *GoogleCloudDocumentaiV1beta3DocumentDocumentLayout `json:"documentLayout,omitempty"`
 	// Entities: A list of entities detected on Document.text. For document shards,
@@ -3002,6 +3005,8 @@ func (s GoogleCloudDocumentaiV1beta3DocumentDocumentLayout) MarshalJSON() ([]byt
 type GoogleCloudDocumentaiV1beta3DocumentDocumentLayoutDocumentLayoutBlock struct {
 	// BlockId: ID of the block.
 	BlockId string `json:"blockId,omitempty"`
+	// BoundingBox: Identifies the bounding box for the block.
+	BoundingBox *GoogleCloudDocumentaiV1beta3BoundingPoly `json:"boundingBox,omitempty"`
 	// ListBlock: Block consisting of list content/structure.
 	ListBlock *GoogleCloudDocumentaiV1beta3DocumentDocumentLayoutDocumentLayoutBlockLayoutListBlock `json:"listBlock,omitempty"`
 	// PageSpan: Page span of the block.

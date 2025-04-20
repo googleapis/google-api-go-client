@@ -2590,31 +2590,6 @@ func (s ListAppGatewaysResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// ShouldThrottleResponse: Response message for calling ShouldThrottle
-type ShouldThrottleResponse struct {
-	// ShouldThrottle: Whether the port should be throttled
-	ShouldThrottle bool `json:"shouldThrottle,omitempty"`
-
-	// ServerResponse contains the HTTP response code and headers from the server.
-	googleapi.ServerResponse `json:"-"`
-	// ForceSendFields is a list of field names (e.g. "ShouldThrottle") to
-	// unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
-	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "ShouldThrottle") to include in
-	// API requests with the JSON null value. By default, fields with empty values
-	// are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
-	NullFields []string `json:"-"`
-}
-
-func (s ShouldThrottleResponse) MarshalJSON() ([]byte, error) {
-	type NoMethod ShouldThrottleResponse
-	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
-}
-
 // Tunnelv1ProtoTunnelerError: TunnelerError is an error proto for errors
 // returned by the connection manager.
 type Tunnelv1ProtoTunnelerError struct {
@@ -3611,6 +3586,14 @@ type ProjectsLocationsListCall struct {
 func (r *ProjectsLocationsService) List(name string) *ProjectsLocationsListCall {
 	c := &ProjectsLocationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
+	return c
+}
+
+// ExtraLocationTypes sets the optional parameter "extraLocationTypes": A list
+// of extra location types that should be used as conditions for controlling
+// the visibility of the locations.
+func (c *ProjectsLocationsListCall) ExtraLocationTypes(extraLocationTypes ...string) *ProjectsLocationsListCall {
+	c.urlParams_.SetMulti("extraLocationTypes", append([]string{}, extraLocationTypes...))
 	return c
 }
 
@@ -6959,130 +6942,6 @@ func (c *ProjectsLocationsAppGatewaysSetIamPolicyCall) Do(opts ...googleapi.Call
 		return nil, err
 	}
 	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "beyondcorp.projects.locations.appGateways.setIamPolicy", "response", internallog.HTTPResponse(res, b))
-	return ret, nil
-}
-
-type ProjectsLocationsAppGatewaysShouldThrottleCall struct {
-	s            *Service
-	name         string
-	urlParams_   gensupport.URLParams
-	ifNoneMatch_ string
-	ctx_         context.Context
-	header_      http.Header
-}
-
-// ShouldThrottle: Calls the Bouncer method ShouldThrottle to check if a
-// request should be throttled.
-//
-// - name: Name of the resource.
-func (r *ProjectsLocationsAppGatewaysService) ShouldThrottle(name string) *ProjectsLocationsAppGatewaysShouldThrottleCall {
-	c := &ProjectsLocationsAppGatewaysShouldThrottleCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.name = name
-	return c
-}
-
-// Port sets the optional parameter "port": The port that is being throttled
-func (c *ProjectsLocationsAppGatewaysShouldThrottleCall) Port(port int64) *ProjectsLocationsAppGatewaysShouldThrottleCall {
-	c.urlParams_.Set("port", fmt.Sprint(port))
-	return c
-}
-
-// RequestedAmount sets the optional parameter "requestedAmount": The current
-// throughput through the port (mbps)
-func (c *ProjectsLocationsAppGatewaysShouldThrottleCall) RequestedAmount(requestedAmount int64) *ProjectsLocationsAppGatewaysShouldThrottleCall {
-	c.urlParams_.Set("requestedAmount", fmt.Sprint(requestedAmount))
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
-// details.
-func (c *ProjectsLocationsAppGatewaysShouldThrottleCall) Fields(s ...googleapi.Field) *ProjectsLocationsAppGatewaysShouldThrottleCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// IfNoneMatch sets an optional parameter which makes the operation fail if the
-// object's ETag matches the given value. This is useful for getting updates
-// only after the object has changed since the last request.
-func (c *ProjectsLocationsAppGatewaysShouldThrottleCall) IfNoneMatch(entityTag string) *ProjectsLocationsAppGatewaysShouldThrottleCall {
-	c.ifNoneMatch_ = entityTag
-	return c
-}
-
-// Context sets the context to be used in this call's Do method.
-func (c *ProjectsLocationsAppGatewaysShouldThrottleCall) Context(ctx context.Context) *ProjectsLocationsAppGatewaysShouldThrottleCall {
-	c.ctx_ = ctx
-	return c
-}
-
-// Header returns a http.Header that can be modified by the caller to add
-// headers to the request.
-func (c *ProjectsLocationsAppGatewaysShouldThrottleCall) Header() http.Header {
-	if c.header_ == nil {
-		c.header_ = make(http.Header)
-	}
-	return c.header_
-}
-
-func (c *ProjectsLocationsAppGatewaysShouldThrottleCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
-	if c.ifNoneMatch_ != "" {
-		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
-	}
-	c.urlParams_.Set("alt", alt)
-	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}:shouldThrottle")
-	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, nil)
-	if err != nil {
-		return nil, err
-	}
-	req.Header = reqHeaders
-	googleapi.Expand(req.URL, map[string]string{
-		"name": c.name,
-	})
-	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "beyondcorp.projects.locations.appGateways.shouldThrottle", "request", internallog.HTTPRequest(req, nil))
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
-}
-
-// Do executes the "beyondcorp.projects.locations.appGateways.shouldThrottle" call.
-// Any non-2xx status code is an error. Response headers are in either
-// *ShouldThrottleResponse.ServerResponse.Header or (if a response was returned
-// at all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
-// check whether the returned error was because http.StatusNotModified was
-// returned.
-func (c *ProjectsLocationsAppGatewaysShouldThrottleCall) Do(opts ...googleapi.CallOption) (*ShouldThrottleResponse, error) {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if res != nil && res.StatusCode == http.StatusNotModified {
-		if res.Body != nil {
-			res.Body.Close()
-		}
-		return nil, gensupport.WrapError(&googleapi.Error{
-			Code:   res.StatusCode,
-			Header: res.Header,
-		})
-	}
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, gensupport.WrapError(err)
-	}
-	ret := &ShouldThrottleResponse{
-		ServerResponse: googleapi.ServerResponse{
-			Header:         res.Header,
-			HTTPStatusCode: res.StatusCode,
-		},
-	}
-	target := &ret
-	b, err := gensupport.DecodeResponseBytes(target, res)
-	if err != nil {
-		return nil, err
-	}
-	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "beyondcorp.projects.locations.appGateways.shouldThrottle", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 

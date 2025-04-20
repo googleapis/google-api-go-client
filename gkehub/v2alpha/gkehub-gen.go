@@ -1587,6 +1587,8 @@ type FeatureSpec struct {
 	Origin *Origin `json:"origin,omitempty"`
 	// Policycontroller: Policycontroller-specific FeatureSpec.
 	Policycontroller *PolicyControllerSpec `json:"policycontroller,omitempty"`
+	// Rbacrolebindingactuation: Rbacrolebindingactuation-specific FeatureSpec.
+	Rbacrolebindingactuation *RBACRoleBindingActuationSpec `json:"rbacrolebindingactuation,omitempty"`
 	// Servicemesh: ServiceMesh Feature Spec.
 	Servicemesh *ServiceMeshSpec `json:"servicemesh,omitempty"`
 	// Workloadcertificate: Workloadcertificate-specific FeatureSpec.
@@ -1624,6 +1626,8 @@ type FeatureState struct {
 	Metering *MeteringState `json:"metering,omitempty"`
 	// Policycontroller: Policy Controller state
 	Policycontroller *PolicyControllerState `json:"policycontroller,omitempty"`
+	// Rbacrolebindingactuation: RBAC Role Binding Actuation state
+	Rbacrolebindingactuation *RBACRoleBindingActuationState `json:"rbacrolebindingactuation,omitempty"`
 	// Servicemesh: Service mesh state
 	Servicemesh *ServiceMeshState `json:"servicemesh,omitempty"`
 	// State: The high-level state of this MembershipFeature.
@@ -3028,6 +3032,73 @@ type PolicyControllerToleration struct {
 
 func (s PolicyControllerToleration) MarshalJSON() ([]byte, error) {
 	type NoMethod PolicyControllerToleration
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// RBACRoleBindingActuationRBACRoleBindingState: RBACRoleBindingState is the
+// status of an RBACRoleBinding which exists on a membership.
+type RBACRoleBindingActuationRBACRoleBindingState struct {
+	// Description: The reason for the failure.
+	Description string `json:"description,omitempty"`
+	// State: Output only. The state of the RBACRoleBinding.
+	//
+	// Possible values:
+	//   "ROLE_BINDING_STATE_UNSPECIFIED" - Unspecified state.
+	//   "OK" - RBACRoleBinding is created properly on the cluster.
+	//   "CUSTOM_ROLE_MISSING_FROM_CLUSTER" - The RBACRoleBinding was created on
+	// the cluster but the specified custom role does not exist on the cluster,
+	// hence the RBACRoleBinding has no effect.
+	State string `json:"state,omitempty"`
+	// UpdateTime: The time the RBACRoleBinding status was last updated.
+	UpdateTime string `json:"updateTime,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Description") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Description") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s RBACRoleBindingActuationRBACRoleBindingState) MarshalJSON() ([]byte, error) {
+	type NoMethod RBACRoleBindingActuationRBACRoleBindingState
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// RBACRoleBindingActuationSpec: **RBAC RoleBinding Actuation**: The
+// membership-specific input for RBACRoleBindingActuation feature.
+type RBACRoleBindingActuationSpec struct {
+}
+
+// RBACRoleBindingActuationState: **RBAC RoleBinding Actuation**: A
+// membership-specific Feature state for the RBACRoleBindingActuation fleet
+// feature.
+type RBACRoleBindingActuationState struct {
+	// RbacrolebindingStates: Output only. The state of RBACRoleBindings using
+	// custom roles that exist on the cluster, keyed by RBACRoleBinding resource
+	// name with format:
+	// projects/{project}/locations/{location}/scopes/{scope}/rbacrolebindings/{rbac
+	// rolebinding}.
+	RbacrolebindingStates map[string]RBACRoleBindingActuationRBACRoleBindingState `json:"rbacrolebindingStates,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "RbacrolebindingStates") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "RbacrolebindingStates") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s RBACRoleBindingActuationState) MarshalJSON() ([]byte, error) {
+	type NoMethod RBACRoleBindingActuationState
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 

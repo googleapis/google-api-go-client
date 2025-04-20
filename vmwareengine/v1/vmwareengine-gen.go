@@ -802,6 +802,10 @@ func (s Cluster) MarshalJSON() ([]byte, error) {
 // Constraints: Constraints to be applied while editing a schedule. These
 // constraints ensure that `Upgrade` specific requirements are met.
 type Constraints struct {
+	// DisallowedIntervals: Output only. Output Only. A list of intervals in which
+	// maintenance windows are not allowed. Any time window that overlaps with any
+	// of these intervals will be considered invalid.
+	DisallowedIntervals []*WeeklyTimeInterval `json:"disallowedIntervals,omitempty"`
 	// MinHoursDay: Output only. Minimum number of hours must be allotted for the
 	// upgrade activities for each selected day. This is a minimum; the upgrade
 	// schedule can allot more hours for the given day.
@@ -813,15 +817,15 @@ type Constraints struct {
 	// RescheduleDateRange: Output only. Output Only. The user can only reschedule
 	// an upgrade that starts within this range.
 	RescheduleDateRange *Interval `json:"rescheduleDateRange,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "MinHoursDay") to
+	// ForceSendFields is a list of field names (e.g. "DisallowedIntervals") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "MinHoursDay") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
+	// NullFields is a list of field names (e.g. "DisallowedIntervals") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -3898,6 +3902,57 @@ func (s VpcNetwork) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// WeeklyTimeInterval: Represents a time interval, spanning across days of the
+// week. Until local timezones are supported, this interval is in UTC.
+type WeeklyTimeInterval struct {
+	// EndDay: Output only. The day on which the interval ends. Can be same as
+	// start day.
+	//
+	// Possible values:
+	//   "DAY_OF_WEEK_UNSPECIFIED" - The day of the week is unspecified.
+	//   "MONDAY" - Monday
+	//   "TUESDAY" - Tuesday
+	//   "WEDNESDAY" - Wednesday
+	//   "THURSDAY" - Thursday
+	//   "FRIDAY" - Friday
+	//   "SATURDAY" - Saturday
+	//   "SUNDAY" - Sunday
+	EndDay string `json:"endDay,omitempty"`
+	// EndTime: Output only. The time on the end day at which the interval ends.
+	EndTime *TimeOfDay `json:"endTime,omitempty"`
+	// StartDay: Output only. The day on which the interval starts.
+	//
+	// Possible values:
+	//   "DAY_OF_WEEK_UNSPECIFIED" - The day of the week is unspecified.
+	//   "MONDAY" - Monday
+	//   "TUESDAY" - Tuesday
+	//   "WEDNESDAY" - Wednesday
+	//   "THURSDAY" - Thursday
+	//   "FRIDAY" - Friday
+	//   "SATURDAY" - Saturday
+	//   "SUNDAY" - Sunday
+	StartDay string `json:"startDay,omitempty"`
+	// StartTime: Output only. The time on the start day at which the interval
+	// starts.
+	StartTime *TimeOfDay `json:"startTime,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "EndDay") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "EndDay") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s WeeklyTimeInterval) MarshalJSON() ([]byte, error) {
+	type NoMethod WeeklyTimeInterval
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 type ProjectsLocationsGetCall struct {
 	s            *Service
 	name         string
@@ -4139,6 +4194,14 @@ type ProjectsLocationsListCall struct {
 func (r *ProjectsLocationsService) List(name string) *ProjectsLocationsListCall {
 	c := &ProjectsLocationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
+	return c
+}
+
+// ExtraLocationTypes sets the optional parameter "extraLocationTypes": A list
+// of extra location types that should be used as conditions for controlling
+// the visibility of the locations.
+func (c *ProjectsLocationsListCall) ExtraLocationTypes(extraLocationTypes ...string) *ProjectsLocationsListCall {
+	c.urlParams_.SetMulti("extraLocationTypes", append([]string{}, extraLocationTypes...))
 	return c
 }
 

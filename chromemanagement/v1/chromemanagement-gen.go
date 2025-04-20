@@ -7535,7 +7535,8 @@ func (c *CustomersReportsFindInstalledAppDevicesCall) AppId(appId string) *Custo
 	return c
 }
 
-// AppType sets the optional parameter "appType": Type of the app.
+// AppType sets the optional parameter "appType": Type of the app.  If not
+// provided, an app type will be inferred from the format of the app ID.
 //
 // Possible values:
 //

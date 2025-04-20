@@ -1139,7 +1139,7 @@ type CanaryDeployment struct {
 	// If this is not configured, there will be no predeploy job for this phase.
 	Predeploy *Predeploy `json:"predeploy,omitempty"`
 	// Verify: Optional. Whether to run verify tests after each percentage
-	// deployment.
+	// deployment via `skaffold verify`.
 	Verify bool `json:"verify,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Percentages") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -2006,10 +2006,10 @@ type DeployPolicy struct {
 	// Description: Optional. Description of the `DeployPolicy`. Max length is 255
 	// characters.
 	Description string `json:"description,omitempty"`
-	// Etag: The weak etag of the `Automation` resource. This checksum is computed
-	// by the server based on the value of other fields, and may be sent on update
-	// and delete requests to ensure the client has an up-to-date value before
-	// proceeding.
+	// Etag: The weak etag of the `DeployPolicy` resource. This checksum is
+	// computed by the server based on the value of other fields, and may be sent
+	// on update and delete requests to ensure the client has an up-to-date value
+	// before proceeding.
 	Etag string `json:"etag,omitempty"`
 	// Labels: Labels are attributes that can be set and used by both the user and
 	// by Cloud Deploy. Labels must meet the following constraints: * Keys and
@@ -3300,7 +3300,8 @@ type PhaseConfig struct {
 	// this phase. These are in addition to the profiles list specified in the
 	// `DeliveryPipeline` stage.
 	Profiles []string `json:"profiles,omitempty"`
-	// Verify: Optional. Whether to run verify tests after the deployment.
+	// Verify: Optional. Whether to run verify tests after the deployment via
+	// `skaffold verify`.
 	Verify bool `json:"verify,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Percentage") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -5218,7 +5219,7 @@ type Standard struct {
 	// Predeploy: Optional. Configuration for the predeploy job. If this is not
 	// configured, predeploy job will not be present.
 	Predeploy *Predeploy `json:"predeploy,omitempty"`
-	// Verify: Optional. Whether to verify a deployment.
+	// Verify: Optional. Whether to verify a deployment via `skaffold verify`.
 	Verify bool `json:"verify,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Postdeploy") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -6216,6 +6217,14 @@ type ProjectsLocationsListCall struct {
 func (r *ProjectsLocationsService) List(name string) *ProjectsLocationsListCall {
 	c := &ProjectsLocationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
+	return c
+}
+
+// ExtraLocationTypes sets the optional parameter "extraLocationTypes": A list
+// of extra location types that should be used as conditions for controlling
+// the visibility of the locations.
+func (c *ProjectsLocationsListCall) ExtraLocationTypes(extraLocationTypes ...string) *ProjectsLocationsListCall {
+	c.urlParams_.SetMulti("extraLocationTypes", append([]string{}, extraLocationTypes...))
 	return c
 }
 

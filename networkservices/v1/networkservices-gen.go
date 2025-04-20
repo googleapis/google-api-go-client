@@ -564,7 +564,7 @@ type AuthzExtension struct {
 	//
 	// Possible values:
 	//   "WIRE_FORMAT_UNSPECIFIED" - Not specified.
-	//   "EXT_PROC_GRPC" - The extension service uses ExtProc GRPC API over a gRPC
+	//   "EXT_PROC_GRPC" - The extension service uses ext_proc gRPC API over a gRPC
 	// stream. This is the default value if the wire format is not specified. The
 	// backend service for the extension must use HTTP2 or H2C as the protocol. All
 	// `supported_events` for a client request are sent as part of the same gRPC
@@ -986,12 +986,15 @@ type ExtensionChainExtension struct {
 	// `com.google.lb_traffic_extension.lbtrafficextension1.chain1.ext1`. The
 	// following variables are supported in the metadata: `{forwarding_rule_id}` -
 	// substituted with the forwarding rule's fully qualified resource name. This
+	// field must not be set for plugin extensions. Setting it results in a
+	// validation error. You can set metadata at either the resource level or the
+	// extension level. The extension level metadata is recommended because you can
+	// pass a different set of metadata through each extension to the backend. This
 	// field is subject to following limitations: * The total size of the metadata
 	// must be less than 1KiB. * The total number of keys in the metadata must be
-	// less than 20. * The length of each key must be less than 64 characters. *
+	// less than 16. * The length of each key must be less than 64 characters. *
 	// The length of each value must be less than 1024 characters. * All values
-	// must be strings. This field is not supported for plugin extensions. Setting
-	// it results in a validation error.
+	// must be strings.
 	Metadata googleapi.RawMessage `json:"metadata,omitempty"`
 	// Name: Required. The name for this extension. The name is logged as part of
 	// the HTTP request logs. The name must conform with RFC-1034, is restricted to
@@ -2449,8 +2452,8 @@ type LbRouteExtension struct {
 	ExtensionChains []*ExtensionChain `json:"extensionChains,omitempty"`
 	// ForwardingRules: Required. A list of references to the forwarding rules to
 	// which this service extension is attached. At least one forwarding rule is
-	// required. There can be only one `LbRouteExtension` resource per forwarding
-	// rule.
+	// required. Only one `LbRouteExtension` resource can be associated with a
+	// forwarding rule.
 	ForwardingRules []string `json:"forwardingRules,omitempty"`
 	// Labels: Optional. Set of labels associated with the `LbRouteExtension`
 	// resource. The format must comply with the requirements for labels
@@ -2472,12 +2475,16 @@ type LbRouteExtension struct {
 	LoadBalancingScheme string `json:"loadBalancingScheme,omitempty"`
 	// Metadata: Optional. The metadata provided here is included as part of the
 	// `metadata_context` (of type `google.protobuf.Struct`) in the
-	// `ProcessingRequest` message sent to the extension server. The metadata is
-	// available under the namespace `com.google.lb_route_extension.`. The
-	// following variables are supported in the metadata Struct:
-	// `{forwarding_rule_id}` - substituted with the forwarding rule's fully
-	// qualified resource name. This field is not supported for plugin extensions.
-	// Setting it results in a validation error.
+	// `ProcessingRequest` message sent to the extension server. The metadata
+	// applies to all extensions in all extensions chains in this resource. The
+	// metadata is available under the key `com.google.lb_route_extension.`. The
+	// following variables are supported in the metadata: `{forwarding_rule_id}` -
+	// substituted with the forwarding rule's fully qualified resource name. This
+	// field must not be set if at least one of the extension chains contains
+	// plugin extensions. Setting it results in a validation error. You can set
+	// metadata at either the resource level or the extension level. The extension
+	// level metadata is recommended because you can pass a different set of
+	// metadata through each extension to the backend.
 	Metadata googleapi.RawMessage `json:"metadata,omitempty"`
 	// Name: Required. Identifier. Name of the `LbRouteExtension` resource in the
 	// following format:
@@ -2525,8 +2532,8 @@ type LbTrafficExtension struct {
 	ExtensionChains []*ExtensionChain `json:"extensionChains,omitempty"`
 	// ForwardingRules: Optional. A list of references to the forwarding rules to
 	// which this service extension is attached. At least one forwarding rule is
-	// required. There can be only one `LBTrafficExtension` resource per forwarding
-	// rule.
+	// required. Only one `LbTrafficExtension` resource can be associated with a
+	// forwarding rule.
 	ForwardingRules []string `json:"forwardingRules,omitempty"`
 	// Labels: Optional. Set of labels associated with the `LbTrafficExtension`
 	// resource. The format must comply with the requirements for labels
@@ -2546,13 +2553,18 @@ type LbTrafficExtension struct {
 	//   "EXTERNAL_MANAGED" - Signifies that this is used for External Managed
 	// HTTP(S) Load Balancing.
 	LoadBalancingScheme string `json:"loadBalancingScheme,omitempty"`
-	// Metadata: Optional. The metadata provided here is included in the
-	// `ProcessingRequest.metadata_context.filter_metadata` map field. The metadata
-	// is available under the key `com.google.lb_traffic_extension.`. The following
-	// variables are supported in the metadata: `{forwarding_rule_id}` -
+	// Metadata: Optional. The metadata provided here is included as part of the
+	// `metadata_context` (of type `google.protobuf.Struct`) in the
+	// `ProcessingRequest` message sent to the extension server. The metadata
+	// applies to all extensions in all extensions chains in this resource. The
+	// metadata is available under the key `com.google.lb_traffic_extension.`. The
+	// following variables are supported in the metadata: `{forwarding_rule_id}` -
 	// substituted with the forwarding rule's fully qualified resource name. This
-	// field is not supported for plugin extensions. Setting it results in a
-	// validation error.
+	// field must not be set if at least one of the extension chains contains
+	// plugin extensions. Setting it results in a validation error. You can set
+	// metadata at either the resource level or the extension level. The extension
+	// level metadata is recommended because you can pass a different set of
+	// metadata through each extension to the backend.
 	Metadata googleapi.RawMessage `json:"metadata,omitempty"`
 	// Name: Required. Identifier. Name of the `LbTrafficExtension` resource in the
 	// following format:
@@ -3548,7 +3560,9 @@ func (s RetryFilterPerRouteConfig) MarshalJSON() ([]byte, error) {
 // ServiceBinding: ServiceBinding can be used to: - Bind a Service Directory
 // Service to be used in a BackendService resource. This feature will be
 // deprecated soon. - Bind a Private Service Connect producer service to be
-// used in consumer Cloud Service Mesh or Application Load Balancers.
+// used in consumer Cloud Service Mesh or Application Load Balancers. - Bind a
+// Cloud Run service to be used in consumer Cloud Service Mesh or Application
+// Load Balancers.
 type ServiceBinding struct {
 	// CreateTime: Output only. The timestamp when the resource was created.
 	CreateTime string `json:"createTime,omitempty"`
@@ -4596,6 +4610,14 @@ type ProjectsLocationsListCall struct {
 func (r *ProjectsLocationsService) List(name string) *ProjectsLocationsListCall {
 	c := &ProjectsLocationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
+	return c
+}
+
+// ExtraLocationTypes sets the optional parameter "extraLocationTypes": A list
+// of extra location types that should be used as conditions for controlling
+// the visibility of the locations.
+func (c *ProjectsLocationsListCall) ExtraLocationTypes(extraLocationTypes ...string) *ProjectsLocationsListCall {
+	c.urlParams_.SetMulti("extraLocationTypes", append([]string{}, extraLocationTypes...))
 	return c
 }
 

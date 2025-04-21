@@ -701,8 +701,8 @@ type Enrollment struct {
 	Etag string `json:"etag,omitempty"`
 	// Labels: Optional. Resource labels.
 	Labels map[string]string `json:"labels,omitempty"`
-	// MessageBus: Required. Resource name of the message bus identifying the
-	// source of the messages. It matches the form
+	// MessageBus: Required. Immutable. Resource name of the message bus
+	// identifying the source of the messages. It matches the form
 	// projects/{project}/locations/{location}/messageBuses/{messageBus}.
 	MessageBus string `json:"messageBus,omitempty"`
 	// Name: Identifier. Resource name of the form
@@ -2931,6 +2931,14 @@ type ProjectsLocationsListCall struct {
 func (r *ProjectsLocationsService) List(name string) *ProjectsLocationsListCall {
 	c := &ProjectsLocationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
+	return c
+}
+
+// ExtraLocationTypes sets the optional parameter "extraLocationTypes": A list
+// of extra location types that should be used as conditions for controlling
+// the visibility of the locations.
+func (c *ProjectsLocationsListCall) ExtraLocationTypes(extraLocationTypes ...string) *ProjectsLocationsListCall {
+	c.urlParams_.SetMulti("extraLocationTypes", append([]string{}, extraLocationTypes...))
 	return c
 }
 

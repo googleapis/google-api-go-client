@@ -993,6 +993,8 @@ type CommonFeatureSpec struct {
 	Fleetobservability *FleetObservabilityFeatureSpec `json:"fleetobservability,omitempty"`
 	// Multiclusteringress: Multicluster Ingress-specific spec.
 	Multiclusteringress *MultiClusterIngressFeatureSpec `json:"multiclusteringress,omitempty"`
+	// Rbacrolebindingactuation: RBAC Role Binding Actuation feature spec
+	Rbacrolebindingactuation *RBACRoleBindingActuationFeatureSpec `json:"rbacrolebindingactuation,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Appdevexperience") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -1020,6 +1022,8 @@ type CommonFeatureState struct {
 	Clusterupgrade *ClusterUpgradeFleetState `json:"clusterupgrade,omitempty"`
 	// Fleetobservability: FleetObservability feature state.
 	Fleetobservability *FleetObservabilityFeatureState `json:"fleetobservability,omitempty"`
+	// Rbacrolebindingactuation: RBAC Role Binding Actuation feature state
+	Rbacrolebindingactuation *RBACRoleBindingActuationFeatureState `json:"rbacrolebindingactuation,omitempty"`
 	// State: Output only. The "running state" of the Feature in this Fleet.
 	State *FeatureState `json:"state,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Appdevexperience") to
@@ -3921,7 +3925,9 @@ type Membership struct {
 	// represents a Kubernetes cluster, this value should be set to the UID of the
 	// `kube-system` namespace object.
 	ExternalId string `json:"externalId,omitempty"`
-	// Labels: Optional. Labels for this membership.
+	// Labels: Optional. Labels for this membership. These labels are not leveraged
+	// by multi-cluster features, instead, we prefer cluster labels, which can be
+	// set on GKE cluster or other cluster types.
 	Labels map[string]string `json:"labels,omitempty"`
 	// LastConnectionTime: Output only. For clusters using Connect, the timestamp
 	// of the most recent connection established with Google Cloud. This time is
@@ -5181,6 +5187,37 @@ func (s RBACRoleBinding) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// RBACRoleBindingActuationFeatureSpec: **RBAC RoleBinding Actuation**: The
+// Hub-wide input for the RBACRoleBindingActuation feature.
+type RBACRoleBindingActuationFeatureSpec struct {
+	// AllowedCustomRoles: The list of allowed custom roles (ClusterRoles). If a
+	// ClusterRole is not part of this list, it cannot be used in a Scope
+	// RBACRoleBinding. If a ClusterRole in this list is in use, it cannot be
+	// removed from the list.
+	AllowedCustomRoles []string `json:"allowedCustomRoles,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AllowedCustomRoles") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AllowedCustomRoles") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s RBACRoleBindingActuationFeatureSpec) MarshalJSON() ([]byte, error) {
+	type NoMethod RBACRoleBindingActuationFeatureSpec
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// RBACRoleBindingActuationFeatureState: **RBAC RoleBinding Actuation**: An
+// empty state left as an example Hub-wide Feature state.
+type RBACRoleBindingActuationFeatureState struct {
+}
+
 // RBACRoleBindingLifecycleState: RBACRoleBindingLifecycleState describes the
 // state of a RbacRoleBinding resource.
 type RBACRoleBindingLifecycleState struct {
@@ -5273,6 +5310,9 @@ func (s ResourceOptions) MarshalJSON() ([]byte, error) {
 
 // Role: Role is the type for Kubernetes roles
 type Role struct {
+	// CustomRole: Optional. custom_role is the name of a custom
+	// KubernetesClusterRole to use.
+	CustomRole string `json:"customRole,omitempty"`
 	// PredefinedRole: predefined_role is the Kubernetes default role to use
 	//
 	// Possible values:
@@ -5283,15 +5323,15 @@ type Role struct {
 	//   "ANTHOS_SUPPORT" - ANTHOS_SUPPORT gives Google Support read-only access to
 	// a number of cluster resources.
 	PredefinedRole string `json:"predefinedRole,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "PredefinedRole") to
+	// ForceSendFields is a list of field names (e.g. "CustomRole") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "PredefinedRole") to include in
-	// API requests with the JSON null value. By default, fields with empty values
-	// are omitted from API requests. See
+	// NullFields is a list of field names (e.g. "CustomRole") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }

@@ -19,7 +19,7 @@ require (
 	golang.org/x/time v0.11.0
 	google.golang.org/genproto/googleapis/bytestream v0.0.0-20250414145226-207652e42e2e
 	google.golang.org/genproto/googleapis/rpc v0.0.0-20250414145226-207652e42e2e
-	google.golang.org/grpc v1.71.1
+	google.golang.org/grpc v1.72.0
 	google.golang.org/protobuf v1.36.6
 )
 

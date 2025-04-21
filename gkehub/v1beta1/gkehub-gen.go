@@ -934,7 +934,9 @@ type Membership struct {
 	// This includes GKE distributions such as GKE-OnPrem and GKE-OnBareMetal.
 	//   "MULTI_CLOUD" - Public cloud infrastructure.
 	InfrastructureType string `json:"infrastructureType,omitempty"`
-	// Labels: Optional. GCP labels for this membership.
+	// Labels: Optional. GCP labels for this membership. These labels are not
+	// leveraged by multi-cluster features, instead, we prefer cluster labels,
+	// which can be set on GKE cluster or other cluster types.
 	Labels map[string]string `json:"labels,omitempty"`
 	// LastConnectionTime: Output only. For clusters using Connect, the timestamp
 	// of the most recent connection established with Google Cloud. This time is

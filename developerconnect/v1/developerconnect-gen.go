@@ -243,7 +243,8 @@ type AccountConnector struct {
 	// Annotations: Optional. Allows users to store small amounts of arbitrary
 	// data.
 	Annotations map[string]string `json:"annotations,omitempty"`
-	// CreateTime: Output only. The timestamp when the userConnection was created.
+	// CreateTime: Output only. The timestamp when the accountConnector was
+	// created.
 	CreateTime string `json:"createTime,omitempty"`
 	// Etag: Optional. This checksum is computed by the server based on the value
 	// of other fields, and may be sent on update and delete requests to ensure the
@@ -251,7 +252,7 @@ type AccountConnector struct {
 	Etag string `json:"etag,omitempty"`
 	// Labels: Optional. Labels as key value pairs
 	Labels map[string]string `json:"labels,omitempty"`
-	// Name: Identifier. The resource name of the userConnection, in the format
+	// Name: Identifier. The resource name of the accountConnector, in the format
 	// `projects/{project}/locations/{location}/accountConnectors/{account_connector
 	// _id}`.
 	Name string `json:"name,omitempty"`
@@ -259,7 +260,8 @@ type AccountConnector struct {
 	OauthStartUri string `json:"oauthStartUri,omitempty"`
 	// ProviderOauthConfig: Provider OAuth config.
 	ProviderOauthConfig *ProviderOAuthConfig `json:"providerOauthConfig,omitempty"`
-	// UpdateTime: Output only. The timestamp when the userConnection was updated.
+	// UpdateTime: Output only. The timestamp when the accountConnector was
+	// updated.
 	UpdateTime string `json:"updateTime,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
@@ -2521,7 +2523,7 @@ type ProjectsLocationsAccountConnectorsPatchCall struct {
 
 // Patch: Updates the parameters of a single AccountConnector.
 //
-//   - name: Identifier. The resource name of the userConnection, in the format
+//   - name: Identifier. The resource name of the accountConnector, in the format
 //     `projects/{project}/locations/{location}/accountConnectors/{account_connect
 //     or_id}`.
 func (r *ProjectsLocationsAccountConnectorsService) Patch(name string, accountconnector *AccountConnector) *ProjectsLocationsAccountConnectorsPatchCall {
@@ -2532,9 +2534,9 @@ func (r *ProjectsLocationsAccountConnectorsService) Patch(name string, accountco
 }
 
 // AllowMissing sets the optional parameter "allowMissing": If set to true, and
-// the userConnection is not found a new userConnection will be created. In
+// the accountConnector is not found a new accountConnector will be created. In
 // this situation `update_mask` is ignored. The creation will succeed only if
-// the input userConnection has all the necessary
+// the input accountConnector has all the necessary
 func (c *ProjectsLocationsAccountConnectorsPatchCall) AllowMissing(allowMissing bool) *ProjectsLocationsAccountConnectorsPatchCall {
 	c.urlParams_.Set("allowMissing", fmt.Sprint(allowMissing))
 	return c
@@ -2791,7 +2793,7 @@ type ProjectsLocationsAccountConnectorsUsersDeleteSelfCall struct {
 	header_    http.Header
 }
 
-// DeleteSelf: Delete the User of the user themselves.
+// DeleteSelf: Delete the User based on the user credentials.
 //
 // - name: Name of the AccountConnector resource.
 func (r *ProjectsLocationsAccountConnectorsUsersService) DeleteSelf(name string) *ProjectsLocationsAccountConnectorsUsersDeleteSelfCall {
@@ -2994,7 +2996,7 @@ type ProjectsLocationsAccountConnectorsUsersFetchSelfCall struct {
 	header_      http.Header
 }
 
-// FetchSelf: Fetches the User of the user themselves.
+// FetchSelf: Fetch the User based on the user credentials.
 //
 // - name: Name of the AccountConnector resource.
 func (r *ProjectsLocationsAccountConnectorsUsersService) FetchSelf(name string) *ProjectsLocationsAccountConnectorsUsersFetchSelfCall {

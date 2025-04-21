@@ -186,6 +186,7 @@ type ProjectsLocationsService struct {
 
 func NewProjectsLocationsClustersService(s *Service) *ProjectsLocationsClustersService {
 	rs := &ProjectsLocationsClustersService{s: s}
+	rs.Acls = NewProjectsLocationsClustersAclsService(s)
 	rs.ConsumerGroups = NewProjectsLocationsClustersConsumerGroupsService(s)
 	rs.Topics = NewProjectsLocationsClustersTopicsService(s)
 	return rs
@@ -194,9 +195,20 @@ func NewProjectsLocationsClustersService(s *Service) *ProjectsLocationsClustersS
 type ProjectsLocationsClustersService struct {
 	s *Service
 
+	Acls *ProjectsLocationsClustersAclsService
+
 	ConsumerGroups *ProjectsLocationsClustersConsumerGroupsService
 
 	Topics *ProjectsLocationsClustersTopicsService
+}
+
+func NewProjectsLocationsClustersAclsService(s *Service) *ProjectsLocationsClustersAclsService {
+	rs := &ProjectsLocationsClustersAclsService{s: s}
+	return rs
+}
+
+type ProjectsLocationsClustersAclsService struct {
+	s *Service
 }
 
 func NewProjectsLocationsClustersConsumerGroupsService(s *Service) *ProjectsLocationsClustersConsumerGroupsService {
@@ -268,6 +280,132 @@ type AccessConfig struct {
 
 func (s AccessConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod AccessConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// Acl: Represents the set of ACLs for a given Kafka Resource Pattern, which
+// consists of resource_type, resource_name and pattern_type.
+type Acl struct {
+	// AclEntries: Required. The ACL entries that apply to the resource pattern.
+	// The maximum number of allowed entries 100.
+	AclEntries []*AclEntry `json:"aclEntries,omitempty"`
+	// Etag: Optional. `etag` is used for concurrency control. An `etag` is
+	// returned in the response to `GetAcl` and `CreateAcl`. Callers are required
+	// to put that etag in the request to `UpdateAcl` to ensure that their change
+	// will be applied to the same version of the acl that exists in the Kafka
+	// Cluster. A terminal 'T' character in the etag indicates that the AclEntries
+	// were truncated; more entries for the Acl exist on the Kafka Cluster, but
+	// can't be returned in the Acl due to repeated field limits.
+	Etag string `json:"etag,omitempty"`
+	// Name: Identifier. The name for the acl. Represents a single Resource
+	// Pattern. Structured like:
+	// projects/{project}/locations/{location}/clusters/{cluster}/acls/{acl_id} The
+	// structure of `acl_id` defines the Resource Pattern (resource_type,
+	// resource_name, pattern_type) of the acl. `acl_id` is structured like one of
+	// the following: For acls on the cluster: `cluster` For acls on a single
+	// resource within the cluster: `topic/{resource_name}`
+	// `consumerGroup/{resource_name}` `transactionalId/{resource_name}` For acls
+	// on all resources that match a prefix: `topicPrefixed/{resource_name}`
+	// `consumerGroupPrefixed/{resource_name}`
+	// `transactionalIdPrefixed/{resource_name}` For acls on all resources of a
+	// given type (i.e. the wildcard literal "*"): `allTopics` (represents
+	// `topic/*`) `allConsumerGroups` (represents `consumerGroup/*`)
+	// `allTransactionalIds` (represents `transactionalId/*`)
+	Name string `json:"name,omitempty"`
+	// PatternType: Output only. The ACL pattern type derived from the name. One
+	// of: LITERAL, PREFIXED.
+	PatternType string `json:"patternType,omitempty"`
+	// ResourceName: Output only. The ACL resource name derived from the name. For
+	// cluster resource_type, this is always "kafka-cluster". Can be the wildcard
+	// literal "*".
+	ResourceName string `json:"resourceName,omitempty"`
+	// ResourceType: Output only. The ACL resource type derived from the name. One
+	// of: CLUSTER, TOPIC, GROUP, TRANSACTIONAL_ID.
+	ResourceType string `json:"resourceType,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "AclEntries") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AclEntries") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s Acl) MarshalJSON() ([]byte, error) {
+	type NoMethod Acl
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// AclEntry: Represents the access granted for a given Resource Pattern in an
+// ACL.
+type AclEntry struct {
+	// Host: Required. The host. Must be set to "*" for Managed Service for Apache
+	// Kafka.
+	Host string `json:"host,omitempty"`
+	// Operation: Required. The operation type. Allowed values are (case
+	// insensitive): ALL, READ, WRITE, CREATE, DELETE, ALTER, DESCRIBE,
+	// CLUSTER_ACTION, DESCRIBE_CONFIGS, ALTER_CONFIGS, and IDEMPOTENT_WRITE. See
+	// https://kafka.apache.org/documentation/#operations_resources_and_protocols
+	// for valid combinations of resource_type and operation for different Kafka
+	// API requests.
+	Operation string `json:"operation,omitempty"`
+	// PermissionType: Required. The permission type. Accepted values are (case
+	// insensitive): ALLOW, DENY.
+	PermissionType string `json:"permissionType,omitempty"`
+	// Principal: Required. The principal. Specified as Google Cloud account, with
+	// the Kafka StandardAuthorizer prefix "User:". For example:
+	// "User:test-kafka-client@test-project.iam.gserviceaccount.com". Can be the
+	// wildcard "User:*" to refer to all users.
+	Principal string `json:"principal,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Host") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Host") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s AclEntry) MarshalJSON() ([]byte, error) {
+	type NoMethod AclEntry
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// AddAclEntryResponse: Response for AddAclEntry.
+type AddAclEntryResponse struct {
+	// Acl: The updated acl.
+	Acl *Acl `json:"acl,omitempty"`
+	// AclCreated: Whether the acl was created as a result of adding the acl entry.
+	AclCreated bool `json:"aclCreated,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "Acl") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Acl") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s AddAclEntryResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod AddAclEntryResponse
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -667,6 +805,35 @@ func (s GcpConfig) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// ListAclsResponse: Response for ListAcls.
+type ListAclsResponse struct {
+	// Acls: The list of acls in the requested parent. The order of the acls is
+	// unspecified.
+	Acls []*Acl `json:"acls,omitempty"`
+	// NextPageToken: A token that can be sent as `page_token` to retrieve the next
+	// page of results. If this field is omitted, there are no more results.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "Acls") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Acls") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ListAclsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ListAclsResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // ListClustersResponse: Response for ListClusters.
 type ListClustersResponse struct {
 	// Clusters: The list of Clusters in the requested parent.
@@ -1056,6 +1223,35 @@ type RebalanceConfig struct {
 
 func (s RebalanceConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod RebalanceConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// RemoveAclEntryResponse: Response for RemoveAclEntry.
+type RemoveAclEntryResponse struct {
+	// Acl: The updated acl. Returned if the removed acl entry was not the last
+	// entry in the acl.
+	Acl *Acl `json:"acl,omitempty"`
+	// AclDeleted: Returned with value true if the removed acl entry was the last
+	// entry in the acl, resulting in acl deletion.
+	AclDeleted bool `json:"aclDeleted,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "Acl") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Acl") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s RemoveAclEntryResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod RemoveAclEntryResponse
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -2109,6 +2305,831 @@ func (c *ProjectsLocationsClustersPatchCall) Do(opts ...googleapi.CallOption) (*
 		return nil, err
 	}
 	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "managedkafka.projects.locations.clusters.patch", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsClustersAclsAddAclEntryCall struct {
+	s          *Service
+	acl        string
+	aclentry   *AclEntry
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// AddAclEntry: Incremental update: Adds an acl entry to an acl. Creates the
+// acl if it does not exist yet.
+//
+//   - acl: The name of the acl to add the acl entry to. Structured like:
+//     `projects/{project}/locations/{location}/clusters/{cluster}/acls/{acl_id}`.
+//     The structure of `acl_id` defines the Resource Pattern (resource_type,
+//     resource_name, pattern_type) of the acl. See `Acl.name` for details.
+func (r *ProjectsLocationsClustersAclsService) AddAclEntry(acl string, aclentry *AclEntry) *ProjectsLocationsClustersAclsAddAclEntryCall {
+	c := &ProjectsLocationsClustersAclsAddAclEntryCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.acl = acl
+	c.aclentry = aclentry
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsClustersAclsAddAclEntryCall) Fields(s ...googleapi.Field) *ProjectsLocationsClustersAclsAddAclEntryCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsClustersAclsAddAclEntryCall) Context(ctx context.Context) *ProjectsLocationsClustersAclsAddAclEntryCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsClustersAclsAddAclEntryCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsClustersAclsAddAclEntryCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.aclentry)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+acl}:addAclEntry")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"acl": c.acl,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "managedkafka.projects.locations.clusters.acls.addAclEntry", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "managedkafka.projects.locations.clusters.acls.addAclEntry" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *AddAclEntryResponse.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *ProjectsLocationsClustersAclsAddAclEntryCall) Do(opts ...googleapi.CallOption) (*AddAclEntryResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &AddAclEntryResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "managedkafka.projects.locations.clusters.acls.addAclEntry", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsClustersAclsCreateCall struct {
+	s          *Service
+	parent     string
+	acl        *Acl
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Create: Creates a new acl in the given project, location, and cluster.
+//
+//   - parent: The parent cluster in which to create the acl. Structured like
+//     `projects/{project}/locations/{location}/clusters/{cluster}`.
+func (r *ProjectsLocationsClustersAclsService) Create(parent string, acl *Acl) *ProjectsLocationsClustersAclsCreateCall {
+	c := &ProjectsLocationsClustersAclsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.acl = acl
+	return c
+}
+
+// AclId sets the optional parameter "aclId": Required. The ID to use for the
+// acl, which will become the final component of the acl's name. The structure
+// of `acl_id` defines the Resource Pattern (resource_type, resource_name,
+// pattern_type) of the acl. `acl_id` is structured like one of the following:
+// For acls on the cluster: `cluster` For acls on a single resource within the
+// cluster: `topic/{resource_name}` `consumerGroup/{resource_name}`
+// `transactionalId/{resource_name}` For acls on all resources that match a
+// prefix: `topicPrefixed/{resource_name}`
+// `consumerGroupPrefixed/{resource_name}`
+// `transactionalIdPrefixed/{resource_name}` For acls on all resources of a
+// given type (i.e. the wildcard literal "*"): `allTopics` (represents
+// `topic/*`) `allConsumerGroups` (represents `consumerGroup/*`)
+// `allTransactionalIds` (represents `transactionalId/*`)
+func (c *ProjectsLocationsClustersAclsCreateCall) AclId(aclId string) *ProjectsLocationsClustersAclsCreateCall {
+	c.urlParams_.Set("aclId", aclId)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsClustersAclsCreateCall) Fields(s ...googleapi.Field) *ProjectsLocationsClustersAclsCreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsClustersAclsCreateCall) Context(ctx context.Context) *ProjectsLocationsClustersAclsCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsClustersAclsCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsClustersAclsCreateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.acl)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/acls")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "managedkafka.projects.locations.clusters.acls.create", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "managedkafka.projects.locations.clusters.acls.create" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Acl.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsClustersAclsCreateCall) Do(opts ...googleapi.CallOption) (*Acl, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Acl{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "managedkafka.projects.locations.clusters.acls.create", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsClustersAclsDeleteCall struct {
+	s          *Service
+	name       string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Delete: Deletes an acl.
+//
+//   - name: The name of the acl to delete. Structured like:
+//     `projects/{project}/locations/{location}/clusters/{cluster}/acls/{acl_id}`.
+//     The structure of `acl_id` defines the Resource Pattern (resource_type,
+//     resource_name, pattern_type) of the acl. See `Acl.name` for details.
+func (r *ProjectsLocationsClustersAclsService) Delete(name string) *ProjectsLocationsClustersAclsDeleteCall {
+	c := &ProjectsLocationsClustersAclsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsClustersAclsDeleteCall) Fields(s ...googleapi.Field) *ProjectsLocationsClustersAclsDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsClustersAclsDeleteCall) Context(ctx context.Context) *ProjectsLocationsClustersAclsDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsClustersAclsDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsClustersAclsDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("DELETE", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "managedkafka.projects.locations.clusters.acls.delete", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "managedkafka.projects.locations.clusters.acls.delete" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Empty.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsClustersAclsDeleteCall) Do(opts ...googleapi.CallOption) (*Empty, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Empty{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "managedkafka.projects.locations.clusters.acls.delete", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsClustersAclsGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Returns the properties of a single acl.
+//
+//   - name: The name of the acl to return. Structured like:
+//     `projects/{project}/locations/{location}/clusters/{cluster}/acls/{acl_id}`.
+//     The structure of `acl_id` defines the Resource Pattern (resource_type,
+//     resource_name, pattern_type) of the acl. See `Acl.name` for details.
+func (r *ProjectsLocationsClustersAclsService) Get(name string) *ProjectsLocationsClustersAclsGetCall {
+	c := &ProjectsLocationsClustersAclsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsClustersAclsGetCall) Fields(s ...googleapi.Field) *ProjectsLocationsClustersAclsGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsClustersAclsGetCall) IfNoneMatch(entityTag string) *ProjectsLocationsClustersAclsGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsClustersAclsGetCall) Context(ctx context.Context) *ProjectsLocationsClustersAclsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsClustersAclsGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsClustersAclsGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "managedkafka.projects.locations.clusters.acls.get", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "managedkafka.projects.locations.clusters.acls.get" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Acl.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsClustersAclsGetCall) Do(opts ...googleapi.CallOption) (*Acl, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Acl{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "managedkafka.projects.locations.clusters.acls.get", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsClustersAclsListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists the acls in a given cluster.
+//
+//   - parent: The parent cluster whose acls are to be listed. Structured like
+//     `projects/{project}/locations/{location}/clusters/{cluster}`.
+func (r *ProjectsLocationsClustersAclsService) List(parent string) *ProjectsLocationsClustersAclsListCall {
+	c := &ProjectsLocationsClustersAclsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The maximum number of acls
+// to return. The service may return fewer than this value. If unset or zero,
+// all acls for the parent is returned.
+func (c *ProjectsLocationsClustersAclsListCall) PageSize(pageSize int64) *ProjectsLocationsClustersAclsListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": A page token, received
+// from a previous `ListAcls` call. Provide this to retrieve the subsequent
+// page. When paginating, all other parameters provided to `ListAcls` must
+// match the call that provided the page token.
+func (c *ProjectsLocationsClustersAclsListCall) PageToken(pageToken string) *ProjectsLocationsClustersAclsListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsClustersAclsListCall) Fields(s ...googleapi.Field) *ProjectsLocationsClustersAclsListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsClustersAclsListCall) IfNoneMatch(entityTag string) *ProjectsLocationsClustersAclsListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsClustersAclsListCall) Context(ctx context.Context) *ProjectsLocationsClustersAclsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsClustersAclsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsClustersAclsListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/acls")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "managedkafka.projects.locations.clusters.acls.list", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "managedkafka.projects.locations.clusters.acls.list" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *ListAclsResponse.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *ProjectsLocationsClustersAclsListCall) Do(opts ...googleapi.CallOption) (*ListAclsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ListAclsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "managedkafka.projects.locations.clusters.acls.list", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsLocationsClustersAclsListCall) Pages(ctx context.Context, f func(*ListAclsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+type ProjectsLocationsClustersAclsPatchCall struct {
+	s          *Service
+	name       string
+	acl        *Acl
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Patch: Updates the properties of a single acl.
+//
+//   - name: Identifier. The name for the acl. Represents a single Resource
+//     Pattern. Structured like:
+//     projects/{project}/locations/{location}/clusters/{cluster}/acls/{acl_id}
+//     The structure of `acl_id` defines the Resource Pattern (resource_type,
+//     resource_name, pattern_type) of the acl. `acl_id` is structured like one
+//     of the following: For acls on the cluster: `cluster` For acls on a single
+//     resource within the cluster: `topic/{resource_name}`
+//     `consumerGroup/{resource_name}` `transactionalId/{resource_name}` For acls
+//     on all resources that match a prefix: `topicPrefixed/{resource_name}`
+//     `consumerGroupPrefixed/{resource_name}`
+//     `transactionalIdPrefixed/{resource_name}` For acls on all resources of a
+//     given type (i.e. the wildcard literal "*"): `allTopics` (represents
+//     `topic/*`) `allConsumerGroups` (represents `consumerGroup/*`)
+//     `allTransactionalIds` (represents `transactionalId/*`).
+func (r *ProjectsLocationsClustersAclsService) Patch(name string, acl *Acl) *ProjectsLocationsClustersAclsPatchCall {
+	c := &ProjectsLocationsClustersAclsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.acl = acl
+	return c
+}
+
+// UpdateMask sets the optional parameter "updateMask": Field mask is used to
+// specify the fields to be overwritten in the Acl resource by the update. The
+// fields specified in the update_mask are relative to the resource, not the
+// full request. A field will be overwritten if it is in the mask.
+func (c *ProjectsLocationsClustersAclsPatchCall) UpdateMask(updateMask string) *ProjectsLocationsClustersAclsPatchCall {
+	c.urlParams_.Set("updateMask", updateMask)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsClustersAclsPatchCall) Fields(s ...googleapi.Field) *ProjectsLocationsClustersAclsPatchCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsClustersAclsPatchCall) Context(ctx context.Context) *ProjectsLocationsClustersAclsPatchCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsClustersAclsPatchCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsClustersAclsPatchCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.acl)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PATCH", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "managedkafka.projects.locations.clusters.acls.patch", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "managedkafka.projects.locations.clusters.acls.patch" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Acl.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsClustersAclsPatchCall) Do(opts ...googleapi.CallOption) (*Acl, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Acl{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "managedkafka.projects.locations.clusters.acls.patch", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsClustersAclsRemoveAclEntryCall struct {
+	s          *Service
+	acl        string
+	aclentry   *AclEntry
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// RemoveAclEntry: Incremental update: Removes an acl entry from an acl.
+// Deletes the acl if its acl entries become empty (i.e. if the removed entry
+// was the last one in the acl).
+//
+//   - acl: The name of the acl to remove the acl entry from. Structured like:
+//     `projects/{project}/locations/{location}/clusters/{cluster}/acls/{acl_id}`.
+//     The structure of `acl_id` defines the Resource Pattern (resource_type,
+//     resource_name, pattern_type) of the acl. See `Acl.name` for details.
+func (r *ProjectsLocationsClustersAclsService) RemoveAclEntry(acl string, aclentry *AclEntry) *ProjectsLocationsClustersAclsRemoveAclEntryCall {
+	c := &ProjectsLocationsClustersAclsRemoveAclEntryCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.acl = acl
+	c.aclentry = aclentry
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsClustersAclsRemoveAclEntryCall) Fields(s ...googleapi.Field) *ProjectsLocationsClustersAclsRemoveAclEntryCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsClustersAclsRemoveAclEntryCall) Context(ctx context.Context) *ProjectsLocationsClustersAclsRemoveAclEntryCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsClustersAclsRemoveAclEntryCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsClustersAclsRemoveAclEntryCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.aclentry)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+acl}:removeAclEntry")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"acl": c.acl,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "managedkafka.projects.locations.clusters.acls.removeAclEntry", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "managedkafka.projects.locations.clusters.acls.removeAclEntry" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *RemoveAclEntryResponse.ServerResponse.Header or (if a response was returned
+// at all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *ProjectsLocationsClustersAclsRemoveAclEntryCall) Do(opts ...googleapi.CallOption) (*RemoveAclEntryResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &RemoveAclEntryResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "managedkafka.projects.locations.clusters.acls.removeAclEntry", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 

@@ -2475,7 +2475,7 @@ func (s ListTopicResponse) MarshalJSON() ([]byte, error) {
 type Material struct {
 	// DriveFile: Google Drive file material.
 	DriveFile *SharedDriveFile `json:"driveFile,omitempty"`
-	// Form: Google Forms material.
+	// Form: Google Forms material. Read-only.
 	Form *Form `json:"form,omitempty"`
 	// Link: Link material. On creation, this is upgraded to a more appropriate
 	// type if possible, and this is reflected in the response.

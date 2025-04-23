@@ -712,8 +712,8 @@ type Form struct {
 	PublishSettings *PublishSettings `json:"publishSettings,omitempty"`
 	// ResponderUri: Output only. The form URI to share with responders. This opens
 	// a page that allows the user to submit responses but not edit the questions.
-	// For forms that have `publish_settings` value set, this will be the published
-	// form URI.
+	// For forms that have `publish_settings` value set, this is the published form
+	// URI.
 	ResponderUri string `json:"responderUri,omitempty"`
 	// RevisionId: Output only. The revision ID of the form. Used in the
 	// WriteControl in update requests to identify the revision on which the

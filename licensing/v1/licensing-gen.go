@@ -6,7 +6,7 @@
 
 // Package licensing provides access to the Enterprise License Manager API.
 //
-// For product documentation, see: https://developers.google.com/admin-sdk/licensing/
+// For product documentation, see: https://developers.google.com/workspace/admin/licensing/
 //
 // # Library status
 //

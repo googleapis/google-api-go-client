@@ -330,6 +330,32 @@ type TermsOfServiceService struct {
 	s *APIService
 }
 
+// AcceptTermsOfServiceResponse: Response message for the
+// `AcceptTermsOfService` method.
+type AcceptTermsOfServiceResponse struct {
+	// TermsOfServiceAgreementState: The agreement state after accepting the ToS.
+	TermsOfServiceAgreementState *TermsOfServiceAgreementState `json:"termsOfServiceAgreementState,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g.
+	// "TermsOfServiceAgreementState") to unconditionally include in API requests.
+	// By default, fields with empty or default values are omitted from API
+	// requests. See https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields
+	// for more details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "TermsOfServiceAgreementState") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s AcceptTermsOfServiceResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod AcceptTermsOfServiceResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // Accepted: Describes the accepted terms of service.
 type Accepted struct {
 	// AcceptedBy: The account where the acceptance was recorded. This can be the
@@ -3944,7 +3970,7 @@ type AccountsListSubaccountsCall struct {
 // service(type="ACCOUNT_AGGREGATION"))`
 //
 //   - provider: The aggregation service provider. Format:
-//     `providers/{providerId}`.
+//     `accounts/{providerId}`.
 func (r *AccountsService) ListSubaccounts(provider string) *AccountsListSubaccountsCall {
 	c := &AccountsListSubaccountsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.provider = provider
@@ -8292,12 +8318,11 @@ func (c *AccountsUsersPatchCall) Do(opts ...googleapi.CallOption) (*User, error)
 }
 
 type TermsOfServiceAcceptCall struct {
-	s            *APIService
-	name         string
-	urlParams_   gensupport.URLParams
-	ifNoneMatch_ string
-	ctx_         context.Context
-	header_      http.Header
+	s          *APIService
+	name       string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
 }
 
 // Accept: Accepts a `TermsOfService`. Executing this method requires admin
@@ -8335,14 +8360,6 @@ func (c *TermsOfServiceAcceptCall) Fields(s ...googleapi.Field) *TermsOfServiceA
 	return c
 }
 
-// IfNoneMatch sets an optional parameter which makes the operation fail if the
-// object's ETag matches the given value. This is useful for getting updates
-// only after the object has changed since the last request.
-func (c *TermsOfServiceAcceptCall) IfNoneMatch(entityTag string) *TermsOfServiceAcceptCall {
-	c.ifNoneMatch_ = entityTag
-	return c
-}
-
 // Context sets the context to be used in this call's Do method.
 func (c *TermsOfServiceAcceptCall) Context(ctx context.Context) *TermsOfServiceAcceptCall {
 	c.ctx_ = ctx
@@ -8360,14 +8377,11 @@ func (c *TermsOfServiceAcceptCall) Header() http.Header {
 
 func (c *TermsOfServiceAcceptCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
-	if c.ifNoneMatch_ != "" {
-		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
-	}
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "accounts/v1beta/{+name}:accept")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, nil)
+	req, err := http.NewRequest("POST", urls, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -8381,10 +8395,11 @@ func (c *TermsOfServiceAcceptCall) doRequest(alt string) (*http.Response, error)
 
 // Do executes the "merchantapi.termsOfService.accept" call.
 // Any non-2xx status code is an error. Response headers are in either
-// *Empty.ServerResponse.Header or (if a response was returned at all) in
-// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was returned.
-func (c *TermsOfServiceAcceptCall) Do(opts ...googleapi.CallOption) (*Empty, error) {
+// *AcceptTermsOfServiceResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *TermsOfServiceAcceptCall) Do(opts ...googleapi.CallOption) (*AcceptTermsOfServiceResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
@@ -8403,7 +8418,7 @@ func (c *TermsOfServiceAcceptCall) Do(opts ...googleapi.CallOption) (*Empty, err
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, gensupport.WrapError(err)
 	}
-	ret := &Empty{
+	ret := &AcceptTermsOfServiceResponse{
 		ServerResponse: googleapi.ServerResponse{
 			Header:         res.Header,
 			HTTPStatusCode: res.StatusCode,

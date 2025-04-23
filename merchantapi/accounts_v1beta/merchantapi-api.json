@@ -233,7 +233,7 @@
               "type": "string"
             },
             "provider": {
-              "description": "Required. The aggregation service provider. Format: `providers/{providerId}`",
+              "description": "Required. The aggregation service provider. Format: `accounts/{providerId}`",
               "location": "path",
               "pattern": "^accounts/[^/]+$",
               "required": true,
@@ -1386,7 +1386,7 @@
         "accept": {
           "description": "Accepts a `TermsOfService`. Executing this method requires admin access.",
           "flatPath": "accounts/v1beta/termsOfService/{termsOfServiceId}:accept",
-          "httpMethod": "GET",
+          "httpMethod": "POST",
           "id": "merchantapi.termsOfService.accept",
           "parameterOrder": [
             "name"
@@ -1412,7 +1412,7 @@
           },
           "path": "accounts/v1beta/{+name}:accept",
           "response": {
-            "$ref": "Empty"
+            "$ref": "AcceptTermsOfServiceResponse"
           },
           "scopes": [
             "https://www.googleapis.com/auth/content"
@@ -1480,9 +1480,20 @@
       }
     }
   },
-  "revision": "20250416",
+  "revision": "20250421",
   "rootUrl": "https://merchantapi.googleapis.com/",
   "schemas": {
+    "AcceptTermsOfServiceResponse": {
+      "description": "Response message for the `AcceptTermsOfService` method.",
+      "id": "AcceptTermsOfServiceResponse",
+      "properties": {
+        "termsOfServiceAgreementState": {
+          "$ref": "TermsOfServiceAgreementState",
+          "description": "The agreement state after accepting the ToS."
+        }
+      },
+      "type": "object"
+    },
     "Accepted": {
       "description": "Describes the accepted terms of service.",
       "id": "Accepted",

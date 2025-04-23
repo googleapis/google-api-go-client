@@ -4107,7 +4107,7 @@
       }
     }
   },
-  "revision": "20250331",
+  "revision": "20250416",
   "rootUrl": "https://classroom.googleapis.com/",
   "schemas": {
     "AddOnAttachment": {
@@ -5573,7 +5573,7 @@
         },
         "form": {
           "$ref": "Form",
-          "description": "Google Forms material."
+          "description": "Google Forms material. Read-only."
         },
         "link": {
           "$ref": "Link",

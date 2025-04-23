@@ -1378,6 +1378,7 @@ type GpuMetric struct {
 	//   "UNKNOWN_GPU_TYPE"
 	//   "NVIDIA_TESLA_A100"
 	//   "NVIDIA_A100_80GB"
+	//   "NVIDIA_B200"
 	//   "NVIDIA_TESLA_K80"
 	//   "NVIDIA_L4"
 	//   "NVIDIA_TESLA_P100"
@@ -1385,6 +1386,7 @@ type GpuMetric struct {
 	//   "NVIDIA_TESLA_T4"
 	//   "NVIDIA_TESLA_V100"
 	//   "NVIDIA_H100_80GB"
+	//   "NVIDIA_H100_MEGA_80GB"
 	//   "NVIDIA_H200_141GB"
 	GpuType string `json:"gpuType,omitempty"`
 	// MachineSpec: Required. Machine spec, e.g. N1_STANDARD_4.

@@ -1953,8 +1953,8 @@ type GoogleAppsCardV1BorderStyle struct {
 	//
 	// Possible values:
 	//   "BORDER_TYPE_UNSPECIFIED" - Don't use. Unspecified.
-	//   "NO_BORDER" - Default value. No border.
-	//   "STROKE" - Outline.
+	//   "NO_BORDER" - No border.
+	//   "STROKE" - Default value. Outline.
 	Type string `json:"type,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "CornerRadius") to
 	// unconditionally include in API requests. By default, fields with empty or

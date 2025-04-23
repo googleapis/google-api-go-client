@@ -6200,9 +6200,9 @@ type ServicesConsumerQuotaMetricsGetCall struct {
 
 // Get: Retrieves a summary of quota information for a specific quota metric
 //
-//   - name: The resource name of the quota limit. An example name would be:
-//     `projects/123/services/serviceusage.googleapis.com/quotas/metrics/serviceus
-//     age.googleapis.com%2Fmutate_requests`.
+//   - name: The resource name of the quota. An example name would be:
+//     `projects/123/services/serviceusage.googleapis.com/consumerQuotaMetrics/ser
+//     viceusage.googleapis.com%2Fmutate_requests`.
 func (r *ServicesConsumerQuotaMetricsService) Get(name string) *ServicesConsumerQuotaMetricsGetCall {
 	c := &ServicesConsumerQuotaMetricsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name

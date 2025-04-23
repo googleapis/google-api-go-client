@@ -2090,6 +2090,9 @@ type GoogleCloudAiplatformV1beta1Schema struct {
 	AnyOf []*GoogleCloudAiplatformV1beta1Schema `json:"anyOf,omitempty"`
 	// Default: Optional. Default value of the data.
 	Default interface{} `json:"default,omitempty"`
+	// Defs: Optional. A map of definitions for use by `ref` Only allowed at the
+	// root of the schema.
+	Defs map[string]GoogleCloudAiplatformV1beta1Schema `json:"defs,omitempty"`
 	// Description: Optional. The description of the data.
 	Description string `json:"description,omitempty"`
 	// Enum: Optional. Possible values of the element of primitive type with enum
@@ -2136,6 +2139,14 @@ type GoogleCloudAiplatformV1beta1Schema struct {
 	// PropertyOrdering: Optional. The order of the properties. Not a standard
 	// field in open api spec. Only used to support the order of the properties.
 	PropertyOrdering []string `json:"propertyOrdering,omitempty"`
+	// Ref: Optional. Allows indirect references between schema nodes. The value
+	// should be a valid reference to a child of the root `defs`. For example, the
+	// following schema defines a reference to a schema node named "Pet": type:
+	// object properties: pet: ref: #/defs/Pet defs: Pet: type: object properties:
+	// name: type: string The value of the "pet" property is a reference to the
+	// schema node named "Pet". See details in
+	// https://json-schema.org/understanding-json-schema/structuring
+	Ref string `json:"ref,omitempty"`
 	// Required: Optional. Required properties of Type.OBJECT.
 	Required []string `json:"required,omitempty"`
 	// Title: Optional. The title of the Schema.
@@ -2150,6 +2161,7 @@ type GoogleCloudAiplatformV1beta1Schema struct {
 	//   "BOOLEAN" - OpenAPI boolean type
 	//   "ARRAY" - OpenAPI array type
 	//   "OBJECT" - OpenAPI object type
+	//   "NULL" - Null type
 	Type string `json:"type,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AnyOf") to unconditionally
 	// include in API requests. By default, fields with empty or default values are

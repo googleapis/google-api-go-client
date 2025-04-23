@@ -581,6 +581,10 @@ func (s Expr) MarshalJSON() ([]byte, error) {
 // Folder: A Folder in an Organization's resource hierarchy, used to organize
 // that Organization's resources.
 type Folder struct {
+	// ConfiguredCapabilities: Output only. Optional capabilities configured for
+	// this folder (via UpdateCapability API). Example:
+	// `folders/123/capabilities/app-management`.
+	ConfiguredCapabilities []string `json:"configuredCapabilities,omitempty"`
 	// CreateTime: Output only. Timestamp when the Folder was created. Assigned by
 	// the server.
 	CreateTime string `json:"createTime,omitempty"`
@@ -599,6 +603,10 @@ type Folder struct {
 	//   "ACTIVE" - The normal and active state.
 	//   "DELETE_REQUESTED" - The folder has been marked for deletion by the user.
 	LifecycleState string `json:"lifecycleState,omitempty"`
+	// ManagementProject: Output only. Management Project associated with this
+	// folder (if app-management capability is enabled). Example:
+	// `projects/google-mp-123` OUTPUT ONLY.
+	ManagementProject string `json:"managementProject,omitempty"`
 	// Name: Output only. The resource name of the Folder. Its format is
 	// `folders/{folder_id}`, for example: "folders/1234".
 	Name string `json:"name,omitempty"`
@@ -613,15 +621,15 @@ type Folder struct {
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-	// ForceSendFields is a list of field names (e.g. "CreateTime") to
+	// ForceSendFields is a list of field names (e.g. "ConfiguredCapabilities") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "CreateTime") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
+	// NullFields is a list of field names (e.g. "ConfiguredCapabilities") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }

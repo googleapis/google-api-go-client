@@ -475,7 +475,7 @@ type Seats struct {
 	// users that are assigned a license for the product defined in `skuId`. This
 	// field's value is equivalent to the numerical count of users returned by the
 	// Enterprise License Manager API method: `listForProductAndSku`
-	// (/admin-sdk/licensing/v1/reference/licenseAssignments/listForProductAndSku).
+	// (https://developers.google.com/workspace/admin/licensing/v1/reference/licenseAssignments/listForProductAndSku).
 	LicensedNumberOfSeats int64 `json:"licensedNumberOfSeats,omitempty"`
 	// MaximumNumberOfSeats: This is a required property and is exclusive to
 	// subscriptions with `FLEXIBLE` or `TRIAL` plans. This property sets the
@@ -801,7 +801,7 @@ type CustomersGetCall struct {
 // information for an existing customer that you do not manage. For more
 // information about the API response for existing customers, see retrieving a
 // customer account
-// (/admin-sdk/reseller/v1/how-tos/manage_customers#get_customer).
+// (https://developers.google.com/workspace/admin/reseller/v1/how-tos/manage_customers#get_customer).
 //
 //   - customerId: This can be either the customer's primary domain name or the
 //     customer's unique identifier. If the domain name for a customer changes,
@@ -916,20 +916,22 @@ type CustomersInsertCall struct {
 
 // Insert: Orders a new customer's account. Before ordering a new customer
 // account, establish whether the customer account already exists using the
-// `customers.get` (/admin-sdk/reseller/v1/reference/customers/get) If the
-// customer account exists as a direct Google account or as a resold customer
-// account from another reseller, use the `customerAuthToken\` as described in
-// order a resold account for an existing customer
-// (/admin-sdk/reseller/v1/how-tos/manage_customers#create_existing_customer).
+// `customers.get`
+// (https://developers.google.com/workspace/admin/reseller/v1/reference/customers/get)
+// If the customer account exists as a direct Google account or as a resold
+// customer account from another reseller, use the `customerAuthToken\` as
+// described in order a resold account for an existing customer
+// (https://developers.google.com/workspace/admin/reseller/v1/how-tos/manage_customers#create_existing_customer).
 // For more information about ordering a new customer account, see order a new
 // customer account
-// (/admin-sdk/reseller/v1/how-tos/manage_customers#create_customer). After
-// creating a new customer account, you must provision a user as an
+// (https://developers.google.com/workspace/admin/reseller/v1/how-tos/manage_customers#create_customer).
+// After creating a new customer account, you must provision a user as an
 // administrator. The customer's administrator is required to sign in to the
 // Admin console and sign the G Suite via Reseller agreement to activate the
 // account. Resellers are prohibited from signing the G Suite via Reseller
 // agreement on the customer's behalf. For more information, see order a new
-// customer account (/admin-sdk/reseller/v1/how-tos/manage_customers#tos).
+// customer account
+// (https://developers.google.com/workspace/admin/reseller/v1/how-tos/manage_customers#tos).
 func (r *CustomersService) Insert(customer *Customer) *CustomersInsertCall {
 	c := &CustomersInsertCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.customer = customer
@@ -1153,7 +1155,7 @@ type CustomersUpdateCall struct {
 // `customerType` via the Reseller API, but a "team" customer can verify
 // their domain and become `customerType = "domain". For more information, see
 // update a customer's settings
-// (/admin-sdk/reseller/v1/how-tos/manage_customers#update_customer).
+// (https://developers.google.com/workspace/admin/reseller/v1/how-tos/manage_customers#update_customer).
 //
 //   - customerId: This can be either the customer's primary domain name or the
 //     customer's unique identifier. If the domain name for a customer changes,
@@ -1682,8 +1684,7 @@ type SubscriptionsChangePlanCall struct {
 // plan with monthly or yearly payments. How a plan is updated differs
 // depending on the plan and the products. For more information, see the
 // description in manage subscriptions
-// (/admin-sdk/reseller/v1/how-tos/manage_subscriptions#update_subscription_plan
-// ).
+// (https://developers.google.com/workspace/admin/reseller/v1/how-tos/manage_subscriptions#update_subscription_plan).
 //
 //   - customerId: This can be either the customer's primary domain name or the
 //     customer's unique identifier. If the domain name for a customer changes,
@@ -1802,7 +1803,7 @@ type SubscriptionsChangeRenewalSettingsCall struct {
 // ChangeRenewalSettings: Updates a user license's renewal settings. This is
 // applicable for accounts with annual commitment plans only. For more
 // information, see the description in manage subscriptions
-// (/admin-sdk/reseller/v1/how-tos/manage_subscriptions#update_renewal).
+// (https://developers.google.com/workspace/admin/reseller/v1/how-tos/manage_subscriptions#update_renewal).
 //
 //   - customerId: This can be either the customer's primary domain name or the
 //     customer's unique identifier. If the domain name for a customer changes,
@@ -1921,8 +1922,7 @@ type SubscriptionsChangeSeatsCall struct {
 // ChangeSeats: Updates a subscription's user license settings. For more
 // information about updating an annual commitment plan or a flexible plan
 // subscription’s licenses, see Manage Subscriptions
-// (/admin-sdk/reseller/v1/how-tos/manage_subscriptions#update_subscription_seat
-// ).
+// (https://developers.google.com/workspace/admin/reseller/v1/how-tos/manage_subscriptions#update_subscription_seat).
 //
 //   - customerId: This can be either the customer's primary domain name or the
 //     customer's unique identifier. If the domain name for a customer changes,
@@ -2129,10 +2129,10 @@ type SubscriptionsGetCall struct {
 
 // Get: Gets a specific subscription. The `subscriptionId` can be found using
 // the Retrieve all reseller subscriptions
-// (/admin-sdk/reseller/v1/how-tos/manage_subscriptions#get_all_subscriptions)
+// (https://developers.google.com/workspace/admin/reseller/v1/how-tos/manage_subscriptions#get_all_subscriptions)
 // method. For more information about retrieving a specific subscription, see
 // the information descrived in manage subscriptions
-// (/admin-sdk/reseller/v1/how-tos/manage_subscriptions#get_subscription).
+// (https://developers.google.com/workspace/admin/reseller/v1/how-tos/manage_subscriptions#get_subscription).
 //
 //   - customerId: This can be either the customer's primary domain name or the
 //     customer's unique identifier. If the domain name for a customer changes,
@@ -2255,18 +2255,18 @@ type SubscriptionsInsertCall struct {
 
 // Insert: Creates or transfer a subscription. Create a subscription for a
 // customer's account that you ordered using the Order a new customer account
-// (/admin-sdk/reseller/v1/reference/customers/insert.html) method. For more
-// information about creating a subscription for different payment plans, see
-// manage subscriptions
-// (/admin-sdk/reseller/v1/how-tos/manage_subscriptions#create_subscription).\
+// (https://developers.google.com/workspace/admin/reseller/v1/reference/customers/insert.html)
+// method. For more information about creating a subscription for different
+// payment plans, see manage subscriptions
+// (https://developers.google.com/workspace/admin/reseller/v1/how-tos/manage_subscriptions#create_subscription).\
 // If you did not order the customer's account using the customer insert
 // method, use the customer's `customerAuthToken` when creating a subscription
 // for that customer. If transferring a G Suite subscription with an associated
 // Google Drive or Google Vault subscription, use the batch operation
-// (/admin-sdk/reseller/v1/how-tos/batch.html) to transfer all of these
-// subscriptions. For more information, see how to transfer subscriptions
-// (/admin-sdk/reseller/v1/how-tos/manage_subscriptions#transfer_a_subscription)
-// .
+// (https://developers.google.com/workspace/admin/reseller/v1/how-tos/batch.html)
+// to transfer all of these subscriptions. For more information, see how to
+// transfer subscriptions
+// (https://developers.google.com/workspace/admin/reseller/v1/how-tos/manage_subscriptions#transfer_a_subscription).
 //
 //   - customerId: This can be either the customer's primary domain name or the
 //     customer's unique identifier. If the domain name for a customer changes,
@@ -2419,7 +2419,7 @@ type SubscriptionsListCall struct {
 // subscriptions, all of a customer's subscriptions, or all of a customer's
 // transferable subscriptions. Optionally, this method can filter the response
 // by a `customerNamePrefix`. For more information, see manage subscriptions
-// (/admin-sdk/reseller/v1/how-tos/manage_subscriptions).
+// (https://developers.google.com/workspace/admin/reseller/v1/how-tos/manage_subscriptions).
 func (r *SubscriptionsService) List() *SubscriptionsListCall {
 	c := &SubscriptionsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	return c
@@ -2597,7 +2597,7 @@ type SubscriptionsStartPaidServiceCall struct {
 // paid service subscription. This method is only applicable if a payment plan
 // has already been set up for the 30-day trial subscription. For more
 // information, see manage subscriptions
-// (/admin-sdk/reseller/v1/how-tos/manage_subscriptions#paid_service).
+// (https://developers.google.com/workspace/admin/reseller/v1/how-tos/manage_subscriptions#paid_service).
 //
 //   - customerId: This can be either the customer's primary domain name or the
 //     customer's unique identifier. If the domain name for a customer changes,

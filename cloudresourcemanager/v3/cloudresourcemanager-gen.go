@@ -199,10 +199,22 @@ type EffectiveTagsService struct {
 
 func NewFoldersService(s *Service) *FoldersService {
 	rs := &FoldersService{s: s}
+	rs.Capabilities = NewFoldersCapabilitiesService(s)
 	return rs
 }
 
 type FoldersService struct {
+	s *Service
+
+	Capabilities *FoldersCapabilitiesService
+}
+
+func NewFoldersCapabilitiesService(s *Service) *FoldersCapabilitiesService {
+	rs := &FoldersCapabilitiesService{s: s}
+	return rs
+}
+
+type FoldersCapabilitiesService struct {
 	s *Service
 }
 
@@ -453,6 +465,37 @@ type Binding struct {
 
 func (s Binding) MarshalJSON() ([]byte, error) {
 	type NoMethod Binding
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// Capability: Representation of a Capability.
+type Capability struct {
+	// Name: Immutable. Identifier. The resource name of the capability. Must be in
+	// the following form: * `folders/{folder_id}/capabilities/{capability_name}`
+	// For example, `folders/123/capabilities/app-management` Following are the
+	// allowed {capability_name} values: * `app-management`
+	Name string `json:"name,omitempty"`
+	// Value: Required. The configured value of the capability at the given parent
+	// resource.
+	Value bool `json:"value,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "Name") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Name") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s Capability) MarshalJSON() ([]byte, error) {
+	type NoMethod Capability
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -733,6 +776,10 @@ func (s Expr) MarshalJSON() ([]byte, error) {
 // Folder: A folder in an organization's resource hierarchy, used to organize
 // that organization's resources.
 type Folder struct {
+	// ConfiguredCapabilities: Output only. Optional capabilities configured for
+	// this folder (via UpdateCapability API). Example:
+	// `folders/123/capabilities/app-management`.
+	ConfiguredCapabilities []string `json:"configuredCapabilities,omitempty"`
 	// CreateTime: Output only. Timestamp when the folder was created.
 	CreateTime string `json:"createTime,omitempty"`
 	// DeleteTime: Output only. Timestamp when the folder was requested to be
@@ -749,6 +796,10 @@ type Folder struct {
 	// value of the folder resource. This may be sent on update and delete requests
 	// to ensure the client has an up-to-date value before proceeding.
 	Etag string `json:"etag,omitempty"`
+	// ManagementProject: Output only. Management Project associated with this
+	// folder (if app-management capability is enabled). Example:
+	// `projects/google-mp-123` OUTPUT ONLY.
+	ManagementProject string `json:"managementProject,omitempty"`
 	// Name: Output only. The resource name of the folder. Its format is
 	// `folders/{folder_id}`, for example: "folders/1234".
 	Name string `json:"name,omitempty"`
@@ -773,15 +824,15 @@ type Folder struct {
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-	// ForceSendFields is a list of field names (e.g. "CreateTime") to
+	// ForceSendFields is a list of field names (e.g. "ConfiguredCapabilities") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "CreateTime") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
+	// NullFields is a list of field names (e.g. "ConfiguredCapabilities") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -3552,6 +3603,230 @@ func (c *FoldersUndeleteCall) Do(opts ...googleapi.CallOption) (*Operation, erro
 		return nil, err
 	}
 	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "cloudresourcemanager.folders.undelete", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type FoldersCapabilitiesGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Retrieves the Capability identified by the supplied resource name.
+//
+//   - name: The name of the capability to get. For example,
+//     `folders/123/capabilities/app-management`.
+func (r *FoldersCapabilitiesService) Get(name string) *FoldersCapabilitiesGetCall {
+	c := &FoldersCapabilitiesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *FoldersCapabilitiesGetCall) Fields(s ...googleapi.Field) *FoldersCapabilitiesGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *FoldersCapabilitiesGetCall) IfNoneMatch(entityTag string) *FoldersCapabilitiesGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *FoldersCapabilitiesGetCall) Context(ctx context.Context) *FoldersCapabilitiesGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *FoldersCapabilitiesGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *FoldersCapabilitiesGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v3/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "cloudresourcemanager.folders.capabilities.get", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "cloudresourcemanager.folders.capabilities.get" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Capability.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *FoldersCapabilitiesGetCall) Do(opts ...googleapi.CallOption) (*Capability, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Capability{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "cloudresourcemanager.folders.capabilities.get", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type FoldersCapabilitiesPatchCall struct {
+	s          *Service
+	name       string
+	capability *Capability
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Patch: Updates the Capability.
+//
+//   - name: Immutable. Identifier. The resource name of the capability. Must be
+//     in the following form: *
+//     `folders/{folder_id}/capabilities/{capability_name}` For example,
+//     `folders/123/capabilities/app-management` Following are the allowed
+//     {capability_name} values: * `app-management`.
+func (r *FoldersCapabilitiesService) Patch(name string, capability *Capability) *FoldersCapabilitiesPatchCall {
+	c := &FoldersCapabilitiesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.capability = capability
+	return c
+}
+
+// UpdateMask sets the optional parameter "updateMask": The list of fields to
+// update. Only [Capability.value] can be updated.
+func (c *FoldersCapabilitiesPatchCall) UpdateMask(updateMask string) *FoldersCapabilitiesPatchCall {
+	c.urlParams_.Set("updateMask", updateMask)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *FoldersCapabilitiesPatchCall) Fields(s ...googleapi.Field) *FoldersCapabilitiesPatchCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *FoldersCapabilitiesPatchCall) Context(ctx context.Context) *FoldersCapabilitiesPatchCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *FoldersCapabilitiesPatchCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *FoldersCapabilitiesPatchCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.capability)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v3/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PATCH", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "cloudresourcemanager.folders.capabilities.patch", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "cloudresourcemanager.folders.capabilities.patch" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *FoldersCapabilitiesPatchCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "cloudresourcemanager.folders.capabilities.patch", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 

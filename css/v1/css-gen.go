@@ -285,7 +285,7 @@ type AccountLabel struct {
 	//   "AUTOMATIC" - Indicates that the label was created automatically by CSS
 	// Center.
 	LabelType string `json:"labelType,omitempty"`
-	// Name: The resource name of the label. Format:
+	// Name: Identifier. The resource name of the label. Format:
 	// accounts/{account}/labels/{label}
 	Name string `json:"name,omitempty"`
 
@@ -583,7 +583,7 @@ type CssProductInput struct {
 	// received by the CSS API. If the operation is prevented, the aborted
 	// exception will be thrown.
 	FreshnessTime string `json:"freshnessTime,omitempty"`
-	// Name: The name of the CSS Product input. Format:
+	// Name: Identifier. The name of the CSS Product input. Format:
 	// `accounts/{account}/cssProductInputs/{css_product_input}`, where the last
 	// section `css_product_input` consists of 3 parts:
 	// contentLanguage~feedLabel~offerId. Example:
@@ -1795,7 +1795,7 @@ type AccountsCssProductInputsPatchCall struct {
 // After inserting, updating, or deleting a CSS Product input, it may take
 // several minutes before the processed Css Product can be retrieved.
 //
-//   - name: The name of the CSS Product input. Format:
+//   - name: Identifier. The name of the CSS Product input. Format:
 //     `accounts/{account}/cssProductInputs/{css_product_input}`, where the last
 //     section `css_product_input` consists of 3 parts:
 //     contentLanguage~feedLabel~offerId. Example:
@@ -2533,7 +2533,7 @@ type AccountsLabelsPatchCall struct {
 
 // Patch: Updates a label.
 //
-//   - name: The resource name of the label. Format:
+//   - name: Identifier. The resource name of the label. Format:
 //     accounts/{account}/labels/{label}.
 func (r *AccountsLabelsService) Patch(name string, accountlabel *AccountLabel) *AccountsLabelsPatchCall {
 	c := &AccountsLabelsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}

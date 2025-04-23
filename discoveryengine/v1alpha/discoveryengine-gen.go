@@ -2594,6 +2594,86 @@ func (s GoogleCloudDiscoveryengineV1AdvancedSiteSearchConfig) MarshalJSON() ([]b
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudDiscoveryengineV1AnswerGenerationSpec: The specification for
+// answer generation.
+type GoogleCloudDiscoveryengineV1AnswerGenerationSpec struct {
+	// UserDefinedClassifierSpec: Optional. The specification for user specified
+	// classifier spec.
+	UserDefinedClassifierSpec *GoogleCloudDiscoveryengineV1AnswerGenerationSpecUserDefinedClassifierSpec `json:"userDefinedClassifierSpec,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "UserDefinedClassifierSpec")
+	// to unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "UserDefinedClassifierSpec") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1AnswerGenerationSpec) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1AnswerGenerationSpec
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1AnswerGenerationSpecUserDefinedClassifierSpec:
+// The specification for user defined classifier.
+type GoogleCloudDiscoveryengineV1AnswerGenerationSpecUserDefinedClassifierSpec struct {
+	// EnableUserDefinedClassifier: Optional. Whether or not to enable and include
+	// user defined classifier.
+	EnableUserDefinedClassifier bool `json:"enableUserDefinedClassifier,omitempty"`
+	// ModelId: Optional. The model id to be used for the user defined classifier.
+	ModelId string `json:"modelId,omitempty"`
+	// Preamble: Optional. The preamble to be used for the user defined classifier.
+	Preamble string `json:"preamble,omitempty"`
+	// Seed: Optional. The seed value to be used for the user defined classifier.
+	Seed int64 `json:"seed,omitempty"`
+	// TaskMarker: Optional. The task marker to be used for the user defined
+	// classifier.
+	TaskMarker string `json:"taskMarker,omitempty"`
+	// Temperature: Optional. The temperature value to be used for the user defined
+	// classifier.
+	Temperature float64 `json:"temperature,omitempty"`
+	// TopK: Optional. The top-k value to be used for the user defined classifier.
+	TopK int64 `json:"topK,omitempty,string"`
+	// TopP: Optional. The top-p value to be used for the user defined classifier.
+	TopP float64 `json:"topP,omitempty"`
+	// ForceSendFields is a list of field names (e.g.
+	// "EnableUserDefinedClassifier") to unconditionally include in API requests.
+	// By default, fields with empty or default values are omitted from API
+	// requests. See https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields
+	// for more details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "EnableUserDefinedClassifier") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1AnswerGenerationSpecUserDefinedClassifierSpec) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1AnswerGenerationSpecUserDefinedClassifierSpec
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+func (s *GoogleCloudDiscoveryengineV1AnswerGenerationSpecUserDefinedClassifierSpec) UnmarshalJSON(data []byte) error {
+	type NoMethod GoogleCloudDiscoveryengineV1AnswerGenerationSpecUserDefinedClassifierSpec
+	var s1 struct {
+		Temperature gensupport.JSONFloat64 `json:"temperature"`
+		TopP        gensupport.JSONFloat64 `json:"topP"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.Temperature = float64(s1.Temperature)
+	s.TopP = float64(s1.TopP)
+	return nil
+}
+
 // GoogleCloudDiscoveryengineV1BatchCreateTargetSiteMetadata: Metadata related
 // to the progress of the SiteSearchEngineService.BatchCreateTargetSites
 // operation. This will be returned by the
@@ -3804,6 +3884,15 @@ type GoogleCloudDiscoveryengineV1DocumentProcessingConfigParsingConfigLayoutPars
 	// EnableTableAnnotation: Optional. If true, the LLM based annotation is added
 	// to the table during parsing.
 	EnableTableAnnotation bool `json:"enableTableAnnotation,omitempty"`
+	// ExcludeHtmlClasses: Optional. List of HTML classes to exclude from the
+	// parsed content.
+	ExcludeHtmlClasses []string `json:"excludeHtmlClasses,omitempty"`
+	// ExcludeHtmlElements: Optional. List of HTML elements to exclude from the
+	// parsed content.
+	ExcludeHtmlElements []string `json:"excludeHtmlElements,omitempty"`
+	// ExcludeHtmlIds: Optional. List of HTML ids to exclude from the parsed
+	// content.
+	ExcludeHtmlIds []string `json:"excludeHtmlIds,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "EnableImageAnnotation") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -3920,6 +4009,10 @@ type GoogleCloudDiscoveryengineV1Engine struct {
 	//   "MEDIA" - The media industry vertical.
 	//   "HEALTHCARE_FHIR" - The healthcare FHIR vertical.
 	IndustryVertical string `json:"industryVertical,omitempty"`
+	// MediaRecommendationEngineConfig: Configurations for the Media Engine. Only
+	// applicable on the data stores with solution_type
+	// SOLUTION_TYPE_RECOMMENDATION and IndustryVertical.MEDIA vertical.
+	MediaRecommendationEngineConfig *GoogleCloudDiscoveryengineV1EngineMediaRecommendationEngineConfig `json:"mediaRecommendationEngineConfig,omitempty"`
 	// Name: Immutable. The fully qualified resource name of the engine. This field
 	// must be a UTF-8 encoded string with a length limit of 1024 characters.
 	// Format:
@@ -4093,6 +4186,184 @@ type GoogleCloudDiscoveryengineV1EngineCommonConfig struct {
 
 func (s GoogleCloudDiscoveryengineV1EngineCommonConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDiscoveryengineV1EngineCommonConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1EngineMediaRecommendationEngineConfig:
+// Additional config specs for a Media Recommendation engine.
+type GoogleCloudDiscoveryengineV1EngineMediaRecommendationEngineConfig struct {
+	// EngineFeaturesConfig: Optional. Additional engine features config.
+	EngineFeaturesConfig *GoogleCloudDiscoveryengineV1EngineMediaRecommendationEngineConfigEngineFeaturesConfig `json:"engineFeaturesConfig,omitempty"`
+	// OptimizationObjective: The optimization objective. e.g., `cvr`. This field
+	// together with optimization_objective describe engine metadata to use to
+	// control engine training and serving. Currently supported values: `ctr`,
+	// `cvr`. If not specified, we choose default based on engine type. Default
+	// depends on type of recommendation: `recommended-for-you` => `ctr`
+	// `others-you-may-like` => `ctr`
+	OptimizationObjective string `json:"optimizationObjective,omitempty"`
+	// OptimizationObjectiveConfig: Name and value of the custom threshold for cvr
+	// optimization_objective. For target_field `watch-time`, target_field_value
+	// must be an integer value indicating the media progress time in seconds
+	// between (0, 86400] (excludes 0, includes 86400) (e.g., 90). For target_field
+	// `watch-percentage`, the target_field_value must be a valid float value
+	// between (0, 1.0] (excludes 0, includes 1.0) (e.g., 0.5).
+	OptimizationObjectiveConfig *GoogleCloudDiscoveryengineV1EngineMediaRecommendationEngineConfigOptimizationObjectiveConfig `json:"optimizationObjectiveConfig,omitempty"`
+	// TrainingState: The training state that the engine is in (e.g. `TRAINING` or
+	// `PAUSED`). Since part of the cost of running the service is frequency of
+	// training - this can be used to determine when to train engine in order to
+	// control cost. If not specified: the default value for `CreateEngine` method
+	// is `TRAINING`. The default value for `UpdateEngine` method is to keep the
+	// state the same as before.
+	//
+	// Possible values:
+	//   "TRAINING_STATE_UNSPECIFIED" - Unspecified training state.
+	//   "PAUSED" - The engine training is paused.
+	//   "TRAINING" - The engine is training.
+	TrainingState string `json:"trainingState,omitempty"`
+	// Type: Required. The type of engine. e.g., `recommended-for-you`. This field
+	// together with optimization_objective describe engine metadata to use to
+	// control engine training and serving. Currently supported values:
+	// `recommended-for-you`, `others-you-may-like`, `more-like-this`,
+	// `most-popular-items`.
+	Type string `json:"type,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "EngineFeaturesConfig") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "EngineFeaturesConfig") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1EngineMediaRecommendationEngineConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1EngineMediaRecommendationEngineConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1EngineMediaRecommendationEngineConfigEngineFeatur
+// esConfig: More feature configs of the selected engine type.
+type GoogleCloudDiscoveryengineV1EngineMediaRecommendationEngineConfigEngineFeaturesConfig struct {
+	// MostPopularConfig: Most popular engine feature config.
+	MostPopularConfig *GoogleCloudDiscoveryengineV1EngineMediaRecommendationEngineConfigMostPopularFeatureConfig `json:"mostPopularConfig,omitempty"`
+	// RecommendedForYouConfig: Recommended for you engine feature config.
+	RecommendedForYouConfig *GoogleCloudDiscoveryengineV1EngineMediaRecommendationEngineConfigRecommendedForYouFeatureConfig `json:"recommendedForYouConfig,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "MostPopularConfig") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "MostPopularConfig") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1EngineMediaRecommendationEngineConfigEngineFeaturesConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1EngineMediaRecommendationEngineConfigEngineFeaturesConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1EngineMediaRecommendationEngineConfigMostPopularF
+// eatureConfig: Feature configurations that are required for creating a Most
+// Popular engine.
+type GoogleCloudDiscoveryengineV1EngineMediaRecommendationEngineConfigMostPopularFeatureConfig struct {
+	// TimeWindowDays: The time window of which the engine is queried at training
+	// and prediction time. Positive integers only. The value translates to the
+	// last X days of events. Currently required for the `most-popular-items`
+	// engine.
+	TimeWindowDays int64 `json:"timeWindowDays,omitempty,string"`
+	// ForceSendFields is a list of field names (e.g. "TimeWindowDays") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "TimeWindowDays") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1EngineMediaRecommendationEngineConfigMostPopularFeatureConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1EngineMediaRecommendationEngineConfigMostPopularFeatureConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1EngineMediaRecommendationEngineConfigOptimization
+// ObjectiveConfig: Custom threshold for `cvr` optimization_objective.
+type GoogleCloudDiscoveryengineV1EngineMediaRecommendationEngineConfigOptimizationObjectiveConfig struct {
+	// TargetField: Required. The name of the field to target. Currently supported
+	// values: `watch-percentage`, `watch-time`.
+	TargetField string `json:"targetField,omitempty"`
+	// TargetFieldValueFloat: Required. The threshold to be applied to the target
+	// (e.g., 0.5).
+	TargetFieldValueFloat float64 `json:"targetFieldValueFloat,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "TargetField") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "TargetField") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1EngineMediaRecommendationEngineConfigOptimizationObjectiveConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1EngineMediaRecommendationEngineConfigOptimizationObjectiveConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+func (s *GoogleCloudDiscoveryengineV1EngineMediaRecommendationEngineConfigOptimizationObjectiveConfig) UnmarshalJSON(data []byte) error {
+	type NoMethod GoogleCloudDiscoveryengineV1EngineMediaRecommendationEngineConfigOptimizationObjectiveConfig
+	var s1 struct {
+		TargetFieldValueFloat gensupport.JSONFloat64 `json:"targetFieldValueFloat"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.TargetFieldValueFloat = float64(s1.TargetFieldValueFloat)
+	return nil
+}
+
+// GoogleCloudDiscoveryengineV1EngineMediaRecommendationEngineConfigRecommendedF
+// orYouFeatureConfig: Additional feature configurations for creating a
+// `recommended-for-you` engine.
+type GoogleCloudDiscoveryengineV1EngineMediaRecommendationEngineConfigRecommendedForYouFeatureConfig struct {
+	// ContextEventType: The type of event with which the engine is queried at
+	// prediction time. If set to `generic`, only `view-item`, `media-play`,and
+	// `media-complete` will be used as `context-event` in engine training. If set
+	// to `view-home-page`, `view-home-page` will also be used as `context-events`
+	// in addition to `view-item`, `media-play`, and `media-complete`. Currently
+	// supported for the `recommended-for-you` engine. Currently supported values:
+	// `view-home-page`, `generic`.
+	ContextEventType string `json:"contextEventType,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ContextEventType") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ContextEventType") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1EngineMediaRecommendationEngineConfigRecommendedForYouFeatureConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1EngineMediaRecommendationEngineConfigRecommendedForYouFeatureConfig
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -5113,6 +5384,8 @@ func (s GoogleCloudDiscoveryengineV1SearchRequestContentSearchSpecSummarySpecMod
 // predictions). The ServingConfig is passed in the search and predict request
 // and generates results.
 type GoogleCloudDiscoveryengineV1ServingConfig struct {
+	// AnswerGenerationSpec: Optional. The specification for answer generation.
+	AnswerGenerationSpec *GoogleCloudDiscoveryengineV1AnswerGenerationSpec `json:"answerGenerationSpec,omitempty"`
 	// BoostControlIds: Boost controls to use in serving path. All triggered boost
 	// controls will be applied. Boost controls must be in the same data store as
 	// the serving config. Maximum of 20 boost controls.
@@ -5211,15 +5484,15 @@ type GoogleCloudDiscoveryengineV1ServingConfig struct {
 	SynonymsControlIds []string `json:"synonymsControlIds,omitempty"`
 	// UpdateTime: Output only. ServingConfig updated timestamp.
 	UpdateTime string `json:"updateTime,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "BoostControlIds") to
+	// ForceSendFields is a list of field names (e.g. "AnswerGenerationSpec") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "BoostControlIds") to include in
-	// API requests with the JSON null value. By default, fields with empty values
-	// are omitted from API requests. See
+	// NullFields is a list of field names (e.g. "AnswerGenerationSpec") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -5789,6 +6062,8 @@ type GoogleCloudDiscoveryengineV1alphaAdvancedCompleteQueryRequest struct {
 	// BoostSpec: Optional. Specification to boost suggestions matching the
 	// condition.
 	BoostSpec *GoogleCloudDiscoveryengineV1alphaAdvancedCompleteQueryRequestBoostSpec `json:"boostSpec,omitempty"`
+	// ExperimentIds: Optional. Experiment ids for this request.
+	ExperimentIds []string `json:"experimentIds,omitempty"`
 	// IncludeTailSuggestions: Indicates if tail suggestions should be returned if
 	// there are no suggestions that match the full query. Even if set to true, if
 	// there are suggestions that match the full query, those are returned and no
@@ -6544,6 +6819,86 @@ type GoogleCloudDiscoveryengineV1alphaAnswerCitationSource struct {
 func (s GoogleCloudDiscoveryengineV1alphaAnswerCitationSource) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDiscoveryengineV1alphaAnswerCitationSource
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1alphaAnswerGenerationSpec: The specification for
+// answer generation.
+type GoogleCloudDiscoveryengineV1alphaAnswerGenerationSpec struct {
+	// UserDefinedClassifierSpec: Optional. The specification for user specified
+	// classifier spec.
+	UserDefinedClassifierSpec *GoogleCloudDiscoveryengineV1alphaAnswerGenerationSpecUserDefinedClassifierSpec `json:"userDefinedClassifierSpec,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "UserDefinedClassifierSpec")
+	// to unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "UserDefinedClassifierSpec") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1alphaAnswerGenerationSpec) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1alphaAnswerGenerationSpec
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1alphaAnswerGenerationSpecUserDefinedClassifierSpe
+// c: The specification for user defined classifier.
+type GoogleCloudDiscoveryengineV1alphaAnswerGenerationSpecUserDefinedClassifierSpec struct {
+	// EnableUserDefinedClassifier: Optional. Whether or not to enable and include
+	// user defined classifier.
+	EnableUserDefinedClassifier bool `json:"enableUserDefinedClassifier,omitempty"`
+	// ModelId: Optional. The model id to be used for the user defined classifier.
+	ModelId string `json:"modelId,omitempty"`
+	// Preamble: Optional. The preamble to be used for the user defined classifier.
+	Preamble string `json:"preamble,omitempty"`
+	// Seed: Optional. The seed value to be used for the user defined classifier.
+	Seed int64 `json:"seed,omitempty"`
+	// TaskMarker: Optional. The task marker to be used for the user defined
+	// classifier.
+	TaskMarker string `json:"taskMarker,omitempty"`
+	// Temperature: Optional. The temperature value to be used for the user defined
+	// classifier.
+	Temperature float64 `json:"temperature,omitempty"`
+	// TopK: Optional. The top-k value to be used for the user defined classifier.
+	TopK int64 `json:"topK,omitempty,string"`
+	// TopP: Optional. The top-p value to be used for the user defined classifier.
+	TopP float64 `json:"topP,omitempty"`
+	// ForceSendFields is a list of field names (e.g.
+	// "EnableUserDefinedClassifier") to unconditionally include in API requests.
+	// By default, fields with empty or default values are omitted from API
+	// requests. See https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields
+	// for more details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "EnableUserDefinedClassifier") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1alphaAnswerGenerationSpecUserDefinedClassifierSpec) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1alphaAnswerGenerationSpecUserDefinedClassifierSpec
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+func (s *GoogleCloudDiscoveryengineV1alphaAnswerGenerationSpecUserDefinedClassifierSpec) UnmarshalJSON(data []byte) error {
+	type NoMethod GoogleCloudDiscoveryengineV1alphaAnswerGenerationSpecUserDefinedClassifierSpec
+	var s1 struct {
+		Temperature gensupport.JSONFloat64 `json:"temperature"`
+		TopP        gensupport.JSONFloat64 `json:"topP"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.Temperature = float64(s1.Temperature)
+	s.TopP = float64(s1.TopP)
+	return nil
 }
 
 // GoogleCloudDiscoveryengineV1alphaAnswerGroundingSupport: Grounding support
@@ -8541,6 +8896,9 @@ type GoogleCloudDiscoveryengineV1alphaCheckGroundingResponseClaim struct {
 	// check, this field will be set to false. In that case, no grounding check was
 	// done for the claim and therefore citation_indices should not be returned.
 	GroundingCheckRequired bool `json:"groundingCheckRequired,omitempty"`
+	// Score: Confidence score for the claim in the answer candidate, in the range
+	// of [0, 1]. This is set only when enable_claim_level_score is true.
+	Score float64 `json:"score,omitempty"`
 	// StartPos: Position indicating the start of the claim in the answer
 	// candidate, measured in bytes. Note that this is not measured in characters
 	// and, therefore, must be rendered in the user interface keeping in mind that
@@ -8567,6 +8925,20 @@ func (s GoogleCloudDiscoveryengineV1alphaCheckGroundingResponseClaim) MarshalJSO
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+func (s *GoogleCloudDiscoveryengineV1alphaCheckGroundingResponseClaim) UnmarshalJSON(data []byte) error {
+	type NoMethod GoogleCloudDiscoveryengineV1alphaCheckGroundingResponseClaim
+	var s1 struct {
+		Score gensupport.JSONFloat64 `json:"score"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.Score = float64(s1.Score)
+	return nil
+}
+
 // GoogleCloudDiscoveryengineV1alphaCheckGroundingSpec: Specification for the
 // grounding check.
 type GoogleCloudDiscoveryengineV1alphaCheckGroundingSpec struct {
@@ -8576,6 +8948,9 @@ type GoogleCloudDiscoveryengineV1alphaCheckGroundingSpec struct {
 	// lower threshold may lead to more but somewhat weaker citations. If unset,
 	// the threshold will default to 0.6.
 	CitationThreshold float64 `json:"citationThreshold,omitempty"`
+	// EnableClaimLevelScore: The control flag that enables claim-level grounding
+	// score in the response.
+	EnableClaimLevelScore bool `json:"enableClaimLevelScore,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "CitationThreshold") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -10295,6 +10670,10 @@ func (s GoogleCloudDiscoveryengineV1alphaCustomTuningModel) MarshalJSON() ([]byt
 // through DataConnectorService.SetUpDataConnector method, which will create a
 // new Collection and initialize its DataConnector.
 type GoogleCloudDiscoveryengineV1alphaDataConnector struct {
+	// AclEnabled: Optional. Whether the connector will be created with an ACL
+	// config. Currently this field only affects Cloud Storage and BigQuery
+	// connectors.
+	AclEnabled bool `json:"aclEnabled,omitempty"`
 	// ActionConfig: Optional. Action configurations to make the connector support
 	// actions.
 	ActionConfig *GoogleCloudDiscoveryengineV1alphaActionConfig `json:"actionConfig,omitempty"`
@@ -10315,6 +10694,16 @@ type GoogleCloudDiscoveryengineV1alphaDataConnector struct {
 	//   "ALLOWLIST_IN_SERVICE_ATTACHMENT" - Connector requires customer to
 	// allowlist our project in their service attachment.
 	BlockingReasons []string `json:"blockingReasons,omitempty"`
+	// ConnectorModes: Optional. The modes enabled for this connector. Default
+	// state is CONNECTOR_MODE_UNSPECIFIED.
+	//
+	// Possible values:
+	//   "CONNECTOR_MODE_UNSPECIFIED" - Connector mode unspecified.
+	//   "DATA_INGESTION" - Connector utilized for data ingestion.
+	//   "ACTIONS" - Connector utilized for actions.
+	//   "FEDERATED" - Connector utilized for federated search.
+	//   "EUA" - Connector utilized for End User Authentication.
+	ConnectorModes []string `json:"connectorModes,omitempty"`
 	// ConnectorType: Output only. The type of connector. Each source can only map
 	// to one type. For example, salesforce, confluence and jira have THIRD_PARTY
 	// connector type. It is notmutable once set by system.
@@ -10344,6 +10733,9 @@ type GoogleCloudDiscoveryengineV1alphaDataConnector struct {
 	// DestinationConfigs: Optional. Any target destinations used to connect to
 	// third-party services.
 	DestinationConfigs []*GoogleCloudDiscoveryengineV1alphaDestinationConfig `json:"destinationConfigs,omitempty"`
+	// EndUserConfig: Optional. Any params and credentials used specifically for
+	// EUA connectors.
+	EndUserConfig *GoogleCloudDiscoveryengineV1alphaDataConnectorEndUserConfig `json:"endUserConfig,omitempty"`
 	// Entities: List of entities from the connected data source to ingest.
 	Entities []*GoogleCloudDiscoveryengineV1alphaDataConnectorSourceEntity `json:"entities,omitempty"`
 	// Errors: Output only. The errors from initialization or from the latest
@@ -10476,13 +10868,13 @@ type GoogleCloudDiscoveryengineV1alphaDataConnector struct {
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-	// ForceSendFields is a list of field names (e.g. "ActionConfig") to
+	// ForceSendFields is a list of field names (e.g. "AclEnabled") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "ActionConfig") to include in API
+	// NullFields is a list of field names (e.g. "AclEnabled") to include in API
 	// requests with the JSON null value. By default, fields with empty values are
 	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
@@ -10491,6 +10883,32 @@ type GoogleCloudDiscoveryengineV1alphaDataConnector struct {
 
 func (s GoogleCloudDiscoveryengineV1alphaDataConnector) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDiscoveryengineV1alphaDataConnector
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1alphaDataConnectorEndUserConfig: Any params and
+// credentials used specifically for EUA connectors.
+type GoogleCloudDiscoveryengineV1alphaDataConnectorEndUserConfig struct {
+	// AdditionalParams: Optional. Any additional parameters needed for EUA.
+	AdditionalParams googleapi.RawMessage `json:"additionalParams,omitempty"`
+	// AuthParams: Optional. Any authentication parameters specific to EUA
+	// connectors.
+	AuthParams googleapi.RawMessage `json:"authParams,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AdditionalParams") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AdditionalParams") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1alphaDataConnectorEndUserConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1alphaDataConnectorEndUserConfig
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -11263,7 +11681,8 @@ func (s GoogleCloudDiscoveryengineV1alphaDocumentAclInfoAccessRestriction) Marsh
 type GoogleCloudDiscoveryengineV1alphaDocumentContent struct {
 	// MimeType: The MIME type of the content. Supported types: * `application/pdf`
 	// (PDF, only native PDFs are supported for now) * `text/html` (HTML) *
-	// `text/plain` (TXT) * `text/xml` (XML) * `application/json` (JSON) *
+	// `text/plain` (TXT) * `application/xml` or `text/xml` (XML) *
+	// `application/json` (JSON) *
 	// `application/vnd.openxmlformats-officedocument.wordprocessingml.document`
 	// (DOCX) *
 	// `application/vnd.openxmlformats-officedocument.presentationml.presentation`
@@ -11533,6 +11952,15 @@ type GoogleCloudDiscoveryengineV1alphaDocumentProcessingConfigParsingConfigLayou
 	// EnableTableAnnotation: Optional. If true, the LLM based annotation is added
 	// to the table during parsing.
 	EnableTableAnnotation bool `json:"enableTableAnnotation,omitempty"`
+	// ExcludeHtmlClasses: Optional. List of HTML classes to exclude from the
+	// parsed content.
+	ExcludeHtmlClasses []string `json:"excludeHtmlClasses,omitempty"`
+	// ExcludeHtmlElements: Optional. List of HTML elements to exclude from the
+	// parsed content.
+	ExcludeHtmlElements []string `json:"excludeHtmlElements,omitempty"`
+	// ExcludeHtmlIds: Optional. List of HTML ids to exclude from the parsed
+	// content.
+	ExcludeHtmlIds []string `json:"excludeHtmlIds,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "EnableImageAnnotation") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -11909,6 +12337,8 @@ func (s GoogleCloudDiscoveryengineV1alphaEngineCommonConfig) MarshalJSON() ([]by
 // GoogleCloudDiscoveryengineV1alphaEngineMediaRecommendationEngineConfig:
 // Additional config specs for a Media Recommendation engine.
 type GoogleCloudDiscoveryengineV1alphaEngineMediaRecommendationEngineConfig struct {
+	// EngineFeaturesConfig: Optional. Additional engine features config.
+	EngineFeaturesConfig *GoogleCloudDiscoveryengineV1alphaEngineMediaRecommendationEngineConfigEngineFeaturesConfig `json:"engineFeaturesConfig,omitempty"`
 	// OptimizationObjective: The optimization objective. e.g., `cvr`. This field
 	// together with optimization_objective describe engine metadata to use to
 	// control engine training and serving. Currently supported values: `ctr`,
@@ -11941,21 +12371,73 @@ type GoogleCloudDiscoveryengineV1alphaEngineMediaRecommendationEngineConfig stru
 	// `recommended-for-you`, `others-you-may-like`, `more-like-this`,
 	// `most-popular-items`.
 	Type string `json:"type,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "OptimizationObjective") to
+	// ForceSendFields is a list of field names (e.g. "EngineFeaturesConfig") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "OptimizationObjective") to
-	// include in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. See
+	// NullFields is a list of field names (e.g. "EngineFeaturesConfig") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s GoogleCloudDiscoveryengineV1alphaEngineMediaRecommendationEngineConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDiscoveryengineV1alphaEngineMediaRecommendationEngineConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1alphaEngineMediaRecommendationEngineConfigEngineF
+// eaturesConfig: More feature configs of the selected engine type.
+type GoogleCloudDiscoveryengineV1alphaEngineMediaRecommendationEngineConfigEngineFeaturesConfig struct {
+	// MostPopularConfig: Most popular engine feature config.
+	MostPopularConfig *GoogleCloudDiscoveryengineV1alphaEngineMediaRecommendationEngineConfigMostPopularFeatureConfig `json:"mostPopularConfig,omitempty"`
+	// RecommendedForYouConfig: Recommended for you engine feature config.
+	RecommendedForYouConfig *GoogleCloudDiscoveryengineV1alphaEngineMediaRecommendationEngineConfigRecommendedForYouFeatureConfig `json:"recommendedForYouConfig,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "MostPopularConfig") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "MostPopularConfig") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1alphaEngineMediaRecommendationEngineConfigEngineFeaturesConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1alphaEngineMediaRecommendationEngineConfigEngineFeaturesConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1alphaEngineMediaRecommendationEngineConfigMostPop
+// ularFeatureConfig: Feature configurations that are required for creating a
+// Most Popular engine.
+type GoogleCloudDiscoveryengineV1alphaEngineMediaRecommendationEngineConfigMostPopularFeatureConfig struct {
+	// TimeWindowDays: The time window of which the engine is queried at training
+	// and prediction time. Positive integers only. The value translates to the
+	// last X days of events. Currently required for the `most-popular-items`
+	// engine.
+	TimeWindowDays int64 `json:"timeWindowDays,omitempty,string"`
+	// ForceSendFields is a list of field names (e.g. "TimeWindowDays") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "TimeWindowDays") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1alphaEngineMediaRecommendationEngineConfigMostPopularFeatureConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1alphaEngineMediaRecommendationEngineConfigMostPopularFeatureConfig
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -11998,6 +12480,36 @@ func (s *GoogleCloudDiscoveryengineV1alphaEngineMediaRecommendationEngineConfigO
 	}
 	s.TargetFieldValueFloat = float64(s1.TargetFieldValueFloat)
 	return nil
+}
+
+// GoogleCloudDiscoveryengineV1alphaEngineMediaRecommendationEngineConfigRecomme
+// ndedForYouFeatureConfig: Additional feature configurations for creating a
+// `recommended-for-you` engine.
+type GoogleCloudDiscoveryengineV1alphaEngineMediaRecommendationEngineConfigRecommendedForYouFeatureConfig struct {
+	// ContextEventType: The type of event with which the engine is queried at
+	// prediction time. If set to `generic`, only `view-item`, `media-play`,and
+	// `media-complete` will be used as `context-event` in engine training. If set
+	// to `view-home-page`, `view-home-page` will also be used as `context-events`
+	// in addition to `view-item`, `media-play`, and `media-complete`. Currently
+	// supported for the `recommended-for-you` engine. Currently supported values:
+	// `view-home-page`, `generic`.
+	ContextEventType string `json:"contextEventType,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ContextEventType") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ContextEventType") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1alphaEngineMediaRecommendationEngineConfigRecommendedForYouFeatureConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1alphaEngineMediaRecommendationEngineConfigRecommendedForYouFeatureConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDiscoveryengineV1alphaEngineRecommendationMetadata: Additional
@@ -12370,6 +12882,8 @@ type GoogleCloudDiscoveryengineV1alphaFactChunk struct {
 	// ChunkText: Text content of the fact chunk. Can be at most 10K characters
 	// long.
 	ChunkText string `json:"chunkText,omitempty"`
+	// Domain: The domain of the source.
+	Domain string `json:"domain,omitempty"`
 	// Index: The index of this chunk. Currently, only used for the streaming mode.
 	Index int64 `json:"index,omitempty"`
 	// Source: Source from which this fact chunk was retrieved. If it was retrieved
@@ -12378,6 +12892,10 @@ type GoogleCloudDiscoveryengineV1alphaFactChunk struct {
 	Source string `json:"source,omitempty"`
 	// SourceMetadata: More fine-grained information for the source reference.
 	SourceMetadata map[string]string `json:"sourceMetadata,omitempty"`
+	// Title: The title of the source.
+	Title string `json:"title,omitempty"`
+	// Uri: The URI of the source.
+	Uri string `json:"uri,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "ChunkText") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -12776,6 +13294,8 @@ func (s GoogleCloudDiscoveryengineV1alphaGcsSource) MarshalJSON() ([]byte, error
 type GoogleCloudDiscoveryengineV1alphaGetConnectorSecretResponse struct {
 	// App: The app name of the associated Connector.
 	App string `json:"app,omitempty"`
+	// AuthorizationUri: The authorization uri for the data connector.
+	AuthorizationUri string `json:"authorizationUri,omitempty"`
 	// ClientId: The client id of the associated Connector.
 	ClientId string `json:"clientId,omitempty"`
 	// Instance: The instance name of the associated Connector.
@@ -19051,6 +19571,8 @@ func (s GoogleCloudDiscoveryengineV1alphaSearchResponseSummarySummaryWithMetadat
 // predictions). The ServingConfig is passed in the search and predict request
 // and generates results.
 type GoogleCloudDiscoveryengineV1alphaServingConfig struct {
+	// AnswerGenerationSpec: Optional. The specification for answer generation.
+	AnswerGenerationSpec *GoogleCloudDiscoveryengineV1alphaAnswerGenerationSpec `json:"answerGenerationSpec,omitempty"`
 	// BoostControlIds: Boost controls to use in serving path. All triggered boost
 	// controls will be applied. Boost controls must be in the same data store as
 	// the serving config. Maximum of 20 boost controls.
@@ -19171,15 +19693,15 @@ type GoogleCloudDiscoveryengineV1alphaServingConfig struct {
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-	// ForceSendFields is a list of field names (e.g. "BoostControlIds") to
+	// ForceSendFields is a list of field names (e.g. "AnswerGenerationSpec") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "BoostControlIds") to include in
-	// API requests with the JSON null value. By default, fields with empty values
-	// are omitted from API requests. See
+	// NullFields is a list of field names (e.g. "AnswerGenerationSpec") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -20738,8 +21260,19 @@ func (s GoogleCloudDiscoveryengineV1alphaWidgetConfigAccessSettings) MarshalJSON
 // the assistant settings of the widget.
 type GoogleCloudDiscoveryengineV1alphaWidgetConfigAssistantSettings struct {
 	// GoogleSearchGroundingEnabled: Whether or not the Google search grounding
-	// toggle is shown.
+	// toggle is shown. Deprecated. Use web_grounding_type instead.
 	GoogleSearchGroundingEnabled bool `json:"googleSearchGroundingEnabled,omitempty"`
+	// WebGroundingType: Optional. The type of web grounding to use.
+	//
+	// Possible values:
+	//   "WEB_GROUNDING_TYPE_UNSPECIFIED" - Default, unspecified setting. This is
+	// the same as disabled.
+	//   "WEB_GROUNDING_TYPE_DISABLED" - Web grounding is disabled.
+	//   "WEB_GROUNDING_TYPE_GOOGLE_SEARCH" - Grounding with Google Search is
+	// enabled.
+	//   "WEB_GROUNDING_TYPE_ENTERPRISE_WEB_SEARCH" - Grounding with Enterprise Web
+	// Search is enabled.
+	WebGroundingType string `json:"webGroundingType,omitempty"`
 	// ForceSendFields is a list of field names (e.g.
 	// "GoogleSearchGroundingEnabled") to unconditionally include in API requests.
 	// By default, fields with empty or default values are omitted from API
@@ -21109,6 +21642,9 @@ type GoogleCloudDiscoveryengineV1alphaWidgetConfigUiSettings struct {
 	DisableUserEventsCollection bool `json:"disableUserEventsCollection,omitempty"`
 	// EnableAutocomplete: Whether or not to enable autocomplete.
 	EnableAutocomplete bool `json:"enableAutocomplete,omitempty"`
+	// EnablePeopleSearch: Optional. If set to true, the widget will enable people
+	// search.
+	EnablePeopleSearch bool `json:"enablePeopleSearch,omitempty"`
 	// EnableQualityFeedback: Turn on or off collecting the search result quality
 	// feedback from end users.
 	EnableQualityFeedback bool `json:"enableQualityFeedback,omitempty"`
@@ -22545,6 +23081,15 @@ type GoogleCloudDiscoveryengineV1betaDocumentProcessingConfigParsingConfigLayout
 	// EnableTableAnnotation: Optional. If true, the LLM based annotation is added
 	// to the table during parsing.
 	EnableTableAnnotation bool `json:"enableTableAnnotation,omitempty"`
+	// ExcludeHtmlClasses: Optional. List of HTML classes to exclude from the
+	// parsed content.
+	ExcludeHtmlClasses []string `json:"excludeHtmlClasses,omitempty"`
+	// ExcludeHtmlElements: Optional. List of HTML elements to exclude from the
+	// parsed content.
+	ExcludeHtmlElements []string `json:"excludeHtmlElements,omitempty"`
+	// ExcludeHtmlIds: Optional. List of HTML ids to exclude from the parsed
+	// content.
+	ExcludeHtmlIds []string `json:"excludeHtmlIds,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "EnableImageAnnotation") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -22661,6 +23206,10 @@ type GoogleCloudDiscoveryengineV1betaEngine struct {
 	//   "MEDIA" - The media industry vertical.
 	//   "HEALTHCARE_FHIR" - The healthcare FHIR vertical.
 	IndustryVertical string `json:"industryVertical,omitempty"`
+	// MediaRecommendationEngineConfig: Configurations for the Media Engine. Only
+	// applicable on the data stores with solution_type
+	// SOLUTION_TYPE_RECOMMENDATION and IndustryVertical.MEDIA vertical.
+	MediaRecommendationEngineConfig *GoogleCloudDiscoveryengineV1betaEngineMediaRecommendationEngineConfig `json:"mediaRecommendationEngineConfig,omitempty"`
 	// Name: Immutable. The fully qualified resource name of the engine. This field
 	// must be a UTF-8 encoded string with a length limit of 1024 characters.
 	// Format:
@@ -22834,6 +23383,184 @@ type GoogleCloudDiscoveryengineV1betaEngineCommonConfig struct {
 
 func (s GoogleCloudDiscoveryengineV1betaEngineCommonConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDiscoveryengineV1betaEngineCommonConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1betaEngineMediaRecommendationEngineConfig:
+// Additional config specs for a Media Recommendation engine.
+type GoogleCloudDiscoveryengineV1betaEngineMediaRecommendationEngineConfig struct {
+	// EngineFeaturesConfig: Optional. Additional engine features config.
+	EngineFeaturesConfig *GoogleCloudDiscoveryengineV1betaEngineMediaRecommendationEngineConfigEngineFeaturesConfig `json:"engineFeaturesConfig,omitempty"`
+	// OptimizationObjective: The optimization objective. e.g., `cvr`. This field
+	// together with optimization_objective describe engine metadata to use to
+	// control engine training and serving. Currently supported values: `ctr`,
+	// `cvr`. If not specified, we choose default based on engine type. Default
+	// depends on type of recommendation: `recommended-for-you` => `ctr`
+	// `others-you-may-like` => `ctr`
+	OptimizationObjective string `json:"optimizationObjective,omitempty"`
+	// OptimizationObjectiveConfig: Name and value of the custom threshold for cvr
+	// optimization_objective. For target_field `watch-time`, target_field_value
+	// must be an integer value indicating the media progress time in seconds
+	// between (0, 86400] (excludes 0, includes 86400) (e.g., 90). For target_field
+	// `watch-percentage`, the target_field_value must be a valid float value
+	// between (0, 1.0] (excludes 0, includes 1.0) (e.g., 0.5).
+	OptimizationObjectiveConfig *GoogleCloudDiscoveryengineV1betaEngineMediaRecommendationEngineConfigOptimizationObjectiveConfig `json:"optimizationObjectiveConfig,omitempty"`
+	// TrainingState: The training state that the engine is in (e.g. `TRAINING` or
+	// `PAUSED`). Since part of the cost of running the service is frequency of
+	// training - this can be used to determine when to train engine in order to
+	// control cost. If not specified: the default value for `CreateEngine` method
+	// is `TRAINING`. The default value for `UpdateEngine` method is to keep the
+	// state the same as before.
+	//
+	// Possible values:
+	//   "TRAINING_STATE_UNSPECIFIED" - Unspecified training state.
+	//   "PAUSED" - The engine training is paused.
+	//   "TRAINING" - The engine is training.
+	TrainingState string `json:"trainingState,omitempty"`
+	// Type: Required. The type of engine. e.g., `recommended-for-you`. This field
+	// together with optimization_objective describe engine metadata to use to
+	// control engine training and serving. Currently supported values:
+	// `recommended-for-you`, `others-you-may-like`, `more-like-this`,
+	// `most-popular-items`.
+	Type string `json:"type,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "EngineFeaturesConfig") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "EngineFeaturesConfig") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1betaEngineMediaRecommendationEngineConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1betaEngineMediaRecommendationEngineConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1betaEngineMediaRecommendationEngineConfigEngineFe
+// aturesConfig: More feature configs of the selected engine type.
+type GoogleCloudDiscoveryengineV1betaEngineMediaRecommendationEngineConfigEngineFeaturesConfig struct {
+	// MostPopularConfig: Most popular engine feature config.
+	MostPopularConfig *GoogleCloudDiscoveryengineV1betaEngineMediaRecommendationEngineConfigMostPopularFeatureConfig `json:"mostPopularConfig,omitempty"`
+	// RecommendedForYouConfig: Recommended for you engine feature config.
+	RecommendedForYouConfig *GoogleCloudDiscoveryengineV1betaEngineMediaRecommendationEngineConfigRecommendedForYouFeatureConfig `json:"recommendedForYouConfig,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "MostPopularConfig") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "MostPopularConfig") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1betaEngineMediaRecommendationEngineConfigEngineFeaturesConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1betaEngineMediaRecommendationEngineConfigEngineFeaturesConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1betaEngineMediaRecommendationEngineConfigMostPopu
+// larFeatureConfig: Feature configurations that are required for creating a
+// Most Popular engine.
+type GoogleCloudDiscoveryengineV1betaEngineMediaRecommendationEngineConfigMostPopularFeatureConfig struct {
+	// TimeWindowDays: The time window of which the engine is queried at training
+	// and prediction time. Positive integers only. The value translates to the
+	// last X days of events. Currently required for the `most-popular-items`
+	// engine.
+	TimeWindowDays int64 `json:"timeWindowDays,omitempty,string"`
+	// ForceSendFields is a list of field names (e.g. "TimeWindowDays") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "TimeWindowDays") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1betaEngineMediaRecommendationEngineConfigMostPopularFeatureConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1betaEngineMediaRecommendationEngineConfigMostPopularFeatureConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1betaEngineMediaRecommendationEngineConfigOptimiza
+// tionObjectiveConfig: Custom threshold for `cvr` optimization_objective.
+type GoogleCloudDiscoveryengineV1betaEngineMediaRecommendationEngineConfigOptimizationObjectiveConfig struct {
+	// TargetField: Required. The name of the field to target. Currently supported
+	// values: `watch-percentage`, `watch-time`.
+	TargetField string `json:"targetField,omitempty"`
+	// TargetFieldValueFloat: Required. The threshold to be applied to the target
+	// (e.g., 0.5).
+	TargetFieldValueFloat float64 `json:"targetFieldValueFloat,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "TargetField") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "TargetField") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1betaEngineMediaRecommendationEngineConfigOptimizationObjectiveConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1betaEngineMediaRecommendationEngineConfigOptimizationObjectiveConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+func (s *GoogleCloudDiscoveryengineV1betaEngineMediaRecommendationEngineConfigOptimizationObjectiveConfig) UnmarshalJSON(data []byte) error {
+	type NoMethod GoogleCloudDiscoveryengineV1betaEngineMediaRecommendationEngineConfigOptimizationObjectiveConfig
+	var s1 struct {
+		TargetFieldValueFloat gensupport.JSONFloat64 `json:"targetFieldValueFloat"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.TargetFieldValueFloat = float64(s1.TargetFieldValueFloat)
+	return nil
+}
+
+// GoogleCloudDiscoveryengineV1betaEngineMediaRecommendationEngineConfigRecommen
+// dedForYouFeatureConfig: Additional feature configurations for creating a
+// `recommended-for-you` engine.
+type GoogleCloudDiscoveryengineV1betaEngineMediaRecommendationEngineConfigRecommendedForYouFeatureConfig struct {
+	// ContextEventType: The type of event with which the engine is queried at
+	// prediction time. If set to `generic`, only `view-item`, `media-play`,and
+	// `media-complete` will be used as `context-event` in engine training. If set
+	// to `view-home-page`, `view-home-page` will also be used as `context-events`
+	// in addition to `view-item`, `media-play`, and `media-complete`. Currently
+	// supported for the `recommended-for-you` engine. Currently supported values:
+	// `view-home-page`, `generic`.
+	ContextEventType string `json:"contextEventType,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ContextEventType") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ContextEventType") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1betaEngineMediaRecommendationEngineConfigRecommendedForYouFeatureConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1betaEngineMediaRecommendationEngineConfigRecommendedForYouFeatureConfig
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 

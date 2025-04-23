@@ -560,10 +560,9 @@ type GoogleCloudChannelV1ChangeOfferRequest struct {
 	// available Parameters refer to the Offer.parameter_definitions from the
 	// desired offer.
 	Parameters []*GoogleCloudChannelV1Parameter `json:"parameters,omitempty"`
-	// PriceReferenceId: Optional. Price reference ID for the offer. Optional field
-	// only for offers that require additional price information. Used to guarantee
-	// that the pricing is consistent between quoting the offer and placing the
-	// order.
+	// PriceReferenceId: Optional. Price reference ID for the offer. Only for
+	// offers that require additional price information. Used to guarantee that the
+	// pricing is consistent between quoting the offer and placing the order.
 	PriceReferenceId string `json:"priceReferenceId,omitempty"`
 	// PurchaseOrderId: Optional. Purchase order id provided by the reseller.
 	PurchaseOrderId string `json:"purchaseOrderId,omitempty"`
@@ -1125,6 +1124,19 @@ type GoogleCloudChannelV1Customer struct {
 	CorrelationId string `json:"correlationId,omitempty"`
 	// CreateTime: Output only. Time when the customer was created.
 	CreateTime string `json:"createTime,omitempty"`
+	// CustomerAttestationState: Optional. Indicate if a customer is attesting
+	// about the correctness of provided information. Only required if creating a
+	// GCP Entitlement.
+	//
+	// Possible values:
+	//   "CUSTOMER_ATTESTATION_STATE_UNSPECIFIED" - Default value if not set yet
+	//   "EXEMPT" - Customer is exempt from attesting based on exemption list at
+	// https://cloud.google.com/terms/direct-tos-exemptions. Contact information of
+	// customer will be mandatory.
+	//   "NON_EXEMPT_AND_INFO_VERIFIED" - Customer is not exempt and has verified
+	// the information provided is correct. Contact information of customer will be
+	// mandatory.
+	CustomerAttestationState string `json:"customerAttestationState,omitempty"`
 	// Domain: Required. The customer's primary domain. Must match the primary
 	// contact email's domain.
 	Domain string `json:"domain,omitempty"`
@@ -1387,10 +1399,9 @@ type GoogleCloudChannelV1Entitlement struct {
 	// Google Cloud billing subaccounts, the following Parameter may be accepted as
 	// input: - display_name: The display name of the billing subaccount.
 	Parameters []*GoogleCloudChannelV1Parameter `json:"parameters,omitempty"`
-	// PriceReferenceId: Optional. Price reference ID for the offer. Optional field
-	// only for offers that require additional price information. Used to guarantee
-	// that the pricing is consistent between quoting the offer and placing the
-	// order.
+	// PriceReferenceId: Optional. Price reference ID for the offer. Only for
+	// offers that require additional price information. Used to guarantee that the
+	// pricing is consistent between quoting the offer and placing the order.
 	PriceReferenceId string `json:"priceReferenceId,omitempty"`
 	// ProvisionedService: Output only. Service provisioning details for the
 	// entitlement.
@@ -1893,7 +1904,9 @@ func (s GoogleCloudChannelV1ListEntitlementsResponse) MarshalJSON() ([]byte, err
 type GoogleCloudChannelV1ListOffersResponse struct {
 	// NextPageToken: A token to retrieve the next page of results.
 	NextPageToken string `json:"nextPageToken,omitempty"`
-	// Offers: The list of Offers requested.
+	// Offers: The list of Offers requested. The pricing information for each Offer
+	// only includes the base price. Effective prices and discounts aren't
+	// populated.
 	Offers []*GoogleCloudChannelV1Offer `json:"offers,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
@@ -2864,10 +2877,9 @@ func (s GoogleCloudChannelV1ProvisionedService) MarshalJSON() ([]byte, error) {
 type GoogleCloudChannelV1PurchasableOffer struct {
 	// Offer: Offer.
 	Offer *GoogleCloudChannelV1Offer `json:"offer,omitempty"`
-	// PriceReferenceId: Optional. Price reference ID for the offer. Optional field
-	// only for offers that require additional price information. Used to guarantee
-	// that the pricing is consistent between quoting the offer and placing the
-	// order.
+	// PriceReferenceId: Optional. Price reference ID for the offer. Only for
+	// offers that require additional price information. Used to guarantee that the
+	// pricing is consistent between quoting the offer and placing the order.
 	PriceReferenceId string `json:"priceReferenceId,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Offer") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -3749,10 +3761,9 @@ func (s GoogleCloudChannelV1TransferEntitlementsToGoogleRequest) MarshalJSON() (
 type GoogleCloudChannelV1TransferableOffer struct {
 	// Offer: Offer with parameter constraints updated to allow the Transfer.
 	Offer *GoogleCloudChannelV1Offer `json:"offer,omitempty"`
-	// PriceReferenceId: Optional. Price reference ID for the offer. Optional field
-	// only for offers that require additional price information. Used to guarantee
-	// that the pricing is consistent between quoting the offer and placing the
-	// order.
+	// PriceReferenceId: Optional. Price reference ID for the offer. Only for
+	// offers that require additional price information. Used to guarantee that the
+	// pricing is consistent between quoting the offer and placing the order.
 	PriceReferenceId string `json:"priceReferenceId,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Offer") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -4207,10 +4218,9 @@ type GoogleCloudChannelV1alpha1Entitlement struct {
 	// Google Cloud billing subaccounts, the following Parameter may be accepted as
 	// input: - display_name: The display name of the billing subaccount.
 	Parameters []*GoogleCloudChannelV1alpha1Parameter `json:"parameters,omitempty"`
-	// PriceReferenceId: Optional. Price reference ID for the offer. Optional field
-	// only for offers that require additional price information. Used to guarantee
-	// that the pricing is consistent between quoting the offer and placing the
-	// order.
+	// PriceReferenceId: Optional. Price reference ID for the offer. Only for
+	// offers that require additional price information. Used to guarantee that the
+	// pricing is consistent between quoting the offer and placing the order.
 	PriceReferenceId string `json:"priceReferenceId,omitempty"`
 	// ProvisionedService: Output only. Service provisioning details for the
 	// entitlement.

@@ -6,7 +6,7 @@
 
 // Package admin provides access to the Admin SDK API.
 //
-// For product documentation, see: https://developers.google.com/admin-sdk/
+// For product documentation, see: https://developers.google.com/workspace/admin/
 //
 // # Library status
 //

@@ -5700,7 +5700,7 @@
           ]
         },
         "patch": {
-          "description": "Updates an existing custom bidding algorithm. Returns the updated custom bidding algorithm if successful. *Warning*: Starting **April 1, 2025**, requests updating custom bidding algorithms that are assigned to line items will return an error. [Read more about this announced change](/display-video/api/deprecations#features.custom_bidding_floodlight).",
+          "description": "Updates an existing custom bidding algorithm. Returns the updated custom bidding algorithm if successful. Requests updating a custom bidding algorithm assigned to a line item will return an error.",
           "flatPath": "v3/customBiddingAlgorithms/{customBiddingAlgorithmsId}",
           "httpMethod": "PATCH",
           "id": "displayvideo.customBiddingAlgorithms.patch",
@@ -5815,7 +5815,7 @@
         "rules": {
           "methods": {
             "create": {
-              "description": "Creates a new rules resource. Returns the newly created rules resource if successful. *Warning*: Starting **April 1, 2025**, requests updating custom bidding algorithms that are assigned to line items will return an error. [Read more about this announced change](/display-video/api/deprecations#features.custom_bidding_floodlight).",
+              "description": "Creates a new rules resource. Returns the newly created rules resource if successful. Requests creating a custom bidding rules resource under an algorithm assigned to a line item will return an error.",
               "flatPath": "v3/customBiddingAlgorithms/{customBiddingAlgorithmsId}/rules",
               "httpMethod": "POST",
               "id": "displayvideo.customBiddingAlgorithms.rules.create",
@@ -5961,7 +5961,7 @@
         "scripts": {
           "methods": {
             "create": {
-              "description": "Creates a new custom bidding script. Returns the newly created script if successful. *Warning*: Starting **April 1, 2025**, requests updating custom bidding algorithms that are assigned to line items will return an error. [Read more about this announced change](/display-video/api/deprecations#features.custom_bidding_floodlight).",
+              "description": "Creates a new custom bidding script. Returns the newly created script if successful. Requests creating a custom bidding script under an algorithm assigned to a line item will return an error.",
               "flatPath": "v3/customBiddingAlgorithms/{customBiddingAlgorithmsId}/scripts",
               "httpMethod": "POST",
               "id": "displayvideo.customBiddingAlgorithms.scripts.create",
@@ -8602,7 +8602,7 @@
     "sdfdownloadtasks": {
       "methods": {
         "create": {
-          "description": "Creates an SDF Download Task. Returns an Operation. An SDF Download Task is a long-running, asynchronous operation. The metadata type of this operation is SdfDownloadTaskMetadata. If the request is successful, the response type of the operation is SdfDownloadTask. The response will not include the download files, which must be retrieved with media.download. The state of operation can be retrieved with sdfdownloadtask.operations.get. Any errors can be found in the error.message. Note that error.details is expected to be empty.",
+          "description": "Creates an SDF Download Task. Returns an Operation. An SDF Download Task is a long-running, asynchronous operation. The metadata type of this operation is SdfDownloadTaskMetadata. If the request is successful, the response type of the operation is SdfDownloadTask. The response will not include the download files, which must be retrieved with media.download. The state of operation can be retrieved with `sdfdownloadtasks.operations.get`. Any errors can be found in the error.message. Note that error.details is expected to be empty.",
           "flatPath": "v3/sdfdownloadtasks",
           "httpMethod": "POST",
           "id": "displayvideo.sdfdownloadtasks.create",
@@ -9268,7 +9268,7 @@
       }
     }
   },
-  "revision": "20250410",
+  "revision": "20250417",
   "rootUrl": "https://displayvideo.googleapis.com/",
   "schemas": {
     "ActiveViewVideoViewabilityMetricConfig": {
@@ -10368,6 +10368,8 @@
             "EXCHANGE_TOPON_GBID",
             "EXCHANGE_NETFLIX",
             "EXCHANGE_CORE",
+            "EXCHANGE_COMMERCE_GRID",
+            "EXCHANGE_SPOTIFY",
             "EXCHANGE_TUBI"
           ],
           "enumDescriptions": [
@@ -10455,6 +10457,8 @@
             "TopOn.",
             "Netflix.",
             "Core.",
+            "Commerce Grid.",
+            "Spotify.",
             "Tubi."
           ],
           "type": "string"
@@ -13153,7 +13157,7 @@
       "id": "ConversionCountingConfig",
       "properties": {
         "floodlightActivityConfigs": {
-          "description": "The Floodlight activity configs used to track conversions. The number of conversions counted is the sum of all of the conversions counted by all of the Floodlight activity IDs specified in this field. *Warning*: Starting **April 1, 2025**, this field will no longer be writable while a custom bidding algorithm is assigned to the line item. If you set this field and assign a custom bidding algorithm in the same request, the floodlight activities must match the ones used by the custom bidding algorithm. [Read more about this announced change](/display-video/api/deprecations#features.custom_bidding_floodlight).",
+          "description": "The Floodlight activity configs used to track conversions. The number of conversions counted is the sum of all of the conversions counted by all of the Floodlight activity IDs specified in this field. This field can't be updated if a custom bidding algorithm is assigned to the line item. If you set this field and assign a custom bidding algorithm in the same request, the floodlight activities must match the ones used by the custom bidding algorithm.",
           "items": {
             "$ref": "TrackingFloodlightActivityConfig"
           },
@@ -15308,6 +15312,8 @@
             "EXCHANGE_TOPON_GBID",
             "EXCHANGE_NETFLIX",
             "EXCHANGE_CORE",
+            "EXCHANGE_COMMERCE_GRID",
+            "EXCHANGE_SPOTIFY",
             "EXCHANGE_TUBI"
           ],
           "enumDescriptions": [
@@ -15395,6 +15401,8 @@
             "TopOn.",
             "Netflix.",
             "Core.",
+            "Commerce Grid.",
+            "Spotify.",
             "Tubi."
           ],
           "type": "string"
@@ -15507,6 +15515,8 @@
             "EXCHANGE_TOPON_GBID",
             "EXCHANGE_NETFLIX",
             "EXCHANGE_CORE",
+            "EXCHANGE_COMMERCE_GRID",
+            "EXCHANGE_SPOTIFY",
             "EXCHANGE_TUBI"
           ],
           "enumDescriptions": [
@@ -15594,6 +15604,8 @@
             "TopOn.",
             "Netflix.",
             "Core.",
+            "Commerce Grid.",
+            "Spotify.",
             "Tubi."
           ],
           "type": "string"
@@ -15707,6 +15719,8 @@
             "EXCHANGE_TOPON_GBID",
             "EXCHANGE_NETFLIX",
             "EXCHANGE_CORE",
+            "EXCHANGE_COMMERCE_GRID",
+            "EXCHANGE_SPOTIFY",
             "EXCHANGE_TUBI"
           ],
           "enumDescriptions": [
@@ -15794,6 +15808,8 @@
             "TopOn.",
             "Netflix.",
             "Core.",
+            "Commerce Grid.",
+            "Spotify.",
             "Tubi."
           ],
           "type": "string"
@@ -15908,6 +15924,8 @@
             "EXCHANGE_TOPON_GBID",
             "EXCHANGE_NETFLIX",
             "EXCHANGE_CORE",
+            "EXCHANGE_COMMERCE_GRID",
+            "EXCHANGE_SPOTIFY",
             "EXCHANGE_TUBI"
           ],
           "enumDescriptions": [
@@ -15995,6 +16013,8 @@
             "TopOn.",
             "Netflix.",
             "Core.",
+            "Commerce Grid.",
+            "Spotify.",
             "Tubi."
           ],
           "readOnly": true,
@@ -16173,7 +16193,7 @@
           "type": "string"
         },
         "membershipDurationDays": {
-          "description": "The duration in days that an entry remains in the audience after the qualifying event. If the audience has no expiration, set the value of this field to 10000. Otherwise, the set value must be greater than 0 and less than or equal to 540. Only applicable to first party audiences. This field is required if one of the following audience_type is used: * `CUSTOMER_MATCH_CONTACT_INFO` * `CUSTOMER_MATCH_DEVICE_ID` *Warning*: Starting on **April 7, 2025**, audiences will no longer be able to have infinite membership duration. This field will no longer accept the value 10000 and all audiences with membership durations greater than 540 days will be updated to a membership duration of 540 days. [Read more about this announced change](/display-video/api/deprecations#features.audience_duration).",
+          "description": "The duration in days that an entry remains in the audience after the qualifying event. The set value must be greater than 0 and less than or equal to 540. Only applicable to first party audiences. This field is required if one of the following audience_type is used: * `CUSTOMER_MATCH_CONTACT_INFO` * `CUSTOMER_MATCH_DEVICE_ID`",
           "format": "int64",
           "type": "string"
         },
@@ -17005,6 +17025,8 @@
             "EXCHANGE_TOPON_GBID",
             "EXCHANGE_NETFLIX",
             "EXCHANGE_CORE",
+            "EXCHANGE_COMMERCE_GRID",
+            "EXCHANGE_SPOTIFY",
             "EXCHANGE_TUBI"
           ],
           "enumDescriptions": [
@@ -17092,6 +17114,8 @@
             "TopOn.",
             "Netflix.",
             "Core.",
+            "Commerce Grid.",
+            "Spotify.",
             "Tubi."
           ],
           "type": "string"
@@ -17944,6 +17968,8 @@
             "EXCHANGE_TOPON_GBID",
             "EXCHANGE_NETFLIX",
             "EXCHANGE_CORE",
+            "EXCHANGE_COMMERCE_GRID",
+            "EXCHANGE_SPOTIFY",
             "EXCHANGE_TUBI"
           ],
           "enumDescriptions": [
@@ -18031,6 +18057,8 @@
             "TopOn.",
             "Netflix.",
             "Core.",
+            "Commerce Grid.",
+            "Spotify.",
             "Tubi."
           ],
           "type": "string"
@@ -18594,7 +18622,7 @@
         },
         "conversionCounting": {
           "$ref": "ConversionCountingConfig",
-          "description": "The conversion tracking setting of the line item. *Warning*: Starting **April 1, 2025**, the floodlight_activity_configs field will no longer be writable while a custom bidding algorithm is assigned to the line item. If you set this field and assign a custom bidding algorithm in the same request, the floodlight activities must match the ones used by the custom bidding algorithm. [Read more about this announced change](/display-video/api/deprecations#features.custom_bidding_floodlight)."
+          "description": "The conversion tracking setting of the line item."
         },
         "creativeIds": {
           "description": "The IDs of the creatives associated with the line item.",
@@ -19633,7 +19661,7 @@
       "id": "MaximizeSpendBidStrategy",
       "properties": {
         "customBiddingAlgorithmId": {
-          "description": "The ID of the Custom Bidding Algorithm used by this strategy. Only applicable when performance_goal_type is set to `BIDDING_STRATEGY_PERFORMANCE_GOAL_TYPE_CUSTOM_ALGO`. *Warning*: Starting **April 1, 2025**, assigning a custom bidding algorithm that uses floodlight activities not identified in floodlightActivityConfigs will return an error. [Read more about this announced change](/display-video/api/deprecations#features.custom_bidding_floodlight).",
+          "description": "The ID of the Custom Bidding Algorithm used by this strategy. Only applicable when performance_goal_type is set to `BIDDING_STRATEGY_PERFORMANCE_GOAL_TYPE_CUSTOM_ALGO`. Assigning a custom bidding algorithm that uses floodlight activities not identified in floodlightActivityConfigs will return an error.",
           "format": "int64",
           "type": "string"
         },
@@ -20652,7 +20680,7 @@
       "id": "PerformanceGoalBidStrategy",
       "properties": {
         "customBiddingAlgorithmId": {
-          "description": "The ID of the Custom Bidding Algorithm used by this strategy. Only applicable when performance_goal_type is set to `BIDDING_STRATEGY_PERFORMANCE_GOAL_TYPE_CUSTOM_ALGO`. *Warning*: Starting **April 1, 2025**, assigning a custom bidding algorithm that uses floodlight activities not identified in floodlightActivityConfigs will return an error. [Read more about this announced change](/display-video/api/deprecations#features.custom_bidding_floodlight).",
+          "description": "The ID of the Custom Bidding Algorithm used by this strategy. Only applicable when performance_goal_type is set to `BIDDING_STRATEGY_PERFORMANCE_GOAL_TYPE_CUSTOM_ALGO`. Assigning a custom bidding algorithm that uses floodlight activities not identified in floodlightActivityConfigs will return an error.",
           "format": "int64",
           "type": "string"
         },
@@ -21256,7 +21284,7 @@
       "type": "object"
     },
     "SdfDownloadTask": {
-      "description": "Type for the response returned by [SdfDownloadTaskService.CreateSdfDownloadTask].",
+      "description": "Type for the response returned by SdfDownloadTaskService.CreateSdfDownloadTask.",
       "id": "SdfDownloadTask",
       "properties": {
         "resourceName": {
@@ -21267,7 +21295,7 @@
       "type": "object"
     },
     "SdfDownloadTaskMetadata": {
-      "description": "Type for the metadata returned by [SdfDownloadTaskService.CreateSdfDownloadTask].",
+      "description": "Type for the metadata returned by SdfDownloadTaskService.CreateSdfDownloadTask.",
       "id": "SdfDownloadTaskMetadata",
       "properties": {
         "createTime": {

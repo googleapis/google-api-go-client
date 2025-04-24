@@ -2957,6 +2957,8 @@ type GoogleCloudDialogflowCxV3QueryInput struct {
 	LanguageCode string `json:"languageCode,omitempty"`
 	// Text: The natural language text to be processed.
 	Text *GoogleCloudDialogflowCxV3TextInput `json:"text,omitempty"`
+	// ToolCallResult: The results of a tool executed by the client.
+	ToolCallResult *GoogleCloudDialogflowCxV3ToolCallResult `json:"toolCallResult,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Audio") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
 	// omitted from API requests. See
@@ -3035,6 +3037,9 @@ type GoogleCloudDialogflowCxV3ResponseMessage struct {
 	TelephonyTransferCall *GoogleCloudDialogflowCxV3ResponseMessageTelephonyTransferCall `json:"telephonyTransferCall,omitempty"`
 	// Text: Returns a text response.
 	Text *GoogleCloudDialogflowCxV3ResponseMessageText `json:"text,omitempty"`
+	// ToolCall: Returns the definition of a tool call that should be executed by
+	// the client.
+	ToolCall *GoogleCloudDialogflowCxV3ToolCall `json:"toolCall,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Channel") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
 	// omitted from API requests. See
@@ -3624,6 +3629,87 @@ type GoogleCloudDialogflowCxV3TextInput struct {
 
 func (s GoogleCloudDialogflowCxV3TextInput) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowCxV3TextInput
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDialogflowCxV3ToolCall: Represents a call of a specific tool's
+// action with the specified inputs.
+type GoogleCloudDialogflowCxV3ToolCall struct {
+	// Action: Required. The name of the tool's action associated with this call.
+	Action string `json:"action,omitempty"`
+	// InputParameters: Optional. The action's input parameters.
+	InputParameters googleapi.RawMessage `json:"inputParameters,omitempty"`
+	// Tool: Required. The tool associated with this call. Format:
+	// `projects//locations//agents//tools/`.
+	Tool string `json:"tool,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Action") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Action") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDialogflowCxV3ToolCall) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDialogflowCxV3ToolCall
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDialogflowCxV3ToolCallResult: The result of calling a tool's
+// action that has been executed by the client.
+type GoogleCloudDialogflowCxV3ToolCallResult struct {
+	// Action: Required. The name of the tool's action associated with this call.
+	Action string `json:"action,omitempty"`
+	// Error: The tool call's error.
+	Error *GoogleCloudDialogflowCxV3ToolCallResultError `json:"error,omitempty"`
+	// OutputParameters: The tool call's output parameters.
+	OutputParameters googleapi.RawMessage `json:"outputParameters,omitempty"`
+	// Tool: Required. The tool associated with this call. Format:
+	// `projects//locations//agents//tools/`.
+	Tool string `json:"tool,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Action") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Action") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDialogflowCxV3ToolCallResult) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDialogflowCxV3ToolCallResult
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDialogflowCxV3ToolCallResultError: An error produced by the tool
+// call.
+type GoogleCloudDialogflowCxV3ToolCallResultError struct {
+	// Message: Optional. The error message of the function.
+	Message string `json:"message,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Message") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Message") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDialogflowCxV3ToolCallResultError) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDialogflowCxV3ToolCallResultError
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -9552,6 +9638,43 @@ func (s GoogleCloudDialogflowV2CreateConversationModelOperationMetadata) Marshal
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudDialogflowV2CustomPronunciationParams: Pronunciation
+// customization for a phrase.
+type GoogleCloudDialogflowV2CustomPronunciationParams struct {
+	// PhoneticEncoding: The phonetic encoding of the phrase.
+	//
+	// Possible values:
+	//   "PHONETIC_ENCODING_UNSPECIFIED" - Not specified.
+	//   "PHONETIC_ENCODING_IPA" - IPA, such as apple -> ˈæpəl.
+	// https://en.wikipedia.org/wiki/International_Phonetic_Alphabet
+	//   "PHONETIC_ENCODING_X_SAMPA" - X-SAMPA, such as apple -> "{p@l".
+	// https://en.wikipedia.org/wiki/X-SAMPA
+	PhoneticEncoding string `json:"phoneticEncoding,omitempty"`
+	// Phrase: The phrase to which the customization is applied. The phrase can be
+	// multiple words, such as proper nouns, but shouldn't span the length of the
+	// sentence.
+	Phrase string `json:"phrase,omitempty"`
+	// Pronunciation: The pronunciation of the phrase. This must be in the phonetic
+	// encoding specified above.
+	Pronunciation string `json:"pronunciation,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "PhoneticEncoding") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "PhoneticEncoding") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDialogflowV2CustomPronunciationParams) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDialogflowV2CustomPronunciationParams
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudDialogflowV2DeleteConversationDatasetOperationMetadata: Metadata
 // for DeleteConversationDataset.
 type GoogleCloudDialogflowV2DeleteConversationDatasetOperationMetadata struct {
@@ -12146,7 +12269,8 @@ type GoogleCloudDialogflowV2InputAudioConfig struct {
 	// not do translations. See Language Support
 	// (https://cloud.google.com/dialogflow/docs/reference/language) for a list of
 	// the currently supported language codes. Note that queries in the same
-	// session do not necessarily need to specify the same language.
+	// session do not necessarily need to specify the same language. If not set,
+	// the language is inferred from the ConversationProfile.stt_config.
 	LanguageCode string `json:"languageCode,omitempty"`
 	// Model: Optional. Which Speech model to select for the given request. For
 	// more information, see Speech models
@@ -15782,7 +15906,8 @@ type GoogleCloudDialogflowV2SpeechToTextConfig struct {
 	// translations. See Language Support
 	// (https://cloud.google.com/dialogflow/docs/reference/language) for a list of
 	// the currently supported language codes. Note that queries in the same
-	// session do not necessarily need to specify the same language.
+	// session do not necessarily need to specify the same language. If not
+	// specified, the default language configured at ConversationProfile is used.
 	LanguageCode string `json:"languageCode,omitempty"`
 	// Model: Which Speech model to select. Select the model best suited to your
 	// domain to get best results. If a model is not explicitly specified, then
@@ -16640,6 +16765,9 @@ type GoogleCloudDialogflowV2SynthesizeSpeechConfig struct {
 	// increase 20 semitones from the original pitch. -20 means decrease 20
 	// semitones from the original pitch.
 	Pitch float64 `json:"pitch,omitempty"`
+	// Pronunciations: Optional. The custom pronunciations for the synthesized
+	// audio.
+	Pronunciations []*GoogleCloudDialogflowV2CustomPronunciationParams `json:"pronunciations,omitempty"`
 	// SpeakingRate: Optional. Speaking rate/speed, in the range [0.25, 4.0]. 1.0
 	// is the normal native speed supported by the specific voice. 2.0 is twice as
 	// fast, and 0.5 is half as fast. If unset(0.0), defaults to the native 1.0

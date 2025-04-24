@@ -6,7 +6,7 @@
 
 // Package classroom provides access to the Google Classroom API.
 //
-// For product documentation, see: https://developers.google.com/classroom/
+// For product documentation, see: https://developers.google.com/workspace/classroom/
 //
 // # Library status
 //
@@ -4184,7 +4184,7 @@ type CoursesUpdateGradingPeriodSettingsCall struct {
 // Individual grading periods can be added, removed, or modified using this
 // method. The requesting user and course owner must be eligible to modify
 // Grading Periods. For details, see licensing requirements
-// (https://developers.google.com/classroom/grading-periods/manage-grading-periods#licensing_requirements).
+// (https://developers.google.com/workspace/classroom/grading-periods/manage-grading-periods#licensing_requirements).
 // This method returns the following error codes: * `PERMISSION_DENIED` if the
 // requesting user is not permitted to modify the grading period settings in a
 // course or for access errors: * UserIneligibleToUpdateGradingPeriodSettings *
@@ -5022,7 +5022,7 @@ type CoursesAnnouncementsGetAddOnContextCall struct {
 // specific post. To maintain the integrity of its own data and permissions
 // model, an add-on should call this to validate query parameters and the
 // requesting user's role whenever the add-on is opened in an iframe
-// (https://developers.google.com/classroom/add-ons/get-started/iframes/iframes-overview).
+// (https://developers.google.com/workspace/classroom/add-ons/get-started/iframes/iframes-overview).
 // This method returns the following error codes: * `PERMISSION_DENIED` for
 // access errors. * `INVALID_ARGUMENT` if the request is malformed. *
 // `NOT_FOUND` if one of the identified resources does not exist.
@@ -5052,7 +5052,7 @@ func (c *CoursesAnnouncementsGetAddOnContextCall) AddOnToken(addOnToken string) 
 // AttachmentId sets the optional parameter "attachmentId": The identifier of
 // the attachment. This field is required for all requests except when the user
 // is in the Attachment Discovery iframe
-// (https://developers.google.com/classroom/add-ons/get-started/iframes/attachment-discovery-iframe).
+// (https://developers.google.com/workspace/classroom/add-ons/get-started/iframes/attachment-discovery-iframe).
 func (c *CoursesAnnouncementsGetAddOnContextCall) AttachmentId(attachmentId string) *CoursesAnnouncementsGetAddOnContextCall {
 	c.urlParams_.Set("attachmentId", attachmentId)
 	return c
@@ -6634,7 +6634,7 @@ type CoursesCourseWorkGetAddOnContextCall struct {
 // specific post. To maintain the integrity of its own data and permissions
 // model, an add-on should call this to validate query parameters and the
 // requesting user's role whenever the add-on is opened in an iframe
-// (https://developers.google.com/classroom/add-ons/get-started/iframes/iframes-overview).
+// (https://developers.google.com/workspace/classroom/add-ons/get-started/iframes/iframes-overview).
 // This method returns the following error codes: * `PERMISSION_DENIED` for
 // access errors. * `INVALID_ARGUMENT` if the request is malformed. *
 // `NOT_FOUND` if one of the identified resources does not exist.
@@ -6664,7 +6664,7 @@ func (c *CoursesCourseWorkGetAddOnContextCall) AddOnToken(addOnToken string) *Co
 // AttachmentId sets the optional parameter "attachmentId": The identifier of
 // the attachment. This field is required for all requests except when the user
 // is in the Attachment Discovery iframe
-// (https://developers.google.com/classroom/add-ons/get-started/iframes/attachment-discovery-iframe).
+// (https://developers.google.com/workspace/classroom/add-ons/get-started/iframes/attachment-discovery-iframe).
 func (c *CoursesCourseWorkGetAddOnContextCall) AttachmentId(attachmentId string) *CoursesCourseWorkGetAddOnContextCall {
 	c.urlParams_.Set("attachmentId", attachmentId)
 	return c
@@ -7224,7 +7224,7 @@ type CoursesCourseWorkUpdateRubricCall struct {
 // (/classroom/rubrics/limitations) once grading has started. The requesting
 // user and course owner must have rubrics creation capabilities. For details,
 // see licensing requirements
-// (https://developers.google.com/classroom/rubrics/limitations#license-requirements).
+// (https://developers.google.com/workspace/classroom/rubrics/limitations#license-requirements).
 // This request must be made by the Google Cloud console of the OAuth client ID
 // (https://support.google.com/cloud/answer/6158849) used to create the parent
 // course work item. This method returns the following error codes: *
@@ -8329,7 +8329,7 @@ type CoursesCourseWorkRubricsCreateCall struct {
 
 // Create: Creates a rubric. The requesting user and course owner must have
 // rubrics creation capabilities. For details, see licensing requirements
-// (https://developers.google.com/classroom/rubrics/limitations#license-requirements).
+// (https://developers.google.com/workspace/classroom/rubrics/limitations#license-requirements).
 // For further details, see Rubrics structure and known limitations
 // (/classroom/rubrics/limitations). This request must be made by the Google
 // Cloud console of the OAuth client ID
@@ -8450,7 +8450,7 @@ type CoursesCourseWorkRubricsDeleteCall struct {
 
 // Delete: Deletes a rubric. The requesting user and course owner must have
 // rubrics creation capabilities. For details, see licensing requirements
-// (https://developers.google.com/classroom/rubrics/limitations#license-requirements).
+// (https://developers.google.com/workspace/classroom/rubrics/limitations#license-requirements).
 // This request must be made by the Google Cloud console of the OAuth client ID
 // (https://support.google.com/cloud/answer/6158849) used to create the
 // corresponding rubric. This method returns the following error codes: *
@@ -8846,7 +8846,7 @@ type CoursesCourseWorkRubricsPatchCall struct {
 // (/classroom/rubrics/limitations) once grading has started. The requesting
 // user and course owner must have rubrics creation capabilities. For details,
 // see licensing requirements
-// (https://developers.google.com/classroom/rubrics/limitations#license-requirements).
+// (https://developers.google.com/workspace/classroom/rubrics/limitations#license-requirements).
 // This request must be made by the Google Cloud console of the OAuth client ID
 // (https://support.google.com/cloud/answer/6158849) used to create the parent
 // course work item. This method returns the following error codes: *
@@ -10293,7 +10293,7 @@ type CoursesCourseWorkMaterialsGetAddOnContextCall struct {
 // specific post. To maintain the integrity of its own data and permissions
 // model, an add-on should call this to validate query parameters and the
 // requesting user's role whenever the add-on is opened in an iframe
-// (https://developers.google.com/classroom/add-ons/get-started/iframes/iframes-overview).
+// (https://developers.google.com/workspace/classroom/add-ons/get-started/iframes/iframes-overview).
 // This method returns the following error codes: * `PERMISSION_DENIED` for
 // access errors. * `INVALID_ARGUMENT` if the request is malformed. *
 // `NOT_FOUND` if one of the identified resources does not exist.
@@ -10323,7 +10323,7 @@ func (c *CoursesCourseWorkMaterialsGetAddOnContextCall) AddOnToken(addOnToken st
 // AttachmentId sets the optional parameter "attachmentId": The identifier of
 // the attachment. This field is required for all requests except when the user
 // is in the Attachment Discovery iframe
-// (https://developers.google.com/classroom/add-ons/get-started/iframes/attachment-discovery-iframe).
+// (https://developers.google.com/workspace/classroom/add-ons/get-started/iframes/attachment-discovery-iframe).
 func (c *CoursesCourseWorkMaterialsGetAddOnContextCall) AttachmentId(attachmentId string) *CoursesCourseWorkMaterialsGetAddOnContextCall {
 	c.urlParams_.Set("attachmentId", attachmentId)
 	return c
@@ -11469,7 +11469,7 @@ type CoursesPostsGetAddOnContextCall struct {
 // specific post. To maintain the integrity of its own data and permissions
 // model, an add-on should call this to validate query parameters and the
 // requesting user's role whenever the add-on is opened in an iframe
-// (https://developers.google.com/classroom/add-ons/get-started/iframes/iframes-overview).
+// (https://developers.google.com/workspace/classroom/add-ons/get-started/iframes/iframes-overview).
 // This method returns the following error codes: * `PERMISSION_DENIED` for
 // access errors. * `INVALID_ARGUMENT` if the request is malformed. *
 // `NOT_FOUND` if one of the identified resources does not exist.
@@ -11497,7 +11497,7 @@ func (c *CoursesPostsGetAddOnContextCall) AddOnToken(addOnToken string) *Courses
 // AttachmentId sets the optional parameter "attachmentId": The identifier of
 // the attachment. This field is required for all requests except when the user
 // is in the Attachment Discovery iframe
-// (https://developers.google.com/classroom/add-ons/get-started/iframes/attachment-discovery-iframe).
+// (https://developers.google.com/workspace/classroom/add-ons/get-started/iframes/attachment-discovery-iframe).
 func (c *CoursesPostsGetAddOnContextCall) AttachmentId(attachmentId string) *CoursesPostsGetAddOnContextCall {
 	c.urlParams_.Set("attachmentId", attachmentId)
 	return c
@@ -12577,13 +12577,13 @@ type CoursesStudentsCreateCall struct {
 
 // Create: Adds a user as a student of a course. Domain administrators are
 // permitted to directly add
-// (https://developers.google.com/classroom/guides/manage-users) users within
-// their domain as students to courses within their domain. Students are
-// permitted to add themselves to a course using an enrollment code. This
-// method returns the following error codes: * `PERMISSION_DENIED` if the
-// requesting user is not permitted to create students in this course or for
-// access errors. * `NOT_FOUND` if the requested course ID does not exist. *
-// `FAILED_PRECONDITION` if the requested user's account is disabled, for the
+// (https://developers.google.com/workspace/classroom/guides/manage-users)
+// users within their domain as students to courses within their domain.
+// Students are permitted to add themselves to a course using an enrollment
+// code. This method returns the following error codes: * `PERMISSION_DENIED`
+// if the requesting user is not permitted to create students in this course or
+// for access errors. * `NOT_FOUND` if the requested course ID does not exist.
+// * `FAILED_PRECONDITION` if the requested user's account is disabled, for the
 // following request errors: * CourseMemberLimitReached * CourseNotModifiable *
 // UserGroupsMembershipLimitReached * InactiveCourseOwner * `ALREADY_EXISTS` if
 // the user is already a student or teacher in the course.
@@ -13079,16 +13079,17 @@ type CoursesTeachersCreateCall struct {
 
 // Create: Creates a teacher of a course. Domain administrators are permitted
 // to directly add
-// (https://developers.google.com/classroom/guides/manage-users) users within
-// their domain as teachers to courses within their domain. Non-admin users
-// should send an Invitation instead. This method returns the following error
-// codes: * `PERMISSION_DENIED` if the requesting user is not permitted to
-// create teachers in this course or for access errors. * `NOT_FOUND` if the
-// requested course ID does not exist. * `FAILED_PRECONDITION` if the requested
-// user's account is disabled, for the following request errors: *
-// CourseMemberLimitReached * CourseNotModifiable * CourseTeacherLimitReached *
-// UserGroupsMembershipLimitReached * InactiveCourseOwner * `ALREADY_EXISTS` if
-// the user is already a teacher or student in the course.
+// (https://developers.google.com/workspace/classroom/guides/manage-users)
+// users within their domain as teachers to courses within their domain.
+// Non-admin users should send an Invitation instead. This method returns the
+// following error codes: * `PERMISSION_DENIED` if the requesting user is not
+// permitted to create teachers in this course or for access errors. *
+// `NOT_FOUND` if the requested course ID does not exist. *
+// `FAILED_PRECONDITION` if the requested user's account is disabled, for the
+// following request errors: * CourseMemberLimitReached * CourseNotModifiable *
+// CourseTeacherLimitReached * UserGroupsMembershipLimitReached *
+// InactiveCourseOwner * `ALREADY_EXISTS` if the user is already a teacher or
+// student in the course.
 //
 //   - courseId: Identifier of the course. This identifier can be either the
 //     Classroom-assigned identifier or an alias.

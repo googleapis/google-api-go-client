@@ -1404,6 +1404,18 @@ type DatabaseResourceHealthSignalData struct {
 	// read intensive workload.
 	//   "SIGNAL_TYPE_MEMORY_LIMIT" - Indicates that the instance is nearing memory
 	// limit.
+	//   "SIGNAL_TYPE_MAX_SERVER_MEMORY" - Indicates that the instance's max server
+	// memory is configured higher than the recommended value.
+	//   "SIGNAL_TYPE_LARGE_ROWS" - Indicates that the database has large rows
+	// beyond the recommended limit.
+	//   "SIGNAL_TYPE_HIGH_WRITE_PRESSURE" - Heavy write pressure on the database
+	// rows.
+	//   "SIGNAL_TYPE_HIGH_READ_PRESSURE" - Heavy read pressure on the database
+	// rows.
+	//   "SIGNAL_TYPE_ENCRYPTION_ORG_POLICY_NOT_SATISFIED" - Encryption org policy
+	// not satisfied.
+	//   "SIGNAL_TYPE_LOCATION_ORG_POLICY_NOT_SATISFIED" - Location org policy not
+	// satisfied.
 	SignalType string `json:"signalType,omitempty"`
 	// Possible values:
 	//   "STATE_UNSPECIFIED" - Unspecified state.
@@ -1871,6 +1883,18 @@ type DatabaseResourceRecommendationSignalData struct {
 	// read intensive workload.
 	//   "SIGNAL_TYPE_MEMORY_LIMIT" - Indicates that the instance is nearing memory
 	// limit.
+	//   "SIGNAL_TYPE_MAX_SERVER_MEMORY" - Indicates that the instance's max server
+	// memory is configured higher than the recommended value.
+	//   "SIGNAL_TYPE_LARGE_ROWS" - Indicates that the database has large rows
+	// beyond the recommended limit.
+	//   "SIGNAL_TYPE_HIGH_WRITE_PRESSURE" - Heavy write pressure on the database
+	// rows.
+	//   "SIGNAL_TYPE_HIGH_READ_PRESSURE" - Heavy read pressure on the database
+	// rows.
+	//   "SIGNAL_TYPE_ENCRYPTION_ORG_POLICY_NOT_SATISFIED" - Encryption org policy
+	// not satisfied.
+	//   "SIGNAL_TYPE_LOCATION_ORG_POLICY_NOT_SATISFIED" - Location org policy not
+	// satisfied.
 	SignalType string `json:"signalType,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AdditionalMetadata") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -3347,9 +3371,10 @@ type Product struct {
 	//   "ON_PREM" - On premises database product.
 	//   "PRODUCT_TYPE_MEMORYSTORE" - Memorystore product area in GCP
 	//   "PRODUCT_TYPE_BIGTABLE" - Bigtable product area in GCP
+	//   "PRODUCT_TYPE_FIRESTORE" - Firestore product area in GCP.
+	//   "PRODUCT_TYPE_COMPUTE_ENGINE" - Compute Engine self managed databases
 	//   "PRODUCT_TYPE_OTHER" - Other refers to rest of other product type. This is
 	// to be when product type is known, but it is not present in this enum.
-	//   "PRODUCT_TYPE_FIRESTORE" - Firestore product area in GCP.
 	Type string `json:"type,omitempty"`
 	// Version: Version of the underlying database engine. Example values: For
 	// MySQL, it could be "8.0", "5.7" etc.. For Postgres, it could be "14", "15"

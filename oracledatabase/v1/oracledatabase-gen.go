@@ -1263,12 +1263,25 @@ type CloudExadataInfrastructureProperties struct {
 	// ComputeCount: Optional. The number of compute servers for the Exadata
 	// Infrastructure.
 	ComputeCount int64 `json:"computeCount,omitempty"`
+	// ComputeModel: Output only. The compute model of the Exadata Infrastructure.
+	//
+	// Possible values:
+	//   "COMPUTE_MODEL_UNSPECIFIED" - Unspecified compute model.
+	//   "COMPUTE_MODEL_ECPU" - Abstract measure of compute resources. ECPUs are
+	// based on the number of cores elastically allocated from a pool of compute
+	// and storage servers.
+	//   "COMPUTE_MODEL_OCPU" - Physical measure of compute resources. OCPUs are
+	// based on the physical core of a processor.
+	ComputeModel string `json:"computeModel,omitempty"`
 	// CpuCount: Output only. The number of enabled CPU cores.
 	CpuCount int64 `json:"cpuCount,omitempty"`
 	// CustomerContacts: Optional. The list of customer contacts.
 	CustomerContacts []*CustomerContact `json:"customerContacts,omitempty"`
 	// DataStorageSizeTb: Output only. Size, in terabytes, of the DATA disk group.
 	DataStorageSizeTb float64 `json:"dataStorageSizeTb,omitempty"`
+	// DatabaseServerType: Output only. The database server type of the Exadata
+	// Infrastructure.
+	DatabaseServerType string `json:"databaseServerType,omitempty"`
 	// DbNodeStorageSizeGb: Output only. The local node storage allocated in GBs.
 	DbNodeStorageSizeGb int64 `json:"dbNodeStorageSizeGb,omitempty"`
 	// DbServerVersion: Output only. The software version of the database servers
@@ -1326,6 +1339,9 @@ type CloudExadataInfrastructureProperties struct {
 	// StorageCount: Optional. The number of Cloud Exadata storage servers for the
 	// Exadata Infrastructure.
 	StorageCount int64 `json:"storageCount,omitempty"`
+	// StorageServerType: Output only. The storage server type of the Exadata
+	// Infrastructure.
+	StorageServerType string `json:"storageServerType,omitempty"`
 	// StorageServerVersion: Output only. The software version of the storage
 	// servers (cells) in the Exadata Infrastructure.
 	StorageServerVersion string `json:"storageServerVersion,omitempty"`
@@ -1369,9 +1385,9 @@ func (s *CloudExadataInfrastructureProperties) UnmarshalJSON(data []byte) error 
 // CloudVmCluster: Details of the Cloud VM Cluster resource.
 // https://docs.oracle.com/en-us/iaas/api/#/en/database/20160918/CloudVmCluster/
 type CloudVmCluster struct {
-	// BackupSubnetCidr: Required. CIDR range of the backup subnet.
+	// BackupSubnetCidr: Optional. CIDR range of the backup subnet.
 	BackupSubnetCidr string `json:"backupSubnetCidr,omitempty"`
-	// Cidr: Required. Network settings. CIDR to use for cluster IP allocation.
+	// Cidr: Optional. Network settings. CIDR to use for cluster IP allocation.
 	Cidr string `json:"cidr,omitempty"`
 	// CreateTime: Output only. The date and time that the VM cluster was created.
 	CreateTime string `json:"createTime,omitempty"`
@@ -1391,7 +1407,7 @@ type CloudVmCluster struct {
 	// Name: Identifier. The name of the VM Cluster resource with the format:
 	// projects/{project}/locations/{region}/cloudVmClusters/{cloud_vm_cluster}
 	Name string `json:"name,omitempty"`
-	// Network: Required. The name of the VPC network. Format:
+	// Network: Optional. The name of the VPC network. Format:
 	// projects/{project}/global/networks/{network}
 	Network string `json:"network,omitempty"`
 	// Properties: Optional. Various properties of the VM Cluster.
@@ -1424,6 +1440,16 @@ type CloudVmClusterProperties struct {
 	ClusterName string `json:"clusterName,omitempty"`
 	// CompartmentId: Output only. Compartment ID of cluster.
 	CompartmentId string `json:"compartmentId,omitempty"`
+	// ComputeModel: Output only. The compute model of the VM Cluster.
+	//
+	// Possible values:
+	//   "COMPUTE_MODEL_UNSPECIFIED" - Unspecified compute model.
+	//   "COMPUTE_MODEL_ECPU" - Abstract measure of compute resources. ECPUs are
+	// based on the number of cores elastically allocated from a pool of compute
+	// and storage servers.
+	//   "COMPUTE_MODEL_OCPU" - Physical measure of compute resources. OCPUs are
+	// based on the physical core of a processor.
+	ComputeModel string `json:"computeModel,omitempty"`
 	// CpuCoreCount: Required. Number of enabled CPU cores.
 	CpuCoreCount int64 `json:"cpuCoreCount,omitempty"`
 	// DataStorageSizeTb: Optional. The data disk group size to be allocated in

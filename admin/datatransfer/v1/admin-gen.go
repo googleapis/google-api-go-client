@@ -6,7 +6,7 @@
 
 // Package admin provides access to the Admin SDK API.
 //
-// For product documentation, see: https://developers.google.com/admin-sdk/
+// For product documentation, see: https://developers.google.com/workspace/admin/
 //
 // # Library status
 //
@@ -129,9 +129,6 @@ func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, err
 	s := &Service{client: client, BasePath: basePath, logger: internaloption.GetLogger(opts)}
 	s.Applications = NewApplicationsService(s)
 	s.Transfers = NewTransfersService(s)
-	if err != nil {
-		return nil, err
-	}
 	if endpoint != "" {
 		s.BasePath = endpoint
 	}

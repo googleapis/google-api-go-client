@@ -423,11 +423,9 @@ func (s Status) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// Subscription: Developer Preview
-// (https://developers.google.com/workspace/preview). A subscription to receive
-// events about a Google Workspace resource. To learn more about subscriptions,
-// see the Google Workspace Events API overview
-// (https://developers.google.com/workspace/events).
+// Subscription: A subscription to receive events about a Google Workspace
+// resource. To learn more about subscriptions, see the Google Workspace Events
+// API overview (https://developers.google.com/workspace/events).
 type Subscription struct {
 	// Authority: Output only. The user who authorized the creation of the
 	// subscription. Format: `users/{user}` For Google Workspace users, the
@@ -661,9 +659,8 @@ type SubscriptionsCreateCall struct {
 	header_      http.Header
 }
 
-// Create: Developer Preview (https://developers.google.com/workspace/preview):
-// Creates a Google Workspace subscription. To learn how to use this method,
-// see Create a Google Workspace subscription
+// Create: Creates a Google Workspace subscription. To learn how to use this
+// method, see Create a Google Workspace subscription
 // (https://developers.google.com/workspace/events/guides/create-subscription).
 func (r *SubscriptionsService) Create(subscription *Subscription) *SubscriptionsCreateCall {
 	c := &SubscriptionsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -767,9 +764,8 @@ type SubscriptionsDeleteCall struct {
 	header_    http.Header
 }
 
-// Delete: Developer Preview (https://developers.google.com/workspace/preview):
-// Deletes a Google Workspace subscription. To learn how to use this method,
-// see Delete a Google Workspace subscription
+// Delete: Deletes a Google Workspace subscription. To learn how to use this
+// method, see Delete a Google Workspace subscription
 // (https://developers.google.com/workspace/events/guides/delete-subscription).
 //
 //   - name: Resource name of the subscription to delete. Format:
@@ -892,9 +888,8 @@ type SubscriptionsGetCall struct {
 	header_      http.Header
 }
 
-// Get: Developer Preview (https://developers.google.com/workspace/preview):
-// Gets details about a Google Workspace subscription. To learn how to use this
-// method, see Get details about a Google Workspace subscription
+// Get: Gets details about a Google Workspace subscription. To learn how to use
+// this method, see Get details about a Google Workspace subscription
 // (https://developers.google.com/workspace/events/guides/get-subscription).
 //
 //   - name: Resource name of the subscription. Format:
@@ -1004,9 +999,8 @@ type SubscriptionsListCall struct {
 	header_      http.Header
 }
 
-// List: Developer Preview (https://developers.google.com/workspace/preview):
-// Lists Google Workspace subscriptions. To learn how to use this method, see
-// List Google Workspace subscriptions
+// List: Lists Google Workspace subscriptions. To learn how to use this method,
+// see List Google Workspace subscriptions
 // (https://developers.google.com/workspace/events/guides/list-subscriptions).
 func (r *SubscriptionsService) List() *SubscriptionsListCall {
 	c := &SubscriptionsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -1172,9 +1166,8 @@ type SubscriptionsPatchCall struct {
 	header_      http.Header
 }
 
-// Patch: Developer Preview (https://developers.google.com/workspace/preview):
-// Updates or renews a Google Workspace subscription. To learn how to use this
-// method, see Update or renew a Google Workspace subscription
+// Patch: Updates or renews a Google Workspace subscription. To learn how to
+// use this method, see Update or renew a Google Workspace subscription
 // (https://developers.google.com/workspace/events/guides/update-subscription).
 //
 //   - name: Identifier. Resource name of the subscription. Format:
@@ -1298,13 +1291,12 @@ type SubscriptionsReactivateCall struct {
 	header_                       http.Header
 }
 
-// Reactivate: Developer Preview
-// (https://developers.google.com/workspace/preview): Reactivates a suspended
-// Google Workspace subscription. This method resets your subscription's
-// `State` field to `ACTIVE`. Before you use this method, you must fix the
-// error that suspended the subscription. This method will ignore or reject any
-// subscription that isn't currently in a suspended state. To learn how to use
-// this method, see Reactivate a Google Workspace subscription
+// Reactivate: Reactivates a suspended Google Workspace subscription. This
+// method resets your subscription's `State` field to `ACTIVE`. Before you use
+// this method, you must fix the error that suspended the subscription. This
+// method will ignore or reject any subscription that isn't currently in a
+// suspended state. To learn how to use this method, see Reactivate a Google
+// Workspace subscription
 // (https://developers.google.com/workspace/events/guides/reactivate-subscription).
 //
 //   - name: Resource name of the subscription. Format:

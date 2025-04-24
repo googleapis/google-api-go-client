@@ -3491,7 +3491,7 @@ func (s User) MarshalJSON() ([]byte, error) {
 
 // UserPicture: Output only. The user's profile picture.
 type UserPicture struct {
-	// Url: Output Only. A URL that points to a profile picture of this user.
+	// Url: Output only. A URL that points to a profile picture of this user.
 	Url string `json:"url,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Url") to unconditionally
 	// include in API requests. By default, fields with empty or default values are

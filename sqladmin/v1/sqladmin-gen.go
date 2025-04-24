@@ -471,8 +471,8 @@ type Backup struct {
 	// BackupRun: Output only. The mapping to backup run resource used for IAM
 	// validations.
 	BackupRun string `json:"backupRun,omitempty"`
-	// DatabaseVersion: Output only. The database version of the instance of when
-	// this backup was made.
+	// DatabaseVersion: Output only. The database version of the instance of at the
+	// time this backup was made.
 	//
 	// Possible values:
 	//   "SQL_DATABASE_VERSION_UNSPECIFIED" - This is an unknown database version.
@@ -507,8 +507,6 @@ type Backup struct {
 	// version is 36.
 	//   "MYSQL_8_0_37" - The database major version is MySQL 8.0 and the minor
 	// version is 37.
-	//   "MYSQL_8_0_38" - The database major version is MySQL 8.0 and the minor
-	// version is 38.
 	//   "MYSQL_8_0_39" - The database major version is MySQL 8.0 and the minor
 	// version is 39.
 	//   "MYSQL_8_0_40" - The database major version is MySQL 8.0 and the minor
@@ -797,8 +795,8 @@ type BackupRun struct {
 	//   "SNAPSHOT" - Snapshot-based backups.
 	//   "PHYSICAL" - Physical backups.
 	BackupKind string `json:"backupKind,omitempty"`
-	// DatabaseVersion: Output only. The instance database version when this backup
-	// was made.
+	// DatabaseVersion: Output only. The instance database version at the time this
+	// backup was made.
 	//
 	// Possible values:
 	//   "SQL_DATABASE_VERSION_UNSPECIFIED" - This is an unknown database version.
@@ -833,8 +831,6 @@ type BackupRun struct {
 	// version is 36.
 	//   "MYSQL_8_0_37" - The database major version is MySQL 8.0 and the minor
 	// version is 37.
-	//   "MYSQL_8_0_38" - The database major version is MySQL 8.0 and the minor
-	// version is 38.
 	//   "MYSQL_8_0_39" - The database major version is MySQL 8.0 and the minor
 	// version is 39.
 	//   "MYSQL_8_0_40" - The database major version is MySQL 8.0 and the minor
@@ -1076,16 +1072,17 @@ func (s CloneContext) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// ConnectPoolNodeConfig: Details of a single node of a read pool.
+// ConnectPoolNodeConfig: Details of a single read pool node of a read pool.
 type ConnectPoolNodeConfig struct {
-	// DnsName: Output only. The DNS name of the node.
+	// DnsName: Output only. The DNS name of the read pool node.
 	DnsName string `json:"dnsName,omitempty"`
-	// DnsNames: Output only. The list of DNS names used by this node.
+	// DnsNames: Output only. The list of DNS names used by this read pool node.
 	DnsNames []*DnsNameMapping `json:"dnsNames,omitempty"`
 	// IpAddresses: Output only. Mappings containing IP addresses that can be used
-	// to connect to the node.
+	// to connect to the read pool node.
 	IpAddresses []*IpMapping `json:"ipAddresses,omitempty"`
-	// Name: Output only. The name of the node. Doesn't include the project ID.
+	// Name: Output only. The name of the read pool node. Doesn't include the
+	// project ID.
 	Name string `json:"name,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "DnsName") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -1165,8 +1162,6 @@ type ConnectSettings struct {
 	// version is 36.
 	//   "MYSQL_8_0_37" - The database major version is MySQL 8.0 and the minor
 	// version is 37.
-	//   "MYSQL_8_0_38" - The database major version is MySQL 8.0 and the minor
-	// version is 38.
 	//   "MYSQL_8_0_39" - The database major version is MySQL 8.0 and the minor
 	// version is 39.
 	//   "MYSQL_8_0_40" - The database major version is MySQL 8.0 and the minor
@@ -1215,10 +1210,10 @@ type ConnectSettings struct {
 	IpAddresses []*IpMapping `json:"ipAddresses,omitempty"`
 	// Kind: This is always `sql#connectSettings`.
 	Kind string `json:"kind,omitempty"`
-	// NodeCount: The number of nodes in a read pool.
+	// NodeCount: The number of read pool nodes in a read pool.
 	NodeCount int64 `json:"nodeCount,omitempty"`
-	// Nodes: Output only. Entries containing information about each node of the
-	// read pool.
+	// Nodes: Output only. Entries containing information about each read pool node
+	// of the read pool.
 	Nodes []*ConnectPoolNodeConfig `json:"nodes,omitempty"`
 	// PscEnabled: Whether PSC connectivity is enabled for this instance.
 	PscEnabled bool `json:"pscEnabled,omitempty"`
@@ -1260,36 +1255,17 @@ func (s ConnectSettings) MarshalJSON() ([]byte, error) {
 
 // ConnectionPoolConfig: The managed connection pooling configuration.
 type ConnectionPoolConfig struct {
-	// ClientConnectionIdleTimeout: Client idle timeout.
-	ClientConnectionIdleTimeout string `json:"clientConnectionIdleTimeout,omitempty"`
-	// ConnPoolSize: Managed connection pool size.
-	ConnPoolSize int64 `json:"connPoolSize,omitempty"`
 	// ConnectionPoolingEnabled: Whether managed connection pooling is enabled.
 	ConnectionPoolingEnabled bool `json:"connectionPoolingEnabled,omitempty"`
 	// Flags: Optional. List of connection pool configuration flags
 	Flags []*ConnectionPoolFlags `json:"flags,omitempty"`
-	// MaxClientConnections: Maximum number of client connections in connection
-	// pool.
-	MaxClientConnections int64 `json:"maxClientConnections,omitempty"`
-	// PoolMode: The managed connection pool mode for the instance.
-	//
-	// Possible values:
-	//   "POOL_MODE_UNSPECIFIED" - The pool mode is unknown.
-	//   "SESSION" - The session mode for managed connection pooling.
-	//   "TRANSACTION" - The transaction(default) mode for managed connection
-	// pooling.
-	PoolMode string `json:"poolMode,omitempty"`
-	// QueryWaitTimeout: Query wait timeout.
-	QueryWaitTimeout string `json:"queryWaitTimeout,omitempty"`
-	// ServerConnectionIdleTimeout: Server idle timeout.
-	ServerConnectionIdleTimeout string `json:"serverConnectionIdleTimeout,omitempty"`
-	// ForceSendFields is a list of field names (e.g.
-	// "ClientConnectionIdleTimeout") to unconditionally include in API requests.
-	// By default, fields with empty or default values are omitted from API
-	// requests. See https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields
-	// for more details.
+	// ForceSendFields is a list of field names (e.g. "ConnectionPoolingEnabled")
+	// to unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "ClientConnectionIdleTimeout") to
+	// NullFields is a list of field names (e.g. "ConnectionPoolingEnabled") to
 	// include in API requests with the JSON null value. By default, fields with
 	// empty values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
@@ -1494,8 +1470,6 @@ type DatabaseInstance struct {
 	// version is 36.
 	//   "MYSQL_8_0_37" - The database major version is MySQL 8.0 and the minor
 	// version is 37.
-	//   "MYSQL_8_0_38" - The database major version is MySQL 8.0 and the minor
-	// version is 38.
 	//   "MYSQL_8_0_39" - The database major version is MySQL 8.0 and the minor
 	// version is 39.
 	//   "MYSQL_8_0_40" - The database major version is MySQL 8.0 and the minor
@@ -1571,7 +1545,7 @@ type DatabaseInstance struct {
 	//   "ON_PREMISES_INSTANCE" - An instance running on the customer's premises
 	// that is not managed by Cloud SQL.
 	//   "READ_REPLICA_INSTANCE" - A Cloud SQL instance acting as a read-replica.
-	//   "READ_POOL_INSTANCE" - CloudSQL read pool.
+	//   "READ_POOL_INSTANCE" - A Cloud SQL read pool.
 	InstanceType string `json:"instanceType,omitempty"`
 	// IpAddresses: The assigned IP addresses for the instance.
 	IpAddresses []*IpMapping `json:"ipAddresses,omitempty"`
@@ -1589,10 +1563,10 @@ type DatabaseInstance struct {
 	MaxDiskSize int64 `json:"maxDiskSize,omitempty,string"`
 	// Name: Name of the Cloud SQL instance. This does not include the project ID.
 	Name string `json:"name,omitempty"`
-	// NodeCount: The number of nodes in a read pool.
+	// NodeCount: The number of read pool nodes in a read pool.
 	NodeCount int64 `json:"nodeCount,omitempty"`
-	// Nodes: Output only. Entries containing information about each node of the
-	// read pool.
+	// Nodes: Output only. Entries containing information about each read pool node
+	// of the read pool.
 	Nodes []*PoolNodeConfig `json:"nodes,omitempty"`
 	// OnPremisesConfiguration: Configuration specific to on-premises instances.
 	OnPremisesConfiguration *OnPremisesConfiguration `json:"onPremisesConfiguration,omitempty"`
@@ -2071,7 +2045,7 @@ type ExportContext struct {
 	FileType string `json:"fileType,omitempty"`
 	// Kind: This is always `sql#exportContext`.
 	Kind string `json:"kind,omitempty"`
-	// Offload: Option for export offload.
+	// Offload: Whether to perform a serverless export.
 	Offload bool `json:"offload,omitempty"`
 	// SqlExportOptions: Options for exporting data as SQL statements.
 	SqlExportOptions *ExportContextSqlExportOptions `json:"sqlExportOptions,omitempty"`
@@ -2254,8 +2228,8 @@ func (s ExportContextSqlExportOptionsMysqlExportOptions) MarshalJSON() ([]byte, 
 // ExportContextSqlExportOptionsPostgresExportOptions: Options for exporting
 // from a Cloud SQL for PostgreSQL instance.
 type ExportContextSqlExportOptionsPostgresExportOptions struct {
-	// Clean: Optional. Use this option to include DROP SQL statements. These
-	// statements are used to delete database objects before running the import
+	// Clean: Optional. Use this option to include DROP <object> SQL statements.
+	// Use these statements to delete database objects before running the import
 	// operation.
 	Clean bool `json:"clean,omitempty"`
 	// IfExists: Optional. Option to include an IF EXISTS SQL statement with each
@@ -2410,8 +2384,6 @@ type Flag struct {
 	// version is 36.
 	//   "MYSQL_8_0_37" - The database major version is MySQL 8.0 and the minor
 	// version is 37.
-	//   "MYSQL_8_0_38" - The database major version is MySQL 8.0 and the minor
-	// version is 38.
 	//   "MYSQL_8_0_39" - The database major version is MySQL 8.0 and the minor
 	// version is 39.
 	//   "MYSQL_8_0_40" - The database major version is MySQL 8.0 and the minor
@@ -3870,8 +3842,8 @@ type Operation struct {
 	//   "MANAGE_BACKUP" - Changes the BackupTier of a Cloud SQL instance.
 	//   "ENHANCED_BACKUP" - Creates a backup for an Enhanced BackupTier Cloud SQL
 	// instance.
-	//   "REPAIR_READ_POOL" - Repairs entire read pool or specified nodes in the
-	// read pool.
+	//   "REPAIR_READ_POOL" - Repairs entire read pool or specified read pool nodes
+	// in the read pool.
 	//   "CREATE_READ_POOL" - Creates a Cloud SQL read pool instance.
 	OperationType string `json:"operationType,omitempty"`
 	// SelfLink: The URI of this resource.
@@ -4127,21 +4099,21 @@ func (s PerformDiskShrinkContext) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// PoolNodeConfig: Details of a single node of a read pool.
+// PoolNodeConfig: Details of a single read pool node of a read pool.
 type PoolNodeConfig struct {
-	// DnsName: Output only. The DNS name of the node.
+	// DnsName: Output only. The DNS name of the read pool node.
 	DnsName string `json:"dnsName,omitempty"`
-	// DnsNames: Output only. The list of DNS names used by this node.
+	// DnsNames: Output only. The list of DNS names used by this read pool node.
 	DnsNames []*DnsNameMapping `json:"dnsNames,omitempty"`
-	// GceZone: Output only. The serving zone of the node.
+	// GceZone: Output only. The zone of the read pool node.
 	GceZone string `json:"gceZone,omitempty"`
 	// IpAddresses: Output only. Mappings containing IP addresses that can be used
-	// to connect to the node.
+	// to connect to the read pool node.
 	IpAddresses []*IpMapping `json:"ipAddresses,omitempty"`
-	// Name: Output only. The name of the node, to be used for retrieving metrics
-	// and logs for the node.
+	// Name: Output only. The name of the read pool node, to be used for retrieving
+	// metrics and logs.
 	Name string `json:"name,omitempty"`
-	// State: Output only. The current state of the node.
+	// State: Output only. The current state of the read pool node.
 	//
 	// Possible values:
 	//   "SQL_INSTANCE_STATE_UNSPECIFIED" - The state of the instance is unknown.
@@ -4577,7 +4549,7 @@ type Settings struct {
 	// EnableGoogleMlIntegration: Optional. When this parameter is set to true,
 	// Cloud SQL instances can connect to Vertex AI to pass requests for real-time
 	// predictions and insights to the AI. The default value is false. This applies
-	// only to Cloud SQL for PostgreSQL instances.
+	// only to Cloud SQL for MySQL and Cloud SQL for PostgreSQL instances.
 	EnableGoogleMlIntegration bool `json:"enableGoogleMlIntegration,omitempty"`
 	// InsightsConfig: Insights configuration, for now relevant only for Postgres.
 	InsightsConfig *InsightsConfig `json:"insightsConfig,omitempty"`
@@ -5617,6 +5589,15 @@ type User struct {
 	// after insertion. For a MySQL instance, it's required; for a PostgreSQL or
 	// SQL Server instance, it's optional.
 	Host string `json:"host,omitempty"`
+	// IamStatus: Indicates if user is active for IAM Authentication.
+	//
+	// Possible values:
+	//   "IAM_STATUS_UNSPECIFIED" - The default value for users that are not of
+	// type CLOUD_IAM_GROUP. Only CLOUD_IAM_GROUP users will be inactive/active.
+	// Will not display any value in UI.
+	//   "INACTIVE" - User is not available for IAM Authentication.
+	//   "ACTIVE" - User is available for IAM Authentication.
+	IamStatus string `json:"iamStatus,omitempty"`
 	// Instance: The name of the Cloud SQL instance. This does not include the
 	// project ID. Can be omitted for `update` because it is already specified on
 	// the URL.

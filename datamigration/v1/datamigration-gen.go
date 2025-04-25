@@ -4597,12 +4597,20 @@ type SourceObjectIdentifier struct {
 	// Database: Optional. The database name. This will be required only if the
 	// object uses a database name as part of its unique identifier.
 	Database string `json:"database,omitempty"`
+	// Schema: Optional. The schema name. This will be required only if the object
+	// uses a schema name as part of its unique identifier.
+	Schema string `json:"schema,omitempty"`
+	// Table: Optional. The table name. This will be required only if the object is
+	// a level below database or schema.
+	Table string `json:"table,omitempty"`
 	// Type: Required. The type of the migration job object.
 	//
 	// Possible values:
 	//   "MIGRATION_JOB_OBJECT_TYPE_UNSPECIFIED" - The type of the migration job
 	// object is unknown.
 	//   "DATABASE" - The migration job object is a database.
+	//   "SCHEMA" - The migration job object is a schema.
+	//   "TABLE" - The migration job object is a table.
 	Type string `json:"type,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Database") to
 	// unconditionally include in API requests. By default, fields with empty or

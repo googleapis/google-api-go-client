@@ -5647,9 +5647,7 @@ func (s SecurityPostureConfig) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// ServiceMeshCondition: Condition being reported. TODO b/395151419: Remove
-// this message once the membership-level conditions field uses the common
-// Condition message.
+// ServiceMeshCondition: Condition being reported.
 type ServiceMeshCondition struct {
 	// Code: Unique identifier of the condition which describes the condition
 	// recognizable to the user.
@@ -5888,7 +5886,6 @@ func (s ServiceMeshMembershipSpec) MarshalJSON() ([]byte, error) {
 // as analyzed by the Service Mesh Hub Controller.
 type ServiceMeshMembershipState struct {
 	// Conditions: Output only. List of conditions reported for this membership.
-	// TODO b/395151419: Use the common Condition message.
 	Conditions []*ServiceMeshCondition `json:"conditions,omitempty"`
 	// ControlPlaneManagement: Output only. Status of control plane management
 	ControlPlaneManagement *ServiceMeshControlPlaneManagement `json:"controlPlaneManagement,omitempty"`

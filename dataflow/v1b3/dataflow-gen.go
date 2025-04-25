@@ -3628,6 +3628,11 @@ func (s MetricStructuredName) MarshalJSON() ([]byte, error) {
 
 // MetricUpdate: Describes the state of a metric.
 type MetricUpdate struct {
+	// BoundedTrie: Worker-computed aggregate value for the "Trie" aggregation
+	// kind. The only possible value type is a BoundedTrieNode. Introduced this
+	// field to avoid breaking older SDKs when Dataflow service starts to populate
+	// the `bounded_trie` field.
+	BoundedTrie interface{} `json:"boundedTrie,omitempty"`
 	// Cumulative: True if this metric is reported as the total cumulative
 	// aggregate value accumulated since the worker started working on this
 	// WorkItem. By default this is false, indicating that this metric is reported
@@ -3676,13 +3681,13 @@ type MetricUpdate struct {
 	// workers are reporting work progress; it will be filled in responses from the
 	// metrics API.
 	UpdateTime string `json:"updateTime,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "Cumulative") to
+	// ForceSendFields is a list of field names (e.g. "BoundedTrie") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Cumulative") to include in API
+	// NullFields is a list of field names (e.g. "BoundedTrie") to include in API
 	// requests with the JSON null value. By default, fields with empty values are
 	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.

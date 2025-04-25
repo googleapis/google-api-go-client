@@ -721,7 +721,7 @@
         "issues": {
           "methods": {
             "list": {
-              "description": "Lists all account issues of a Merchant Center account.",
+              "description": "Lists all account issues of a Merchant Center account. When called on a multi-client account, this method only returns issues belonging to that account, not its sub-accounts. To retrieve issues for sub-accounts, you must first call the accounts.listSubaccounts method to obtain a list of sub-accounts, and then call `accounts.issues.list` for each sub-account individually.",
               "flatPath": "accounts/v1beta/accounts/{accountsId}/issues",
               "httpMethod": "GET",
               "id": "merchantapi.accounts.issues.list",
@@ -1480,7 +1480,7 @@
       }
     }
   },
-  "revision": "20250421",
+  "revision": "20250422",
   "rootUrl": "https://merchantapi.googleapis.com/",
   "schemas": {
     "AcceptTermsOfServiceResponse": {

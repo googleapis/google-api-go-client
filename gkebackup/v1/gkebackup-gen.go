@@ -2121,7 +2121,7 @@ type Restore struct {
 	// CreateTime: Output only. The timestamp when this Restore resource was
 	// created.
 	CreateTime string `json:"createTime,omitempty"`
-	// Description: User specified descriptive string for this Restore.
+	// Description: Optional. User specified descriptive string for this Restore.
 	Description string `json:"description,omitempty"`
 	// Etag: Output only. `etag` is used for optimistic concurrency control as a
 	// way to help prevent simultaneous updates of a restore from overwriting each

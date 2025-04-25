@@ -870,8 +870,8 @@ func (s SignedinUser) MarshalJSON() ([]byte, error) {
 }
 
 // SmartNotesConfig: Configuration related to smart notes in a meeting space.
-// More details about smart notes
-// https://support.google.com/meet/answer/14754931?hl=en.
+// For more information about smart notes, see "Take notes for me" in Google
+// Meet (https://support.google.com/meet/answer/14754931).
 type SmartNotesConfig struct {
 	// AutoSmartNotesGeneration: Defines whether to automatically generate a
 	// summary and recap of the meeting for all invitees in the organization when

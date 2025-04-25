@@ -1343,8 +1343,8 @@ func (r *ProjectsLocationsScopesService) Patch(name string, scope *Scope) *Proje
 // UpdateMask sets the optional parameter "updateMask": Field mask is used to
 // specify the fields to be overwritten in the Scope resource by the update.
 // The fields specified in the update_mask are relative to the resource, not
-// the full request. A field will be overwritten if it is in the mask. If the
-// user does not provide a mask then all fields present in the request will be
+// the full request. A field is overwritten when it is in the mask. If the user
+// does not provide a mask, then all fields present in the request are
 // overwritten.
 func (c *ProjectsLocationsScopesPatchCall) UpdateMask(updateMask string) *ProjectsLocationsScopesPatchCall {
 	c.urlParams_.Set("updateMask", updateMask)

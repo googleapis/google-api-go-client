@@ -4287,12 +4287,10 @@ type ConversionCountingConfig struct {
 	// FloodlightActivityConfigs: The Floodlight activity configs used to track
 	// conversions. The number of conversions counted is the sum of all of the
 	// conversions counted by all of the Floodlight activity IDs specified in this
-	// field. *Warning*: Starting **April 1, 2025**, this field will no longer be
-	// writable while a custom bidding algorithm is assigned to the line item. If
-	// you set this field and assign a custom bidding algorithm in the same
-	// request, the floodlight activities must match the ones used by the custom
-	// bidding algorithm. Read more about this announced change
-	// (/display-video/api/deprecations#features.custom_bidding_floodlight).
+	// field. This field can't be updated if a custom bidding algorithm is assigned
+	// to the line item. If you set this field and assign a custom bidding
+	// algorithm in the same request, the floodlight activities must match the ones
+	// used by the custom bidding algorithm.
 	FloodlightActivityConfigs []*TrackingFloodlightActivityConfig `json:"floodlightActivityConfigs,omitempty"`
 	// PostViewCountPercentageMillis: The percentage of post-view conversions to
 	// count, in millis (1/1000 of a percent). Must be between 0 and 100000
@@ -6548,6 +6546,8 @@ type ExchangeAssignedTargetingOptionDetails struct {
 	//   "EXCHANGE_TOPON_GBID" - TopOn.
 	//   "EXCHANGE_NETFLIX" - Netflix.
 	//   "EXCHANGE_CORE" - Core.
+	//   "EXCHANGE_COMMERCE_GRID" - Commerce Grid.
+	//   "EXCHANGE_SPOTIFY" - Spotify.
 	//   "EXCHANGE_TUBI" - Tubi.
 	Exchange string `json:"exchange,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Exchange") to
@@ -6683,6 +6683,8 @@ type ExchangeConfigEnabledExchange struct {
 	//   "EXCHANGE_TOPON_GBID" - TopOn.
 	//   "EXCHANGE_NETFLIX" - Netflix.
 	//   "EXCHANGE_CORE" - Core.
+	//   "EXCHANGE_COMMERCE_GRID" - Commerce Grid.
+	//   "EXCHANGE_SPOTIFY" - Spotify.
 	//   "EXCHANGE_TUBI" - Tubi.
 	Exchange string `json:"exchange,omitempty"`
 	// GoogleAdManagerAgencyId: Output only. Agency ID of Google Ad Manager. The
@@ -6802,6 +6804,8 @@ type ExchangeReviewStatus struct {
 	//   "EXCHANGE_TOPON_GBID" - TopOn.
 	//   "EXCHANGE_NETFLIX" - Netflix.
 	//   "EXCHANGE_CORE" - Core.
+	//   "EXCHANGE_COMMERCE_GRID" - Commerce Grid.
+	//   "EXCHANGE_SPOTIFY" - Spotify.
 	//   "EXCHANGE_TUBI" - Tubi.
 	Exchange string `json:"exchange,omitempty"`
 	// Status: Status of the exchange review.
@@ -6924,6 +6928,8 @@ type ExchangeTargetingOptionDetails struct {
 	//   "EXCHANGE_TOPON_GBID" - TopOn.
 	//   "EXCHANGE_NETFLIX" - Netflix.
 	//   "EXCHANGE_CORE" - Core.
+	//   "EXCHANGE_COMMERCE_GRID" - Commerce Grid.
+	//   "EXCHANGE_SPOTIFY" - Spotify.
 	//   "EXCHANGE_TUBI" - Tubi.
 	Exchange string `json:"exchange,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Exchange") to
@@ -7755,6 +7761,8 @@ type GuaranteedOrder struct {
 	//   "EXCHANGE_TOPON_GBID" - TopOn.
 	//   "EXCHANGE_NETFLIX" - Netflix.
 	//   "EXCHANGE_CORE" - Core.
+	//   "EXCHANGE_COMMERCE_GRID" - Commerce Grid.
+	//   "EXCHANGE_SPOTIFY" - Spotify.
 	//   "EXCHANGE_TUBI" - Tubi.
 	Exchange string `json:"exchange,omitempty"`
 	// GuaranteedOrderId: Output only. The unique identifier of the guaranteed
@@ -8544,6 +8552,8 @@ type InventorySource struct {
 	//   "EXCHANGE_TOPON_GBID" - TopOn.
 	//   "EXCHANGE_NETFLIX" - Netflix.
 	//   "EXCHANGE_CORE" - Core.
+	//   "EXCHANGE_COMMERCE_GRID" - Commerce Grid.
+	//   "EXCHANGE_SPOTIFY" - Spotify.
 	//   "EXCHANGE_TUBI" - Tubi.
 	Exchange string `json:"exchange,omitempty"`
 	// GuaranteedOrderId: Immutable. The ID of the guaranteed order that this
@@ -9147,12 +9157,6 @@ type LineItem struct {
 	// belongs to.
 	CampaignId int64 `json:"campaignId,omitempty,string"`
 	// ConversionCounting: The conversion tracking setting of the line item.
-	// *Warning*: Starting **April 1, 2025**, the floodlight_activity_configs field
-	// will no longer be writable while a custom bidding algorithm is assigned to
-	// the line item. If you set this field and assign a custom bidding algorithm
-	// in the same request, the floodlight activities must match the ones used by
-	// the custom bidding algorithm. Read more about this announced change
-	// (/display-video/api/deprecations#features.custom_bidding_floodlight).
 	ConversionCounting *ConversionCountingConfig `json:"conversionCounting,omitempty"`
 	// CreativeIds: The IDs of the creatives associated with the line item.
 	CreativeIds googleapi.Int64s `json:"creativeIds,omitempty"`
@@ -10639,11 +10643,9 @@ func (s MastheadAd) MarshalJSON() ([]byte, error) {
 type MaximizeSpendBidStrategy struct {
 	// CustomBiddingAlgorithmId: The ID of the Custom Bidding Algorithm used by
 	// this strategy. Only applicable when performance_goal_type is set to
-	// `BIDDING_STRATEGY_PERFORMANCE_GOAL_TYPE_CUSTOM_ALGO`. *Warning*: Starting
-	// **April 1, 2025**, assigning a custom bidding algorithm that uses floodlight
-	// activities not identified in floodlightActivityConfigs will return an error.
-	// Read more about this announced change
-	// (/display-video/api/deprecations#features.custom_bidding_floodlight).
+	// `BIDDING_STRATEGY_PERFORMANCE_GOAL_TYPE_CUSTOM_ALGO`. Assigning a custom
+	// bidding algorithm that uses floodlight activities not identified in
+	// floodlightActivityConfigs will return an error.
 	CustomBiddingAlgorithmId int64 `json:"customBiddingAlgorithmId,omitempty,string"`
 	// MaxAverageCpmBidAmountMicros: The maximum average CPM that may be bid, in
 	// micros of the advertiser's currency. Must be greater than or equal to a
@@ -11869,11 +11871,9 @@ func (s PerformanceGoal) MarshalJSON() ([]byte, error) {
 type PerformanceGoalBidStrategy struct {
 	// CustomBiddingAlgorithmId: The ID of the Custom Bidding Algorithm used by
 	// this strategy. Only applicable when performance_goal_type is set to
-	// `BIDDING_STRATEGY_PERFORMANCE_GOAL_TYPE_CUSTOM_ALGO`. *Warning*: Starting
-	// **April 1, 2025**, assigning a custom bidding algorithm that uses floodlight
-	// activities not identified in floodlightActivityConfigs will return an error.
-	// Read more about this announced change
-	// (/display-video/api/deprecations#features.custom_bidding_floodlight).
+	// `BIDDING_STRATEGY_PERFORMANCE_GOAL_TYPE_CUSTOM_ALGO`. Assigning a custom
+	// bidding algorithm that uses floodlight activities not identified in
+	// floodlightActivityConfigs will return an error.
 	CustomBiddingAlgorithmId int64 `json:"customBiddingAlgorithmId,omitempty,string"`
 	// MaxAverageCpmBidAmountMicros: The maximum average CPM that may be bid, in
 	// micros of the advertiser's currency. Must be greater than or equal to a
@@ -12639,7 +12639,7 @@ func (s SdfConfig) MarshalJSON() ([]byte, error) {
 }
 
 // SdfDownloadTask: Type for the response returned by
-// [SdfDownloadTaskService.CreateSdfDownloadTask].
+// SdfDownloadTaskService.CreateSdfDownloadTask.
 type SdfDownloadTask struct {
 	// ResourceName: A resource name to be used in media.download to Download the
 	// prepared files. Resource names have the format
@@ -12666,7 +12666,7 @@ func (s SdfDownloadTask) MarshalJSON() ([]byte, error) {
 }
 
 // SdfDownloadTaskMetadata: Type for the metadata returned by
-// [SdfDownloadTaskService.CreateSdfDownloadTask].
+// SdfDownloadTaskService.CreateSdfDownloadTask.
 type SdfDownloadTaskMetadata struct {
 	// CreateTime: The time when the operation was created.
 	CreateTime string `json:"createTime,omitempty"`
@@ -26480,10 +26480,8 @@ type CustomBiddingAlgorithmsPatchCall struct {
 }
 
 // Patch: Updates an existing custom bidding algorithm. Returns the updated
-// custom bidding algorithm if successful. *Warning*: Starting **April 1,
-// 2025**, requests updating custom bidding algorithms that are assigned to
-// line items will return an error. Read more about this announced change
-// (/display-video/api/deprecations#features.custom_bidding_floodlight).
+// custom bidding algorithm if successful. Requests updating a custom bidding
+// algorithm assigned to a line item will return an error.
 //
 //   - customBiddingAlgorithmId: Output only. The unique ID of the custom bidding
 //     algorithm. Assigned by the system.
@@ -26725,10 +26723,8 @@ type CustomBiddingAlgorithmsScriptsCreateCall struct {
 }
 
 // Create: Creates a new custom bidding script. Returns the newly created
-// script if successful. *Warning*: Starting **April 1, 2025**, requests
-// updating custom bidding algorithms that are assigned to line items will
-// return an error. Read more about this announced change
-// (/display-video/api/deprecations#features.custom_bidding_floodlight).
+// script if successful. Requests creating a custom bidding script under an
+// algorithm assigned to a line item will return an error.
 //
 //   - customBiddingAlgorithmId: The ID of the custom bidding algorithm that owns
 //     the script.
@@ -33143,8 +33139,8 @@ type SdfdownloadtasksCreateCall struct {
 // operation is SdfDownloadTaskMetadata. If the request is successful, the
 // response type of the operation is SdfDownloadTask. The response will not
 // include the download files, which must be retrieved with media.download. The
-// state of operation can be retrieved with sdfdownloadtask.operations.get. Any
-// errors can be found in the error.message. Note that error.details is
+// state of operation can be retrieved with `sdfdownloadtasks.operations.get`.
+// Any errors can be found in the error.message. Note that error.details is
 // expected to be empty.
 func (r *SdfdownloadtasksService) Create(createsdfdownloadtaskrequest *CreateSdfDownloadTaskRequest) *SdfdownloadtasksCreateCall {
 	c := &SdfdownloadtasksCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}

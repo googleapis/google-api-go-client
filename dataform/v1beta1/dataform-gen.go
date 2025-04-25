@@ -257,6 +257,115 @@ type ProjectsLocationsRepositoriesWorkspacesService struct {
 	s *Service
 }
 
+// ActionErrorTable: Error table information, used to write error data into a
+// BigQuery table.
+type ActionErrorTable struct {
+	// RetentionDays: Error table partition expiration in days. Only positive
+	// values are allowed.
+	RetentionDays int64 `json:"retentionDays,omitempty"`
+	// Target: Error Table target.
+	Target *Target `json:"target,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "RetentionDays") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "RetentionDays") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ActionErrorTable) MarshalJSON() ([]byte, error) {
+	type NoMethod ActionErrorTable
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ActionIncrementalLoadMode: Load definition for incremental load modes
+type ActionIncrementalLoadMode struct {
+	// Column: Column name for incremental load modes
+	Column string `json:"column,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Column") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Column") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ActionIncrementalLoadMode) MarshalJSON() ([]byte, error) {
+	type NoMethod ActionIncrementalLoadMode
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ActionLoadConfig: Simplified load configuration for actions
+type ActionLoadConfig struct {
+	// Append: Append into destination table
+	Append *ActionSimpleLoadMode `json:"append,omitempty"`
+	// Maximum: Insert records where the value exceeds the previous maximum value
+	// for a column in the destination table
+	Maximum *ActionIncrementalLoadMode `json:"maximum,omitempty"`
+	// Replace: Replace destination table
+	Replace *ActionSimpleLoadMode `json:"replace,omitempty"`
+	// Unique: Insert records where the value of a column is not already present in
+	// the destination table
+	Unique *ActionIncrementalLoadMode `json:"unique,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Append") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Append") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ActionLoadConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod ActionLoadConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ActionSimpleLoadMode: Simple load definition
+type ActionSimpleLoadMode struct {
+}
+
+// ActionSqlDefinition: Definition of a SQL Data Preparation
+type ActionSqlDefinition struct {
+	// ErrorTable: Error table configuration,
+	ErrorTable *ActionErrorTable `json:"errorTable,omitempty"`
+	// LoadConfig: Load configuration.
+	LoadConfig *ActionLoadConfig `json:"loadConfig,omitempty"`
+	// Query: The SQL query representing the data preparation steps. Formatted as a
+	// Pipe SQL query statement.
+	Query string `json:"query,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ErrorTable") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ErrorTable") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ActionSqlDefinition) MarshalJSON() ([]byte, error) {
+	type NoMethod ActionSqlDefinition
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // Assertion: Represents an assertion upon a SQL query which is required return
 // zero rows.
 type Assertion struct {
@@ -435,6 +544,9 @@ type CodeCompilationConfig struct {
 	// AssertionSchema: Optional. The default schema (BigQuery dataset ID) for
 	// assertions.
 	AssertionSchema string `json:"assertionSchema,omitempty"`
+	// BuiltinAssertionNamePrefix: Optional. The prefix to prepend to built-in
+	// assertion names.
+	BuiltinAssertionNamePrefix string `json:"builtinAssertionNamePrefix,omitempty"`
 	// DatabaseSuffix: Optional. The suffix that should be appended to all database
 	// (Google Cloud project ID) names.
 	DatabaseSuffix string `json:"databaseSuffix,omitempty"`
@@ -765,6 +877,8 @@ type CompilationResultAction struct {
 	// CanonicalTarget: The action's identifier if the project had been compiled
 	// without any overrides configured. Unique within the compilation result.
 	CanonicalTarget *Target `json:"canonicalTarget,omitempty"`
+	// DataPreparation: The data preparation executed by this action.
+	DataPreparation *DataPreparation `json:"dataPreparation,omitempty"`
 	// Declaration: The declaration declared by this action.
 	Declaration *Declaration `json:"declaration,omitempty"`
 	// FilePath: The full path including filename in which this action is located,
@@ -886,6 +1000,71 @@ func (s DataEncryptionState) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// DataPreparation: Defines a compiled Data Preparation entity
+type DataPreparation struct {
+	// ContentsSql: SQL definition for a Data Preparation. Contains a SQL query and
+	// additional context information.
+	ContentsSql *SqlDefinition `json:"contentsSql,omitempty"`
+	// ContentsYaml: The data preparation definition, stored as a YAML string.
+	ContentsYaml string `json:"contentsYaml,omitempty"`
+	// DependencyTargets: A list of actions that this action depends on.
+	DependencyTargets []*Target `json:"dependencyTargets,omitempty"`
+	// Disabled: Whether this action is disabled (i.e. should not be run).
+	Disabled bool `json:"disabled,omitempty"`
+	// Tags: Arbitrary, user-defined tags on this action.
+	Tags []string `json:"tags,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ContentsSql") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ContentsSql") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s DataPreparation) MarshalJSON() ([]byte, error) {
+	type NoMethod DataPreparation
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// DataPreparationAction: Represents a workflow action that will run a Data
+// Preparation.
+type DataPreparationAction struct {
+	// ContentsSql: SQL definition for a Data Preparation. Contains a SQL query and
+	// additional context information.
+	ContentsSql *ActionSqlDefinition `json:"contentsSql,omitempty"`
+	// ContentsYaml: Output only. YAML representing the contents of the data
+	// preparation. Can be used to show the customer what the input was to their
+	// workflow.
+	ContentsYaml string `json:"contentsYaml,omitempty"`
+	// GeneratedSql: Output only. The generated BigQuery SQL script that will be
+	// executed. For reference only.
+	GeneratedSql string `json:"generatedSql,omitempty"`
+	// JobId: Output only. The ID of the BigQuery job that executed the SQL in
+	// sql_script. Only set once the job has started to run.
+	JobId string `json:"jobId,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ContentsSql") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ContentsSql") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s DataPreparationAction) MarshalJSON() ([]byte, error) {
+	type NoMethod DataPreparationAction
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // Declaration: Represents a relation which is not managed by Dataform but
 // which may be referenced by Dataform actions.
 type Declaration struct {
@@ -969,6 +1148,32 @@ func (s DirectorySearchResult) MarshalJSON() ([]byte, error) {
 type Empty struct {
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
+}
+
+// ErrorTable: Error table information, used to write error data into a
+// BigQuery table.
+type ErrorTable struct {
+	// RetentionDays: Error table partition expiration in days. Only positive
+	// values are allowed.
+	RetentionDays int64 `json:"retentionDays,omitempty"`
+	// Target: Error Table target.
+	Target *Target `json:"target,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "RetentionDays") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "RetentionDays") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ErrorTable) MarshalJSON() ([]byte, error) {
+	type NoMethod ErrorTable
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Expr: Represents a textual expression in the Common Expression Language
@@ -1242,6 +1447,28 @@ type GitRemoteSettings struct {
 
 func (s GitRemoteSettings) MarshalJSON() ([]byte, error) {
 	type NoMethod GitRemoteSettings
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// IncrementalLoadMode: Load definition for incremental load modes
+type IncrementalLoadMode struct {
+	// Column: Column name for incremental load modes
+	Column string `json:"column,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Column") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Column") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s IncrementalLoadMode) MarshalJSON() ([]byte, error) {
+	type NoMethod IncrementalLoadMode
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -1573,6 +1800,36 @@ type ListWorkspacesResponse struct {
 
 func (s ListWorkspacesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListWorkspacesResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// LoadConfig: Simplified load configuration for actions
+type LoadConfig struct {
+	// Append: Append into destination table
+	Append *SimpleLoadMode `json:"append,omitempty"`
+	// Maximum: Insert records where the value exceeds the previous maximum value
+	// for a column in the destination table
+	Maximum *IncrementalLoadMode `json:"maximum,omitempty"`
+	// Replace: Replace destination table
+	Replace *SimpleLoadMode `json:"replace,omitempty"`
+	// Unique: Insert records where the value of a column is not already present in
+	// the destination table
+	Unique *IncrementalLoadMode `json:"unique,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Append") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Append") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s LoadConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod LoadConfig
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -2621,6 +2878,37 @@ func (s SetIamPolicyRequest) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// SimpleLoadMode: Simple load definition
+type SimpleLoadMode struct {
+}
+
+// SqlDefinition: Definition of a SQL Data Preparation
+type SqlDefinition struct {
+	// ErrorTable: Error table configuration,
+	ErrorTable *ErrorTable `json:"errorTable,omitempty"`
+	// Load: Load configuration.
+	Load *LoadConfig `json:"load,omitempty"`
+	// Query: The SQL query representing the data preparation steps. Formatted as a
+	// Pipe SQL query statement.
+	Query string `json:"query,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ErrorTable") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ErrorTable") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s SqlDefinition) MarshalJSON() ([]byte, error) {
+	type NoMethod SqlDefinition
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // SshAuthenticationConfig: Configures fields for performing SSH
 // authentication.
 type SshAuthenticationConfig struct {
@@ -2804,6 +3092,8 @@ type WorkflowConfig struct {
 	// CronSchedule: Optional. Optional schedule (in cron format) for automatic
 	// execution of this workflow config.
 	CronSchedule string `json:"cronSchedule,omitempty"`
+	// Disabled: Optional. Disables automatic creation of workflow invocations.
+	Disabled bool `json:"disabled,omitempty"`
 	// InternalMetadata: Output only. All the metadata information that is used
 	// internally to serve the resource. For example: timestamps, flags, status
 	// fields, etc. The format of this field is a JSON string.
@@ -2918,6 +3208,9 @@ type WorkflowInvocationAction struct {
 	// been compiled without any overrides configured. Unique within the
 	// compilation result.
 	CanonicalTarget *Target `json:"canonicalTarget,omitempty"`
+	// DataPreparationAction: Output only. The workflow action's data preparation
+	// action details.
+	DataPreparationAction *DataPreparationAction `json:"dataPreparationAction,omitempty"`
 	// FailureReason: Output only. If and only if action's state is FAILED a
 	// failure reason is set.
 	FailureReason string `json:"failureReason,omitempty"`
@@ -4523,7 +4816,9 @@ type ProjectsLocationsRepositoriesListCall struct {
 	header_      http.Header
 }
 
-// List: Lists Repositories in a given project and location.
+// List: Lists Repositories in a given project and location. **Note:** *This
+// method can return repositories not shown in the Dataform UI
+// (https://console.cloud.google.com/bigquery/dataform)*.
 //
 //   - parent: The location in which to list repositories. Must be in the format
 //     `projects/*/locations/*`.

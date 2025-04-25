@@ -5808,7 +5808,12 @@ type AccountsIssuesListCall struct {
 	header_      http.Header
 }
 
-// List: Lists all account issues of a Merchant Center account.
+// List: Lists all account issues of a Merchant Center account. When called on
+// a multi-client account, this method only returns issues belonging to that
+// account, not its sub-accounts. To retrieve issues for sub-accounts, you must
+// first call the accounts.listSubaccounts method to obtain a list of
+// sub-accounts, and then call `accounts.issues.list` for each sub-account
+// individually.
 //
 //   - parent: The parent, which owns this collection of issues. Format:
 //     `accounts/{account}`.

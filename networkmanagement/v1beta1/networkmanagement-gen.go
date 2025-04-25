@@ -337,9 +337,12 @@ type AbortInfo struct {
 	// configuration was missing.
 	//   "ROUTE_CONFIG_NOT_FOUND" - Aborted because expected route configuration
 	// was missing.
-	//   "GOOGLE_MANAGED_SERVICE_AMBIGUOUS_PSC_ENDPOINT" - Aborted because a PSC
+	//   "GOOGLE_MANAGED_SERVICE_AMBIGUOUS_PSC_ENDPOINT" - Aborted because PSC
 	// endpoint selection for the Google-managed service is ambiguous (several PSC
 	// endpoints satisfy test input).
+	//   "GOOGLE_MANAGED_SERVICE_AMBIGUOUS_ENDPOINT" - Aborted because endpoint
+	// selection for the Google-managed service is ambiguous (several endpoints
+	// satisfy test input).
 	//   "SOURCE_PSC_CLOUD_SQL_UNSUPPORTED" - Aborted because tests with a
 	// PSC-based Cloud SQL instance as a source are not supported.
 	//   "SOURCE_REDIS_CLUSTER_UNSUPPORTED" - Aborted because tests with a Redis
@@ -1160,6 +1163,9 @@ type DropInfo struct {
 	//   "TRAFFIC_FROM_HYBRID_ENDPOINT_TO_INTERNET_DISALLOWED" - Packet could be
 	// dropped because hybrid endpoint like a VPN gateway or Interconnect is not
 	// allowed to send traffic to the Internet.
+	//   "NO_MATCHING_NAT64_GATEWAY" - Packet with destination IP address within
+	// the reserved NAT64 range is dropped due to no matching NAT gateway in the
+	// subnet.
 	Cause string `json:"cause,omitempty"`
 	// DestinationIp: Destination IP address of the dropped packet (if relevant).
 	DestinationIp string `json:"destinationIp,omitempty"`
@@ -1704,6 +1710,8 @@ type InstanceInfo struct {
 	// PscNetworkAttachmentUri: URI of the PSC network attachment the NIC is
 	// attached to (if relevant).
 	PscNetworkAttachmentUri string `json:"pscNetworkAttachmentUri,omitempty"`
+	// Running: Indicates whether the Compute Engine instance is running.
+	Running bool `json:"running,omitempty"`
 	// ServiceAccount: Service account authorized for the instance.
 	ServiceAccount string `json:"serviceAccount,omitempty"`
 	// Uri: URI of a Compute Engine instance.

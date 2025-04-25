@@ -330,6 +330,10 @@ type GoogleCloudOrgpolicyV2Constraint struct {
 	Description string `json:"description,omitempty"`
 	// DisplayName: The human readable name. Mutable.
 	DisplayName string `json:"displayName,omitempty"`
+	// EquivalentConstraint: Managed constraint and canned constraint sometimes can
+	// have equivalents. This field is used to store the equivalent constraint
+	// name.
+	EquivalentConstraint string `json:"equivalentConstraint,omitempty"`
 	// ListConstraint: Defines this constraint as being a list constraint.
 	ListConstraint *GoogleCloudOrgpolicyV2ConstraintListConstraint `json:"listConstraint,omitempty"`
 	// Name: Immutable. The resource name of the constraint. Must be in one of the

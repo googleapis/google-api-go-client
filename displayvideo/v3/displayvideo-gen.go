@@ -1068,7 +1068,8 @@ func (s AdUrl) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// Adloox: Details of Adloox brand safety settings.
+// Adloox: Details of Scope3 (previously known as Adloox) brand safety
+// settings.
 type Adloox struct {
 	// AdultExplicitSexualContent: Optional. Adult and Explicit Sexual Content GARM
 	// (https://wfanet.org/leadership/garm/about-garm) risk ranges to exclude.
@@ -1149,10 +1150,10 @@ type Adloox struct {
 	//   "DISPLAY_IAB_VIEWABILITY_75" - 75%+ in view (IAB display viewability
 	// standard).
 	DisplayIabViewability string `json:"displayIabViewability,omitempty"`
-	// ExcludedAdlooxCategories: Adloox categories to exclude.
+	// ExcludedAdlooxCategories: Scope3 categories to exclude.
 	//
 	// Possible values:
-	//   "ADLOOX_UNSPECIFIED" - Default value when a Adloox category is not
+	//   "ADLOOX_UNSPECIFIED" - Default value when a Scope3 category is not
 	// specified or is unknown in this version.
 	//   "ADULT_CONTENT_HARD" - Adult content (hard).
 	//   "ADULT_CONTENT_SOFT" - Adult content (soft).
@@ -1163,11 +1164,11 @@ type Adloox struct {
 	//   "LOW_VIEWABILITY_DOMAINS" - Low viewability domains.
 	//   "FRAUD" - Fraud.
 	ExcludedAdlooxCategories []string `json:"excludedAdlooxCategories,omitempty"`
-	// ExcludedFraudIvtMfaCategories: Optional. Adloox's fraud IVT MFA categories
+	// ExcludedFraudIvtMfaCategories: Optional. Scope3's fraud IVT MFA categories
 	// to exclude.
 	//
 	// Possible values:
-	//   "FRAUD_IVT_MFA_CATEGORY_UNSPECIFIED" - Default value when a Adloox Fraud,
+	//   "FRAUD_IVT_MFA_CATEGORY_UNSPECIFIED" - Default value when a Scope3 Fraud,
 	// IVT, MFA category is not specified or is unknown in this version.
 	//   "FRAUD_IVT_MFA" - FRAUD, IVT, MFA.
 	ExcludedFraudIvtMfaCategories []string `json:"excludedFraudIvtMfaCategories,omitempty"`
@@ -1721,17 +1722,21 @@ func (s AgeRangeTargetingOptionDetails) MarshalJSON() ([]byte, error) {
 
 // AlgorithmRules: Rule-based algorithm.
 type AlgorithmRules struct {
+	// AttributionModelId: Attribution model for the algorithm.
+	AttributionModelId int64 `json:"attributionModelId,omitempty,string"`
 	// ImpressionSignalRuleset: Rules for the impression signals.
 	ImpressionSignalRuleset *AlgorithmRulesRuleset `json:"impressionSignalRuleset,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "ImpressionSignalRuleset") to
+	// PostImpressionSignalRuleset: Rules for the post-impression signals.
+	PostImpressionSignalRuleset *AlgorithmRulesRuleset `json:"postImpressionSignalRuleset,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AttributionModelId") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "ImpressionSignalRuleset") to
-	// include in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. See
+	// NullFields is a list of field names (e.g. "AttributionModelId") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -1890,6 +1895,22 @@ type AlgorithmRulesComparisonValue struct {
 	OnScreenPositionValue string `json:"onScreenPositionValue,omitempty"`
 	// StringValue: String value.
 	StringValue string `json:"stringValue,omitempty"`
+	// VideoPlayerSizeValue: Video player size value.
+	//
+	// Possible values:
+	//   "VIDEO_PLAYER_SIZE_UNSPECIFIED" - Video player size is not specified in
+	// this version. This enum is a place holder for a default value and does not
+	// represent a real video player size.
+	//   "VIDEO_PLAYER_SIZE_SMALL" - The dimensions of the video player are less
+	// than 400×300 (desktop), or up to 20% of screen covered (mobile).
+	//   "VIDEO_PLAYER_SIZE_LARGE" - The dimensions of the video player are between
+	// 400x300 and 1280x720 pixels (desktop), or 20% to 90% of the screen covered
+	// (mobile).
+	//   "VIDEO_PLAYER_SIZE_HD" - The dimensions of the video player are 1280×720
+	// or greater (desktop), or over 90% of the screen covered (mobile).
+	//   "VIDEO_PLAYER_SIZE_UNKNOWN" - The dimensions of the video player are
+	// unknown.
+	VideoPlayerSizeValue string `json:"videoPlayerSizeValue,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "BoolValue") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -1920,6 +1941,51 @@ func (s *AlgorithmRulesComparisonValue) UnmarshalJSON(data []byte) error {
 	}
 	s.DoubleValue = float64(s1.DoubleValue)
 	return nil
+}
+
+// AlgorithmRulesFloodlightActivityConversionSignal: The rule to score
+// impressions based on Floodlight conversion events.
+type AlgorithmRulesFloodlightActivityConversionSignal struct {
+	// ConversionCounting: Required. The type of conversions to be used in
+	// impression value computation, for example, post-click conversions.
+	//
+	// Possible values:
+	//   "CONVERSION_COUNTING_UNSPECIFIED" - The action is not specified.
+	//   "ALL_CONVERSIONS" - All conversions.
+	//   "POST_CLICK" - Post-click conversions.
+	//   "POST_VIEW" - Post-view conversions.
+	ConversionCounting string `json:"conversionCounting,omitempty"`
+	// CountingMethod: Required. The way to acquire value from the floodlight
+	// activity, for example, count of the conversion.
+	//
+	// Possible values:
+	//   "COUNTING_METHOD_UNSPECIFIED" - The action is not specified.
+	//   "CONVERSIONS_COUNT" - The count of conversions associated with the
+	// conversion activity.
+	//   "SALES_QUANTITY" - The number of sales items associated with the
+	// conversion activity.
+	//   "SALES_VALUE" - The sales revenue associated with the conversion activity.
+	//   "UNIQUE_COUNT" - The count of unique conversions associated with the
+	// conversion activity. Only one conversion can be counted per impression.
+	CountingMethod string `json:"countingMethod,omitempty"`
+	// FloodlightActivityId: Required. Id of the floodlight activity.
+	FloodlightActivityId int64 `json:"floodlightActivityId,omitempty,string"`
+	// ForceSendFields is a list of field names (e.g. "ConversionCounting") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ConversionCounting") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s AlgorithmRulesFloodlightActivityConversionSignal) MarshalJSON() ([]byte, error) {
+	type NoMethod AlgorithmRulesFloodlightActivityConversionSignal
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // AlgorithmRulesRule: Set of conditions. The return value of the rule is
@@ -2027,6 +2093,30 @@ func (s *AlgorithmRulesRuleset) UnmarshalJSON(data []byte) error {
 
 // AlgorithmRulesSignal: Signal used to evaluate rules.
 type AlgorithmRulesSignal struct {
+	// ActiveViewSignal: Signal based on active views.
+	//
+	// Possible values:
+	//   "ACTIVE_VIEW_SIGNAL_UNSPECIFIED" - Unknown signal.
+	//   "ACTIVE_VIEW_VIEWED" - Whether Active View detects that your ad has been
+	// viewed. Value is stored in the boolValue field of the comparison value.
+	//   "AUDIBLE" - Whether Active View detects that your ad was audible. Value is
+	// stored in the boolValue field of the comparison value.
+	//   "VIDEO_COMPLETED" - Whether the video was completed. Value is stored in
+	// the boolValue field of the comparison value.
+	//   "TIME_ON_SCREEN" - The time the ad was on screen in seconds. Value is
+	// stored in the int64Value field of the comparison value.
+	//   "VIDEO_PLAYER_SIZE" - The size of the video player displaying the ad.
+	// Value is stored in the videoPlayerSizeValue field of the comparison value.
+	//   "COMPLETED_IN_VIEW_AUDIBLE" - Whether the ad was completed in view and
+	// audible. Value is stored in the boolValue field of the comparison value.
+	ActiveViewSignal string `json:"activeViewSignal,omitempty"`
+	// ClickSignal: Signal based on clicks.
+	//
+	// Possible values:
+	//   "CLICK_SIGNAL_UNSPECIFIED" - Unknown signal.
+	//   "CLICK" - Whether the ad was clicked. Value is stored in the boolValue
+	// field of the comparison value.
+	ClickSignal string `json:"clickSignal,omitempty"`
 	// ImpressionSignal: Signal based on impressions.
 	//
 	// Possible values:
@@ -2055,13 +2145,13 @@ type AlgorithmRulesSignal struct {
 	//   "CREATIVE_DIMENSION" - Creative height and width in pixels. Value is
 	// stored in the creativeDimensionValue field of the comparison value.
 	ImpressionSignal string `json:"impressionSignal,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "ImpressionSignal") to
+	// ForceSendFields is a list of field names (e.g. "ActiveViewSignal") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "ImpressionSignal") to include in
+	// NullFields is a list of field names (e.g. "ActiveViewSignal") to include in
 	// API requests with the JSON null value. By default, fields with empty values
 	// are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
@@ -2118,17 +2208,38 @@ func (s AlgorithmRulesSignalComparison) MarshalJSON() ([]byte, error) {
 // AlgorithmRulesSignalValue: Adjusted value of the signal used for rule
 // evaluation.
 type AlgorithmRulesSignalValue struct {
+	// ActiveViewSignal: Signal based on active views. Only `TIME_ON_SCREEN` is
+	// supported.
+	//
+	// Possible values:
+	//   "ACTIVE_VIEW_SIGNAL_UNSPECIFIED" - Unknown signal.
+	//   "ACTIVE_VIEW_VIEWED" - Whether Active View detects that your ad has been
+	// viewed. Value is stored in the boolValue field of the comparison value.
+	//   "AUDIBLE" - Whether Active View detects that your ad was audible. Value is
+	// stored in the boolValue field of the comparison value.
+	//   "VIDEO_COMPLETED" - Whether the video was completed. Value is stored in
+	// the boolValue field of the comparison value.
+	//   "TIME_ON_SCREEN" - The time the ad was on screen in seconds. Value is
+	// stored in the int64Value field of the comparison value.
+	//   "VIDEO_PLAYER_SIZE" - The size of the video player displaying the ad.
+	// Value is stored in the videoPlayerSizeValue field of the comparison value.
+	//   "COMPLETED_IN_VIEW_AUDIBLE" - Whether the ad was completed in view and
+	// audible. Value is stored in the boolValue field of the comparison value.
+	ActiveViewSignal string `json:"activeViewSignal,omitempty"`
+	// FloodlightActivityConversionSignal: Signal based on floodlight conversion
+	// events.
+	FloodlightActivityConversionSignal *AlgorithmRulesFloodlightActivityConversionSignal `json:"floodlightActivityConversionSignal,omitempty"`
 	// Number: Value to use as result.
 	Number float64 `json:"number,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "Number") to unconditionally
-	// include in API requests. By default, fields with empty or default values are
-	// omitted from API requests. See
+	// ForceSendFields is a list of field names (e.g. "ActiveViewSignal") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Number") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
+	// NullFields is a list of field names (e.g. "ActiveViewSignal") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -13416,10 +13527,10 @@ type PartnerCost struct {
 	// Possible values:
 	//   "PARTNER_COST_TYPE_UNSPECIFIED" - Type value is not specified or is
 	// unknown in this version.
-	//   "PARTNER_COST_TYPE_ADLOOX" - The cost is charged for using Adloox. Billed
-	// by the partner.
-	//   "PARTNER_COST_TYPE_ADLOOX_PREBID" - The cost is charged for using Adloox
-	// Pre-Bid. Billed through DV360.
+	//   "PARTNER_COST_TYPE_ADLOOX" - The cost is charged for using Scope3
+	// (previously known as Adloox). Billed by the partner.
+	//   "PARTNER_COST_TYPE_ADLOOX_PREBID" - The cost is charged for using Scope3
+	// (previously known as Adloox) Pre-Bid. Billed through DV360.
 	//   "PARTNER_COST_TYPE_ADSAFE" - The cost is charged for using AdSafe. Billed
 	// by the partner.
 	//   "PARTNER_COST_TYPE_ADXPOSE" - The cost is charged for using AdExpose.
@@ -15407,7 +15518,7 @@ func (s ThirdPartyVendorConfig) MarshalJSON() ([]byte, error) {
 // field of an AssignedTargetingOption when targeting_type is
 // `TARGETING_TYPE_THIRD_PARTY_VERIFIER`.
 type ThirdPartyVerifierAssignedTargetingOptionDetails struct {
-	// Adloox: Third party brand verifier -- Adloox.
+	// Adloox: Third party brand verifier -- Scope3 (previously known as Adloox).
 	Adloox *Adloox `json:"adloox,omitempty"`
 	// DoubleVerify: Third party brand verifier -- DoubleVerify.
 	DoubleVerify *DoubleVerify `json:"doubleVerify,omitempty"`

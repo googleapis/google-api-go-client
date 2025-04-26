@@ -1044,7 +1044,8 @@ func (s AdUrl) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// Adloox: Details of Adloox brand safety settings.
+// Adloox: Details of Scope3 (previously known as Adloox) brand safety
+// settings.
 type Adloox struct {
 	// AdultExplicitSexualContent: Optional. Adult and Explicit Sexual Content GARM
 	// (https://wfanet.org/leadership/garm/about-garm) risk ranges to exclude.
@@ -1125,10 +1126,10 @@ type Adloox struct {
 	//   "DISPLAY_IAB_VIEWABILITY_75" - 75%+ in view (IAB display viewability
 	// standard).
 	DisplayIabViewability string `json:"displayIabViewability,omitempty"`
-	// ExcludedAdlooxCategories: Adloox categories to exclude.
+	// ExcludedAdlooxCategories: Scope3 categories to exclude.
 	//
 	// Possible values:
-	//   "ADLOOX_UNSPECIFIED" - Default value when a Adloox category is not
+	//   "ADLOOX_UNSPECIFIED" - Default value when a Scope3 category is not
 	// specified or is unknown in this version.
 	//   "ADULT_CONTENT_HARD" - Adult content (hard).
 	//   "ADULT_CONTENT_SOFT" - Adult content (soft).
@@ -1139,11 +1140,11 @@ type Adloox struct {
 	//   "LOW_VIEWABILITY_DOMAINS" - Low viewability domains.
 	//   "FRAUD" - Fraud.
 	ExcludedAdlooxCategories []string `json:"excludedAdlooxCategories,omitempty"`
-	// ExcludedFraudIvtMfaCategories: Optional. Adloox's fraud IVT MFA categories
+	// ExcludedFraudIvtMfaCategories: Optional. Scope3's fraud IVT MFA categories
 	// to exclude.
 	//
 	// Possible values:
-	//   "FRAUD_IVT_MFA_CATEGORY_UNSPECIFIED" - Default value when a Adloox Fraud,
+	//   "FRAUD_IVT_MFA_CATEGORY_UNSPECIFIED" - Default value when a Scope3 Fraud,
 	// IVT, MFA category is not specified or is unknown in this version.
 	//   "FRAUD_IVT_MFA" - FRAUD, IVT, MFA.
 	ExcludedFraudIvtMfaCategories []string `json:"excludedFraudIvtMfaCategories,omitempty"`
@@ -1697,17 +1698,21 @@ func (s AgeRangeTargetingOptionDetails) MarshalJSON() ([]byte, error) {
 
 // AlgorithmRules: Rule-based algorithm.
 type AlgorithmRules struct {
+	// AttributionModelId: Attribution model for the algorithm.
+	AttributionModelId int64 `json:"attributionModelId,omitempty,string"`
 	// ImpressionSignalRuleset: Rules for the impression signals.
 	ImpressionSignalRuleset *AlgorithmRulesRuleset `json:"impressionSignalRuleset,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "ImpressionSignalRuleset") to
+	// PostImpressionSignalRuleset: Rules for the post-impression signals.
+	PostImpressionSignalRuleset *AlgorithmRulesRuleset `json:"postImpressionSignalRuleset,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AttributionModelId") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "ImpressionSignalRuleset") to
-	// include in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. See
+	// NullFields is a list of field names (e.g. "AttributionModelId") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -1848,6 +1853,8 @@ type AlgorithmRulesComparisonValue struct {
 	//   "EXCHANGE_TOPON_GBID" - TopOn.
 	//   "EXCHANGE_NETFLIX" - Netflix.
 	//   "EXCHANGE_CORE" - Core.
+	//   "EXCHANGE_COMMERCE_GRID" - Commerce Grid.
+	//   "EXCHANGE_SPOTIFY" - Spotify.
 	//   "EXCHANGE_TUBI" - Tubi.
 	ExchangeValue string `json:"exchangeValue,omitempty"`
 	// Int64Value: Integer value.
@@ -1864,6 +1871,22 @@ type AlgorithmRulesComparisonValue struct {
 	OnScreenPositionValue string `json:"onScreenPositionValue,omitempty"`
 	// StringValue: String value.
 	StringValue string `json:"stringValue,omitempty"`
+	// VideoPlayerSizeValue: Video player size value.
+	//
+	// Possible values:
+	//   "VIDEO_PLAYER_SIZE_UNSPECIFIED" - Video player size is not specified in
+	// this version. This enum is a place holder for a default value and does not
+	// represent a real video player size.
+	//   "VIDEO_PLAYER_SIZE_SMALL" - The dimensions of the video player are less
+	// than 400×300 (desktop), or up to 20% of screen covered (mobile).
+	//   "VIDEO_PLAYER_SIZE_LARGE" - The dimensions of the video player are between
+	// 400x300 and 1280x720 pixels (desktop), or 20% to 90% of the screen covered
+	// (mobile).
+	//   "VIDEO_PLAYER_SIZE_HD" - The dimensions of the video player are 1280×720
+	// or greater (desktop), or over 90% of the screen covered (mobile).
+	//   "VIDEO_PLAYER_SIZE_UNKNOWN" - The dimensions of the video player are
+	// unknown.
+	VideoPlayerSizeValue string `json:"videoPlayerSizeValue,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "BoolValue") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -1894,6 +1917,51 @@ func (s *AlgorithmRulesComparisonValue) UnmarshalJSON(data []byte) error {
 	}
 	s.DoubleValue = float64(s1.DoubleValue)
 	return nil
+}
+
+// AlgorithmRulesFloodlightActivityConversionSignal: The rule to score
+// impressions based on Floodlight conversion events.
+type AlgorithmRulesFloodlightActivityConversionSignal struct {
+	// ConversionCounting: Required. The type of conversions to be used in
+	// impression value computation, for example, post-click conversions.
+	//
+	// Possible values:
+	//   "CONVERSION_COUNTING_UNSPECIFIED" - The action is not specified.
+	//   "ALL_CONVERSIONS" - All conversions.
+	//   "POST_CLICK" - Post-click conversions.
+	//   "POST_VIEW" - Post-view conversions.
+	ConversionCounting string `json:"conversionCounting,omitempty"`
+	// CountingMethod: Required. The way to acquire value from the floodlight
+	// activity, for example, count of the conversion.
+	//
+	// Possible values:
+	//   "COUNTING_METHOD_UNSPECIFIED" - The action is not specified.
+	//   "CONVERSIONS_COUNT" - The count of conversions associated with the
+	// conversion activity.
+	//   "SALES_QUANTITY" - The number of sales items associated with the
+	// conversion activity.
+	//   "SALES_VALUE" - The sales revenue associated with the conversion activity.
+	//   "UNIQUE_COUNT" - The count of unique conversions associated with the
+	// conversion activity. Only one conversion can be counted per impression.
+	CountingMethod string `json:"countingMethod,omitempty"`
+	// FloodlightActivityId: Required. Id of the floodlight activity.
+	FloodlightActivityId int64 `json:"floodlightActivityId,omitempty,string"`
+	// ForceSendFields is a list of field names (e.g. "ConversionCounting") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ConversionCounting") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s AlgorithmRulesFloodlightActivityConversionSignal) MarshalJSON() ([]byte, error) {
+	type NoMethod AlgorithmRulesFloodlightActivityConversionSignal
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // AlgorithmRulesRule: Set of conditions. The return value of the rule is
@@ -2001,6 +2069,30 @@ func (s *AlgorithmRulesRuleset) UnmarshalJSON(data []byte) error {
 
 // AlgorithmRulesSignal: Signal used to evaluate rules.
 type AlgorithmRulesSignal struct {
+	// ActiveViewSignal: Signal based on active views.
+	//
+	// Possible values:
+	//   "ACTIVE_VIEW_SIGNAL_UNSPECIFIED" - Unknown signal.
+	//   "ACTIVE_VIEW_VIEWED" - Whether Active View detects that your ad has been
+	// viewed. Value is stored in the boolValue field of the comparison value.
+	//   "AUDIBLE" - Whether Active View detects that your ad was audible. Value is
+	// stored in the boolValue field of the comparison value.
+	//   "VIDEO_COMPLETED" - Whether the video was completed. Value is stored in
+	// the boolValue field of the comparison value.
+	//   "TIME_ON_SCREEN" - The time the ad was on screen in seconds. Value is
+	// stored in the int64Value field of the comparison value.
+	//   "VIDEO_PLAYER_SIZE" - The size of the video player displaying the ad.
+	// Value is stored in the videoPlayerSizeValue field of the comparison value.
+	//   "COMPLETED_IN_VIEW_AUDIBLE" - Whether the ad was completed in view and
+	// audible. Value is stored in the boolValue field of the comparison value.
+	ActiveViewSignal string `json:"activeViewSignal,omitempty"`
+	// ClickSignal: Signal based on clicks.
+	//
+	// Possible values:
+	//   "CLICK_SIGNAL_UNSPECIFIED" - Unknown signal.
+	//   "CLICK" - Whether the ad was clicked. Value is stored in the boolValue
+	// field of the comparison value.
+	ClickSignal string `json:"clickSignal,omitempty"`
 	// ImpressionSignal: Signal based on impressions.
 	//
 	// Possible values:
@@ -2029,13 +2121,13 @@ type AlgorithmRulesSignal struct {
 	//   "CREATIVE_DIMENSION" - Creative height and width in pixels. Value is
 	// stored in the creativeDimensionValue field of the comparison value.
 	ImpressionSignal string `json:"impressionSignal,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "ImpressionSignal") to
+	// ForceSendFields is a list of field names (e.g. "ActiveViewSignal") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "ImpressionSignal") to include in
+	// NullFields is a list of field names (e.g. "ActiveViewSignal") to include in
 	// API requests with the JSON null value. By default, fields with empty values
 	// are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
@@ -2092,17 +2184,38 @@ func (s AlgorithmRulesSignalComparison) MarshalJSON() ([]byte, error) {
 // AlgorithmRulesSignalValue: Adjusted value of the signal used for rule
 // evaluation.
 type AlgorithmRulesSignalValue struct {
+	// ActiveViewSignal: Signal based on active views. Only `TIME_ON_SCREEN` is
+	// supported.
+	//
+	// Possible values:
+	//   "ACTIVE_VIEW_SIGNAL_UNSPECIFIED" - Unknown signal.
+	//   "ACTIVE_VIEW_VIEWED" - Whether Active View detects that your ad has been
+	// viewed. Value is stored in the boolValue field of the comparison value.
+	//   "AUDIBLE" - Whether Active View detects that your ad was audible. Value is
+	// stored in the boolValue field of the comparison value.
+	//   "VIDEO_COMPLETED" - Whether the video was completed. Value is stored in
+	// the boolValue field of the comparison value.
+	//   "TIME_ON_SCREEN" - The time the ad was on screen in seconds. Value is
+	// stored in the int64Value field of the comparison value.
+	//   "VIDEO_PLAYER_SIZE" - The size of the video player displaying the ad.
+	// Value is stored in the videoPlayerSizeValue field of the comparison value.
+	//   "COMPLETED_IN_VIEW_AUDIBLE" - Whether the ad was completed in view and
+	// audible. Value is stored in the boolValue field of the comparison value.
+	ActiveViewSignal string `json:"activeViewSignal,omitempty"`
+	// FloodlightActivityConversionSignal: Signal based on floodlight conversion
+	// events.
+	FloodlightActivityConversionSignal *AlgorithmRulesFloodlightActivityConversionSignal `json:"floodlightActivityConversionSignal,omitempty"`
 	// Number: Value to use as result.
 	Number float64 `json:"number,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "Number") to unconditionally
-	// include in API requests. By default, fields with empty or default values are
-	// omitted from API requests. See
+	// ForceSendFields is a list of field names (e.g. "ActiveViewSignal") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Number") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
+	// NullFields is a list of field names (e.g. "ActiveViewSignal") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -5392,12 +5505,10 @@ type ConversionCountingConfig struct {
 	// FloodlightActivityConfigs: The Floodlight activity configs used to track
 	// conversions. The number of conversions counted is the sum of all of the
 	// conversions counted by all of the Floodlight activity IDs specified in this
-	// field. *Warning*: Starting **April 1, 2025**, this field will no longer be
-	// writable while a custom bidding algorithm is assigned to the line item. If
-	// you set this field and assign a custom bidding algorithm in the same
-	// request, the floodlight activities must match the ones used by the custom
-	// bidding algorithm. Read more about this announced change
-	// (/display-video/api/deprecations#features.custom_bidding_floodlight).
+	// field. This field can't be updated if a custom bidding algorithm is assigned
+	// to the line item. If you set this field and assign a custom bidding
+	// algorithm in the same request, the floodlight activities must match the ones
+	// used by the custom bidding algorithm.
 	FloodlightActivityConfigs []*TrackingFloodlightActivityConfig `json:"floodlightActivityConfigs,omitempty"`
 	// PostViewCountPercentageMillis: The percentage of post-view conversions to
 	// count, in millis (1/1000 of a percent). Must be between 0 and 100000
@@ -7881,6 +7992,8 @@ type ExchangeAssignedTargetingOptionDetails struct {
 	//   "EXCHANGE_TOPON_GBID" - TopOn.
 	//   "EXCHANGE_NETFLIX" - Netflix.
 	//   "EXCHANGE_CORE" - Core.
+	//   "EXCHANGE_COMMERCE_GRID" - Commerce Grid.
+	//   "EXCHANGE_SPOTIFY" - Spotify.
 	//   "EXCHANGE_TUBI" - Tubi.
 	Exchange string `json:"exchange,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Exchange") to
@@ -8016,6 +8129,8 @@ type ExchangeConfigEnabledExchange struct {
 	//   "EXCHANGE_TOPON_GBID" - TopOn.
 	//   "EXCHANGE_NETFLIX" - Netflix.
 	//   "EXCHANGE_CORE" - Core.
+	//   "EXCHANGE_COMMERCE_GRID" - Commerce Grid.
+	//   "EXCHANGE_SPOTIFY" - Spotify.
 	//   "EXCHANGE_TUBI" - Tubi.
 	Exchange string `json:"exchange,omitempty"`
 	// GoogleAdManagerAgencyId: Output only. Agency ID of Google Ad Manager. The
@@ -8135,6 +8250,8 @@ type ExchangeReviewStatus struct {
 	//   "EXCHANGE_TOPON_GBID" - TopOn.
 	//   "EXCHANGE_NETFLIX" - Netflix.
 	//   "EXCHANGE_CORE" - Core.
+	//   "EXCHANGE_COMMERCE_GRID" - Commerce Grid.
+	//   "EXCHANGE_SPOTIFY" - Spotify.
 	//   "EXCHANGE_TUBI" - Tubi.
 	Exchange string `json:"exchange,omitempty"`
 	// Status: Status of the exchange review.
@@ -8257,6 +8374,8 @@ type ExchangeTargetingOptionDetails struct {
 	//   "EXCHANGE_TOPON_GBID" - TopOn.
 	//   "EXCHANGE_NETFLIX" - Netflix.
 	//   "EXCHANGE_CORE" - Core.
+	//   "EXCHANGE_COMMERCE_GRID" - Commerce Grid.
+	//   "EXCHANGE_SPOTIFY" - Spotify.
 	//   "EXCHANGE_TUBI" - Tubi.
 	Exchange string `json:"exchange,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Exchange") to
@@ -8416,17 +8535,10 @@ type FirstPartyAndPartnerAudience struct {
 	// Only returned in GET request.
 	GmailAudienceSize int64 `json:"gmailAudienceSize,omitempty,string"`
 	// MembershipDurationDays: Output only. The duration in days that an entry
-	// remains in the audience after the qualifying event. If the audience has no
-	// expiration, set the value of this field to 10000. Otherwise, the set value
-	// must be greater than 0 and less than or equal to 540. Only applicable to
-	// first party audiences. This field is required if one of the following
-	// audience_type is used: * `CUSTOMER_MATCH_CONTACT_INFO` *
-	// `CUSTOMER_MATCH_DEVICE_ID` *Warning*: Starting on **April 7, 2025**,
-	// audiences will no longer be able to have infinite membership duration. This
-	// field will no longer accept the value 10000 and all audiences with
-	// membership durations greater than 540 days will be updated to a membership
-	// duration of 540 days. Read more about this announced change
-	// (/display-video/api/deprecations#features.audience_duration).
+	// remains in the audience after the qualifying event. The set value must be
+	// greater than 0 and less than or equal to 540. Only applicable to first party
+	// audiences. This field is required if one of the following audience_type is
+	// used: * `CUSTOMER_MATCH_CONTACT_INFO` * `CUSTOMER_MATCH_DEVICE_ID`
 	MembershipDurationDays int64 `json:"membershipDurationDays,omitempty,string"`
 	// MobileDeviceIdList: Input only. A list of mobile device IDs to define the
 	// initial audience members. Only applicable to audience_type
@@ -9324,6 +9436,8 @@ type GuaranteedOrder struct {
 	//   "EXCHANGE_TOPON_GBID" - TopOn.
 	//   "EXCHANGE_NETFLIX" - Netflix.
 	//   "EXCHANGE_CORE" - Core.
+	//   "EXCHANGE_COMMERCE_GRID" - Commerce Grid.
+	//   "EXCHANGE_SPOTIFY" - Spotify.
 	//   "EXCHANGE_TUBI" - Tubi.
 	Exchange string `json:"exchange,omitempty"`
 	// GuaranteedOrderId: Output only. The unique identifier of the guaranteed
@@ -10131,6 +10245,8 @@ type InventorySource struct {
 	//   "EXCHANGE_TOPON_GBID" - TopOn.
 	//   "EXCHANGE_NETFLIX" - Netflix.
 	//   "EXCHANGE_CORE" - Core.
+	//   "EXCHANGE_COMMERCE_GRID" - Commerce Grid.
+	//   "EXCHANGE_SPOTIFY" - Spotify.
 	//   "EXCHANGE_TUBI" - Tubi.
 	Exchange string `json:"exchange,omitempty"`
 	// GuaranteedOrderId: Immutable. The ID of the guaranteed order that this
@@ -10812,12 +10928,6 @@ type LineItem struct {
 	// belongs to.
 	CampaignId int64 `json:"campaignId,omitempty,string"`
 	// ConversionCounting: The conversion tracking setting of the line item.
-	// *Warning*: Starting **April 1, 2025**, the floodlight_activity_configs field
-	// will no longer be writable while a custom bidding algorithm is assigned to
-	// the line item. If you set this field and assign a custom bidding algorithm
-	// in the same request, the floodlight activities must match the ones used by
-	// the custom bidding algorithm. Read more about this announced change
-	// (/display-video/api/deprecations#features.custom_bidding_floodlight).
 	ConversionCounting *ConversionCountingConfig `json:"conversionCounting,omitempty"`
 	// CreativeIds: The IDs of the creatives associated with the line item.
 	CreativeIds googleapi.Int64s `json:"creativeIds,omitempty"`
@@ -12276,11 +12386,9 @@ func (s MastheadAd) MarshalJSON() ([]byte, error) {
 type MaximizeSpendBidStrategy struct {
 	// CustomBiddingAlgorithmId: The ID of the Custom Bidding Algorithm used by
 	// this strategy. Only applicable when performance_goal_type is set to
-	// `BIDDING_STRATEGY_PERFORMANCE_GOAL_TYPE_CUSTOM_ALGO`. *Warning*: Starting
-	// **April 1, 2025**, assigning a custom bidding algorithm that uses floodlight
-	// activities not identified in floodlightActivityConfigs will return an error.
-	// Read more about this announced change
-	// (/display-video/api/deprecations#features.custom_bidding_floodlight).
+	// `BIDDING_STRATEGY_PERFORMANCE_GOAL_TYPE_CUSTOM_ALGO`. Assigning a custom
+	// bidding algorithm that uses floodlight activities not identified in
+	// floodlightActivityConfigs will return an error.
 	CustomBiddingAlgorithmId int64 `json:"customBiddingAlgorithmId,omitempty,string"`
 	// MaxAverageCpmBidAmountMicros: The maximum average CPM that may be bid, in
 	// micros of the advertiser's currency. Must be greater than or equal to a
@@ -13269,10 +13377,10 @@ type PartnerCost struct {
 	// Possible values:
 	//   "PARTNER_COST_TYPE_UNSPECIFIED" - Type value is not specified or is
 	// unknown in this version.
-	//   "PARTNER_COST_TYPE_ADLOOX" - The cost is charged for using Adloox. Billed
-	// by the partner.
-	//   "PARTNER_COST_TYPE_ADLOOX_PREBID" - The cost is charged for using Adloox
-	// Pre-Bid. Billed through DV360.
+	//   "PARTNER_COST_TYPE_ADLOOX" - The cost is charged for using Scope3
+	// (previously known as Adloox). Billed by the partner.
+	//   "PARTNER_COST_TYPE_ADLOOX_PREBID" - The cost is charged for using Scope3
+	// (previously known as Adloox) Pre-Bid. Billed through DV360.
 	//   "PARTNER_COST_TYPE_ADSAFE" - The cost is charged for using AdSafe. Billed
 	// by the partner.
 	//   "PARTNER_COST_TYPE_ADXPOSE" - The cost is charged for using AdExpose.
@@ -13562,11 +13670,9 @@ func (s PerformanceGoal) MarshalJSON() ([]byte, error) {
 type PerformanceGoalBidStrategy struct {
 	// CustomBiddingAlgorithmId: The ID of the Custom Bidding Algorithm used by
 	// this strategy. Only applicable when performance_goal_type is set to
-	// `BIDDING_STRATEGY_PERFORMANCE_GOAL_TYPE_CUSTOM_ALGO`. *Warning*: Starting
-	// **April 1, 2025**, assigning a custom bidding algorithm that uses floodlight
-	// activities not identified in floodlightActivityConfigs will return an error.
-	// Read more about this announced change
-	// (/display-video/api/deprecations#features.custom_bidding_floodlight).
+	// `BIDDING_STRATEGY_PERFORMANCE_GOAL_TYPE_CUSTOM_ALGO`. Assigning a custom
+	// bidding algorithm that uses floodlight activities not identified in
+	// floodlightActivityConfigs will return an error.
 	CustomBiddingAlgorithmId int64 `json:"customBiddingAlgorithmId,omitempty,string"`
 	// MaxAverageCpmBidAmountMicros: The maximum average CPM that may be bid, in
 	// micros of the advertiser's currency. Must be greater than or equal to a
@@ -14299,7 +14405,7 @@ func (s SdfConfig) MarshalJSON() ([]byte, error) {
 }
 
 // SdfDownloadTask: Type for the response returned by
-// [SdfDownloadTaskService.CreateSdfDownloadTask].
+// SdfDownloadTaskService.CreateSdfDownloadTask.
 type SdfDownloadTask struct {
 	// ResourceName: A resource name to be used in media.download to Download the
 	// prepared files. Resource names have the format
@@ -14326,7 +14432,7 @@ func (s SdfDownloadTask) MarshalJSON() ([]byte, error) {
 }
 
 // SdfDownloadTaskMetadata: Type for the metadata returned by
-// [SdfDownloadTaskService.CreateSdfDownloadTask].
+// SdfDownloadTaskService.CreateSdfDownloadTask.
 type SdfDownloadTaskMetadata struct {
 	// CreateTime: The time when the operation was created.
 	CreateTime string `json:"createTime,omitempty"`
@@ -15227,7 +15333,7 @@ func (s ThirdPartyVendorConfig) MarshalJSON() ([]byte, error) {
 // field of an AssignedTargetingOption when targeting_type is
 // `TARGETING_TYPE_THIRD_PARTY_VERIFIER`.
 type ThirdPartyVerifierAssignedTargetingOptionDetails struct {
-	// Adloox: Third party brand verifier -- Adloox.
+	// Adloox: Third party brand verifier -- Scope3 (previously known as Adloox).
 	Adloox *Adloox `json:"adloox,omitempty"`
 	// DoubleVerify: Third party brand verifier -- DoubleVerify.
 	DoubleVerify *DoubleVerify `json:"doubleVerify,omitempty"`
@@ -27191,10 +27297,8 @@ type CustomBiddingAlgorithmsPatchCall struct {
 }
 
 // Patch: Updates an existing custom bidding algorithm. Returns the updated
-// custom bidding algorithm if successful. *Warning*: Starting **April 1,
-// 2025**, requests updating custom bidding algorithms that are assigned to
-// line items will return an error. Read more about this announced change
-// (/display-video/api/deprecations#features.custom_bidding_floodlight).
+// custom bidding algorithm if successful. Requests updating a custom bidding
+// algorithm assigned to a line item will return an error.
 //
 //   - customBiddingAlgorithmId: Output only. The unique ID of the custom bidding
 //     algorithm. Assigned by the system.
@@ -27564,10 +27668,8 @@ type CustomBiddingAlgorithmsRulesCreateCall struct {
 }
 
 // Create: Creates a new rules resource. Returns the newly created rules
-// resource if successful. *Warning*: Starting **April 1, 2025**, requests
-// updating custom bidding algorithms that are assigned to line items will
-// return an error. Read more about this announced change
-// (/display-video/api/deprecations#features.custom_bidding_floodlight).
+// resource if successful. Requests creating a custom bidding rules resource
+// under an algorithm assigned to a line item will return an error.
 //
 //   - customBiddingAlgorithmId: The ID of the custom bidding algorithm that owns
 //     the rules resource.
@@ -27991,10 +28093,8 @@ type CustomBiddingAlgorithmsScriptsCreateCall struct {
 }
 
 // Create: Creates a new custom bidding script. Returns the newly created
-// script if successful. *Warning*: Starting **April 1, 2025**, requests
-// updating custom bidding algorithms that are assigned to line items will
-// return an error. Read more about this announced change
-// (/display-video/api/deprecations#features.custom_bidding_floodlight).
+// script if successful. Requests creating a custom bidding script under an
+// algorithm assigned to a line item will return an error.
 //
 //   - customBiddingAlgorithmId: The ID of the custom bidding algorithm that owns
 //     the script.
@@ -35059,8 +35159,8 @@ type SdfdownloadtasksCreateCall struct {
 // operation is SdfDownloadTaskMetadata. If the request is successful, the
 // response type of the operation is SdfDownloadTask. The response will not
 // include the download files, which must be retrieved with media.download. The
-// state of operation can be retrieved with sdfdownloadtask.operations.get. Any
-// errors can be found in the error.message. Note that error.details is
+// state of operation can be retrieved with `sdfdownloadtasks.operations.get`.
+// Any errors can be found in the error.message. Note that error.details is
 // expected to be empty.
 func (r *SdfdownloadtasksService) Create(createsdfdownloadtaskrequest *CreateSdfDownloadTaskRequest) *SdfdownloadtasksCreateCall {
 	c := &SdfdownloadtasksCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}

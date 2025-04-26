@@ -8010,7 +8010,7 @@
       }
     }
   },
-  "revision": "20250417",
+  "revision": "20250424",
   "rootUrl": "https://displayvideo.googleapis.com/",
   "schemas": {
     "ActivateManualTriggerRequest": {
@@ -8164,11 +8164,11 @@
       "type": "object"
     },
     "Adloox": {
-      "description": "Details of Adloox brand safety settings.",
+      "description": "Details of Scope3 (previously known as Adloox) brand safety settings.",
       "id": "Adloox",
       "properties": {
         "excludedAdlooxCategories": {
-          "description": "Adloox categories to exclude.",
+          "description": "Scope3 categories to exclude.",
           "items": {
             "enum": [
               "ADLOOX_UNSPECIFIED",
@@ -8182,7 +8182,7 @@
               "FRAUD"
             ],
             "enumDescriptions": [
-              "Default value when a Adloox category is not specified or is unknown in this version.",
+              "Default value when a Scope3 category is not specified or is unknown in this version.",
               "Adult content (hard).",
               "Adult content (soft).",
               "Illegal content.",
@@ -17443,8 +17443,8 @@
           ],
           "enumDescriptions": [
             "Type value is not specified or is unknown in this version.",
-            "The cost is charged for using Adloox. Billed by the partner.",
-            "The cost is charged for using Adloox Pre-Bid. Billed through DV360.",
+            "The cost is charged for using Scope3 (previously known as Adloox). Billed by the partner.",
+            "The cost is charged for using Scope3 (previously known as Adloox) Pre-Bid. Billed through DV360.",
             "The cost is charged for using AdSafe. Billed by the partner.",
             "The cost is charged for using AdExpose. Billed by the partner.",
             "The cost is charged for using Aggregate Knowledge. Billed by the partner.",
@@ -19034,7 +19034,7 @@
       "properties": {
         "adloox": {
           "$ref": "Adloox",
-          "description": "Third party brand verifier -- Adloox."
+          "description": "Third party brand verifier -- Scope3 (previously known as Adloox)."
         },
         "doubleVerify": {
           "$ref": "DoubleVerify",

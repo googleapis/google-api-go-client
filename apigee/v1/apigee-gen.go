@@ -2361,7 +2361,7 @@ func (s GoogleCloudApigeeV1ApiProxyRevision) MarshalJSON() ([]byte, error) {
 type GoogleCloudApigeeV1ApiSecurityConfig struct {
 	// Enabled: Flag that specifies whether the API security add-on is enabled.
 	Enabled bool `json:"enabled,omitempty"`
-	// ExpiresAt: Output only. Time at which the API Security add-on expires in in
+	// ExpiresAt: Output only. Time at which the API Security add-on expires in
 	// milliseconds since epoch. If unspecified, the add-on will never expire.
 	ExpiresAt int64 `json:"expiresAt,omitempty,string"`
 	// ForceSendFields is a list of field names (e.g. "Enabled") to unconditionally

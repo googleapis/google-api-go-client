@@ -383,9 +383,22 @@ type BestEffort struct {
 type BootDiskConfig struct {
 	// CustomerEncryptionKey: Optional. Customer encryption key for boot disk.
 	CustomerEncryptionKey *CustomerEncryptionKey `json:"customerEncryptionKey,omitempty"`
+	// DiskSizeGb: Optional. Size of the boot disk in GB. It must be larger than or
+	// equal to the size of the image.
+	DiskSizeGb int64 `json:"diskSizeGb,omitempty,string"`
 	// EnableConfidentialCompute: Optional. Whether the boot disk will be created
 	// with confidential compute mode.
 	EnableConfidentialCompute bool `json:"enableConfidentialCompute,omitempty"`
+	// ProvisionedIops: Optional. Indicates how many IOPS to provision for the
+	// disk. This sets the number of I/O operations per second that the disk can
+	// handle. To learn more about IOPS, see Provisioning persistent disk
+	// performance
+	// (https://cloud.google.com/compute/docs/disks/performance#provisioned-iops).
+	ProvisionedIops int64 `json:"provisionedIops,omitempty,string"`
+	// ProvisionedThroughput: Optional. Indicates how much throughput to provision
+	// for the disk. This sets the number of throughput MB per second that the disk
+	// can handle.
+	ProvisionedThroughput int64 `json:"provisionedThroughput,omitempty,string"`
 	// SourceImage: Optional. Image from which boot disk is to be created. If not
 	// specified, the default image for the runtime version will be used. Example:
 	// `projects/$PROJECT_ID/global/images/$IMAGE_NAME`.

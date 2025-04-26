@@ -260,12 +260,12 @@ type ExportDataRequest struct {
 	// unique request ID so that if you must retry your request, the server will
 	// know to ignore the request if it has already been completed. The server will
 	// guarantee that for at least 60 minutes since the first request. For example,
-	// consider a situation where you make an initial request and t he request
-	// times out. If you make the request again with the same request ID, the
-	// server can check if original operation with the same request ID was
-	// received, and if so, will ignore the second request. This prevents clients
-	// from accidentally creating duplicate commitments. The request ID must be a
-	// valid UUID with the exception that zero UUID is not supported
+	// consider a situation where you make an initial request and the request times
+	// out. If you make the request again with the same request ID, the server can
+	// check if original operation with the same request ID was received, and if
+	// so, will ignore the second request. This prevents clients from accidentally
+	// creating duplicate commitments. The request ID must be a valid UUID with the
+	// exception that zero UUID is not supported
 	// (00000000-0000-0000-0000-000000000000).
 	RequestId string `json:"requestId,omitempty"`
 	// ServiceAccount: Optional. User-specified Service Account (SA) credentials to
@@ -318,12 +318,12 @@ type ImportDataRequest struct {
 	// unique request ID so that if you must retry your request, the server will
 	// know to ignore the request if it has already been completed. The server will
 	// guarantee that for at least 60 minutes since the first request. For example,
-	// consider a situation where you make an initial request and t he request
-	// times out. If you make the request again with the same request ID, the
-	// server can check if original operation with the same request ID was
-	// received, and if so, will ignore the second request. This prevents clients
-	// from accidentally creating duplicate commitments. The request ID must be a
-	// valid UUID with the exception that zero UUID is not supported
+	// consider a situation where you make an initial request and the request times
+	// out. If you make the request again with the same request ID, the server can
+	// check if original operation with the same request ID was received, and if
+	// so, will ignore the second request. This prevents clients from accidentally
+	// creating duplicate commitments. The request ID must be a valid UUID with the
+	// exception that zero UUID is not supported
 	// (00000000-0000-0000-0000-000000000000).
 	RequestId string `json:"requestId,omitempty"`
 	// ServiceAccount: Optional. User-specified service account credentials to be
@@ -366,8 +366,8 @@ type Instance struct {
 	CapacityGib int64 `json:"capacityGib,omitempty,string"`
 	// CreateTime: Output only. The time when the instance was created.
 	CreateTime string `json:"createTime,omitempty"`
-	// DaosVersion: Output only. Deprecated 'daos_version' field. Output only. The
-	// version of DAOS software running in the instance.
+	// DaosVersion: Output only. Deprecated: The version of DAOS software running
+	// in the instance.
 	DaosVersion string `json:"daosVersion,omitempty"`
 	// DeploymentType: Optional. Immutable. The deployment type of the instance.
 	// Allowed values are: * `SCRATCH`: the instance is a scratch instance. *
@@ -1142,7 +1142,7 @@ func (c *ProjectsLocationsInstancesCreateCall) InstanceId(instanceId string) *Pr
 // your request, the server will know to ignore the request if it has already
 // been completed. The server will guarantee that for at least 60 minutes since
 // the first request. For example, consider a situation where you make an
-// initial request and t he request times out. If you make the request again
+// initial request and the request times out. If you make the request again
 // with the same request ID, the server can check if original operation with
 // the same request ID was received, and if so, will ignore the second request.
 // This prevents clients from accidentally creating duplicate commitments. The
@@ -1259,7 +1259,7 @@ func (r *ProjectsLocationsInstancesService) Delete(name string) *ProjectsLocatio
 // your request, the server will know to ignore the request if it has already
 // been completed. The server will guarantee that for at least 60 minutes after
 // the first request. For example, consider a situation where you make an
-// initial request and t he request times out. If you make the request again
+// initial request and the request times out. If you make the request again
 // with the same request ID, the server can check if original operation with
 // the same request ID was received, and if so, will ignore the second request.
 // This prevents clients from accidentally creating duplicate commitments. The
@@ -1853,7 +1853,7 @@ func (r *ProjectsLocationsInstancesService) Patch(name string, instance *Instanc
 // your request, the server will know to ignore the request if it has already
 // been completed. The server will guarantee that for at least 60 minutes since
 // the first request. For example, consider a situation where you make an
-// initial request and t he request times out. If you make the request again
+// initial request and the request times out. If you make the request again
 // with the same request ID, the server can check if original operation with
 // the same request ID was received, and if so, will ignore the second request.
 // This prevents clients from accidentally creating duplicate commitments. The

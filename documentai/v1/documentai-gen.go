@@ -3679,6 +3679,15 @@ func (s GoogleCloudDocumentaiV1DocumentSchemaEntityTypeEnumValues) MarshalJSON()
 type GoogleCloudDocumentaiV1DocumentSchemaEntityTypeProperty struct {
 	// DisplayName: User defined name for the property.
 	DisplayName string `json:"displayName,omitempty"`
+	// GroundingConfig: Grounding config of the entity type.
+	//
+	// Possible values:
+	//   "GROUNDING_CONFIG_UNSPECIFIED" - Unspecified grounding config. It defaults
+	// to `STRICT` grounding.
+	//   "STRICT" - Strict grounding.
+	//   "RELAXED" - Relaxed grounding.
+	//   "NO_GROUNDING" - Allow no grounding.
+	GroundingConfig string `json:"groundingConfig,omitempty"`
 	// Name: The name of the property. Follows the same guidelines as the
 	// EntityType name.
 	Name string `json:"name,omitempty"`

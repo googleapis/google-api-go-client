@@ -826,12 +826,13 @@ func (s AdUrl) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// Adloox: Details of Adloox brand safety settings.
+// Adloox: Details of Scope3 (previously known as Adloox) brand safety
+// settings.
 type Adloox struct {
-	// ExcludedAdlooxCategories: Adloox categories to exclude.
+	// ExcludedAdlooxCategories: Scope3 categories to exclude.
 	//
 	// Possible values:
-	//   "ADLOOX_UNSPECIFIED" - Default value when a Adloox category is not
+	//   "ADLOOX_UNSPECIFIED" - Default value when a Scope3 category is not
 	// specified or is unknown in this version.
 	//   "ADULT_CONTENT_HARD" - Adult content (hard).
 	//   "ADULT_CONTENT_SOFT" - Adult content (soft).
@@ -11578,10 +11579,10 @@ type PartnerCost struct {
 	// Possible values:
 	//   "PARTNER_COST_TYPE_UNSPECIFIED" - Type value is not specified or is
 	// unknown in this version.
-	//   "PARTNER_COST_TYPE_ADLOOX" - The cost is charged for using Adloox. Billed
-	// by the partner.
-	//   "PARTNER_COST_TYPE_ADLOOX_PREBID" - The cost is charged for using Adloox
-	// Pre-Bid. Billed through DV360.
+	//   "PARTNER_COST_TYPE_ADLOOX" - The cost is charged for using Scope3
+	// (previously known as Adloox). Billed by the partner.
+	//   "PARTNER_COST_TYPE_ADLOOX_PREBID" - The cost is charged for using Scope3
+	// (previously known as Adloox) Pre-Bid. Billed through DV360.
 	//   "PARTNER_COST_TYPE_ADSAFE" - The cost is charged for using AdSafe. Billed
 	// by the partner.
 	//   "PARTNER_COST_TYPE_ADXPOSE" - The cost is charged for using AdExpose.
@@ -13524,7 +13525,7 @@ func (s ThirdPartyVendorConfig) MarshalJSON() ([]byte, error) {
 // field of an AssignedTargetingOption when targeting_type is
 // `TARGETING_TYPE_THIRD_PARTY_VERIFIER`.
 type ThirdPartyVerifierAssignedTargetingOptionDetails struct {
-	// Adloox: Third party brand verifier -- Adloox.
+	// Adloox: Third party brand verifier -- Scope3 (previously known as Adloox).
 	Adloox *Adloox `json:"adloox,omitempty"`
 	// DoubleVerify: Third party brand verifier -- DoubleVerify.
 	DoubleVerify *DoubleVerify `json:"doubleVerify,omitempty"`

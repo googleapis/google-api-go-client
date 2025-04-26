@@ -2573,6 +2573,8 @@ type GoogleCloudDialogflowCxV3QueryInput struct {
 	LanguageCode string `json:"languageCode,omitempty"`
 	// Text: The natural language text to be processed.
 	Text *GoogleCloudDialogflowCxV3TextInput `json:"text,omitempty"`
+	// ToolCallResult: The results of a tool executed by the client.
+	ToolCallResult *GoogleCloudDialogflowCxV3ToolCallResult `json:"toolCallResult,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Audio") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
 	// omitted from API requests. See
@@ -2651,6 +2653,9 @@ type GoogleCloudDialogflowCxV3ResponseMessage struct {
 	TelephonyTransferCall *GoogleCloudDialogflowCxV3ResponseMessageTelephonyTransferCall `json:"telephonyTransferCall,omitempty"`
 	// Text: Returns a text response.
 	Text *GoogleCloudDialogflowCxV3ResponseMessageText `json:"text,omitempty"`
+	// ToolCall: Returns the definition of a tool call that should be executed by
+	// the client.
+	ToolCall *GoogleCloudDialogflowCxV3ToolCall `json:"toolCall,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Channel") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
 	// omitted from API requests. See
@@ -3240,6 +3245,87 @@ type GoogleCloudDialogflowCxV3TextInput struct {
 
 func (s GoogleCloudDialogflowCxV3TextInput) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowCxV3TextInput
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDialogflowCxV3ToolCall: Represents a call of a specific tool's
+// action with the specified inputs.
+type GoogleCloudDialogflowCxV3ToolCall struct {
+	// Action: Required. The name of the tool's action associated with this call.
+	Action string `json:"action,omitempty"`
+	// InputParameters: Optional. The action's input parameters.
+	InputParameters googleapi.RawMessage `json:"inputParameters,omitempty"`
+	// Tool: Required. The tool associated with this call. Format:
+	// `projects//locations//agents//tools/`.
+	Tool string `json:"tool,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Action") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Action") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDialogflowCxV3ToolCall) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDialogflowCxV3ToolCall
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDialogflowCxV3ToolCallResult: The result of calling a tool's
+// action that has been executed by the client.
+type GoogleCloudDialogflowCxV3ToolCallResult struct {
+	// Action: Required. The name of the tool's action associated with this call.
+	Action string `json:"action,omitempty"`
+	// Error: The tool call's error.
+	Error *GoogleCloudDialogflowCxV3ToolCallResultError `json:"error,omitempty"`
+	// OutputParameters: The tool call's output parameters.
+	OutputParameters googleapi.RawMessage `json:"outputParameters,omitempty"`
+	// Tool: Required. The tool associated with this call. Format:
+	// `projects//locations//agents//tools/`.
+	Tool string `json:"tool,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Action") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Action") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDialogflowCxV3ToolCallResult) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDialogflowCxV3ToolCallResult
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDialogflowCxV3ToolCallResultError: An error produced by the tool
+// call.
+type GoogleCloudDialogflowCxV3ToolCallResultError struct {
+	// Message: Optional. The error message of the function.
+	Message string `json:"message,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Message") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Message") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDialogflowCxV3ToolCallResultError) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDialogflowCxV3ToolCallResultError
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -6724,9 +6810,9 @@ func (s GoogleCloudDialogflowCxV3beta1Example) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudDialogflowCxV3beta1Exception: Exception thrown during the
+// GoogleCloudDialogflowCxV3beta1ExceptionDetail: Exception thrown during the
 // execution of an action.
-type GoogleCloudDialogflowCxV3beta1Exception struct {
+type GoogleCloudDialogflowCxV3beta1ExceptionDetail struct {
 	// ErrorMessage: Optional. The error message.
 	ErrorMessage string `json:"errorMessage,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "ErrorMessage") to
@@ -6742,8 +6828,8 @@ type GoogleCloudDialogflowCxV3beta1Exception struct {
 	NullFields []string `json:"-"`
 }
 
-func (s GoogleCloudDialogflowCxV3beta1Exception) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudDialogflowCxV3beta1Exception
+func (s GoogleCloudDialogflowCxV3beta1ExceptionDetail) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDialogflowCxV3beta1ExceptionDetail
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -7466,7 +7552,6 @@ type GoogleCloudDialogflowCxV3beta1ExportToolsRequest struct {
 	// Possible values:
 	//   "DATA_FORMAT_UNSPECIFIED" - Unspecified format. Treated as `BLOB`.
 	//   "BLOB" - Tools will be exported as raw bytes.
-	//   "JSON" - Tools will be exported in JSON format.
 	DataFormat string `json:"dataFormat,omitempty"`
 	// Tools: Required. The name of the tools to export. Format:
 	// `projects//locations//agents//tools/`.
@@ -12712,7 +12797,7 @@ type GoogleCloudDialogflowCxV3beta1StartExperimentRequest struct {
 type GoogleCloudDialogflowCxV3beta1Status struct {
 	// Exception: Optional. The exception thrown during the execution of the
 	// action.
-	Exception *GoogleCloudDialogflowCxV3beta1Exception `json:"exception,omitempty"`
+	Exception *GoogleCloudDialogflowCxV3beta1ExceptionDetail `json:"exception,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Exception") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See

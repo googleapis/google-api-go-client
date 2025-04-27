@@ -528,6 +528,15 @@ type GoogleCloudSaasacceleratorManagementProvidersV1Instance struct {
 	// to Maintenance Window notifications
 	// (go/slm-rollout-maintenance-policies#prerequisites).
 	ConsumerDefinedName string `json:"consumerDefinedName,omitempty"`
+	// ConsumerProjectNumber: Optional. The consumer_project_number associated with
+	// this Apigee instance. This field is added specifically to support Apigee
+	// integration with SLM Rollout and UMM. It represents the numerical project ID
+	// of the GCP project that consumes this Apigee instance. It is used for SLM
+	// rollout notifications and UMM integration, enabling proper mapping to
+	// customer projects and log delivery for Apigee instances. This field
+	// complements consumer_project_id and may be used for specific Apigee
+	// scenarios where the numerical ID is required.
+	ConsumerProjectNumber string `json:"consumerProjectNumber,omitempty"`
 	// CreateTime: Output only. Timestamp when the resource was created.
 	CreateTime string `json:"createTime,omitempty"`
 	// InstanceType: Optional. The instance_type of this instance of format:
@@ -2107,14 +2116,6 @@ func (c *ProjectsLocationsListCall) ExtraLocationTypes(extraLocationTypes ...str
 // (https://google.aip.dev/160).
 func (c *ProjectsLocationsListCall) Filter(filter string) *ProjectsLocationsListCall {
 	c.urlParams_.Set("filter", filter)
-	return c
-}
-
-// IncludeUnrevealedLocations sets the optional parameter
-// "includeUnrevealedLocations": If true, the returned list will include
-// locations which are not yet revealed.
-func (c *ProjectsLocationsListCall) IncludeUnrevealedLocations(includeUnrevealedLocations bool) *ProjectsLocationsListCall {
-	c.urlParams_.Set("includeUnrevealedLocations", fmt.Sprint(includeUnrevealedLocations))
 	return c
 }
 

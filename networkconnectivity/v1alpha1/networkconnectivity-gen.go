@@ -235,6 +235,55 @@ type ProjectsLocationsSpokesService struct {
 	s *Service
 }
 
+// AllocationOptions: Range auto-allocation options, to be optionally used when
+// CIDR block is not explicitly set.
+type AllocationOptions struct {
+	// AllocationStrategy: Optional. Allocation strategy Not setting this field
+	// when the allocation is requested means an implementation defined strategy is
+	// used.
+	//
+	// Possible values:
+	//   "ALLOCATION_STRATEGY_UNSPECIFIED" - Unspecified strategy must be used when
+	// the range is specified explicitly using ip_cidr_range field. Othherwise
+	// unspefified means using the default strategy.
+	//   "RANDOM" - Random strategy, the legacy algorithm, used for backwards
+	// compatibility. This allocation strategy remains efficient in the case of
+	// concurrent allocation requests in the same peered network space and doesn't
+	// require providing the level of concurrency in an explicit parameter, but it
+	// is prone to fragmenting available address space.
+	//   "FIRST_AVAILABLE" - Pick the first available address range. This strategy
+	// is deterministic and the result is easy to predict.
+	//   "RANDOM_FIRST_N_AVAILABLE" - Pick an arbitrary range out of the first N
+	// available ones. The N will be set in the first_available_ranges_lookup_size
+	// field. This strategy should be used when concurrent allocation requests are
+	// made in the same space of peered networks while the fragmentation of the
+	// addrress space is reduced.
+	//   "FIRST_SMALLEST_FITTING" - Pick the smallest but fitting available range.
+	// This deterministic strategy minimizes fragmentation of the address space.
+	AllocationStrategy string `json:"allocationStrategy,omitempty"`
+	// FirstAvailableRangesLookupSize: Optional. This field must be set only when
+	// allocation_strategy is set to RANDOM_FIRST_N_AVAILABLE. The value should be
+	// the maximum expected parallelism of range creation requests issued to the
+	// same space of peered netwroks.
+	FirstAvailableRangesLookupSize int64 `json:"firstAvailableRangesLookupSize,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AllocationStrategy") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AllocationStrategy") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s AllocationOptions) MarshalJSON() ([]byte, error) {
+	type NoMethod AllocationOptions
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // AuditConfig: Specifies the audit configuration for a service. The
 // configuration determines which permission types are logged, and what
 // identities, if any, are exempted from logging. An AuditConfig must have one
@@ -643,6 +692,10 @@ func (s Hub) MarshalJSON() ([]byte, error) {
 // characteristics of that range (its usage and peering behavior). Networking
 // resources can link to this range if they are created as belonging to it.
 type InternalRange struct {
+	// AllocationOptions: Optional. Range auto-allocation options, may be set only
+	// when auto-allocation is selected by not setting ip_cidr_range (and setting
+	// prefix_length).
+	AllocationOptions *AllocationOptions `json:"allocationOptions,omitempty"`
 	// CreateTime: Time when the internal range was created.
 	CreateTime string `json:"createTime,omitempty"`
 	// Description: A description of this resource.
@@ -750,15 +803,15 @@ type InternalRange struct {
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-	// ForceSendFields is a list of field names (e.g. "CreateTime") to
+	// ForceSendFields is a list of field names (e.g. "AllocationOptions") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "CreateTime") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
+	// NullFields is a list of field names (e.g. "AllocationOptions") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -1379,6 +1432,14 @@ type ProjectsLocationsListCall struct {
 func (r *ProjectsLocationsService) List(name string) *ProjectsLocationsListCall {
 	c := &ProjectsLocationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
+	return c
+}
+
+// ExtraLocationTypes sets the optional parameter "extraLocationTypes": A list
+// of extra location types that should be used as conditions for controlling
+// the visibility of the locations.
+func (c *ProjectsLocationsListCall) ExtraLocationTypes(extraLocationTypes ...string) *ProjectsLocationsListCall {
+	c.urlParams_.SetMulti("extraLocationTypes", append([]string{}, extraLocationTypes...))
 	return c
 }
 

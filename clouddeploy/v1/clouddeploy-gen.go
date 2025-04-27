@@ -5214,10 +5214,10 @@ func (s Stage) MarshalJSON() ([]byte, error) {
 // Standard: Standard represents the standard deployment strategy.
 type Standard struct {
 	// Postdeploy: Optional. Configuration for the postdeploy job. If this is not
-	// configured, postdeploy job will not be present.
+	// configured, the postdeploy job will not be present.
 	Postdeploy *Postdeploy `json:"postdeploy,omitempty"`
 	// Predeploy: Optional. Configuration for the predeploy job. If this is not
-	// configured, predeploy job will not be present.
+	// configured, the predeploy job will not be present.
 	Predeploy *Predeploy `json:"predeploy,omitempty"`
 	// Verify: Optional. Whether to verify a deployment via `skaffold verify`.
 	Verify bool `json:"verify,omitempty"`

@@ -1130,6 +1130,8 @@ type CommonFeatureSpec struct {
 	Rbacrolebindingactuation *RBACRoleBindingActuationFeatureSpec `json:"rbacrolebindingactuation,omitempty"`
 	// Workloadcertificate: Workload Certificate spec.
 	Workloadcertificate *FeatureSpec `json:"workloadcertificate,omitempty"`
+	// Workloadidentity: Workload Identity feature spec.
+	Workloadidentity *WorkloadIdentityFeatureSpec `json:"workloadidentity,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Appdevexperience") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -1165,6 +1167,8 @@ type CommonFeatureState struct {
 	Servicemesh *ServiceMeshFeatureState `json:"servicemesh,omitempty"`
 	// State: Output only. The "running state" of the Feature in this Fleet.
 	State *FeatureState `json:"state,omitempty"`
+	// Workloadidentity: WorkloadIdentity fleet-level state.
+	Workloadidentity *WorkloadIdentityFeatureState `json:"workloadidentity,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Appdevexperience") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -4484,6 +4488,8 @@ type MembershipFeatureState struct {
 	Servicemesh *ServiceMeshMembershipState `json:"servicemesh,omitempty"`
 	// State: The high-level state of this Feature for a single membership.
 	State *FeatureState `json:"state,omitempty"`
+	// Workloadidentity: Workload Identity membership specific state.
+	Workloadidentity *WorkloadIdentityMembershipState `json:"workloadidentity,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Appdevexperience") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -6031,9 +6037,7 @@ func (s ServiceMeshAnalysisMessageBase) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// ServiceMeshCondition: Condition being reported. TODO b/395151419: Remove
-// this message once the membership-level conditions field uses the common
-// Condition message.
+// ServiceMeshCondition: Condition being reported.
 type ServiceMeshCondition struct {
 	// Code: Unique identifier of the condition which describes the condition
 	// recognizable to the user.
@@ -6218,9 +6222,7 @@ func (s ServiceMeshDataPlaneManagement) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// ServiceMeshFeatureCondition: Condition being reported. TODO b/395151419:
-// This message should be used to replace the membership-level Condition
-// message.
+// ServiceMeshFeatureCondition: Condition being reported.
 type ServiceMeshFeatureCondition struct {
 	// Code: Unique identifier of the condition which describes the condition
 	// recognizable to the user.
@@ -6274,6 +6276,12 @@ type ServiceMeshFeatureCondition struct {
 	//   "QUOTA_EXCEEDED_TCP_FILTERS" - TCPFilter quota exceeded error code.
 	//   "QUOTA_EXCEEDED_NETWORK_ENDPOINT_GROUPS" - NetworkEndpointGroup quota
 	// exceeded error code.
+	//   "LEGACY_MC_SECRETS" - Legacy istio secrets found for multicluster error
+	// code.
+	//   "WORKLOAD_IDENTITY_REQUIRED" - Workload identity required error code.
+	//   "NON_STANDARD_BINARY_USAGE" - Non-standard binary usage error code.
+	//   "UNSUPPORTED_GATEWAY_CLASS" - Unsupported gateway class error code.
+	//   "MANAGED_CNI_NOT_ENABLED" - Managed CNI not enabled error code.
 	//   "MODERNIZATION_SCHEDULED" - Modernization is scheduled for a cluster.
 	//   "MODERNIZATION_IN_PROGRESS" - Modernization is in progress for a cluster.
 	//   "MODERNIZATION_COMPLETED" - Modernization is completed for a cluster.
@@ -6406,7 +6414,6 @@ type ServiceMeshMembershipState struct {
 	// AnalysisMessages: Output only. Results of running Service Mesh analyzers.
 	AnalysisMessages []*ServiceMeshAnalysisMessage `json:"analysisMessages,omitempty"`
 	// Conditions: Output only. List of conditions reported for this membership.
-	// TODO b/395151419: Use the common Condition message.
 	Conditions []*ServiceMeshCondition `json:"conditions,omitempty"`
 	// ConfigApiVersion: The API version (i.e. Istio CRD version) for configuring
 	// service mesh in this cluster. This version is influenced by the
@@ -6747,6 +6754,155 @@ type ValidationResult struct {
 
 func (s ValidationResult) MarshalJSON() ([]byte, error) {
 	type NoMethod ValidationResult
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// WorkloadIdentityFeatureSpec: **WorkloadIdentity**: Global feature
+// specification.
+type WorkloadIdentityFeatureSpec struct {
+	// ScopeTenancyPool: Pool to be used for Workload Identity. This pool in
+	// trust-domain mode is used with Fleet Tenancy, so that sameness can be
+	// enforced. ex:
+	// projects/example/locations/global/workloadidentitypools/custompool
+	ScopeTenancyPool string `json:"scopeTenancyPool,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ScopeTenancyPool") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ScopeTenancyPool") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s WorkloadIdentityFeatureSpec) MarshalJSON() ([]byte, error) {
+	type NoMethod WorkloadIdentityFeatureSpec
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// WorkloadIdentityFeatureState: **WorkloadIdentity**: Global feature state.
+type WorkloadIdentityFeatureState struct {
+	// NamespaceStateDetails: The state of the IAM namespaces for the fleet.
+	NamespaceStateDetails map[string]WorkloadIdentityNamespaceStateDetail `json:"namespaceStateDetails,omitempty"`
+	// NamespaceStates: Deprecated, will erase after code is changed to use the new
+	// field.
+	NamespaceStates map[string]string `json:"namespaceStates,omitempty"`
+	// ScopeTenancyWorkloadIdentityPool: The full name of the scope-tenancy pool
+	// for the fleet.
+	ScopeTenancyWorkloadIdentityPool string `json:"scopeTenancyWorkloadIdentityPool,omitempty"`
+	// WorkloadIdentityPool: The full name of the svc.id.goog pool for the fleet.
+	WorkloadIdentityPool string `json:"workloadIdentityPool,omitempty"`
+	// WorkloadIdentityPoolStateDetails: The state of the Workload Identity Pools
+	// for the fleet.
+	WorkloadIdentityPoolStateDetails map[string]WorkloadIdentityWorkloadIdentityPoolStateDetail `json:"workloadIdentityPoolStateDetails,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "NamespaceStateDetails") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "NamespaceStateDetails") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s WorkloadIdentityFeatureState) MarshalJSON() ([]byte, error) {
+	type NoMethod WorkloadIdentityFeatureState
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// WorkloadIdentityMembershipState: **WorkloadIdentity**: The
+// membership-specific state for WorkloadIdentity feature.
+type WorkloadIdentityMembershipState struct {
+	// Description: Deprecated, will erase after code is changed to use the new
+	// field.
+	Description string `json:"description,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Description") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Description") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s WorkloadIdentityMembershipState) MarshalJSON() ([]byte, error) {
+	type NoMethod WorkloadIdentityMembershipState
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// WorkloadIdentityNamespaceStateDetail: NamespaceStateDetail represents the
+// state of a IAM namespace.
+type WorkloadIdentityNamespaceStateDetail struct {
+	// Code: The state of the IAM namespace.
+	//
+	// Possible values:
+	//   "NAMESPACE_STATE_UNSPECIFIED" - Unknown state.
+	//   "NAMESPACE_STATE_OK" - The Namespace was created/updated successfully.
+	//   "NAMESPACE_STATE_ERROR" - The Namespace was not created/updated
+	// successfully. The error message is in the description field.
+	Code string `json:"code,omitempty"`
+	// Description: A human-readable description of the current state or returned
+	// error.
+	Description string `json:"description,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Code") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Code") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s WorkloadIdentityNamespaceStateDetail) MarshalJSON() ([]byte, error) {
+	type NoMethod WorkloadIdentityNamespaceStateDetail
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// WorkloadIdentityWorkloadIdentityPoolStateDetail:
+// WorkloadIdentityPoolStateDetail represents the state of the Workload
+// Identity Pools for the fleet.
+type WorkloadIdentityWorkloadIdentityPoolStateDetail struct {
+	// Code: The state of the Workload Identity Pool.
+	//
+	// Possible values:
+	//   "WORKLOAD_IDENTITY_POOL_STATE_UNSPECIFIED" - Unknown state.
+	//   "WORKLOAD_IDENTITY_POOL_STATE_OK" - The Workload Identity Pool was
+	// created/updated successfully.
+	//   "WORKLOAD_IDENTITY_POOL_STATE_ERROR" - The Workload Identity Pool was not
+	// created/updated successfully. The error message is in the description field.
+	Code string `json:"code,omitempty"`
+	// Description: A human-readable description of the current state or returned
+	// error.
+	Description string `json:"description,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Code") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Code") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s WorkloadIdentityWorkloadIdentityPoolStateDetail) MarshalJSON() ([]byte, error) {
+	type NoMethod WorkloadIdentityWorkloadIdentityPoolStateDetail
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 

@@ -258,6 +258,10 @@ func NewProjectsLocationsService(s *Service) *ProjectsLocationsService {
 	rs.ClientTlsPolicies = NewProjectsLocationsClientTlsPoliciesService(s)
 	rs.FirewallEndpointAssociations = NewProjectsLocationsFirewallEndpointAssociationsService(s)
 	rs.GatewaySecurityPolicies = NewProjectsLocationsGatewaySecurityPoliciesService(s)
+	rs.InterceptDeploymentGroups = NewProjectsLocationsInterceptDeploymentGroupsService(s)
+	rs.InterceptDeployments = NewProjectsLocationsInterceptDeploymentsService(s)
+	rs.InterceptEndpointGroupAssociations = NewProjectsLocationsInterceptEndpointGroupAssociationsService(s)
+	rs.InterceptEndpointGroups = NewProjectsLocationsInterceptEndpointGroupsService(s)
 	rs.MirroringDeploymentGroups = NewProjectsLocationsMirroringDeploymentGroupsService(s)
 	rs.MirroringDeployments = NewProjectsLocationsMirroringDeploymentsService(s)
 	rs.MirroringEndpointGroupAssociations = NewProjectsLocationsMirroringEndpointGroupAssociationsService(s)
@@ -283,6 +287,14 @@ type ProjectsLocationsService struct {
 	FirewallEndpointAssociations *ProjectsLocationsFirewallEndpointAssociationsService
 
 	GatewaySecurityPolicies *ProjectsLocationsGatewaySecurityPoliciesService
+
+	InterceptDeploymentGroups *ProjectsLocationsInterceptDeploymentGroupsService
+
+	InterceptDeployments *ProjectsLocationsInterceptDeploymentsService
+
+	InterceptEndpointGroupAssociations *ProjectsLocationsInterceptEndpointGroupAssociationsService
+
+	InterceptEndpointGroups *ProjectsLocationsInterceptEndpointGroupsService
 
 	MirroringDeploymentGroups *ProjectsLocationsMirroringDeploymentGroupsService
 
@@ -364,6 +376,42 @@ func NewProjectsLocationsGatewaySecurityPoliciesRulesService(s *Service) *Projec
 }
 
 type ProjectsLocationsGatewaySecurityPoliciesRulesService struct {
+	s *Service
+}
+
+func NewProjectsLocationsInterceptDeploymentGroupsService(s *Service) *ProjectsLocationsInterceptDeploymentGroupsService {
+	rs := &ProjectsLocationsInterceptDeploymentGroupsService{s: s}
+	return rs
+}
+
+type ProjectsLocationsInterceptDeploymentGroupsService struct {
+	s *Service
+}
+
+func NewProjectsLocationsInterceptDeploymentsService(s *Service) *ProjectsLocationsInterceptDeploymentsService {
+	rs := &ProjectsLocationsInterceptDeploymentsService{s: s}
+	return rs
+}
+
+type ProjectsLocationsInterceptDeploymentsService struct {
+	s *Service
+}
+
+func NewProjectsLocationsInterceptEndpointGroupAssociationsService(s *Service) *ProjectsLocationsInterceptEndpointGroupAssociationsService {
+	rs := &ProjectsLocationsInterceptEndpointGroupAssociationsService{s: s}
+	return rs
+}
+
+type ProjectsLocationsInterceptEndpointGroupAssociationsService struct {
+	s *Service
+}
+
+func NewProjectsLocationsInterceptEndpointGroupsService(s *Service) *ProjectsLocationsInterceptEndpointGroupsService {
+	rs := &ProjectsLocationsInterceptEndpointGroupsService{s: s}
+	return rs
+}
+
+type ProjectsLocationsInterceptEndpointGroupsService struct {
 	s *Service
 }
 
@@ -552,7 +600,7 @@ type AntivirusOverride struct {
 	//
 	// Possible values:
 	//   "PROTOCOL_UNSPECIFIED" - Protocol not specified.
-	//   "SMTP" - SMTP prtocol
+	//   "SMTP" - SMTP protocol
 	//   "SMB" - SMB protocol
 	//   "POP3" - POP3 protocol
 	//   "IMAP" - IMAP protocol
@@ -2057,6 +2105,521 @@ func (s HttpHeaderMatch) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// InterceptDeployment: A deployment represents a zonal intercept backend ready
+// to accept GENEVE-encapsulated traffic, e.g. a zonal instance group fronted
+// by an internal passthrough load balancer. Deployments are always part of a
+// global deployment group which represents a global intercept service.
+type InterceptDeployment struct {
+	// CreateTime: Output only. The timestamp when the resource was created. See
+	// https://google.aip.dev/148#timestamps.
+	CreateTime string `json:"createTime,omitempty"`
+	// Description: Optional. User-provided description of the deployment. Used as
+	// additional context for the deployment.
+	Description string `json:"description,omitempty"`
+	// ForwardingRule: Required. Immutable. The regional forwarding rule that
+	// fronts the interceptors, for example:
+	// `projects/123456789/regions/us-central1/forwardingRules/my-rule`. See
+	// https://google.aip.dev/124.
+	ForwardingRule string `json:"forwardingRule,omitempty"`
+	// InterceptDeploymentGroup: Required. Immutable. The deployment group that
+	// this deployment is a part of, for example:
+	// `projects/123456789/locations/global/interceptDeploymentGroups/my-dg`. See
+	// https://google.aip.dev/124.
+	InterceptDeploymentGroup string `json:"interceptDeploymentGroup,omitempty"`
+	// Labels: Optional. Labels are key/value pairs that help to organize and
+	// filter resources.
+	Labels map[string]string `json:"labels,omitempty"`
+	// Name: Immutable. Identifier. The resource name of this deployment, for
+	// example:
+	// `projects/123456789/locations/us-central1-a/interceptDeployments/my-dep`.
+	// See https://google.aip.dev/122 for more details.
+	Name string `json:"name,omitempty"`
+	// Reconciling: Output only. The current state of the resource does not match
+	// the user's intended state, and the system is working to reconcile them. This
+	// part of the normal operation (e.g. linking a new association to the parent
+	// group). See https://google.aip.dev/128.
+	Reconciling bool `json:"reconciling,omitempty"`
+	// State: Output only. The current state of the deployment. See
+	// https://google.aip.dev/216.
+	//
+	// Possible values:
+	//   "STATE_UNSPECIFIED" - State not set (this is not a valid state).
+	//   "ACTIVE" - The deployment is ready and in sync with the parent group.
+	//   "CREATING" - The deployment is being created.
+	//   "DELETING" - The deployment is being deleted.
+	//   "OUT_OF_SYNC" - The deployment is out of sync with the parent group. In
+	// most cases, this is a result of a transient issue within the system (e.g. a
+	// delayed data-path config) and the system is expected to recover
+	// automatically. See the parent deployment group's state for more details.
+	//   "DELETE_FAILED" - An attempt to delete the deployment has failed. This is
+	// a terminal state and the deployment is not expected to recover. The only
+	// permitted operation is to retry deleting the deployment.
+	State string `json:"state,omitempty"`
+	// UpdateTime: Output only. The timestamp when the resource was most recently
+	// updated. See https://google.aip.dev/148#timestamps.
+	UpdateTime string `json:"updateTime,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "CreateTime") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CreateTime") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s InterceptDeployment) MarshalJSON() ([]byte, error) {
+	type NoMethod InterceptDeployment
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// InterceptDeploymentGroup: A deployment group aggregates many zonal intercept
+// backends (deployments) into a single global intercept service. Consumers can
+// connect this service using an endpoint group.
+type InterceptDeploymentGroup struct {
+	// ConnectedEndpointGroups: Output only. The list of endpoint groups that are
+	// connected to this resource.
+	ConnectedEndpointGroups []*InterceptDeploymentGroupConnectedEndpointGroup `json:"connectedEndpointGroups,omitempty"`
+	// CreateTime: Output only. The timestamp when the resource was created. See
+	// https://google.aip.dev/148#timestamps.
+	CreateTime string `json:"createTime,omitempty"`
+	// Description: Optional. User-provided description of the deployment group.
+	// Used as additional context for the deployment group.
+	Description string `json:"description,omitempty"`
+	// Labels: Optional. Labels are key/value pairs that help to organize and
+	// filter resources.
+	Labels map[string]string `json:"labels,omitempty"`
+	// Locations: Output only. The list of locations where the deployment group is
+	// present.
+	Locations []*InterceptLocation `json:"locations,omitempty"`
+	// Name: Immutable. Identifier. The resource name of this deployment group, for
+	// example:
+	// `projects/123456789/locations/global/interceptDeploymentGroups/my-dg`. See
+	// https://google.aip.dev/122 for more details.
+	Name string `json:"name,omitempty"`
+	// NestedDeployments: Output only. The list of Intercept Deployments that
+	// belong to this group.
+	NestedDeployments []*InterceptDeploymentGroupDeployment `json:"nestedDeployments,omitempty"`
+	// Network: Required. Immutable. The network that will be used for all child
+	// deployments, for example: `projects/{project}/global/networks/{network}`.
+	// See https://google.aip.dev/124.
+	Network string `json:"network,omitempty"`
+	// Reconciling: Output only. The current state of the resource does not match
+	// the user's intended state, and the system is working to reconcile them. This
+	// is part of the normal operation (e.g. adding a new deployment to the group)
+	// See https://google.aip.dev/128.
+	Reconciling bool `json:"reconciling,omitempty"`
+	// State: Output only. The current state of the deployment group. See
+	// https://google.aip.dev/216.
+	//
+	// Possible values:
+	//   "STATE_UNSPECIFIED" - State not set (this is not a valid state).
+	//   "ACTIVE" - The deployment group is ready.
+	//   "CREATING" - The deployment group is being created.
+	//   "DELETING" - The deployment group is being deleted.
+	State string `json:"state,omitempty"`
+	// UpdateTime: Output only. The timestamp when the resource was most recently
+	// updated. See https://google.aip.dev/148#timestamps.
+	UpdateTime string `json:"updateTime,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "ConnectedEndpointGroups") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ConnectedEndpointGroups") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s InterceptDeploymentGroup) MarshalJSON() ([]byte, error) {
+	type NoMethod InterceptDeploymentGroup
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// InterceptDeploymentGroupConnectedEndpointGroup: An endpoint group connected
+// to this deployment group.
+type InterceptDeploymentGroupConnectedEndpointGroup struct {
+	// Name: Output only. The connected endpoint group's resource name, for
+	// example:
+	// `projects/123456789/locations/global/interceptEndpointGroups/my-eg`. See
+	// https://google.aip.dev/124.
+	Name string `json:"name,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Name") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Name") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s InterceptDeploymentGroupConnectedEndpointGroup) MarshalJSON() ([]byte, error) {
+	type NoMethod InterceptDeploymentGroupConnectedEndpointGroup
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// InterceptDeploymentGroupDeployment: A deployment belonging to this
+// deployment group.
+type InterceptDeploymentGroupDeployment struct {
+	// Name: Output only. The name of the Intercept Deployment, in the format:
+	// `projects/{project}/locations/{location}/interceptDeployments/{intercept_depl
+	// oyment}`.
+	Name string `json:"name,omitempty"`
+	// State: Output only. Most recent known state of the deployment.
+	//
+	// Possible values:
+	//   "STATE_UNSPECIFIED" - State not set (this is not a valid state).
+	//   "ACTIVE" - The deployment is ready and in sync with the parent group.
+	//   "CREATING" - The deployment is being created.
+	//   "DELETING" - The deployment is being deleted.
+	//   "OUT_OF_SYNC" - The deployment is out of sync with the parent group. In
+	// most cases, this is a result of a transient issue within the system (e.g. a
+	// delayed data-path config) and the system is expected to recover
+	// automatically. See the parent deployment group's state for more details.
+	//   "DELETE_FAILED" - An attempt to delete the deployment has failed. This is
+	// a terminal state and the deployment is not expected to recover. The only
+	// permitted operation is to retry deleting the deployment.
+	State string `json:"state,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Name") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Name") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s InterceptDeploymentGroupDeployment) MarshalJSON() ([]byte, error) {
+	type NoMethod InterceptDeploymentGroupDeployment
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// InterceptEndpointGroup: An endpoint group is a consumer frontend for a
+// deployment group (backend). In order to configure intercept for a network,
+// consumers must create: - An association between their network and the
+// endpoint group. - A security profile that points to the endpoint group. - A
+// firewall rule that references the security profile (group).
+type InterceptEndpointGroup struct {
+	// Associations: Output only. List of associations to this endpoint group.
+	Associations []*InterceptEndpointGroupAssociationDetails `json:"associations,omitempty"`
+	// ConnectedDeploymentGroup: Output only. Details about the connected
+	// deployment group to this endpoint group.
+	ConnectedDeploymentGroup *InterceptEndpointGroupConnectedDeploymentGroup `json:"connectedDeploymentGroup,omitempty"`
+	// CreateTime: Output only. The timestamp when the resource was created. See
+	// https://google.aip.dev/148#timestamps.
+	CreateTime string `json:"createTime,omitempty"`
+	// Description: Optional. User-provided description of the endpoint group. Used
+	// as additional context for the endpoint group.
+	Description string `json:"description,omitempty"`
+	// InterceptDeploymentGroup: Required. Immutable. The deployment group that
+	// this endpoint group is connected to, for example:
+	// `projects/123456789/locations/global/interceptDeploymentGroups/my-dg`. See
+	// https://google.aip.dev/124.
+	InterceptDeploymentGroup string `json:"interceptDeploymentGroup,omitempty"`
+	// Labels: Optional. Labels are key/value pairs that help to organize and
+	// filter resources.
+	Labels map[string]string `json:"labels,omitempty"`
+	// Name: Immutable. Identifier. The resource name of this endpoint group, for
+	// example:
+	// `projects/123456789/locations/global/interceptEndpointGroups/my-eg`. See
+	// https://google.aip.dev/122 for more details.
+	Name string `json:"name,omitempty"`
+	// Reconciling: Output only. The current state of the resource does not match
+	// the user's intended state, and the system is working to reconcile them. This
+	// is part of the normal operation (e.g. adding a new association to the
+	// group). See https://google.aip.dev/128.
+	Reconciling bool `json:"reconciling,omitempty"`
+	// State: Output only. The current state of the endpoint group. See
+	// https://google.aip.dev/216.
+	//
+	// Possible values:
+	//   "STATE_UNSPECIFIED" - State not set (this is not a valid state).
+	//   "ACTIVE" - The endpoint group is ready and in sync with the target
+	// deployment group.
+	//   "CLOSED" - The deployment group backing this endpoint group has been
+	// force-deleted. This endpoint group cannot be used and interception is
+	// effectively disabled.
+	//   "CREATING" - The endpoint group is being created.
+	//   "DELETING" - The endpoint group is being deleted.
+	//   "OUT_OF_SYNC" - The endpoint group is out of sync with the backing
+	// deployment group. In most cases, this is a result of a transient issue
+	// within the system (e.g. an inaccessible location) and the system is expected
+	// to recover automatically. See the associations field for details per network
+	// and location.
+	//   "DELETE_FAILED" - An attempt to delete the endpoint group has failed. This
+	// is a terminal state and the endpoint group is not expected to recover. The
+	// only permitted operation is to retry deleting the endpoint group.
+	State string `json:"state,omitempty"`
+	// UpdateTime: Output only. The timestamp when the resource was most recently
+	// updated. See https://google.aip.dev/148#timestamps.
+	UpdateTime string `json:"updateTime,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "Associations") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Associations") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s InterceptEndpointGroup) MarshalJSON() ([]byte, error) {
+	type NoMethod InterceptEndpointGroup
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// InterceptEndpointGroupAssociation: An endpoint group association represents
+// a link between a network and an endpoint group in the organization. Creating
+// an association creates the networking infrastructure linking the network to
+// the endpoint group, but does not enable intercept by itself. To enable
+// intercept, the user must also create a network firewall policy containing
+// intercept rules and associate it with the network.
+type InterceptEndpointGroupAssociation struct {
+	// CreateTime: Output only. The timestamp when the resource was created. See
+	// https://google.aip.dev/148#timestamps.
+	CreateTime string `json:"createTime,omitempty"`
+	// InterceptEndpointGroup: Required. Immutable. The endpoint group that this
+	// association is connected to, for example:
+	// `projects/123456789/locations/global/interceptEndpointGroups/my-eg`. See
+	// https://google.aip.dev/124.
+	InterceptEndpointGroup string `json:"interceptEndpointGroup,omitempty"`
+	// Labels: Optional. Labels are key/value pairs that help to organize and
+	// filter resources.
+	Labels map[string]string `json:"labels,omitempty"`
+	// Locations: Output only. The list of locations where the association is
+	// configured. This information is retrieved from the linked endpoint group.
+	Locations []*InterceptLocation `json:"locations,omitempty"`
+	// LocationsDetails: Output only. The list of locations where the association
+	// is present. This information is retrieved from the linked endpoint group,
+	// and not configured as part of the association itself.
+	LocationsDetails []*InterceptEndpointGroupAssociationLocationDetails `json:"locationsDetails,omitempty"`
+	// Name: Immutable. Identifier. The resource name of this endpoint group
+	// association, for example:
+	// `projects/123456789/locations/global/interceptEndpointGroupAssociations/my-eg
+	// -association`. See https://google.aip.dev/122 for more details.
+	Name string `json:"name,omitempty"`
+	// Network: Required. Immutable. The VPC network that is associated. for
+	// example: `projects/123456789/global/networks/my-network`. See
+	// https://google.aip.dev/124.
+	Network string `json:"network,omitempty"`
+	// Reconciling: Output only. The current state of the resource does not match
+	// the user's intended state, and the system is working to reconcile them. This
+	// part of the normal operation (e.g. adding a new location to the target
+	// deployment group). See https://google.aip.dev/128.
+	Reconciling bool `json:"reconciling,omitempty"`
+	// State: Output only. Current state of the endpoint group association.
+	//
+	// Possible values:
+	//   "STATE_UNSPECIFIED" - Not set.
+	//   "ACTIVE" - The association is ready and in sync with the linked endpoint
+	// group.
+	//   "CREATING" - The association is being created.
+	//   "DELETING" - The association is being deleted.
+	//   "CLOSED" - The association is disabled due to a breaking change in another
+	// resource.
+	//   "OUT_OF_SYNC" - The association is out of sync with the linked endpoint
+	// group. In most cases, this is a result of a transient issue within the
+	// system (e.g. an inaccessible location) and the system is expected to recover
+	// automatically. Check the `locations_details` field for more details.
+	//   "DELETE_FAILED" - An attempt to delete the association has failed. This is
+	// a terminal state and the association is not expected to be usable as some of
+	// its resources have been deleted. The only permitted operation is to retry
+	// deleting the association.
+	State string `json:"state,omitempty"`
+	// UpdateTime: Output only. The timestamp when the resource was most recently
+	// updated. See https://google.aip.dev/148#timestamps.
+	UpdateTime string `json:"updateTime,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "CreateTime") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CreateTime") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s InterceptEndpointGroupAssociation) MarshalJSON() ([]byte, error) {
+	type NoMethod InterceptEndpointGroupAssociation
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// InterceptEndpointGroupAssociationDetails: The endpoint group's view of a
+// connected association.
+type InterceptEndpointGroupAssociationDetails struct {
+	// Name: Output only. The connected association's resource name, for example:
+	// `projects/123456789/locations/global/interceptEndpointGroupAssociations/my-eg
+	// a`. See https://google.aip.dev/124.
+	Name string `json:"name,omitempty"`
+	// Network: Output only. The associated network, for example:
+	// projects/123456789/global/networks/my-network. See
+	// https://google.aip.dev/124.
+	Network string `json:"network,omitempty"`
+	// State: Output only. Most recent known state of the association.
+	//
+	// Possible values:
+	//   "STATE_UNSPECIFIED" - Not set.
+	//   "ACTIVE" - The association is ready and in sync with the linked endpoint
+	// group.
+	//   "CREATING" - The association is being created.
+	//   "DELETING" - The association is being deleted.
+	//   "CLOSED" - The association is disabled due to a breaking change in another
+	// resource.
+	//   "OUT_OF_SYNC" - The association is out of sync with the linked endpoint
+	// group. In most cases, this is a result of a transient issue within the
+	// system (e.g. an inaccessible location) and the system is expected to recover
+	// automatically. Check the `locations_details` field for more details.
+	//   "DELETE_FAILED" - An attempt to delete the association has failed. This is
+	// a terminal state and the association is not expected to be usable as some of
+	// its resources have been deleted. The only permitted operation is to retry
+	// deleting the association.
+	State string `json:"state,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Name") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Name") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s InterceptEndpointGroupAssociationDetails) MarshalJSON() ([]byte, error) {
+	type NoMethod InterceptEndpointGroupAssociationDetails
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// InterceptEndpointGroupAssociationLocationDetails: Contains details about the
+// state of an association in a specific cloud location.
+type InterceptEndpointGroupAssociationLocationDetails struct {
+	// Location: Output only. The cloud location, e.g. "us-central1-a" or
+	// "asia-south1".
+	Location string `json:"location,omitempty"`
+	// State: Output only. The current state of the association in this location.
+	//
+	// Possible values:
+	//   "STATE_UNSPECIFIED" - Not set.
+	//   "ACTIVE" - The association is ready and in sync with the linked endpoint
+	// group.
+	//   "OUT_OF_SYNC" - The association is out of sync with the linked endpoint
+	// group. In most cases, this is a result of a transient issue within the
+	// system (e.g. an inaccessible location) and the system is expected to recover
+	// automatically.
+	State string `json:"state,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Location") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Location") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s InterceptEndpointGroupAssociationLocationDetails) MarshalJSON() ([]byte, error) {
+	type NoMethod InterceptEndpointGroupAssociationLocationDetails
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// InterceptEndpointGroupConnectedDeploymentGroup: The endpoint group's view of
+// a connected deployment group.
+type InterceptEndpointGroupConnectedDeploymentGroup struct {
+	// Locations: Output only. The list of locations where the deployment group is
+	// present.
+	Locations []*InterceptLocation `json:"locations,omitempty"`
+	// Name: Output only. The connected deployment group's resource name, for
+	// example:
+	// `projects/123456789/locations/global/interceptDeploymentGroups/my-dg`. See
+	// https://google.aip.dev/124.
+	Name string `json:"name,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Locations") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Locations") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s InterceptEndpointGroupConnectedDeploymentGroup) MarshalJSON() ([]byte, error) {
+	type NoMethod InterceptEndpointGroupConnectedDeploymentGroup
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// InterceptLocation: Details about intercept in a specific cloud location.
+type InterceptLocation struct {
+	// Location: Output only. The cloud location, e.g. "us-central1-a" or
+	// "asia-south1".
+	Location string `json:"location,omitempty"`
+	// State: Output only. The current state of the association in this location.
+	//
+	// Possible values:
+	//   "STATE_UNSPECIFIED" - State not set (this is not a valid state).
+	//   "ACTIVE" - The resource is ready and in sync in the location.
+	//   "OUT_OF_SYNC" - The resource is out of sync in the location. In most
+	// cases, this is a result of a transient issue within the system (e.g. an
+	// inaccessible location) and the system is expected to recover automatically.
+	State string `json:"state,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Location") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Location") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s InterceptLocation) MarshalJSON() ([]byte, error) {
+	type NoMethod InterceptLocation
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // ListAddressGroupReferencesResponse: Response of the
 // ListAddressGroupReferences method.
 type ListAddressGroupReferencesResponse struct {
@@ -2367,6 +2930,131 @@ type ListGatewaySecurityPolicyRulesResponse struct {
 
 func (s ListGatewaySecurityPolicyRulesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListGatewaySecurityPolicyRulesResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ListInterceptDeploymentGroupsResponse: Response message for
+// ListInterceptDeploymentGroups.
+type ListInterceptDeploymentGroupsResponse struct {
+	// InterceptDeploymentGroups: The deployment groups from the specified parent.
+	InterceptDeploymentGroups []*InterceptDeploymentGroup `json:"interceptDeploymentGroups,omitempty"`
+	// NextPageToken: A token that can be sent as `page_token` to retrieve the next
+	// page. If this field is omitted, there are no subsequent pages. See
+	// https://google.aip.dev/158 for more details.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "InterceptDeploymentGroups")
+	// to unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "InterceptDeploymentGroups") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ListInterceptDeploymentGroupsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ListInterceptDeploymentGroupsResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ListInterceptDeploymentsResponse: Response message for
+// ListInterceptDeployments.
+type ListInterceptDeploymentsResponse struct {
+	// InterceptDeployments: The deployments from the specified parent.
+	InterceptDeployments []*InterceptDeployment `json:"interceptDeployments,omitempty"`
+	// NextPageToken: A token that can be sent as `page_token` to retrieve the next
+	// page. If this field is omitted, there are no subsequent pages. See
+	// https://google.aip.dev/158 for more details.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+	// Unreachable: Locations that could not be reached.
+	Unreachable []string `json:"unreachable,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "InterceptDeployments") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "InterceptDeployments") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ListInterceptDeploymentsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ListInterceptDeploymentsResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ListInterceptEndpointGroupAssociationsResponse: Response message for
+// ListInterceptEndpointGroupAssociations.
+type ListInterceptEndpointGroupAssociationsResponse struct {
+	// InterceptEndpointGroupAssociations: The associations from the specified
+	// parent.
+	InterceptEndpointGroupAssociations []*InterceptEndpointGroupAssociation `json:"interceptEndpointGroupAssociations,omitempty"`
+	// NextPageToken: A token that can be sent as `page_token` to retrieve the next
+	// page. If this field is omitted, there are no subsequent pages. See
+	// https://google.aip.dev/158 for more details.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g.
+	// "InterceptEndpointGroupAssociations") to unconditionally include in API
+	// requests. By default, fields with empty or default values are omitted from
+	// API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g.
+	// "InterceptEndpointGroupAssociations") to include in API requests with the
+	// JSON null value. By default, fields with empty values are omitted from API
+	// requests. See https://pkg.go.dev/google.golang.org/api#hdr-NullFields for
+	// more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ListInterceptEndpointGroupAssociationsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ListInterceptEndpointGroupAssociationsResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ListInterceptEndpointGroupsResponse: Response message for
+// ListInterceptEndpointGroups.
+type ListInterceptEndpointGroupsResponse struct {
+	// InterceptEndpointGroups: The endpoint groups from the specified parent.
+	InterceptEndpointGroups []*InterceptEndpointGroup `json:"interceptEndpointGroups,omitempty"`
+	// NextPageToken: A token that can be sent as `page_token` to retrieve the next
+	// page. If this field is omitted, there are no subsequent pages. See
+	// https://google.aip.dev/158 for more details.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "InterceptEndpointGroups") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "InterceptEndpointGroups") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ListInterceptEndpointGroupsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ListInterceptEndpointGroupsResponse
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -13826,6 +14514,2516 @@ func (c *ProjectsLocationsGatewaySecurityPoliciesRulesPatchCall) Do(opts ...goog
 		return nil, err
 	}
 	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "networksecurity.projects.locations.gatewaySecurityPolicies.rules.patch", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsInterceptDeploymentGroupsCreateCall struct {
+	s                        *Service
+	parent                   string
+	interceptdeploymentgroup *InterceptDeploymentGroup
+	urlParams_               gensupport.URLParams
+	ctx_                     context.Context
+	header_                  http.Header
+}
+
+// Create: Creates a deployment group in a given project and location. See
+// https://google.aip.dev/133.
+//
+//   - parent: The parent resource where this deployment group will be created.
+//     Format: projects/{project}/locations/{location}.
+func (r *ProjectsLocationsInterceptDeploymentGroupsService) Create(parent string, interceptdeploymentgroup *InterceptDeploymentGroup) *ProjectsLocationsInterceptDeploymentGroupsCreateCall {
+	c := &ProjectsLocationsInterceptDeploymentGroupsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.interceptdeploymentgroup = interceptdeploymentgroup
+	return c
+}
+
+// InterceptDeploymentGroupId sets the optional parameter
+// "interceptDeploymentGroupId": Required. The ID to use for the new deployment
+// group, which will become the final component of the deployment group's
+// resource name.
+func (c *ProjectsLocationsInterceptDeploymentGroupsCreateCall) InterceptDeploymentGroupId(interceptDeploymentGroupId string) *ProjectsLocationsInterceptDeploymentGroupsCreateCall {
+	c.urlParams_.Set("interceptDeploymentGroupId", interceptDeploymentGroupId)
+	return c
+}
+
+// RequestId sets the optional parameter "requestId": A unique identifier for
+// this request. Must be a UUID4. This request is only idempotent if a
+// `request_id` is provided. See https://google.aip.dev/155 for more details.
+func (c *ProjectsLocationsInterceptDeploymentGroupsCreateCall) RequestId(requestId string) *ProjectsLocationsInterceptDeploymentGroupsCreateCall {
+	c.urlParams_.Set("requestId", requestId)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsInterceptDeploymentGroupsCreateCall) Fields(s ...googleapi.Field) *ProjectsLocationsInterceptDeploymentGroupsCreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsInterceptDeploymentGroupsCreateCall) Context(ctx context.Context) *ProjectsLocationsInterceptDeploymentGroupsCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsInterceptDeploymentGroupsCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsInterceptDeploymentGroupsCreateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.interceptdeploymentgroup)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/interceptDeploymentGroups")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "networksecurity.projects.locations.interceptDeploymentGroups.create", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "networksecurity.projects.locations.interceptDeploymentGroups.create" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsInterceptDeploymentGroupsCreateCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "networksecurity.projects.locations.interceptDeploymentGroups.create", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsInterceptDeploymentGroupsDeleteCall struct {
+	s          *Service
+	name       string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Delete: Deletes a deployment group. See https://google.aip.dev/135.
+//
+// - name: The deployment group to delete.
+func (r *ProjectsLocationsInterceptDeploymentGroupsService) Delete(name string) *ProjectsLocationsInterceptDeploymentGroupsDeleteCall {
+	c := &ProjectsLocationsInterceptDeploymentGroupsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// RequestId sets the optional parameter "requestId": A unique identifier for
+// this request. Must be a UUID4. This request is only idempotent if a
+// `request_id` is provided. See https://google.aip.dev/155 for more details.
+func (c *ProjectsLocationsInterceptDeploymentGroupsDeleteCall) RequestId(requestId string) *ProjectsLocationsInterceptDeploymentGroupsDeleteCall {
+	c.urlParams_.Set("requestId", requestId)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsInterceptDeploymentGroupsDeleteCall) Fields(s ...googleapi.Field) *ProjectsLocationsInterceptDeploymentGroupsDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsInterceptDeploymentGroupsDeleteCall) Context(ctx context.Context) *ProjectsLocationsInterceptDeploymentGroupsDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsInterceptDeploymentGroupsDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsInterceptDeploymentGroupsDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("DELETE", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "networksecurity.projects.locations.interceptDeploymentGroups.delete", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "networksecurity.projects.locations.interceptDeploymentGroups.delete" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsInterceptDeploymentGroupsDeleteCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "networksecurity.projects.locations.interceptDeploymentGroups.delete", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsInterceptDeploymentGroupsGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Gets a specific deployment group. See https://google.aip.dev/131.
+//
+//   - name: The name of the deployment group to retrieve. Format:
+//     projects/{project}/locations/{location}/interceptDeploymentGroups/{intercep
+//     t_deployment_group}.
+func (r *ProjectsLocationsInterceptDeploymentGroupsService) Get(name string) *ProjectsLocationsInterceptDeploymentGroupsGetCall {
+	c := &ProjectsLocationsInterceptDeploymentGroupsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsInterceptDeploymentGroupsGetCall) Fields(s ...googleapi.Field) *ProjectsLocationsInterceptDeploymentGroupsGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsInterceptDeploymentGroupsGetCall) IfNoneMatch(entityTag string) *ProjectsLocationsInterceptDeploymentGroupsGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsInterceptDeploymentGroupsGetCall) Context(ctx context.Context) *ProjectsLocationsInterceptDeploymentGroupsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsInterceptDeploymentGroupsGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsInterceptDeploymentGroupsGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "networksecurity.projects.locations.interceptDeploymentGroups.get", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "networksecurity.projects.locations.interceptDeploymentGroups.get" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *InterceptDeploymentGroup.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsInterceptDeploymentGroupsGetCall) Do(opts ...googleapi.CallOption) (*InterceptDeploymentGroup, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &InterceptDeploymentGroup{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "networksecurity.projects.locations.interceptDeploymentGroups.get", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsInterceptDeploymentGroupsListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists deployment groups in a given project and location. See
+// https://google.aip.dev/132.
+//
+//   - parent: The parent, which owns this collection of deployment groups.
+//     Example: `projects/123456789/locations/global`. See
+//     https://google.aip.dev/132 for more details.
+func (r *ProjectsLocationsInterceptDeploymentGroupsService) List(parent string) *ProjectsLocationsInterceptDeploymentGroupsListCall {
+	c := &ProjectsLocationsInterceptDeploymentGroupsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// Filter sets the optional parameter "filter": Filter expression. See
+// https://google.aip.dev/160#filtering for more details.
+func (c *ProjectsLocationsInterceptDeploymentGroupsListCall) Filter(filter string) *ProjectsLocationsInterceptDeploymentGroupsListCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// OrderBy sets the optional parameter "orderBy": Sort expression. See
+// https://google.aip.dev/132#ordering for more details.
+func (c *ProjectsLocationsInterceptDeploymentGroupsListCall) OrderBy(orderBy string) *ProjectsLocationsInterceptDeploymentGroupsListCall {
+	c.urlParams_.Set("orderBy", orderBy)
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": Requested page size. Server
+// may return fewer items than requested. If unspecified, server will pick an
+// appropriate default. See https://google.aip.dev/158 for more details.
+func (c *ProjectsLocationsInterceptDeploymentGroupsListCall) PageSize(pageSize int64) *ProjectsLocationsInterceptDeploymentGroupsListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": A page token, received
+// from a previous `ListInterceptDeploymentGroups` call. Provide this to
+// retrieve the subsequent page. When paginating, all other parameters provided
+// to `ListInterceptDeploymentGroups` must match the call that provided the
+// page token. See https://google.aip.dev/158 for more details.
+func (c *ProjectsLocationsInterceptDeploymentGroupsListCall) PageToken(pageToken string) *ProjectsLocationsInterceptDeploymentGroupsListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsInterceptDeploymentGroupsListCall) Fields(s ...googleapi.Field) *ProjectsLocationsInterceptDeploymentGroupsListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsInterceptDeploymentGroupsListCall) IfNoneMatch(entityTag string) *ProjectsLocationsInterceptDeploymentGroupsListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsInterceptDeploymentGroupsListCall) Context(ctx context.Context) *ProjectsLocationsInterceptDeploymentGroupsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsInterceptDeploymentGroupsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsInterceptDeploymentGroupsListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/interceptDeploymentGroups")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "networksecurity.projects.locations.interceptDeploymentGroups.list", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "networksecurity.projects.locations.interceptDeploymentGroups.list" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *ListInterceptDeploymentGroupsResponse.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsInterceptDeploymentGroupsListCall) Do(opts ...googleapi.CallOption) (*ListInterceptDeploymentGroupsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ListInterceptDeploymentGroupsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "networksecurity.projects.locations.interceptDeploymentGroups.list", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsLocationsInterceptDeploymentGroupsListCall) Pages(ctx context.Context, f func(*ListInterceptDeploymentGroupsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+type ProjectsLocationsInterceptDeploymentGroupsPatchCall struct {
+	s                        *Service
+	name                     string
+	interceptdeploymentgroup *InterceptDeploymentGroup
+	urlParams_               gensupport.URLParams
+	ctx_                     context.Context
+	header_                  http.Header
+}
+
+// Patch: Updates a deployment group. See https://google.aip.dev/134.
+//
+//   - name: Immutable. Identifier. The resource name of this deployment group,
+//     for example:
+//     `projects/123456789/locations/global/interceptDeploymentGroups/my-dg`. See
+//     https://google.aip.dev/122 for more details.
+func (r *ProjectsLocationsInterceptDeploymentGroupsService) Patch(name string, interceptdeploymentgroup *InterceptDeploymentGroup) *ProjectsLocationsInterceptDeploymentGroupsPatchCall {
+	c := &ProjectsLocationsInterceptDeploymentGroupsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.interceptdeploymentgroup = interceptdeploymentgroup
+	return c
+}
+
+// RequestId sets the optional parameter "requestId": A unique identifier for
+// this request. Must be a UUID4. This request is only idempotent if a
+// `request_id` is provided. See https://google.aip.dev/155 for more details.
+func (c *ProjectsLocationsInterceptDeploymentGroupsPatchCall) RequestId(requestId string) *ProjectsLocationsInterceptDeploymentGroupsPatchCall {
+	c.urlParams_.Set("requestId", requestId)
+	return c
+}
+
+// UpdateMask sets the optional parameter "updateMask": The list of fields to
+// update. Fields are specified relative to the deployment group (e.g.
+// `description`; *not* `intercept_deployment_group.description`). See
+// https://google.aip.dev/161 for more details.
+func (c *ProjectsLocationsInterceptDeploymentGroupsPatchCall) UpdateMask(updateMask string) *ProjectsLocationsInterceptDeploymentGroupsPatchCall {
+	c.urlParams_.Set("updateMask", updateMask)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsInterceptDeploymentGroupsPatchCall) Fields(s ...googleapi.Field) *ProjectsLocationsInterceptDeploymentGroupsPatchCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsInterceptDeploymentGroupsPatchCall) Context(ctx context.Context) *ProjectsLocationsInterceptDeploymentGroupsPatchCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsInterceptDeploymentGroupsPatchCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsInterceptDeploymentGroupsPatchCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.interceptdeploymentgroup)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PATCH", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "networksecurity.projects.locations.interceptDeploymentGroups.patch", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "networksecurity.projects.locations.interceptDeploymentGroups.patch" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsInterceptDeploymentGroupsPatchCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "networksecurity.projects.locations.interceptDeploymentGroups.patch", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsInterceptDeploymentsCreateCall struct {
+	s                   *Service
+	parent              string
+	interceptdeployment *InterceptDeployment
+	urlParams_          gensupport.URLParams
+	ctx_                context.Context
+	header_             http.Header
+}
+
+// Create: Creates a deployment in a given project and location. See
+// https://google.aip.dev/133.
+//
+//   - parent: The parent resource where this deployment will be created. Format:
+//     projects/{project}/locations/{location}.
+func (r *ProjectsLocationsInterceptDeploymentsService) Create(parent string, interceptdeployment *InterceptDeployment) *ProjectsLocationsInterceptDeploymentsCreateCall {
+	c := &ProjectsLocationsInterceptDeploymentsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.interceptdeployment = interceptdeployment
+	return c
+}
+
+// InterceptDeploymentId sets the optional parameter "interceptDeploymentId":
+// Required. The ID to use for the new deployment, which will become the final
+// component of the deployment's resource name.
+func (c *ProjectsLocationsInterceptDeploymentsCreateCall) InterceptDeploymentId(interceptDeploymentId string) *ProjectsLocationsInterceptDeploymentsCreateCall {
+	c.urlParams_.Set("interceptDeploymentId", interceptDeploymentId)
+	return c
+}
+
+// RequestId sets the optional parameter "requestId": A unique identifier for
+// this request. Must be a UUID4. This request is only idempotent if a
+// `request_id` is provided. See https://google.aip.dev/155 for more details.
+func (c *ProjectsLocationsInterceptDeploymentsCreateCall) RequestId(requestId string) *ProjectsLocationsInterceptDeploymentsCreateCall {
+	c.urlParams_.Set("requestId", requestId)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsInterceptDeploymentsCreateCall) Fields(s ...googleapi.Field) *ProjectsLocationsInterceptDeploymentsCreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsInterceptDeploymentsCreateCall) Context(ctx context.Context) *ProjectsLocationsInterceptDeploymentsCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsInterceptDeploymentsCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsInterceptDeploymentsCreateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.interceptdeployment)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/interceptDeployments")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "networksecurity.projects.locations.interceptDeployments.create", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "networksecurity.projects.locations.interceptDeployments.create" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsInterceptDeploymentsCreateCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "networksecurity.projects.locations.interceptDeployments.create", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsInterceptDeploymentsDeleteCall struct {
+	s          *Service
+	name       string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Delete: Deletes a deployment. See https://google.aip.dev/135.
+//
+// - name: Name of the resource.
+func (r *ProjectsLocationsInterceptDeploymentsService) Delete(name string) *ProjectsLocationsInterceptDeploymentsDeleteCall {
+	c := &ProjectsLocationsInterceptDeploymentsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// RequestId sets the optional parameter "requestId": A unique identifier for
+// this request. Must be a UUID4. This request is only idempotent if a
+// `request_id` is provided. See https://google.aip.dev/155 for more details.
+func (c *ProjectsLocationsInterceptDeploymentsDeleteCall) RequestId(requestId string) *ProjectsLocationsInterceptDeploymentsDeleteCall {
+	c.urlParams_.Set("requestId", requestId)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsInterceptDeploymentsDeleteCall) Fields(s ...googleapi.Field) *ProjectsLocationsInterceptDeploymentsDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsInterceptDeploymentsDeleteCall) Context(ctx context.Context) *ProjectsLocationsInterceptDeploymentsDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsInterceptDeploymentsDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsInterceptDeploymentsDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("DELETE", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "networksecurity.projects.locations.interceptDeployments.delete", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "networksecurity.projects.locations.interceptDeployments.delete" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsInterceptDeploymentsDeleteCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "networksecurity.projects.locations.interceptDeployments.delete", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsInterceptDeploymentsGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Gets a specific deployment. See https://google.aip.dev/131.
+//
+//   - name: The name of the deployment to retrieve. Format:
+//     projects/{project}/locations/{location}/interceptDeployments/{intercept_dep
+//     loyment}.
+func (r *ProjectsLocationsInterceptDeploymentsService) Get(name string) *ProjectsLocationsInterceptDeploymentsGetCall {
+	c := &ProjectsLocationsInterceptDeploymentsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsInterceptDeploymentsGetCall) Fields(s ...googleapi.Field) *ProjectsLocationsInterceptDeploymentsGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsInterceptDeploymentsGetCall) IfNoneMatch(entityTag string) *ProjectsLocationsInterceptDeploymentsGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsInterceptDeploymentsGetCall) Context(ctx context.Context) *ProjectsLocationsInterceptDeploymentsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsInterceptDeploymentsGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsInterceptDeploymentsGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "networksecurity.projects.locations.interceptDeployments.get", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "networksecurity.projects.locations.interceptDeployments.get" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *InterceptDeployment.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *ProjectsLocationsInterceptDeploymentsGetCall) Do(opts ...googleapi.CallOption) (*InterceptDeployment, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &InterceptDeployment{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "networksecurity.projects.locations.interceptDeployments.get", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsInterceptDeploymentsListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists deployments in a given project and location. See
+// https://google.aip.dev/132.
+//
+//   - parent: The parent, which owns this collection of deployments. Example:
+//     `projects/123456789/locations/us-central1-a`. See
+//     https://google.aip.dev/132 for more details.
+func (r *ProjectsLocationsInterceptDeploymentsService) List(parent string) *ProjectsLocationsInterceptDeploymentsListCall {
+	c := &ProjectsLocationsInterceptDeploymentsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// Filter sets the optional parameter "filter": Filter expression. See
+// https://google.aip.dev/160#filtering for more details.
+func (c *ProjectsLocationsInterceptDeploymentsListCall) Filter(filter string) *ProjectsLocationsInterceptDeploymentsListCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// OrderBy sets the optional parameter "orderBy": Sort expression. See
+// https://google.aip.dev/132#ordering for more details.
+func (c *ProjectsLocationsInterceptDeploymentsListCall) OrderBy(orderBy string) *ProjectsLocationsInterceptDeploymentsListCall {
+	c.urlParams_.Set("orderBy", orderBy)
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": Requested page size. Server
+// may return fewer items than requested. If unspecified, server will pick an
+// appropriate default. See https://google.aip.dev/158 for more details.
+func (c *ProjectsLocationsInterceptDeploymentsListCall) PageSize(pageSize int64) *ProjectsLocationsInterceptDeploymentsListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": A page token, received
+// from a previous `ListInterceptDeployments` call. Provide this to retrieve
+// the subsequent page. When paginating, all other parameters provided to
+// `ListInterceptDeployments` must match the call that provided the page token.
+// See https://google.aip.dev/158 for more details.
+func (c *ProjectsLocationsInterceptDeploymentsListCall) PageToken(pageToken string) *ProjectsLocationsInterceptDeploymentsListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsInterceptDeploymentsListCall) Fields(s ...googleapi.Field) *ProjectsLocationsInterceptDeploymentsListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsInterceptDeploymentsListCall) IfNoneMatch(entityTag string) *ProjectsLocationsInterceptDeploymentsListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsInterceptDeploymentsListCall) Context(ctx context.Context) *ProjectsLocationsInterceptDeploymentsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsInterceptDeploymentsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsInterceptDeploymentsListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/interceptDeployments")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "networksecurity.projects.locations.interceptDeployments.list", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "networksecurity.projects.locations.interceptDeployments.list" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *ListInterceptDeploymentsResponse.ServerResponse.Header or (if a response
+// was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsInterceptDeploymentsListCall) Do(opts ...googleapi.CallOption) (*ListInterceptDeploymentsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ListInterceptDeploymentsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "networksecurity.projects.locations.interceptDeployments.list", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsLocationsInterceptDeploymentsListCall) Pages(ctx context.Context, f func(*ListInterceptDeploymentsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+type ProjectsLocationsInterceptDeploymentsPatchCall struct {
+	s                   *Service
+	name                string
+	interceptdeployment *InterceptDeployment
+	urlParams_          gensupport.URLParams
+	ctx_                context.Context
+	header_             http.Header
+}
+
+// Patch: Updates a deployment. See https://google.aip.dev/134.
+//
+//   - name: Immutable. Identifier. The resource name of this deployment, for
+//     example:
+//     `projects/123456789/locations/us-central1-a/interceptDeployments/my-dep`.
+//     See https://google.aip.dev/122 for more details.
+func (r *ProjectsLocationsInterceptDeploymentsService) Patch(name string, interceptdeployment *InterceptDeployment) *ProjectsLocationsInterceptDeploymentsPatchCall {
+	c := &ProjectsLocationsInterceptDeploymentsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.interceptdeployment = interceptdeployment
+	return c
+}
+
+// RequestId sets the optional parameter "requestId": A unique identifier for
+// this request. Must be a UUID4. This request is only idempotent if a
+// `request_id` is provided. See https://google.aip.dev/155 for more details.
+func (c *ProjectsLocationsInterceptDeploymentsPatchCall) RequestId(requestId string) *ProjectsLocationsInterceptDeploymentsPatchCall {
+	c.urlParams_.Set("requestId", requestId)
+	return c
+}
+
+// UpdateMask sets the optional parameter "updateMask": The list of fields to
+// update. Fields are specified relative to the deployment (e.g. `description`;
+// *not* `intercept_deployment.description`). See https://google.aip.dev/161
+// for more details.
+func (c *ProjectsLocationsInterceptDeploymentsPatchCall) UpdateMask(updateMask string) *ProjectsLocationsInterceptDeploymentsPatchCall {
+	c.urlParams_.Set("updateMask", updateMask)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsInterceptDeploymentsPatchCall) Fields(s ...googleapi.Field) *ProjectsLocationsInterceptDeploymentsPatchCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsInterceptDeploymentsPatchCall) Context(ctx context.Context) *ProjectsLocationsInterceptDeploymentsPatchCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsInterceptDeploymentsPatchCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsInterceptDeploymentsPatchCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.interceptdeployment)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PATCH", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "networksecurity.projects.locations.interceptDeployments.patch", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "networksecurity.projects.locations.interceptDeployments.patch" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsInterceptDeploymentsPatchCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "networksecurity.projects.locations.interceptDeployments.patch", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsInterceptEndpointGroupAssociationsCreateCall struct {
+	s                                 *Service
+	parent                            string
+	interceptendpointgroupassociation *InterceptEndpointGroupAssociation
+	urlParams_                        gensupport.URLParams
+	ctx_                              context.Context
+	header_                           http.Header
+}
+
+// Create: Creates an association in a given project and location. See
+// https://google.aip.dev/133.
+//
+//   - parent: The parent resource where this association will be created.
+//     Format: projects/{project}/locations/{location}.
+func (r *ProjectsLocationsInterceptEndpointGroupAssociationsService) Create(parent string, interceptendpointgroupassociation *InterceptEndpointGroupAssociation) *ProjectsLocationsInterceptEndpointGroupAssociationsCreateCall {
+	c := &ProjectsLocationsInterceptEndpointGroupAssociationsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.interceptendpointgroupassociation = interceptendpointgroupassociation
+	return c
+}
+
+// InterceptEndpointGroupAssociationId sets the optional parameter
+// "interceptEndpointGroupAssociationId": The ID to use for the new
+// association, which will become the final component of the endpoint group's
+// resource name. If not provided, the server will generate a unique ID.
+func (c *ProjectsLocationsInterceptEndpointGroupAssociationsCreateCall) InterceptEndpointGroupAssociationId(interceptEndpointGroupAssociationId string) *ProjectsLocationsInterceptEndpointGroupAssociationsCreateCall {
+	c.urlParams_.Set("interceptEndpointGroupAssociationId", interceptEndpointGroupAssociationId)
+	return c
+}
+
+// RequestId sets the optional parameter "requestId": A unique identifier for
+// this request. Must be a UUID4. This request is only idempotent if a
+// `request_id` is provided. See https://google.aip.dev/155 for more details.
+func (c *ProjectsLocationsInterceptEndpointGroupAssociationsCreateCall) RequestId(requestId string) *ProjectsLocationsInterceptEndpointGroupAssociationsCreateCall {
+	c.urlParams_.Set("requestId", requestId)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsInterceptEndpointGroupAssociationsCreateCall) Fields(s ...googleapi.Field) *ProjectsLocationsInterceptEndpointGroupAssociationsCreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsInterceptEndpointGroupAssociationsCreateCall) Context(ctx context.Context) *ProjectsLocationsInterceptEndpointGroupAssociationsCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsInterceptEndpointGroupAssociationsCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsInterceptEndpointGroupAssociationsCreateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.interceptendpointgroupassociation)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/interceptEndpointGroupAssociations")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "networksecurity.projects.locations.interceptEndpointGroupAssociations.create", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "networksecurity.projects.locations.interceptEndpointGroupAssociations.create" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsInterceptEndpointGroupAssociationsCreateCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "networksecurity.projects.locations.interceptEndpointGroupAssociations.create", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsInterceptEndpointGroupAssociationsDeleteCall struct {
+	s          *Service
+	name       string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Delete: Deletes an association. See https://google.aip.dev/135.
+//
+// - name: The association to delete.
+func (r *ProjectsLocationsInterceptEndpointGroupAssociationsService) Delete(name string) *ProjectsLocationsInterceptEndpointGroupAssociationsDeleteCall {
+	c := &ProjectsLocationsInterceptEndpointGroupAssociationsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// RequestId sets the optional parameter "requestId": A unique identifier for
+// this request. Must be a UUID4. This request is only idempotent if a
+// `request_id` is provided. See https://google.aip.dev/155 for more details.
+func (c *ProjectsLocationsInterceptEndpointGroupAssociationsDeleteCall) RequestId(requestId string) *ProjectsLocationsInterceptEndpointGroupAssociationsDeleteCall {
+	c.urlParams_.Set("requestId", requestId)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsInterceptEndpointGroupAssociationsDeleteCall) Fields(s ...googleapi.Field) *ProjectsLocationsInterceptEndpointGroupAssociationsDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsInterceptEndpointGroupAssociationsDeleteCall) Context(ctx context.Context) *ProjectsLocationsInterceptEndpointGroupAssociationsDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsInterceptEndpointGroupAssociationsDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsInterceptEndpointGroupAssociationsDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("DELETE", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "networksecurity.projects.locations.interceptEndpointGroupAssociations.delete", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "networksecurity.projects.locations.interceptEndpointGroupAssociations.delete" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsInterceptEndpointGroupAssociationsDeleteCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "networksecurity.projects.locations.interceptEndpointGroupAssociations.delete", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsInterceptEndpointGroupAssociationsGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Gets a specific association. See https://google.aip.dev/131.
+//
+//   - name: The name of the association to retrieve. Format:
+//     projects/{project}/locations/{location}/interceptEndpointGroupAssociations/
+//     {intercept_endpoint_group_association}.
+func (r *ProjectsLocationsInterceptEndpointGroupAssociationsService) Get(name string) *ProjectsLocationsInterceptEndpointGroupAssociationsGetCall {
+	c := &ProjectsLocationsInterceptEndpointGroupAssociationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsInterceptEndpointGroupAssociationsGetCall) Fields(s ...googleapi.Field) *ProjectsLocationsInterceptEndpointGroupAssociationsGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsInterceptEndpointGroupAssociationsGetCall) IfNoneMatch(entityTag string) *ProjectsLocationsInterceptEndpointGroupAssociationsGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsInterceptEndpointGroupAssociationsGetCall) Context(ctx context.Context) *ProjectsLocationsInterceptEndpointGroupAssociationsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsInterceptEndpointGroupAssociationsGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsInterceptEndpointGroupAssociationsGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "networksecurity.projects.locations.interceptEndpointGroupAssociations.get", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "networksecurity.projects.locations.interceptEndpointGroupAssociations.get" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *InterceptEndpointGroupAssociation.ServerResponse.Header or (if a response
+// was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsInterceptEndpointGroupAssociationsGetCall) Do(opts ...googleapi.CallOption) (*InterceptEndpointGroupAssociation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &InterceptEndpointGroupAssociation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "networksecurity.projects.locations.interceptEndpointGroupAssociations.get", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsInterceptEndpointGroupAssociationsListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists associations in a given project and location. See
+// https://google.aip.dev/132.
+//
+//   - parent: The parent, which owns this collection of associations. Example:
+//     `projects/123456789/locations/global`. See https://google.aip.dev/132 for
+//     more details.
+func (r *ProjectsLocationsInterceptEndpointGroupAssociationsService) List(parent string) *ProjectsLocationsInterceptEndpointGroupAssociationsListCall {
+	c := &ProjectsLocationsInterceptEndpointGroupAssociationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// Filter sets the optional parameter "filter": Filter expression. See
+// https://google.aip.dev/160#filtering for more details.
+func (c *ProjectsLocationsInterceptEndpointGroupAssociationsListCall) Filter(filter string) *ProjectsLocationsInterceptEndpointGroupAssociationsListCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// OrderBy sets the optional parameter "orderBy": Sort expression. See
+// https://google.aip.dev/132#ordering for more details.
+func (c *ProjectsLocationsInterceptEndpointGroupAssociationsListCall) OrderBy(orderBy string) *ProjectsLocationsInterceptEndpointGroupAssociationsListCall {
+	c.urlParams_.Set("orderBy", orderBy)
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": Requested page size. Server
+// may return fewer items than requested. If unspecified, server will pick an
+// appropriate default. See https://google.aip.dev/158 for more details.
+func (c *ProjectsLocationsInterceptEndpointGroupAssociationsListCall) PageSize(pageSize int64) *ProjectsLocationsInterceptEndpointGroupAssociationsListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": A page token, received
+// from a previous `ListInterceptEndpointGroups` call. Provide this to retrieve
+// the subsequent page. When paginating, all other parameters provided to
+// `ListInterceptEndpointGroups` must match the call that provided the page
+// token. See https://google.aip.dev/158 for more details.
+func (c *ProjectsLocationsInterceptEndpointGroupAssociationsListCall) PageToken(pageToken string) *ProjectsLocationsInterceptEndpointGroupAssociationsListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsInterceptEndpointGroupAssociationsListCall) Fields(s ...googleapi.Field) *ProjectsLocationsInterceptEndpointGroupAssociationsListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsInterceptEndpointGroupAssociationsListCall) IfNoneMatch(entityTag string) *ProjectsLocationsInterceptEndpointGroupAssociationsListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsInterceptEndpointGroupAssociationsListCall) Context(ctx context.Context) *ProjectsLocationsInterceptEndpointGroupAssociationsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsInterceptEndpointGroupAssociationsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsInterceptEndpointGroupAssociationsListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/interceptEndpointGroupAssociations")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "networksecurity.projects.locations.interceptEndpointGroupAssociations.list", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "networksecurity.projects.locations.interceptEndpointGroupAssociations.list" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *ListInterceptEndpointGroupAssociationsResponse.ServerResponse.Header or (if
+// a response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsInterceptEndpointGroupAssociationsListCall) Do(opts ...googleapi.CallOption) (*ListInterceptEndpointGroupAssociationsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ListInterceptEndpointGroupAssociationsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "networksecurity.projects.locations.interceptEndpointGroupAssociations.list", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsLocationsInterceptEndpointGroupAssociationsListCall) Pages(ctx context.Context, f func(*ListInterceptEndpointGroupAssociationsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+type ProjectsLocationsInterceptEndpointGroupAssociationsPatchCall struct {
+	s                                 *Service
+	name                              string
+	interceptendpointgroupassociation *InterceptEndpointGroupAssociation
+	urlParams_                        gensupport.URLParams
+	ctx_                              context.Context
+	header_                           http.Header
+}
+
+// Patch: Updates an association. See https://google.aip.dev/134.
+//
+//   - name: Immutable. Identifier. The resource name of this endpoint group
+//     association, for example:
+//     `projects/123456789/locations/global/interceptEndpointGroupAssociations/my-
+//     eg-association`. See https://google.aip.dev/122 for more details.
+func (r *ProjectsLocationsInterceptEndpointGroupAssociationsService) Patch(name string, interceptendpointgroupassociation *InterceptEndpointGroupAssociation) *ProjectsLocationsInterceptEndpointGroupAssociationsPatchCall {
+	c := &ProjectsLocationsInterceptEndpointGroupAssociationsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.interceptendpointgroupassociation = interceptendpointgroupassociation
+	return c
+}
+
+// RequestId sets the optional parameter "requestId": A unique identifier for
+// this request. Must be a UUID4. This request is only idempotent if a
+// `request_id` is provided. See https://google.aip.dev/155 for more details.
+func (c *ProjectsLocationsInterceptEndpointGroupAssociationsPatchCall) RequestId(requestId string) *ProjectsLocationsInterceptEndpointGroupAssociationsPatchCall {
+	c.urlParams_.Set("requestId", requestId)
+	return c
+}
+
+// UpdateMask sets the optional parameter "updateMask": The list of fields to
+// update. Fields are specified relative to the association (e.g.
+// `description`; *not* `intercept_endpoint_group_association.description`).
+// See https://google.aip.dev/161 for more details.
+func (c *ProjectsLocationsInterceptEndpointGroupAssociationsPatchCall) UpdateMask(updateMask string) *ProjectsLocationsInterceptEndpointGroupAssociationsPatchCall {
+	c.urlParams_.Set("updateMask", updateMask)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsInterceptEndpointGroupAssociationsPatchCall) Fields(s ...googleapi.Field) *ProjectsLocationsInterceptEndpointGroupAssociationsPatchCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsInterceptEndpointGroupAssociationsPatchCall) Context(ctx context.Context) *ProjectsLocationsInterceptEndpointGroupAssociationsPatchCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsInterceptEndpointGroupAssociationsPatchCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsInterceptEndpointGroupAssociationsPatchCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.interceptendpointgroupassociation)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PATCH", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "networksecurity.projects.locations.interceptEndpointGroupAssociations.patch", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "networksecurity.projects.locations.interceptEndpointGroupAssociations.patch" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsInterceptEndpointGroupAssociationsPatchCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "networksecurity.projects.locations.interceptEndpointGroupAssociations.patch", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsInterceptEndpointGroupsCreateCall struct {
+	s                      *Service
+	parent                 string
+	interceptendpointgroup *InterceptEndpointGroup
+	urlParams_             gensupport.URLParams
+	ctx_                   context.Context
+	header_                http.Header
+}
+
+// Create: Creates an endpoint group in a given project and location. See
+// https://google.aip.dev/133.
+//
+//   - parent: The parent resource where this endpoint group will be created.
+//     Format: projects/{project}/locations/{location}.
+func (r *ProjectsLocationsInterceptEndpointGroupsService) Create(parent string, interceptendpointgroup *InterceptEndpointGroup) *ProjectsLocationsInterceptEndpointGroupsCreateCall {
+	c := &ProjectsLocationsInterceptEndpointGroupsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.interceptendpointgroup = interceptendpointgroup
+	return c
+}
+
+// InterceptEndpointGroupId sets the optional parameter
+// "interceptEndpointGroupId": Required. The ID to use for the endpoint group,
+// which will become the final component of the endpoint group's resource name.
+func (c *ProjectsLocationsInterceptEndpointGroupsCreateCall) InterceptEndpointGroupId(interceptEndpointGroupId string) *ProjectsLocationsInterceptEndpointGroupsCreateCall {
+	c.urlParams_.Set("interceptEndpointGroupId", interceptEndpointGroupId)
+	return c
+}
+
+// RequestId sets the optional parameter "requestId": A unique identifier for
+// this request. Must be a UUID4. This request is only idempotent if a
+// `request_id` is provided. See https://google.aip.dev/155 for more details.
+func (c *ProjectsLocationsInterceptEndpointGroupsCreateCall) RequestId(requestId string) *ProjectsLocationsInterceptEndpointGroupsCreateCall {
+	c.urlParams_.Set("requestId", requestId)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsInterceptEndpointGroupsCreateCall) Fields(s ...googleapi.Field) *ProjectsLocationsInterceptEndpointGroupsCreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsInterceptEndpointGroupsCreateCall) Context(ctx context.Context) *ProjectsLocationsInterceptEndpointGroupsCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsInterceptEndpointGroupsCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsInterceptEndpointGroupsCreateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.interceptendpointgroup)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/interceptEndpointGroups")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "networksecurity.projects.locations.interceptEndpointGroups.create", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "networksecurity.projects.locations.interceptEndpointGroups.create" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsInterceptEndpointGroupsCreateCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "networksecurity.projects.locations.interceptEndpointGroups.create", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsInterceptEndpointGroupsDeleteCall struct {
+	s          *Service
+	name       string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Delete: Deletes an endpoint group. See https://google.aip.dev/135.
+//
+// - name: The endpoint group to delete.
+func (r *ProjectsLocationsInterceptEndpointGroupsService) Delete(name string) *ProjectsLocationsInterceptEndpointGroupsDeleteCall {
+	c := &ProjectsLocationsInterceptEndpointGroupsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// RequestId sets the optional parameter "requestId": A unique identifier for
+// this request. Must be a UUID4. This request is only idempotent if a
+// `request_id` is provided. See https://google.aip.dev/155 for more details.
+func (c *ProjectsLocationsInterceptEndpointGroupsDeleteCall) RequestId(requestId string) *ProjectsLocationsInterceptEndpointGroupsDeleteCall {
+	c.urlParams_.Set("requestId", requestId)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsInterceptEndpointGroupsDeleteCall) Fields(s ...googleapi.Field) *ProjectsLocationsInterceptEndpointGroupsDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsInterceptEndpointGroupsDeleteCall) Context(ctx context.Context) *ProjectsLocationsInterceptEndpointGroupsDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsInterceptEndpointGroupsDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsInterceptEndpointGroupsDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("DELETE", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "networksecurity.projects.locations.interceptEndpointGroups.delete", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "networksecurity.projects.locations.interceptEndpointGroups.delete" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsInterceptEndpointGroupsDeleteCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "networksecurity.projects.locations.interceptEndpointGroups.delete", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsInterceptEndpointGroupsGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Gets a specific endpoint group. See https://google.aip.dev/131.
+//
+//   - name: The name of the endpoint group to retrieve. Format:
+//     projects/{project}/locations/{location}/interceptEndpointGroups/{intercept_
+//     endpoint_group}.
+func (r *ProjectsLocationsInterceptEndpointGroupsService) Get(name string) *ProjectsLocationsInterceptEndpointGroupsGetCall {
+	c := &ProjectsLocationsInterceptEndpointGroupsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsInterceptEndpointGroupsGetCall) Fields(s ...googleapi.Field) *ProjectsLocationsInterceptEndpointGroupsGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsInterceptEndpointGroupsGetCall) IfNoneMatch(entityTag string) *ProjectsLocationsInterceptEndpointGroupsGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsInterceptEndpointGroupsGetCall) Context(ctx context.Context) *ProjectsLocationsInterceptEndpointGroupsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsInterceptEndpointGroupsGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsInterceptEndpointGroupsGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "networksecurity.projects.locations.interceptEndpointGroups.get", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "networksecurity.projects.locations.interceptEndpointGroups.get" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *InterceptEndpointGroup.ServerResponse.Header or (if a response was returned
+// at all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *ProjectsLocationsInterceptEndpointGroupsGetCall) Do(opts ...googleapi.CallOption) (*InterceptEndpointGroup, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &InterceptEndpointGroup{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "networksecurity.projects.locations.interceptEndpointGroups.get", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsInterceptEndpointGroupsListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists endpoint groups in a given project and location. See
+// https://google.aip.dev/132.
+//
+//   - parent: The parent, which owns this collection of endpoint groups.
+//     Example: `projects/123456789/locations/global`. See
+//     https://google.aip.dev/132 for more details.
+func (r *ProjectsLocationsInterceptEndpointGroupsService) List(parent string) *ProjectsLocationsInterceptEndpointGroupsListCall {
+	c := &ProjectsLocationsInterceptEndpointGroupsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// Filter sets the optional parameter "filter": Filter expression. See
+// https://google.aip.dev/160#filtering for more details.
+func (c *ProjectsLocationsInterceptEndpointGroupsListCall) Filter(filter string) *ProjectsLocationsInterceptEndpointGroupsListCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// OrderBy sets the optional parameter "orderBy": Sort expression. See
+// https://google.aip.dev/132#ordering for more details.
+func (c *ProjectsLocationsInterceptEndpointGroupsListCall) OrderBy(orderBy string) *ProjectsLocationsInterceptEndpointGroupsListCall {
+	c.urlParams_.Set("orderBy", orderBy)
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": Requested page size. Server
+// may return fewer items than requested. If unspecified, server will pick an
+// appropriate default. See https://google.aip.dev/158 for more details.
+func (c *ProjectsLocationsInterceptEndpointGroupsListCall) PageSize(pageSize int64) *ProjectsLocationsInterceptEndpointGroupsListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": A page token, received
+// from a previous `ListInterceptEndpointGroups` call. Provide this to retrieve
+// the subsequent page. When paginating, all other parameters provided to
+// `ListInterceptEndpointGroups` must match the call that provided the page
+// token. See https://google.aip.dev/158 for more details.
+func (c *ProjectsLocationsInterceptEndpointGroupsListCall) PageToken(pageToken string) *ProjectsLocationsInterceptEndpointGroupsListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsInterceptEndpointGroupsListCall) Fields(s ...googleapi.Field) *ProjectsLocationsInterceptEndpointGroupsListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsInterceptEndpointGroupsListCall) IfNoneMatch(entityTag string) *ProjectsLocationsInterceptEndpointGroupsListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsInterceptEndpointGroupsListCall) Context(ctx context.Context) *ProjectsLocationsInterceptEndpointGroupsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsInterceptEndpointGroupsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsInterceptEndpointGroupsListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/interceptEndpointGroups")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "networksecurity.projects.locations.interceptEndpointGroups.list", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "networksecurity.projects.locations.interceptEndpointGroups.list" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *ListInterceptEndpointGroupsResponse.ServerResponse.Header or (if a response
+// was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsInterceptEndpointGroupsListCall) Do(opts ...googleapi.CallOption) (*ListInterceptEndpointGroupsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ListInterceptEndpointGroupsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "networksecurity.projects.locations.interceptEndpointGroups.list", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsLocationsInterceptEndpointGroupsListCall) Pages(ctx context.Context, f func(*ListInterceptEndpointGroupsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+type ProjectsLocationsInterceptEndpointGroupsPatchCall struct {
+	s                      *Service
+	name                   string
+	interceptendpointgroup *InterceptEndpointGroup
+	urlParams_             gensupport.URLParams
+	ctx_                   context.Context
+	header_                http.Header
+}
+
+// Patch: Updates an endpoint group. See https://google.aip.dev/134.
+//
+//   - name: Immutable. Identifier. The resource name of this endpoint group, for
+//     example:
+//     `projects/123456789/locations/global/interceptEndpointGroups/my-eg`. See
+//     https://google.aip.dev/122 for more details.
+func (r *ProjectsLocationsInterceptEndpointGroupsService) Patch(name string, interceptendpointgroup *InterceptEndpointGroup) *ProjectsLocationsInterceptEndpointGroupsPatchCall {
+	c := &ProjectsLocationsInterceptEndpointGroupsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.interceptendpointgroup = interceptendpointgroup
+	return c
+}
+
+// RequestId sets the optional parameter "requestId": A unique identifier for
+// this request. Must be a UUID4. This request is only idempotent if a
+// `request_id` is provided. See https://google.aip.dev/155 for more details.
+func (c *ProjectsLocationsInterceptEndpointGroupsPatchCall) RequestId(requestId string) *ProjectsLocationsInterceptEndpointGroupsPatchCall {
+	c.urlParams_.Set("requestId", requestId)
+	return c
+}
+
+// UpdateMask sets the optional parameter "updateMask": The list of fields to
+// update. Fields are specified relative to the endpoint group (e.g.
+// `description`; *not* `intercept_endpoint_group.description`). See
+// https://google.aip.dev/161 for more details.
+func (c *ProjectsLocationsInterceptEndpointGroupsPatchCall) UpdateMask(updateMask string) *ProjectsLocationsInterceptEndpointGroupsPatchCall {
+	c.urlParams_.Set("updateMask", updateMask)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsInterceptEndpointGroupsPatchCall) Fields(s ...googleapi.Field) *ProjectsLocationsInterceptEndpointGroupsPatchCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsInterceptEndpointGroupsPatchCall) Context(ctx context.Context) *ProjectsLocationsInterceptEndpointGroupsPatchCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsInterceptEndpointGroupsPatchCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsInterceptEndpointGroupsPatchCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.interceptendpointgroup)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PATCH", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "networksecurity.projects.locations.interceptEndpointGroups.patch", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "networksecurity.projects.locations.interceptEndpointGroups.patch" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsInterceptEndpointGroupsPatchCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "networksecurity.projects.locations.interceptEndpointGroups.patch", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 

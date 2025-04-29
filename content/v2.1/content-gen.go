@@ -20457,8 +20457,8 @@ type LiasettingsSetinventoryverificationcontactCall struct {
 	header_    http.Header
 }
 
-// Setinventoryverificationcontact: Sets the inventory verification contract
-// for the specified country.
+// Setinventoryverificationcontact: Sets the inventory verification contact for
+// the specified country.
 //
 //   - accountId: The ID of the account that manages the order. This cannot be a
 //     multi-client account.

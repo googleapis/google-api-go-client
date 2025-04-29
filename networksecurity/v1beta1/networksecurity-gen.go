@@ -612,7 +612,7 @@ type AntivirusOverride struct {
 	//
 	// Possible values:
 	//   "PROTOCOL_UNSPECIFIED" - Protocol not specified.
-	//   "SMTP" - SMTP prtocol
+	//   "SMTP" - SMTP protocol
 	//   "SMB" - SMB protocol
 	//   "POP3" - POP3 protocol
 	//   "IMAP" - IMAP protocol

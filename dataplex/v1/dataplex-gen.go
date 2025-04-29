@@ -1861,7 +1861,8 @@ func (s GoogleCloudDataplexV1DataAttributeBindingPath) MarshalJSON() ([]byte, er
 type GoogleCloudDataplexV1DataDiscoveryResult struct {
 	// BigqueryPublishing: Output only. Configuration for metadata publishing.
 	BigqueryPublishing *GoogleCloudDataplexV1DataDiscoveryResultBigQueryPublishing `json:"bigqueryPublishing,omitempty"`
-	// ScanStatistics: Output only. Statistics of the DataDiscoveryScan.
+	// ScanStatistics: Output only. Describes result statistics of a data scan
+	// discovery job.
 	ScanStatistics *GoogleCloudDataplexV1DataDiscoveryResultScanStatistics `json:"scanStatistics,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "BigqueryPublishing") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -1907,8 +1908,8 @@ func (s GoogleCloudDataplexV1DataDiscoveryResultBigQueryPublishing) MarshalJSON(
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudDataplexV1DataDiscoveryResultScanStatistics: Statistics of the
-// DataDiscoveryScan.
+// GoogleCloudDataplexV1DataDiscoveryResultScanStatistics: Describes result
+// statistics of a data scan discovery job.
 type GoogleCloudDataplexV1DataDiscoveryResultScanStatistics struct {
 	// DataProcessedBytes: The data processed in bytes.
 	DataProcessedBytes int64 `json:"dataProcessedBytes,omitempty,string"`
@@ -4371,6 +4372,94 @@ func (s GoogleCloudDataplexV1DiscoveryEventTableDetails) MarshalJSON() ([]byte, 
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudDataplexV1EncryptionConfig: A Resource designed to manage
+// encryption configurations for customers to support Customer Managed
+// Encryption Keys (CMEK).
+type GoogleCloudDataplexV1EncryptionConfig struct {
+	// CreateTime: Output only. The time when the Encryption configuration was
+	// created.
+	CreateTime string `json:"createTime,omitempty"`
+	// EncryptionState: Output only. The state of encryption of the databases.
+	//
+	// Possible values:
+	//   "ENCRYPTION_STATE_UNSPECIFIED" - State is not specified.
+	//   "ENCRYPTING" - The encryption state of the database when the
+	// EncryptionConfig is created or updated. If the encryption fails, it is
+	// retried indefinitely and the state is shown as ENCRYPTING.
+	//   "COMPLETED" - The encryption of data has completed successfully.
+	//   "FAILED" - The encryption of data has failed. The state is set to FAILED
+	// when the encryption fails due to reasons like permission issues, invalid key
+	// etc.
+	EncryptionState string `json:"encryptionState,omitempty"`
+	// Etag: Etag of the EncryptionConfig. This is a strong etag.
+	Etag string `json:"etag,omitempty"`
+	// FailureDetails: Output only. Details of the failure if anything related to
+	// Cmek db fails.
+	FailureDetails *GoogleCloudDataplexV1EncryptionConfigFailureDetails `json:"failureDetails,omitempty"`
+	// Key: Optional. If a key is chosen, it means that the customer is using CMEK.
+	// If a key is not chosen, it means that the customer is using Google managed
+	// encryption.
+	Key string `json:"key,omitempty"`
+	// Name: Identifier. The resource name of the EncryptionConfig. Format:
+	// organizations/{organization}/locations/{location}/encryptionConfigs/{encrypti
+	// on_config} Global location is not supported.
+	Name string `json:"name,omitempty"`
+	// UpdateTime: Output only. The time when the Encryption configuration was last
+	// updated.
+	UpdateTime string `json:"updateTime,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "CreateTime") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CreateTime") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDataplexV1EncryptionConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDataplexV1EncryptionConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDataplexV1EncryptionConfigFailureDetails: Details of the failure
+// if anything related to Cmek db fails.
+type GoogleCloudDataplexV1EncryptionConfigFailureDetails struct {
+	// ErrorCode: Output only. The error code for the failure.
+	//
+	// Possible values:
+	//   "UNKNOWN" - The error code is not specified
+	//   "INTERNAL_ERROR" - Error because of internal server error, will be retried
+	// automatically.
+	//   "REQUIRE_USER_ACTION" - User action is required to resolve the error.
+	ErrorCode string `json:"errorCode,omitempty"`
+	// ErrorMessage: Output only. The error message will be shown to the user. Set
+	// only if the error code is REQUIRE_USER_ACTION.
+	ErrorMessage string `json:"errorMessage,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ErrorCode") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ErrorCode") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDataplexV1EncryptionConfigFailureDetails) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDataplexV1EncryptionConfigFailureDetails
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudDataplexV1Entity: Represents tables and fileset metadata
 // contained within a zone.
 type GoogleCloudDataplexV1Entity struct {
@@ -5782,6 +5871,38 @@ func (s GoogleCloudDataplexV1ListDataTaxonomiesResponse) MarshalJSON() ([]byte, 
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudDataplexV1ListEncryptionConfigsResponse: List EncryptionConfigs
+// Response
+type GoogleCloudDataplexV1ListEncryptionConfigsResponse struct {
+	// EncryptionConfigs: The list of EncryptionConfigs under the given parent
+	// location.
+	EncryptionConfigs []*GoogleCloudDataplexV1EncryptionConfig `json:"encryptionConfigs,omitempty"`
+	// NextPageToken: Token to retrieve the next page of results, or empty if there
+	// are no more results in the list.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+	// UnreachableLocations: Locations that could not be reached.
+	UnreachableLocations []string `json:"unreachableLocations,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "EncryptionConfigs") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "EncryptionConfigs") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDataplexV1ListEncryptionConfigsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDataplexV1ListEncryptionConfigsResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudDataplexV1ListEntitiesResponse: List metadata entities response.
 type GoogleCloudDataplexV1ListEntitiesResponse struct {
 	// Entities: Entities in the specified parent zone.
@@ -6155,7 +6276,7 @@ type GoogleCloudDataplexV1MetadataJob struct {
 	// Possible values:
 	//   "TYPE_UNSPECIFIED" - Unspecified.
 	//   "IMPORT" - Import job.
-	//   "EXPORT" - Export job type.
+	//   "EXPORT" - Export job.
 	Type string `json:"type,omitempty"`
 	// Uid: Output only. A system-generated, globally unique ID for the metadata
 	// job. If the metadata job is deleted and then re-created with the same name,
@@ -6184,12 +6305,15 @@ func (s GoogleCloudDataplexV1MetadataJob) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudDataplexV1MetadataJobExportJobResult: Export Job Results. The
-// result is based on the snapshot at the time when the job is created.
+// GoogleCloudDataplexV1MetadataJobExportJobResult: Summary results from a
+// metadata export job. The results are a snapshot of the metadata at the time
+// when the job was created. The exported entries are saved to a Cloud Storage
+// bucket.
 type GoogleCloudDataplexV1MetadataJobExportJobResult struct {
-	// ErrorMessage: Output only. The error message if the export job failed.
+	// ErrorMessage: Output only. The error message if the metadata export job
+	// failed.
 	ErrorMessage string `json:"errorMessage,omitempty"`
-	// ExportedEntries: Output only. The number of entries that have been exported.
+	// ExportedEntries: Output only. The number of entries that were exported.
 	ExportedEntries int64 `json:"exportedEntries,omitempty,string"`
 	// ForceSendFields is a list of field names (e.g. "ErrorMessage") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -6209,14 +6333,18 @@ func (s GoogleCloudDataplexV1MetadataJobExportJobResult) MarshalJSON() ([]byte, 
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudDataplexV1MetadataJobExportJobSpec: Export job specification.
+// GoogleCloudDataplexV1MetadataJobExportJobSpec: Job specification for a
+// metadata export job.
 type GoogleCloudDataplexV1MetadataJobExportJobSpec struct {
-	// OutputPath: Required. The root path of the exported metadata. Must be in the
-	// format: "gs://" Or specify a customized prefix after the bucket:
-	// "gs://///.../". The length limit of the customized prefix is 128 characters.
-	// The bucket must be in the same VPC-SC perimeter with the job.
+	// OutputPath: Required. The root path of the Cloud Storage bucket to export
+	// the metadata to, in the format gs://{bucket}/. You can optionally specify a
+	// custom prefix after the bucket name, in the format gs://{bucket}/{prefix}/.
+	// The maximum length of the custom prefix is 128 characters. Dataplex
+	// constructs the object path for the exported files by using the bucket name
+	// and prefix that you provide, followed by a system-generated path.The bucket
+	// must be in the same VPC Service Controls perimeter as the job.
 	OutputPath string `json:"outputPath,omitempty"`
-	// Scope: Required. Selects the entries to be exported by this job.
+	// Scope: Required. The scope of the export job.
 	Scope *GoogleCloudDataplexV1MetadataJobExportJobSpecExportJobScope `json:"scope,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "OutputPath") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -6236,37 +6364,44 @@ func (s GoogleCloudDataplexV1MetadataJobExportJobSpec) MarshalJSON() ([]byte, er
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudDataplexV1MetadataJobExportJobSpecExportJobScope: Scope of the
-// export job.
+// GoogleCloudDataplexV1MetadataJobExportJobSpecExportJobScope: The scope of
+// the export job.
 type GoogleCloudDataplexV1MetadataJobExportJobSpecExportJobScope struct {
-	// AspectTypes: The aspect types that are in scope for the export job.
-	// Optional. If specified, only aspects of the specified types will be affected
-	// by the job. Must follow the format: "projects//locations//aspectTypes/"
+	// AspectTypes: The aspect types that are in scope for the export job,
+	// specified as relative resource names in the format
+	// projects/{project_id_or_number}/locations/{location}/aspectTypes/{aspect_type
+	// _id}. Only aspects that belong to the specified aspect types are affected by
+	// the job.
 	AspectTypes []string `json:"aspectTypes,omitempty"`
-	// EntryGroups: The entry groups that are in scope for the export job.
-	// Optional. If specified, only entries in the specified entry groups will be
-	// exported by the job. Must be in the VPC-SC perimeter of the job. The
-	// location of the entry groups must be the same as the job. Either projects or
-	// entry_groups can be specified when organization_level_export is set to
-	// false. Must follow the format: "projects//locations//entryGroups/"
+	// EntryGroups: The entry groups whose metadata you want to export, in the
+	// format
+	// projects/{project_id_or_number}/locations/{location_id}/entryGroups/{entry_gr
+	// oup_id}. Only the entries in the specified entry groups are exported.The
+	// entry groups must be in the same location and the same VPC Service Controls
+	// perimeter as the job.If you set the job scope to be a list of entry groups,
+	// then set the organization-level export flag to false and don't provide a
+	// list of projects.
 	EntryGroups []string `json:"entryGroups,omitempty"`
-	// EntryTypes: If specified, only entries of the specified types will be
-	// affected by the job. Must follow the format:
-	// "projects//locations//entryTypes/"
+	// EntryTypes: The entry types that are in scope for the export job, specified
+	// as relative resource names in the format
+	// projects/{project_id_or_number}/locations/{location}/entryTypes/{entry_type_i
+	// d}. Only entries that belong to the specified entry types are affected by
+	// the job.
 	EntryTypes []string `json:"entryTypes,omitempty"`
-	// OrganizationLevel: Indicating if it is an organization level export job. -
-	// When set to true, exports all entries from entry groups and projects sharing
-	// the same organization id of the Metadata Job. Only projects and entry groups
-	// in the VPC-SC perimeter will be exported. The projects and entry groups are
-	// ignored. - When set to false, one of the projects or entry groups must be
-	// specified. - Default to false.
+	// OrganizationLevel: Whether the metadata export job is an organization-level
+	// export job. If true, the job exports the entries from the same organization
+	// and VPC Service Controls perimeter as the job. The project that the job
+	// belongs to determines the VPC Service Controls perimeter. If you set the job
+	// scope to be at the organization level, then don't provide a list of projects
+	// or entry groups. If false, you must specify a list of projects or a list of
+	// entry groups whose entries you want to export.The default is false.
 	OrganizationLevel bool `json:"organizationLevel,omitempty"`
-	// Projects: The projects that are in the scope of the export job. Can either
-	// be project numbers or project IDs. If specified, only the entries from the
-	// specified projects will be exported. The projects must be in the same
-	// organization and in the VPC-SC perimeter. Either projects or entry_groups
-	// can be specified when organization_level_export is set to false. Must follow
-	// the format: "projects/"
+	// Projects: The projects whose metadata you want to export, in the format
+	// projects/{project_id_or_number}. Only the entries from the specified
+	// projects are exported.The projects must be in the same organization and VPC
+	// Service Controls perimeter as the job.If you set the job scope to be a list
+	// of projects, then set the organization-level export flag to false and don't
+	// provide a list of entry groups.
 	Projects []string `json:"projects,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AspectTypes") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -6392,9 +6527,9 @@ type GoogleCloudDataplexV1MetadataJobImportJobSpec struct {
 	// SourceStorageUri: Optional. The URI of a Cloud Storage bucket or folder
 	// (beginning with gs:// and ending with /) that contains the metadata import
 	// files for this job.A metadata import file defines the values to set for each
-	// of the entries and aspects in a metadata job. For more information about how
-	// to create a metadata import file and the file requirements, see Metadata
-	// import file
+	// of the entries and aspects in a metadata import job. For more information
+	// about how to create a metadata import file and the file requirements, see
+	// Metadata import file
 	// (https://cloud.google.com/dataplex/docs/import-metadata#metadata-import-file).You
 	// can provide multiple metadata import files in the same metadata job. The
 	// bucket or folder must contain at least one metadata import file, in JSON
@@ -8513,6 +8648,333 @@ func (s GoogleTypeExpr) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+type OrganizationsLocationsEncryptionConfigsCreateCall struct {
+	s                                     *Service
+	parent                                string
+	googleclouddataplexv1encryptionconfig *GoogleCloudDataplexV1EncryptionConfig
+	urlParams_                            gensupport.URLParams
+	ctx_                                  context.Context
+	header_                               http.Header
+}
+
+// Create: Create an EncryptionConfig.
+//
+// - parent: The location at which the EncryptionConfig is to be created.
+func (r *OrganizationsLocationsEncryptionConfigsService) Create(parent string, googleclouddataplexv1encryptionconfig *GoogleCloudDataplexV1EncryptionConfig) *OrganizationsLocationsEncryptionConfigsCreateCall {
+	c := &OrganizationsLocationsEncryptionConfigsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.googleclouddataplexv1encryptionconfig = googleclouddataplexv1encryptionconfig
+	return c
+}
+
+// EncryptionConfigId sets the optional parameter "encryptionConfigId":
+// Required. The ID of the EncryptionConfig to create. Currently, only a value
+// of "default" is supported.
+func (c *OrganizationsLocationsEncryptionConfigsCreateCall) EncryptionConfigId(encryptionConfigId string) *OrganizationsLocationsEncryptionConfigsCreateCall {
+	c.urlParams_.Set("encryptionConfigId", encryptionConfigId)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *OrganizationsLocationsEncryptionConfigsCreateCall) Fields(s ...googleapi.Field) *OrganizationsLocationsEncryptionConfigsCreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *OrganizationsLocationsEncryptionConfigsCreateCall) Context(ctx context.Context) *OrganizationsLocationsEncryptionConfigsCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *OrganizationsLocationsEncryptionConfigsCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *OrganizationsLocationsEncryptionConfigsCreateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googleclouddataplexv1encryptionconfig)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/encryptionConfigs")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "dataplex.organizations.locations.encryptionConfigs.create", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "dataplex.organizations.locations.encryptionConfigs.create" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleLongrunningOperation.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *OrganizationsLocationsEncryptionConfigsCreateCall) Do(opts ...googleapi.CallOption) (*GoogleLongrunningOperation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleLongrunningOperation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "dataplex.organizations.locations.encryptionConfigs.create", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type OrganizationsLocationsEncryptionConfigsDeleteCall struct {
+	s          *Service
+	name       string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Delete: Delete an EncryptionConfig.
+//
+// - name: The name of the EncryptionConfig to delete.
+func (r *OrganizationsLocationsEncryptionConfigsService) Delete(name string) *OrganizationsLocationsEncryptionConfigsDeleteCall {
+	c := &OrganizationsLocationsEncryptionConfigsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Etag sets the optional parameter "etag": Etag of the EncryptionConfig. This
+// is a strong etag.
+func (c *OrganizationsLocationsEncryptionConfigsDeleteCall) Etag(etag string) *OrganizationsLocationsEncryptionConfigsDeleteCall {
+	c.urlParams_.Set("etag", etag)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *OrganizationsLocationsEncryptionConfigsDeleteCall) Fields(s ...googleapi.Field) *OrganizationsLocationsEncryptionConfigsDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *OrganizationsLocationsEncryptionConfigsDeleteCall) Context(ctx context.Context) *OrganizationsLocationsEncryptionConfigsDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *OrganizationsLocationsEncryptionConfigsDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *OrganizationsLocationsEncryptionConfigsDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("DELETE", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "dataplex.organizations.locations.encryptionConfigs.delete", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "dataplex.organizations.locations.encryptionConfigs.delete" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleLongrunningOperation.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *OrganizationsLocationsEncryptionConfigsDeleteCall) Do(opts ...googleapi.CallOption) (*GoogleLongrunningOperation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleLongrunningOperation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "dataplex.organizations.locations.encryptionConfigs.delete", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type OrganizationsLocationsEncryptionConfigsGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Get an EncryptionConfig.
+//
+// - name: The name of the EncryptionConfig to fetch.
+func (r *OrganizationsLocationsEncryptionConfigsService) Get(name string) *OrganizationsLocationsEncryptionConfigsGetCall {
+	c := &OrganizationsLocationsEncryptionConfigsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *OrganizationsLocationsEncryptionConfigsGetCall) Fields(s ...googleapi.Field) *OrganizationsLocationsEncryptionConfigsGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *OrganizationsLocationsEncryptionConfigsGetCall) IfNoneMatch(entityTag string) *OrganizationsLocationsEncryptionConfigsGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *OrganizationsLocationsEncryptionConfigsGetCall) Context(ctx context.Context) *OrganizationsLocationsEncryptionConfigsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *OrganizationsLocationsEncryptionConfigsGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *OrganizationsLocationsEncryptionConfigsGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "dataplex.organizations.locations.encryptionConfigs.get", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "dataplex.organizations.locations.encryptionConfigs.get" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudDataplexV1EncryptionConfig.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *OrganizationsLocationsEncryptionConfigsGetCall) Do(opts ...googleapi.CallOption) (*GoogleCloudDataplexV1EncryptionConfig, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudDataplexV1EncryptionConfig{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "dataplex.organizations.locations.encryptionConfigs.get", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
 type OrganizationsLocationsEncryptionConfigsGetIamPolicyCall struct {
 	s            *Service
 	resource     string
@@ -8640,6 +9102,293 @@ func (c *OrganizationsLocationsEncryptionConfigsGetIamPolicyCall) Do(opts ...goo
 		return nil, err
 	}
 	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "dataplex.organizations.locations.encryptionConfigs.getIamPolicy", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type OrganizationsLocationsEncryptionConfigsListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: List EncryptionConfigs.
+//
+// - parent: The location for which the EncryptionConfig is to be listed.
+func (r *OrganizationsLocationsEncryptionConfigsService) List(parent string) *OrganizationsLocationsEncryptionConfigsListCall {
+	c := &OrganizationsLocationsEncryptionConfigsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// Filter sets the optional parameter "filter": Filter the EncryptionConfigs to
+// be returned. Using bare literals: (These values will be matched anywhere it
+// may appear in the object's field values) * filter=some_value Using fields:
+// (These values will be matched only in the specified field) *
+// filter=some_field=some_value Supported fields: * name, key, create_time,
+// update_time, encryption_state Example: *
+// filter=name=organizations/123/locations/us-central1/encryptionConfigs/test-co
+// nfig conjunctions: (AND, OR, NOT) *
+// filter=name=organizations/123/locations/us-central1/encryptionConfigs/test-co
+// nfig AND mode=CMEK logical operators: (>, <, >=, <=, !=, =, :), *
+// filter=create_time>2024-05-01T00:00:00.000Z
+func (c *OrganizationsLocationsEncryptionConfigsListCall) Filter(filter string) *OrganizationsLocationsEncryptionConfigsListCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// OrderBy sets the optional parameter "orderBy": Order by fields for the
+// result.
+func (c *OrganizationsLocationsEncryptionConfigsListCall) OrderBy(orderBy string) *OrganizationsLocationsEncryptionConfigsListCall {
+	c.urlParams_.Set("orderBy", orderBy)
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": Maximum number of
+// EncryptionConfigs to return. The service may return fewer than this value.
+// If unspecified, at most 10 EncryptionConfigs will be returned. The maximum
+// value is 1000; values above 1000 will be coerced to 1000.
+func (c *OrganizationsLocationsEncryptionConfigsListCall) PageSize(pageSize int64) *OrganizationsLocationsEncryptionConfigsListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": Page token received from
+// a previous ListEncryptionConfigs call. Provide this to retrieve the
+// subsequent page. When paginating, the parameters - filter and order_by
+// provided to ListEncryptionConfigs must match the call that provided the page
+// token.
+func (c *OrganizationsLocationsEncryptionConfigsListCall) PageToken(pageToken string) *OrganizationsLocationsEncryptionConfigsListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *OrganizationsLocationsEncryptionConfigsListCall) Fields(s ...googleapi.Field) *OrganizationsLocationsEncryptionConfigsListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *OrganizationsLocationsEncryptionConfigsListCall) IfNoneMatch(entityTag string) *OrganizationsLocationsEncryptionConfigsListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *OrganizationsLocationsEncryptionConfigsListCall) Context(ctx context.Context) *OrganizationsLocationsEncryptionConfigsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *OrganizationsLocationsEncryptionConfigsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *OrganizationsLocationsEncryptionConfigsListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/encryptionConfigs")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "dataplex.organizations.locations.encryptionConfigs.list", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "dataplex.organizations.locations.encryptionConfigs.list" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudDataplexV1ListEncryptionConfigsResponse.ServerResponse.Header or
+// (if a response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *OrganizationsLocationsEncryptionConfigsListCall) Do(opts ...googleapi.CallOption) (*GoogleCloudDataplexV1ListEncryptionConfigsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudDataplexV1ListEncryptionConfigsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "dataplex.organizations.locations.encryptionConfigs.list", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *OrganizationsLocationsEncryptionConfigsListCall) Pages(ctx context.Context, f func(*GoogleCloudDataplexV1ListEncryptionConfigsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+type OrganizationsLocationsEncryptionConfigsPatchCall struct {
+	s                                     *Service
+	name                                  string
+	googleclouddataplexv1encryptionconfig *GoogleCloudDataplexV1EncryptionConfig
+	urlParams_                            gensupport.URLParams
+	ctx_                                  context.Context
+	header_                               http.Header
+}
+
+// Patch: Update an EncryptionConfig.
+//
+//   - name: Identifier. The resource name of the EncryptionConfig. Format:
+//     organizations/{organization}/locations/{location}/encryptionConfigs/{encryp
+//     tion_config} Global location is not supported.
+func (r *OrganizationsLocationsEncryptionConfigsService) Patch(name string, googleclouddataplexv1encryptionconfig *GoogleCloudDataplexV1EncryptionConfig) *OrganizationsLocationsEncryptionConfigsPatchCall {
+	c := &OrganizationsLocationsEncryptionConfigsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.googleclouddataplexv1encryptionconfig = googleclouddataplexv1encryptionconfig
+	return c
+}
+
+// UpdateMask sets the optional parameter "updateMask": Mask of fields to
+// update. The service treats an omitted field mask as an implied field mask
+// equivalent to all fields that are populated (have a non-empty value).
+func (c *OrganizationsLocationsEncryptionConfigsPatchCall) UpdateMask(updateMask string) *OrganizationsLocationsEncryptionConfigsPatchCall {
+	c.urlParams_.Set("updateMask", updateMask)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *OrganizationsLocationsEncryptionConfigsPatchCall) Fields(s ...googleapi.Field) *OrganizationsLocationsEncryptionConfigsPatchCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *OrganizationsLocationsEncryptionConfigsPatchCall) Context(ctx context.Context) *OrganizationsLocationsEncryptionConfigsPatchCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *OrganizationsLocationsEncryptionConfigsPatchCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *OrganizationsLocationsEncryptionConfigsPatchCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googleclouddataplexv1encryptionconfig)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PATCH", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "dataplex.organizations.locations.encryptionConfigs.patch", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "dataplex.organizations.locations.encryptionConfigs.patch" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleLongrunningOperation.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *OrganizationsLocationsEncryptionConfigsPatchCall) Do(opts ...googleapi.CallOption) (*GoogleLongrunningOperation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleLongrunningOperation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "dataplex.organizations.locations.encryptionConfigs.patch", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 

@@ -1329,14 +1329,15 @@ type ProductInput struct {
 	// Product: Output only. The name of the processed product. Format:
 	// `accounts/{account}/products/{product}`
 	Product string `json:"product,omitempty"`
-	// VersionNumber: Optional. Represents the existing version (freshness) of the
-	// product, which can be used to preserve the right order when multiple updates
-	// are done at the same time. If set, the insertion is prevented when version
-	// number is lower than the current version number of the existing product.
-	// Re-insertion (for example, product refresh after 30 days) can be performed
-	// with the current `version_number`. Only supported for insertions into
-	// primary data sources. If the operation is prevented, the aborted exception
-	// will be thrown.
+	// VersionNumber: Optional. Immutable. Represents the existing version
+	// (freshness) of the product, which can be used to preserve the right order
+	// when multiple updates are done at the same time. If set, the insertion is
+	// prevented when version number is lower than the current version number of
+	// the existing product. Re-insertion (for example, product refresh after 30
+	// days) can be performed with the current `version_number`. Only supported for
+	// insertions into primary data sources. Do not set this field for updates. Do
+	// not set this field for insertions into supplemental data sources. If the
+	// operation is prevented, the aborted exception will be thrown.
 	VersionNumber int64 `json:"versionNumber,omitempty,string"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.

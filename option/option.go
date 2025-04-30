@@ -11,6 +11,7 @@ import (
 	"net/http"
 
 	"cloud.google.com/go/auth"
+	"go.opentelemetry.io/contrib/instrumentation/net/http/otelhttp"
 	"golang.org/x/oauth2"
 	"golang.org/x/oauth2/google"
 	"google.golang.org/api/internal"
@@ -413,4 +414,18 @@ type withLogger struct{ l *slog.Logger }
 
 func (w withLogger) Apply(o *internal.DialSettings) {
 	o.Logger = w.l
+}
+
+// WithOtelHTTPOpts returns a ClientOption that sets the options for
+// the OpenTelemetry HTTP client. This option is used to configure
+// the OpenTelemetry HTTP client instrumentation.
+func WithOtelHTTPOpts(opts ...otelhttp.Option) ClientOption {
+	return withOtelHTTPOpts{opts}
+}
+
+type withOtelHTTPOpts struct{ opts []otelhttp.Option }
+
+func (w withOtelHTTPOpts) Apply(o *internal.DialSettings) {
+	o.OtelHTTPOpts = make([]otelhttp.Option, len(w.opts))
+	copy(o.OtelHTTPOpts, w.opts)
 }

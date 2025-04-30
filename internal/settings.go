@@ -15,6 +15,7 @@ import (
 	"time"
 
 	"cloud.google.com/go/auth"
+	"go.opentelemetry.io/contrib/instrumentation/net/http/otelhttp"
 	"golang.org/x/oauth2"
 	"golang.org/x/oauth2/google"
 	"google.golang.org/api/internal/impersonate"
@@ -76,6 +77,9 @@ type DialSettings struct {
 
 	// TODO(b/372244283): Remove after b/358175516 has been fixed
 	EnableAsyncRefreshDryRun func()
+
+	// otelhttp options
+	OtelHTTPOpts []otelhttp.Option
 }
 
 // GetScopes returns the user-provided scopes, if set, or else falls back to the

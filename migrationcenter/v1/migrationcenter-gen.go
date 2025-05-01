@@ -367,6 +367,9 @@ type AggregateAssetsValuesRequest struct {
 	// Filter: Optional. The aggregation will be performed on assets that match the
 	// provided filter.
 	Filter string `json:"filter,omitempty"`
+	// ShowHidden: Optional. When this value is set to 'true,' the response will
+	// include all assets, including those that are hidden.
+	ShowHidden bool `json:"showHidden,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Aggregations") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -689,6 +692,12 @@ type Asset struct {
 	// DatabaseDetails: Output only. Asset information specific for logical
 	// databases.
 	DatabaseDetails *DatabaseDetails `json:"databaseDetails,omitempty"`
+	// Hidden: Optional. Indicates if the asset is hidden.
+	Hidden bool `json:"hidden,omitempty"`
+	// HideReason: Optional. An optional reason for marking this asset as hidden.
+	HideReason string `json:"hideReason,omitempty"`
+	// HideTime: Output only. The timestamp when the asset was marked as hidden.
+	HideTime string `json:"hideTime,omitempty"`
 	// InsightList: Output only. The list of insights associated with the asset.
 	InsightList *InsightList `json:"insightList,omitempty"`
 	// Labels: Labels as key value pairs.
@@ -7099,6 +7108,14 @@ func (c *ProjectsLocationsAssetsListCall) PageSize(pageSize int64) *ProjectsLoca
 // page of results the server should return.
 func (c *ProjectsLocationsAssetsListCall) PageToken(pageToken string) *ProjectsLocationsAssetsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// ShowHidden sets the optional parameter "showHidden": When this value is set
+// to 'true,' the response will include all assets, including those that are
+// hidden.
+func (c *ProjectsLocationsAssetsListCall) ShowHidden(showHidden bool) *ProjectsLocationsAssetsListCall {
+	c.urlParams_.Set("showHidden", fmt.Sprint(showHidden))
 	return c
 }
 

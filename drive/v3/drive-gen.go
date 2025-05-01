@@ -3215,7 +3215,7 @@ type User struct {
 	// visible to the requester.
 	EmailAddress string `json:"emailAddress,omitempty"`
 	// Kind: Output only. Identifies what kind of resource this is. Value: the
-	// fixed string "drive#user".
+	// fixed string `drive#user`.
 	Kind string `json:"kind,omitempty"`
 	// Me: Output only. Whether this user is the requesting user.
 	Me bool `json:"me,omitempty"`

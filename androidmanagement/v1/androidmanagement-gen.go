@@ -1144,6 +1144,38 @@ func (s ApplicationReportingSettings) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// BackupServiceToggledEvent: An admin has enabled or disabled backup service.
+type BackupServiceToggledEvent struct {
+	// AdminPackageName: Package name of the admin app requesting the change.
+	AdminPackageName string `json:"adminPackageName,omitempty"`
+	// AdminUserId: User ID of the admin app from the which the change was
+	// requested.
+	AdminUserId int64 `json:"adminUserId,omitempty"`
+	// BackupServiceState: Whether the backup service is enabled
+	//
+	// Possible values:
+	//   "BACKUP_SERVICE_STATE_UNSPECIFIED" - No value is set
+	//   "BACKUP_SERVICE_DISABLED" - Backup service is enabled
+	//   "BACKUP_SERVICE_ENABLED" - Backup service is disabled
+	BackupServiceState string `json:"backupServiceState,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AdminPackageName") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AdminPackageName") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s BackupServiceToggledEvent) MarshalJSON() ([]byte, error) {
+	type NoMethod BackupServiceToggledEvent
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // BatchUsageLogEvents: Batched event logs of events from the device.
 type BatchUsageLogEvents struct {
 	// Device: If present, the name of the device in the form
@@ -2073,6 +2105,19 @@ func (s Device) MarshalJSON() ([]byte, error) {
 // DeviceConnectivityManagement: Covers controls for device connectivity such
 // as Wi-Fi, USB data access, keyboard/mouse connections, and more.
 type DeviceConnectivityManagement struct {
+	// BluetoothSharing: Optional. Controls whether Bluetooth sharing is allowed.
+	//
+	// Possible values:
+	//   "BLUETOOTH_SHARING_UNSPECIFIED" - Unspecified. Defaults to
+	// BLUETOOTH_SHARING_DISALLOWED on work profiles and BLUETOOTH_SHARING_ALLOWED
+	// on fully managed devices.
+	//   "BLUETOOTH_SHARING_ALLOWED" - Bluetooth sharing is allowed.Supported on
+	// Android 8 and above. A NonComplianceDetail with API_LEVEL is reported on
+	// work profiles if the Android version is less than 8.
+	//   "BLUETOOTH_SHARING_DISALLOWED" - Bluetooth sharing is disallowed.Supported
+	// on Android 8 and above. A NonComplianceDetail with API_LEVEL is reported on
+	// fully managed devices if the Android version is less than 8.
+	BluetoothSharing string `json:"bluetoothSharing,omitempty"`
 	// ConfigureWifi: Controls Wi-Fi configuring privileges. Based on the option
 	// set, user will have either full or limited or no control in configuring
 	// Wi-Fi networks.
@@ -2159,15 +2204,15 @@ type DeviceConnectivityManagement struct {
 	// Note that this does not affect which networks can be configured on the
 	// device. Supported on company-owned devices running Android 13 and above.
 	WifiSsidPolicy *WifiSsidPolicy `json:"wifiSsidPolicy,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "ConfigureWifi") to
+	// ForceSendFields is a list of field names (e.g. "BluetoothSharing") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "ConfigureWifi") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
+	// NullFields is a list of field names (e.g. "BluetoothSharing") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -4806,6 +4851,20 @@ type PersonalUsagePolicies struct {
 	// AccountTypesWithManagementDisabled: Account types that can't be managed by
 	// the user.
 	AccountTypesWithManagementDisabled []string `json:"accountTypesWithManagementDisabled,omitempty"`
+	// BluetoothSharing: Optional. Whether bluetooth sharing is allowed.
+	//
+	// Possible values:
+	//   "BLUETOOTH_SHARING_UNSPECIFIED" - Unspecified. Defaults to
+	// BLUETOOTH_SHARING_ALLOWED.
+	//   "BLUETOOTH_SHARING_ALLOWED" - Bluetooth sharing is allowed on personal
+	// profile.Supported on Android 8 and above. A NonComplianceDetail with
+	// MANAGEMENT_MODE is reported if this is set for a personal device.
+	//   "BLUETOOTH_SHARING_DISALLOWED" - Bluetooth sharing is disallowed on
+	// personal profile.Supported on Android 8 and above. A NonComplianceDetail
+	// with API_LEVEL is reported if the Android version is less than 8. A
+	// NonComplianceDetail with MANAGEMENT_MODE is reported if this is set for a
+	// personal device.
+	BluetoothSharing string `json:"bluetoothSharing,omitempty"`
 	// CameraDisabled: If true, the camera is disabled on the personal profile.
 	CameraDisabled bool `json:"cameraDisabled,omitempty"`
 	// MaxDaysWithWorkOff: Controls how long the work profile can stay off. The
@@ -6468,6 +6527,9 @@ type UsageLogEvent struct {
 	AdbShellInteractiveEvent *AdbShellInteractiveEvent `json:"adbShellInteractiveEvent,omitempty"`
 	// AppProcessStartEvent: An app process was started. Part of SECURITY_LOGS.
 	AppProcessStartEvent *AppProcessStartEvent `json:"appProcessStartEvent,omitempty"`
+	// BackupServiceToggledEvent: An admin has enabled or disabled backup service.
+	// Part of SECURITY_LOGS.
+	BackupServiceToggledEvent *BackupServiceToggledEvent `json:"backupServiceToggledEvent,omitempty"`
 	// CertAuthorityInstalledEvent: A new root certificate was installed into the
 	// system's trusted credential storage. Part of SECURITY_LOGS.
 	CertAuthorityInstalledEvent *CertAuthorityInstalledEvent `json:"certAuthorityInstalledEvent,omitempty"`
@@ -6544,6 +6606,8 @@ type UsageLogEvent struct {
 	// has been set.
 	//   "LOST_MODE_LOCATION" - Indicates lostModeLocationEvent has been set.
 	//   "ENROLLMENT_COMPLETE" - Indicates enrollment_complete_event has been set.
+	//   "BACKUP_SERVICE_TOGGLED" - Indicates backupServiceToggledEvent has been
+	// set.
 	EventType string `json:"eventType,omitempty"`
 	// FilePulledEvent: A file was downloaded from the device. Part of
 	// SECURITY_LOGS.
@@ -10317,7 +10381,7 @@ type EnterprisesWebAppsGetCall struct {
 // Get: Gets a web app.
 //
 //   - name: The name of the web app in the form
-//     enterprises/{enterpriseId}/webApp/{packageName}.
+//     enterprises/{enterpriseId}/webApps/{packageName}.
 func (r *EnterprisesWebAppsService) Get(name string) *EnterprisesWebAppsGetCall {
 	c := &EnterprisesWebAppsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name

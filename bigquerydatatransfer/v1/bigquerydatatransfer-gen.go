@@ -1479,8 +1479,10 @@ type ProjectsDataSourcesCheckValidCredsCall struct {
 // CheckValidCreds: Returns true if valid credentials exist for the given data
 // source and requesting user.
 //
-//   - name: The data source in the form:
-//     `projects/{project_id}/dataSources/{data_source_id}` or
+//   - name: The name of the data source. If you are using the regionless method,
+//     the location must be `US` and the name should be in the following form: *
+//     `projects/{project_id}/dataSources/{data_source_id}` If you are using the
+//     regionalized method, the name should be in the following form: *
 //     `projects/{project_id}/locations/{location_id}/dataSources/{data_source_id}
 //     `.
 func (r *ProjectsDataSourcesService) CheckValidCreds(name string, checkvalidcredsrequest *CheckValidCredsRequest) *ProjectsDataSourcesCheckValidCredsCall {
@@ -1586,8 +1588,10 @@ type ProjectsDataSourcesGetCall struct {
 
 // Get: Retrieves a supported data source and returns its settings.
 //
-//   - name: The field will contain name of the resource requested, for example:
-//     `projects/{project_id}/dataSources/{data_source_id}` or
+//   - name: The name of the resource requested. If you are using the regionless
+//     method, the location must be `US` and the name should be in the following
+//     form: * `projects/{project_id}/dataSources/{data_source_id}` If you are
+//     using the regionalized method, the name should be in the following form: *
 //     `projects/{project_id}/locations/{location_id}/dataSources/{data_source_id}
 //     `.
 func (r *ProjectsDataSourcesService) Get(name string) *ProjectsDataSourcesGetCall {
@@ -2339,8 +2343,10 @@ type ProjectsLocationsDataSourcesCheckValidCredsCall struct {
 // CheckValidCreds: Returns true if valid credentials exist for the given data
 // source and requesting user.
 //
-//   - name: The data source in the form:
-//     `projects/{project_id}/dataSources/{data_source_id}` or
+//   - name: The name of the data source. If you are using the regionless method,
+//     the location must be `US` and the name should be in the following form: *
+//     `projects/{project_id}/dataSources/{data_source_id}` If you are using the
+//     regionalized method, the name should be in the following form: *
 //     `projects/{project_id}/locations/{location_id}/dataSources/{data_source_id}
 //     `.
 func (r *ProjectsLocationsDataSourcesService) CheckValidCreds(name string, checkvalidcredsrequest *CheckValidCredsRequest) *ProjectsLocationsDataSourcesCheckValidCredsCall {
@@ -2446,8 +2452,10 @@ type ProjectsLocationsDataSourcesGetCall struct {
 
 // Get: Retrieves a supported data source and returns its settings.
 //
-//   - name: The field will contain name of the resource requested, for example:
-//     `projects/{project_id}/dataSources/{data_source_id}` or
+//   - name: The name of the resource requested. If you are using the regionless
+//     method, the location must be `US` and the name should be in the following
+//     form: * `projects/{project_id}/dataSources/{data_source_id}` If you are
+//     using the regionalized method, the name should be in the following form: *
 //     `projects/{project_id}/locations/{location_id}/dataSources/{data_source_id}
 //     `.
 func (r *ProjectsLocationsDataSourcesService) Get(name string) *ProjectsLocationsDataSourcesGetCall {
@@ -2862,8 +2870,10 @@ type ProjectsLocationsTransferConfigsDeleteCall struct {
 // Delete: Deletes a data transfer configuration, including any associated
 // transfer runs and logs.
 //
-//   - name: The field will contain name of the resource requested, for example:
-//     `projects/{project_id}/transferConfigs/{config_id}` or
+//   - name: The name of the resource to delete. If you are using the regionless
+//     method, the location must be `US` and the name should be in the following
+//     form: * `projects/{project_id}/transferConfigs/{config_id}` If you are
+//     using the regionalized method, the name should be in the following form: *
 //     `projects/{project_id}/locations/{location_id}/transferConfigs/{config_id}`.
 func (r *ProjectsLocationsTransferConfigsService) Delete(name string) *ProjectsLocationsTransferConfigsDeleteCall {
 	c := &ProjectsLocationsTransferConfigsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -2962,8 +2972,10 @@ type ProjectsLocationsTransferConfigsGetCall struct {
 
 // Get: Returns information about a data transfer config.
 //
-//   - name: The field will contain name of the resource requested, for example:
-//     `projects/{project_id}/transferConfigs/{config_id}` or
+//   - name: The name of the resource requested. If you are using the regionless
+//     method, the location must be `US` and the name should be in the following
+//     form: * `projects/{project_id}/transferConfigs/{config_id}` If you are
+//     using the regionalized method, the name should be in the following form: *
 //     `projects/{project_id}/locations/{location_id}/transferConfigs/{config_id}`.
 func (r *ProjectsLocationsTransferConfigsService) Get(name string) *ProjectsLocationsTransferConfigsGetCall {
 	c := &ProjectsLocationsTransferConfigsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -3075,7 +3087,10 @@ type ProjectsLocationsTransferConfigsListCall struct {
 // the specified location.
 //
 //   - parent: The BigQuery project id for which transfer configs should be
-//     returned: `projects/{project_id}` or
+//     returned. If you are using the regionless method, the location must be
+//     `US` and `parent` should be in the following form: *
+//     `projects/{project_id} If you are using the regionalized method, `parent`
+//     should be in the following form: *
 //     `projects/{project_id}/locations/{location_id}`.
 func (r *ProjectsLocationsTransferConfigsService) List(parent string) *ProjectsLocationsTransferConfigsListCall {
 	c := &ProjectsLocationsTransferConfigsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -3397,10 +3412,11 @@ type ProjectsLocationsTransferConfigsScheduleRunsCall struct {
 // range, one transfer run is created. Note that runs are created per UTC time
 // in the time range. DEPRECATED: use StartManualTransferRuns instead.
 //
-//   - parent: Transfer configuration name in the form:
-//     `projects/{project_id}/transferConfigs/{config_id}` or
-//     `projects/{project_id}/locations/{location_id}/transferConfigs/{config_id}`
-//     .
+//   - parent: Transfer configuration name. If you are using the regionless
+//     method, the location must be `US` and the name should be in the following
+//     form: * `projects/{project_id}/transferConfigs/{config_id}` If you are
+//     using the regionalized method, the name should be in the following form: *
+//     `projects/{project_id}/locations/{location_id}/transferConfigs/{config_id}`.
 func (r *ProjectsLocationsTransferConfigsService) ScheduleRuns(parent string, scheduletransferrunsrequest *ScheduleTransferRunsRequest) *ProjectsLocationsTransferConfigsScheduleRunsCall {
 	c := &ProjectsLocationsTransferConfigsScheduleRunsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -3502,15 +3518,19 @@ type ProjectsLocationsTransferConfigsStartManualRunsCall struct {
 	header_                        http.Header
 }
 
-// StartManualRuns: Start manual transfer runs to be executed now with
-// schedule_time equal to current time. The transfer runs can be created for a
-// time range where the run_time is between start_time (inclusive) and end_time
-// (exclusive), or for a specific run_time.
+// StartManualRuns: Manually initiates transfer runs. You can schedule these
+// runs in two ways: 1. For a specific point in time using the
+// 'requested_run_time' parameter. 2. For a period between 'start_time'
+// (inclusive) and 'end_time' (exclusive). If scheduling a single run, it is
+// set to execute immediately (schedule_time equals the current time). When
+// scheduling multiple runs within a time range, the first run starts now, and
+// subsequent runs are delayed by 15 seconds each.
 //
-//   - parent: Transfer configuration name in the form:
-//     `projects/{project_id}/transferConfigs/{config_id}` or
-//     `projects/{project_id}/locations/{location_id}/transferConfigs/{config_id}`
-//     .
+//   - parent: Transfer configuration name. If you are using the regionless
+//     method, the location must be `US` and the name should be in the following
+//     form: * `projects/{project_id}/transferConfigs/{config_id}` If you are
+//     using the regionalized method, the name should be in the following form: *
+//     `projects/{project_id}/locations/{location_id}/transferConfigs/{config_id}`.
 func (r *ProjectsLocationsTransferConfigsService) StartManualRuns(parent string, startmanualtransferrunsrequest *StartManualTransferRunsRequest) *ProjectsLocationsTransferConfigsStartManualRunsCall {
 	c := &ProjectsLocationsTransferConfigsStartManualRunsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -3613,8 +3633,11 @@ type ProjectsLocationsTransferConfigsRunsDeleteCall struct {
 
 // Delete: Deletes the specified transfer run.
 //
-//   - name: The field will contain name of the resource requested, for example:
-//     `projects/{project_id}/transferConfigs/{config_id}/runs/{run_id}` or
+//   - name: The name of the resource requested. If you are using the regionless
+//     method, the location must be `US` and the name should be in the following
+//     form: * `projects/{project_id}/transferConfigs/{config_id}/runs/{run_id}`
+//     If you are using the regionalized method, the name should be in the
+//     following form: *
 //     `projects/{project_id}/locations/{location_id}/transferConfigs/{config_id}/
 //     runs/{run_id}`.
 func (r *ProjectsLocationsTransferConfigsRunsService) Delete(name string) *ProjectsLocationsTransferConfigsRunsDeleteCall {
@@ -3714,8 +3737,11 @@ type ProjectsLocationsTransferConfigsRunsGetCall struct {
 
 // Get: Returns information about the particular transfer run.
 //
-//   - name: The field will contain name of the resource requested, for example:
-//     `projects/{project_id}/transferConfigs/{config_id}/runs/{run_id}` or
+//   - name: The name of the resource requested. If you are using the regionless
+//     method, the location must be `US` and the name should be in the following
+//     form: * `projects/{project_id}/transferConfigs/{config_id}/runs/{run_id}`
+//     If you are using the regionalized method, the name should be in the
+//     following form: *
 //     `projects/{project_id}/locations/{location_id}/transferConfigs/{config_id}/
 //     runs/{run_id}`.
 func (r *ProjectsLocationsTransferConfigsRunsService) Get(name string) *ProjectsLocationsTransferConfigsRunsGetCall {
@@ -3827,10 +3853,11 @@ type ProjectsLocationsTransferConfigsRunsListCall struct {
 // List: Returns information about running and completed transfer runs.
 //
 //   - parent: Name of transfer configuration for which transfer runs should be
-//     retrieved. Format of transfer configuration resource name is:
-//     `projects/{project_id}/transferConfigs/{config_id}` or
-//     `projects/{project_id}/locations/{location_id}/transferConfigs/{config_id}`
-//     .
+//     retrieved. If you are using the regionless method, the location must be
+//     `US` and the name should be in the following form: *
+//     `projects/{project_id}/transferConfigs/{config_id}` If you are using the
+//     regionalized method, the name should be in the following form: *
+//     `projects/{project_id}/locations/{location_id}/transferConfigs/{config_id}`.
 func (r *ProjectsLocationsTransferConfigsRunsService) List(parent string) *ProjectsLocationsTransferConfigsRunsListCall {
 	c := &ProjectsLocationsTransferConfigsRunsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -4009,8 +4036,11 @@ type ProjectsLocationsTransferConfigsRunsTransferLogsListCall struct {
 
 // List: Returns log messages for the transfer run.
 //
-//   - parent: Transfer run name in the form:
-//     `projects/{project_id}/transferConfigs/{config_id}/runs/{run_id}` or
+//   - parent: Transfer run name. If you are using the regionless method, the
+//     location must be `US` and the name should be in the following form: *
+//     `projects/{project_id}/transferConfigs/{config_id}/runs/{run_id}` If you
+//     are using the regionalized method, the name should be in the following
+//     form: *
 //     `projects/{project_id}/locations/{location_id}/transferConfigs/{config_id}/
 //     runs/{run_id}`.
 func (r *ProjectsLocationsTransferConfigsRunsTransferLogsService) List(parent string) *ProjectsLocationsTransferConfigsRunsTransferLogsListCall {
@@ -4328,8 +4358,10 @@ type ProjectsTransferConfigsDeleteCall struct {
 // Delete: Deletes a data transfer configuration, including any associated
 // transfer runs and logs.
 //
-//   - name: The field will contain name of the resource requested, for example:
-//     `projects/{project_id}/transferConfigs/{config_id}` or
+//   - name: The name of the resource to delete. If you are using the regionless
+//     method, the location must be `US` and the name should be in the following
+//     form: * `projects/{project_id}/transferConfigs/{config_id}` If you are
+//     using the regionalized method, the name should be in the following form: *
 //     `projects/{project_id}/locations/{location_id}/transferConfigs/{config_id}`.
 func (r *ProjectsTransferConfigsService) Delete(name string) *ProjectsTransferConfigsDeleteCall {
 	c := &ProjectsTransferConfigsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -4428,8 +4460,10 @@ type ProjectsTransferConfigsGetCall struct {
 
 // Get: Returns information about a data transfer config.
 //
-//   - name: The field will contain name of the resource requested, for example:
-//     `projects/{project_id}/transferConfigs/{config_id}` or
+//   - name: The name of the resource requested. If you are using the regionless
+//     method, the location must be `US` and the name should be in the following
+//     form: * `projects/{project_id}/transferConfigs/{config_id}` If you are
+//     using the regionalized method, the name should be in the following form: *
 //     `projects/{project_id}/locations/{location_id}/transferConfigs/{config_id}`.
 func (r *ProjectsTransferConfigsService) Get(name string) *ProjectsTransferConfigsGetCall {
 	c := &ProjectsTransferConfigsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -4541,7 +4575,10 @@ type ProjectsTransferConfigsListCall struct {
 // the specified location.
 //
 //   - parent: The BigQuery project id for which transfer configs should be
-//     returned: `projects/{project_id}` or
+//     returned. If you are using the regionless method, the location must be
+//     `US` and `parent` should be in the following form: *
+//     `projects/{project_id} If you are using the regionalized method, `parent`
+//     should be in the following form: *
 //     `projects/{project_id}/locations/{location_id}`.
 func (r *ProjectsTransferConfigsService) List(parent string) *ProjectsTransferConfigsListCall {
 	c := &ProjectsTransferConfigsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -4863,10 +4900,11 @@ type ProjectsTransferConfigsScheduleRunsCall struct {
 // range, one transfer run is created. Note that runs are created per UTC time
 // in the time range. DEPRECATED: use StartManualTransferRuns instead.
 //
-//   - parent: Transfer configuration name in the form:
-//     `projects/{project_id}/transferConfigs/{config_id}` or
-//     `projects/{project_id}/locations/{location_id}/transferConfigs/{config_id}`
-//     .
+//   - parent: Transfer configuration name. If you are using the regionless
+//     method, the location must be `US` and the name should be in the following
+//     form: * `projects/{project_id}/transferConfigs/{config_id}` If you are
+//     using the regionalized method, the name should be in the following form: *
+//     `projects/{project_id}/locations/{location_id}/transferConfigs/{config_id}`.
 func (r *ProjectsTransferConfigsService) ScheduleRuns(parent string, scheduletransferrunsrequest *ScheduleTransferRunsRequest) *ProjectsTransferConfigsScheduleRunsCall {
 	c := &ProjectsTransferConfigsScheduleRunsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -4968,15 +5006,19 @@ type ProjectsTransferConfigsStartManualRunsCall struct {
 	header_                        http.Header
 }
 
-// StartManualRuns: Start manual transfer runs to be executed now with
-// schedule_time equal to current time. The transfer runs can be created for a
-// time range where the run_time is between start_time (inclusive) and end_time
-// (exclusive), or for a specific run_time.
+// StartManualRuns: Manually initiates transfer runs. You can schedule these
+// runs in two ways: 1. For a specific point in time using the
+// 'requested_run_time' parameter. 2. For a period between 'start_time'
+// (inclusive) and 'end_time' (exclusive). If scheduling a single run, it is
+// set to execute immediately (schedule_time equals the current time). When
+// scheduling multiple runs within a time range, the first run starts now, and
+// subsequent runs are delayed by 15 seconds each.
 //
-//   - parent: Transfer configuration name in the form:
-//     `projects/{project_id}/transferConfigs/{config_id}` or
-//     `projects/{project_id}/locations/{location_id}/transferConfigs/{config_id}`
-//     .
+//   - parent: Transfer configuration name. If you are using the regionless
+//     method, the location must be `US` and the name should be in the following
+//     form: * `projects/{project_id}/transferConfigs/{config_id}` If you are
+//     using the regionalized method, the name should be in the following form: *
+//     `projects/{project_id}/locations/{location_id}/transferConfigs/{config_id}`.
 func (r *ProjectsTransferConfigsService) StartManualRuns(parent string, startmanualtransferrunsrequest *StartManualTransferRunsRequest) *ProjectsTransferConfigsStartManualRunsCall {
 	c := &ProjectsTransferConfigsStartManualRunsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -5079,8 +5121,11 @@ type ProjectsTransferConfigsRunsDeleteCall struct {
 
 // Delete: Deletes the specified transfer run.
 //
-//   - name: The field will contain name of the resource requested, for example:
-//     `projects/{project_id}/transferConfigs/{config_id}/runs/{run_id}` or
+//   - name: The name of the resource requested. If you are using the regionless
+//     method, the location must be `US` and the name should be in the following
+//     form: * `projects/{project_id}/transferConfigs/{config_id}/runs/{run_id}`
+//     If you are using the regionalized method, the name should be in the
+//     following form: *
 //     `projects/{project_id}/locations/{location_id}/transferConfigs/{config_id}/
 //     runs/{run_id}`.
 func (r *ProjectsTransferConfigsRunsService) Delete(name string) *ProjectsTransferConfigsRunsDeleteCall {
@@ -5180,8 +5225,11 @@ type ProjectsTransferConfigsRunsGetCall struct {
 
 // Get: Returns information about the particular transfer run.
 //
-//   - name: The field will contain name of the resource requested, for example:
-//     `projects/{project_id}/transferConfigs/{config_id}/runs/{run_id}` or
+//   - name: The name of the resource requested. If you are using the regionless
+//     method, the location must be `US` and the name should be in the following
+//     form: * `projects/{project_id}/transferConfigs/{config_id}/runs/{run_id}`
+//     If you are using the regionalized method, the name should be in the
+//     following form: *
 //     `projects/{project_id}/locations/{location_id}/transferConfigs/{config_id}/
 //     runs/{run_id}`.
 func (r *ProjectsTransferConfigsRunsService) Get(name string) *ProjectsTransferConfigsRunsGetCall {
@@ -5293,10 +5341,11 @@ type ProjectsTransferConfigsRunsListCall struct {
 // List: Returns information about running and completed transfer runs.
 //
 //   - parent: Name of transfer configuration for which transfer runs should be
-//     retrieved. Format of transfer configuration resource name is:
-//     `projects/{project_id}/transferConfigs/{config_id}` or
-//     `projects/{project_id}/locations/{location_id}/transferConfigs/{config_id}`
-//     .
+//     retrieved. If you are using the regionless method, the location must be
+//     `US` and the name should be in the following form: *
+//     `projects/{project_id}/transferConfigs/{config_id}` If you are using the
+//     regionalized method, the name should be in the following form: *
+//     `projects/{project_id}/locations/{location_id}/transferConfigs/{config_id}`.
 func (r *ProjectsTransferConfigsRunsService) List(parent string) *ProjectsTransferConfigsRunsListCall {
 	c := &ProjectsTransferConfigsRunsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -5475,8 +5524,11 @@ type ProjectsTransferConfigsRunsTransferLogsListCall struct {
 
 // List: Returns log messages for the transfer run.
 //
-//   - parent: Transfer run name in the form:
-//     `projects/{project_id}/transferConfigs/{config_id}/runs/{run_id}` or
+//   - parent: Transfer run name. If you are using the regionless method, the
+//     location must be `US` and the name should be in the following form: *
+//     `projects/{project_id}/transferConfigs/{config_id}/runs/{run_id}` If you
+//     are using the regionalized method, the name should be in the following
+//     form: *
 //     `projects/{project_id}/locations/{location_id}/transferConfigs/{config_id}/
 //     runs/{run_id}`.
 func (r *ProjectsTransferConfigsRunsTransferLogsService) List(parent string) *ProjectsTransferConfigsRunsTransferLogsListCall {

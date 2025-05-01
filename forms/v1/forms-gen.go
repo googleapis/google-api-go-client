@@ -705,14 +705,14 @@ type Form struct {
 	// accumulating responses from this Form (if such a Sheet exists).
 	LinkedSheetId string `json:"linkedSheetId,omitempty"`
 	// PublishSettings: Output only. The publishing settings for a form. This field
-	// isn't set for legacy forms because they don't have the `publish_settings`
+	// isn't set for legacy forms because they don't have the publish_settings
 	// field. All newly created forms support publish settings. Forms with
-	// `publish_settings` value set can call SetPublishSettings API to publish or
+	// publish_settings value set can call SetPublishSettings API to publish or
 	// unpublish the form.
 	PublishSettings *PublishSettings `json:"publishSettings,omitempty"`
 	// ResponderUri: Output only. The form URI to share with responders. This opens
 	// a page that allows the user to submit responses but not edit the questions.
-	// For forms that have `publish_settings` value set, this is the published form
+	// For forms that have publish_settings value set, this is the published form
 	// URI.
 	ResponderUri string `json:"responderUri,omitempty"`
 	// RevisionId: Output only. The revision ID of the form. Used in the
@@ -725,11 +725,11 @@ type Form struct {
 	// user) usually means the form *content* has been updated; however, a changed
 	// ID can also be due to internal factors such as ID format changes. Form
 	// content excludes form metadata, including: * sharing settings (who has
-	// access to the form) * `publish_settings` (if the form supports publishing
-	// and if it is published)
+	// access to the form) * publish_settings (if the form supports publishing and
+	// if it is published)
 	RevisionId string `json:"revisionId,omitempty"`
 	// Settings: The form's settings. This must be updated with
-	// UpdateSettingsRequest; it is ignored during `forms.create` and
+	// UpdateSettingsRequest; it is ignored during CreateForm and
 	// UpdateFormInfoRequest.
 	Settings *FormSettings `json:"settings,omitempty"`
 
@@ -1016,7 +1016,7 @@ type Info struct {
 	// Description: The description of the form.
 	Description string `json:"description,omitempty"`
 	// DocumentTitle: Output only. The title of the document which is visible in
-	// Drive. If `Info.title` is empty, `document_title` may appear in its place in
+	// Drive. If Info.title is empty, `document_title` may appear in its place in
 	// the Google Forms UI and be visible to responders. `document_title` can be
 	// set on create, but cannot be modified by a batchUpdate request. Please use
 	// the Google Drive API
@@ -1607,9 +1607,9 @@ func (s SetPublishSettingsRequest) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// SetPublishSettingsResponse: The response of a `SetPublishSettings` request.
+// SetPublishSettingsResponse: The response of a SetPublishSettings request.
 type SetPublishSettingsResponse struct {
-	// FormId: Required. The ID of the Form. This is same as the `Form.form_id`
+	// FormId: Required. The ID of the Form. This is same as the Form.form_id
 	// field.
 	FormId string `json:"formId,omitempty"`
 	// PublishSettings: The publish settings of the form.
@@ -2397,7 +2397,7 @@ type FormsSetPublishSettingsCall struct {
 // SetPublishSettings: Updates the publish settings of a form. Legacy forms
 // aren't supported because they don't have the `publish_settings` field.
 //
-// - formId: The ID of the form. You can get the id from `Form.form_id` field.
+// - formId: The ID of the form. You can get the id from Form.form_id field.
 func (r *FormsService) SetPublishSettings(formId string, setpublishsettingsrequest *SetPublishSettingsRequest) *FormsSetPublishSettingsCall {
 	c := &FormsSetPublishSettingsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.formId = formId

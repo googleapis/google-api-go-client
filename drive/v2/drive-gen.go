@@ -3459,15 +3459,17 @@ func (s TeamDriveList) MarshalJSON() ([]byte, error) {
 type User struct {
 	// DisplayName: Output only. A plain text displayable name for this user.
 	DisplayName string `json:"displayName,omitempty"`
-	// EmailAddress: Output only. The email address of the user.
+	// EmailAddress: Output only. The email address of the user. This may not be
+	// present in certain contexts if the user has not made their email address
+	// visible to the requester.
 	EmailAddress string `json:"emailAddress,omitempty"`
 	// IsAuthenticatedUser: Output only. Whether this user is the same as the
 	// authenticated user for whom the request was made.
 	IsAuthenticatedUser bool `json:"isAuthenticatedUser,omitempty"`
-	// Kind: Output only. This is always `drive#user`.
+	// Kind: Output only. Identifies what kind of resource this is. Value: the
+	// fixed string `drive#user`.
 	Kind string `json:"kind,omitempty"`
-	// PermissionId: Output only. The user's ID as visible in the permissions
-	// collection.
+	// PermissionId: Output only. The user's ID as visible in Permission resources.
 	PermissionId string `json:"permissionId,omitempty"`
 	// Picture: Output only. The user's profile picture.
 	Picture *UserPicture `json:"picture,omitempty"`

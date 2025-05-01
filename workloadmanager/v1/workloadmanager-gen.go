@@ -283,32 +283,6 @@ type ProjectsLocationsRulesService struct {
 	s *Service
 }
 
-// APILayerServer: The API layer server
-type APILayerServer struct {
-	// Name: Output only. The api layer name
-	Name string `json:"name,omitempty"`
-	// OsVersion: Output only. OS information
-	OsVersion string `json:"osVersion,omitempty"`
-	// Resources: Output only. resources in the component
-	Resources []*CloudResource `json:"resources,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "Name") to unconditionally
-	// include in API requests. By default, fields with empty or default values are
-	// omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
-	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Name") to include in API requests
-	// with the JSON null value. By default, fields with empty values are omitted
-	// from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
-	NullFields []string `json:"-"`
-}
-
-func (s APILayerServer) MarshalJSON() ([]byte, error) {
-	type NoMethod APILayerServer
-	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
-}
-
 // AgentCommand: * An AgentCommand specifies a one-time executable program for
 // the agent to run.
 type AgentCommand struct {
@@ -333,64 +307,6 @@ type AgentCommand struct {
 
 func (s AgentCommand) MarshalJSON() ([]byte, error) {
 	type NoMethod AgentCommand
-	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
-}
-
-// AvailabilityGroup: The availability groups for sqlserver
-type AvailabilityGroup struct {
-	// Databases: Output only. The databases
-	Databases []string `json:"databases,omitempty"`
-	// Name: Output only. The availability group name
-	Name string `json:"name,omitempty"`
-	// PrimaryServer: Output only. The primary server
-	PrimaryServer string `json:"primaryServer,omitempty"`
-	// SecondaryServers: Output only. The secondary servers
-	SecondaryServers []string `json:"secondaryServers,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "Databases") to
-	// unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
-	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Databases") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
-	NullFields []string `json:"-"`
-}
-
-func (s AvailabilityGroup) MarshalJSON() ([]byte, error) {
-	type NoMethod AvailabilityGroup
-	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
-}
-
-// BackendServer: The backend server
-type BackendServer struct {
-	// BackupFile: Output only. The backup file
-	BackupFile string `json:"backupFile,omitempty"`
-	// BackupSchedule: Output only. The backup schedule
-	BackupSchedule string `json:"backupSchedule,omitempty"`
-	// Name: Output only. The backend name
-	Name string `json:"name,omitempty"`
-	// OsVersion: Output only. OS information
-	OsVersion string `json:"osVersion,omitempty"`
-	// Resources: Output only. resources in the component
-	Resources []*CloudResource `json:"resources,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "BackupFile") to
-	// unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
-	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "BackupFile") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
-	NullFields []string `json:"-"`
-}
-
-func (s BackendServer) MarshalJSON() ([]byte, error) {
-	type NoMethod BackendServer
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -493,30 +409,6 @@ func (s CloudResource) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// Cluster: The cluster for sqlserver
-type Cluster struct {
-	// Nodes: Output only. The nodes
-	Nodes []string `json:"nodes,omitempty"`
-	// WitnessServer: Output only. The witness server
-	WitnessServer string `json:"witnessServer,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "Nodes") to unconditionally
-	// include in API requests. By default, fields with empty or default values are
-	// omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
-	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Nodes") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
-	NullFields []string `json:"-"`
-}
-
-func (s Cluster) MarshalJSON() ([]byte, error) {
-	type NoMethod Cluster
-	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
-}
-
 // Command: * Command specifies the type of command to execute.
 type Command struct {
 	// AgentCommand: AgentCommand specifies a one-time executable program for the
@@ -585,34 +477,6 @@ type ComponentHealth struct {
 
 func (s ComponentHealth) MarshalJSON() ([]byte, error) {
 	type NoMethod ComponentHealth
-	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
-}
-
-// Database: The database for sqlserver
-type Database struct {
-	// BackupFile: Output only. The backup file
-	BackupFile string `json:"backupFile,omitempty"`
-	// BackupSchedule: Output only. The backup schedule
-	BackupSchedule string `json:"backupSchedule,omitempty"`
-	// HostVm: Output only. The host VM
-	HostVm string `json:"hostVm,omitempty"`
-	// Name: Output only. The database name
-	Name string `json:"name,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "BackupFile") to
-	// unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
-	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "BackupFile") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
-	NullFields []string `json:"-"`
-}
-
-func (s Database) MarshalJSON() ([]byte, error) {
-	type NoMethod Database
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -853,32 +717,6 @@ type ExternalDataSources struct {
 
 func (s ExternalDataSources) MarshalJSON() ([]byte, error) {
 	type NoMethod ExternalDataSources
-	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
-}
-
-// FrontEndServer: The front end server
-type FrontEndServer struct {
-	// Name: Output only. The frontend name
-	Name string `json:"name,omitempty"`
-	// OsVersion: Output only. OS information
-	OsVersion string `json:"osVersion,omitempty"`
-	// Resources: Output only. resources in the component
-	Resources []*CloudResource `json:"resources,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "Name") to unconditionally
-	// include in API requests. By default, fields with empty or default values are
-	// omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
-	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Name") to include in API requests
-	// with the JSON null value. By default, fields with empty values are omitted
-	// from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
-	NullFields []string `json:"-"`
-}
-
-func (s FrontEndServer) MarshalJSON() ([]byte, error) {
-	type NoMethod FrontEndServer
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -1326,30 +1164,6 @@ type ListScannedResourcesResponse struct {
 
 func (s ListScannedResourcesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListScannedResourcesResponse
-	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
-}
-
-// LoadBalancerServer: The load balancer for sqlserver
-type LoadBalancerServer struct {
-	// Ip: Output only. The IP address
-	Ip string `json:"ip,omitempty"`
-	// Vm: Output only. The VM name
-	Vm string `json:"vm,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "Ip") to unconditionally
-	// include in API requests. By default, fields with empty or default values are
-	// omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
-	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Ip") to include in API requests
-	// with the JSON null value. By default, fields with empty values are omitted
-	// from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
-	NullFields []string `json:"-"`
-}
-
-func (s LoadBalancerServer) MarshalJSON() ([]byte, error) {
-	type NoMethod LoadBalancerServer
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -2534,34 +2348,6 @@ func (s SqlserverValidationValidationDetail) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// SqlserverWorkload: The body of sqlserver workload
-type SqlserverWorkload struct {
-	// Ags: Output only. The availability groups for sqlserver
-	Ags []*AvailabilityGroup `json:"ags,omitempty"`
-	// Cluster: Output only. The cluster for sqlserver
-	Cluster *Cluster `json:"cluster,omitempty"`
-	// Databases: Output only. The databases for sqlserver
-	Databases []*Database `json:"databases,omitempty"`
-	// LoadBalancerServer: Output only. The load balancer for sqlserver
-	LoadBalancerServer *LoadBalancerServer `json:"loadBalancerServer,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "Ags") to unconditionally
-	// include in API requests. By default, fields with empty or default values are
-	// omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
-	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Ags") to include in API requests
-	// with the JSON null value. By default, fields with empty values are omitted
-	// from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
-	NullFields []string `json:"-"`
-}
-
-func (s SqlserverWorkload) MarshalJSON() ([]byte, error) {
-	type NoMethod SqlserverWorkload
-	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
-}
-
 // Status: The `Status` type defines a logical error model that is suitable for
 // different programming environments, including REST APIs and RPC APIs. It is
 // used by gRPC (https://github.com/grpc). Each `Status` message contains three
@@ -2624,34 +2410,6 @@ func (s Summary) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// ThreeTierWorkload: The body of three tier workload
-type ThreeTierWorkload struct {
-	// ApiLayer: Output only. The API layer for three tier workload
-	ApiLayer *APILayerServer `json:"apiLayer,omitempty"`
-	// Backend: Output only. The backend for three tier workload
-	Backend *BackendServer `json:"backend,omitempty"`
-	// Endpoint: Output only. the workload endpoint
-	Endpoint string `json:"endpoint,omitempty"`
-	// Frontend: Output only. The frontend for three tier workload
-	Frontend *FrontEndServer `json:"frontend,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "ApiLayer") to
-	// unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
-	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "ApiLayer") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
-	NullFields []string `json:"-"`
-}
-
-func (s ThreeTierWorkload) MarshalJSON() ([]byte, error) {
-	type NoMethod ThreeTierWorkload
-	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
-}
-
 // TorsoValidation: The schema of torso workload validation data.
 type TorsoValidation struct {
 	// AgentVersion: Required. agent_version lists the version of the agent that
@@ -2698,6 +2456,9 @@ type UpcomingMaintenanceEvent struct {
 	EndTime string `json:"endTime,omitempty"`
 	// MaintenanceStatus: Optional. Maintenance status
 	MaintenanceStatus string `json:"maintenanceStatus,omitempty"`
+	// OnHostMaintenance: Optional. Instance maintenance behavior. Could be
+	// "MIGRATE" or "TERMINATE".
+	OnHostMaintenance string `json:"onHostMaintenance,omitempty"`
 	// StartTime: Optional. Start time
 	StartTime string `json:"startTime,omitempty"`
 	// Type: Optional. Type
@@ -2764,8 +2525,6 @@ type WorkloadProfile struct {
 	RefreshedTime string `json:"refreshedTime,omitempty"`
 	// SapWorkload: The sap workload content
 	SapWorkload *SapWorkload `json:"sapWorkload,omitempty"`
-	// SqlserverWorkload: The sqlserver workload content
-	SqlserverWorkload *SqlserverWorkload `json:"sqlserverWorkload,omitempty"`
 	// State: Output only. [output only] the current state if a a workload
 	//
 	// Possible values:
@@ -2775,8 +2534,6 @@ type WorkloadProfile struct {
 	//   "DESTROYING" - The workload is in Destroying state
 	//   "MAINTENANCE" - The Workload is undermaintance
 	State string `json:"state,omitempty"`
-	// ThreeTierWorkload: The 3 tier web app workload content
-	ThreeTierWorkload *ThreeTierWorkload `json:"threeTierWorkload,omitempty"`
 	// WorkloadType: Required. The type of the workload
 	//
 	// Possible values:

@@ -1754,6 +1754,9 @@ type GoogleCloudDiscoveryengineV1Answer struct {
 	// intent.
 	//   "LOW_GROUNDED_ANSWER" - The low-grounded answer case. Google skips the
 	// answer if a well grounded answer was unable to be generated.
+	//   "USER_DEFINED_CLASSIFICATION_QUERY_IGNORED" - The user defined query
+	// classification ignored case. Google skips the answer if the query is
+	// classified as a user defined query classification.
 	AnswerSkippedReasons []string `json:"answerSkippedReasons,omitempty"`
 	// AnswerText: The textual answer.
 	AnswerText string `json:"answerText,omitempty"`
@@ -2360,6 +2363,8 @@ type GoogleCloudDiscoveryengineV1AnswerQueryRequestQueryUnderstandingSpecQueryCl
 	//   "JAIL_BREAKING_QUERY" - Jail-breaking query classification type.
 	//   "NON_ANSWER_SEEKING_QUERY_V2" - Non-answer-seeking query classification
 	// type, for no clear intent.
+	//   "USER_DEFINED_CLASSIFICATION_QUERY" - User defined query classification
+	// type.
 	Types []string `json:"types,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Types") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -2908,6 +2913,8 @@ type GoogleCloudDiscoveryengineV1AnswerQueryUnderstandingInfoQueryClassification
 	//   "JAIL_BREAKING_QUERY" - Jail-breaking query classification type.
 	//   "NON_ANSWER_SEEKING_QUERY_V2" - Non-answer-seeking query classification
 	// type, for no clear intent.
+	//   "USER_DEFINED_CLASSIFICATION_QUERY" - User defined query classification
+	// type.
 	Type string `json:"type,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Positive") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -12060,6 +12067,9 @@ type GoogleCloudDiscoveryengineV1alphaAnswer struct {
 	// intent.
 	//   "LOW_GROUNDED_ANSWER" - The low-grounded answer case. Google skips the
 	// answer if a well grounded answer was unable to be generated.
+	//   "USER_DEFINED_CLASSIFICATION_QUERY_IGNORED" - The user defined query
+	// classification ignored case. Google skips the answer if the query is
+	// classified as a user defined query classification.
 	AnswerSkippedReasons []string `json:"answerSkippedReasons,omitempty"`
 	// AnswerText: The textual answer.
 	AnswerText string `json:"answerText,omitempty"`
@@ -12330,6 +12340,8 @@ type GoogleCloudDiscoveryengineV1alphaAnswerQueryUnderstandingInfoQueryClassific
 	//   "JAIL_BREAKING_QUERY" - Jail-breaking query classification type.
 	//   "NON_ANSWER_SEEKING_QUERY_V2" - Non-answer-seeking query classification
 	// type, for no clear intent.
+	//   "USER_DEFINED_CLASSIFICATION_QUERY" - User defined query classification
+	// type.
 	Type string `json:"type,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Positive") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -13805,6 +13817,8 @@ type GoogleCloudDiscoveryengineV1alphaDataConnector struct {
 	//   "THIRD_PARTY_FEDERATED" - Federated connector, it is a third party
 	// connector that doesn't ingestion data, and search is powered by third party
 	// application's API.
+	//   "THIRD_PARTY_EUA" - Connector utilized for End User Authentication
+	// features.
 	ConnectorType string `json:"connectorType,omitempty"`
 	// CreateTime: Output only. Timestamp the DataConnector was created at.
 	CreateTime string `json:"createTime,omitempty"`

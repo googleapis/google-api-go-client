@@ -2622,9 +2622,9 @@ func (s DiscoveryClient) MarshalJSON() ([]byte, error) {
 // DiscoveryClientDiscoveryClientRecommendedVersion: Discovery client
 // recommended version.
 type DiscoveryClientDiscoveryClientRecommendedVersion struct {
-	// Uri: The URI of the discovery client version.
+	// Uri: Output only. The URI of the discovery client version.
 	Uri string `json:"uri,omitempty"`
-	// Version: The version of the discovery client.
+	// Version: Output only. The version of the discovery client.
 	Version string `json:"version,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Uri") to unconditionally
 	// include in API requests. By default, fields with empty or default values are

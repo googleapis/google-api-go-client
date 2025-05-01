@@ -186,9 +186,8 @@ type AccountsDataSourcesFileUploadsService struct {
 	s *Service
 }
 
-// DataSource: The data source
-// (https://support.google.com/merchants/answer/7439058) for the Merchant
-// Center account.
+// DataSource: The data source (/merchant/api/guides/data-sources/overview) for
+// the Merchant Center account.
 type DataSource struct {
 	// DataSourceId: Output only. The data source id.
 	DataSourceId int64 `json:"dataSourceId,omitempty,string"`

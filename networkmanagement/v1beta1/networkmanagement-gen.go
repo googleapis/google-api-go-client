@@ -1166,6 +1166,9 @@ type DropInfo struct {
 	//   "NO_MATCHING_NAT64_GATEWAY" - Packet with destination IP address within
 	// the reserved NAT64 range is dropped due to no matching NAT gateway in the
 	// subnet.
+	//   "LOAD_BALANCER_BACKEND_IP_VERSION_MISMATCH" - Packet is dropped due to
+	// being sent to a backend of a passthrough load balancer that doesn't use the
+	// same IP version as the frontend.
 	Cause string `json:"cause,omitempty"`
 	// DestinationIp: Destination IP address of the dropped packet (if relevant).
 	DestinationIp string `json:"destinationIp,omitempty"`

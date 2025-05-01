@@ -548,8 +548,9 @@ func (s BatchDeleteVersionsMetadata) MarshalJSON() ([]byte, error) {
 // BatchDeleteVersionsRequest: The request to delete multiple versions across a
 // repository.
 type BatchDeleteVersionsRequest struct {
-	// Names: Required. The names of the versions to delete. A maximum of 10000
-	// versions can be deleted in a batch.
+	// Names: Required. The names of the versions to delete. The maximum number of
+	// versions deleted per batch is determined by the service and is dependent on
+	// the available resources in the region.
 	Names []string `json:"names,omitempty"`
 	// ValidateOnly: If true, the request is performed without deleting data,
 	// following AIP-163.
@@ -3995,6 +3996,14 @@ type ProjectsLocationsListCall struct {
 func (r *ProjectsLocationsService) List(name string) *ProjectsLocationsListCall {
 	c := &ProjectsLocationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
+	return c
+}
+
+// ExtraLocationTypes sets the optional parameter "extraLocationTypes": A list
+// of extra location types that should be used as conditions for controlling
+// the visibility of the locations.
+func (c *ProjectsLocationsListCall) ExtraLocationTypes(extraLocationTypes ...string) *ProjectsLocationsListCall {
+	c.urlParams_.SetMulti("extraLocationTypes", append([]string{}, extraLocationTypes...))
 	return c
 }
 

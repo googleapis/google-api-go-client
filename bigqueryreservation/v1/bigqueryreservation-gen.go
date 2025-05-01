@@ -294,7 +294,7 @@ type Autoscale struct {
 	// may stay in the original value and could be larger than max_slots for that
 	// brief period (less than one minute)
 	CurrentSlots int64 `json:"currentSlots,omitempty,string"`
-	// MaxSlots: Number of slots to be scaled when needed.
+	// MaxSlots: Optional. Number of slots to be scaled when needed.
 	MaxSlots int64 `json:"maxSlots,omitempty,string"`
 	// ForceSendFields is a list of field names (e.g. "CurrentSlots") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -695,18 +695,20 @@ func (s ReplicationStatus) MarshalJSON() ([]byte, error) {
 
 // Reservation: A reservation is a mechanism used to guarantee slots to users.
 type Reservation struct {
-	// Autoscale: The configuration parameters for the auto scaling feature.
+	// Autoscale: Optional. The configuration parameters for the auto scaling
+	// feature.
 	Autoscale *Autoscale `json:"autoscale,omitempty"`
-	// Concurrency: Job concurrency target which sets a soft upper bound on the
-	// number of jobs that can run concurrently in this reservation. This is a soft
-	// target due to asynchronous nature of the system and various optimizations
-	// for small queries. Default value is 0 which means that concurrency target
-	// will be automatically computed by the system. NOTE: this field is exposed as
-	// target job concurrency in the Information Schema, DDL and BigQuery CLI.
+	// Concurrency: Optional. Job concurrency target which sets a soft upper bound
+	// on the number of jobs that can run concurrently in this reservation. This is
+	// a soft target due to asynchronous nature of the system and various
+	// optimizations for small queries. Default value is 0 which means that
+	// concurrency target will be automatically computed by the system. NOTE: this
+	// field is exposed as target job concurrency in the Information Schema, DDL
+	// and BigQuery CLI.
 	Concurrency int64 `json:"concurrency,omitempty,string"`
 	// CreationTime: Output only. Creation time of the reservation.
 	CreationTime string `json:"creationTime,omitempty"`
-	// Edition: Edition of the reservation.
+	// Edition: Optional. Edition of the reservation.
 	//
 	// Possible values:
 	//   "EDITION_UNSPECIFIED" - Default value, which will be treated as
@@ -715,10 +717,10 @@ type Reservation struct {
 	//   "ENTERPRISE" - Enterprise edition.
 	//   "ENTERPRISE_PLUS" - Enterprise Plus edition.
 	Edition string `json:"edition,omitempty"`
-	// IgnoreIdleSlots: If false, any query or pipeline job using this reservation
-	// will use idle slots from other reservations within the same admin project.
-	// If true, a query or pipeline job using this reservation will execute with
-	// the slot capacity specified in the slot_capacity field at most.
+	// IgnoreIdleSlots: Optional. If false, any query or pipeline job using this
+	// reservation will use idle slots from other reservations within the same
+	// admin project. If true, a query or pipeline job using this reservation will
+	// execute with the slot capacity specified in the slot_capacity field at most.
 	IgnoreIdleSlots bool `json:"ignoreIdleSlots,omitempty"`
 	// Labels: Optional. The labels associated with this reservation. You can use
 	// these to organize and group your reservations. You can set this property
@@ -765,7 +767,7 @@ type Reservation struct {
 	// organization's default region. NOTE: this is a preview feature. Project must
 	// be allow-listed in order to set this field.
 	MultiRegionAuxiliary bool `json:"multiRegionAuxiliary,omitempty"`
-	// Name: The resource name of the reservation, e.g.,
+	// Name: Identifier. The resource name of the reservation, e.g.,
 	// `projects/*/locations/*/reservations/team1-prod`. The reservation_id must
 	// only contain lower case alphanumeric characters or dashes. It must start
 	// with a letter and must not end with a dash. Its maximum length is 64
@@ -789,9 +791,9 @@ type Reservation struct {
 	// reservation is a DR secondary or that any replication operations on the
 	// reservation have succeeded.
 	ReplicationStatus *ReplicationStatus `json:"replicationStatus,omitempty"`
-	// ScalingMode: The scaling mode for the reservation. If the field is present
-	// but max_slots is not present, requests will be rejected with error code
-	// `google.rpc.Code.INVALID_ARGUMENT`.
+	// ScalingMode: Optional. The scaling mode for the reservation. If the field is
+	// present but max_slots is not present, requests will be rejected with error
+	// code `google.rpc.Code.INVALID_ARGUMENT`.
 	//
 	// Possible values:
 	//   "SCALING_MODE_UNSPECIFIED" - Default value of ScalingMode.
@@ -837,11 +839,11 @@ type Reservation struct {
 	// create a failover reservation or in update reservation calls to convert a
 	// non-failover reservation to a failover reservation(or vice versa).
 	SecondaryLocation string `json:"secondaryLocation,omitempty"`
-	// SlotCapacity: Baseline slots available to this reservation. A slot is a unit
-	// of computational power in BigQuery, and serves as the unit of parallelism.
-	// Queries using this reservation might use more slots during runtime if
-	// ignore_idle_slots is set to false, or autoscaling is enabled. The total
-	// slot_capacity of the reservation and its siblings may exceed the total
+	// SlotCapacity: Optional. Baseline slots available to this reservation. A slot
+	// is a unit of computational power in BigQuery, and serves as the unit of
+	// parallelism. Queries using this reservation might use more slots during
+	// runtime if ignore_idle_slots is set to false, or autoscaling is enabled. The
+	// total slot_capacity of the reservation and its siblings may exceed the total
 	// slot_count of capacity commitments. In that case, the exceeding slots will
 	// be charged with the autoscale SKU. You can increase the number of baseline
 	// slots in a reservation every few minutes. If you want to decrease your
@@ -3011,7 +3013,7 @@ type ProjectsLocationsReservationsPatchCall struct {
 
 // Patch: Updates an existing reservation resource.
 //
-//   - name: The resource name of the reservation, e.g.,
+//   - name: Identifier. The resource name of the reservation, e.g.,
 //     `projects/*/locations/*/reservations/team1-prod`. The reservation_id must
 //     only contain lower case alphanumeric characters or dashes. It must start
 //     with a letter and must not end with a dash. Its maximum length is 64

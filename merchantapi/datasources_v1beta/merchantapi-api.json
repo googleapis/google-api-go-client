@@ -321,11 +321,11 @@
       }
     }
   },
-  "revision": "20250416",
+  "revision": "20250427",
   "rootUrl": "https://merchantapi.googleapis.com/",
   "schemas": {
     "DataSource": {
-      "description": "The [data source](https://support.google.com/merchants/answer/7439058) for the Merchant Center account.",
+      "description": "The [data source](/merchant/api/guides/data-sources/overview) for the Merchant Center account.",
       "id": "DataSource",
       "properties": {
         "dataSourceId": {

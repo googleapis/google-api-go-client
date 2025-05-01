@@ -216,7 +216,11 @@ type BuildingInsights struct {
 	//   "LOW" - Solar data is derived from enhanced satellite imagery processed at
 	// 0.25 m/pixel.
 	//   "BASE" - Solar data is derived from enhanced satellite imagery processed
-	// at 0.25 m/pixel.
+	// at 0.25 m/pixel. **Note:** This enum is only available if
+	// `experiments=EXPANDED_COVERAGE` is set in the request. For more information,
+	// see [Expanded
+	// Coverage](https://developers.google.com/maps/documentation/solar/expanded-cov
+	// erage).
 	ImageryQuality string `json:"imageryQuality,omitempty"`
 	// Name: The resource name for the building, of the format
 	// `buildings/{place_id}`.
@@ -363,7 +367,11 @@ type DataLayers struct {
 	//   "LOW" - Solar data is derived from enhanced satellite imagery processed at
 	// 0.25 m/pixel.
 	//   "BASE" - Solar data is derived from enhanced satellite imagery processed
-	// at 0.25 m/pixel.
+	// at 0.25 m/pixel. **Note:** This enum is only available if
+	// `experiments=EXPANDED_COVERAGE` is set in the request. For more information,
+	// see [Expanded
+	// Coverage](https://developers.google.com/maps/documentation/solar/expanded-cov
+	// erage).
 	ImageryQuality string `json:"imageryQuality,omitempty"`
 	// MaskUrl: The URL for the building mask image: one bit per pixel saying
 	// whether that pixel is considered to be part of a rooftop or not.
@@ -1223,7 +1231,9 @@ func (r *BuildingInsightsService) FindClosest() *BuildingInsightsFindClosestCall
 //	"EXPERIMENT_UNSPECIFIED" - No experiments are specified.
 //	"EXPANDED_COVERAGE" - Expands the geographic region available for querying
 //
-// solar data.
+// solar data. For more information, see [Expanded
+// Coverage](https://developers.google.com/maps/documentation/solar/expanded-cov
+// erage).
 func (c *BuildingInsightsFindClosestCall) Experiments(experiments ...string) *BuildingInsightsFindClosestCall {
 	c.urlParams_.SetMulti("experiments", append([]string{}, experiments...))
 	return c
@@ -1265,7 +1275,11 @@ func (c *BuildingInsightsFindClosestCall) LocationLongitude(locationLongitude fl
 //
 //	"BASE" - Solar data is derived from enhanced satellite imagery processed
 //
-// at 0.25 m/pixel.
+// at 0.25 m/pixel. **Note:** This enum is only available if
+// `experiments=EXPANDED_COVERAGE` is set in the request. For more information,
+// see [Expanded
+// Coverage](https://developers.google.com/maps/documentation/solar/expanded-cov
+// erage).
 func (c *BuildingInsightsFindClosestCall) RequiredQuality(requiredQuality string) *BuildingInsightsFindClosestCall {
 	c.urlParams_.Set("requiredQuality", requiredQuality)
 	return c
@@ -1395,7 +1409,9 @@ func (c *DataLayersGetCall) ExactQualityRequired(exactQualityRequired bool) *Dat
 //	"EXPERIMENT_UNSPECIFIED" - No experiments are specified.
 //	"EXPANDED_COVERAGE" - Expands the geographic region available for querying
 //
-// solar data.
+// solar data. For more information, see [Expanded
+// Coverage](https://developers.google.com/maps/documentation/solar/expanded-cov
+// erage).
 func (c *DataLayersGetCall) Experiments(experiments ...string) *DataLayersGetCall {
 	c.urlParams_.SetMulti("experiments", append([]string{}, experiments...))
 	return c
@@ -1462,7 +1478,11 @@ func (c *DataLayersGetCall) RadiusMeters(radiusMeters float64) *DataLayersGetCal
 //
 //	"BASE" - Solar data is derived from enhanced satellite imagery processed
 //
-// at 0.25 m/pixel.
+// at 0.25 m/pixel. **Note:** This enum is only available if
+// `experiments=EXPANDED_COVERAGE` is set in the request. For more information,
+// see [Expanded
+// Coverage](https://developers.google.com/maps/documentation/solar/expanded-cov
+// erage).
 func (c *DataLayersGetCall) RequiredQuality(requiredQuality string) *DataLayersGetCall {
 	c.urlParams_.Set("requiredQuality", requiredQuality)
 	return c

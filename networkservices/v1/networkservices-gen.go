@@ -1040,7 +1040,7 @@ type ExtensionChainExtension struct {
 	// called when the HTTP response trailers arrives.
 	SupportedEvents []string `json:"supportedEvents,omitempty"`
 	// Timeout: Optional. Specifies the timeout for each individual message on the
-	// stream. The timeout must be between `10`-`1000` milliseconds. Required for
+	// stream. The timeout must be between `10`-`10000` milliseconds. Required for
 	// callout extensions. This field is not supported for plugin extensions.
 	// Setting it results in a validation error.
 	Timeout string `json:"timeout,omitempty"`

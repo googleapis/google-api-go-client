@@ -2381,6 +2381,11 @@ type GoogleCloudAiplatformV1beta1VertexAISearch struct {
 	// `projects/{project}/locations/{location}/collections/{collection}/engines/{en
 	// gine}`
 	Engine string `json:"engine,omitempty"`
+	// Filter: Optional. Filter strings to be passed to the search API.
+	Filter string `json:"filter,omitempty"`
+	// MaxResults: Optional. Number of search results to return per query. The
+	// default value is 10. The maximumm allowed value is 10.
+	MaxResults int64 `json:"maxResults,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Datastore") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See

@@ -7713,6 +7713,8 @@ func (s GoogleCloudApigeeV1OperationMetadataProgress) MarshalJSON() ([]byte, err
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudApigeeV1OptimizedStats: Encapsulates a response format for
+// JavaScript Optimized Scenario.
 type GoogleCloudApigeeV1OptimizedStats struct {
 	// Response: Wraps the `stats` response for JavaScript Optimized Scenario with
 	// a response key. For example: ```{ "Response": { "TimeUnit": [], "metaData":
@@ -7754,6 +7756,7 @@ func (s GoogleCloudApigeeV1OptimizedStats) MarshalJSON() ([]byte, error) {
 // dimension is present in the query or not the data node type can be a simple
 // metric value or dimension identifier with list of metrics.
 type GoogleCloudApigeeV1OptimizedStatsNode struct {
+	// Data: List of data values.
 	Data []interface{} `json:"data,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Data") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -36361,7 +36364,7 @@ func (c *OrganizationsEnvironmentsOptimizedStatsGetCall) Filter(filter string) *
 }
 
 // Limit sets the optional parameter "limit": Maximum number of result items to
-// return. The default and maximum value that can be returned is 14400.
+// return.
 func (c *OrganizationsEnvironmentsOptimizedStatsGetCall) Limit(limit string) *OrganizationsEnvironmentsOptimizedStatsGetCall {
 	c.urlParams_.Set("limit", limit)
 	return c
@@ -36404,7 +36407,7 @@ func (c *OrganizationsEnvironmentsOptimizedStatsGetCall) Sort(sort string) *Orga
 	return c
 }
 
-// Sortby sets the optional parameter "sortby": Comma-separated list of columns
+// Sortby sets the optional parameter "sortby": Comma-separated list of metrics
 // to sort the final result.
 func (c *OrganizationsEnvironmentsOptimizedStatsGetCall) Sortby(sortby string) *OrganizationsEnvironmentsOptimizedStatsGetCall {
 	c.urlParams_.Set("sortby", sortby)
@@ -40784,7 +40787,7 @@ func (c *OrganizationsEnvironmentsStatsGetCall) Filter(filter string) *Organizat
 }
 
 // Limit sets the optional parameter "limit": Maximum number of result items to
-// return. The default and maximum value that can be returned is 14400.
+// return.
 func (c *OrganizationsEnvironmentsStatsGetCall) Limit(limit string) *OrganizationsEnvironmentsStatsGetCall {
 	c.urlParams_.Set("limit", limit)
 	return c
@@ -40827,7 +40830,7 @@ func (c *OrganizationsEnvironmentsStatsGetCall) Sort(sort string) *Organizations
 	return c
 }
 
-// Sortby sets the optional parameter "sortby": Comma-separated list of columns
+// Sortby sets the optional parameter "sortby": Comma-separated list of metrics
 // to sort the final result.
 func (c *OrganizationsEnvironmentsStatsGetCall) Sortby(sortby string) *OrganizationsEnvironmentsStatsGetCall {
 	c.urlParams_.Set("sortby", sortby)
@@ -43281,7 +43284,7 @@ func (c *OrganizationsHostStatsGetCall) Filter(filter string) *OrganizationsHost
 }
 
 // Limit sets the optional parameter "limit": Maximum number of result items to
-// return. The default and maximum value that can be returned is 14400.
+// return.
 func (c *OrganizationsHostStatsGetCall) Limit(limit string) *OrganizationsHostStatsGetCall {
 	c.urlParams_.Set("limit", limit)
 	return c
@@ -43316,7 +43319,7 @@ func (c *OrganizationsHostStatsGetCall) Sort(sort string) *OrganizationsHostStat
 	return c
 }
 
-// Sortby sets the optional parameter "sortby": Comma-separated list of columns
+// Sortby sets the optional parameter "sortby": Comma-separated list of metrics
 // to sort the final result.
 func (c *OrganizationsHostStatsGetCall) Sortby(sortby string) *OrganizationsHostStatsGetCall {
 	c.urlParams_.Set("sortby", sortby)
@@ -46531,7 +46534,7 @@ func (c *OrganizationsOptimizedHostStatsGetCall) Filter(filter string) *Organiza
 }
 
 // Limit sets the optional parameter "limit": Maximum number of result items to
-// return. The default and maximum value that can be returned is 14400.
+// return.
 func (c *OrganizationsOptimizedHostStatsGetCall) Limit(limit string) *OrganizationsOptimizedHostStatsGetCall {
 	c.urlParams_.Set("limit", limit)
 	return c
@@ -46567,7 +46570,7 @@ func (c *OrganizationsOptimizedHostStatsGetCall) Sort(sort string) *Organization
 	return c
 }
 
-// Sortby sets the optional parameter "sortby": Comma-separated list of columns
+// Sortby sets the optional parameter "sortby": Comma-separated list of metrics
 // used to sort the final result.
 func (c *OrganizationsOptimizedHostStatsGetCall) Sortby(sortby string) *OrganizationsOptimizedHostStatsGetCall {
 	c.urlParams_.Set("sortby", sortby)

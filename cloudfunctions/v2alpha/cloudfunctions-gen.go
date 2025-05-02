@@ -404,8 +404,9 @@ type BuildConfig struct {
 	Build string `json:"build,omitempty"`
 	// DockerRegistry: Docker Registry to use for this deployment. This
 	// configuration is only applicable to 1st Gen functions, 2nd Gen functions can
-	// only use Artifact Registry. Deprecated: Container Registry option will no
-	// longer be available after March 2025:
+	// only use Artifact Registry. Deprecated: as of March 2025,
+	// `CONTAINER_REGISTRY` option is no longer available in response to Container
+	// Registry's deprecation:
 	// https://cloud.google.com/artifact-registry/docs/transition/transition-from-gcr
 	// Please use Artifact Registry instead, which is the default choice. If
 	// unspecified, it defaults to `ARTIFACT_REGISTRY`. If `docker_repository`

@@ -5097,6 +5097,8 @@ type BackendBucket struct {
 	// global application external load balancers, or both.
 	//
 	// Possible values:
+	//   "EXTERNAL_MANAGED" - Signifies that this will be used for regional
+	// external Application Load Balancers.
 	//   "INTERNAL_MANAGED" - Signifies that this will be used for internal
 	// Application Load Balancers.
 	LoadBalancingScheme string `json:"loadBalancingScheme,omitempty"`
@@ -5787,7 +5789,7 @@ type BackendService struct {
 	// parameters that control consistent hashing. This field is only applicable
 	// when localityLbPolicy is set to MAGLEV or RING_HASH. This field is
 	// applicable to either: - A regional backend service with the service_protocol
-	// set to HTTP, HTTPS, or HTTP2, and load_balancing_scheme set to
+	// set to HTTP, HTTPS, HTTP2 or H2C, and load_balancing_scheme set to
 	// INTERNAL_MANAGED. - A global backend service with the load_balancing_scheme
 	// set to INTERNAL_SELF_MANAGED.
 	ConsistentHash *ConsistentHashLoadBalancerSettings `json:"consistentHash,omitempty"`
@@ -5974,7 +5976,7 @@ type BackendService struct {
 	// and host selection times. For more information about Maglev, see
 	// https://ai.google/research/pubs/pub44824 This field is applicable to either:
 	// - A regional backend service with the service_protocol set to HTTP, HTTPS,
-	// or HTTP2, and load_balancing_scheme set to INTERNAL_MANAGED. - A global
+	// HTTP2 or H2C, and load_balancing_scheme set to INTERNAL_MANAGED. - A global
 	// backend service with the load_balancing_scheme set to INTERNAL_SELF_MANAGED,
 	// INTERNAL_MANAGED, or EXTERNAL_MANAGED. If sessionAffinity is not
 	// configured—that is, if session affinity remains at the default value of
@@ -6074,11 +6076,11 @@ type BackendService struct {
 	// published using Private Service Connect Applicable backend service types can
 	// be: - A global backend service with the loadBalancingScheme set to
 	// INTERNAL_SELF_MANAGED or EXTERNAL_MANAGED. - A regional backend service with
-	// the serviceProtocol set to HTTP, HTTPS, or HTTP2, and loadBalancingScheme
-	// set to INTERNAL_MANAGED or EXTERNAL_MANAGED. Not supported for Serverless
-	// NEGs. Not supported when the backend service is referenced by a URL map that
-	// is bound to target gRPC proxy that has validateForProxyless field set to
-	// true.
+	// the serviceProtocol set to HTTP, HTTPS, HTTP2 or H2C, and
+	// loadBalancingScheme set to INTERNAL_MANAGED or EXTERNAL_MANAGED. Not
+	// supported for Serverless NEGs. Not supported when the backend service is
+	// referenced by a URL map that is bound to target gRPC proxy that has
+	// validateForProxyless field set to true.
 	OutlierDetection *OutlierDetection `json:"outlierDetection,omitempty"`
 	// Port: Deprecated in favor of portName. The TCP port to connect on the
 	// backend. The default value is 80. For internal passthrough Network Load
@@ -6093,11 +6095,11 @@ type BackendService struct {
 	// Balancers, omit port_name.
 	PortName string `json:"portName,omitempty"`
 	// Protocol: The protocol this BackendService uses to communicate with
-	// backends. Possible values are HTTP, HTTPS, HTTP2, TCP, SSL, UDP or GRPC.
-	// depending on the chosen load balancer or Traffic Director configuration.
-	// Refer to the documentation for the load balancers or for Traffic Director
-	// for more information. Must be set to GRPC when the backend service is
-	// referenced by a URL map that is bound to target gRPC proxy.
+	// backends. Possible values are HTTP, HTTPS, HTTP2, H2C, TCP, SSL, UDP or
+	// GRPC. depending on the chosen load balancer or Traffic Director
+	// configuration. Refer to the documentation for the load balancers or for
+	// Traffic Director for more information. Must be set to GRPC when the backend
+	// service is referenced by a URL map that is bound to target gRPC proxy.
 	//
 	// Possible values:
 	//   "ALL" - ALL includes TCP, UDP, ICMP, ESP, AH and SCTP. Note that this
@@ -9029,9 +9031,11 @@ type Commitment struct {
 	//   "COMPUTE_OPTIMIZED_C3"
 	//   "COMPUTE_OPTIMIZED_C3D"
 	//   "COMPUTE_OPTIMIZED_H3"
+	//   "COMPUTE_OPTIMIZED_H4D"
 	//   "GENERAL_PURPOSE"
 	//   "GENERAL_PURPOSE_C4"
 	//   "GENERAL_PURPOSE_C4A"
+	//   "GENERAL_PURPOSE_C4D"
 	//   "GENERAL_PURPOSE_E2"
 	//   "GENERAL_PURPOSE_N2"
 	//   "GENERAL_PURPOSE_N2D"
@@ -14408,6 +14412,16 @@ type FirewallPolicyRuleMatcher struct {
 	//   "UNSPECIFIED"
 	//   "VPC_NETWORKS"
 	DestNetworkScope string `json:"destNetworkScope,omitempty"`
+	// DestNetworkType: Network type of the traffic destination. Allowed values
+	// are: - UNSPECIFIED - INTERNET - NON_INTERNET
+	//
+	// Possible values:
+	//   "INTERNET"
+	//   "INTRA_VPC"
+	//   "NON_INTERNET"
+	//   "UNSPECIFIED"
+	//   "VPC_NETWORKS"
+	DestNetworkType string `json:"destNetworkType,omitempty"`
 	// DestRegionCodes: Region codes whose IP addresses will be used to match for
 	// destination of traffic. Should be specified as 2 letter country code defined
 	// as per ISO 3166 alpha-2 country codes. ex."US" Maximum number of dest region
@@ -14436,6 +14450,16 @@ type FirewallPolicyRuleMatcher struct {
 	//   "UNSPECIFIED"
 	//   "VPC_NETWORKS"
 	SrcNetworkScope string `json:"srcNetworkScope,omitempty"`
+	// SrcNetworkType: Network type of the traffic source. Allowed values are: -
+	// UNSPECIFIED - INTERNET - INTRA_VPC - NON_INTERNET - VPC_NETWORKS
+	//
+	// Possible values:
+	//   "INTERNET"
+	//   "INTRA_VPC"
+	//   "NON_INTERNET"
+	//   "UNSPECIFIED"
+	//   "VPC_NETWORKS"
+	SrcNetworkType string `json:"srcNetworkType,omitempty"`
 	// SrcNetworks: Networks of the traffic source. It can be either a full or
 	// partial url.
 	SrcNetworks []string `json:"srcNetworks,omitempty"`
@@ -17039,6 +17063,18 @@ type GroupMaintenanceInfo struct {
 	//   "INDEPENDENT" - Maintenance is not synchronized for this reservation.
 	// Instead, each instance has its own maintenance window.
 	SchedulingType string `json:"schedulingType,omitempty"`
+	// SubblockInfraMaintenanceOngoingCount: Describes number of subblock
+	// Infrastructure that has ongoing maintenance. Here, Subblock Infrastructure
+	// Maintenance pertains to upstream hardware contained in the Subblock that is
+	// necessary for a VM Family(e.g. NVLink Domains). Not all VM Families will
+	// support this field.
+	SubblockInfraMaintenanceOngoingCount int64 `json:"subblockInfraMaintenanceOngoingCount,omitempty"`
+	// SubblockInfraMaintenancePendingCount: Describes number of subblock
+	// Infrastructure that has pending maintenance. Here, Subblock Infrastructure
+	// Maintenance pertains to upstream hardware contained in the Subblock that is
+	// necessary for a VM Family (e.g. NVLink Domains). Not all VM Families will
+	// support this field.
+	SubblockInfraMaintenancePendingCount int64 `json:"subblockInfraMaintenancePendingCount,omitempty"`
 	// UpcomingGroupMaintenance: Maintenance information on this group of VMs.
 	UpcomingGroupMaintenance *UpcomingMaintenance `json:"upcomingGroupMaintenance,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "MaintenanceOngoingCount") to
@@ -27961,6 +27997,7 @@ type Interconnect struct {
 	//
 	// Possible values:
 	//   "IF_CROSS_SITE_NETWORK" - Cross-Site Networking
+	//   "IF_L2_FORWARDING" - L2 Interconnect Attachment Forwarding
 	//   "IF_MACSEC" - Media Access Control security (MACsec)
 	AvailableFeatures []string `json:"availableFeatures,omitempty"`
 	// CircuitInfos: [Output Only] A list of CircuitInfo objects, that describe the
@@ -28095,6 +28132,7 @@ type Interconnect struct {
 	//
 	// Possible values:
 	//   "IF_CROSS_SITE_NETWORK" - Cross-Site Networking
+	//   "IF_L2_FORWARDING" - L2 Interconnect Attachment Forwarding
 	//   "IF_MACSEC" - Media Access Control security (MACsec)
 	RequestedFeatures []string `json:"requestedFeatures,omitempty"`
 	// RequestedLinkCount: Target number of physical links in the link bundle, as
@@ -29321,12 +29359,13 @@ type InterconnectAttachmentGroupsCreateMembersInterconnectAttachmentInput struct
 	// attachment. Multicast packets will be dropped if this is not enabled.
 	MulticastEnabled bool `json:"multicastEnabled,omitempty"`
 	// Name: Name of the resource. Provided by the client when the resource is
-	// created. The name must be 1-63 characters long, and comply with RFC1035.
-	// Specifically, the name must be 1-63 characters long and match the regular
-	// expression `[a-z]([-a-z0-9]*[a-z0-9])?` which means the first character must
-	// be a lowercase letter, and all following characters must be a dash,
-	// lowercase letter, or digit, except the last character, which cannot be a
-	// dash.
+	// created. Must be set on either the template_attachment or on each specific
+	// attachment. If set, the name must be 1-63 characters long, and comply with
+	// RFC1035. Specifically, the name must be 1-63 characters long and match the
+	// regular expression `[a-z]([-a-z0-9]*[a-z0-9])?` which means the first
+	// character must be a lowercase letter, and all following characters must be a
+	// dash, lowercase letter, or digit, except the last character, which cannot be
+	// a dash.
 	Name string `json:"name,omitempty"`
 	// PairingKey: [Output only for type PARTNER. Input only for PARTNER_PROVIDER.
 	// Not present for DEDICATED]. The opaque identifier of a PARTNER attachment
@@ -30845,13 +30884,13 @@ type InterconnectGroupsCreateMembersInterconnectInput struct {
 	// 10000000000];
 	//   "LINK_TYPE_ETHERNET_400G_LR4" - 400G Ethernet, LR4 Optics.
 	LinkType string `json:"linkType,omitempty"`
-	// Name: Name of the resource. Provided by the client when the resource is
-	// created. The name must be 1-63 characters long, and comply with RFC1035.
-	// Specifically, the name must be 1-63 characters long and match the regular
-	// expression `[a-z]([-a-z0-9]*[a-z0-9])?` which means the first character must
-	// be a lowercase letter, and all following characters must be a dash,
-	// lowercase letter, or digit, except the last character, which cannot be a
-	// dash.
+	// Name: Name of the Interconnects to be created. This must be specified on the
+	// template and/or on each individual interconnect. The name, if not empty,
+	// must be 1-63 characters long, and comply with RFC1035. Specifically, any
+	// nonempty name must be 1-63 characters long and match the regular expression
+	// `[a-z]([-a-z0-9]*[a-z0-9])?` which means the first character must be a
+	// lowercase letter, and all following characters must be a dash, lowercase
+	// letter, or digit, except the last character, which cannot be a dash.
 	Name string `json:"name,omitempty"`
 	// NocContactEmail: Email address to contact the customer NOC for operations
 	// and maintenance notifications regarding this Interconnect. If specified,
@@ -30874,6 +30913,7 @@ type InterconnectGroupsCreateMembersInterconnectInput struct {
 	//
 	// Possible values:
 	//   "IF_CROSS_SITE_NETWORK" - Cross-Site Networking
+	//   "IF_L2_FORWARDING" - L2 Interconnect Attachment Forwarding
 	//   "IF_MACSEC" - Media Access Control security (MACsec)
 	RequestedFeatures []string `json:"requestedFeatures,omitempty"`
 	// RequestedLinkCount: Target number of physical links in the link bundle, as
@@ -31350,6 +31390,7 @@ type InterconnectLocation struct {
 	//
 	// Possible values:
 	//   "IF_CROSS_SITE_NETWORK" - Cross-Site Networking
+	//   "IF_L2_FORWARDING" - L2 Interconnect Attachment Forwarding
 	//   "IF_MACSEC" - Media Access Control security (MACsec)
 	AvailableFeatures []string `json:"availableFeatures,omitempty"`
 	// AvailableLinkTypes: [Output only] List of link types available at this
@@ -31647,6 +31688,9 @@ type InterconnectLocationRegionInfo struct {
 	// ExpectedRttMs: Expected round-trip time in milliseconds, from this
 	// InterconnectLocation to a VM in this region.
 	ExpectedRttMs int64 `json:"expectedRttMs,omitempty,string"`
+	// L2ForwardingEnabled: Identifies whether L2 Interconnect Attachments can be
+	// created in this region for interconnects that are in this location.
+	L2ForwardingEnabled bool `json:"l2ForwardingEnabled,omitempty"`
 	// LocationPresence: Identifies the network presence of this location.
 	//
 	// Possible values:
@@ -34960,8 +35004,8 @@ func (s ManagedInstancePropertiesFromFlexibilityPolicy) MarshalJSON() ([]byte, e
 }
 
 type ManagedInstanceScheduling struct {
-	// TerminationTimestamp: [Output Only] The timestamp when the MIG will
-	// automatically terminate the instance. The value is in RFC3339 text format.
+	// TerminationTimestamp: [Output Only] The timestamp at which the managed
+	// instance will be terminated. This is in RFC3339 text format.
 	TerminationTimestamp string `json:"terminationTimestamp,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "TerminationTimestamp") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -38693,8 +38737,8 @@ type NetworkPeering struct {
 	// the matching peering. To delete a peering with the consensus update
 	// strategy, both the peerings must request the deletion of the peering before
 	// the peering can be deleted.
-	//   "INDEPENDENT" - In this mode changes to the peering configuration can be
-	// unilaterally altered by changing a single network peering. This is the
+	//   "INDEPENDENT" - In this mode, changes to the peering configuration can be
+	// unilaterally altered by changing either side of the peering. This is the
 	// default value if the field is unspecified.
 	//   "UNSPECIFIED" - Peerings with update strategy UNSPECIFIED are created with
 	// update strategy INDEPENDENT.
@@ -38723,8 +38767,8 @@ func (s NetworkPeering) MarshalJSON() ([]byte, error) {
 // information about the effective settings for the connection as a whole,
 // including pending delete/update requests for CONSENSUS peerings.
 type NetworkPeeringConnectionStatus struct {
-	// ConsensusState: The consensus state contains the information about the
-	// status of update and delete for a consensus peering connection.
+	// ConsensusState: The consensus state contains information about the status of
+	// update and delete for a consensus peering connection.
 	ConsensusState *NetworkPeeringConnectionStatusConsensusState `json:"consensusState,omitempty"`
 	// TrafficConfiguration: The active connectivity settings for the peering
 	// connection based on the settings of the network peerings.
@@ -38738,8 +38782,8 @@ type NetworkPeeringConnectionStatus struct {
 	// the matching peering. To delete a peering with the consensus update
 	// strategy, both the peerings must request the deletion of the peering before
 	// the peering can be deleted.
-	//   "INDEPENDENT" - In this mode changes to the peering configuration can be
-	// unilaterally altered by changing a single network peering. This is the
+	//   "INDEPENDENT" - In this mode, changes to the peering configuration can be
+	// unilaterally altered by changing either side of the peering. This is the
 	// default value if the field is unspecified.
 	//   "UNSPECIFIED" - Peerings with update strategy UNSPECIFIED are created with
 	// update strategy INDEPENDENT.
@@ -38762,10 +38806,10 @@ func (s NetworkPeeringConnectionStatus) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// NetworkPeeringConnectionStatusConsensusState: Surfaces relevant state for a
-// consensus peering connection update/delete semantics. Only set when
-// connection_status.update_strategy is CONSENSUS or one network peering is
-// proposing upgrading to CONSENSUS.
+// NetworkPeeringConnectionStatusConsensusState: The status of update/delete
+// for a consensus peering connection. Only set when
+// connection_status.update_strategy is CONSENSUS or a network peering is
+// proposing to update the strategy to CONSENSUS.
 type NetworkPeeringConnectionStatusConsensusState struct {
 	// DeleteStatus: The status of the delete request.
 	//
@@ -38784,10 +38828,10 @@ type NetworkPeeringConnectionStatusConsensusState struct {
 	//   "IN_SYNC" - No pending configuration update proposals to the peering
 	// connection.
 	//   "PENDING_LOCAL_ACKNOWLEDMENT" - The peer network admin has made an
-	// updatePeering call. The change are awaiting acknowledgment from this
+	// updatePeering call. The change is awaiting acknowledgment from this
 	// peering's network admin.
 	//   "PENDING_PEER_ACKNOWLEDGEMENT" - The local network admin has made an
-	// updatePeering call. The change are awaiting acknowledgment from the peer
+	// updatePeering call. The change is awaiting acknowledgment from the peer
 	// network admin.
 	//   "UPDATE_STATUS_UNSPECIFIED"
 	UpdateStatus string `json:"updateStatus,omitempty"`
@@ -38814,13 +38858,13 @@ type NetworkPeeringConnectionStatusTrafficConfiguration struct {
 	// peer network.
 	ExportCustomRoutesToPeer bool `json:"exportCustomRoutesToPeer,omitempty"`
 	// ExportSubnetRoutesWithPublicIpToPeer: Whether subnet routes with public IP
-	// range are being exported to the peer network.
+	// ranges are being exported to the peer network.
 	ExportSubnetRoutesWithPublicIpToPeer bool `json:"exportSubnetRoutesWithPublicIpToPeer,omitempty"`
-	// ImportCustomRoutesFromPeer: Whether custom routes is being imported from the
-	// peer network.
+	// ImportCustomRoutesFromPeer: Whether custom routes are being imported from
+	// the peer network.
 	ImportCustomRoutesFromPeer bool `json:"importCustomRoutesFromPeer,omitempty"`
 	// ImportSubnetRoutesWithPublicIpFromPeer: Whether subnet routes with public IP
-	// range are being imported from the peer network.
+	// ranges are being imported from the peer network.
 	ImportSubnetRoutesWithPublicIpFromPeer bool `json:"importSubnetRoutesWithPublicIpFromPeer,omitempty"`
 	// StackType: Which IP version(s) of traffic and routes are being imported or
 	// exported between peer networks.
@@ -45576,11 +45620,11 @@ type PublicDelegatedPrefix struct {
 	// be one of following values: - `INITIALIZING` The public delegated prefix is
 	// being initialized and addresses cannot be created yet. - `READY_TO_ANNOUNCE`
 	// The public delegated prefix is a live migration prefix and is active. -
-	// `ANNOUNCED` The public delegated prefix is active. - `DELETING` The public
-	// delegated prefix is being deprovsioned.
+	// `ANNOUNCED` The public delegated prefix is announced and ready to use. -
+	// `DELETING` The public delegated prefix is being deprovsioned.
 	//
 	// Possible values:
-	//   "ANNOUNCED" - The public delegated prefix is active.
+	//   "ANNOUNCED" - The public delegated prefix is announced and ready to use.
 	//   "ANNOUNCED_TO_GOOGLE" - The prefix is announced within Google network.
 	//   "ANNOUNCED_TO_INTERNET" - The prefix is announced to Internet and within
 	// Google.
@@ -49860,6 +49904,15 @@ type Reservation struct {
 	ResourceStatus *AllocationResourceStatus `json:"resourceStatus,omitempty"`
 	// SatisfiesPzs: [Output Only] Reserved for future use.
 	SatisfiesPzs bool `json:"satisfiesPzs,omitempty"`
+	// SchedulingType: The type of maintenance for the reservation.
+	//
+	// Possible values:
+	//   "GROUPED" - Maintenance on all reserved instances in the reservation is
+	// synchronized.
+	//   "GROUP_MAINTENANCE_TYPE_UNSPECIFIED" - Unknown maintenance type.
+	//   "INDEPENDENT" - Maintenance is not synchronized for this reservation.
+	// Instead, each instance has its own maintenance window.
+	SchedulingType string `json:"schedulingType,omitempty"`
 	// SelfLink: [Output Only] Server-defined fully-qualified URL for this
 	// resource.
 	SelfLink string `json:"selfLink,omitempty"`
@@ -50577,6 +50630,9 @@ type ReservationSubBlock struct {
 	// PhysicalTopology: [Output Only] The physical topology of the reservation
 	// subBlock.
 	PhysicalTopology *ReservationSubBlockPhysicalTopology `json:"physicalTopology,omitempty"`
+	// ReservationSubBlockMaintenance: Maintenance information for this reservation
+	// subBlock.
+	ReservationSubBlockMaintenance *GroupMaintenanceInfo `json:"reservationSubBlockMaintenance,omitempty"`
 	// SelfLink: [Output Only] Server-defined fully-qualified URL for this
 	// resource.
 	SelfLink string `json:"selfLink,omitempty"`
@@ -52293,21 +52349,38 @@ func (s ResourceStatusAcceleratorStatusRecommendedScan) MarshalJSON() ([]byte, e
 // ResourceStatusEffectiveInstanceMetadata: Effective values of predefined
 // metadata keys for an instance.
 type ResourceStatusEffectiveInstanceMetadata struct {
+	// BlockProjectSshKeysMetadataValue: Effective block-project-ssh-keys value at
+	// Instance level.
+	BlockProjectSshKeysMetadataValue bool `json:"blockProjectSshKeysMetadataValue,omitempty"`
+	// EnableGuestAttributesMetadataValue: Effective enable-guest-attributes value
+	// at Instance level.
+	EnableGuestAttributesMetadataValue bool `json:"enableGuestAttributesMetadataValue,omitempty"`
+	// EnableOsInventoryMetadataValue: Effective enable-osinventory value at
+	// Instance level.
+	EnableOsInventoryMetadataValue bool `json:"enableOsInventoryMetadataValue,omitempty"`
+	// EnableOsconfigMetadataValue: Effective enable-osconfig value at Instance
+	// level.
+	EnableOsconfigMetadataValue bool `json:"enableOsconfigMetadataValue,omitempty"`
 	// EnableOsloginMetadataValue: Effective enable-oslogin value at Instance
 	// level.
 	EnableOsloginMetadataValue bool `json:"enableOsloginMetadataValue,omitempty"`
+	// SerialPortEnableMetadataValue: Effective serial-port-enable value at
+	// Instance level.
+	SerialPortEnableMetadataValue bool `json:"serialPortEnableMetadataValue,omitempty"`
 	// VmDnsSettingMetadataValue: Effective VM DNS setting at Instance level.
 	VmDnsSettingMetadataValue string `json:"vmDnsSettingMetadataValue,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "EnableOsloginMetadataValue")
-	// to unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
+	// ForceSendFields is a list of field names (e.g.
+	// "BlockProjectSshKeysMetadataValue") to unconditionally include in API
+	// requests. By default, fields with empty or default values are omitted from
+	// API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "EnableOsloginMetadataValue") to
-	// include in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	// NullFields is a list of field names (e.g.
+	// "BlockProjectSshKeysMetadataValue") to include in API requests with the JSON
+	// null value. By default, fields with empty values are omitted from API
+	// requests. See https://pkg.go.dev/google.golang.org/api#hdr-NullFields for
+	// more details.
 	NullFields []string `json:"-"`
 }
 
@@ -52335,6 +52408,7 @@ type ResourceStatusLastInstanceTerminationDetails struct {
 	//   "SCHEDULED_STOP" - Terminated due to scheduled stop
 	//   "SHUTDOWN_DUE_TO_HOST_ERROR" - Terminated due to host error
 	//   "SHUTDOWN_DUE_TO_MAINTENANCE" - Terminated due to maintenance
+	//   "SHUTDOWN_DUE_TO_POWER_EVENT" - Terminated due to power event
 	//   "USER_TERMINATED" - Terminated by user
 	TerminationReason string `json:"terminationReason,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "TerminationReason") to
@@ -55686,6 +55760,9 @@ type Scheduling struct {
 	// baseline, 10 minute maximum burst at full utilization).
 	//   "COST_OPTIMIZED" - Maximum license cost savings via restrictive throttles
 	// (20% baseline, 3.75 minute maximum burst at full utilization).
+	//   "MANAGED" - License optimization mode managed by Google, in exchange for
+	// guaranteed discounts. This mode cannot be set by users, only by Google
+	// internal tooling.
 	//   "OFF" - No license cost savings with maximum CPU performance.
 	//   "PERFORMANCE" - Moderate license cost savings via least restrictive
 	// throttles (60% baseline, 22.5 minute maximum burst at full utilization).
@@ -56539,8 +56616,8 @@ type SecurityPolicyAdvancedOptionsConfig struct {
 	//   "VERBOSE"
 	LogLevel string `json:"logLevel,omitempty"`
 	// RequestBodyInspectionSize: The maximum request size chosen by the customer
-	// with Waf enabled. Currently only "8KB" and "128KB" are supported. Values are
-	// case insensitive.
+	// with Waf enabled. Values supported are "8KB", "16KB, "32KB", "48KB" and
+	// "64KB". Values are case insensitive.
 	RequestBodyInspectionSize string `json:"requestBodyInspectionSize,omitempty"`
 	// UserIpRequestHeaders: An optional list of case-insensitive request header
 	// names to use for resolving the callers client IP address.
@@ -63266,6 +63343,14 @@ type Subnetwork struct {
 	//   "DRAINING" - Subnetwork is being drained.
 	//   "READY" - Subnetwork is ready for use.
 	State string `json:"state,omitempty"`
+	// SystemReservedExternalIpv6Ranges: Output only. [Output Only] The array of
+	// external IPv6 network ranges reserved from the subnetwork's external IPv6
+	// range for system use.
+	SystemReservedExternalIpv6Ranges []string `json:"systemReservedExternalIpv6Ranges,omitempty"`
+	// SystemReservedInternalIpv6Ranges: Output only. [Output Only] The array of
+	// internal IPv6 network ranges reserved from the subnetwork's internal IPv6
+	// range for system use.
+	SystemReservedInternalIpv6Ranges []string `json:"systemReservedInternalIpv6Ranges,omitempty"`
 	// UtilizationDetails: Output only. [Output Only] The current IP utilization of
 	// all subnetwork ranges. Contains the total number of allocated and free IPs
 	// in each range.
@@ -68817,6 +68902,8 @@ type UpcomingMaintenance struct {
 	//   "FAILURE_GPU_TEMPERATURE" - Maintenance due to high GPU temperature.
 	//   "FAILURE_GPU_XID" - Maintenance due to GPU xid failure.
 	//   "FAILURE_NVLINK" - Maintenance due to NVLink failure.
+	//   "INFRASTRUCTURE_RELOCATION" - Maintenance due to infrastructure
+	// relocation.
 	//   "MAINTENANCE_REASON_UNKNOWN" - Unknown maintenance reason. Do not use this
 	// value.
 	MaintenanceReasons []string `json:"maintenanceReasons,omitempty"`

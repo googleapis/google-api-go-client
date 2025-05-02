@@ -1453,6 +1453,9 @@ func (s ListSubscriptionsResponse) MarshalJSON() ([]byte, error) {
 // along with descriptive information that will help subscribers find and
 // subscribe the data.
 type Listing struct {
+	// AllowOnlyMetadataSharing: Optional. If true, the listing is only available
+	// to get the resource metadata. Listing is non subscribable.
+	AllowOnlyMetadataSharing bool `json:"allowOnlyMetadataSharing,omitempty"`
 	// BigqueryDataset: Shared dataset i.e. BigQuery dataset source.
 	BigqueryDataset *BigQueryDatasetSource `json:"bigqueryDataset,omitempty"`
 	// Categories: Optional. Categories of the listing. Up to two categories are
@@ -1553,15 +1556,15 @@ type Listing struct {
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-	// ForceSendFields is a list of field names (e.g. "BigqueryDataset") to
-	// unconditionally include in API requests. By default, fields with empty or
+	// ForceSendFields is a list of field names (e.g. "AllowOnlyMetadataSharing")
+	// to unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "BigqueryDataset") to include in
-	// API requests with the JSON null value. By default, fields with empty values
-	// are omitted from API requests. See
+	// NullFields is a list of field names (e.g. "AllowOnlyMetadataSharing") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }

@@ -3370,16 +3370,12 @@ func (s GoogleAppsCardV1SelectionInput) MarshalJSON() ([]byte, error) {
 type GoogleAppsCardV1SelectionItem struct {
 	// BottomText: For multiselect menus, a text description or label that's
 	// displayed below the item's `text` field.
-	BottomText string `json:"bottomText,omitempty"`
+	BottomText   string                        `json:"bottomText,omitempty"`
+	MaterialIcon *GoogleAppsCardV1MaterialIcon `json:"materialIcon,omitempty"`
 	// Selected: Whether the item is selected by default. If the selection input
 	// only accepts one value (such as for radio buttons or a dropdown menu), only
 	// set this field for one item.
-	Selected bool `json:"selected,omitempty"`
-	// StartIconUri: For multiselect menus, the URL for the icon displayed next to
-	// the item's `text` field. Supports PNG and JPEG files. Must be an `HTTPS`
-	// URL. For example,
-	// `https://developers.google.com/workspace/chat/images/quickstart-app-avatar.pn
-	// g`.
+	Selected     bool   `json:"selected,omitempty"`
 	StartIconUri string `json:"startIconUri,omitempty"`
 	// Text: The text that identifies or describes the item to users.
 	Text string `json:"text,omitempty"`

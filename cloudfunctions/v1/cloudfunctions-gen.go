@@ -466,8 +466,9 @@ type CloudFunction struct {
 	BuildWorkerPool string `json:"buildWorkerPool,omitempty"`
 	// Description: User-provided description of a function.
 	Description string `json:"description,omitempty"`
-	// DockerRegistry: Docker Registry to use for this deployment. Deprecated:
-	// Container Registry option will no longer be available after March 2025:
+	// DockerRegistry: Docker Registry to use for this deployment. Deprecated: as
+	// of March 2025, `CONTAINER_REGISTRY` option is no longer available in
+	// response to Container Registry's deprecation:
 	// https://cloud.google.com/artifact-registry/docs/transition/transition-from-gcr
 	// Please use Artifact Registry instead, which is the default choice. If
 	// unspecified, it defaults to `ARTIFACT_REGISTRY`. If `docker_repository`

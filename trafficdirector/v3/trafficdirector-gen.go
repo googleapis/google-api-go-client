@@ -1435,7 +1435,7 @@ func (s SemanticVersion) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// SocketAddress: [#next-free-field: 7]
+// SocketAddress: [#next-free-field: 8]
 type SocketAddress struct {
 	// Address: The address for this socket. :ref:`Listeners ` will bind to the
 	// address. An empty address is not allowed. Specify ``0.0.0.0`` or ``::`` to
@@ -1455,7 +1455,11 @@ type SocketAddress struct {
 	// NamedPort: This is only valid if :ref:`resolver_name ` is specified below
 	// and the named resolver is capable of named port resolution.
 	NamedPort string `json:"namedPort,omitempty"`
-	PortValue int64  `json:"portValue,omitempty"`
+	// NetworkNamespaceFilepath: The Linux network namespace to bind the socket to.
+	// If this is set, Envoy will create the socket in the specified network
+	// namespace. Only supported on Linux. [#not-implemented-hide:]
+	NetworkNamespaceFilepath string `json:"networkNamespaceFilepath,omitempty"`
+	PortValue                int64  `json:"portValue,omitempty"`
 	// Possible values:
 	//   "TCP"
 	//   "UDP"

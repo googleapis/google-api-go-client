@@ -934,6 +934,8 @@ type LoggingConfig struct {
 	// are logged as INFO.
 	//   "FAILED" - `LoggableAction` terminated in an error state. `FAILED` actions
 	// are logged as ERROR.
+	//   "SKIPPED" - The `COPY` action was skipped for this file. Only supported
+	// for agent-based transfers. `SKIPPED` actions are logged as INFO.
 	LogActionStates []string `json:"logActionStates,omitempty"`
 	// LogActions: Specifies the actions to be logged. If empty, no logs are
 	// generated.

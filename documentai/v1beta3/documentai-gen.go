@@ -3292,19 +3292,21 @@ func (s GoogleCloudDocumentaiV1beta3DocumentDocumentLayoutDocumentLayoutBlockLay
 // GoogleCloudDocumentaiV1beta3DocumentDocumentLayoutDocumentLayoutBlockLayoutTa
 // bleBlock: Represents a table type block.
 type GoogleCloudDocumentaiV1beta3DocumentDocumentLayoutDocumentLayoutBlockLayoutTableBlock struct {
+	// Annotations: Annotation of the table block.
+	Annotations *GoogleCloudDocumentaiV1beta3DocumentAnnotations `json:"annotations,omitempty"`
 	// BodyRows: Body rows containing main table content.
 	BodyRows []*GoogleCloudDocumentaiV1beta3DocumentDocumentLayoutDocumentLayoutBlockLayoutTableRow `json:"bodyRows,omitempty"`
 	// Caption: Table caption/title.
 	Caption string `json:"caption,omitempty"`
 	// HeaderRows: Header rows at the top of the table.
 	HeaderRows []*GoogleCloudDocumentaiV1beta3DocumentDocumentLayoutDocumentLayoutBlockLayoutTableRow `json:"headerRows,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "BodyRows") to
+	// ForceSendFields is a list of field names (e.g. "Annotations") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "BodyRows") to include in API
+	// NullFields is a list of field names (e.g. "Annotations") to include in API
 	// requests with the JSON null value. By default, fields with empty values are
 	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
@@ -3485,7 +3487,8 @@ type GoogleCloudDocumentaiV1beta3DocumentEntityNormalizedValue struct {
 	IntegerValue int64 `json:"integerValue,omitempty"`
 	// MoneyValue: Money value. See also:
 	// https://github.com/googleapis/googleapis/blob/master/google/type/money.proto
-	MoneyValue *GoogleTypeMoney `json:"moneyValue,omitempty"`
+	MoneyValue     *GoogleTypeMoney `json:"moneyValue,omitempty"`
+	SignatureValue bool             `json:"signatureValue,omitempty"`
 	// Text: Optional. An optional field to store a normalized string. For some
 	// entity types, one of respective `structured_value` fields may also be
 	// populated. Also not all the types of `structured_value` will be normalized.
@@ -6429,8 +6432,17 @@ func (s GoogleCloudDocumentaiV1beta3ProcessOptionsIndividualPageSelector) Marsha
 type GoogleCloudDocumentaiV1beta3ProcessOptionsLayoutConfig struct {
 	// ChunkingConfig: Optional. Config for chunking in layout parser processor.
 	ChunkingConfig *GoogleCloudDocumentaiV1beta3ProcessOptionsLayoutConfigChunkingConfig `json:"chunkingConfig,omitempty"`
+	// EnableImageAnnotation: Optional. Whether to include image annotations in
+	// layout parser response.
+	EnableImageAnnotation bool `json:"enableImageAnnotation,omitempty"`
+	// EnableImageExtraction: Optional. Whether to extract images in layout parser
+	// response.
+	EnableImageExtraction bool `json:"enableImageExtraction,omitempty"`
 	// EnableLlmLayoutParsing: Optional. Whether to refine PDF layout using LLM.
 	EnableLlmLayoutParsing bool `json:"enableLlmLayoutParsing,omitempty"`
+	// EnableTableAnnotation: Optional. Whether to include table annotations in
+	// layout parser response.
+	EnableTableAnnotation bool `json:"enableTableAnnotation,omitempty"`
 	// ReturnBoundingBoxes: Optional. Whether to include bounding boxes in layout
 	// parser processor response.
 	ReturnBoundingBoxes bool `json:"returnBoundingBoxes,omitempty"`

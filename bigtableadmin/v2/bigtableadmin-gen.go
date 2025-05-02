@@ -374,7 +374,8 @@ type AppProfile struct {
 	Etag string `json:"etag,omitempty"`
 	// MultiClusterRoutingUseAny: Use a multi-cluster routing policy.
 	MultiClusterRoutingUseAny *MultiClusterRoutingUseAny `json:"multiClusterRoutingUseAny,omitempty"`
-	// Name: The unique name of the app profile. Values are of the form
+	// Name: The unique name of the app profile, up to 50 characters long. Values
+	// are of the form
 	// `projects/{project}/instances/{instance}/appProfiles/_a-zA-Z0-9*`.
 	Name string `json:"name,omitempty"`
 	// Priority: This field has been deprecated in favor of
@@ -3073,6 +3074,9 @@ func (s Location) MarshalJSON() ([]byte, error) {
 // LogicalView: A SQL logical view object that can be referenced in SQL
 // queries.
 type LogicalView struct {
+	// DeletionProtection: Optional. Set to true to make the LogicalView protected
+	// against deletion.
+	DeletionProtection bool `json:"deletionProtection,omitempty"`
 	// Etag: Optional. The etag for this logical view. This may be sent on update
 	// requests to ensure that the client has an up-to-date value before
 	// proceeding. The server returns an ABORTED error on a mismatched etag.
@@ -3085,15 +3089,15 @@ type LogicalView struct {
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-	// ForceSendFields is a list of field names (e.g. "Etag") to unconditionally
-	// include in API requests. By default, fields with empty or default values are
-	// omitted from API requests. See
+	// ForceSendFields is a list of field names (e.g. "DeletionProtection") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Etag") to include in API requests
-	// with the JSON null value. By default, fields with empty values are omitted
-	// from API requests. See
+	// NullFields is a list of field names (e.g. "DeletionProtection") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -6100,7 +6104,8 @@ type ProjectsInstancesAppProfilesPatchCall struct {
 
 // Patch: Updates an app profile within an instance.
 //
-//   - name: The unique name of the app profile. Values are of the form
+//   - name: The unique name of the app profile, up to 50 characters long. Values
+//     are of the form
 //     `projects/{project}/instances/{instance}/appProfiles/_a-zA-Z0-9*`.
 func (r *ProjectsInstancesAppProfilesService) Patch(name string, appprofile *AppProfile) *ProjectsInstancesAppProfilesPatchCall {
 	c := &ProjectsInstancesAppProfilesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}

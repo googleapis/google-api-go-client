@@ -227,6 +227,7 @@ func (s Availability) MarshalJSON() ([]byte, error) {
 }
 
 // Conversion: A conversion containing data relevant to DoubleClick Search.
+// Common DS3 API conversion fields: Id Range [1 - 2800]. Next Id to use: 33
 type Conversion struct {
 	// AdGroupId: DS ad group ID.
 	AdGroupId int64 `json:"adGroupId,omitempty,string"`

@@ -1447,7 +1447,11 @@ type Command struct {
 	// if unspecified is ten minutes. There is no maximum duration.
 	Duration string `json:"duration,omitempty"`
 	// ErrorCode: If the command failed, an error code explaining the failure. This
-	// is not set when the command is cancelled by the caller.
+	// is not set when the command is cancelled by the caller. For reasoning about
+	// command errors, prefer fields in the following order (most preferred first):
+	// 1. Command-specific fields like clearAppsDataStatus, startLostModeStatus, or
+	// similar, if they exist. 2. This field, if set. 3. The generic error field in
+	// the Operation that wraps the command.
 	//
 	// Possible values:
 	//   "COMMAND_ERROR_CODE_UNSPECIFIED" - There was no error.
@@ -1464,6 +1468,15 @@ type Command struct {
 	// it is numeric in case of Android 14 devices. Else the command will fail with
 	// INVALID_VALUE.
 	NewPassword string `json:"newPassword,omitempty"`
+	// RequestDeviceInfoParams: Optional. Parameters for the REQUEST_DEVICE_INFO
+	// command to get device related information. If this is set, then it is
+	// suggested that type should not be set. In this case, the server
+	// automatically sets it to REQUEST_DEVICE_INFO . It is also acceptable to
+	// explicitly set type to REQUEST_DEVICE_INFO.
+	RequestDeviceInfoParams *RequestDeviceInfoParams `json:"requestDeviceInfoParams,omitempty"`
+	// RequestDeviceInfoStatus: Output only. Status of the REQUEST_DEVICE_INFO
+	// command.
+	RequestDeviceInfoStatus *RequestDeviceInfoStatus `json:"requestDeviceInfoStatus,omitempty"`
 	// ResetPasswordFlags: For commands of type RESET_PASSWORD, optionally
 	// specifies flags.
 	//
@@ -2493,6 +2506,50 @@ func (s DpcMigrationInfo) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// Eid: EID information for each eUICC chip.
+type Eid struct {
+	// Eid: Output only. The EID
+	Eid string `json:"eid,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Eid") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Eid") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s Eid) MarshalJSON() ([]byte, error) {
+	type NoMethod Eid
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// EidInfo: Information related to the EIDs of the device.
+type EidInfo struct {
+	// Eids: Output only. EID information for each eUICC chip.
+	Eids []*Eid `json:"eids,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Eids") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Eids") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s EidInfo) MarshalJSON() ([]byte, error) {
+	type NoMethod EidInfo
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // Empty: A generic empty message that you can re-use to avoid defining
 // duplicated empty messages in your APIs. A typical example is to use it as
 // the request or the response type of an API method. For instance: service Foo
@@ -2724,6 +2781,30 @@ type EnterpriseUpgradeEvent struct {
 
 func (s EnterpriseUpgradeEvent) MarshalJSON() ([]byte, error) {
 	type NoMethod EnterpriseUpgradeEvent
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// EuiccChipInfo: Information related to the eUICC chip.
+type EuiccChipInfo struct {
+	// Eid: Output only. The Embedded Identity Document (EID) that identifies the
+	// eUICC chip for each eUICC chip on the device. This is available on company
+	// owned devices running Android 13 and above.
+	Eid string `json:"eid,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Eid") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Eid") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s EuiccChipInfo) MarshalJSON() ([]byte, error) {
+	type NoMethod EuiccChipInfo
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -3011,6 +3092,8 @@ type HardwareInfo struct {
 	// setups and even factory resets. This ID is available on personally-owned
 	// devices with a work profile on devices running Android 12 and above.
 	EnterpriseSpecificId string `json:"enterpriseSpecificId,omitempty"`
+	// EuiccChipInfo: Output only. Information related to the eUICC chip.
+	EuiccChipInfo []*EuiccChipInfo `json:"euiccChipInfo,omitempty"`
 	// GpuShutdownTemperatures: GPU shutdown temperature thresholds in Celsius for
 	// each GPU on the device.
 	GpuShutdownTemperatures []float64 `json:"gpuShutdownTemperatures,omitempty"`
@@ -5720,6 +5803,70 @@ type RemoteLockEvent struct {
 
 func (s RemoteLockEvent) MarshalJSON() ([]byte, error) {
 	type NoMethod RemoteLockEvent
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// RequestDeviceInfoParams: Parameters associated with the REQUEST_DEVICE_INFO
+// command to get device related information.
+type RequestDeviceInfoParams struct {
+	// DeviceInfo: Required. Type of device information to be requested.
+	//
+	// Possible values:
+	//   "DEVICE_INFO_UNSPECIFIED" - This value is disallowed.
+	//   "EID" - Request the identifier for eSIM. The user will be asked to approve
+	// the disclosure of the information before the result can be returned. If the
+	// user doesn't approve the disclosure, USER_DECLINED will be returned. This is
+	// supported only for personally owned devices with work profiles and Android
+	// versions 13 and above.
+	DeviceInfo string `json:"deviceInfo,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "DeviceInfo") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DeviceInfo") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s RequestDeviceInfoParams) MarshalJSON() ([]byte, error) {
+	type NoMethod RequestDeviceInfoParams
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// RequestDeviceInfoStatus: Status of the REQUEST_DEVICE_INFO command.
+type RequestDeviceInfoStatus struct {
+	// EidInfo: Information related to the EIDs of the device.
+	EidInfo *EidInfo `json:"eidInfo,omitempty"`
+	// Status: Output only. Status of a REQUEST_DEVICE_INFO command.
+	//
+	// Possible values:
+	//   "STATUS_UNSPECIFIED" - Unspecified. This value is not used.
+	//   "SUCCEEDED" - Device information has been successfully delivered.
+	//   "PENDING_USER_ACTION" - The user has not completed the actions required to
+	// share device information.
+	//   "USER_DECLINED" - The user declined sharing device information.
+	//   "UNSUPPORTED" - The requested device info is not supported on this device,
+	// e.g. eSIM is not supported on the device.
+	Status string `json:"status,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "EidInfo") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "EidInfo") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s RequestDeviceInfoStatus) MarshalJSON() ([]byte, error) {
+	type NoMethod RequestDeviceInfoStatus
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 

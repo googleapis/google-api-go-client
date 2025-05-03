@@ -398,7 +398,8 @@ func (s LfpInventory) MarshalJSON() ([]byte, error) {
 type LfpMerchantState struct {
 	// CountrySettings: Country-specific settings for the merchant.
 	CountrySettings []*CountrySettings `json:"countrySettings,omitempty"`
-	// InventoryStats: The inventory statistics for the merchant.
+	// InventoryStats: The inventory statistics for the merchant. The field will be
+	// absent if the merchant has no inventory submitted through LFP.
 	InventoryStats *InventoryStats `json:"inventoryStats,omitempty"`
 	// LinkedGbps: Number of GBPs (https://www.google.com/business/) this merchant
 	// has access to.
@@ -407,6 +408,8 @@ type LfpMerchantState struct {
 	// `accounts/{account}/lfpMerchantStates/{target_merchant}`
 	Name string `json:"name,omitempty"`
 	// StoreStates: Output only. The state per store from the specified merchant.
+	// The field will be absent if the merchant has no stores submitted through
+	// LFP.
 	StoreStates []*LfpStoreState `json:"storeStates,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.

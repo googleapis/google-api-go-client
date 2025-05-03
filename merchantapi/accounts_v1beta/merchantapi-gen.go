@@ -2245,11 +2245,11 @@ func (s MinimumOrderValueTable) MarshalJSON() ([]byte, error) {
 // currently used to represent return policies for ads and free listings
 // programs.
 type OnlineReturnPolicy struct {
-	// AcceptDefectiveOnly: This field specifies if merchant only accepts defective
-	// products for returns, and this field is required.
+	// AcceptDefectiveOnly: Optional. This field specifies if merchant only accepts
+	// defective products for returns.
 	AcceptDefectiveOnly bool `json:"acceptDefectiveOnly,omitempty"`
-	// AcceptExchange: This field specifies if merchant allows customers to
-	// exchange products, this field is required.
+	// AcceptExchange: Optional. This field specifies if merchant allows customers
+	// to exchange products.
 	AcceptExchange bool `json:"acceptExchange,omitempty"`
 	// Countries: Required. Immutable. The countries of sale where the return
 	// policy applies. The values must be a valid 2 letter ISO 3166 code.
@@ -2276,15 +2276,14 @@ type OnlineReturnPolicy struct {
 	Name string `json:"name,omitempty"`
 	// Policy: Optional. The return policy.
 	Policy *Policy `json:"policy,omitempty"`
-	// ProcessRefundDays: The field specifies the number of days it takes for
-	// merchants to process refunds, field is optional.
+	// ProcessRefundDays: Optional. The field specifies the number of days it takes
+	// for merchants to process refunds.
 	ProcessRefundDays int64 `json:"processRefundDays,omitempty"`
 	// RestockingFee: Optional. The restocking fee that applies to all return
 	// reason categories. This would be treated as a free restocking fee if the
 	// value is not set.
 	RestockingFee *RestockingFee `json:"restockingFee,omitempty"`
-	// ReturnLabelSource: The field specifies the return label source. This field
-	// is required when return method is BY_MAIL.
+	// ReturnLabelSource: Optional. The field specifies the return label source.
 	//
 	// Possible values:
 	//   "RETURN_LABEL_SOURCE_UNSPECIFIED" - Default value. This value is unused.
@@ -4267,8 +4266,7 @@ type AccountsListSubaccountsCall struct {
 // the following filter: `relationship(providerId={parent} AND
 // service(type="ACCOUNT_AGGREGATION"))`
 //
-//   - provider: The aggregation service provider. Format:
-//     `accounts/{providerId}`.
+// - provider: The aggregation service provider. Format: `accounts/{accountId}`.
 func (r *AccountsService) ListSubaccounts(provider string) *AccountsListSubaccountsCall {
 	c := &AccountsListSubaccountsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.provider = provider

@@ -15281,10 +15281,10 @@ func (c *AdvertisersListCall) Filter(filter string) *AdvertisersListCall {
 }
 
 // OrderBy sets the optional parameter "orderBy": Field by which to sort the
-// list. Acceptable values are: * `displayName` (default) * `entityStatus` *
-// `updateTime` The default sorting order is ascending. To specify descending
-// order for a field, a suffix "desc" should be added to the field name. For
-// example, `displayName desc`.
+// list. Acceptable values are: * `advertiserId` (default) * `displayName` *
+// `entityStatus` * `updateTime` The default sorting order is ascending. To
+// specify descending order for a field, a suffix "desc" should be added to the
+// field name. For example, `displayName desc`.
 func (c *AdvertisersListCall) OrderBy(orderBy string) *AdvertisersListCall {
 	c.urlParams_.Set("orderBy", orderBy)
 	return c
@@ -24380,7 +24380,7 @@ type AdvertisersTargetingTypesAssignedTargetingOptionsGetCall struct {
 //     `TARGETING_TYPE_DIGITAL_CONTENT_LABEL_EXCLUSION` * `TARGETING_TYPE_OMID` *
 //     `TARGETING_TYPE_SENSITIVE_CATEGORY_EXCLUSION` *
 //     `TARGETING_TYPE_YOUTUBE_VIDEO` * `TARGETING_TYPE_YOUTUBE_CHANNEL` *
-//     `TARGETING_TYPE_KEYWORD`.
+//     `TARGETING_TYPE_KEYWORD` * `TARGETING_TYPE_CONTENT_THEME_EXCLUSION`.
 func (r *AdvertisersTargetingTypesAssignedTargetingOptionsService) Get(advertiserId int64, targetingType string, assignedTargetingOptionId string) *AdvertisersTargetingTypesAssignedTargetingOptionsGetCall {
 	c := &AdvertisersTargetingTypesAssignedTargetingOptionsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.advertiserId = advertiserId
@@ -24501,7 +24501,7 @@ type AdvertisersTargetingTypesAssignedTargetingOptionsListCall struct {
 //     `TARGETING_TYPE_DIGITAL_CONTENT_LABEL_EXCLUSION` * `TARGETING_TYPE_OMID` *
 //     `TARGETING_TYPE_SENSITIVE_CATEGORY_EXCLUSION` *
 //     `TARGETING_TYPE_YOUTUBE_VIDEO` * `TARGETING_TYPE_YOUTUBE_CHANNEL` *
-//     `TARGETING_TYPE_KEYWORD`.
+//     `TARGETING_TYPE_KEYWORD` * `TARGETING_TYPE_CONTENT_THEME_EXCLUSION`.
 func (r *AdvertisersTargetingTypesAssignedTargetingOptionsService) List(advertiserId int64, targetingType string) *AdvertisersTargetingTypesAssignedTargetingOptionsListCall {
 	c := &AdvertisersTargetingTypesAssignedTargetingOptionsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.advertiserId = advertiserId

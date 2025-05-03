@@ -1712,6 +1712,9 @@ func (s MetricsScope) MarshalJSON() ([]byte, error) {
 type MonitoredProject struct {
 	// CreateTime: Output only. The time when this MonitoredProject was created.
 	CreateTime string `json:"createTime,omitempty"`
+	// IsTombstoned: Output only. Set if the project has been tombstoned by the
+	// user.
+	IsTombstoned bool `json:"isTombstoned,omitempty"`
 	// Name: Immutable. The resource name of the MonitoredProject. On input, the
 	// resource name includes the scoping project ID and monitored project ID. On
 	// output, it contains the equivalent project numbers. Example:
@@ -3151,7 +3154,7 @@ func (s Type) MarshalJSON() ([]byte, error) {
 // displayed.
 type VisibilityCondition struct {
 	// TemplateVariableCondition: A condition whose evaluation is based on the
-	// value of a template variable.
+	// value of a template1 variable.
 	TemplateVariableCondition *TemplateVariableCondition `json:"templateVariableCondition,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "TemplateVariableCondition")
 	// to unconditionally include in API requests. By default, fields with empty or

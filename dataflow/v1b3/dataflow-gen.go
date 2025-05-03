@@ -7902,7 +7902,8 @@ type ProjectsJobsCreateCall struct {
 	header_    http.Header
 }
 
-// Create: Creates a Cloud Dataflow job. To create a job, we recommend using
+// Create: A Job is a multi-stage computation graph run by the Cloud Dataflow
+// service. Creates a Cloud Dataflow job. To create a job, we recommend using
 // `projects.locations.jobs.create` with a [regional endpoint]
 // (https://cloud.google.com/dataflow/docs/concepts/regional-endpoints). Using
 // `projects.jobs.create` is not recommended, as your job will always start in
@@ -9690,7 +9691,8 @@ type ProjectsLocationsJobsCreateCall struct {
 	header_    http.Header
 }
 
-// Create: Creates a Cloud Dataflow job. To create a job, we recommend using
+// Create: A Job is a multi-stage computation graph run by the Cloud Dataflow
+// service. Creates a Cloud Dataflow job. To create a job, we recommend using
 // `projects.locations.jobs.create` with a [regional endpoint]
 // (https://cloud.google.com/dataflow/docs/concepts/regional-endpoints). Using
 // `projects.jobs.create` is not recommended, as your job will always start in

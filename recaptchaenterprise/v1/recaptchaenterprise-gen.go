@@ -610,6 +610,40 @@ func (s GoogleCloudRecaptchaenterpriseV1AssessmentEnvironment) MarshalJSON() ([]
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudRecaptchaenterpriseV1Bot: Bot information and metadata.
+type GoogleCloudRecaptchaenterpriseV1Bot struct {
+	// BotType: Optional. Enumerated field representing the type of bot.
+	//
+	// Possible values:
+	//   "BOT_TYPE_UNSPECIFIED" - Default unspecified type.
+	//   "AI_AGENT" - Software program that interacts with a site and performs
+	// tasks autonomously.
+	//   "CONTENT_SCRAPER" - Software that extracts specific data from sites for
+	// use.
+	//   "SEARCH_INDEXER" - Software that crawls sites and stores content for the
+	// purpose of efficient retrieval, likely as part of a search engine.
+	BotType string `json:"botType,omitempty"`
+	// Name: Optional. Enumerated string value that indicates the identity of the
+	// bot, formatted in kebab-case.
+	Name string `json:"name,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "BotType") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "BotType") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudRecaptchaenterpriseV1Bot) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudRecaptchaenterpriseV1Bot
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudRecaptchaenterpriseV1ChallengeMetrics: Metrics related to
 // challenges.
 type GoogleCloudRecaptchaenterpriseV1ChallengeMetrics struct {
@@ -1804,6 +1838,9 @@ type GoogleCloudRecaptchaenterpriseV1RiskAnalysis struct {
 	// likely legitimate traffic while 0.0 means very likely non-legitimate
 	// traffic).
 	Score float64 `json:"score,omitempty"`
+	// VerifiedBots: Output only. Bots with identities that have been verified by
+	// reCAPTCHA and detected in the event.
+	VerifiedBots []*GoogleCloudRecaptchaenterpriseV1Bot `json:"verifiedBots,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Challenge") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See

@@ -221,7 +221,7 @@ type DataSource struct {
 	// MerchantReviewDataSource: The merchant review
 	// (https://support.google.com/merchants/answer/7045996) data source.
 	MerchantReviewDataSource *MerchantReviewDataSource `json:"merchantReviewDataSource,omitempty"`
-	// Name: Identifier. The name of the data source. Format:
+	// Name: Required. Identifier. The name of the data source. Format:
 	// `accounts/{account}/dataSources/{datasource}`
 	Name string `json:"name,omitempty"`
 	// PrimaryProductDataSource: The primary data source

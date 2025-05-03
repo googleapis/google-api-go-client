@@ -2804,7 +2804,7 @@ type StopAutonomousDatabaseRequest struct {
 }
 
 // SwitchoverAutonomousDatabaseRequest: The request for
-// `AutonomousDatabase.Switchover`.
+// `OracleDatabase.SwitchoverAutonomousDatabase`.
 type SwitchoverAutonomousDatabaseRequest struct {
 	// PeerAutonomousDatabase: Required. The peer database name to switch over to.
 	PeerAutonomousDatabase string `json:"peerAutonomousDatabase,omitempty"`
@@ -4523,7 +4523,7 @@ type ProjectsLocationsAutonomousDatabasesSwitchoverCall struct {
 	header_                             http.Header
 }
 
-// Switchover: Initiates a switchover of specified autonomous deatabase to the
+// Switchover: Initiates a switchover of specified autonomous database to the
 // associated peer database.
 //
 //   - name: The name of the Autonomous Database in the following format:

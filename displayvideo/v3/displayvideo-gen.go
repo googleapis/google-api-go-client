@@ -1722,11 +1722,13 @@ func (s AgeRangeTargetingOptionDetails) MarshalJSON() ([]byte, error) {
 
 // AlgorithmRules: Rule-based algorithm.
 type AlgorithmRules struct {
-	// AttributionModelId: Attribution model for the algorithm.
+	// AttributionModelId: Attribution model for the algorithm. This field is only
+	// supported for allowlisted partners.
 	AttributionModelId int64 `json:"attributionModelId,omitempty,string"`
 	// ImpressionSignalRuleset: Rules for the impression signals.
 	ImpressionSignalRuleset *AlgorithmRulesRuleset `json:"impressionSignalRuleset,omitempty"`
-	// PostImpressionSignalRuleset: Rules for the post-impression signals.
+	// PostImpressionSignalRuleset: Rules for the post-impression signals. This
+	// field is only supported for allowlisted partners.
 	PostImpressionSignalRuleset *AlgorithmRulesRuleset `json:"postImpressionSignalRuleset,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AttributionModelId") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -1895,7 +1897,8 @@ type AlgorithmRulesComparisonValue struct {
 	OnScreenPositionValue string `json:"onScreenPositionValue,omitempty"`
 	// StringValue: String value.
 	StringValue string `json:"stringValue,omitempty"`
-	// VideoPlayerSizeValue: Video player size value.
+	// VideoPlayerSizeValue: Video player size value. This field is only supported
+	// for allowlisted partners.
 	//
 	// Possible values:
 	//   "VIDEO_PLAYER_SIZE_UNSPECIFIED" - Video player size is not specified in
@@ -2093,7 +2096,8 @@ func (s *AlgorithmRulesRuleset) UnmarshalJSON(data []byte) error {
 
 // AlgorithmRulesSignal: Signal used to evaluate rules.
 type AlgorithmRulesSignal struct {
-	// ActiveViewSignal: Signal based on active views.
+	// ActiveViewSignal: Signal based on active views. This field is only supported
+	// for allowlisted partners.
 	//
 	// Possible values:
 	//   "ACTIVE_VIEW_SIGNAL_UNSPECIFIED" - Unknown signal.
@@ -2110,7 +2114,8 @@ type AlgorithmRulesSignal struct {
 	//   "COMPLETED_IN_VIEW_AUDIBLE" - Whether the ad was completed in view and
 	// audible. Value is stored in the boolValue field of the comparison value.
 	ActiveViewSignal string `json:"activeViewSignal,omitempty"`
-	// ClickSignal: Signal based on clicks.
+	// ClickSignal: Signal based on clicks. This field is only supported for
+	// allowlisted partners.
 	//
 	// Possible values:
 	//   "CLICK_SIGNAL_UNSPECIFIED" - Unknown signal.
@@ -2209,7 +2214,7 @@ func (s AlgorithmRulesSignalComparison) MarshalJSON() ([]byte, error) {
 // evaluation.
 type AlgorithmRulesSignalValue struct {
 	// ActiveViewSignal: Signal based on active views. Only `TIME_ON_SCREEN` is
-	// supported.
+	// supported. This field is only supported for allowlisted partners.
 	//
 	// Possible values:
 	//   "ACTIVE_VIEW_SIGNAL_UNSPECIFIED" - Unknown signal.
@@ -2227,7 +2232,7 @@ type AlgorithmRulesSignalValue struct {
 	// audible. Value is stored in the boolValue field of the comparison value.
 	ActiveViewSignal string `json:"activeViewSignal,omitempty"`
 	// FloodlightActivityConversionSignal: Signal based on floodlight conversion
-	// events.
+	// events. This field is only supported for allowlisted partners.
 	FloodlightActivityConversionSignal *AlgorithmRulesFloodlightActivityConversionSignal `json:"floodlightActivityConversionSignal,omitempty"`
 	// Number: Value to use as result.
 	Number float64 `json:"number,omitempty"`
@@ -2884,7 +2889,10 @@ type AssignedTargetingOption struct {
 	// Programmatic Reservation line items. Targeting of this type cannot be
 	// created or updated using the API.
 	//   "TARGETING_TYPE_CONTENT_THEME_EXCLUSION" - Filter website content by
-	// content themes (for example, religion).
+	// content themes (for example, religion). Only supported for Advertiser
+	// resources. Targeting of this type cannot be created or updated using the
+	// API. This targeting is only inherited by child YouTube and Demand Gen line
+	// item resources.
 	TargetingType string `json:"targetingType,omitempty"`
 	// ThirdPartyVerifierDetails: Third party verification details. This field will
 	// be populated when the targeting_type is
@@ -5489,8 +5497,8 @@ type ContentThemeAssignedTargetingOptionDetails struct {
 	// ContentTheme: Output only. An enum for the DV360 content theme classifier.
 	//
 	// Possible values:
-	//   "CONTENT_THEME_UNSPECIFIED" - This enum is only a placeholder and doesn't
-	// specify a DV360 content theme.
+	//   "CONTENT_THEME_UNSPECIFIED" - Content theme is not specified or is unknown
+	// in this version.
 	//   "CONTENT_THEME_FIGHTING_VIDEO_GAMES" - Fighting video games.
 	//   "CONTENT_THEME_MATURE_GAMES" - Mature games.
 	//   "CONTENT_THEME_NOT_YET_DETERMINED_HEALTH_SOURCES" - Not yet determined
@@ -5507,8 +5515,8 @@ type ContentThemeAssignedTargetingOptionDetails struct {
 	// classified to be EXCLUDED.
 	//
 	// Possible values:
-	//   "CONTENT_THEME_UNSPECIFIED" - This enum is only a placeholder and doesn't
-	// specify a DV360 content theme.
+	//   "CONTENT_THEME_UNSPECIFIED" - Content theme is not specified or is unknown
+	// in this version.
 	//   "CONTENT_THEME_FIGHTING_VIDEO_GAMES" - Fighting video games.
 	//   "CONTENT_THEME_MATURE_GAMES" - Mature games.
 	//   "CONTENT_THEME_NOT_YET_DETERMINED_HEALTH_SOURCES" - Not yet determined
@@ -5550,8 +5558,8 @@ type ContentThemeTargetingOptionDetails struct {
 	// classifier.
 	//
 	// Possible values:
-	//   "CONTENT_THEME_UNSPECIFIED" - This enum is only a placeholder and doesn't
-	// specify a DV360 content theme.
+	//   "CONTENT_THEME_UNSPECIFIED" - Content theme is not specified or is unknown
+	// in this version.
 	//   "CONTENT_THEME_FIGHTING_VIDEO_GAMES" - Fighting video games.
 	//   "CONTENT_THEME_MATURE_GAMES" - Mature games.
 	//   "CONTENT_THEME_NOT_YET_DETERMINED_HEALTH_SOURCES" - Not yet determined
@@ -5807,7 +5815,10 @@ type CreateAssignedTargetingOptionsRequest struct {
 	// Programmatic Reservation line items. Targeting of this type cannot be
 	// created or updated using the API.
 	//   "TARGETING_TYPE_CONTENT_THEME_EXCLUSION" - Filter website content by
-	// content themes (for example, religion).
+	// content themes (for example, religion). Only supported for Advertiser
+	// resources. Targeting of this type cannot be created or updated using the
+	// API. This targeting is only inherited by child YouTube and Demand Gen line
+	// item resources.
 	TargetingType string `json:"targetingType,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AssignedTargetingOptions")
 	// to unconditionally include in API requests. By default, fields with empty or
@@ -7058,7 +7069,10 @@ type DeleteAssignedTargetingOptionsRequest struct {
 	// Programmatic Reservation line items. Targeting of this type cannot be
 	// created or updated using the API.
 	//   "TARGETING_TYPE_CONTENT_THEME_EXCLUSION" - Filter website content by
-	// content themes (for example, religion).
+	// content themes (for example, religion). Only supported for Advertiser
+	// resources. Targeting of this type cannot be created or updated using the
+	// API. This targeting is only inherited by child YouTube and Demand Gen line
+	// item resources.
 	TargetingType string `json:"targetingType,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AssignedTargetingOptionIds")
 	// to unconditionally include in API requests. By default, fields with empty or
@@ -15318,7 +15332,10 @@ type TargetingOption struct {
 	// Programmatic Reservation line items. Targeting of this type cannot be
 	// created or updated using the API.
 	//   "TARGETING_TYPE_CONTENT_THEME_EXCLUSION" - Filter website content by
-	// content themes (for example, religion).
+	// content themes (for example, religion). Only supported for Advertiser
+	// resources. Targeting of this type cannot be created or updated using the
+	// API. This targeting is only inherited by child YouTube and Demand Gen line
+	// item resources.
 	TargetingType string `json:"targetingType,omitempty"`
 	// UserRewardedContentDetails: User rewarded content details.
 	UserRewardedContentDetails *UserRewardedContentTargetingOptionDetails `json:"userRewardedContentDetails,omitempty"`
@@ -17034,10 +17051,10 @@ func (c *AdvertisersListCall) Filter(filter string) *AdvertisersListCall {
 }
 
 // OrderBy sets the optional parameter "orderBy": Field by which to sort the
-// list. Acceptable values are: * `displayName` (default) * `entityStatus` *
-// `updateTime` The default sorting order is ascending. To specify descending
-// order for a field, a suffix "desc" should be added to the field name. For
-// example, `displayName desc`.
+// list. Acceptable values are: * `advertiserId` (default) * `displayName` *
+// `entityStatus` * `updateTime` The default sorting order is ascending. To
+// specify descending order for a field, a suffix "desc" should be added to the
+// field name. For example, `displayName desc`.
 func (c *AdvertisersListCall) OrderBy(orderBy string) *AdvertisersListCall {
 	c.urlParams_.Set("orderBy", orderBy)
 	return c
@@ -27809,7 +27826,7 @@ type AdvertisersTargetingTypesAssignedTargetingOptionsGetCall struct {
 //     `TARGETING_TYPE_DIGITAL_CONTENT_LABEL_EXCLUSION` * `TARGETING_TYPE_OMID` *
 //     `TARGETING_TYPE_SENSITIVE_CATEGORY_EXCLUSION` *
 //     `TARGETING_TYPE_YOUTUBE_VIDEO` * `TARGETING_TYPE_YOUTUBE_CHANNEL` *
-//     `TARGETING_TYPE_KEYWORD`.
+//     `TARGETING_TYPE_KEYWORD` * `TARGETING_TYPE_CONTENT_THEME_EXCLUSION`.
 func (r *AdvertisersTargetingTypesAssignedTargetingOptionsService) Get(advertiserId int64, targetingType string, assignedTargetingOptionId string) *AdvertisersTargetingTypesAssignedTargetingOptionsGetCall {
 	c := &AdvertisersTargetingTypesAssignedTargetingOptionsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.advertiserId = advertiserId
@@ -27930,7 +27947,7 @@ type AdvertisersTargetingTypesAssignedTargetingOptionsListCall struct {
 //     `TARGETING_TYPE_DIGITAL_CONTENT_LABEL_EXCLUSION` * `TARGETING_TYPE_OMID` *
 //     `TARGETING_TYPE_SENSITIVE_CATEGORY_EXCLUSION` *
 //     `TARGETING_TYPE_YOUTUBE_VIDEO` * `TARGETING_TYPE_YOUTUBE_CHANNEL` *
-//     `TARGETING_TYPE_KEYWORD`.
+//     `TARGETING_TYPE_KEYWORD` * `TARGETING_TYPE_CONTENT_THEME_EXCLUSION`.
 func (r *AdvertisersTargetingTypesAssignedTargetingOptionsService) List(advertiserId int64, targetingType string) *AdvertisersTargetingTypesAssignedTargetingOptionsListCall {
 	c := &AdvertisersTargetingTypesAssignedTargetingOptionsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.advertiserId = advertiserId

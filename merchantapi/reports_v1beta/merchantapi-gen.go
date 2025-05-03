@@ -1622,8 +1622,10 @@ type SearchRequest struct {
 	// should be used.
 	PageToken string `json:"pageToken,omitempty"`
 	// Query: Required. Query that defines a report to be retrieved. For details on
-	// how to construct your query, see the Query Language guide. For the full list
-	// of available tables and fields, see the Available fields.
+	// how to construct your query, see the Query Language guide
+	// (/merchant/api/guides/reports/query-language). For the full list of
+	// available tables and fields, see the Available fields
+	// (/merchant/api/reference/rest/reports_v1beta/accounts.reports).
 	Query string `json:"query,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "PageSize") to
 	// unconditionally include in API requests. By default, fields with empty or

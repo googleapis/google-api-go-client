@@ -322,6 +322,7 @@ type ProjectsLocationsDataTaxonomiesAttributesService struct {
 func NewProjectsLocationsEntryGroupsService(s *Service) *ProjectsLocationsEntryGroupsService {
 	rs := &ProjectsLocationsEntryGroupsService{s: s}
 	rs.Entries = NewProjectsLocationsEntryGroupsEntriesService(s)
+	rs.EntryLinks = NewProjectsLocationsEntryGroupsEntryLinksService(s)
 	return rs
 }
 
@@ -329,6 +330,8 @@ type ProjectsLocationsEntryGroupsService struct {
 	s *Service
 
 	Entries *ProjectsLocationsEntryGroupsEntriesService
+
+	EntryLinks *ProjectsLocationsEntryGroupsEntryLinksService
 }
 
 func NewProjectsLocationsEntryGroupsEntriesService(s *Service) *ProjectsLocationsEntryGroupsEntriesService {
@@ -337,6 +340,15 @@ func NewProjectsLocationsEntryGroupsEntriesService(s *Service) *ProjectsLocation
 }
 
 type ProjectsLocationsEntryGroupsEntriesService struct {
+	s *Service
+}
+
+func NewProjectsLocationsEntryGroupsEntryLinksService(s *Service) *ProjectsLocationsEntryGroupsEntryLinksService {
+	rs := &ProjectsLocationsEntryGroupsEntryLinksService{s: s}
+	return rs
+}
+
+type ProjectsLocationsEntryGroupsEntryLinksService struct {
 	s *Service
 }
 
@@ -949,7 +961,7 @@ func (s GoogleCloudDataplexV1AspectType) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudDataplexV1AspectTypeAuthorization: Autorization for an
+// GoogleCloudDataplexV1AspectTypeAuthorization: Authorization for an
 // AspectType.
 type GoogleCloudDataplexV1AspectTypeAuthorization struct {
 	// AlternateUsePermission: Immutable. The IAM permission grantable on the
@@ -3698,7 +3710,7 @@ type GoogleCloudDataplexV1DataScanEvent struct {
 	//   "SUCCEEDED" - Data scan job successfully completed.
 	//   "FAILED" - Data scan job was unsuccessful.
 	//   "CANCELLED" - Data scan job was cancelled.
-	//   "CREATED" - Data scan job was createed.
+	//   "CREATED" - Data scan job was created.
 	State string `json:"state,omitempty"`
 	// Trigger: The trigger type of the data scan job.
 	//
@@ -4725,6 +4737,85 @@ func (s GoogleCloudDataplexV1EntryGroup) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudDataplexV1EntryLink: EntryLink represents a link between two
+// entries.
+type GoogleCloudDataplexV1EntryLink struct {
+	// CreateTime: Output only. The time when the Entry Link was created.
+	CreateTime string `json:"createTime,omitempty"`
+	// EntryLinkType: Required. Immutable. Relative resource name of the Entry Link
+	// Type used to create this Entry Link, of the form:
+	// projects/{project}/locations/{location}/entryLinkTypes/{entry_link_type}.
+	EntryLinkType string `json:"entryLinkType,omitempty"`
+	// EntryReferences: Required. Specifies the entries referenced in the entry
+	// link. There should be exactly two entry references.
+	EntryReferences []*GoogleCloudDataplexV1EntryLinkEntryReference `json:"entryReferences,omitempty"`
+	// Name: Output only. Immutable. Identifier. The relative resource name of the
+	// Entry Link, of the form:
+	// projects/{project}/locations/{location}/entryGroups/{entry_group}/entryLinks/
+	// {entry_link}.
+	Name string `json:"name,omitempty"`
+	// UpdateTime: Output only. The time when the Entry Link was last updated.
+	UpdateTime string `json:"updateTime,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "CreateTime") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CreateTime") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDataplexV1EntryLink) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDataplexV1EntryLink
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDataplexV1EntryLinkEntryReference: Reference to the Entry that is
+// linked through the entry link.
+type GoogleCloudDataplexV1EntryLinkEntryReference struct {
+	// Name: Required. Immutable. The relative resource name of the referenced
+	// entry, of the form:
+	// projects/{project}/locations/{location}/entryGroups/{entryGroup}/entries/{ent
+	// ry}.
+	Name string `json:"name,omitempty"`
+	// Path: Immutable. The path in the entry that is referenced in the entry link.
+	// Empty path denotes that the entry itself is referenced in the entry link.
+	Path string `json:"path,omitempty"`
+	// Type: Required. Immutable. The reference type of the entry.
+	//
+	// Possible values:
+	//   "UNSPECIFIED" - Unspecified reference type. Implies that the entry is
+	// referenced in a non-directional entry link.
+	//   "SOURCE" - The entry is referenced as the source of the directional entry
+	// link.
+	//   "TARGET" - The entry is referenced as the target of the directional entry
+	// link.
+	Type string `json:"type,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Name") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Name") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDataplexV1EntryLinkEntryReference) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDataplexV1EntryLinkEntryReference
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudDataplexV1EntryLinkEvent: Payload associated with Entry related
 // log events.
 type GoogleCloudDataplexV1EntryLinkEvent struct {
@@ -5200,6 +5291,161 @@ type GoogleCloudDataplexV1GenerateDataQualityRulesResponse struct {
 
 func (s GoogleCloudDataplexV1GenerateDataQualityRulesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDataplexV1GenerateDataQualityRulesResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDataplexV1Glossary: A Glossary represents a collection of
+// categories and terms defined by the user. Glossary is a top level resource
+// and is the GCP parent resource of all the categories and terms within it.
+type GoogleCloudDataplexV1Glossary struct {
+	// CategoryCount: Output only. The number of categories in the glossary.
+	CategoryCount int64 `json:"categoryCount,omitempty"`
+	// CreateTime: Output only. The time at which the glossary was created.
+	CreateTime string `json:"createTime,omitempty"`
+	// Description: Optional. The user-mutable description of the glossary.
+	Description string `json:"description,omitempty"`
+	// DisplayName: Optional. User friendly display name of the glossary. This is
+	// user-mutable. This will be same as the glossaryId, if not specified.
+	DisplayName string `json:"displayName,omitempty"`
+	// Etag: Optional. Needed for resource freshness validation. This checksum is
+	// computed by the server based on the value of other fields, and may be sent
+	// on update and delete requests to ensure the client has an up-to-date value
+	// before proceeding.
+	Etag string `json:"etag,omitempty"`
+	// Labels: Optional. User-defined labels for the Glossary.
+	Labels map[string]string `json:"labels,omitempty"`
+	// Name: Output only. Identifier. The resource name of the Glossary. Format:
+	// projects/{projectId}/locations/{locationId}/glossaries/{glossaryId}
+	Name string `json:"name,omitempty"`
+	// TermCount: Output only. The number of terms in the glossary.
+	TermCount int64 `json:"termCount,omitempty"`
+	// Uid: Output only. System generated unique id for the Glossary. This ID will
+	// be different if the Glossary is deleted and re-created with the same name.
+	Uid string `json:"uid,omitempty"`
+	// UpdateTime: Output only. The time at which the glossary was last updated.
+	UpdateTime string `json:"updateTime,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "CategoryCount") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CategoryCount") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDataplexV1Glossary) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDataplexV1Glossary
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDataplexV1GlossaryCategory: A GlossaryCategory represents a
+// collection of categories and terms within a Glossary that are related to
+// each other.
+type GoogleCloudDataplexV1GlossaryCategory struct {
+	// CreateTime: Output only. The time at which the GlossaryCategory was created.
+	CreateTime string `json:"createTime,omitempty"`
+	// Description: Optional. The user-mutable description of the GlossaryCategory.
+	Description string `json:"description,omitempty"`
+	// DisplayName: Optional. User friendly display name of the GlossaryCategory.
+	// This is user-mutable. This will be same as the categoryId, if not specified.
+	DisplayName string `json:"displayName,omitempty"`
+	// Labels: Optional. User-defined labels for the GlossaryCategory.
+	Labels map[string]string `json:"labels,omitempty"`
+	// Name: Output only. Identifier. The resource name of the GlossaryCategory.
+	// Format:
+	// projects/{projectId}/locations/{locationId}/glossaries/{glossaryId}/categorie
+	// s/{categoryId}
+	Name string `json:"name,omitempty"`
+	// Parent: Required. The immediate parent of the GlossaryCategory in the
+	// resource-hierarchy. It can either be a Glossary or a Category. Format:
+	// projects/{projectId}/locations/{locationId}/glossaries/{glossaryId} OR
+	// projects/{projectId}/locations/{locationId}/glossaries/{glossaryId}/categorie
+	// s/{categoryId}
+	Parent string `json:"parent,omitempty"`
+	// Uid: Output only. System generated unique id for the GlossaryCategory. This
+	// ID will be different if the GlossaryCategory is deleted and re-created with
+	// the same name.
+	Uid string `json:"uid,omitempty"`
+	// UpdateTime: Output only. The time at which the GlossaryCategory was last
+	// updated.
+	UpdateTime string `json:"updateTime,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "CreateTime") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CreateTime") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDataplexV1GlossaryCategory) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDataplexV1GlossaryCategory
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDataplexV1GlossaryTerm: GlossaryTerms are the core of glossary. A
+// GlossaryTerm holds a rich text description that can be attached to entries
+// or specific columns to enrich them.
+type GoogleCloudDataplexV1GlossaryTerm struct {
+	// CreateTime: Output only. The time at which the GlossaryTerm was created.
+	CreateTime string `json:"createTime,omitempty"`
+	// Description: Optional. The user-mutable description of the GlossaryTerm.
+	Description string `json:"description,omitempty"`
+	// DisplayName: Optional. User friendly display name of the GlossaryTerm. This
+	// is user-mutable. This will be same as the termId, if not specified.
+	DisplayName string `json:"displayName,omitempty"`
+	// Labels: Optional. User-defined labels for the GlossaryTerm.
+	Labels map[string]string `json:"labels,omitempty"`
+	// Name: Output only. Identifier. The resource name of the GlossaryTerm.
+	// Format:
+	// projects/{projectId}/locations/{locationId}/glossaries/{glossaryId}/terms/{te
+	// rmId}
+	Name string `json:"name,omitempty"`
+	// Parent: Required. The immediate parent of the GlossaryTerm in the
+	// resource-hierarchy. It can either be a Glossary or a Category. Format:
+	// projects/{projectId}/locations/{locationId}/glossaries/{glossaryId} OR
+	// projects/{projectId}/locations/{locationId}/glossaries/{glossaryId}/categorie
+	// s/{categoryId}
+	Parent string `json:"parent,omitempty"`
+	// Uid: Output only. System generated unique id for the GlossaryTerm. This ID
+	// will be different if the GlossaryTerm is deleted and re-created with the
+	// same name.
+	Uid string `json:"uid,omitempty"`
+	// UpdateTime: Output only. The time at which the GlossaryTerm was last
+	// updated.
+	UpdateTime string `json:"updateTime,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "CreateTime") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CreateTime") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDataplexV1GlossaryTerm) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDataplexV1GlossaryTerm
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -6044,6 +6290,97 @@ type GoogleCloudDataplexV1ListEnvironmentsResponse struct {
 
 func (s GoogleCloudDataplexV1ListEnvironmentsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDataplexV1ListEnvironmentsResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDataplexV1ListGlossariesResponse: List Glossaries Response
+type GoogleCloudDataplexV1ListGlossariesResponse struct {
+	// Glossaries: Lists the glossaries in the specified parent.
+	Glossaries []*GoogleCloudDataplexV1Glossary `json:"glossaries,omitempty"`
+	// NextPageToken: A token, which can be sent as page_token to retrieve the next
+	// page. If this field is omitted, there are no subsequent pages.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+	// UnreachableLocations: Locations that the service couldn't reach.
+	UnreachableLocations []string `json:"unreachableLocations,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "Glossaries") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Glossaries") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDataplexV1ListGlossariesResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDataplexV1ListGlossariesResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDataplexV1ListGlossaryCategoriesResponse: List GlossaryCategories
+// Response
+type GoogleCloudDataplexV1ListGlossaryCategoriesResponse struct {
+	// Categories: Lists the glossaryCategories in the specified parent.
+	Categories []*GoogleCloudDataplexV1GlossaryCategory `json:"categories,omitempty"`
+	// NextPageToken: A token, which can be sent as page_token to retrieve the next
+	// page. If this field is omitted, there are no subsequent pages.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+	// UnreachableLocations: Locations that the service couldn't reach.
+	UnreachableLocations []string `json:"unreachableLocations,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "Categories") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Categories") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDataplexV1ListGlossaryCategoriesResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDataplexV1ListGlossaryCategoriesResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDataplexV1ListGlossaryTermsResponse: List GlossaryTerms Response
+type GoogleCloudDataplexV1ListGlossaryTermsResponse struct {
+	// NextPageToken: A token, which can be sent as page_token to retrieve the next
+	// page. If this field is omitted, there are no subsequent pages.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+	// Terms: Lists the terms in the specified parent.
+	Terms []*GoogleCloudDataplexV1GlossaryTerm `json:"terms,omitempty"`
+	// UnreachableLocations: Locations that the service couldn't reach.
+	UnreachableLocations []string `json:"unreachableLocations,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "NextPageToken") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDataplexV1ListGlossaryTermsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDataplexV1ListGlossaryTermsResponse
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -10575,6 +10912,12 @@ func (c *ProjectsLocationsSearchEntriesCall) Query(query string) *ProjectsLocati
 // name is located.
 func (c *ProjectsLocationsSearchEntriesCall) Scope(scope string) *ProjectsLocationsSearchEntriesCall {
 	c.urlParams_.Set("scope", scope)
+	return c
+}
+
+// SemanticSearch sets the optional parameter "semanticSearch": Internal only.
+func (c *ProjectsLocationsSearchEntriesCall) SemanticSearch(semanticSearch bool) *ProjectsLocationsSearchEntriesCall {
+	c.urlParams_.Set("semanticSearch", fmt.Sprint(semanticSearch))
 	return c
 }
 
@@ -17860,6 +18203,332 @@ func (c *ProjectsLocationsEntryGroupsEntriesPatchCall) Do(opts ...googleapi.Call
 	return ret, nil
 }
 
+type ProjectsLocationsEntryGroupsEntryLinksCreateCall struct {
+	s                              *Service
+	parent                         string
+	googleclouddataplexv1entrylink *GoogleCloudDataplexV1EntryLink
+	urlParams_                     gensupport.URLParams
+	ctx_                           context.Context
+	header_                        http.Header
+}
+
+// Create: Creates an Entry Link.
+//
+//   - parent: The resource name of the parent Entry Group:
+//     projects/{project}/locations/{location}/entryGroups/{entry_group}.
+func (r *ProjectsLocationsEntryGroupsEntryLinksService) Create(parent string, googleclouddataplexv1entrylink *GoogleCloudDataplexV1EntryLink) *ProjectsLocationsEntryGroupsEntryLinksCreateCall {
+	c := &ProjectsLocationsEntryGroupsEntryLinksCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.googleclouddataplexv1entrylink = googleclouddataplexv1entrylink
+	return c
+}
+
+// EntryLinkId sets the optional parameter "entryLinkId": Required. Entry Link
+// identifier * Must contain only lowercase letters, numbers and hyphens. *
+// Must start with a letter. * Must be between 1-63 characters. * Must end with
+// a number or a letter. * Must be unique within the EntryGroup.
+func (c *ProjectsLocationsEntryGroupsEntryLinksCreateCall) EntryLinkId(entryLinkId string) *ProjectsLocationsEntryGroupsEntryLinksCreateCall {
+	c.urlParams_.Set("entryLinkId", entryLinkId)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsEntryGroupsEntryLinksCreateCall) Fields(s ...googleapi.Field) *ProjectsLocationsEntryGroupsEntryLinksCreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsEntryGroupsEntryLinksCreateCall) Context(ctx context.Context) *ProjectsLocationsEntryGroupsEntryLinksCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsEntryGroupsEntryLinksCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsEntryGroupsEntryLinksCreateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googleclouddataplexv1entrylink)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/entryLinks")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "dataplex.projects.locations.entryGroups.entryLinks.create", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "dataplex.projects.locations.entryGroups.entryLinks.create" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudDataplexV1EntryLink.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsEntryGroupsEntryLinksCreateCall) Do(opts ...googleapi.CallOption) (*GoogleCloudDataplexV1EntryLink, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudDataplexV1EntryLink{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "dataplex.projects.locations.entryGroups.entryLinks.create", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsEntryGroupsEntryLinksDeleteCall struct {
+	s          *Service
+	name       string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Delete: Deletes an Entry Link.
+//
+//   - name: The resource name of the Entry Link:
+//     projects/{project}/locations/{location}/entryGroups/{entry_group}/entryLink
+//     s/{entry_link}.
+func (r *ProjectsLocationsEntryGroupsEntryLinksService) Delete(name string) *ProjectsLocationsEntryGroupsEntryLinksDeleteCall {
+	c := &ProjectsLocationsEntryGroupsEntryLinksDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsEntryGroupsEntryLinksDeleteCall) Fields(s ...googleapi.Field) *ProjectsLocationsEntryGroupsEntryLinksDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsEntryGroupsEntryLinksDeleteCall) Context(ctx context.Context) *ProjectsLocationsEntryGroupsEntryLinksDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsEntryGroupsEntryLinksDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsEntryGroupsEntryLinksDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("DELETE", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "dataplex.projects.locations.entryGroups.entryLinks.delete", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "dataplex.projects.locations.entryGroups.entryLinks.delete" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudDataplexV1EntryLink.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsEntryGroupsEntryLinksDeleteCall) Do(opts ...googleapi.CallOption) (*GoogleCloudDataplexV1EntryLink, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudDataplexV1EntryLink{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "dataplex.projects.locations.entryGroups.entryLinks.delete", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsEntryGroupsEntryLinksGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Gets an entry link.
+//
+//   - name: The resource name of the Entry Link:
+//     projects/{project}/locations/{location}/entryGroups/{entry_group}/entryLink
+//     s/{entry_link}.
+func (r *ProjectsLocationsEntryGroupsEntryLinksService) Get(name string) *ProjectsLocationsEntryGroupsEntryLinksGetCall {
+	c := &ProjectsLocationsEntryGroupsEntryLinksGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsEntryGroupsEntryLinksGetCall) Fields(s ...googleapi.Field) *ProjectsLocationsEntryGroupsEntryLinksGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsEntryGroupsEntryLinksGetCall) IfNoneMatch(entityTag string) *ProjectsLocationsEntryGroupsEntryLinksGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsEntryGroupsEntryLinksGetCall) Context(ctx context.Context) *ProjectsLocationsEntryGroupsEntryLinksGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsEntryGroupsEntryLinksGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsEntryGroupsEntryLinksGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "dataplex.projects.locations.entryGroups.entryLinks.get", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "dataplex.projects.locations.entryGroups.entryLinks.get" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudDataplexV1EntryLink.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsEntryGroupsEntryLinksGetCall) Do(opts ...googleapi.CallOption) (*GoogleCloudDataplexV1EntryLink, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudDataplexV1EntryLink{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "dataplex.projects.locations.entryGroups.entryLinks.get", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
 type ProjectsLocationsEntryLinkTypesGetIamPolicyCall struct {
 	s            *Service
 	resource     string
@@ -19188,6 +19857,346 @@ func (c *ProjectsLocationsEntryTypesTestIamPermissionsCall) Do(opts ...googleapi
 	return ret, nil
 }
 
+type ProjectsLocationsGlossariesCreateCall struct {
+	s                             *Service
+	parent                        string
+	googleclouddataplexv1glossary *GoogleCloudDataplexV1Glossary
+	urlParams_                    gensupport.URLParams
+	ctx_                          context.Context
+	header_                       http.Header
+}
+
+// Create: Creates a new Glossary resource.
+//
+//   - parent: The parent resource where this Glossary will be created. Format:
+//     projects/{projectId}/locations/{locationId} where locationId refers to a
+//     GCP region.
+func (r *ProjectsLocationsGlossariesService) Create(parent string, googleclouddataplexv1glossary *GoogleCloudDataplexV1Glossary) *ProjectsLocationsGlossariesCreateCall {
+	c := &ProjectsLocationsGlossariesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.googleclouddataplexv1glossary = googleclouddataplexv1glossary
+	return c
+}
+
+// GlossaryId sets the optional parameter "glossaryId": Required. Glossary ID:
+// Glossary identifier.
+func (c *ProjectsLocationsGlossariesCreateCall) GlossaryId(glossaryId string) *ProjectsLocationsGlossariesCreateCall {
+	c.urlParams_.Set("glossaryId", glossaryId)
+	return c
+}
+
+// ValidateOnly sets the optional parameter "validateOnly": Validates the
+// request without actually creating the glossary. Default: false.
+func (c *ProjectsLocationsGlossariesCreateCall) ValidateOnly(validateOnly bool) *ProjectsLocationsGlossariesCreateCall {
+	c.urlParams_.Set("validateOnly", fmt.Sprint(validateOnly))
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsGlossariesCreateCall) Fields(s ...googleapi.Field) *ProjectsLocationsGlossariesCreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsGlossariesCreateCall) Context(ctx context.Context) *ProjectsLocationsGlossariesCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsGlossariesCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsGlossariesCreateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googleclouddataplexv1glossary)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/glossaries")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "dataplex.projects.locations.glossaries.create", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "dataplex.projects.locations.glossaries.create" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleLongrunningOperation.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsGlossariesCreateCall) Do(opts ...googleapi.CallOption) (*GoogleLongrunningOperation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleLongrunningOperation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "dataplex.projects.locations.glossaries.create", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsGlossariesDeleteCall struct {
+	s          *Service
+	name       string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Delete: Deletes a Glossary resource. All the categories and terms within the
+// glossary must be deleted before a glossary can be deleted.
+//
+//   - name: The name of the Glossary to delete. Format:
+//     projects/{project}/locations/{location}/glossary/{glossary}.
+func (r *ProjectsLocationsGlossariesService) Delete(name string) *ProjectsLocationsGlossariesDeleteCall {
+	c := &ProjectsLocationsGlossariesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Etag sets the optional parameter "etag": The etag of the Glossary. If this
+// is provided, it must match the server's etag. If the etag is provided and
+// does not match the server-computed etag, the request must fail with a
+// ABORTED error code.
+func (c *ProjectsLocationsGlossariesDeleteCall) Etag(etag string) *ProjectsLocationsGlossariesDeleteCall {
+	c.urlParams_.Set("etag", etag)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsGlossariesDeleteCall) Fields(s ...googleapi.Field) *ProjectsLocationsGlossariesDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsGlossariesDeleteCall) Context(ctx context.Context) *ProjectsLocationsGlossariesDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsGlossariesDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsGlossariesDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("DELETE", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "dataplex.projects.locations.glossaries.delete", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "dataplex.projects.locations.glossaries.delete" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleLongrunningOperation.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsGlossariesDeleteCall) Do(opts ...googleapi.CallOption) (*GoogleLongrunningOperation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleLongrunningOperation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "dataplex.projects.locations.glossaries.delete", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsGlossariesGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Retrieves a specified Glossary resource.
+//
+//   - name: The name of the Glossary to retrieve. Format:
+//     projects/{project}/locations/{location}/glossaries/{glossary}.
+func (r *ProjectsLocationsGlossariesService) Get(name string) *ProjectsLocationsGlossariesGetCall {
+	c := &ProjectsLocationsGlossariesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsGlossariesGetCall) Fields(s ...googleapi.Field) *ProjectsLocationsGlossariesGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsGlossariesGetCall) IfNoneMatch(entityTag string) *ProjectsLocationsGlossariesGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsGlossariesGetCall) Context(ctx context.Context) *ProjectsLocationsGlossariesGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsGlossariesGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsGlossariesGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "dataplex.projects.locations.glossaries.get", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "dataplex.projects.locations.glossaries.get" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudDataplexV1Glossary.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsGlossariesGetCall) Do(opts ...googleapi.CallOption) (*GoogleCloudDataplexV1Glossary, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudDataplexV1Glossary{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "dataplex.projects.locations.glossaries.get", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
 type ProjectsLocationsGlossariesGetIamPolicyCall struct {
 	s            *Service
 	resource     string
@@ -19315,6 +20324,290 @@ func (c *ProjectsLocationsGlossariesGetIamPolicyCall) Do(opts ...googleapi.CallO
 		return nil, err
 	}
 	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "dataplex.projects.locations.glossaries.getIamPolicy", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsGlossariesListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists Glossary resources in a project and location.
+//
+//   - parent: The parent, which has this collection of glossaries. Format:
+//     projects/{project}/locations/{location} Location is the GCP region.
+func (r *ProjectsLocationsGlossariesService) List(parent string) *ProjectsLocationsGlossariesListCall {
+	c := &ProjectsLocationsGlossariesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// Filter sets the optional parameter "filter": Filter expression that filters
+// glossaries listed in the response. Initially, no filter is supported.
+func (c *ProjectsLocationsGlossariesListCall) Filter(filter string) *ProjectsLocationsGlossariesListCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// OrderBy sets the optional parameter "orderBy": Order by expression that
+// orders glossaries listed in the response. Order by fields are: name or
+// create_time for the result. If not specified, the ordering is undefined.
+func (c *ProjectsLocationsGlossariesListCall) OrderBy(orderBy string) *ProjectsLocationsGlossariesListCall {
+	c.urlParams_.Set("orderBy", orderBy)
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The maximum number of
+// glossaries to return. The service may return fewer than this value. If
+// unspecified, at most 50 glossaries will be returned. The maximum value is
+// 1000; values above 1000 will be coerced to 1000.
+func (c *ProjectsLocationsGlossariesListCall) PageSize(pageSize int64) *ProjectsLocationsGlossariesListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": A page token, received
+// from a previous ListGlossaries call. Provide this to retrieve the subsequent
+// page. When paginating, all other parameters provided to ListGlossaries must
+// match the call that provided the page token.
+func (c *ProjectsLocationsGlossariesListCall) PageToken(pageToken string) *ProjectsLocationsGlossariesListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsGlossariesListCall) Fields(s ...googleapi.Field) *ProjectsLocationsGlossariesListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsGlossariesListCall) IfNoneMatch(entityTag string) *ProjectsLocationsGlossariesListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsGlossariesListCall) Context(ctx context.Context) *ProjectsLocationsGlossariesListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsGlossariesListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsGlossariesListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/glossaries")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "dataplex.projects.locations.glossaries.list", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "dataplex.projects.locations.glossaries.list" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudDataplexV1ListGlossariesResponse.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsGlossariesListCall) Do(opts ...googleapi.CallOption) (*GoogleCloudDataplexV1ListGlossariesResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudDataplexV1ListGlossariesResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "dataplex.projects.locations.glossaries.list", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsLocationsGlossariesListCall) Pages(ctx context.Context, f func(*GoogleCloudDataplexV1ListGlossariesResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+type ProjectsLocationsGlossariesPatchCall struct {
+	s                             *Service
+	name                          string
+	googleclouddataplexv1glossary *GoogleCloudDataplexV1Glossary
+	urlParams_                    gensupport.URLParams
+	ctx_                          context.Context
+	header_                       http.Header
+}
+
+// Patch: Updates a Glossary resource.
+//
+//   - name: Output only. Identifier. The resource name of the Glossary. Format:
+//     projects/{projectId}/locations/{locationId}/glossaries/{glossaryId}.
+func (r *ProjectsLocationsGlossariesService) Patch(name string, googleclouddataplexv1glossary *GoogleCloudDataplexV1Glossary) *ProjectsLocationsGlossariesPatchCall {
+	c := &ProjectsLocationsGlossariesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.googleclouddataplexv1glossary = googleclouddataplexv1glossary
+	return c
+}
+
+// UpdateMask sets the optional parameter "updateMask": Required. The list of
+// fields to update.
+func (c *ProjectsLocationsGlossariesPatchCall) UpdateMask(updateMask string) *ProjectsLocationsGlossariesPatchCall {
+	c.urlParams_.Set("updateMask", updateMask)
+	return c
+}
+
+// ValidateOnly sets the optional parameter "validateOnly": Validates the
+// request without actually updating the glossary. Default: false.
+func (c *ProjectsLocationsGlossariesPatchCall) ValidateOnly(validateOnly bool) *ProjectsLocationsGlossariesPatchCall {
+	c.urlParams_.Set("validateOnly", fmt.Sprint(validateOnly))
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsGlossariesPatchCall) Fields(s ...googleapi.Field) *ProjectsLocationsGlossariesPatchCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsGlossariesPatchCall) Context(ctx context.Context) *ProjectsLocationsGlossariesPatchCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsGlossariesPatchCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsGlossariesPatchCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googleclouddataplexv1glossary)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PATCH", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "dataplex.projects.locations.glossaries.patch", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "dataplex.projects.locations.glossaries.patch" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleLongrunningOperation.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsGlossariesPatchCall) Do(opts ...googleapi.CallOption) (*GoogleLongrunningOperation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleLongrunningOperation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "dataplex.projects.locations.glossaries.patch", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -19537,6 +20830,334 @@ func (c *ProjectsLocationsGlossariesTestIamPermissionsCall) Do(opts ...googleapi
 	return ret, nil
 }
 
+type ProjectsLocationsGlossariesCategoriesCreateCall struct {
+	s                                     *Service
+	parent                                string
+	googleclouddataplexv1glossarycategory *GoogleCloudDataplexV1GlossaryCategory
+	urlParams_                            gensupport.URLParams
+	ctx_                                  context.Context
+	header_                               http.Header
+}
+
+// Create: GlossaryCategory APIs are CCFE passthrough APIs. Creates a new
+// GlossaryCategory resource.
+//
+//   - parent: The parent resource where this GlossaryCategory will be created.
+//     Format:
+//     projects/{projectId}/locations/{locationId}/glossaries/{glossaryId} where
+//     locationId refers to a GCP region.
+func (r *ProjectsLocationsGlossariesCategoriesService) Create(parent string, googleclouddataplexv1glossarycategory *GoogleCloudDataplexV1GlossaryCategory) *ProjectsLocationsGlossariesCategoriesCreateCall {
+	c := &ProjectsLocationsGlossariesCategoriesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.googleclouddataplexv1glossarycategory = googleclouddataplexv1glossarycategory
+	return c
+}
+
+// CategoryId sets the optional parameter "categoryId": Required. Category ID:
+// GlossaryCategory identifier.
+func (c *ProjectsLocationsGlossariesCategoriesCreateCall) CategoryId(categoryId string) *ProjectsLocationsGlossariesCategoriesCreateCall {
+	c.urlParams_.Set("categoryId", categoryId)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsGlossariesCategoriesCreateCall) Fields(s ...googleapi.Field) *ProjectsLocationsGlossariesCategoriesCreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsGlossariesCategoriesCreateCall) Context(ctx context.Context) *ProjectsLocationsGlossariesCategoriesCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsGlossariesCategoriesCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsGlossariesCategoriesCreateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googleclouddataplexv1glossarycategory)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/categories")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "dataplex.projects.locations.glossaries.categories.create", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "dataplex.projects.locations.glossaries.categories.create" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudDataplexV1GlossaryCategory.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsGlossariesCategoriesCreateCall) Do(opts ...googleapi.CallOption) (*GoogleCloudDataplexV1GlossaryCategory, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudDataplexV1GlossaryCategory{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "dataplex.projects.locations.glossaries.categories.create", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsGlossariesCategoriesDeleteCall struct {
+	s          *Service
+	name       string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Delete: Deletes a GlossaryCategory resource. All the categories and terms
+// nested directly under the category will be moved one level up to the parent
+// in the hierarchy.
+//
+//   - name: The name of the GlossaryCategory to delete. Format:
+//     projects/{project}/locations/{location}/glossary/{glossary}/categories/{glo
+//     ssary_category}.
+func (r *ProjectsLocationsGlossariesCategoriesService) Delete(name string) *ProjectsLocationsGlossariesCategoriesDeleteCall {
+	c := &ProjectsLocationsGlossariesCategoriesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsGlossariesCategoriesDeleteCall) Fields(s ...googleapi.Field) *ProjectsLocationsGlossariesCategoriesDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsGlossariesCategoriesDeleteCall) Context(ctx context.Context) *ProjectsLocationsGlossariesCategoriesDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsGlossariesCategoriesDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsGlossariesCategoriesDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("DELETE", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "dataplex.projects.locations.glossaries.categories.delete", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "dataplex.projects.locations.glossaries.categories.delete" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Empty.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsGlossariesCategoriesDeleteCall) Do(opts ...googleapi.CallOption) (*Empty, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Empty{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "dataplex.projects.locations.glossaries.categories.delete", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsGlossariesCategoriesGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Retrieves a specified GlossaryCategory resource.
+//
+//   - name: The name of the GlossaryCategory to retrieve. Format:
+//     projects/{project}/locations/{location}/glossaries/{glossary}/categories/{g
+//     lossary_category}.
+func (r *ProjectsLocationsGlossariesCategoriesService) Get(name string) *ProjectsLocationsGlossariesCategoriesGetCall {
+	c := &ProjectsLocationsGlossariesCategoriesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsGlossariesCategoriesGetCall) Fields(s ...googleapi.Field) *ProjectsLocationsGlossariesCategoriesGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsGlossariesCategoriesGetCall) IfNoneMatch(entityTag string) *ProjectsLocationsGlossariesCategoriesGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsGlossariesCategoriesGetCall) Context(ctx context.Context) *ProjectsLocationsGlossariesCategoriesGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsGlossariesCategoriesGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsGlossariesCategoriesGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "dataplex.projects.locations.glossaries.categories.get", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "dataplex.projects.locations.glossaries.categories.get" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudDataplexV1GlossaryCategory.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsGlossariesCategoriesGetCall) Do(opts ...googleapi.CallOption) (*GoogleCloudDataplexV1GlossaryCategory, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudDataplexV1GlossaryCategory{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "dataplex.projects.locations.glossaries.categories.get", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
 type ProjectsLocationsGlossariesCategoriesGetIamPolicyCall struct {
 	s            *Service
 	resource     string
@@ -19664,6 +21285,289 @@ func (c *ProjectsLocationsGlossariesCategoriesGetIamPolicyCall) Do(opts ...googl
 		return nil, err
 	}
 	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "dataplex.projects.locations.glossaries.categories.getIamPolicy", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsGlossariesCategoriesListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists GlossaryCategory resources in a glossary.
+//
+//   - parent: The parent, which has this collection of categories. Format:
+//     projects/{project}/locations/{location}/glossaries/{glossary} Location is
+//     the GCP region.
+func (r *ProjectsLocationsGlossariesCategoriesService) List(parent string) *ProjectsLocationsGlossariesCategoriesListCall {
+	c := &ProjectsLocationsGlossariesCategoriesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// Filter sets the optional parameter "filter": Filter expression that filters
+// categories listed in the response. Filters supported: List
+// GlossaryCategories based on immediate parent in the resource hierarchy. This
+// will only return the GlossaryCategories nested directly under the parent and
+// no other subsequent nested categories will be returned.
+func (c *ProjectsLocationsGlossariesCategoriesListCall) Filter(filter string) *ProjectsLocationsGlossariesCategoriesListCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// OrderBy sets the optional parameter "orderBy": Order by expression that
+// orders categories listed in the response. Order by fields are: name or
+// create_time for the result. If not specified, the ordering is undefined.
+func (c *ProjectsLocationsGlossariesCategoriesListCall) OrderBy(orderBy string) *ProjectsLocationsGlossariesCategoriesListCall {
+	c.urlParams_.Set("orderBy", orderBy)
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The maximum number of
+// categories to return. The service may return fewer than this value. If
+// unspecified, at most 50 categories will be returned. The maximum value is
+// 1000; values above 1000 will be coerced to 1000.
+func (c *ProjectsLocationsGlossariesCategoriesListCall) PageSize(pageSize int64) *ProjectsLocationsGlossariesCategoriesListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": A page token, received
+// from a previous ListGlossaryCategories call. Provide this to retrieve the
+// subsequent page. When paginating, all other parameters provided to
+// ListGlossaryCategories must match the call that provided the page token.
+func (c *ProjectsLocationsGlossariesCategoriesListCall) PageToken(pageToken string) *ProjectsLocationsGlossariesCategoriesListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsGlossariesCategoriesListCall) Fields(s ...googleapi.Field) *ProjectsLocationsGlossariesCategoriesListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsGlossariesCategoriesListCall) IfNoneMatch(entityTag string) *ProjectsLocationsGlossariesCategoriesListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsGlossariesCategoriesListCall) Context(ctx context.Context) *ProjectsLocationsGlossariesCategoriesListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsGlossariesCategoriesListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsGlossariesCategoriesListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/categories")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "dataplex.projects.locations.glossaries.categories.list", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "dataplex.projects.locations.glossaries.categories.list" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudDataplexV1ListGlossaryCategoriesResponse.ServerResponse.Header
+// or (if a response was returned at all) in error.(*googleapi.Error).Header.
+// Use googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsGlossariesCategoriesListCall) Do(opts ...googleapi.CallOption) (*GoogleCloudDataplexV1ListGlossaryCategoriesResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudDataplexV1ListGlossaryCategoriesResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "dataplex.projects.locations.glossaries.categories.list", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsLocationsGlossariesCategoriesListCall) Pages(ctx context.Context, f func(*GoogleCloudDataplexV1ListGlossaryCategoriesResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+type ProjectsLocationsGlossariesCategoriesPatchCall struct {
+	s                                     *Service
+	name                                  string
+	googleclouddataplexv1glossarycategory *GoogleCloudDataplexV1GlossaryCategory
+	urlParams_                            gensupport.URLParams
+	ctx_                                  context.Context
+	header_                               http.Header
+}
+
+// Patch: Updates a GlossaryCategory resource.
+//
+//   - name: Output only. Identifier. The resource name of the GlossaryCategory.
+//     Format:
+//     projects/{projectId}/locations/{locationId}/glossaries/{glossaryId}/categor
+//     ies/{categoryId}.
+func (r *ProjectsLocationsGlossariesCategoriesService) Patch(name string, googleclouddataplexv1glossarycategory *GoogleCloudDataplexV1GlossaryCategory) *ProjectsLocationsGlossariesCategoriesPatchCall {
+	c := &ProjectsLocationsGlossariesCategoriesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.googleclouddataplexv1glossarycategory = googleclouddataplexv1glossarycategory
+	return c
+}
+
+// UpdateMask sets the optional parameter "updateMask": Required. The list of
+// fields to update.
+func (c *ProjectsLocationsGlossariesCategoriesPatchCall) UpdateMask(updateMask string) *ProjectsLocationsGlossariesCategoriesPatchCall {
+	c.urlParams_.Set("updateMask", updateMask)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsGlossariesCategoriesPatchCall) Fields(s ...googleapi.Field) *ProjectsLocationsGlossariesCategoriesPatchCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsGlossariesCategoriesPatchCall) Context(ctx context.Context) *ProjectsLocationsGlossariesCategoriesPatchCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsGlossariesCategoriesPatchCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsGlossariesCategoriesPatchCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googleclouddataplexv1glossarycategory)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PATCH", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "dataplex.projects.locations.glossaries.categories.patch", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "dataplex.projects.locations.glossaries.categories.patch" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudDataplexV1GlossaryCategory.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsGlossariesCategoriesPatchCall) Do(opts ...googleapi.CallOption) (*GoogleCloudDataplexV1GlossaryCategory, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudDataplexV1GlossaryCategory{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "dataplex.projects.locations.glossaries.categories.patch", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -19886,6 +21790,332 @@ func (c *ProjectsLocationsGlossariesCategoriesTestIamPermissionsCall) Do(opts ..
 	return ret, nil
 }
 
+type ProjectsLocationsGlossariesTermsCreateCall struct {
+	s                                 *Service
+	parent                            string
+	googleclouddataplexv1glossaryterm *GoogleCloudDataplexV1GlossaryTerm
+	urlParams_                        gensupport.URLParams
+	ctx_                              context.Context
+	header_                           http.Header
+}
+
+// Create: GlossaryTerm APIs are CCFE passthrough APIs. Creates a new
+// GlossaryTerm resource.
+//
+//   - parent: The parent resource where this GlossaryTerm will be created.
+//     Format:
+//     projects/{projectId}/locations/{locationId}/glossaries/{glossaryId} where
+//     locationId refers to a GCP region.
+func (r *ProjectsLocationsGlossariesTermsService) Create(parent string, googleclouddataplexv1glossaryterm *GoogleCloudDataplexV1GlossaryTerm) *ProjectsLocationsGlossariesTermsCreateCall {
+	c := &ProjectsLocationsGlossariesTermsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.googleclouddataplexv1glossaryterm = googleclouddataplexv1glossaryterm
+	return c
+}
+
+// TermId sets the optional parameter "termId": Required. Term ID: GlossaryTerm
+// identifier.
+func (c *ProjectsLocationsGlossariesTermsCreateCall) TermId(termId string) *ProjectsLocationsGlossariesTermsCreateCall {
+	c.urlParams_.Set("termId", termId)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsGlossariesTermsCreateCall) Fields(s ...googleapi.Field) *ProjectsLocationsGlossariesTermsCreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsGlossariesTermsCreateCall) Context(ctx context.Context) *ProjectsLocationsGlossariesTermsCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsGlossariesTermsCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsGlossariesTermsCreateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googleclouddataplexv1glossaryterm)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/terms")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "dataplex.projects.locations.glossaries.terms.create", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "dataplex.projects.locations.glossaries.terms.create" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudDataplexV1GlossaryTerm.ServerResponse.Header or (if a response
+// was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsGlossariesTermsCreateCall) Do(opts ...googleapi.CallOption) (*GoogleCloudDataplexV1GlossaryTerm, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudDataplexV1GlossaryTerm{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "dataplex.projects.locations.glossaries.terms.create", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsGlossariesTermsDeleteCall struct {
+	s          *Service
+	name       string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Delete: Deletes a GlossaryTerm resource.
+//
+//   - name: The name of the GlossaryTerm to delete. Format:
+//     projects/{project}/locations/{location}/glossary/{glossary}/terms/{glossary
+//     _term}.
+func (r *ProjectsLocationsGlossariesTermsService) Delete(name string) *ProjectsLocationsGlossariesTermsDeleteCall {
+	c := &ProjectsLocationsGlossariesTermsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsGlossariesTermsDeleteCall) Fields(s ...googleapi.Field) *ProjectsLocationsGlossariesTermsDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsGlossariesTermsDeleteCall) Context(ctx context.Context) *ProjectsLocationsGlossariesTermsDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsGlossariesTermsDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsGlossariesTermsDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("DELETE", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "dataplex.projects.locations.glossaries.terms.delete", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "dataplex.projects.locations.glossaries.terms.delete" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Empty.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsGlossariesTermsDeleteCall) Do(opts ...googleapi.CallOption) (*Empty, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Empty{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "dataplex.projects.locations.glossaries.terms.delete", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsGlossariesTermsGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Retrieves a specified GlossaryTerm resource.
+//
+//   - name: The name of the GlossaryTerm to retrieve. Format:
+//     projects/{project}/locations/{location}/glossaries/{glossary}/terms/{glossa
+//     ry_term}.
+func (r *ProjectsLocationsGlossariesTermsService) Get(name string) *ProjectsLocationsGlossariesTermsGetCall {
+	c := &ProjectsLocationsGlossariesTermsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsGlossariesTermsGetCall) Fields(s ...googleapi.Field) *ProjectsLocationsGlossariesTermsGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsGlossariesTermsGetCall) IfNoneMatch(entityTag string) *ProjectsLocationsGlossariesTermsGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsGlossariesTermsGetCall) Context(ctx context.Context) *ProjectsLocationsGlossariesTermsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsGlossariesTermsGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsGlossariesTermsGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "dataplex.projects.locations.glossaries.terms.get", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "dataplex.projects.locations.glossaries.terms.get" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudDataplexV1GlossaryTerm.ServerResponse.Header or (if a response
+// was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsGlossariesTermsGetCall) Do(opts ...googleapi.CallOption) (*GoogleCloudDataplexV1GlossaryTerm, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudDataplexV1GlossaryTerm{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "dataplex.projects.locations.glossaries.terms.get", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
 type ProjectsLocationsGlossariesTermsGetIamPolicyCall struct {
 	s            *Service
 	resource     string
@@ -20013,6 +22243,289 @@ func (c *ProjectsLocationsGlossariesTermsGetIamPolicyCall) Do(opts ...googleapi.
 		return nil, err
 	}
 	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "dataplex.projects.locations.glossaries.terms.getIamPolicy", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsGlossariesTermsListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists GlossaryTerm resources in a glossary.
+//
+//   - parent: The parent, which has this collection of terms. Format:
+//     projects/{project}/locations/{location}/glossaries/{glossary} Location is
+//     the GCP region.
+func (r *ProjectsLocationsGlossariesTermsService) List(parent string) *ProjectsLocationsGlossariesTermsListCall {
+	c := &ProjectsLocationsGlossariesTermsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// Filter sets the optional parameter "filter": Filter expression that filters
+// terms listed in the response. Filters supported: List GlossaryTerms based on
+// immediate parent in the resource hierarchy. This will only return the terms
+// nested directly under the parent and no other subsequent nested terms will
+// be returned.
+func (c *ProjectsLocationsGlossariesTermsListCall) Filter(filter string) *ProjectsLocationsGlossariesTermsListCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// OrderBy sets the optional parameter "orderBy": Order by expression that
+// orders terms listed in the response. Order by fields are: name or
+// create_time for the result. If not specified, the ordering is undefined.
+func (c *ProjectsLocationsGlossariesTermsListCall) OrderBy(orderBy string) *ProjectsLocationsGlossariesTermsListCall {
+	c.urlParams_.Set("orderBy", orderBy)
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The maximum number of terms
+// to return. The service may return fewer than this value. If unspecified, at
+// most 50 terms will be returned. The maximum value is 1000; values above 1000
+// will be coerced to 1000.
+func (c *ProjectsLocationsGlossariesTermsListCall) PageSize(pageSize int64) *ProjectsLocationsGlossariesTermsListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": A page token, received
+// from a previous ListGlossaryTerms call. Provide this to retrieve the
+// subsequent page. When paginating, all other parameters provided to
+// ListGlossaryTerms must match the call that provided the page token.
+func (c *ProjectsLocationsGlossariesTermsListCall) PageToken(pageToken string) *ProjectsLocationsGlossariesTermsListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsGlossariesTermsListCall) Fields(s ...googleapi.Field) *ProjectsLocationsGlossariesTermsListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsGlossariesTermsListCall) IfNoneMatch(entityTag string) *ProjectsLocationsGlossariesTermsListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsGlossariesTermsListCall) Context(ctx context.Context) *ProjectsLocationsGlossariesTermsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsGlossariesTermsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsGlossariesTermsListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/terms")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "dataplex.projects.locations.glossaries.terms.list", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "dataplex.projects.locations.glossaries.terms.list" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudDataplexV1ListGlossaryTermsResponse.ServerResponse.Header or (if
+// a response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsGlossariesTermsListCall) Do(opts ...googleapi.CallOption) (*GoogleCloudDataplexV1ListGlossaryTermsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudDataplexV1ListGlossaryTermsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "dataplex.projects.locations.glossaries.terms.list", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsLocationsGlossariesTermsListCall) Pages(ctx context.Context, f func(*GoogleCloudDataplexV1ListGlossaryTermsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+type ProjectsLocationsGlossariesTermsPatchCall struct {
+	s                                 *Service
+	name                              string
+	googleclouddataplexv1glossaryterm *GoogleCloudDataplexV1GlossaryTerm
+	urlParams_                        gensupport.URLParams
+	ctx_                              context.Context
+	header_                           http.Header
+}
+
+// Patch: Updates a GlossaryTerm resource.
+//
+//   - name: Output only. Identifier. The resource name of the GlossaryTerm.
+//     Format:
+//     projects/{projectId}/locations/{locationId}/glossaries/{glossaryId}/terms/{
+//     termId}.
+func (r *ProjectsLocationsGlossariesTermsService) Patch(name string, googleclouddataplexv1glossaryterm *GoogleCloudDataplexV1GlossaryTerm) *ProjectsLocationsGlossariesTermsPatchCall {
+	c := &ProjectsLocationsGlossariesTermsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.googleclouddataplexv1glossaryterm = googleclouddataplexv1glossaryterm
+	return c
+}
+
+// UpdateMask sets the optional parameter "updateMask": Required. The list of
+// fields to update.
+func (c *ProjectsLocationsGlossariesTermsPatchCall) UpdateMask(updateMask string) *ProjectsLocationsGlossariesTermsPatchCall {
+	c.urlParams_.Set("updateMask", updateMask)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsGlossariesTermsPatchCall) Fields(s ...googleapi.Field) *ProjectsLocationsGlossariesTermsPatchCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsGlossariesTermsPatchCall) Context(ctx context.Context) *ProjectsLocationsGlossariesTermsPatchCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsGlossariesTermsPatchCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsGlossariesTermsPatchCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googleclouddataplexv1glossaryterm)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PATCH", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "dataplex.projects.locations.glossaries.terms.patch", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "dataplex.projects.locations.glossaries.terms.patch" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudDataplexV1GlossaryTerm.ServerResponse.Header or (if a response
+// was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsGlossariesTermsPatchCall) Do(opts ...googleapi.CallOption) (*GoogleCloudDataplexV1GlossaryTerm, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudDataplexV1GlossaryTerm{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "dataplex.projects.locations.glossaries.terms.patch", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 

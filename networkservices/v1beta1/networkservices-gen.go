@@ -771,7 +771,7 @@ type ExtensionChainExtension struct {
 	// called when the HTTP response trailers arrives.
 	SupportedEvents []string `json:"supportedEvents,omitempty"`
 	// Timeout: Optional. Specifies the timeout for each individual message on the
-	// stream. The timeout must be between `10`-`1000` milliseconds. Required for
+	// stream. The timeout must be between `10`-`10000` milliseconds. Required for
 	// callout extensions. This field is not supported for plugin extensions.
 	// Setting it results in a validation error.
 	Timeout string `json:"timeout,omitempty"`
@@ -3429,6 +3429,9 @@ type ServiceLbPolicy struct {
 	Description string `json:"description,omitempty"`
 	// FailoverConfig: Optional. Configuration related to health based failover.
 	FailoverConfig *ServiceLbPolicyFailoverConfig `json:"failoverConfig,omitempty"`
+	// IsolationConfig: Optional. Configuration to provide isolation support for
+	// the associated Backend Service.
+	IsolationConfig *ServiceLbPolicyIsolationConfig `json:"isolationConfig,omitempty"`
 	// Labels: Optional. Set of label tags associated with the ServiceLbPolicy
 	// resource.
 	Labels map[string]string `json:"labels,omitempty"`
@@ -3529,6 +3532,45 @@ type ServiceLbPolicyFailoverConfig struct {
 
 func (s ServiceLbPolicyFailoverConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod ServiceLbPolicyFailoverConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ServiceLbPolicyIsolationConfig: Configuration to provide isolation support
+// for the associated Backend Service.
+type ServiceLbPolicyIsolationConfig struct {
+	// IsolationGranularity: Optional. The isolation granularity of the load
+	// balancer.
+	//
+	// Possible values:
+	//   "ISOLATION_GRANULARITY_UNSPECIFIED" - No isolation is configured for the
+	// backend service. Traffic can overflow based on the load balancing algorithm.
+	//   "REGION" - Traffic for this service will be isolated at the cloud region
+	// level.
+	IsolationGranularity string `json:"isolationGranularity,omitempty"`
+	// IsolationMode: Optional. The isolation mode of the load balancer.
+	//
+	// Possible values:
+	//   "ISOLATION_MODE_UNSPECIFIED" - No isolation mode is configured for the
+	// backend service.
+	//   "NEAREST" - Traffic will be sent to the nearest region.
+	//   "STRICT" - Traffic will fail if no serving backends are available in the
+	// same region as the load balancer.
+	IsolationMode string `json:"isolationMode,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "IsolationGranularity") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "IsolationGranularity") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ServiceLbPolicyIsolationConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod ServiceLbPolicyIsolationConfig
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 

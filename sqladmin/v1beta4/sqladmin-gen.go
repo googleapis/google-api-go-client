@@ -454,7 +454,7 @@ func (s AvailableDatabaseVersion) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// Backup: A backup resource.
+// Backup: A backup resource. Next ID: 30
 type Backup struct {
 	// BackupInterval: Output only. This output contains the following values:
 	// start_time: All database writes up to this time are available. end_time: Any
@@ -643,6 +643,16 @@ func (s Backup) MarshalJSON() ([]byte, error) {
 type BackupConfiguration struct {
 	// BackupRetentionSettings: Backup retention settings.
 	BackupRetentionSettings *BackupRetentionSettings `json:"backupRetentionSettings,omitempty"`
+	// BackupTier: Output only. Backup tier that manages the backups for the
+	// instance.
+	//
+	// Possible values:
+	//   "BACKUP_TIER_UNSPECIFIED" - Unspecified.
+	//   "STANDARD" - Instance is managed by Cloud SQL.
+	//   "ADVANCED" - Deprecated: ADVANCED is deprecated. Please use ENHANCED
+	// instead.
+	//   "ENHANCED" - Instance is managed by Google Cloud Backup and DR Service.
+	BackupTier string `json:"backupTier,omitempty"`
 	// BinaryLogEnabled: (MySQL only) Whether binary log is enabled. If backup
 	// configuration is disabled, binarylog must be disabled as well.
 	BinaryLogEnabled bool `json:"binaryLogEnabled,omitempty"`
@@ -3214,6 +3224,12 @@ type InstancesRestoreBackupRequest struct {
 	// Format: projects/{project-id}/backups/{backup-uid}. Only one of
 	// restore_backup_context, backup, backupdr_backup can be passed to the input.
 	Backup string `json:"backup,omitempty"`
+	// BackupdrBackup: The name of the backup that's used to restore a Cloud SQL
+	// instance: Format:
+	// "projects/{project-id}/locations/{location}/backupVaults/{backupvault}/dataSo
+	// urces/{datasource}/backups/{backup-uid}". Only one of
+	// restore_backup_context, backup, backupdr_backup can be passed to the input.
+	BackupdrBackup string `json:"backupdrBackup,omitempty"`
 	// RestoreBackupContext: Parameters required to perform the restore backup
 	// operation.
 	RestoreBackupContext *RestoreBackupContext `json:"restoreBackupContext,omitempty"`
@@ -4103,6 +4119,59 @@ type PerformDiskShrinkContext struct {
 
 func (s PerformDiskShrinkContext) MarshalJSON() ([]byte, error) {
 	type NoMethod PerformDiskShrinkContext
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// PointInTimeRestoreContext: Context to perform a point-in-time restore of an
+// instance managed by Google Cloud Backup and Disaster Recovery.
+type PointInTimeRestoreContext struct {
+	// AllocatedIpRange: Optional. The name of the allocated IP range for the
+	// internal IP Cloud SQL instance. For example:
+	// "google-managed-services-default". If you set this, then Cloud SQL creates
+	// the IP address for the cloned instance in the allocated range. This range
+	// must comply with RFC 1035 (https://tools.ietf.org/html/rfc1035) standards.
+	// Specifically, the name must be 1-63 characters long and match the regular
+	// expression a-z ([-a-z0-9]*[a-z0-9])?. Reserved for future use.
+	// http://go/speckle-subnet-picker-clone
+	AllocatedIpRange string `json:"allocatedIpRange,omitempty"`
+	// Datasource: The Google Cloud Backup and Disaster Recovery Datasource URI.
+	// Format:
+	// projects/{project}/locations/{region}/backupVaults/{backupvault}/dataSources/
+	// {datasource}.
+	Datasource string `json:"datasource,omitempty"`
+	// PointInTime: Required. The date and time to which you want to restore the
+	// instance.
+	PointInTime string `json:"pointInTime,omitempty"`
+	// PreferredSecondaryZone: Optional. Point-in-time recovery of a regional
+	// instance in the specified zones. If not specified, clone to the same
+	// secondary zone as the source instance. This value cannot be the same as the
+	// preferred_zone field.
+	PreferredSecondaryZone string `json:"preferredSecondaryZone,omitempty"`
+	// PreferredZone: Optional. Point-in-time recovery of an instance to the
+	// specified zone. If no zone is specified, then clone to the same primary zone
+	// as the source instance.
+	PreferredZone string `json:"preferredZone,omitempty"`
+	// PrivateNetwork: Optional. The resource link for the VPC network from which
+	// the Cloud SQL instance is accessible for private IP. For example,
+	// `/projects/myProject/global/networks/default`.
+	PrivateNetwork string `json:"privateNetwork,omitempty"`
+	// TargetInstance: Target instance name.
+	TargetInstance string `json:"targetInstance,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AllocatedIpRange") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AllocatedIpRange") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s PointInTimeRestoreContext) MarshalJSON() ([]byte, error) {
+	type NoMethod PointInTimeRestoreContext
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -5592,15 +5661,6 @@ type User struct {
 	// after insertion. For a MySQL instance, it's required; for a PostgreSQL or
 	// SQL Server instance, it's optional.
 	Host string `json:"host,omitempty"`
-	// IamStatus: Indicates if user is active for IAM Authentication.
-	//
-	// Possible values:
-	//   "IAM_STATUS_UNSPECIFIED" - The default value for users that are not of
-	// type CLOUD_IAM_GROUP. Only CLOUD_IAM_GROUP users will be inactive/active.
-	// Will not display any value in UI.
-	//   "INACTIVE" - User is not available for IAM Authentication.
-	//   "ACTIVE" - User is available for IAM Authentication.
-	IamStatus string `json:"iamStatus,omitempty"`
 	// Instance: The name of the Cloud SQL instance. This does not include the
 	// project ID. Can be omitted for *update* because it is already specified on
 	// the URL.
@@ -6683,8 +6743,9 @@ type BackupsUpdateBackupCall struct {
 	header_    http.Header
 }
 
-// UpdateBackup: Updates the retention period and the description of the
-// backup. You can use this API to update final backups only.
+// UpdateBackup: This API updates the following: 1- retention period and
+// description of backup in case of final backups only. 2-
+// gcbdr_soft_delete_status of backup in case of GCBDR managed backups only.
 //
 //   - name: Output only. The resource name of the backup. Format:
 //     projects/{project}/backups/{backup}.
@@ -6696,8 +6757,9 @@ func (r *BackupsService) UpdateBackup(name string, backup *Backup) *BackupsUpdat
 }
 
 // UpdateMask sets the optional parameter "updateMask": The list of fields that
-// you can update. You can update only the description and retention period of
-// the final backup.
+// you can update. 1- You can update only the description and retention period
+// for a final backup. 2- You can update only the gcbdr_soft_delete_status for
+// GCBDR managed backup.
 func (c *BackupsUpdateBackupCall) UpdateMask(updateMask string) *BackupsUpdateBackupCall {
 	c.urlParams_.Set("updateMask", updateMask)
 	return c
@@ -9758,6 +9820,111 @@ func (c *InstancesPatchCall) Do(opts ...googleapi.CallOption) (*Operation, error
 		return nil, err
 	}
 	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "sql.instances.patch", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type InstancesPointInTimeRestoreCall struct {
+	s                         *Service
+	parent                    string
+	pointintimerestorecontext *PointInTimeRestoreContext
+	urlParams_                gensupport.URLParams
+	ctx_                      context.Context
+	header_                   http.Header
+}
+
+// PointInTimeRestore: Point in time restore for an instance managed by Google
+// Cloud Backup and Disaster Recovery.
+//
+//   - parent: The parent resource where you created this instance. Format:
+//     projects/{project}.
+func (r *InstancesService) PointInTimeRestore(parent string, pointintimerestorecontext *PointInTimeRestoreContext) *InstancesPointInTimeRestoreCall {
+	c := &InstancesPointInTimeRestoreCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.pointintimerestorecontext = pointintimerestorecontext
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *InstancesPointInTimeRestoreCall) Fields(s ...googleapi.Field) *InstancesPointInTimeRestoreCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *InstancesPointInTimeRestoreCall) Context(ctx context.Context) *InstancesPointInTimeRestoreCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *InstancesPointInTimeRestoreCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *InstancesPointInTimeRestoreCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.pointintimerestorecontext)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "sql/v1beta4/{+parent}:pointInTimeRestore")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "sql.instances.pointInTimeRestore", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "sql.instances.pointInTimeRestore" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *InstancesPointInTimeRestoreCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "sql.instances.pointInTimeRestore", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 

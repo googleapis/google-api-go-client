@@ -4732,8 +4732,8 @@ type JobConfigurationLoad struct {
 	// table. Only one of timePartitioning and rangePartitioning should be
 	// specified.
 	TimePartitioning *TimePartitioning `json:"timePartitioning,omitempty"`
-	// TimeZone: Optional. [Experimental] Default time zone that will apply when
-	// parsing timestamp values that have no specific time zone.
+	// TimeZone: Optional. Default time zone that will apply when parsing timestamp
+	// values that have no specific time zone.
 	TimeZone string `json:"timeZone,omitempty"`
 	// TimestampFormat: Optional. Date format used for parsing TIMESTAMP values.
 	TimestampFormat string `json:"timestampFormat,omitempty"`
@@ -5370,8 +5370,7 @@ type JobStatistics2 struct {
 	QueryPlan []*ExplainQueryStage `json:"queryPlan,omitempty"`
 	// ReferencedRoutines: Output only. Referenced routines for the job.
 	ReferencedRoutines []*RoutineReference `json:"referencedRoutines,omitempty"`
-	// ReferencedTables: Output only. Referenced tables for the job. Queries that
-	// reference more than 50 tables will not have a complete list.
+	// ReferencedTables: Output only. Referenced tables for the job.
 	ReferencedTables []*TableReference `json:"referencedTables,omitempty"`
 	// ReservationUsage: Output only. Job resource usage breakdown by reservation.
 	// This field reported misleading information and will no longer be populated.
@@ -7270,6 +7269,10 @@ type QueryTimelineSample struct {
 	// PendingUnits: Total units of work remaining for the query. This number can
 	// be revised (increased or decreased) while the query is running.
 	PendingUnits int64 `json:"pendingUnits,omitempty,string"`
+	// ShuffleRamUsageRatio: Total shuffle usage ratio in shuffle RAM per
+	// reservation of this query. This will be provided for reservation customers
+	// only.
+	ShuffleRamUsageRatio float64 `json:"shuffleRamUsageRatio,omitempty"`
 	// TotalSlotMs: Cumulative slot-ms consumed by the query.
 	TotalSlotMs int64 `json:"totalSlotMs,omitempty,string"`
 	// ForceSendFields is a list of field names (e.g. "ActiveUnits") to
@@ -7288,6 +7291,20 @@ type QueryTimelineSample struct {
 func (s QueryTimelineSample) MarshalJSON() ([]byte, error) {
 	type NoMethod QueryTimelineSample
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+func (s *QueryTimelineSample) UnmarshalJSON(data []byte) error {
+	type NoMethod QueryTimelineSample
+	var s1 struct {
+		ShuffleRamUsageRatio gensupport.JSONFloat64 `json:"shuffleRamUsageRatio"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.ShuffleRamUsageRatio = float64(s1.ShuffleRamUsageRatio)
+	return nil
 }
 
 type RangePartitioning struct {
@@ -10764,15 +10781,15 @@ func (c *DatasetsGetCall) AccessPolicyVersion(accessPolicyVersion int64) *Datase
 // Possible values:
 //
 //	"DATASET_VIEW_UNSPECIFIED" - The default value. Default to the FULL view.
-//	"METADATA" - Includes metadata information for the dataset, such as
+//	"METADATA" - Updates metadata information for the dataset, such as
 //
-// location, etag, lastModifiedTime, etc.
+// friendlyName, description, labels, etc.
 //
-//	"ACL" - Includes ACL information for the dataset, which defines dataset
+//	"ACL" - Updates ACL information for the dataset, which defines dataset
 //
 // access for one or more entities.
 //
-//	"FULL" - Includes both dataset metadata and ACL information.
+//	"FULL" - Updates both dataset metadata and ACL information.
 func (c *DatasetsGetCall) DatasetView(datasetView string) *DatasetsGetCall {
 	c.urlParams_.Set("datasetView", datasetView)
 	return c
@@ -11200,6 +11217,27 @@ func (c *DatasetsPatchCall) AccessPolicyVersion(accessPolicyVersion int64) *Data
 	return c
 }
 
+// UpdateMode sets the optional parameter "updateMode": Specifies the fields of
+// dataset that update/patch operation is targeting By default, both metadata
+// and ACL fields are updated.
+//
+// Possible values:
+//
+//	"UPDATE_MODE_UNSPECIFIED" - The default value. Default to the UPDATE_FULL.
+//	"UPDATE_METADATA" - Includes metadata information for the dataset, such as
+//
+// friendlyName, description, labels, etc.
+//
+//	"UPDATE_ACL" - Includes ACL information for the dataset, which defines
+//
+// dataset access for one or more entities.
+//
+//	"UPDATE_FULL" - Includes both dataset metadata and ACL information.
+func (c *DatasetsPatchCall) UpdateMode(updateMode string) *DatasetsPatchCall {
+	c.urlParams_.Set("updateMode", updateMode)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
 // details.
@@ -11435,6 +11473,27 @@ func (r *DatasetsService) Update(projectId string, datasetId string, dataset *Da
 // set policy in IAM.
 func (c *DatasetsUpdateCall) AccessPolicyVersion(accessPolicyVersion int64) *DatasetsUpdateCall {
 	c.urlParams_.Set("accessPolicyVersion", fmt.Sprint(accessPolicyVersion))
+	return c
+}
+
+// UpdateMode sets the optional parameter "updateMode": Specifies the fields of
+// dataset that update/patch operation is targeting By default, both metadata
+// and ACL fields are updated.
+//
+// Possible values:
+//
+//	"UPDATE_MODE_UNSPECIFIED" - The default value. Default to the UPDATE_FULL.
+//	"UPDATE_METADATA" - Includes metadata information for the dataset, such as
+//
+// friendlyName, description, labels, etc.
+//
+//	"UPDATE_ACL" - Includes ACL information for the dataset, which defines
+//
+// dataset access for one or more entities.
+//
+//	"UPDATE_FULL" - Includes both dataset metadata and ACL information.
+func (c *DatasetsUpdateCall) UpdateMode(updateMode string) *DatasetsUpdateCall {
+	c.urlParams_.Set("updateMode", updateMode)
 	return c
 }
 

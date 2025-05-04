@@ -2687,11 +2687,9 @@ type Repository struct {
 	RegistryUri string `json:"registryUri,omitempty"`
 	// RemoteRepositoryConfig: Configuration specific for a Remote Repository.
 	RemoteRepositoryConfig *RemoteRepositoryConfig `json:"remoteRepositoryConfig,omitempty"`
-	// SatisfiesPzi: Output only. If set, the repository satisfies physical zone
-	// isolation.
+	// SatisfiesPzi: Output only. Whether or not this repository satisfies PZI.
 	SatisfiesPzi bool `json:"satisfiesPzi,omitempty"`
-	// SatisfiesPzs: Output only. If set, the repository satisfies physical zone
-	// separation.
+	// SatisfiesPzs: Output only. Whether or not this repository satisfies PZS.
 	SatisfiesPzs bool `json:"satisfiesPzs,omitempty"`
 	// SizeBytes: Output only. The size, in bytes, of all artifact storage in this
 	// repository. Repositories that are generally available or in public preview
@@ -3024,8 +3022,8 @@ type UploadGenericArtifactRequest struct {
 	// VersionId: The ID of the version of the generic artifact. If the version
 	// does not exist, a new version will be created. The version_id must start and
 	// end with a letter or number, can only contain lowercase letters, numbers,
-	// hyphens and periods, i.e. [a-z0-9-.] and cannot exceed a total of 128
-	// characters. Creating a version called `latest` is not allowed.
+	// the following characters [-.+~:], i.e.[a-z0-9-.+~:] and cannot exceed a
+	// total of 128 characters. Creating a version called `latest` is not allowed.
 	VersionId string `json:"versionId,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Filename") to
 	// unconditionally include in API requests. By default, fields with empty or

@@ -2180,7 +2180,15 @@ type GoogleCloudDatacatalogV1MigrationConfig struct {
 	//
 	// Possible values:
 	//   "TAG_TEMPLATE_MIGRATION_UNSPECIFIED" - Default value. Migration of Tag
-	// Templates from Data Catalog to Dataplex is not performed.
+	// Templates from Data Catalog to Dataplex is not performed. For projects that
+	// are under an organization, the project inherits the organization's
+	// configuration when you set the project-level configuration to unspecified
+	// (`TAG_TEMPLATE_MIGRATION_UNSPECIFIED`). This means that when migration is
+	// enabled at the organization level, and the project-level configuration is
+	// unspecified, the project is migrated. To explicitly opt-in or opt-out
+	// individual projects, set the project-level configuration to enabled
+	// (`TAG_TEMPLATE_MIGRATION_ENABLED`) or disabled
+	// (`TAG_TEMPLATE_MIGRATION_DISABLED`).
 	//   "TAG_TEMPLATE_MIGRATION_ENABLED" - Migration of Tag Templates from Data
 	// Catalog to Dataplex is enabled.
 	//   "TAG_TEMPLATE_MIGRATION_DISABLED" - Migration of Tag Templates from Data
@@ -3099,7 +3107,15 @@ type GoogleCloudDatacatalogV1SetConfigRequest struct {
 	//
 	// Possible values:
 	//   "TAG_TEMPLATE_MIGRATION_UNSPECIFIED" - Default value. Migration of Tag
-	// Templates from Data Catalog to Dataplex is not performed.
+	// Templates from Data Catalog to Dataplex is not performed. For projects that
+	// are under an organization, the project inherits the organization's
+	// configuration when you set the project-level configuration to unspecified
+	// (`TAG_TEMPLATE_MIGRATION_UNSPECIFIED`). This means that when migration is
+	// enabled at the organization level, and the project-level configuration is
+	// unspecified, the project is migrated. To explicitly opt-in or opt-out
+	// individual projects, set the project-level configuration to enabled
+	// (`TAG_TEMPLATE_MIGRATION_ENABLED`) or disabled
+	// (`TAG_TEMPLATE_MIGRATION_DISABLED`).
 	//   "TAG_TEMPLATE_MIGRATION_ENABLED" - Migration of Tag Templates from Data
 	// Catalog to Dataplex is enabled.
 	//   "TAG_TEMPLATE_MIGRATION_DISABLED" - Migration of Tag Templates from Data

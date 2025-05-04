@@ -1174,6 +1174,8 @@ type BareMetalCluster struct {
 	// local name is used in the admin cluster controller logs. You use the cluster
 	// name when accessing the cluster using bmctl and kubectl.
 	LocalName string `json:"localName,omitempty"`
+	// LocalNamespace: Output only. The namespace of the cluster.
+	LocalNamespace string `json:"localNamespace,omitempty"`
 	// MaintenanceConfig: Maintenance configuration.
 	MaintenanceConfig *BareMetalMaintenanceConfig `json:"maintenanceConfig,omitempty"`
 	// MaintenanceStatus: Output only. Status of on-going maintenance tasks.

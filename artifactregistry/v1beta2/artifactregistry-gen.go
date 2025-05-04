@@ -1251,11 +1251,9 @@ type Repository struct {
 	// `projects/p1/locations/us-central1/repositories/repo1`. For each location in
 	// a project, repository names must be unique.
 	Name string `json:"name,omitempty"`
-	// SatisfiesPzi: Output only. If set, the repository satisfies physical zone
-	// isolation.
+	// SatisfiesPzi: Output only. Whether or not this repository satisfies PZI.
 	SatisfiesPzi bool `json:"satisfiesPzi,omitempty"`
-	// SatisfiesPzs: Output only. If set, the repository satisfies physical zone
-	// separation.
+	// SatisfiesPzs: Output only. Whether or not this repository satisfies PZS.
 	SatisfiesPzs bool `json:"satisfiesPzs,omitempty"`
 	// SizeBytes: Output only. The size, in bytes, of all artifact storage in this
 	// repository. Repositories that are generally available or in public preview

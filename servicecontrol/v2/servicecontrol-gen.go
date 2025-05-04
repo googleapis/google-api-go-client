@@ -1548,8 +1548,7 @@ type ServicesCheckCall struct {
 	header_      http.Header
 }
 
-// Check: Private Preview. This feature is only available for approved
-// services. This method provides admission control for services that are
+// Check: This method provides admission control for services that are
 // integrated with Service Infrastructure
 // (https://cloud.google.com/service-infrastructure). It checks whether an
 // operation should be allowed based on the service configuration and relevant
@@ -1669,8 +1668,7 @@ type ServicesReportCall struct {
 	header_       http.Header
 }
 
-// Report: Private Preview. This feature is only available for approved
-// services. This method provides telemetry reporting for services that are
+// Report: This method provides telemetry reporting for services that are
 // integrated with Service Infrastructure
 // (https://cloud.google.com/service-infrastructure). It reports a list of
 // operations that have occurred on a service. It must be called after the

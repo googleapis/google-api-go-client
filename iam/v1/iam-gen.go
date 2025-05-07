@@ -1494,18 +1494,18 @@ func (s GoogleIamAdminV1WorkforcePoolProviderSaml) MarshalJSON() ([]byte, error)
 // InlineCertificateIssuanceConfig: Represents configuration for generating
 // mutual TLS (mTLS) certificates for the identities within this pool.
 type InlineCertificateIssuanceConfig struct {
-	// CaPools: Optional. A required mapping of a cloud region to the CA pool
-	// resource located in that region used for certificate issuance, adhering to
-	// these constraints: * Key format: A supported cloud region name equivalent to
-	// the location identifier in the corresponding map entry's value. * Value
-	// format: A valid CA pool resource path format like:
-	// "projects/{project}/locations/{location}/caPools/{ca_pool}" * Region
+	// CaPools: Optional. A required mapping of a Google Cloud region to the CA
+	// pool resource located in that region. The CA pool is used for certificate
+	// issuance, adhering to the following constraints: * Key format: A supported
+	// cloud region name equivalent to the location identifier in the corresponding
+	// map entry's value. * Value format: A valid CA pool resource path format
+	// like: "projects/{project}/locations/{location}/caPools/{ca_pool}" * Region
 	// Matching: Workloads are ONLY issued certificates from CA pools within the
 	// same region. Also the CA pool region (in value) must match the workload's
 	// region (key).
 	CaPools map[string]string `json:"caPools,omitempty"`
 	// KeyAlgorithm: Optional. Key algorithm to use when generating the key pair.
-	// This key pair will be used to create the certificate. If unspecified, this
+	// This key pair will be used to create the certificate. If not specified, this
 	// will default to ECDSA_P256.
 	//
 	// Possible values:
@@ -1518,12 +1518,12 @@ type InlineCertificateIssuanceConfig struct {
 	//   "ECDSA_P384" - Specifies ECDSA with curve P384.
 	KeyAlgorithm string `json:"keyAlgorithm,omitempty"`
 	// Lifetime: Optional. Lifetime of the workload certificates issued by the CA
-	// pool. Must be between 10 hours - 30 days. If unspecified, this will be
+	// pool. Must be between 10 hours and 30 days. If not specified, this will be
 	// defaulted to 24 hours.
 	Lifetime string `json:"lifetime,omitempty"`
 	// RotationWindowPercentage: Optional. Rotation window percentage indicating
 	// when certificate rotation should be initiated based on remaining lifetime.
-	// Must be between 10 - 80. If unspecified, this will be defaulted to 50.
+	// Must be between 10 and 80. If not specified, this will be defaulted to 50.
 	RotationWindowPercentage int64 `json:"rotationWindowPercentage,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "CaPools") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -1550,14 +1550,13 @@ func (s InlineCertificateIssuanceConfig) MarshalJSON() ([]byte, error) {
 // the need for explicit configuration.
 type InlineTrustConfig struct {
 	// AdditionalTrustBundles: Optional. Maps specific trust domains (e.g.,
-	// "example.com") to their corresponding TrustStore objects, which contain the
-	// trusted root certificates for that domain. There can be a maximum of 10
-	// trust domain entries in this map. Note that a trust domain automatically
-	// trusts itself and don't need to be specified here. If however, this
-	// WorkloadIdentityPool's trust domain contains any trust anchors in the
-	// additional_trust_bundles map, those trust anchors will be *appended to* the
-	// Trust Bundle automatically derived from your
-	// InlineCertificateIssuanceConfig's ca_pools.
+	// "example.com") to their corresponding TrustStore, which contain the trusted
+	// root certificates for that domain. There can be a maximum of 10 trust domain
+	// entries in this map. Note that a trust domain automatically trusts itself
+	// and don't need to be specified here. If however, this WorkloadIdentityPool's
+	// trust domain contains any trust anchors in the additional_trust_bundles map,
+	// those trust anchors will be *appended to* the trust bundle automatically
+	// derived from your InlineCertificateIssuanceConfig's ca_pools.
 	AdditionalTrustBundles map[string]TrustStore `json:"additionalTrustBundles,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AdditionalTrustBundles") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -2304,10 +2303,10 @@ type Oidc struct {
 	// https://iam.googleapis.com/projects//locations//workloadIdentityPools//providers/
 	// ```
 	AllowedAudiences []string `json:"allowedAudiences,omitempty"`
-	// IssuerUri: Required. The OIDC issuer URL. Must be an HTTPS endpoint. Used
-	// per OpenID Connect Discovery 1.0 spec to locate the provider's public keys
-	// (via `jwks_uri`) for verifying tokens like the OIDC ID token. These public
-	// key types must be 'EC' or 'RSA'.
+	// IssuerUri: Required. The OIDC issuer URL. Must be an HTTPS endpoint. Per
+	// OpenID Connect Discovery 1.0 spec, the OIDC issuer URL is used to locate the
+	// provider's public keys (via `jwks_uri`) for verifying tokens like the OIDC
+	// ID token. These public key types must be 'EC' or 'RSA'.
 	IssuerUri string `json:"issuerUri,omitempty"`
 	// JwksJson: Optional. OIDC JWKs in JSON String format. For details on the
 	// definition of a JWK, see https://tools.ietf.org/html/rfc7517. If not set,
@@ -2711,10 +2710,10 @@ func (s QueryAuditableServicesResponse) MarshalJSON() ([]byte, error) {
 
 // QueryGrantableRolesRequest: The grantable role query request.
 type QueryGrantableRolesRequest struct {
-	// FullResourceName: Required. The full resource name to query from the list of
-	// grantable roles. The name follows the Google Cloud Platform resource format.
-	// For example, a Cloud Platform project with id `my-project` will be named
-	// `//cloudresourcemanager.googleapis.com/projects/my-project`.
+	// FullResourceName: Required. Required. The full resource name to query from
+	// the list of grantable roles. The name follows the Google Cloud Platform
+	// resource format. For example, a Cloud Platform project with id `my-project`
+	// will be named `//cloudresourcemanager.googleapis.com/projects/my-project`.
 	FullResourceName string `json:"fullResourceName,omitempty"`
 	// PageSize: Optional limit on the number of roles to include in the response.
 	// The default is 300, and the maximum is 2,000.
@@ -3468,16 +3467,16 @@ func (s TrustAnchor) MarshalJSON() ([]byte, error) {
 }
 
 // TrustStore: Trust store that contains trust anchors and optional
-// intermediate CAs used in PKI to build trust chain and verify client's
+// intermediate CAs used in PKI to build trust chain and verify a client's
 // identity.
 type TrustStore struct {
 	// IntermediateCas: Optional. Set of intermediate CA certificates used for
-	// building the trust chain to trust anchor. IMPORTANT: * Intermediate CAs are
-	// only supported when configuring x509 federation.
+	// building the trust chain to the trust anchor. Important: Intermediate CAs
+	// are only supported for X.509 federation.
 	IntermediateCas []*IntermediateCA `json:"intermediateCas,omitempty"`
-	// TrustAnchors: Required. List of Trust Anchors to be used while performing
+	// TrustAnchors: Required. List of trust anchors to be used while performing
 	// validation against a given TrustStore. The incoming end entity's certificate
-	// must be chained up to one of the trust anchors here.
+	// must be in the trust chain of one of the trust anchors here.
 	TrustAnchors []*TrustAnchor `json:"trustAnchors,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "IntermediateCas") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -4206,10 +4205,10 @@ func (s WorkloadIdentityPoolProviderKey) MarshalJSON() ([]byte, error) {
 // assert a client identity if the client has a certificate that chains up to
 // this CA.
 type X509 struct {
-	// TrustStore: Required. A Trust store, use this trust store as a wrapper to
+	// TrustStore: Required. A TrustStore. Use this trust store as a wrapper to
 	// config the trust anchor and optional intermediate cas to help build the
-	// trust chain for the incoming end entity certificate. Follow the x509
-	// guidelines to define those PEM encoded certs. Only 1 trust store is
+	// trust chain for the incoming end entity certificate. Follow the X.509
+	// guidelines to define those PEM encoded certs. Only one trust store is
 	// currently supported.
 	TrustStore *TrustStore `json:"trustStore,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "TrustStore") to
@@ -9966,8 +9965,7 @@ type ProjectsLocationsWorkloadIdentityPoolsGetIamPolicyCall struct {
 	header_             http.Header
 }
 
-// GetIamPolicy: Gets IAM policies for one of WorkloadIdentityPool
-// WorkloadIdentityPoolNamespace WorkloadIdentityPoolManagedIdentity
+// GetIamPolicy: Gets the IAM policy of a WorkloadIdentityPool.
 //
 //   - resource: REQUIRED: The resource for which the policy is being requested.
 //     See Resource names (https://cloud.google.com/apis/design/resource_names)
@@ -10337,8 +10335,7 @@ type ProjectsLocationsWorkloadIdentityPoolsSetIamPolicyCall struct {
 	header_             http.Header
 }
 
-// SetIamPolicy: Sets IAM policies on one of WorkloadIdentityPool
-// WorkloadIdentityPoolNamespace WorkloadIdentityPoolManagedIdentity
+// SetIamPolicy: Sets the IAM policies on a WorkloadIdentityPool
 //
 //   - resource: REQUIRED: The resource for which the policy is being specified.
 //     See Resource names (https://cloud.google.com/apis/design/resource_names)
@@ -10443,9 +10440,8 @@ type ProjectsLocationsWorkloadIdentityPoolsTestIamPermissionsCall struct {
 	header_                   http.Header
 }
 
-// TestIamPermissions: Returns the caller's permissions on one of
-// WorkloadIdentityPool WorkloadIdentityPoolNamespace
-// WorkloadIdentityPoolManagedIdentity
+// TestIamPermissions: Returns the caller's permissions on a
+// WorkloadIdentityPool
 //
 //   - resource: REQUIRED: The resource for which the policy detail is being
 //     requested. See Resource names
@@ -11783,7 +11779,7 @@ type ProjectsLocationsWorkloadIdentityPoolsNamespacesManagedIdentitiesListCall s
 
 // List: Lists all non-deleted WorkloadIdentityPoolManagedIdentitys in a
 // namespace. If `show_deleted` is set to `true`, then deleted managed
-// identites are also listed.
+// identities are also listed.
 //
 // - parent: The parent resource to list managed identities for.
 func (r *ProjectsLocationsWorkloadIdentityPoolsNamespacesManagedIdentitiesService) List(parent string) *ProjectsLocationsWorkloadIdentityPoolsNamespacesManagedIdentitiesListCall {

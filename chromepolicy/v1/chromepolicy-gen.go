@@ -1817,8 +1817,8 @@ func (s Proto2FieldDescriptorProto) MarshalJSON() ([]byte, error) {
 
 // Proto2FileDescriptorProto: Describes a complete .proto file.
 type Proto2FileDescriptorProto struct {
-	// EditionDeprecated: BEGIN GOOGLE-INTERNAL TODO(b/297898292) Deprecate and
-	// remove this field in favor of enums. END GOOGLE-INTERNAL
+	// EditionDeprecated: copybara:strip_begin TODO(b/297898292) Deprecate and
+	// remove this field in favor of enums. copybara:strip_end
 	EditionDeprecated string                       `json:"editionDeprecated,omitempty"`
 	EnumType          []*Proto2EnumDescriptorProto `json:"enumType,omitempty"`
 	// MessageType: All top-level definitions in this file.

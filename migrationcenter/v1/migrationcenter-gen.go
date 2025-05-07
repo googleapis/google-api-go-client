@@ -913,6 +913,9 @@ type BatchDeleteAssetsRequest struct {
 	// https://google.aip.dev/135#delete-if-existing for additional details.
 	// Default value is `false`.
 	AllowMissing bool `json:"allowMissing,omitempty"`
+	// CascadingRules: Optional. Optional cascading rules for deleting related
+	// assets.
+	CascadingRules []*CascadingRule `json:"cascadingRules,omitempty"`
 	// Names: Required. The IDs of the assets to delete. A maximum of 1000 assets
 	// can be deleted in a batch. Format:
 	// projects/{project}/locations/{location}/assets/{name}.
@@ -1019,6 +1022,32 @@ func (s BiosDetails) MarshalJSON() ([]byte, error) {
 
 // CancelOperationRequest: The request message for Operations.CancelOperation.
 type CancelOperationRequest struct {
+}
+
+// CascadeLogicalDBsRule: Cascading rule for related logical DBs.
+type CascadeLogicalDBsRule struct {
+}
+
+// CascadingRule: Specifies cascading rules for traversing relations.
+type CascadingRule struct {
+	// CascadeLogicalDbs: Cascading rule for related logical DBs.
+	CascadeLogicalDbs *CascadeLogicalDBsRule `json:"cascadeLogicalDbs,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "CascadeLogicalDbs") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CascadeLogicalDbs") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s CascadingRule) MarshalJSON() ([]byte, error) {
+	type NoMethod CascadingRule
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ComputeEngineMigrationTarget: Compute engine migration target.

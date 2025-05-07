@@ -1427,6 +1427,30 @@ func (s GoogleCloudContactcenterinsightsV1CalculateIssueModelStatsResponse) Mars
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudContactcenterinsightsV1CalculateStatsRequest: The request for
+// calculating conversation statistics.
+type GoogleCloudContactcenterinsightsV1CalculateStatsRequest struct {
+	// Filter: A filter to reduce results to a specific subset. This field is
+	// useful for getting statistics about conversations with specific properties.
+	Filter string `json:"filter,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Filter") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Filter") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudContactcenterinsightsV1CalculateStatsRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudContactcenterinsightsV1CalculateStatsRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudContactcenterinsightsV1CalculateStatsResponse: The response for
 // calculating conversation statistics.
 type GoogleCloudContactcenterinsightsV1CalculateStatsResponse struct {
@@ -2240,6 +2264,36 @@ type GoogleCloudContactcenterinsightsV1CreateIssueRequest struct {
 
 func (s GoogleCloudContactcenterinsightsV1CreateIssueRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudContactcenterinsightsV1CreateIssueRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudContactcenterinsightsV1Dataset: Dataset resource represents a
+// collection of conversations that may be bounded (Static Dataset, e.g. golden
+// dataset for training), or unbounded (Dynamic Dataset, e.g. live traffic, or
+// agent training traffic)
+type GoogleCloudContactcenterinsightsV1Dataset struct {
+	// CreateTime: Output only. Dataset create time.
+	CreateTime string `json:"createTime,omitempty"`
+	// Description: Dataset description.
+	Description string `json:"description,omitempty"`
+	// Name: Immutable. Identifier. Resource name of the dataset. Format:
+	// projects/{project}/locations/{location}/datasets/{dataset}
+	Name string `json:"name,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "CreateTime") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CreateTime") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudContactcenterinsightsV1Dataset) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudContactcenterinsightsV1Dataset
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -5421,6 +5475,151 @@ func (s GoogleCloudContactcenterinsightsV1RuntimeAnnotationUserInput) MarshalJSO
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudContactcenterinsightsV1SampleConversationsToDatasetMetadata: The
+// metadata for an SampleConversationsToDataset operation.
+type GoogleCloudContactcenterinsightsV1SampleConversationsToDatasetMetadata struct {
+	// CreateTime: Output only. The time the operation was created.
+	CreateTime string `json:"createTime,omitempty"`
+	// EndTime: Output only. The time the operation finished running.
+	EndTime string `json:"endTime,omitempty"`
+	// PartialErrors: Output only. Partial errors during sample conversations to
+	// dataset operation that might cause the operation output to be incomplete.
+	PartialErrors []*GoogleRpcStatus `json:"partialErrors,omitempty"`
+	// Request: Output only. The original request for sample conversations to
+	// dataset.
+	Request *GoogleCloudContactcenterinsightsV1SampleConversationsToDatasetRequest `json:"request,omitempty"`
+	// SampleConversationsToDatasetStats: Output only. Statistics for
+	// SampleConversationsToDataset operation.
+	SampleConversationsToDatasetStats *GoogleCloudContactcenterinsightsV1SampleConversationsToDatasetMetadataSampleConversationsToDatasetStats `json:"sampleConversationsToDatasetStats,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "CreateTime") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CreateTime") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudContactcenterinsightsV1SampleConversationsToDatasetMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudContactcenterinsightsV1SampleConversationsToDatasetMetadata
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudContactcenterinsightsV1SampleConversationsToDatasetMetadataSampleC
+// onversationsToDatasetStats: Statistics for SampleConversationsToDataset
+// operation.
+type GoogleCloudContactcenterinsightsV1SampleConversationsToDatasetMetadataSampleConversationsToDatasetStats struct {
+	// FailedSampleCount: Output only. The number of objects which were unable to
+	// be sampled due to errors. The errors are populated in the partial_errors
+	// field.
+	FailedSampleCount int64 `json:"failedSampleCount,omitempty"`
+	// SuccessfulSampleCount: Output only. The number of new conversations added
+	// during this sample operation.
+	SuccessfulSampleCount int64 `json:"successfulSampleCount,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "FailedSampleCount") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "FailedSampleCount") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudContactcenterinsightsV1SampleConversationsToDatasetMetadataSampleConversationsToDatasetStats) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudContactcenterinsightsV1SampleConversationsToDatasetMetadataSampleConversationsToDatasetStats
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudContactcenterinsightsV1SampleConversationsToDatasetRequest: The
+// request to sample conversations to a dataset.
+type GoogleCloudContactcenterinsightsV1SampleConversationsToDatasetRequest struct {
+	// DestinationDataset: Required. The dataset resource to copy the conversations
+	// to.
+	DestinationDataset *GoogleCloudContactcenterinsightsV1Dataset `json:"destinationDataset,omitempty"`
+	// Parent: Required. The parent resource of the dataset.
+	Parent string `json:"parent,omitempty"`
+	// SampleRule: Optional. The sample rule used for sampling conversations.
+	SampleRule *GoogleCloudContactcenterinsightsV1SampleRule `json:"sampleRule,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "DestinationDataset") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DestinationDataset") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudContactcenterinsightsV1SampleConversationsToDatasetRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudContactcenterinsightsV1SampleConversationsToDatasetRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudContactcenterinsightsV1SampleConversationsToDatasetResponse: The
+// response to an SampleConversationsToDataset operation.
+type GoogleCloudContactcenterinsightsV1SampleConversationsToDatasetResponse struct {
+}
+
+// GoogleCloudContactcenterinsightsV1SampleRule: Message for sampling
+// conversations.
+type GoogleCloudContactcenterinsightsV1SampleRule struct {
+	// ConversationFilter: To specify the filter for the conversions that should
+	// apply this sample rule. An empty filter means this sample rule applies to
+	// all conversations.
+	ConversationFilter string `json:"conversationFilter,omitempty"`
+	// Dimension: Optional. Group by dimension to sample the conversation. If no
+	// dimension is provided, the sampling will be applied to the project level.
+	// Current supported dimensions is 'quality_metadata.agent_info.agent_id'.
+	Dimension string `json:"dimension,omitempty"`
+	// SamplePercentage: Percentage of conversations that we should sample based on
+	// the dimension between [0, 100].
+	SamplePercentage float64 `json:"samplePercentage,omitempty"`
+	// SampleRow: Number of the conversations that we should sample based on the
+	// dimension.
+	SampleRow int64 `json:"sampleRow,omitempty,string"`
+	// ForceSendFields is a list of field names (e.g. "ConversationFilter") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ConversationFilter") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudContactcenterinsightsV1SampleRule) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudContactcenterinsightsV1SampleRule
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+func (s *GoogleCloudContactcenterinsightsV1SampleRule) UnmarshalJSON(data []byte) error {
+	type NoMethod GoogleCloudContactcenterinsightsV1SampleRule
+	var s1 struct {
+		SamplePercentage gensupport.JSONFloat64 `json:"samplePercentage"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.SamplePercentage = float64(s1.SamplePercentage)
+	return nil
+}
+
 // GoogleCloudContactcenterinsightsV1SentimentData: The data for a sentiment
 // annotation.
 type GoogleCloudContactcenterinsightsV1SentimentData struct {
@@ -7206,6 +7405,36 @@ type GoogleCloudContactcenterinsightsV1alpha1CreateIssueRequest struct {
 
 func (s GoogleCloudContactcenterinsightsV1alpha1CreateIssueRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudContactcenterinsightsV1alpha1CreateIssueRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudContactcenterinsightsV1alpha1Dataset: Dataset resource represents
+// a collection of conversations that may be bounded (Static Dataset, e.g.
+// golden dataset for training), or unbounded (Dynamic Dataset, e.g. live
+// traffic, or agent training traffic)
+type GoogleCloudContactcenterinsightsV1alpha1Dataset struct {
+	// CreateTime: Output only. Dataset create time.
+	CreateTime string `json:"createTime,omitempty"`
+	// Description: Dataset description.
+	Description string `json:"description,omitempty"`
+	// Name: Immutable. Identifier. Resource name of the dataset. Format:
+	// projects/{project}/locations/{location}/datasets/{dataset}
+	Name string `json:"name,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "CreateTime") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CreateTime") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudContactcenterinsightsV1alpha1Dataset) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudContactcenterinsightsV1alpha1Dataset
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -9563,6 +9792,153 @@ type GoogleCloudContactcenterinsightsV1alpha1RuntimeAnnotationUserInput struct {
 func (s GoogleCloudContactcenterinsightsV1alpha1RuntimeAnnotationUserInput) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudContactcenterinsightsV1alpha1RuntimeAnnotationUserInput
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudContactcenterinsightsV1alpha1SampleConversationsToDatasetMetadata:
+//
+//	The metadata for an SampleConversationsToDataset operation.
+type GoogleCloudContactcenterinsightsV1alpha1SampleConversationsToDatasetMetadata struct {
+	// CreateTime: Output only. The time the operation was created.
+	CreateTime string `json:"createTime,omitempty"`
+	// EndTime: Output only. The time the operation finished running.
+	EndTime string `json:"endTime,omitempty"`
+	// PartialErrors: Output only. Partial errors during sample conversations to
+	// dataset operation that might cause the operation output to be incomplete.
+	PartialErrors []*GoogleRpcStatus `json:"partialErrors,omitempty"`
+	// Request: Output only. The original request for sample conversations to
+	// dataset.
+	Request *GoogleCloudContactcenterinsightsV1alpha1SampleConversationsToDatasetRequest `json:"request,omitempty"`
+	// SampleConversationsToDatasetStats: Output only. Statistics for
+	// SampleConversationsToDataset operation.
+	SampleConversationsToDatasetStats *GoogleCloudContactcenterinsightsV1alpha1SampleConversationsToDatasetMetadataSampleConversationsToDatasetStats `json:"sampleConversationsToDatasetStats,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "CreateTime") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CreateTime") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudContactcenterinsightsV1alpha1SampleConversationsToDatasetMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudContactcenterinsightsV1alpha1SampleConversationsToDatasetMetadata
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudContactcenterinsightsV1alpha1SampleConversationsToDatasetMetadataS
+// ampleConversationsToDatasetStats: Statistics for
+// SampleConversationsToDataset operation.
+type GoogleCloudContactcenterinsightsV1alpha1SampleConversationsToDatasetMetadataSampleConversationsToDatasetStats struct {
+	// FailedSampleCount: Output only. The number of objects which were unable to
+	// be sampled due to errors. The errors are populated in the partial_errors
+	// field.
+	FailedSampleCount int64 `json:"failedSampleCount,omitempty"`
+	// SuccessfulSampleCount: Output only. The number of new conversations added
+	// during this sample operation.
+	SuccessfulSampleCount int64 `json:"successfulSampleCount,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "FailedSampleCount") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "FailedSampleCount") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudContactcenterinsightsV1alpha1SampleConversationsToDatasetMetadataSampleConversationsToDatasetStats) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudContactcenterinsightsV1alpha1SampleConversationsToDatasetMetadataSampleConversationsToDatasetStats
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudContactcenterinsightsV1alpha1SampleConversationsToDatasetRequest:
+// The request to sample conversations to a dataset.
+type GoogleCloudContactcenterinsightsV1alpha1SampleConversationsToDatasetRequest struct {
+	// DestinationDataset: Required. The dataset resource to copy the conversations
+	// to.
+	DestinationDataset *GoogleCloudContactcenterinsightsV1alpha1Dataset `json:"destinationDataset,omitempty"`
+	// Parent: Required. The parent resource of the dataset.
+	Parent string `json:"parent,omitempty"`
+	// SampleRule: Optional. The sample rule used for sampling conversations.
+	SampleRule *GoogleCloudContactcenterinsightsV1alpha1SampleRule `json:"sampleRule,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "DestinationDataset") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DestinationDataset") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudContactcenterinsightsV1alpha1SampleConversationsToDatasetRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudContactcenterinsightsV1alpha1SampleConversationsToDatasetRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudContactcenterinsightsV1alpha1SampleConversationsToDatasetResponse:
+//
+//	The response to an SampleConversationsToDataset operation.
+type GoogleCloudContactcenterinsightsV1alpha1SampleConversationsToDatasetResponse struct {
+}
+
+// GoogleCloudContactcenterinsightsV1alpha1SampleRule: Message for sampling
+// conversations.
+type GoogleCloudContactcenterinsightsV1alpha1SampleRule struct {
+	// ConversationFilter: To specify the filter for the conversions that should
+	// apply this sample rule. An empty filter means this sample rule applies to
+	// all conversations.
+	ConversationFilter string `json:"conversationFilter,omitempty"`
+	// Dimension: Optional. Group by dimension to sample the conversation. If no
+	// dimension is provided, the sampling will be applied to the project level.
+	// Current supported dimensions is 'quality_metadata.agent_info.agent_id'.
+	Dimension string `json:"dimension,omitempty"`
+	// SamplePercentage: Percentage of conversations that we should sample based on
+	// the dimension between [0, 100].
+	SamplePercentage float64 `json:"samplePercentage,omitempty"`
+	// SampleRow: Number of the conversations that we should sample based on the
+	// dimension.
+	SampleRow int64 `json:"sampleRow,omitempty,string"`
+	// ForceSendFields is a list of field names (e.g. "ConversationFilter") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ConversationFilter") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudContactcenterinsightsV1alpha1SampleRule) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudContactcenterinsightsV1alpha1SampleRule
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+func (s *GoogleCloudContactcenterinsightsV1alpha1SampleRule) UnmarshalJSON(data []byte) error {
+	type NoMethod GoogleCloudContactcenterinsightsV1alpha1SampleRule
+	var s1 struct {
+		SamplePercentage gensupport.JSONFloat64 `json:"samplePercentage"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.SamplePercentage = float64(s1.SamplePercentage)
+	return nil
 }
 
 // GoogleCloudContactcenterinsightsV1alpha1SentimentData: The data for a
@@ -15934,6 +16310,110 @@ func (c *ProjectsLocationsConversationsFeedbackLabelsPatchCall) Do(opts ...googl
 		return nil, err
 	}
 	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "contactcenterinsights.projects.locations.conversations.feedbackLabels.patch", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsDatasetsConversationsCalculateStatsCall struct {
+	s                                                       *Service
+	location                                                string
+	googlecloudcontactcenterinsightsv1calculatestatsrequest *GoogleCloudContactcenterinsightsV1CalculateStatsRequest
+	urlParams_                                              gensupport.URLParams
+	ctx_                                                    context.Context
+	header_                                                 http.Header
+}
+
+// CalculateStats: Gets conversation statistics.
+//
+// - location: The location of the conversations.
+func (r *ProjectsLocationsDatasetsConversationsService) CalculateStats(location string, googlecloudcontactcenterinsightsv1calculatestatsrequest *GoogleCloudContactcenterinsightsV1CalculateStatsRequest) *ProjectsLocationsDatasetsConversationsCalculateStatsCall {
+	c := &ProjectsLocationsDatasetsConversationsCalculateStatsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.location = location
+	c.googlecloudcontactcenterinsightsv1calculatestatsrequest = googlecloudcontactcenterinsightsv1calculatestatsrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsDatasetsConversationsCalculateStatsCall) Fields(s ...googleapi.Field) *ProjectsLocationsDatasetsConversationsCalculateStatsCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsDatasetsConversationsCalculateStatsCall) Context(ctx context.Context) *ProjectsLocationsDatasetsConversationsCalculateStatsCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsDatasetsConversationsCalculateStatsCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsDatasetsConversationsCalculateStatsCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googlecloudcontactcenterinsightsv1calculatestatsrequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+location}/conversations:calculateStats")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"location": c.location,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "contactcenterinsights.projects.locations.datasets.conversations.calculateStats", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "contactcenterinsights.projects.locations.datasets.conversations.calculateStats" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudContactcenterinsightsV1CalculateStatsResponse.ServerResponse.Head
+// er or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsDatasetsConversationsCalculateStatsCall) Do(opts ...googleapi.CallOption) (*GoogleCloudContactcenterinsightsV1CalculateStatsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudContactcenterinsightsV1CalculateStatsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "contactcenterinsights.projects.locations.datasets.conversations.calculateStats", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 

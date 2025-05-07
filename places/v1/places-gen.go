@@ -1748,19 +1748,13 @@ type GoogleMapsPlacesV1PlaceGoogleMapsLinks struct {
 	// DirectionsUri: A link to show the directions to the place. The link only
 	// populates the destination location and uses the default travel mode `DRIVE`.
 	DirectionsUri string `json:"directionsUri,omitempty"`
-	// PhotosUri: A link to show photos of this place. This link is currently not
-	// supported on Google Maps Mobile and only works on the web version of Google
-	// Maps.
+	// PhotosUri: A link to show reviews of this place on Google Maps.
 	PhotosUri string `json:"photosUri,omitempty"`
 	// PlaceUri: A link to show this place.
 	PlaceUri string `json:"placeUri,omitempty"`
-	// ReviewsUri: A link to show reviews of this place. This link is currently not
-	// supported on Google Maps Mobile and only works on the web version of Google
-	// Maps.
+	// ReviewsUri: A link to show reviews of this place on Google Maps.
 	ReviewsUri string `json:"reviewsUri,omitempty"`
-	// WriteAReviewUri: A link to write a review for this place. This link is
-	// currently not supported on Google Maps Mobile and only works on the web
-	// version of Google Maps.
+	// WriteAReviewUri: A link to show reviews of this place on Google Maps.
 	WriteAReviewUri string `json:"writeAReviewUri,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "DirectionsUri") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -2208,9 +2202,6 @@ type GoogleMapsPlacesV1Review struct {
 	RelativePublishTimeDescription string `json:"relativePublishTimeDescription,omitempty"`
 	// Text: The localized text of the review.
 	Text *GoogleTypeLocalizedText `json:"text,omitempty"`
-	// VisitDate: The date when the author visited the place. This is trucated to
-	// month.
-	VisitDate *GoogleMapsPlacesV1ReviewVisitDate `json:"visitDate,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AuthorAttribution") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -2241,32 +2232,6 @@ func (s *GoogleMapsPlacesV1Review) UnmarshalJSON(data []byte) error {
 	}
 	s.Rating = float64(s1.Rating)
 	return nil
-}
-
-// GoogleMapsPlacesV1ReviewVisitDate: The date when the author visited the
-// place. This is trucated to month.
-type GoogleMapsPlacesV1ReviewVisitDate struct {
-	// Month: The month the author visited the place, e.g. 4. The value is between
-	// 1 and 12.
-	Month int64 `json:"month,omitempty"`
-	// Year: The year the author visited the place, e.g. 2025.
-	Year int64 `json:"year,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "Month") to unconditionally
-	// include in API requests. By default, fields with empty or default values are
-	// omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
-	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Month") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
-	NullFields []string `json:"-"`
-}
-
-func (s GoogleMapsPlacesV1ReviewVisitDate) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleMapsPlacesV1ReviewVisitDate
-	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleMapsPlacesV1RouteModifiers: Encapsulates a set of optional conditions

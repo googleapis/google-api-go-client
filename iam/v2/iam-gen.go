@@ -402,7 +402,7 @@ type GoogleIamV2DenyRule struct {
 	// `{service_fqdn}` is the fully qualified domain name for the service. For
 	// example, `iam.googleapis.com/roles.list`.
 	DeniedPermissions []string `json:"deniedPermissions,omitempty"`
-	// DeniedPrincipals: The identities that are prevented from using one or more
+	// DeniedPrincipals:  The identities that are prevented from using one or more
 	// permissions on Google Cloud resources. This field can contain the following
 	// values: * `principal://goog/subject/{email_id}`: A specific Google Account.
 	// Includes Gmail, Cloud Identity, and Google Workspace user accounts. For

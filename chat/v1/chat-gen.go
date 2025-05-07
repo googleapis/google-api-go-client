@@ -1527,11 +1527,7 @@ type DeprecatedEvent struct {
 	//   "SUBMIT_DIALOG" - A user clicks an interactive element of a dialog. For
 	// example, a user fills out information in a dialog and clicks a button to
 	// submit the information.
-	//   "CANCEL_DIALOG" - A user closes a dialog without submitting information.
-	// The Chat app only receives this interaction event when users click the close
-	// icon in the top right corner of the dialog. When the user closes the dialog
-	// by other means (such as refreshing the browser, clicking outside the dialog
-	// box, or pressing the escape key), no event is sent. .
+	//   "CANCEL_DIALOG"
 	DialogEventType string `json:"dialogEventType,omitempty"`
 	// EventTime: The timestamp indicating when the interaction event occurred.
 	EventTime string `json:"eventTime,omitempty"`

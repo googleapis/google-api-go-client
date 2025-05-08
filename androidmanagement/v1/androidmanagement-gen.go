@@ -483,6 +483,270 @@ func (s ApiLevelCondition) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// ApnPolicy: Access Point Name (APN) policy. Configuration for Access Point
+// Names (APNs) which may override any other APNs on the device. See
+// OVERRIDE_APNS_ENABLED and overrideApns for details.
+type ApnPolicy struct {
+	// ApnSettings: Optional. APN settings for override APNs. There must not be any
+	// conflict between any of APN settings provided, otherwise the policy will be
+	// rejected. Two ApnSettings are considered to conflict when all of the
+	// following fields match on both: numericOperatorId, apn, proxyAddress,
+	// proxyPort, mmsProxyAddress, mmsProxyPort, mmsc, mvnoType, protocol,
+	// roamingProtocol. If some of the APN settings result in non-compliance of
+	// INVALID_VALUE , they will be ignored. This can be set on fully managed
+	// devices on Android 10 and above. This can also be set on work profiles on
+	// Android 13 and above and only with ApnSetting's with ENTERPRISE APN type. A
+	// nonComplianceDetail with API_LEVEL is reported if the Android version is
+	// less than 10. A nonComplianceDetail with MANAGEMENT_MODE is reported for
+	// work profiles on Android versions less than 13.
+	ApnSettings []*ApnSetting `json:"apnSettings,omitempty"`
+	// OverrideApns: Optional. Whether override APNs are disabled or enabled. See
+	// DevicePolicyManager.setOverrideApnsEnabled
+	// (https://developer.android.com/reference/android/app/admin/DevicePolicyManager#setOverrideApnsEnabled)
+	// for more details.
+	//
+	// Possible values:
+	//   "OVERRIDE_APNS_UNSPECIFIED" - Unspecified. Defaults to
+	// OVERRIDE_APNS_DISABLED.
+	//   "OVERRIDE_APNS_DISABLED" - Override APNs disabled. Any configured
+	// apnSettings are saved on the device, but are disabled and have no effect.
+	// Any other APNs on the device remain in use.
+	//   "OVERRIDE_APNS_ENABLED" - Override APNs enabled. Only override APNs are in
+	// use, any other APNs are ignored. This can only be set on fully managed
+	// devices on Android 10 and above. For work profiles override APNs are enabled
+	// via preferentialNetworkServiceSettings and this value cannot be set. A
+	// nonComplianceDetail with API_LEVEL is reported if the Android version is
+	// less than 10. A nonComplianceDetail with MANAGEMENT_MODE is reported for
+	// work profiles.
+	OverrideApns string `json:"overrideApns,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ApnSettings") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ApnSettings") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ApnPolicy) MarshalJSON() ([]byte, error) {
+	type NoMethod ApnPolicy
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ApnSetting: An Access Point Name (APN) configuration for a carrier data
+// connection. The APN provides configuration to connect a cellular network
+// device to an IP data network. A carrier uses this setting to decide which IP
+// address to assign, any security methods to apply, and how the device might
+// be connected to private networks.
+type ApnSetting struct {
+	// AlwaysOnSetting: Optional. Whether User Plane resources have to be activated
+	// during every transition from CM-IDLE mode to CM-CONNECTED state for this
+	// APN. See 3GPP TS 23.501 section 5.6.13.
+	//
+	// Possible values:
+	//   "ALWAYS_ON_SETTING_UNSPECIFIED" - Unspecified. Defaults to NOT_ALWAYS_ON.
+	//   "NOT_ALWAYS_ON" - The PDU session brought up by this APN should not be
+	// always on.
+	//   "ALWAYS_ON" - The PDU session brought up by this APN should always be on.
+	// Supported on Android 15 and above. A nonComplianceDetail with API_LEVEL is
+	// reported if the Android version is less than 15.
+	AlwaysOnSetting string `json:"alwaysOnSetting,omitempty"`
+	// Apn: Required. Name of the APN. Policy will be rejected if this field is
+	// empty.
+	Apn string `json:"apn,omitempty"`
+	// ApnTypes: Required. Usage categories for the APN. Policy will be rejected if
+	// this field is empty or contains APN_TYPE_UNSPECIFIED or duplicates. Multiple
+	// APN types can be set on fully managed devices. ENTERPRISE is the only
+	// allowed APN type on work profiles. A nonComplianceDetail with
+	// MANAGEMENT_MODE is reported for any other value on work profiles. APN types
+	// that are not supported on the device or management mode will be ignored. If
+	// this results in the empty list, the APN setting will be ignored, because
+	// apnTypes is a required field. A nonComplianceDetail with INVALID_VALUE is
+	// reported if none of the APN types are supported on the device or management
+	// mode.
+	//
+	// Possible values:
+	//   "APN_TYPE_UNSPECIFIED" - Unspecified. This value is not used.
+	//   "ENTERPRISE" - APN type for enterprise traffic. Supported on Android 13
+	// and above. A nonComplianceDetail with API_LEVEL is reported if the Android
+	// version is less than 13.
+	//   "BIP" - APN type for BIP (Bearer Independent Protocol). This can only be
+	// set on fully managed devices on Android 12 and above. A nonComplianceDetail
+	// with API_LEVEL is reported if the Android version is less than 12. A
+	// nonComplianceDetail with MANAGEMENT_MODE is reported for work profiles.
+	//   "CBS" - APN type for CBS (Carrier Branded Services). This can only be set
+	// on fully managed devices. A nonComplianceDetail with MANAGEMENT_MODE is
+	// reported for work profiles.
+	//   "DEFAULT" - APN type for default data traffic. This can only be set on
+	// fully managed devices. A nonComplianceDetail with MANAGEMENT_MODE is
+	// reported for work profiles.
+	//   "DUN" - APN type for DUN (Dial-up networking) traffic. This can only be
+	// set on fully managed devices. A nonComplianceDetail with MANAGEMENT_MODE is
+	// reported for work profiles.
+	//   "EMERGENCY" - APN type for Emergency PDN. This is not an IA apn, but is
+	// used for access to carrier services in an emergency call situation. This can
+	// only be set on fully managed devices. A nonComplianceDetail with
+	// MANAGEMENT_MODE is reported for work profiles.
+	//   "FOTA" - APN type for accessing the carrier's FOTA (Firmware Over-the-Air)
+	// portal, used for over the air updates. This can only be set on fully managed
+	// devices. A nonComplianceDetail with MANAGEMENT_MODE is reported for work
+	// profiles.
+	//   "HIPRI" - APN type for HiPri (high-priority) traffic. This can only be set
+	// on fully managed devices. A nonComplianceDetail with MANAGEMENT_MODE is
+	// reported for work profiles.
+	//   "IA" - APN type for IA (Initial Attach) APN. This can only be set on fully
+	// managed devices. A nonComplianceDetail with MANAGEMENT_MODE is reported for
+	// work profiles.
+	//   "IMS" - APN type for IMS (IP Multimedia Subsystem) traffic. This can only
+	// be set on fully managed devices. A nonComplianceDetail with MANAGEMENT_MODE
+	// is reported for work profiles.
+	//   "MCX" - APN type for MCX (Mission Critical Service) where X can be
+	// PTT/Video/Data. This can only be set on fully managed devices. A
+	// nonComplianceDetail with MANAGEMENT_MODE is reported for work profiles.
+	//   "MMS" - APN type for MMS (Multimedia Messaging Service) traffic. This can
+	// only be set on fully managed devices. A nonComplianceDetail with
+	// MANAGEMENT_MODE is reported for work profiles.
+	//   "RCS" - APN type for RCS (Rich Communication Services). This can only be
+	// set on fully managed devices on Android 15 and above. A nonComplianceDetail
+	// with API_LEVEL is reported if the Android version is less than 15. A
+	// nonComplianceDetail with MANAGEMENT_MODE is reported for work profiles.
+	//   "SUPL" - APN type for SUPL (Secure User Plane Location) assisted GPS. This
+	// can only be set on fully managed devices. A nonComplianceDetail with
+	// MANAGEMENT_MODE is reported for work profiles.
+	//   "VSIM" - APN type for VSIM (Virtual SIM) service. This can only be set on
+	// fully managed devices on Android 12 and above. A nonComplianceDetail with
+	// API_LEVEL is reported if the Android version is less than 12. A
+	// nonComplianceDetail with MANAGEMENT_MODE is reported for work profiles.
+	//   "XCAP" - APN type for XCAP (XML Configuration Access Protocol) traffic.
+	// This can only be set on fully managed devices on Android 11 and above. A
+	// nonComplianceDetail with API_LEVEL is reported if the Android version is
+	// less than 11. A nonComplianceDetail with MANAGEMENT_MODE is reported for
+	// work profiles.
+	ApnTypes []string `json:"apnTypes,omitempty"`
+	// AuthType: Optional. Authentication type of the APN.
+	//
+	// Possible values:
+	//   "AUTH_TYPE_UNSPECIFIED" - Unspecified. If username is empty, defaults to
+	// NONE. Otherwise, defaults to PAP_OR_CHAP.
+	//   "NONE" - Authentication is not required.
+	//   "PAP" - Authentication type for PAP.
+	//   "CHAP" - Authentication type for CHAP.
+	//   "PAP_OR_CHAP" - Authentication type for PAP or CHAP.
+	AuthType string `json:"authType,omitempty"`
+	// CarrierId: Optional. Carrier ID for the APN. A value of 0 (default) means
+	// not set and negative values are rejected.
+	CarrierId int64 `json:"carrierId,omitempty"`
+	// DisplayName: Required. Human-readable name that describes the APN. Policy
+	// will be rejected if this field is empty.
+	DisplayName string `json:"displayName,omitempty"`
+	// MmsProxyAddress: Optional. MMS (Multimedia Messaging Service) proxy address
+	// of the APN which can be an IP address or hostname (not a URL).
+	MmsProxyAddress string `json:"mmsProxyAddress,omitempty"`
+	// MmsProxyPort: Optional. MMS (Multimedia Messaging Service) proxy port of the
+	// APN. A value of 0 (default) means not set and negative values are rejected.
+	MmsProxyPort int64 `json:"mmsProxyPort,omitempty"`
+	// Mmsc: Optional. MMSC (Multimedia Messaging Service Center) URI of the APN.
+	Mmsc string `json:"mmsc,omitempty"`
+	// MtuV4: Optional. The default MTU (Maximum Transmission Unit) size in bytes
+	// of the IPv4 routes brought up by this APN setting. A value of 0 (default)
+	// means not set and negative values are rejected. Supported on Android 13 and
+	// above. A nonComplianceDetail with API_LEVEL is reported if the Android
+	// version is less than 13.
+	MtuV4 int64 `json:"mtuV4,omitempty"`
+	// MtuV6: Optional. The MTU (Maximum Transmission Unit) size of the IPv6 mobile
+	// interface to which the APN connected. A value of 0 (default) means not set
+	// and negative values are rejected. Supported on Android 13 and above. A
+	// nonComplianceDetail with API_LEVEL is reported if the Android version is
+	// less than 13.
+	MtuV6 int64 `json:"mtuV6,omitempty"`
+	// MvnoType: Optional. MVNO match type for the APN.
+	//
+	// Possible values:
+	//   "MVNO_TYPE_UNSPECIFIED" - The MVNO type is not specified.
+	//   "GID" - MVNO type for group identifier level 1.
+	//   "ICCID" - MVNO type for ICCID.
+	//   "IMSI" - MVNO type for IMSI.
+	//   "SPN" - MVNO type for SPN (service provider name).
+	MvnoType string `json:"mvnoType,omitempty"`
+	// NetworkTypes: Optional. Radio technologies (network types) the APN may use.
+	// Policy will be rejected if this field contains NETWORK_TYPE_UNSPECIFIED or
+	// duplicates.
+	//
+	// Possible values:
+	//   "NETWORK_TYPE_UNSPECIFIED" - Unspecified. This value must not be used.
+	//   "EDGE" - Radio technology EDGE.
+	//   "GPRS" - Radio technology GPRS.
+	//   "GSM" - Radio technology GSM.
+	//   "HSDPA" - Radio technology HSDPA.
+	//   "HSPA" - Radio technology HSPA.
+	//   "HSPAP" - Radio technology HSPAP.
+	//   "HSUPA" - Radio technology HSUPA.
+	//   "IWLAN" - Radio technology IWLAN.
+	//   "LTE" - Radio technology LTE.
+	//   "NR" - Radio technology NR (New Radio) 5G.
+	//   "TD_SCDMA" - Radio technology TD_SCDMA.
+	//   "UMTS" - Radio technology UMTS.
+	NetworkTypes []string `json:"networkTypes,omitempty"`
+	// NumericOperatorId: Optional. The numeric operator ID of the APN. Numeric
+	// operator ID is defined as MCC (Mobile Country Code) + MNC (Mobile Network
+	// Code).
+	NumericOperatorId string `json:"numericOperatorId,omitempty"`
+	// Password: Optional. APN password of the APN.
+	Password string `json:"password,omitempty"`
+	// Protocol: Optional. The protocol to use to connect to this APN.
+	//
+	// Possible values:
+	//   "PROTOCOL_UNSPECIFIED" - The protocol is not specified.
+	//   "IP" - Internet protocol.
+	//   "IPV4V6" - Virtual PDP type introduced to handle dual IP stack UE
+	// capability.
+	//   "IPV6" - Internet protocol, version 6.
+	//   "NON_IP" - Transfer of Non-IP data to external packet data network.
+	//   "PPP" - Point to point protocol.
+	//   "UNSTRUCTURED" - Transfer of Unstructured data to the Data Network via N6.
+	Protocol string `json:"protocol,omitempty"`
+	// ProxyAddress: Optional. The proxy address of the APN.
+	ProxyAddress string `json:"proxyAddress,omitempty"`
+	// ProxyPort: Optional. The proxy port of the APN. A value of 0 (default) means
+	// not set and negative values are rejected.
+	ProxyPort int64 `json:"proxyPort,omitempty"`
+	// RoamingProtocol: Optional. The protocol to use to connect to this APN while
+	// the device is roaming.
+	//
+	// Possible values:
+	//   "PROTOCOL_UNSPECIFIED" - The protocol is not specified.
+	//   "IP" - Internet protocol.
+	//   "IPV4V6" - Virtual PDP type introduced to handle dual IP stack UE
+	// capability.
+	//   "IPV6" - Internet protocol, version 6.
+	//   "NON_IP" - Transfer of Non-IP data to external packet data network.
+	//   "PPP" - Point to point protocol.
+	//   "UNSTRUCTURED" - Transfer of Unstructured data to the Data Network via N6.
+	RoamingProtocol string `json:"roamingProtocol,omitempty"`
+	// Username: Optional. APN username of the APN.
+	Username string `json:"username,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AlwaysOnSetting") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AlwaysOnSetting") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ApnSetting) MarshalJSON() ([]byte, error) {
+	type NoMethod ApnSetting
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // AppProcessInfo: Information about a process. It contains process name, start
 // time, app Uid, app Pid, seinfo tag, hash of the base APK.
 type AppProcessInfo struct {
@@ -1005,6 +1269,27 @@ type ApplicationPolicy struct {
 	// values override the default_permission_policy and permission_grants which
 	// apply to all apps.
 	PermissionGrants []*PermissionGrant `json:"permissionGrants,omitempty"`
+	// PreferentialNetworkId: Optional. ID of the preferential network the
+	// application uses. There must be a configuration for the specified network ID
+	// in preferentialNetworkServiceConfigs. If set to
+	// PREFERENTIAL_NETWORK_ID_UNSPECIFIED, the application will use the default
+	// network ID specified in defaultPreferentialNetworkId. See the documentation
+	// of defaultPreferentialNetworkId for the list of apps excluded from this
+	// defaulting. This applies on both work profiles and fully managed devices on
+	// Android 13 and above.
+	//
+	// Possible values:
+	//   "PREFERENTIAL_NETWORK_ID_UNSPECIFIED" - Whether this value is valid and
+	// what it means depends on where it is used, and this is documented on the
+	// relevant fields.
+	//   "NO_PREFERENTIAL_NETWORK" - Application does not use any preferential
+	// network.
+	//   "PREFERENTIAL_NETWORK_ID_ONE" - Preferential network identifier 1.
+	//   "PREFERENTIAL_NETWORK_ID_TWO" - Preferential network identifier 2.
+	//   "PREFERENTIAL_NETWORK_ID_THREE" - Preferential network identifier 3.
+	//   "PREFERENTIAL_NETWORK_ID_FOUR" - Preferential network identifier 4.
+	//   "PREFERENTIAL_NETWORK_ID_FIVE" - Preferential network identifier 5.
+	PreferentialNetworkId string `json:"preferentialNetworkId,omitempty"`
 	// UserControlSettings: Optional. Specifies whether user control is permitted
 	// for the app. User control includes user actions like force-stopping and
 	// clearing app data. Supported on Android 11 and above.
@@ -1529,6 +1814,7 @@ type Command struct {
 	//   "STOP_LOST_MODE" - Takes the device out of lost mode. Only supported on
 	// fully managed devices or organization-owned devices with a managed profile.
 	// See also stop_lost_mode_params.
+	//   "REQUEST_DEVICE_INFO" - Request information related to the device.
 	Type string `json:"type,omitempty"`
 	// UserName: The resource name of the user that owns the device in the form
 	// enterprises/{enterpriseId}/users/{userId}. This is automatically generated
@@ -2118,6 +2404,10 @@ func (s Device) MarshalJSON() ([]byte, error) {
 // DeviceConnectivityManagement: Covers controls for device connectivity such
 // as Wi-Fi, USB data access, keyboard/mouse connections, and more.
 type DeviceConnectivityManagement struct {
+	// ApnPolicy: Optional. Access Point Name (APN) policy. Configuration for
+	// Access Point Names (APNs) which may override any other APNs on the device.
+	// See OVERRIDE_APNS_ENABLED and overrideApns for details.
+	ApnPolicy *ApnPolicy `json:"apnPolicy,omitempty"`
 	// BluetoothSharing: Optional. Controls whether Bluetooth sharing is allowed.
 	//
 	// Possible values:
@@ -2161,6 +2451,11 @@ type DeviceConnectivityManagement struct {
 	// hatch will be shown in order to refresh the device policy (see
 	// networkEscapeHatchEnabled).
 	ConfigureWifi string `json:"configureWifi,omitempty"`
+	// PreferentialNetworkServiceSettings: Optional. Preferential network service
+	// configuration. Setting this field will override preferentialNetworkService.
+	// This can be set on both work profiles and fully managed devices on Android
+	// 13 and above.
+	PreferentialNetworkServiceSettings *PreferentialNetworkServiceSettings `json:"preferentialNetworkServiceSettings,omitempty"`
 	// TetheringSettings: Controls tethering settings. Based on the value set, the
 	// user is partially or fully disallowed from using different forms of
 	// tethering.
@@ -2217,15 +2512,15 @@ type DeviceConnectivityManagement struct {
 	// Note that this does not affect which networks can be configured on the
 	// device. Supported on company-owned devices running Android 13 and above.
 	WifiSsidPolicy *WifiSsidPolicy `json:"wifiSsidPolicy,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "BluetoothSharing") to
+	// ForceSendFields is a list of field names (e.g. "ApnPolicy") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "BluetoothSharing") to include in
-	// API requests with the JSON null value. By default, fields with empty values
-	// are omitted from API requests. See
+	// NullFields is a list of field names (e.g. "ApnPolicy") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -4312,6 +4607,8 @@ type NonComplianceDetail struct {
 	// the minimum version code specified by policy.
 	//   "DEVICE_INCOMPATIBLE" - The device is incompatible with the policy
 	// requirements.
+	//   "PROJECT_NOT_PERMITTED" - The Google Cloud Platform project used to manage
+	// the device is not permitted to use this policy.
 	NonComplianceReason string `json:"nonComplianceReason,omitempty"`
 	// PackageName: The package name indicating which app is out of compliance, if
 	// applicable.
@@ -4357,6 +4654,12 @@ type NonComplianceDetail struct {
 	// (https://chromium.googlesource.com/chromium/src/+/main/components/onc/docs/onc_spec.md#eap-type)
 	// field in openNetworkConfiguration does not correspond to an existing key
 	// installed on the device. nonComplianceReason is set to INVALID_VALUE.
+	//   "PERMISSIBLE_USAGE_RESTRICTION" - This policy setting is restricted and
+	// cannot be set for this Google Cloud Platform project. More details
+	// (including how to enable usage of this policy setting) are available in the
+	// Permissible Usage policy
+	// (https://developers.google.com/android/management/permissible-usage).
+	// nonComplianceReason is set to PROJECT_NOT_PERMITTED.
 	SpecificNonComplianceReason string `json:"specificNonComplianceReason,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "CurrentValue") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -4408,6 +4711,8 @@ type NonComplianceDetailCondition struct {
 	// the minimum version code specified by policy.
 	//   "DEVICE_INCOMPATIBLE" - The device is incompatible with the policy
 	// requirements.
+	//   "PROJECT_NOT_PERMITTED" - The Google Cloud Platform project used to manage
+	// the device is not permitted to use this policy.
 	NonComplianceReason string `json:"nonComplianceReason,omitempty"`
 	// PackageName: The package name of the app that's out of compliance. If not
 	// set, then this condition matches any package name.
@@ -5221,6 +5526,23 @@ type Policy struct {
 	EncryptionPolicy string `json:"encryptionPolicy,omitempty"`
 	// EnsureVerifyAppsEnabled: Whether app verification is force-enabled.
 	EnsureVerifyAppsEnabled bool `json:"ensureVerifyAppsEnabled,omitempty"`
+	// EnterpriseDisplayNameVisibility: Optional. Controls whether the
+	// enterpriseDisplayName is visible on the device (e.g. lock screen message on
+	// company-owned devices).
+	//
+	// Possible values:
+	//   "ENTERPRISE_DISPLAY_NAME_VISIBILITY_UNSPECIFIED" - Unspecified. Defaults
+	// to displaying the enterprise name that's set at the time of device setup. In
+	// future, this will default to ENTERPRISE_DISPLAY_NAME_VISIBLE.
+	//   "ENTERPRISE_DISPLAY_NAME_VISIBLE" - The enterprise display name is visible
+	// on the device. Supported on work profiles on Android 7 and above. Supported
+	// on fully managed devices on Android 8 and above. A nonComplianceDetail with
+	// API_LEVEL is reported if the Android version is less than 7. A
+	// nonComplianceDetail with MANAGEMENT_MODE is reported on fully managed
+	// devices on Android 7.
+	//   "ENTERPRISE_DISPLAY_NAME_HIDDEN" - The enterprise display name is hidden
+	// on the device.
+	EnterpriseDisplayNameVisibility string `json:"enterpriseDisplayNameVisibility,omitempty"`
 	// FactoryResetDisabled: Whether factory resetting from settings is disabled.
 	FactoryResetDisabled bool `json:"factoryResetDisabled,omitempty"`
 	// FrpAdminEmails: Email addresses of device administrators for factory reset
@@ -5404,11 +5726,14 @@ type Policy struct {
 	// policy can not be applied on device
 	PolicyEnforcementRules []*PolicyEnforcementRule `json:"policyEnforcementRules,omitempty"`
 	// PreferentialNetworkService: Controls whether preferential network service is
-	// enabled on the work profile. For example, an organization may have an
-	// agreement with a carrier that all of the work data from its employees'
-	// devices will be sent via a network service dedicated for enterprise use. An
-	// example of a supported preferential network service is the enterprise slice
-	// on 5G networks. This has no effect on fully managed devices.
+	// enabled on the work profile or on fully managed devices. For example, an
+	// organization may have an agreement with a carrier that all of the work data
+	// from its employees' devices will be sent via a network service dedicated for
+	// enterprise use. An example of a supported preferential network service is
+	// the enterprise slice on 5G networks. This policy has no effect if
+	// preferentialNetworkServiceSettings or
+	// ApplicationPolicy.preferentialNetworkId is set on devices running Android 13
+	// or above.
 	//
 	// Possible values:
 	//   "PREFERENTIAL_NETWORK_SERVICE_UNSPECIFIED" - Unspecified. Defaults to
@@ -5416,7 +5741,9 @@ type Policy struct {
 	//   "PREFERENTIAL_NETWORK_SERVICE_DISABLED" - Preferential network service is
 	// disabled on the work profile.
 	//   "PREFERENTIAL_NETWORK_SERVICE_ENABLED" - Preferential network service is
-	// enabled on the work profile.
+	// enabled on the work profile. This setting is only supported on work profiles
+	// on devices running Android 12 or above. Starting with Android 13, fully
+	// managed devices are also supported.
 	PreferentialNetworkService string `json:"preferentialNetworkService,omitempty"`
 	// PrintingPolicy: Optional. Controls whether printing is allowed. This is
 	// supported on devices running Android 9 and above. .
@@ -5683,6 +6010,134 @@ func (s *PowerManagementEvent) UnmarshalJSON(data []byte) error {
 	}
 	s.BatteryLevel = float64(s1.BatteryLevel)
 	return nil
+}
+
+// PreferentialNetworkServiceConfig: Individual preferential network service
+// configuration.
+type PreferentialNetworkServiceConfig struct {
+	// FallbackToDefaultConnection: Optional. Whether fallback to the device-wide
+	// default network is allowed. If this is set to
+	// FALLBACK_TO_DEFAULT_CONNECTION_ALLOWED, then nonMatchingNetworks must not be
+	// set to NON_MATCHING_NETWORKS_DISALLOWED, the policy will be rejected
+	// otherwise. Note: If this is set to
+	// FALLBACK_TO_DEFAULT_CONNECTION_DISALLOWED, applications are not able to
+	// access the internet if the 5G slice is not available.
+	//
+	// Possible values:
+	//   "FALLBACK_TO_DEFAULT_CONNECTION_UNSPECIFIED" - Unspecified. Defaults to
+	// FALLBACK_TO_DEFAULT_CONNECTION_ALLOWED.
+	//   "FALLBACK_TO_DEFAULT_CONNECTION_ALLOWED" - Fallback to default connection
+	// is allowed. If this is set, nonMatchingNetworks must not be set to
+	// NON_MATCHING_NETWORKS_DISALLOWED, the policy will be rejected otherwise.
+	//   "FALLBACK_TO_DEFAULT_CONNECTION_DISALLOWED" - Fallback to default
+	// connection is not allowed.
+	FallbackToDefaultConnection string `json:"fallbackToDefaultConnection,omitempty"`
+	// NonMatchingNetworks: Optional. Whether apps this configuration applies to
+	// are blocked from using networks other than the preferential service. If this
+	// is set to NON_MATCHING_NETWORKS_DISALLOWED, then fallbackToDefaultConnection
+	// must be set to FALLBACK_TO_DEFAULT_CONNECTION_DISALLOWED.
+	//
+	// Possible values:
+	//   "NON_MATCHING_NETWORKS_UNSPECIFIED" - Unspecified. Defaults to
+	// NON_MATCHING_NETWORKS_ALLOWED.
+	//   "NON_MATCHING_NETWORKS_ALLOWED" - Apps this configuration applies to are
+	// allowed to use networks other than the preferential service.
+	//   "NON_MATCHING_NETWORKS_DISALLOWED" - Apps this configuration applies to
+	// are disallowed from using other networks than the preferential service. This
+	// can be set on Android 14 and above. A nonComplianceDetail with API_LEVEL is
+	// reported if the Android version is less than 14. If this is set,
+	// fallbackToDefaultConnection must be set to
+	// FALLBACK_TO_DEFAULT_CONNECTION_DISALLOWED, the policy will be rejected
+	// otherwise.
+	NonMatchingNetworks string `json:"nonMatchingNetworks,omitempty"`
+	// PreferentialNetworkId: Required. Preferential network identifier. This must
+	// not be set to NO_PREFERENTIAL_NETWORK or
+	// PREFERENTIAL_NETWORK_ID_UNSPECIFIED, the policy will be rejected otherwise.
+	//
+	// Possible values:
+	//   "PREFERENTIAL_NETWORK_ID_UNSPECIFIED" - Whether this value is valid and
+	// what it means depends on where it is used, and this is documented on the
+	// relevant fields.
+	//   "NO_PREFERENTIAL_NETWORK" - Application does not use any preferential
+	// network.
+	//   "PREFERENTIAL_NETWORK_ID_ONE" - Preferential network identifier 1.
+	//   "PREFERENTIAL_NETWORK_ID_TWO" - Preferential network identifier 2.
+	//   "PREFERENTIAL_NETWORK_ID_THREE" - Preferential network identifier 3.
+	//   "PREFERENTIAL_NETWORK_ID_FOUR" - Preferential network identifier 4.
+	//   "PREFERENTIAL_NETWORK_ID_FIVE" - Preferential network identifier 5.
+	PreferentialNetworkId string `json:"preferentialNetworkId,omitempty"`
+	// ForceSendFields is a list of field names (e.g.
+	// "FallbackToDefaultConnection") to unconditionally include in API requests.
+	// By default, fields with empty or default values are omitted from API
+	// requests. See https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields
+	// for more details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "FallbackToDefaultConnection") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s PreferentialNetworkServiceConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod PreferentialNetworkServiceConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// PreferentialNetworkServiceSettings: Preferential network service settings.
+type PreferentialNetworkServiceSettings struct {
+	// DefaultPreferentialNetworkId: Required. Default preferential network ID for
+	// the applications that are not in applications or if
+	// ApplicationPolicy.preferentialNetworkId is set to
+	// PREFERENTIAL_NETWORK_ID_UNSPECIFIED. There must be a configuration for the
+	// specified network ID in preferentialNetworkServiceConfigs, unless this is
+	// set to NO_PREFERENTIAL_NETWORK. If set to
+	// PREFERENTIAL_NETWORK_ID_UNSPECIFIED or unset, this defaults to
+	// NO_PREFERENTIAL_NETWORK. Note: If the default preferential network is
+	// misconfigured, applications with no ApplicationPolicy.preferentialNetworkId
+	// set are not able to access the internet. This setting does not apply to the
+	// following critical apps: com.google.android.apps.work.clouddpc
+	// com.google.android.gmsApplicationPolicy.preferentialNetworkId can still be
+	// used to configure the preferential network for them.
+	//
+	// Possible values:
+	//   "PREFERENTIAL_NETWORK_ID_UNSPECIFIED" - Whether this value is valid and
+	// what it means depends on where it is used, and this is documented on the
+	// relevant fields.
+	//   "NO_PREFERENTIAL_NETWORK" - Application does not use any preferential
+	// network.
+	//   "PREFERENTIAL_NETWORK_ID_ONE" - Preferential network identifier 1.
+	//   "PREFERENTIAL_NETWORK_ID_TWO" - Preferential network identifier 2.
+	//   "PREFERENTIAL_NETWORK_ID_THREE" - Preferential network identifier 3.
+	//   "PREFERENTIAL_NETWORK_ID_FOUR" - Preferential network identifier 4.
+	//   "PREFERENTIAL_NETWORK_ID_FIVE" - Preferential network identifier 5.
+	DefaultPreferentialNetworkId string `json:"defaultPreferentialNetworkId,omitempty"`
+	// PreferentialNetworkServiceConfigs: Required. Preferential network service
+	// configurations which enables having multiple enterprise slices. There must
+	// not be multiple configurations with the same preferentialNetworkId. If a
+	// configuration is not referenced by any application by setting
+	// ApplicationPolicy.preferentialNetworkId or by setting
+	// defaultPreferentialNetworkId, it will be ignored. For devices on 4G
+	// networks, enterprise APN needs to be configured additionally to set up data
+	// call for preferential network service. These APNs can be added using
+	// apnPolicy.
+	PreferentialNetworkServiceConfigs []*PreferentialNetworkServiceConfig `json:"preferentialNetworkServiceConfigs,omitempty"`
+	// ForceSendFields is a list of field names (e.g.
+	// "DefaultPreferentialNetworkId") to unconditionally include in API requests.
+	// By default, fields with empty or default values are omitted from API
+	// requests. See https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields
+	// for more details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DefaultPreferentialNetworkId") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s PreferentialNetworkServiceSettings) MarshalJSON() ([]byte, error) {
+	type NoMethod PreferentialNetworkServiceSettings
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ProvisioningInfo: Information about a device that is available during setup.

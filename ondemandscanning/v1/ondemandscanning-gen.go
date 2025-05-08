@@ -1332,6 +1332,10 @@ func (s GrafeasV1FileLocation) MarshalJSON() ([]byte, error) {
 type GrafeasV1LayerDetails struct {
 	// BaseImages: The base images the layer is found within.
 	BaseImages []*GrafeasV1BaseImage `json:"baseImages,omitempty"`
+	// ChainId: The layer chain ID (sha256 hash) of the layer in the container
+	// image.
+	// https://github.com/opencontainers/image-spec/blob/main/config.md#layer-chainid
+	ChainId string `json:"chainId,omitempty"`
 	// Command: The layer build command that was used to build the layer. This may
 	// not be found in all layers depending on how the container image is built.
 	Command string `json:"command,omitempty"`
@@ -1791,6 +1795,10 @@ func (s Layer) MarshalJSON() ([]byte, error) {
 type LayerDetails struct {
 	// BaseImages: The base images the layer is found within.
 	BaseImages []*BaseImage `json:"baseImages,omitempty"`
+	// ChainId: The layer chain ID (sha256 hash) of the layer in the container
+	// image.
+	// https://github.com/opencontainers/image-spec/blob/main/config.md#layer-chainid
+	ChainId string `json:"chainId,omitempty"`
 	// Command: The layer build command that was used to build the layer. This may
 	// not be found in all layers depending on how the container image is built.
 	Command string `json:"command,omitempty"`
@@ -2078,6 +2086,7 @@ type Occurrence struct {
 	//   "DSSE_ATTESTATION" - This represents a DSSE attestation Note
 	//   "VULNERABILITY_ASSESSMENT" - This represents a Vulnerability Assessment.
 	//   "SBOM_REFERENCE" - This represents an SBOM Reference.
+	//   "SECRET" - This represents a secret.
 	Kind string `json:"kind,omitempty"`
 	// Name: Output only. The name of the occurrence in the form of
 	// `projects/[PROJECT_ID]/occurrences/[OCCURRENCE_ID]`.
@@ -2096,6 +2105,8 @@ type Occurrence struct {
 	ResourceUri string `json:"resourceUri,omitempty"`
 	// SbomReference: Describes a specific SBOM reference occurrences.
 	SbomReference *SBOMReferenceOccurrence `json:"sbomReference,omitempty"`
+	// Secret: Describes a secret.
+	Secret *SecretOccurrence `json:"secret,omitempty"`
 	// UpdateTime: Output only. The time this occurrence was last updated.
 	UpdateTime string `json:"updateTime,omitempty"`
 	// Upgrade: Describes an available package upgrade on the linked resource.
@@ -2218,7 +2229,7 @@ type PackageData struct {
 	//   "NPM" - NPM packages.
 	//   "NUGET" - Nuget (C#/.NET) packages.
 	//   "RUBYGEMS" - Ruby packges (from RubyGems package manager).
-	//   "RUST" - Rust packages from Cargo (Github ecosystem is `RUST`).
+	//   "RUST" - Rust packages from Cargo (GitHub ecosystem is `RUST`).
 	//   "COMPOSER" - PHP packages from Composer package manager.
 	//   "SWIFT" - Swift packages from Swift Package Manager (SwiftPM).
 	PackageType string `json:"packageType,omitempty"`
@@ -2726,6 +2737,92 @@ type SbomReferenceIntotoPredicate struct {
 
 func (s SbomReferenceIntotoPredicate) MarshalJSON() ([]byte, error) {
 	type NoMethod SbomReferenceIntotoPredicate
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// SecretLocation: The location of the secret.
+type SecretLocation struct {
+	// FileLocation: The secret is found from a file.
+	FileLocation *GrafeasV1FileLocation `json:"fileLocation,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "FileLocation") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "FileLocation") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s SecretLocation) MarshalJSON() ([]byte, error) {
+	type NoMethod SecretLocation
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// SecretOccurrence: The occurrence provides details of a secret.
+type SecretOccurrence struct {
+	// Kind: Required. Type of secret.
+	//
+	// Possible values:
+	//   "SECRET_KIND_UNSPECIFIED" - Unspecified
+	//   "SECRET_KIND_UNKNOWN" - The secret kind is unknown.
+	//   "SECRET_KIND_GCP_SERVICE_ACCOUNT_KEY" - A GCP service account key per:
+	// https://cloud.google.com/iam/docs/creating-managing-service-account-keys
+	Kind string `json:"kind,omitempty"`
+	// Locations: Optional. Locations where the secret is detected.
+	Locations []*SecretLocation `json:"locations,omitempty"`
+	// Statuses: Optional. Status of the secret.
+	Statuses []*SecretStatus `json:"statuses,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Kind") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Kind") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s SecretOccurrence) MarshalJSON() ([]byte, error) {
+	type NoMethod SecretOccurrence
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// SecretStatus: The status of the secret with a timestamp.
+type SecretStatus struct {
+	// Message: Optional. Optional message about the status code.
+	Message string `json:"message,omitempty"`
+	// Status: Optional. The status of the secret.
+	//
+	// Possible values:
+	//   "STATUS_UNSPECIFIED" - Unspecified
+	//   "UNKNOWN" - The status of the secret is unknown.
+	//   "VALID" - The secret is valid.
+	//   "INVALID" - The secret is invalid.
+	Status string `json:"status,omitempty"`
+	// UpdateTime: Optional. The time the secret status was last updated.
+	UpdateTime string `json:"updateTime,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Message") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Message") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s SecretStatus) MarshalJSON() ([]byte, error) {
+	type NoMethod SecretStatus
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 

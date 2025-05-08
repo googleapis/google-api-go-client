@@ -1533,7 +1533,7 @@ func (s DiscoverableProgramMerchantSigninInfo) MarshalJSON() ([]byte, error) {
 // DiscoverableProgramMerchantSignupInfo: Information about the merchant hosted
 // signup flow for a program.
 type DiscoverableProgramMerchantSignupInfo struct {
-	// SignupSharedDatas:  User data that is sent in a POST request to the signup
+	// SignupSharedDatas: User data that is sent in a POST request to the signup
 	// website URL. This information is encoded and then shared so that the
 	// merchant's website can prefill fields used to enroll the user for the
 	// discoverable program.
@@ -2274,14 +2274,14 @@ type EventTicketObject struct {
 	// moved to the "Expired passes" section.
 	//
 	// Possible values:
-	//   "STATE_UNSPECIFIED"
+	//   "STATE_UNSPECIFIED" - Default value.
 	//   "ACTIVE" - Object is active and displayed to with other active objects.
 	//   "active" - Legacy alias for `ACTIVE`. Deprecated.
-	//   "COMPLETED"
+	//   "COMPLETED" - Object has completed it's lifecycle.
 	//   "completed" - Legacy alias for `COMPLETED`. Deprecated.
 	//   "EXPIRED" - Object is no longer valid (`validTimeInterval` passed).
 	//   "expired" - Legacy alias for `EXPIRED`. Deprecated.
-	//   "INACTIVE"
+	//   "INACTIVE" - Object is no longer valid
 	//   "inactive" - Legacy alias for `INACTIVE`. Deprecated.
 	State string `json:"state,omitempty"`
 	// TextModulesData: Text module data. If text module data is also defined on
@@ -3078,14 +3078,14 @@ type FlightObject struct {
 	// moved to the "Expired passes" section.
 	//
 	// Possible values:
-	//   "STATE_UNSPECIFIED"
+	//   "STATE_UNSPECIFIED" - Default value.
 	//   "ACTIVE" - Object is active and displayed to with other active objects.
 	//   "active" - Legacy alias for `ACTIVE`. Deprecated.
-	//   "COMPLETED"
+	//   "COMPLETED" - Object has completed it's lifecycle.
 	//   "completed" - Legacy alias for `COMPLETED`. Deprecated.
 	//   "EXPIRED" - Object is no longer valid (`validTimeInterval` passed).
 	//   "expired" - Legacy alias for `EXPIRED`. Deprecated.
-	//   "INACTIVE"
+	//   "INACTIVE" - Object is no longer valid
 	//   "inactive" - Legacy alias for `INACTIVE`. Deprecated.
 	State string `json:"state,omitempty"`
 	// TextModulesData: Text module data. If text module data is also defined on
@@ -3487,14 +3487,14 @@ type GenericObject struct {
 	// be considered `ACTIVE`.
 	//
 	// Possible values:
-	//   "STATE_UNSPECIFIED"
+	//   "STATE_UNSPECIFIED" - Default value.
 	//   "ACTIVE" - Object is active and displayed to with other active objects.
 	//   "active" - Legacy alias for `ACTIVE`. Deprecated.
-	//   "COMPLETED"
+	//   "COMPLETED" - Object has completed it's lifecycle.
 	//   "completed" - Legacy alias for `COMPLETED`. Deprecated.
 	//   "EXPIRED" - Object is no longer valid (`validTimeInterval` passed).
 	//   "expired" - Legacy alias for `EXPIRED`. Deprecated.
-	//   "INACTIVE"
+	//   "INACTIVE" - Object is no longer valid
 	//   "inactive" - Legacy alias for `INACTIVE`. Deprecated.
 	State string `json:"state,omitempty"`
 	// Subheader: The title label of the pass, such as location where this pass can
@@ -3987,14 +3987,14 @@ type GiftCardObject struct {
 	// moved to the "Expired passes" section.
 	//
 	// Possible values:
-	//   "STATE_UNSPECIFIED"
+	//   "STATE_UNSPECIFIED" - Default value.
 	//   "ACTIVE" - Object is active and displayed to with other active objects.
 	//   "active" - Legacy alias for `ACTIVE`. Deprecated.
-	//   "COMPLETED"
+	//   "COMPLETED" - Object has completed it's lifecycle.
 	//   "completed" - Legacy alias for `COMPLETED`. Deprecated.
 	//   "EXPIRED" - Object is no longer valid (`validTimeInterval` passed).
 	//   "expired" - Legacy alias for `EXPIRED`. Deprecated.
-	//   "INACTIVE"
+	//   "INACTIVE" - Object is no longer valid
 	//   "inactive" - Legacy alias for `INACTIVE`. Deprecated.
 	State string `json:"state,omitempty"`
 	// TextModulesData: Text module data. If text module data is also defined on
@@ -4999,14 +4999,14 @@ type LoyaltyObject struct {
 	// moved to the "Expired passes" section.
 	//
 	// Possible values:
-	//   "STATE_UNSPECIFIED"
+	//   "STATE_UNSPECIFIED" - Default value.
 	//   "ACTIVE" - Object is active and displayed to with other active objects.
 	//   "active" - Legacy alias for `ACTIVE`. Deprecated.
-	//   "COMPLETED"
+	//   "COMPLETED" - Object has completed it's lifecycle.
 	//   "completed" - Legacy alias for `COMPLETED`. Deprecated.
 	//   "EXPIRED" - Object is no longer valid (`validTimeInterval` passed).
 	//   "expired" - Legacy alias for `EXPIRED`. Deprecated.
-	//   "INACTIVE"
+	//   "INACTIVE" - Object is no longer valid
 	//   "inactive" - Legacy alias for `INACTIVE`. Deprecated.
 	State string `json:"state,omitempty"`
 	// TextModulesData: Text module data. If text module data is also defined on
@@ -6058,14 +6058,14 @@ type OfferObject struct {
 	// moved to the "Expired passes" section.
 	//
 	// Possible values:
-	//   "STATE_UNSPECIFIED"
+	//   "STATE_UNSPECIFIED" - Default value.
 	//   "ACTIVE" - Object is active and displayed to with other active objects.
 	//   "active" - Legacy alias for `ACTIVE`. Deprecated.
-	//   "COMPLETED"
+	//   "COMPLETED" - Object has completed it's lifecycle.
 	//   "completed" - Legacy alias for `COMPLETED`. Deprecated.
 	//   "EXPIRED" - Object is no longer valid (`validTimeInterval` passed).
 	//   "expired" - Legacy alias for `EXPIRED`. Deprecated.
-	//   "INACTIVE"
+	//   "INACTIVE" - Object is no longer valid
 	//   "inactive" - Legacy alias for `INACTIVE`. Deprecated.
 	State string `json:"state,omitempty"`
 	// TextModulesData: Text module data. If text module data is also defined on
@@ -7587,14 +7587,14 @@ type TransitObject struct {
 	// moved to the "Expired passes" section.
 	//
 	// Possible values:
-	//   "STATE_UNSPECIFIED"
+	//   "STATE_UNSPECIFIED" - Default value.
 	//   "ACTIVE" - Object is active and displayed to with other active objects.
 	//   "active" - Legacy alias for `ACTIVE`. Deprecated.
-	//   "COMPLETED"
+	//   "COMPLETED" - Object has completed it's lifecycle.
 	//   "completed" - Legacy alias for `COMPLETED`. Deprecated.
 	//   "EXPIRED" - Object is no longer valid (`validTimeInterval` passed).
 	//   "expired" - Legacy alias for `EXPIRED`. Deprecated.
-	//   "INACTIVE"
+	//   "INACTIVE" - Object is no longer valid
 	//   "inactive" - Legacy alias for `INACTIVE`. Deprecated.
 	State string `json:"state,omitempty"`
 	// TextModulesData: Text module data. If text module data is also defined on

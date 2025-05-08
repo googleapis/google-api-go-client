@@ -1300,8 +1300,7 @@ func (s PolicyIssue) MarshalJSON() ([]byte, error) {
 // content. A single policy issue can have multiple policy topics for a single
 // entity.
 type PolicyTopic struct {
-	// MustFix: Required. Deprecated. Policy topics no longer have a "must-fix"
-	// classification.
+	// MustFix: Required. Deprecated. Always set to false.
 	MustFix bool `json:"mustFix,omitempty"`
 	// Topic: Required. The policy topic. For example, "sexual-content" or
 	// "ads-obscuring-content"."

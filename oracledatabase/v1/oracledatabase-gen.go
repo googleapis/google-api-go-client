@@ -354,7 +354,7 @@ func (s AllConnectionStrings) MarshalJSON() ([]byte, error) {
 type AutonomousDatabase struct {
 	// AdminPassword: Optional. The password for the default ADMIN user.
 	AdminPassword string `json:"adminPassword,omitempty"`
-	// Cidr: Optional. The subnet CIDR range for the Autonmous Database.
+	// Cidr: Optional. The subnet CIDR range for the Autonomous Database.
 	Cidr string `json:"cidr,omitempty"`
 	// CreateTime: Output only. The date and time that the Autonomous Database was
 	// created.
@@ -2733,7 +2733,7 @@ func (s ScheduledOperationDetails) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// SourceConfig: The source configuration for the standby Autonomnous Database.
+// SourceConfig: The source configuration for the standby Autonomous Database.
 type SourceConfig struct {
 	// AutomaticBackupsReplicationEnabled: Optional. This field specifies if the
 	// replication of automatic backups is enabled when creating a Data Guard.
@@ -6394,6 +6394,14 @@ type ProjectsLocationsGiVersionsListCall struct {
 func (r *ProjectsLocationsGiVersionsService) List(parent string) *ProjectsLocationsGiVersionsListCall {
 	c := &ProjectsLocationsGiVersionsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
+	return c
+}
+
+// Filter sets the optional parameter "filter": An expression for filtering the
+// results of the request. Only the shape and gi_version fields are supported
+// in this format: `shape="{shape}".
+func (c *ProjectsLocationsGiVersionsListCall) Filter(filter string) *ProjectsLocationsGiVersionsListCall {
+	c.urlParams_.Set("filter", filter)
 	return c
 }
 

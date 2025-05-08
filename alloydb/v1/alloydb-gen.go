@@ -1470,6 +1470,19 @@ func (s InjectFaultRequest) MarshalJSON() ([]byte, error) {
 // Instance: An Instance is a computing unit that an end customer can connect
 // to. It's the main unit of computing resources in AlloyDB.
 type Instance struct {
+	// ActivationPolicy: Optional. Specifies whether an instance needs to spin up.
+	// Once the instance is active, the activation policy can be updated to the
+	// `NEVER` to stop the instance. Likewise, the activation policy can be updated
+	// to `ALWAYS` to start the instance. There are restrictions around when an
+	// instance can/cannot be activated (for example, a read pool instance should
+	// be stopped before stopping primary etc.). Please refer to the API
+	// documentation for more details.
+	//
+	// Possible values:
+	//   "ACTIVATION_POLICY_UNSPECIFIED" - The policy is not specified.
+	//   "ALWAYS" - The instance is running.
+	//   "NEVER" - The instance is not running.
+	ActivationPolicy string `json:"activationPolicy,omitempty"`
 	// Annotations: Annotations to allow client tools to store small amount of
 	// arbitrary data. This is distinct from labels. https://google.aip.dev/128
 	Annotations map[string]string `json:"annotations,omitempty"`
@@ -1606,15 +1619,15 @@ type Instance struct {
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-	// ForceSendFields is a list of field names (e.g. "Annotations") to
+	// ForceSendFields is a list of field names (e.g. "ActivationPolicy") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Annotations") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
+	// NullFields is a list of field names (e.g. "ActivationPolicy") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -3469,6 +3482,18 @@ type StorageDatabasecenterPartnerapiV1mainDatabaseResourceHealthSignalData struc
 	// read intensive workload.
 	//   "SIGNAL_TYPE_MEMORY_LIMIT" - Indicates that the instance is nearing memory
 	// limit.
+	//   "SIGNAL_TYPE_MAX_SERVER_MEMORY" - Indicates that the instance's max server
+	// memory is configured higher than the recommended value.
+	//   "SIGNAL_TYPE_LARGE_ROWS" - Indicates that the database has large rows
+	// beyond the recommended limit.
+	//   "SIGNAL_TYPE_HIGH_WRITE_PRESSURE" - Heavy write pressure on the database
+	// rows.
+	//   "SIGNAL_TYPE_HIGH_READ_PRESSURE" - Heavy read pressure on the database
+	// rows.
+	//   "SIGNAL_TYPE_ENCRYPTION_ORG_POLICY_NOT_SATISFIED" - Encryption org policy
+	// not satisfied.
+	//   "SIGNAL_TYPE_LOCATION_ORG_POLICY_NOT_SATISFIED" - Location org policy not
+	// satisfied.
 	SignalType string `json:"signalType,omitempty"`
 	// Possible values:
 	//   "STATE_UNSPECIFIED" - Unspecified state.
@@ -3936,6 +3961,18 @@ type StorageDatabasecenterPartnerapiV1mainDatabaseResourceRecommendationSignalDa
 	// read intensive workload.
 	//   "SIGNAL_TYPE_MEMORY_LIMIT" - Indicates that the instance is nearing memory
 	// limit.
+	//   "SIGNAL_TYPE_MAX_SERVER_MEMORY" - Indicates that the instance's max server
+	// memory is configured higher than the recommended value.
+	//   "SIGNAL_TYPE_LARGE_ROWS" - Indicates that the database has large rows
+	// beyond the recommended limit.
+	//   "SIGNAL_TYPE_HIGH_WRITE_PRESSURE" - Heavy write pressure on the database
+	// rows.
+	//   "SIGNAL_TYPE_HIGH_READ_PRESSURE" - Heavy read pressure on the database
+	// rows.
+	//   "SIGNAL_TYPE_ENCRYPTION_ORG_POLICY_NOT_SATISFIED" - Encryption org policy
+	// not satisfied.
+	//   "SIGNAL_TYPE_LOCATION_ORG_POLICY_NOT_SATISFIED" - Location org policy not
+	// satisfied.
 	SignalType string `json:"signalType,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AdditionalMetadata") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -4328,9 +4365,10 @@ type StorageDatabasecenterProtoCommonProduct struct {
 	//   "ON_PREM" - On premises database product.
 	//   "PRODUCT_TYPE_MEMORYSTORE" - Memorystore product area in GCP
 	//   "PRODUCT_TYPE_BIGTABLE" - Bigtable product area in GCP
+	//   "PRODUCT_TYPE_FIRESTORE" - Firestore product area in GCP.
+	//   "PRODUCT_TYPE_COMPUTE_ENGINE" - Compute Engine self managed databases
 	//   "PRODUCT_TYPE_OTHER" - Other refers to rest of other product type. This is
 	// to be when product type is known, but it is not present in this enum.
-	//   "PRODUCT_TYPE_FIRESTORE" - Firestore product area in GCP.
 	Type string `json:"type,omitempty"`
 	// Version: Version of the underlying database engine. Example values: For
 	// MySQL, it could be "8.0", "5.7" etc.. For Postgres, it could be "14", "15"

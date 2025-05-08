@@ -1001,6 +1001,9 @@ type GoogleCloudRecaptchaenterpriseV1FraudPreventionAssessment struct {
 	// CardTestingVerdict: Output only. Assessment of this transaction for risk of
 	// being part of a card testing attack.
 	CardTestingVerdict *GoogleCloudRecaptchaenterpriseV1FraudPreventionAssessmentCardTestingVerdict `json:"cardTestingVerdict,omitempty"`
+	// RiskReasons: Output only. Reasons why the transaction is probably fraudulent
+	// and received a high transaction risk score.
+	RiskReasons []*GoogleCloudRecaptchaenterpriseV1FraudPreventionAssessmentRiskReason `json:"riskReasons,omitempty"`
 	// StolenInstrumentVerdict: Output only. Assessment of this transaction for
 	// risk of a stolen instrument.
 	StolenInstrumentVerdict *GoogleCloudRecaptchaenterpriseV1FraudPreventionAssessmentStolenInstrumentVerdict `json:"stolenInstrumentVerdict,omitempty"`
@@ -1116,6 +1119,45 @@ func (s *GoogleCloudRecaptchaenterpriseV1FraudPreventionAssessmentCardTestingVer
 	}
 	s.Risk = float64(s1.Risk)
 	return nil
+}
+
+// GoogleCloudRecaptchaenterpriseV1FraudPreventionAssessmentRiskReason: Risk
+// reasons applicable to the Fraud Prevention assessment.
+type GoogleCloudRecaptchaenterpriseV1FraudPreventionAssessmentRiskReason struct {
+	// Reason: Output only. Risk reasons applicable to the Fraud Prevention
+	// assessment.
+	//
+	// Possible values:
+	//   "REASON_UNSPECIFIED" - Default unspecified type.
+	//   "HIGH_TRANSACTION_VELOCITY" - A suspiciously high number of recent
+	// transactions have used identifiers present in this transaction.
+	//   "EXCESSIVE_ENUMERATION_PATTERN" - User is cycling through a suspiciously
+	// large number of identifiers, suggesting enumeration or validation attacks
+	// within a potential fraud network.
+	//   "SHORT_IDENTITY_HISTORY" - User has a short history or no history in the
+	// reCAPTCHA network, suggesting the possibility of synthetic identity
+	// generation.
+	//   "GEOLOCATION_DISCREPANCY" - Identifiers used in this transaction originate
+	// from an unusual or conflicting set of geolocations.
+	//   "ASSOCIATED_WITH_FRAUD_CLUSTER" - This transaction is linked to a cluster
+	// of known fraudulent activity.
+	Reason string `json:"reason,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Reason") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Reason") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudRecaptchaenterpriseV1FraudPreventionAssessmentRiskReason) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudRecaptchaenterpriseV1FraudPreventionAssessmentRiskReason
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudRecaptchaenterpriseV1FraudPreventionAssessmentStolenInstrumentVerd

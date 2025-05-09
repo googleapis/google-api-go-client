@@ -5085,30 +5085,6 @@ type GoogleCloudRetailV2betaLocalInventory struct {
 	// should be unset or set to false. * The max summed total bytes of custom
 	// attribute keys and values per product is 5MiB.
 	Attributes map[string]GoogleCloudRetailV2betaCustomAttribute `json:"attributes,omitempty"`
-	// Availability: Optional. The availability of the Product at this place_id.
-	// Default to Availability.IN_STOCK. For primary products with variants set the
-	// availability of the primary as Availability.OUT_OF_STOCK and set the true
-	// availability at the variant level. This way the primary product will be
-	// considered "in stock" as long as it has at least one variant in stock. For
-	// primary products with no variants set the true availability at the primary
-	// level. Corresponding properties: Google Merchant Center property
-	// availability (https://support.google.com/merchants/answer/6324448).
-	// Schema.org property Offer.availability (https://schema.org/availability).
-	// This field is currently only used by the Recommendations API. For Search,
-	// please make use of fulfillment_types or custom attributes for similar
-	// behaviour. See here (
-	// https://cloud.google.com/retail/docs/local-inventory-updates#local-inventory-update-methods)
-	// for more details.
-	//
-	// Possible values:
-	//   "AVAILABILITY_UNSPECIFIED" - Default product availability. Default to
-	// Availability.IN_STOCK if unset.
-	//   "IN_STOCK" - Product in stock.
-	//   "OUT_OF_STOCK" - Product out of stock.
-	//   "PREORDER" - Product that is in pre-order state.
-	//   "BACKORDER" - Product that is back-ordered (i.e. temporarily out of
-	// stock).
-	Availability string `json:"availability,omitempty"`
 	// FulfillmentTypes: Optional. Supported fulfillment types. Valid fulfillment
 	// type values include commonly used types (such as pickup in store and same
 	// day delivery), and custom types. Customers have to map custom types to their

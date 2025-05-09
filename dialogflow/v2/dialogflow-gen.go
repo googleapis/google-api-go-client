@@ -10822,6 +10822,12 @@ type GoogleCloudDialogflowV2GenerateStatelessSuggestionRequest struct {
 	// GeneratorName: The resource name of the existing created generator. Format:
 	// `projects//locations//generators/`
 	GeneratorName string `json:"generatorName,omitempty"`
+	// SecuritySettings: Optional. Name of the CX SecuritySettings which is used to
+	// redact generated response. If this field is empty, try to fetch v2
+	// security_settings, which is a project level setting. If this field is empty
+	// and no v2 security_settings set up in this project, no redaction will be
+	// done. Format: `projects//locations//securitySettings/`.
+	SecuritySettings string `json:"securitySettings,omitempty"`
 	// TriggerEvents: Optional. A list of trigger events. Generator will be
 	// triggered only if it's trigger event is included here.
 	//

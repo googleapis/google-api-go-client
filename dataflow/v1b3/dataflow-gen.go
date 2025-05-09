@@ -1749,6 +1749,9 @@ type Environment struct {
 	// storage.googleapis.com/{bucket}/{object}
 	// bucket.storage.googleapis.com/{object}
 	TempStoragePrefix string `json:"tempStoragePrefix,omitempty"`
+	// UsePublicIps: Optional. True when any worker pool that uses public IPs is
+	// present.
+	UsePublicIps bool `json:"usePublicIps,omitempty"`
 	// UseStreamingEngineResourceBasedBilling: Output only. Whether the job uses
 	// the Streaming Engine resource-based billing model.
 	UseStreamingEngineResourceBasedBilling bool `json:"useStreamingEngineResourceBasedBilling,omitempty"`

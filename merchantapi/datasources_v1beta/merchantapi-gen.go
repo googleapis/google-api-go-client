@@ -1006,6 +1006,7 @@ type AccountsDataSourcesCreateCall struct {
 }
 
 // Create: Creates the new data source configuration for the given account.
+// This method always creates a new data source.
 //
 //   - parent: The account where this data source will be created. Format:
 //     `accounts/{account}`.

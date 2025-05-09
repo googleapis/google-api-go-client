@@ -3154,7 +3154,7 @@ func (s Type) MarshalJSON() ([]byte, error) {
 // displayed.
 type VisibilityCondition struct {
 	// TemplateVariableCondition: A condition whose evaluation is based on the
-	// value of a template1 variable.
+	// value of a template variable.
 	TemplateVariableCondition *TemplateVariableCondition `json:"templateVariableCondition,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "TemplateVariableCondition")
 	// to unconditionally include in API requests. By default, fields with empty or

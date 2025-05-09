@@ -385,7 +385,7 @@ type Aspect struct {
 	// Kind: The type of this aspect configuration.
 	Kind string `json:"kind,omitempty"`
 	// Spec: Content of the configuration. The underlying schema should be defined
-	// by Aspect owners as protobuf message under `apiserving/configaspects/proto`.
+	// by Aspect owners as protobuf message under `google/api/configaspects/proto`.
 	Spec googleapi.RawMessage `json:"spec,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Kind") to unconditionally
 	// include in API requests. By default, fields with empty or default values are

@@ -1605,6 +1605,18 @@ type ChromeOsDevice struct {
 	//   "education" - The device is bundled with a perpetual Chrome Education
 	// Upgrade.
 	//   "kioskUpgrade" - The device has an annual Kiosk Upgrade.
+	//   "enterpriseUpgradePerpetual" - Indicating the device is consumming a
+	// standalone, perpetual Chrome Enterprise Upgrade, a Chrome Enterprise
+	// license.
+	//   "enterpriseUpgradeFixedTerm" - Indicating the device is consuming a
+	// standalone, fixed-term Chrome Enterprise Upgrade, a Chrome Enterprise
+	// license.
+	//   "educationUpgradePerpetual" - Indicating the device is consuming a
+	// standalone, perpetual Chrome Education Upgrade(AKA Chrome EDU perpetual
+	// license).
+	//   "educationUpgradeFixedTerm" - Indicating the device is consuming a
+	// standalone, fixed-term Chrome Education Upgrade(AKA Chrome EDU fixed-term
+	// license).
 	DeviceLicenseType string `json:"deviceLicenseType,omitempty"`
 	// DiskSpaceUsage: Output only. How much disk space the device has available
 	// and is currently using.

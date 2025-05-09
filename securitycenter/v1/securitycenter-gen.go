@@ -2363,7 +2363,7 @@ type CustomModuleValidationError struct {
 	Description string `json:"description,omitempty"`
 	// End: The end position of the error in the uploaded text version of the
 	// module. This field may be omitted if no specific position applies, or if one
-	// could not be computed..
+	// could not be computed.
 	End *Position `json:"end,omitempty"`
 	// FieldPath: The path, in RFC 8901 JSON Pointer format, to the field that
 	// failed validation. This may be left empty if no specific field is affected.
@@ -2394,6 +2394,7 @@ func (s CustomModuleValidationError) MarshalJSON() ([]byte, error) {
 // while validating the uploaded configuration of an Event Threat Detection
 // Custom Module.
 type CustomModuleValidationErrors struct {
+	// Errors: The list of errors.
 	Errors []*CustomModuleValidationError `json:"errors,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Errors") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -11350,8 +11351,10 @@ func (s PortRange) MarshalJSON() ([]byte, error) {
 
 // Position: A position in the uploaded text version of a module.
 type Position struct {
+	// ColumnNumber: The column number.
 	ColumnNumber int64 `json:"columnNumber,omitempty"`
-	LineNumber   int64 `json:"lineNumber,omitempty"`
+	// LineNumber: The line number.
+	LineNumber int64 `json:"lineNumber,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "ColumnNumber") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See

@@ -531,7 +531,8 @@ type AccountRelationship struct {
 	// `account_id_alias` to assign a friendly name to this relationship for easier
 	// identification in your systems.
 	AccountIdAlias string `json:"accountIdAlias,omitempty"`
-	// Name: Identifier. The resource name of the account relationship.
+	// Name: Identifier. The resource name of the account relationship. Format:
+	// `accounts/{account}/relationships/{relationship}`
 	Name string `json:"name,omitempty"`
 	// Provider: Immutable. The provider of the service. Either the reference to an
 	// account such as `providers/123` or a well-known service provider (one of
@@ -612,7 +613,8 @@ type AccountService struct {
 	//   "MUTABLE" - The service can be mutated without restrictions.
 	//   "IMMUTABLE" - The service is read-only and must not be mutated.
 	Mutability string `json:"mutability,omitempty"`
-	// Name: Identifier. The resource name of the account service.
+	// Name: Identifier. The resource name of the account service. Format:
+	// `accounts/{account}/services/{service}`
 	Name string `json:"name,omitempty"`
 	// ProductsManagement: Service type for managing products. This allows the
 	// provider to handle product data on behalf of the merchant, including reading
@@ -3689,6 +3691,8 @@ type WarehouseBasedDeliveryTime struct {
 	// The name of the service must be in the eddSupportedServices list.
 	CarrierService string `json:"carrierService,omitempty"`
 	// Warehouse: Required. Warehouse name. This should match warehouse
+	// (/merchant/api/reference/rest/accounts_v1beta/accounts.shippingSettings#wareh
+	// ouse)
 	Warehouse string `json:"warehouse,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Carrier") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -7595,7 +7599,8 @@ type AccountsRelationshipsGetCall struct {
 
 // Get: Retrieve an account relationship.
 //
-// - name: The resource name of the account relationship to get.
+//   - name: The resource name of the account relationship to get. Format:
+//     `accounts/{account}/relationships/{relationship}`.
 func (r *AccountsRelationshipsService) Get(name string) *AccountsRelationshipsGetCall {
 	c := &AccountsRelationshipsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -7705,7 +7710,8 @@ type AccountsRelationshipsListCall struct {
 
 // List: List account relationships for the specified account.
 //
-// - parent: The parent account of the account relationship to filter by.
+//   - parent: The parent account of the account relationship to filter by.
+//     Format: `accounts/{account}`.
 func (r *AccountsRelationshipsService) List(parent string) *AccountsRelationshipsListCall {
 	c := &AccountsRelationshipsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -7853,7 +7859,8 @@ type AccountsRelationshipsPatchCall struct {
 // Patch: Updates the account relationship. Executing this method requires
 // admin access.
 //
-// - name: Identifier. The resource name of the account relationship.
+//   - name: Identifier. The resource name of the account relationship. Format:
+//     `accounts/{account}/relationships/{relationship}`.
 func (r *AccountsRelationshipsService) Patch(name string, accountrelationship *AccountRelationship) *AccountsRelationshipsPatchCall {
 	c := &AccountsRelationshipsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -7965,7 +7972,8 @@ type AccountsServicesApproveCall struct {
 
 // Approve: Approve an account service proposal.
 //
-// - name: The resource name of the account service to approve.
+//   - name: The resource name of the account service to approve. Format:
+//     `accounts/{account}/services/{service}`.
 func (r *AccountsServicesService) Approve(name string, approveaccountservicerequest *ApproveAccountServiceRequest) *AccountsServicesApproveCall {
 	c := &AccountsServicesApproveCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -8068,7 +8076,8 @@ type AccountsServicesGetCall struct {
 
 // Get: Retrieve an account service.
 //
-// - name: The resource name of the account service to get.
+//   - name: The resource name of the account service to get. Format:
+//     `accounts/{account}/services/{service}`.
 func (r *AccountsServicesService) Get(name string) *AccountsServicesGetCall {
 	c := &AccountsServicesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -8177,7 +8186,8 @@ type AccountsServicesListCall struct {
 
 // List: List account services for the specified accounts. Supports filtering.
 //
-// - parent: The parent account of the account service to filter by.
+//   - parent: The parent account of the account service to filter by. Format:
+//     `accounts/{account}`.
 func (r *AccountsServicesService) List(parent string) *AccountsServicesListCall {
 	c := &AccountsServicesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -8324,7 +8334,8 @@ type AccountsServicesProposeCall struct {
 
 // Propose: Propose an account service.
 //
-// - parent: The resource name of the parent account for the service.
+//   - parent: The resource name of the parent account for the service. Format:
+//     `accounts/{account}`.
 func (r *AccountsServicesService) Propose(parent string, proposeaccountservicerequest *ProposeAccountServiceRequest) *AccountsServicesProposeCall {
 	c := &AccountsServicesProposeCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -8428,7 +8439,8 @@ type AccountsServicesRejectCall struct {
 // Reject: Reject an account service (both proposed and approve services can be
 // rejected).
 //
-// - name: The resource name of the account service to reject.
+//   - name: The resource name of the account service to reject. Format:
+//     `accounts/{account}/services/{service}`.
 func (r *AccountsServicesService) Reject(name string, rejectaccountservicerequest *RejectAccountServiceRequest) *AccountsServicesRejectCall {
 	c := &AccountsServicesRejectCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name

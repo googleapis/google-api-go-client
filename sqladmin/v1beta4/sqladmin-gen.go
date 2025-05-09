@@ -6743,9 +6743,8 @@ type BackupsUpdateBackupCall struct {
 	header_    http.Header
 }
 
-// UpdateBackup: This API updates the following: 1- retention period and
-// description of backup in case of final backups only. 2-
-// gcbdr_soft_delete_status of backup in case of GCBDR managed backups only.
+// UpdateBackup: Updates the retention period and the description of the
+// backup. You can use this API to update final backups only.
 //
 //   - name: Output only. The resource name of the backup. Format:
 //     projects/{project}/backups/{backup}.
@@ -6757,9 +6756,8 @@ func (r *BackupsService) UpdateBackup(name string, backup *Backup) *BackupsUpdat
 }
 
 // UpdateMask sets the optional parameter "updateMask": The list of fields that
-// you can update. 1- You can update only the description and retention period
-// for a final backup. 2- You can update only the gcbdr_soft_delete_status for
-// GCBDR managed backup.
+// you can update. You can update only the description and retention period of
+// the final backup.
 func (c *BackupsUpdateBackupCall) UpdateMask(updateMask string) *BackupsUpdateBackupCall {
 	c.urlParams_.Set("updateMask", updateMask)
 	return c

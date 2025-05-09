@@ -1754,7 +1754,7 @@ type GoogleMapsPlacesV1PlaceGoogleMapsLinks struct {
 	PlaceUri string `json:"placeUri,omitempty"`
 	// ReviewsUri: A link to show reviews of this place on Google Maps.
 	ReviewsUri string `json:"reviewsUri,omitempty"`
-	// WriteAReviewUri: A link to show reviews of this place on Google Maps.
+	// WriteAReviewUri: A link to write a review for this place on Google Maps.
 	WriteAReviewUri string `json:"writeAReviewUri,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "DirectionsUri") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -2065,6 +2065,8 @@ type GoogleMapsPlacesV1PlaceReviewSummary struct {
 	DisclosureText *GoogleTypeLocalizedText `json:"disclosureText,omitempty"`
 	// FlagContentUri: A link where users can flag a problem with the summary.
 	FlagContentUri string `json:"flagContentUri,omitempty"`
+	// ReviewsUri: A link to show reviews of this place on Google Maps.
+	ReviewsUri string `json:"reviewsUri,omitempty"`
 	// Text: The summary of user reviews.
 	Text *GoogleTypeLocalizedText `json:"text,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "DisclosureText") to

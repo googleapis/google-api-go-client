@@ -810,8 +810,9 @@ func (s HdfsData) MarshalJSON() ([]byte, error) {
 // no effect when filtering objects to transfer.
 type HttpData struct {
 	// ListUrl: Required. The URL that points to the file that stores the object
-	// list entries. This file must allow public access. Currently, only URLs with
-	// HTTP and HTTPS schemes are supported.
+	// list entries. This file must allow public access. The URL is either an
+	// HTTP/HTTPS address (e.g. `https://example.com/urllist.tsv`) or a Cloud
+	// Storage path (e.g. `gs://my-bucket/urllist.tsv`).
 	ListUrl string `json:"listUrl,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "ListUrl") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -1151,8 +1152,14 @@ func (s NotificationConfig) MarshalJSON() ([]byte, error) {
 // "last modification time" refers to the time of the last change to the
 // object's content or metadata — specifically, this is the `updated`
 // property of Cloud Storage objects, the `LastModified` field of S3 objects,
-// and the `Last-Modified` header of Azure blobs. Transfers with a
-// PosixFilesystem source or destination don't support `ObjectConditions`.
+// and the `Last-Modified` header of Azure blobs. For S3 objects, the
+// `LastModified` value is the time the object begins uploading. If the object
+// meets your "last modification time" criteria, but has not finished
+// uploading, the object is not transferred. See Transfer from Amazon S3 to
+// Cloud Storage
+// (https://cloud.google.com/storage-transfer/docs/create-transfers/agentless/s3#transfer_options)
+// for more information. Transfers with a PosixFilesystem source or destination
+// don't support `ObjectConditions`.
 type ObjectConditions struct {
 	// ExcludePrefixes: If you specify `exclude_prefixes`, Storage Transfer Service
 	// uses the items in the `exclude_prefixes` array to determine which objects to
@@ -1698,6 +1705,17 @@ type TransferJob struct {
 	// field. When the field is not set, the job never executes a transfer, unless
 	// you invoke RunTransferJob or update the job to have a non-empty schedule.
 	Schedule *Schedule `json:"schedule,omitempty"`
+	// ServiceAccount: Optional. The service account to be used to access resources
+	// in the consumer project in the transfer job. We accept `email` or `uniqueId`
+	// for the service account. Service account format is
+	// projects/-/serviceAccounts/{ACCOUNT_EMAIL_OR_UNIQUEID} See
+	// https://cloud.google.com/iam/docs/reference/credentials/rest/v1/projects.serviceAccounts/generateAccessToken#path-parameters
+	// for details. Caller requires the following IAM permission on the specified
+	// service account: `iam.serviceAccounts.actAs`.
+	// project-PROJECT_NUMBER@storage-transfer-service.iam.gserviceaccount.com
+	// requires the following IAM permission on the specified service account:
+	// `iam.serviceAccounts.getAccessToken`
+	ServiceAccount string `json:"serviceAccount,omitempty"`
 	// Status: Status of the job. This value MUST be specified for
 	// `CreateTransferJobRequests`. **Note:** The effect of the new job status
 	// takes place during a subsequent job run. For example, if you change the job

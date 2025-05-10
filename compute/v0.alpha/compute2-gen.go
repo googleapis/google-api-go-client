@@ -69777,23 +69777,23 @@ func (c *PacketMirroringsTestIamPermissionsCall) Do(opts ...googleapi.CallOption
 }
 
 type PreviewFeaturesGetCall struct {
-	s            *Service
-	project      string
-	resourceId   string
-	urlParams_   gensupport.URLParams
-	ifNoneMatch_ string
-	ctx_         context.Context
-	header_      http.Header
+	s              *Service
+	project        string
+	previewFeature string
+	urlParams_     gensupport.URLParams
+	ifNoneMatch_   string
+	ctx_           context.Context
+	header_        http.Header
 }
 
 // Get: Returns the details of the given PreviewFeature.
 //
+// - previewFeature: Name of the PreviewFeature for this request.
 // - project: Project ID for this request.
-// - resourceId: Name of the PreviewFeature for this request.
-func (r *PreviewFeaturesService) Get(project string, resourceId string) *PreviewFeaturesGetCall {
+func (r *PreviewFeaturesService) Get(project string, previewFeature string) *PreviewFeaturesGetCall {
 	c := &PreviewFeaturesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.project = project
-	c.resourceId = resourceId
+	c.previewFeature = previewFeature
 	return c
 }
 
@@ -69835,7 +69835,7 @@ func (c *PreviewFeaturesGetCall) doRequest(alt string) (*http.Response, error) {
 	}
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "projects/{project}/global/previewFeatures/{resourceId}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "projects/{project}/global/previewFeatures/{previewFeature}")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("GET", urls, nil)
 	if err != nil {
@@ -69843,8 +69843,8 @@ func (c *PreviewFeaturesGetCall) doRequest(alt string) (*http.Response, error) {
 	}
 	req.Header = reqHeaders
 	googleapi.Expand(req.URL, map[string]string{
-		"project":    c.project,
-		"resourceId": c.resourceId,
+		"project":        c.project,
+		"previewFeature": c.previewFeature,
 	})
 	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "compute.previewFeatures.get", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
@@ -70101,7 +70101,7 @@ func (c *PreviewFeaturesListCall) Pages(ctx context.Context, f func(*PreviewFeat
 type PreviewFeaturesUpdateCall struct {
 	s              *Service
 	project        string
-	resourceId     string
+	previewFeature string
 	previewfeature *PreviewFeature
 	urlParams_     gensupport.URLParams
 	ctx_           context.Context
@@ -70111,12 +70111,12 @@ type PreviewFeaturesUpdateCall struct {
 // Update: Patches the given PreviewFeature. This method is used to enable or
 // disable a PreviewFeature.
 //
+// - previewFeature: Name of the PreviewFeature for this request.
 // - project: Project ID for this request.
-// - resourceId: Name of the PreviewFeature for this request.
-func (r *PreviewFeaturesService) Update(project string, resourceId string, previewfeature *PreviewFeature) *PreviewFeaturesUpdateCall {
+func (r *PreviewFeaturesService) Update(project string, previewFeature string, previewfeature *PreviewFeature) *PreviewFeaturesUpdateCall {
 	c := &PreviewFeaturesUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.project = project
-	c.resourceId = resourceId
+	c.previewFeature = previewFeature
 	c.previewfeature = previewfeature
 	return c
 }
@@ -70167,7 +70167,7 @@ func (c *PreviewFeaturesUpdateCall) doRequest(alt string) (*http.Response, error
 	}
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "projects/{project}/global/previewFeatures/{resourceId}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "projects/{project}/global/previewFeatures/{previewFeature}")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("PATCH", urls, body)
 	if err != nil {
@@ -70175,8 +70175,8 @@ func (c *PreviewFeaturesUpdateCall) doRequest(alt string) (*http.Response, error
 	}
 	req.Header = reqHeaders
 	googleapi.Expand(req.URL, map[string]string{
-		"project":    c.project,
-		"resourceId": c.resourceId,
+		"project":        c.project,
+		"previewFeature": c.previewFeature,
 	})
 	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "compute.previewFeatures.update", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)

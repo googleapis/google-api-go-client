@@ -22409,8 +22409,8 @@ type InterconnectAttachment struct {
 	// values may be empty.
 	Labels map[string]string `json:"labels,omitempty"`
 	// Mtu: Maximum Transmission Unit (MTU), in bytes, of packets passing through
-	// this interconnect attachment. Only 1440 and 1500 are allowed. If not
-	// specified, the value will default to 1440.
+	// this interconnect attachment. Valid values are 1440, 1460, 1500, and 8896.
+	// If not specified, the value will default to 1440.
 	Mtu int64 `json:"mtu,omitempty"`
 	// Name: Name of the resource. Provided by the client when the resource is
 	// created. The name must be 1-63 characters long, and comply with RFC1035.

@@ -1562,15 +1562,15 @@ func (s GoogleCloudDatacatalogV1GcsFileSpec) MarshalJSON() ([]byte, error) {
 type GoogleCloudDatacatalogV1GcsFilesetSpec struct {
 	// FilePatterns: Required. Patterns to identify a set of files in Google Cloud
 	// Storage. For more information, see [Wildcard Names]
-	// (https://cloud.google.com/storage/docs/gsutil/addlhelp/WildcardNames). Note:
-	// Currently, bucket wildcards are not supported. Examples of valid
-	// `file_patterns`: * `gs://bucket_name/dir/*`: matches all files in
-	// `bucket_name/dir` directory * `gs://bucket_name/dir/**`: matches all files
-	// in `bucket_name/dir` and all subdirectories * `gs://bucket_name/file*`:
-	// matches files prefixed by `file` in `bucket_name` *
-	// `gs://bucket_name/??.txt`: matches files with two characters followed by
-	// `.txt` in `bucket_name` * `gs://bucket_name/[aeiou].txt`: matches files that
-	// contain a single vowel character followed by `.txt` in `bucket_name` *
+	// (https://cloud.google.com/storage/docs/wildcards). Note: Currently, bucket
+	// wildcards are not supported. Examples of valid `file_patterns`: *
+	// `gs://bucket_name/dir/*`: matches all files in `bucket_name/dir` directory *
+	// `gs://bucket_name/dir/**`: matches all files in `bucket_name/dir` and all
+	// subdirectories * `gs://bucket_name/file*`: matches files prefixed by `file`
+	// in `bucket_name` * `gs://bucket_name/??.txt`: matches files with two
+	// characters followed by `.txt` in `bucket_name` *
+	// `gs://bucket_name/[aeiou].txt`: matches files that contain a single vowel
+	// character followed by `.txt` in `bucket_name` *
 	// `gs://bucket_name/[a-m].txt`: matches files that contain `a`, `b`, ... or
 	// `m` followed by `.txt` in `bucket_name` * `gs://bucket_name/a/*/b`: matches
 	// all files in `bucket_name` that match the `a/*/b` pattern, such as `a/c/b`,
@@ -2949,11 +2949,11 @@ func (s GoogleCloudDatacatalogV1beta1GcsFileSpec) MarshalJSON() ([]byte, error) 
 type GoogleCloudDatacatalogV1beta1GcsFilesetSpec struct {
 	// FilePatterns: Required. Patterns to identify a set of files in Google Cloud
 	// Storage. See Cloud Storage documentation
-	// (https://cloud.google.com/storage/docs/gsutil/addlhelp/WildcardNames) for
-	// more information. Note that bucket wildcards are currently not supported.
-	// Examples of valid file_patterns: * `gs://bucket_name/dir/*`: matches all
-	// files within `bucket_name/dir` directory. * `gs://bucket_name/dir/**`:
-	// matches all files in `bucket_name/dir` spanning all subdirectories. *
+	// (https://cloud.google.com/storage/docs/wildcards) for more information. Note
+	// that bucket wildcards are currently not supported. Examples of valid
+	// file_patterns: * `gs://bucket_name/dir/*`: matches all files within
+	// `bucket_name/dir` directory. * `gs://bucket_name/dir/**`: matches all files
+	// in `bucket_name/dir` spanning all subdirectories. *
 	// `gs://bucket_name/file*`: matches files prefixed by `file` in `bucket_name`
 	// * `gs://bucket_name/??.txt`: matches files with two characters followed by
 	// `.txt` in `bucket_name` * `gs://bucket_name/[aeiou].txt`: matches files that

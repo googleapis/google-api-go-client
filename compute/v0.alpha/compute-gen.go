@@ -17046,6 +17046,12 @@ func (s GlobalSetPolicyRequest) MarshalJSON() ([]byte, error) {
 
 // GroupMaintenanceInfo: Maintenance Info for ReservationBlocks.
 type GroupMaintenanceInfo struct {
+	// InstanceMaintenanceOngoingCount: Describes number of instances that have
+	// ongoing maintenance.
+	InstanceMaintenanceOngoingCount int64 `json:"instanceMaintenanceOngoingCount,omitempty"`
+	// InstanceMaintenancePendingCount: Describes number of instances that have
+	// pending maintenance.
+	InstanceMaintenancePendingCount int64 `json:"instanceMaintenancePendingCount,omitempty"`
 	// MaintenanceOngoingCount: Progress for ongoing maintenance for this group of
 	// VMs/hosts. Describes number of hosts in the block that have ongoing
 	// maintenance.
@@ -17077,14 +17083,15 @@ type GroupMaintenanceInfo struct {
 	SubblockInfraMaintenancePendingCount int64 `json:"subblockInfraMaintenancePendingCount,omitempty"`
 	// UpcomingGroupMaintenance: Maintenance information on this group of VMs.
 	UpcomingGroupMaintenance *UpcomingMaintenance `json:"upcomingGroupMaintenance,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "MaintenanceOngoingCount") to
-	// unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
+	// ForceSendFields is a list of field names (e.g.
+	// "InstanceMaintenanceOngoingCount") to unconditionally include in API
+	// requests. By default, fields with empty or default values are omitted from
+	// API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "MaintenanceOngoingCount") to
-	// include in API requests with the JSON null value. By default, fields with
+	// NullFields is a list of field names (e.g. "InstanceMaintenanceOngoingCount")
+	// to include in API requests with the JSON null value. By default, fields with
 	// empty values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
@@ -22870,6 +22877,8 @@ type InstanceGroupManagerInstanceLifecyclePolicy struct {
 	//   "DO_NOTHING" - MIG doesn't repair an unhealthy VM.
 	//   "REPAIR" - MIG automatically repairs an unhealthy VM by recreating it.
 	OnFailedHealthCheck string `json:"onFailedHealthCheck,omitempty"`
+	// OnRepair: Configuration for VM repairs in the MIG.
+	OnRepair *InstanceGroupManagerInstanceLifecyclePolicyOnRepair `json:"onRepair,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "DefaultActionOnFailure") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -22907,6 +22916,34 @@ type InstanceGroupManagerInstanceLifecyclePolicyMetadataBasedReadinessSignal str
 
 func (s InstanceGroupManagerInstanceLifecyclePolicyMetadataBasedReadinessSignal) MarshalJSON() ([]byte, error) {
 	type NoMethod InstanceGroupManagerInstanceLifecyclePolicyMetadataBasedReadinessSignal
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// InstanceGroupManagerInstanceLifecyclePolicyOnRepair: Configuration for VM
+// repairs in the MIG.
+type InstanceGroupManagerInstanceLifecyclePolicyOnRepair struct {
+	// AllowChangingZone: Specifies whether the MIG can change a VM's zone during
+	// repair.
+	//
+	// Possible values:
+	//   "NO" - [Default] MIG cannot change a VM's zone during repair.
+	//   "YES" - MIG can select a different zone for the VM during repair.
+	AllowChangingZone string `json:"allowChangingZone,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AllowChangingZone") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AllowChangingZone") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s InstanceGroupManagerInstanceLifecyclePolicyOnRepair) MarshalJSON() ([]byte, error) {
+	type NoMethod InstanceGroupManagerInstanceLifecyclePolicyOnRepair
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -28459,8 +28496,8 @@ type InterconnectAttachment struct {
 	// values may be empty.
 	Labels map[string]string `json:"labels,omitempty"`
 	// Mtu: Maximum Transmission Unit (MTU), in bytes, of packets passing through
-	// this interconnect attachment. Only 1440 and 1500 are allowed. If not
-	// specified, the value will default to 1440.
+	// this interconnect attachment. Valid values are 1440, 1460, 1500, and 8896.
+	// If not specified, the value will default to 1440.
 	Mtu int64 `json:"mtu,omitempty"`
 	// MulticastEnabled: Whether or not to permit multicast traffic for this
 	// attachment. Multicast packets will be dropped if this is not enabled.
@@ -29352,8 +29389,8 @@ type InterconnectAttachmentGroupsCreateMembersInterconnectAttachmentInput struct
 	// the appliance IP address and sent to the edge appliance.
 	L2Forwarding *InterconnectAttachmentL2Forwarding `json:"l2Forwarding,omitempty"`
 	// Mtu: Maximum Transmission Unit (MTU), in bytes, of packets passing through
-	// this interconnect attachment. Only 1440 and 1500 are allowed. If not
-	// specified, the value will default to 1440.
+	// this interconnect attachment. Valid values are 1440, 1460, 1500, or 8896. If
+	// not specified, the value will default to 1440.
 	Mtu int64 `json:"mtu,omitempty"`
 	// MulticastEnabled: Whether or not to permit multicast traffic for this
 	// attachment. Multicast packets will be dropped if this is not enabled.
@@ -49880,6 +49917,22 @@ type Reservation struct {
 	// must be a dash, lowercase letter, or digit, except the last character, which
 	// cannot be a dash.
 	Name string `json:"name,omitempty"`
+	// ProtectionTier: Protection tier for the workload which specifies the
+	// workload expectations in the event of infrastructure failures at data center
+	// (e.g. power and/or cooling failures).
+	//
+	// Possible values:
+	//   "CAPACITY_OPTIMIZED" - CAPACITY_OPTIMIZED capacity leverages redundancies
+	// (e.g. power, cooling) at the data center during normal operating conditions.
+	// In the event of infrastructure failures at data center (e.g. power and/or
+	// cooling failures), this workload may be disrupted. As a consequence, it has
+	// a weaker availability SLO than STANDARD.
+	//   "PROTECTION_TIER_UNSPECIFIED" - Unspecified protection tier.
+	//   "STANDARD" - STANDARD protection for workload that should be protected by
+	// redundancies (e.g. power, cooling) at the data center level. In the event of
+	// infrastructure failures at data center (e.g. power and/or cooling failures),
+	// this workload is expected to continue as normal using the redundancies.
+	ProtectionTier string `json:"protectionTier,omitempty"`
 	// ReservationMode: [Output only] Indicates the reservation mode of the
 	// reservation.
 	//
@@ -52355,7 +52408,7 @@ type ResourceStatusEffectiveInstanceMetadata struct {
 	// EnableGuestAttributesMetadataValue: Effective enable-guest-attributes value
 	// at Instance level.
 	EnableGuestAttributesMetadataValue bool `json:"enableGuestAttributesMetadataValue,omitempty"`
-	// EnableOsInventoryMetadataValue: Effective enable-osinventory value at
+	// EnableOsInventoryMetadataValue: Effective enable-os-inventory value at
 	// Instance level.
 	EnableOsInventoryMetadataValue bool `json:"enableOsInventoryMetadataValue,omitempty"`
 	// EnableOsconfigMetadataValue: Effective enable-osconfig value at Instance
@@ -52367,6 +52420,9 @@ type ResourceStatusEffectiveInstanceMetadata struct {
 	// SerialPortEnableMetadataValue: Effective serial-port-enable value at
 	// Instance level.
 	SerialPortEnableMetadataValue bool `json:"serialPortEnableMetadataValue,omitempty"`
+	// SerialPortLoggingEnableMetadataValue: Effective serial-port-logging-enable
+	// value at Instance level.
+	SerialPortLoggingEnableMetadataValue bool `json:"serialPortLoggingEnableMetadataValue,omitempty"`
 	// VmDnsSettingMetadataValue: Effective VM DNS setting at Instance level.
 	VmDnsSettingMetadataValue string `json:"vmDnsSettingMetadataValue,omitempty"`
 	// ForceSendFields is a list of field names (e.g.
@@ -56727,19 +56783,33 @@ func (s SecurityPolicyCloudArmorConfig) MarshalJSON() ([]byte, error) {
 
 type SecurityPolicyDdosProtectionConfig struct {
 	// Possible values:
+	//   "DISABLED"
+	//   "ENABLED"
+	//   "PREVIEW"
+	DdosAdaptiveProtection string `json:"ddosAdaptiveProtection,omitempty"`
+	// DdosImpactedBaselineThreshold: Adaptive Protection for Network Load
+	// Balancers (and VMs with public IPs) builds DDos mitigations that minimize
+	// collateral damage. It quantifies this as the fraction of a non-abuse
+	// baseline that's inadvertently blocked. Rules whose collateral damage exceeds
+	// ddosAdaptiveImpactedBaselineThreshold will not be deployed. Using a lower
+	// value will prioritize keeping collateral damage low, possibly at the cost of
+	// its effectiveness in rate limiting some or all of the attack. It should
+	// typically be between 0.01 and 0.10.
+	DdosImpactedBaselineThreshold float64 `json:"ddosImpactedBaselineThreshold,omitempty"`
+	// Possible values:
 	//   "ADVANCED"
 	//   "ADVANCED_PREVIEW"
 	//   "STANDARD"
 	DdosProtection string `json:"ddosProtection,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "DdosProtection") to
+	// ForceSendFields is a list of field names (e.g. "DdosAdaptiveProtection") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "DdosProtection") to include in
-	// API requests with the JSON null value. By default, fields with empty values
-	// are omitted from API requests. See
+	// NullFields is a list of field names (e.g. "DdosAdaptiveProtection") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -56747,6 +56817,20 @@ type SecurityPolicyDdosProtectionConfig struct {
 func (s SecurityPolicyDdosProtectionConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod SecurityPolicyDdosProtectionConfig
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+func (s *SecurityPolicyDdosProtectionConfig) UnmarshalJSON(data []byte) error {
+	type NoMethod SecurityPolicyDdosProtectionConfig
+	var s1 struct {
+		DdosImpactedBaselineThreshold gensupport.JSONFloat64 `json:"ddosImpactedBaselineThreshold"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.DdosImpactedBaselineThreshold = float64(s1.DdosImpactedBaselineThreshold)
+	return nil
 }
 
 type SecurityPolicyList struct {

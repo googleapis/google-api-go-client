@@ -268,7 +268,8 @@ type Empty struct {
 // request message for signing an SSH public key.
 type GoogleCloudOsloginControlplaneRegionalV1betaSignSshPublicKeyRequest struct {
 	// AppEngineInstance: The App Engine instance to sign the SSH public key for.
-	// Expected format: services/{service}/versions/{version}/instances/{instance}
+	// Expected format:
+	// apps/{app}/services/{service}/versions/{version}/instances/{instance}
 	AppEngineInstance string `json:"appEngineInstance,omitempty"`
 	// ComputeInstance: The Compute instance to sign the SSH public key for.
 	// Expected format:

@@ -8653,12 +8653,13 @@ type GoogleCloudApigeeV1RatePlan struct {
 	// ConsumptionPricingRates: API call volume ranges and the fees charged when
 	// the total number of API calls is within a given range. The method used to
 	// calculate the final fee depends on the selected pricing model. For example,
-	// if the pricing model is `STAIRSTEP` and the ranges are defined as follows:
-	// ``` { "start": 1, "end": 100, "fee": 75 }, { "start": 101, "end": 200,
-	// "fee": 100 }, } ``` Then the following fees would be charged based on the
-	// total number of API calls (assuming the currency selected is `USD`): * 1
-	// call costs $75 * 50 calls cost $75 * 150 calls cost $100 The number of API
-	// calls cannot exceed 200.
+	// if the pricing model is `BANDED` and the ranges are defined as follows: ```
+	// { "start": 1, "end": 100, "fee": 2 }, { "start": 101, "end": 200, "fee":
+	// 1.50 }, { "start": 201, "end": 0, "fee": 1 }, } ``` Then the following fees
+	// would be charged based on the total number of API calls (assuming the
+	// currency selected is `USD`): * 50 calls cost 50 x $2 = $100 * 150 calls cost
+	// 100 x $2 + 50 x $1.5 = $275 * 250 calls cost 100 x $2 + 100 x $1.5 + 50 x $1
+	// = $400 * 500 calls cost 100 x $2 + 100 x $1.5 + 300 x $1 = $650
 	ConsumptionPricingRates []*GoogleCloudApigeeV1RateRange `json:"consumptionPricingRates,omitempty"`
 	// ConsumptionPricingType: Pricing model used for consumption-based charges.
 	//
@@ -8670,8 +8671,7 @@ type GoogleCloudApigeeV1RatePlan struct {
 	// Example: * 1-100 calls cost $2 per call * 101-200 calls cost $1.50 per call
 	// * 201-300 calls cost $1 per call * Total price for 50 calls: 50 x $2 = $100
 	// * Total price for 150 calls: 100 x $2 + 50 x $1.5 = $275 * Total price for
-	// 250 calls: 100 x $2 + 100 x $1.5 + 50 x $1 = $400. **Note**: Not supported
-	// by Apigee at this time.
+	// 250 calls: 100 x $2 + 100 x $1.5 + 50 x $1 = $400.
 	//   "TIERED" - **Note**: Not supported by Apigee at this time.
 	//   "STAIRSTEP" - **Note**: Not supported by Apigee at this time.
 	ConsumptionPricingType string `json:"consumptionPricingType,omitempty"`
@@ -20222,9 +20222,9 @@ type OrganizationsAppgroupsAppsKeysCreateCall struct {
 // exceed 2 KBs each. **Note**: When creating the consumer key and secret, an
 // association to API products will not be made. Therefore, you should not
 // specify the associated API products in your request. Instead, use the
-// ProductizeAppGroupAppKey API to make the association after the consumer key
-// and secret are created. If a consumer key and secret already exist, you can
-// keep them or delete them using the DeleteAppGroupAppKey API.
+// UpdateAppGroupAppKey API to make the association after the consumer key and
+// secret are created. If a consumer key and secret already exist, you can keep
+// them or delete them using the DeleteAppGroupAppKey API.
 //
 //   - parent: Parent of the AppGroup app key. Use the following structure in
 //     your request:

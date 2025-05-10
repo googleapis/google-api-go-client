@@ -182,6 +182,7 @@ func NewProjectsLocationsService(s *Service) *ProjectsLocationsService {
 	rs.RankingConfigs = NewProjectsLocationsRankingConfigsService(s)
 	rs.SampleQuerySets = NewProjectsLocationsSampleQuerySetsService(s)
 	rs.UserEvents = NewProjectsLocationsUserEventsService(s)
+	rs.UserStores = NewProjectsLocationsUserStoresService(s)
 	return rs
 }
 
@@ -209,6 +210,8 @@ type ProjectsLocationsService struct {
 	SampleQuerySets *ProjectsLocationsSampleQuerySetsService
 
 	UserEvents *ProjectsLocationsUserEventsService
+
+	UserStores *ProjectsLocationsUserStoresService
 }
 
 func NewProjectsLocationsCmekConfigsService(s *Service) *ProjectsLocationsCmekConfigsService {
@@ -1015,6 +1018,27 @@ func NewProjectsLocationsUserEventsService(s *Service) *ProjectsLocationsUserEve
 }
 
 type ProjectsLocationsUserEventsService struct {
+	s *Service
+}
+
+func NewProjectsLocationsUserStoresService(s *Service) *ProjectsLocationsUserStoresService {
+	rs := &ProjectsLocationsUserStoresService{s: s}
+	rs.UserLicenses = NewProjectsLocationsUserStoresUserLicensesService(s)
+	return rs
+}
+
+type ProjectsLocationsUserStoresService struct {
+	s *Service
+
+	UserLicenses *ProjectsLocationsUserStoresUserLicensesService
+}
+
+func NewProjectsLocationsUserStoresUserLicensesService(s *Service) *ProjectsLocationsUserStoresUserLicensesService {
+	rs := &ProjectsLocationsUserStoresUserLicensesService{s: s}
+	return rs
+}
+
+type ProjectsLocationsUserStoresUserLicensesService struct {
 	s *Service
 }
 
@@ -2080,7 +2104,6 @@ type GoogleCloudDiscoveryengineV1Control struct {
 	// `projects/*/locations/global/dataStore/*/controls/*`
 	Name string `json:"name,omitempty"`
 	// PromoteAction: Promote certain links based on predefined trigger queries.
-	// This now only supports basic site search.
 	PromoteAction *GoogleCloudDiscoveryengineV1ControlPromoteAction `json:"promoteAction,omitempty"`
 	// RedirectAction: Defines a redirect-type control.
 	RedirectAction *GoogleCloudDiscoveryengineV1ControlRedirectAction `json:"redirectAction,omitempty"`
@@ -5354,6 +5377,10 @@ type GoogleCloudDiscoveryengineV1alphaAnswer struct {
 	//   "USER_DEFINED_CLASSIFICATION_QUERY_IGNORED" - The user defined query
 	// classification ignored case. Google skips the answer if the query is
 	// classified as a user defined query classification.
+	//   "UNHELPFUL_ANSWER" - The unhelpful answer case. Google skips the answer if
+	// the answer is not helpful. This can be due to a variety of factors,
+	// including but not limited to: the query is not answerable, the answer is not
+	// relevant to the query, or the answer is not well-formatted.
 	AnswerSkippedReasons []string `json:"answerSkippedReasons,omitempty"`
 	// AnswerText: The textual answer.
 	AnswerText string `json:"answerText,omitempty"`
@@ -6078,6 +6105,8 @@ type GoogleCloudDiscoveryengineV1alphaBAPConfig struct {
 	//   "CONNECTOR_MODE_UNSPECIFIED" - Connector mode unspecified.
 	//   "DATA_INGESTION" - Connector utilized for data ingestion.
 	//   "ACTIONS" - Connector utilized for Actions
+	//   "END_USER_AUTHENTICATION" - Connector utilized for End User
+	// Authentication.
 	SupportedConnectorModes []string `json:"supportedConnectorModes,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "SupportedConnectorModes") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -6145,6 +6174,63 @@ type GoogleCloudDiscoveryengineV1alphaBatchCreateTargetSitesResponse struct {
 
 func (s GoogleCloudDiscoveryengineV1alphaBatchCreateTargetSitesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDiscoveryengineV1alphaBatchCreateTargetSitesResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1alphaBatchUpdateUserLicensesMetadata: Metadata
+// related to the progress of the UserLicenseService.BatchUpdateUserLicenses
+// operation. This will be returned by the
+// google.longrunning.Operation.metadata field.
+type GoogleCloudDiscoveryengineV1alphaBatchUpdateUserLicensesMetadata struct {
+	// CreateTime: Operation create time.
+	CreateTime string `json:"createTime,omitempty"`
+	// FailureCount: Count of user licenses that failed to be updated.
+	FailureCount int64 `json:"failureCount,omitempty,string"`
+	// SuccessCount: Count of user licenses successfully updated.
+	SuccessCount int64 `json:"successCount,omitempty,string"`
+	// UpdateTime: Operation last update time. If the operation is done, this is
+	// also the finish time.
+	UpdateTime string `json:"updateTime,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "CreateTime") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CreateTime") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1alphaBatchUpdateUserLicensesMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1alphaBatchUpdateUserLicensesMetadata
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1alphaBatchUpdateUserLicensesResponse: Response
+// message for UserLicenseService.BatchUpdateUserLicenses method.
+type GoogleCloudDiscoveryengineV1alphaBatchUpdateUserLicensesResponse struct {
+	// ErrorSamples: A sample of errors encountered while processing the request.
+	ErrorSamples []*GoogleRpcStatus `json:"errorSamples,omitempty"`
+	// UserLicenses: UserLicenses successfully updated.
+	UserLicenses []*GoogleCloudDiscoveryengineV1alphaUserLicense `json:"userLicenses,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ErrorSamples") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ErrorSamples") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1alphaBatchUpdateUserLicensesResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1alphaBatchUpdateUserLicensesResponse
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -6454,6 +6540,7 @@ type GoogleCloudDiscoveryengineV1alphaConnectorRunEntityRun struct {
 	//   "FULL" - Sync triggers full sync of all documents.
 	//   "INCREMENTAL" - Incremental sync of updated documents.
 	//   "REALTIME" - Realtime sync.
+	//   "SCALA_SYNC" - Scala sync.
 	SyncType string `json:"syncType,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "DeletedRecordCount") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -6539,7 +6626,6 @@ type GoogleCloudDiscoveryengineV1alphaControl struct {
 	// `projects/*/locations/global/dataStore/*/controls/*`
 	Name string `json:"name,omitempty"`
 	// PromoteAction: Promote certain links based on predefined trigger queries.
-	// This now only supports basic site search.
 	PromoteAction *GoogleCloudDiscoveryengineV1alphaControlPromoteAction `json:"promoteAction,omitempty"`
 	// RedirectAction: Defines a redirect-type control.
 	RedirectAction *GoogleCloudDiscoveryengineV1alphaControlRedirectAction `json:"redirectAction,omitempty"`
@@ -7083,7 +7169,7 @@ type GoogleCloudDiscoveryengineV1alphaDataConnector struct {
 	ConnectorModes []string `json:"connectorModes,omitempty"`
 	// ConnectorType: Output only. The type of connector. Each source can only map
 	// to one type. For example, salesforce, confluence and jira have THIRD_PARTY
-	// connector type. It is notmutable once set by system.
+	// connector type. It is not mutable once set by system.
 	//
 	// Possible values:
 	//   "CONNECTOR_TYPE_UNSPECIFIED" - Default value.
@@ -7104,6 +7190,9 @@ type GoogleCloudDiscoveryengineV1alphaDataConnector struct {
 	//   "THIRD_PARTY_EUA" - Connector utilized for End User Authentication
 	// features.
 	ConnectorType string `json:"connectorType,omitempty"`
+	// CreateEuaSaas: Optional. Whether the END USER AUTHENTICATION connector is
+	// created in SaaS.
+	CreateEuaSaas bool `json:"createEuaSaas,omitempty"`
 	// CreateTime: Output only. Timestamp the DataConnector was created at.
 	CreateTime string `json:"createTime,omitempty"`
 	// DataSource: Required. The name of the data source. Supported values:
@@ -7241,6 +7330,8 @@ type GoogleCloudDiscoveryengineV1alphaDataConnector struct {
 	// or indicate a one-time sync.
 	//   "STREAMING" - The data will be synced in real time.
 	//   "UNSPECIFIED" - Connector that doesn't ingest data will have this value
+	//   "SCALA_SYNC" - The data will be synced with Scala Sync, a data ingestion
+	// solution.
 	SyncMode string `json:"syncMode,omitempty"`
 	// UpdateTime: Output only. Timestamp the DataConnector was last updated.
 	UpdateTime string `json:"updateTime,omitempty"`
@@ -11356,6 +11447,11 @@ type GoogleCloudDiscoveryengineV1alphaSearchRequestDataStoreSpec struct {
 	// more information on boosting, see Boosting
 	// (https://cloud.google.com/generative-ai-app-builder/docs/boost-search-results)
 	BoostSpec *GoogleCloudDiscoveryengineV1alphaSearchRequestBoostSpec `json:"boostSpec,omitempty"`
+	// CustomSearchOperators: Optional. Custom search operators which if specified
+	// will be used to filter results from workspace data stores. For more
+	// information on custom search operators, see SearchOperators
+	// (https://support.google.com/cloudsearch/answer/6172299).
+	CustomSearchOperators string `json:"customSearchOperators,omitempty"`
 	// DataStore: Required. Full resource name of DataStore, such as
 	// `projects/{project}/locations/{location}/collections/{collection_id}/dataStor
 	// es/{data_store_id}`.
@@ -12509,6 +12605,67 @@ func (s GoogleCloudDiscoveryengineV1alphaUserInfo) MarshalJSON() ([]byte, error)
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudDiscoveryengineV1alphaUserLicense: User License information
+// assigned by the admin.
+type GoogleCloudDiscoveryengineV1alphaUserLicense struct {
+	// CreateTime: Output only. User created timestamp.
+	CreateTime string `json:"createTime,omitempty"`
+	// LastLoginTime: Output only. User last logged in time. If the user has not
+	// logged in yet, this field will be empty.
+	LastLoginTime string `json:"lastLoginTime,omitempty"`
+	// LicenseAssignmentState: Output only. License assignment state of the user.
+	// If the user is assigned with a license config, the user loggin will be
+	// assigned with the license; If the user's license assignment state is
+	// unassigned or unspecified, no license config will be associated to the user;
+	//
+	// Possible values:
+	//   "LICENSE_ASSIGNMENT_STATE_UNSPECIFIED" - Default value.
+	//   "ASSIGNED" - License assigned to the user.
+	//   "UNASSIGNED" - No license assigned to the user. Deprecated, translated to
+	// NO_LICENSE.
+	//   "NO_LICENSE" - No license assigned to the user.
+	//   "NO_LICENSE_ATTEMPTED_LOGIN" - User attempted to login but no license
+	// assigned to the user. This state is only used for no user first time login
+	// attempt but cannot get license assigned. Users already logged in but cannot
+	// get license assigned will be assigned NO_LICENSE state(License could be
+	// unassigned by admin).
+	LicenseAssignmentState string `json:"licenseAssignmentState,omitempty"`
+	// LicenseConfig: Optional. The full resource name of the
+	// Subscription(LicenseConfig) assigned to the user.
+	LicenseConfig string `json:"licenseConfig,omitempty"`
+	// UpdateTime: Output only. User update timestamp.
+	UpdateTime string `json:"updateTime,omitempty"`
+	// User: Optional. The full resource name of the User, in the format of
+	// `projects/{project}/locations/{location}/userStores/{user_store}/users/{user_
+	// id}`. This field must be a UTF-8 encoded string with a length limit of 2048
+	// characters. If the user field is empty, it's indicating the user has not
+	// logged in yet and no User entity is created.
+	User string `json:"user,omitempty"`
+	// UserPrincipal: Required. Immutable. The user principal of the User, could be
+	// email address or other prinical identifier. This field is immutable. Admin
+	// assign licenses based on the user principal.
+	UserPrincipal string `json:"userPrincipal,omitempty"`
+	// UserProfile: Optional. The user profile. We user user full name(First name +
+	// Last name) as user profile.
+	UserProfile string `json:"userProfile,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "CreateTime") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CreateTime") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1alphaUserLicense) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1alphaUserLicense
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudDiscoveryengineV1alphaWorkspaceConfig: Config to store data store
 // type configuration for workspace data
 type GoogleCloudDiscoveryengineV1alphaWorkspaceConfig struct {
@@ -13081,6 +13238,10 @@ type GoogleCloudDiscoveryengineV1betaAnswer struct {
 	//   "USER_DEFINED_CLASSIFICATION_QUERY_IGNORED" - The user defined query
 	// classification ignored case. Google skips the answer if the query is
 	// classified as a user defined query classification.
+	//   "UNHELPFUL_ANSWER" - The unhelpful answer case. Google skips the answer if
+	// the answer is not helpful. This can be due to a variety of factors,
+	// including but not limited to: the query is not answerable, the answer is not
+	// relevant to the query, or the answer is not well-formatted.
 	AnswerSkippedReasons []string `json:"answerSkippedReasons,omitempty"`
 	// AnswerText: The textual answer.
 	AnswerText string `json:"answerText,omitempty"`
@@ -14947,6 +15108,62 @@ func (s GoogleCloudDiscoveryengineV1betaBatchGetDocumentsMetadataResponseDocumen
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudDiscoveryengineV1betaBatchUpdateUserLicensesRequest: Request
+// message for UserLicenseService.BatchUpdateUserLicenses method.
+type GoogleCloudDiscoveryengineV1betaBatchUpdateUserLicensesRequest struct {
+	// DeleteUnassignedUserLicenses: Optional. If true, if user licenses removed
+	// associated license config, the user license will be deleted. By default
+	// which is false, the user license will be updated to unassigned state.
+	DeleteUnassignedUserLicenses bool `json:"deleteUnassignedUserLicenses,omitempty"`
+	// GcsSource: Cloud Storage location for the input content.
+	GcsSource *GoogleCloudDiscoveryengineV1betaGcsSource `json:"gcsSource,omitempty"`
+	// InlineSource: The inline source for the input content for document
+	// embeddings.
+	InlineSource *GoogleCloudDiscoveryengineV1betaBatchUpdateUserLicensesRequestInlineSource `json:"inlineSource,omitempty"`
+	// ForceSendFields is a list of field names (e.g.
+	// "DeleteUnassignedUserLicenses") to unconditionally include in API requests.
+	// By default, fields with empty or default values are omitted from API
+	// requests. See https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields
+	// for more details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DeleteUnassignedUserLicenses") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1betaBatchUpdateUserLicensesRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1betaBatchUpdateUserLicensesRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1betaBatchUpdateUserLicensesRequestInlineSource:
+// The inline source for the input config for BatchUpdateUserLicenses method.
+type GoogleCloudDiscoveryengineV1betaBatchUpdateUserLicensesRequestInlineSource struct {
+	// UpdateMask: Optional. The list of fields to update.
+	UpdateMask string `json:"updateMask,omitempty"`
+	// UserLicenses: Required. A list of user licenses to update. Each user license
+	// must have a valid UserLicense.user_principal.
+	UserLicenses []*GoogleCloudDiscoveryengineV1betaUserLicense `json:"userLicenses,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "UpdateMask") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "UpdateMask") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1betaBatchUpdateUserLicensesRequestInlineSource) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1betaBatchUpdateUserLicensesRequestInlineSource
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudDiscoveryengineV1betaBatchVerifyTargetSitesRequest: Request
 // message for SiteSearchEngineService.BatchVerifyTargetSites method.
 type GoogleCloudDiscoveryengineV1betaBatchVerifyTargetSitesRequest struct {
@@ -15313,7 +15530,8 @@ type GoogleCloudDiscoveryengineV1betaCheckGroundingResponseClaim struct {
 	// done for the claim and therefore citation_indices should not be returned.
 	GroundingCheckRequired bool `json:"groundingCheckRequired,omitempty"`
 	// Score: Confidence score for the claim in the answer candidate, in the range
-	// of [0, 1]. This is set only when enable_claim_level_score is true.
+	// of [0, 1]. This is set only when
+	// `CheckGroundingRequest.grounding_spec.enable_claim_level_score` is true.
 	Score float64 `json:"score,omitempty"`
 	// StartPos: Position indicating the start of the claim in the answer
 	// candidate, measured in bytes. Note that this is not measured in characters
@@ -15906,7 +16124,6 @@ type GoogleCloudDiscoveryengineV1betaControl struct {
 	// `projects/*/locations/global/dataStore/*/controls/*`
 	Name string `json:"name,omitempty"`
 	// PromoteAction: Promote certain links based on predefined trigger queries.
-	// This now only supports basic site search.
 	PromoteAction *GoogleCloudDiscoveryengineV1betaControlPromoteAction `json:"promoteAction,omitempty"`
 	// RedirectAction: Defines a redirect-type control.
 	RedirectAction *GoogleCloudDiscoveryengineV1betaControlRedirectAction `json:"redirectAction,omitempty"`
@@ -19959,6 +20176,35 @@ func (s GoogleCloudDiscoveryengineV1betaListTargetSitesResponse) MarshalJSON() (
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudDiscoveryengineV1betaListUserLicensesResponse: Response message
+// for UserLicenseService.ListUserLicenses.
+type GoogleCloudDiscoveryengineV1betaListUserLicensesResponse struct {
+	// NextPageToken: A token, which can be sent as `page_token` to retrieve the
+	// next page. If this field is omitted, there are no subsequent pages.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+	// UserLicenses: All the customer's UserLicenses.
+	UserLicenses []*GoogleCloudDiscoveryengineV1betaUserLicense `json:"userLicenses,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "NextPageToken") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1betaListUserLicensesResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1betaListUserLicensesResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudDiscoveryengineV1betaMediaInfo: Media-specific user event
 // information.
 type GoogleCloudDiscoveryengineV1betaMediaInfo struct {
@@ -22436,6 +22682,11 @@ type GoogleCloudDiscoveryengineV1betaSearchRequestDataStoreSpec struct {
 	// more information on boosting, see Boosting
 	// (https://cloud.google.com/generative-ai-app-builder/docs/boost-search-results)
 	BoostSpec *GoogleCloudDiscoveryengineV1betaSearchRequestBoostSpec `json:"boostSpec,omitempty"`
+	// CustomSearchOperators: Optional. Custom search operators which if specified
+	// will be used to filter results from workspace data stores. For more
+	// information on custom search operators, see SearchOperators
+	// (https://support.google.com/cloudsearch/answer/6172299).
+	CustomSearchOperators string `json:"customSearchOperators,omitempty"`
 	// DataStore: Required. Full resource name of DataStore, such as
 	// `projects/{project}/locations/{location}/collections/{collection_id}/dataStor
 	// es/{data_store_id}`.
@@ -23162,9 +23413,6 @@ type GoogleCloudDiscoveryengineV1betaSearchResponseNaturalLanguageQueryUnderstan
 	ExtractedFilters string `json:"extractedFilters,omitempty"`
 	// RewrittenQuery: Rewritten input query minus the extracted filters.
 	RewrittenQuery string `json:"rewrittenQuery,omitempty"`
-	// SqlRequest: Optional. The SQL request that was generated from the natural
-	// language query understanding phase.
-	SqlRequest *GoogleCloudDiscoveryengineV1betaSearchResponseNaturalLanguageQueryUnderstandingInfoSqlRequest `json:"sqlRequest,omitempty"`
 	// StructuredExtractedFilter: The filters that were extracted from the input
 	// query represented in a structured form.
 	StructuredExtractedFilter *GoogleCloudDiscoveryengineV1betaSearchResponseNaturalLanguageQueryUnderstandingInfoStructuredExtractedFilter `json:"structuredExtractedFilter,omitempty"`
@@ -23183,30 +23431,6 @@ type GoogleCloudDiscoveryengineV1betaSearchResponseNaturalLanguageQueryUnderstan
 
 func (s GoogleCloudDiscoveryengineV1betaSearchResponseNaturalLanguageQueryUnderstandingInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDiscoveryengineV1betaSearchResponseNaturalLanguageQueryUnderstandingInfo
-	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
-}
-
-// GoogleCloudDiscoveryengineV1betaSearchResponseNaturalLanguageQueryUnderstandi
-// ngInfoSqlRequest: The SQL request that was generated from the natural
-// language query understanding phase.
-type GoogleCloudDiscoveryengineV1betaSearchResponseNaturalLanguageQueryUnderstandingInfoSqlRequest struct {
-	// SqlQuery: Optional. The SQL query in text format.
-	SqlQuery string `json:"sqlQuery,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "SqlQuery") to
-	// unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
-	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "SqlQuery") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
-	NullFields []string `json:"-"`
-}
-
-func (s GoogleCloudDiscoveryengineV1betaSearchResponseNaturalLanguageQueryUnderstandingInfoSqlRequest) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudDiscoveryengineV1betaSearchResponseNaturalLanguageQueryUnderstandingInfoSqlRequest
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -25157,6 +25381,67 @@ type GoogleCloudDiscoveryengineV1betaUserInfo struct {
 
 func (s GoogleCloudDiscoveryengineV1betaUserInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDiscoveryengineV1betaUserInfo
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1betaUserLicense: User License information
+// assigned by the admin.
+type GoogleCloudDiscoveryengineV1betaUserLicense struct {
+	// CreateTime: Output only. User created timestamp.
+	CreateTime string `json:"createTime,omitempty"`
+	// LastLoginTime: Output only. User last logged in time. If the user has not
+	// logged in yet, this field will be empty.
+	LastLoginTime string `json:"lastLoginTime,omitempty"`
+	// LicenseAssignmentState: Output only. License assignment state of the user.
+	// If the user is assigned with a license config, the user loggin will be
+	// assigned with the license; If the user's license assignment state is
+	// unassigned or unspecified, no license config will be associated to the user;
+	//
+	// Possible values:
+	//   "LICENSE_ASSIGNMENT_STATE_UNSPECIFIED" - Default value.
+	//   "ASSIGNED" - License assigned to the user.
+	//   "UNASSIGNED" - No license assigned to the user. Deprecated, translated to
+	// NO_LICENSE.
+	//   "NO_LICENSE" - No license assigned to the user.
+	//   "NO_LICENSE_ATTEMPTED_LOGIN" - User attempted to login but no license
+	// assigned to the user. This state is only used for no user first time login
+	// attempt but cannot get license assigned. Users already logged in but cannot
+	// get license assigned will be assigned NO_LICENSE state(License could be
+	// unassigned by admin).
+	LicenseAssignmentState string `json:"licenseAssignmentState,omitempty"`
+	// LicenseConfig: Optional. The full resource name of the
+	// Subscription(LicenseConfig) assigned to the user.
+	LicenseConfig string `json:"licenseConfig,omitempty"`
+	// UpdateTime: Output only. User update timestamp.
+	UpdateTime string `json:"updateTime,omitempty"`
+	// User: Optional. The full resource name of the User, in the format of
+	// `projects/{project}/locations/{location}/userStores/{user_store}/users/{user_
+	// id}`. This field must be a UTF-8 encoded string with a length limit of 2048
+	// characters. If the user field is empty, it's indicating the user has not
+	// logged in yet and no User entity is created.
+	User string `json:"user,omitempty"`
+	// UserPrincipal: Required. Immutable. The user principal of the User, could be
+	// email address or other prinical identifier. This field is immutable. Admin
+	// assign licenses based on the user principal.
+	UserPrincipal string `json:"userPrincipal,omitempty"`
+	// UserProfile: Optional. The user profile. We user user full name(First name +
+	// Last name) as user profile.
+	UserProfile string `json:"userProfile,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "CreateTime") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CreateTime") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1betaUserLicense) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1betaUserLicense
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -54642,6 +54927,275 @@ func (c *ProjectsLocationsUserEventsWriteCall) Do(opts ...googleapi.CallOption) 
 	}
 	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "discoveryengine.projects.locations.userEvents.write", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
+}
+
+type ProjectsLocationsUserStoresBatchUpdateUserLicensesCall struct {
+	s                                                              *Service
+	parent                                                         string
+	googleclouddiscoveryenginev1betabatchupdateuserlicensesrequest *GoogleCloudDiscoveryengineV1betaBatchUpdateUserLicensesRequest
+	urlParams_                                                     gensupport.URLParams
+	ctx_                                                           context.Context
+	header_                                                        http.Header
+}
+
+// BatchUpdateUserLicenses: Updates the User License. This method is used for
+// batch assign/unassign licenses to users.
+//
+//   - parent: The parent UserStore resource name, format:
+//     `projects/{project}/locations/{location}/userStores/{user_store_id}`.
+func (r *ProjectsLocationsUserStoresService) BatchUpdateUserLicenses(parent string, googleclouddiscoveryenginev1betabatchupdateuserlicensesrequest *GoogleCloudDiscoveryengineV1betaBatchUpdateUserLicensesRequest) *ProjectsLocationsUserStoresBatchUpdateUserLicensesCall {
+	c := &ProjectsLocationsUserStoresBatchUpdateUserLicensesCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.googleclouddiscoveryenginev1betabatchupdateuserlicensesrequest = googleclouddiscoveryenginev1betabatchupdateuserlicensesrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsUserStoresBatchUpdateUserLicensesCall) Fields(s ...googleapi.Field) *ProjectsLocationsUserStoresBatchUpdateUserLicensesCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsUserStoresBatchUpdateUserLicensesCall) Context(ctx context.Context) *ProjectsLocationsUserStoresBatchUpdateUserLicensesCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsUserStoresBatchUpdateUserLicensesCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsUserStoresBatchUpdateUserLicensesCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googleclouddiscoveryenginev1betabatchupdateuserlicensesrequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta/{+parent}:batchUpdateUserLicenses")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "discoveryengine.projects.locations.userStores.batchUpdateUserLicenses", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "discoveryengine.projects.locations.userStores.batchUpdateUserLicenses" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleLongrunningOperation.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsUserStoresBatchUpdateUserLicensesCall) Do(opts ...googleapi.CallOption) (*GoogleLongrunningOperation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleLongrunningOperation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "discoveryengine.projects.locations.userStores.batchUpdateUserLicenses", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsUserStoresUserLicensesListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists the User Licenses.
+//
+//   - parent: The parent UserStore resource name, format:
+//     `projects/{project}/locations/{location}/userStores/{user_store_id}`.
+func (r *ProjectsLocationsUserStoresUserLicensesService) List(parent string) *ProjectsLocationsUserStoresUserLicensesListCall {
+	c := &ProjectsLocationsUserStoresUserLicensesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// Filter sets the optional parameter "filter": Filter for the list request.
+// Supported fields: * `license_assignment_state` Examples: *
+// `license_assignment_state = ASSIGNED` to list assigned user licenses. *
+// `license_assignment_state = NO_LICENSE` to list not licensed users. *
+// `license_assignment_state = NO_LICENSE_ATTEMPTED_LOGIN` to list users who
+// attempted login but no license assigned. * `license_assignment_state !=
+// NO_LICENSE_ATTEMPTED_LOGIN` to filter out users who attempted login but no
+// license assigned.
+func (c *ProjectsLocationsUserStoresUserLicensesListCall) Filter(filter string) *ProjectsLocationsUserStoresUserLicensesListCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": Requested page size. Server
+// may return fewer items than requested. If unspecified, defaults to 10. The
+// maximum value is 50; values above 50 will be coerced to 50. If this field is
+// negative, an INVALID_ARGUMENT error is returned.
+func (c *ProjectsLocationsUserStoresUserLicensesListCall) PageSize(pageSize int64) *ProjectsLocationsUserStoresUserLicensesListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": A page token, received
+// from a previous `ListUserLicenses` call. Provide this to retrieve the
+// subsequent page. When paginating, all other parameters provided to
+// `ListUserLicenses` must match the call that provided the page token.
+func (c *ProjectsLocationsUserStoresUserLicensesListCall) PageToken(pageToken string) *ProjectsLocationsUserStoresUserLicensesListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsUserStoresUserLicensesListCall) Fields(s ...googleapi.Field) *ProjectsLocationsUserStoresUserLicensesListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsUserStoresUserLicensesListCall) IfNoneMatch(entityTag string) *ProjectsLocationsUserStoresUserLicensesListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsUserStoresUserLicensesListCall) Context(ctx context.Context) *ProjectsLocationsUserStoresUserLicensesListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsUserStoresUserLicensesListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsUserStoresUserLicensesListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta/{+parent}/userLicenses")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "discoveryengine.projects.locations.userStores.userLicenses.list", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "discoveryengine.projects.locations.userStores.userLicenses.list" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudDiscoveryengineV1betaListUserLicensesResponse.ServerResponse.Head
+// er or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsUserStoresUserLicensesListCall) Do(opts ...googleapi.CallOption) (*GoogleCloudDiscoveryengineV1betaListUserLicensesResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudDiscoveryengineV1betaListUserLicensesResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "discoveryengine.projects.locations.userStores.userLicenses.list", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsLocationsUserStoresUserLicensesListCall) Pages(ctx context.Context, f func(*GoogleCloudDiscoveryengineV1betaListUserLicensesResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
 }
 
 type ProjectsOperationsGetCall struct {

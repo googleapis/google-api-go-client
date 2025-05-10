@@ -238,7 +238,7 @@ type ProjectsLocationsSpokesService struct {
 // AllocationOptions: Range auto-allocation options, to be optionally used when
 // CIDR block is not explicitly set.
 type AllocationOptions struct {
-	// AllocationStrategy: Optional. Allocation strategy Not setting this field
+	// AllocationStrategy: Optional. Allocation strategy. Not setting this field
 	// when the allocation is requested means an implementation defined strategy is
 	// used.
 	//

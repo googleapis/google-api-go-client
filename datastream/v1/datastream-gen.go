@@ -1335,13 +1335,17 @@ func (s MongodbObjectIdentifier) MarshalJSON() ([]byte, error) {
 
 // MongodbProfile: MongoDB profile.
 type MongodbProfile struct {
-	// HostAddresses: Required. List of host addresses for a MongoDB cluster.
+	// HostAddresses: Required. List of host addresses for a MongoDB cluster. For
+	// SRV connection format, this list must contain exactly one DNS host without a
+	// port. For Standard connection format, this list must contain all the
+	// required hosts in the cluster with their respective ports.
 	HostAddresses []*HostAddress `json:"hostAddresses,omitempty"`
 	// Password: Optional. Password for the MongoDB connection. Mutually exclusive
 	// with the `secret_manager_stored_password` field.
 	Password string `json:"password,omitempty"`
 	// ReplicaSet: Optional. Name of the replica set. Only needed for self hosted
-	// replica set type MongoDB cluster.
+	// replica set type MongoDB cluster. For SRV connection format, this field must
+	// be empty. For Standard connection format, this field must be specified.
 	ReplicaSet string `json:"replicaSet,omitempty"`
 	// SecretManagerStoredPassword: Optional. A reference to a Secret Manager
 	// resource name storing the SQLServer connection password. Mutually exclusive

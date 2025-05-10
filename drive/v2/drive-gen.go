@@ -10177,6 +10177,13 @@ func (c *PermissionsInsertCall) EmailMessage(emailMessage string) *PermissionsIn
 	return c
 }
 
+// EnforceExpansiveAccess sets the optional parameter "enforceExpansiveAccess":
+// Whether the request should enforce expansive access rules.
+func (c *PermissionsInsertCall) EnforceExpansiveAccess(enforceExpansiveAccess bool) *PermissionsInsertCall {
+	c.urlParams_.Set("enforceExpansiveAccess", fmt.Sprint(enforceExpansiveAccess))
+	return c
+}
+
 // EnforceSingleParent sets the optional parameter "enforceSingleParent":
 // Deprecated: See `moveToNewOwnersRoot` for details.
 func (c *PermissionsInsertCall) EnforceSingleParent(enforceSingleParent bool) *PermissionsInsertCall {

@@ -1,5 +1,16 @@
 # Changes
 
+## [0.233.0](https://github.com/googleapis/google-api-go-client/compare/v0.232.0...v0.233.0) (2025-05-10)
+
+
+### Features
+
+* **accessapproval:** Remove accessapproval/v1beta1 client ([#3142](https://github.com/googleapis/google-api-go-client/issues/3142)) ([aae5a4e](https://github.com/googleapis/google-api-go-client/commit/aae5a4ef104776f382324379cef849bb7c4e22ff))
+* **all:** Auto-regenerate discovery clients ([#3139](https://github.com/googleapis/google-api-go-client/issues/3139)) ([ef1442a](https://github.com/googleapis/google-api-go-client/commit/ef1442adf4ac0da0a9a4577488559c5bc72741ff))
+* **all:** Auto-regenerate discovery clients ([#3141](https://github.com/googleapis/google-api-go-client/issues/3141)) ([868e87a](https://github.com/googleapis/google-api-go-client/commit/868e87a45b28cc39b83e7b5fa27ecd460950945c))
+* **all:** Auto-regenerate discovery clients ([#3143](https://github.com/googleapis/google-api-go-client/issues/3143)) ([357a874](https://github.com/googleapis/google-api-go-client/commit/357a87401613893e1dffaea1915682f8bbd7cfb5))
+* **all:** Auto-regenerate discovery clients ([#3144](https://github.com/googleapis/google-api-go-client/issues/3144)) ([37401aa](https://github.com/googleapis/google-api-go-client/commit/37401aa34a3e597341b6068848f0eb574e3dfdff))
+
 ## [0.232.0](https://github.com/googleapis/google-api-go-client/compare/v0.231.0...v0.232.0) (2025-05-05)
 
 

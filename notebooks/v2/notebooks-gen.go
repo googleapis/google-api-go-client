@@ -467,12 +467,7 @@ type ConfidentialInstanceConfig struct {
 	//   "CONFIDENTIAL_INSTANCE_TYPE_UNSPECIFIED" - No type specified. Do not use
 	// this value.
 	//   "SEV" - AMD Secure Encrypted Virtualization.
-	//   "SEV_SNP" - AMD Secure Encrypted Virtualization - Secure Nested Paging.
-	//   "TDX" - Intel Trust Domain eXtension.
 	ConfidentialInstanceType string `json:"confidentialInstanceType,omitempty"`
-	// EnableConfidentialCompute: Optional. Defines whether the instance should
-	// have confidential compute enabled.
-	EnableConfidentialCompute bool `json:"enableConfidentialCompute,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "ConfidentialInstanceType")
 	// to unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -855,6 +850,9 @@ type GceSetup struct {
 	// NetworkInterfaces: Optional. The network interfaces for the VM. Supports
 	// only one interface.
 	NetworkInterfaces []*NetworkInterface `json:"networkInterfaces,omitempty"`
+	// ReservationAffinity: Optional. Specifies the reservations that this instance
+	// can consume from.
+	ReservationAffinity *ReservationAffinity `json:"reservationAffinity,omitempty"`
 	// ServiceAccounts: Optional. The service account that serves as an identity
 	// for the VM instance. Currently supports only one service account.
 	ServiceAccounts []*ServiceAccount `json:"serviceAccounts,omitempty"`
@@ -922,6 +920,10 @@ type Instance struct {
 	// DisableProxyAccess: Optional. If true, the notebook instance will not
 	// register with the proxy.
 	DisableProxyAccess bool `json:"disableProxyAccess,omitempty"`
+	// EnableDeletionProtection: Optional. If true, deletion protection will be
+	// enabled for this Workbench Instance. If false, deletion protection will be
+	// disabled for this Workbench Instance.
+	EnableDeletionProtection bool `json:"enableDeletionProtection,omitempty"`
 	// EnableThirdPartyIdentity: Optional. Flag that specifies that a notebook can
 	// be accessed with third party identity provider.
 	EnableThirdPartyIdentity bool `json:"enableThirdPartyIdentity,omitempty"`
@@ -1378,6 +1380,48 @@ func (s ReportInstanceInfoSystemRequest) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// ReservationAffinity: A reservation that an instance can consume from.
+type ReservationAffinity struct {
+	// ConsumeReservationType: Required. Specifies the type of reservation from
+	// which this instance can consume resources: RESERVATION_ANY (default),
+	// RESERVATION_SPECIFIC, or RESERVATION_NONE. See Consuming reserved instances
+	// for examples.
+	//
+	// Possible values:
+	//   "RESERVATION_UNSPECIFIED" - Default type.
+	//   "RESERVATION_NONE" - Do not consume from any allocated capacity.
+	//   "RESERVATION_ANY" - Consume any reservation available.
+	//   "RESERVATION_SPECIFIC" - Must consume from a specific reservation. Must
+	// specify key value fields for specifying the reservations.
+	ConsumeReservationType string `json:"consumeReservationType,omitempty"`
+	// Key: Optional. Corresponds to the label key of a reservation resource. To
+	// target a RESERVATION_SPECIFIC by name, use
+	// compute.googleapis.com/reservation-name as the key and specify the name of
+	// your reservation as its value.
+	Key string `json:"key,omitempty"`
+	// Values: Optional. Corresponds to the label values of a reservation resource.
+	// This can be either a name to a reservation in the same project or
+	// "projects/different-project/reservations/some-reservation-name" to target a
+	// shared reservation in the same zone but in a different project.
+	Values []string `json:"values,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ConsumeReservationType") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ConsumeReservationType") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ReservationAffinity) MarshalJSON() ([]byte, error) {
+	type NoMethod ReservationAffinity
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // ResetInstanceRequest: Request for resetting a notebook instance
 type ResetInstanceRequest struct {
 }
@@ -1516,8 +1560,7 @@ type ShieldedInstanceConfig struct {
 	// integrity monitoring enabled. Enables monitoring and attestation of the boot
 	// integrity of the VM instance. The attestation is performed against the
 	// integrity policy baseline. This baseline is initially derived from the
-	// implicitly trusted boot image when the VM instance is created. Enabled by
-	// default.
+	// implicitly trusted boot image when the VM instance is created.
 	EnableIntegrityMonitoring bool `json:"enableIntegrityMonitoring,omitempty"`
 	// EnableSecureBoot: Optional. Defines whether the VM instance has Secure Boot
 	// enabled. Secure Boot helps ensure that the system only runs authentic
@@ -1526,7 +1569,6 @@ type ShieldedInstanceConfig struct {
 	// default.
 	EnableSecureBoot bool `json:"enableSecureBoot,omitempty"`
 	// EnableVtpm: Optional. Defines whether the VM instance has the vTPM enabled.
-	// Enabled by default.
 	EnableVtpm bool `json:"enableVtpm,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "EnableIntegrityMonitoring")
 	// to unconditionally include in API requests. By default, fields with empty or
@@ -1924,6 +1966,14 @@ type ProjectsLocationsListCall struct {
 func (r *ProjectsLocationsService) List(name string) *ProjectsLocationsListCall {
 	c := &ProjectsLocationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
+	return c
+}
+
+// ExtraLocationTypes sets the optional parameter "extraLocationTypes": A list
+// of extra location types that should be used as conditions for controlling
+// the visibility of the locations.
+func (c *ProjectsLocationsListCall) ExtraLocationTypes(extraLocationTypes ...string) *ProjectsLocationsListCall {
+	c.urlParams_.SetMulti("extraLocationTypes", append([]string{}, extraLocationTypes...))
 	return c
 }
 

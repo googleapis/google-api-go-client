@@ -564,6 +564,10 @@ type CloudFunction struct {
 	// list of possible choices, see the `gcloud` command reference
 	// (https://cloud.google.com/sdk/gcloud/reference/functions/deploy#--runtime).
 	Runtime string `json:"runtime,omitempty"`
+	// SatisfiesPzi: Output only.
+	SatisfiesPzi bool `json:"satisfiesPzi,omitempty"`
+	// SatisfiesPzs: Output only.
+	SatisfiesPzs bool `json:"satisfiesPzs,omitempty"`
 	// SecretEnvironmentVariables: Secret environment variables configuration.
 	SecretEnvironmentVariables []*SecretEnvVar `json:"secretEnvironmentVariables,omitempty"`
 	// SecretVolumes: Secret volumes configuration.

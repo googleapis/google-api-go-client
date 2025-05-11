@@ -3857,6 +3857,33 @@ func (s MaxPodsConstraint) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// MemoryManager: The option enables the Kubernetes NUMA-aware Memory Manager
+// feature. Detailed description about the feature can be found here
+// (https://kubernetes.io/docs/tasks/administer-cluster/memory-manager/).
+type MemoryManager struct {
+	// Policy: Controls the memory management policy on the Node. See
+	// https://kubernetes.io/docs/tasks/administer-cluster/memory-manager/#policies
+	// The following values are allowed. * "none" * "static" The default value is
+	// 'none' if unspecified.
+	Policy string `json:"policy,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Policy") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Policy") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s MemoryManager) MarshalJSON() ([]byte, error) {
+	type NoMethod MemoryManager
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // MeshCertificates: Configuration for issuance of mTLS keys and certificates
 // to Kubernetes pods.
 type MeshCertificates struct {
@@ -4554,11 +4581,19 @@ type NodeKubeletConfig struct {
 	// InsecureKubeletReadonlyPortEnabled: Enable or disable Kubelet read only
 	// port.
 	InsecureKubeletReadonlyPortEnabled bool `json:"insecureKubeletReadonlyPortEnabled,omitempty"`
+	// MemoryManager: Optional. Controls NUMA-aware Memory Manager configuration on
+	// the node. For more information, see:
+	// https://kubernetes.io/docs/tasks/administer-cluster/memory-manager/
+	MemoryManager *MemoryManager `json:"memoryManager,omitempty"`
 	// PodPidsLimit: Set the Pod PID limits. See
 	// https://kubernetes.io/docs/concepts/policy/pid-limiting/#pod-pid-limits
 	// Controls the maximum number of processes allowed to run in a pod. The value
 	// must be greater than or equal to 1024 and less than 4194304.
 	PodPidsLimit int64 `json:"podPidsLimit,omitempty,string"`
+	// TopologyManager: Optional. Controls Topology Manager configuration on the
+	// node. For more information, see:
+	// https://kubernetes.io/docs/tasks/administer-cluster/topology-manager/
+	TopologyManager *TopologyManager `json:"topologyManager,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AllowedUnsafeSysctls") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -7212,6 +7247,48 @@ type TimeWindow struct {
 
 func (s TimeWindow) MarshalJSON() ([]byte, error) {
 	type NoMethod TimeWindow
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// TopologyManager: TopologyManager defines the configuration options for
+// Topology Manager feature. See
+// https://kubernetes.io/docs/tasks/administer-cluster/topology-manager/
+type TopologyManager struct {
+	// Policy: Configures the strategy for resource alignment. Allowed values are:
+	// * none: the default policy, and does not perform any topology alignment. *
+	// restricted: the topology manager stores the preferred NUMA node affinity for
+	// the container, and will reject the pod if the affinity if not preferred. *
+	// best-effort: the topology manager stores the preferred NUMA node affinity
+	// for the container. If the affinity is not preferred, the topology manager
+	// will admit the pod to the node anyway. * single-numa-node: the topology
+	// manager determines if the single NUMA node affinity is possible. If it is,
+	// Topology Manager will store this and the Hint Providers can then use this
+	// information when making the resource allocation decision. If, however, this
+	// is not possible then the Topology Manager will reject the pod from the node.
+	// This will result in a pod in a Terminated state with a pod admission
+	// failure. The default policy value is 'none' if unspecified. Details about
+	// each strategy can be found here
+	// (https://kubernetes.io/docs/tasks/administer-cluster/topology-manager/#topology-manager-policies).
+	Policy string `json:"policy,omitempty"`
+	// Scope: The Topology Manager aligns resources in following scopes: *
+	// container * pod The default scope is 'container' if unspecified. See
+	// https://kubernetes.io/docs/tasks/administer-cluster/topology-manager/#topology-manager-scopes
+	Scope string `json:"scope,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Policy") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Policy") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s TopologyManager) MarshalJSON() ([]byte, error) {
+	type NoMethod TopologyManager
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 

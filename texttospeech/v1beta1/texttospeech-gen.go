@@ -337,6 +337,19 @@ type CustomPronunciationParams struct {
 	// https://en.wikipedia.org/wiki/International_Phonetic_Alphabet
 	//   "PHONETIC_ENCODING_X_SAMPA" - X-SAMPA, such as apple -> "{p@l".
 	// https://en.wikipedia.org/wiki/X-SAMPA
+	//   "PHONETIC_ENCODING_JAPANESE_YOMIGANA" - For reading-to-pron conversion to
+	// work well, the `pronunciation` field should only contain Kanji, Hiragana,
+	// and Katakana. The pronunciation can also contain pitch accents. The start of
+	// a pitch phrase is specified with `^` and the down-pitch position is
+	// specified with `!`, for example: phrase:端 pronunciation:^はし phrase:箸
+	// pronunciation:^は!し phrase:橋 pronunciation:^はし! We currently only
+	// support the Tokyo dialect, which allows at most one down-pitch per phrase
+	// (i.e. at most one `!` between `^`).
+	//   "PHONETIC_ENCODING_PINYIN" - Used to specify pronunciations for Mandarin
+	// words. See https://en.wikipedia.org/wiki/Pinyin. For example: 朝阳, the
+	// pronunciation is "chao2 yang2". The number represents the tone, and there is
+	// a space between syllables. Neutral tones are represented by 5, for example
+	// 孩子 "hai2 zi5".
 	PhoneticEncoding string `json:"phoneticEncoding,omitempty"`
 	// Phrase: The phrase to which the customization is applied. The phrase can be
 	// multiple words, such as proper nouns, but shouldn't span the length of the
@@ -631,6 +644,9 @@ type SynthesisInput struct {
 	// be an exact match of the phrase in the input types. If using SSML, the
 	// phrase must not be inside a phoneme tag.
 	CustomPronunciations *CustomPronunciations `json:"customPronunciations,omitempty"`
+	// Markup: Markup for HD voices specifically. This field may not be used with
+	// any other voices.
+	Markup string `json:"markup,omitempty"`
 	// MultiSpeakerMarkup: The multi-speaker input to be synthesized. Only
 	// applicable for multi-speaker synthesis.
 	MultiSpeakerMarkup *MultiSpeakerMarkup `json:"multiSpeakerMarkup,omitempty"`

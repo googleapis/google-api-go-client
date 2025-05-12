@@ -12,7 +12,6 @@ import (
 
 	"github.com/google/go-cmp/cmp"
 	"github.com/google/go-cmp/cmp/cmpopts"
-	"go.opentelemetry.io/contrib/instrumentation/net/http/otelhttp"
 	"golang.org/x/oauth2/google"
 	"google.golang.org/api/internal"
 	"google.golang.org/grpc"
@@ -135,28 +134,22 @@ func TestApplyClientCertSource(t *testing.T) {
 	}
 }
 
-func TestOtelHTTPOpts(t *testing.T) {
-	otelhttpopts := []otelhttp.Option{
-		otelhttp.WithServerName("test"),
+func TestOpenTelemetryOpts(t *testing.T) {
+	otelOpts := []any{
+		"non-otelhttp-otelgrpc-option",
 	}
 	opts := []ClientOption{
-		WithOtelHTTPOpts(otelhttpopts...),
+		WithOpenTelemetryOpts(otelOpts...),
 	}
 	var got internal.DialSettings
 	for _, opt := range opts {
 		opt.Apply(&got)
 	}
 	want := internal.DialSettings{
-		OtelHTTPOpts: []otelhttp.Option{
-			otelhttp.WithServerName("test"),
-		},
+		OpenTelemetryOpts: []any{},
 	}
 
-	comparer := cmp.Comparer(func(x, y internal.DialSettings) bool {
-		return len(x.OtelHTTPOpts) == len(y.OtelHTTPOpts)
-	})
-
-	if !cmp.Equal(got, want, comparer) {
-		t.Error(cmp.Diff(got, want, comparer))
+	if cmp.Equal(got, want) {
+		t.Error(cmp.Diff(got, want))
 	}
 }

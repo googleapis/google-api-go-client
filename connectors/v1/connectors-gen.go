@@ -196,6 +196,7 @@ type ProjectsLocationsService struct {
 func NewProjectsLocationsConnectionsService(s *Service) *ProjectsLocationsConnectionsService {
 	rs := &ProjectsLocationsConnectionsService{s: s}
 	rs.ConnectionSchemaMetadata = NewProjectsLocationsConnectionsConnectionSchemaMetadataService(s)
+	rs.EndUserAuthentications = NewProjectsLocationsConnectionsEndUserAuthenticationsService(s)
 	rs.EventSubscriptions = NewProjectsLocationsConnectionsEventSubscriptionsService(s)
 	rs.RuntimeActionSchemas = NewProjectsLocationsConnectionsRuntimeActionSchemasService(s)
 	rs.RuntimeEntitySchemas = NewProjectsLocationsConnectionsRuntimeEntitySchemasService(s)
@@ -206,6 +207,8 @@ type ProjectsLocationsConnectionsService struct {
 	s *Service
 
 	ConnectionSchemaMetadata *ProjectsLocationsConnectionsConnectionSchemaMetadataService
+
+	EndUserAuthentications *ProjectsLocationsConnectionsEndUserAuthenticationsService
 
 	EventSubscriptions *ProjectsLocationsConnectionsEventSubscriptionsService
 
@@ -220,6 +223,15 @@ func NewProjectsLocationsConnectionsConnectionSchemaMetadataService(s *Service) 
 }
 
 type ProjectsLocationsConnectionsConnectionSchemaMetadataService struct {
+	s *Service
+}
+
+func NewProjectsLocationsConnectionsEndUserAuthenticationsService(s *Service) *ProjectsLocationsConnectionsEndUserAuthenticationsService {
+	rs := &ProjectsLocationsConnectionsEndUserAuthenticationsService{s: s}
+	return rs
+}
+
+type ProjectsLocationsConnectionsEndUserAuthenticationsService struct {
 	s *Service
 }
 
@@ -457,11 +469,11 @@ func (s AuditLogConfig) MarshalJSON() ([]byte, error) {
 
 // AuthConfig: AuthConfig defines details of a authentication type.
 type AuthConfig struct {
-	// AdditionalVariables: List containing additional auth configs.
+	// AdditionalVariables: Optional. List containing additional auth configs.
 	AdditionalVariables []*ConfigVariable `json:"additionalVariables,omitempty"`
-	// AuthKey: Identifier key for auth config
+	// AuthKey: Optional. Identifier key for auth config
 	AuthKey string `json:"authKey,omitempty"`
-	// AuthType: The type of authentication configured.
+	// AuthType: Optional. The type of authentication configured.
 	//
 	// Possible values:
 	//   "AUTH_TYPE_UNSPECIFIED" - Authentication type not specified.
@@ -858,7 +870,7 @@ type ConfigVariable struct {
 	EncryptionKeyValue *EncryptionKey `json:"encryptionKeyValue,omitempty"`
 	// IntValue: Value is an integer
 	IntValue int64 `json:"intValue,omitempty,string"`
-	// Key: Key of the config variable.
+	// Key: Optional. Key of the config variable.
 	Key string `json:"key,omitempty"`
 	// SecretValue: Value is a secret.
 	SecretValue *Secret `json:"secretValue,omitempty"`
@@ -1021,6 +1033,11 @@ type Connection struct {
 	// EnvoyImageLocation: Output only. GCR location where the envoy image is
 	// stored. formatted like: gcr.io/{bucketName}/{imageName}
 	EnvoyImageLocation string `json:"envoyImageLocation,omitempty"`
+	// EuaOauthAuthConfig: Optional. Additional Oauth2.0 Auth config for EUA. If
+	// the connection is configured using non-OAuth authentication but OAuth needs
+	// to be used for EUA, this field can be populated with the OAuth config. This
+	// should be a OAuth2AuthCodeFlow Auth type only.
+	EuaOauthAuthConfig *AuthConfig `json:"euaOauthAuthConfig,omitempty"`
 	// EventingConfig: Optional. Eventing config of a connection
 	EventingConfig *EventingConfig `json:"eventingConfig,omitempty"`
 	// EventingEnablementType: Optional. Eventing enablement type. Will be nil if
@@ -1034,6 +1051,12 @@ type Connection struct {
 	EventingEnablementType string `json:"eventingEnablementType,omitempty"`
 	// EventingRuntimeData: Output only. Eventing Runtime Data.
 	EventingRuntimeData *EventingRuntimeData `json:"eventingRuntimeData,omitempty"`
+	// FallbackOnAdminCredentials: Optional. Fallback on admin credentials for the
+	// connection. If this both auth_override_enabled and
+	// fallback_on_admin_credentials are set to true, the connection will use the
+	// admin credentials if the dynamic auth header is not present during auth
+	// override.
+	FallbackOnAdminCredentials bool `json:"fallbackOnAdminCredentials,omitempty"`
 	// Host: Output only. The name of the Hostname of the Service Directory service
 	// with TLS.
 	Host string `json:"host,omitempty"`
@@ -1307,6 +1330,14 @@ type ConnectorInfraConfig struct {
 	MigrateDeploymentModel bool `json:"migrateDeploymentModel,omitempty"`
 	// MigrateTls: Indicate whether connector is being migrated to TLS.
 	MigrateTls bool `json:"migrateTls,omitempty"`
+	// NetworkEgressMode: Indicate whether connector is being migrated to use
+	// direct VPC egress.
+	//
+	// Possible values:
+	//   "NETWORK_EGRESS_MODE_UNSPECIFIED" - Network egress mode is not specified.
+	//   "SERVERLESS_VPC_ACCESS_CONNECTOR" - Default model VPC Access Connector.
+	//   "DIRECT_VPC_EGRESS" - Direct VPC Egress.
+	NetworkEgressMode string `json:"networkEgressMode,omitempty"`
 	// ProvisionCloudSpanner: Indicate whether cloud spanner is required for
 	// connector job.
 	ProvisionCloudSpanner bool `json:"provisionCloudSpanner,omitempty"`
@@ -1388,6 +1419,9 @@ type ConnectorVersion struct {
 	// ector}/versions/{version} Only global location is supported for Connector
 	// resource.
 	Name string `json:"name,omitempty"`
+	// PriorityEntityTypes: Optional. The priority entity types for the connector
+	// version.
+	PriorityEntityTypes []*PriorityEntityType `json:"priorityEntityTypes,omitempty"`
 	// ReleaseVersion: Output only. ReleaseVersion of the connector, for example:
 	// "1.0.1-alpha".
 	ReleaseVersion string `json:"releaseVersion,omitempty"`
@@ -1512,8 +1546,8 @@ func (s ConnectorVersionInfraConfig) MarshalJSON() ([]byte, error) {
 
 // ConnectorsLogConfig: Log configuration for the connection.
 type ConnectorsLogConfig struct {
-	// Enabled: Enabled represents whether logging is enabled or not for a
-	// connection.
+	// Enabled: Optional. Enabled represents whether logging is enabled or not for
+	// a connection.
 	Enabled bool `json:"enabled,omitempty"`
 	// Level: Optional. Log configuration level.
 	//
@@ -1911,6 +1945,31 @@ func (s DestinationConfigTemplate) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// EUASecret: EUASecret provides a reference to entries in Secret Manager.
+type EUASecret struct {
+	// SecretValue: Optional. The plain string value of the secret.
+	SecretValue string `json:"secretValue,omitempty"`
+	// SecretVersion: Optional. The resource name of the secret version in the
+	// format, format as: `projects/*/secrets/*/versions/*`.
+	SecretVersion string `json:"secretVersion,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "SecretValue") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "SecretValue") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s EUASecret) MarshalJSON() ([]byte, error) {
+	type NoMethod EUASecret
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // EgressControlConfig: Egress control config for connector runtime. These
 // configurations define the rules to identify which outbound domains/hosts
 // needs to be whitelisted. It may be a static information for a particular
@@ -1985,8 +2044,8 @@ func (s EncryptionConfig) MarshalJSON() ([]byte, error) {
 
 // EncryptionKey: Encryption Key value.
 type EncryptionKey struct {
-	// KmsKeyName: The [KMS key name] with which the content of the Operation is
-	// encrypted. The expected format:
+	// KmsKeyName: Optional. The [KMS key name] with which the content of the
+	// Operation is encrypted. The expected format:
 	// `projects/*/locations/*/keyRings/*/cryptoKeys/*`. Will be empty string if
 	// google managed.
 	KmsKeyName string `json:"kmsKeyName,omitempty"`
@@ -2017,9 +2076,9 @@ func (s EncryptionKey) MarshalJSON() ([]byte, error) {
 
 // EndPoint: Endpoint message includes details of the Destination endpoint.
 type EndPoint struct {
-	// EndpointUri: The URI of the Endpoint.
+	// EndpointUri: Optional. The URI of the Endpoint.
 	EndpointUri string `json:"endpointUri,omitempty"`
-	// Headers: List of Header to be added to the Endpoint.
+	// Headers: Optional. List of Header to be added to the Endpoint.
 	Headers []*Header `json:"headers,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "EndpointUri") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -2036,6 +2095,479 @@ type EndPoint struct {
 
 func (s EndPoint) MarshalJSON() ([]byte, error) {
 	type NoMethod EndPoint
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// EndUserAuthentication: AuthConfig defines details of a authentication type.
+type EndUserAuthentication struct {
+	// ConfigVariables: Optional. Config variables for the EndUserAuthentication.
+	ConfigVariables []*EndUserAuthenticationConfigVariable `json:"configVariables,omitempty"`
+	// CreateTime: Output only. Created time.
+	CreateTime string `json:"createTime,omitempty"`
+	// DestinationConfigs: Optional. Destination configs for the
+	// EndUserAuthentication.
+	DestinationConfigs []*DestinationConfig `json:"destinationConfigs,omitempty"`
+	// EndUserAuthenticationConfig: Optional. The EndUserAuthenticationConfig for
+	// the EndUserAuthentication.
+	EndUserAuthenticationConfig *EndUserAuthenticationConfig `json:"endUserAuthenticationConfig,omitempty"`
+	// Labels: Optional. Labels for the EndUserAuthentication.
+	Labels []string `json:"labels,omitempty"`
+	// Name: Required. Identifier. Resource name of the EndUserAuthentication.
+	// Format:
+	// projects/{project}/locations/{location}/connections/{connection}/endUserAuthe
+	// ntications/{end_user_authentication}
+	Name string `json:"name,omitempty"`
+	// NotifyEndpointDestination: Optional. The destination to hit when we receive
+	// an event
+	NotifyEndpointDestination *EndUserAuthenticationNotifyEndpointDestination `json:"notifyEndpointDestination,omitempty"`
+	// Roles: Optional. Roles for the EndUserAuthentication.
+	//
+	// Possible values:
+	//   "ROLE_UNSPECIFIED" - Default state.
+	//   "READER" - READER.
+	//   "READER_DOMAIN_WIDE_ACCESSIBLE" - READER_DOMAIN_WIDE_ACCESSIBLE which has
+	// access to only public data.
+	Roles []string `json:"roles,omitempty"`
+	// Status: Optional. Status of the EndUserAuthentication.
+	Status *EndUserAuthenticationEndUserAuthenticationStatus `json:"status,omitempty"`
+	// UpdateTime: Output only. Updated time.
+	UpdateTime string `json:"updateTime,omitempty"`
+	// UserId: Optional. The user id of the user.
+	UserId string `json:"userId,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "ConfigVariables") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ConfigVariables") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s EndUserAuthentication) MarshalJSON() ([]byte, error) {
+	type NoMethod EndUserAuthentication
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// EndUserAuthenticationConfig: EndUserAuthenticationConfig defines details of
+// a authentication configuration for EUC
+type EndUserAuthenticationConfig struct {
+	// AdditionalVariables: Optional. List containing additional auth configs.
+	AdditionalVariables []*EndUserAuthenticationConfigVariable `json:"additionalVariables,omitempty"`
+	// AuthKey: Identifier key for auth config
+	AuthKey string `json:"authKey,omitempty"`
+	// AuthType: The type of authentication configured.
+	//
+	// Possible values:
+	//   "AUTH_TYPE_UNSPECIFIED" - Authentication type not specified.
+	//   "USER_PASSWORD" - Username and Password Authentication.
+	//   "OAUTH2_JWT_BEARER" - JSON Web Token (JWT) Profile for Oauth 2.0
+	// Authorization Grant based authentication
+	//   "OAUTH2_CLIENT_CREDENTIALS" - Oauth 2.0 Client Credentials Grant
+	// Authentication
+	//   "SSH_PUBLIC_KEY" - SSH Public Key Authentication
+	//   "OAUTH2_AUTH_CODE_FLOW" - Oauth 2.0 Authorization Code Flow
+	//   "GOOGLE_AUTHENTICATION" - Google authentication
+	//   "OAUTH2_AUTH_CODE_FLOW_GOOGLE_MANAGED" - Oauth 2.0 Authorization Code Flow
+	// with Google Provided OAuth Client
+	AuthType string `json:"authType,omitempty"`
+	// Oauth2AuthCodeFlow: Oauth2AuthCodeFlow.
+	Oauth2AuthCodeFlow *EndUserAuthenticationConfigOauth2AuthCodeFlow `json:"oauth2AuthCodeFlow,omitempty"`
+	// Oauth2AuthCodeFlowGoogleManaged: Oauth2AuthCodeFlowGoogleManaged.
+	Oauth2AuthCodeFlowGoogleManaged *EndUserAuthenticationConfigOauth2AuthCodeFlowGoogleManaged `json:"oauth2AuthCodeFlowGoogleManaged,omitempty"`
+	// Oauth2ClientCredentials: Oauth2ClientCredentials.
+	Oauth2ClientCredentials *EndUserAuthenticationConfigOauth2ClientCredentials `json:"oauth2ClientCredentials,omitempty"`
+	// Oauth2JwtBearer: Oauth2JwtBearer.
+	Oauth2JwtBearer *EndUserAuthenticationConfigOauth2JwtBearer `json:"oauth2JwtBearer,omitempty"`
+	// SshPublicKey: SSH Public Key.
+	SshPublicKey *EndUserAuthenticationConfigSshPublicKey `json:"sshPublicKey,omitempty"`
+	// UserPassword: UserPassword.
+	UserPassword *EndUserAuthenticationConfigUserPassword `json:"userPassword,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AdditionalVariables") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AdditionalVariables") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s EndUserAuthenticationConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod EndUserAuthenticationConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// EndUserAuthenticationConfigOauth2AuthCodeFlow: Parameters to support Oauth
+// 2.0 Auth Code Grant Authentication. See
+// https://www.rfc-editor.org/rfc/rfc6749#section-1.3.1 for more details.
+type EndUserAuthenticationConfigOauth2AuthCodeFlow struct {
+	// AuthCode: Optional. Authorization code to be exchanged for access and
+	// refresh tokens.
+	AuthCode string `json:"authCode,omitempty"`
+	// AuthUri: Optional. Auth URL for Authorization Code Flow
+	AuthUri string `json:"authUri,omitempty"`
+	// ClientId: Optional. Client ID for user-provided OAuth app.
+	ClientId string `json:"clientId,omitempty"`
+	// ClientSecret: Optional. Client secret for user-provided OAuth app.
+	ClientSecret *EUASecret `json:"clientSecret,omitempty"`
+	// EnablePkce: Optional. Whether to enable PKCE when the user performs the auth
+	// code flow.
+	EnablePkce bool `json:"enablePkce,omitempty"`
+	// OauthTokenData: Optional. Auth Code Data
+	OauthTokenData *OAuthTokenData `json:"oauthTokenData,omitempty"`
+	// PkceVerifier: Optional. PKCE verifier to be used during the auth code
+	// exchange.
+	PkceVerifier string `json:"pkceVerifier,omitempty"`
+	// RedirectUri: Optional. Redirect URI to be provided during the auth code
+	// exchange.
+	RedirectUri string `json:"redirectUri,omitempty"`
+	// Scopes: Optional. Scopes the connection will request when the user performs
+	// the auth code flow.
+	Scopes []string `json:"scopes,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AuthCode") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AuthCode") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s EndUserAuthenticationConfigOauth2AuthCodeFlow) MarshalJSON() ([]byte, error) {
+	type NoMethod EndUserAuthenticationConfigOauth2AuthCodeFlow
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// EndUserAuthenticationConfigOauth2AuthCodeFlowGoogleManaged: Parameters to
+// support Oauth 2.0 Auth Code Grant Authentication using Google Provided OAuth
+// Client. See https://tools.ietf.org/html/rfc6749#section-1.3.1 for more
+// details.
+type EndUserAuthenticationConfigOauth2AuthCodeFlowGoogleManaged struct {
+	// AuthCode: Optional. Authorization code to be exchanged for access and
+	// refresh tokens.
+	AuthCode string `json:"authCode,omitempty"`
+	// OauthTokenData: Auth Code Data
+	OauthTokenData *OAuthTokenData `json:"oauthTokenData,omitempty"`
+	// RedirectUri: Optional. Redirect URI to be provided during the auth code
+	// exchange.
+	RedirectUri string `json:"redirectUri,omitempty"`
+	// Scopes: Required. Scopes the connection will request when the user performs
+	// the auth code flow.
+	Scopes []string `json:"scopes,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AuthCode") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AuthCode") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s EndUserAuthenticationConfigOauth2AuthCodeFlowGoogleManaged) MarshalJSON() ([]byte, error) {
+	type NoMethod EndUserAuthenticationConfigOauth2AuthCodeFlowGoogleManaged
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// EndUserAuthenticationConfigOauth2ClientCredentials: Parameters to support
+// Oauth 2.0 Client Credentials Grant Authentication. See
+// https://tools.ietf.org/html/rfc6749#section-1.3.4 for more details.
+type EndUserAuthenticationConfigOauth2ClientCredentials struct {
+	// ClientId: The client identifier.
+	ClientId string `json:"clientId,omitempty"`
+	// ClientSecret: Required. string value or secret version containing the client
+	// secret.
+	ClientSecret *EUASecret `json:"clientSecret,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ClientId") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ClientId") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s EndUserAuthenticationConfigOauth2ClientCredentials) MarshalJSON() ([]byte, error) {
+	type NoMethod EndUserAuthenticationConfigOauth2ClientCredentials
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// EndUserAuthenticationConfigOauth2JwtBearer: Parameters to support JSON Web
+// Token (JWT) Profile for Oauth 2.0 Authorization Grant based authentication.
+// See https://tools.ietf.org/html/rfc7523 for more details.
+type EndUserAuthenticationConfigOauth2JwtBearer struct {
+	// ClientKey: Required. secret version/value reference containing a PKCS#8
+	// PEM-encoded private key associated with the Client Certificate. This private
+	// key will be used to sign JWTs used for the jwt-bearer authorization grant.
+	// Specified in the form as: `projects/*/strings/*/versions/*`.
+	ClientKey *EUASecret `json:"clientKey,omitempty"`
+	// JwtClaims: JwtClaims providers fields to generate the token.
+	JwtClaims *EndUserAuthenticationConfigOauth2JwtBearerJwtClaims `json:"jwtClaims,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ClientKey") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ClientKey") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s EndUserAuthenticationConfigOauth2JwtBearer) MarshalJSON() ([]byte, error) {
+	type NoMethod EndUserAuthenticationConfigOauth2JwtBearer
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// EndUserAuthenticationConfigOauth2JwtBearerJwtClaims: JWT claims used for the
+// jwt-bearer authorization grant.
+type EndUserAuthenticationConfigOauth2JwtBearerJwtClaims struct {
+	// Audience: Value for the "aud" claim.
+	Audience string `json:"audience,omitempty"`
+	// Issuer: Value for the "iss" claim.
+	Issuer string `json:"issuer,omitempty"`
+	// Subject: Value for the "sub" claim.
+	Subject string `json:"subject,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Audience") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Audience") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s EndUserAuthenticationConfigOauth2JwtBearerJwtClaims) MarshalJSON() ([]byte, error) {
+	type NoMethod EndUserAuthenticationConfigOauth2JwtBearerJwtClaims
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// EndUserAuthenticationConfigSshPublicKey: Parameters to support Ssh public
+// key Authentication.
+type EndUserAuthenticationConfigSshPublicKey struct {
+	// CertType: Format of SSH Client cert.
+	CertType string `json:"certType,omitempty"`
+	// SshClientCert: Required. SSH Client Cert. It should contain both public and
+	// private key.
+	SshClientCert *EUASecret `json:"sshClientCert,omitempty"`
+	// SshClientCertPass: Required. Password (passphrase) for ssh client
+	// certificate if it has one.
+	SshClientCertPass *EUASecret `json:"sshClientCertPass,omitempty"`
+	// Username: The user account used to authenticate.
+	Username string `json:"username,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "CertType") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CertType") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s EndUserAuthenticationConfigSshPublicKey) MarshalJSON() ([]byte, error) {
+	type NoMethod EndUserAuthenticationConfigSshPublicKey
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// EndUserAuthenticationConfigUserPassword: Parameters to support Username and
+// Password Authentication.
+type EndUserAuthenticationConfigUserPassword struct {
+	// Password: Required. string value or secret version reference containing the
+	// password.
+	Password *EUASecret `json:"password,omitempty"`
+	// Username: Username.
+	Username string `json:"username,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Password") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Password") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s EndUserAuthenticationConfigUserPassword) MarshalJSON() ([]byte, error) {
+	type NoMethod EndUserAuthenticationConfigUserPassword
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// EndUserAuthenticationConfigVariable: EndUserAuthenticationConfigVariable
+// represents a configuration variable present in a EndUserAuthentication.
+type EndUserAuthenticationConfigVariable struct {
+	// BoolValue: Value is a bool.
+	BoolValue bool `json:"boolValue,omitempty"`
+	// IntValue: Value is an integer
+	IntValue int64 `json:"intValue,omitempty,string"`
+	// Key: Required. Key of the config variable.
+	Key string `json:"key,omitempty"`
+	// SecretValue: Value is a secret
+	SecretValue *EUASecret `json:"secretValue,omitempty"`
+	// StringValue: Value is a string.
+	StringValue string `json:"stringValue,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "BoolValue") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "BoolValue") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s EndUserAuthenticationConfigVariable) MarshalJSON() ([]byte, error) {
+	type NoMethod EndUserAuthenticationConfigVariable
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// EndUserAuthenticationEndUserAuthenticationStatus: EndUserAuthentication
+// Status denotes the status of the EndUserAuthentication resource.
+type EndUserAuthenticationEndUserAuthenticationStatus struct {
+	// Description: Output only. Description of the state.
+	Description string `json:"description,omitempty"`
+	// State: Output only. State of Event Subscription resource.
+	//
+	// Possible values:
+	//   "STATE_UNSPECIFIED" - Default state.
+	//   "ACTIVE" - EndUserAuthentication is in Active state.
+	//   "ERROR" - EndUserAuthentication is in Error state.
+	State string `json:"state,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Description") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Description") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s EndUserAuthenticationEndUserAuthenticationStatus) MarshalJSON() ([]byte, error) {
+	type NoMethod EndUserAuthenticationEndUserAuthenticationStatus
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// EndUserAuthenticationNotifyEndpointDestination: Message for
+// NotifyEndpointDestination Destination to hit when the refresh token is
+// expired.
+type EndUserAuthenticationNotifyEndpointDestination struct {
+	// Endpoint: Optional. OPTION 1: Hit an endpoint when the refresh token is
+	// expired.
+	Endpoint *EndUserAuthenticationNotifyEndpointDestinationEndPoint `json:"endpoint,omitempty"`
+	// ServiceAccount: Required. Service account needed for runtime plane to notify
+	// the backend.
+	ServiceAccount string `json:"serviceAccount,omitempty"`
+	// Type: Required. type of the destination
+	//
+	// Possible values:
+	//   "TYPE_UNSPECIFIED" - Default state.
+	//   "ENDPOINT" - Endpoint - Hit the value of endpoint when event is received
+	Type string `json:"type,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Endpoint") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Endpoint") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s EndUserAuthenticationNotifyEndpointDestination) MarshalJSON() ([]byte, error) {
+	type NoMethod EndUserAuthenticationNotifyEndpointDestination
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// EndUserAuthenticationNotifyEndpointDestinationEndPoint: Endpoint message
+// includes details of the Destination endpoint.
+type EndUserAuthenticationNotifyEndpointDestinationEndPoint struct {
+	// EndpointUri: Required. The URI of the Endpoint.
+	EndpointUri string `json:"endpointUri,omitempty"`
+	// Headers: Optional. List of Header to be added to the Endpoint.
+	Headers []*EndUserAuthenticationNotifyEndpointDestinationEndPointHeader `json:"headers,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "EndpointUri") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "EndpointUri") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s EndUserAuthenticationNotifyEndpointDestinationEndPoint) MarshalJSON() ([]byte, error) {
+	type NoMethod EndUserAuthenticationNotifyEndpointDestinationEndPoint
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// EndUserAuthenticationNotifyEndpointDestinationEndPointHeader: Header details
+// for a given header to be added to Endpoint.
+type EndUserAuthenticationNotifyEndpointDestinationEndPointHeader struct {
+	// Key: Required. Key of Header.
+	Key string `json:"key,omitempty"`
+	// Value: Required. Value of Header.
+	Value string `json:"value,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Key") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Key") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s EndUserAuthenticationNotifyEndpointDestinationEndPointHeader) MarshalJSON() ([]byte, error) {
+	type NoMethod EndUserAuthenticationNotifyEndpointDestinationEndPointHeader
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -2159,7 +2691,7 @@ type EventSubscription struct {
 	EventTypeId string `json:"eventTypeId,omitempty"`
 	// Jms: Optional. JMS is the source for the event listener.
 	Jms *JMS `json:"jms,omitempty"`
-	// Name: Required. Resource name of the EventSubscription. Format:
+	// Name: Required. Identifier. Resource name of the EventSubscription. Format:
 	// projects/{project}/locations/{location}/connections/{connection}/eventSubscri
 	// ptions/{event_subscription}
 	Name string `json:"name,omitempty"`
@@ -2204,10 +2736,10 @@ type EventSubscriptionDestination struct {
 	Endpoint *EndPoint `json:"endpoint,omitempty"`
 	// Pubsub: OPTION 3: Write the event to Pub/Sub topic.
 	Pubsub *PubSub `json:"pubsub,omitempty"`
-	// ServiceAccount: Service account needed for runtime plane to trigger IP
-	// workflow.
+	// ServiceAccount: Optional. Service account needed for runtime plane to
+	// trigger IP workflow.
 	ServiceAccount string `json:"serviceAccount,omitempty"`
-	// Type: type of the destination
+	// Type: Optional. type of the destination
 	//
 	// Possible values:
 	//   "TYPE_UNSPECIFIED" - Default state.
@@ -2804,9 +3336,9 @@ func (s HPAConfig) MarshalJSON() ([]byte, error) {
 
 // Header: Header details for a given header to be added to Endpoint.
 type Header struct {
-	// Key: Key of Header.
+	// Key: Optional. Key of Header.
 	Key string `json:"key,omitempty"`
-	// Value: Value of Header.
+	// Value: Optional. Value of Header.
 	Value string `json:"value,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Key") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -3188,11 +3720,11 @@ func (s JsonSchema) MarshalJSON() ([]byte, error) {
 
 // JwtClaims: JWT claims used for the jwt-bearer authorization grant.
 type JwtClaims struct {
-	// Audience: Value for the "aud" claim.
+	// Audience: Optional. Value for the "aud" claim.
 	Audience string `json:"audience,omitempty"`
-	// Issuer: Value for the "iss" claim.
+	// Issuer: Optional. Value for the "iss" claim.
 	Issuer string `json:"issuer,omitempty"`
-	// Subject: Value for the "sub" claim.
+	// Subject: Optional. Value for the "sub" claim.
 	Subject string `json:"subject,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Audience") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -3385,6 +3917,36 @@ type ListCustomConnectorsResponse struct {
 
 func (s ListCustomConnectorsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListCustomConnectorsResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ListEndUserAuthenticationsResponse: Response message for
+// ConnectorsService.ListEndUserAuthentications
+type ListEndUserAuthenticationsResponse struct {
+	// EndUserAuthentications: Subscriptions.
+	EndUserAuthentications []*EndUserAuthentication `json:"endUserAuthentications,omitempty"`
+	// NextPageToken: Next page token.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+	// Unreachable: Locations that could not be reached.
+	Unreachable []string `json:"unreachable,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "EndUserAuthentications") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "EndUserAuthentications") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ListEndUserAuthenticationsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ListEndUserAuthenticationsResponse
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -3742,9 +4304,9 @@ func (s Location) MarshalJSON() ([]byte, error) {
 // LockConfig: Determines whether or no a connection is locked. If locked, a
 // reason must be specified.
 type LockConfig struct {
-	// Locked: Indicates whether or not the connection is locked.
+	// Locked: Optional. Indicates whether or not the connection is locked.
 	Locked bool `json:"locked,omitempty"`
-	// Reason: Describes why a connection is locked.
+	// Reason: Optional. Describes why a connection is locked.
 	Reason string `json:"reason,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Locked") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -4101,9 +4663,9 @@ func (s NetworkConfig) MarshalJSON() ([]byte, error) {
 
 // NodeConfig: Node configuration for the connection.
 type NodeConfig struct {
-	// MaxNodeCount: Maximum number of nodes in the runtime nodes.
+	// MaxNodeCount: Optional. Maximum number of nodes in the runtime nodes.
 	MaxNodeCount int64 `json:"maxNodeCount,omitempty"`
-	// MinNodeCount: Minimum number of nodes in the runtime nodes.
+	// MinNodeCount: Optional. Minimum number of nodes in the runtime nodes.
 	MinNodeCount int64 `json:"minNodeCount,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "MaxNodeCount") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -4177,27 +4739,59 @@ func (s NotificationParameter) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// OAuthTokenData: pass only at create and not update using updateMask Auth
+// Code Data
+type OAuthTokenData struct {
+	// AccessToken: Optional. Access token for the connection.
+	AccessToken *EUASecret `json:"accessToken,omitempty"`
+	// CreateTime: Optional. Timestamp when the access token was created.
+	CreateTime string `json:"createTime,omitempty"`
+	// Expiry: Optional. Time in seconds when the access token expires.
+	Expiry string `json:"expiry,omitempty"`
+	// RefreshToken: Optional. Refresh token for the connection.
+	RefreshToken *EUASecret `json:"refreshToken,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AccessToken") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AccessToken") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s OAuthTokenData) MarshalJSON() ([]byte, error) {
+	type NoMethod OAuthTokenData
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // Oauth2AuthCodeFlow: Parameters to support Oauth 2.0 Auth Code Grant
 // Authentication. See https://www.rfc-editor.org/rfc/rfc6749#section-1.3.1 for
 // more details.
 type Oauth2AuthCodeFlow struct {
-	// AuthCode: Authorization code to be exchanged for access and refresh tokens.
+	// AuthCode: Optional. Authorization code to be exchanged for access and
+	// refresh tokens.
 	AuthCode string `json:"authCode,omitempty"`
-	// AuthUri: Auth URL for Authorization Code Flow
+	// AuthUri: Optional. Auth URL for Authorization Code Flow
 	AuthUri string `json:"authUri,omitempty"`
-	// ClientId: Client ID for user-provided OAuth app.
+	// ClientId: Optional. Client ID for user-provided OAuth app.
 	ClientId string `json:"clientId,omitempty"`
-	// ClientSecret: Client secret for user-provided OAuth app.
+	// ClientSecret: Optional. Client secret for user-provided OAuth app.
 	ClientSecret *Secret `json:"clientSecret,omitempty"`
-	// EnablePkce: Whether to enable PKCE when the user performs the auth code
-	// flow.
-	EnablePkce bool `json:"enablePkce,omitempty"`
-	// PkceVerifier: PKCE verifier to be used during the auth code exchange.
-	PkceVerifier string `json:"pkceVerifier,omitempty"`
-	// RedirectUri: Redirect URI to be provided during the auth code exchange.
-	RedirectUri string `json:"redirectUri,omitempty"`
-	// Scopes: Scopes the connection will request when the user performs the auth
+	// EnablePkce: Optional. Whether to enable PKCE when the user performs the auth
 	// code flow.
+	EnablePkce bool `json:"enablePkce,omitempty"`
+	// PkceVerifier: Optional. PKCE verifier to be used during the auth code
+	// exchange.
+	PkceVerifier string `json:"pkceVerifier,omitempty"`
+	// RedirectUri: Optional. Redirect URI to be provided during the auth code
+	// exchange.
+	RedirectUri string `json:"redirectUri,omitempty"`
+	// Scopes: Optional. Scopes the connection will request when the user performs
+	// the auth code flow.
 	Scopes []string `json:"scopes,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AuthCode") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -4252,9 +4846,10 @@ func (s Oauth2AuthCodeFlowGoogleManaged) MarshalJSON() ([]byte, error) {
 // Grant Authentication. See https://tools.ietf.org/html/rfc6749#section-1.3.4
 // for more details.
 type Oauth2ClientCredentials struct {
-	// ClientId: The client identifier.
+	// ClientId: Optional. The client identifier.
 	ClientId string `json:"clientId,omitempty"`
-	// ClientSecret: Secret version reference containing the client secret.
+	// ClientSecret: Optional. Secret version reference containing the client
+	// secret.
 	ClientSecret *Secret `json:"clientSecret,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "ClientId") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -4278,12 +4873,12 @@ func (s Oauth2ClientCredentials) MarshalJSON() ([]byte, error) {
 // Oauth 2.0 Authorization Grant based authentication. See
 // https://tools.ietf.org/html/rfc7523 for more details.
 type Oauth2JwtBearer struct {
-	// ClientKey: Secret version reference containing a PKCS#8 PEM-encoded private
-	// key associated with the Client Certificate. This private key will be used to
-	// sign JWTs used for the jwt-bearer authorization grant. Specified in the form
-	// as: `projects/*/secrets/*/versions/*`.
+	// ClientKey: Optional. Secret version reference containing a PKCS#8
+	// PEM-encoded private key associated with the Client Certificate. This private
+	// key will be used to sign JWTs used for the jwt-bearer authorization grant.
+	// Specified in the form as: `projects/*/secrets/*/versions/*`.
 	ClientKey *Secret `json:"clientKey,omitempty"`
-	// JwtClaims: JwtClaims providers fields to generate the token.
+	// JwtClaims: Optional. JwtClaims providers fields to generate the token.
 	JwtClaims *JwtClaims `json:"jwtClaims,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "ClientKey") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -4578,6 +5173,35 @@ type Policy struct {
 
 func (s Policy) MarshalJSON() ([]byte, error) {
 	type NoMethod Policy
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// PriorityEntityType: PriorityEntityType represents an entity type with its
+// associated priority and order.
+type PriorityEntityType struct {
+	// Description: The description of the entity type.
+	Description string `json:"description,omitempty"`
+	// Id: The entity type.
+	Id string `json:"id,omitempty"`
+	// Order: The order of the entity type within its priority group.
+	Order int64 `json:"order,omitempty"`
+	// Priority: The priority of the entity type, such as P0, P1, etc.
+	Priority string `json:"priority,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Description") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Description") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s PriorityEntityType) MarshalJSON() ([]byte, error) {
+	type NoMethod PriorityEntityType
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -5274,8 +5898,8 @@ func (s SearchConnectionsResponse) MarshalJSON() ([]byte, error) {
 
 // Secret: Secret provides a reference to entries in Secret Manager.
 type Secret struct {
-	// SecretVersion: The resource name of the secret version in the format, format
-	// as: `projects/*/secrets/*/versions/*`.
+	// SecretVersion: Optional. The resource name of the secret version in the
+	// format, format as: `projects/*/secrets/*/versions/*`.
 	SecretVersion string `json:"secretVersion,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "SecretVersion") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -5447,15 +6071,15 @@ func (s Source) MarshalJSON() ([]byte, error) {
 
 // SshPublicKey: Parameters to support Ssh public key Authentication.
 type SshPublicKey struct {
-	// CertType: Format of SSH Client cert.
+	// CertType: Optional. Format of SSH Client cert.
 	CertType string `json:"certType,omitempty"`
-	// SshClientCert: SSH Client Cert. It should contain both public and private
-	// key.
+	// SshClientCert: Optional. SSH Client Cert. It should contain both public and
+	// private key.
 	SshClientCert *Secret `json:"sshClientCert,omitempty"`
-	// SshClientCertPass: Password (passphrase) for ssh client certificate if it
-	// has one.
+	// SshClientCertPass: Optional. Password (passphrase) for ssh client
+	// certificate if it has one.
 	SshClientCertPass *Secret `json:"sshClientCertPass,omitempty"`
-	// Username: The user account used to authenticate.
+	// Username: Optional. The user account used to authenticate.
 	Username string `json:"username,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "CertType") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -5868,9 +6492,9 @@ func (s UpdatePolicy) MarshalJSON() ([]byte, error) {
 
 // UserPassword: Parameters to support Username and Password Authentication.
 type UserPassword struct {
-	// Password: Secret version reference containing the password.
+	// Password: Optional. Secret version reference containing the password.
 	Password *Secret `json:"password,omitempty"`
-	// Username: Username.
+	// Username: Optional. Username.
 	Username string `json:"username,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Password") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -7506,8 +8130,11 @@ func (r *ProjectsLocationsConnectionsService) Patch(name string, connection *Con
 	return c
 }
 
-// UpdateMask sets the optional parameter "updateMask": Required. You can
-// modify only the fields listed below. To lock/unlock a connection: *
+// UpdateMask sets the optional parameter "updateMask": Required. The list of
+// fields to update. Fields are specified relative to the connection. A field
+// will be overwritten if it is in the mask. The field mask must not be empty,
+// and it must not contain fields that are immutable or only set by the server.
+// You can modify only the fields listed below. To lock/unlock a connection: *
 // `lock_config` To suspend/resume a connection: * `suspended` To update the
 // connection details: * `description` * `labels` * `connector_version` *
 // `config_variables` * `auth_config` * `destination_configs` * `node_config` *
@@ -8746,6 +9373,615 @@ func (c *ProjectsLocationsConnectionsConnectionSchemaMetadataRefreshCall) Do(opt
 	return ret, nil
 }
 
+type ProjectsLocationsConnectionsEndUserAuthenticationsCreateCall struct {
+	s                     *Service
+	parent                string
+	enduserauthentication *EndUserAuthentication
+	urlParams_            gensupport.URLParams
+	ctx_                  context.Context
+	header_               http.Header
+}
+
+// Create: Creates a new EndUserAuthentication in a given project,location and
+// connection.
+//
+//   - parent: Parent resource of the EndUserAuthentication, of the form:
+//     `projects/*/locations/*/connections/*`.
+func (r *ProjectsLocationsConnectionsEndUserAuthenticationsService) Create(parent string, enduserauthentication *EndUserAuthentication) *ProjectsLocationsConnectionsEndUserAuthenticationsCreateCall {
+	c := &ProjectsLocationsConnectionsEndUserAuthenticationsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.enduserauthentication = enduserauthentication
+	return c
+}
+
+// EndUserAuthenticationId sets the optional parameter
+// "endUserAuthenticationId": Required. Identifier to assign to the
+// EndUserAuthentication. Must be unique within scope of the parent resource.
+func (c *ProjectsLocationsConnectionsEndUserAuthenticationsCreateCall) EndUserAuthenticationId(endUserAuthenticationId string) *ProjectsLocationsConnectionsEndUserAuthenticationsCreateCall {
+	c.urlParams_.Set("endUserAuthenticationId", endUserAuthenticationId)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsConnectionsEndUserAuthenticationsCreateCall) Fields(s ...googleapi.Field) *ProjectsLocationsConnectionsEndUserAuthenticationsCreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsConnectionsEndUserAuthenticationsCreateCall) Context(ctx context.Context) *ProjectsLocationsConnectionsEndUserAuthenticationsCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsConnectionsEndUserAuthenticationsCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsConnectionsEndUserAuthenticationsCreateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.enduserauthentication)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/endUserAuthentications")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "connectors.projects.locations.connections.endUserAuthentications.create", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "connectors.projects.locations.connections.endUserAuthentications.create" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsConnectionsEndUserAuthenticationsCreateCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "connectors.projects.locations.connections.endUserAuthentications.create", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsConnectionsEndUserAuthenticationsDeleteCall struct {
+	s          *Service
+	name       string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Delete: Deletes a single EndUserAuthentication.
+//
+//   - name: Resource name of the form:
+//     `projects/*/locations/*/connections/*/endUserAuthentication/*`.
+func (r *ProjectsLocationsConnectionsEndUserAuthenticationsService) Delete(name string) *ProjectsLocationsConnectionsEndUserAuthenticationsDeleteCall {
+	c := &ProjectsLocationsConnectionsEndUserAuthenticationsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsConnectionsEndUserAuthenticationsDeleteCall) Fields(s ...googleapi.Field) *ProjectsLocationsConnectionsEndUserAuthenticationsDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsConnectionsEndUserAuthenticationsDeleteCall) Context(ctx context.Context) *ProjectsLocationsConnectionsEndUserAuthenticationsDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsConnectionsEndUserAuthenticationsDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsConnectionsEndUserAuthenticationsDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("DELETE", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "connectors.projects.locations.connections.endUserAuthentications.delete", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "connectors.projects.locations.connections.endUserAuthentications.delete" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsConnectionsEndUserAuthenticationsDeleteCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "connectors.projects.locations.connections.endUserAuthentications.delete", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsConnectionsEndUserAuthenticationsGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Gets details of a single EndUserAuthentication.
+//
+//   - name: Resource name of the form:
+//     `projects/*/locations/*/connections/*/EndUserAuthentications/*`.
+func (r *ProjectsLocationsConnectionsEndUserAuthenticationsService) Get(name string) *ProjectsLocationsConnectionsEndUserAuthenticationsGetCall {
+	c := &ProjectsLocationsConnectionsEndUserAuthenticationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// View sets the optional parameter "view": View of the EndUserAuthentication
+// to return.
+//
+// Possible values:
+//
+//	"END_USER_AUTHENTICATION_VIEW_UNSPECIFIED" -
+//
+// END_USER_AUTHENTICATION_UNSPECIFIED.
+//
+//	"BASIC_VIEW" - Do not include secret fields.
+//	"FULL_VIEW" - Include secret fields.
+func (c *ProjectsLocationsConnectionsEndUserAuthenticationsGetCall) View(view string) *ProjectsLocationsConnectionsEndUserAuthenticationsGetCall {
+	c.urlParams_.Set("view", view)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsConnectionsEndUserAuthenticationsGetCall) Fields(s ...googleapi.Field) *ProjectsLocationsConnectionsEndUserAuthenticationsGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsConnectionsEndUserAuthenticationsGetCall) IfNoneMatch(entityTag string) *ProjectsLocationsConnectionsEndUserAuthenticationsGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsConnectionsEndUserAuthenticationsGetCall) Context(ctx context.Context) *ProjectsLocationsConnectionsEndUserAuthenticationsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsConnectionsEndUserAuthenticationsGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsConnectionsEndUserAuthenticationsGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "connectors.projects.locations.connections.endUserAuthentications.get", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "connectors.projects.locations.connections.endUserAuthentications.get" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *EndUserAuthentication.ServerResponse.Header or (if a response was returned
+// at all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *ProjectsLocationsConnectionsEndUserAuthenticationsGetCall) Do(opts ...googleapi.CallOption) (*EndUserAuthentication, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &EndUserAuthentication{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "connectors.projects.locations.connections.endUserAuthentications.get", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsConnectionsEndUserAuthenticationsListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: List EndUserAuthentications in a given project,location and
+// connection.
+//
+//   - parent: Parent resource of the EndUserAuthentication, of the form:
+//     `projects/*/locations/*/connections/*`.
+func (r *ProjectsLocationsConnectionsEndUserAuthenticationsService) List(parent string) *ProjectsLocationsConnectionsEndUserAuthenticationsListCall {
+	c := &ProjectsLocationsConnectionsEndUserAuthenticationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// Filter sets the optional parameter "filter": Filter.
+func (c *ProjectsLocationsConnectionsEndUserAuthenticationsListCall) Filter(filter string) *ProjectsLocationsConnectionsEndUserAuthenticationsListCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// OrderBy sets the optional parameter "orderBy": Order by parameters.
+func (c *ProjectsLocationsConnectionsEndUserAuthenticationsListCall) OrderBy(orderBy string) *ProjectsLocationsConnectionsEndUserAuthenticationsListCall {
+	c.urlParams_.Set("orderBy", orderBy)
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": Page size.
+func (c *ProjectsLocationsConnectionsEndUserAuthenticationsListCall) PageSize(pageSize int64) *ProjectsLocationsConnectionsEndUserAuthenticationsListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": Page token.
+func (c *ProjectsLocationsConnectionsEndUserAuthenticationsListCall) PageToken(pageToken string) *ProjectsLocationsConnectionsEndUserAuthenticationsListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsConnectionsEndUserAuthenticationsListCall) Fields(s ...googleapi.Field) *ProjectsLocationsConnectionsEndUserAuthenticationsListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsConnectionsEndUserAuthenticationsListCall) IfNoneMatch(entityTag string) *ProjectsLocationsConnectionsEndUserAuthenticationsListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsConnectionsEndUserAuthenticationsListCall) Context(ctx context.Context) *ProjectsLocationsConnectionsEndUserAuthenticationsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsConnectionsEndUserAuthenticationsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsConnectionsEndUserAuthenticationsListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/endUserAuthentications")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "connectors.projects.locations.connections.endUserAuthentications.list", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "connectors.projects.locations.connections.endUserAuthentications.list" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *ListEndUserAuthenticationsResponse.ServerResponse.Header or (if a response
+// was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsConnectionsEndUserAuthenticationsListCall) Do(opts ...googleapi.CallOption) (*ListEndUserAuthenticationsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ListEndUserAuthenticationsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "connectors.projects.locations.connections.endUserAuthentications.list", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsLocationsConnectionsEndUserAuthenticationsListCall) Pages(ctx context.Context, f func(*ListEndUserAuthenticationsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+type ProjectsLocationsConnectionsEndUserAuthenticationsPatchCall struct {
+	s                     *Service
+	name                  string
+	enduserauthentication *EndUserAuthentication
+	urlParams_            gensupport.URLParams
+	ctx_                  context.Context
+	header_               http.Header
+}
+
+// Patch: Updates the parameters of a single EndUserAuthentication.
+//
+//   - name: Identifier. Resource name of the EndUserAuthentication. Format:
+//     projects/{project}/locations/{location}/connections/{connection}/endUserAut
+//     hentications/{end_user_authentication}.
+func (r *ProjectsLocationsConnectionsEndUserAuthenticationsService) Patch(name string, enduserauthentication *EndUserAuthentication) *ProjectsLocationsConnectionsEndUserAuthenticationsPatchCall {
+	c := &ProjectsLocationsConnectionsEndUserAuthenticationsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.enduserauthentication = enduserauthentication
+	return c
+}
+
+// UpdateMask sets the optional parameter "updateMask": Required. The list of
+// fields to update. A field will be overwritten if it is in the mask. You can
+// modify only the fields listed below. To update the EndUserAuthentication
+// details: * `notify_endpoint_destination`
+func (c *ProjectsLocationsConnectionsEndUserAuthenticationsPatchCall) UpdateMask(updateMask string) *ProjectsLocationsConnectionsEndUserAuthenticationsPatchCall {
+	c.urlParams_.Set("updateMask", updateMask)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsConnectionsEndUserAuthenticationsPatchCall) Fields(s ...googleapi.Field) *ProjectsLocationsConnectionsEndUserAuthenticationsPatchCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsConnectionsEndUserAuthenticationsPatchCall) Context(ctx context.Context) *ProjectsLocationsConnectionsEndUserAuthenticationsPatchCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsConnectionsEndUserAuthenticationsPatchCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsConnectionsEndUserAuthenticationsPatchCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.enduserauthentication)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PATCH", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "connectors.projects.locations.connections.endUserAuthentications.patch", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "connectors.projects.locations.connections.endUserAuthentications.patch" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsConnectionsEndUserAuthenticationsPatchCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "connectors.projects.locations.connections.endUserAuthentications.patch", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
 type ProjectsLocationsConnectionsEventSubscriptionsCreateCall struct {
 	s                 *Service
 	parent            string
@@ -9235,7 +10471,7 @@ type ProjectsLocationsConnectionsEventSubscriptionsPatchCall struct {
 
 // Patch: Updates the parameters of a single EventSubscription.
 //
-//   - name: Resource name of the EventSubscription. Format:
+//   - name: Identifier. Resource name of the EventSubscription. Format:
 //     projects/{project}/locations/{location}/connections/{connection}/eventSubsc
 //     riptions/{event_subscription}.
 func (r *ProjectsLocationsConnectionsEventSubscriptionsService) Patch(name string, eventsubscription *EventSubscription) *ProjectsLocationsConnectionsEventSubscriptionsPatchCall {
@@ -14169,6 +15405,27 @@ func (r *ProjectsLocationsProvidersConnectorsVersionsService) Get(name string) *
 	return c
 }
 
+// SchemaView sets the optional parameter "schemaView": Enum to control whether
+// schema enrichment related fields should be included in the response.
+//
+// Possible values:
+//
+//	"CONNECTOR_VERSION_SCHEMA_VIEW_UNSPECIFIED" - VIEW_UNSPECIFIED. The unset
+//
+// value. Defaults to BASIC View.
+//
+//	"CONNECTOR_VERSION_SCHEMA_VIEW_BASIC" - Return basic connector version
+//
+// schema.
+//
+//	"CONNECTOR_VERSION_SCHEMA_VIEW_ENRICHED" - Return enriched connector
+//
+// version schema.
+func (c *ProjectsLocationsProvidersConnectorsVersionsGetCall) SchemaView(schemaView string) *ProjectsLocationsProvidersConnectorsVersionsGetCall {
+	c.urlParams_.Set("schemaView", schemaView)
+	return c
+}
+
 // View sets the optional parameter "view": Specifies which fields of the
 // ConnectorVersion are returned in the response. Defaults to `CUSTOMER` view.
 //
@@ -14303,6 +15560,27 @@ func (c *ProjectsLocationsProvidersConnectorsVersionsListCall) PageSize(pageSize
 // PageToken sets the optional parameter "pageToken": Page token.
 func (c *ProjectsLocationsProvidersConnectorsVersionsListCall) PageToken(pageToken string) *ProjectsLocationsProvidersConnectorsVersionsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// SchemaView sets the optional parameter "schemaView": Enum to control whether
+// schema enrichment related fields should be included in the response.
+//
+// Possible values:
+//
+//	"CONNECTOR_VERSION_SCHEMA_VIEW_UNSPECIFIED" - VIEW_UNSPECIFIED. The unset
+//
+// value. Defaults to BASIC View.
+//
+//	"CONNECTOR_VERSION_SCHEMA_VIEW_BASIC" - Return basic connector version
+//
+// schema.
+//
+//	"CONNECTOR_VERSION_SCHEMA_VIEW_ENRICHED" - Return enriched connector
+//
+// version schema.
+func (c *ProjectsLocationsProvidersConnectorsVersionsListCall) SchemaView(schemaView string) *ProjectsLocationsProvidersConnectorsVersionsListCall {
+	c.urlParams_.Set("schemaView", schemaView)
 	return c
 }
 

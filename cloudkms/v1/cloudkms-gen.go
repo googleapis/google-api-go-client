@@ -2168,6 +2168,8 @@ type ListCryptoKeyVersionsResponse struct {
 	// results.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 	// TotalSize: The total number of CryptoKeyVersions that matched the query.
+	// This field is not populated if ListCryptoKeyVersionsRequest.filter is
+	// applied.
 	TotalSize int64 `json:"totalSize,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
@@ -2198,7 +2200,8 @@ type ListCryptoKeysResponse struct {
 	// NextPageToken: A token to retrieve next page of results. Pass this value in
 	// ListCryptoKeysRequest.page_token to retrieve the next page of results.
 	NextPageToken string `json:"nextPageToken,omitempty"`
-	// TotalSize: The total number of CryptoKeys that matched the query.
+	// TotalSize: The total number of CryptoKeys that matched the query. This field
+	// is not populated if ListCryptoKeysRequest.filter is applied.
 	TotalSize int64 `json:"totalSize,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
@@ -2229,7 +2232,8 @@ type ListEkmConnectionsResponse struct {
 	// NextPageToken: A token to retrieve next page of results. Pass this value in
 	// ListEkmConnectionsRequest.page_token to retrieve the next page of results.
 	NextPageToken string `json:"nextPageToken,omitempty"`
-	// TotalSize: The total number of EkmConnections that matched the query.
+	// TotalSize: The total number of EkmConnections that matched the query. This
+	// field is not populated if ListEkmConnectionsRequest.filter is applied.
 	TotalSize int64 `json:"totalSize,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
@@ -2260,7 +2264,8 @@ type ListImportJobsResponse struct {
 	// NextPageToken: A token to retrieve next page of results. Pass this value in
 	// ListImportJobsRequest.page_token to retrieve the next page of results.
 	NextPageToken string `json:"nextPageToken,omitempty"`
-	// TotalSize: The total number of ImportJobs that matched the query.
+	// TotalSize: The total number of ImportJobs that matched the query. This field
+	// is not populated if ListImportJobsRequest.filter is applied.
 	TotalSize int64 `json:"totalSize,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
@@ -2319,7 +2324,8 @@ type ListKeyRingsResponse struct {
 	// NextPageToken: A token to retrieve next page of results. Pass this value in
 	// ListKeyRingsRequest.page_token to retrieve the next page of results.
 	NextPageToken string `json:"nextPageToken,omitempty"`
-	// TotalSize: The total number of KeyRings that matched the query.
+	// TotalSize: The total number of KeyRings that matched the query. This field
+	// is not populated if ListKeyRingsRequest.filter is applied.
 	TotalSize int64 `json:"totalSize,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.

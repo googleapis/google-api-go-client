@@ -12,7 +12,10 @@ import (
 
 	"google.golang.org/api/internal/impersonate"
 	"google.golang.org/grpc"
+	"google.golang.org/grpc/stats"
 
+	"go.opentelemetry.io/contrib/instrumentation/google.golang.org/grpc/otelgrpc"
+	"go.opentelemetry.io/contrib/instrumentation/net/http/otelhttp"
 	"golang.org/x/oauth2"
 	"golang.org/x/oauth2/google"
 )
@@ -38,6 +41,13 @@ func TestSettingsValidate(t *testing.T) {
 		{ClientCertSource: dummyGetClientCertificate},
 		{ImpersonationConfig: &impersonate.Config{Scopes: []string{"x"}}},
 		{ImpersonationConfig: &impersonate.Config{}, Scopes: []string{"x"}},
+		{OpenTelemetryOpts: []any{
+			otelgrpc.WithFilter(func(ri *stats.RPCTagInfo) bool {
+				return true
+			}),
+			otelhttp.WithFilter(func(ri *http.Request) bool {
+				return true
+			})}},
 	} {
 		err := ds.Validate()
 		if err != nil {
@@ -67,6 +77,7 @@ func TestSettingsValidate(t *testing.T) {
 		{ClientCertSource: dummyGetClientCertificate, GRPCDialOpts: []grpc.DialOption{grpc.WithInsecure()}},
 		{ClientCertSource: dummyGetClientCertificate, GRPCConnPoolSize: 1},
 		{ImpersonationConfig: &impersonate.Config{}},
+		{OpenTelemetryOpts: []any{"string"}},
 	} {
 		err := ds.Validate()
 		if err == nil {

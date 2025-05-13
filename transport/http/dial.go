@@ -306,15 +306,7 @@ func addOpenTelemetryTransport(trans http.RoundTripper, settings *internal.DialS
 	if settings.TelemetryDisabled {
 		return trans
 	}
-
-	opts := []otelhttp.Option{}
-	for _, opt := range settings.OpenTelemetryOpts {
-		if opt, ok := opt.(otelhttp.Option); ok {
-			opts = append(opts, opt)
-		}
-	}
-
-	return otelhttp.NewTransport(trans, opts...)
+	return otelhttp.NewTransport(trans, settings.OpenTelemetryOptsHTTP...)
 }
 
 // clonedTransport returns the given RoundTripper as a cloned *http.Transport.

@@ -400,12 +400,7 @@ func addOpenTelemetryStatsHandler(opts []grpc.DialOption, settings *internal.Dia
 	if settings.TelemetryDisabled {
 		return opts
 	}
-	otelOpts := []otelgrpc.Option{}
-	for _, opt := range settings.OpenTelemetryOpts {
-		if opt, ok := opt.(otelgrpc.Option); ok {
-			otelOpts = append(otelOpts, opt)
-		}
-	}
+	otelOpts := settings.OpenTelemetryOptsGRPC
 	return append(opts, grpc.WithStatsHandler(otelGRPCStatsHandler(otelOpts)))
 }
 

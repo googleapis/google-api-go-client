@@ -299,6 +299,9 @@ type AuthCodeData struct {
 	// RedirectUri: OAuth redirect URI passed in during the auth code flow,
 	// required by some OAuth backends.
 	RedirectUri string `json:"redirectUri,omitempty"`
+	// Scopes: Scopes the connection will request when the user performs the auth
+	// code flow.
+	Scopes []string `json:"scopes,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AuthCode") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See

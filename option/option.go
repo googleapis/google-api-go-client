@@ -418,7 +418,9 @@ func (w withLogger) Apply(o *internal.DialSettings) {
 // WithOpenTelemetryOpts returns a ClientOption that sets the options for
 // the OpenTelemetry HTTP/gRPC client. This option is used to configure
 // the OpenTelemetry HTTP/gRPC client instrumentation.
-// It can accept any number of options, which can be otelhttp.Option or otelgrpc.Option.
+// It can accept any number of options, which can be
+// go.opentelemetry.io/contrib/instrumentation/net/http/otelhttp.Option or
+// go.opentelemetry.io/contrib/instrumentation/google.golang.org/grpc/otelgrpc.Option
 func WithOpenTelemetryOpts(opts ...any) ClientOption {
 	return withOpenTelemetryOpts{opts}
 }

@@ -192,7 +192,9 @@ func (ds *DialSettings) Validate() error {
 		case otelgrpc.Option:
 			ds.OpenTelemetryOptsGRPC = append(ds.OpenTelemetryOptsGRPC, o.(otelgrpc.Option))
 		default:
-			return errors.New("WithOpenTelemetryOpts options must be of type otelhttp.Option or otelgrpc.Option")
+			return errors.New("WithOpenTelemetryOpts options must be of type " +
+				"go.opentelemetry.io/contrib/instrumentation/net/http/otelhttp.Option " +
+				"or go.opentelemetry.io/contrib/instrumentation/google.golang.org/grpc/otelgrpc.Option")
 		}
 	}
 	return nil

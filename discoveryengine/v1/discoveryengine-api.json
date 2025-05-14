@@ -7052,7 +7052,7 @@
       }
     }
   },
-  "revision": "20250508",
+  "revision": "20250509",
   "rootUrl": "https://discoveryengine.googleapis.com/",
   "schemas": {
     "GoogleApiDistribution": {
@@ -16292,7 +16292,7 @@
           "type": "array"
         },
         "autoRunDisabled": {
-          "description": "Indicates whether the connector is disabled for auto run. It can be used to pause periodical and real time sync.",
+          "description": "Optional. Indicates whether the connector is disabled for auto run. It can be used to pause periodical and real time sync. Update: with the introduction of incremental_sync_disabled, auto_run_disabled is used to pause/disable only full syncs",
           "type": "boolean"
         },
         "bapConfig": {
@@ -16418,6 +16418,15 @@
         "identityScheduleConfig": {
           "$ref": "GoogleCloudDiscoveryengineV1alphaIdentityScheduleConfig",
           "description": "The configuration for the identity data synchronization runs. This contains the refresh interval to sync the Access Control List information for the documents ingested by this connector."
+        },
+        "incrementalRefreshInterval": {
+          "description": "Optional. The refresh interval specifically for incremental data syncs. If unset, incremental syncs will use the default from env, set to 3hrs. The minimum is 30 minutes and maximum is 7 days.",
+          "format": "google-duration",
+          "type": "string"
+        },
+        "incrementalSyncDisabled": {
+          "description": "Optional. Indicates whether incremental syncs are paused for this connector. This is independent of auto_run_disabled.",
+          "type": "boolean"
         },
         "kmsKeyName": {
           "description": "Input only. The KMS key to be used to protect the DataStores managed by this connector. Must be set for requests that need to comply with CMEK Org Policy protections. If this field is set and processed successfully, the DataStores created by this connector will be protected by the KMS key.",

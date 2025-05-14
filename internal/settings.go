@@ -190,7 +190,7 @@ func (ds *DialSettings) Validate() error {
 		case otelhttp.Option:
 			ds.OpenTelemetryOptsHTTP = append(ds.OpenTelemetryOptsHTTP, o)
 		case otelgrpc.Option:
-			ds.OpenTelemetryOptsGRPC = append(ds.OpenTelemetryOptsGRPC, o.(otelgrpc.Option))
+			ds.OpenTelemetryOptsGRPC = append(ds.OpenTelemetryOptsGRPC, o)
 		default:
 			return errors.New("WithOpenTelemetryOpts options must be of type " +
 				"go.opentelemetry.io/contrib/instrumentation/net/http/otelhttp.Option " +

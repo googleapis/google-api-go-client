@@ -6278,7 +6278,10 @@ type CustomEmojisCreateCall struct {
 // Chat (https://support.google.com/chat/answer/12800149) and Manage custom
 // emoji permissions (https://support.google.com/a/answer/12850085). Requires
 // user authentication
-// (https://developers.google.com/workspace/chat/authenticate-authorize-chat-user).
+// (https://developers.google.com/workspace/chat/authenticate-authorize-chat-user)
+// with the authorization scope
+// (https://developers.google.com/workspace/chat/authenticate-authorize#chat-api-scopes):
+// - `https://www.googleapis.com/auth/chat.customemojis`
 func (r *CustomEmojisService) Create(customemoji *CustomEmoji) *CustomEmojisCreateCall {
 	c := &CustomEmojisCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.customemoji = customemoji
@@ -6385,7 +6388,10 @@ type CustomEmojisDeleteCall struct {
 // (https://support.google.com/chat/answer/12800149) and Manage custom emoji
 // permissions (https://support.google.com/a/answer/12850085). Requires user
 // authentication
-// (https://developers.google.com/workspace/chat/authenticate-authorize-chat-user).
+// (https://developers.google.com/workspace/chat/authenticate-authorize-chat-user)
+// with the authorization scope
+// (https://developers.google.com/workspace/chat/authenticate-authorize#chat-api-scopes):
+// - `https://www.googleapis.com/auth/chat.customemojis`
 //
 //   - name: Resource name of the custom emoji to delete. Format:
 //     `customEmojis/{customEmoji}` You can use the emoji name as an alias for
@@ -6492,7 +6498,11 @@ type CustomEmojisGetCall struct {
 // in Google Chat (https://support.google.com/chat/answer/12800149) and Manage
 // custom emoji permissions (https://support.google.com/a/answer/12850085).
 // Requires user authentication
-// (https://developers.google.com/workspace/chat/authenticate-authorize-chat-user).
+// (https://developers.google.com/workspace/chat/authenticate-authorize-chat-user)
+// with one of the following authorization scopes
+// (https://developers.google.com/workspace/chat/authenticate-authorize#chat-api-scopes):
+// - `https://www.googleapis.com/auth/chat.customemojis.readonly` -
+// `https://www.googleapis.com/auth/chat.customemojis`
 //
 //   - name: Resource name of the custom emoji. Format:
 //     `customEmojis/{customEmoji}` You can use the emoji name as an alias for
@@ -6610,7 +6620,11 @@ type CustomEmojisListCall struct {
 // (https://support.google.com/chat/answer/12800149) and Manage custom emoji
 // permissions (https://support.google.com/a/answer/12850085). Requires user
 // authentication
-// (https://developers.google.com/workspace/chat/authenticate-authorize-chat-user).
+// (https://developers.google.com/workspace/chat/authenticate-authorize-chat-user)
+// with one of the following authorization scopes
+// (https://developers.google.com/workspace/chat/authenticate-authorize#chat-api-scopes):
+// - `https://www.googleapis.com/auth/chat.customemojis.readonly` -
+// `https://www.googleapis.com/auth/chat.customemojis`
 func (r *CustomEmojisService) List() *CustomEmojisListCall {
 	c := &CustomEmojisListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	return c
@@ -6898,9 +6912,14 @@ type MediaUploadCall struct {
 // attachment
 // (https://developers.google.com/workspace/chat/upload-media-attachments).
 // Requires user authentication
-// (https://developers.google.com/workspace/chat/authenticate-authorize-chat-user).
-// You can upload attachments up to 200 MB. Certain file types aren't
-// supported. For details, see File types blocked by Google Chat
+// (https://developers.google.com/workspace/chat/authenticate-authorize-chat-user)
+// with one of the following authorization scopes
+// (https://developers.google.com/workspace/chat/authenticate-authorize#chat-api-scopes):
+// - `https://www.googleapis.com/auth/chat.messages.create` -
+// `https://www.googleapis.com/auth/chat.messages` -
+// `https://www.googleapis.com/auth/chat.import` (import mode spaces only) You
+// can upload attachments up to 200 MB. Certain file types aren't supported.
+// For details, see File types blocked by Google Chat
 // (https://support.google.com/chat/answer/7651457?&co=GENIE.Platform%3DDesktop#File%20types%20blocked%20in%20Google%20Chat).
 //
 //   - parent: Resource name of the Chat space in which the attachment is
@@ -7070,10 +7089,12 @@ type SpacesCompleteImportCall struct {
 
 // CompleteImport: Completes the import process
 // (https://developers.google.com/workspace/chat/import-data) for the specified
-// space and makes it visible to users. Requires app authentication
-// (https://developers.google.com/workspace/chat/authenticate-authorize-chat-app)
-// and domain-wide delegation. For more information, see Authorize Google Chat
-// apps to import data
+// space and makes it visible to users. Requires user authentication
+// (https://developers.google.com/workspace/chat/authenticate-authorize-chat-user)
+// and domain-wide delegation with the authorization scope
+// (https://developers.google.com/workspace/chat/authenticate-authorize#chat-api-scopes):
+// - `https://www.googleapis.com/auth/chat.import` For more information, see
+// Authorize Google Chat apps to import data
 // (https://developers.google.com/workspace/chat/authorize-import).
 //
 // - name: Resource name of the import mode space. Format: `spaces/{space}`.
@@ -7185,10 +7206,16 @@ type SpacesCreateCall struct {
 // authentication
 // (https://developers.google.com/workspace/chat/authenticate-authorize-chat-app)
 // with administrator approval (https://support.google.com/a?p=chat-app-auth)
-// in Developer Preview (https://developers.google.com/workspace/preview) -
-// User authentication
+// in Developer Preview (https://developers.google.com/workspace/preview) and
+// one of the following authorization scopes: -
+// `https://www.googleapis.com/auth/chat.app.spaces.create` -
+// `https://www.googleapis.com/auth/chat.app.spaces` - User authentication
 // (https://developers.google.com/workspace/chat/authenticate-authorize-chat-user)
-// When authenticating as an app, the `space.customer` field must be set in the
+// with one of the following authorization scopes: -
+// `https://www.googleapis.com/auth/chat.spaces.create` -
+// `https://www.googleapis.com/auth/chat.spaces` -
+// `https://www.googleapis.com/auth/chat.import` (import mode spaces only) When
+// authenticating as an app, the `space.customer` field must be set in the
 // request. Space membership upon creation depends on whether the space is
 // created in `Import mode`: * **Import mode:** No members are created. * **All
 // other modes:** The calling user is added as a member. This is: * The app
@@ -7306,15 +7333,21 @@ type SpacesDeleteCall struct {
 // and memberships in the space—are also deleted. For an example, see Delete
 // a space (https://developers.google.com/workspace/chat/delete-spaces).
 // Supports the following types of authentication
-// (https://developers.google.com/workspace/chat/authenticate-authorize): -
-// Developer Preview: App authentication
+// (https://developers.google.com/workspace/chat/authenticate-authorize): - App
+// authentication
 // (https://developers.google.com/workspace/chat/authenticate-authorize-chat-app)
-// with administrator approval (https://support.google.com/a?p=chat-app-auth).
-// Requires that the Chat app created the space using app authentication. -
-// User authentication
+// with administrator approval (https://support.google.com/a?p=chat-app-auth)
+// in Developer Preview (https://developers.google.com/workspace/preview) and
+// the authorization scope: - `https://www.googleapis.com/auth/chat.app.delete`
+// (only in spaces the app created) - User authentication
 // (https://developers.google.com/workspace/chat/authenticate-authorize-chat-user)
-// You can authenticate and authorize this method with administrator privileges
-// by setting the `use_admin_access` field in the request.
+// with one of the following authorization scopes: -
+// `https://www.googleapis.com/auth/chat.delete` -
+// `https://www.googleapis.com/auth/chat.import` (import mode spaces only) -
+// User authentication grants administrator privileges when an administrator
+// account authenticates, `use_admin_access` is `true`, and the following
+// authorization scope is used: -
+// `https://www.googleapis.com/auth/chat.admin.delete`
 //
 // - name: Resource name of the space to delete. Format: `spaces/{space}`.
 func (r *SpacesService) Delete(name string) *SpacesDeleteCall {
@@ -7432,12 +7465,16 @@ type SpacesFindDirectMessageCall struct {
 // Chat app. With user authentication
 // (https://developers.google.com/workspace/chat/authenticate-authorize-chat-user),
 // returns the direct message space between the specified user and the
-// authenticated user. // Supports the following types of authentication
+// authenticated user. Supports the following types of authentication
 // (https://developers.google.com/workspace/chat/authenticate-authorize): - App
 // authentication
 // (https://developers.google.com/workspace/chat/authenticate-authorize-chat-app)
-// - User authentication
+// with the authorization scope: - `https://www.googleapis.com/auth/chat.bot` -
+// User authentication
 // (https://developers.google.com/workspace/chat/authenticate-authorize-chat-user)
+// with one of the following authorization scopes: -
+// `https://www.googleapis.com/auth/chat.spaces.readonly` -
+// `https://www.googleapis.com/auth/chat.spaces`
 func (r *SpacesService) FindDirectMessage() *SpacesFindDirectMessageCall {
 	c := &SpacesFindDirectMessageCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	return c
@@ -7564,10 +7601,19 @@ type SpacesGetCall struct {
 // (https://developers.google.com/workspace/chat/authenticate-authorize): - App
 // authentication
 // (https://developers.google.com/workspace/chat/authenticate-authorize-chat-app)
-// - User authentication
+// with one of the following authorization scopes: -
+// `https://www.googleapis.com/auth/chat.bot` -
+// `https://www.googleapis.com/auth/chat.app.spaces` with administrator
+// approval (https://support.google.com/a?p=chat-app-auth) - User
+// authentication
 // (https://developers.google.com/workspace/chat/authenticate-authorize-chat-user)
-// You can authenticate and authorize this method with administrator privileges
-// by setting the `use_admin_access` field in the request.
+// with one of the following authorization scopes: -
+// `https://www.googleapis.com/auth/chat.spaces.readonly` -
+// `https://www.googleapis.com/auth/chat.spaces` - User authentication grants
+// administrator privileges when an administrator account authenticates,
+// `use_admin_access` is `true`, and one of the following authorization scopes
+// is used: - `https://www.googleapis.com/auth/chat.admin.spaces.readonly` -
+// `https://www.googleapis.com/auth/chat.admin.spaces`
 //
 //   - name: Resource name of the space, in the form `spaces/{space}`. Format:
 //     `spaces/{space}`.
@@ -7695,10 +7741,13 @@ type SpacesListCall struct {
 // (https://developers.google.com/workspace/chat/authenticate-authorize): - App
 // authentication
 // (https://developers.google.com/workspace/chat/authenticate-authorize-chat-app)
-// - User authentication
+// with the authorization scope: - `https://www.googleapis.com/auth/chat.bot` -
+// User authentication
 // (https://developers.google.com/workspace/chat/authenticate-authorize-chat-user)
-// To list all named spaces by Google Workspace organization, use the
-// `spaces.search()`
+// with one of the following authorization scopes: -
+// `https://www.googleapis.com/auth/chat.spaces.readonly` -
+// `https://www.googleapis.com/auth/chat.spaces` To list all named spaces by
+// Google Workspace organization, use the `spaces.search()`
 // (https://developers.google.com/workspace/chat/api/reference/rest/v1/spaces/search)
 // method using Workspace administrator privileges instead.
 func (r *SpacesService) List() *SpacesListCall {
@@ -7869,11 +7918,17 @@ type SpacesPatchCall struct {
 // authentication
 // (https://developers.google.com/workspace/chat/authenticate-authorize-chat-app)
 // with administrator approval (https://support.google.com/a?p=chat-app-auth)
-// in Developer Preview (https://developers.google.com/workspace/preview) -
-// User authentication
+// in Developer Preview (https://developers.google.com/workspace/preview) and
+// one of the following authorization scopes: -
+// `https://www.googleapis.com/auth/chat.app.spaces` - User authentication
 // (https://developers.google.com/workspace/chat/authenticate-authorize-chat-user)
-// You can authenticate and authorize this method with administrator privileges
-// by setting the `use_admin_access` field in the request.
+// with one of the following authorization scopes: -
+// `https://www.googleapis.com/auth/chat.spaces` -
+// `https://www.googleapis.com/auth/chat.import` (import mode spaces only) -
+// User authentication grants administrator privileges when an administrator
+// account authenticates, `use_admin_access` is `true`, and the following
+// authorization scopes is used: -
+// `https://www.googleapis.com/auth/chat.admin.spaces`
 //
 //   - name: Identifier. Resource name of the space. Format: `spaces/{space}`
 //     Where `{space}` represents the system-assigned ID for the space. You can
@@ -8045,8 +8100,12 @@ type SpacesSearchCall struct {
 // Search: Returns a list of spaces in a Google Workspace organization based on
 // an administrator's search. Requires user authentication with administrator
 // privileges
-// (https://developers.google.com/workspace/chat/authenticate-authorize-chat-user#admin-privileges).
-// In the request, set `use_admin_access` to `true`.
+// (https://developers.google.com/workspace/chat/authenticate-authorize-chat-user#admin-privileges)
+// and one of the following authorization scopes
+// (https://developers.google.com/workspace/chat/authenticate-authorize#chat-api-scopes):
+// - `https://www.googleapis.com/auth/chat.admin.spaces.readonly` -
+// `https://www.googleapis.com/auth/chat.admin.spaces` In the request, set
+// `use_admin_access` to `true`.
 func (r *SpacesService) Search() *SpacesSearchCall {
 	c := &SpacesSearchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	return c
@@ -8301,7 +8360,11 @@ type SpacesSetupCall struct {
 // `ALREADY_EXISTS` when setting up a space, try a different `displayName`. An
 // existing space within the Google Workspace organization might already use
 // this display name. Requires user authentication
-// (https://developers.google.com/workspace/chat/authenticate-authorize-chat-user).
+// (https://developers.google.com/workspace/chat/authenticate-authorize-chat-user)
+// with one of the following authorization scopes
+// (https://developers.google.com/workspace/chat/authenticate-authorize#chat-api-scopes):
+// - `https://www.googleapis.com/auth/chat.spaces.create` -
+// `https://www.googleapis.com/auth/chat.spaces`
 func (r *SpacesService) Setup(setupspacerequest *SetUpSpaceRequest) *SpacesSetupCall {
 	c := &SpacesSetupCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.setupspacerequest = setupspacerequest
@@ -8408,11 +8471,18 @@ type SpacesMembersCreateCall struct {
 // authentication
 // (https://developers.google.com/workspace/chat/authenticate-authorize-chat-app)
 // with administrator approval (https://support.google.com/a?p=chat-app-auth)
-// in Developer Preview (https://developers.google.com/workspace/preview) -
-// User authentication
+// in Developer Preview (https://developers.google.com/workspace/preview) and
+// the authorization scope: -
+// `https://www.googleapis.com/auth/chat.app.memberships` - User authentication
 // (https://developers.google.com/workspace/chat/authenticate-authorize-chat-user)
-// You can authenticate and authorize this method with administrator privileges
-// by setting the `use_admin_access` field in the request. For example usage,
+// with one of the following authorization scopes: -
+// `https://www.googleapis.com/auth/chat.memberships` -
+// `https://www.googleapis.com/auth/chat.memberships.app` (to add the calling
+// app to the space) - `https://www.googleapis.com/auth/chat.import` (import
+// mode spaces only) - User authentication grants administrator privileges when
+// an administrator account authenticates, `use_admin_access` is `true`, and
+// the following authorization scope is used: -
+// `https://www.googleapis.com/auth/chat.admin.memberships` For example usage,
 // see: - Invite or add a user to a space
 // (https://developers.google.com/workspace/chat/create-members#create-user-membership).
 // - Invite or add a Google Group to a space
@@ -8544,11 +8614,18 @@ type SpacesMembersDeleteCall struct {
 // authentication
 // (https://developers.google.com/workspace/chat/authenticate-authorize-chat-app)
 // with administrator approval (https://support.google.com/a?p=chat-app-auth)
-// in Developer Preview (https://developers.google.com/workspace/preview) -
-// User authentication
+// in Developer Preview (https://developers.google.com/workspace/preview) and
+// the authorization scope: -
+// `https://www.googleapis.com/auth/chat.app.memberships` - User authentication
 // (https://developers.google.com/workspace/chat/authenticate-authorize-chat-user)
-// You can authenticate and authorize this method with administrator privileges
-// by setting the `use_admin_access` field in the request. To delete
+// with one of the following authorization scopes: -
+// `https://www.googleapis.com/auth/chat.memberships` -
+// `https://www.googleapis.com/auth/chat.memberships.app` (to remove the
+// calling app from the space) - `https://www.googleapis.com/auth/chat.import`
+// (import mode spaces only) - User authentication grants administrator
+// privileges when an administrator account authenticates, `use_admin_access`
+// is `true`, and the following authorization scope is used: -
+// `https://www.googleapis.com/auth/chat.admin.memberships` To delete
 // memberships for space managers, the requester must be a space manager. If
 // you're using app authentication
 // (https://developers.google.com/workspace/chat/authenticate-authorize-chat-app)
@@ -8683,10 +8760,16 @@ type SpacesMembersGetCall struct {
 // (https://developers.google.com/workspace/chat/authenticate-authorize): - App
 // authentication
 // (https://developers.google.com/workspace/chat/authenticate-authorize-chat-app)
-// - User authentication
+// with the authorization scope: - `https://www.googleapis.com/auth/chat.bot` -
+// User authentication
 // (https://developers.google.com/workspace/chat/authenticate-authorize-chat-user)
-// You can authenticate and authorize this method with administrator privileges
-// by setting the `use_admin_access` field in the request.
+// with one of the following authorization scopes: -
+// `https://www.googleapis.com/auth/chat.memberships.readonly` -
+// `https://www.googleapis.com/auth/chat.memberships` - User authentication
+// grants administrator privileges when an administrator account authenticates,
+// `use_admin_access` is `true`, and one of the following authorization scopes
+// is used: - `https://www.googleapis.com/auth/chat.admin.memberships.readonly`
+// - `https://www.googleapis.com/auth/chat.admin.memberships`
 //
 //   - name: Resource name of the membership to retrieve. To get the app's own
 //     membership by using user authentication
@@ -8830,10 +8913,18 @@ type SpacesMembersListCall struct {
 // (https://developers.google.com/workspace/chat/authenticate-authorize): - App
 // authentication
 // (https://developers.google.com/workspace/chat/authenticate-authorize-chat-app)
-// - User authentication
+// with the authorization scope: - `https://www.googleapis.com/auth/chat.bot` -
+// User authentication
 // (https://developers.google.com/workspace/chat/authenticate-authorize-chat-user)
-// You can authenticate and authorize this method with administrator privileges
-// by setting the `use_admin_access` field in the request.
+// with one of the following authorization scopes: -
+// `https://www.googleapis.com/auth/chat.memberships.readonly` -
+// `https://www.googleapis.com/auth/chat.memberships` -
+// `https://www.googleapis.com/auth/chat.import` (import mode spaces only) -
+// User authentication grants administrator privileges when an administrator
+// account authenticates, `use_admin_access` is `true`, and one of the
+// following authorization scopes is used: -
+// `https://www.googleapis.com/auth/chat.admin.memberships.readonly` -
+// `https://www.googleapis.com/auth/chat.admin.memberships`
 //
 //   - parent: The resource name of the space for which to fetch a membership
 //     list. Format: spaces/{space}.
@@ -9044,15 +9135,22 @@ type SpacesMembersPatchCall struct {
 // Patch: Updates a membership. For an example, see Update a user's membership
 // in a space (https://developers.google.com/workspace/chat/update-members).
 // Supports the following types of authentication
-// (https://developers.google.com/workspace/chat/authenticate-authorize): -
-// Developer Preview: App authentication
+// (https://developers.google.com/workspace/chat/authenticate-authorize): - App
+// authentication
 // (https://developers.google.com/workspace/chat/authenticate-authorize-chat-app)
-// with administrator approval (https://support.google.com/a?p=chat-app-auth).
-// Requires that the Chat app created the space using app authentication. -
-// User authentication
+// with administrator approval (https://support.google.com/a?p=chat-app-auth)
+// in Developer Preview (https://developers.google.com/workspace/preview) and
+// the authorization scope: -
+// `https://www.googleapis.com/auth/chat.app.memberships` (only in spaces the
+// app created) - User authentication
 // (https://developers.google.com/workspace/chat/authenticate-authorize-chat-user)
-// You can authenticate and authorize this method with administrator privileges
-// by setting the `use_admin_access` field in the request.
+// with one of the following authorization scopes: -
+// `https://www.googleapis.com/auth/chat.memberships` -
+// `https://www.googleapis.com/auth/chat.import` (import mode spaces only) -
+// User authentication grants administrator privileges when an administrator
+// account authenticates, `use_admin_access` is `true`, and the following
+// authorization scope is used: -
+// `https://www.googleapis.com/auth/chat.admin.memberships`
 //
 //   - name: Identifier. Resource name of the membership, assigned by the server.
 //     Format: `spaces/{space}/members/{member}`.
@@ -9177,11 +9275,18 @@ type SpacesMessagesCreateCall struct {
 }
 
 // Create: Creates a message in a Google Chat space. For an example, see Send a
-// message (https://developers.google.com/workspace/chat/create-messages). The
-// `create()` method requires either user authentication
+// message (https://developers.google.com/workspace/chat/create-messages).
+// Supports the following types of authentication
+// (https://developers.google.com/workspace/chat/authenticate-authorize): - App
+// authentication
+// (https://developers.google.com/workspace/chat/authenticate-authorize-chat-app)
+// with the authorization scope: - `https://www.googleapis.com/auth/chat.bot` -
+// User authentication
 // (https://developers.google.com/workspace/chat/authenticate-authorize-chat-user)
-// or app authentication
-// (https://developers.google.com/workspace/chat/authorize-import). Chat
+// with one of the following authorization scopes: -
+// `https://www.googleapis.com/auth/chat.messages.create` -
+// `https://www.googleapis.com/auth/chat.messages` -
+// `https://www.googleapis.com/auth/chat.import` (import mode spaces only) Chat
 // attributes the message sender differently depending on the type of
 // authentication that you use in your request. The following image shows how
 // Chat attributes a message when you use app authentication. Chat displays the
@@ -9370,10 +9475,14 @@ type SpacesMessagesDeleteCall struct {
 // (https://developers.google.com/workspace/chat/authenticate-authorize): - App
 // authentication
 // (https://developers.google.com/workspace/chat/authenticate-authorize-chat-app)
-// - User authentication
+// with the authorization scope: - `https://www.googleapis.com/auth/chat.bot` -
+// User authentication
 // (https://developers.google.com/workspace/chat/authenticate-authorize-chat-user)
-// When using app authentication, requests can only delete messages created by
-// the calling Chat app.
+// with one of the following authorization scopes: -
+// `https://www.googleapis.com/auth/chat.messages` -
+// `https://www.googleapis.com/auth/chat.import` (import mode spaces only) When
+// using app authentication, requests can only delete messages created by the
+// calling Chat app.
 //
 //   - name: Resource name of the message. Format:
 //     `spaces/{space}/messages/{message}` If you've set a custom ID for your
@@ -9492,9 +9601,13 @@ type SpacesMessagesGetCall struct {
 // (https://developers.google.com/workspace/chat/authenticate-authorize): - App
 // authentication
 // (https://developers.google.com/workspace/chat/authenticate-authorize-chat-app)
-// - User authentication
+// with the authorization scope: - `https://www.googleapis.com/auth/chat.bot` -
+// User authentication
 // (https://developers.google.com/workspace/chat/authenticate-authorize-chat-user)
-// Note: Might return a message from a blocked member or space.
+// with one of the following authorization scopes: -
+// `https://www.googleapis.com/auth/chat.messages.readonly` -
+// `https://www.googleapis.com/auth/chat.messages` Note: Might return a message
+// from a blocked member or space.
 //
 //   - name: Resource name of the message. Format:
 //     `spaces/{space}/messages/{message}` If you've set a custom ID for your
@@ -9614,7 +9727,12 @@ type SpacesMessagesListCall struct {
 // see List messages
 // (https://developers.google.com/workspace/chat/api/guides/v1/messages/list).
 // Requires user authentication
-// (https://developers.google.com/workspace/chat/authenticate-authorize-chat-user).
+// (https://developers.google.com/workspace/chat/authenticate-authorize-chat-user)
+// with one of the following authorization scopes
+// (https://developers.google.com/workspace/chat/authenticate-authorize#chat-api-scopes):
+// - `https://www.googleapis.com/auth/chat.messages.readonly` -
+// `https://www.googleapis.com/auth/chat.messages` -
+// `https://www.googleapis.com/auth/chat.import` (import mode spaces only)
 //
 //   - parent: The resource name of the space to list messages from. Format:
 //     `spaces/{space}`.
@@ -9815,10 +9933,14 @@ type SpacesMessagesPatchCall struct {
 // (https://developers.google.com/workspace/chat/authenticate-authorize): - App
 // authentication
 // (https://developers.google.com/workspace/chat/authenticate-authorize-chat-app)
-// - User authentication
+// with the authorization scope: - `https://www.googleapis.com/auth/chat.bot` -
+// User authentication
 // (https://developers.google.com/workspace/chat/authenticate-authorize-chat-user)
-// When using app authentication, requests can only update messages created by
-// the calling Chat app.
+// with one of the following authorization scopes: -
+// `https://www.googleapis.com/auth/chat.messages` -
+// `https://www.googleapis.com/auth/chat.import` (import mode spaces only) When
+// using app authentication, requests can only update messages created by the
+// calling Chat app.
 //
 //   - name: Identifier. Resource name of the message. Format:
 //     `spaces/{space}/messages/{message}` Where `{space}` is the ID of the space
@@ -9963,10 +10085,14 @@ type SpacesMessagesUpdateCall struct {
 // (https://developers.google.com/workspace/chat/authenticate-authorize): - App
 // authentication
 // (https://developers.google.com/workspace/chat/authenticate-authorize-chat-app)
-// - User authentication
+// with the authorization scope: - `https://www.googleapis.com/auth/chat.bot` -
+// User authentication
 // (https://developers.google.com/workspace/chat/authenticate-authorize-chat-user)
-// When using app authentication, requests can only update messages created by
-// the calling Chat app.
+// with one of the following authorization scopes: -
+// `https://www.googleapis.com/auth/chat.messages` -
+// `https://www.googleapis.com/auth/chat.import` (import mode spaces only) When
+// using app authentication, requests can only update messages created by the
+// calling Chat app.
 //
 //   - name: Identifier. Resource name of the message. Format:
 //     `spaces/{space}/messages/{message}` Where `{space}` is the ID of the space
@@ -10108,7 +10234,10 @@ type SpacesMessagesAttachmentsGetCall struct {
 // For an example, see Get metadata about a message attachment
 // (https://developers.google.com/workspace/chat/get-media-attachments).
 // Requires app authentication
-// (https://developers.google.com/workspace/chat/authenticate-authorize-chat-app).
+// (https://developers.google.com/workspace/chat/authenticate-authorize-chat-app)
+// with the authorization scope
+// (https://developers.google.com/workspace/chat/authenticate-authorize#chat-api-scopes):
+// - `https://www.googleapis.com/auth/chat.bot`
 //
 //   - name: Resource name of the attachment, in the form
 //     `spaces/{space}/messages/{message}/attachments/{attachment}`.
@@ -10222,7 +10351,13 @@ type SpacesMessagesReactionsCreateCall struct {
 // a reaction to a message
 // (https://developers.google.com/workspace/chat/create-reactions). Requires
 // user authentication
-// (https://developers.google.com/workspace/chat/authenticate-authorize-chat-user).
+// (https://developers.google.com/workspace/chat/authenticate-authorize-chat-user)
+// with one of the following authorization scopes
+// (https://developers.google.com/workspace/chat/authenticate-authorize#chat-api-scopes):
+// - `https://www.googleapis.com/auth/chat.messages.reactions.create` -
+// `https://www.googleapis.com/auth/chat.messages.reactions` -
+// `https://www.googleapis.com/auth/chat.messages` -
+// `https://www.googleapis.com/auth/chat.import` (import mode spaces only)
 //
 //   - parent: The message where the reaction is created. Format:
 //     `spaces/{space}/messages/{message}`.
@@ -10328,7 +10463,12 @@ type SpacesMessagesReactionsDeleteCall struct {
 // Delete: Deletes a reaction to a message. For an example, see Delete a
 // reaction (https://developers.google.com/workspace/chat/delete-reactions).
 // Requires user authentication
-// (https://developers.google.com/workspace/chat/authenticate-authorize-chat-user).
+// (https://developers.google.com/workspace/chat/authenticate-authorize-chat-user)
+// with one of the following authorization scopes
+// (https://developers.google.com/workspace/chat/authenticate-authorize#chat-api-scopes):
+// - `https://www.googleapis.com/auth/chat.messages.reactions` -
+// `https://www.googleapis.com/auth/chat.messages` -
+// `https://www.googleapis.com/auth/chat.import` (import mode spaces only)
 //
 //   - name: Name of the reaction to delete. Format:
 //     `spaces/{space}/messages/{message}/reactions/{reaction}`.
@@ -10430,7 +10570,13 @@ type SpacesMessagesReactionsListCall struct {
 // List: Lists reactions to a message. For an example, see List reactions for a
 // message (https://developers.google.com/workspace/chat/list-reactions).
 // Requires user authentication
-// (https://developers.google.com/workspace/chat/authenticate-authorize-chat-user).
+// (https://developers.google.com/workspace/chat/authenticate-authorize-chat-user)
+// with one of the following authorization scopes
+// (https://developers.google.com/workspace/chat/authenticate-authorize#chat-api-scopes):
+// - `https://www.googleapis.com/auth/chat.messages.reactions.readonly` -
+// `https://www.googleapis.com/auth/chat.messages.reactions` -
+// `https://www.googleapis.com/auth/chat.messages.readonly` -
+// `https://www.googleapis.com/auth/chat.messages`
 //
 //   - parent: The message users reacted to. Format:
 //     `spaces/{space}/messages/{message}`.
@@ -10617,9 +10763,20 @@ type SpacesSpaceEventsGetCall struct {
 // payload. Note: The `permissionSettings` field is not returned in the Space
 // object of the Space event data for this request. Requires user
 // authentication
-// (https://developers.google.com/workspace/chat/authenticate-authorize-chat-user).
-// To get an event, the authenticated user must be a member of the space. For
-// an example, see Get details about an event from a Google Chat space
+// (https://developers.google.com/workspace/chat/authenticate-authorize-chat-user)
+// with an authorization scope
+// (https://developers.google.com/workspace/chat/authenticate-authorize#chat-api-scopes)
+// appropriate for reading the requested data: -
+// `https://www.googleapis.com/auth/chat.spaces.readonly` -
+// `https://www.googleapis.com/auth/chat.spaces` -
+// `https://www.googleapis.com/auth/chat.messages.readonly` -
+// `https://www.googleapis.com/auth/chat.messages` -
+// `https://www.googleapis.com/auth/chat.messages.reactions.readonly` -
+// `https://www.googleapis.com/auth/chat.messages.reactions` -
+// `https://www.googleapis.com/auth/chat.memberships.readonly` -
+// `https://www.googleapis.com/auth/chat.memberships` To get an event, the
+// authenticated user must be a member of the space. For an example, see Get
+// details about an event from a Google Chat space
 // (https://developers.google.com/workspace/chat/get-space-event).
 //
 //   - name: The resource name of the space event. Format:
@@ -10737,9 +10894,20 @@ type SpacesSpaceEventsListCall struct {
 // resources that contain the latest membership details. If new members were
 // removed during the requested period, the event payload contains an empty
 // `Membership` resource. Requires user authentication
-// (https://developers.google.com/workspace/chat/authenticate-authorize-chat-user).
-// To list events, the authenticated user must be a member of the space. For an
-// example, see List events from a Google Chat space
+// (https://developers.google.com/workspace/chat/authenticate-authorize-chat-user)
+// with an authorization scope
+// (https://developers.google.com/workspace/chat/authenticate-authorize#chat-api-scopes)
+// appropriate for reading the requested data: -
+// `https://www.googleapis.com/auth/chat.spaces.readonly` -
+// `https://www.googleapis.com/auth/chat.spaces` -
+// `https://www.googleapis.com/auth/chat.messages.readonly` -
+// `https://www.googleapis.com/auth/chat.messages` -
+// `https://www.googleapis.com/auth/chat.messages.reactions.readonly` -
+// `https://www.googleapis.com/auth/chat.messages.reactions` -
+// `https://www.googleapis.com/auth/chat.memberships.readonly` -
+// `https://www.googleapis.com/auth/chat.memberships` To list events, the
+// authenticated user must be a member of the space. For an example, see List
+// events from a Google Chat space
 // (https://developers.google.com/workspace/chat/list-space-events).
 //
 //   - parent: Resource name of the Google Chat space
@@ -10930,7 +11098,11 @@ type UsersSpacesGetSpaceReadStateCall struct {
 // about a user's space read state
 // (https://developers.google.com/workspace/chat/get-space-read-state).
 // Requires user authentication
-// (https://developers.google.com/workspace/chat/authenticate-authorize-chat-user).
+// (https://developers.google.com/workspace/chat/authenticate-authorize-chat-user)
+// with one of the following authorization scopes
+// (https://developers.google.com/workspace/chat/authenticate-authorize#chat-api-scopes):
+// - `https://www.googleapis.com/auth/chat.users.readstate.readonly` -
+// `https://www.googleapis.com/auth/chat.users.readstate`
 //
 //   - name: Resource name of the space read state to retrieve. Only supports
 //     getting read state for the calling user. To refer to the calling user, set
@@ -11051,7 +11223,10 @@ type UsersSpacesUpdateSpaceReadStateCall struct {
 // read state
 // (https://developers.google.com/workspace/chat/update-space-read-state).
 // Requires user authentication
-// (https://developers.google.com/workspace/chat/authenticate-authorize-chat-user).
+// (https://developers.google.com/workspace/chat/authenticate-authorize-chat-user)
+// with the authorization scope
+// (https://developers.google.com/workspace/chat/authenticate-authorize#chat-api-scopes):
+// - `https://www.googleapis.com/auth/chat.users.readstate`
 //
 //   - name: Resource name of the space read state. Format:
 //     `users/{user}/spaces/{space}/spaceReadState`.
@@ -11173,7 +11348,10 @@ type UsersSpacesSpaceNotificationSettingGetCall struct {
 // caller's space notification setting
 // (https://developers.google.com/workspace/chat/get-space-notification-setting).
 // Requires user authentication
-// (https://developers.google.com/workspace/chat/authenticate-authorize-chat-user).
+// (https://developers.google.com/workspace/chat/authenticate-authorize-chat-user)
+// with the authorization scope
+// (https://developers.google.com/workspace/chat/authenticate-authorize#chat-api-scopes):
+// - `https://www.googleapis.com/auth/chat.users.spacesettings`
 //
 //   - name: Format: users/{user}/spaces/{space}/spaceNotificationSetting -
 //     `users/me/spaces/{space}/spaceNotificationSetting`, OR -
@@ -11291,7 +11469,10 @@ type UsersSpacesSpaceNotificationSettingPatchCall struct {
 // the caller's space notification setting
 // (https://developers.google.com/workspace/chat/update-space-notification-setting).
 // Requires user authentication
-// (https://developers.google.com/workspace/chat/authenticate-authorize-chat-user).
+// (https://developers.google.com/workspace/chat/authenticate-authorize-chat-user)
+// with the authorization scope
+// (https://developers.google.com/workspace/chat/authenticate-authorize#chat-api-scopes):
+// - `https://www.googleapis.com/auth/chat.users.spacesettings`
 //
 //   - name: Identifier. The resource name of the space notification setting.
 //     Format: `users/{user}/spaces/{space}/spaceNotificationSetting`.
@@ -11408,7 +11589,11 @@ type UsersSpacesThreadsGetThreadReadStateCall struct {
 // details about a user's thread read state
 // (https://developers.google.com/workspace/chat/get-thread-read-state).
 // Requires user authentication
-// (https://developers.google.com/workspace/chat/authenticate-authorize-chat-user).
+// (https://developers.google.com/workspace/chat/authenticate-authorize-chat-user)
+// with one of the following authorization scopes
+// (https://developers.google.com/workspace/chat/authenticate-authorize#chat-api-scopes):
+// - `https://www.googleapis.com/auth/chat.users.readstate.readonly` -
+// `https://www.googleapis.com/auth/chat.users.readstate`
 //
 //   - name: Resource name of the thread read state to retrieve. Only supports
 //     getting read state for the calling user. To refer to the calling user, set

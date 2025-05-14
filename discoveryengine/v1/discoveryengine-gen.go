@@ -14014,8 +14014,10 @@ type GoogleCloudDiscoveryengineV1alphaDataConnector struct {
 	ActionConfig *GoogleCloudDiscoveryengineV1alphaActionConfig `json:"actionConfig,omitempty"`
 	// AlertPolicyConfigs: Optional. The connector level alert config.
 	AlertPolicyConfigs []*GoogleCloudDiscoveryengineV1alphaAlertPolicyConfig `json:"alertPolicyConfigs,omitempty"`
-	// AutoRunDisabled: Indicates whether the connector is disabled for auto run.
-	// It can be used to pause periodical and real time sync.
+	// AutoRunDisabled: Optional. Indicates whether the connector is disabled for
+	// auto run. It can be used to pause periodical and real time sync. Update:
+	// with the introduction of incremental_sync_disabled, auto_run_disabled is
+	// used to pause/disable only full syncs
 	AutoRunDisabled bool `json:"autoRunDisabled,omitempty"`
 	// BapConfig: Optional. The configuration for establishing a BAP connection.
 	BapConfig *GoogleCloudDiscoveryengineV1alphaBAPConfig `json:"bapConfig,omitempty"`
@@ -14091,6 +14093,13 @@ type GoogleCloudDiscoveryengineV1alphaDataConnector struct {
 	// synchronization runs. This contains the refresh interval to sync the Access
 	// Control List information for the documents ingested by this connector.
 	IdentityScheduleConfig *GoogleCloudDiscoveryengineV1alphaIdentityScheduleConfig `json:"identityScheduleConfig,omitempty"`
+	// IncrementalRefreshInterval: Optional. The refresh interval specifically for
+	// incremental data syncs. If unset, incremental syncs will use the default
+	// from env, set to 3hrs. The minimum is 30 minutes and maximum is 7 days.
+	IncrementalRefreshInterval string `json:"incrementalRefreshInterval,omitempty"`
+	// IncrementalSyncDisabled: Optional. Indicates whether incremental syncs are
+	// paused for this connector. This is independent of auto_run_disabled.
+	IncrementalSyncDisabled bool `json:"incrementalSyncDisabled,omitempty"`
 	// KmsKeyName: Input only. The KMS key to be used to protect the DataStores
 	// managed by this connector. Must be set for requests that need to comply with
 	// CMEK Org Policy protections. If this field is set and processed

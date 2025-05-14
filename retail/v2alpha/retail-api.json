@@ -2800,7 +2800,7 @@
       }
     }
   },
-  "revision": "20250501",
+  "revision": "20250508",
   "rootUrl": "https://retail.googleapis.com/",
   "schemas": {
     "GoogleApiHttpBody": {
@@ -5746,8 +5746,14 @@
       "description": "Merchant Center Feed filter criterion.",
       "id": "GoogleCloudRetailV2alphaMerchantCenterAccountLinkMerchantCenterFeedFilter",
       "properties": {
+        "dataSourceId": {
+          "description": "AFM data source ID.",
+          "format": "int64",
+          "type": "string"
+        },
         "primaryFeedId": {
-          "description": "Merchant Center primary feed ID.",
+          "deprecated": true,
+          "description": "Merchant Center primary feed ID. Deprecated: use data_source_id instead.",
           "format": "int64",
           "type": "string"
         },
@@ -5762,8 +5768,14 @@
       "description": "Merchant Center Feed filter criterion.",
       "id": "GoogleCloudRetailV2alphaMerchantCenterFeedFilter",
       "properties": {
+        "dataSourceId": {
+          "description": "AFM data source ID.",
+          "format": "int64",
+          "type": "string"
+        },
         "primaryFeedId": {
-          "description": "Merchant Center primary feed ID.",
+          "deprecated": true,
+          "description": "Merchant Center primary feed ID. Deprecated: use data_source_id instead.",
           "format": "int64",
           "type": "string"
         },

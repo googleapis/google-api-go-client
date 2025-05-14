@@ -2281,11 +2281,9 @@ func (r *SubscriptionsService) Insert(customerId string, subscription *Subscript
 	return c
 }
 
-// Action sets the optional parameter "action": The intented insert action. The
-// usage of this field is governed by certain policies which are being
-// developed & tested currently. Hence, these might not work as intended. Once
-// this is fully tested & available to consume, we will share more information
-// about its usage, limitations and policy documentation.
+// Action sets the optional parameter "action": The intented insert action.
+// Advised to set this when the customer already has a subscription for a
+// different SKU in the same product.
 //
 // Possible values:
 //
@@ -2314,10 +2312,7 @@ func (c *SubscriptionsInsertCall) CustomerAuthToken(customerAuthToken string) *S
 
 // SourceSkuId sets the optional parameter "sourceSkuId": The sku_id of the
 // existing subscription to be upgraded or downgraded. This is required when
-// action is SWITCH. The usage of this field is governed by certain policies
-// which are being developed & tested currently. Hence, these might not work as
-// intended. Once this is fully tested & available to consume, we will share
-// more information about its usage, limitations and policy documentation.
+// action is SWITCH.
 func (c *SubscriptionsInsertCall) SourceSkuId(sourceSkuId string) *SubscriptionsInsertCall {
 	c.urlParams_.Set("sourceSkuId", sourceSkuId)
 	return c

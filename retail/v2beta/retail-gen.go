@@ -1910,18 +1910,21 @@ func (s GoogleCloudRetailV2alphaMerchantCenterAccountLink) MarshalJSON() ([]byte
 // GoogleCloudRetailV2alphaMerchantCenterAccountLinkMerchantCenterFeedFilter:
 // Merchant Center Feed filter criterion.
 type GoogleCloudRetailV2alphaMerchantCenterAccountLinkMerchantCenterFeedFilter struct {
-	// PrimaryFeedId: Merchant Center primary feed ID.
+	// DataSourceId: AFM data source ID.
+	DataSourceId int64 `json:"dataSourceId,omitempty,string"`
+	// PrimaryFeedId: Merchant Center primary feed ID. Deprecated: use
+	// data_source_id instead.
 	PrimaryFeedId int64 `json:"primaryFeedId,omitempty,string"`
 	// PrimaryFeedName: Merchant Center primary feed name. The name is used for the
 	// display purposes only.
 	PrimaryFeedName string `json:"primaryFeedName,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "PrimaryFeedId") to
+	// ForceSendFields is a list of field names (e.g. "DataSourceId") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "PrimaryFeedId") to include in API
+	// NullFields is a list of field names (e.g. "DataSourceId") to include in API
 	// requests with the JSON null value. By default, fields with empty values are
 	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
@@ -5122,18 +5125,21 @@ func (s GoogleCloudRetailV2betaLocalInventory) MarshalJSON() ([]byte, error) {
 // GoogleCloudRetailV2betaMerchantCenterFeedFilter: Merchant Center Feed filter
 // criterion.
 type GoogleCloudRetailV2betaMerchantCenterFeedFilter struct {
-	// PrimaryFeedId: Merchant Center primary feed ID.
+	// DataSourceId: AFM data source ID.
+	DataSourceId int64 `json:"dataSourceId,omitempty,string"`
+	// PrimaryFeedId: Merchant Center primary feed ID. Deprecated: use
+	// data_source_id instead.
 	PrimaryFeedId int64 `json:"primaryFeedId,omitempty,string"`
 	// PrimaryFeedName: Merchant Center primary feed name. The name is used for the
 	// display purposes only.
 	PrimaryFeedName string `json:"primaryFeedName,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "PrimaryFeedId") to
+	// ForceSendFields is a list of field names (e.g. "DataSourceId") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "PrimaryFeedId") to include in API
+	// NullFields is a list of field names (e.g. "DataSourceId") to include in API
 	// requests with the JSON null value. By default, fields with empty values are
 	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.

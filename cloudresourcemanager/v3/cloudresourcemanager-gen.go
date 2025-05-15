@@ -800,7 +800,7 @@ type Folder struct {
 	// folder (if app-management capability is enabled). Example:
 	// `projects/google-mp-123` OUTPUT ONLY.
 	ManagementProject string `json:"managementProject,omitempty"`
-	// Name: Output only. The resource name of the folder. Its format is
+	// Name: Identifier. The resource name of the folder. Its format is
 	// `folders/{folder_id}`, for example: "folders/1234".
 	Name string `json:"name,omitempty"`
 	// Parent: Required. The folder's parent's resource name. Updates to the
@@ -3011,7 +3011,7 @@ type FoldersPatchCall struct {
 // update fails due to the unique name constraint then a `PreconditionFailure`
 // explaining this violation will be returned in the Status.details field.
 //
-//   - name: Output only. The resource name of the folder. Its format is
+//   - name: Identifier. The resource name of the folder. Its format is
 //     `folders/{folder_id}`, for example: "folders/1234".
 func (r *FoldersService) Patch(name string, folder *Folder) *FoldersPatchCall {
 	c := &FoldersPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}

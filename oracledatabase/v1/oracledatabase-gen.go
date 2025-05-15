@@ -5947,6 +5947,7 @@ type ProjectsLocationsCloudVmClustersDbNodesListCall struct {
 //
 //   - parent: The parent value for database node in the following format:
 //     projects/{project}/locations/{location}/cloudVmClusters/{cloudVmCluster}.
+//     .
 func (r *ProjectsLocationsCloudVmClustersDbNodesService) List(parent string) *ProjectsLocationsCloudVmClustersDbNodesListCall {
 	c := &ProjectsLocationsCloudVmClustersDbNodesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent

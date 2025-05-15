@@ -1444,6 +1444,18 @@ func (s ListVulnerabilityReportsResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// MessageSet: This is proto2's version of MessageSet. DEPRECATED: DO NOT USE
+// FOR NEW FIELDS. If you are using editions or proto2, please make your own
+// extendable messages for your use case. If you are using proto3, please use
+// `Any` instead. MessageSet was the implementation of extensions for proto1.
+// When proto2 was introduced, extensions were implemented as a first-class
+// feature. This schema for MessageSet was meant to be a "bridge" solution to
+// migrate MessageSet-bearing messages from proto1 to proto2. This schema has
+// been open-sourced only to facilitate the migration of Google products with
+// MessageSet-bearing messages to open-source environments.
+type MessageSet struct {
+}
+
 // MonthlySchedule: Represents a monthly schedule. An example of a valid
 // monthly schedule is "on the third Tuesday of the month" or "on the 15th of
 // the month".
@@ -3340,6 +3352,45 @@ type Status struct {
 
 func (s Status) MarshalJSON() ([]byte, error) {
 	type NoMethod Status
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// StatusProto: Wire-format for a Status object
+type StatusProto struct {
+	// CanonicalCode: copybara:strip_begin(b/383363683)
+	// copybara:strip_end_and_replace optional int32 canonical_code = 6;
+	CanonicalCode int64 `json:"canonicalCode,omitempty"`
+	// Code: Numeric code drawn from the space specified below. Often, this is the
+	// canonical error space, and code is drawn from google3/util/task/codes.proto
+	// copybara:strip_begin(b/383363683) copybara:strip_end_and_replace optional
+	// int32 code = 1;
+	Code int64 `json:"code,omitempty"`
+	// Message: Detail message copybara:strip_begin(b/383363683)
+	// copybara:strip_end_and_replace optional string message = 3;
+	Message string `json:"message,omitempty"`
+	// MessageSet: message_set associates an arbitrary proto message with the
+	// status. copybara:strip_begin(b/383363683) copybara:strip_end_and_replace
+	// optional proto2.bridge.MessageSet message_set = 5;
+	MessageSet *MessageSet `json:"messageSet,omitempty"`
+	// Space: copybara:strip_begin(b/383363683) Space to which this status belongs
+	// copybara:strip_end_and_replace optional string space = 2; // Space to which
+	// this status belongs
+	Space string `json:"space,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "CanonicalCode") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CanonicalCode") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s StatusProto) MarshalJSON() ([]byte, error) {
+	type NoMethod StatusProto
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 

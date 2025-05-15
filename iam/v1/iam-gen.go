@@ -1287,13 +1287,22 @@ func (s GoogleIamAdminV1WorkforcePoolProviderExtraAttributesOAuth2Client) Marsha
 // rs: Represents the parameters to control which claims are fetched from an
 // IdP.
 type GoogleIamAdminV1WorkforcePoolProviderExtraAttributesOAuth2ClientQueryParameters struct {
-	// Filter: Optional. The filter used to request specific records from IdP. In
-	// case of attributes type as AZURE_AD_GROUPS_MAIL, it represents the filter
-	// used to request specific groups for users from IdP. By default, all of the
-	// groups associated with the user are fetched. The groups should be mail
-	// enabled and security enabled. See
-	// https://learn.microsoft.com/en-us/graph/search-query-parameter for more
-	// details.
+	// Filter: Optional. The filter used to request specific records from the IdP.
+	// By default, all of the groups that are associated with a user are fetched.
+	// For Microsoft Entra ID, you can add `$search` query parameters using
+	// [Keyword Query Language]
+	// (https://learn.microsoft.com/en-us/sharepoint/dev/general-development/keyword-query-language-kql-syntax-reference).
+	// To learn more about `$search` querying in Microsoft Entra ID, see [Use the
+	// `$search` query parameter]
+	// (https://learn.microsoft.com/en-us/graph/search-query-parameter).
+	// Additionally, Workforce Identity Federation automatically adds the following
+	// [`$filter` query parameters]
+	// (https://learn.microsoft.com/en-us/graph/filter-query-parameter), based on
+	// the value of `attributes_type`. Values passed to `filter` are converted to
+	// `$search` query parameters. Additional `$filter` query parameters cannot be
+	// added using this field. * `AZURE_AD_GROUPS_MAIL`: `mailEnabled` and
+	// `securityEnabled` filters are applied. * `AZURE_AD_GROUPS_ID`:
+	// `securityEnabled` filter is applied.
 	Filter string `json:"filter,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Filter") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -3753,6 +3762,11 @@ type WorkforcePoolProvider struct {
 	// Description: Optional. A user-specified description of the provider. Cannot
 	// exceed 256 characters.
 	Description string `json:"description,omitempty"`
+	// DetailedAuditLogging: Optional. If true, populates additional debug
+	// information in Cloud Audit Logs for this provider. Logged attribute mappings
+	// and values can be found in `sts.googleapis.com` data access logs. Default
+	// value is false.
+	DetailedAuditLogging bool `json:"detailedAuditLogging,omitempty"`
 	// Disabled: Optional. Disables the workforce pool provider. You cannot use a
 	// disabled provider to exchange tokens. However, existing tokens still grant
 	// access.

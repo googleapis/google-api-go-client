@@ -3499,6 +3499,7 @@ type XPSImageModelServingSpecModelThroughputEstimation struct {
 	//   "NVIDIA_H100_MEGA_80GB" - Nvidia H100 80Gb GPU.
 	//   "NVIDIA_H200_141GB" - Nvidia H200 141Gb GPU.
 	//   "NVIDIA_B200" - Nvidia B200 GPU.
+	//   "NVIDIA_GB200" - Nvidia GB200 GPU.
 	//   "TPU_V2" - TPU v2 (JellyFish).
 	//   "TPU_V3" - TPU v3 (DragonFish).
 	//   "TPU_V4_POD" - TPU_v4 (PufferFish).

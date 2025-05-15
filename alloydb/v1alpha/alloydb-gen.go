@@ -949,7 +949,15 @@ func (s ContinuousBackupConfig) MarshalJSON() ([]byte, error) {
 // properties of a cluster.
 type ContinuousBackupInfo struct {
 	// EarliestRestorableTime: Output only. The earliest restorable time that can
-	// be restored to. Output only field.
+	// be restored to. If continuous backups and recovery was recently enabled, the
+	// earliest restorable time is the creation time of the earliest eligible
+	// backup within this cluster's continuous backup recovery window. After a
+	// cluster has had continuous backups enabled for the duration of its recovery
+	// window, the earliest restorable time becomes "now minus the recovery
+	// window". For example, assuming a point in time recovery is attempted at
+	// 04/16/2025 3:23:00PM with a 14d recovery window, the earliest restorable
+	// time would be 04/02/2025 3:23:00PM. This field is only visible if the
+	// CLUSTER_VIEW_CONTINUOUS_BACKUP cluster view is provided.
 	EarliestRestorableTime string `json:"earliestRestorableTime,omitempty"`
 	// EnabledTime: Output only. When ContinuousBackup was most recently enabled.
 	// Set to null if ContinuousBackup is not enabled.
@@ -958,7 +966,7 @@ type ContinuousBackupInfo struct {
 	// backups required for ContinuousBackup.
 	EncryptionInfo *EncryptionInfo `json:"encryptionInfo,omitempty"`
 	// Schedule: Output only. Days of the week on which a continuous backup is
-	// taken. Output only field. Ignored if passed into the request.
+	// taken.
 	//
 	// Possible values:
 	//   "DAY_OF_WEEK_UNSPECIFIED" - The day of the week is unspecified.
@@ -1769,6 +1777,13 @@ func (s Instance) MarshalJSON() ([]byte, error) {
 // InstanceNetworkConfig: Metadata related to instance-level network
 // configuration.
 type InstanceNetworkConfig struct {
+	// AllocatedIpRangeOverride: Optional. Name of the allocated IP range for the
+	// private IP AlloyDB instance, for example: "google-managed-services-default".
+	// If set, the instance IPs will be created from this allocated range and will
+	// override the IP range used by the parent cluster. The range name must comply
+	// with RFC 1035 (http://go/rfc/1035). Specifically, the name must be 1-63
+	// characters long and match the regular expression a-z ([-a-z0-9]*[a-z0-9])?.
+	AllocatedIpRangeOverride string `json:"allocatedIpRangeOverride,omitempty"`
 	// AuthorizedExternalNetworks: Optional. A list of external network authorized
 	// to access this instance.
 	AuthorizedExternalNetworks []*AuthorizedNetwork `json:"authorizedExternalNetworks,omitempty"`
@@ -1783,13 +1798,13 @@ type InstanceNetworkConfig struct {
 	// is specified in the form: //
 	// `projects/{project_number}/global/networks/{network_id}`.
 	Network string `json:"network,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "AuthorizedExternalNetworks")
+	// ForceSendFields is a list of field names (e.g. "AllocatedIpRangeOverride")
 	// to unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "AuthorizedExternalNetworks") to
+	// NullFields is a list of field names (e.g. "AllocatedIpRangeOverride") to
 	// include in API requests with the JSON null value. By default, fields with
 	// empty values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.

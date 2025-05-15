@@ -871,6 +871,18 @@ func (s ListOperationsResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// MessageSet: This is proto2's version of MessageSet. DEPRECATED: DO NOT USE
+// FOR NEW FIELDS. If you are using editions or proto2, please make your own
+// extendable messages for your use case. If you are using proto3, please use
+// `Any` instead. MessageSet was the implementation of extensions for proto1.
+// When proto2 was introduced, extensions were implemented as a first-class
+// feature. This schema for MessageSet was meant to be a "bridge" solution to
+// migrate MessageSet-bearing messages from proto1 to proto2. This schema has
+// been open-sourced only to facilitate the migration of Google products with
+// MessageSet-bearing messages to open-source environments.
+type MessageSet struct {
+}
+
 // OSPolicy: An OS policy defines the desired state configuration for a VM.
 type OSPolicy struct {
 	// AllowNoResourceGroupMatch: This flag determines the OS policy compliance
@@ -1946,6 +1958,45 @@ func (s Status) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// StatusProto: Wire-format for a Status object
+type StatusProto struct {
+	// CanonicalCode: copybara:strip_begin(b/383363683)
+	// copybara:strip_end_and_replace optional int32 canonical_code = 6;
+	CanonicalCode int64 `json:"canonicalCode,omitempty"`
+	// Code: Numeric code drawn from the space specified below. Often, this is the
+	// canonical error space, and code is drawn from google3/util/task/codes.proto
+	// copybara:strip_begin(b/383363683) copybara:strip_end_and_replace optional
+	// int32 code = 1;
+	Code int64 `json:"code,omitempty"`
+	// Message: Detail message copybara:strip_begin(b/383363683)
+	// copybara:strip_end_and_replace optional string message = 3;
+	Message string `json:"message,omitempty"`
+	// MessageSet: message_set associates an arbitrary proto message with the
+	// status. copybara:strip_begin(b/383363683) copybara:strip_end_and_replace
+	// optional proto2.bridge.MessageSet message_set = 5;
+	MessageSet *MessageSet `json:"messageSet,omitempty"`
+	// Space: copybara:strip_begin(b/383363683) Space to which this status belongs
+	// copybara:strip_end_and_replace optional string space = 2; // Space to which
+	// this status belongs
+	Space string `json:"space,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "CanonicalCode") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CanonicalCode") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s StatusProto) MarshalJSON() ([]byte, error) {
+	type NoMethod StatusProto
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 type FoldersLocationsGlobalPolicyOrchestratorsCreateCall struct {
 	s                                             *Service
 	parent                                        string
@@ -2507,12 +2558,12 @@ func (r *FoldersLocationsGlobalPolicyOrchestratorsService) Patch(name string, go
 // replaced, * map fields are merged key by key, * message fields are cleared
 // if not set in the request, otherwise they are merged recursively (in
 // particular - message fields set to an empty message has no side effects) If
-// field mask is not specified, it is automatically inferred from the request
-// using following rules: * primitive fields are listed, if set to a
-// non-default value (as there is no way to distinguish between default and
-// unset value), * map and repeated fields are listed, * `google.protobuf.Any`
-// fields are listed, * other message fields are traversed recursively. Note:
-// implicit mask does not allow clearing fields.
+// field mask (or its paths) is not specified, it is automatically inferred
+// from the request using following rules: * primitive fields are listed, if
+// set to a non-default value (as there is no way to distinguish between
+// default and unset value), * map and repeated fields are listed, *
+// `google.protobuf.Any` fields are listed, * other message fields are
+// traversed recursively. Note: implicit mask does not allow clearing fields.
 func (c *FoldersLocationsGlobalPolicyOrchestratorsPatchCall) UpdateMask(updateMask string) *FoldersLocationsGlobalPolicyOrchestratorsPatchCall {
 	c.urlParams_.Set("updateMask", updateMask)
 	return c
@@ -3638,12 +3689,12 @@ func (r *OrganizationsLocationsGlobalPolicyOrchestratorsService) Patch(name stri
 // replaced, * map fields are merged key by key, * message fields are cleared
 // if not set in the request, otherwise they are merged recursively (in
 // particular - message fields set to an empty message has no side effects) If
-// field mask is not specified, it is automatically inferred from the request
-// using following rules: * primitive fields are listed, if set to a
-// non-default value (as there is no way to distinguish between default and
-// unset value), * map and repeated fields are listed, * `google.protobuf.Any`
-// fields are listed, * other message fields are traversed recursively. Note:
-// implicit mask does not allow clearing fields.
+// field mask (or its paths) is not specified, it is automatically inferred
+// from the request using following rules: * primitive fields are listed, if
+// set to a non-default value (as there is no way to distinguish between
+// default and unset value), * map and repeated fields are listed, *
+// `google.protobuf.Any` fields are listed, * other message fields are
+// traversed recursively. Note: implicit mask does not allow clearing fields.
 func (c *OrganizationsLocationsGlobalPolicyOrchestratorsPatchCall) UpdateMask(updateMask string) *OrganizationsLocationsGlobalPolicyOrchestratorsPatchCall {
 	c.urlParams_.Set("updateMask", updateMask)
 	return c
@@ -4769,12 +4820,12 @@ func (r *ProjectsLocationsGlobalPolicyOrchestratorsService) Patch(name string, g
 // replaced, * map fields are merged key by key, * message fields are cleared
 // if not set in the request, otherwise they are merged recursively (in
 // particular - message fields set to an empty message has no side effects) If
-// field mask is not specified, it is automatically inferred from the request
-// using following rules: * primitive fields are listed, if set to a
-// non-default value (as there is no way to distinguish between default and
-// unset value), * map and repeated fields are listed, * `google.protobuf.Any`
-// fields are listed, * other message fields are traversed recursively. Note:
-// implicit mask does not allow clearing fields.
+// field mask (or its paths) is not specified, it is automatically inferred
+// from the request using following rules: * primitive fields are listed, if
+// set to a non-default value (as there is no way to distinguish between
+// default and unset value), * map and repeated fields are listed, *
+// `google.protobuf.Any` fields are listed, * other message fields are
+// traversed recursively. Note: implicit mask does not allow clearing fields.
 func (c *ProjectsLocationsGlobalPolicyOrchestratorsPatchCall) UpdateMask(updateMask string) *ProjectsLocationsGlobalPolicyOrchestratorsPatchCall {
 	c.urlParams_.Set("updateMask", updateMask)
 	return c

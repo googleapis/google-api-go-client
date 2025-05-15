@@ -950,10 +950,10 @@ type Instance struct {
 	HealthState string `json:"healthState,omitempty"`
 	// Id: Output only. Unique ID of the resource.
 	Id string `json:"id,omitempty"`
-	// InstanceOwners: Optional. Input only. The owner of this instance after
-	// creation. Format: `alias@example.com` Currently supports one owner only. If
-	// not specified, all of the service account users of your VM instance's
-	// service account can use the instance.
+	// InstanceOwners: Optional. The owner of this instance after creation. Format:
+	// `alias@example.com` Currently supports one owner only. If not specified, all
+	// of the service account users of your VM instance's service account can use
+	// the instance.
 	InstanceOwners []string `json:"instanceOwners,omitempty"`
 	// Labels: Optional. Labels to apply to this instance. These can be later
 	// modified by the UpdateInstance method.

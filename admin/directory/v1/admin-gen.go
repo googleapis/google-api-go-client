@@ -1605,16 +1605,16 @@ type ChromeOsDevice struct {
 	//   "education" - The device is bundled with a perpetual Chrome Education
 	// Upgrade.
 	//   "kioskUpgrade" - The device has an annual Kiosk Upgrade.
-	//   "enterpriseUpgradePerpetual" - Indicating the device is consumming a
+	//   "enterpriseUpgradePerpetual" - Indicates that the device is consuming a
 	// standalone, perpetual Chrome Enterprise Upgrade, a Chrome Enterprise
 	// license.
-	//   "enterpriseUpgradeFixedTerm" - Indicating the device is consuming a
+	//   "enterpriseUpgradeFixedTerm" - Indicates that the device is consuming a
 	// standalone, fixed-term Chrome Enterprise Upgrade, a Chrome Enterprise
 	// license.
-	//   "educationUpgradePerpetual" - Indicating the device is consuming a
+	//   "educationUpgradePerpetual" - Indicates that the device is consuming a
 	// standalone, perpetual Chrome Education Upgrade(AKA Chrome EDU perpetual
 	// license).
-	//   "educationUpgradeFixedTerm" - Indicating the device is consuming a
+	//   "educationUpgradeFixedTerm" - Indicates that the device is consuming a
 	// standalone, fixed-term Chrome Education Upgrade(AKA Chrome EDU fixed-term
 	// license).
 	DeviceLicenseType string `json:"deviceLicenseType,omitempty"`
@@ -2404,6 +2404,9 @@ type DirectoryChromeosdevicesCommand struct {
 	// be downloaded from the downloadUrl link present in `deviceFiles` field of
 	// [chromeosdevices](https://developers.google.com/admin-sdk/directory/reference
 	// /rest/v1/chromeosdevices)
+	//   "FETCH_CRD_AVAILABILITY_INFO" - Fetches available type(s) of Chrome Remote
+	// Desktop sessions (private or shared) that can be used to remotely connect to
+	// the device.
 	//   "FETCH_SUPPORT_PACKET" - Fetch support packet from a device remotely.
 	// Support packet is a zip archive that contains various system logs and debug
 	// data from a ChromeOS device. The support packet can be downloaded from the
@@ -2437,7 +2440,13 @@ type DirectoryChromeosdevicesCommandResult struct {
 	// CommandResultPayload: The payload for the command result. The following
 	// commands respond with a payload: * `DEVICE_START_CRD_SESSION`: Payload is a
 	// stringified JSON object in the form: { "url": url }. The URL provides a link
-	// to the Chrome Remote Desktop session.
+	// to the Chrome Remote Desktop session. * `FETCH_CRD_AVAILABILITY_INFO`:
+	// Payload is a stringified JSON object in the form: {
+	// "deviceIdleTimeInSeconds": number, "userSessionType": string,
+	// "remoteSupportAvailability": string, "remoteAccessAvailability": string }.
+	// The "remoteSupportAvailability" field is set to "AVAILABLE" if `shared` CRD
+	// session to the device is available. The "remoteAccessAvailability" field is
+	// set to "AVAILABLE" if `private` CRD session to the device is available.
 	CommandResultPayload string `json:"commandResultPayload,omitempty"`
 	// ErrorMessage: The error message with a short explanation as to why the
 	// command failed. Only present if the command failed.
@@ -2498,6 +2507,9 @@ type DirectoryChromeosdevicesIssueCommandRequest struct {
 	// be downloaded from the downloadUrl link present in `deviceFiles` field of
 	// [chromeosdevices](https://developers.google.com/admin-sdk/directory/reference
 	// /rest/v1/chromeosdevices)
+	//   "FETCH_CRD_AVAILABILITY_INFO" - Fetches available type(s) of Chrome Remote
+	// Desktop sessions (private or shared) that can be used to remotely connect to
+	// the device.
 	//   "FETCH_SUPPORT_PACKET" - Fetch support packet from a device remotely.
 	// Support packet is a zip archive that contains various system logs and debug
 	// data from a ChromeOS device. The support packet can be downloaded from the

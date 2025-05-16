@@ -5546,13 +5546,15 @@ type PeopleUpdateContactCall struct {
 // The server returns a 400 error with reason "failedPrecondition" if
 // `person.metadata.sources.etag` is different than the contact's etag, which
 // indicates the contact has changed since its data was read. Clients should
-// get the latest person and merge their updates into the latest person. The
-// server returns a 400 error if `memberships` are being updated and there are
-// no contact group memberships specified on the person. The server returns a
-// 400 error if more than one field is specified on a field that is a singleton
-// for contact sources: * biographies * birthdays * genders * names Mutate
-// requests for the same user should be sent sequentially to avoid increased
-// latency and failures.
+// get the latest person and merge their updates into the latest person. If
+// making sequential updates to the same person, the etag from the
+// `updateContact` response should be used to avoid failures. The server
+// returns a 400 error if `memberships` are being updated and there are no
+// contact group memberships specified on the person. The server returns a 400
+// error if more than one field is specified on a field that is a singleton for
+// contact sources: * biographies * birthdays * genders * names Mutate requests
+// for the same user should be sent sequentially to avoid increased latency and
+// failures.
 //
 //   - resourceName: The resource name for the person, assigned by the server. An
 //     ASCII string in the form of `people/{person_id}`.

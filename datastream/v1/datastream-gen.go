@@ -1381,6 +1381,10 @@ type MongodbSourceConfig struct {
 	ExcludeObjects *MongodbCluster `json:"excludeObjects,omitempty"`
 	// IncludeObjects: MongoDB collections to include in the stream.
 	IncludeObjects *MongodbCluster `json:"includeObjects,omitempty"`
+	// MaxConcurrentBackfillTasks: Optional. Maximum number of concurrent backfill
+	// tasks. The number should be non-negative and less than or equal to 50. If
+	// not set (or set to 0), the system's default value is used
+	MaxConcurrentBackfillTasks int64 `json:"maxConcurrentBackfillTasks,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "ExcludeObjects") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -3118,6 +3122,25 @@ type SrvConnectionFormat struct {
 
 // StandardConnectionFormat: Standard connection format.
 type StandardConnectionFormat struct {
+	// DirectConnection: Optional. Specifies whether the client connects directly
+	// to the host[:port] in the connection URI.
+	DirectConnection bool `json:"directConnection,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "DirectConnection") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DirectConnection") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s StandardConnectionFormat) MarshalJSON() ([]byte, error) {
+	type NoMethod StandardConnectionFormat
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // StartBackfillJobRequest: Request for manually initiating a backfill job for

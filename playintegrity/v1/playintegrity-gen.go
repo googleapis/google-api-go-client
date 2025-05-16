@@ -388,6 +388,55 @@ func (s DecodeIntegrityTokenResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// DecodePcIntegrityTokenRequest: Request to decode the PC integrity token.
+type DecodePcIntegrityTokenRequest struct {
+	// IntegrityToken: Encoded integrity token.
+	IntegrityToken string `json:"integrityToken,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "IntegrityToken") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "IntegrityToken") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s DecodePcIntegrityTokenRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod DecodePcIntegrityTokenRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// DecodePcIntegrityTokenResponse: Response containing the decoded PC integrity
+// payload.
+type DecodePcIntegrityTokenResponse struct {
+	// TokenPayloadExternal: Plain token payload generated from the decoded
+	// integrity token.
+	TokenPayloadExternal *PcTokenPayloadExternal `json:"tokenPayloadExternal,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "TokenPayloadExternal") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "TokenPayloadExternal") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s DecodePcIntegrityTokenResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod DecodePcIntegrityTokenResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // DeviceAttributes: Contains information about the device for which the
 // integrity token was generated, e.g. Android SDK version.
 type DeviceAttributes struct {
@@ -538,6 +587,86 @@ type EnvironmentDetails struct {
 
 func (s EnvironmentDetails) MarshalJSON() ([]byte, error) {
 	type NoMethod EnvironmentDetails
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// PcDeviceIntegrity: Contains the device attestation information.
+type PcDeviceIntegrity struct {
+	// DeviceRecognitionVerdict: Details about the integrity of the device the app
+	// is running on.
+	//
+	// Possible values:
+	//   "DEVICE_RECOGNITION_VERDICT_UNSPECIFIED" - Unspecified device integrity.
+	//   "MEETS_PC_INTEGRITY" - App is running on Windows Device with Google
+	// Desktop Services.
+	DeviceRecognitionVerdict []string `json:"deviceRecognitionVerdict,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "DeviceRecognitionVerdict")
+	// to unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DeviceRecognitionVerdict") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s PcDeviceIntegrity) MarshalJSON() ([]byte, error) {
+	type NoMethod PcDeviceIntegrity
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// PcRequestDetails: Contains the integrity request information.
+type PcRequestDetails struct {
+	// RequestHash: Request hash that was provided in the request.
+	RequestHash string `json:"requestHash,omitempty"`
+	// RequestPackageName: Required. Application package name this attestation was
+	// requested for. Note: This field makes no guarantees or promises on the
+	// caller integrity.
+	RequestPackageName string `json:"requestPackageName,omitempty"`
+	// RequestTime: Required. Timestamp, of the integrity application request.
+	RequestTime string `json:"requestTime,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "RequestHash") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "RequestHash") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s PcRequestDetails) MarshalJSON() ([]byte, error) {
+	type NoMethod PcRequestDetails
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// PcTokenPayloadExternal: Contains PC device attestation details.
+type PcTokenPayloadExternal struct {
+	// DeviceIntegrity: Required. Details about the device integrity.
+	DeviceIntegrity *PcDeviceIntegrity `json:"deviceIntegrity,omitempty"`
+	// RequestDetails: Required. Details about the integrity request.
+	RequestDetails *PcRequestDetails `json:"requestDetails,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "DeviceIntegrity") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DeviceIntegrity") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s PcTokenPayloadExternal) MarshalJSON() ([]byte, error) {
+	type NoMethod PcTokenPayloadExternal
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -970,5 +1099,111 @@ func (c *V1DecodeIntegrityTokenCall) Do(opts ...googleapi.CallOption) (*DecodeIn
 		return nil, err
 	}
 	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "playintegrity.decodeIntegrityToken", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type V1DecodePcIntegrityTokenCall struct {
+	s                             *Service
+	packageName                   string
+	decodepcintegritytokenrequest *DecodePcIntegrityTokenRequest
+	urlParams_                    gensupport.URLParams
+	ctx_                          context.Context
+	header_                       http.Header
+}
+
+// DecodePcIntegrityToken: Decodes the PC integrity token and returns the PC
+// token payload.
+//
+//   - packageName: Package name of the app the attached integrity token belongs
+//     to.
+func (r *V1Service) DecodePcIntegrityToken(packageName string, decodepcintegritytokenrequest *DecodePcIntegrityTokenRequest) *V1DecodePcIntegrityTokenCall {
+	c := &V1DecodePcIntegrityTokenCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.packageName = packageName
+	c.decodepcintegritytokenrequest = decodepcintegritytokenrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *V1DecodePcIntegrityTokenCall) Fields(s ...googleapi.Field) *V1DecodePcIntegrityTokenCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *V1DecodePcIntegrityTokenCall) Context(ctx context.Context) *V1DecodePcIntegrityTokenCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *V1DecodePcIntegrityTokenCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *V1DecodePcIntegrityTokenCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.decodepcintegritytokenrequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+packageName}:decodePcIntegrityToken")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"packageName": c.packageName,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "playintegrity.decodePcIntegrityToken", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "playintegrity.decodePcIntegrityToken" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *DecodePcIntegrityTokenResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *V1DecodePcIntegrityTokenCall) Do(opts ...googleapi.CallOption) (*DecodePcIntegrityTokenResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &DecodePcIntegrityTokenResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "playintegrity.decodePcIntegrityToken", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }

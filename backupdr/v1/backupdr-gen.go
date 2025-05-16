@@ -699,6 +699,8 @@ type Backup struct {
 	// Description: Output only. The description of the Backup instance (2048
 	// characters or less).
 	Description string `json:"description,omitempty"`
+	// DiskBackupProperties: Output only. Disk specific backup properties.
+	DiskBackupProperties *DiskBackupProperties `json:"diskBackupProperties,omitempty"`
 	// EnforcedRetentionEndTime: Optional. The backup can not be deleted before
 	// this time.
 	EnforcedRetentionEndTime string `json:"enforcedRetentionEndTime,omitempty"`
@@ -1177,6 +1179,9 @@ type BackupPlan struct {
 	//   "INACTIVE" - The resource has been created but is not usable.
 	//   "UPDATING" - The resource is being updated.
 	State string `json:"state,omitempty"`
+	// SupportedResourceTypes: Output only. All resource types to which backupPlan
+	// can be applied.
+	SupportedResourceTypes []string `json:"supportedResourceTypes,omitempty"`
 	// UpdateTime: Output only. When the `BackupPlan` was last updated.
 	UpdateTime string `json:"updateTime,omitempty"`
 
@@ -1360,6 +1365,7 @@ type BackupVault struct {
 	//   "ACTIVE" - The backup vault has been created and is fully usable.
 	//   "DELETING" - The backup vault is being deleted.
 	//   "ERROR" - The backup vault is experiencing an issue and might be unusable.
+	//   "UPDATING" - The backup vault is being updated.
 	State string `json:"state,omitempty"`
 	// TotalStoredBytes: Output only. Total size of the storage used by all backup
 	// resources.
@@ -1841,6 +1847,9 @@ func (s CustomerEncryptionKey) MarshalJSON() ([]byte, error) {
 // DataSource: Message describing a DataSource object. Datasource object used
 // to represent Datasource details for both admin and basic view.
 type DataSource struct {
+	// BackupBlockedByVaultAccessRestriction: Output only. This field is set to
+	// true if the backup is blocked by vault access restriction.
+	BackupBlockedByVaultAccessRestriction bool `json:"backupBlockedByVaultAccessRestriction,omitempty"`
 	// BackupConfigInfo: Output only. Details of how the resource is configured for
 	// backup.
 	BackupConfigInfo *BackupConfigInfo `json:"backupConfigInfo,omitempty"`
@@ -1896,16 +1905,18 @@ type DataSource struct {
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-	// ForceSendFields is a list of field names (e.g. "BackupConfigInfo") to
-	// unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
+	// ForceSendFields is a list of field names (e.g.
+	// "BackupBlockedByVaultAccessRestriction") to unconditionally include in API
+	// requests. By default, fields with empty or default values are omitted from
+	// API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "BackupConfigInfo") to include in
-	// API requests with the JSON null value. By default, fields with empty values
-	// are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	// NullFields is a list of field names (e.g.
+	// "BackupBlockedByVaultAccessRestriction") to include in API requests with the
+	// JSON null value. By default, fields with empty values are omitted from API
+	// requests. See https://pkg.go.dev/google.golang.org/api#hdr-NullFields for
+	// more details.
 	NullFields []string `json:"-"`
 }
 
@@ -1959,6 +1970,9 @@ type DataSourceGcpResource struct {
 	// a subset of Compute Instance properties that are useful at the Datasource
 	// level.
 	ComputeInstanceDatasourceProperties *ComputeInstanceDataSourceProperties `json:"computeInstanceDatasourceProperties,omitempty"`
+	// DiskDatasourceProperties: DiskDataSourceProperties has a subset of Disk
+	// properties that are useful at the Datasource level.
+	DiskDatasourceProperties *DiskDataSourceProperties `json:"diskDatasourceProperties,omitempty"`
 	// GcpResourcename: Output only. Full resource pathname URL of the source
 	// Google Cloud resource.
 	GcpResourcename string `json:"gcpResourcename,omitempty"`
@@ -1984,6 +1998,198 @@ type DataSourceGcpResource struct {
 
 func (s DataSourceGcpResource) MarshalJSON() ([]byte, error) {
 	type NoMethod DataSourceGcpResource
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// DiskBackupProperties: DiskBackupProperties represents the properties of a
+// Disk backup.
+type DiskBackupProperties struct {
+	// Architecture: The architecture of the source disk. Valid values are ARM64 or
+	// X86_64.
+	//
+	// Possible values:
+	//   "ARCHITECTURE_UNSPECIFIED" - Default value. This value is unused.
+	//   "X86_64" - Disks with architecture X86_64
+	//   "ARM64" - Disks with architecture ARM64
+	Architecture string `json:"architecture,omitempty"`
+	// Description: A description of the source disk.
+	Description string `json:"description,omitempty"`
+	// GuestOsFeature: A list of guest OS features that are applicable to this
+	// backup.
+	GuestOsFeature []*GuestOsFeature `json:"guestOsFeature,omitempty"`
+	// Licenses: A list of publicly available licenses that are applicable to this
+	// backup. This is applicable if the original image had licenses attached, e.g.
+	// Windows image.
+	Licenses []string `json:"licenses,omitempty"`
+	// Region: Region and zone are mutually exclusive fields. The URL of the region
+	// of the source disk.
+	Region string `json:"region,omitempty"`
+	// ReplicaZones: The URL of the Zones where the source disk should be
+	// replicated.
+	ReplicaZones []string `json:"replicaZones,omitempty"`
+	// SizeGb: Size(in GB) of the source disk.
+	SizeGb int64 `json:"sizeGb,omitempty,string"`
+	// SourceDisk: The source disk used to create this backup.
+	SourceDisk string `json:"sourceDisk,omitempty"`
+	// Type: The URL of the type of the disk.
+	Type string `json:"type,omitempty"`
+	// Zone: The URL of the Zone where the source disk.
+	Zone string `json:"zone,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Architecture") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Architecture") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s DiskBackupProperties) MarshalJSON() ([]byte, error) {
+	type NoMethod DiskBackupProperties
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// DiskDataSourceProperties: DiskDataSourceProperties represents the properties
+// of a Disk resource that are stored in the DataSource. .
+type DiskDataSourceProperties struct {
+	// Description: The description of the disk.
+	Description string `json:"description,omitempty"`
+	// Name: Name of the disk backed up by the datasource.
+	Name string `json:"name,omitempty"`
+	// SizeGb: The size of the disk in GB.
+	SizeGb int64 `json:"sizeGb,omitempty,string"`
+	// Type: The type of the disk.
+	Type string `json:"type,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Description") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Description") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s DiskDataSourceProperties) MarshalJSON() ([]byte, error) {
+	type NoMethod DiskDataSourceProperties
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// DiskRestoreProperties: DiskRestoreProperties represents the properties of a
+// Disk restore.
+type DiskRestoreProperties struct {
+	// AccessMode: Optional. The access mode of the disk.
+	//
+	// Possible values:
+	//   "READ_WRITE_SINGLE" - The default AccessMode, means the disk can be
+	// attached to single instance in RW mode.
+	//   "READ_WRITE_MANY" - The AccessMode means the disk can be attached to
+	// multiple instances in RW mode.
+	//   "READ_ONLY_MANY" - The AccessMode means the disk can be attached to
+	// multiple instances in RO mode.
+	AccessMode string `json:"accessMode,omitempty"`
+	// Architecture: Optional. The architecture of the source disk. Valid values
+	// are ARM64 or X86_64.
+	//
+	// Possible values:
+	//   "ARCHITECTURE_UNSPECIFIED" - Default value. This value is unused.
+	//   "X86_64" - Disks with architecture X86_64
+	//   "ARM64" - Disks with architecture ARM64
+	Architecture string `json:"architecture,omitempty"`
+	// Description: Optional. An optional description of this resource. Provide
+	// this property when you create the resource.
+	Description string `json:"description,omitempty"`
+	// DiskEncryptionKey: Optional. Encrypts the disk using a customer-supplied
+	// encryption key or a customer-managed encryption key.
+	DiskEncryptionKey *CustomerEncryptionKey `json:"diskEncryptionKey,omitempty"`
+	// EnableConfidentialCompute: Optional. Indicates whether this disk is using
+	// confidential compute mode. Encryption with a Cloud KMS key is required to
+	// enable this option.
+	EnableConfidentialCompute bool `json:"enableConfidentialCompute,omitempty"`
+	// GuestOsFeature: Optional. A list of features to enable in the guest
+	// operating system. This is applicable only for bootable images.
+	GuestOsFeature []*GuestOsFeature `json:"guestOsFeature,omitempty"`
+	// Labels: Optional. Labels to apply to this disk. These can be modified later
+	// using setLabels method. Label values can be empty.
+	Labels map[string]string `json:"labels,omitempty"`
+	// Licenses: Optional. A list of publicly available licenses that are
+	// applicable to this backup. This is applicable if the original image had
+	// licenses attached, e.g. Windows image
+	Licenses []string `json:"licenses,omitempty"`
+	// Name: Required. Name of the disk..
+	Name string `json:"name,omitempty"`
+	// PhysicalBlockSizeBytes: Optional. Physical block size of the persistent
+	// disk, in bytes. If not present in a request, a default value is used.
+	// Currently, the supported size is 4096.
+	PhysicalBlockSizeBytes int64 `json:"physicalBlockSizeBytes,omitempty,string"`
+	// ProvisionedIops: Optional. Indicates how many IOPS to provision for the
+	// disk. This sets the number of I/O operations per second that the disk can
+	// handle.
+	ProvisionedIops int64 `json:"provisionedIops,omitempty,string"`
+	// ProvisionedThroughput: Optional. Indicates how much throughput to provision
+	// for the disk. This sets the number of throughput MB per second that the disk
+	// can handle.
+	ProvisionedThroughput int64 `json:"provisionedThroughput,omitempty,string"`
+	// ResourceManagerTags: Optional. Resource manager tags to be bound to the
+	// disk.
+	ResourceManagerTags map[string]string `json:"resourceManagerTags,omitempty"`
+	// ResourcePolicy: Optional. Resource policies applied to this disk.
+	ResourcePolicy []string `json:"resourcePolicy,omitempty"`
+	// SizeGb: Required. The size of the disk in GB.
+	SizeGb int64 `json:"sizeGb,omitempty,string"`
+	// StoragePool: Optional. The storage pool in which the new disk is created.
+	// You can provide this as a partial or full URL to the resource.
+	StoragePool string `json:"storagePool,omitempty"`
+	// Type: Required. URL of the disk type resource describing which disk type to
+	// use to create the disk.
+	Type string `json:"type,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AccessMode") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AccessMode") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s DiskRestoreProperties) MarshalJSON() ([]byte, error) {
+	type NoMethod DiskRestoreProperties
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// DiskTargetEnvironment: DiskTargetEnvironment represents the target
+// environment for the disk.
+type DiskTargetEnvironment struct {
+	// Project: Required. Target project for the disk.
+	Project string `json:"project,omitempty"`
+	// Zone: Required. Target zone for the disk.
+	Zone string `json:"zone,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Project") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Project") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s DiskTargetEnvironment) MarshalJSON() ([]byte, error) {
+	type NoMethod DiskTargetEnvironment
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -3364,6 +3570,33 @@ func (s Policy) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// RegionDiskTargetEnvironment: RegionDiskTargetEnvironment represents the
+// target environment for the disk.
+type RegionDiskTargetEnvironment struct {
+	// Project: Required. Target project for the disk.
+	Project string `json:"project,omitempty"`
+	// Region: Required. Target region for the disk.
+	Region string `json:"region,omitempty"`
+	// ReplicaZones: Required. Target URLs of the replica zones for the disk.
+	ReplicaZones []string `json:"replicaZones,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Project") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Project") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s RegionDiskTargetEnvironment) MarshalJSON() ([]byte, error) {
+	type NoMethod RegionDiskTargetEnvironment
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // RemoveDataSourceRequest: Message for deleting a DataSource.
 type RemoveDataSourceRequest struct {
 	// RequestId: Optional. An optional request ID to identify requests. Specify a
@@ -3460,6 +3693,13 @@ type RestoreBackupRequest struct {
 	// ComputeInstanceTargetEnvironment: Compute Engine target environment to be
 	// used during restore.
 	ComputeInstanceTargetEnvironment *ComputeInstanceTargetEnvironment `json:"computeInstanceTargetEnvironment,omitempty"`
+	// DiskRestoreProperties: Disk properties to be overridden during restore.
+	DiskRestoreProperties *DiskRestoreProperties `json:"diskRestoreProperties,omitempty"`
+	// DiskTargetEnvironment: Disk target environment to be used during restore.
+	DiskTargetEnvironment *DiskTargetEnvironment `json:"diskTargetEnvironment,omitempty"`
+	// RegionDiskTargetEnvironment: Region disk target environment to be used
+	// during restore.
+	RegionDiskTargetEnvironment *RegionDiskTargetEnvironment `json:"regionDiskTargetEnvironment,omitempty"`
 	// RequestId: Optional. An optional request ID to identify requests. Specify a
 	// unique request ID so that if you must retry your request, the server will
 	// know to ignore the request if it has already been completed. The server will
@@ -4922,6 +5162,140 @@ func (c *ProjectsLocationsBackupPlanAssociationsListCall) Pages(ctx context.Cont
 	}
 }
 
+type ProjectsLocationsBackupPlanAssociationsPatchCall struct {
+	s                     *Service
+	name                  string
+	backupplanassociation *BackupPlanAssociation
+	urlParams_            gensupport.URLParams
+	ctx_                  context.Context
+	header_               http.Header
+}
+
+// Patch: Update a BackupPlanAssociation
+//
+//   - name: Output only. Identifier. The resource name of BackupPlanAssociation
+//     in below format Format :
+//     projects/{project}/locations/{location}/backupPlanAssociations/{backupPlanA
+//     ssociationId}.
+func (r *ProjectsLocationsBackupPlanAssociationsService) Patch(name string, backupplanassociation *BackupPlanAssociation) *ProjectsLocationsBackupPlanAssociationsPatchCall {
+	c := &ProjectsLocationsBackupPlanAssociationsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.backupplanassociation = backupplanassociation
+	return c
+}
+
+// RequestId sets the optional parameter "requestId": An optional request ID to
+// identify requests. Specify a unique request ID so that if you must retry
+// your request, the server will know to ignore the request if it has already
+// been completed. The server will guarantee that for at least 60 minutes since
+// the first request. For example, consider a situation where you make an
+// initial request and t he request times out. If you make the request again
+// with the same request ID, the server can check if original operation with
+// the same request ID was received, and if so, will ignore the second request.
+// This prevents clients from accidentally creating duplicate commitments. The
+// request ID must be a valid UUID with the exception that zero UUID is not
+// supported (00000000-0000-0000-0000-000000000000).
+func (c *ProjectsLocationsBackupPlanAssociationsPatchCall) RequestId(requestId string) *ProjectsLocationsBackupPlanAssociationsPatchCall {
+	c.urlParams_.Set("requestId", requestId)
+	return c
+}
+
+// UpdateMask sets the optional parameter "updateMask": Required. The list of
+// fields to update. Field mask is used to specify the fields to be overwritten
+// in the BackupPlanAssociation resource by the update. The fields specified in
+// the update_mask are relative to the resource, not the full request. A field
+// will be overwritten if it is in the mask. If the user does not provide a
+// mask then the request will fail. Currently
+// backup_plan_association.backup_plan is the only supported field.
+func (c *ProjectsLocationsBackupPlanAssociationsPatchCall) UpdateMask(updateMask string) *ProjectsLocationsBackupPlanAssociationsPatchCall {
+	c.urlParams_.Set("updateMask", updateMask)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsBackupPlanAssociationsPatchCall) Fields(s ...googleapi.Field) *ProjectsLocationsBackupPlanAssociationsPatchCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsBackupPlanAssociationsPatchCall) Context(ctx context.Context) *ProjectsLocationsBackupPlanAssociationsPatchCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsBackupPlanAssociationsPatchCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsBackupPlanAssociationsPatchCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.backupplanassociation)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PATCH", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "backupdr.projects.locations.backupPlanAssociations.patch", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "backupdr.projects.locations.backupPlanAssociations.patch" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsBackupPlanAssociationsPatchCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "backupdr.projects.locations.backupPlanAssociations.patch", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
 type ProjectsLocationsBackupPlanAssociationsTriggerBackupCall struct {
 	s                    *Service
 	name                 string
@@ -6343,6 +6717,15 @@ func (r *ProjectsLocationsBackupVaultsService) Patch(name string, backupvault *B
 // plan duration against backup vault enforcement duration.
 func (c *ProjectsLocationsBackupVaultsPatchCall) Force(force bool) *ProjectsLocationsBackupVaultsPatchCall {
 	c.urlParams_.Set("force", fmt.Sprint(force))
+	return c
+}
+
+// ForceUpdateAccessRestriction sets the optional parameter
+// "forceUpdateAccessRestriction": If set to true, we will force update access
+// restriction even if some non compliant data sources are present. The default
+// is 'false'.
+func (c *ProjectsLocationsBackupVaultsPatchCall) ForceUpdateAccessRestriction(forceUpdateAccessRestriction bool) *ProjectsLocationsBackupVaultsPatchCall {
+	c.urlParams_.Set("forceUpdateAccessRestriction", fmt.Sprint(forceUpdateAccessRestriction))
 	return c
 }
 

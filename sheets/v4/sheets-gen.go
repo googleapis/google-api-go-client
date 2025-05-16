@@ -702,6 +702,28 @@ func (s AddTableRequest) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// AddTableResponse: The result of adding a table.
+type AddTableResponse struct {
+	// Table: Output only. The table that was added.
+	Table *Table `json:"table,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Table") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Table") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s AddTableResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod AddTableResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // AppendCellsRequest: Adds new cells after the last row with data in a sheet,
 // inserting new rows into the sheet if necessary.
 type AppendCellsRequest struct {
@@ -7381,6 +7403,8 @@ type Response struct {
 	AddSheet *AddSheetResponse `json:"addSheet,omitempty"`
 	// AddSlicer: A reply from adding a slicer.
 	AddSlicer *AddSlicerResponse `json:"addSlicer,omitempty"`
+	// AddTable: A reply from adding a table.
+	AddTable *AddTableResponse `json:"addTable,omitempty"`
 	// CancelDataSourceRefresh: A reply from cancelling data source object
 	// refreshes.
 	CancelDataSourceRefresh *CancelDataSourceRefreshResponse `json:"cancelDataSourceRefresh,omitempty"`

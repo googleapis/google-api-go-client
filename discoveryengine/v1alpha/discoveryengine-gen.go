@@ -198,6 +198,7 @@ func NewProjectsLocationsService(s *Service) *ProjectsLocationsService {
 	rs.Evaluations = NewProjectsLocationsEvaluationsService(s)
 	rs.GroundingConfigs = NewProjectsLocationsGroundingConfigsService(s)
 	rs.IdentityMappingStores = NewProjectsLocationsIdentityMappingStoresService(s)
+	rs.Notebooks = NewProjectsLocationsNotebooksService(s)
 	rs.Operations = NewProjectsLocationsOperationsService(s)
 	rs.Podcasts = NewProjectsLocationsPodcastsService(s)
 	rs.RankingConfigs = NewProjectsLocationsRankingConfigsService(s)
@@ -222,6 +223,8 @@ type ProjectsLocationsService struct {
 	GroundingConfigs *ProjectsLocationsGroundingConfigsService
 
 	IdentityMappingStores *ProjectsLocationsIdentityMappingStoresService
+
+	Notebooks *ProjectsLocationsNotebooksService
 
 	Operations *ProjectsLocationsOperationsService
 
@@ -1033,6 +1036,27 @@ func NewProjectsLocationsIdentityMappingStoresOperationsService(s *Service) *Pro
 }
 
 type ProjectsLocationsIdentityMappingStoresOperationsService struct {
+	s *Service
+}
+
+func NewProjectsLocationsNotebooksService(s *Service) *ProjectsLocationsNotebooksService {
+	rs := &ProjectsLocationsNotebooksService{s: s}
+	rs.Sources = NewProjectsLocationsNotebooksSourcesService(s)
+	return rs
+}
+
+type ProjectsLocationsNotebooksService struct {
+	s *Service
+
+	Sources *ProjectsLocationsNotebooksSourcesService
+}
+
+func NewProjectsLocationsNotebooksSourcesService(s *Service) *ProjectsLocationsNotebooksSourcesService {
+	rs := &ProjectsLocationsNotebooksSourcesService{s: s}
+	return rs
+}
+
+type ProjectsLocationsNotebooksSourcesService struct {
 	s *Service
 }
 
@@ -3424,7 +3448,8 @@ type GoogleCloudDiscoveryengineV1DataStore struct {
 	// DataStore will be protected by the KMS key, as indicated in the cmek_config
 	// field.
 	KmsKeyName string `json:"kmsKeyName,omitempty"`
-	// Name: Immutable. The full resource name of the data store. Format:
+	// Name: Immutable. Identifier. The full resource name of the data store.
+	// Format:
 	// `projects/{project}/locations/{location}/collections/{collection_id}/dataStor
 	// es/{data_store_id}`. This field must be a UTF-8 encoded string with a length
 	// limit of 1024 characters.
@@ -3514,8 +3539,8 @@ func (s GoogleCloudDiscoveryengineV1DataStoreBillingEstimation) MarshalJSON() ([
 // GoogleCloudDiscoveryengineV1DataStoreServingConfigDataStore: Stores
 // information regarding the serving configurations at DataStore level.
 type GoogleCloudDiscoveryengineV1DataStoreServingConfigDataStore struct {
-	// DisabledForServing: If set true, the DataStore will not be available for
-	// serving search requests.
+	// DisabledForServing: Optional. If set true, the DataStore will not be
+	// available for serving search requests.
 	DisabledForServing bool `json:"disabledForServing,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "DisabledForServing") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -3996,7 +4021,7 @@ type GoogleCloudDiscoveryengineV1Engine struct {
 	CommonConfig *GoogleCloudDiscoveryengineV1EngineCommonConfig `json:"commonConfig,omitempty"`
 	// CreateTime: Output only. Timestamp the Recommendation Engine was created at.
 	CreateTime string `json:"createTime,omitempty"`
-	// DataStoreIds: The data stores associated with this engine. For
+	// DataStoreIds: Optional. The data stores associated with this engine. For
 	// SOLUTION_TYPE_SEARCH and SOLUTION_TYPE_RECOMMENDATION type of engines, they
 	// can only associate with at most one data store. If solution_type is
 	// SOLUTION_TYPE_CHAT, multiple DataStores in the same Collection can be
@@ -4009,9 +4034,10 @@ type GoogleCloudDiscoveryengineV1Engine struct {
 	// DisplayName: Required. The display name of the engine. Should be human
 	// readable. UTF-8 encoded string with limit of 1024 characters.
 	DisplayName string `json:"displayName,omitempty"`
-	// IndustryVertical: The industry vertical that the engine registers. The
-	// restriction of the Engine industry vertical is based on DataStore: Vertical
-	// on Engine has to match vertical of the DataStore linked to the engine.
+	// IndustryVertical: Optional. The industry vertical that the engine registers.
+	// The restriction of the Engine industry vertical is based on DataStore:
+	// Vertical on Engine has to match vertical of the DataStore linked to the
+	// engine.
 	//
 	// Possible values:
 	//   "INDUSTRY_VERTICAL_UNSPECIFIED" - Value used when unset.
@@ -4024,9 +4050,9 @@ type GoogleCloudDiscoveryengineV1Engine struct {
 	// applicable on the data stores with solution_type
 	// SOLUTION_TYPE_RECOMMENDATION and IndustryVertical.MEDIA vertical.
 	MediaRecommendationEngineConfig *GoogleCloudDiscoveryengineV1EngineMediaRecommendationEngineConfig `json:"mediaRecommendationEngineConfig,omitempty"`
-	// Name: Immutable. The fully qualified resource name of the engine. This field
-	// must be a UTF-8 encoded string with a length limit of 1024 characters.
-	// Format:
+	// Name: Immutable. Identifier. The fully qualified resource name of the
+	// engine. This field must be a UTF-8 encoded string with a length limit of
+	// 1024 characters. Format:
 	// `projects/{project}/locations/{location}/collections/{collection}/engines/{en
 	// gine}` engine should be 1-63 characters, and valid characters are /a-z0-9*/.
 	// Otherwise, an INVALID_ARGUMENT error is returned.
@@ -11219,7 +11245,8 @@ type GoogleCloudDiscoveryengineV1alphaDataStore struct {
 	KmsKeyName string `json:"kmsKeyName,omitempty"`
 	// LanguageInfo: Language info for DataStore.
 	LanguageInfo *GoogleCloudDiscoveryengineV1alphaLanguageInfo `json:"languageInfo,omitempty"`
-	// Name: Immutable. The full resource name of the data store. Format:
+	// Name: Immutable. Identifier. The full resource name of the data store.
+	// Format:
 	// `projects/{project}/locations/{location}/collections/{collection_id}/dataStor
 	// es/{data_store_id}`. This field must be a UTF-8 encoded string with a length
 	// limit of 1024 characters.
@@ -11315,8 +11342,8 @@ func (s GoogleCloudDiscoveryengineV1alphaDataStoreBillingEstimation) MarshalJSON
 // GoogleCloudDiscoveryengineV1alphaDataStoreServingConfigDataStore: Stores
 // information regarding the serving configurations at DataStore level.
 type GoogleCloudDiscoveryengineV1alphaDataStoreServingConfigDataStore struct {
-	// DisabledForServing: If set true, the DataStore will not be available for
-	// serving search requests.
+	// DisabledForServing: Optional. If set true, the DataStore will not be
+	// available for serving search requests.
 	DisabledForServing bool `json:"disabledForServing,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "DisabledForServing") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -12274,7 +12301,7 @@ type GoogleCloudDiscoveryengineV1alphaEngine struct {
 	CommonConfig *GoogleCloudDiscoveryengineV1alphaEngineCommonConfig `json:"commonConfig,omitempty"`
 	// CreateTime: Output only. Timestamp the Recommendation Engine was created at.
 	CreateTime string `json:"createTime,omitempty"`
-	// DataStoreIds: The data stores associated with this engine. For
+	// DataStoreIds: Optional. The data stores associated with this engine. For
 	// SOLUTION_TYPE_SEARCH and SOLUTION_TYPE_RECOMMENDATION type of engines, they
 	// can only associate with at most one data store. If solution_type is
 	// SOLUTION_TYPE_CHAT, multiple DataStores in the same Collection can be
@@ -12287,9 +12314,10 @@ type GoogleCloudDiscoveryengineV1alphaEngine struct {
 	// DisplayName: Required. The display name of the engine. Should be human
 	// readable. UTF-8 encoded string with limit of 1024 characters.
 	DisplayName string `json:"displayName,omitempty"`
-	// IndustryVertical: The industry vertical that the engine registers. The
-	// restriction of the Engine industry vertical is based on DataStore: Vertical
-	// on Engine has to match vertical of the DataStore linked to the engine.
+	// IndustryVertical: Optional. The industry vertical that the engine registers.
+	// The restriction of the Engine industry vertical is based on DataStore:
+	// Vertical on Engine has to match vertical of the DataStore linked to the
+	// engine.
 	//
 	// Possible values:
 	//   "INDUSTRY_VERTICAL_UNSPECIFIED" - Value used when unset.
@@ -12302,9 +12330,9 @@ type GoogleCloudDiscoveryengineV1alphaEngine struct {
 	// applicable on the data stores with solution_type
 	// SOLUTION_TYPE_RECOMMENDATION and IndustryVertical.MEDIA vertical.
 	MediaRecommendationEngineConfig *GoogleCloudDiscoveryengineV1alphaEngineMediaRecommendationEngineConfig `json:"mediaRecommendationEngineConfig,omitempty"`
-	// Name: Immutable. The fully qualified resource name of the engine. This field
-	// must be a UTF-8 encoded string with a length limit of 1024 characters.
-	// Format:
+	// Name: Immutable. Identifier. The fully qualified resource name of the
+	// engine. This field must be a UTF-8 encoded string with a length limit of
+	// 1024 characters. Format:
 	// `projects/{project}/locations/{location}/collections/{collection}/engines/{en
 	// gine}` engine should be 1-63 characters, and valid characters are /a-z0-9*/.
 	// Otherwise, an INVALID_ARGUMENT error is returned.
@@ -22820,7 +22848,8 @@ type GoogleCloudDiscoveryengineV1betaDataStore struct {
 	KmsKeyName string `json:"kmsKeyName,omitempty"`
 	// LanguageInfo: Language info for DataStore.
 	LanguageInfo *GoogleCloudDiscoveryengineV1betaLanguageInfo `json:"languageInfo,omitempty"`
-	// Name: Immutable. The full resource name of the data store. Format:
+	// Name: Immutable. Identifier. The full resource name of the data store.
+	// Format:
 	// `projects/{project}/locations/{location}/collections/{collection_id}/dataStor
 	// es/{data_store_id}`. This field must be a UTF-8 encoded string with a length
 	// limit of 1024 characters.
@@ -22913,8 +22942,8 @@ func (s GoogleCloudDiscoveryengineV1betaDataStoreBillingEstimation) MarshalJSON(
 // GoogleCloudDiscoveryengineV1betaDataStoreServingConfigDataStore: Stores
 // information regarding the serving configurations at DataStore level.
 type GoogleCloudDiscoveryengineV1betaDataStoreServingConfigDataStore struct {
-	// DisabledForServing: If set true, the DataStore will not be available for
-	// serving search requests.
+	// DisabledForServing: Optional. If set true, the DataStore will not be
+	// available for serving search requests.
 	DisabledForServing bool `json:"disabledForServing,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "DisabledForServing") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -23406,7 +23435,7 @@ type GoogleCloudDiscoveryengineV1betaEngine struct {
 	CommonConfig *GoogleCloudDiscoveryengineV1betaEngineCommonConfig `json:"commonConfig,omitempty"`
 	// CreateTime: Output only. Timestamp the Recommendation Engine was created at.
 	CreateTime string `json:"createTime,omitempty"`
-	// DataStoreIds: The data stores associated with this engine. For
+	// DataStoreIds: Optional. The data stores associated with this engine. For
 	// SOLUTION_TYPE_SEARCH and SOLUTION_TYPE_RECOMMENDATION type of engines, they
 	// can only associate with at most one data store. If solution_type is
 	// SOLUTION_TYPE_CHAT, multiple DataStores in the same Collection can be
@@ -23419,9 +23448,10 @@ type GoogleCloudDiscoveryengineV1betaEngine struct {
 	// DisplayName: Required. The display name of the engine. Should be human
 	// readable. UTF-8 encoded string with limit of 1024 characters.
 	DisplayName string `json:"displayName,omitempty"`
-	// IndustryVertical: The industry vertical that the engine registers. The
-	// restriction of the Engine industry vertical is based on DataStore: Vertical
-	// on Engine has to match vertical of the DataStore linked to the engine.
+	// IndustryVertical: Optional. The industry vertical that the engine registers.
+	// The restriction of the Engine industry vertical is based on DataStore:
+	// Vertical on Engine has to match vertical of the DataStore linked to the
+	// engine.
 	//
 	// Possible values:
 	//   "INDUSTRY_VERTICAL_UNSPECIFIED" - Value used when unset.
@@ -23434,9 +23464,9 @@ type GoogleCloudDiscoveryengineV1betaEngine struct {
 	// applicable on the data stores with solution_type
 	// SOLUTION_TYPE_RECOMMENDATION and IndustryVertical.MEDIA vertical.
 	MediaRecommendationEngineConfig *GoogleCloudDiscoveryengineV1betaEngineMediaRecommendationEngineConfig `json:"mediaRecommendationEngineConfig,omitempty"`
-	// Name: Immutable. The fully qualified resource name of the engine. This field
-	// must be a UTF-8 encoded string with a length limit of 1024 characters.
-	// Format:
+	// Name: Immutable. Identifier. The fully qualified resource name of the
+	// engine. This field must be a UTF-8 encoded string with a length limit of
+	// 1024 characters. Format:
 	// `projects/{project}/locations/{location}/collections/{collection}/engines/{en
 	// gine}` engine should be 1-63 characters, and valid characters are /a-z0-9*/.
 	// Otherwise, an INVALID_ARGUMENT error is returned.
@@ -26794,9 +26824,6 @@ type GoogleCloudNotebooklmV1alphaUploadSourceFileRequest struct {
 	Blob *GdataMedia `json:"blob,omitempty"`
 	// MediaRequestInfo: Media upload request metadata.
 	MediaRequestInfo *ApiservingMediaRequestInfo `json:"mediaRequestInfo,omitempty"`
-	// ProjectId: The project (notebook) id of the uploaded source. Prefer to use
-	// the parent field instead.
-	ProjectId string `json:"projectId,omitempty"`
 	// SourceId: The source id of the associated file. If not set, a source id will
 	// be generated and a new tentative source will be created.
 	SourceId string `json:"sourceId,omitempty"`
@@ -31555,7 +31582,8 @@ type ProjectsLocationsCollectionsDataStoresPatchCall struct {
 
 // Patch: Updates a DataStore
 //
-//   - name: Immutable. The full resource name of the data store. Format:
+//   - name: Immutable. Identifier. The full resource name of the data store.
+//     Format:
 //     `projects/{project}/locations/{location}/collections/{collection_id}/dataSt
 //     ores/{data_store_id}`. This field must be a UTF-8 encoded string with a
 //     length limit of 1024 characters.
@@ -32411,10 +32439,10 @@ func (c *ProjectsLocationsCollectionsDataStoresBranchesDocumentsGetProcessedDocu
 //
 // PNG) if available.
 //
-//	"IMAGE_BYTES" - Return image bytes if image_id of a document is provided,
+//	"IMAGE_BYTES" - Return image bytes in base64 encoded format if image_id of
 //
-// only supported for enabling shareholder-structure in layout parsing config
-// for now.
+// a document is provided, only supported for enabling shareholder-structure in
+// layout parsing config for now.
 func (c *ProjectsLocationsCollectionsDataStoresBranchesDocumentsGetProcessedDocumentCall) ProcessedDocumentType(processedDocumentType string) *ProjectsLocationsCollectionsDataStoresBranchesDocumentsGetProcessedDocumentCall {
 	c.urlParams_.Set("processedDocumentType", processedDocumentType)
 	return c
@@ -42147,9 +42175,9 @@ type ProjectsLocationsCollectionsEnginesPatchCall struct {
 
 // Patch: Updates an Engine
 //
-//   - name: Immutable. The fully qualified resource name of the engine. This
-//     field must be a UTF-8 encoded string with a length limit of 1024
-//     characters. Format:
+//   - name: Immutable. Identifier. The fully qualified resource name of the
+//     engine. This field must be a UTF-8 encoded string with a length limit of
+//     1024 characters. Format:
 //     `projects/{project}/locations/{location}/collections/{collection}/engines/{
 //     engine}` engine should be 1-63 characters, and valid characters are
 //     /a-z0-9*/. Otherwise, an INVALID_ARGUMENT error is returned.
@@ -47395,7 +47423,8 @@ type ProjectsLocationsDataStoresPatchCall struct {
 
 // Patch: Updates a DataStore
 //
-//   - name: Immutable. The full resource name of the data store. Format:
+//   - name: Immutable. Identifier. The full resource name of the data store.
+//     Format:
 //     `projects/{project}/locations/{location}/collections/{collection_id}/dataSt
 //     ores/{data_store_id}`. This field must be a UTF-8 encoded string with a
 //     length limit of 1024 characters.
@@ -48144,10 +48173,10 @@ func (c *ProjectsLocationsDataStoresBranchesDocumentsGetProcessedDocumentCall) P
 //
 // PNG) if available.
 //
-//	"IMAGE_BYTES" - Return image bytes if image_id of a document is provided,
+//	"IMAGE_BYTES" - Return image bytes in base64 encoded format if image_id of
 //
-// only supported for enabling shareholder-structure in layout parsing config
-// for now.
+// a document is provided, only supported for enabling shareholder-structure in
+// layout parsing config for now.
 func (c *ProjectsLocationsDataStoresBranchesDocumentsGetProcessedDocumentCall) ProcessedDocumentType(processedDocumentType string) *ProjectsLocationsDataStoresBranchesDocumentsGetProcessedDocumentCall {
 	c.urlParams_.Set("processedDocumentType", processedDocumentType)
 	return c
@@ -57870,6 +57899,116 @@ func (c *ProjectsLocationsIdentityMappingStoresOperationsListCall) Pages(ctx con
 		}
 		c.PageToken(x.NextPageToken)
 	}
+}
+
+type ProjectsLocationsNotebooksSourcesUploadFileCall struct {
+	s                                                   *Service
+	parent                                              string
+	sourceId                                            string
+	googlecloudnotebooklmv1alphauploadsourcefilerequest *GoogleCloudNotebooklmV1alphaUploadSourceFileRequest
+	urlParams_                                          gensupport.URLParams
+	ctx_                                                context.Context
+	header_                                             http.Header
+}
+
+// UploadFile: Uploads a file for Notebook LM to use. Creates a Source.
+//
+//   - parent: The parent resource where the sources will be created. Format:
+//     projects/{project}/locations/{location}/notebooks/{notebook}.
+//   - sourceId: The source id of the associated file. If not set, a source id
+//     will be generated and a new tentative source will be created.
+func (r *ProjectsLocationsNotebooksSourcesService) UploadFile(parent string, sourceId string, googlecloudnotebooklmv1alphauploadsourcefilerequest *GoogleCloudNotebooklmV1alphaUploadSourceFileRequest) *ProjectsLocationsNotebooksSourcesUploadFileCall {
+	c := &ProjectsLocationsNotebooksSourcesUploadFileCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.sourceId = sourceId
+	c.googlecloudnotebooklmv1alphauploadsourcefilerequest = googlecloudnotebooklmv1alphauploadsourcefilerequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsNotebooksSourcesUploadFileCall) Fields(s ...googleapi.Field) *ProjectsLocationsNotebooksSourcesUploadFileCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsNotebooksSourcesUploadFileCall) Context(ctx context.Context) *ProjectsLocationsNotebooksSourcesUploadFileCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsNotebooksSourcesUploadFileCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsNotebooksSourcesUploadFileCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googlecloudnotebooklmv1alphauploadsourcefilerequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+parent}/sources/{sourceId}:uploadFile")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent":   c.parent,
+		"sourceId": c.sourceId,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "discoveryengine.projects.locations.notebooks.sources.uploadFile", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "discoveryengine.projects.locations.notebooks.sources.uploadFile" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudNotebooklmV1alphaUploadSourceFileResponse.ServerResponse.Header
+// or (if a response was returned at all) in error.(*googleapi.Error).Header.
+// Use googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsNotebooksSourcesUploadFileCall) Do(opts ...googleapi.CallOption) (*GoogleCloudNotebooklmV1alphaUploadSourceFileResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudNotebooklmV1alphaUploadSourceFileResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "discoveryengine.projects.locations.notebooks.sources.uploadFile", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
 }
 
 type ProjectsLocationsOperationsGetCall struct {

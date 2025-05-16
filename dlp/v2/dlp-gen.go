@@ -5536,7 +5536,7 @@ type GooglePrivacyDlpV2FileStoreDataProfile struct {
 	// FileStoreInfoTypeSummaries: InfoTypes detected in this file store.
 	FileStoreInfoTypeSummaries []*GooglePrivacyDlpV2FileStoreInfoTypeSummary `json:"fileStoreInfoTypeSummaries,omitempty"`
 	// FileStoreIsEmpty: The file store does not have any files. If the profiling
-	// failed, this will be false.
+	// operation failed, this is false.
 	FileStoreIsEmpty bool `json:"fileStoreIsEmpty,omitempty"`
 	// FileStoreLocation: The location of the file store. * Cloud Storage:
 	// https://cloud.google.com/storage/docs/locations#available-locations * Amazon

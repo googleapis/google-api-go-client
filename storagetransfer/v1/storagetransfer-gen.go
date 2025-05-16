@@ -401,6 +401,10 @@ type AzureBlobStorageData struct {
 	// for more information. If `credentials_secret` is specified, do not specify
 	// azure_credentials. Format: `projects/{project_number}/secrets/{secret_name}`
 	CredentialsSecret string `json:"credentialsSecret,omitempty"`
+	// FederatedIdentityConfig: Optional. Federated identity config of a user
+	// registered Azure application. If `federated_identity_config` is specified,
+	// do not specify azure_credentials or credentials_secret.
+	FederatedIdentityConfig *FederatedIdentityConfig `json:"federatedIdentityConfig,omitempty"`
 	// Path: Root path to transfer objects. Must be an empty string or full path
 	// name that ends with a '/'. This field is treated as an object prefix. As
 	// such, it should generally not begin with a '/'.
@@ -692,6 +696,41 @@ type EventStream struct {
 
 func (s EventStream) MarshalJSON() ([]byte, error) {
 	type NoMethod EventStream
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// FederatedIdentityConfig: Identities of a user registered Azure application
+// that enables identity federation to trust tokens issued by the user's Google
+// service account. For more information about Azure application and identity
+// federation, see [Register an application with the Microsoft identity
+// platform]
+// (https://learn.microsoft.com/en-us/entra/identity-platform/quickstart-register-app)
+// Azure RBAC roles then need be assigned to the Azure application to authorize
+// access to the user's Azure data source. For more information about Azure
+// RBAC roles for blobs, see [Manage Access Rights with RBAC]
+// (https://learn.microsoft.com/en-us/rest/api/storageservices/authorize-with-azure-active-directory#manage-access-rights-with-rbac)
+type FederatedIdentityConfig struct {
+	// ClientId: Required. Client (application) ID of the application with
+	// federated credentials.
+	ClientId string `json:"clientId,omitempty"`
+	// TenantId: Required. Tenant (directory) ID of the application with federated
+	// credentials.
+	TenantId string `json:"tenantId,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ClientId") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ClientId") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s FederatedIdentityConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod FederatedIdentityConfig
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 

@@ -1234,7 +1234,7 @@
                       ],
                       "parameters": {
                         "name": {
-                          "description": "Immutable. The full resource name of the data store. Format: `projects/{project}/locations/{location}/collections/{collection_id}/dataStores/{data_store_id}`. This field must be a UTF-8 encoded string with a length limit of 1024 characters.",
+                          "description": "Immutable. Identifier. The full resource name of the data store. Format: `projects/{project}/locations/{location}/collections/{collection_id}/dataStores/{data_store_id}`. This field must be a UTF-8 encoded string with a length limit of 1024 characters.",
                           "location": "path",
                           "pattern": "^projects/[^/]+/locations/[^/]+/collections/[^/]+/dataStores/[^/]+$",
                           "required": true,
@@ -1496,7 +1496,7 @@
                                     "Available for all data store parsing configs.",
                                     "Only available if ChunkingConfig is enabled on the data store.",
                                     "Returns the converted Image bytes (as JPEG or PNG) if available.",
-                                    "Return image bytes if image_id of a document is provided, only supported for enabling shareholder-structure in layout parsing config for now."
+                                    "Return image bytes in base64 encoded format if image_id of a document is provided, only supported for enabling shareholder-structure in layout parsing config for now."
                                   ],
                                   "location": "query",
                                   "type": "string"
@@ -4070,7 +4070,7 @@
                       ],
                       "parameters": {
                         "name": {
-                          "description": "Immutable. The fully qualified resource name of the engine. This field must be a UTF-8 encoded string with a length limit of 1024 characters. Format: `projects/{project}/locations/{location}/collections/{collection}/engines/{engine}` engine should be 1-63 characters, and valid characters are /a-z0-9*/. Otherwise, an INVALID_ARGUMENT error is returned.",
+                          "description": "Immutable. Identifier. The fully qualified resource name of the engine. This field must be a UTF-8 encoded string with a length limit of 1024 characters. Format: `projects/{project}/locations/{location}/collections/{collection}/engines/{engine}` engine should be 1-63 characters, and valid characters are /a-z0-9*/. Otherwise, an INVALID_ARGUMENT error is returned.",
                           "location": "path",
                           "pattern": "^projects/[^/]+/locations/[^/]+/collections/[^/]+/engines/[^/]+$",
                           "required": true,
@@ -5459,7 +5459,7 @@
                   ],
                   "parameters": {
                     "name": {
-                      "description": "Immutable. The full resource name of the data store. Format: `projects/{project}/locations/{location}/collections/{collection_id}/dataStores/{data_store_id}`. This field must be a UTF-8 encoded string with a length limit of 1024 characters.",
+                      "description": "Immutable. Identifier. The full resource name of the data store. Format: `projects/{project}/locations/{location}/collections/{collection_id}/dataStores/{data_store_id}`. This field must be a UTF-8 encoded string with a length limit of 1024 characters.",
                       "location": "path",
                       "pattern": "^projects/[^/]+/locations/[^/]+/dataStores/[^/]+$",
                       "required": true,
@@ -5693,7 +5693,7 @@
                                 "Available for all data store parsing configs.",
                                 "Only available if ChunkingConfig is enabled on the data store.",
                                 "Returns the converted Image bytes (as JPEG or PNG) if available.",
-                                "Return image bytes if image_id of a document is provided, only supported for enabling shareholder-structure in layout parsing config for now."
+                                "Return image bytes in base64 encoded format if image_id of a document is provided, only supported for enabling shareholder-structure in layout parsing config for now."
                               ],
                               "location": "query",
                               "type": "string"
@@ -8260,6 +8260,49 @@
                 }
               }
             },
+            "notebooks": {
+              "resources": {
+                "sources": {
+                  "methods": {
+                    "uploadFile": {
+                      "description": "Uploads a file for Notebook LM to use. Creates a Source.",
+                      "flatPath": "v1alpha/projects/{projectsId}/locations/{locationsId}/notebooks/{notebooksId}/sources/{sourceId}:uploadFile",
+                      "httpMethod": "POST",
+                      "id": "discoveryengine.projects.locations.notebooks.sources.uploadFile",
+                      "parameterOrder": [
+                        "parent",
+                        "sourceId"
+                      ],
+                      "parameters": {
+                        "parent": {
+                          "description": "Required. The parent resource where the sources will be created. Format: projects/{project}/locations/{location}/notebooks/{notebook}",
+                          "location": "path",
+                          "pattern": "^projects/[^/]+/locations/[^/]+/notebooks/[^/]+$",
+                          "required": true,
+                          "type": "string"
+                        },
+                        "sourceId": {
+                          "description": "The source id of the associated file. If not set, a source id will be generated and a new tentative source will be created.",
+                          "location": "path",
+                          "required": true,
+                          "type": "string"
+                        }
+                      },
+                      "path": "v1alpha/{+parent}/sources/{sourceId}:uploadFile",
+                      "request": {
+                        "$ref": "GoogleCloudNotebooklmV1alphaUploadSourceFileRequest"
+                      },
+                      "response": {
+                        "$ref": "GoogleCloudNotebooklmV1alphaUploadSourceFileResponse"
+                      },
+                      "scopes": [
+                        "https://www.googleapis.com/auth/cloud-platform"
+                      ]
+                    }
+                  }
+                }
+              }
+            },
             "operations": {
               "methods": {
                 "get": {
@@ -9130,7 +9173,7 @@
       }
     }
   },
-  "revision": "20250509",
+  "revision": "20250514",
   "rootUrl": "https://discoveryengine.googleapis.com/",
   "schemas": {
     "ApiservingMediaRequestInfo": {
@@ -10781,7 +10824,7 @@
           "type": "string"
         },
         "name": {
-          "description": "Immutable. The full resource name of the data store. Format: `projects/{project}/locations/{location}/collections/{collection_id}/dataStores/{data_store_id}`. This field must be a UTF-8 encoded string with a length limit of 1024 characters.",
+          "description": "Immutable. Identifier. The full resource name of the data store. Format: `projects/{project}/locations/{location}/collections/{collection_id}/dataStores/{data_store_id}`. This field must be a UTF-8 encoded string with a length limit of 1024 characters.",
           "type": "string"
         },
         "servingConfigDataStore": {
@@ -10862,7 +10905,7 @@
       "id": "GoogleCloudDiscoveryengineV1DataStoreServingConfigDataStore",
       "properties": {
         "disabledForServing": {
-          "description": "If set true, the DataStore will not be available for serving search requests.",
+          "description": "Optional. If set true, the DataStore will not be available for serving search requests.",
           "type": "boolean"
         }
       },
@@ -11190,7 +11233,7 @@
           "type": "string"
         },
         "dataStoreIds": {
-          "description": "The data stores associated with this engine. For SOLUTION_TYPE_SEARCH and SOLUTION_TYPE_RECOMMENDATION type of engines, they can only associate with at most one data store. If solution_type is SOLUTION_TYPE_CHAT, multiple DataStores in the same Collection can be associated here. Note that when used in CreateEngineRequest, one DataStore id must be provided as the system will use it for necessary initializations.",
+          "description": "Optional. The data stores associated with this engine. For SOLUTION_TYPE_SEARCH and SOLUTION_TYPE_RECOMMENDATION type of engines, they can only associate with at most one data store. If solution_type is SOLUTION_TYPE_CHAT, multiple DataStores in the same Collection can be associated here. Note that when used in CreateEngineRequest, one DataStore id must be provided as the system will use it for necessary initializations.",
           "items": {
             "type": "string"
           },
@@ -11205,7 +11248,7 @@
           "type": "string"
         },
         "industryVertical": {
-          "description": "The industry vertical that the engine registers. The restriction of the Engine industry vertical is based on DataStore: Vertical on Engine has to match vertical of the DataStore linked to the engine.",
+          "description": "Optional. The industry vertical that the engine registers. The restriction of the Engine industry vertical is based on DataStore: Vertical on Engine has to match vertical of the DataStore linked to the engine.",
           "enum": [
             "INDUSTRY_VERTICAL_UNSPECIFIED",
             "GENERIC",
@@ -11225,7 +11268,7 @@
           "description": "Configurations for the Media Engine. Only applicable on the data stores with solution_type SOLUTION_TYPE_RECOMMENDATION and IndustryVertical.MEDIA vertical."
         },
         "name": {
-          "description": "Immutable. The fully qualified resource name of the engine. This field must be a UTF-8 encoded string with a length limit of 1024 characters. Format: `projects/{project}/locations/{location}/collections/{collection}/engines/{engine}` engine should be 1-63 characters, and valid characters are /a-z0-9*/. Otherwise, an INVALID_ARGUMENT error is returned.",
+          "description": "Immutable. Identifier. The fully qualified resource name of the engine. This field must be a UTF-8 encoded string with a length limit of 1024 characters. Format: `projects/{project}/locations/{location}/collections/{collection}/engines/{engine}` engine should be 1-63 characters, and valid characters are /a-z0-9*/. Otherwise, an INVALID_ARGUMENT error is returned.",
           "type": "string"
         },
         "searchEngineConfig": {
@@ -16678,7 +16721,7 @@
           "description": "Language info for DataStore."
         },
         "name": {
-          "description": "Immutable. The full resource name of the data store. Format: `projects/{project}/locations/{location}/collections/{collection_id}/dataStores/{data_store_id}`. This field must be a UTF-8 encoded string with a length limit of 1024 characters.",
+          "description": "Immutable. Identifier. The full resource name of the data store. Format: `projects/{project}/locations/{location}/collections/{collection_id}/dataStores/{data_store_id}`. This field must be a UTF-8 encoded string with a length limit of 1024 characters.",
           "type": "string"
         },
         "naturalLanguageQueryUnderstandingConfig": {
@@ -16763,7 +16806,7 @@
       "id": "GoogleCloudDiscoveryengineV1alphaDataStoreServingConfigDataStore",
       "properties": {
         "disabledForServing": {
-          "description": "If set true, the DataStore will not be available for serving search requests.",
+          "description": "Optional. If set true, the DataStore will not be available for serving search requests.",
           "type": "boolean"
         }
       },
@@ -17401,7 +17444,7 @@
           "type": "string"
         },
         "dataStoreIds": {
-          "description": "The data stores associated with this engine. For SOLUTION_TYPE_SEARCH and SOLUTION_TYPE_RECOMMENDATION type of engines, they can only associate with at most one data store. If solution_type is SOLUTION_TYPE_CHAT, multiple DataStores in the same Collection can be associated here. Note that when used in CreateEngineRequest, one DataStore id must be provided as the system will use it for necessary initializations.",
+          "description": "Optional. The data stores associated with this engine. For SOLUTION_TYPE_SEARCH and SOLUTION_TYPE_RECOMMENDATION type of engines, they can only associate with at most one data store. If solution_type is SOLUTION_TYPE_CHAT, multiple DataStores in the same Collection can be associated here. Note that when used in CreateEngineRequest, one DataStore id must be provided as the system will use it for necessary initializations.",
           "items": {
             "type": "string"
           },
@@ -17416,7 +17459,7 @@
           "type": "string"
         },
         "industryVertical": {
-          "description": "The industry vertical that the engine registers. The restriction of the Engine industry vertical is based on DataStore: Vertical on Engine has to match vertical of the DataStore linked to the engine.",
+          "description": "Optional. The industry vertical that the engine registers. The restriction of the Engine industry vertical is based on DataStore: Vertical on Engine has to match vertical of the DataStore linked to the engine.",
           "enum": [
             "INDUSTRY_VERTICAL_UNSPECIFIED",
             "GENERIC",
@@ -17436,7 +17479,7 @@
           "description": "Configurations for the Media Engine. Only applicable on the data stores with solution_type SOLUTION_TYPE_RECOMMENDATION and IndustryVertical.MEDIA vertical."
         },
         "name": {
-          "description": "Immutable. The fully qualified resource name of the engine. This field must be a UTF-8 encoded string with a length limit of 1024 characters. Format: `projects/{project}/locations/{location}/collections/{collection}/engines/{engine}` engine should be 1-63 characters, and valid characters are /a-z0-9*/. Otherwise, an INVALID_ARGUMENT error is returned.",
+          "description": "Immutable. Identifier. The fully qualified resource name of the engine. This field must be a UTF-8 encoded string with a length limit of 1024 characters. Format: `projects/{project}/locations/{location}/collections/{collection}/engines/{engine}` engine should be 1-63 characters, and valid characters are /a-z0-9*/. Otherwise, an INVALID_ARGUMENT error is returned.",
           "type": "string"
         },
         "recommendationMetadata": {
@@ -24954,7 +24997,7 @@
           "description": "Language info for DataStore."
         },
         "name": {
-          "description": "Immutable. The full resource name of the data store. Format: `projects/{project}/locations/{location}/collections/{collection_id}/dataStores/{data_store_id}`. This field must be a UTF-8 encoded string with a length limit of 1024 characters.",
+          "description": "Immutable. Identifier. The full resource name of the data store. Format: `projects/{project}/locations/{location}/collections/{collection_id}/dataStores/{data_store_id}`. This field must be a UTF-8 encoded string with a length limit of 1024 characters.",
           "type": "string"
         },
         "naturalLanguageQueryUnderstandingConfig": {
@@ -25039,7 +25082,7 @@
       "id": "GoogleCloudDiscoveryengineV1betaDataStoreServingConfigDataStore",
       "properties": {
         "disabledForServing": {
-          "description": "If set true, the DataStore will not be available for serving search requests.",
+          "description": "Optional. If set true, the DataStore will not be available for serving search requests.",
           "type": "boolean"
         }
       },
@@ -25373,7 +25416,7 @@
           "type": "string"
         },
         "dataStoreIds": {
-          "description": "The data stores associated with this engine. For SOLUTION_TYPE_SEARCH and SOLUTION_TYPE_RECOMMENDATION type of engines, they can only associate with at most one data store. If solution_type is SOLUTION_TYPE_CHAT, multiple DataStores in the same Collection can be associated here. Note that when used in CreateEngineRequest, one DataStore id must be provided as the system will use it for necessary initializations.",
+          "description": "Optional. The data stores associated with this engine. For SOLUTION_TYPE_SEARCH and SOLUTION_TYPE_RECOMMENDATION type of engines, they can only associate with at most one data store. If solution_type is SOLUTION_TYPE_CHAT, multiple DataStores in the same Collection can be associated here. Note that when used in CreateEngineRequest, one DataStore id must be provided as the system will use it for necessary initializations.",
           "items": {
             "type": "string"
           },
@@ -25388,7 +25431,7 @@
           "type": "string"
         },
         "industryVertical": {
-          "description": "The industry vertical that the engine registers. The restriction of the Engine industry vertical is based on DataStore: Vertical on Engine has to match vertical of the DataStore linked to the engine.",
+          "description": "Optional. The industry vertical that the engine registers. The restriction of the Engine industry vertical is based on DataStore: Vertical on Engine has to match vertical of the DataStore linked to the engine.",
           "enum": [
             "INDUSTRY_VERTICAL_UNSPECIFIED",
             "GENERIC",
@@ -25408,7 +25451,7 @@
           "description": "Configurations for the Media Engine. Only applicable on the data stores with solution_type SOLUTION_TYPE_RECOMMENDATION and IndustryVertical.MEDIA vertical."
         },
         "name": {
-          "description": "Immutable. The fully qualified resource name of the engine. This field must be a UTF-8 encoded string with a length limit of 1024 characters. Format: `projects/{project}/locations/{location}/collections/{collection}/engines/{engine}` engine should be 1-63 characters, and valid characters are /a-z0-9*/. Otherwise, an INVALID_ARGUMENT error is returned.",
+          "description": "Immutable. Identifier. The fully qualified resource name of the engine. This field must be a UTF-8 encoded string with a length limit of 1024 characters. Format: `projects/{project}/locations/{location}/collections/{collection}/engines/{engine}` engine should be 1-63 characters, and valid characters are /a-z0-9*/. Otherwise, an INVALID_ARGUMENT error is returned.",
           "type": "string"
         },
         "searchEngineConfig": {
@@ -27655,10 +27698,6 @@
         "mediaRequestInfo": {
           "$ref": "ApiservingMediaRequestInfo",
           "description": "Media upload request metadata."
-        },
-        "projectId": {
-          "description": "The project (notebook) id of the uploaded source. Prefer to use the parent field instead.",
-          "type": "string"
         },
         "sourceId": {
           "description": "The source id of the associated file. If not set, a source id will be generated and a new tentative source will be created.",

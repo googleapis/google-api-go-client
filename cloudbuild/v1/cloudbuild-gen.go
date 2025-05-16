@@ -1456,6 +1456,9 @@ type BuildTrigger struct {
 	CreateTime string `json:"createTime,omitempty"`
 	// Description: Human-readable description of this trigger.
 	Description string `json:"description,omitempty"`
+	// DeveloperConnectEventConfig: Optional. The configuration of a trigger that
+	// creates a build whenever an event from the DeveloperConnect API is received.
+	DeveloperConnectEventConfig *DeveloperConnectEventConfig `json:"developerConnectEventConfig,omitempty"`
 	// Disabled: If true, the trigger will never automatically execute a build.
 	Disabled bool `json:"disabled,omitempty"`
 	// EventType: EventType allows the user to explicitly set the type of event to
@@ -2034,6 +2037,45 @@ type DeveloperConnectConfig struct {
 
 func (s DeveloperConnectConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod DeveloperConnectConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// DeveloperConnectEventConfig: The configuration of a trigger that creates a
+// build whenever an event from the DeveloperConnect API is received.
+type DeveloperConnectEventConfig struct {
+	// GitRepositoryLink: Required. The Developer Connect Git repository link,
+	// formatted as `projects/*/locations/*/connections/*/gitRepositoryLink/*`.
+	GitRepositoryLink string `json:"gitRepositoryLink,omitempty"`
+	// GitRepositoryLinkType: Output only. The type of DeveloperConnect
+	// GitRepositoryLink.
+	//
+	// Possible values:
+	//   "GIT_REPOSITORY_LINK_TYPE_UNSPECIFIED" - If unspecified,
+	// GitRepositoryLinkType defaults to GITHUB.
+	//   "GITHUB" - The SCM repo is GITHUB.
+	//   "GITHUB_ENTERPRISE" - The SCM repo is GITHUB_ENTERPRISE.
+	//   "GITLAB" - The SCM repo is GITLAB.
+	//   "GITLAB_ENTERPRISE" - The SCM repo is GITLAB_ENTERPRISE.
+	GitRepositoryLinkType string `json:"gitRepositoryLinkType,omitempty"`
+	// PullRequest: Filter to match changes in pull requests.
+	PullRequest *PullRequestFilter `json:"pullRequest,omitempty"`
+	// Push: Filter to match changes in refs like branches and tags.
+	Push *PushFilter `json:"push,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "GitRepositoryLink") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "GitRepositoryLink") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s DeveloperConnectEventConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod DeveloperConnectEventConfig
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -3098,8 +3140,8 @@ type MavenArtifact struct {
 	// GroupId: Maven `groupId` value used when uploading the artifact to Artifact
 	// Registry.
 	GroupId string `json:"groupId,omitempty"`
-	// Path: Path to an artifact in the build's workspace to be uploaded to
-	// Artifact Registry. This can be either an absolute path, e.g.
+	// Path: Optional. Path to an artifact in the build's workspace to be uploaded
+	// to Artifact Registry. This can be either an absolute path, e.g.
 	// /workspace/my-app/target/my-app-1.0.SNAPSHOT.jar or a relative path from
 	// /workspace, e.g. my-app/target/my-app-1.0.SNAPSHOT.jar.
 	Path string `json:"path,omitempty"`
@@ -4515,7 +4557,7 @@ type WorkerPool struct {
 	// `CreateWorkerPool` request and the value of `{location}` is determined by
 	// the endpoint accessed.
 	Name string `json:"name,omitempty"`
-	// PrivatePoolV1Config: Legacy Private Pool configuration.
+	// PrivatePoolV1Config: Private Pool configuration.
 	PrivatePoolV1Config *PrivatePoolV1Config `json:"privatePoolV1Config,omitempty"`
 	// State: Output only. `WorkerPool` state.
 	//

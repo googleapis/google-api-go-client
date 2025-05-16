@@ -2621,7 +2621,8 @@ type GoogleCloudDiscoveryengineV1DataStore struct {
 	// DataStore will be protected by the KMS key, as indicated in the cmek_config
 	// field.
 	KmsKeyName string `json:"kmsKeyName,omitempty"`
-	// Name: Immutable. The full resource name of the data store. Format:
+	// Name: Immutable. Identifier. The full resource name of the data store.
+	// Format:
 	// `projects/{project}/locations/{location}/collections/{collection_id}/dataStor
 	// es/{data_store_id}`. This field must be a UTF-8 encoded string with a length
 	// limit of 1024 characters.
@@ -2711,8 +2712,8 @@ func (s GoogleCloudDiscoveryengineV1DataStoreBillingEstimation) MarshalJSON() ([
 // GoogleCloudDiscoveryengineV1DataStoreServingConfigDataStore: Stores
 // information regarding the serving configurations at DataStore level.
 type GoogleCloudDiscoveryengineV1DataStoreServingConfigDataStore struct {
-	// DisabledForServing: If set true, the DataStore will not be available for
-	// serving search requests.
+	// DisabledForServing: Optional. If set true, the DataStore will not be
+	// available for serving search requests.
 	DisabledForServing bool `json:"disabledForServing,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "DisabledForServing") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -3193,7 +3194,7 @@ type GoogleCloudDiscoveryengineV1Engine struct {
 	CommonConfig *GoogleCloudDiscoveryengineV1EngineCommonConfig `json:"commonConfig,omitempty"`
 	// CreateTime: Output only. Timestamp the Recommendation Engine was created at.
 	CreateTime string `json:"createTime,omitempty"`
-	// DataStoreIds: The data stores associated with this engine. For
+	// DataStoreIds: Optional. The data stores associated with this engine. For
 	// SOLUTION_TYPE_SEARCH and SOLUTION_TYPE_RECOMMENDATION type of engines, they
 	// can only associate with at most one data store. If solution_type is
 	// SOLUTION_TYPE_CHAT, multiple DataStores in the same Collection can be
@@ -3206,9 +3207,10 @@ type GoogleCloudDiscoveryengineV1Engine struct {
 	// DisplayName: Required. The display name of the engine. Should be human
 	// readable. UTF-8 encoded string with limit of 1024 characters.
 	DisplayName string `json:"displayName,omitempty"`
-	// IndustryVertical: The industry vertical that the engine registers. The
-	// restriction of the Engine industry vertical is based on DataStore: Vertical
-	// on Engine has to match vertical of the DataStore linked to the engine.
+	// IndustryVertical: Optional. The industry vertical that the engine registers.
+	// The restriction of the Engine industry vertical is based on DataStore:
+	// Vertical on Engine has to match vertical of the DataStore linked to the
+	// engine.
 	//
 	// Possible values:
 	//   "INDUSTRY_VERTICAL_UNSPECIFIED" - Value used when unset.
@@ -3221,9 +3223,9 @@ type GoogleCloudDiscoveryengineV1Engine struct {
 	// applicable on the data stores with solution_type
 	// SOLUTION_TYPE_RECOMMENDATION and IndustryVertical.MEDIA vertical.
 	MediaRecommendationEngineConfig *GoogleCloudDiscoveryengineV1EngineMediaRecommendationEngineConfig `json:"mediaRecommendationEngineConfig,omitempty"`
-	// Name: Immutable. The fully qualified resource name of the engine. This field
-	// must be a UTF-8 encoded string with a length limit of 1024 characters.
-	// Format:
+	// Name: Immutable. Identifier. The fully qualified resource name of the
+	// engine. This field must be a UTF-8 encoded string with a length limit of
+	// 1024 characters. Format:
 	// `projects/{project}/locations/{location}/collections/{collection}/engines/{en
 	// gine}` engine should be 1-63 characters, and valid characters are /a-z0-9*/.
 	// Otherwise, an INVALID_ARGUMENT error is returned.
@@ -7541,7 +7543,8 @@ type GoogleCloudDiscoveryengineV1alphaDataStore struct {
 	KmsKeyName string `json:"kmsKeyName,omitempty"`
 	// LanguageInfo: Language info for DataStore.
 	LanguageInfo *GoogleCloudDiscoveryengineV1alphaLanguageInfo `json:"languageInfo,omitempty"`
-	// Name: Immutable. The full resource name of the data store. Format:
+	// Name: Immutable. Identifier. The full resource name of the data store.
+	// Format:
 	// `projects/{project}/locations/{location}/collections/{collection_id}/dataStor
 	// es/{data_store_id}`. This field must be a UTF-8 encoded string with a length
 	// limit of 1024 characters.
@@ -7634,8 +7637,8 @@ func (s GoogleCloudDiscoveryengineV1alphaDataStoreBillingEstimation) MarshalJSON
 // GoogleCloudDiscoveryengineV1alphaDataStoreServingConfigDataStore: Stores
 // information regarding the serving configurations at DataStore level.
 type GoogleCloudDiscoveryengineV1alphaDataStoreServingConfigDataStore struct {
-	// DisabledForServing: If set true, the DataStore will not be available for
-	// serving search requests.
+	// DisabledForServing: Optional. If set true, the DataStore will not be
+	// available for serving search requests.
 	DisabledForServing bool `json:"disabledForServing,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "DisabledForServing") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -8260,7 +8263,7 @@ type GoogleCloudDiscoveryengineV1alphaEngine struct {
 	CommonConfig *GoogleCloudDiscoveryengineV1alphaEngineCommonConfig `json:"commonConfig,omitempty"`
 	// CreateTime: Output only. Timestamp the Recommendation Engine was created at.
 	CreateTime string `json:"createTime,omitempty"`
-	// DataStoreIds: The data stores associated with this engine. For
+	// DataStoreIds: Optional. The data stores associated with this engine. For
 	// SOLUTION_TYPE_SEARCH and SOLUTION_TYPE_RECOMMENDATION type of engines, they
 	// can only associate with at most one data store. If solution_type is
 	// SOLUTION_TYPE_CHAT, multiple DataStores in the same Collection can be
@@ -8273,9 +8276,10 @@ type GoogleCloudDiscoveryengineV1alphaEngine struct {
 	// DisplayName: Required. The display name of the engine. Should be human
 	// readable. UTF-8 encoded string with limit of 1024 characters.
 	DisplayName string `json:"displayName,omitempty"`
-	// IndustryVertical: The industry vertical that the engine registers. The
-	// restriction of the Engine industry vertical is based on DataStore: Vertical
-	// on Engine has to match vertical of the DataStore linked to the engine.
+	// IndustryVertical: Optional. The industry vertical that the engine registers.
+	// The restriction of the Engine industry vertical is based on DataStore:
+	// Vertical on Engine has to match vertical of the DataStore linked to the
+	// engine.
 	//
 	// Possible values:
 	//   "INDUSTRY_VERTICAL_UNSPECIFIED" - Value used when unset.
@@ -8288,9 +8292,9 @@ type GoogleCloudDiscoveryengineV1alphaEngine struct {
 	// applicable on the data stores with solution_type
 	// SOLUTION_TYPE_RECOMMENDATION and IndustryVertical.MEDIA vertical.
 	MediaRecommendationEngineConfig *GoogleCloudDiscoveryengineV1alphaEngineMediaRecommendationEngineConfig `json:"mediaRecommendationEngineConfig,omitempty"`
-	// Name: Immutable. The fully qualified resource name of the engine. This field
-	// must be a UTF-8 encoded string with a length limit of 1024 characters.
-	// Format:
+	// Name: Immutable. Identifier. The fully qualified resource name of the
+	// engine. This field must be a UTF-8 encoded string with a length limit of
+	// 1024 characters. Format:
 	// `projects/{project}/locations/{location}/collections/{collection}/engines/{en
 	// gine}` engine should be 1-63 characters, and valid characters are /a-z0-9*/.
 	// Otherwise, an INVALID_ARGUMENT error is returned.
@@ -17011,7 +17015,8 @@ type GoogleCloudDiscoveryengineV1betaDataStore struct {
 	KmsKeyName string `json:"kmsKeyName,omitempty"`
 	// LanguageInfo: Language info for DataStore.
 	LanguageInfo *GoogleCloudDiscoveryengineV1betaLanguageInfo `json:"languageInfo,omitempty"`
-	// Name: Immutable. The full resource name of the data store. Format:
+	// Name: Immutable. Identifier. The full resource name of the data store.
+	// Format:
 	// `projects/{project}/locations/{location}/collections/{collection_id}/dataStor
 	// es/{data_store_id}`. This field must be a UTF-8 encoded string with a length
 	// limit of 1024 characters.
@@ -17107,8 +17112,8 @@ func (s GoogleCloudDiscoveryengineV1betaDataStoreBillingEstimation) MarshalJSON(
 // GoogleCloudDiscoveryengineV1betaDataStoreServingConfigDataStore: Stores
 // information regarding the serving configurations at DataStore level.
 type GoogleCloudDiscoveryengineV1betaDataStoreServingConfigDataStore struct {
-	// DisabledForServing: If set true, the DataStore will not be available for
-	// serving search requests.
+	// DisabledForServing: Optional. If set true, the DataStore will not be
+	// available for serving search requests.
 	DisabledForServing bool `json:"disabledForServing,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "DisabledForServing") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -17930,7 +17935,7 @@ type GoogleCloudDiscoveryengineV1betaEngine struct {
 	CommonConfig *GoogleCloudDiscoveryengineV1betaEngineCommonConfig `json:"commonConfig,omitempty"`
 	// CreateTime: Output only. Timestamp the Recommendation Engine was created at.
 	CreateTime string `json:"createTime,omitempty"`
-	// DataStoreIds: The data stores associated with this engine. For
+	// DataStoreIds: Optional. The data stores associated with this engine. For
 	// SOLUTION_TYPE_SEARCH and SOLUTION_TYPE_RECOMMENDATION type of engines, they
 	// can only associate with at most one data store. If solution_type is
 	// SOLUTION_TYPE_CHAT, multiple DataStores in the same Collection can be
@@ -17943,9 +17948,10 @@ type GoogleCloudDiscoveryengineV1betaEngine struct {
 	// DisplayName: Required. The display name of the engine. Should be human
 	// readable. UTF-8 encoded string with limit of 1024 characters.
 	DisplayName string `json:"displayName,omitempty"`
-	// IndustryVertical: The industry vertical that the engine registers. The
-	// restriction of the Engine industry vertical is based on DataStore: Vertical
-	// on Engine has to match vertical of the DataStore linked to the engine.
+	// IndustryVertical: Optional. The industry vertical that the engine registers.
+	// The restriction of the Engine industry vertical is based on DataStore:
+	// Vertical on Engine has to match vertical of the DataStore linked to the
+	// engine.
 	//
 	// Possible values:
 	//   "INDUSTRY_VERTICAL_UNSPECIFIED" - Value used when unset.
@@ -17958,9 +17964,9 @@ type GoogleCloudDiscoveryengineV1betaEngine struct {
 	// applicable on the data stores with solution_type
 	// SOLUTION_TYPE_RECOMMENDATION and IndustryVertical.MEDIA vertical.
 	MediaRecommendationEngineConfig *GoogleCloudDiscoveryengineV1betaEngineMediaRecommendationEngineConfig `json:"mediaRecommendationEngineConfig,omitempty"`
-	// Name: Immutable. The fully qualified resource name of the engine. This field
-	// must be a UTF-8 encoded string with a length limit of 1024 characters.
-	// Format:
+	// Name: Immutable. Identifier. The fully qualified resource name of the
+	// engine. This field must be a UTF-8 encoded string with a length limit of
+	// 1024 characters. Format:
 	// `projects/{project}/locations/{location}/collections/{collection}/engines/{en
 	// gine}` engine should be 1-63 characters, and valid characters are /a-z0-9*/.
 	// Otherwise, an INVALID_ARGUMENT error is returned.
@@ -28137,7 +28143,8 @@ type ProjectsLocationsCollectionsDataStoresPatchCall struct {
 
 // Patch: Updates a DataStore
 //
-//   - name: Immutable. The full resource name of the data store. Format:
+//   - name: Immutable. Identifier. The full resource name of the data store.
+//     Format:
 //     `projects/{project}/locations/{location}/collections/{collection_id}/dataSt
 //     ores/{data_store_id}`. This field must be a UTF-8 encoded string with a
 //     length limit of 1024 characters.
@@ -37834,9 +37841,9 @@ type ProjectsLocationsCollectionsEnginesPatchCall struct {
 
 // Patch: Updates an Engine
 //
-//   - name: Immutable. The fully qualified resource name of the engine. This
-//     field must be a UTF-8 encoded string with a length limit of 1024
-//     characters. Format:
+//   - name: Immutable. Identifier. The fully qualified resource name of the
+//     engine. This field must be a UTF-8 encoded string with a length limit of
+//     1024 characters. Format:
 //     `projects/{project}/locations/{location}/collections/{collection}/engines/{
 //     engine}` engine should be 1-63 characters, and valid characters are
 //     /a-z0-9*/. Otherwise, an INVALID_ARGUMENT error is returned.
@@ -42847,7 +42854,8 @@ type ProjectsLocationsDataStoresPatchCall struct {
 
 // Patch: Updates a DataStore
 //
-//   - name: Immutable. The full resource name of the data store. Format:
+//   - name: Immutable. Identifier. The full resource name of the data store.
+//     Format:
 //     `projects/{project}/locations/{location}/collections/{collection_id}/dataSt
 //     ores/{data_store_id}`. This field must be a UTF-8 encoded string with a
 //     length limit of 1024 characters.

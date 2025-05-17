@@ -1192,6 +1192,17 @@ type ConversionWorkspace struct {
 	CreateTime string `json:"createTime,omitempty"`
 	// Destination: Required. The destination engine details.
 	Destination *DatabaseEngineInfo `json:"destination,omitempty"`
+	// DestinationProvider: Optional. The provider for the destination database.
+	//
+	// Possible values:
+	//   "DATABASE_PROVIDER_UNSPECIFIED" - Use this value for on-premise source
+	// database instances and ORACLE.
+	//   "CLOUDSQL" - Cloud SQL is the source instance provider.
+	//   "RDS" - Amazon RDS is the source instance provider.
+	//   "AURORA" - Amazon Aurora is the source instance provider.
+	//   "ALLOYDB" - AlloyDB for PostgreSQL is the source instance provider.
+	//   "AZURE_DATABASE" - Microsoft Azure Database for MySQL/PostgreSQL.
+	DestinationProvider string `json:"destinationProvider,omitempty"`
 	// DisplayName: Optional. The display name for the workspace.
 	DisplayName string `json:"displayName,omitempty"`
 	// GlobalSettings: Optional. A generic list of settings for the workspace. The
@@ -1214,6 +1225,17 @@ type ConversionWorkspace struct {
 	Name string `json:"name,omitempty"`
 	// Source: Required. The source engine details.
 	Source *DatabaseEngineInfo `json:"source,omitempty"`
+	// SourceProvider: Optional. The provider for the source database.
+	//
+	// Possible values:
+	//   "DATABASE_PROVIDER_UNSPECIFIED" - Use this value for on-premise source
+	// database instances and ORACLE.
+	//   "CLOUDSQL" - Cloud SQL is the source instance provider.
+	//   "RDS" - Amazon RDS is the source instance provider.
+	//   "AURORA" - Amazon Aurora is the source instance provider.
+	//   "ALLOYDB" - AlloyDB for PostgreSQL is the source instance provider.
+	//   "AZURE_DATABASE" - Microsoft Azure Database for MySQL/PostgreSQL.
+	SourceProvider string `json:"sourceProvider,omitempty"`
 	// UpdateTime: Output only. The timestamp when the workspace resource was last
 	// updated.
 	UpdateTime string `json:"updateTime,omitempty"`

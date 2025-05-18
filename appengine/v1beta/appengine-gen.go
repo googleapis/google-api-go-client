@@ -330,6 +330,7 @@ type ProjectsLocationsService struct {
 func NewProjectsLocationsApplicationsService(s *APIService) *ProjectsLocationsApplicationsService {
 	rs := &ProjectsLocationsApplicationsService{s: s}
 	rs.AuthorizedDomains = NewProjectsLocationsApplicationsAuthorizedDomainsService(s)
+	rs.DomainMappings = NewProjectsLocationsApplicationsDomainMappingsService(s)
 	rs.Services = NewProjectsLocationsApplicationsServicesService(s)
 	return rs
 }
@@ -338,6 +339,8 @@ type ProjectsLocationsApplicationsService struct {
 	s *APIService
 
 	AuthorizedDomains *ProjectsLocationsApplicationsAuthorizedDomainsService
+
+	DomainMappings *ProjectsLocationsApplicationsDomainMappingsService
 
 	Services *ProjectsLocationsApplicationsServicesService
 }
@@ -348,6 +351,15 @@ func NewProjectsLocationsApplicationsAuthorizedDomainsService(s *APIService) *Pr
 }
 
 type ProjectsLocationsApplicationsAuthorizedDomainsService struct {
+	s *APIService
+}
+
+func NewProjectsLocationsApplicationsDomainMappingsService(s *APIService) *ProjectsLocationsApplicationsDomainMappingsService {
+	rs := &ProjectsLocationsApplicationsDomainMappingsService{s: s}
+	return rs
+}
+
+type ProjectsLocationsApplicationsDomainMappingsService struct {
 	s *APIService
 }
 
@@ -9191,6 +9203,128 @@ func (c *ProjectsLocationsApplicationsAuthorizedDomainsListCall) Pages(ctx conte
 	}
 }
 
+type ProjectsLocationsApplicationsDomainMappingsGetCall struct {
+	s                *APIService
+	projectsId       string
+	locationsId      string
+	applicationsId   string
+	domainMappingsId string
+	urlParams_       gensupport.URLParams
+	ifNoneMatch_     string
+	ctx_             context.Context
+	header_          http.Header
+}
+
+// Get: Gets the specified domain mapping.
+//
+//   - applicationsId: Part of `name`. See documentation of `projectsId`.
+//   - domainMappingsId: Part of `name`. See documentation of `projectsId`.
+//   - locationsId: Part of `name`. See documentation of `projectsId`.
+//   - projectsId: Part of `name`. Name of the resource requested. Example:
+//     apps/myapp/domainMappings/example.com.
+func (r *ProjectsLocationsApplicationsDomainMappingsService) Get(projectsId string, locationsId string, applicationsId string, domainMappingsId string) *ProjectsLocationsApplicationsDomainMappingsGetCall {
+	c := &ProjectsLocationsApplicationsDomainMappingsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.projectsId = projectsId
+	c.locationsId = locationsId
+	c.applicationsId = applicationsId
+	c.domainMappingsId = domainMappingsId
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsApplicationsDomainMappingsGetCall) Fields(s ...googleapi.Field) *ProjectsLocationsApplicationsDomainMappingsGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsApplicationsDomainMappingsGetCall) IfNoneMatch(entityTag string) *ProjectsLocationsApplicationsDomainMappingsGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsApplicationsDomainMappingsGetCall) Context(ctx context.Context) *ProjectsLocationsApplicationsDomainMappingsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsApplicationsDomainMappingsGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsApplicationsDomainMappingsGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta/projects/{projectsId}/locations/{locationsId}/applications/{applicationsId}/domainMappings/{domainMappingsId}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"projectsId":       c.projectsId,
+		"locationsId":      c.locationsId,
+		"applicationsId":   c.applicationsId,
+		"domainMappingsId": c.domainMappingsId,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "appengine.projects.locations.applications.domainMappings.get", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "appengine.projects.locations.applications.domainMappings.get" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *DomainMapping.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsApplicationsDomainMappingsGetCall) Do(opts ...googleapi.CallOption) (*DomainMapping, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &DomainMapping{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "appengine.projects.locations.applications.domainMappings.get", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
 type ProjectsLocationsApplicationsServicesDeleteCall struct {
 	s              *APIService
 	projectsId     string
@@ -9298,6 +9432,148 @@ func (c *ProjectsLocationsApplicationsServicesDeleteCall) Do(opts ...googleapi.C
 		return nil, err
 	}
 	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "appengine.projects.locations.applications.services.delete", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsApplicationsServicesPatchCall struct {
+	s              *APIService
+	projectsId     string
+	locationsId    string
+	applicationsId string
+	servicesId     string
+	service        *Service
+	urlParams_     gensupport.URLParams
+	ctx_           context.Context
+	header_        http.Header
+}
+
+// Patch: Updates the configuration of the specified service.
+//
+//   - applicationsId: Part of `name`. See documentation of `projectsId`.
+//   - locationsId: Part of `name`. See documentation of `projectsId`.
+//   - projectsId: Part of `name`. Name of the resource to update. Example:
+//     apps/myapp/services/default.
+//   - servicesId: Part of `name`. See documentation of `projectsId`.
+func (r *ProjectsLocationsApplicationsServicesService) Patch(projectsId string, locationsId string, applicationsId string, servicesId string, service *Service) *ProjectsLocationsApplicationsServicesPatchCall {
+	c := &ProjectsLocationsApplicationsServicesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.projectsId = projectsId
+	c.locationsId = locationsId
+	c.applicationsId = applicationsId
+	c.servicesId = servicesId
+	c.service = service
+	return c
+}
+
+// MigrateTraffic sets the optional parameter "migrateTraffic": Set to true to
+// gradually shift traffic to one or more versions that you specify. By
+// default, traffic is shifted immediately. For gradual traffic migration, the
+// target versions must be located within instances that are configured for
+// both warmup requests
+// (https://cloud.google.com/appengine/docs/admin-api/reference/rest/v1beta/apps.services.versions#InboundServiceType)
+// and automatic scaling
+// (https://cloud.google.com/appengine/docs/admin-api/reference/rest/v1beta/apps.services.versions#AutomaticScaling).
+// You must specify the shardBy
+// (https://cloud.google.com/appengine/docs/admin-api/reference/rest/v1beta/apps.services#ShardBy)
+// field in the Service resource. Gradual traffic migration is not supported in
+// the App Engine flexible environment. For examples, see Migrating and
+// Splitting Traffic
+// (https://cloud.google.com/appengine/docs/admin-api/migrating-splitting-traffic).
+func (c *ProjectsLocationsApplicationsServicesPatchCall) MigrateTraffic(migrateTraffic bool) *ProjectsLocationsApplicationsServicesPatchCall {
+	c.urlParams_.Set("migrateTraffic", fmt.Sprint(migrateTraffic))
+	return c
+}
+
+// UpdateMask sets the optional parameter "updateMask": Required. Standard
+// field mask for the set of fields to be updated.
+func (c *ProjectsLocationsApplicationsServicesPatchCall) UpdateMask(updateMask string) *ProjectsLocationsApplicationsServicesPatchCall {
+	c.urlParams_.Set("updateMask", updateMask)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsApplicationsServicesPatchCall) Fields(s ...googleapi.Field) *ProjectsLocationsApplicationsServicesPatchCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsApplicationsServicesPatchCall) Context(ctx context.Context) *ProjectsLocationsApplicationsServicesPatchCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsApplicationsServicesPatchCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsApplicationsServicesPatchCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.service)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta/projects/{projectsId}/locations/{locationsId}/applications/{applicationsId}/services/{servicesId}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PATCH", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"projectsId":     c.projectsId,
+		"locationsId":    c.locationsId,
+		"applicationsId": c.applicationsId,
+		"servicesId":     c.servicesId,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "appengine.projects.locations.applications.services.patch", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "appengine.projects.locations.applications.services.patch" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsApplicationsServicesPatchCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "appengine.projects.locations.applications.services.patch", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 

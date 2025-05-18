@@ -2364,6 +2364,10 @@ type DatasetListDatasets struct {
 	// DatasetReference: The dataset reference. Use this property to access
 	// specific parts of the dataset's ID, such as project ID or dataset ID.
 	DatasetReference *DatasetReference `json:"datasetReference,omitempty"`
+	// ExternalDatasetReference: Output only. Reference to a read-only external
+	// dataset defined in data catalogs outside of BigQuery. Filled out when the
+	// dataset type is EXTERNAL.
+	ExternalDatasetReference *ExternalDatasetReference `json:"externalDatasetReference,omitempty"`
 	// FriendlyName: An alternate name for the dataset. The friendly name is purely
 	// decorative in nature.
 	FriendlyName string `json:"friendlyName,omitempty"`
@@ -4746,6 +4750,8 @@ type JobConfigurationLoad struct {
 	// destination table already exists. The following values are supported: *
 	// WRITE_TRUNCATE: If the table already exists, BigQuery overwrites the data,
 	// removes the constraints and uses the schema from the load job. *
+	// WRITE_TRUNCATE_DATA: If the table already exists, BigQuery overwrites the
+	// data, but keeps the constraints and schema of the existing table. *
 	// WRITE_APPEND: If the table already exists, BigQuery appends the data to the
 	// table. * WRITE_EMPTY: If the table already exists and contains data, a
 	// 'duplicate' error is returned in the job result. The default value is
@@ -4911,6 +4917,8 @@ type JobConfigurationQuery struct {
 	// destination table already exists. The following values are supported: *
 	// WRITE_TRUNCATE: If the table already exists, BigQuery overwrites the data,
 	// removes the constraints, and uses the schema from the query result. *
+	// WRITE_TRUNCATE_DATA: If the table already exists, BigQuery overwrites the
+	// data, but keeps the constraints and schema of the existing table. *
 	// WRITE_APPEND: If the table already exists, BigQuery appends the data to the
 	// table. * WRITE_EMPTY: If the table already exists and contains data, a
 	// 'duplicate' error is returned in the job result. The default value is

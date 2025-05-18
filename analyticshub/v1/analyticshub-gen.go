@@ -653,7 +653,7 @@ type DataExchange struct {
 	// DataExchange has an email sharing mandate enabled.
 	LogLinkedDatasetQueryUserEmail bool `json:"logLinkedDatasetQueryUserEmail,omitempty"`
 	// Name: Output only. The resource name of the data exchange. e.g.
-	// `projects/myproject/locations/US/dataExchanges/123`.
+	// `projects/myproject/locations/us/dataExchanges/123`.
 	Name string `json:"name,omitempty"`
 	// PrimaryContact: Optional. Email or URL of the primary point of contact of
 	// the data exchange. Max Length: 1000 bytes.
@@ -808,10 +808,6 @@ type DestinationDataset struct {
 	// See https://cloud.google.com/bigquery/docs/locations for supported
 	// locations.
 	Location string `json:"location,omitempty"`
-	// ReplicaLocations: Optional. The geographic locations where the dataset
-	// should be replicated. See https://cloud.google.com/bigquery/docs/locations
-	// for supported locations.
-	ReplicaLocations []string `json:"replicaLocations,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "DatasetReference") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -1522,7 +1518,7 @@ type Listing struct {
 	// Listing has an email sharing mandate enabled.
 	LogLinkedDatasetQueryUserEmail bool `json:"logLinkedDatasetQueryUserEmail,omitempty"`
 	// Name: Output only. The resource name of the listing. e.g.
-	// `projects/myproject/locations/US/dataExchanges/123/listings/456`
+	// `projects/myproject/locations/us/dataExchanges/123/listings/456`
 	Name string `json:"name,omitempty"`
 	// PrimaryContact: Optional. Email or URL of the primary point of contact of
 	// the listing. Max Length: 1000 bytes.
@@ -2220,7 +2216,7 @@ func (s Status) MarshalJSON() ([]byte, error) {
 // SubscribeDataExchangeRequest: Message for subscribing to a Data Exchange.
 type SubscribeDataExchangeRequest struct {
 	// Destination: Required. The parent resource path of the Subscription. e.g.
-	// `projects/subscriberproject/locations/US`
+	// `projects/subscriberproject/locations/us`
 	Destination string `json:"destination,omitempty"`
 	// DestinationDataset: Optional. BigQuery destination dataset to create for the
 	// subscriber.
@@ -2334,14 +2330,17 @@ type Subscription struct {
 	// CreationTime: Output only. Timestamp when the subscription was created.
 	CreationTime string `json:"creationTime,omitempty"`
 	// DataExchange: Output only. Resource name of the source Data Exchange. e.g.
-	// projects/123/locations/US/dataExchanges/456
+	// projects/123/locations/us/dataExchanges/456
 	DataExchange string `json:"dataExchange,omitempty"`
+	// DestinationDataset: Optional. BigQuery destination dataset to create for the
+	// subscriber.
+	DestinationDataset *DestinationDataset `json:"destinationDataset,omitempty"`
 	// LastModifyTime: Output only. Timestamp when the subscription was last
 	// modified.
 	LastModifyTime string `json:"lastModifyTime,omitempty"`
 	// LinkedDatasetMap: Output only. Map of listing resource names to associated
 	// linked resource, e.g.
-	// projects/123/locations/US/dataExchanges/456/listings/789 ->
+	// projects/123/locations/us/dataExchanges/456/listings/789 ->
 	// projects/123/datasets/my_dataset For listing-level subscriptions, this is a
 	// map of size 1. Only contains values if state == STATE_ACTIVE.
 	LinkedDatasetMap map[string]LinkedResource `json:"linkedDatasetMap,omitempty"`
@@ -2349,14 +2348,14 @@ type Subscription struct {
 	// Only contains values if state = STATE_ACTIVE.
 	LinkedResources []*LinkedResource `json:"linkedResources,omitempty"`
 	// Listing: Output only. Resource name of the source Listing. e.g.
-	// projects/123/locations/US/dataExchanges/456/listings/789
+	// projects/123/locations/us/dataExchanges/456/listings/789
 	Listing string `json:"listing,omitempty"`
 	// LogLinkedDatasetQueryUserEmail: Output only. By default, false. If true, the
 	// Subscriber agreed to the email sharing mandate that is enabled for
 	// DataExchange/Listing.
 	LogLinkedDatasetQueryUserEmail bool `json:"logLinkedDatasetQueryUserEmail,omitempty"`
 	// Name: Output only. The resource name of the subscription. e.g.
-	// `projects/myproject/locations/US/subscriptions/123`.
+	// `projects/myproject/locations/us/subscriptions/123`.
 	Name string `json:"name,omitempty"`
 	// OrganizationDisplayName: Output only. Display name of the project of this
 	// subscription.
@@ -2475,7 +2474,7 @@ type OrganizationsLocationsDataExchangesListCall struct {
 // location.
 //
 //   - organization: The organization resource path of the projects containing
-//     DataExchanges. e.g. `organizations/myorg/locations/US`.
+//     DataExchanges. e.g. `organizations/myorg/locations/us`.
 func (r *OrganizationsLocationsDataExchangesService) List(organization string) *OrganizationsLocationsDataExchangesListCall {
 	c := &OrganizationsLocationsDataExchangesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.organization = organization
@@ -2622,7 +2621,7 @@ type ProjectsLocationsDataExchangesCreateCall struct {
 // Create: Creates a new data exchange.
 //
 //   - parent: The parent resource path of the data exchange. e.g.
-//     `projects/myproject/locations/US`.
+//     `projects/myproject/locations/us`.
 func (r *ProjectsLocationsDataExchangesService) Create(parent string, dataexchange *DataExchange) *ProjectsLocationsDataExchangesCreateCall {
 	c := &ProjectsLocationsDataExchangesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -2733,7 +2732,7 @@ type ProjectsLocationsDataExchangesDeleteCall struct {
 // Delete: Deletes an existing data exchange.
 //
 //   - name: The full name of the data exchange resource that you want to delete.
-//     For example, `projects/myproject/locations/US/dataExchanges/123`.
+//     For example, `projects/myproject/locations/us/dataExchanges/123`.
 func (r *ProjectsLocationsDataExchangesService) Delete(name string) *ProjectsLocationsDataExchangesDeleteCall {
 	c := &ProjectsLocationsDataExchangesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2832,7 +2831,7 @@ type ProjectsLocationsDataExchangesGetCall struct {
 // Get: Gets the details of a data exchange.
 //
 //   - name: The resource name of the data exchange. e.g.
-//     `projects/myproject/locations/US/dataExchanges/123`.
+//     `projects/myproject/locations/us/dataExchanges/123`.
 func (r *ProjectsLocationsDataExchangesService) Get(name string) *ProjectsLocationsDataExchangesGetCall {
 	c := &ProjectsLocationsDataExchangesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3047,7 +3046,7 @@ type ProjectsLocationsDataExchangesListCall struct {
 // List: Lists all data exchanges in a given project and location.
 //
 //   - parent: The parent resource path of the data exchanges. e.g.
-//     `projects/myproject/locations/US`.
+//     `projects/myproject/locations/us`.
 func (r *ProjectsLocationsDataExchangesService) List(parent string) *ProjectsLocationsDataExchangesListCall {
 	c := &ProjectsLocationsDataExchangesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -3196,8 +3195,8 @@ type ProjectsLocationsDataExchangesListSubscriptionsCall struct {
 //
 //   - resource: Resource name of the requested target. This resource may be
 //     either a Listing or a DataExchange. e.g.
-//     projects/123/locations/US/dataExchanges/456 OR e.g.
-//     projects/123/locations/US/dataExchanges/456/listings/789.
+//     projects/123/locations/us/dataExchanges/456 OR e.g.
+//     projects/123/locations/us/dataExchanges/456/listings/789.
 func (r *ProjectsLocationsDataExchangesService) ListSubscriptions(resource string) *ProjectsLocationsDataExchangesListSubscriptionsCall {
 	c := &ProjectsLocationsDataExchangesListSubscriptionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -3351,7 +3350,7 @@ type ProjectsLocationsDataExchangesPatchCall struct {
 // Patch: Updates an existing data exchange.
 //
 //   - name: Output only. The resource name of the data exchange. e.g.
-//     `projects/myproject/locations/US/dataExchanges/123`.
+//     `projects/myproject/locations/us/dataExchanges/123`.
 func (r *ProjectsLocationsDataExchangesService) Patch(name string, dataexchange *DataExchange) *ProjectsLocationsDataExchangesPatchCall {
 	c := &ProjectsLocationsDataExchangesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3567,10 +3566,11 @@ type ProjectsLocationsDataExchangesSubscribeCall struct {
 }
 
 // Subscribe: Creates a Subscription to a Data Clean Room. This is a
-// long-running operation as it will create one or more linked datasets.
+// long-running operation as it will create one or more linked datasets. Throws
+// a Bad Request error if the Data Exchange does not contain any listings.
 //
 //   - name: Resource name of the Data Exchange. e.g.
-//     `projects/publisherproject/locations/US/dataExchanges/123`.
+//     `projects/publisherproject/locations/us/dataExchanges/123`.
 func (r *ProjectsLocationsDataExchangesService) Subscribe(name string, subscribedataexchangerequest *SubscribeDataExchangeRequest) *ProjectsLocationsDataExchangesSubscribeCall {
 	c := &ProjectsLocationsDataExchangesSubscribeCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3781,7 +3781,7 @@ type ProjectsLocationsDataExchangesListingsCreateCall struct {
 // Create: Creates a new listing.
 //
 //   - parent: The parent resource path of the listing. e.g.
-//     `projects/myproject/locations/US/dataExchanges/123`.
+//     `projects/myproject/locations/us/dataExchanges/123`.
 func (r *ProjectsLocationsDataExchangesListingsService) Create(parent string, listing *Listing) *ProjectsLocationsDataExchangesListingsCreateCall {
 	c := &ProjectsLocationsDataExchangesListingsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -3892,7 +3892,7 @@ type ProjectsLocationsDataExchangesListingsDeleteCall struct {
 // Delete: Deletes a listing.
 //
 //   - name: Resource name of the listing to delete. e.g.
-//     `projects/myproject/locations/US/dataExchanges/123/listings/456`.
+//     `projects/myproject/locations/us/dataExchanges/123/listings/456`.
 func (r *ProjectsLocationsDataExchangesListingsService) Delete(name string) *ProjectsLocationsDataExchangesListingsDeleteCall {
 	c := &ProjectsLocationsDataExchangesListingsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4000,7 +4000,7 @@ type ProjectsLocationsDataExchangesListingsGetCall struct {
 // Get: Gets the details of a listing.
 //
 //   - name: The resource name of the listing. e.g.
-//     `projects/myproject/locations/US/dataExchanges/123/listings/456`.
+//     `projects/myproject/locations/us/dataExchanges/123/listings/456`.
 func (r *ProjectsLocationsDataExchangesListingsService) Get(name string) *ProjectsLocationsDataExchangesListingsGetCall {
 	c := &ProjectsLocationsDataExchangesListingsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4215,7 +4215,7 @@ type ProjectsLocationsDataExchangesListingsListCall struct {
 // List: Lists all listings in a given project and location.
 //
 //   - parent: The parent resource path of the listing. e.g.
-//     `projects/myproject/locations/US/dataExchanges/123`.
+//     `projects/myproject/locations/us/dataExchanges/123`.
 func (r *ProjectsLocationsDataExchangesListingsService) List(parent string) *ProjectsLocationsDataExchangesListingsListCall {
 	c := &ProjectsLocationsDataExchangesListingsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -4364,8 +4364,8 @@ type ProjectsLocationsDataExchangesListingsListSubscriptionsCall struct {
 //
 //   - resource: Resource name of the requested target. This resource may be
 //     either a Listing or a DataExchange. e.g.
-//     projects/123/locations/US/dataExchanges/456 OR e.g.
-//     projects/123/locations/US/dataExchanges/456/listings/789.
+//     projects/123/locations/us/dataExchanges/456 OR e.g.
+//     projects/123/locations/us/dataExchanges/456/listings/789.
 func (r *ProjectsLocationsDataExchangesListingsService) ListSubscriptions(resource string) *ProjectsLocationsDataExchangesListingsListSubscriptionsCall {
 	c := &ProjectsLocationsDataExchangesListingsListSubscriptionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -4519,7 +4519,7 @@ type ProjectsLocationsDataExchangesListingsPatchCall struct {
 // Patch: Updates an existing listing.
 //
 //   - name: Output only. The resource name of the listing. e.g.
-//     `projects/myproject/locations/US/dataExchanges/123/listings/456`.
+//     `projects/myproject/locations/us/dataExchanges/123/listings/456`.
 func (r *ProjectsLocationsDataExchangesListingsService) Patch(name string, listing *Listing) *ProjectsLocationsDataExchangesListingsPatchCall {
 	c := &ProjectsLocationsDataExchangesListingsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4739,7 +4739,7 @@ type ProjectsLocationsDataExchangesListingsSubscribeCall struct {
 // the subscriber's project.
 //
 //   - name: Resource name of the listing that you want to subscribe to. e.g.
-//     `projects/myproject/locations/US/dataExchanges/123/listings/456`.
+//     `projects/myproject/locations/us/dataExchanges/123/listings/456`.
 func (r *ProjectsLocationsDataExchangesListingsService) Subscribe(name string, subscribelistingrequest *SubscribeListingRequest) *ProjectsLocationsDataExchangesListingsSubscribeCall {
 	c := &ProjectsLocationsDataExchangesListingsSubscribeCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4950,7 +4950,7 @@ type ProjectsLocationsSubscriptionsDeleteCall struct {
 // Delete: Deletes a subscription.
 //
 //   - name: Resource name of the subscription to delete. e.g.
-//     projects/123/locations/US/subscriptions/456.
+//     projects/123/locations/us/subscriptions/456.
 func (r *ProjectsLocationsSubscriptionsService) Delete(name string) *ProjectsLocationsSubscriptionsDeleteCall {
 	c := &ProjectsLocationsSubscriptionsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5049,7 +5049,7 @@ type ProjectsLocationsSubscriptionsGetCall struct {
 // Get: Gets the details of a Subscription.
 //
 //   - name: Resource name of the subscription. e.g.
-//     projects/123/locations/US/subscriptions/456.
+//     projects/123/locations/us/subscriptions/456.
 func (r *ProjectsLocationsSubscriptionsService) Get(name string) *ProjectsLocationsSubscriptionsGetCall {
 	c := &ProjectsLocationsSubscriptionsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5264,7 +5264,7 @@ type ProjectsLocationsSubscriptionsListCall struct {
 // List: Lists all subscriptions in a given project and location.
 //
 //   - parent: The parent resource path of the subscription. e.g.
-//     projects/myproject/locations/US.
+//     projects/myproject/locations/us.
 func (r *ProjectsLocationsSubscriptionsService) List(parent string) *ProjectsLocationsSubscriptionsListCall {
 	c := &ProjectsLocationsSubscriptionsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -5426,7 +5426,7 @@ type ProjectsLocationsSubscriptionsRefreshCall struct {
 // operation as it may create many linked datasets.
 //
 //   - name: Resource name of the Subscription to refresh. e.g.
-//     `projects/subscriberproject/locations/US/subscriptions/123`.
+//     `projects/subscriberproject/locations/us/subscriptions/123`.
 func (r *ProjectsLocationsSubscriptionsService) Refresh(name string, refreshsubscriptionrequest *RefreshSubscriptionRequest) *ProjectsLocationsSubscriptionsRefreshCall {
 	c := &ProjectsLocationsSubscriptionsRefreshCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5530,7 +5530,7 @@ type ProjectsLocationsSubscriptionsRevokeCall struct {
 // Revoke: Revokes a given subscription.
 //
 //   - name: Resource name of the subscription to revoke. e.g.
-//     projects/123/locations/US/subscriptions/456.
+//     projects/123/locations/us/subscriptions/456.
 func (r *ProjectsLocationsSubscriptionsService) Revoke(name string, revokesubscriptionrequest *RevokeSubscriptionRequest) *ProjectsLocationsSubscriptionsRevokeCall {
 	c := &ProjectsLocationsSubscriptionsRevokeCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name

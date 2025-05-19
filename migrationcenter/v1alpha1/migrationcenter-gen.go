@@ -2662,7 +2662,7 @@ type DiskEntry struct {
 	TotalCapacityBytes int64 `json:"totalCapacityBytes,omitempty,string"`
 	// TotalFreeBytes: Disk free space.
 	TotalFreeBytes int64 `json:"totalFreeBytes,omitempty,string"`
-	// VmwareConfig: VMware disk details.
+	// VmwareConfig: VMware disk details. Deprecated
 	VmwareConfig *VmwareDiskConfig `json:"vmwareConfig,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "DiskLabel") to
 	// unconditionally include in API requests. By default, fields with empty or

@@ -4738,21 +4738,22 @@ func (s GoogleCloudDataplexV1EntryGroup) MarshalJSON() ([]byte, error) {
 }
 
 // GoogleCloudDataplexV1EntryLink: EntryLink represents a link between two
-// entries.
+// Entries.
 type GoogleCloudDataplexV1EntryLink struct {
 	// CreateTime: Output only. The time when the Entry Link was created.
 	CreateTime string `json:"createTime,omitempty"`
 	// EntryLinkType: Required. Immutable. Relative resource name of the Entry Link
 	// Type used to create this Entry Link, of the form:
-	// projects/{project}/locations/{location}/entryLinkTypes/{entry_link_type}.
+	// `projects/{project_id_or_number}/locations/{location_id}/entryLinkTypes/{entr
+	// y_link_type_id}.
 	EntryLinkType string `json:"entryLinkType,omitempty"`
-	// EntryReferences: Required. Specifies the entries referenced in the entry
-	// link. There should be exactly two entry references.
+	// EntryReferences: Required. Specifies the Entries referenced in the Entry
+	// Link. There should be exactly two entry references.
 	EntryReferences []*GoogleCloudDataplexV1EntryLinkEntryReference `json:"entryReferences,omitempty"`
 	// Name: Output only. Immutable. Identifier. The relative resource name of the
 	// Entry Link, of the form:
-	// projects/{project}/locations/{location}/entryGroups/{entry_group}/entryLinks/
-	// {entry_link}.
+	// projects/{project_id_or_number}/locations/{location_id}/entryGroups/{entry_gr
+	// oup_id}/entryLinks/{entry_link_id}
 	Name string `json:"name,omitempty"`
 	// UpdateTime: Output only. The time when the Entry Link was last updated.
 	UpdateTime string `json:"updateTime,omitempty"`
@@ -4778,25 +4779,25 @@ func (s GoogleCloudDataplexV1EntryLink) MarshalJSON() ([]byte, error) {
 }
 
 // GoogleCloudDataplexV1EntryLinkEntryReference: Reference to the Entry that is
-// linked through the entry link.
+// linked through the Entry Link.
 type GoogleCloudDataplexV1EntryLinkEntryReference struct {
 	// Name: Required. Immutable. The relative resource name of the referenced
-	// entry, of the form:
-	// projects/{project}/locations/{location}/entryGroups/{entryGroup}/entries/{ent
-	// ry}.
+	// Entry, of the form:
+	// projects/{project_id_or_number}/locations/{location_id}/entryGroups/{entry_gr
+	// oup_id}/entries/{entry_id}
 	Name string `json:"name,omitempty"`
-	// Path: Immutable. The path in the entry that is referenced in the entry link.
-	// Empty path denotes that the entry itself is referenced in the entry link.
+	// Path: Immutable. The path in the Entry that is referenced in the Entry Link.
+	// Empty path denotes that the Entry itself is referenced in the Entry Link.
 	Path string `json:"path,omitempty"`
-	// Type: Required. Immutable. The reference type of the entry.
+	// Type: Required. Immutable. The reference type of the Entry.
 	//
 	// Possible values:
-	//   "UNSPECIFIED" - Unspecified reference type. Implies that the entry is
-	// referenced in a non-directional entry link.
-	//   "SOURCE" - The entry is referenced as the source of the directional entry
-	// link.
-	//   "TARGET" - The entry is referenced as the target of the directional entry
-	// link.
+	//   "UNSPECIFIED" - Unspecified reference type. Implies that the Entry is
+	// referenced in a non-directional Entry Link.
+	//   "SOURCE" - The Entry is referenced as the source of the directional Entry
+	// Link.
+	//   "TARGET" - The Entry is referenced as the target of the directional Entry
+	// Link.
 	Type string `json:"type,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Name") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -10867,7 +10868,7 @@ type ProjectsLocationsSearchEntriesCall struct {
 // SearchEntries: Searches for Entries matching the given query and scope.
 //
 //   - name: The project to which the request should be attributed in the
-//     following form: projects/{project}/locations/{location}.
+//     following form: projects/{project}/locations/global.
 func (r *ProjectsLocationsService) SearchEntries(name string) *ProjectsLocationsSearchEntriesCall {
 	c := &ProjectsLocationsSearchEntriesCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -18215,7 +18216,8 @@ type ProjectsLocationsEntryGroupsEntryLinksCreateCall struct {
 // Create: Creates an Entry Link.
 //
 //   - parent: The resource name of the parent Entry Group:
-//     projects/{project}/locations/{location}/entryGroups/{entry_group}.
+//     projects/{project_id_or_number}/locations/{location_id}/entryGroups/{entry_
+//     group_id}.
 func (r *ProjectsLocationsEntryGroupsEntryLinksService) Create(parent string, googleclouddataplexv1entrylink *GoogleCloudDataplexV1EntryLink) *ProjectsLocationsEntryGroupsEntryLinksCreateCall {
 	c := &ProjectsLocationsEntryGroupsEntryLinksCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -18328,8 +18330,8 @@ type ProjectsLocationsEntryGroupsEntryLinksDeleteCall struct {
 // Delete: Deletes an Entry Link.
 //
 //   - name: The resource name of the Entry Link:
-//     projects/{project}/locations/{location}/entryGroups/{entry_group}/entryLink
-//     s/{entry_link}.
+//     projects/{project_id_or_number}/locations/{location_id}/entryGroups/{entry_
+//     group_id}/entryLinks/{entry_link_id}.
 func (r *ProjectsLocationsEntryGroupsEntryLinksService) Delete(name string) *ProjectsLocationsEntryGroupsEntryLinksDeleteCall {
 	c := &ProjectsLocationsEntryGroupsEntryLinksDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -18426,11 +18428,11 @@ type ProjectsLocationsEntryGroupsEntryLinksGetCall struct {
 	header_      http.Header
 }
 
-// Get: Gets an entry link.
+// Get: Gets an Entry Link.
 //
 //   - name: The resource name of the Entry Link:
-//     projects/{project}/locations/{location}/entryGroups/{entry_group}/entryLink
-//     s/{entry_link}.
+//     projects/{project_id_or_number}/locations/{location_id}/entryGroups/{entry_
+//     group_id}/entryLinks/{entry_link_id}.
 func (r *ProjectsLocationsEntryGroupsEntryLinksService) Get(name string) *ProjectsLocationsEntryGroupsEntryLinksGetCall {
 	c := &ProjectsLocationsEntryGroupsEntryLinksGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name

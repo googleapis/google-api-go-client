@@ -419,6 +419,9 @@ type Backup struct {
 	// Description: A description of the backup with 2048 characters or less.
 	// Requests with longer descriptions will be rejected.
 	Description string `json:"description,omitempty"`
+	// EnforcedRetentionEndTime: Output only. The time until which the backup is
+	// not deletable.
+	EnforcedRetentionEndTime string `json:"enforcedRetentionEndTime,omitempty"`
 	// Labels: Resource labels to represent user provided metadata.
 	Labels map[string]string `json:"labels,omitempty"`
 	// Name: Identifier. The resource name of the backup. Format:
@@ -573,11 +576,55 @@ func (s BackupPolicy) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// BackupRetentionPolicy: Retention policy for backups in the backup vault
+type BackupRetentionPolicy struct {
+	// BackupMinimumEnforcedRetentionDays: Required. Minimum retention duration in
+	// days for backups in the backup vault.
+	BackupMinimumEnforcedRetentionDays int64 `json:"backupMinimumEnforcedRetentionDays,omitempty"`
+	// DailyBackupImmutable: Optional. Indicates if the daily backups are
+	// immutable. Atleast one of daily_backup_immutable, weekly_backup_immutable,
+	// monthly_backup_immutable and manual_backup_immutable must be true.
+	DailyBackupImmutable bool `json:"dailyBackupImmutable,omitempty"`
+	// ManualBackupImmutable: Optional. Indicates if the manual backups are
+	// immutable. Atleast one of daily_backup_immutable, weekly_backup_immutable,
+	// monthly_backup_immutable and manual_backup_immutable must be true.
+	ManualBackupImmutable bool `json:"manualBackupImmutable,omitempty"`
+	// MonthlyBackupImmutable: Optional. Indicates if the monthly backups are
+	// immutable. Atleast one of daily_backup_immutable, weekly_backup_immutable,
+	// monthly_backup_immutable and manual_backup_immutable must be true.
+	MonthlyBackupImmutable bool `json:"monthlyBackupImmutable,omitempty"`
+	// WeeklyBackupImmutable: Optional. Indicates if the weekly backups are
+	// immutable. Atleast one of daily_backup_immutable, weekly_backup_immutable,
+	// monthly_backup_immutable and manual_backup_immutable must be true.
+	WeeklyBackupImmutable bool `json:"weeklyBackupImmutable,omitempty"`
+	// ForceSendFields is a list of field names (e.g.
+	// "BackupMinimumEnforcedRetentionDays") to unconditionally include in API
+	// requests. By default, fields with empty or default values are omitted from
+	// API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g.
+	// "BackupMinimumEnforcedRetentionDays") to include in API requests with the
+	// JSON null value. By default, fields with empty values are omitted from API
+	// requests. See https://pkg.go.dev/google.golang.org/api#hdr-NullFields for
+	// more details.
+	NullFields []string `json:"-"`
+}
+
+func (s BackupRetentionPolicy) MarshalJSON() ([]byte, error) {
+	type NoMethod BackupRetentionPolicy
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // BackupVault: A NetApp BackupVault.
 type BackupVault struct {
 	// BackupRegion: Optional. Region where the backups are stored. Format:
 	// `projects/{project_id}/locations/{location}`
 	BackupRegion string `json:"backupRegion,omitempty"`
+	// BackupRetentionPolicy: Optional. Backup retention policy defining the
+	// retenton of backups.
+	BackupRetentionPolicy *BackupRetentionPolicy `json:"backupRetentionPolicy,omitempty"`
 	// BackupVaultType: Optional. Type of backup vault to be created. Default is
 	// IN_REGION.
 	//
@@ -2066,6 +2113,11 @@ type StoragePool struct {
 	CustomPerformanceEnabled bool `json:"customPerformanceEnabled,omitempty"`
 	// Description: Optional. Description of the storage pool
 	Description string `json:"description,omitempty"`
+	// EnableHotTierAutoResize: Optional. Flag indicating that the hot-tier
+	// threshold will be auto-increased by 10% of the hot-tier when it hits 100%.
+	// Default is true. The increment will kick in only if the new size after
+	// increment is still less than or equal to storage pool size.
+	EnableHotTierAutoResize bool `json:"enableHotTierAutoResize,omitempty"`
 	// EncryptionType: Output only. Specifies the current pool encryption key
 	// source.
 	//
@@ -2078,6 +2130,11 @@ type StoragePool struct {
 	// GlobalAccessAllowed: Deprecated. Used to allow SO pool to access AD or DNS
 	// server from other regions.
 	GlobalAccessAllowed bool `json:"globalAccessAllowed,omitempty"`
+	// HotTierSizeGib: Optional. Total hot tier capacity for the Storage Pool. It
+	// is applicable only to Flex service level. It should be less than the minimum
+	// storage pool size and cannot be more than the current storage pool size. It
+	// cannot be decreased once set.
+	HotTierSizeGib int64 `json:"hotTierSizeGib,omitempty,string"`
 	// KmsConfig: Optional. Specifies the KMS config to be used for volume
 	// encryption.
 	KmsConfig string `json:"kmsConfig,omitempty"`
@@ -2173,6 +2230,10 @@ type TieringPolicy struct {
 	// as cold and make it eligible for tiering, can be range from 2-183. Default
 	// is 31.
 	CoolingThresholdDays int64 `json:"coolingThresholdDays,omitempty"`
+	// HotTierBypassModeEnabled: Optional. Flag indicating that the hot tier bypass
+	// mode is enabled. Default is false. This is only applicable to Flex service
+	// level.
+	HotTierBypassModeEnabled bool `json:"hotTierBypassModeEnabled,omitempty"`
 	// TierAction: Optional. Flag indicating if the volume has tiering policy
 	// enable/pause. Default is PAUSED.
 	//
@@ -2218,8 +2279,8 @@ type TransferStats struct {
 	// TotalTransferDuration: Cumulative time taken across all transfers for the
 	// replication relationship.
 	TotalTransferDuration string `json:"totalTransferDuration,omitempty"`
-	// TransferBytes: Cumulative bytes trasferred so far for the replication
-	// relatinonship.
+	// TransferBytes: Cumulative bytes transferred so far for the replication
+	// relationship.
 	TransferBytes int64 `json:"transferBytes,omitempty,string"`
 	// UpdateTime: Time when progress was updated last.
 	UpdateTime string `json:"updateTime,omitempty"`

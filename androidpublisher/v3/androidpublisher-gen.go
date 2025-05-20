@@ -1396,6 +1396,31 @@ func (s BasePlan) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// BatchGetOrdersResponse: Response for the orders.batchGet API.
+type BatchGetOrdersResponse struct {
+	// Orders: Details for the requested order IDs.
+	Orders []*Order `json:"orders,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "Orders") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Orders") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s BatchGetOrdersResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod BatchGetOrdersResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // BatchGetSubscriptionOffersRequest: Request message for
 // BatchGetSubscriptionOffers endpoint.
 type BatchGetSubscriptionOffersRequest struct {
@@ -1783,6 +1808,37 @@ func (s BundlesListResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// BuyerAddress: Address information for the customer, for use in tax
+// computation.
+type BuyerAddress struct {
+	// BuyerCountry: Two letter country code based on ISO-3166-1 Alpha-2 (UN
+	// country codes).
+	BuyerCountry string `json:"buyerCountry,omitempty"`
+	// BuyerPostcode: Postal code of an address. When Google is the Merchant of
+	// Record for the order, this information is not included.
+	BuyerPostcode string `json:"buyerPostcode,omitempty"`
+	// BuyerState: Top-level administrative subdivision of the buyer address
+	// country. When Google is the Merchant of Record for the order, this
+	// information is not included.
+	BuyerState string `json:"buyerState,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "BuyerCountry") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "BuyerCountry") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s BuyerAddress) MarshalJSON() ([]byte, error) {
+	type NoMethod BuyerAddress
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // CancelAppRecoveryRequest: Request message for CancelAppRecovery.
 type CancelAppRecoveryRequest struct {
 }
@@ -1857,6 +1913,28 @@ type CanceledStateContext struct {
 
 func (s CanceledStateContext) MarshalJSON() ([]byte, error) {
 	type NoMethod CanceledStateContext
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// CancellationEvent: Details of when the order was canceled.
+type CancellationEvent struct {
+	// EventTime: The time when the order was canceled.
+	EventTime string `json:"eventTime,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "EventTime") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "EventTime") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s CancellationEvent) MarshalJSON() ([]byte, error) {
+	type NoMethod CancellationEvent
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -3794,6 +3872,46 @@ func (s LanguageTargeting) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// LineItem: Details of a line item.
+type LineItem struct {
+	// ListingPrice: Item's listed price on Play Store, this may or may not include
+	// tax. Excludes any discounts or promotions.
+	ListingPrice *Money `json:"listingPrice,omitempty"`
+	// OneTimePurchaseDetails: Details of a one-time purchase.
+	OneTimePurchaseDetails *OneTimePurchaseDetails `json:"oneTimePurchaseDetails,omitempty"`
+	// PaidAppDetails: Details of a paid app purchase.
+	PaidAppDetails *PaidAppDetails `json:"paidAppDetails,omitempty"`
+	// ProductId: The purchased product ID or in-app SKU (for example, 'monthly001'
+	// or 'com.some.thing.inapp1').
+	ProductId string `json:"productId,omitempty"`
+	// ProductTitle: Developer-specified name of the product. Displayed in buyer's
+	// locale. Example: coins, monthly subscription, etc.
+	ProductTitle string `json:"productTitle,omitempty"`
+	// SubscriptionDetails: Details of a subscription purchase.
+	SubscriptionDetails *SubscriptionDetails `json:"subscriptionDetails,omitempty"`
+	// Tax: The tax paid for this line item.
+	Tax *Money `json:"tax,omitempty"`
+	// Total: The total amount paid by the user for this line item, taking into
+	// account discounts and tax.
+	Total *Money `json:"total,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ListingPrice") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ListingPrice") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s LineItem) MarshalJSON() ([]byte, error) {
+	type NoMethod LineItem
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // ListAppRecoveriesResponse: Response message for ListAppRecoveries. --
 // api-linter: core::0158::response-next-page-token-field=disabled
 type ListAppRecoveriesResponse struct {
@@ -4342,6 +4460,146 @@ func (s OneTimeExternalTransaction) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// OneTimePurchaseDetails: Details of a one-time purchase.
+type OneTimePurchaseDetails struct {
+	// OfferId: The offer ID of the one-time purchase offer.
+	OfferId string `json:"offerId,omitempty"`
+	// Quantity: The number of items purchased (for multi-quantity item purchases).
+	Quantity int64 `json:"quantity,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "OfferId") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "OfferId") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s OneTimePurchaseDetails) MarshalJSON() ([]byte, error) {
+	type NoMethod OneTimePurchaseDetails
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// Order: Details of an order.
+type Order struct {
+	// BuyerAddress: Address information for the customer, for use in tax
+	// computation. When Google is the Merchant of Record for the order, only
+	// country is shown.
+	BuyerAddress *BuyerAddress `json:"buyerAddress,omitempty"`
+	// CreateTime: The time when the order was created.
+	CreateTime string `json:"createTime,omitempty"`
+	// DeveloperRevenueInBuyerCurrency: Your revenue for this order in the buyer's
+	// currency, including deductions of partial refunds, taxes and fees. Google
+	// deducts standard transaction and third party fees from each sale, including
+	// VAT in some regions.
+	DeveloperRevenueInBuyerCurrency *Money `json:"developerRevenueInBuyerCurrency,omitempty"`
+	// LastEventTime: The time of the last event that occurred on the order.
+	LastEventTime string `json:"lastEventTime,omitempty"`
+	// LineItems: The individual line items making up this order.
+	LineItems []*LineItem `json:"lineItems,omitempty"`
+	// OrderDetails: Detailed information about the order at creation time.
+	OrderDetails *OrderDetails `json:"orderDetails,omitempty"`
+	// OrderHistory: Details about events which modified the order.
+	OrderHistory *OrderHistory `json:"orderHistory,omitempty"`
+	// OrderId: The order ID.
+	OrderId string `json:"orderId,omitempty"`
+	// PointsDetails: Play points applied to the order, including offer
+	// information, discount rate and point values.
+	PointsDetails *PointsDetails `json:"pointsDetails,omitempty"`
+	// PurchaseToken: The token provided to the user's device when the subscription
+	// or item was purchased.
+	PurchaseToken string `json:"purchaseToken,omitempty"`
+	// State: The state of the order.
+	//
+	// Possible values:
+	//   "STATE_UNSPECIFIED" - State unspecified. This value is not used.
+	//   "PENDING" - Order has been created and is waiting to be processed.
+	//   "PROCESSED" - Order has been successfully processed.
+	//   "CANCELED" - Order was canceled before being processed.
+	//   "PENDING_REFUND" - Requested refund is waiting to be processed.
+	//   "PARTIALLY_REFUNDED" - Part of the order amount was refunded.
+	//   "REFUNDED" - The full order amount was refunded.
+	State string `json:"state,omitempty"`
+	// Tax: The total tax paid as a part of this order.
+	Tax *Money `json:"tax,omitempty"`
+	// Total: The final amount paid by the customer, taking into account discounts
+	// and taxes.
+	Total *Money `json:"total,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "BuyerAddress") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "BuyerAddress") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s Order) MarshalJSON() ([]byte, error) {
+	type NoMethod Order
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// OrderDetails: Detailed information about the order at creation time.
+type OrderDetails struct {
+	// TaxInclusive: Indicates whether the listed price was tax inclusive or not.
+	TaxInclusive bool `json:"taxInclusive,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "TaxInclusive") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "TaxInclusive") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s OrderDetails) MarshalJSON() ([]byte, error) {
+	type NoMethod OrderDetails
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// OrderHistory: Details about events which modified the order.
+type OrderHistory struct {
+	// CancellationEvent: Details of when the order was canceled.
+	CancellationEvent *CancellationEvent `json:"cancellationEvent,omitempty"`
+	// PartialRefundEvents: Details of the partial refund events for this order.
+	PartialRefundEvents []*PartialRefundEvent `json:"partialRefundEvents,omitempty"`
+	// ProcessedEvent: Details of when the order was processed.
+	ProcessedEvent *ProcessedEvent `json:"processedEvent,omitempty"`
+	// RefundEvent: Details of when the order was fully refunded.
+	RefundEvent *RefundEvent `json:"refundEvent,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "CancellationEvent") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CancellationEvent") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s OrderHistory) MarshalJSON() ([]byte, error) {
+	type NoMethod OrderHistory
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // OtherRecurringProduct: Details of a recurring external transaction product
 // which doesn't belong to any other more specific category.
 type OtherRecurringProduct struct {
@@ -4527,6 +4785,10 @@ func (s PageInfo) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// PaidAppDetails: Details of a paid app purchase.
+type PaidAppDetails struct {
+}
+
 // PartialRefund: A partial refund of a transaction.
 type PartialRefund struct {
 	// RefundId: Required. A unique id distinguishing this partial refund. If the
@@ -4551,6 +4813,39 @@ type PartialRefund struct {
 
 func (s PartialRefund) MarshalJSON() ([]byte, error) {
 	type NoMethod PartialRefund
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// PartialRefundEvent: Details of the partial refund events for this order.
+type PartialRefundEvent struct {
+	// CreateTime: The time when the partial refund was created.
+	CreateTime string `json:"createTime,omitempty"`
+	// ProcessTime: The time when the partial refund was processed.
+	ProcessTime string `json:"processTime,omitempty"`
+	// RefundDetails: Details for the partial refund.
+	RefundDetails *RefundDetails `json:"refundDetails,omitempty"`
+	// State: The state of the partial refund.
+	//
+	// Possible values:
+	//   "STATE_UNSPECIFIED" - State unspecified. This value is not used.
+	//   "PENDING" - The partial refund has been created, but not yet processed.
+	//   "PROCESSED_SUCCESSFULLY" - The partial refund was processed successfully.
+	State string `json:"state,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "CreateTime") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CreateTime") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s PartialRefundEvent) MarshalJSON() ([]byte, error) {
+	type NoMethod PartialRefundEvent
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -4581,6 +4876,43 @@ func (s PausedStateContext) MarshalJSON() ([]byte, error) {
 // cancellation on the virtual installment plan. The cancellation will happen
 // only after the user finished all committed payments.
 type PendingCancellation struct {
+}
+
+// PointsDetails: Details relating to any Play Points applied to an order.
+type PointsDetails struct {
+	// PointsCouponValue: The monetary value of a Play Points coupon. This is the
+	// discount the coupon provides, which may not be the total amount. Only set
+	// when Play Points coupons have been used. E.g. for a 100 points for $2
+	// coupon, this is $2.
+	PointsCouponValue *Money `json:"pointsCouponValue,omitempty"`
+	// PointsDiscountRateMicros: The percentage rate which the Play Points
+	// promotion reduces the cost by. E.g. for a 100 points for $2 coupon, this is
+	// 500,000. Since $2 has an estimate of 200 points, but the actual Points
+	// required, 100, is 50% of this, and 50% in micros is 500,000. Between 0 and
+	// 1,000,000.
+	PointsDiscountRateMicros int64 `json:"pointsDiscountRateMicros,omitempty,string"`
+	// PointsOfferId: ID unique to the play points offer in use for this order.
+	PointsOfferId string `json:"pointsOfferId,omitempty"`
+	// PointsSpent: The number of Play Points applied in this order. E.g. for a 100
+	// points for $2 coupon, this is 100. For coupon stacked with base offer, this
+	// is the total points spent across both.
+	PointsSpent int64 `json:"pointsSpent,omitempty,string"`
+	// ForceSendFields is a list of field names (e.g. "PointsCouponValue") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "PointsCouponValue") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s PointsDetails) MarshalJSON() ([]byte, error) {
+	type NoMethod PointsDetails
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // PrepaidBasePlanType: Represents a base plan that does not automatically
@@ -4665,6 +4997,28 @@ type Price struct {
 
 func (s Price) MarshalJSON() ([]byte, error) {
 	type NoMethod Price
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ProcessedEvent: Details of when the order was processed.
+type ProcessedEvent struct {
+	// EventTime: The time when the order was processed.
+	EventTime string `json:"eventTime,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "EventTime") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "EventTime") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ProcessedEvent) MarshalJSON() ([]byte, error) {
+	type NoMethod ProcessedEvent
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -4813,6 +5167,63 @@ type RecurringExternalTransaction struct {
 
 func (s RecurringExternalTransaction) MarshalJSON() ([]byte, error) {
 	type NoMethod RecurringExternalTransaction
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// RefundDetails: Details for a partial or full refund.
+type RefundDetails struct {
+	// Tax: The amount of tax refunded.
+	Tax *Money `json:"tax,omitempty"`
+	// Total: The total amount refunded, including tax.
+	Total *Money `json:"total,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Tax") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Tax") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s RefundDetails) MarshalJSON() ([]byte, error) {
+	type NoMethod RefundDetails
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// RefundEvent: Details of when the order was fully refunded.
+type RefundEvent struct {
+	// EventTime: The time when the order was fully refunded.
+	EventTime string `json:"eventTime,omitempty"`
+	// RefundDetails: Details for the full refund.
+	RefundDetails *RefundDetails `json:"refundDetails,omitempty"`
+	// RefundReason: The reason the order was refunded.
+	//
+	// Possible values:
+	//   "REFUND_REASON_UNSPECIFIED" - Refund reason unspecified. This value is not
+	// used.
+	//   "OTHER" - The order was refunded for a reason other than the listed
+	// reasons here.
+	//   "CHARGEBACK" - The order was charged back.
+	RefundReason string `json:"refundReason,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "EventTime") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "EventTime") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s RefundEvent) MarshalJSON() ([]byte, error) {
+	type NoMethod RefundEvent
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -5106,10 +5517,10 @@ type RegionsVersion struct {
 	// to be specified according to the information published in this article
 	// (https://support.google.com/googleplay/android-developer/answer/10532353).
 	// Each time the supported locations substantially change, the version will be
-	// incremented. Using this field will ensure that creating and updating the
-	// resource with an older region's version and set of regional prices and
-	// currencies will succeed even though a new version is available. The latest
-	// version is 2022/02.
+	// incremented. The latest supported version is available in this article.
+	// Using this field will ensure that creating and updating the resource with an
+	// older region's version and set of regional prices and currencies will
+	// succeed even though a new version is available.
 	Version string `json:"version,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Version") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -5372,6 +5783,9 @@ type RevocationContext struct {
 	// FullRefund: Optional. Used when users should be refunded the full amount of
 	// the latest order of the subscription.
 	FullRefund *RevocationContextFullRefund `json:"fullRefund,omitempty"`
+	// ItemBasedRefund: Optional. Used when a specific item should be refunded in a
+	// subscription with multiple items.
+	ItemBasedRefund *RevocationContextItemBasedRefund `json:"itemBasedRefund,omitempty"`
 	// ProratedRefund: Optional. Used when users should be refunded a prorated
 	// amount they paid for their subscription based on the amount of time
 	// remaining in a subscription.
@@ -5397,6 +5811,30 @@ func (s RevocationContext) MarshalJSON() ([]byte, error) {
 // RevocationContextFullRefund: Used to determine if the refund type in the
 // RevocationContext is a full refund.
 type RevocationContextFullRefund struct {
+}
+
+// RevocationContextItemBasedRefund: Used to determine what specific item to
+// revoke in a subscription with multiple items.
+type RevocationContextItemBasedRefund struct {
+	// ProductId: Required. If the subscription is a subscription bundle, the
+	// product id of the subscription to revoke.
+	ProductId string `json:"productId,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ProductId") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ProductId") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s RevocationContextItemBasedRefund) MarshalJSON() ([]byte, error) {
+	type NoMethod RevocationContextItemBasedRefund
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // RevocationContextProratedRefund: Used to determine if the refund type in the
@@ -5807,6 +6245,49 @@ type SubscriptionDeferralInfo struct {
 
 func (s SubscriptionDeferralInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod SubscriptionDeferralInfo
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// SubscriptionDetails: Details of a subscription purchase.
+type SubscriptionDetails struct {
+	// BasePlanId: The base plan ID of the subscription.
+	BasePlanId string `json:"basePlanId,omitempty"`
+	// OfferId: The offer ID for the current subscription offer.
+	OfferId string `json:"offerId,omitempty"`
+	// OfferPhase: The pricing phase for the billing period funded by this order.
+	//
+	// Possible values:
+	//   "OFFER_PHASE_UNSPECIFIED" - Offer phase unspecified. This value is not
+	// used.
+	//   "BASE" - The order funds a base price period.
+	//   "INTRODUCTORY" - The order funds an introductory pricing period.
+	//   "FREE_TRIAL" - The order funds a free trial period.
+	OfferPhase string `json:"offerPhase,omitempty"`
+	// ServicePeriodEndTime: The end of the billing period funded by this order.
+	// This is a snapshot of the billing/service period end time at the moment the
+	// order was processed, and should be used only for accounting. To get the
+	// current end time of the subscription service period, use
+	// purchases.subscriptionsv2.get.
+	ServicePeriodEndTime string `json:"servicePeriodEndTime,omitempty"`
+	// ServicePeriodStartTime: The start of the billing period funded by this
+	// order. This is a snapshot of the billing/service period start time at the
+	// moment the order was processed, and should be used only for accounting.
+	ServicePeriodStartTime string `json:"servicePeriodStartTime,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "BasePlanId") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "BasePlanId") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s SubscriptionDetails) MarshalJSON() ([]byte, error) {
+	type NoMethod SubscriptionDetails
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -15811,10 +16292,10 @@ func (c *MonetizationSubscriptionsCreateCall) ProductId(productId string) *Monet
 // specified according to the information published in this article
 // (https://support.google.com/googleplay/android-developer/answer/10532353).
 // Each time the supported locations substantially change, the version will be
-// incremented. Using this field will ensure that creating and updating the
-// resource with an older region's version and set of regional prices and
-// currencies will succeed even though a new version is available. The latest
-// version is 2022/02.
+// incremented. The latest supported version is available in this article.
+// Using this field will ensure that creating and updating the resource with an
+// older region's version and set of regional prices and currencies will
+// succeed even though a new version is available.
 func (c *MonetizationSubscriptionsCreateCall) RegionsVersionVersion(regionsVersionVersion string) *MonetizationSubscriptionsCreateCall {
 	c.urlParams_.Set("regionsVersion.version", regionsVersionVersion)
 	return c
@@ -16318,10 +16799,10 @@ func (c *MonetizationSubscriptionsPatchCall) LatencyTolerance(latencyTolerance s
 // specified according to the information published in this article
 // (https://support.google.com/googleplay/android-developer/answer/10532353).
 // Each time the supported locations substantially change, the version will be
-// incremented. Using this field will ensure that creating and updating the
-// resource with an older region's version and set of regional prices and
-// currencies will succeed even though a new version is available. The latest
-// version is 2022/02.
+// incremented. The latest supported version is available in this article.
+// Using this field will ensure that creating and updating the resource with an
+// older region's version and set of regional prices and currencies will
+// succeed even though a new version is available.
 func (c *MonetizationSubscriptionsPatchCall) RegionsVersionVersion(regionsVersionVersion string) *MonetizationSubscriptionsPatchCall {
 	c.urlParams_.Set("regionsVersion.version", regionsVersionVersion)
 	return c
@@ -17593,10 +18074,10 @@ func (c *MonetizationSubscriptionsBasePlansOffersCreateCall) OfferId(offerId str
 // specified according to the information published in this article
 // (https://support.google.com/googleplay/android-developer/answer/10532353).
 // Each time the supported locations substantially change, the version will be
-// incremented. Using this field will ensure that creating and updating the
-// resource with an older region's version and set of regional prices and
-// currencies will succeed even though a new version is available. The latest
-// version is 2022/02.
+// incremented. The latest supported version is available in this article.
+// Using this field will ensure that creating and updating the resource with an
+// older region's version and set of regional prices and currencies will
+// succeed even though a new version is available.
 func (c *MonetizationSubscriptionsBasePlansOffersCreateCall) RegionsVersionVersion(regionsVersionVersion string) *MonetizationSubscriptionsBasePlansOffersCreateCall {
 	c.urlParams_.Set("regionsVersion.version", regionsVersionVersion)
 	return c
@@ -18247,10 +18728,10 @@ func (c *MonetizationSubscriptionsBasePlansOffersPatchCall) LatencyTolerance(lat
 // specified according to the information published in this article
 // (https://support.google.com/googleplay/android-developer/answer/10532353).
 // Each time the supported locations substantially change, the version will be
-// incremented. Using this field will ensure that creating and updating the
-// resource with an older region's version and set of regional prices and
-// currencies will succeed even though a new version is available. The latest
-// version is 2022/02.
+// incremented. The latest supported version is available in this article.
+// Using this field will ensure that creating and updating the resource with an
+// older region's version and set of regional prices and currencies will
+// succeed even though a new version is available.
 func (c *MonetizationSubscriptionsBasePlansOffersPatchCall) RegionsVersionVersion(regionsVersionVersion string) *MonetizationSubscriptionsBasePlansOffersPatchCall {
 	c.urlParams_.Set("regionsVersion.version", regionsVersionVersion)
 	return c
@@ -18348,6 +18829,242 @@ func (c *MonetizationSubscriptionsBasePlansOffersPatchCall) Do(opts ...googleapi
 		return nil, err
 	}
 	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "androidpublisher.monetization.subscriptions.basePlans.offers.patch", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type OrdersBatchgetCall struct {
+	s            *Service
+	packageName  string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Batchget: Get order details for a list of orders.
+//
+//   - packageName: The package name of the application for which this
+//     subscription or in-app item was purchased (for example, 'com.some.thing').
+func (r *OrdersService) Batchget(packageName string) *OrdersBatchgetCall {
+	c := &OrdersBatchgetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.packageName = packageName
+	return c
+}
+
+// OrderIds sets the optional parameter "orderIds": Required. The list of order
+// IDs to retrieve order details for. There must be between 1 and 1000
+// (inclusive) order IDs per request. If any order ID is not found or does not
+// match the provided package, the entire request will fail with an error. The
+// order IDs must be distinct.
+func (c *OrdersBatchgetCall) OrderIds(orderIds ...string) *OrdersBatchgetCall {
+	c.urlParams_.SetMulti("orderIds", append([]string{}, orderIds...))
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *OrdersBatchgetCall) Fields(s ...googleapi.Field) *OrdersBatchgetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *OrdersBatchgetCall) IfNoneMatch(entityTag string) *OrdersBatchgetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *OrdersBatchgetCall) Context(ctx context.Context) *OrdersBatchgetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *OrdersBatchgetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *OrdersBatchgetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "androidpublisher/v3/applications/{packageName}/orders:batchGet")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"packageName": c.packageName,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "androidpublisher.orders.batchget", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "androidpublisher.orders.batchget" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *BatchGetOrdersResponse.ServerResponse.Header or (if a response was returned
+// at all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *OrdersBatchgetCall) Do(opts ...googleapi.CallOption) (*BatchGetOrdersResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &BatchGetOrdersResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "androidpublisher.orders.batchget", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type OrdersGetCall struct {
+	s            *Service
+	packageName  string
+	orderId      string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Get order details for a single order.
+//
+//   - orderId: The order ID provided to the user when the subscription or in-app
+//     order was purchased.
+//   - packageName: The package name of the application for which this
+//     subscription or in-app item was purchased (for example, 'com.some.thing').
+func (r *OrdersService) Get(packageName string, orderId string) *OrdersGetCall {
+	c := &OrdersGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.packageName = packageName
+	c.orderId = orderId
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *OrdersGetCall) Fields(s ...googleapi.Field) *OrdersGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *OrdersGetCall) IfNoneMatch(entityTag string) *OrdersGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *OrdersGetCall) Context(ctx context.Context) *OrdersGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *OrdersGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *OrdersGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "androidpublisher/v3/applications/{packageName}/orders/{orderId}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"packageName": c.packageName,
+		"orderId":     c.orderId,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "androidpublisher.orders.get", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "androidpublisher.orders.get" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Order.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *OrdersGetCall) Do(opts ...googleapi.CallOption) (*Order, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Order{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "androidpublisher.orders.get", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 

@@ -654,6 +654,7 @@ type CpuMetric struct {
 	//   "A2" - GPU-based machine, skip quota reporting.
 	//   "A3" - GPU-based machine, skip quota reporting.
 	//   "A4" - GPU-based machine, skip quota reporting.
+	//   "A4X" - GPU-based machine, skip quota reporting.
 	//   "C2" - COMPUTE_OPTIMIZED
 	//   "C2D"
 	//   "CUSTOM"
@@ -709,6 +710,7 @@ type CpuMetric struct {
 	//   "A3_ULTRAGPU_8G"
 	//   "A3_EDGEGPU_8G"
 	//   "A4_HIGHGPU_8G"
+	//   "A4X_HIGHGPU_4G"
 	//   "E2_STANDARD_2"
 	//   "E2_STANDARD_4"
 	//   "E2_STANDARD_8"
@@ -1059,6 +1061,7 @@ type GpuMetric struct {
 	//   "NVIDIA_TESLA_A100"
 	//   "NVIDIA_A100_80GB"
 	//   "NVIDIA_B200"
+	//   "NVIDIA_GB200"
 	//   "NVIDIA_TESLA_K80"
 	//   "NVIDIA_L4"
 	//   "NVIDIA_TESLA_P100"
@@ -1111,6 +1114,7 @@ type GpuMetric struct {
 	//   "A3_ULTRAGPU_8G"
 	//   "A3_EDGEGPU_8G"
 	//   "A4_HIGHGPU_8G"
+	//   "A4X_HIGHGPU_4G"
 	//   "E2_STANDARD_2"
 	//   "E2_STANDARD_4"
 	//   "E2_STANDARD_8"
@@ -1405,6 +1409,7 @@ type RamMetric struct {
 	//   "A3_ULTRAGPU_8G"
 	//   "A3_EDGEGPU_8G"
 	//   "A4_HIGHGPU_8G"
+	//   "A4X_HIGHGPU_4G"
 	//   "E2_STANDARD_2"
 	//   "E2_STANDARD_4"
 	//   "E2_STANDARD_8"
@@ -1541,6 +1546,7 @@ type RamMetric struct {
 	//   "A2"
 	//   "A3"
 	//   "A4"
+	//   "A4X"
 	//   "C2" - COMPUTE_OPTIMIZED
 	//   "C2D"
 	//   "CUSTOM"

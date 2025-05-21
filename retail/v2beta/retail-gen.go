@@ -4015,6 +4015,45 @@ func (s *GoogleCloudRetailV2betaCustomAttribute) UnmarshalJSON(data []byte) erro
 	return nil
 }
 
+// GoogleCloudRetailV2betaDoubleList: A message with a list of double values.
+type GoogleCloudRetailV2betaDoubleList struct {
+	// Values: The list of double values.
+	Values []float64 `json:"values,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Values") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Values") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudRetailV2betaDoubleList) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudRetailV2betaDoubleList
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+func (s *GoogleCloudRetailV2betaDoubleList) UnmarshalJSON(data []byte) error {
+	type NoMethod GoogleCloudRetailV2betaDoubleList
+	var s1 struct {
+		Values []gensupport.JSONFloat64 `json:"values"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.Values = make([]float64, len(s1.Values))
+	for i := range s1.Values {
+		s.Values[i] = float64(s1.Values[i])
+	}
+	return nil
+}
+
 // GoogleCloudRetailV2betaExperimentInfo: Metadata for active A/B testing
 // experiment.
 type GoogleCloudRetailV2betaExperimentInfo struct {
@@ -8359,6 +8398,8 @@ type GoogleCloudRetailV2betaSearchResponseSearchResult struct {
 	// "sku1" with field mask "products.color_info" indicates there is a match
 	// between "sku1" ColorInfo and the query.
 	MatchingVariantFields map[string]string `json:"matchingVariantFields,omitempty"`
+	// ModelScores: Google provided available scores.
+	ModelScores map[string]GoogleCloudRetailV2betaDoubleList `json:"modelScores,omitempty"`
 	// PersonalLabels: Specifies previous events related to this product for this
 	// user based on UserEvent with same SearchRequest.visitor_id or
 	// UserInfo.user_id. This is set only when

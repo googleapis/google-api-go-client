@@ -1,5 +1,24 @@
 # Changes
 
+## [0.234.0](https://github.com/googleapis/google-api-go-client/compare/v0.233.0...v0.234.0) (2025-05-21)
+
+
+### Features
+
+* **all:** Auto-regenerate discovery clients ([#3151](https://github.com/googleapis/google-api-go-client/issues/3151)) ([8bd18c1](https://github.com/googleapis/google-api-go-client/commit/8bd18c152448ee4c123b0d1981dbb723eb32e500))
+* **all:** Auto-regenerate discovery clients ([#3154](https://github.com/googleapis/google-api-go-client/issues/3154)) ([26da395](https://github.com/googleapis/google-api-go-client/commit/26da3959b7779f52963db09a0b50d1afe4b4b51b))
+* **all:** Auto-regenerate discovery clients ([#3155](https://github.com/googleapis/google-api-go-client/issues/3155)) ([7ee8057](https://github.com/googleapis/google-api-go-client/commit/7ee80577caa089f9c3a0e0708751480605ff065d))
+* **all:** Auto-regenerate discovery clients ([#3156](https://github.com/googleapis/google-api-go-client/issues/3156)) ([a6373d8](https://github.com/googleapis/google-api-go-client/commit/a6373d86717152abaea887d63b054d1abbe7b2ca))
+* **all:** Auto-regenerate discovery clients ([#3157](https://github.com/googleapis/google-api-go-client/issues/3157)) ([a265780](https://github.com/googleapis/google-api-go-client/commit/a265780e46c34bbacf3c1f73b5197bd2068aa0c5))
+* **all:** Auto-regenerate discovery clients ([#3159](https://github.com/googleapis/google-api-go-client/issues/3159)) ([fde37fb](https://github.com/googleapis/google-api-go-client/commit/fde37fb28ebee7b0fa43e25a2389a0fa4ce810c2))
+* **all:** Auto-regenerate discovery clients ([#3160](https://github.com/googleapis/google-api-go-client/issues/3160)) ([933d259](https://github.com/googleapis/google-api-go-client/commit/933d259cd41fa22cf7f160f0147e4dee6efc539f))
+* **all:** Auto-regenerate discovery clients ([#3161](https://github.com/googleapis/google-api-go-client/issues/3161)) ([e68e11e](https://github.com/googleapis/google-api-go-client/commit/e68e11e5bdcec9384569c862ff8b072fcfbc692a))
+
+
+### Bug Fixes
+
+* Check for auth creds in options to trigger new auth lib usage ([#3162](https://github.com/googleapis/google-api-go-client/issues/3162)) ([b356c44](https://github.com/googleapis/google-api-go-client/commit/b356c44233de66998082255070ec4e37f3132f8e))
+
 ## [0.233.0](https://github.com/googleapis/google-api-go-client/compare/v0.232.0...v0.233.0) (2025-05-13)
 
 

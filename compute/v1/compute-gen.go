@@ -5373,7 +5373,8 @@ type BackendService struct {
 	// field must be set for Internal Passthrough Network Load Balancers when the
 	// haPolicy is enabled, and for External Passthrough Network Load Balancers
 	// when the haPolicy fastIpMove is enabled. This field can only be specified
-	// when the load balancing scheme is set to INTERNAL.
+	// when the load balancing scheme is set to INTERNAL, or when the load
+	// balancing scheme is set to EXTERNAL and haPolicy fastIpMove is enabled.
 	Network string `json:"network,omitempty"`
 	// OutlierDetection: Settings controlling the ejection of unhealthy backend
 	// endpoints from the load balancing pool of each individual proxy instance
@@ -7781,6 +7782,7 @@ type Commitment struct {
 	//   "MEMORY_OPTIMIZED"
 	//   "MEMORY_OPTIMIZED_M3"
 	//   "MEMORY_OPTIMIZED_M4"
+	//   "MEMORY_OPTIMIZED_M4_6TB"
 	//   "MEMORY_OPTIMIZED_X4_16TB"
 	//   "MEMORY_OPTIMIZED_X4_24TB"
 	//   "MEMORY_OPTIMIZED_X4_32TB"
@@ -11081,6 +11083,9 @@ type Firewall struct {
 	// https://www.googleapis.com/compute/v1/projects/myproject/global/networks/my-network
 	// - projects/myproject/global/networks/my-network - global/networks/default
 	Network string `json:"network,omitempty"`
+	// Params: Input only. [Input Only] Additional params passed with the request,
+	// but not persisted as part of resource payload.
+	Params *FirewallParams `json:"params,omitempty"`
 	// Priority: Priority for this rule. This is an integer between `0` and
 	// `65535`, both inclusive. The default value is `1000`. Relative priorities
 	// determine which rule takes effect if multiple rules apply. Lower values
@@ -11402,6 +11407,36 @@ type FirewallLogConfig struct {
 
 func (s FirewallLogConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod FirewallLogConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// FirewallParams: Additional firewall parameters.
+type FirewallParams struct {
+	// ResourceManagerTags: Tag keys/values directly bound to this resource. Tag
+	// keys and values have the same definition as resource manager tags. The field
+	// is allowed for INSERT only. The keys/values to set on the resource should be
+	// specified in either ID { : } or Namespaced format { : }. For example the
+	// following are valid inputs: * {"tagKeys/333" : "tagValues/444",
+	// "tagKeys/123" : "tagValues/456"} * {"123/environment" : "production",
+	// "345/abc" : "xyz"} Note: * Invalid combinations of ID & namespaced format is
+	// not supported. For instance: {"123/environment" : "tagValues/444"} is
+	// invalid.
+	ResourceManagerTags map[string]string `json:"resourceManagerTags,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ResourceManagerTags") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ResourceManagerTags") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s FirewallParams) MarshalJSON() ([]byte, error) {
+	type NoMethod FirewallParams
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -41099,6 +41134,9 @@ type Route struct {
 	// NextHopVpnTunnel: The URL to a VpnTunnel that should handle matching
 	// packets.
 	NextHopVpnTunnel string `json:"nextHopVpnTunnel,omitempty"`
+	// Params: Input only. [Input Only] Additional params passed with the request,
+	// but not persisted as part of resource payload.
+	Params *RouteParams `json:"params,omitempty"`
 	// Priority: The priority of this route. Priority is used to break ties in
 	// cases where there is more than one matching route of equal prefix length. In
 	// cases where multiple routes have equal prefix length, the one with the
@@ -41460,6 +41498,36 @@ type RouteListWarningData struct {
 
 func (s RouteListWarningData) MarshalJSON() ([]byte, error) {
 	type NoMethod RouteListWarningData
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// RouteParams: Additional route parameters.
+type RouteParams struct {
+	// ResourceManagerTags: Tag keys/values directly bound to this resource. Tag
+	// keys and values have the same definition as resource manager tags. The field
+	// is allowed for INSERT only. The keys/values to set on the resource should be
+	// specified in either ID { : } or Namespaced format { : }. For example the
+	// following are valid inputs: * {"tagKeys/333" : "tagValues/444",
+	// "tagKeys/123" : "tagValues/456"} * {"123/environment" : "production",
+	// "345/abc" : "xyz"} Note: * Invalid combinations of ID & namespaced format is
+	// not supported. For instance: {"123/environment" : "tagValues/444"} is
+	// invalid.
+	ResourceManagerTags map[string]string `json:"resourceManagerTags,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ResourceManagerTags") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ResourceManagerTags") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s RouteParams) MarshalJSON() ([]byte, error) {
+	type NoMethod RouteParams
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 

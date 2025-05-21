@@ -1210,6 +1210,10 @@ type Cluster struct {
 	// AddonsConfig: Configurations for the various addons available to run in the
 	// cluster.
 	AddonsConfig *AddonsConfig `json:"addonsConfig,omitempty"`
+	// AlphaClusterFeatureGates: The list of user specified Kubernetes feature
+	// gates. Each string represents the activation status of a feature gate (e.g.
+	// "featureX=true" or "featureX=false")
+	AlphaClusterFeatureGates []string `json:"alphaClusterFeatureGates,omitempty"`
 	// AuthenticatorGroupsConfig: Configuration controlling RBAC group membership
 	// information.
 	AuthenticatorGroupsConfig *AuthenticatorGroupsConfig `json:"authenticatorGroupsConfig,omitempty"`

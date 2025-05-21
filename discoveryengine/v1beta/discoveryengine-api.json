@@ -8004,7 +8004,7 @@
       }
     }
   },
-  "revision": "20250514",
+  "revision": "20250519",
   "rootUrl": "https://discoveryengine.googleapis.com/",
   "schemas": {
     "GoogleApiDistribution": {
@@ -18733,6 +18733,14 @@
           "readOnly": true,
           "type": "array"
         },
+        "annotationMetadata": {
+          "description": "Output only. The annotation metadata includes structured content in the current chunk.",
+          "items": {
+            "$ref": "GoogleCloudDiscoveryengineV1betaChunkAnnotationMetadata"
+          },
+          "readOnly": true,
+          "type": "array"
+        },
         "chunkMetadata": {
           "$ref": "GoogleCloudDiscoveryengineV1betaChunkChunkMetadata",
           "description": "Output only. Metadata of the current chunk.",
@@ -18780,6 +18788,23 @@
           "format": "double",
           "readOnly": true,
           "type": "number"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudDiscoveryengineV1betaChunkAnnotationMetadata": {
+      "description": "The annotation metadata includes structured content in the current chunk.",
+      "id": "GoogleCloudDiscoveryengineV1betaChunkAnnotationMetadata",
+      "properties": {
+        "imageId": {
+          "description": "Output only. Image id is provided if the structured content is based on an image.",
+          "readOnly": true,
+          "type": "string"
+        },
+        "structuredContent": {
+          "$ref": "GoogleCloudDiscoveryengineV1betaChunkStructuredContent",
+          "description": "Output only. The structured content information.",
+          "readOnly": true
         }
       },
       "type": "object"
@@ -18841,6 +18866,35 @@
           "description": "The start page of the chunk.",
           "format": "int32",
           "type": "integer"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudDiscoveryengineV1betaChunkStructuredContent": {
+      "description": "The structured content information.",
+      "id": "GoogleCloudDiscoveryengineV1betaChunkStructuredContent",
+      "properties": {
+        "content": {
+          "description": "Output only. The content of the structured content.",
+          "readOnly": true,
+          "type": "string"
+        },
+        "structureType": {
+          "description": "Output only. The structure type of the structured content.",
+          "enum": [
+            "STRUCTURE_TYPE_UNSPECIFIED",
+            "SHAREHOLDER_STRUCTURE",
+            "SIGNATURE_STRUCTURE",
+            "CHECKBOX_STRUCTURE"
+          ],
+          "enumDescriptions": [
+            "Default value.",
+            "Shareholder structure.",
+            "Signature structure.",
+            "Checkbox structure."
+          ],
+          "readOnly": true,
+          "type": "string"
         }
       },
       "type": "object"

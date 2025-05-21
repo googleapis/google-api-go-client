@@ -206,6 +206,7 @@ func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, err
 	s.PublicAdvertisedPrefixes = NewPublicAdvertisedPrefixesService(s)
 	s.PublicDelegatedPrefixes = NewPublicDelegatedPrefixesService(s)
 	s.RegionAutoscalers = NewRegionAutoscalersService(s)
+	s.RegionBackendBuckets = NewRegionBackendBucketsService(s)
 	s.RegionBackendServices = NewRegionBackendServicesService(s)
 	s.RegionCommitments = NewRegionCommitmentsService(s)
 	s.RegionCompositeHealthChecks = NewRegionCompositeHealthChecksService(s)
@@ -415,6 +416,8 @@ type Service struct {
 	PublicDelegatedPrefixes *PublicDelegatedPrefixesService
 
 	RegionAutoscalers *RegionAutoscalersService
+
+	RegionBackendBuckets *RegionBackendBucketsService
 
 	RegionBackendServices *RegionBackendServicesService
 
@@ -1093,6 +1096,15 @@ func NewRegionAutoscalersService(s *Service) *RegionAutoscalersService {
 }
 
 type RegionAutoscalersService struct {
+	s *Service
+}
+
+func NewRegionBackendBucketsService(s *Service) *RegionBackendBucketsService {
+	rs := &RegionBackendBucketsService{s: s}
+	return rs
+}
+
+type RegionBackendBucketsService struct {
 	s *Service
 }
 
@@ -6051,7 +6063,8 @@ type BackendService struct {
 	// field must be set for Internal Passthrough Network Load Balancers when the
 	// haPolicy is enabled, and for External Passthrough Network Load Balancers
 	// when the haPolicy fastIpMove is enabled. This field can only be specified
-	// when the load balancing scheme is set to INTERNAL.
+	// when the load balancing scheme is set to INTERNAL, or when the load
+	// balancing scheme is set to EXTERNAL and haPolicy fastIpMove is enabled.
 	Network string `json:"network,omitempty"`
 	// NetworkPassThroughLbTrafficPolicy: Configures traffic steering properties of
 	// internal passthrough Network Load Balancers.
@@ -8756,6 +8769,329 @@ type CallCredentials struct {
 
 func (s CallCredentials) MarshalJSON() ([]byte, error) {
 	type NoMethod CallCredentials
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// CapacityAdviceRequest: A request to provide Assistant Scores. These scores
+// determine VM obtainability and preemption likelihood.
+type CapacityAdviceRequest struct {
+	// DistributionPolicy: Policy specifying the distribution of instances across
+	// zones within the requested region.
+	DistributionPolicy *CapacityAdviceRequestDistributionPolicy `json:"distributionPolicy,omitempty"`
+	// InstanceFlexibilityPolicy: Policy for instance selectors.
+	InstanceFlexibilityPolicy *CapacityAdviceRequestInstanceFlexibilityPolicy `json:"instanceFlexibilityPolicy,omitempty"`
+	// InstanceProperties: Instance properties for this request.
+	InstanceProperties *CapacityAdviceRequestInstanceProperties `json:"instanceProperties,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "DistributionPolicy") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DistributionPolicy") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s CapacityAdviceRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod CapacityAdviceRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+type CapacityAdviceRequestDistributionPolicy struct {
+	// TargetShape: The distribution shape to which the group converges.
+	//
+	// Possible values:
+	//   "ANY" - The group picks zones for creating VM instances to fulfill the
+	// requested number of VMs within present resource constraints and to maximize
+	// utilization of unused zonal reservations. Recommended for batch workloads
+	// that do not require high availability.
+	//   "ANY_SINGLE_ZONE" - The group creates all VM instances within a single
+	// zone. The zone is selected based on the present resource constraints and to
+	// maximize utilization of unused zonal reservations. Recommended for batch
+	// workloads with heavy interprocess communication.
+	//   "BALANCED" - The group prioritizes acquisition of resources, scheduling
+	// VMs in zones where resources are available while distributing VMs as evenly
+	// as possible across selected zones to minimize the impact of zonal failure.
+	// Recommended for highly available serving workloads.
+	//   "TARGET_SHAPE_UNSPECIFIED"
+	TargetShape string `json:"targetShape,omitempty"`
+	// Zones: Zones where Capacity Advisor looks for capacity.
+	Zones []*CapacityAdviceRequestDistributionPolicyZoneConfiguration `json:"zones,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "TargetShape") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "TargetShape") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s CapacityAdviceRequestDistributionPolicy) MarshalJSON() ([]byte, error) {
+	type NoMethod CapacityAdviceRequestDistributionPolicy
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+type CapacityAdviceRequestDistributionPolicyZoneConfiguration struct {
+	// Zone: The URL of the zone.
+	Zone string `json:"zone,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Zone") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Zone") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s CapacityAdviceRequestDistributionPolicyZoneConfiguration) MarshalJSON() ([]byte, error) {
+	type NoMethod CapacityAdviceRequestDistributionPolicyZoneConfiguration
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// CapacityAdviceRequestInstanceFlexibilityPolicy: Specification of
+// alternative, flexible instance subsets.
+type CapacityAdviceRequestInstanceFlexibilityPolicy struct {
+	// InstanceSelections: Named instance selections configure properties. The key
+	// is an arbitrary, unique RFC1035 string that identifies the instance
+	// selection.
+	InstanceSelections map[string]CapacityAdviceRequestInstanceFlexibilityPolicyInstanceSelection `json:"instanceSelections,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "InstanceSelections") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "InstanceSelections") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s CapacityAdviceRequestInstanceFlexibilityPolicy) MarshalJSON() ([]byte, error) {
+	type NoMethod CapacityAdviceRequestInstanceFlexibilityPolicy
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// CapacityAdviceRequestInstanceFlexibilityPolicyInstanceSelection: Machine
+// specification.
+type CapacityAdviceRequestInstanceFlexibilityPolicyInstanceSelection struct {
+	// MachineTypes: Full machine-type names, e.g. "n1-standard-16".
+	MachineTypes []string `json:"machineTypes,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "MachineTypes") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "MachineTypes") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s CapacityAdviceRequestInstanceFlexibilityPolicyInstanceSelection) MarshalJSON() ([]byte, error) {
+	type NoMethod CapacityAdviceRequestInstanceFlexibilityPolicyInstanceSelection
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// CapacityAdviceRequestInstanceProperties: Instance provisining properties.
+type CapacityAdviceRequestInstanceProperties struct {
+	// Scheduling: Specifies the scheduling options.
+	Scheduling *CapacityAdviceRequestInstancePropertiesScheduling `json:"scheduling,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Scheduling") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Scheduling") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s CapacityAdviceRequestInstanceProperties) MarshalJSON() ([]byte, error) {
+	type NoMethod CapacityAdviceRequestInstanceProperties
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// CapacityAdviceRequestInstancePropertiesScheduling: Defines the instance
+// scheduling options.
+type CapacityAdviceRequestInstancePropertiesScheduling struct {
+	// ProvisioningModel: Specifies the provisioning model of the instance.
+	//
+	// Possible values:
+	//   "FLEX_START" - Instance is provisioned using the Flex Start provisioning
+	// model and has a limited runtime.
+	//   "RESERVATION_BOUND" - Bound to the lifecycle of the reservation in which
+	// it is provisioned.
+	//   "SPOT" - Heavily discounted, no guaranteed runtime.
+	//   "STANDARD" - Standard provisioning with user controlled runtime, no
+	// discounts.
+	ProvisioningModel string `json:"provisioningModel,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ProvisioningModel") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ProvisioningModel") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s CapacityAdviceRequestInstancePropertiesScheduling) MarshalJSON() ([]byte, error) {
+	type NoMethod CapacityAdviceRequestInstancePropertiesScheduling
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// CapacityAdviceResponse: A response contains multiple scoring
+// recommendations.
+type CapacityAdviceResponse struct {
+	// Recommendations: Initially the API will provide one recommendation which
+	// balances the individual scores according to Google's preference.
+	Recommendations []*CapacityAdviceResponseRecommendation `json:"recommendations,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "Recommendations") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Recommendations") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s CapacityAdviceResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod CapacityAdviceResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+type CapacityAdviceResponseRecommendation struct {
+	Scores *CapacityAdviceResponseRecommendationScores  `json:"scores,omitempty"`
+	Shards []*CapacityAdviceResponseRecommendationShard `json:"shards,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Scores") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Scores") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s CapacityAdviceResponseRecommendation) MarshalJSON() ([]byte, error) {
+	type NoMethod CapacityAdviceResponseRecommendation
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// CapacityAdviceResponseRecommendationScores: The Scores message groups
+// information about a shard of capacity.
+type CapacityAdviceResponseRecommendationScores struct {
+	// Obtainability: The obtainability score indicates the likelihood of
+	// successfully obtaining (provisioning) the requested number of VMs. The score
+	// range is 0.0 through 1.0. Higher is better.
+	Obtainability float64 `json:"obtainability,omitempty"`
+	// SpotPreemption: The preemption score indicates the likelihood that your Spot
+	// VMs is preempted. For more information about the preemption process, see
+	// Preemption of Spot VMs. The score range is 0.0 through 1.0. Higher is
+	// better.
+	SpotPreemption float64 `json:"spotPreemption,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Obtainability") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Obtainability") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s CapacityAdviceResponseRecommendationScores) MarshalJSON() ([]byte, error) {
+	type NoMethod CapacityAdviceResponseRecommendationScores
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+func (s *CapacityAdviceResponseRecommendationScores) UnmarshalJSON(data []byte) error {
+	type NoMethod CapacityAdviceResponseRecommendationScores
+	var s1 struct {
+		Obtainability  gensupport.JSONFloat64 `json:"obtainability"`
+		SpotPreemption gensupport.JSONFloat64 `json:"spotPreemption"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.Obtainability = float64(s1.Obtainability)
+	s.SpotPreemption = float64(s1.SpotPreemption)
+	return nil
+}
+
+// CapacityAdviceResponseRecommendationShard: Shards represent blocks of
+// uniform capacity in recommendations. Each shard is for a single zone, single
+// instance selection, and a single machine shape. Each shard defines a size
+// expressed as the number of VMs.
+type CapacityAdviceResponseRecommendationShard struct {
+	InstanceCount int64 `json:"instanceCount,omitempty"`
+	// MachineType: The machine type corresponds to the instance selection in the
+	// request.
+	MachineType string `json:"machineType,omitempty"`
+	// ProvisioningModel: Provisioning model of the recommended capacity.
+	//
+	// Possible values:
+	//   "FLEX_START" - Instance is provisioned using the Flex Start provisioning
+	// model and has a limited runtime.
+	//   "RESERVATION_BOUND" - Bound to the lifecycle of the reservation in which
+	// it is provisioned.
+	//   "SPOT" - Heavily discounted, no guaranteed runtime.
+	//   "STANDARD" - Standard provisioning with user controlled runtime, no
+	// discounts.
+	ProvisioningModel string `json:"provisioningModel,omitempty"`
+	// Zone: The zone name for this shard.
+	Zone string `json:"zone,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "InstanceCount") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "InstanceCount") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s CapacityAdviceResponseRecommendationShard) MarshalJSON() ([]byte, error) {
+	type NoMethod CapacityAdviceResponseRecommendationShard
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -22347,7 +22683,8 @@ type InstanceGroupManager struct {
 	// deleteInstances or abandonInstances methods. Resizing the group also changes
 	// this number.
 	TargetSize int64 `json:"targetSize,omitempty"`
-	// TargetSizePolicy: Configures how target size of MIG is achieved.
+	// TargetSizePolicy: The policy that specifies how the MIG creates its VMs to
+	// achieve the target size.
 	TargetSizePolicy *InstanceGroupManagerTargetSizePolicy `json:"targetSizePolicy,omitempty"`
 	// TargetSizeUnit: The unit of measure for the target size.
 	//
@@ -23669,7 +24006,7 @@ type InstanceGroupManagerStatus struct {
 	// Autoscaler: [Output Only] The URL of the Autoscaler that targets this
 	// instance group manager.
 	Autoscaler string `json:"autoscaler,omitempty"`
-	// BulkInstanceOperation: [Output Only] Status of bulk instance operation.
+	// BulkInstanceOperation: [Output Only] The status of bulk instance operation.
 	BulkInstanceOperation *InstanceGroupManagerStatusBulkInstanceOperation `json:"bulkInstanceOperation,omitempty"`
 	// IsStable: [Output Only] A bit indicating whether the managed instance group
 	// is in a stable state. A stable state means that: none of the instances in
@@ -23727,11 +24064,13 @@ func (s InstanceGroupManagerStatusAllInstancesConfig) MarshalJSON() ([]byte, err
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// InstanceGroupManagerStatusBulkInstanceOperation: Bulk instance operation is
+// the creation of VMs in a MIG when the targetSizePolicy.mode is set to BULK.
 type InstanceGroupManagerStatusBulkInstanceOperation struct {
 	// InProgress: [Output Only] Informs whether bulk instance operation is in
 	// progress.
 	InProgress bool `json:"inProgress,omitempty"`
-	// LastProgressCheck: [Output Only] Information from last progress check of
+	// LastProgressCheck: [Output Only] Information from the last progress check of
 	// bulk instance operation.
 	LastProgressCheck *InstanceGroupManagerStatusBulkInstanceOperationLastProgressCheck `json:"lastProgressCheck,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "InProgress") to
@@ -23753,8 +24092,7 @@ func (s InstanceGroupManagerStatusBulkInstanceOperation) MarshalJSON() ([]byte, 
 }
 
 type InstanceGroupManagerStatusBulkInstanceOperationLastProgressCheck struct {
-	// Error: [Output Only] Contains errors encountered during bulk instance
-	// operation.
+	// Error: [Output Only] Errors encountered during bulk instance operation.
 	Error *InstanceGroupManagerStatusBulkInstanceOperationLastProgressCheckError `json:"error,omitempty"`
 	// Timestamp: [Output Only] Timestamp of the last progress check of bulk
 	// instance operation. Timestamp is in RFC3339 text format.
@@ -23778,7 +24116,7 @@ func (s InstanceGroupManagerStatusBulkInstanceOperationLastProgressCheck) Marsha
 }
 
 // InstanceGroupManagerStatusBulkInstanceOperationLastProgressCheckError:
-// [Output Only] Contains errors encountered during bulk instance operation.
+// [Output Only] Errors encountered during bulk instance operation.
 type InstanceGroupManagerStatusBulkInstanceOperationLastProgressCheckError struct {
 	// Errors: [Output Only] The array of errors encountered while processing this
 	// operation.
@@ -23940,16 +24278,16 @@ func (s InstanceGroupManagerStatusVersionTarget) MarshalJSON() ([]byte, error) {
 }
 
 type InstanceGroupManagerTargetSizePolicy struct {
-	// Mode: Mode in which operations on size are processed.
+	// Mode: The mode of target size policy based on which the MIG creates its VMs
+	// individually or all at once.
 	//
 	// Possible values:
-	//   "BULK" - Mode in which MIG creates and starts VMs in all-or-nothing
-	// manner. If any VM from the request cannot be provisioned, the whole request
-	// waits for conditions that allow for provisioning whole capacity in bulk.
-	//   "INDIVIDUAL" - Default mode in which MIG creates and starts VMs
-	// individually without cross-dependency between VMs. This means that in case
-	// of something blocking part of VMs to be provisioned, the other part will be
-	// created.
+	//   "BULK" - The mode in which the MIG creates VMs all at once. In this mode,
+	// if the MIG is unable to create even one VM, the MIG waits until all VMs can
+	// be created at the same time.
+	//   "INDIVIDUAL" - The mode in which the MIG creates VMs individually. In this
+	// mode, if the MIG is unable to create a VM, the MIG will continue to create
+	// the other VMs in the group. This is the default mode.
 	//   "UNSPECIFIED_MODE" - If mode is unspecified, MIG will behave as in the
 	// default `INDIVIDUAL` mode.
 	Mode string `json:"mode,omitempty"`

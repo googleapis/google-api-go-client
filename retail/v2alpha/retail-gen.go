@@ -3430,6 +3430,45 @@ func (s *GoogleCloudRetailV2alphaCustomAttribute) UnmarshalJSON(data []byte) err
 	return nil
 }
 
+// GoogleCloudRetailV2alphaDoubleList: A message with a list of double values.
+type GoogleCloudRetailV2alphaDoubleList struct {
+	// Values: The list of double values.
+	Values []float64 `json:"values,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Values") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Values") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudRetailV2alphaDoubleList) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudRetailV2alphaDoubleList
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+func (s *GoogleCloudRetailV2alphaDoubleList) UnmarshalJSON(data []byte) error {
+	type NoMethod GoogleCloudRetailV2alphaDoubleList
+	var s1 struct {
+		Values []gensupport.JSONFloat64 `json:"values"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.Values = make([]float64, len(s1.Values))
+	for i := range s1.Values {
+		s.Values[i] = float64(s1.Values[i])
+	}
+	return nil
+}
+
 // GoogleCloudRetailV2alphaEnrollSolutionMetadata: Metadata related to the
 // EnrollSolution method. This will be returned by the
 // google.longrunning.Operation.metadata field.
@@ -8377,6 +8416,8 @@ type GoogleCloudRetailV2alphaSearchResponseSearchResult struct {
 	// "sku1" with field mask "products.color_info" indicates there is a match
 	// between "sku1" ColorInfo and the query.
 	MatchingVariantFields map[string]string `json:"matchingVariantFields,omitempty"`
+	// ModelScores: Google provided available scores.
+	ModelScores map[string]GoogleCloudRetailV2alphaDoubleList `json:"modelScores,omitempty"`
 	// PersonalLabels: Specifies previous events related to this product for this
 	// user based on UserEvent with same SearchRequest.visitor_id or
 	// UserInfo.user_id. This is set only when

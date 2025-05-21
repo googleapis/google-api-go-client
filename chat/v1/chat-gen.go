@@ -3366,8 +3366,7 @@ func (s GoogleAppsCardV1SelectionInput) MarshalJSON() ([]byte, error) {
 type GoogleAppsCardV1SelectionItem struct {
 	// BottomText: For multiselect menus, a text description or label that's
 	// displayed below the item's `text` field.
-	BottomText   string                        `json:"bottomText,omitempty"`
-	MaterialIcon *GoogleAppsCardV1MaterialIcon `json:"materialIcon,omitempty"`
+	BottomText string `json:"bottomText,omitempty"`
 	// Selected: Whether the item is selected by default. If the selection input
 	// only accepts one value (such as for radio buttons or a dropdown menu), only
 	// set this field for one item.

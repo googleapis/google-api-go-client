@@ -11530,8 +11530,8 @@ type GoogleCloudApigeeV1UpdateAppGroupAppKeyRequest struct {
 	// credential. This list will be appended to the existing list of associated
 	// API Products for this App Key. Duplicates will be ignored.
 	ApiProducts []string `json:"apiProducts,omitempty"`
-	// AppGroupAppKey: The new AppGroupKey to be amended. Note that the status can
-	// be updated only via action.
+	// AppGroupAppKey: Note that only Scopes and Attributes of the AppGroupAppKey
+	// can be amended.
 	AppGroupAppKey *GoogleCloudApigeeV1AppGroupAppKey `json:"appGroupAppKey,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Action") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -20547,11 +20547,11 @@ type OrganizationsAppgroupsAppsKeysUpdateAppGroupAppKeyCall struct {
 
 // UpdateAppGroupAppKey: Adds an API product to an AppGroupAppKey, enabling the
 // app that holds the key to access the API resources bundled in the API
-// product. In addition, you can add attributes to the AppGroupAppKey. This API
-// replaces the existing attributes with those specified in the request.
-// Include or exclude any existing attributes that you want to retain or
-// delete, respectively. You can use the same key to access all API products
-// associated with the app.
+// product. In addition, you can add attributes and scopes to the
+// AppGroupAppKey. This API replaces the existing attributes with those
+// specified in the request. Include or exclude any existing attributes that
+// you want to retain or delete, respectively. You can use the same key to
+// access all API products associated with the app.
 //
 //   - name: Name of the AppGroup app key. Use the following structure in your
 //     request:
@@ -24816,11 +24816,13 @@ type OrganizationsDevelopersAppsKeysUpdateDeveloperAppKeyCall struct {
 
 // UpdateDeveloperAppKey: Adds an API product to a developer app key, enabling
 // the app that holds the key to access the API resources bundled in the API
-// product. In addition, you can add attributes to a developer app key. This
-// API replaces the existing attributes with those specified in the request.
-// Include or exclude any existing attributes that you want to retain or
-// delete, respectively. You can use the same key to access all API products
-// associated with the app.
+// product. In addition, you can add attributes and scopes associated with the
+// API product to the developer app key. The status of the key can be updated
+// via "action" Query Parameter. None of the other fields can be updated via
+// this API. This API replaces the existing attributes with those specified in
+// the request. Include or exclude any existing attributes that you want to
+// retain or delete, respectively. None of the other fields can be updated. You
+// can use the same key to access all API products associated with the app.
 //
 //   - name: Name of the developer app key. Use the following structure in your
 //     request:

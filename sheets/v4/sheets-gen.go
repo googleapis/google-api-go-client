@@ -877,8 +877,12 @@ func (s AutoResizeDimensionsRequest) MarshalJSON() ([]byte, error) {
 
 // BandedRange: A banded (alternating colors) range in a sheet.
 type BandedRange struct {
-	// BandedRangeId: The ID of the banded range.
+	// BandedRangeId: The ID of the banded range. If unset, refer to
+	// banded_range_reference.
 	BandedRangeId int64 `json:"bandedRangeId,omitempty"`
+	// BandedRangeReference: Output only. The reference of the banded range, used
+	// to identify the ID that is not supported by the banded_range_id.
+	BandedRangeReference string `json:"bandedRangeReference,omitempty"`
 	// ColumnProperties: Properties for column bands. These properties are applied
 	// on a column- by-column basis throughout all the columns in the range. At
 	// least one of row_properties or column_properties must be specified.

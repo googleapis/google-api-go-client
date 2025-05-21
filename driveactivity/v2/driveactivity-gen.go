@@ -1388,6 +1388,7 @@ type RestrictionChange struct {
 	// individual items.
 	//   "ITEM_DUPLICATION" - When restricted, this prevents actions like copy,
 	// download, and print that might result in uncontrolled duplicates of items.
+	// Now deprecated in favor of READERS_CAN_DOWNLOAD.
 	//   "DRIVE_FILE_STREAM" - When restricted, this prevents use of Drive File
 	// Stream.
 	//   "FILE_ORGANIZER_CAN_SHARE_FOLDERS" - When restricted, this limits sharing

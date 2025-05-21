@@ -4060,6 +4060,9 @@ type GoogleCloudDiscoveryengineV1Chunk struct {
 	// AnnotationContents: Output only. Annotation contents if the current chunk
 	// contains annotations.
 	AnnotationContents []string `json:"annotationContents,omitempty"`
+	// AnnotationMetadata: Output only. The annotation metadata includes structured
+	// content in the current chunk.
+	AnnotationMetadata []*GoogleCloudDiscoveryengineV1ChunkAnnotationMetadata `json:"annotationMetadata,omitempty"`
 	// ChunkMetadata: Output only. Metadata of the current chunk.
 	ChunkMetadata *GoogleCloudDiscoveryengineV1ChunkChunkMetadata `json:"chunkMetadata,omitempty"`
 	// Content: Content is a string from a document (parsed content).
@@ -4118,6 +4121,32 @@ func (s *GoogleCloudDiscoveryengineV1Chunk) UnmarshalJSON(data []byte) error {
 	}
 	s.RelevanceScore = float64(s1.RelevanceScore)
 	return nil
+}
+
+// GoogleCloudDiscoveryengineV1ChunkAnnotationMetadata: The annotation metadata
+// includes structured content in the current chunk.
+type GoogleCloudDiscoveryengineV1ChunkAnnotationMetadata struct {
+	// ImageId: Output only. Image id is provided if the structured content is
+	// based on an image.
+	ImageId string `json:"imageId,omitempty"`
+	// StructuredContent: Output only. The structured content information.
+	StructuredContent *GoogleCloudDiscoveryengineV1ChunkStructuredContent `json:"structuredContent,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ImageId") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ImageId") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1ChunkAnnotationMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1ChunkAnnotationMetadata
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDiscoveryengineV1ChunkChunkMetadata: Metadata of the current
@@ -4199,6 +4228,37 @@ type GoogleCloudDiscoveryengineV1ChunkPageSpan struct {
 
 func (s GoogleCloudDiscoveryengineV1ChunkPageSpan) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDiscoveryengineV1ChunkPageSpan
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1ChunkStructuredContent: The structured content
+// information.
+type GoogleCloudDiscoveryengineV1ChunkStructuredContent struct {
+	// Content: Output only. The content of the structured content.
+	Content string `json:"content,omitempty"`
+	// StructureType: Output only. The structure type of the structured content.
+	//
+	// Possible values:
+	//   "STRUCTURE_TYPE_UNSPECIFIED" - Default value.
+	//   "SHAREHOLDER_STRUCTURE" - Shareholder structure.
+	//   "SIGNATURE_STRUCTURE" - Signature structure.
+	//   "CHECKBOX_STRUCTURE" - Checkbox structure.
+	StructureType string `json:"structureType,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Content") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Content") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1ChunkStructuredContent) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1ChunkStructuredContent
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 

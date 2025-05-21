@@ -2685,7 +2685,7 @@
       }
     }
   },
-  "revision": "20250429",
+  "revision": "20250506",
   "rootUrl": "https://container.googleapis.com/",
   "schemas": {
     "AcceleratorConfig": {
@@ -3391,6 +3391,13 @@
         "addonsConfig": {
           "$ref": "AddonsConfig",
           "description": "Configurations for the various addons available to run in the cluster."
+        },
+        "alphaClusterFeatureGates": {
+          "description": "The list of user specified Kubernetes feature gates. Each string represents the activation status of a feature gate (e.g. \"featureX=true\" or \"featureX=false\")",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
         },
         "authenticatorGroupsConfig": {
           "$ref": "AuthenticatorGroupsConfig",

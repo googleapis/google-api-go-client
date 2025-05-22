@@ -309,7 +309,8 @@ type AlloyDbSettings struct {
 	InitialUser *UserPassword `json:"initialUser,omitempty"`
 	// Labels: Labels for the AlloyDB cluster created by DMS. An object containing
 	// a list of 'key', 'value' pairs.
-	Labels                  map[string]string        `json:"labels,omitempty"`
+	Labels map[string]string `json:"labels,omitempty"`
+	// PrimaryInstanceSettings: Settings for the cluster's primary instance
 	PrimaryInstanceSettings *PrimaryInstanceSettings `json:"primaryInstanceSettings,omitempty"`
 	// VpcNetwork: Required. The resource link for the VPC network in which cluster
 	// resources are created and from which they are accessible via Private IP. The

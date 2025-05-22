@@ -4484,7 +4484,25 @@ func (s OneTimePurchaseDetails) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// Order: Details of an order.
+// Order: The Order resource encapsulates comprehensive information about a
+// transaction made on Google Play. It includes a variety of attributes that
+// provide details about the order itself, the products purchased, and the
+// history of events related to the order. The Orders APIs provide real-time
+// access to your order data within the Google Play ecosystem. You can retrieve
+// detailed information and metadata for both one-time and recurring orders,
+// including transaction details like charges, taxes, and refunds, as well as
+// metadata such as pricing phases for subscriptions. The Orders APIs let you
+// automate tasks related to order management, reducing the need for manual
+// checks via the Play Developer Console. The following are some of the use
+// cases for this API: + Real-time order data retrieval - Get order details and
+// metadata immediately after a purchase using an order ID. + Order update
+// synchronization - Periodically sync order updates to maintain an up-to-date
+// record of order information. Note: + The Orders API calls count towards your
+// Play Developer API quota, which defaults to 200K daily, and may be
+// insufficient to sync extensive order histories. + A maximum of 1000 orders
+// can be retrieved per call. Using larger page sizes is recommended to
+// minimize quota usage. Check your quota in the Cloud Console and request more
+// if required.
 type Order struct {
 	// BuyerAddress: Address information for the customer, for use in tax
 	// computation. When Google is the Merchant of Record for the order, only
@@ -6737,8 +6755,9 @@ type SubscriptionPurchaseV2 struct {
 	// Kind: This kind represents a SubscriptionPurchaseV2 object in the
 	// androidpublisher service.
 	Kind string `json:"kind,omitempty"`
-	// LatestOrderId: The order id of the latest order associated with the purchase
-	// of the subscription. For autoRenewing subscription, this is the order id of
+	// LatestOrderId: Deprecated: Use line_items.latest_successful_order_id
+	// instead. The order id of the latest order associated with the purchase of
+	// the subscription. For autoRenewing subscription, this is the order id of
 	// signup order if it is not renewed yet, or the last recurring order id
 	// (success, pending, or declined order). For prepaid subscription, this is the
 	// order id associated with the queried purchase token.
@@ -19749,8 +19768,8 @@ type PurchasesSubscriptionsGetCall struct {
 	header_        http.Header
 }
 
-// Get: Checks whether a user's subscription purchase is valid and returns its
-// expiry time.
+// Get: Deprecated: Use purchases.subscriptionsv2.get instead. Checks whether a
+// user's subscription purchase is valid and returns its expiry time.
 //
 //   - packageName: The package name of the application for which this
 //     subscription was purchased (for example, 'com.some.thing').
@@ -19869,8 +19888,9 @@ type PurchasesSubscriptionsRefundCall struct {
 	header_        http.Header
 }
 
-// Refund: Refunds a user's subscription purchase, but the subscription remains
-// valid until its expiration time and it will continue to recur.
+// Refund: Deprecated: Use orders.refund instead. Refunds a user's subscription
+// purchase, but the subscription remains valid until its expiration time and
+// it will continue to recur.
 //
 //   - packageName: The package name of the application for which this
 //     subscription was purchased (for example, 'com.some.thing').
@@ -19954,9 +19974,9 @@ type PurchasesSubscriptionsRevokeCall struct {
 	header_        http.Header
 }
 
-// Revoke: Refunds and immediately revokes a user's subscription purchase.
-// Access to the subscription will be terminated immediately and it will stop
-// recurring.
+// Revoke: Deprecated: Use purchases.subscriptionsv2.revoke instead. Refunds
+// and immediately revokes a user's subscription purchase. Access to the
+// subscription will be terminated immediately and it will stop recurring.
 //
 //   - packageName: The package name of the application for which this
 //     subscription was purchased (for example, 'com.some.thing').

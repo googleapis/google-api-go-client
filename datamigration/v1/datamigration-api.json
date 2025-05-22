@@ -2340,7 +2340,7 @@
       }
     }
   },
-  "revision": "20250507",
+  "revision": "20250514",
   "rootUrl": "https://datamigration.googleapis.com/",
   "schemas": {
     "AlloyDbConnectionProfile": {
@@ -2394,7 +2394,8 @@
           "type": "object"
         },
         "primaryInstanceSettings": {
-          "$ref": "PrimaryInstanceSettings"
+          "$ref": "PrimaryInstanceSettings",
+          "description": "Settings for the cluster's primary instance"
         },
         "vpcNetwork": {
           "description": "Required. The resource link for the VPC network in which cluster resources are created and from which they are accessible via Private IP. The network must belong to the same project as the cluster. It is specified in the form: \"projects/{project_number}/global/networks/{network_id}\". This is required to create a cluster.",

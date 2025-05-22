@@ -537,9 +537,8 @@ type BackupChannel struct {
 	// BackupChannel.
 	Description string `json:"description,omitempty"`
 	// DestinationProject: Required. Immutable. The project where Backups are
-	// allowed to be stored. The format is `projects/{project}`. Currently,
-	// {project} can only be the project number. Support for project IDs will be
-	// added in the future.
+	// allowed to be stored. The format is `projects/{projectId}` or
+	// `projects/{projectNumber}`.
 	DestinationProject string `json:"destinationProject,omitempty"`
 	// DestinationProjectId: Output only. The project_id where Backups are allowed
 	// to be stored. Example Project ID: "my-project-id". This will be an
@@ -2275,9 +2274,8 @@ type RestoreChannel struct {
 	// RestoreChannel.
 	Description string `json:"description,omitempty"`
 	// DestinationProject: Required. Immutable. The project into which the backups
-	// will be restored. The format is `projects/{project}`. Currently, {project}
-	// can only be the project number. Support for project IDs will be added in the
-	// future.
+	// will be restored. The format is `projects/{projectId}` or
+	// `projects/{projectNumber}`.
 	DestinationProject string `json:"destinationProject,omitempty"`
 	// DestinationProjectId: Output only. The project_id where backups will be
 	// restored. Example Project ID: "my-project-id". This will be an OUTPUT_ONLY

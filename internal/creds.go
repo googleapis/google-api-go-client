@@ -48,6 +48,9 @@ func Creds(ctx context.Context, ds *DialSettings) (*google.Credentials, error) {
 // options. If there are no applicable options, then it returns the result of
 // [cloud.google.com/go/auth/credentials.DetectDefault].
 func AuthCreds(ctx context.Context, settings *DialSettings) (*auth.Credentials, error) {
+	if settings.NoAuth {
+		return nil, nil
+	}
 	if settings.AuthCredentials != nil {
 		return settings.AuthCredentials, nil
 	}

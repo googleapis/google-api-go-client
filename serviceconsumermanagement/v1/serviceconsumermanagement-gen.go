@@ -664,6 +664,119 @@ func (s *BackendRule) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+// BatchingConfigProto: `BatchingConfigProto` defines the batching
+// configuration for an API method.
+type BatchingConfigProto struct {
+	// BatchDescriptor: The request and response fields used in batching.
+	BatchDescriptor *BatchingDescriptorProto `json:"batchDescriptor,omitempty"`
+	// Thresholds: The thresholds which trigger a batched request to be sent.
+	Thresholds *BatchingSettingsProto `json:"thresholds,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "BatchDescriptor") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "BatchDescriptor") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s BatchingConfigProto) MarshalJSON() ([]byte, error) {
+	type NoMethod BatchingConfigProto
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// BatchingDescriptorProto: `BatchingDescriptorProto` specifies the fields of
+// the request message to be used for batching, and, optionally, the fields of
+// the response message to be used for demultiplexing.
+type BatchingDescriptorProto struct {
+	// BatchedField: The repeated field in the request message to be aggregated by
+	// batching.
+	BatchedField string `json:"batchedField,omitempty"`
+	// DiscriminatorFields: A list of the fields in the request message. Two
+	// requests will be batched together only if the values of every field
+	// specified in `request_discriminator_fields` is equal between the two
+	// requests.
+	DiscriminatorFields []string `json:"discriminatorFields,omitempty"`
+	// SubresponseField: Optional. When present, indicates the field in the
+	// response message to be used to demultiplex the response into multiple
+	// response messages, in correspondence with the multiple request messages
+	// originally batched together.
+	SubresponseField string `json:"subresponseField,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "BatchedField") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "BatchedField") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s BatchingDescriptorProto) MarshalJSON() ([]byte, error) {
+	type NoMethod BatchingDescriptorProto
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// BatchingSettingsProto: `BatchingSettingsProto` specifies a set of batching
+// thresholds, each of which acts as a trigger to send a batch of messages as a
+// request. At least one threshold must be positive nonzero.
+type BatchingSettingsProto struct {
+	// DelayThreshold: The duration after which a batch should be sent, starting
+	// from the addition of the first message to that batch.
+	DelayThreshold string `json:"delayThreshold,omitempty"`
+	// ElementCountLimit: The maximum number of elements collected in a batch that
+	// could be accepted by server.
+	ElementCountLimit int64 `json:"elementCountLimit,omitempty"`
+	// ElementCountThreshold: The number of elements of a field collected into a
+	// batch which, if exceeded, causes the batch to be sent.
+	ElementCountThreshold int64 `json:"elementCountThreshold,omitempty"`
+	// FlowControlByteLimit: The maximum size of data allowed by flow control.
+	FlowControlByteLimit int64 `json:"flowControlByteLimit,omitempty"`
+	// FlowControlElementLimit: The maximum number of elements allowed by flow
+	// control.
+	FlowControlElementLimit int64 `json:"flowControlElementLimit,omitempty"`
+	// FlowControlLimitExceededBehavior: The behavior to take when the flow control
+	// limit is exceeded.
+	//
+	// Possible values:
+	//   "UNSET_BEHAVIOR" - Default behavior, system-defined.
+	//   "THROW_EXCEPTION" - Stop operation, raise error.
+	//   "BLOCK" - Pause operation until limit clears.
+	//   "IGNORE" - Continue operation, disregard limit.
+	FlowControlLimitExceededBehavior string `json:"flowControlLimitExceededBehavior,omitempty"`
+	// RequestByteLimit: The maximum size of the request that could be accepted by
+	// server.
+	RequestByteLimit int64 `json:"requestByteLimit,omitempty"`
+	// RequestByteThreshold: The aggregated size of the batched field which, if
+	// exceeded, causes the batch to be sent. This size is computed by aggregating
+	// the sizes of the request field to be batched, not of the entire request
+	// message.
+	RequestByteThreshold int64 `json:"requestByteThreshold,omitempty,string"`
+	// ForceSendFields is a list of field names (e.g. "DelayThreshold") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DelayThreshold") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s BatchingSettingsProto) MarshalJSON() ([]byte, error) {
+	type NoMethod BatchingSettingsProto
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // Billing: Billing related configuration of the service. The following example
 // shows how to configure monitored resources and metrics for billing,
 // `consumer_destinations` is the only supported destination and the monitored
@@ -2196,6 +2309,12 @@ type MethodSettings struct {
 	// google.example.v1.ExampleService.CreateExample auto_populated_fields: -
 	// request_id
 	AutoPopulatedFields []string `json:"autoPopulatedFields,omitempty"`
+	// Batching: Batching configuration for an API method in client libraries.
+	// Example of a YAML configuration: publishing: method_settings: - selector:
+	// google.example.v1.ExampleService.BatchCreateExample batching:
+	// element_count_threshold: 1000 request_byte_threshold: 100000000
+	// delay_threshold_millis: 10
+	Batching *BatchingConfigProto `json:"batching,omitempty"`
 	// LongRunning: Describes settings to use for long-running operations when
 	// generating API methods for RPCs. Complements RPCs that use the annotations
 	// in google/longrunning/operations.proto. Example of a YAML configuration::

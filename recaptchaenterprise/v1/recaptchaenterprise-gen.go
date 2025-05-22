@@ -2597,8 +2597,7 @@ type GoogleCloudRecaptchaenterpriseV1WafSettings struct {
 	//   "SESSION_TOKEN" - Use reCAPTCHA session-tokens to protect the whole user
 	// session on the site's domain.
 	//   "ACTION_TOKEN" - Use reCAPTCHA action-tokens to protect user actions.
-	//   "EXPRESS" - Use reCAPTCHA WAF express protection to protect any content
-	// other than web pages, like APIs and IoT devices.
+	//   "EXPRESS" - Deprecated: Use `express_settings` instead.
 	WafFeature string `json:"wafFeature,omitempty"`
 	// WafService: Required. The WAF service that uses this key.
 	//

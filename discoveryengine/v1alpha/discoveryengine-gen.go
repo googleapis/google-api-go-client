@@ -3929,6 +3929,9 @@ type GoogleCloudDiscoveryengineV1DocumentProcessingConfigParsingConfigLayoutPars
 	// ExcludeHtmlIds: Optional. List of HTML ids to exclude from the parsed
 	// content.
 	ExcludeHtmlIds []string `json:"excludeHtmlIds,omitempty"`
+	// StructuredContentTypes: Optional. Contains the required structure types to
+	// extract from the document. Supported values: * `shareholder-structure`
+	StructuredContentTypes []string `json:"structuredContentTypes,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "EnableImageAnnotation") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -4034,6 +4037,13 @@ type GoogleCloudDiscoveryengineV1Engine struct {
 	// DisplayName: Required. The display name of the engine. Should be human
 	// readable. UTF-8 encoded string with limit of 1024 characters.
 	DisplayName string `json:"displayName,omitempty"`
+	// Features: Optional. Feature config for the engine to opt in or opt out of
+	// features. Supported keys: * `*`: all features, if it's present, all other
+	// feature state settings are ignored. * `agent-gallery` *
+	// `no-code-agent-builder` * `prompt-gallery` * `model-selector` *
+	// `notebook-lm` * `people-search` * `people-search-org-chart` *
+	// `bi-directional-audio` * `feedback`
+	Features map[string]string `json:"features,omitempty"`
 	// IndustryVertical: Optional. The industry vertical that the engine registers.
 	// The restriction of the Engine industry vertical is based on DataStore:
 	// Vertical on Engine has to match vertical of the DataStore linked to the
@@ -9935,12 +9945,16 @@ type GoogleCloudDiscoveryengineV1alphaConnectorRunEntityRun struct {
 	// error state. Contains error code and error message.
 	Errors []*GoogleRpcStatus `json:"errors,omitempty"`
 	// ExtractedRecordCount: The number of documents extracted from connector
-	// source, ready to be ingested to UCS.
+	// source, ready to be ingested to VAIS.
 	ExtractedRecordCount int64 `json:"extractedRecordCount,omitempty,string"`
 	// IndexedRecordCount: The number of documents indexed.
 	IndexedRecordCount int64 `json:"indexedRecordCount,omitempty,string"`
 	// Progress: Metadata to generate the progress bar.
 	Progress *GoogleCloudDiscoveryengineV1alphaConnectorRunEntityRunProgress `json:"progress,omitempty"`
+	// ScheduledRecordCount: The number of documents scheduled to be
+	// crawled/extracted from connector source. This only applies to third party
+	// connectors.
+	ScheduledRecordCount int64 `json:"scheduledRecordCount,omitempty,string"`
 	// SourceApiRequestCount: The number of requests sent to 3p API.
 	SourceApiRequestCount int64 `json:"sourceApiRequestCount,omitempty,string"`
 	// State: The state of the entity's sync run.
@@ -12202,6 +12216,9 @@ type GoogleCloudDiscoveryengineV1alphaDocumentProcessingConfigParsingConfigLayou
 	// ExcludeHtmlIds: Optional. List of HTML ids to exclude from the parsed
 	// content.
 	ExcludeHtmlIds []string `json:"excludeHtmlIds,omitempty"`
+	// StructuredContentTypes: Optional. Contains the required structure types to
+	// extract from the document. Supported values: * `shareholder-structure`
+	StructuredContentTypes []string `json:"structuredContentTypes,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "EnableImageAnnotation") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -12374,6 +12391,13 @@ type GoogleCloudDiscoveryengineV1alphaEngine struct {
 	// DisplayName: Required. The display name of the engine. Should be human
 	// readable. UTF-8 encoded string with limit of 1024 characters.
 	DisplayName string `json:"displayName,omitempty"`
+	// Features: Optional. Feature config for the engine to opt in or opt out of
+	// features. Supported keys: * `*`: all features, if it's present, all other
+	// feature state settings are ignored. * `agent-gallery` *
+	// `no-code-agent-builder` * `prompt-gallery` * `model-selector` *
+	// `notebook-lm` * `people-search` * `people-search-org-chart` *
+	// `bi-directional-audio` * `feedback`
+	Features map[string]string `json:"features,omitempty"`
 	// IndustryVertical: Optional. The industry vertical that the engine registers.
 	// The restriction of the Engine industry vertical is based on DataStore:
 	// Vertical on Engine has to match vertical of the DataStore linked to the
@@ -12771,6 +12795,9 @@ type GoogleCloudDiscoveryengineV1alphaEngineRecommendationMetadata struct {
 	//   "DATA_ERROR" - The engine does not have sufficient training data. Error
 	// messages can be queried via Stackdriver.
 	DataState string `json:"dataState,omitempty"`
+	// LastTrainTime: Output only. The timestamp when the latest successful
+	// training finished. Only applicable on Media Recommendation engines.
+	LastTrainTime string `json:"lastTrainTime,omitempty"`
 	// LastTuneTime: Output only. The timestamp when the latest successful tune
 	// finished. Only applicable on Media Recommendation engines.
 	LastTuneTime string `json:"lastTuneTime,omitempty"`
@@ -21337,12 +21364,6 @@ type GoogleCloudDiscoveryengineV1alphaUserLicense struct {
 	LicenseConfig string `json:"licenseConfig,omitempty"`
 	// UpdateTime: Output only. User update timestamp.
 	UpdateTime string `json:"updateTime,omitempty"`
-	// User: Optional. The full resource name of the User, in the format of
-	// `projects/{project}/locations/{location}/userStores/{user_store}/users/{user_
-	// id}`. This field must be a UTF-8 encoded string with a length limit of 2048
-	// characters. If the user field is empty, it's indicating the user has not
-	// logged in yet and no User entity is created.
-	User string `json:"user,omitempty"`
 	// UserPrincipal: Required. Immutable. The user principal of the User, could be
 	// email address or other prinical identifier. This field is immutable. Admin
 	// assign licenses based on the user principal.
@@ -21970,6 +21991,11 @@ type GoogleCloudDiscoveryengineV1alphaWidgetConfigUiSettings struct {
 	// content summary on applicable search requests. Only used by healthcare
 	// search.
 	EnableVisualContentSummary bool `json:"enableVisualContentSummary,omitempty"`
+	// Features: Output only. Feature config for the engine to opt in or opt out of
+	// features. Supported keys: * `agent-gallery` * `no-code-agent-builder` *
+	// `prompt-gallery` * `model-selector` * `notebook-lm` * `people-search` *
+	// `people-search-org-chart` * `bi-directional-audio` * `feedback`
+	Features map[string]string `json:"features,omitempty"`
 	// GenerativeAnswerConfig: Describes generative answer configuration.
 	GenerativeAnswerConfig *GoogleCloudDiscoveryengineV1alphaWidgetConfigUiSettingsGenerativeAnswerConfig `json:"generativeAnswerConfig,omitempty"`
 	// InteractionType: Describes widget (or web app) interaction type
@@ -23403,6 +23429,9 @@ type GoogleCloudDiscoveryengineV1betaDocumentProcessingConfigParsingConfigLayout
 	// ExcludeHtmlIds: Optional. List of HTML ids to exclude from the parsed
 	// content.
 	ExcludeHtmlIds []string `json:"excludeHtmlIds,omitempty"`
+	// StructuredContentTypes: Optional. Contains the required structure types to
+	// extract from the document. Supported values: * `shareholder-structure`
+	StructuredContentTypes []string `json:"structuredContentTypes,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "EnableImageAnnotation") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -23508,6 +23537,13 @@ type GoogleCloudDiscoveryengineV1betaEngine struct {
 	// DisplayName: Required. The display name of the engine. Should be human
 	// readable. UTF-8 encoded string with limit of 1024 characters.
 	DisplayName string `json:"displayName,omitempty"`
+	// Features: Optional. Feature config for the engine to opt in or opt out of
+	// features. Supported keys: * `*`: all features, if it's present, all other
+	// feature state settings are ignored. * `agent-gallery` *
+	// `no-code-agent-builder` * `prompt-gallery` * `model-selector` *
+	// `notebook-lm` * `people-search` * `people-search-org-chart` *
+	// `bi-directional-audio` * `feedback`
+	Features map[string]string `json:"features,omitempty"`
 	// IndustryVertical: Optional. The industry vertical that the engine registers.
 	// The restriction of the Engine industry vertical is based on DataStore:
 	// Vertical on Engine has to match vertical of the DataStore linked to the

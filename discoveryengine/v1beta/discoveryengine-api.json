@@ -8004,7 +8004,7 @@
       }
     }
   },
-  "revision": "20250519",
+  "revision": "20250521",
   "rootUrl": "https://discoveryengine.googleapis.com/",
   "schemas": {
     "GoogleApiDistribution": {
@@ -9402,6 +9402,13 @@
             "type": "string"
           },
           "type": "array"
+        },
+        "structuredContentTypes": {
+          "description": "Optional. Contains the required structure types to extract from the document. Supported values: * `shareholder-structure`",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
         }
       },
       "type": "object"
@@ -9485,6 +9492,23 @@
         "displayName": {
           "description": "Required. The display name of the engine. Should be human readable. UTF-8 encoded string with limit of 1024 characters.",
           "type": "string"
+        },
+        "features": {
+          "additionalProperties": {
+            "enum": [
+              "FEATURE_STATE_UNSPECIFIED",
+              "FEATURE_STATE_ON",
+              "FEATURE_STATE_OFF"
+            ],
+            "enumDescriptions": [
+              "The feature state is unspecified.",
+              "The feature is turned on to be accessible.",
+              "The feature is turned off to be inaccessible."
+            ],
+            "type": "string"
+          },
+          "description": "Optional. Feature config for the engine to opt in or opt out of features. Supported keys: * `*`: all features, if it's present, all other feature state settings are ignored. * `agent-gallery` * `no-code-agent-builder` * `prompt-gallery` * `model-selector` * `notebook-lm` * `people-search` * `people-search-org-chart` * `bi-directional-audio` * `feedback`",
+          "type": "object"
         },
         "industryVertical": {
           "description": "Optional. The industry vertical that the engine registers. The restriction of the Engine industry vertical is based on DataStore: Vertical on Engine has to match vertical of the DataStore linked to the engine.",
@@ -12015,7 +12039,7 @@
           "type": "array"
         },
         "extractedRecordCount": {
-          "description": "The number of documents extracted from connector source, ready to be ingested to UCS.",
+          "description": "The number of documents extracted from connector source, ready to be ingested to VAIS.",
           "format": "int64",
           "type": "string"
         },
@@ -12027,6 +12051,11 @@
         "progress": {
           "$ref": "GoogleCloudDiscoveryengineV1alphaConnectorRunEntityRunProgress",
           "description": "Metadata to generate the progress bar."
+        },
+        "scheduledRecordCount": {
+          "description": "The number of documents scheduled to be crawled/extracted from connector source. This only applies to third party connectors.",
+          "format": "int64",
+          "type": "string"
         },
         "sourceApiRequestCount": {
           "description": "The number of requests sent to 3p API.",
@@ -13355,6 +13384,13 @@
             "type": "string"
           },
           "type": "array"
+        },
+        "structuredContentTypes": {
+          "description": "Optional. Contains the required structure types to extract from the document. Supported values: * `shareholder-structure`",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
         }
       },
       "type": "object"
@@ -13438,6 +13474,23 @@
         "displayName": {
           "description": "Required. The display name of the engine. Should be human readable. UTF-8 encoded string with limit of 1024 characters.",
           "type": "string"
+        },
+        "features": {
+          "additionalProperties": {
+            "enum": [
+              "FEATURE_STATE_UNSPECIFIED",
+              "FEATURE_STATE_ON",
+              "FEATURE_STATE_OFF"
+            ],
+            "enumDescriptions": [
+              "The feature state is unspecified.",
+              "The feature is turned on to be accessible.",
+              "The feature is turned off to be inaccessible."
+            ],
+            "type": "string"
+          },
+          "description": "Optional. Feature config for the engine to opt in or opt out of features. Supported keys: * `*`: all features, if it's present, all other feature state settings are ignored. * `agent-gallery` * `no-code-agent-builder` * `prompt-gallery` * `model-selector` * `notebook-lm` * `people-search` * `people-search-org-chart` * `bi-directional-audio` * `feedback`",
+          "type": "object"
         },
         "industryVertical": {
           "description": "Optional. The industry vertical that the engine registers. The restriction of the Engine industry vertical is based on DataStore: Vertical on Engine has to match vertical of the DataStore linked to the engine.",
@@ -13674,6 +13727,12 @@
             "The engine has sufficient training data.",
             "The engine does not have sufficient training data. Error messages can be queried via Stackdriver."
           ],
+          "readOnly": true,
+          "type": "string"
+        },
+        "lastTrainTime": {
+          "description": "Output only. The timestamp when the latest successful training finished. Only applicable on Media Recommendation engines.",
+          "format": "google-datetime",
           "readOnly": true,
           "type": "string"
         },
@@ -16539,10 +16598,6 @@
           "description": "Output only. User update timestamp.",
           "format": "google-datetime",
           "readOnly": true,
-          "type": "string"
-        },
-        "user": {
-          "description": "Optional. The full resource name of the User, in the format of `projects/{project}/locations/{location}/userStores/{user_store}/users/{user_id}`. This field must be a UTF-8 encoded string with a length limit of 2048 characters. If the user field is empty, it's indicating the user has not logged in yet and no User entity is created.",
           "type": "string"
         },
         "userPrincipal": {
@@ -20383,6 +20438,13 @@
             "type": "string"
           },
           "type": "array"
+        },
+        "structuredContentTypes": {
+          "description": "Optional. Contains the required structure types to extract from the document. Supported values: * `shareholder-structure`",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
         }
       },
       "type": "object"
@@ -20498,6 +20560,23 @@
         "displayName": {
           "description": "Required. The display name of the engine. Should be human readable. UTF-8 encoded string with limit of 1024 characters.",
           "type": "string"
+        },
+        "features": {
+          "additionalProperties": {
+            "enum": [
+              "FEATURE_STATE_UNSPECIFIED",
+              "FEATURE_STATE_ON",
+              "FEATURE_STATE_OFF"
+            ],
+            "enumDescriptions": [
+              "The feature state is unspecified.",
+              "The feature is turned on to be accessible.",
+              "The feature is turned off to be inaccessible."
+            ],
+            "type": "string"
+          },
+          "description": "Optional. Feature config for the engine to opt in or opt out of features. Supported keys: * `*`: all features, if it's present, all other feature state settings are ignored. * `agent-gallery` * `no-code-agent-builder` * `prompt-gallery` * `model-selector` * `notebook-lm` * `people-search` * `people-search-org-chart` * `bi-directional-audio` * `feedback`",
+          "type": "object"
         },
         "industryVertical": {
           "description": "Optional. The industry vertical that the engine registers. The restriction of the Engine industry vertical is based on DataStore: Vertical on Engine has to match vertical of the DataStore linked to the engine.",
@@ -25555,10 +25634,6 @@
           "description": "Output only. User update timestamp.",
           "format": "google-datetime",
           "readOnly": true,
-          "type": "string"
-        },
-        "user": {
-          "description": "Optional. The full resource name of the User, in the format of `projects/{project}/locations/{location}/userStores/{user_store}/users/{user_id}`. This field must be a UTF-8 encoded string with a length limit of 2048 characters. If the user field is empty, it's indicating the user has not logged in yet and no User entity is created.",
           "type": "string"
         },
         "userPrincipal": {

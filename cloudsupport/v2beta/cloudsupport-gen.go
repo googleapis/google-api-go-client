@@ -223,7 +223,7 @@ type Actor struct {
 	// Email: The email address of the actor. If not provided, it is inferred from
 	// the credentials supplied during case creation. When a name is provided, an
 	// email must also be provided. If the user is a Google Support agent, this is
-	// obfuscated. This field is deprecated. Use **username** field instead.
+	// obfuscated. This field is deprecated. Use `username` instead.
 	Email string `json:"email,omitempty"`
 	// GoogleSupport: Output only. Whether the actor is a Google support actor.
 	GoogleSupport bool `json:"googleSupport,omitempty"`
@@ -268,7 +268,7 @@ type Attachment struct {
 	Filename string `json:"filename,omitempty"`
 	// MimeType: Output only. The MIME type of the attachment (e.g. text/plain).
 	MimeType string `json:"mimeType,omitempty"`
-	// Name: Output only. The resource name of the attachment.
+	// Name: Output only. Identifier. The resource name of the attachment.
 	Name string `json:"name,omitempty"`
 	// SizeBytes: Output only. The size of the attachment in bytes.
 	SizeBytes int64 `json:"sizeBytes,omitempty,string"`
@@ -361,7 +361,7 @@ type Case struct {
 	// and their support working hours, see:
 	// https://cloud.google.com/support/docs/language-working-hours
 	LanguageCode string `json:"languageCode,omitempty"`
-	// Name: The resource name for the case.
+	// Name: Identifier. The resource name for the case.
 	Name string `json:"name,omitempty"`
 	// Priority: The priority of this case.
 	//
@@ -2154,7 +2154,7 @@ type CasesPatchCall struct {
 // name="projects/some-project/cases/43112854", body={ "displayName": "This is
 // Now a New Title", "priority": "P2", }, ) print(request.execute()) ```
 //
-// - name: The resource name for the case.
+// - name: Identifier. The resource name for the case.
 func (r *CasesService) Patch(name string, case_ *Case) *CasesPatchCall {
 	c := &CasesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name

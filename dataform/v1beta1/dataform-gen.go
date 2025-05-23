@@ -2022,19 +2022,26 @@ func (s NotebookAction) MarshalJSON() ([]byte, error) {
 // NotebookRuntimeOptions: Configures various aspects of Dataform notebook
 // runtime.
 type NotebookRuntimeOptions struct {
+	// AiPlatformNotebookRuntimeTemplate: Optional. The resource name of the [Colab
+	// runtime template] (https://cloud.google.com/colab/docs/runtimes), from which
+	// a runtime is created for notebook executions. If not specified, a runtime is
+	// created with Colab's default specifications.
+	AiPlatformNotebookRuntimeTemplate string `json:"aiPlatformNotebookRuntimeTemplate,omitempty"`
 	// GcsOutputBucket: Optional. The Google Cloud Storage location to upload the
 	// result to. Format: `gs://bucket-name`.
 	GcsOutputBucket string `json:"gcsOutputBucket,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "GcsOutputBucket") to
-	// unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
+	// ForceSendFields is a list of field names (e.g.
+	// "AiPlatformNotebookRuntimeTemplate") to unconditionally include in API
+	// requests. By default, fields with empty or default values are omitted from
+	// API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "GcsOutputBucket") to include in
-	// API requests with the JSON null value. By default, fields with empty values
-	// are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	// NullFields is a list of field names (e.g.
+	// "AiPlatformNotebookRuntimeTemplate") to include in API requests with the
+	// JSON null value. By default, fields with empty values are omitted from API
+	// requests. See https://pkg.go.dev/google.golang.org/api#hdr-NullFields for
+	// more details.
 	NullFields []string `json:"-"`
 }
 

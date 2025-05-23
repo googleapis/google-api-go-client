@@ -1427,6 +1427,8 @@ type DatabaseInstance struct {
 	//   "SECOND_GEN" - V2 speckle instance.
 	//   "EXTERNAL" - On premises instance.
 	BackendType string `json:"backendType,omitempty"`
+	// ClearNetwork: Clears private network settings when the instance is restored.
+	ClearNetwork bool `json:"clearNetwork,omitempty"`
 	// ConnectionName: Connection name of the Cloud SQL instance used in connection
 	// strings.
 	ConnectionName string `json:"connectionName,omitempty"`
@@ -4869,6 +4871,8 @@ type SqlExternalSyncSettingError struct {
 	// this is an error and will block the migration.
 	//   "SELECTED_OBJECTS_NOT_EXIST_ON_SOURCE" - The selected objects don't exist
 	// on the source instance.
+	//   "PSC_ONLY_INSTANCE_WITH_NO_NETWORK_ATTACHMENT_URI" - PSC only destination
+	// instance does not have a network attachment URI.
 	Type string `json:"type,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Detail") to unconditionally
 	// include in API requests. By default, fields with empty or default values are

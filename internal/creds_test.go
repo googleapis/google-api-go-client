@@ -645,3 +645,17 @@ func TestIsSelfSignedJWTFlow(t *testing.T) {
 		}
 	}
 }
+
+func TestNewAuth_NoAuth(t *testing.T) {
+	ctx := context.Background()
+	ds := &DialSettings{
+		NoAuth: true,
+	}
+	creds, err := AuthCreds(ctx, ds)
+	if err != nil {
+		t.Fatalf("got %v, want nil error", err)
+	}
+	if creds != nil {
+		t.Fatalf("got %v, want nil creds", creds)
+	}
+}

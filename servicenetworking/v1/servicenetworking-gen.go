@@ -6353,7 +6353,7 @@ func (r *ServicesConnectionsService) List(parent string) *ServicesConnectionsLis
 	return c
 }
 
-// Network sets the optional parameter "network": The name of service
+// Network sets the optional parameter "network": Required. The name of service
 // consumer's VPC network that's connected with service producer network
 // through a private connection. The network name must be in the following
 // format: `projects/{project}/global/networks/{network}`. {project} is a

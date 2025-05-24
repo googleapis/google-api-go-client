@@ -1502,10 +1502,10 @@ type Criteria struct {
 	// the filter in the snooze.Snooze filters support resource, metric, and
 	// metadata labels. If multiple labels are used, then they must be connected
 	// with an AND operator. For example, the following filter applies the snooze
-	// to incidents that have a resource label with an instance ID of "1234567890",
-	// a metric label with an instance name of "group", a metadata user label with
-	// a key of "foo" and a value of "bar", and a metadata system label with a key
-	// of "region" and a value of "us-central1": "filter":
+	// to incidents that have a resource label with an instance ID of 1234567890, a
+	// metric label with an instance name of test_group, a metadata user label with
+	// a key of foo and a value of bar, and a metadata system label with a key of
+	// region and a value of us-central1: "filter":
 	// "resource.labels.instance_id=\"1234567890\" AND
 	// metric.labels.instance_name=\"test_group\" AND
 	// metadata.user_labels.foo=\"bar\" AND

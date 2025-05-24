@@ -5663,7 +5663,6 @@ type ServiceMeshCondition struct {
 	// identity federation required error code
 	//   "CNI_INSTALLATION_FAILED" - CNI installation failed error code
 	//   "CNI_POD_UNSCHEDULABLE" - CNI pod unschedulable error code
-	//   "THC_POD_UNSCHEDULABLE" - THC pod unschedulable error code
 	//   "CLUSTER_HAS_ZERO_NODES" - Cluster has zero node code
 	//   "CANONICAL_SERVICE_ERROR" - Failure to reconcile CanonicalServices
 	//   "UNSUPPORTED_MULTIPLE_CONTROL_PLANES" - Multiple control planes

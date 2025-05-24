@@ -237,6 +237,268 @@ func (s Date) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudAiplatformV1beta1ApiAuth: The generic reusable api auth config.
+// Deprecated. Please use AuthConfig
+// (google/cloud/aiplatform/master/auth.proto) instead.
+type GoogleCloudAiplatformV1beta1ApiAuth struct {
+	// ApiKeyConfig: The API secret.
+	ApiKeyConfig *GoogleCloudAiplatformV1beta1ApiAuthApiKeyConfig `json:"apiKeyConfig,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ApiKeyConfig") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ApiKeyConfig") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudAiplatformV1beta1ApiAuth) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudAiplatformV1beta1ApiAuth
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudAiplatformV1beta1ApiAuthApiKeyConfig: The API secret.
+type GoogleCloudAiplatformV1beta1ApiAuthApiKeyConfig struct {
+	// ApiKeySecretVersion: Required. The SecretManager secret version resource
+	// name storing API key. e.g.
+	// projects/{project}/secrets/{secret}/versions/{version}
+	ApiKeySecretVersion string `json:"apiKeySecretVersion,omitempty"`
+	// ApiKeyString: The API key string. Either this or `api_key_secret_version`
+	// must be set.
+	ApiKeyString string `json:"apiKeyString,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ApiKeySecretVersion") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ApiKeySecretVersion") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudAiplatformV1beta1ApiAuthApiKeyConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudAiplatformV1beta1ApiAuthApiKeyConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudAiplatformV1beta1AuthConfig: Auth configuration to run the
+// extension.
+type GoogleCloudAiplatformV1beta1AuthConfig struct {
+	// ApiKeyConfig: Config for API key auth.
+	ApiKeyConfig *GoogleCloudAiplatformV1beta1AuthConfigApiKeyConfig `json:"apiKeyConfig,omitempty"`
+	// AuthType: Type of auth scheme.
+	//
+	// Possible values:
+	//   "AUTH_TYPE_UNSPECIFIED"
+	//   "NO_AUTH" - No Auth.
+	//   "API_KEY_AUTH" - API Key Auth.
+	//   "HTTP_BASIC_AUTH" - HTTP Basic Auth.
+	//   "GOOGLE_SERVICE_ACCOUNT_AUTH" - Google Service Account Auth.
+	//   "OAUTH" - OAuth auth.
+	//   "OIDC_AUTH" - OpenID Connect (OIDC) Auth.
+	AuthType string `json:"authType,omitempty"`
+	// GoogleServiceAccountConfig: Config for Google Service Account auth.
+	GoogleServiceAccountConfig *GoogleCloudAiplatformV1beta1AuthConfigGoogleServiceAccountConfig `json:"googleServiceAccountConfig,omitempty"`
+	// HttpBasicAuthConfig: Config for HTTP Basic auth.
+	HttpBasicAuthConfig *GoogleCloudAiplatformV1beta1AuthConfigHttpBasicAuthConfig `json:"httpBasicAuthConfig,omitempty"`
+	// OauthConfig: Config for user oauth.
+	OauthConfig *GoogleCloudAiplatformV1beta1AuthConfigOauthConfig `json:"oauthConfig,omitempty"`
+	// OidcConfig: Config for user OIDC auth.
+	OidcConfig *GoogleCloudAiplatformV1beta1AuthConfigOidcConfig `json:"oidcConfig,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ApiKeyConfig") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ApiKeyConfig") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudAiplatformV1beta1AuthConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudAiplatformV1beta1AuthConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudAiplatformV1beta1AuthConfigApiKeyConfig: Config for
+// authentication with API key.
+type GoogleCloudAiplatformV1beta1AuthConfigApiKeyConfig struct {
+	// ApiKeySecret: Optional. The name of the SecretManager secret version
+	// resource storing the API key. Format:
+	// `projects/{project}/secrets/{secrete}/versions/{version}` - If both
+	// `api_key_secret` and `api_key_string` are specified, this field takes
+	// precedence over `api_key_string`. - If specified, the
+	// `secretmanager.versions.access` permission should be granted to Vertex AI
+	// Extension Service Agent
+	// (https://cloud.google.com/vertex-ai/docs/general/access-control#service-agents)
+	// on the specified resource.
+	ApiKeySecret string `json:"apiKeySecret,omitempty"`
+	// ApiKeyString: Optional. The API key to be used in the request directly.
+	ApiKeyString string `json:"apiKeyString,omitempty"`
+	// HttpElementLocation: Optional. The location of the API key.
+	//
+	// Possible values:
+	//   "HTTP_IN_UNSPECIFIED"
+	//   "HTTP_IN_QUERY" - Element is in the HTTP request query.
+	//   "HTTP_IN_HEADER" - Element is in the HTTP request header.
+	//   "HTTP_IN_PATH" - Element is in the HTTP request path.
+	//   "HTTP_IN_BODY" - Element is in the HTTP request body.
+	//   "HTTP_IN_COOKIE" - Element is in the HTTP request cookie.
+	HttpElementLocation string `json:"httpElementLocation,omitempty"`
+	// Name: Optional. The parameter name of the API key. E.g. If the API request
+	// is "https://example.com/act?api_key=", "api_key" would be the parameter
+	// name.
+	Name string `json:"name,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ApiKeySecret") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ApiKeySecret") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudAiplatformV1beta1AuthConfigApiKeyConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudAiplatformV1beta1AuthConfigApiKeyConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudAiplatformV1beta1AuthConfigGoogleServiceAccountConfig: Config for
+// Google Service Account Authentication.
+type GoogleCloudAiplatformV1beta1AuthConfigGoogleServiceAccountConfig struct {
+	// ServiceAccount: Optional. The service account that the extension execution
+	// service runs as. - If the service account is specified, the
+	// `iam.serviceAccounts.getAccessToken` permission should be granted to Vertex
+	// AI Extension Service Agent
+	// (https://cloud.google.com/vertex-ai/docs/general/access-control#service-agents)
+	// on the specified service account. - If not specified, the Vertex AI
+	// Extension Service Agent will be used to execute the Extension.
+	ServiceAccount string `json:"serviceAccount,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ServiceAccount") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ServiceAccount") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudAiplatformV1beta1AuthConfigGoogleServiceAccountConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudAiplatformV1beta1AuthConfigGoogleServiceAccountConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudAiplatformV1beta1AuthConfigHttpBasicAuthConfig: Config for HTTP
+// Basic Authentication.
+type GoogleCloudAiplatformV1beta1AuthConfigHttpBasicAuthConfig struct {
+	// CredentialSecret: Required. The name of the SecretManager secret version
+	// resource storing the base64 encoded credentials. Format:
+	// `projects/{project}/secrets/{secrete}/versions/{version}` - If specified,
+	// the `secretmanager.versions.access` permission should be granted to Vertex
+	// AI Extension Service Agent
+	// (https://cloud.google.com/vertex-ai/docs/general/access-control#service-agents)
+	// on the specified resource.
+	CredentialSecret string `json:"credentialSecret,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "CredentialSecret") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CredentialSecret") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudAiplatformV1beta1AuthConfigHttpBasicAuthConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudAiplatformV1beta1AuthConfigHttpBasicAuthConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudAiplatformV1beta1AuthConfigOauthConfig: Config for user oauth.
+type GoogleCloudAiplatformV1beta1AuthConfigOauthConfig struct {
+	// AccessToken: Access token for extension endpoint. Only used to propagate
+	// token from [[ExecuteExtensionRequest.runtime_auth_config]] at request time.
+	AccessToken string `json:"accessToken,omitempty"`
+	// ServiceAccount: The service account used to generate access tokens for
+	// executing the Extension. - If the service account is specified, the
+	// `iam.serviceAccounts.getAccessToken` permission should be granted to Vertex
+	// AI Extension Service Agent
+	// (https://cloud.google.com/vertex-ai/docs/general/access-control#service-agents)
+	// on the provided service account.
+	ServiceAccount string `json:"serviceAccount,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AccessToken") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AccessToken") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudAiplatformV1beta1AuthConfigOauthConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudAiplatformV1beta1AuthConfigOauthConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudAiplatformV1beta1AuthConfigOidcConfig: Config for user OIDC auth.
+type GoogleCloudAiplatformV1beta1AuthConfigOidcConfig struct {
+	// IdToken: OpenID Connect formatted ID token for extension endpoint. Only used
+	// to propagate token from [[ExecuteExtensionRequest.runtime_auth_config]] at
+	// request time.
+	IdToken string `json:"idToken,omitempty"`
+	// ServiceAccount: The service account used to generate an OpenID Connect
+	// (OIDC)-compatible JWT token signed by the Google OIDC Provider
+	// (accounts.google.com) for extension endpoint
+	// (https://cloud.google.com/iam/docs/create-short-lived-credentials-direct#sa-credentials-oidc).
+	// - The audience for the token will be set to the URL in the server url
+	// defined in the OpenApi spec. - If the service account is provided, the
+	// service account should grant `iam.serviceAccounts.getOpenIdToken` permission
+	// to Vertex AI Extension Service Agent
+	// (https://cloud.google.com/vertex-ai/docs/general/access-control#service-agents).
+	ServiceAccount string `json:"serviceAccount,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "IdToken") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "IdToken") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudAiplatformV1beta1AuthConfigOidcConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudAiplatformV1beta1AuthConfigOidcConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudAiplatformV1beta1Blob: Content blob.
 type GoogleCloudAiplatformV1beta1Blob struct {
 	// Data: Required. Raw bytes.
@@ -301,6 +563,7 @@ type GoogleCloudAiplatformV1beta1Candidate struct {
 	// Sensitive Personally Identifiable Information (SPII).
 	//   "MALFORMED_FUNCTION_CALL" - The function call generated by the model is
 	// invalid.
+	//   "UNEXPECTED_TOOL_CALL" - The tool call generated by the model is invalid.
 	FinishReason string `json:"finishReason,omitempty"`
 	// GroundingMetadata: Output only. Metadata specifies sources used to ground
 	// generated content.
@@ -401,7 +664,8 @@ func (s GoogleCloudAiplatformV1beta1CitationMetadata) MarshalJSON() ([]byte, err
 }
 
 // GoogleCloudAiplatformV1beta1CodeExecutionResult: Result of executing the
-// [ExecutableCode]. Always follows a `part` containing the [ExecutableCode].
+// [ExecutableCode]. Only generated when using the [CodeExecution] tool, and
+// always follows a `part` containing the [ExecutableCode].
 type GoogleCloudAiplatformV1beta1CodeExecutionResult struct {
 	// Outcome: Required. Outcome of the code execution.
 	//
@@ -590,8 +854,8 @@ type GoogleCloudAiplatformV1beta1EnterpriseWebSearch struct {
 
 // GoogleCloudAiplatformV1beta1ExecutableCode: Code generated by the model that
 // is meant to be executed, and the result returned to the model. Generated
-// when using the [FunctionDeclaration] tool and [FunctionCallingConfig] mode
-// is set to [Mode.CODE].
+// when using the [CodeExecution] tool, in which the code will be automatically
+// executed, and a corresponding [CodeExecutionResult] will also be generated.
 type GoogleCloudAiplatformV1beta1ExecutableCode struct {
 	// Code: Required. The code to be executed.
 	Code string `json:"code,omitempty"`
@@ -618,6 +882,82 @@ type GoogleCloudAiplatformV1beta1ExecutableCode struct {
 func (s GoogleCloudAiplatformV1beta1ExecutableCode) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1beta1ExecutableCode
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudAiplatformV1beta1ExternalApi: Retrieve from data source powered
+// by external API for grounding. The external API is not owned by Google, but
+// need to follow the pre-defined API spec.
+type GoogleCloudAiplatformV1beta1ExternalApi struct {
+	// ApiAuth: The authentication config to access the API. Deprecated. Please use
+	// auth_config instead.
+	ApiAuth *GoogleCloudAiplatformV1beta1ApiAuth `json:"apiAuth,omitempty"`
+	// ApiSpec: The API spec that the external API implements.
+	//
+	// Possible values:
+	//   "API_SPEC_UNSPECIFIED" - Unspecified API spec. This value should not be
+	// used.
+	//   "SIMPLE_SEARCH" - Simple search API spec.
+	//   "ELASTIC_SEARCH" - Elastic search API spec.
+	ApiSpec string `json:"apiSpec,omitempty"`
+	// AuthConfig: The authentication config to access the API.
+	AuthConfig *GoogleCloudAiplatformV1beta1AuthConfig `json:"authConfig,omitempty"`
+	// ElasticSearchParams: Parameters for the elastic search API.
+	ElasticSearchParams *GoogleCloudAiplatformV1beta1ExternalApiElasticSearchParams `json:"elasticSearchParams,omitempty"`
+	// Endpoint: The endpoint of the external API. The system will call the API at
+	// this endpoint to retrieve the data for grounding. Example:
+	// https://acme.com:443/search
+	Endpoint string `json:"endpoint,omitempty"`
+	// SimpleSearchParams: Parameters for the simple search API.
+	SimpleSearchParams *GoogleCloudAiplatformV1beta1ExternalApiSimpleSearchParams `json:"simpleSearchParams,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ApiAuth") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ApiAuth") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudAiplatformV1beta1ExternalApi) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudAiplatformV1beta1ExternalApi
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudAiplatformV1beta1ExternalApiElasticSearchParams: The search
+// parameters to use for the ELASTIC_SEARCH spec.
+type GoogleCloudAiplatformV1beta1ExternalApiElasticSearchParams struct {
+	// Index: The ElasticSearch index to use.
+	Index string `json:"index,omitempty"`
+	// NumHits: Optional. Number of hits (chunks) to request. When specified, it is
+	// passed to Elasticsearch as the `num_hits` param.
+	NumHits int64 `json:"numHits,omitempty"`
+	// SearchTemplate: The ElasticSearch search template to use.
+	SearchTemplate string `json:"searchTemplate,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Index") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Index") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudAiplatformV1beta1ExternalApiElasticSearchParams) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudAiplatformV1beta1ExternalApiElasticSearchParams
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudAiplatformV1beta1ExternalApiSimpleSearchParams: The search
+// parameters to use for SIMPLE_SEARCH spec.
+type GoogleCloudAiplatformV1beta1ExternalApiSimpleSearchParams struct {
 }
 
 // GoogleCloudAiplatformV1beta1FileData: URI based data.
@@ -745,10 +1085,22 @@ type GoogleCloudAiplatformV1beta1FunctionDeclaration struct {
 	// optional parameter: type: OBJECT properties: param1: type: STRING param2:
 	// type: INTEGER required: - param1
 	Parameters *GoogleCloudAiplatformV1beta1Schema `json:"parameters,omitempty"`
+	// ParametersJsonSchema: Optional. Describes the parameters to the function in
+	// JSON Schema format. The schema must describe an object where the properties
+	// are the parameters to the function. For example: ``` { "type": "object",
+	// "properties": { "name": { "type": "string" }, "age": { "type": "integer" }
+	// }, "additionalProperties": false, "required": ["name", "age"],
+	// "propertyOrdering": ["name", "age"] } ``` This field is mutually exclusive
+	// with `parameters`.
+	ParametersJsonSchema interface{} `json:"parametersJsonSchema,omitempty"`
 	// Response: Optional. Describes the output from this function in JSON Schema
 	// format. Reflects the Open API 3.03 Response Object. The Schema defines the
 	// type used for the response value of the function.
 	Response *GoogleCloudAiplatformV1beta1Schema `json:"response,omitempty"`
+	// ResponseJsonSchema: Optional. Describes the output from this function in
+	// JSON Schema format. The value specified by the schema is the response value
+	// of the function. This field is mutually exclusive with `response`.
+	ResponseJsonSchema interface{} `json:"responseJsonSchema,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Description") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -998,6 +1350,9 @@ type GoogleCloudAiplatformV1beta1GenerationConfig struct {
 	AudioTimestamp bool `json:"audioTimestamp,omitempty"`
 	// CandidateCount: Optional. Number of candidates to generate.
 	CandidateCount int64 `json:"candidateCount,omitempty"`
+	// EnableAffectiveDialog: Optional. If enabled, the model will detect emotions
+	// and adapt its responses accordingly.
+	EnableAffectiveDialog bool `json:"enableAffectiveDialog,omitempty"`
 	// FrequencyPenalty: Optional. Frequency penalties.
 	FrequencyPenalty float64 `json:"frequencyPenalty,omitempty"`
 	// Logprobs: Optional. Logit probabilities.
@@ -1019,6 +1374,21 @@ type GoogleCloudAiplatformV1beta1GenerationConfig struct {
 	ModelConfig *GoogleCloudAiplatformV1beta1GenerationConfigModelConfig `json:"modelConfig,omitempty"`
 	// PresencePenalty: Optional. Positive penalties.
 	PresencePenalty float64 `json:"presencePenalty,omitempty"`
+	// ResponseJsonSchema: Optional. Output schema of the generated response. This
+	// is an alternative to `response_schema` that accepts JSON Schema
+	// (https://json-schema.org/). If set, `response_schema` must be omitted, but
+	// `response_mime_type` is required. While the full JSON Schema may be sent,
+	// not all features are supported. Specifically, only the following properties
+	// are supported: - `$id` - `$defs` - `$ref` - `$anchor` - `type` - `format` -
+	// `title` - `description` - `enum` (for strings and numbers) - `items` -
+	// `prefixItems` - `minItems` - `maxItems` - `minimum` - `maximum` - `anyOf` -
+	// `oneOf` (interpreted the same as `anyOf`) - `properties` -
+	// `additionalProperties` - `required` The non-standard `propertyOrdering`
+	// property may also be set. Cyclic references are unrolled to a limited degree
+	// and, as such, may only be used within non-required properties. (Nullable
+	// properties are not sufficient.) If `$ref` is set on a sub-schema, no other
+	// properties, except for than those starting as a `$`, may be set.
+	ResponseJsonSchema interface{} `json:"responseJsonSchema,omitempty"`
 	// ResponseLogprobs: Optional. If true, export the logprobs results in
 	// response.
 	ResponseLogprobs bool `json:"responseLogprobs,omitempty"`
@@ -1864,6 +2234,8 @@ type GoogleCloudAiplatformV1beta1Retrieval struct {
 	// DisableAttribution: Optional. Deprecated. This option is no longer
 	// supported.
 	DisableAttribution bool `json:"disableAttribution,omitempty"`
+	// ExternalApi: Use data source powered by external API for grounding.
+	ExternalApi *GoogleCloudAiplatformV1beta1ExternalApi `json:"externalApi,omitempty"`
 	// VertexAiSearch: Set to use data source powered by Vertex AI Search.
 	VertexAiSearch *GoogleCloudAiplatformV1beta1VertexAISearch `json:"vertexAiSearch,omitempty"`
 	// VertexRagStore: Set to use data source powered by Vertex RAG store. User
@@ -2374,6 +2746,11 @@ type GoogleCloudAiplatformV1beta1ToolGoogleSearch struct {
 // datastore or engine for grounding. datastore and engine are mutually
 // exclusive. See https://cloud.google.com/products/agent-builder
 type GoogleCloudAiplatformV1beta1VertexAISearch struct {
+	// DataStoreSpecs: Specifications that define the specific DataStores to be
+	// searched, along with configurations for those data stores. This is only
+	// considered for Engines with multiple data stores. It should only be set if
+	// engine is used.
+	DataStoreSpecs []*GoogleCloudAiplatformV1beta1VertexAISearchDataStoreSpec `json:"dataStoreSpecs,omitempty"`
 	// Datastore: Optional. Fully-qualified Vertex AI Search data store resource
 	// ID. Format:
 	// `projects/{project}/locations/{location}/collections/{collection}/dataStores/
@@ -2389,21 +2766,53 @@ type GoogleCloudAiplatformV1beta1VertexAISearch struct {
 	// MaxResults: Optional. Number of search results to return per query. The
 	// default value is 10. The maximumm allowed value is 10.
 	MaxResults int64 `json:"maxResults,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "Datastore") to
+	// ForceSendFields is a list of field names (e.g. "DataStoreSpecs") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Datastore") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
+	// NullFields is a list of field names (e.g. "DataStoreSpecs") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s GoogleCloudAiplatformV1beta1VertexAISearch) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1beta1VertexAISearch
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudAiplatformV1beta1VertexAISearchDataStoreSpec: Define data stores
+// within engine to filter on in a search call and configurations for those
+// data stores. For more information, see
+// https://cloud.google.com/generative-ai-app-builder/docs/reference/rpc/google.cloud.discoveryengine.v1#datastorespec
+type GoogleCloudAiplatformV1beta1VertexAISearchDataStoreSpec struct {
+	// DataStore: Full resource name of DataStore, such as Format:
+	// `projects/{project}/locations/{location}/collections/{collection}/dataStores/
+	// {dataStore}`
+	DataStore string `json:"dataStore,omitempty"`
+	// Filter: Optional. Filter specification to filter documents in the data store
+	// specified by data_store field. For more information on filtering, see
+	// Filtering
+	// (https://cloud.google.com/generative-ai-app-builder/docs/filter-search-metadata)
+	Filter string `json:"filter,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "DataStore") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DataStore") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudAiplatformV1beta1VertexAISearchDataStoreSpec) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudAiplatformV1beta1VertexAISearchDataStoreSpec
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 

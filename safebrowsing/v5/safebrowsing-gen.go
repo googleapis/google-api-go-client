@@ -107,6 +107,8 @@ func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, err
 		return nil, err
 	}
 	s := &Service{client: client, BasePath: basePath, logger: internaloption.GetLogger(opts)}
+	s.HashList = NewHashListService(s)
+	s.HashLists = NewHashListsService(s)
 	s.Hashes = NewHashesService(s)
 	if endpoint != "" {
 		s.BasePath = endpoint
@@ -132,6 +134,10 @@ type Service struct {
 	BasePath  string // API endpoint base URL
 	UserAgent string // optional additional User-Agent fragment
 
+	HashList *HashListService
+
+	HashLists *HashListsService
+
 	Hashes *HashesService
 }
 
@@ -142,6 +148,24 @@ func (s *Service) userAgent() string {
 	return googleapi.UserAgent + " " + s.UserAgent
 }
 
+func NewHashListService(s *Service) *HashListService {
+	rs := &HashListService{s: s}
+	return rs
+}
+
+type HashListService struct {
+	s *Service
+}
+
+func NewHashListsService(s *Service) *HashListsService {
+	rs := &HashListsService{s: s}
+	return rs
+}
+
+type HashListsService struct {
+	s *Service
+}
+
 func NewHashesService(s *Service) *HashesService {
 	rs := &HashesService{s: s}
 	return rs
@@ -149,6 +173,32 @@ func NewHashesService(s *Service) *HashesService {
 
 type HashesService struct {
 	s *Service
+}
+
+// GoogleSecuritySafebrowsingV5BatchGetHashListsResponse: The response
+// containing multiple hash lists.
+type GoogleSecuritySafebrowsingV5BatchGetHashListsResponse struct {
+	// HashLists: The hash lists in the same order given in the request.
+	HashLists []*GoogleSecuritySafebrowsingV5HashList `json:"hashLists,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "HashLists") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "HashLists") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleSecuritySafebrowsingV5BatchGetHashListsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleSecuritySafebrowsingV5BatchGetHashListsResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleSecuritySafebrowsingV5FullHash: The full hash identified with one or
@@ -252,6 +302,350 @@ func (s GoogleSecuritySafebrowsingV5FullHashFullHashDetail) MarshalJSON() ([]byt
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GoogleSecuritySafebrowsingV5HashList: A list of hashes identified by its
+// name.
+type GoogleSecuritySafebrowsingV5HashList struct {
+	// AdditionsEightBytes: The 8-byte additions.
+	AdditionsEightBytes *GoogleSecuritySafebrowsingV5RiceDeltaEncoded64Bit `json:"additionsEightBytes,omitempty"`
+	// AdditionsFourBytes: The 4-byte additions.
+	AdditionsFourBytes *GoogleSecuritySafebrowsingV5RiceDeltaEncoded32Bit `json:"additionsFourBytes,omitempty"`
+	// AdditionsSixteenBytes: The 16-byte additions.
+	AdditionsSixteenBytes *GoogleSecuritySafebrowsingV5RiceDeltaEncoded128Bit `json:"additionsSixteenBytes,omitempty"`
+	// AdditionsThirtyTwoBytes: The 32-byte additions.
+	AdditionsThirtyTwoBytes *GoogleSecuritySafebrowsingV5RiceDeltaEncoded256Bit `json:"additionsThirtyTwoBytes,omitempty"`
+	// CompressedRemovals: The Rice-delta encoded version of removal indices. Since
+	// each hash list definitely has less than 2^32 entries, the indices are
+	// treated as 32-bit integers and encoded.
+	CompressedRemovals *GoogleSecuritySafebrowsingV5RiceDeltaEncoded32Bit `json:"compressedRemovals,omitempty"`
+	// Metadata: Metadata about the hash list. This is not populated by the
+	// `GetHashList` method, but this is populated by the `ListHashLists` method.
+	Metadata *GoogleSecuritySafebrowsingV5HashListMetadata `json:"metadata,omitempty"`
+	// MinimumWaitDuration: Clients should wait at least this long to get the hash
+	// list again. If omitted or zero, clients SHOULD fetch immediately because it
+	// indicates that the server has an additional update to be sent to the client,
+	// but could not due to the client-specified constraints.
+	MinimumWaitDuration string `json:"minimumWaitDuration,omitempty"`
+	// Name: The name of the hash list. Note that the Global Cache is also just a
+	// hash list and can be referred to here.
+	Name string `json:"name,omitempty"`
+	// PartialUpdate: When true, this is a partial diff containing additions and
+	// removals based on what the client already has. When false, this is the
+	// complete hash list. When false, the client MUST delete any locally stored
+	// version for this hash list. This means that either the version possessed by
+	// the client is seriously out-of-date or the client data is believed to be
+	// corrupt. The `compressed_removals` field will be empty. When true, the
+	// client MUST apply an incremental update by applying removals and then
+	// additions.
+	PartialUpdate bool `json:"partialUpdate,omitempty"`
+	// Sha256Checksum: The sorted list of all hashes, hashed again with SHA256.
+	// This is the checksum for the sorted list of all hashes present in the
+	// database after applying the provided update. In the case that no updates
+	// were provided, the server will omit this field to indicate that the client
+	// should use the existing checksum.
+	Sha256Checksum string `json:"sha256Checksum,omitempty"`
+	// Version: The version of the hash list. The client MUST NOT manipulate those
+	// bytes.
+	Version string `json:"version,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "AdditionsEightBytes") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AdditionsEightBytes") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleSecuritySafebrowsingV5HashList) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleSecuritySafebrowsingV5HashList
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleSecuritySafebrowsingV5HashListMetadata: Metadata about a particular
+// hash list.
+type GoogleSecuritySafebrowsingV5HashListMetadata struct {
+	// Description: A human-readable description about this list. Written in
+	// English.
+	Description string `json:"description,omitempty"`
+	// HashLength: The supported hash length for this hash list. Each hash list
+	// will support exactly one length. If a different hash length is introduced
+	// for the same set of threat types or safe types, it will be introduced as a
+	// separate list with a distinct name and respective hash length set.
+	//
+	// Possible values:
+	//   "HASH_LENGTH_UNSPECIFIED" - Unspecified length.
+	//   "FOUR_BYTES" - Each hash is a four-byte prefix.
+	//   "EIGHT_BYTES" - Each hash is an eight-byte prefix.
+	//   "SIXTEEN_BYTES" - Each hash is a sixteen-byte prefix.
+	//   "THIRTY_TWO_BYTES" - Each hash is a thirty-two-byte full hash.
+	HashLength string `json:"hashLength,omitempty"`
+	// LikelySafeTypes: Unordered list. If not empty, this specifies that the hash
+	// list represents a list of likely safe hashes, and this enumerates the ways
+	// they are considered likely safe. This field is mutually exclusive with the
+	// threat_types field.
+	//
+	// Possible values:
+	//   "LIKELY_SAFE_TYPE_UNSPECIFIED" - Unknown.
+	//   "GENERAL_BROWSING" - This site is likely safe enough for general browsing.
+	// This is also known as the global cache.
+	//   "CSD" - This site is likely safe enough that there is no need to run
+	// Client-Side Detection models or password protection checks.
+	//   "DOWNLOAD" - This site is likely safe enough that downloads from the site
+	// need not be checked.
+	LikelySafeTypes []string `json:"likelySafeTypes,omitempty"`
+	// ThreatTypes: Unordered list. If not empty, this specifies that the hash list
+	// is a kind of threat list, and this enumerates the kind of threats associated
+	// with hashes or hash prefixes in this hash list. May be empty if the entry
+	// does not represent a threat, i.e. in the case that it represents a likely
+	// safe type.
+	//
+	// Possible values:
+	//   "THREAT_TYPE_UNSPECIFIED" - Unknown threat type. If this is returned by
+	// the server, the client shall disregard the enclosing `FullHashDetail`
+	// altogether.
+	//   "MALWARE" - Malware threat type. Malware is any software or mobile
+	// application specifically designed to harm a computer, a mobile device, the
+	// software it's running, or its users. Malware exhibits malicious behavior
+	// that can include installing software without user consent and installing
+	// harmful software such as viruses. More information can be found
+	// [here](https://developers.google.com/search/docs/monitor-debug/security/malwa
+	// re).
+	//   "SOCIAL_ENGINEERING" - Social engineering threat type. Social engineering
+	// pages falsely purport to act on behalf of a third party with the intention
+	// of confusing viewers into performing an action with which the viewer would
+	// only trust a true agent of that third party. Phishing is a type of social
+	// engineering that tricks the viewer into performing the specific action of
+	// providing information, such as login credentials. More information can be
+	// found
+	// [here](https://developers.google.com/search/docs/monitor-debug/security/socia
+	// l-engineering).
+	//   "UNWANTED_SOFTWARE" - Unwanted software threat type. Unwanted software is
+	// any software that does not adhere to [Google's Software
+	// Principles](https://www.google.com/about/software-principles.html) but isn't
+	// malware.
+	//   "POTENTIALLY_HARMFUL_APPLICATION" - Potentially harmful application threat
+	// type [as used by Google Play Protect for the Play
+	// Store](https://developers.google.com/android/play-protect/potentially-harmful
+	// -applications).
+	ThreatTypes []string `json:"threatTypes,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Description") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Description") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleSecuritySafebrowsingV5HashListMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleSecuritySafebrowsingV5HashListMetadata
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleSecuritySafebrowsingV5ListHashListsResponse: The response containing
+// metadata about hash lists.
+type GoogleSecuritySafebrowsingV5ListHashListsResponse struct {
+	// HashLists: The hash lists in an arbitrary order. Only metadata about the
+	// hash lists will be included, not the contents.
+	HashLists []*GoogleSecuritySafebrowsingV5HashList `json:"hashLists,omitempty"`
+	// NextPageToken: A token, which can be sent as `page_token` to retrieve the
+	// next page. If this field is omitted, there are no subsequent pages.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "HashLists") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "HashLists") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleSecuritySafebrowsingV5ListHashListsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleSecuritySafebrowsingV5ListHashListsResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleSecuritySafebrowsingV5RiceDeltaEncoded128Bit: Same as
+// `RiceDeltaEncoded32Bit` except this encodes 128-bit numbers.
+type GoogleSecuritySafebrowsingV5RiceDeltaEncoded128Bit struct {
+	// EncodedData: The encoded deltas that are encoded using the Golomb-Rice
+	// coder.
+	EncodedData string `json:"encodedData,omitempty"`
+	// EntriesCount: The number of entries that are delta encoded in the encoded
+	// data. If only a single integer was encoded, this will be zero and the single
+	// value will be stored in `first_value`.
+	EntriesCount int64 `json:"entriesCount,omitempty"`
+	// FirstValueHi: The upper 64 bits of the first entry in the encoded data
+	// (hashes). If the field is empty, the upper 64 bits are all zero.
+	FirstValueHi uint64 `json:"firstValueHi,omitempty,string"`
+	// FirstValueLo: The lower 64 bits of the first entry in the encoded data
+	// (hashes). If the field is empty, the lower 64 bits are all zero.
+	FirstValueLo uint64 `json:"firstValueLo,omitempty,string"`
+	// RiceParameter: The Golomb-Rice parameter. This parameter is guaranteed to be
+	// between 99 and 126, inclusive.
+	RiceParameter int64 `json:"riceParameter,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "EncodedData") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "EncodedData") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleSecuritySafebrowsingV5RiceDeltaEncoded128Bit) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleSecuritySafebrowsingV5RiceDeltaEncoded128Bit
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleSecuritySafebrowsingV5RiceDeltaEncoded256Bit: Same as
+// `RiceDeltaEncoded32Bit` except this encodes 256-bit numbers.
+type GoogleSecuritySafebrowsingV5RiceDeltaEncoded256Bit struct {
+	// EncodedData: The encoded deltas that are encoded using the Golomb-Rice
+	// coder.
+	EncodedData string `json:"encodedData,omitempty"`
+	// EntriesCount: The number of entries that are delta encoded in the encoded
+	// data. If only a single integer was encoded, this will be zero and the single
+	// value will be stored in `first_value`.
+	EntriesCount int64 `json:"entriesCount,omitempty"`
+	// FirstValueFirstPart: The first 64 bits of the first entry in the encoded
+	// data (hashes). If the field is empty, the first 64 bits are all zero.
+	FirstValueFirstPart uint64 `json:"firstValueFirstPart,omitempty,string"`
+	// FirstValueFourthPart: The last 64 bits of the first entry in the encoded
+	// data (hashes). If the field is empty, the last 64 bits are all zero.
+	FirstValueFourthPart uint64 `json:"firstValueFourthPart,omitempty,string"`
+	// FirstValueSecondPart: The 65 through 128th bits of the first entry in the
+	// encoded data (hashes). If the field is empty, the 65 through 128th bits are
+	// all zero.
+	FirstValueSecondPart uint64 `json:"firstValueSecondPart,omitempty,string"`
+	// FirstValueThirdPart: The 129 through 192th bits of the first entry in the
+	// encoded data (hashes). If the field is empty, the 129 through 192th bits are
+	// all zero.
+	FirstValueThirdPart uint64 `json:"firstValueThirdPart,omitempty,string"`
+	// RiceParameter: The Golomb-Rice parameter. This parameter is guaranteed to be
+	// between 227 and 254, inclusive.
+	RiceParameter int64 `json:"riceParameter,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "EncodedData") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "EncodedData") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleSecuritySafebrowsingV5RiceDeltaEncoded256Bit) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleSecuritySafebrowsingV5RiceDeltaEncoded256Bit
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleSecuritySafebrowsingV5RiceDeltaEncoded32Bit: The Rice-Golomb encoded
+// data. Used for either hashes or removal indices. It is guaranteed that every
+// hash or index here has the same length, and this length is exactly 32 bits.
+// Generally speaking, if we sort all the entries lexicographically, we will
+// find that the higher order bits tend not to change as frequently as lower
+// order bits. This means that if we also take the adjacent difference between
+// entries, the higher order bits have a high probability of being zero. This
+// exploits this high probability of zero by essentially choosing a certain
+// number of bits; all bits more significant than this are likely to be zero so
+// we use unary encoding. See the `rice_parameter` field. Historical note: the
+// Rice-delta encoding was first used in V4 of this API. In V5, two significant
+// improvements were made: firstly, the Rice-delta encoding is now available
+// with hash prefixes longer than 4 bytes; secondly, the encoded data are now
+// treated as big-endian so as to avoid a costly sorting step.
+type GoogleSecuritySafebrowsingV5RiceDeltaEncoded32Bit struct {
+	// EncodedData: The encoded deltas that are encoded using the Golomb-Rice
+	// coder.
+	EncodedData string `json:"encodedData,omitempty"`
+	// EntriesCount: The number of entries that are delta encoded in the encoded
+	// data. If only a single integer was encoded, this will be zero and the single
+	// value will be stored in `first_value`.
+	EntriesCount int64 `json:"entriesCount,omitempty"`
+	// FirstValue: The first entry in the encoded data (hashes or indices), or, if
+	// only a single hash prefix or index was encoded, that entry's value. If the
+	// field is empty, the entry is zero.
+	FirstValue int64 `json:"firstValue,omitempty"`
+	// RiceParameter: The Golomb-Rice parameter. This parameter is guaranteed to be
+	// between 3 and 30, inclusive.
+	RiceParameter int64 `json:"riceParameter,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "EncodedData") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "EncodedData") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleSecuritySafebrowsingV5RiceDeltaEncoded32Bit) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleSecuritySafebrowsingV5RiceDeltaEncoded32Bit
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleSecuritySafebrowsingV5RiceDeltaEncoded64Bit: Same as
+// `RiceDeltaEncoded32Bit` except this encodes 64-bit numbers.
+type GoogleSecuritySafebrowsingV5RiceDeltaEncoded64Bit struct {
+	// EncodedData: The encoded deltas that are encoded using the Golomb-Rice
+	// coder.
+	EncodedData string `json:"encodedData,omitempty"`
+	// EntriesCount: The number of entries that are delta encoded in the encoded
+	// data. If only a single integer was encoded, this will be zero and the single
+	// value will be stored in `first_value`.
+	EntriesCount int64 `json:"entriesCount,omitempty"`
+	// FirstValue: The first entry in the encoded data (hashes), or, if only a
+	// single hash prefix was encoded, that entry's value. If the field is empty,
+	// the entry is zero.
+	FirstValue uint64 `json:"firstValue,omitempty,string"`
+	// RiceParameter: The Golomb-Rice parameter. This parameter is guaranteed to be
+	// between 35 and 62, inclusive.
+	RiceParameter int64 `json:"riceParameter,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "EncodedData") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "EncodedData") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleSecuritySafebrowsingV5RiceDeltaEncoded64Bit) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleSecuritySafebrowsingV5RiceDeltaEncoded64Bit
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GoogleSecuritySafebrowsingV5SearchHashesResponse: The response returned
 // after searching threat hashes. If nothing is found, the server will return
 // an OK status (HTTP status code 200) with the `full_hashes` field empty,
@@ -296,6 +690,446 @@ type GoogleSecuritySafebrowsingV5SearchHashesResponse struct {
 func (s GoogleSecuritySafebrowsingV5SearchHashesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleSecuritySafebrowsingV5SearchHashesResponse
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+type HashListGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Get the latest contents of a hash list. A hash list may either by a
+// threat list or a non-threat list such as the Global Cache. This is a
+// standard Get method as defined by https://google.aip.dev/131 and the HTTP
+// method is also GET.
+//
+//   - name: The name of this particular hash list. It may be a threat list, or
+//     it may be the Global Cache.
+func (r *HashListService) Get(name string) *HashListGetCall {
+	c := &HashListGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// SizeConstraintsMaxDatabaseEntries sets the optional parameter
+// "sizeConstraints.maxDatabaseEntries": Sets the maximum number of entries
+// that the client is willing to have in the local database for the list. (The
+// server MAY cause the client to store less than this number of entries.) If
+// omitted or zero, no database size limit is set.
+func (c *HashListGetCall) SizeConstraintsMaxDatabaseEntries(sizeConstraintsMaxDatabaseEntries int64) *HashListGetCall {
+	c.urlParams_.Set("sizeConstraints.maxDatabaseEntries", fmt.Sprint(sizeConstraintsMaxDatabaseEntries))
+	return c
+}
+
+// SizeConstraintsMaxUpdateEntries sets the optional parameter
+// "sizeConstraints.maxUpdateEntries": The maximum size in number of entries.
+// The update will not contain more entries than this value, but it is possible
+// that the update will contain fewer entries than this value. This MUST be at
+// least 1024. If omitted or zero, no update size limit is set.
+func (c *HashListGetCall) SizeConstraintsMaxUpdateEntries(sizeConstraintsMaxUpdateEntries int64) *HashListGetCall {
+	c.urlParams_.Set("sizeConstraints.maxUpdateEntries", fmt.Sprint(sizeConstraintsMaxUpdateEntries))
+	return c
+}
+
+// Version sets the optional parameter "version": The version of the hash list
+// that the client already has. If this is the first time the client is
+// fetching the hash list, this field MUST be left empty. Otherwise, the client
+// SHOULD supply the version previously received from the server. The client
+// MUST NOT manipulate those bytes. **What's new in V5**: in V4 of the API,
+// this was called `states`; it is now renamed to `version` for clarity.
+func (c *HashListGetCall) Version(version string) *HashListGetCall {
+	c.urlParams_.Set("version", version)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *HashListGetCall) Fields(s ...googleapi.Field) *HashListGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *HashListGetCall) IfNoneMatch(entityTag string) *HashListGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *HashListGetCall) Context(ctx context.Context) *HashListGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *HashListGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *HashListGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v5/hashList/{name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "safebrowsing.hashList.get", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "safebrowsing.hashList.get" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleSecuritySafebrowsingV5HashList.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *HashListGetCall) Do(opts ...googleapi.CallOption) (*GoogleSecuritySafebrowsingV5HashList, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleSecuritySafebrowsingV5HashList{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "safebrowsing.hashList.get", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type HashListsBatchGetCall struct {
+	s            *Service
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// BatchGet: Get multiple hash lists at once. It is very common for a client to
+// need to get multiple hash lists. Using this method is preferred over using
+// the regular Get method multiple times. This is a standard batch Get method
+// as defined by https://google.aip.dev/231 and the HTTP method is also GET.
+func (r *HashListsService) BatchGet() *HashListsBatchGetCall {
+	c := &HashListsBatchGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	return c
+}
+
+// Names sets the optional parameter "names": Required. The names of the
+// particular hash lists. The list MAY be a threat list, or it may be the
+// Global Cache. The names MUST NOT contain duplicates; if they did, the client
+// will get an error.
+func (c *HashListsBatchGetCall) Names(names ...string) *HashListsBatchGetCall {
+	c.urlParams_.SetMulti("names", append([]string{}, names...))
+	return c
+}
+
+// SizeConstraintsMaxDatabaseEntries sets the optional parameter
+// "sizeConstraints.maxDatabaseEntries": Sets the maximum number of entries
+// that the client is willing to have in the local database for the list. (The
+// server MAY cause the client to store less than this number of entries.) If
+// omitted or zero, no database size limit is set.
+func (c *HashListsBatchGetCall) SizeConstraintsMaxDatabaseEntries(sizeConstraintsMaxDatabaseEntries int64) *HashListsBatchGetCall {
+	c.urlParams_.Set("sizeConstraints.maxDatabaseEntries", fmt.Sprint(sizeConstraintsMaxDatabaseEntries))
+	return c
+}
+
+// SizeConstraintsMaxUpdateEntries sets the optional parameter
+// "sizeConstraints.maxUpdateEntries": The maximum size in number of entries.
+// The update will not contain more entries than this value, but it is possible
+// that the update will contain fewer entries than this value. This MUST be at
+// least 1024. If omitted or zero, no update size limit is set.
+func (c *HashListsBatchGetCall) SizeConstraintsMaxUpdateEntries(sizeConstraintsMaxUpdateEntries int64) *HashListsBatchGetCall {
+	c.urlParams_.Set("sizeConstraints.maxUpdateEntries", fmt.Sprint(sizeConstraintsMaxUpdateEntries))
+	return c
+}
+
+// Version sets the optional parameter "version": The versions of the hash list
+// that the client already has. If this is the first time the client is
+// fetching the hash lists, the field should be left empty. Otherwise, the
+// client should supply the versions previously received from the server. The
+// client MUST NOT manipulate those bytes. The client need not send the
+// versions in the same order as the corresponding list names. The client may
+// send fewer or more versions in a request than there are names. However the
+// client MUST NOT send multiple versions that correspond to the same name; if
+// it did, the client will get an error. Historical note: in V4 of the API,
+// this was called `states`; it is now renamed to `version` for clarity.
+func (c *HashListsBatchGetCall) Version(version ...string) *HashListsBatchGetCall {
+	c.urlParams_.SetMulti("version", append([]string{}, version...))
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *HashListsBatchGetCall) Fields(s ...googleapi.Field) *HashListsBatchGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *HashListsBatchGetCall) IfNoneMatch(entityTag string) *HashListsBatchGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *HashListsBatchGetCall) Context(ctx context.Context) *HashListsBatchGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *HashListsBatchGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *HashListsBatchGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v5/hashLists:batchGet")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "safebrowsing.hashLists.batchGet", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "safebrowsing.hashLists.batchGet" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleSecuritySafebrowsingV5BatchGetHashListsResponse.ServerResponse.Header
+// or (if a response was returned at all) in error.(*googleapi.Error).Header.
+// Use googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *HashListsBatchGetCall) Do(opts ...googleapi.CallOption) (*GoogleSecuritySafebrowsingV5BatchGetHashListsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleSecuritySafebrowsingV5BatchGetHashListsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "safebrowsing.hashLists.batchGet", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type HashListsListCall struct {
+	s            *Service
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: List hash lists. In the V5 API, Google will never remove a hash list
+// that has ever been returned by this method. This enables clients to skip
+// using this method and simply hard-code all hash lists they need. This is a
+// standard List method as defined by https://google.aip.dev/132 and the HTTP
+// method is GET.
+func (r *HashListsService) List() *HashListsListCall {
+	c := &HashListsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The maximum number of hash
+// lists to return. The service may return fewer than this value. If
+// unspecified, the server will choose a page size, which may be larger than
+// the number of hash lists so that pagination is not necessary.
+func (c *HashListsListCall) PageSize(pageSize int64) *HashListsListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": A page token, received
+// from a previous `ListHashLists` call. Provide this to retrieve the
+// subsequent page.
+func (c *HashListsListCall) PageToken(pageToken string) *HashListsListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *HashListsListCall) Fields(s ...googleapi.Field) *HashListsListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *HashListsListCall) IfNoneMatch(entityTag string) *HashListsListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *HashListsListCall) Context(ctx context.Context) *HashListsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *HashListsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *HashListsListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v5/hashLists")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "safebrowsing.hashLists.list", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "safebrowsing.hashLists.list" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleSecuritySafebrowsingV5ListHashListsResponse.ServerResponse.Header or
+// (if a response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *HashListsListCall) Do(opts ...googleapi.CallOption) (*GoogleSecuritySafebrowsingV5ListHashListsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleSecuritySafebrowsingV5ListHashListsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "safebrowsing.hashLists.list", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *HashListsListCall) Pages(ctx context.Context, f func(*GoogleSecuritySafebrowsingV5ListHashListsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
 }
 
 type HashesSearchCall struct {

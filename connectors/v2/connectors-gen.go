@@ -3679,6 +3679,13 @@ func (c *ProjectsLocationsConnectionsEntityTypesEntitiesListCall) SortBy(sortBy 
 	return c
 }
 
+// SortOrder sets the optional parameter "sortOrder": List of 'sort_order'
+// columns to use when returning the results.
+func (c *ProjectsLocationsConnectionsEntityTypesEntitiesListCall) SortOrder(sortOrder ...string) *ProjectsLocationsConnectionsEntityTypesEntitiesListCall {
+	c.urlParams_.SetMulti("sortOrder", append([]string{}, sortOrder...))
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
 // details.

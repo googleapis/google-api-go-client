@@ -7821,7 +7821,8 @@ type ProjectsLocationsEntryGroupsEntriesTagsReconcileCall struct {
 // operation deletes tags not included in the input tag list. `ReconcileTags`
 // returns a long-running operation resource that can be queried with
 // Operations.GetOperation to return ReconcileTagsMetadata and a
-// ReconcileTagsResponse message.
+// ReconcileTagsResponse message. Note: SearchCatalog might return stale search
+// results for up to 24 hours after the `ReconcileTags` operation completes.
 //
 // - parent: Name of Entry to be tagged.
 func (r *ProjectsLocationsEntryGroupsEntriesTagsService) Reconcile(parent string, googleclouddatacatalogv1reconciletagsrequest *GoogleCloudDatacatalogV1ReconcileTagsRequest) *ProjectsLocationsEntryGroupsEntriesTagsReconcileCall {

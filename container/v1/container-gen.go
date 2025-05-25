@@ -438,6 +438,9 @@ type AddonsConfig struct {
 	GcsFuseCsiDriverConfig *GcsFuseCsiDriverConfig `json:"gcsFuseCsiDriverConfig,omitempty"`
 	// GkeBackupAgentConfig: Configuration for the Backup for GKE agent addon.
 	GkeBackupAgentConfig *GkeBackupAgentConfig `json:"gkeBackupAgentConfig,omitempty"`
+	// HighScaleCheckpointingConfig: Configuration for the High Scale Checkpointing
+	// add-on.
+	HighScaleCheckpointingConfig *HighScaleCheckpointingConfig `json:"highScaleCheckpointingConfig,omitempty"`
 	// HorizontalPodAutoscaling: Configuration for the horizontal pod autoscaling
 	// feature, which increases or decreases the number of replica pods a
 	// replication controller has based on the resource usage of the existing pods.
@@ -520,6 +523,16 @@ type AdvancedMachineFeatures struct {
 	// EnableNestedVirtualization: Whether or not to enable nested virtualization
 	// (defaults to false).
 	EnableNestedVirtualization bool `json:"enableNestedVirtualization,omitempty"`
+	// PerformanceMonitoringUnit: Type of Performance Monitoring Unit (PMU)
+	// requested on node pool instances. If unset, PMU will not be available to the
+	// node.
+	//
+	// Possible values:
+	//   "PERFORMANCE_MONITORING_UNIT_UNSPECIFIED" - PMU not enabled.
+	//   "ARCHITECTURAL" - Architecturally defined non-LLC events.
+	//   "STANDARD" - Most documented core/L2 events.
+	//   "ENHANCED" - Most documented core/L2 and LLC events.
+	PerformanceMonitoringUnit string `json:"performanceMonitoringUnit,omitempty"`
 	// ThreadsPerCore: The number of threads per physical core. To disable
 	// simultaneous multithreading (SMT) set this to 1. If unset, the maximum
 	// number of threads supported per core by the underlying processor is assumed.
@@ -540,6 +553,11 @@ type AdvancedMachineFeatures struct {
 func (s AdvancedMachineFeatures) MarshalJSON() ([]byte, error) {
 	type NoMethod AdvancedMachineFeatures
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// AnonymousAuthenticationConfig: AnonymousAuthenticationConfig defines the
+// settings needed to limit endpoints that allow anonymous authentication.
+type AnonymousAuthenticationConfig struct {
 }
 
 // AuthenticatorGroupsConfig: Configuration for returning group information
@@ -1121,6 +1139,9 @@ type Cluster struct {
 	// gates. Each string represents the activation status of a feature gate (e.g.
 	// "featureX=true" or "featureX=false")
 	AlphaClusterFeatureGates []string `json:"alphaClusterFeatureGates,omitempty"`
+	// AnonymousAuthenticationConfig: Configuration for limiting anonymous access
+	// to all endpoints except the health checks.
+	AnonymousAuthenticationConfig *AnonymousAuthenticationConfig `json:"anonymousAuthenticationConfig,omitempty"`
 	// AuthenticatorGroupsConfig: Configuration controlling RBAC group membership
 	// information.
 	AuthenticatorGroupsConfig *AuthenticatorGroupsConfig `json:"authenticatorGroupsConfig,omitempty"`
@@ -1513,6 +1534,9 @@ type ClusterUpdate struct {
 	// DesiredAddonsConfig: Configurations for the various addons available to run
 	// in the cluster.
 	DesiredAddonsConfig *AddonsConfig `json:"desiredAddonsConfig,omitempty"`
+	// DesiredAnonymousAuthenticationConfig: Configuration for limiting anonymous
+	// access to all endpoints except the health checks.
+	DesiredAnonymousAuthenticationConfig *AnonymousAuthenticationConfig `json:"desiredAnonymousAuthenticationConfig,omitempty"`
 	// DesiredAuthenticatorGroupsConfig: The desired authenticator groups config
 	// for the cluster.
 	DesiredAuthenticatorGroupsConfig *AuthenticatorGroupsConfig `json:"desiredAuthenticatorGroupsConfig,omitempty"`
@@ -2872,6 +2896,29 @@ type GkeBackupAgentConfig struct {
 
 func (s GkeBackupAgentConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GkeBackupAgentConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// HighScaleCheckpointingConfig: Configuration for the High Scale
+// Checkpointing.
+type HighScaleCheckpointingConfig struct {
+	// Enabled: Whether the High Scale Checkpointing is enabled for this cluster.
+	Enabled bool `json:"enabled,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Enabled") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Enabled") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s HighScaleCheckpointingConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod HighScaleCheckpointingConfig
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 

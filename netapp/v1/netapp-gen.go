@@ -883,25 +883,25 @@ func (s *HourlySchedule) UnmarshalJSON(data []byte) error {
 // HybridPeeringDetails: HybridPeeringDetails contains details about the hybrid
 // peering.
 type HybridPeeringDetails struct {
-	// Command: Optional. Copy-paste-able commands to be used on user's ONTAP to
+	// Command: Output only. Copy-paste-able commands to be used on user's ONTAP to
 	// accept peering requests.
 	Command string `json:"command,omitempty"`
-	// CommandExpiryTime: Optional. Expiration time for the peering command to be
-	// executed on user's ONTAP.
+	// CommandExpiryTime: Output only. Expiration time for the peering command to
+	// be executed on user's ONTAP.
 	CommandExpiryTime string `json:"commandExpiryTime,omitempty"`
-	// Passphrase: Optional. Temporary passphrase generated to accept cluster
+	// Passphrase: Output only. Temporary passphrase generated to accept cluster
 	// peering command.
 	Passphrase string `json:"passphrase,omitempty"`
-	// PeerClusterName: Optional. Name of the user's local source cluster to be
+	// PeerClusterName: Output only. Name of the user's local source cluster to be
 	// peered with the destination cluster.
 	PeerClusterName string `json:"peerClusterName,omitempty"`
-	// PeerSvmName: Optional. Name of the user's local source vserver svm to be
+	// PeerSvmName: Output only. Name of the user's local source vserver svm to be
 	// peered with the destination vserver svm.
 	PeerSvmName string `json:"peerSvmName,omitempty"`
-	// PeerVolumeName: Optional. Name of the user's local source volume to be
+	// PeerVolumeName: Output only. Name of the user's local source volume to be
 	// peered with the destination volume.
 	PeerVolumeName string `json:"peerVolumeName,omitempty"`
-	// SubnetIp: Optional. IP address of the subnet.
+	// SubnetIp: Output only. IP address of the subnet.
 	SubnetIp string `json:"subnetIp,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Command") to unconditionally
 	// include in API requests. By default, fields with empty or default values are

@@ -498,7 +498,7 @@ func (s SecurityKey) MarshalJSON() ([]byte, error) {
 }
 
 type SignSshPublicKeyRequest struct {
-	// SshPublicKey: The SSH public key to sign.
+	// SshPublicKey: Required. The SSH public key to sign.
 	SshPublicKey string `json:"sshPublicKey,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "SshPublicKey") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -745,8 +745,8 @@ func (r *UsersService) GetLoginProfile(name string) *UsersGetLoginProfileCall {
 	return c
 }
 
-// ProjectId sets the optional parameter "projectId": The project ID of the
-// Google Cloud Platform project.
+// ProjectId sets the optional parameter "projectId": Required. The project ID
+// of the Google Cloud Platform project.
 func (c *UsersGetLoginProfileCall) ProjectId(projectId string) *UsersGetLoginProfileCall {
 	c.urlParams_.Set("projectId", projectId)
 	return c

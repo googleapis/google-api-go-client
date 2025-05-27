@@ -609,7 +609,7 @@ type InstanceConfig struct {
 	// Hyperthreading: Whether the instance should be provisioned with
 	// Hyperthreading enabled.
 	Hyperthreading bool `json:"hyperthreading,omitempty"`
-	// Id: A transient unique identifier to idenfity an instance within an
+	// Id: A transient unique identifier to identify an instance within an
 	// ProvisioningConfig request.
 	Id string `json:"id,omitempty"`
 	// InstanceType: Instance type. Available types
@@ -6303,7 +6303,7 @@ type ProjectsLocationsProvisioningConfigsSubmitCall struct {
 	header_                         http.Header
 }
 
-// Submit: Submit a provisiong configuration for a given project.
+// Submit: Submit a provisioning configuration for a given project.
 //
 // - parent: The parent project and location containing the ProvisioningConfig.
 func (r *ProjectsLocationsProvisioningConfigsService) Submit(parent string, submitprovisioningconfigrequest *SubmitProvisioningConfigRequest) *ProjectsLocationsProvisioningConfigsSubmitCall {

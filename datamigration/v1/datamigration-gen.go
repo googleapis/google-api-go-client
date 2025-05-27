@@ -5083,6 +5083,11 @@ type SslConfig struct {
 	// key associated with the Client Certificate. If this field is used then the
 	// 'client_certificate' field is mandatory.
 	ClientKey string `json:"clientKey,omitempty"`
+	// SslFlags: Optional. SSL flags used for establishing SSL connection to the
+	// source database. Only source specific flags are supported. An object
+	// containing a list of "key": "value" pairs. Example: {
+	// "server_certificate_hostname": "server.com"}.
+	SslFlags map[string]string `json:"sslFlags,omitempty"`
 	// Type: Optional. The ssl config type according to 'client_key',
 	// 'client_certificate' and 'ca_certificate'.
 	//

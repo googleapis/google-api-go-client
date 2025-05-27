@@ -131,6 +131,7 @@ func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, err
 	}
 	s := &Service{client: client, BasePath: basePath, logger: internaloption.GetLogger(opts)}
 	s.Folders = NewFoldersService(s)
+	s.Organizations = NewOrganizationsService(s)
 	s.Projects = NewProjectsService(s)
 	if endpoint != "" {
 		s.BasePath = endpoint
@@ -158,6 +159,8 @@ type Service struct {
 
 	Folders *FoldersService
 
+	Organizations *OrganizationsService
+
 	Projects *ProjectsService
 }
 
@@ -174,6 +177,15 @@ func NewFoldersService(s *Service) *FoldersService {
 }
 
 type FoldersService struct {
+	s *Service
+}
+
+func NewOrganizationsService(s *Service) *OrganizationsService {
+	rs := &OrganizationsService{s: s}
+	return rs
+}
+
+type OrganizationsService struct {
 	s *Service
 }
 
@@ -590,6 +602,11 @@ func (s AuditLogConfig) MarshalJSON() ([]byte, error) {
 
 // AutokeyConfig: Cloud KMS Autokey configuration for a folder.
 type AutokeyConfig struct {
+	// Etag: Optional. A checksum computed by the server based on the value of
+	// other fields. This may be sent on update requests to ensure that the client
+	// has an up-to-date value before proceeding. The request will be rejected with
+	// an ABORTED error on a mismatched etag.
+	Etag string `json:"etag,omitempty"`
 	// KeyProject: Optional. Name of the key project, e.g. `projects/{PROJECT_ID}`
 	// or `projects/{PROJECT_NUMBER}`, where Cloud KMS Autokey will provision a new
 	// CryptoKey when a KeyHandle is created. On UpdateAutokeyConfig, the caller
@@ -616,15 +633,15 @@ type AutokeyConfig struct {
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-	// ForceSendFields is a list of field names (e.g. "KeyProject") to
-	// unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
+	// ForceSendFields is a list of field names (e.g. "Etag") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "KeyProject") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
+	// NullFields is a list of field names (e.g. "Etag") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -1078,7 +1095,7 @@ type CryptoKeyVersion struct {
 	//   "ENABLED" - This version may be used for cryptographic operations.
 	//   "DISABLED" - This version may not be used, but the key material is still
 	// available, and the version can be placed back into the ENABLED state.
-	//   "DESTROYED" - This key material of this version is destroyed and no longer
+	//   "DESTROYED" - The key material of this version is destroyed and no longer
 	// stored. This version may only become ENABLED again if this version is
 	// reimport_eligible and the original key material is reimported with a call to
 	// KeyManagementService.ImportCryptoKeyVersion.
@@ -1986,6 +2003,32 @@ func (s ImportJob) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// KeyAccessJustificationsEnrollmentConfig: The configuration of a protection
+// level for a project's Key Access Justifications enrollment.
+type KeyAccessJustificationsEnrollmentConfig struct {
+	// AuditLogging: Whether the project has KAJ logging enabled.
+	AuditLogging bool `json:"auditLogging,omitempty"`
+	// PolicyEnforcement: Whether the project is enrolled in KAJ policy
+	// enforcement.
+	PolicyEnforcement bool `json:"policyEnforcement,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AuditLogging") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AuditLogging") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s KeyAccessJustificationsEnrollmentConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod KeyAccessJustificationsEnrollmentConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // KeyAccessJustificationsPolicy: A KeyAccessJustificationsPolicy specifies
 // zero or more allowed AccessReason values for encrypt, decrypt, and sign
 // operations on a CryptoKey.
@@ -2049,6 +2092,41 @@ type KeyAccessJustificationsPolicy struct {
 
 func (s KeyAccessJustificationsPolicy) MarshalJSON() ([]byte, error) {
 	type NoMethod KeyAccessJustificationsPolicy
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// KeyAccessJustificationsPolicyConfig: A singleton configuration for Key
+// Access Justifications policies.
+type KeyAccessJustificationsPolicyConfig struct {
+	// DefaultKeyAccessJustificationPolicy: Optional. The default key access
+	// justification policy used when a CryptoKey is created in this folder. This
+	// is only used when a Key Access Justifications policy is not provided in the
+	// CreateCryptoKeyRequest. This overrides any default policies in its ancestry.
+	DefaultKeyAccessJustificationPolicy *KeyAccessJustificationsPolicy `json:"defaultKeyAccessJustificationPolicy,omitempty"`
+	// Name: Identifier. The resource name for this
+	// KeyAccessJustificationsPolicyConfig in the format of
+	// "{organizations|folders|projects}/*/kajPolicyConfig".
+	Name string `json:"name,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g.
+	// "DefaultKeyAccessJustificationPolicy") to unconditionally include in API
+	// requests. By default, fields with empty or default values are omitted from
+	// API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g.
+	// "DefaultKeyAccessJustificationPolicy") to include in API requests with the
+	// JSON null value. By default, fields with empty values are omitted from API
+	// requests. See https://pkg.go.dev/google.golang.org/api#hdr-NullFields for
+	// more details.
+	NullFields []string `json:"-"`
+}
+
+func (s KeyAccessJustificationsPolicyConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod KeyAccessJustificationsPolicyConfig
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -3347,6 +3425,69 @@ func (s ShowEffectiveAutokeyConfigResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// ShowEffectiveKeyAccessJustificationsEnrollmentConfigResponse: Response
+// message for
+// KeyAccessJustificationsConfig.ShowEffectiveKeyAccessJustificationsEnrollmentC
+// onfig
+type ShowEffectiveKeyAccessJustificationsEnrollmentConfigResponse struct {
+	// ExternalConfig: The effective KeyAccessJustificationsEnrollmentConfig for
+	// external keys.
+	ExternalConfig *KeyAccessJustificationsEnrollmentConfig `json:"externalConfig,omitempty"`
+	// HardwareConfig: The effective KeyAccessJustificationsEnrollmentConfig for
+	// hardware keys.
+	HardwareConfig *KeyAccessJustificationsEnrollmentConfig `json:"hardwareConfig,omitempty"`
+	// SoftwareConfig: The effective KeyAccessJustificationsEnrollmentConfig for
+	// software keys.
+	SoftwareConfig *KeyAccessJustificationsEnrollmentConfig `json:"softwareConfig,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "ExternalConfig") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ExternalConfig") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ShowEffectiveKeyAccessJustificationsEnrollmentConfigResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ShowEffectiveKeyAccessJustificationsEnrollmentConfigResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ShowEffectiveKeyAccessJustificationsPolicyConfigResponse: Response message
+// for
+// KeyAccessJustificationsConfig.ShowEffectiveKeyAccessJustificationsPolicyConfi
+// g.
+type ShowEffectiveKeyAccessJustificationsPolicyConfigResponse struct {
+	// EffectiveKajPolicy: The effective KeyAccessJustificationsPolicyConfig.
+	EffectiveKajPolicy *KeyAccessJustificationsPolicyConfig `json:"effectiveKajPolicy,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "EffectiveKajPolicy") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "EffectiveKajPolicy") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ShowEffectiveKeyAccessJustificationsPolicyConfigResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ShowEffectiveKeyAccessJustificationsPolicyConfigResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // Status: The `Status` type defines a logical error model that is suitable for
 // different programming environments, including REST APIs and RPC APIs. It is
 // used by gRPC (https://github.com/grpc). Each `Status` message contains three
@@ -3601,6 +3742,117 @@ func (c *FoldersGetAutokeyConfigCall) Do(opts ...googleapi.CallOption) (*Autokey
 	return ret, nil
 }
 
+type FoldersGetKajPolicyConfigCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// GetKajPolicyConfig: Gets the KeyAccessJustificationsPolicyConfig for a given
+// organization/folder/projects.
+//
+// - name: The name of the KeyAccessJustificationsPolicyConfig to get.
+func (r *FoldersService) GetKajPolicyConfig(name string) *FoldersGetKajPolicyConfigCall {
+	c := &FoldersGetKajPolicyConfigCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *FoldersGetKajPolicyConfigCall) Fields(s ...googleapi.Field) *FoldersGetKajPolicyConfigCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *FoldersGetKajPolicyConfigCall) IfNoneMatch(entityTag string) *FoldersGetKajPolicyConfigCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *FoldersGetKajPolicyConfigCall) Context(ctx context.Context) *FoldersGetKajPolicyConfigCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *FoldersGetKajPolicyConfigCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *FoldersGetKajPolicyConfigCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "cloudkms.folders.getKajPolicyConfig", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "cloudkms.folders.getKajPolicyConfig" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *KeyAccessJustificationsPolicyConfig.ServerResponse.Header or (if a response
+// was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *FoldersGetKajPolicyConfigCall) Do(opts ...googleapi.CallOption) (*KeyAccessJustificationsPolicyConfig, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &KeyAccessJustificationsPolicyConfig{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "cloudkms.folders.getKajPolicyConfig", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
 type FoldersUpdateAutokeyConfigCall struct {
 	s             *Service
 	name          string
@@ -3716,6 +3968,456 @@ func (c *FoldersUpdateAutokeyConfigCall) Do(opts ...googleapi.CallOption) (*Auto
 	return ret, nil
 }
 
+type FoldersUpdateKajPolicyConfigCall struct {
+	s                                   *Service
+	name                                string
+	keyaccessjustificationspolicyconfig *KeyAccessJustificationsPolicyConfig
+	urlParams_                          gensupport.URLParams
+	ctx_                                context.Context
+	header_                             http.Header
+}
+
+// UpdateKajPolicyConfig: Updates the KeyAccessJustificationsPolicyConfig for a
+// given organization/folder/projects.
+//
+//   - name: Identifier. The resource name for this
+//     KeyAccessJustificationsPolicyConfig in the format of
+//     "{organizations|folders|projects}/*/kajPolicyConfig".
+func (r *FoldersService) UpdateKajPolicyConfig(name string, keyaccessjustificationspolicyconfig *KeyAccessJustificationsPolicyConfig) *FoldersUpdateKajPolicyConfigCall {
+	c := &FoldersUpdateKajPolicyConfigCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.keyaccessjustificationspolicyconfig = keyaccessjustificationspolicyconfig
+	return c
+}
+
+// UpdateMask sets the optional parameter "updateMask": The list of fields to
+// update.
+func (c *FoldersUpdateKajPolicyConfigCall) UpdateMask(updateMask string) *FoldersUpdateKajPolicyConfigCall {
+	c.urlParams_.Set("updateMask", updateMask)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *FoldersUpdateKajPolicyConfigCall) Fields(s ...googleapi.Field) *FoldersUpdateKajPolicyConfigCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *FoldersUpdateKajPolicyConfigCall) Context(ctx context.Context) *FoldersUpdateKajPolicyConfigCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *FoldersUpdateKajPolicyConfigCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *FoldersUpdateKajPolicyConfigCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.keyaccessjustificationspolicyconfig)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PATCH", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "cloudkms.folders.updateKajPolicyConfig", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "cloudkms.folders.updateKajPolicyConfig" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *KeyAccessJustificationsPolicyConfig.ServerResponse.Header or (if a response
+// was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *FoldersUpdateKajPolicyConfigCall) Do(opts ...googleapi.CallOption) (*KeyAccessJustificationsPolicyConfig, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &KeyAccessJustificationsPolicyConfig{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "cloudkms.folders.updateKajPolicyConfig", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type OrganizationsGetKajPolicyConfigCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// GetKajPolicyConfig: Gets the KeyAccessJustificationsPolicyConfig for a given
+// organization/folder/projects.
+//
+// - name: The name of the KeyAccessJustificationsPolicyConfig to get.
+func (r *OrganizationsService) GetKajPolicyConfig(name string) *OrganizationsGetKajPolicyConfigCall {
+	c := &OrganizationsGetKajPolicyConfigCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *OrganizationsGetKajPolicyConfigCall) Fields(s ...googleapi.Field) *OrganizationsGetKajPolicyConfigCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *OrganizationsGetKajPolicyConfigCall) IfNoneMatch(entityTag string) *OrganizationsGetKajPolicyConfigCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *OrganizationsGetKajPolicyConfigCall) Context(ctx context.Context) *OrganizationsGetKajPolicyConfigCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *OrganizationsGetKajPolicyConfigCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *OrganizationsGetKajPolicyConfigCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "cloudkms.organizations.getKajPolicyConfig", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "cloudkms.organizations.getKajPolicyConfig" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *KeyAccessJustificationsPolicyConfig.ServerResponse.Header or (if a response
+// was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *OrganizationsGetKajPolicyConfigCall) Do(opts ...googleapi.CallOption) (*KeyAccessJustificationsPolicyConfig, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &KeyAccessJustificationsPolicyConfig{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "cloudkms.organizations.getKajPolicyConfig", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type OrganizationsUpdateKajPolicyConfigCall struct {
+	s                                   *Service
+	name                                string
+	keyaccessjustificationspolicyconfig *KeyAccessJustificationsPolicyConfig
+	urlParams_                          gensupport.URLParams
+	ctx_                                context.Context
+	header_                             http.Header
+}
+
+// UpdateKajPolicyConfig: Updates the KeyAccessJustificationsPolicyConfig for a
+// given organization/folder/projects.
+//
+//   - name: Identifier. The resource name for this
+//     KeyAccessJustificationsPolicyConfig in the format of
+//     "{organizations|folders|projects}/*/kajPolicyConfig".
+func (r *OrganizationsService) UpdateKajPolicyConfig(name string, keyaccessjustificationspolicyconfig *KeyAccessJustificationsPolicyConfig) *OrganizationsUpdateKajPolicyConfigCall {
+	c := &OrganizationsUpdateKajPolicyConfigCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.keyaccessjustificationspolicyconfig = keyaccessjustificationspolicyconfig
+	return c
+}
+
+// UpdateMask sets the optional parameter "updateMask": The list of fields to
+// update.
+func (c *OrganizationsUpdateKajPolicyConfigCall) UpdateMask(updateMask string) *OrganizationsUpdateKajPolicyConfigCall {
+	c.urlParams_.Set("updateMask", updateMask)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *OrganizationsUpdateKajPolicyConfigCall) Fields(s ...googleapi.Field) *OrganizationsUpdateKajPolicyConfigCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *OrganizationsUpdateKajPolicyConfigCall) Context(ctx context.Context) *OrganizationsUpdateKajPolicyConfigCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *OrganizationsUpdateKajPolicyConfigCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *OrganizationsUpdateKajPolicyConfigCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.keyaccessjustificationspolicyconfig)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PATCH", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "cloudkms.organizations.updateKajPolicyConfig", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "cloudkms.organizations.updateKajPolicyConfig" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *KeyAccessJustificationsPolicyConfig.ServerResponse.Header or (if a response
+// was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *OrganizationsUpdateKajPolicyConfigCall) Do(opts ...googleapi.CallOption) (*KeyAccessJustificationsPolicyConfig, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &KeyAccessJustificationsPolicyConfig{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "cloudkms.organizations.updateKajPolicyConfig", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsGetKajPolicyConfigCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// GetKajPolicyConfig: Gets the KeyAccessJustificationsPolicyConfig for a given
+// organization/folder/projects.
+//
+// - name: The name of the KeyAccessJustificationsPolicyConfig to get.
+func (r *ProjectsService) GetKajPolicyConfig(name string) *ProjectsGetKajPolicyConfigCall {
+	c := &ProjectsGetKajPolicyConfigCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsGetKajPolicyConfigCall) Fields(s ...googleapi.Field) *ProjectsGetKajPolicyConfigCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsGetKajPolicyConfigCall) IfNoneMatch(entityTag string) *ProjectsGetKajPolicyConfigCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsGetKajPolicyConfigCall) Context(ctx context.Context) *ProjectsGetKajPolicyConfigCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsGetKajPolicyConfigCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsGetKajPolicyConfigCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "cloudkms.projects.getKajPolicyConfig", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "cloudkms.projects.getKajPolicyConfig" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *KeyAccessJustificationsPolicyConfig.ServerResponse.Header or (if a response
+// was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsGetKajPolicyConfigCall) Do(opts ...googleapi.CallOption) (*KeyAccessJustificationsPolicyConfig, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &KeyAccessJustificationsPolicyConfig{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "cloudkms.projects.getKajPolicyConfig", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
 type ProjectsShowEffectiveAutokeyConfigCall struct {
 	s            *Service
 	parent       string
@@ -3826,6 +4528,346 @@ func (c *ProjectsShowEffectiveAutokeyConfigCall) Do(opts ...googleapi.CallOption
 		return nil, err
 	}
 	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "cloudkms.projects.showEffectiveAutokeyConfig", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsShowEffectiveKeyAccessJustificationsEnrollmentConfigCall struct {
+	s            *Service
+	project      string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// ShowEffectiveKeyAccessJustificationsEnrollmentConfig: Returns the
+// KeyAccessJustificationsEnrollmentConfig of the resource closest to the given
+// project in hierarchy.
+//
+//   - project: The number or id of the project to get the effective
+//     KeyAccessJustificationsEnrollmentConfig for.
+func (r *ProjectsService) ShowEffectiveKeyAccessJustificationsEnrollmentConfig(project string) *ProjectsShowEffectiveKeyAccessJustificationsEnrollmentConfigCall {
+	c := &ProjectsShowEffectiveKeyAccessJustificationsEnrollmentConfigCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.project = project
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsShowEffectiveKeyAccessJustificationsEnrollmentConfigCall) Fields(s ...googleapi.Field) *ProjectsShowEffectiveKeyAccessJustificationsEnrollmentConfigCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsShowEffectiveKeyAccessJustificationsEnrollmentConfigCall) IfNoneMatch(entityTag string) *ProjectsShowEffectiveKeyAccessJustificationsEnrollmentConfigCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsShowEffectiveKeyAccessJustificationsEnrollmentConfigCall) Context(ctx context.Context) *ProjectsShowEffectiveKeyAccessJustificationsEnrollmentConfigCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsShowEffectiveKeyAccessJustificationsEnrollmentConfigCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsShowEffectiveKeyAccessJustificationsEnrollmentConfigCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+project}:showEffectiveKeyAccessJustificationsEnrollmentConfig")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"project": c.project,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "cloudkms.projects.showEffectiveKeyAccessJustificationsEnrollmentConfig", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "cloudkms.projects.showEffectiveKeyAccessJustificationsEnrollmentConfig" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *ShowEffectiveKeyAccessJustificationsEnrollmentConfigResponse.ServerResponse.
+// Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsShowEffectiveKeyAccessJustificationsEnrollmentConfigCall) Do(opts ...googleapi.CallOption) (*ShowEffectiveKeyAccessJustificationsEnrollmentConfigResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ShowEffectiveKeyAccessJustificationsEnrollmentConfigResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "cloudkms.projects.showEffectiveKeyAccessJustificationsEnrollmentConfig", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsShowEffectiveKeyAccessJustificationsPolicyConfigCall struct {
+	s            *Service
+	project      string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// ShowEffectiveKeyAccessJustificationsPolicyConfig: Returns the
+// KeyAccessJustificationsPolicyConfig of the resource closest to the given
+// project in hierarchy.
+//
+//   - project: The number or id of the project to get the effective
+//     KeyAccessJustificationsPolicyConfig. In the format of "projects/{|}".
+func (r *ProjectsService) ShowEffectiveKeyAccessJustificationsPolicyConfig(project string) *ProjectsShowEffectiveKeyAccessJustificationsPolicyConfigCall {
+	c := &ProjectsShowEffectiveKeyAccessJustificationsPolicyConfigCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.project = project
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsShowEffectiveKeyAccessJustificationsPolicyConfigCall) Fields(s ...googleapi.Field) *ProjectsShowEffectiveKeyAccessJustificationsPolicyConfigCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsShowEffectiveKeyAccessJustificationsPolicyConfigCall) IfNoneMatch(entityTag string) *ProjectsShowEffectiveKeyAccessJustificationsPolicyConfigCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsShowEffectiveKeyAccessJustificationsPolicyConfigCall) Context(ctx context.Context) *ProjectsShowEffectiveKeyAccessJustificationsPolicyConfigCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsShowEffectiveKeyAccessJustificationsPolicyConfigCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsShowEffectiveKeyAccessJustificationsPolicyConfigCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+project}:showEffectiveKeyAccessJustificationsPolicyConfig")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"project": c.project,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "cloudkms.projects.showEffectiveKeyAccessJustificationsPolicyConfig", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "cloudkms.projects.showEffectiveKeyAccessJustificationsPolicyConfig" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *ShowEffectiveKeyAccessJustificationsPolicyConfigResponse.ServerResponse.Head
+// er or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsShowEffectiveKeyAccessJustificationsPolicyConfigCall) Do(opts ...googleapi.CallOption) (*ShowEffectiveKeyAccessJustificationsPolicyConfigResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ShowEffectiveKeyAccessJustificationsPolicyConfigResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "cloudkms.projects.showEffectiveKeyAccessJustificationsPolicyConfig", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsUpdateKajPolicyConfigCall struct {
+	s                                   *Service
+	name                                string
+	keyaccessjustificationspolicyconfig *KeyAccessJustificationsPolicyConfig
+	urlParams_                          gensupport.URLParams
+	ctx_                                context.Context
+	header_                             http.Header
+}
+
+// UpdateKajPolicyConfig: Updates the KeyAccessJustificationsPolicyConfig for a
+// given organization/folder/projects.
+//
+//   - name: Identifier. The resource name for this
+//     KeyAccessJustificationsPolicyConfig in the format of
+//     "{organizations|folders|projects}/*/kajPolicyConfig".
+func (r *ProjectsService) UpdateKajPolicyConfig(name string, keyaccessjustificationspolicyconfig *KeyAccessJustificationsPolicyConfig) *ProjectsUpdateKajPolicyConfigCall {
+	c := &ProjectsUpdateKajPolicyConfigCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.keyaccessjustificationspolicyconfig = keyaccessjustificationspolicyconfig
+	return c
+}
+
+// UpdateMask sets the optional parameter "updateMask": The list of fields to
+// update.
+func (c *ProjectsUpdateKajPolicyConfigCall) UpdateMask(updateMask string) *ProjectsUpdateKajPolicyConfigCall {
+	c.urlParams_.Set("updateMask", updateMask)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsUpdateKajPolicyConfigCall) Fields(s ...googleapi.Field) *ProjectsUpdateKajPolicyConfigCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsUpdateKajPolicyConfigCall) Context(ctx context.Context) *ProjectsUpdateKajPolicyConfigCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsUpdateKajPolicyConfigCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsUpdateKajPolicyConfigCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.keyaccessjustificationspolicyconfig)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PATCH", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "cloudkms.projects.updateKajPolicyConfig", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "cloudkms.projects.updateKajPolicyConfig" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *KeyAccessJustificationsPolicyConfig.ServerResponse.Header or (if a response
+// was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsUpdateKajPolicyConfigCall) Do(opts ...googleapi.CallOption) (*KeyAccessJustificationsPolicyConfig, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &KeyAccessJustificationsPolicyConfig{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "cloudkms.projects.updateKajPolicyConfig", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 

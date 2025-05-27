@@ -2464,6 +2464,8 @@ type EnrollBareMetalClusterRequest struct {
 	// Otherwise, it must match the object name of the bare metal cluster custom
 	// resource. It is not modifiable outside / beyond the enrollment operation.
 	LocalName string `json:"localName,omitempty"`
+	// LocalNamespace: Optional. The namespace of the cluster.
+	LocalNamespace string `json:"localNamespace,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AdminClusterMembership") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -3934,6 +3936,8 @@ type VmwareAdminCluster struct {
 	// configuration. It should always be enabled by the Central API, instead of
 	// letting users set it.
 	PreparedSecrets *VmwareAdminPreparedSecretsConfig `json:"preparedSecrets,omitempty"`
+	// PrivateRegistryConfig: Configuration for registry.
+	PrivateRegistryConfig *VmwareAdminPrivateRegistryConfig `json:"privateRegistryConfig,omitempty"`
 	// Reconciling: Output only. If set, there are currently changes in flight to
 	// the VMware admin cluster.
 	Reconciling bool `json:"reconciling,omitempty"`
@@ -4217,6 +4221,34 @@ type VmwareAdminPreparedSecretsConfig struct {
 
 func (s VmwareAdminPreparedSecretsConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod VmwareAdminPreparedSecretsConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// VmwareAdminPrivateRegistryConfig: VmwareAdminPrivateRegistryConfig
+// represents configuration for admin cluster registry.
+type VmwareAdminPrivateRegistryConfig struct {
+	// Address: The registry address.
+	Address string `json:"address,omitempty"`
+	// CaCert: When the container runtime pulls an image from private registry, the
+	// registry must prove its identity by presenting a certificate. The registry's
+	// certificate is signed by a certificate authority (CA). The container runtime
+	// uses the CA's certificate to validate the registry's certificate.
+	CaCert string `json:"caCert,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Address") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Address") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s VmwareAdminPrivateRegistryConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod VmwareAdminPrivateRegistryConfig
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 

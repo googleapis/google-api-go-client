@@ -837,6 +837,25 @@ func (s ConnectivityTest) MarshalJSON() ([]byte, error) {
 
 // DeliverInfo: Details of the final state "deliver" and associated resource.
 type DeliverInfo struct {
+	// GoogleServiceType: Recognized type of a Google Service the packet is
+	// delivered to (if applicable).
+	//
+	// Possible values:
+	//   "GOOGLE_SERVICE_TYPE_UNSPECIFIED" - Unspecified Google Service.
+	//   "IAP" - Identity aware proxy.
+	// https://cloud.google.com/iap/docs/using-tcp-forwarding
+	//   "GFE_PROXY_OR_HEALTH_CHECK_PROBER" - One of two services sharing IP
+	// ranges: * Load Balancer proxy * Centralized Health Check prober
+	// https://cloud.google.com/load-balancing/docs/firewall-rules
+	//   "CLOUD_DNS" - Connectivity from Cloud DNS to forwarding targets or
+	// alternate name servers that use private routing.
+	// https://cloud.google.com/dns/docs/zones/forwarding-zones#firewall-rules
+	// https://cloud.google.com/dns/docs/policies#firewall-rules
+	//   "PRIVATE_GOOGLE_ACCESS" - private.googleapis.com and
+	// restricted.googleapis.com
+	//   "SERVERLESS_VPC_ACCESS" - Google API via Serverless VPC Access.
+	// https://cloud.google.com/vpc/docs/serverless-vpc-access
+	GoogleServiceType string `json:"googleServiceType,omitempty"`
 	// IpAddress: IP address of the target (if applicable).
 	IpAddress string `json:"ipAddress,omitempty"`
 	// PscGoogleApiTarget: PSC Google API target the packet is delivered to (if
@@ -881,15 +900,15 @@ type DeliverInfo struct {
 	//   "REDIS_INSTANCE" - Target is a Redis Instance.
 	//   "REDIS_CLUSTER" - Target is a Redis Cluster.
 	Target string `json:"target,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "IpAddress") to
+	// ForceSendFields is a list of field names (e.g. "GoogleServiceType") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "IpAddress") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
+	// NullFields is a list of field names (e.g. "GoogleServiceType") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -966,7 +985,10 @@ type DropInfo struct {
 	// forwarding rule type is invalid (it's not a forwarding rule of the internal
 	// passthrough load balancer).
 	//   "NO_ROUTE_FROM_INTERNET_TO_PRIVATE_IPV6_ADDRESS" - Packet is sent from the
-	// Internet to the private IPv6 address.
+	// Internet or Google service to the private IPv6 address.
+	//   "NO_ROUTE_FROM_EXTERNAL_IPV6_SOURCE_TO_PRIVATE_IPV6_ADDRESS" - Packet is
+	// sent from the external IPv6 source address of an instance to the private
+	// IPv6 address of an instance.
 	//   "VPN_TUNNEL_LOCAL_SELECTOR_MISMATCH" - The packet does not match a
 	// policy-based VPN tunnel local selector.
 	//   "VPN_TUNNEL_REMOTE_SELECTOR_MISMATCH" - The packet does not match a
@@ -1169,6 +1191,9 @@ type DropInfo struct {
 	//   "LOAD_BALANCER_BACKEND_IP_VERSION_MISMATCH" - Packet is dropped due to
 	// being sent to a backend of a passthrough load balancer that doesn't use the
 	// same IP version as the frontend.
+	//   "NO_KNOWN_ROUTE_FROM_NCC_NETWORK_TO_DESTINATION" - Packet from the unknown
+	// NCC network is dropped due to no known route from the source network to the
+	// destination IP address.
 	Cause string `json:"cause,omitempty"`
 	// DestinationIp: Destination IP address of the dropped packet (if relevant).
 	DestinationIp string `json:"destinationIp,omitempty"`
@@ -2166,7 +2191,7 @@ func (s NatInfo) MarshalJSON() ([]byte, error) {
 }
 
 // NetworkInfo: For display only. Metadata associated with a Compute Engine
-// network. Next ID: 7
+// network.
 type NetworkInfo struct {
 	// DisplayName: Name of a Compute Engine network.
 	DisplayName string `json:"displayName,omitempty"`

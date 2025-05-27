@@ -1646,10 +1646,10 @@ type GoogleCloudApihubV1Deployment struct {
 	// Name: Identifier. The name of the deployment. Format:
 	// `projects/{project}/locations/{location}/deployments/{deployment}`
 	Name string `json:"name,omitempty"`
-	// ResourceUri: Required. A URI to the runtime resource. This URI can be used
-	// to manage the resource. For example, if the runtime resource is of type
-	// APIGEE_PROXY, then this field will contain the URI to the management UI of
-	// the proxy.
+	// ResourceUri: Required. A uri that uniquely identfies the deployment within a
+	// particular gateway. For example, if the runtime resource is of type
+	// APIGEE_PROXY, then this field will be a combination of org, proxy name and
+	// environment.
 	ResourceUri string `json:"resourceUri,omitempty"`
 	// Slo: Optional. The SLO for this deployment. This maps to the following
 	// system defined attribute:

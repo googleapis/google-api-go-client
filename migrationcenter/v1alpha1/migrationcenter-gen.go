@@ -2662,8 +2662,6 @@ type DiskEntry struct {
 	TotalCapacityBytes int64 `json:"totalCapacityBytes,omitempty,string"`
 	// TotalFreeBytes: Disk free space.
 	TotalFreeBytes int64 `json:"totalFreeBytes,omitempty,string"`
-	// VmwareConfig: VMware disk details. Deprecated
-	VmwareConfig *VmwareDiskConfig `json:"vmwareConfig,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "DiskLabel") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -7652,47 +7650,6 @@ func (s *VirtualMachinePreferencesSizingOptimizationCustomParameters) UnmarshalJ
 	}
 	s.StorageMultiplier = float64(s1.StorageMultiplier)
 	return nil
-}
-
-// VmwareDiskConfig: VMware disk config details.
-type VmwareDiskConfig struct {
-	// BackingType: VMDK backing type.
-	//
-	// Possible values:
-	//   "BACKING_TYPE_UNSPECIFIED" - Default value.
-	//   "BACKING_TYPE_FLAT_V1" - Flat v1.
-	//   "BACKING_TYPE_FLAT_V2" - Flat v2.
-	//   "BACKING_TYPE_PMEM" - Persistent memory, also known as Non-Volatile Memory
-	// (NVM).
-	//   "BACKING_TYPE_RDM_V1" - Raw Disk Memory v1.
-	//   "BACKING_TYPE_RDM_V2" - Raw Disk Memory v2.
-	//   "BACKING_TYPE_SESPARSE" - SEsparse is a snapshot format introduced in
-	// vSphere 5.5 for large disks.
-	//   "BACKING_TYPE_SESPARSE_V1" - SEsparse v1.
-	//   "BACKING_TYPE_SESPARSE_V2" - SEsparse v1.
-	BackingType string `json:"backingType,omitempty"`
-	// RdmCompatibilityMode: RDM compatibility mode.
-	RdmCompatibilityMode string `json:"rdmCompatibilityMode,omitempty"`
-	// Shared: Is VMDK shared with other VMs.
-	Shared bool `json:"shared,omitempty"`
-	// VmdkDiskMode: VMDK disk mode.
-	VmdkDiskMode string `json:"vmdkDiskMode,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "BackingType") to
-	// unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
-	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "BackingType") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
-	NullFields []string `json:"-"`
-}
-
-func (s VmwareDiskConfig) MarshalJSON() ([]byte, error) {
-	type NoMethod VmwareDiskConfig
-	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // VmwareEngineMigrationTarget: VMWare engine migration target.

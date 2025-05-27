@@ -2981,8 +2981,14 @@ type GooglePrivacyDlpV2DataProfileFinding struct {
 	// DataProfileResourceName: Resource name of the data profile associated with
 	// the finding.
 	DataProfileResourceName string `json:"dataProfileResourceName,omitempty"`
+	// DataSourceType: The type of the resource that was profiled.
+	DataSourceType *GooglePrivacyDlpV2DataSourceType `json:"dataSourceType,omitempty"`
 	// FindingId: A unique identifier for the finding.
 	FindingId string `json:"findingId,omitempty"`
+	// FullResourceName: The full resource name
+	// (https://cloud.google.com/apis/design/resource_names#full_resource_name) of
+	// the resource profiled for this finding.
+	FullResourceName string `json:"fullResourceName,omitempty"`
 	// Infotype: The type of content
 	// (https://cloud.google.com/sensitive-data-protection/docs/infotypes-reference)
 	// that might have been found.

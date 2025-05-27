@@ -502,7 +502,7 @@ type AddSplitPointsRequest struct {
 	// Initiator: Optional. A user-supplied tag associated with the split points.
 	// For example, "initial_data_load", "special_event_1". Defaults to
 	// "CloudAddSplitPointsAPI" if not specified. The length of the tag must not
-	// exceed 50 characters,else will be trimmed. Only valid UTF8 characters are
+	// exceed 50 characters, or else it is trimmed. Only valid UTF8 characters are
 	// allowed.
 	Initiator string `json:"initiator,omitempty"`
 	// SplitPoints: Required. The split points to add.
@@ -2118,6 +2118,41 @@ func (s Database) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// DatabaseMoveConfig: The configuration for each database in the target
+// instance configuration.
+type DatabaseMoveConfig struct {
+	// DatabaseId: Required. The unique identifier of the database resource in the
+	// Instance. For example if the database uri is
+	// projects/foo/instances/bar/databases/baz, the id to supply here is baz.
+	DatabaseId string `json:"databaseId,omitempty"`
+	// EncryptionConfig: Optional. Encryption configuration to be used for the
+	// database in target configuration. Should be specified for every database
+	// which currently uses CMEK encryption. If a database currently uses
+	// GOOGLE_MANAGED encryption and a target encryption config is not specified,
+	// it defaults to GOOGLE_MANAGED. If a database currently uses Google-managed
+	// encryption and a target encryption config is specified, the request is
+	// rejected. If a database currently uses CMEK encryption, a target encryption
+	// config must be specified. You cannot move a CMEK database to a
+	// Google-managed encryption database by MoveInstance.
+	EncryptionConfig *InstanceEncryptionConfig `json:"encryptionConfig,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "DatabaseId") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DatabaseId") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s DatabaseMoveConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod DatabaseMoveConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // DatabaseRole: A Cloud Spanner database role.
 type DatabaseRole struct {
 	// Name: Required. The name of the database role. Values are of the form
@@ -3243,6 +3278,50 @@ func (s InstanceConfig) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// InstanceEncryptionConfig: Encryption configuration for a Cloud Spanner
+// database.
+type InstanceEncryptionConfig struct {
+	// KmsKeyName: Optional. This field is maintained for backwards compatibility.
+	// For new callers, we recommend using `kms_key_names` to specify the KMS key.
+	// `kms_key_name` should only be used if the location of the KMS key matches
+	// the database instance’s configuration (location) exactly. E.g. The KMS
+	// location is in us-central1 or nam3 and the database instance is also in
+	// us-central1 or nam3. The Cloud KMS key to be used for encrypting and
+	// decrypting the database. Values are of the form
+	// `projects//locations//keyRings//cryptoKeys/`.
+	KmsKeyName string `json:"kmsKeyName,omitempty"`
+	// KmsKeyNames: Optional. Specifies the KMS configuration for one or more keys
+	// used to encrypt the database. Values are of the form
+	// `projects//locations//keyRings//cryptoKeys/`. The keys referenced by
+	// `kms_key_names` must fully cover all regions of the database's instance
+	// configuration. Some examples: * For regional (single-region) instance
+	// configurations, specify a regional location KMS key. * For multi-region
+	// instance configurations of type `GOOGLE_MANAGED`, either specify a
+	// multi-region location KMS key or multiple regional location KMS keys that
+	// cover all regions in the instance configuration. * For an instance
+	// configuration of type `USER_MANAGED`, specify only regional location KMS
+	// keys to cover each region in the instance configuration. Multi-region
+	// location KMS keys aren't supported for `USER_MANAGED` type instance
+	// configurations.
+	KmsKeyNames []string `json:"kmsKeyNames,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "KmsKeyName") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "KmsKeyName") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s InstanceEncryptionConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod InstanceEncryptionConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // InstanceOperationProgress: Encapsulates progress related information for a
 // Cloud Spanner long running instance operations.
 type InstanceOperationProgress struct {
@@ -4181,6 +4260,9 @@ type MoveInstanceRequest struct {
 	// TargetConfig: Required. The target instance configuration where to move the
 	// instance. Values are of the form `projects//instanceConfigs/`.
 	TargetConfig string `json:"targetConfig,omitempty"`
+	// TargetDatabaseMoveConfigs: Optional. The configuration for each database in
+	// the target instance configuration.
+	TargetDatabaseMoveConfigs []*DatabaseMoveConfig `json:"targetDatabaseMoveConfigs,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "TargetConfig") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -5046,7 +5128,7 @@ type ReadOnly struct {
 	// ReadTimestamp: Executes all reads at the given timestamp. Unlike other
 	// modes, reads at a specific timestamp are repeatable; the same read at the
 	// same timestamp always returns the same data. If the timestamp is in the
-	// future, the read will block until the specified timestamp, modulo the read's
+	// future, the read is blocked until the specified timestamp, modulo the read's
 	// deadline. Useful for large scale consistent reads such as mapreduces, or for
 	// coordinating many reads against a consistent snapshot of the data. A
 	// timestamp in RFC3339 UTC \"Zulu\" format, accurate to nanoseconds. Example:
@@ -5896,7 +5978,7 @@ func (s SingleRegionQuorum) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// SplitPoints: The split points of a table/index.
+// SplitPoints: The split points of a table or an index.
 type SplitPoints struct {
 	// ExpireTime: Optional. The expiration timestamp of the split points. A
 	// timestamp in the past means immediate expiration. The maximum value can be
@@ -5905,7 +5987,7 @@ type SplitPoints struct {
 	// Index: The index to split. If specified, the `table` field must refer to the
 	// index's base table.
 	Index string `json:"index,omitempty"`
-	// Keys: Required. The list of split keys, i.e., the split boundaries.
+	// Keys: Required. The list of split keys. In essence, the split boundaries.
 	Keys []*Key `json:"keys,omitempty"`
 	// Table: The table to split.
 	Table string `json:"table,omitempty"`
@@ -6082,7 +6164,7 @@ type Transaction struct {
 	// not have IDs, because single-use transactions do not support multiple
 	// requests.
 	Id string `json:"id,omitempty"`
-	// PrecommitToken: A precommit token will be included in the response of a
+	// PrecommitToken: A precommit token is included in the response of a
 	// BeginTransaction request if the read-write transaction is on a multiplexed
 	// session and a mutation_key was specified in the BeginTransaction. The
 	// precommit token with the highest sequence number from this transaction
@@ -6128,15 +6210,15 @@ func (s Transaction) MarshalJSON() ([]byte, error) {
 // read-only. Snapshot read-only transactions provide guaranteed consistency
 // across several reads, but do not allow writes. Snapshot read-only
 // transactions can be configured to read at timestamps in the past, or
-// configured to perform a strong read (where Spanner will select a timestamp
-// such that the read is guaranteed to see the effects of all transactions that
-// have committed before the start of the read). Snapshot read-only
-// transactions do not need to be committed. Queries on change streams must be
-// performed with the snapshot read-only transaction mode, specifying a strong
-// read. See TransactionOptions.ReadOnly.strong for more details. 3.
-// Partitioned DML. This type of transaction is used to execute a single
-// Partitioned DML statement. Partitioned DML partitions the key space and runs
-// the DML statement over each partition in parallel using separate, internal
+// configured to perform a strong read (where Spanner selects a timestamp such
+// that the read is guaranteed to see the effects of all transactions that have
+// committed before the start of the read). Snapshot read-only transactions do
+// not need to be committed. Queries on change streams must be performed with
+// the snapshot read-only transaction mode, specifying a strong read. See
+// TransactionOptions.ReadOnly.strong for more details. 3. Partitioned DML.
+// This type of transaction is used to execute a single Partitioned DML
+// statement. Partitioned DML partitions the key space and runs the DML
+// statement over each partition in parallel using separate, internal
 // transactions that commit independently. Partitioned DML transactions do not
 // need to be committed. For transactions that only read, snapshot read-only
 // transactions provide simpler semantics and are almost always faster. In
@@ -6183,50 +6265,50 @@ func (s Transaction) MarshalJSON() ([]byte, error) {
 // transaction is considered idle if it has no outstanding reads or SQL queries
 // and has not started a read or SQL query within the last 10 seconds. Idle
 // transactions can be aborted by Cloud Spanner so that they don't hold on to
-// locks indefinitely. If an idle transaction is aborted, the commit will fail
-// with error `ABORTED`. If this behavior is undesirable, periodically
-// executing a simple SQL query in the transaction (for example, `SELECT 1`)
-// prevents the transaction from becoming idle. Snapshot read-only
-// transactions: Snapshot read-only transactions provides a simpler method than
-// locking read-write transactions for doing several consistent reads. However,
-// this type of transaction does not support writes. Snapshot transactions do
-// not take locks. Instead, they work by choosing a Cloud Spanner timestamp,
-// then executing all reads at that timestamp. Since they do not acquire locks,
-// they do not block concurrent read-write transactions. Unlike locking
-// read-write transactions, snapshot read-only transactions never abort. They
-// can fail if the chosen read timestamp is garbage collected; however, the
-// default garbage collection policy is generous enough that most applications
-// do not need to worry about this in practice. Snapshot read-only transactions
-// do not need to call Commit or Rollback (and in fact are not permitted to do
-// so). To execute a snapshot transaction, the client specifies a timestamp
-// bound, which tells Cloud Spanner how to choose a read timestamp. The types
-// of timestamp bound are: - Strong (the default). - Bounded staleness. - Exact
-// staleness. If the Cloud Spanner database to be read is geographically
-// distributed, stale read-only transactions can execute more quickly than
-// strong or read-write transactions, because they are able to execute far from
-// the leader replica. Each type of timestamp bound is discussed in detail
-// below. Strong: Strong reads are guaranteed to see the effects of all
-// transactions that have committed before the start of the read. Furthermore,
-// all rows yielded by a single read are consistent with each other -- if any
-// part of the read observes a transaction, all parts of the read see the
-// transaction. Strong reads are not repeatable: two consecutive strong
-// read-only transactions might return inconsistent results if there are
-// concurrent writes. If consistency across reads is required, the reads should
-// be executed within a transaction or at an exact read timestamp. Queries on
-// change streams (see below for more details) must also specify the strong
-// read timestamp bound. See TransactionOptions.ReadOnly.strong. Exact
-// staleness: These timestamp bounds execute reads at a user-specified
-// timestamp. Reads at a timestamp are guaranteed to see a consistent prefix of
-// the global transaction history: they observe modifications done by all
-// transactions with a commit timestamp less than or equal to the read
-// timestamp, and observe none of the modifications done by transactions with a
-// larger commit timestamp. They will block until all conflicting transactions
-// that may be assigned commit timestamps <= the read timestamp have finished.
-// The timestamp can either be expressed as an absolute Cloud Spanner commit
-// timestamp or a staleness relative to the current time. These modes do not
-// require a "negotiation phase" to pick a timestamp. As a result, they execute
-// slightly faster than the equivalent boundedly stale concurrency modes. On
-// the other hand, boundedly stale reads usually return fresher results. See
+// locks indefinitely. If an idle transaction is aborted, the commit fails with
+// error `ABORTED`. If this behavior is undesirable, periodically executing a
+// simple SQL query in the transaction (for example, `SELECT 1`) prevents the
+// transaction from becoming idle. Snapshot read-only transactions: Snapshot
+// read-only transactions provides a simpler method than locking read-write
+// transactions for doing several consistent reads. However, this type of
+// transaction does not support writes. Snapshot transactions do not take
+// locks. Instead, they work by choosing a Cloud Spanner timestamp, then
+// executing all reads at that timestamp. Since they do not acquire locks, they
+// do not block concurrent read-write transactions. Unlike locking read-write
+// transactions, snapshot read-only transactions never abort. They can fail if
+// the chosen read timestamp is garbage collected; however, the default garbage
+// collection policy is generous enough that most applications do not need to
+// worry about this in practice. Snapshot read-only transactions do not need to
+// call Commit or Rollback (and in fact are not permitted to do so). To execute
+// a snapshot transaction, the client specifies a timestamp bound, which tells
+// Cloud Spanner how to choose a read timestamp. The types of timestamp bound
+// are: - Strong (the default). - Bounded staleness. - Exact staleness. If the
+// Cloud Spanner database to be read is geographically distributed, stale
+// read-only transactions can execute more quickly than strong or read-write
+// transactions, because they are able to execute far from the leader replica.
+// Each type of timestamp bound is discussed in detail below. Strong: Strong
+// reads are guaranteed to see the effects of all transactions that have
+// committed before the start of the read. Furthermore, all rows yielded by a
+// single read are consistent with each other -- if any part of the read
+// observes a transaction, all parts of the read see the transaction. Strong
+// reads are not repeatable: two consecutive strong read-only transactions
+// might return inconsistent results if there are concurrent writes. If
+// consistency across reads is required, the reads should be executed within a
+// transaction or at an exact read timestamp. Queries on change streams (see
+// below for more details) must also specify the strong read timestamp bound.
+// See TransactionOptions.ReadOnly.strong. Exact staleness: These timestamp
+// bounds execute reads at a user-specified timestamp. Reads at a timestamp are
+// guaranteed to see a consistent prefix of the global transaction history:
+// they observe modifications done by all transactions with a commit timestamp
+// less than or equal to the read timestamp, and observe none of the
+// modifications done by transactions with a larger commit timestamp. They
+// block until all conflicting transactions that can be assigned commit
+// timestamps <= the read timestamp have finished. The timestamp can either be
+// expressed as an absolute Cloud Spanner commit timestamp or a staleness
+// relative to the current time. These modes do not require a "negotiation
+// phase" to pick a timestamp. As a result, they execute slightly faster than
+// the equivalent boundedly stale concurrency modes. On the other hand,
+// boundedly stale reads usually return fresher results. See
 // TransactionOptions.ReadOnly.read_timestamp and
 // TransactionOptions.ReadOnly.exact_staleness. Bounded staleness: Bounded
 // staleness modes allow Cloud Spanner to pick the read timestamp, subject to a
@@ -6244,17 +6326,17 @@ func (s Transaction) MarshalJSON() ([]byte, error) {
 // comparable exact staleness reads. However, they are typically able to return
 // fresher results, and are more likely to execute at the closest replica.
 // Because the timestamp negotiation requires up-front knowledge of which rows
-// will be read, it can only be used with single-use read-only transactions.
-// See TransactionOptions.ReadOnly.max_staleness and
+// are read, it can only be used with single-use read-only transactions. See
+// TransactionOptions.ReadOnly.max_staleness and
 // TransactionOptions.ReadOnly.min_read_timestamp. Old read timestamps and
 // garbage collection: Cloud Spanner continuously garbage collects deleted and
 // overwritten data in the background to reclaim storage space. This process is
 // known as "version GC". By default, version GC reclaims versions after they
-// are one hour old. Because of this, Cloud Spanner cannot perform reads at
-// read timestamps more than one hour in the past. This restriction also
-// applies to in-progress reads and/or SQL queries whose timestamp become too
-// old while executing. Reads and SQL queries with too-old read timestamps fail
-// with the error `FAILED_PRECONDITION`. You can configure and extend the
+// are one hour old. Because of this, Cloud Spanner can't perform reads at read
+// timestamps more than one hour in the past. This restriction also applies to
+// in-progress reads and/or SQL queries whose timestamp become too old while
+// executing. Reads and SQL queries with too-old read timestamps fail with the
+// error `FAILED_PRECONDITION`. You can configure and extend the
 // `VERSION_RETENTION_PERIOD` of a database up to a period as long as one week,
 // which allows Cloud Spanner to perform reads up to one week in the past.
 // Querying change Streams: A Change Stream is a schema object that can be
@@ -6271,11 +6353,11 @@ func (s Transaction) MarshalJSON() ([]byte, error) {
 // retention period is accessible using the strong read-only timestamp_bound.
 // All other TransactionOptions are invalid for change stream queries. In
 // addition, if TransactionOptions.read_only.return_read_timestamp is set to
-// true, a special value of 2^63 - 2 will be returned in the Transaction
-// message that describes the transaction, instead of a valid read timestamp.
-// This special value should be discarded and not used for any subsequent
-// queries. Please see https://cloud.google.com/spanner/docs/change-streams for
-// more details on how to query the change stream TVFs. Partitioned DML
+// true, a special value of 2^63 - 2 is returned in the Transaction message
+// that describes the transaction, instead of a valid read timestamp. This
+// special value should be discarded and not used for any subsequent queries.
+// Please see https://cloud.google.com/spanner/docs/change-streams for more
+// details on how to query the change stream TVFs. Partitioned DML
 // transactions: Partitioned DML transactions are used to execute DML
 // statements with a different execution strategy that provides different, and
 // often better, scalability properties for large, table-wide operations than
@@ -6307,7 +6389,7 @@ func (s Transaction) MarshalJSON() ([]byte, error) {
 // Partitioned DML transactions may only contain the execution of a single DML
 // statement via ExecuteSql or ExecuteStreamingSql. - If any error is
 // encountered during the execution of the partitioned DML operation (for
-// instance, a UNIQUE INDEX violation, division by zero, or a value that cannot
+// instance, a UNIQUE INDEX violation, division by zero, or a value that can't
 // be stored due to schema constraints), then the operation is stopped at that
 // point and an error is returned. It is possible that at this point, some
 // partitions have been committed (or even committed multiple times), and other
@@ -6316,16 +6398,16 @@ func (s Transaction) MarshalJSON() ([]byte, error) {
 // deleting old rows from a very large table.
 type TransactionOptions struct {
 	// ExcludeTxnFromChangeStreams: When `exclude_txn_from_change_streams` is set
-	// to `true`: * Modifications from this transaction will not be recorded in
-	// change streams with DDL option `allow_txn_exclusion=true` that are tracking
-	// columns modified by these transactions. * Modifications from this
-	// transaction will be recorded in change streams with DDL option
-	// `allow_txn_exclusion=false or not set` that are tracking columns modified by
-	// these transactions. When `exclude_txn_from_change_streams` is set to `false`
-	// or not set, Modifications from this transaction will be recorded in all
-	// change streams that are tracking columns modified by these transactions.
-	// `exclude_txn_from_change_streams` may only be specified for read-write or
-	// partitioned-dml transactions, otherwise the API will return an
+	// to `true`, it prevents read or write transactions from being tracked in
+	// change streams. * If the DDL option `allow_txn_exclusion` is set to `true`,
+	// then the updates made within this transaction aren't recorded in the change
+	// stream. * If you don't set the DDL option `allow_txn_exclusion` or if it's
+	// set to `false`, then the updates made within this transaction are recorded
+	// in the change stream. When `exclude_txn_from_change_streams` is set to
+	// `false` or not set, modifications from this transaction are recorded in all
+	// change streams that are tracking columns modified by these transactions. The
+	// `exclude_txn_from_change_streams` option can only be specified for
+	// read-write or partitioned DML transactions, otherwise the API returns an
 	// `INVALID_ARGUMENT` error.
 	ExcludeTxnFromChangeStreams bool `json:"excludeTxnFromChangeStreams,omitempty"`
 	// IsolationLevel: Isolation level for the transaction.
@@ -6341,10 +6423,10 @@ type TransactionOptions struct {
 	// called external consistency. For further details, please refer to
 	// https://cloud.google.com/spanner/docs/true-time-external-consistency#serializability.
 	//   "REPEATABLE_READ" - All reads performed during the transaction observe a
-	// consistent snapshot of the database, and the transaction will only
-	// successfully commit in the absence of conflicts between its updates and any
-	// concurrent updates that have occurred since that snapshot. Consequently, in
-	// contrast to `SERIALIZABLE` transactions, only write-write conflicts are
+	// consistent snapshot of the database, and the transaction is only
+	// successfully committed in the absence of conflicts between its updates and
+	// any concurrent updates that have occurred since that snapshot. Consequently,
+	// in contrast to `SERIALIZABLE` transactions, only write-write conflicts are
 	// detected in snapshot transactions. This isolation level does not support
 	// Read-only and Partitioned DML transactions. When `REPEATABLE_READ` is
 	// specified on a read-write transaction, the locking semantics default to
@@ -6355,7 +6437,7 @@ type TransactionOptions struct {
 	// `spanner.databases.beginPartitionedDmlTransaction` permission on the
 	// `session` resource.
 	PartitionedDml *PartitionedDml `json:"partitionedDml,omitempty"`
-	// ReadOnly: Transaction will not write. Authorization to begin a read-only
+	// ReadOnly: Transaction does not write. Authorization to begin a read-only
 	// transaction requires `spanner.databases.beginReadOnlyTransaction` permission
 	// on the `session` resource.
 	ReadOnly *ReadOnly `json:"readOnly,omitempty"`
@@ -11781,11 +11863,11 @@ type ProjectsInstancesDatabasesAddSplitPointsCall struct {
 	header_               http.Header
 }
 
-// AddSplitPoints: Adds split points to specified tables, indexes of a
+// AddSplitPoints: Adds split points to specified tables and indexes of a
 // database.
 //
-//   - database: The database on whose tables/indexes split points are to be
-//     added. Values are of the form `projects//instances//databases/`.
+//   - database: The database on whose tables or indexes the split points are to
+//     be added. Values are of the form `projects//instances//databases/`.
 func (r *ProjectsInstancesDatabasesService) AddSplitPoints(database string, addsplitpointsrequest *AddSplitPointsRequest) *ProjectsInstancesDatabasesAddSplitPointsCall {
 	c := &ProjectsInstancesDatabasesAddSplitPointsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.database = database

@@ -1419,9 +1419,6 @@ type ConnectorVersion struct {
 	// ector}/versions/{version} Only global location is supported for Connector
 	// resource.
 	Name string `json:"name,omitempty"`
-	// PriorityEntityTypes: Optional. The priority entity types for the connector
-	// version.
-	PriorityEntityTypes []*PriorityEntityType `json:"priorityEntityTypes,omitempty"`
 	// ReleaseVersion: Output only. ReleaseVersion of the connector, for example:
 	// "1.0.1-alpha".
 	ReleaseVersion string `json:"releaseVersion,omitempty"`
@@ -5176,35 +5173,6 @@ func (s Policy) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// PriorityEntityType: PriorityEntityType represents an entity type with its
-// associated priority and order.
-type PriorityEntityType struct {
-	// Description: The description of the entity type.
-	Description string `json:"description,omitempty"`
-	// Id: The entity type.
-	Id string `json:"id,omitempty"`
-	// Order: The order of the entity type within its priority group.
-	Order int64 `json:"order,omitempty"`
-	// Priority: The priority of the entity type, such as P0, P1, etc.
-	Priority string `json:"priority,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "Description") to
-	// unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
-	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Description") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
-	NullFields []string `json:"-"`
-}
-
-func (s PriorityEntityType) MarshalJSON() ([]byte, error) {
-	type NoMethod PriorityEntityType
-	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
-}
-
 // Provider: Provider indicates the owner who provides the connectors.
 type Provider struct {
 	// CreateTime: Output only. Created time.
@@ -8139,7 +8107,7 @@ func (r *ProjectsLocationsConnectionsService) Patch(name string, connection *Con
 // connection details: * `description` * `labels` * `connector_version` *
 // `config_variables` * `auth_config` * `destination_configs` * `node_config` *
 // `log_config` * `ssl_config` * `eventing_enablement_type` * `eventing_config`
-// * `auth_override_enabled`
+// * `auth_override_enabled` * `async_operations_enabled`
 func (c *ProjectsLocationsConnectionsPatchCall) UpdateMask(updateMask string) *ProjectsLocationsConnectionsPatchCall {
 	c.urlParams_.Set("updateMask", updateMask)
 	return c
@@ -11533,7 +11501,8 @@ func (r *ProjectsLocationsEndpointAttachmentsService) Create(parent string, endp
 
 // EndpointAttachmentId sets the optional parameter "endpointAttachmentId":
 // Required. Identifier to assign to the EndpointAttachment. Must be unique
-// within scope of the parent resource.
+// within scope of the parent resource. The regex is: `^a-z
+// ([a-z0-9-]{0,61}[a-z0-9])?$`.
 func (c *ProjectsLocationsEndpointAttachmentsCreateCall) EndpointAttachmentId(endpointAttachmentId string) *ProjectsLocationsEndpointAttachmentsCreateCall {
 	c.urlParams_.Set("endpointAttachmentId", endpointAttachmentId)
 	return c
@@ -15405,27 +15374,6 @@ func (r *ProjectsLocationsProvidersConnectorsVersionsService) Get(name string) *
 	return c
 }
 
-// SchemaView sets the optional parameter "schemaView": Enum to control whether
-// schema enrichment related fields should be included in the response.
-//
-// Possible values:
-//
-//	"CONNECTOR_VERSION_SCHEMA_VIEW_UNSPECIFIED" - VIEW_UNSPECIFIED. The unset
-//
-// value. Defaults to BASIC View.
-//
-//	"CONNECTOR_VERSION_SCHEMA_VIEW_BASIC" - Return basic connector version
-//
-// schema.
-//
-//	"CONNECTOR_VERSION_SCHEMA_VIEW_ENRICHED" - Return enriched connector
-//
-// version schema.
-func (c *ProjectsLocationsProvidersConnectorsVersionsGetCall) SchemaView(schemaView string) *ProjectsLocationsProvidersConnectorsVersionsGetCall {
-	c.urlParams_.Set("schemaView", schemaView)
-	return c
-}
-
 // View sets the optional parameter "view": Specifies which fields of the
 // ConnectorVersion are returned in the response. Defaults to `CUSTOMER` view.
 //
@@ -15542,9 +15490,7 @@ type ProjectsLocationsProvidersConnectorsVersionsListCall struct {
 
 // List: Lists Connector Versions in a given project and location.
 //
-//   - parent: Parent resource of the connectors, of the form:
-//     `projects/*/locations/*/providers/*/connectors/*` Only global location is
-//     supported for ConnectorVersion resource.
+// - parent: .
 func (r *ProjectsLocationsProvidersConnectorsVersionsService) List(parent string) *ProjectsLocationsProvidersConnectorsVersionsListCall {
 	c := &ProjectsLocationsProvidersConnectorsVersionsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -15560,27 +15506,6 @@ func (c *ProjectsLocationsProvidersConnectorsVersionsListCall) PageSize(pageSize
 // PageToken sets the optional parameter "pageToken": Page token.
 func (c *ProjectsLocationsProvidersConnectorsVersionsListCall) PageToken(pageToken string) *ProjectsLocationsProvidersConnectorsVersionsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
-	return c
-}
-
-// SchemaView sets the optional parameter "schemaView": Enum to control whether
-// schema enrichment related fields should be included in the response.
-//
-// Possible values:
-//
-//	"CONNECTOR_VERSION_SCHEMA_VIEW_UNSPECIFIED" - VIEW_UNSPECIFIED. The unset
-//
-// value. Defaults to BASIC View.
-//
-//	"CONNECTOR_VERSION_SCHEMA_VIEW_BASIC" - Return basic connector version
-//
-// schema.
-//
-//	"CONNECTOR_VERSION_SCHEMA_VIEW_ENRICHED" - Return enriched connector
-//
-// version schema.
-func (c *ProjectsLocationsProvidersConnectorsVersionsListCall) SchemaView(schemaView string) *ProjectsLocationsProvidersConnectorsVersionsListCall {
-	c.urlParams_.Set("schemaView", schemaView)
 	return c
 }
 

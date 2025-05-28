@@ -3265,7 +3265,9 @@ func (s GoogleCloudRetailV2alphaConversationalSearchResponseFollowupQuestion) Ma
 }
 
 // GoogleCloudRetailV2alphaConversationalSearchResponseFollowupQuestionSuggested
-// Answer: Suggested answers to the follow-up question.
+// Answer: Suggested answers to the follow-up question. If it's numerical
+// attribute, only ProductAttributeInterval will be set. If it's textual
+// attribute, only productAttributeValue will be set.
 type GoogleCloudRetailV2alphaConversationalSearchResponseFollowupQuestionSuggestedAnswer struct {
 	// ProductAttributeValue: Product attribute value, including an attribute key
 	// and an attribute value. Other types can be added here in the future.
@@ -7574,6 +7576,13 @@ type GoogleCloudRetailV2alphaSearchRequest struct {
 	// TileNavigationSpec: Optional. This field specifies tile navigation related
 	// parameters.
 	TileNavigationSpec *GoogleCloudRetailV2alphaSearchRequestTileNavigationSpec `json:"tileNavigationSpec,omitempty"`
+	// UserAttributes: Optional. The user attributes that could be used for
+	// personalization of search results. * Populate at most 100 key-value pairs
+	// per query. * Only supports string keys and repeated string values. *
+	// Duplcate keys are not allowed within a single query. Example:
+	// user_attributes: [ { key: "pets" value { values: "dog" values: "cat" } }, {
+	// key: "state" value { values: "CA" } } ]
+	UserAttributes map[string]GoogleCloudRetailV2alphaStringList `json:"userAttributes,omitempty"`
 	// UserInfo: User information.
 	UserInfo *GoogleCloudRetailV2alphaUserInfo `json:"userInfo,omitempty"`
 	// VariantRollupKeys: The keys to fetch and rollup the matching variant
@@ -8750,6 +8759,28 @@ func (s GoogleCloudRetailV2alphaSetInventoryRequest) MarshalJSON() ([]byte, erro
 // SetInventoryRequest. Currently empty because there is no meaningful response
 // populated from the ProductService.SetInventory method.
 type GoogleCloudRetailV2alphaSetInventoryResponse struct {
+}
+
+// GoogleCloudRetailV2alphaStringList: A list of string values.
+type GoogleCloudRetailV2alphaStringList struct {
+	// Values: String values.
+	Values []string `json:"values,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Values") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Values") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudRetailV2alphaStringList) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudRetailV2alphaStringList
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudRetailV2alphaTile: This field specifies the tile information

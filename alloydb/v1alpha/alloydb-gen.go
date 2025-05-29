@@ -674,6 +674,11 @@ type Cluster struct {
 	// SecondaryConfig: Cross Region replication config specific to SECONDARY
 	// cluster.
 	SecondaryConfig *SecondaryConfig `json:"secondaryConfig,omitempty"`
+	// ServiceAccountEmail: Output only. AlloyDB per-cluster service agent email.
+	// This service account is created per-cluster per-project, and is different
+	// from that of the primary service agent which is created per-project. The
+	// service account naming format is subject to change.
+	ServiceAccountEmail string `json:"serviceAccountEmail,omitempty"`
 	// SslConfig: SSL configuration for this AlloyDB cluster.
 	SslConfig *SslConfig `json:"sslConfig,omitempty"`
 	// State: Output only. The current serving state of the cluster.
@@ -1816,8 +1821,8 @@ func (s InstanceNetworkConfig) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// InstanceUpgradeDetails: Details regarding the upgrade of instaces associated
-// with a cluster.
+// InstanceUpgradeDetails: Details regarding the upgrade of instances
+// associated with a cluster.
 type InstanceUpgradeDetails struct {
 	// InstanceType: Instance type.
 	//

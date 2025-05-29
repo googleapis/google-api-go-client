@@ -1891,6 +1891,39 @@ func (s Encryption) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// Expiration: Expiration holds information about the expiration of a
+// MigratingVm.
+type Expiration struct {
+	// ExpireTime: Output only. Timestamp of when this resource is considered
+	// expired.
+	ExpireTime string `json:"expireTime,omitempty"`
+	// Extendable: Output only. Describes whether the expiration can be extended.
+	Extendable bool `json:"extendable,omitempty"`
+	// ExtensionCount: Output only. The number of times expiration was extended.
+	ExtensionCount int64 `json:"extensionCount,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ExpireTime") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ExpireTime") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s Expiration) MarshalJSON() ([]byte, error) {
+	type NoMethod Expiration
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ExtendMigrationRequest: Request message for 'ExtendMigrationRequest'
+// request.
+type ExtendMigrationRequest struct {
+}
+
 // FetchInventoryResponse: Response message for fetchInventory.
 type FetchInventoryResponse struct {
 	// AwsVms: The description of the VMs in a Source of type AWS.
@@ -2790,6 +2823,9 @@ type MigratingVm struct {
 	// Error: Output only. Provides details on the state of the Migrating VM in
 	// case of an error in replication.
 	Error *Status `json:"error,omitempty"`
+	// Expiration: Output only. Provides details about the expiration state of the
+	// migrating VM.
+	Expiration *Expiration `json:"expiration,omitempty"`
 	// Group: Output only. The group this migrating vm is included in, if any. The
 	// group is represented by the full path of the appropriate Group resource.
 	Group string `json:"group,omitempty"`
@@ -2846,6 +2882,11 @@ type MigratingVm struct {
 	// finalized and no longer consumes billable resources.
 	//   "ERROR" - The replication process encountered an unrecoverable error and
 	// was aborted.
+	//   "EXPIRED" - The migrating VM has passed its expiration date. It might be
+	// possible to bring it back to "Active" state by updating the TTL field. For
+	// more information, see the documentation.
+	//   "FINALIZED_EXPIRED" - The migrating VM's has been finalized and migration
+	// resources have been removed.
 	State string `json:"state,omitempty"`
 	// StateTime: Output only. The last time the migrating VM state was updated.
 	StateTime string `json:"stateTime,omitempty"`
@@ -8218,6 +8259,109 @@ func (c *ProjectsLocationsSourcesMigratingVmsDeleteCall) Do(opts ...googleapi.Ca
 		return nil, err
 	}
 	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "vmmigration.projects.locations.sources.migratingVms.delete", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsSourcesMigratingVmsExtendMigrationCall struct {
+	s                      *Service
+	migratingVm            string
+	extendmigrationrequest *ExtendMigrationRequest
+	urlParams_             gensupport.URLParams
+	ctx_                   context.Context
+	header_                http.Header
+}
+
+// ExtendMigration: Extend the migrating VM time to live.
+//
+// - migratingVm: The name of the MigratingVm.
+func (r *ProjectsLocationsSourcesMigratingVmsService) ExtendMigration(migratingVm string, extendmigrationrequest *ExtendMigrationRequest) *ProjectsLocationsSourcesMigratingVmsExtendMigrationCall {
+	c := &ProjectsLocationsSourcesMigratingVmsExtendMigrationCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.migratingVm = migratingVm
+	c.extendmigrationrequest = extendmigrationrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsSourcesMigratingVmsExtendMigrationCall) Fields(s ...googleapi.Field) *ProjectsLocationsSourcesMigratingVmsExtendMigrationCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsSourcesMigratingVmsExtendMigrationCall) Context(ctx context.Context) *ProjectsLocationsSourcesMigratingVmsExtendMigrationCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsSourcesMigratingVmsExtendMigrationCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsSourcesMigratingVmsExtendMigrationCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.extendmigrationrequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+migratingVm}:extendMigration")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"migratingVm": c.migratingVm,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "vmmigration.projects.locations.sources.migratingVms.extendMigration", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "vmmigration.projects.locations.sources.migratingVms.extendMigration" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsSourcesMigratingVmsExtendMigrationCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "vmmigration.projects.locations.sources.migratingVms.extendMigration", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 

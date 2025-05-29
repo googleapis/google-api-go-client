@@ -4660,6 +4660,11 @@ type NonComplianceDetail struct {
 	// Permissible Usage policy
 	// (https://developers.google.com/android/management/permissible-usage).
 	// nonComplianceReason is set to PROJECT_NOT_PERMITTED.
+	//   "REQUIRED_ACCOUNT_NOT_IN_ENTERPRISE" - Work account required by the
+	// workAccountSetupConfig policy setting is not part of the enterprise anymore.
+	// nonComplianceReason is set to USER_ACTION.
+	//   "NEW_ACCOUNT_NOT_IN_ENTERPRISE" - Work account added by the user is not
+	// part of the enterprise. nonComplianceReason is set to USER_ACTION.
 	SpecificNonComplianceReason string `json:"specificNonComplianceReason,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "CurrentValue") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -5861,6 +5866,10 @@ type Policy struct {
 	WifiConfigDisabled bool `json:"wifiConfigDisabled,omitempty"`
 	// WifiConfigsLockdownEnabled: This is deprecated.
 	WifiConfigsLockdownEnabled bool `json:"wifiConfigsLockdownEnabled,omitempty"`
+	// WorkAccountSetupConfig: Optional. Controls the work account setup
+	// configuration, such as details of whether a Google authenticated account is
+	// required.
+	WorkAccountSetupConfig *WorkAccountSetupConfig `json:"workAccountSetupConfig,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
@@ -7646,6 +7655,45 @@ func (s WipeAction) MarshalJSON() ([]byte, error) {
 // when requested. This could be user initiated or admin initiated e.g. delete
 // was received. Intentionally empty.
 type WipeFailureEvent struct {
+}
+
+// WorkAccountSetupConfig: Controls the work account setup configuration, such
+// as details of whether a Google authenticated account is required.
+type WorkAccountSetupConfig struct {
+	// AuthenticationType: Optional. The authentication type of the user on the
+	// device.
+	//
+	// Possible values:
+	//   "AUTHENTICATION_TYPE_UNSPECIFIED" - Unspecified. Defaults to
+	// AUTHENTICATION_TYPE_NOT_ENFORCED.
+	//   "AUTHENTICATION_TYPE_NOT_ENFORCED" - Authentication status of user on
+	// device is not enforced.
+	//   "GOOGLE_AUTHENTICATED" - Requires device to be managed with a Google
+	// authenticated account.
+	AuthenticationType string `json:"authenticationType,omitempty"`
+	// RequiredAccountEmail: Optional. The specific google work account email
+	// address to be added. This field is only relevant if authenticationType is
+	// GOOGLE_AUTHENTICATED. This must be an enterprise account and not a consumer
+	// account. Once set and a Google authenticated account is added to the device,
+	// changing this field will have no effect, and thus recommended to be set only
+	// once.
+	RequiredAccountEmail string `json:"requiredAccountEmail,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AuthenticationType") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AuthenticationType") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s WorkAccountSetupConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod WorkAccountSetupConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type EnterprisesCreateCall struct {

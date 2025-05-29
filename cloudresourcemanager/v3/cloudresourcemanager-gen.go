@@ -132,6 +132,7 @@ func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, err
 	s.EffectiveTags = NewEffectiveTagsService(s)
 	s.Folders = NewFoldersService(s)
 	s.Liens = NewLiensService(s)
+	s.Locations = NewLocationsService(s)
 	s.Operations = NewOperationsService(s)
 	s.Organizations = NewOrganizationsService(s)
 	s.Projects = NewProjectsService(s)
@@ -167,6 +168,8 @@ type Service struct {
 	Folders *FoldersService
 
 	Liens *LiensService
+
+	Locations *LocationsService
 
 	Operations *OperationsService
 
@@ -224,6 +227,39 @@ func NewLiensService(s *Service) *LiensService {
 }
 
 type LiensService struct {
+	s *Service
+}
+
+func NewLocationsService(s *Service) *LocationsService {
+	rs := &LocationsService{s: s}
+	rs.EffectiveTagBindingCollections = NewLocationsEffectiveTagBindingCollectionsService(s)
+	rs.TagBindingCollections = NewLocationsTagBindingCollectionsService(s)
+	return rs
+}
+
+type LocationsService struct {
+	s *Service
+
+	EffectiveTagBindingCollections *LocationsEffectiveTagBindingCollectionsService
+
+	TagBindingCollections *LocationsTagBindingCollectionsService
+}
+
+func NewLocationsEffectiveTagBindingCollectionsService(s *Service) *LocationsEffectiveTagBindingCollectionsService {
+	rs := &LocationsEffectiveTagBindingCollectionsService{s: s}
+	return rs
+}
+
+type LocationsEffectiveTagBindingCollectionsService struct {
+	s *Service
+}
+
+func NewLocationsTagBindingCollectionsService(s *Service) *LocationsTagBindingCollectionsService {
+	rs := &LocationsTagBindingCollectionsService{s: s}
+	return rs
+}
+
+type LocationsTagBindingCollectionsService struct {
 	s *Service
 }
 
@@ -713,6 +749,44 @@ type EffectiveTag struct {
 
 func (s EffectiveTag) MarshalJSON() ([]byte, error) {
 	type NoMethod EffectiveTag
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// EffectiveTagBindingCollection: Represents a collection of effective tag
+// bindings for a GCP resource.
+type EffectiveTagBindingCollection struct {
+	// EffectiveTags: Tag keys/values effectively bound to this resource, specified
+	// in namespaced format. For example: "123/environment": "production"
+	EffectiveTags map[string]string `json:"effectiveTags,omitempty"`
+	// FullResourceName: The full resource name of the resource the TagBindings are
+	// bound to. E.g. `//cloudresourcemanager.googleapis.com/projects/123`
+	FullResourceName string `json:"fullResourceName,omitempty"`
+	// Name: Identifier. The name of the EffectiveTagBindingCollection, following
+	// the convention:
+	// `locations/{location}/effectiveTagBindingCollections/{encoded-full-resource-n
+	// ame}` where the encoded-full-resource-name is the UTF-8 encoded name of the
+	// GCP resource the TagBindings are bound to. E.g.
+	// "locations/global/effectiveTagBindingCollections/%2f%2fcloudresourcemanager.g
+	// oogleapis.com%2fprojects%2f123"
+	Name string `json:"name,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "EffectiveTags") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "EffectiveTags") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s EffectiveTagBindingCollection) MarshalJSON() ([]byte, error) {
+	type NoMethod EffectiveTagBindingCollection
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -1856,6 +1930,47 @@ func (s TagBinding) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// TagBindingCollection: Represents a collection of tags directly bound to a
+// GCP resource.
+type TagBindingCollection struct {
+	// Etag: Optional. A checksum based on the current bindings which can be passed
+	// to prevent race conditions. This field is always set in server responses.
+	Etag string `json:"etag,omitempty"`
+	// FullResourceName: The full resource name of the resource the TagBindings are
+	// bound to. E.g. `//cloudresourcemanager.googleapis.com/projects/123`
+	FullResourceName string `json:"fullResourceName,omitempty"`
+	// Name: Identifier. The name of the TagBindingCollection, following the
+	// convention:
+	// `locations/{location}/tagBindingCollections/{encoded-full-resource-name}`
+	// where the encoded-full-resource-name is the UTF-8 encoded name of the GCP
+	// resource the TagBindings are bound to.
+	// "locations/global/tagBindingCollections/%2f%2fcloudresourcemanager.googleapis
+	// .com%2fprojects%2f123"
+	Name string `json:"name,omitempty"`
+	// Tags: Tag keys/values directly bound to this resource, specified in
+	// namespaced format. For example: "123/environment": "production"
+	Tags map[string]string `json:"tags,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "Etag") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Etag") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s TagBindingCollection) MarshalJSON() ([]byte, error) {
+	type NoMethod TagBindingCollection
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // TagHold: A TagHold represents the use of a TagValue that is not captured by
 // TagBindings. If a TagValue has any TagHolds, deletion will be blocked. This
 // resource is intended to be created in the same cloud location as the
@@ -1951,7 +2066,7 @@ type TagKey struct {
 	PurposeData map[string]string `json:"purposeData,omitempty"`
 	// ShortName: Required. Immutable. The user friendly name for a TagKey. The
 	// short name should be unique for TagKeys within the same tag namespace. The
-	// short name must be 1-63 characters, beginning and ending with an
+	// short name must be 1-256 characters, beginning and ending with an
 	// alphanumeric character ([a-z0-9A-Z]) with dashes (-), underscores (_), dots
 	// (.), and alphanumerics between.
 	ShortName string `json:"shortName,omitempty"`
@@ -2002,7 +2117,7 @@ type TagValue struct {
 	Parent string `json:"parent,omitempty"`
 	// ShortName: Required. Immutable. User-assigned short name for TagValue. The
 	// short name should be unique for TagValues within the same parent TagKey. The
-	// short name must be 63 characters or less, beginning and ending with an
+	// short name must be 256 characters or less, beginning and ending with an
 	// alphanumeric character ([a-z0-9A-Z]) with dashes (-), underscores (_), dots
 	// (.), and alphanumerics between.
 	ShortName string `json:"shortName,omitempty"`
@@ -4290,6 +4405,353 @@ func (c *LiensListCall) Pages(ctx context.Context, f func(*ListLiensResponse) er
 		}
 		c.PageToken(x.NextPageToken)
 	}
+}
+
+type LocationsEffectiveTagBindingCollectionsGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Returns effective tag bindings on a GCP resource.
+//
+//   - name: The full name of the EffectiveTagBindingCollection in format:
+//     `locations/{location}/effectiveTagBindingCollections/{encoded-full-resource
+//     -name}` where the encoded-full-resource-name is the UTF-8 encoded name of
+//     the resource the TagBindings are bound to. E.g.
+//     "locations/global/effectiveTagBindingCollections/%2f%2fcloudresourcemanager
+//     .googleapis.com%2fprojects%2f123".
+func (r *LocationsEffectiveTagBindingCollectionsService) Get(name string) *LocationsEffectiveTagBindingCollectionsGetCall {
+	c := &LocationsEffectiveTagBindingCollectionsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *LocationsEffectiveTagBindingCollectionsGetCall) Fields(s ...googleapi.Field) *LocationsEffectiveTagBindingCollectionsGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *LocationsEffectiveTagBindingCollectionsGetCall) IfNoneMatch(entityTag string) *LocationsEffectiveTagBindingCollectionsGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *LocationsEffectiveTagBindingCollectionsGetCall) Context(ctx context.Context) *LocationsEffectiveTagBindingCollectionsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *LocationsEffectiveTagBindingCollectionsGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *LocationsEffectiveTagBindingCollectionsGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v3/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "cloudresourcemanager.locations.effectiveTagBindingCollections.get", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "cloudresourcemanager.locations.effectiveTagBindingCollections.get" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *EffectiveTagBindingCollection.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *LocationsEffectiveTagBindingCollectionsGetCall) Do(opts ...googleapi.CallOption) (*EffectiveTagBindingCollection, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &EffectiveTagBindingCollection{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "cloudresourcemanager.locations.effectiveTagBindingCollections.get", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type LocationsTagBindingCollectionsGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Returns tag bindings directly attached to a GCP resource.
+//
+//   - name: The full name of the TagBindingCollection in format:
+//     `locations/{location}/tagBindingCollections/{encoded-full-resource-name}`
+//     where the enoded-full-resource-name is the UTF-8 encoded name of the
+//     resource the TagBindings are bound to. E.g.
+//     "locations/global/tagBindingCollections/%2f%2fcloudresourcemanager.googleap
+//     is.com%2fprojects%2f123".
+func (r *LocationsTagBindingCollectionsService) Get(name string) *LocationsTagBindingCollectionsGetCall {
+	c := &LocationsTagBindingCollectionsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *LocationsTagBindingCollectionsGetCall) Fields(s ...googleapi.Field) *LocationsTagBindingCollectionsGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *LocationsTagBindingCollectionsGetCall) IfNoneMatch(entityTag string) *LocationsTagBindingCollectionsGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *LocationsTagBindingCollectionsGetCall) Context(ctx context.Context) *LocationsTagBindingCollectionsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *LocationsTagBindingCollectionsGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *LocationsTagBindingCollectionsGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v3/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "cloudresourcemanager.locations.tagBindingCollections.get", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "cloudresourcemanager.locations.tagBindingCollections.get" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *TagBindingCollection.ServerResponse.Header or (if a response was returned
+// at all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *LocationsTagBindingCollectionsGetCall) Do(opts ...googleapi.CallOption) (*TagBindingCollection, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &TagBindingCollection{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "cloudresourcemanager.locations.tagBindingCollections.get", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type LocationsTagBindingCollectionsPatchCall struct {
+	s                    *Service
+	name                 string
+	tagbindingcollection *TagBindingCollection
+	urlParams_           gensupport.URLParams
+	ctx_                 context.Context
+	header_              http.Header
+}
+
+// Patch: Updates tag bindings directly attached to a GCP resource. Update_mask
+// can be kept empty or "*".
+//
+//   - name: Identifier. The name of the TagBindingCollection, following the
+//     convention:
+//     `locations/{location}/tagBindingCollections/{encoded-full-resource-name}`
+//     where the encoded-full-resource-name is the UTF-8 encoded name of the GCP
+//     resource the TagBindings are bound to.
+//     "locations/global/tagBindingCollections/%2f%2fcloudresourcemanager.googleap
+//     is.com%2fprojects%2f123".
+func (r *LocationsTagBindingCollectionsService) Patch(name string, tagbindingcollection *TagBindingCollection) *LocationsTagBindingCollectionsPatchCall {
+	c := &LocationsTagBindingCollectionsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.tagbindingcollection = tagbindingcollection
+	return c
+}
+
+// UpdateMask sets the optional parameter "updateMask": An update mask to
+// selectively update fields.
+func (c *LocationsTagBindingCollectionsPatchCall) UpdateMask(updateMask string) *LocationsTagBindingCollectionsPatchCall {
+	c.urlParams_.Set("updateMask", updateMask)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *LocationsTagBindingCollectionsPatchCall) Fields(s ...googleapi.Field) *LocationsTagBindingCollectionsPatchCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *LocationsTagBindingCollectionsPatchCall) Context(ctx context.Context) *LocationsTagBindingCollectionsPatchCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *LocationsTagBindingCollectionsPatchCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *LocationsTagBindingCollectionsPatchCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.tagbindingcollection)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v3/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PATCH", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "cloudresourcemanager.locations.tagBindingCollections.patch", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "cloudresourcemanager.locations.tagBindingCollections.patch" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *LocationsTagBindingCollectionsPatchCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "cloudresourcemanager.locations.tagBindingCollections.patch", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
 }
 
 type OperationsGetCall struct {

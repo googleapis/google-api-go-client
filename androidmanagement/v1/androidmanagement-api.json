@@ -1202,7 +1202,7 @@
       }
     }
   },
-  "revision": "20250515",
+  "revision": "20250527",
   "rootUrl": "https://androidmanagement.googleapis.com/",
   "schemas": {
     "AdbShellCommandEvent": {
@@ -4863,7 +4863,9 @@
             "ONC_WIFI_INVALID_ENTERPRISE_CONFIG",
             "ONC_WIFI_USER_SHOULD_REMOVE_NETWORK",
             "ONC_WIFI_KEY_PAIR_ALIAS_NOT_CORRESPONDING_TO_EXISTING_KEY",
-            "PERMISSIBLE_USAGE_RESTRICTION"
+            "PERMISSIBLE_USAGE_RESTRICTION",
+            "REQUIRED_ACCOUNT_NOT_IN_ENTERPRISE",
+            "NEW_ACCOUNT_NOT_IN_ENTERPRISE"
           ],
           "enumDescriptions": [
             "Specific non-compliance reason is not specified. Fields in specific_non_compliance_context are not set.",
@@ -4875,7 +4877,9 @@
             "The enterprise Wi-Fi network is missing either the root CA or domain name. nonComplianceReason is set to INVALID_VALUE.",
             "User needs to remove the configured Wi-Fi network manually. This is applicable only on work profiles on personally-owned devices. nonComplianceReason is set to USER_ACTION.",
             "Key pair alias specified via ClientCertKeyPairAlias (https://chromium.googlesource.com/chromium/src/+/main/components/onc/docs/onc_spec.md#eap-type) field in openNetworkConfiguration does not correspond to an existing key installed on the device. nonComplianceReason is set to INVALID_VALUE.",
-            "This policy setting is restricted and cannot be set for this Google Cloud Platform project. More details (including how to enable usage of this policy setting) are available in the Permissible Usage policy (https://developers.google.com/android/management/permissible-usage). nonComplianceReason is set to PROJECT_NOT_PERMITTED."
+            "This policy setting is restricted and cannot be set for this Google Cloud Platform project. More details (including how to enable usage of this policy setting) are available in the Permissible Usage policy (https://developers.google.com/android/management/permissible-usage). nonComplianceReason is set to PROJECT_NOT_PERMITTED.",
+            "Work account required by the workAccountSetupConfig policy setting is not part of the enterprise anymore. nonComplianceReason is set to USER_ACTION.",
+            "Work account added by the user is not part of the enterprise. nonComplianceReason is set to USER_ACTION."
           ],
           "type": "string"
         }
@@ -6050,6 +6054,10 @@
           "deprecated": true,
           "description": "This is deprecated.",
           "type": "boolean"
+        },
+        "workAccountSetupConfig": {
+          "$ref": "WorkAccountSetupConfig",
+          "description": "Optional. Controls the work account setup configuration, such as details of whether a Google authenticated account is required."
         }
       },
       "type": "object"
@@ -7435,6 +7443,31 @@
       "description": "The work profile or company-owned device failed to wipe when requested. This could be user initiated or admin initiated e.g. delete was received. Intentionally empty.",
       "id": "WipeFailureEvent",
       "properties": {},
+      "type": "object"
+    },
+    "WorkAccountSetupConfig": {
+      "description": "Controls the work account setup configuration, such as details of whether a Google authenticated account is required.",
+      "id": "WorkAccountSetupConfig",
+      "properties": {
+        "authenticationType": {
+          "description": "Optional. The authentication type of the user on the device.",
+          "enum": [
+            "AUTHENTICATION_TYPE_UNSPECIFIED",
+            "AUTHENTICATION_TYPE_NOT_ENFORCED",
+            "GOOGLE_AUTHENTICATED"
+          ],
+          "enumDescriptions": [
+            "Unspecified. Defaults to AUTHENTICATION_TYPE_NOT_ENFORCED.",
+            "Authentication status of user on device is not enforced.",
+            "Requires device to be managed with a Google authenticated account."
+          ],
+          "type": "string"
+        },
+        "requiredAccountEmail": {
+          "description": "Optional. The specific google work account email address to be added. This field is only relevant if authenticationType is GOOGLE_AUTHENTICATED. This must be an enterprise account and not a consumer account. Once set and a Google authenticated account is added to the device, changing this field will have no effect, and thus recommended to be set only once.",
+          "type": "string"
+        }
+      },
       "type": "object"
     }
   },

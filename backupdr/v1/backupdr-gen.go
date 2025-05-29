@@ -1269,17 +1269,19 @@ type BackupRule struct {
 	// BackupRetentionDays: Required. Configures the duration for which backup data
 	// will be kept. It is defined in “days”. The value should be greater than
 	// or equal to minimum enforced retention of the backup vault. Minimum value is
-	// 1 and maximum value is 90 for hourly backups. Minimum value is 1 and maximum
-	// value is 186 for daily backups. Minimum value is 7 and maximum value is 366
-	// for weekly backups. Minimum value is 30 and maximum value is 732 for monthly
-	// backups. Minimum value is 365 and maximum value is 36159 for yearly backups.
+	// 1 and maximum value is 36159 for custom retention on-demand backup. Minimum
+	// value is 1 and maximum value is 90 for hourly backups. Minimum value is 1
+	// and maximum value is 186 for daily backups. Minimum value is 7 and maximum
+	// value is 366 for weekly backups. Minimum value is 30 and maximum value is
+	// 732 for monthly backups. Minimum value is 365 and maximum value is 36159 for
+	// yearly backups.
 	BackupRetentionDays int64 `json:"backupRetentionDays,omitempty"`
 	// RuleId: Required. Immutable. The unique id of this `BackupRule`. The
 	// `rule_id` is unique per `BackupPlan`.The `rule_id` must start with a
 	// lowercase letter followed by up to 62 lowercase letters, numbers, or
 	// hyphens. Pattern, /a-z{,62}/.
 	RuleId string `json:"ruleId,omitempty"`
-	// StandardSchedule: Required. Defines a schedule that runs within the confines
+	// StandardSchedule: Optional. Defines a schedule that runs within the confines
 	// of a defined window of time.
 	StandardSchedule *StandardSchedule `json:"standardSchedule,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "BackupRetentionDays") to

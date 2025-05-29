@@ -1687,8 +1687,8 @@ func (s InstanceNetworkConfig) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// InstanceUpgradeDetails: Details regarding the upgrade of instaces associated
-// with a cluster.
+// InstanceUpgradeDetails: Details regarding the upgrade of instances
+// associated with a cluster.
 type InstanceUpgradeDetails struct {
 	// InstanceType: Instance type.
 	//

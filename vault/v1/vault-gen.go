@@ -808,6 +808,19 @@ type DriveOptions struct {
 	IncludeSharedDrives bool `json:"includeSharedDrives,omitempty"`
 	// IncludeTeamDrives: Set to true to include Team Drive.
 	IncludeTeamDrives bool `json:"includeTeamDrives,omitempty"`
+	// SharedDrivesOption: Optional. Options to include or exclude documents in
+	// shared drives. We recommend using this field over include_shared_drives.
+	// This field overrides include_shared_drives and include_team_drives when set.
+	//
+	// Possible values:
+	//   "SHARED_DRIVES_OPTION_UNSPECIFIED" - No shared drive option specified.
+	//   "NOT_INCLUDED" - If a resource is in a shared drive, it isn't included in
+	// the search.
+	//   "INCLUDED_IF_ACCOUNT_IS_NOT_A_MEMBER" - (Previously
+	// "include_shared_drives" off)
+	//   "INCLUDED" - Resources in shared drives are included in the search.
+	// (Previously "include_shared_drives" on)
+	SharedDrivesOption string `json:"sharedDrivesOption,omitempty"`
 	// VersionDate: Search the current version of the Drive file, but export the
 	// contents of the last version saved before 12:00 AM UTC on the specified
 	// date. Enter the date in UTC.

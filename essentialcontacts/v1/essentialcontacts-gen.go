@@ -294,9 +294,9 @@ type GoogleCloudEssentialcontactsV1Contact struct {
 	// technical incident notifications will go to these contacts instead of
 	// TECHNICAL.
 	NotificationCategorySubscriptions []string `json:"notificationCategorySubscriptions,omitempty"`
-	// ValidateTime: The last time the validation_state was updated, either
-	// manually or automatically. A contact is considered stale if its validation
-	// state was updated more than 1 year ago.
+	// ValidateTime: Output only. The last time the validation_state was updated,
+	// either manually or automatically. A contact is considered stale if its
+	// validation state was updated more than 1 year ago.
 	ValidateTime string `json:"validateTime,omitempty"`
 	// ValidationState: Output only. The validity of the contact. A contact is
 	// considered valid if it is the correct recipient for notifications for a

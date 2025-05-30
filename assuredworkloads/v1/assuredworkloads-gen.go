@@ -449,6 +449,31 @@ type GoogleCloudAssuredworkloadsV1CreateWorkloadOperationMetadata struct {
 	// Science Controls with US Support
 	//   "IRS_1075" - Internal Revenue Service 1075 controls
 	//   "CANADA_CONTROLLED_GOODS" - Canada Controlled Goods
+	//   "AUSTRALIA_DATA_BOUNDARY_AND_SUPPORT" - Australia Data Boundary and
+	// Support
+	//   "CANADA_DATA_BOUNDARY_AND_SUPPORT" - Canada Data Boundary and Support
+	//   "DATA_BOUNDARY_FOR_CANADA_CONTROLLED_GOODS" - Data Boundary for Canada
+	// Controlled Goods
+	//   "DATA_BOUNDARY_FOR_CANADA_PROTECTED_B" - Data Boundary for Canada
+	// Protected B
+	//   "DATA_BOUNDARY_FOR_CJIS" - Data Boundary for CJIS
+	//   "DATA_BOUNDARY_FOR_FEDRAMP_HIGH" - Data Boundary for FedRAMP High
+	//   "DATA_BOUNDARY_FOR_FEDRAMP_MODERATE" - Data Boundary for FedRAMP Moderate
+	//   "DATA_BOUNDARY_FOR_IL2" - Data Boundary for IL2
+	//   "DATA_BOUNDARY_FOR_IL4" - Data Boundary for IL4
+	//   "DATA_BOUNDARY_FOR_IL5" - Data Boundary for IL5
+	//   "DATA_BOUNDARY_FOR_IRS_PUBLICATION_1075" - Data Boundary for IRS
+	// Publication 1075
+	//   "DATA_BOUNDARY_FOR_ITAR" - Data Boundary for ITAR
+	//   "EU_DATA_BOUNDARY_AND_SUPPORT" - Data Boundary for EU Regions and Support
+	//   "ISRAEL_DATA_BOUNDARY_AND_SUPPORT" - Data Boundary for Israel Regions
+	//   "US_DATA_BOUNDARY_AND_SUPPORT" - Data Boundary for US Regions and Support
+	//   "US_DATA_BOUNDARY_FOR_HEALTHCARE_AND_LIFE_SCIENCES" - Data Boundary for US
+	// Healthcare and Life Sciences
+	//   "US_DATA_BOUNDARY_FOR_HEALTHCARE_AND_LIFE_SCIENCES_WITH_SUPPORT" - Data
+	// Boundary for US Healthcare and Life Sciences with Support
+	//   "KSA_DATA_BOUNDARY_WITH_ACCESS_JUSTIFICATIONS" - KSA Data Boundary with
+	// Access Justifications
 	ComplianceRegime string `json:"complianceRegime,omitempty"`
 	// CreateTime: Optional. Time when the operation was created.
 	CreateTime string `json:"createTime,omitempty"`
@@ -1169,6 +1194,31 @@ type GoogleCloudAssuredworkloadsV1Workload struct {
 	// Science Controls with US Support
 	//   "IRS_1075" - Internal Revenue Service 1075 controls
 	//   "CANADA_CONTROLLED_GOODS" - Canada Controlled Goods
+	//   "AUSTRALIA_DATA_BOUNDARY_AND_SUPPORT" - Australia Data Boundary and
+	// Support
+	//   "CANADA_DATA_BOUNDARY_AND_SUPPORT" - Canada Data Boundary and Support
+	//   "DATA_BOUNDARY_FOR_CANADA_CONTROLLED_GOODS" - Data Boundary for Canada
+	// Controlled Goods
+	//   "DATA_BOUNDARY_FOR_CANADA_PROTECTED_B" - Data Boundary for Canada
+	// Protected B
+	//   "DATA_BOUNDARY_FOR_CJIS" - Data Boundary for CJIS
+	//   "DATA_BOUNDARY_FOR_FEDRAMP_HIGH" - Data Boundary for FedRAMP High
+	//   "DATA_BOUNDARY_FOR_FEDRAMP_MODERATE" - Data Boundary for FedRAMP Moderate
+	//   "DATA_BOUNDARY_FOR_IL2" - Data Boundary for IL2
+	//   "DATA_BOUNDARY_FOR_IL4" - Data Boundary for IL4
+	//   "DATA_BOUNDARY_FOR_IL5" - Data Boundary for IL5
+	//   "DATA_BOUNDARY_FOR_IRS_PUBLICATION_1075" - Data Boundary for IRS
+	// Publication 1075
+	//   "DATA_BOUNDARY_FOR_ITAR" - Data Boundary for ITAR
+	//   "EU_DATA_BOUNDARY_AND_SUPPORT" - Data Boundary for EU Regions and Support
+	//   "ISRAEL_DATA_BOUNDARY_AND_SUPPORT" - Data Boundary for Israel Regions
+	//   "US_DATA_BOUNDARY_AND_SUPPORT" - Data Boundary for US Regions and Support
+	//   "US_DATA_BOUNDARY_FOR_HEALTHCARE_AND_LIFE_SCIENCES" - Data Boundary for US
+	// Healthcare and Life Sciences
+	//   "US_DATA_BOUNDARY_FOR_HEALTHCARE_AND_LIFE_SCIENCES_WITH_SUPPORT" - Data
+	// Boundary for US Healthcare and Life Sciences with Support
+	//   "KSA_DATA_BOUNDARY_WITH_ACCESS_JUSTIFICATIONS" - KSA Data Boundary with
+	// Access Justifications
 	ComplianceRegime string `json:"complianceRegime,omitempty"`
 	// ComplianceStatus: Output only. Count of active Violations in the Workload.
 	ComplianceStatus *GoogleCloudAssuredworkloadsV1WorkloadComplianceStatus `json:"complianceStatus,omitempty"`

@@ -812,20 +812,16 @@ func (s AuthzPolicyAuthzRuleFrom) MarshalJSON() ([]byte, error) {
 // AuthzPolicyAuthzRuleFromRequestSource: Describes the properties of a single
 // source.
 type AuthzPolicyAuthzRuleFromRequestSource struct {
-	// Principals: Optional. A list of identities derived from the client's
-	// certificate. This field is under development and we don't recommend using it
-	// at this time. Limited to 5 principals.
-	Principals []*AuthzPolicyAuthzRuleStringMatch `json:"principals,omitempty"`
 	// Resources: Optional. A list of resources to match against the resource of
 	// the source VM of a request. Limited to 5 resources.
 	Resources []*AuthzPolicyAuthzRuleRequestResource `json:"resources,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "Principals") to
+	// ForceSendFields is a list of field names (e.g. "Resources") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Principals") to include in API
+	// NullFields is a list of field names (e.g. "Resources") to include in API
 	// requests with the JSON null value. By default, fields with empty values are
 	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.

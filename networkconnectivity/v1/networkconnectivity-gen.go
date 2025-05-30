@@ -443,8 +443,8 @@ type AllocationOptions struct {
 	// used.
 	//
 	// Possible values:
-	//   "ALLOCATION_STRATEGY_UNSPECIFIED" - Unspecified strategy must be used when
-	// the range is specified explicitly using ip_cidr_range field. Othherwise
+	//   "ALLOCATION_STRATEGY_UNSPECIFIED" - Unspecified is the only valid option
+	// when the range is specified explicitly by ip_cidr_range field. Otherwise
 	// unspefified means using the default strategy.
 	//   "RANDOM" - Random strategy, the legacy algorithm, used for backwards
 	// compatibility. This allocation strategy remains efficient in the case of
@@ -1229,9 +1229,9 @@ type Hub struct {
 	// table_id}` This field is read-only. Network Connectivity Center
 	// automatically populates it based on the route tables nested under the hub.
 	RouteTables []string `json:"routeTables,omitempty"`
-	// RoutingVpcs: The VPC networks associated with this hub's spokes. This field
-	// is read-only. Network Connectivity Center automatically populates it based
-	// on the set of spokes attached to the hub.
+	// RoutingVpcs: Output only. The VPC networks associated with this hub's
+	// spokes. This field is read-only. Network Connectivity Center automatically
+	// populates it based on the set of spokes attached to the hub.
 	RoutingVpcs []*RoutingVPC `json:"routingVpcs,omitempty"`
 	// SpokeSummary: Output only. A summary of the spokes associated with a hub.
 	// The summary includes a count of spokes according to type and according to
@@ -1347,7 +1347,7 @@ type InternalRange struct {
 	AllocationOptions *AllocationOptions `json:"allocationOptions,omitempty"`
 	// CreateTime: Time when the internal range was created.
 	CreateTime string `json:"createTime,omitempty"`
-	// Description: A description of this resource.
+	// Description: Optional. A description of this resource.
 	Description string `json:"description,omitempty"`
 	// ExcludeCidrRanges: Optional. ExcludeCidrRanges flag. Specifies a set of CIDR
 	// blocks that allows exclusion of particular CIDR ranges from the
@@ -1356,23 +1356,23 @@ type InternalRange struct {
 	// Immutable: Optional. Immutable ranges cannot have their fields modified,
 	// except for labels and description.
 	Immutable bool `json:"immutable,omitempty"`
-	// IpCidrRange: The IP range that this internal range defines. NOTE: IPv6
-	// ranges are limited to usage=EXTERNAL_TO_VPC and peering=FOR_SELF. NOTE: For
-	// IPv6 Ranges this field is compulsory, i.e. the address range must be
+	// IpCidrRange: Optional. The IP range that this internal range defines. NOTE:
+	// IPv6 ranges are limited to usage=EXTERNAL_TO_VPC and peering=FOR_SELF. NOTE:
+	// For IPv6 Ranges this field is compulsory, i.e. the address range must be
 	// specified explicitly.
 	IpCidrRange string `json:"ipCidrRange,omitempty"`
 	// Labels: User-defined labels.
 	Labels map[string]string `json:"labels,omitempty"`
 	// Migration: Optional. Must be present if usage is set to FOR_MIGRATION.
 	Migration *Migration `json:"migration,omitempty"`
-	// Name: Immutable. The name of an internal range. Format:
+	// Name: Identifier. The name of an internal range. Format:
 	// projects/{project}/locations/{location}/internalRanges/{internal_range} See:
 	// https://google.aip.dev/122#fields-representing-resource-names
 	Name string `json:"name,omitempty"`
-	// Network: The URL or resource ID of the network in which to reserve the
-	// internal range. The network cannot be deleted if there are any reserved
-	// internal ranges referring to it. Legacy networks are not supported. For
-	// example:
+	// Network: Immutable. The URL or resource ID of the network in which to
+	// reserve the internal range. The network cannot be deleted if there are any
+	// reserved internal ranges referring to it. Legacy networks are not supported.
+	// For example:
 	// https://www.googleapis.com/compute/v1/projects/{project}/locations/global/networks/{network}
 	// projects/{project}/locations/global/networks/{network} {network}
 	Network string `json:"network,omitempty"`
@@ -1386,7 +1386,7 @@ type InternalRange struct {
 	//   "OVERLAP_EXISTING_SUBNET_RANGE" - Allow creation of internal ranges that
 	// overlap with existing subnets.
 	Overlaps []string `json:"overlaps,omitempty"`
-	// Peering: The type of peering set for this internal range.
+	// Peering: Optional. The type of peering set for this internal range.
 	//
 	// Possible values:
 	//   "PEERING_UNSPECIFIED" - If Peering is left unspecified in
@@ -1408,10 +1408,10 @@ type InternalRange struct {
 	// peers cannot use this range in a way that is visible to this VPC, but can
 	// re-use this range as long as it is NOT_SHARED from the peer VPC, too.
 	Peering string `json:"peering,omitempty"`
-	// PrefixLength: An alternate to ip_cidr_range. Can be set when trying to
-	// create an IPv4 reservation that automatically finds a free range of the
-	// given size. If both ip_cidr_range and prefix_length are set, there is an
-	// error if the range sizes do not match. Can also be used during updates to
+	// PrefixLength: Optional. An alternate to ip_cidr_range. Can be set when
+	// trying to create an IPv4 reservation that automatically finds a free range
+	// of the given size. If both ip_cidr_range and prefix_length are set, there is
+	// an error if the range sizes do not match. Can also be used during updates to
 	// change the range size. NOTE: For IPv6 this field only works if ip_cidr_range
 	// is set as well, and both fields must match. In other words, with IPv6 this
 	// field only works as a redundant parameter.
@@ -1424,7 +1424,7 @@ type InternalRange struct {
 	TargetCidrRange []string `json:"targetCidrRange,omitempty"`
 	// UpdateTime: Time when the internal range was updated.
 	UpdateTime string `json:"updateTime,omitempty"`
-	// Usage: The type of usage set for this InternalRange.
+	// Usage: Optional. The type of usage set for this InternalRange.
 	//
 	// Possible values:
 	//   "USAGE_UNSPECIFIED" - Unspecified usage is allowed in calls which identify
@@ -1526,8 +1526,8 @@ type LinkedProducerVpcNetwork struct {
 	// ProposedExcludeExportRanges: Output only. The proposed exclude export IP
 	// ranges waiting for hub administration's approval.
 	ProposedExcludeExportRanges []string `json:"proposedExcludeExportRanges,omitempty"`
-	// ProposedIncludeExportRanges: Optional. The proposed include export IP ranges
-	// waiting for hub administration's approval.
+	// ProposedIncludeExportRanges: Output only. The proposed include export IP
+	// ranges waiting for hub administration's approval.
 	ProposedIncludeExportRanges []string `json:"proposedIncludeExportRanges,omitempty"`
 	// ServiceConsumerVpcSpoke: Output only. The Service Consumer Network spoke.
 	ServiceConsumerVpcSpoke string `json:"serviceConsumerVpcSpoke,omitempty"`
@@ -1605,8 +1605,8 @@ type LinkedVpcNetwork struct {
 	// ProposedExcludeExportRanges: Output only. The proposed exclude export IP
 	// ranges waiting for hub administration's approval.
 	ProposedExcludeExportRanges []string `json:"proposedExcludeExportRanges,omitempty"`
-	// ProposedIncludeExportRanges: Optional. The proposed include export IP ranges
-	// waiting for hub administration's approval.
+	// ProposedIncludeExportRanges: Output only. The proposed include export IP
+	// ranges waiting for hub administration's approval.
 	ProposedIncludeExportRanges []string `json:"proposedIncludeExportRanges,omitempty"`
 	// Uri: Required. The URI of the VPC network resource.
 	Uri string `json:"uri,omitempty"`
@@ -2148,6 +2148,7 @@ type LocationMetadata struct {
 	//   "SITE_TO_CLOUD_SPOKES" - Site-to-cloud spokes are supported in this
 	// location
 	//   "SITE_TO_SITE_SPOKES" - Site-to-site spokes are supported in this location
+	//   "GATEWAY_SPOKES" - Gateway spokes are supported in this location.
 	LocationFeatures []string `json:"locationFeatures,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "LocationFeatures") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -8693,7 +8694,7 @@ type ProjectsLocationsInternalRangesPatchCall struct {
 
 // Patch: Updates the parameters of a single internal range.
 //
-//   - name: Immutable. The name of an internal range. Format:
+//   - name: Identifier. The name of an internal range. Format:
 //     projects/{project}/locations/{location}/internalRanges/{internal_range}
 //     See: https://google.aip.dev/122#fields-representing-resource-names.
 func (r *ProjectsLocationsInternalRangesService) Patch(name string, internalrange *InternalRange) *ProjectsLocationsInternalRangesPatchCall {

@@ -1978,6 +1978,9 @@ type GoogleCloudContactcenterinsightsV1ConversationDataSource struct {
 	// GcsSource: A Cloud Storage location specification for the audio and
 	// transcript.
 	GcsSource *GoogleCloudContactcenterinsightsV1GcsSource `json:"gcsSource,omitempty"`
+	// MetadataUri: Cloud Storage URI that points to a file that contains the
+	// conversation metadata.
+	MetadataUri string `json:"metadataUri,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "DialogflowSource") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -7480,6 +7483,9 @@ type GoogleCloudContactcenterinsightsV1alpha1ConversationDataSource struct {
 	// GcsSource: A Cloud Storage location specification for the audio and
 	// transcript.
 	GcsSource *GoogleCloudContactcenterinsightsV1alpha1GcsSource `json:"gcsSource,omitempty"`
+	// MetadataUri: Cloud Storage URI that points to a file that contains the
+	// conversation metadata.
+	MetadataUri string `json:"metadataUri,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "DialogflowSource") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See

@@ -2887,6 +2887,9 @@ type GooglePrivacyDlpV2DataProfileAction struct {
 	// context-aware analytics
 	// (https://cloud.google.com/chronicle/docs/detection/usecase-dlp-high-risk-user-download).
 	PublishToChronicle *GooglePrivacyDlpV2PublishToChronicle `json:"publishToChronicle,omitempty"`
+	// PublishToDataplexCatalog: Publishes a portion of each profile to Dataplex
+	// Catalog with the aspect type Sensitive Data Protection Profile.
+	PublishToDataplexCatalog *GooglePrivacyDlpV2PublishToDataplexCatalog `json:"publishToDataplexCatalog,omitempty"`
 	// PublishToScc: Publishes findings to Security Command Center for each data
 	// profile.
 	PublishToScc *GooglePrivacyDlpV2PublishToSecurityCommandCenter `json:"publishToScc,omitempty"`
@@ -8763,6 +8766,35 @@ type GooglePrivacyDlpV2PublishSummaryToCscc struct {
 type GooglePrivacyDlpV2PublishToChronicle struct {
 }
 
+// GooglePrivacyDlpV2PublishToDataplexCatalog: Create Dataplex Catalog aspects
+// for profiled resources with the aspect type Sensitive Data Protection
+// Profile. To learn more about aspects, see
+// https://cloud.google.com/sensitive-data-protection/docs/add-aspects.
+type GooglePrivacyDlpV2PublishToDataplexCatalog struct {
+	// LowerDataRiskToLow: Whether creating a Dataplex Catalog aspect for a
+	// profiled resource should lower the risk of the profile for that resource.
+	// This also lowers the data risk of resources at the lower levels of the
+	// resource hierarchy. For example, reducing the data risk of a table data
+	// profile also reduces the data risk of the constituent column data profiles.
+	LowerDataRiskToLow bool `json:"lowerDataRiskToLow,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "LowerDataRiskToLow") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "LowerDataRiskToLow") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GooglePrivacyDlpV2PublishToDataplexCatalog) MarshalJSON() ([]byte, error) {
+	type NoMethod GooglePrivacyDlpV2PublishToDataplexCatalog
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GooglePrivacyDlpV2PublishToPubSub: Publish a message into a given Pub/Sub
 // topic when DlpJob has completed. The message contains a single field,
 // `DlpJobName`, which is equal to the finished job's `DlpJob.name`
@@ -10245,6 +10277,10 @@ func (s GooglePrivacyDlpV2TableOptions) MarshalJSON() ([]byte, error) {
 type GooglePrivacyDlpV2TableReference struct {
 	// DatasetId: Dataset ID of the table.
 	DatasetId string `json:"datasetId,omitempty"`
+	// ProjectId: The Google Cloud project ID of the project containing the table.
+	// If omitted, the project ID is inferred from the parent project. This field
+	// is required if the parent resource is an organization.
+	ProjectId string `json:"projectId,omitempty"`
 	// TableId: Name of the table.
 	TableId string `json:"tableId,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "DatasetId") to

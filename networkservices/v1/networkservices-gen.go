@@ -2150,6 +2150,7 @@ func (s HttpRouteRedirect) MarshalJSON() ([]byte, error) {
 // shadowed to a separate mirrored destination service. The proxy does not wait
 // for responses from the shadow service. Prior to sending traffic to the
 // shadow service, the host/authority header is suffixed with -shadow.
+// Mirroring is currently not supported for Cloud Run destinations.
 type HttpRouteRequestMirrorPolicy struct {
 	// Destination: The destination the requests will be mirrored to. The weight of
 	// the destination will be ignored.

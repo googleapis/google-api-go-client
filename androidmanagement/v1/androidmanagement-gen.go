@@ -311,6 +311,42 @@ func (s AdbShellCommandEvent) MarshalJSON() ([]byte, error) {
 type AdbShellInteractiveEvent struct {
 }
 
+// AddEsimParams: Parameters associated with the ADD_ESIM command to add an
+// eSIM profile to the device.
+type AddEsimParams struct {
+	// ActivationCode: Required. The activation code for the eSIM profile.
+	ActivationCode string `json:"activationCode,omitempty"`
+	// ActivationState: Required. The activation state of the eSIM profile once it
+	// is downloaded.
+	//
+	// Possible values:
+	//   "ACTIVATION_STATE_UNSPECIFIED" - eSIM activation state is not specified.
+	// This defaults to the eSIM profile being NOT_ACTIVATED on personally-owned
+	// devices and ACTIVATED on company-owned devices.
+	//   "ACTIVATED" - The eSIM is automatically activated after downloading.
+	// Setting this as the activation state for personally-owned devices will
+	// result in the command being rejected.
+	//   "NOT_ACTIVATED" - The eSIM profile is downloaded but not activated. In
+	// this case, the user will need to activate the eSIM manually on the device.
+	ActivationState string `json:"activationState,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ActivationCode") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ActivationCode") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s AddEsimParams) MarshalJSON() ([]byte, error) {
+	type NoMethod AddEsimParams
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // AdvancedSecurityOverrides: Advanced security settings. In most cases,
 // setting these is not needed.
 type AdvancedSecurityOverrides struct {
@@ -1715,6 +1751,11 @@ func (s ClearAppsDataStatus) MarshalJSON() ([]byte, error) {
 
 // Command: A command.
 type Command struct {
+	// AddEsimParams: Optional. Parameters for the ADD_ESIM command to add an eSIM
+	// profile to the device. If this is set, then it is suggested that type should
+	// not be set. In this case, the server automatically sets it to ADD_ESIM. It
+	// is also acceptable to explicitly set type to ADD_ESIM.
+	AddEsimParams *AddEsimParams `json:"addEsimParams,omitempty"`
 	// ClearAppsDataParams: Parameters for the CLEAR_APP_DATA command to clear the
 	// data of specified apps from the device. See ClearAppsDataParams. If this is
 	// set, then it is suggested that type should not be set. In this case, the
@@ -1748,11 +1789,18 @@ type Command struct {
 	//   "UNSUPPORTED" - The device doesn't support the command. Updating Android
 	// Device Policy to the latest version may resolve the issue.
 	ErrorCode string `json:"errorCode,omitempty"`
+	// EsimStatus: Output only. Status of an ADD_ESIM or REMOVE_ESIM command.
+	EsimStatus *EsimCommandStatus `json:"esimStatus,omitempty"`
 	// NewPassword: For commands of type RESET_PASSWORD, optionally specifies the
 	// new password. Note: The new password must be at least 6 characters long if
 	// it is numeric in case of Android 14 devices. Else the command will fail with
 	// INVALID_VALUE.
 	NewPassword string `json:"newPassword,omitempty"`
+	// RemoveEsimParams: Optional. Parameters for the REMOVE_ESIM command to remove
+	// an eSIM profile from the device. If this is set, then it is suggested that
+	// type should not be set. In this case, the server automatically sets it to
+	// REMOVE_ESIM. It is also acceptable to explicitly set type to REMOVE_ESIM.
+	RemoveEsimParams *RemoveEsimParams `json:"removeEsimParams,omitempty"`
 	// RequestDeviceInfoParams: Optional. Parameters for the REQUEST_DEVICE_INFO
 	// command to get device related information. If this is set, then it is
 	// suggested that type should not be set. In this case, the server
@@ -1814,21 +1862,25 @@ type Command struct {
 	//   "STOP_LOST_MODE" - Takes the device out of lost mode. Only supported on
 	// fully managed devices or organization-owned devices with a managed profile.
 	// See also stop_lost_mode_params.
+	//   "ADD_ESIM" - Adds an eSIM profile to the device. This is supported on
+	// Android 15 and above. See also addEsimParams.
+	//   "REMOVE_ESIM" - Removes an eSIM profile from the device. This is supported
+	// on Android 15 and above. See also removeEsimParams.
 	//   "REQUEST_DEVICE_INFO" - Request information related to the device.
 	Type string `json:"type,omitempty"`
 	// UserName: The resource name of the user that owns the device in the form
 	// enterprises/{enterpriseId}/users/{userId}. This is automatically generated
 	// by the server based on the device the command is sent to.
 	UserName string `json:"userName,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "ClearAppsDataParams") to
+	// ForceSendFields is a list of field names (e.g. "AddEsimParams") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "ClearAppsDataParams") to include
-	// in API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. See
+	// NullFields is a list of field names (e.g. "AddEsimParams") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -3079,6 +3131,80 @@ func (s EnterpriseUpgradeEvent) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// EsimCommandStatus: Status and error details (if present) of an ADD_ESIM or
+// REMOVE_ESIM command.
+type EsimCommandStatus struct {
+	// EsimInfo: Output only. Information about the eSIM added or removed. This is
+	// populated only when the eSIM operation status is SUCCESS.
+	EsimInfo *EsimInfo `json:"esimInfo,omitempty"`
+	// InternalErrorDetails: Output only. Details of the error if the status is set
+	// to INTERNAL_ERROR.
+	InternalErrorDetails *InternalErrorDetails `json:"internalErrorDetails,omitempty"`
+	// Status: Output only. Status of an ADD_ESIM or REMOVE_ESIM command.
+	//
+	// Possible values:
+	//   "STATUS_UNSPECIFIED" - Unspecified. This value is not used.
+	//   "SUCCESS" - The eSIM operation was successfully performed on the device.
+	//   "IN_PROGRESS" - The eSIM operation is in progress.
+	//   "PENDING_USER_ACTION" - The user needs to take an action for the eSIM
+	// operation to proceed.
+	//   "ERROR_SETUP_IN_PROGRESS" - The eSIM operation cannot be executed when
+	// setup is in progress.
+	//   "ERROR_USER_DENIED" - The user has denied the eSIM operation.
+	//   "INTERNAL_ERROR" - An error has occurred while trying to add or remove the
+	// eSIM on the device, see internal_error_details.
+	//   "ERROR_ICC_ID_NOT_FOUND" - For a REMOVE_ESIM command, the iccId of the
+	// eSIM to be removed was not found on the device. This could either mean the
+	// eSIM does not belong to the enterprise or the eSIM corresponding to the
+	// iccId is not present on the device.
+	//   "ERROR_MULTIPLE_ACTIVE_ESIMS_NO_AVAILABLE_SLOT" - The ADD_ESIM command
+	// failed when attempting to add a new eSIM with its activation state set to
+	// ACTIVATED since multiple eSIM slots on the device contain active eSIM
+	// profiles and there is no free eSIM slot available. To resolve this, the new
+	// eSIM can be added with its activation state as NOT_ACTIVATED for later
+	// manual activation, or the user must first deactivate an existing active eSIM
+	// for the operation to proceed.
+	Status string `json:"status,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "EsimInfo") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "EsimInfo") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s EsimCommandStatus) MarshalJSON() ([]byte, error) {
+	type NoMethod EsimCommandStatus
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// EsimInfo: Details of the eSIM added or removed.
+type EsimInfo struct {
+	// IccId: Output only. ICC ID of the eSIM.
+	IccId string `json:"iccId,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "IccId") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "IccId") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s EsimInfo) MarshalJSON() ([]byte, error) {
+	type NoMethod EsimInfo
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // EuiccChipInfo: Information related to the eUICC chip.
 type EuiccChipInfo struct {
 	// Eid: Output only. The Embedded Identity Document (EID) that identifies the
@@ -3608,6 +3734,154 @@ type InstallConstraint struct {
 
 func (s InstallConstraint) MarshalJSON() ([]byte, error) {
 	type NoMethod InstallConstraint
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// InternalErrorDetails: Internal error details if present for the ADD_ESIM or
+// REMOVE_ESIM command.
+type InternalErrorDetails struct {
+	// ErrorCode: Output only. Integer representation of the error code as
+	// specified here
+	// (https://developer.android.com/reference/android/telephony/euicc/EuiccManager#EXTRA_EMBEDDED_SUBSCRIPTION_DETAILED_CODE).
+	// See also, OPERATION_SMDX_SUBJECT_REASON_CODE. See error_code_detail for more
+	// details.
+	ErrorCode int64 `json:"errorCode,omitempty,string"`
+	// ErrorCodeDetail: Output only. The error code detail corresponding to the
+	// error_code.
+	//
+	// Possible values:
+	//   "ERROR_CODE_DETAIL_UNSPECIFIED" - Error code detail is unspecified. The
+	// error_code is not recognized by Android Management API. However, see
+	// error_code
+	//   "ERROR_TIME_OUT" - See EuiccManager.ERROR_TIME_OUT
+	// (https://developer.android.com/reference/android/telephony/euicc/EuiccManager#ERROR_TIME_OUT)
+	// for details.
+	//   "ERROR_EUICC_MISSING" - See EuiccManager.ERROR_EUICC_MISSING
+	// (https://developer.android.com/reference/android/telephony/euicc/EuiccManager#ERROR_EUICC_MISSING)
+	// for details.
+	//   "ERROR_UNSUPPORTED_VERSION" - See EuiccManager.ERROR_UNSUPPORTED_VERSION
+	// (https://developer.android.com/reference/android/telephony/euicc/EuiccManager#ERROR_UNSUPPORTED_VERSION)
+	// for details.
+	//   "ERROR_ADDRESS_MISSING" - See EuiccManager.ERROR_ADDRESS_MISSING
+	// (https://developer.android.com/reference/android/telephony/euicc/EuiccManager#ERROR_ADDRESS_MISSING)
+	// for details.
+	//   "ERROR_INVALID_CONFIRMATION_CODE" - See
+	// EuiccManager.ERROR_INVALID_CONFIRMATION_CODE
+	// (https://developer.android.com/reference/android/telephony/euicc/EuiccManager#ERROR_INVALID_CONFIRMATION_CODE)
+	// for details.
+	//   "ERROR_CERTIFICATE_ERROR" - See EuiccManager.ERROR_CERTIFICATE_ERROR
+	// (https://developer.android.com/reference/android/telephony/euicc/EuiccManager#ERROR_CERTIFICATE_ERROR)
+	// for details.
+	//   "ERROR_NO_PROFILES_AVAILABLE" - See
+	// EuiccManager.ERROR_NO_PROFILES_AVAILABLE
+	// (https://developer.android.com/reference/android/telephony/euicc/EuiccManager#ERROR_NO_PROFILES_AVAILABLE)
+	// for details.
+	//   "ERROR_CONNECTION_ERROR" - See EuiccManager.ERROR_CONNECTION_ERROR
+	// (https://developer.android.com/reference/android/telephony/euicc/EuiccManager#ERROR_CONNECTION_ERROR)
+	// for details.
+	//   "ERROR_INVALID_RESPONSE" - See EuiccManager.ERROR_INVALID_RESPONSE
+	// (https://developer.android.com/reference/android/telephony/euicc/EuiccManager#ERROR_INVALID_RESPONSE)
+	// for details.
+	//   "ERROR_CARRIER_LOCKED" - See EuiccManager.ERROR_CARRIER_LOCKED
+	// (https://developer.android.com/reference/android/telephony/euicc/EuiccManager#ERROR_CARRIER_LOCKED)
+	// for details.
+	//   "ERROR_DISALLOWED_BY_PPR" - See EuiccManager.ERROR_DISALLOWED_BY_PPR
+	// (https://developer.android.com/reference/android/telephony/euicc/EuiccManager#ERROR_DISALLOWED_BY_PPR)
+	// for details.
+	//   "ERROR_INVALID_ACTIVATION_CODE" - See
+	// EuiccManager.ERROR_INVALID_ACTIVATION_CODE
+	// (https://developer.android.com/reference/android/telephony/euicc/EuiccManager#ERROR_INVALID_ACTIVATION_CODE)
+	// for details.
+	//   "ERROR_INCOMPATIBLE_CARRIER" - See EuiccManager.ERROR_INCOMPATIBLE_CARRIER
+	// (https://developer.android.com/reference/android/telephony/euicc/EuiccManager#ERROR_INCOMPATIBLE_CARRIER)
+	// for details.
+	//   "ERROR_OPERATION_BUSY" - See EuiccManager.ERROR_OPERATION_BUSY
+	// (https://developer.android.com/reference/android/telephony/euicc/EuiccManager#ERROR_OPERATION_BUSY)
+	// for details.
+	//   "ERROR_INSTALL_PROFILE" - See EuiccManager.ERROR_INSTALL_PROFILE
+	// (https://developer.android.com/reference/android/telephony/euicc/EuiccManager#ERROR_INSTALL_PROFILE)
+	// for details.
+	//   "ERROR_EUICC_INSUFFICIENT_MEMORY" - See
+	// EuiccManager.ERROR_EUICC_INSUFFICIENT_MEMORY
+	// (https://developer.android.com/reference/android/telephony/euicc/EuiccManager#ERROR_EUICC_INSUFFICIENT_MEMORY)
+	// for details.
+	//   "ERROR_INVALID_PORT" - See EuiccManager.ERROR_INVALID_PORT
+	// (https://developer.android.com/reference/android/telephony/euicc/EuiccManager#ERROR_INVALID_PORT)
+	// for details.
+	//   "ERROR_SIM_MISSING" - See EuiccManager.ERROR_SIM_MISSING
+	// (https://developer.android.com/reference/android/telephony/euicc/EuiccManager#ERROR_SIM_MISSING)
+	// for details.
+	ErrorCodeDetail string `json:"errorCodeDetail,omitempty"`
+	// OperationCode: Output only. Integer representation of the operation code as
+	// specified here
+	// (https://developer.android.com/reference/android/telephony/euicc/EuiccManager#EXTRA_EMBEDDED_SUBSCRIPTION_DETAILED_CODE).
+	// See operation_code_detail for more details.
+	OperationCode int64 `json:"operationCode,omitempty,string"`
+	// OperationCodeDetail: Output only. The operation code detail corresponding to
+	// the operation_code.
+	//
+	// Possible values:
+	//   "OPERATION_CODE_DETAIL_UNSPECIFIED" - Operation code detail is
+	// unspecified. The operation_code is not recognized by Android Management API.
+	// However, see operation_code.
+	//   "OPERATION_SYSTEM" - See EuiccManager.OPERATION_SYSTEM
+	// (https://developer.android.com/reference/android/telephony/euicc/EuiccManager#OPERATION_SYSTEM)
+	// for details.
+	//   "OPERATION_SIM_SLOT" - See EuiccManager.OPERATION_SIM_SLOT
+	// (https://developer.android.com/reference/android/telephony/euicc/EuiccManager#OPERATION_SIM_SLOT)
+	// for details.
+	//   "OPERATION_EUICC_CARD" - See EuiccManager.OPERATION_EUICC_CARD
+	// (https://developer.android.com/reference/android/telephony/euicc/EuiccManager#OPERATION_EUICC_CARD)
+	// for details.
+	//   "OPERATION_SMDX" - See EuiccManager.OPERATION_SMDX
+	// (https://developer.android.com/reference/android/telephony/euicc/EuiccManager#OPERATION_SMDX)
+	// for details.
+	//   "OPERATION_SWITCH" - See EuiccManager.OPERATION_SWITCH
+	// (https://developer.android.com/reference/android/telephony/euicc/EuiccManager#OPERATION_SWITCH)
+	// for details.
+	//   "OPERATION_DOWNLOAD" - See EuiccManager.OPERATION_DOWNLOAD
+	// (https://developer.android.com/reference/android/telephony/euicc/EuiccManager#OPERATION_DOWNLOAD)
+	// for details.
+	//   "OPERATION_METADATA" - See EuiccManager.OPERATION_METADATA
+	// (https://developer.android.com/reference/android/telephony/euicc/EuiccManager#OPERATION_METADATA)
+	// for details.
+	//   "OPERATION_EUICC_GSMA" - See EuiccManager.OPERATION_EUICC_GSMA
+	// (https://developer.android.com/reference/android/telephony/euicc/EuiccManager#OPERATION_EUICC_GSMA)
+	// for details.
+	//   "OPERATION_APDU" - See EuiccManager.OPERATION_APDU
+	// (https://developer.android.com/reference/android/telephony/euicc/EuiccManager#OPERATION_APDU)
+	// for details.
+	//   "OPERATION_SMDX_SUBJECT_REASON_CODE" - See
+	// EuiccManager.OPERATION_SMDX_SUBJECT_REASON_CODE
+	// (https://developer.android.com/reference/android/telephony/euicc/EuiccManager#OPERATION_SMDX_SUBJECT_REASON_CODE)
+	// for details. Note that, in this case, error_code is the least significant 3
+	// bytes of the EXTRA_EMBEDDED_SUBSCRIPTION_DETAILED_CODE
+	// (https://developer.android.com/reference/android/telephony/euicc/EuiccManager#EXTRA_EMBEDDED_SUBSCRIPTION_DETAILED_CODE)
+	// specifying the subject code and the reason code as indicated here
+	// (https://developer.android.com/reference/android/telephony/euicc/EuiccManager#OPERATION_SMDX_SUBJECT_REASON_CODE).
+	// The most significant byte of the integer is zeroed out. For example, a
+	// Subject Code of 8.11.1 and a Reason Code of 5.1 is represented in error_code
+	// as 0000 0000 1000 1011 0001 0000 0101 0001 in binary, which is 9113681 in
+	// decimal.
+	//   "OPERATION_HTTP" - See EuiccManager.OPERATION_HTTP
+	// (https://developer.android.com/reference/android/telephony/euicc/EuiccManager#OPERATION_HTTP)
+	// for details.
+	OperationCodeDetail string `json:"operationCodeDetail,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ErrorCode") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ErrorCode") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s InternalErrorDetails) MarshalJSON() ([]byte, error) {
+	type NoMethod InternalErrorDetails
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -5866,6 +6140,20 @@ type Policy struct {
 	WifiConfigDisabled bool `json:"wifiConfigDisabled,omitempty"`
 	// WifiConfigsLockdownEnabled: This is deprecated.
 	WifiConfigsLockdownEnabled bool `json:"wifiConfigsLockdownEnabled,omitempty"`
+	// WipeDataFlags: Optional. Wipe flags to indicate what data is wiped when a
+	// device or profile wipe is triggered due to any reason (for example,
+	// non-compliance). This does not apply to the enterprises.devices.delete
+	// method. . This list must not have duplicates.
+	//
+	// Possible values:
+	//   "WIPE_DATA_FLAG_UNSPECIFIED" - This value must not be used.
+	//   "WIPE_ESIMS" - For company-owned devices, setting this in wipeDataFlags
+	// will remove all eSIMs on the device when wipe is triggered due to any
+	// reason. On personally-owned devices, this will remove only managed eSIMs on
+	// the device. (eSIMs which are added via the ADD_ESIM command). This is
+	// supported on devices running Android 15 and above. A nonComplianceDetail
+	// with API_LEVEL is reported if the Android version is less than 15.
+	WipeDataFlags []string `json:"wipeDataFlags,omitempty"`
 	// WorkAccountSetupConfig: Optional. Controls the work account setup
 	// configuration, such as details of whether a Google authenticated account is
 	// required.
@@ -6267,6 +6555,29 @@ type RemoteLockEvent struct {
 
 func (s RemoteLockEvent) MarshalJSON() ([]byte, error) {
 	type NoMethod RemoteLockEvent
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// RemoveEsimParams: Parameters associated with the REMOVE_ESIM command to
+// remove an eSIM profile from the device.
+type RemoveEsimParams struct {
+	// IccId: Required. ICC ID of the eSIM profile to be deleted.
+	IccId string `json:"iccId,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "IccId") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "IccId") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s RemoveEsimParams) MarshalJSON() ([]byte, error) {
+	type NoMethod RemoveEsimParams
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -7015,21 +7326,41 @@ func (s SystemUpdateInfo) MarshalJSON() ([]byte, error) {
 // device. Only supported on fully managed devices starting from Android API
 // level 23.
 type TelephonyInfo struct {
+	// ActivationState: Output only. Activation state of the SIM card on the
+	// device. This is applicable for eSIMs only. This is supported on all devices
+	// for API level 35 and above. This is always ACTIVATION_STATE_UNSPECIFIED for
+	// physical SIMs and for devices below API level 35.
+	//
+	// Possible values:
+	//   "ACTIVATION_STATE_UNSPECIFIED" - Activation state is not specified.
+	//   "ACTIVATED" - The SIM card is activated.
+	//   "NOT_ACTIVATED" - The SIM card is not activated.
+	ActivationState string `json:"activationState,omitempty"`
 	// CarrierName: The carrier name associated with this SIM card.
 	CarrierName string `json:"carrierName,omitempty"`
+	// ConfigMode: Output only. The configuration mode of the SIM card on the
+	// device. This is applicable for eSIMs only. This is supported on all devices
+	// for API level 35 and above. This is always CONFIG_MODE_UNSPECIFIED for
+	// physical SIMs and for devices below API level 35.
+	//
+	// Possible values:
+	//   "CONFIG_MODE_UNSPECIFIED" - The configuration mode is unspecified.
+	//   "ADMIN_CONFIGURED" - The admin has configured this SIM.
+	//   "USER_CONFIGURED" - The user has configured this SIM.
+	ConfigMode string `json:"configMode,omitempty"`
 	// IccId: Output only. The ICCID associated with this SIM card.
 	IccId string `json:"iccId,omitempty"`
 	// PhoneNumber: The phone number associated with this SIM card.
 	PhoneNumber string `json:"phoneNumber,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "CarrierName") to
+	// ForceSendFields is a list of field names (e.g. "ActivationState") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "CarrierName") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
+	// NullFields is a list of field names (e.g. "ActivationState") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -8574,6 +8905,12 @@ func (r *EnterprisesDevicesService) Delete(name string) *EnterprisesDevicesDelet
 //	"WIPE_EXTERNAL_STORAGE" - Additionally wipe the device's external storage
 //
 // (such as SD cards).
+//
+//	"WIPE_ESIMS" - For company-owned devices, this removes all eSIMs from the
+//
+// device when the device is wiped. In personally-owned devices, this will
+// remove managed eSIMs (eSIMs which are added via the ADD_ESIM command) on the
+// devices and no personally owned eSIMs will be removed.
 func (c *EnterprisesDevicesDeleteCall) WipeDataFlags(wipeDataFlags ...string) *EnterprisesDevicesDeleteCall {
 	c.urlParams_.SetMulti("wipeDataFlags", append([]string{}, wipeDataFlags...))
 	return c

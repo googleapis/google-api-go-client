@@ -1319,7 +1319,9 @@ type AutoRenewingPlan struct {
 	// PriceChangeDetails: The information of the last price change for the item
 	// since subscription signup.
 	PriceChangeDetails *SubscriptionItemPriceChangeDetails `json:"priceChangeDetails,omitempty"`
-	// RecurringPrice: The current recurring price of the auto renewing plan.
+	// RecurringPrice: The current recurring price of the auto renewing plan. Note
+	// that the price does not take into account discounts and taxes, call
+	// orders.get API instead if transaction details are needed.
 	RecurringPrice *Money `json:"recurringPrice,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AutoRenewEnabled") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -5531,14 +5533,14 @@ func (s Regions) MarshalJSON() ([]byte, error) {
 // specified resource.
 type RegionsVersion struct {
 	// Version: Required. A string representing the version of available regions
-	// being used for the specified resource. Regional prices for the resource have
-	// to be specified according to the information published in this article
+	// being used for the specified resource. Regional prices and latest supported
+	// version for the resource have to be specified according to the information
+	// published in this article
 	// (https://support.google.com/googleplay/android-developer/answer/10532353).
 	// Each time the supported locations substantially change, the version will be
-	// incremented. The latest supported version is available in this article.
-	// Using this field will ensure that creating and updating the resource with an
-	// older region's version and set of regional prices and currencies will
-	// succeed even though a new version is available.
+	// incremented. Using this field will ensure that creating and updating the
+	// resource with an older region's version and set of regional prices and
+	// currencies will succeed even though a new version is available.
 	Version string `json:"version,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Version") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -5802,7 +5804,7 @@ type RevocationContext struct {
 	// the latest order of the subscription.
 	FullRefund *RevocationContextFullRefund `json:"fullRefund,omitempty"`
 	// ItemBasedRefund: Optional. Used when a specific item should be refunded in a
-	// subscription with multiple items.
+	// subscription with add-on items.
 	ItemBasedRefund *RevocationContextItemBasedRefund `json:"itemBasedRefund,omitempty"`
 	// ProratedRefund: Optional. Used when users should be refunded a prorated
 	// amount they paid for their subscription based on the amount of time
@@ -5834,8 +5836,8 @@ type RevocationContextFullRefund struct {
 // RevocationContextItemBasedRefund: Used to determine what specific item to
 // revoke in a subscription with multiple items.
 type RevocationContextItemBasedRefund struct {
-	// ProductId: Required. If the subscription is a subscription bundle, the
-	// product id of the subscription to revoke.
+	// ProductId: Required. If the subscription is a subscription with add-ons, the
+	// product id of the subscription item to revoke.
 	ProductId string `json:"productId,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "ProductId") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -6340,6 +6342,7 @@ type SubscriptionItemPriceChangeDetails struct {
 	//   "CONFIRMED" - The price change is confirmed to happen for the user.
 	//   "APPLIED" - The price change is applied, i.e. the user has started being
 	// charged the new price.
+	//   "CANCELED" - The price change was canceled.
 	PriceChangeState string `json:"priceChangeState,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "ExpectedNewPriceChargeTime")
 	// to unconditionally include in API requests. By default, fields with empty or
@@ -6707,6 +6710,10 @@ type SubscriptionPurchaseLineItem struct {
 	// ExpiryTime: Time at which the subscription expired or will expire unless the
 	// access is extended (ex. renews).
 	ExpiryTime string `json:"expiryTime,omitempty"`
+	// LatestSuccessfulOrderId: The order id of the latest successful order
+	// associated with this item. Not present if the item is not owned by the user
+	// yet (e.g. the item being deferred replaced to).
+	LatestSuccessfulOrderId string `json:"latestSuccessfulOrderId,omitempty"`
 	// OfferDetails: The offer details for this item.
 	OfferDetails *OfferDetails `json:"offerDetails,omitempty"`
 	// PrepaidPlan: The item is prepaid.
@@ -6912,7 +6919,7 @@ func (s SubscriptionPurchasesDeferResponse) MarshalJSON() ([]byte, error) {
 }
 
 // SubscriptionTaxAndComplianceSettings: Details about taxation, Google Play
-// policy and legal compliance for subscription products.
+// policy, and legal compliance for subscription products.
 type SubscriptionTaxAndComplianceSettings struct {
 	// EeaWithdrawalRightType: Digital content or service classification for
 	// products distributed to users in the European Economic Area (EEA). The
@@ -16307,14 +16314,14 @@ func (c *MonetizationSubscriptionsCreateCall) ProductId(productId string) *Monet
 
 // RegionsVersionVersion sets the optional parameter "regionsVersion.version":
 // Required. A string representing the version of available regions being used
-// for the specified resource. Regional prices for the resource have to be
-// specified according to the information published in this article
+// for the specified resource. Regional prices and latest supported version for
+// the resource have to be specified according to the information published in
+// this article
 // (https://support.google.com/googleplay/android-developer/answer/10532353).
 // Each time the supported locations substantially change, the version will be
-// incremented. The latest supported version is available in this article.
-// Using this field will ensure that creating and updating the resource with an
-// older region's version and set of regional prices and currencies will
-// succeed even though a new version is available.
+// incremented. Using this field will ensure that creating and updating the
+// resource with an older region's version and set of regional prices and
+// currencies will succeed even though a new version is available.
 func (c *MonetizationSubscriptionsCreateCall) RegionsVersionVersion(regionsVersionVersion string) *MonetizationSubscriptionsCreateCall {
 	c.urlParams_.Set("regionsVersion.version", regionsVersionVersion)
 	return c
@@ -16814,14 +16821,14 @@ func (c *MonetizationSubscriptionsPatchCall) LatencyTolerance(latencyTolerance s
 
 // RegionsVersionVersion sets the optional parameter "regionsVersion.version":
 // Required. A string representing the version of available regions being used
-// for the specified resource. Regional prices for the resource have to be
-// specified according to the information published in this article
+// for the specified resource. Regional prices and latest supported version for
+// the resource have to be specified according to the information published in
+// this article
 // (https://support.google.com/googleplay/android-developer/answer/10532353).
 // Each time the supported locations substantially change, the version will be
-// incremented. The latest supported version is available in this article.
-// Using this field will ensure that creating and updating the resource with an
-// older region's version and set of regional prices and currencies will
-// succeed even though a new version is available.
+// incremented. Using this field will ensure that creating and updating the
+// resource with an older region's version and set of regional prices and
+// currencies will succeed even though a new version is available.
 func (c *MonetizationSubscriptionsPatchCall) RegionsVersionVersion(regionsVersionVersion string) *MonetizationSubscriptionsPatchCall {
 	c.urlParams_.Set("regionsVersion.version", regionsVersionVersion)
 	return c
@@ -18089,14 +18096,14 @@ func (c *MonetizationSubscriptionsBasePlansOffersCreateCall) OfferId(offerId str
 
 // RegionsVersionVersion sets the optional parameter "regionsVersion.version":
 // Required. A string representing the version of available regions being used
-// for the specified resource. Regional prices for the resource have to be
-// specified according to the information published in this article
+// for the specified resource. Regional prices and latest supported version for
+// the resource have to be specified according to the information published in
+// this article
 // (https://support.google.com/googleplay/android-developer/answer/10532353).
 // Each time the supported locations substantially change, the version will be
-// incremented. The latest supported version is available in this article.
-// Using this field will ensure that creating and updating the resource with an
-// older region's version and set of regional prices and currencies will
-// succeed even though a new version is available.
+// incremented. Using this field will ensure that creating and updating the
+// resource with an older region's version and set of regional prices and
+// currencies will succeed even though a new version is available.
 func (c *MonetizationSubscriptionsBasePlansOffersCreateCall) RegionsVersionVersion(regionsVersionVersion string) *MonetizationSubscriptionsBasePlansOffersCreateCall {
 	c.urlParams_.Set("regionsVersion.version", regionsVersionVersion)
 	return c
@@ -18743,14 +18750,14 @@ func (c *MonetizationSubscriptionsBasePlansOffersPatchCall) LatencyTolerance(lat
 
 // RegionsVersionVersion sets the optional parameter "regionsVersion.version":
 // Required. A string representing the version of available regions being used
-// for the specified resource. Regional prices for the resource have to be
-// specified according to the information published in this article
+// for the specified resource. Regional prices and latest supported version for
+// the resource have to be specified according to the information published in
+// this article
 // (https://support.google.com/googleplay/android-developer/answer/10532353).
 // Each time the supported locations substantially change, the version will be
-// incremented. The latest supported version is available in this article.
-// Using this field will ensure that creating and updating the resource with an
-// older region's version and set of regional prices and currencies will
-// succeed even though a new version is available.
+// incremented. Using this field will ensure that creating and updating the
+// resource with an older region's version and set of regional prices and
+// currencies will succeed even though a new version is available.
 func (c *MonetizationSubscriptionsBasePlansOffersPatchCall) RegionsVersionVersion(regionsVersionVersion string) *MonetizationSubscriptionsBasePlansOffersPatchCall {
 	c.urlParams_.Set("regionsVersion.version", regionsVersionVersion)
 	return c
@@ -19484,7 +19491,9 @@ type PurchasesSubscriptionsAcknowledgeCall struct {
 //
 //   - packageName: The package name of the application for which this
 //     subscription was purchased (for example, 'com.some.thing').
-//   - subscriptionId: The purchased subscription ID (for example, 'monthly001').
+//   - subscriptionId: Note: Since May 21, 2025, subscription_id is not required,
+//     and not recommended for subscription with add-ons. The purchased
+//     subscription ID (for example, 'monthly001').
 //   - token: The token provided to the user's device when the subscription was
 //     purchased.
 func (r *PurchasesSubscriptionsService) Acknowledge(packageName string, subscriptionId string, token string, subscriptionpurchasesacknowledgerequest *SubscriptionPurchasesAcknowledgeRequest) *PurchasesSubscriptionsAcknowledgeCall {
@@ -19573,7 +19582,9 @@ type PurchasesSubscriptionsCancelCall struct {
 //
 //   - packageName: The package name of the application for which this
 //     subscription was purchased (for example, 'com.some.thing').
-//   - subscriptionId: The purchased subscription ID (for example, 'monthly001').
+//   - subscriptionId: Note: Since May 21, 2025, subscription_id is not required,
+//     and not recommended for subscription with add-ons. The purchased
+//     subscription ID (for example, 'monthly001').
 //   - token: The token provided to the user's device when the subscription was
 //     purchased.
 func (r *PurchasesSubscriptionsService) Cancel(packageName string, subscriptionId string, token string) *PurchasesSubscriptionsCancelCall {

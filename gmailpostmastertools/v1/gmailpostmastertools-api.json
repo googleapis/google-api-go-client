@@ -1,13 +1,4 @@
 {
-  "auth": {
-    "oauth2": {
-      "scopes": {
-        "https://www.googleapis.com/auth/postmaster.readonly": {
-          "description": "See email traffic metrics for the domains you have registered in Gmail Postmaster Tools"
-        }
-      }
-    }
-  },
   "basePath": "",
   "baseUrl": "https://gmailpostmastertools.googleapis.com/",
   "batchPath": "batch",
@@ -127,10 +118,7 @@
           "path": "v1/{+name}",
           "response": {
             "$ref": "Domain"
-          },
-          "scopes": [
-            "https://www.googleapis.com/auth/postmaster.readonly"
-          ]
+          }
         },
         "list": {
           "description": "Lists the domains that have been registered by the client. The order of domains in the response is unspecified and non-deterministic. Newly created domains will not necessarily be added to the end of this list.",
@@ -154,10 +142,7 @@
           "path": "v1/domains",
           "response": {
             "$ref": "ListDomainsResponse"
-          },
-          "scopes": [
-            "https://www.googleapis.com/auth/postmaster.readonly"
-          ]
+          }
         }
       },
       "resources": {
@@ -183,10 +168,7 @@
               "path": "v1/{+name}",
               "response": {
                 "$ref": "TrafficStats"
-              },
-              "scopes": [
-                "https://www.googleapis.com/auth/postmaster.readonly"
-              ]
+              }
             },
             "list": {
               "description": "List traffic statistics for all available days. Returns PERMISSION_DENIED if user does not have permission to access TrafficStats for the domain.",
@@ -255,17 +237,14 @@
               "path": "v1/{+parent}/trafficStats",
               "response": {
                 "$ref": "ListTrafficStatsResponse"
-              },
-              "scopes": [
-                "https://www.googleapis.com/auth/postmaster.readonly"
-              ]
+              }
             }
           }
         }
       }
     }
   },
-  "revision": "20250325",
+  "revision": "20250528",
   "rootUrl": "https://gmailpostmastertools.googleapis.com/",
   "schemas": {
     "DeliveryError": {

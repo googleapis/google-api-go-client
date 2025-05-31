@@ -1471,6 +1471,10 @@ type FirewallInfo struct {
 	// This field is not applicable to VPC firewall rules and implied VPC firewall
 	// rules.
 	Policy string `json:"policy,omitempty"`
+	// PolicyPriority: The priority of the firewall policy that this rule is
+	// associated with. This field is not applicable to VPC firewall rules and
+	// implied VPC firewall rules.
+	PolicyPriority int64 `json:"policyPriority,omitempty"`
 	// PolicyUri: The URI of the firewall policy that this rule is associated with.
 	// This field is not applicable to VPC firewall rules and implied VPC firewall
 	// rules.
@@ -3258,9 +3262,11 @@ type VpcFlowLogsConfig struct {
 	// VPC flow logs. Can only be specified if "metadata" was set to
 	// CUSTOM_METADATA.
 	MetadataFields []string `json:"metadataFields,omitempty"`
-	// Name: Identifier. Unique name of the configuration using the form:
+	// Name: Identifier. Unique name of the configuration using one of the forms:
 	// `projects/{project_id}/locations/global/vpcFlowLogsConfigs/{vpc_flow_logs_con
 	// fig_id}`
+	// `organizations/{organization_number}/locations/global/vpcFlowLogsConfigs/{vpc
+	// _flow_logs_config_id}`
 	Name string `json:"name,omitempty"`
 	// State: Optional. The state of the VPC Flow Log configuration. Default value
 	// is ENABLED. When creating a new configuration, it must be enabled. Setting
@@ -5245,7 +5251,8 @@ type ProjectsLocationsVpcFlowLogsConfigsCreateCall struct {
 // * name * create_time * update_time * labels * description
 //
 //   - parent: The parent resource of the VPC Flow Logs configuration to create:
-//     `projects/{project_id}/locations/global`.
+//     `projects/{project_id}/locations/global`
+//     `organizations/{organization_id}/locations/global`.
 func (r *ProjectsLocationsVpcFlowLogsConfigsService) Create(parent string, vpcflowlogsconfig *VpcFlowLogsConfig) *ProjectsLocationsVpcFlowLogsConfigsCreateCall {
 	c := &ProjectsLocationsVpcFlowLogsConfigsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -5354,9 +5361,11 @@ type ProjectsLocationsVpcFlowLogsConfigsDeleteCall struct {
 
 // Delete: Deletes a specific `VpcFlowLogsConfig`.
 //
-//   - name: `VpcFlowLogsConfig` resource name using the form:
+//   - name: `VpcFlowLogsConfig` resource name using one of the form:
 //     `projects/{project_id}/locations/global/vpcFlowLogsConfigs/{vpc_flow_logs_c
-//     onfig}`.
+//     onfig}
+//     `organizations/{organization_id}/locations/global/vpcFlowLogsConfigs/{vpc_f
+//     low_logs_config}`.
 func (r *ProjectsLocationsVpcFlowLogsConfigsService) Delete(name string) *ProjectsLocationsVpcFlowLogsConfigsDeleteCall {
 	c := &ProjectsLocationsVpcFlowLogsConfigsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5456,7 +5465,9 @@ type ProjectsLocationsVpcFlowLogsConfigsGetCall struct {
 //
 //   - name: `VpcFlowLogsConfig` resource name using the form:
 //     `projects/{project_id}/locations/global/vpcFlowLogsConfigs/{vpc_flow_logs_c
-//     onfig}`.
+//     onfig}`
+//     `organizations/{organization_id}/locations/global/vpcFlowLogsConfigs/{vpc_f
+//     low_logs_config}`.
 func (r *ProjectsLocationsVpcFlowLogsConfigsService) Get(name string) *ProjectsLocationsVpcFlowLogsConfigsGetCall {
 	c := &ProjectsLocationsVpcFlowLogsConfigsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5567,7 +5578,8 @@ type ProjectsLocationsVpcFlowLogsConfigsListCall struct {
 // List: Lists all `VpcFlowLogsConfigs` in a given project.
 //
 //   - parent: The parent resource of the VpcFlowLogsConfig:
-//     `projects/{project_id}/locations/global`.
+//     `projects/{project_id}/locations/global`
+//     `organizations/{organization_id}/locations/global`.
 func (r *ProjectsLocationsVpcFlowLogsConfigsService) List(parent string) *ProjectsLocationsVpcFlowLogsConfigsListCall {
 	c := &ProjectsLocationsVpcFlowLogsConfigsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -5735,9 +5747,11 @@ type ProjectsLocationsVpcFlowLogsConfigsPatchCall struct {
 // fields will fail as well: * name * create_time * update_time * labels *
 // description
 //
-//   - name: Identifier. Unique name of the configuration using the form:
+//   - name: Identifier. Unique name of the configuration using one of the forms:
 //     `projects/{project_id}/locations/global/vpcFlowLogsConfigs/{vpc_flow_logs_c
-//     onfig_id}`.
+//     onfig_id}`
+//     `organizations/{organization_number}/locations/global/vpcFlowLogsConfigs/{v
+//     pc_flow_logs_config_id}`.
 func (r *ProjectsLocationsVpcFlowLogsConfigsService) Patch(name string, vpcflowlogsconfig *VpcFlowLogsConfig) *ProjectsLocationsVpcFlowLogsConfigsPatchCall {
 	c := &ProjectsLocationsVpcFlowLogsConfigsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name

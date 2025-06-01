@@ -3329,7 +3329,7 @@ type PartnersUserSessionsGenerateCall struct {
 // You can use the session token to redirect the user to Google to finish the
 // signup flow. You can re-generate new session token repeatedly for the same
 // request if necessary, regardless of the previous tokens being expired or
-// not.
+// not. By default, the session token is valid for 1 hour.
 //
 //   - parent: The parent, the partner that can resell. Format:
 //     partners/{partner}.

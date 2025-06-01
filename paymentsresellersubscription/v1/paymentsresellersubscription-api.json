@@ -491,7 +491,7 @@
         "userSessions": {
           "methods": {
             "generate": {
-              "description": "This API replaces user authorized OAuth consent based APIs (Create, Entitle). Issues a timed session token for the given user intent. You can use the session token to redirect the user to Google to finish the signup flow. You can re-generate new session token repeatedly for the same request if necessary, regardless of the previous tokens being expired or not.",
+              "description": "This API replaces user authorized OAuth consent based APIs (Create, Entitle). Issues a timed session token for the given user intent. You can use the session token to redirect the user to Google to finish the signup flow. You can re-generate new session token repeatedly for the same request if necessary, regardless of the previous tokens being expired or not. By default, the session token is valid for 1 hour.",
               "flatPath": "v1/partners/{partnersId}/userSessions:generate",
               "httpMethod": "POST",
               "id": "paymentsresellersubscription.partners.userSessions.generate",
@@ -523,7 +523,7 @@
       }
     }
   },
-  "revision": "20250526",
+  "revision": "20250529",
   "rootUrl": "https://paymentsresellersubscription.googleapis.com/",
   "schemas": {
     "GoogleCloudPaymentsResellerSubscriptionV1Amount": {

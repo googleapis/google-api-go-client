@@ -96,8 +96,20 @@ const basePath = "https://gmailpostmastertools.googleapis.com/"
 const basePathTemplate = "https://gmailpostmastertools.UNIVERSE_DOMAIN/"
 const mtlsBasePath = "https://gmailpostmastertools.mtls.googleapis.com/"
 
+// OAuth2 scopes used by this API.
+const (
+	// See email traffic metrics for the domains you have registered in Gmail
+	// Postmaster Tools
+	PostmasterReadonlyScope = "https://www.googleapis.com/auth/postmaster.readonly"
+)
+
 // NewService creates a new Service.
 func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, error) {
+	scopesOption := internaloption.WithDefaultScopes(
+		"https://www.googleapis.com/auth/postmaster.readonly",
+	)
+	// NOTE: prepend, so we don't override user-specified scopes.
+	opts = append([]option.ClientOption{scopesOption}, opts...)
 	opts = append(opts, internaloption.WithDefaultEndpoint(basePath))
 	opts = append(opts, internaloption.WithDefaultEndpointTemplate(basePathTemplate))
 	opts = append(opts, internaloption.WithDefaultMTLSEndpoint(mtlsBasePath))

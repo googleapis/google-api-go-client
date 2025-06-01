@@ -1586,9 +1586,9 @@ func (s StaticRouteConfig) MarshalJSON() ([]byte, error) {
 
 // StringMatcher: Specifies the way to match a string. [#next-free-field: 9]
 type StringMatcher struct {
-	// Contains: The input string must have the substring specified here. Note:
-	// empty contains match is not allowed, please use regex instead. Examples: *
-	// ``abc`` matches the value ``xyz.abc.def``
+	// Contains: The input string must have the substring specified here. .. note::
+	// Empty contains match is not allowed, please use ``safe_regex`` instead.
+	// Examples: * ``abc`` matches the value ``xyz.abc.def``
 	Contains string `json:"contains,omitempty"`
 	// Custom: Use an extension as the matcher type. [#extension-category:
 	// envoy.string_matcher]
@@ -1596,21 +1596,21 @@ type StringMatcher struct {
 	// Exact: The input string must match exactly the string specified here.
 	// Examples: * ``abc`` only matches the value ``abc``.
 	Exact string `json:"exact,omitempty"`
-	// IgnoreCase: If true, indicates the exact/prefix/suffix/contains matching
-	// should be case insensitive. This has no effect for the safe_regex match. For
-	// example, the matcher ``data`` will match both input string ``Data`` and
-	// ``data`` if set to true.
+	// IgnoreCase: If ``true``, indicates the exact/prefix/suffix/contains matching
+	// should be case insensitive. This has no effect for the ``safe_regex`` match.
+	// For example, the matcher ``data`` will match both input string ``Data`` and
+	// ``data`` if this option is set to ``true``.
 	IgnoreCase bool `json:"ignoreCase,omitempty"`
-	// Prefix: The input string must have the prefix specified here. Note: empty
-	// prefix is not allowed, please use regex instead. Examples: * ``abc`` matches
-	// the value ``abc.xyz``
+	// Prefix: The input string must have the prefix specified here. .. note::
+	// Empty prefix match is not allowed, please use ``safe_regex`` instead.
+	// Examples: * ``abc`` matches the value ``abc.xyz``
 	Prefix string `json:"prefix,omitempty"`
 	// SafeRegex: The input string must match the regular expression specified
 	// here.
 	SafeRegex *RegexMatcher `json:"safeRegex,omitempty"`
-	// Suffix: The input string must have the suffix specified here. Note: empty
-	// prefix is not allowed, please use regex instead. Examples: * ``abc`` matches
-	// the value ``xyz.abc``
+	// Suffix: The input string must have the suffix specified here. .. note::
+	// Empty suffix match is not allowed, please use ``safe_regex`` instead.
+	// Examples: * ``abc`` matches the value ``xyz.abc``
 	Suffix string `json:"suffix,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Contains") to
 	// unconditionally include in API requests. By default, fields with empty or

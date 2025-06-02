@@ -4445,8 +4445,8 @@ func (s MachineNetworkDetails) MarshalJSON() ([]byte, error) {
 }
 
 // MachinePreferences: The type of machines to consider when calculating
-// virtual machine migration insights and recommendations for GCE. Not all
-// machine types are available in all zones and regions.
+// virtual machine migration insights and recommendations for Compute Engine.
+// Not all machine types are available in all zones and regions.
 type MachinePreferences struct {
 	// AllowedMachineSeries: Compute Engine machine series to consider for insights
 	// and recommendations. If empty, no restriction is applied on the machine
@@ -7684,7 +7684,7 @@ type VmwareEnginePreferences struct {
 	// and 8.0, with 0.1 increment.
 	CpuOvercommitRatio float64 `json:"cpuOvercommitRatio,omitempty"`
 	// LicenseDiscountPercentage: Optional. Discount percentage for the license
-	// type offered to you by Broadcom. Must be between 0 and 100. Only valid when
+	// offered to you by Broadcom. Must be between 0 and 100. Only valid when
 	// service_type is set to SERVICE_TYPE_PORTABLE_LICENSE.
 	LicenseDiscountPercentage float64 `json:"licenseDiscountPercentage,omitempty"`
 	// MachinePreferences: Optional. Preferences concerning the machine types to
@@ -7693,8 +7693,8 @@ type VmwareEnginePreferences struct {
 	// MemoryOvercommitRatio: Memory overcommit ratio. Acceptable values are 1.0,
 	// 1.25, 1.5, 1.75 and 2.0.
 	MemoryOvercommitRatio float64 `json:"memoryOvercommitRatio,omitempty"`
-	// ServiceType: Optional. VMWare Service Type (Fully Licensed or Portable
-	// License).
+	// ServiceType: Optional. GCVE service type (fully licensed or portable
+	// license).
 	//
 	// Possible values:
 	//   "SERVICE_TYPE_UNSPECIFIED" - Same as SERVICE_TYPE_FULLY_LICENSED.

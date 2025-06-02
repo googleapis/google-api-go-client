@@ -2262,6 +2262,9 @@ type GoogleCloudClouddmsV1OperationMetadata struct {
 	CreateTime string `json:"createTime,omitempty"`
 	// EndTime: Output only. The time the operation finished running.
 	EndTime string `json:"endTime,omitempty"`
+	// Metadata: Output only. Additional metadata that is returned by the backend
+	// for the operation.
+	Metadata map[string]string `json:"metadata,omitempty"`
 	// RequestedCancellation: Output only. Identifies whether the user has
 	// requested cancellation of the operation. Operations that have successfully
 	// been cancelled have google.longrunning.Operation.error value with a

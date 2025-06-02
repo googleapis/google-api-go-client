@@ -1633,6 +1633,32 @@ func (s Form) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GeminiGem: Gemini Gem link.
+type GeminiGem struct {
+	// Id: Gems resource id.
+	Id string `json:"id,omitempty"`
+	// Title: Title of the Gem. Read-only.
+	Title string `json:"title,omitempty"`
+	// Url: URL that can be used to access the Gem. Read-only.
+	Url string `json:"url,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Id") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Id") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GeminiGem) MarshalJSON() ([]byte, error) {
+	type NoMethod GeminiGem
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GlobalPermission: Global user permission description.
 type GlobalPermission struct {
 	// Permission: Permission value.
@@ -2471,15 +2497,19 @@ func (s ListTopicResponse) MarshalJSON() ([]byte, error) {
 }
 
 // Material: Material attached to course work. When creating attachments,
-// setting the `form` field is not supported.
+// setting the `form`, `gem`, or `notebook` field is not supported.
 type Material struct {
 	// DriveFile: Google Drive file material.
 	DriveFile *SharedDriveFile `json:"driveFile,omitempty"`
 	// Form: Google Forms material. Read-only.
 	Form *Form `json:"form,omitempty"`
+	// Gem: Gemini Gem material. Read-only.
+	Gem *GeminiGem `json:"gem,omitempty"`
 	// Link: Link material. On creation, this is upgraded to a more appropriate
 	// type if possible, and this is reflected in the response.
 	Link *Link `json:"link,omitempty"`
+	// Notebook: NotebookLM Notebook material. Read-only.
+	Notebook *NotebookLmNotebook `json:"notebook,omitempty"`
 	// YoutubeVideo: YouTube video material.
 	YoutubeVideo *YouTubeVideo `json:"youtubeVideo,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "DriveFile") to
@@ -2686,6 +2716,32 @@ type Name struct {
 
 func (s Name) MarshalJSON() ([]byte, error) {
 	type NoMethod Name
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// NotebookLmNotebook: NotebookLM Notebook link.
+type NotebookLmNotebook struct {
+	// Id: Notebook resource id.
+	Id string `json:"id,omitempty"`
+	// Title: Title of the Notebook. Read-only.
+	Title string `json:"title,omitempty"`
+	// Url: URL that can be used to access the Notebook. Read-only.
+	Url string `json:"url,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Id") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Id") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s NotebookLmNotebook) MarshalJSON() ([]byte, error) {
+	type NoMethod NotebookLmNotebook
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 

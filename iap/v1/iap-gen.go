@@ -565,11 +565,11 @@ func (s Brand) MarshalJSON() ([]byte, error) {
 }
 
 // CorsSettings: Allows customers to configure HTTP request paths that'll allow
-// HTTP OPTIONS call to bypass authentication and authorization.
+// HTTP `OPTIONS` call to bypass authentication and authorization.
 type CorsSettings struct {
-	// AllowHttpOptions: Configuration to allow HTTP OPTIONS calls to skip
-	// authorization. If undefined, IAP will not apply any special logic to OPTIONS
-	// requests.
+	// AllowHttpOptions: Configuration to allow HTTP `OPTIONS` calls to skip
+	// authentication and authorization. If undefined, IAP will not apply any
+	// special logic to `OPTIONS` requests.
 	AllowHttpOptions bool `json:"allowHttpOptions,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AllowHttpOptions") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -673,18 +673,18 @@ func (s Expr) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GcipSettings: Allows customers to configure tenant_id for GCIP instance
-// per-app.
+// GcipSettings: Allows customers to configure tenant IDs for a Cloud Identity
+// Platform (GCIP) instance for each application.
 type GcipSettings struct {
 	// LoginPageUri: Login page URI associated with the GCIP tenants. Typically,
 	// all resources within the same project share the same login page, though it
 	// could be overridden at the sub resource level.
 	LoginPageUri string `json:"loginPageUri,omitempty"`
-	// TenantIds: Optional. GCIP tenant ids that are linked to the IAP resource.
-	// tenant_ids could be a string beginning with a number character to indicate
-	// authenticating with GCIP tenant flow, or in the format of _ to indicate
-	// authenticating with GCIP agent flow. If agent flow is used, tenant_ids
-	// should only contain one single element, while for tenant flow, tenant_ids
+	// TenantIds: Optional. GCIP tenant IDs that are linked to the IAP resource.
+	// `tenant_ids` could be a string beginning with a number character to indicate
+	// authenticating with GCIP tenant flow, or in the format of `_` to indicate
+	// authenticating with GCIP agent flow. If agent flow is used, `tenant_ids`
+	// should only contain one single element, while for tenant flow, `tenant_ids`
 	// can contain multiple elements.
 	TenantIds []string `json:"tenantIds,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "LoginPageUri") to
@@ -1223,6 +1223,16 @@ type Resource struct {
 	// your service can meet the data availability and management requirements. *
 	// Talk to iam-conditions-eng@ about your use case.
 	Labels map[string]string `json:"labels,omitempty"`
+	// Locations: The locations of the resource. This field is used to determine
+	// whether the request is compliant with Trust Boundaries. Usage: - If unset or
+	// empty, the location of authorization is used as the target location. - For
+	// global resources: use a single value of "global". - For
+	// regional/multi-regional resources: use name of the GCP region(s) where the
+	// resource exists (e.g., ["us-east1", "us-west1"]). For multi-regional
+	// resources specify the name of each GCP region in the resource's
+	// multi-region. NOTE: Only GCP cloud region names are supported -
+	// go/cloud-region-names.
+	Locations []string `json:"locations,omitempty"`
 	// Name: The **relative** name of the resource, which is the URI path of the
 	// resource without the leading "/". See
 	// https://cloud.google.com/iam/docs/conditions-resource-attributes#resource-name

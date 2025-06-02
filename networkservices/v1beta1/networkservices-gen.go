@@ -562,6 +562,11 @@ type EndpointPolicy struct {
 	// Name: Identifier. Name of the EndpointPolicy resource. It matches pattern
 	// `projects/{project}/locations/global/endpointPolicies/{endpoint_policy}`.
 	Name string `json:"name,omitempty"`
+	// SecurityPolicy: Optional. A URL referring to a SecurityPolicy resource.
+	// SecurityPolicy is used to enforce rate limiting policy on the inbound
+	// traffic at the identified backends. If this field is not set, rate limiting
+	// is disabled for this endpoint.
+	SecurityPolicy string `json:"securityPolicy,omitempty"`
 	// ServerTlsPolicy: Optional. A URL referring to ServerTlsPolicy resource.
 	// ServerTlsPolicy is used to determine the authentication policy to be applied
 	// to terminate the inbound traffic at the identified backends. If this field
@@ -1881,6 +1886,7 @@ func (s HttpRouteRedirect) MarshalJSON() ([]byte, error) {
 // shadowed to a separate mirrored destination service. The proxy does not wait
 // for responses from the shadow service. Prior to sending traffic to the
 // shadow service, the host/authority header is suffixed with -shadow.
+// Mirroring is currently not supported for Cloud Run destinations.
 type HttpRouteRequestMirrorPolicy struct {
 	// Destination: The destination the requests will be mirrored to. The weight of
 	// the destination will be ignored.

@@ -2056,6 +2056,8 @@ type DeveloperConnectEventConfig struct {
 	//   "GITHUB_ENTERPRISE" - The SCM repo is GITHUB_ENTERPRISE.
 	//   "GITLAB" - The SCM repo is GITLAB.
 	//   "GITLAB_ENTERPRISE" - The SCM repo is GITLAB_ENTERPRISE.
+	//   "BITBUCKET_DATA_CENTER" - The SCM repo is BITBUCKET_DATA_CENTER.
+	//   "BITBUCKET_CLOUD" - The SCM repo is BITBUCKET_CLOUD.
 	GitRepositoryLinkType string `json:"gitRepositoryLinkType,omitempty"`
 	// PullRequest: Filter to match changes in pull requests.
 	PullRequest *PullRequestFilter `json:"pullRequest,omitempty"`
@@ -2705,8 +2707,7 @@ func (s GitSourceDependency) MarshalJSON() ([]byte, error) {
 
 // GitSourceRepository: A repository for a git source.
 type GitSourceRepository struct {
-	// DeveloperConnect: The Developer Connect Git repository link or the url that
-	// matches a repository link in the current project, formatted as
+	// DeveloperConnect: The Developer Connect Git repository link formatted as
 	// `projects/*/locations/*/connections/*/gitRepositoryLink/*`
 	DeveloperConnect string `json:"developerConnect,omitempty"`
 	// Url: Location of the Git repository.

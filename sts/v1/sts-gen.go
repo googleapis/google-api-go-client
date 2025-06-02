@@ -347,8 +347,11 @@ type GoogleIdentityStsV1ExchangeTokenRequest struct {
 	// `urn:ietf:params:oauth:token-type:access_boundary_intermediary_token`.
 	RequestedTokenType string `json:"requestedTokenType,omitempty"`
 	// Scope: The OAuth 2.0 scopes to include on the resulting access token,
-	// formatted as a list of space-delimited, case-sensitive strings. Required
-	// when exchanging an external credential for a Google access token.
+	// formatted as a list of space-delimited, case-sensitive strings; for example,
+	// `https://www.googleapis.com/auth/cloud-platform`. Required when exchanging
+	// an external credential for a Google access token. For a list of OAuth 2.0
+	// scopes, see OAuth 2.0 Scopes for Google APIs
+	// (https://developers.google.com/identity/protocols/oauth2/scopes).
 	Scope string `json:"scope,omitempty"`
 	// SubjectToken: Required. The input token. This token is either an external
 	// credential issued by a workload identity pool provider, or a short-lived

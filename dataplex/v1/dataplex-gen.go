@@ -5607,6 +5607,10 @@ type GoogleCloudDataplexV1ImportItem struct {
 	AspectKeys []string `json:"aspectKeys,omitempty"`
 	// Entry: Information about an entry and its attached aspects.
 	Entry *GoogleCloudDataplexV1Entry `json:"entry,omitempty"`
+	// EntryLink: Information about the entry link. User should provide either one
+	// of the entry or entry_link. While providing entry_link, user should not
+	// provide update_mask and aspect_keys.
+	EntryLink *GoogleCloudDataplexV1EntryLink `json:"entryLink,omitempty"`
 	// UpdateMask: The fields to update, in paths that are relative to the Entry
 	// resource. Separate each field with a comma.In FULL entry sync mode, Dataplex
 	// includes the paths of all of the fields for an entry that can be modified,
@@ -6817,14 +6821,23 @@ func (s GoogleCloudDataplexV1MetadataJobExportJobSpecExportJobScope) MarshalJSON
 type GoogleCloudDataplexV1MetadataJobImportJobResult struct {
 	// CreatedEntries: Output only. The total number of entries that were created.
 	CreatedEntries int64 `json:"createdEntries,omitempty,string"`
+	// CreatedEntryLinks: Output only. The total number of entry links that were
+	// successfully created.
+	CreatedEntryLinks int64 `json:"createdEntryLinks,omitempty,string"`
 	// DeletedEntries: Output only. The total number of entries that were deleted.
 	DeletedEntries int64 `json:"deletedEntries,omitempty,string"`
+	// DeletedEntryLinks: Output only. The total number of entry links that were
+	// successfully deleted.
+	DeletedEntryLinks int64 `json:"deletedEntryLinks,omitempty,string"`
 	// RecreatedEntries: Output only. The total number of entries that were
 	// recreated.
 	RecreatedEntries int64 `json:"recreatedEntries,omitempty,string"`
 	// UnchangedEntries: Output only. The total number of entries that were
 	// unchanged.
 	UnchangedEntries int64 `json:"unchangedEntries,omitempty,string"`
+	// UnchangedEntryLinks: Output only. The total number of entry links that were
+	// left unchanged.
+	UnchangedEntryLinks int64 `json:"unchangedEntryLinks,omitempty,string"`
 	// UpdateTime: Output only. The time when the status was updated.
 	UpdateTime string `json:"updateTime,omitempty"`
 	// UpdatedEntries: Output only. The total number of entries that were updated.
@@ -6967,6 +6980,14 @@ type GoogleCloudDataplexV1MetadataJobImportJobSpecImportJobScope struct {
 	// are affected by the job.Must contain exactly one element. The entry group
 	// and the job must be in the same location.
 	EntryGroups []string `json:"entryGroups,omitempty"`
+	// EntryLinkTypes: Optional. The entry link types that are in scope for the
+	// import job, specified as relative resource names in the format
+	// projects/{project_number_or_id}/locations/{location_id}/entryLinkTypes/{entry
+	// _link_type_id}. The job modifies only the entryLinks that belong to these
+	// entry link types.If the metadata import file attempts to create or delete an
+	// entry link whose entry link type isn't included in this list, the import job
+	// will skip those entry links.
+	EntryLinkTypes []string `json:"entryLinkTypes,omitempty"`
 	// EntryTypes: Required. The entry types that are in scope for the import job,
 	// specified as relative resource names in the format
 	// projects/{project_number_or_id}/locations/{location_id}/entryTypes/{entry_typ
@@ -6976,6 +6997,22 @@ type GoogleCloudDataplexV1MetadataJobImportJobSpecImportJobScope struct {
 	// any entries or aspects.The location of an entry type must either match the
 	// location of the job, or the entry type must be global.
 	EntryTypes []string `json:"entryTypes,omitempty"`
+	// Glossaries: Optional. The glossaries that are in scope for the import job,
+	// specified as relative resource names in the format
+	// projects/{project_number_or_id}/locations/{location_id}/glossaries/{glossary_
+	// id}.While importing Business Glossary entries, the user must provide
+	// glossaries. While importing entries, the user does not have to provide
+	// glossaries. If the metadata import file attempts to modify Business Glossary
+	// entries whose glossary isn't included in this list, the import job will skip
+	// those entries.The location of a glossary must either match the location of
+	// the job, or the glossary must be global.
+	Glossaries []string `json:"glossaries,omitempty"`
+	// ReferencedEntryScopes: Optional. Defines the scope of entries that can be
+	// referenced in the entry links.Currently, projects are supported as valid
+	// scopes. Format: projects/{project_number_or_id}If the metadata import file
+	// attempts to create an entry link which references an entry that is not in
+	// the scope, the import job will skip that entry link.
+	ReferencedEntryScopes []string `json:"referencedEntryScopes,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AspectTypes") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See

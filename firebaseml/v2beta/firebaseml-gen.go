@@ -1751,8 +1751,9 @@ func (s GoogleCloudAiplatformV1beta1GroundingMetadata) MarshalJSON() ([]byte, er
 // GoogleCloudAiplatformV1beta1GroundingSupport: Grounding support.
 type GoogleCloudAiplatformV1beta1GroundingSupport struct {
 	// ConfidenceScores: Confidence score of the support references. Ranges from 0
-	// to 1. 1 is the most confident. This list must have the same size as the
-	// grounding_chunk_indices.
+	// to 1. 1 is the most confident. For Gemini 2.0 and before, this list must
+	// have the same size as the grounding_chunk_indices. For Gemini 2.5 and after,
+	// this list will be empty and should be ignored.
 	ConfidenceScores []float64 `json:"confidenceScores,omitempty"`
 	// GroundingChunkIndices: A list of indices (into 'grounding_chunk') specifying
 	// the citations associated with the claim. For instance [1,3,4] means that
@@ -1945,7 +1946,7 @@ type GoogleCloudAiplatformV1beta1Part struct {
 	InlineData *GoogleCloudAiplatformV1beta1Blob `json:"inlineData,omitempty"`
 	// Text: Optional. Text part (can be code).
 	Text string `json:"text,omitempty"`
-	// Thought: Output only. Indicates if the part is thought from the model.
+	// Thought: Optional. Indicates if the part is thought from the model.
 	Thought bool `json:"thought,omitempty"`
 	// ThoughtSignature: Optional. An opaque signature for the thought so it can be
 	// reused in subsequent requests.
@@ -2694,6 +2695,8 @@ type GoogleCloudAiplatformV1beta1Tool struct {
 	// provided retrieval tool(s) to get external knowledge to answer the prompt.
 	// Retrieval results are presented to the model for generation.
 	Retrieval *GoogleCloudAiplatformV1beta1Retrieval `json:"retrieval,omitempty"`
+	// UrlContext: Optional. Tool to support URL context retrieval.
+	UrlContext *GoogleCloudAiplatformV1beta1UrlContext `json:"urlContext,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "CodeExecution") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -2773,6 +2776,10 @@ func (s GoogleCloudAiplatformV1beta1ToolConfig) MarshalJSON() ([]byte, error) {
 // GoogleCloudAiplatformV1beta1ToolGoogleSearch: GoogleSearch tool type. Tool
 // to support Google Search in Model. Powered by Google.
 type GoogleCloudAiplatformV1beta1ToolGoogleSearch struct {
+}
+
+// GoogleCloudAiplatformV1beta1UrlContext: Tool to support URL context.
+type GoogleCloudAiplatformV1beta1UrlContext struct {
 }
 
 // GoogleCloudAiplatformV1beta1VertexAISearch: Retrieve from Vertex AI Search

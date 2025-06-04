@@ -116,7 +116,7 @@
       }
     }
   },
-  "revision": "20250224",
+  "revision": "20250602",
   "rootUrl": "https://travelimpactmodel.googleapis.com/",
   "schemas": {
     "ComputeFlightEmissionsRequest": {
@@ -234,7 +234,7 @@
       "properties": {
         "emissionsGramsPerPax": {
           "$ref": "EmissionsGramsPerPax",
-          "description": "Optional. Per-passenger emission estimate numbers. Will not be present if emissions could not be computed. For the list of reasons why emissions could not be computed, see ComputeFlightEmissions. This field uses wtw emissions aka ttw_emissions_grams_per_pax + wtt_emissions_grams_per_pax."
+          "description": "Optional. Per-passenger emission estimate numbers. Will not be present if emissions could not be computed. For the list of reasons why emissions could not be computed, see ComputeFlightEmissions."
         },
         "flight": {
           "$ref": "Flight",

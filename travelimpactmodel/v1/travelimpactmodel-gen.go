@@ -314,8 +314,6 @@ type FlightWithEmissions struct {
 	// EmissionsGramsPerPax: Optional. Per-passenger emission estimate numbers.
 	// Will not be present if emissions could not be computed. For the list of
 	// reasons why emissions could not be computed, see ComputeFlightEmissions.
-	// This field uses wtw emissions aka ttw_emissions_grams_per_pax +
-	// wtt_emissions_grams_per_pax.
 	EmissionsGramsPerPax *EmissionsGramsPerPax `json:"emissionsGramsPerPax,omitempty"`
 	// Flight: Required. Matches the flight identifiers in the request. Note: all
 	// IATA codes are capitalized.

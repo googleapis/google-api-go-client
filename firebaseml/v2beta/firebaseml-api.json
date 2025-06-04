@@ -206,7 +206,7 @@
       }
     }
   },
-  "revision": "20250525",
+  "revision": "20250601",
   "rootUrl": "https://firebaseml.googleapis.com/",
   "schemas": {
     "Date": {
@@ -1467,7 +1467,7 @@
       "id": "GoogleCloudAiplatformV1beta1GroundingSupport",
       "properties": {
         "confidenceScores": {
-          "description": "Confidence score of the support references. Ranges from 0 to 1. 1 is the most confident. This list must have the same size as the grounding_chunk_indices.",
+          "description": "Confidence score of the support references. Ranges from 0 to 1. 1 is the most confident. For Gemini 2.0 and before, this list must have the same size as the grounding_chunk_indices. For Gemini 2.5 and after, this list will be empty and should be ignored.",
           "items": {
             "format": "float",
             "type": "number"
@@ -1610,8 +1610,7 @@
           "type": "string"
         },
         "thought": {
-          "description": "Output only. Indicates if the part is thought from the model.",
-          "readOnly": true,
+          "description": "Optional. Indicates if the part is thought from the model.",
           "type": "boolean"
         },
         "thoughtSignature": {
@@ -2222,6 +2221,10 @@
         "retrieval": {
           "$ref": "GoogleCloudAiplatformV1beta1Retrieval",
           "description": "Optional. Retrieval tool type. System will always execute the provided retrieval tool(s) to get external knowledge to answer the prompt. Retrieval results are presented to the model for generation."
+        },
+        "urlContext": {
+          "$ref": "GoogleCloudAiplatformV1beta1UrlContext",
+          "description": "Optional. Tool to support URL context retrieval."
         }
       },
       "type": "object"
@@ -2269,6 +2272,12 @@
     "GoogleCloudAiplatformV1beta1ToolGoogleSearch": {
       "description": "GoogleSearch tool type. Tool to support Google Search in Model. Powered by Google.",
       "id": "GoogleCloudAiplatformV1beta1ToolGoogleSearch",
+      "properties": {},
+      "type": "object"
+    },
+    "GoogleCloudAiplatformV1beta1UrlContext": {
+      "description": "Tool to support URL context.",
+      "id": "GoogleCloudAiplatformV1beta1UrlContext",
       "properties": {},
       "type": "object"
     },

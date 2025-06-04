@@ -1027,6 +1027,9 @@ type CryptoKeyVersion struct {
 	// Signature Algorithm, at security level 3. Randomized version.
 	//   "PQ_SIGN_SLH_DSA_SHA2_128S" - The post-quantum stateless hash-based
 	// digital signature algorithm, at security level 1. Randomized version.
+	//   "PQ_SIGN_HASH_SLH_DSA_SHA2_128S_SHA256" - The post-quantum stateless
+	// hash-based digital signature algorithm, at security level 1. Randomized
+	// pre-hash version supporting SHA256 digests.
 	Algorithm string `json:"algorithm,omitempty"`
 	// Attestation: Output only. Statement that was generated and signed by the HSM
 	// at key creation time. Use this statement to verify attributes of the key as
@@ -1212,6 +1215,9 @@ type CryptoKeyVersionTemplate struct {
 	// Signature Algorithm, at security level 3. Randomized version.
 	//   "PQ_SIGN_SLH_DSA_SHA2_128S" - The post-quantum stateless hash-based
 	// digital signature algorithm, at security level 1. Randomized version.
+	//   "PQ_SIGN_HASH_SLH_DSA_SHA2_128S_SHA256" - The post-quantum stateless
+	// hash-based digital signature algorithm, at security level 1. Randomized
+	// pre-hash version supporting SHA256 digests.
 	Algorithm string `json:"algorithm,omitempty"`
 	// ProtectionLevel: ProtectionLevel to use when creating a CryptoKeyVersion
 	// based on this template. Immutable. Defaults to SOFTWARE.
@@ -1819,6 +1825,9 @@ type ImportCryptoKeyVersionRequest struct {
 	// Signature Algorithm, at security level 3. Randomized version.
 	//   "PQ_SIGN_SLH_DSA_SHA2_128S" - The post-quantum stateless hash-based
 	// digital signature algorithm, at security level 1. Randomized version.
+	//   "PQ_SIGN_HASH_SLH_DSA_SHA2_128S_SHA256" - The post-quantum stateless
+	// hash-based digital signature algorithm, at security level 1. Randomized
+	// pre-hash version supporting SHA256 digests.
 	Algorithm string `json:"algorithm,omitempty"`
 	// CryptoKeyVersion: Optional. The optional name of an existing
 	// CryptoKeyVersion to target for an import operation. If this field is not
@@ -2928,6 +2937,9 @@ type PublicKey struct {
 	// Signature Algorithm, at security level 3. Randomized version.
 	//   "PQ_SIGN_SLH_DSA_SHA2_128S" - The post-quantum stateless hash-based
 	// digital signature algorithm, at security level 1. Randomized version.
+	//   "PQ_SIGN_HASH_SLH_DSA_SHA2_128S_SHA256" - The post-quantum stateless
+	// hash-based digital signature algorithm, at security level 1. Randomized
+	// pre-hash version supporting SHA256 digests.
 	Algorithm string `json:"algorithm,omitempty"`
 	// Name: The name of the CryptoKeyVersion public key. Provided here for
 	// verification. NOTE: This field is in Beta.

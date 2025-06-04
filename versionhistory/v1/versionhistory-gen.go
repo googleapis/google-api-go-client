@@ -6,7 +6,7 @@
 
 // Package versionhistory provides access to the versionhistory.googleapis.com API.
 //
-// For product documentation, see: https://developers.chrome.com/versionhistory
+// For product documentation, see: https://developer.chrome.com/docs/web-platform/versionhistory/guide
 //
 // # Library status
 //
@@ -108,9 +108,6 @@ func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, err
 	}
 	s := &Service{client: client, BasePath: basePath, logger: internaloption.GetLogger(opts)}
 	s.Platforms = NewPlatformsService(s)
-	if err != nil {
-		return nil, err
-	}
 	if endpoint != "" {
 		s.BasePath = endpoint
 	}

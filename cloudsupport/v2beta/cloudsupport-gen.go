@@ -3033,8 +3033,10 @@ type MediaDownloadCall struct {
 	header_      http.Header
 }
 
-// Download: Download a file attached to a case. Note: HTTP requests must
-// append "?alt=media" to the URL. EXAMPLES: cURL: ```shell
+// Download: Download a file attached to a case. When this endpoint is called,
+// no "response body" will be returned. Instead, the attachment's blob will be
+// returned. Note: HTTP requests must append "?alt=media" to the URL. EXAMPLES:
+// cURL: ```shell
 // name="projects/some-project/cases/43594844/attachments/0674M00000WijAnZAJ"
 // curl \ --header "Authorization: Bearer $(gcloud auth print-access-token)" \
 // "https://cloudsupport.googleapis.com/v2/$name:download?alt=media" ```

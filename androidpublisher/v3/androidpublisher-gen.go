@@ -5801,7 +5801,7 @@ func (s ReviewsReplyResponse) MarshalJSON() ([]byte, error) {
 // purchases.subscriptionsv2.revoke API.
 type RevocationContext struct {
 	// FullRefund: Optional. Used when users should be refunded the full amount of
-	// the latest order of the subscription.
+	// latest charge on each item in the subscription.
 	FullRefund *RevocationContextFullRefund `json:"fullRefund,omitempty"`
 	// ItemBasedRefund: Optional. Used when a specific item should be refunded in a
 	// subscription with add-on items.

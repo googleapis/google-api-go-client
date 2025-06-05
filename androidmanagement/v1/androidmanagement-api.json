@@ -1204,7 +1204,7 @@
       }
     }
   },
-  "revision": "20250602",
+  "revision": "20250603",
   "rootUrl": "https://androidmanagement.googleapis.com/",
   "schemas": {
     "AdbShellCommandEvent": {
@@ -2087,7 +2087,7 @@
         },
         "extensionConfig": {
           "$ref": "ExtensionConfig",
-          "description": "Configuration to enable this app as an extension app, with the capability of interacting with Android Device Policy offline.This field can be set for at most one app.The signing key certificate fingerprint of the app on the device must match one of the entries in ApplicationPolicy.signingKeyCerts or the signing key certificate fingerprints obtained from Play Store for the app to be able to communicate with Android Device Policy. If the app is not on Play Store and ApplicationPolicy.signingKeyCerts is not set, a NonComplianceDetail with INVALID_VALUE is reported."
+          "description": "Configuration to enable this app as an extension app, with the capability of interacting with Android Device Policy offline.This field can be set for at most one app.The signing key certificate fingerprint of the app on the device must match one of the entries in signingKeyFingerprintsSha256 or the signing key certificate fingerprints obtained from Play Store for the app to be able to communicate with Android Device Policy. If the app is not on Play Store and signingKeyFingerprintsSha256 is not set, a nonComplianceDetail with INVALID_VALUE is reported."
         },
         "installConstraint": {
           "description": "Optional. The constraints for installing the app. You can specify a maximum of one InstallConstraint. Multiple constraints are rejected.",
@@ -3178,7 +3178,7 @@
         },
         "preferentialNetworkServiceSettings": {
           "$ref": "PreferentialNetworkServiceSettings",
-          "description": "Optional. Preferential network service configuration. Setting this field will override preferentialNetworkService. This can be set on both work profiles and fully managed devices on Android 13 and above."
+          "description": "Optional. Preferential network service configuration. Setting this field will override preferentialNetworkService. This can be set on both work profiles and fully managed devices on Android 13 and above. See 5G network slicing (https://developers.google.com/android/management/5g-network-slicing) guide for more details."
         },
         "tetheringSettings": {
           "description": "Controls tethering settings. Based on the value set, the user is partially or fully disallowed from using different forms of tethering.",
@@ -3822,7 +3822,7 @@
           "type": "string"
         },
         "signingKeyFingerprintsSha256": {
-          "description": "Hex-encoded SHA-256 hashes of the signing key certificates of the extension app. Only hexadecimal string representations of 64 characters are valid.The signing key certificate fingerprints are always obtained from the Play Store and this field is used to provide additional signing key certificate fingerprints. However, if the application is not available on the Play Store, this field needs to be set. A NonComplianceDetail with INVALID_VALUE is reported if this field is not set when the application is not available on the Play Store.The signing key certificate fingerprint of the extension app on the device must match one of the signing key certificate fingerprints obtained from the Play Store or the ones provided in this field for the app to be able to communicate with Android Device Policy.In production use cases, it is recommended to leave this empty.",
+          "description": "Hex-encoded SHA-256 hashes of the signing key certificates of the extension app. Only hexadecimal string representations of 64 characters are valid.The signing key certificate fingerprints are always obtained from the Play Store and this field is used to provide additional signing key certificate fingerprints. However, if the application is not available on the Play Store, this field needs to be set. A nonComplianceDetail with INVALID_VALUE is reported if this field is not set when the application is not available on the Play Store.The signing key certificate fingerprint of the extension app on the device must match one of the signing key certificate fingerprints obtained from the Play Store or the ones provided in this field for the app to be able to communicate with Android Device Policy.In production use cases, it is recommended to leave this empty.",
           "items": {
             "type": "string"
           },

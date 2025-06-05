@@ -532,7 +532,7 @@ type Deployment struct {
 	// resource types) and continue actuation. Not all resource types are
 	// supported, refer to documentation.
 	ImportExistingResources bool `json:"importExistingResources,omitempty"`
-	// Labels: User-defined metadata for the deployment.
+	// Labels: Optional. User-defined metadata for the deployment.
 	Labels map[string]string `json:"labels,omitempty"`
 	// LatestRevision: Output only. Revision name that was most recently applied.
 	// Format: `projects/{project}/locations/{location}/deployments/{deployment}/
@@ -550,7 +550,7 @@ type Deployment struct {
 	//   "LOCK_FAILED" - The deployment has failed to lock.
 	//   "UNLOCK_FAILED" - The deployment has failed to unlock.
 	LockState string `json:"lockState,omitempty"`
-	// Name: Resource name of the deployment. Format:
+	// Name: Identifier. Resource name of the deployment. Format:
 	// `projects/{project}/locations/{location}/deployments/{deployment}`
 	Name string `json:"name,omitempty"`
 	// QuotaValidation: Optional. Input to control quota checks for resources in
@@ -3580,7 +3580,7 @@ type ProjectsLocationsDeploymentsPatchCall struct {
 
 // Patch: Updates a Deployment.
 //
-//   - name: Resource name of the deployment. Format:
+//   - name: Identifier. Resource name of the deployment. Format:
 //     `projects/{project}/locations/{location}/deployments/{deployment}`.
 func (r *ProjectsLocationsDeploymentsService) Patch(name string, deployment *Deployment) *ProjectsLocationsDeploymentsPatchCall {
 	c := &ProjectsLocationsDeploymentsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}

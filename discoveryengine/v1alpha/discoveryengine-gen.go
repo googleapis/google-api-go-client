@@ -2761,6 +2761,63 @@ func (s GoogleCloudDiscoveryengineV1BatchCreateTargetSitesResponse) MarshalJSON(
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudDiscoveryengineV1BatchUpdateUserLicensesMetadata: Metadata
+// related to the progress of the UserLicenseService.BatchUpdateUserLicenses
+// operation. This will be returned by the
+// google.longrunning.Operation.metadata field.
+type GoogleCloudDiscoveryengineV1BatchUpdateUserLicensesMetadata struct {
+	// CreateTime: Operation create time.
+	CreateTime string `json:"createTime,omitempty"`
+	// FailureCount: Count of user licenses that failed to be updated.
+	FailureCount int64 `json:"failureCount,omitempty,string"`
+	// SuccessCount: Count of user licenses successfully updated.
+	SuccessCount int64 `json:"successCount,omitempty,string"`
+	// UpdateTime: Operation last update time. If the operation is done, this is
+	// also the finish time.
+	UpdateTime string `json:"updateTime,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "CreateTime") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CreateTime") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1BatchUpdateUserLicensesMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1BatchUpdateUserLicensesMetadata
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1BatchUpdateUserLicensesResponse: Response
+// message for UserLicenseService.BatchUpdateUserLicenses method.
+type GoogleCloudDiscoveryengineV1BatchUpdateUserLicensesResponse struct {
+	// ErrorSamples: A sample of errors encountered while processing the request.
+	ErrorSamples []*GoogleRpcStatus `json:"errorSamples,omitempty"`
+	// UserLicenses: UserLicenses successfully updated.
+	UserLicenses []*GoogleCloudDiscoveryengineV1UserLicense `json:"userLicenses,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ErrorSamples") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ErrorSamples") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1BatchUpdateUserLicensesResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1BatchUpdateUserLicensesResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudDiscoveryengineV1CmekConfig: Configurations used to enable CMEK
 // data encryption with Cloud KMS keys.
 type GoogleCloudDiscoveryengineV1CmekConfig struct {
@@ -2778,7 +2835,7 @@ type GoogleCloudDiscoveryengineV1CmekConfig struct {
 	LastRotationTimestampMicros int64 `json:"lastRotationTimestampMicros,omitempty,string"`
 	// Name: Required. The name of the CmekConfig of the form
 	// `projects/{project}/locations/{location}/cmekConfig` or
-	// `projects/{project}/locations/{location}/cmekConfigs/{cmekConfig}`.
+	// `projects/{project}/locations/{location}/cmekConfigs/{cmek_config}`.
 	Name string `json:"name,omitempty"`
 	// NotebooklmState: Output only. Whether the NotebookLM Corpus is ready to be
 	// used.
@@ -2805,6 +2862,8 @@ type GoogleCloudDiscoveryengineV1CmekConfig struct {
 	//   "UNUSABLE" - The CmekConfig is not usable, most likely due to some
 	// internal issue.
 	//   "ACTIVE_ROTATING" - The KMS key version is being rotated.
+	//   "DELETED" - The KMS key is soft deleted. Some cleanup policy will
+	// eventually be applied.
 	State string `json:"state,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "IsDefault") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -5993,6 +6052,61 @@ func (s GoogleCloudDiscoveryengineV1UpdateTargetSiteMetadata) MarshalJSON() ([]b
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudDiscoveryengineV1UserLicense: User License information assigned
+// by the admin.
+type GoogleCloudDiscoveryengineV1UserLicense struct {
+	// CreateTime: Output only. User created timestamp.
+	CreateTime string `json:"createTime,omitempty"`
+	// LastLoginTime: Output only. User last logged in time. If the user has not
+	// logged in yet, this field will be empty.
+	LastLoginTime string `json:"lastLoginTime,omitempty"`
+	// LicenseAssignmentState: Output only. License assignment state of the user.
+	// If the user is assigned with a license config, the user loggin will be
+	// assigned with the license; If the user's license assignment state is
+	// unassigned or unspecified, no license config will be associated to the user;
+	//
+	// Possible values:
+	//   "LICENSE_ASSIGNMENT_STATE_UNSPECIFIED" - Default value.
+	//   "ASSIGNED" - License assigned to the user.
+	//   "UNASSIGNED" - No license assigned to the user. Deprecated, translated to
+	// NO_LICENSE.
+	//   "NO_LICENSE" - No license assigned to the user.
+	//   "NO_LICENSE_ATTEMPTED_LOGIN" - User attempted to login but no license
+	// assigned to the user. This state is only used for no user first time login
+	// attempt but cannot get license assigned. Users already logged in but cannot
+	// get license assigned will be assigned NO_LICENSE state(License could be
+	// unassigned by admin).
+	LicenseAssignmentState string `json:"licenseAssignmentState,omitempty"`
+	// LicenseConfig: Optional. The full resource name of the
+	// Subscription(LicenseConfig) assigned to the user.
+	LicenseConfig string `json:"licenseConfig,omitempty"`
+	// UpdateTime: Output only. User update timestamp.
+	UpdateTime string `json:"updateTime,omitempty"`
+	// UserPrincipal: Required. Immutable. The user principal of the User, could be
+	// email address or other prinical identifier. This field is immutable. Admin
+	// assign licenses based on the user principal.
+	UserPrincipal string `json:"userPrincipal,omitempty"`
+	// UserProfile: Optional. The user profile. We user user full name(First name +
+	// Last name) as user profile.
+	UserProfile string `json:"userProfile,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "CreateTime") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CreateTime") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1UserLicense) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1UserLicense
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudDiscoveryengineV1WorkspaceConfig: Config to store data store type
 // configuration for workspace data
 type GoogleCloudDiscoveryengineV1WorkspaceConfig struct {
@@ -8630,8 +8744,6 @@ type GoogleCloudDiscoveryengineV1alphaBatchUpdateUserLicensesRequest struct {
 	// associated license config, the user license will be deleted. By default
 	// which is false, the user license will be updated to unassigned state.
 	DeleteUnassignedUserLicenses bool `json:"deleteUnassignedUserLicenses,omitempty"`
-	// GcsSource: Cloud Storage location for the input content.
-	GcsSource *GoogleCloudDiscoveryengineV1alphaGcsSource `json:"gcsSource,omitempty"`
 	// InlineSource: The inline source for the input content for document
 	// embeddings.
 	InlineSource *GoogleCloudDiscoveryengineV1alphaBatchUpdateUserLicensesRequestInlineSource `json:"inlineSource,omitempty"`
@@ -9540,7 +9652,7 @@ type GoogleCloudDiscoveryengineV1alphaCmekConfig struct {
 	LastRotationTimestampMicros int64 `json:"lastRotationTimestampMicros,omitempty,string"`
 	// Name: Required. The name of the CmekConfig of the form
 	// `projects/{project}/locations/{location}/cmekConfig` or
-	// `projects/{project}/locations/{location}/cmekConfigs/{cmekConfig}`.
+	// `projects/{project}/locations/{location}/cmekConfigs/{cmek_config}`.
 	Name string `json:"name,omitempty"`
 	// NotebooklmState: Output only. Whether the NotebookLM Corpus is ready to be
 	// used.
@@ -9567,6 +9679,8 @@ type GoogleCloudDiscoveryengineV1alphaCmekConfig struct {
 	//   "UNUSABLE" - The CmekConfig is not usable, most likely due to some
 	// internal issue.
 	//   "ACTIVE_ROTATING" - The KMS key version is being rotated.
+	//   "DELETED" - The KMS key is soft deleted. Some cleanup policy will
+	// eventually be applied.
 	State string `json:"state,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
@@ -10999,9 +11113,11 @@ type GoogleCloudDiscoveryengineV1alphaDataConnector struct {
 	// IncrementalRefreshInterval: Optional. The refresh interval specifically for
 	// incremental data syncs. If unset, incremental syncs will use the default
 	// from env, set to 3hrs. The minimum is 30 minutes and maximum is 7 days.
+	// Applicable to only 3P connectors.
 	IncrementalRefreshInterval string `json:"incrementalRefreshInterval,omitempty"`
 	// IncrementalSyncDisabled: Optional. Indicates whether incremental syncs are
 	// paused for this connector. This is independent of auto_run_disabled.
+	// Applicable to only 3P connectors.
 	IncrementalSyncDisabled bool `json:"incrementalSyncDisabled,omitempty"`
 	// KmsKeyName: Input only. The KMS key to be used to protect the DataStores
 	// managed by this connector. Must be set for requests that need to comply with
@@ -13093,7 +13209,7 @@ func (s GoogleCloudDiscoveryengineV1alphaEvaluation) MarshalJSON() ([]byte, erro
 // GoogleCloudDiscoveryengineV1alphaEvaluationEvaluationSpec: Describes the
 // specification of the evaluation.
 type GoogleCloudDiscoveryengineV1alphaEvaluationEvaluationSpec struct {
-	// QuerySetSpec: Required. The specification of the query set.
+	// QuerySetSpec: Optional. The specification of the query set.
 	QuerySetSpec *GoogleCloudDiscoveryengineV1alphaEvaluationEvaluationSpecQuerySetSpec `json:"querySetSpec,omitempty"`
 	// SearchRequest: Required. The search request that is used to perform the
 	// evaluation. Only the following fields within SearchRequest are supported; if
@@ -13124,7 +13240,7 @@ func (s GoogleCloudDiscoveryengineV1alphaEvaluationEvaluationSpec) MarshalJSON()
 // GoogleCloudDiscoveryengineV1alphaEvaluationEvaluationSpecQuerySetSpec:
 // Describes the specification of the query set.
 type GoogleCloudDiscoveryengineV1alphaEvaluationEvaluationSpecQuerySetSpec struct {
-	// SampleQuerySet: Required. The full resource name of the SampleQuerySet used
+	// SampleQuerySet: Optional. The full resource name of the SampleQuerySet used
 	// for the evaluation, in the format of
 	// `projects/{project}/locations/{location}/sampleQuerySets/{sampleQuerySet}`.
 	SampleQuerySet string `json:"sampleQuerySet,omitempty"`
@@ -14138,7 +14254,9 @@ type GoogleCloudDiscoveryengineV1alphaImportDocumentsRequest struct {
 	//   "INCREMENTAL" - Inserts new documents or updates existing documents.
 	//   "FULL" - Calculates diff and replaces the entire document dataset.
 	// Existing documents may be deleted if they are not present in the source
-	// location.
+	// location. When using this mode, there won't be any downtime on the dataset
+	// targeted. Any document that should remain unchanged or that should be
+	// updated will continue serving while the operation is running.
 	ReconciliationMode string `json:"reconciliationMode,omitempty"`
 	// SpannerSource: Spanner input source.
 	SpannerSource *GoogleCloudDiscoveryengineV1alphaSpannerSource `json:"spannerSource,omitempty"`
@@ -20139,6 +20257,17 @@ type GoogleCloudDiscoveryengineV1alphaSessionTurn struct {
 	DetailedAnswer *GoogleCloudDiscoveryengineV1alphaAnswer `json:"detailedAnswer,omitempty"`
 	// Query: The user query.
 	Query *GoogleCloudDiscoveryengineV1alphaQuery `json:"query,omitempty"`
+	// QueryConfigs: Optional. Represents metadata related to the query config, for
+	// example LLM model and version used, model parameters (temperature, grounding
+	// parameters, etc.). We don't want to import directly the
+	// [AnswerGenerationSpec] structure as this will serve a more general purpose
+	// and a wider set of customers. This information is used in particular when
+	// rendering alternative answers to the same prompt, providing visual
+	// information about how each answer was generated. The prefix "google." will
+	// be reserved for the key, and 1P services (Answer, Assistant, etc.) should
+	// always store their information with "google..". 3P services can use anything
+	// not starting with "google."
+	QueryConfigs map[string]string `json:"queryConfigs,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Answer") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
 	// omitted from API requests. See
@@ -22217,6 +22346,63 @@ func (s GoogleCloudDiscoveryengineV1betaBatchCreateTargetSitesResponse) MarshalJ
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudDiscoveryengineV1betaBatchUpdateUserLicensesMetadata: Metadata
+// related to the progress of the UserLicenseService.BatchUpdateUserLicenses
+// operation. This will be returned by the
+// google.longrunning.Operation.metadata field.
+type GoogleCloudDiscoveryengineV1betaBatchUpdateUserLicensesMetadata struct {
+	// CreateTime: Operation create time.
+	CreateTime string `json:"createTime,omitempty"`
+	// FailureCount: Count of user licenses that failed to be updated.
+	FailureCount int64 `json:"failureCount,omitempty,string"`
+	// SuccessCount: Count of user licenses successfully updated.
+	SuccessCount int64 `json:"successCount,omitempty,string"`
+	// UpdateTime: Operation last update time. If the operation is done, this is
+	// also the finish time.
+	UpdateTime string `json:"updateTime,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "CreateTime") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CreateTime") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1betaBatchUpdateUserLicensesMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1betaBatchUpdateUserLicensesMetadata
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1betaBatchUpdateUserLicensesResponse: Response
+// message for UserLicenseService.BatchUpdateUserLicenses method.
+type GoogleCloudDiscoveryengineV1betaBatchUpdateUserLicensesResponse struct {
+	// ErrorSamples: A sample of errors encountered while processing the request.
+	ErrorSamples []*GoogleRpcStatus `json:"errorSamples,omitempty"`
+	// UserLicenses: UserLicenses successfully updated.
+	UserLicenses []*GoogleCloudDiscoveryengineV1betaUserLicense `json:"userLicenses,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ErrorSamples") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ErrorSamples") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1betaBatchUpdateUserLicensesResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1betaBatchUpdateUserLicensesResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudDiscoveryengineV1betaCmekConfig: Configurations used to enable
 // CMEK data encryption with Cloud KMS keys.
 type GoogleCloudDiscoveryengineV1betaCmekConfig struct {
@@ -22234,7 +22420,7 @@ type GoogleCloudDiscoveryengineV1betaCmekConfig struct {
 	LastRotationTimestampMicros int64 `json:"lastRotationTimestampMicros,omitempty,string"`
 	// Name: Required. The name of the CmekConfig of the form
 	// `projects/{project}/locations/{location}/cmekConfig` or
-	// `projects/{project}/locations/{location}/cmekConfigs/{cmekConfig}`.
+	// `projects/{project}/locations/{location}/cmekConfigs/{cmek_config}`.
 	Name string `json:"name,omitempty"`
 	// NotebooklmState: Output only. Whether the NotebookLM Corpus is ready to be
 	// used.
@@ -22261,6 +22447,8 @@ type GoogleCloudDiscoveryengineV1betaCmekConfig struct {
 	//   "UNUSABLE" - The CmekConfig is not usable, most likely due to some
 	// internal issue.
 	//   "ACTIVE_ROTATING" - The KMS key version is being rotated.
+	//   "DELETED" - The KMS key is soft deleted. Some cleanup policy will
+	// eventually be applied.
 	State string `json:"state,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "IsDefault") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -24006,7 +24194,7 @@ func (s GoogleCloudDiscoveryengineV1betaEvaluation) MarshalJSON() ([]byte, error
 // GoogleCloudDiscoveryengineV1betaEvaluationEvaluationSpec: Describes the
 // specification of the evaluation.
 type GoogleCloudDiscoveryengineV1betaEvaluationEvaluationSpec struct {
-	// QuerySetSpec: Required. The specification of the query set.
+	// QuerySetSpec: Optional. The specification of the query set.
 	QuerySetSpec *GoogleCloudDiscoveryengineV1betaEvaluationEvaluationSpecQuerySetSpec `json:"querySetSpec,omitempty"`
 	// SearchRequest: Required. The search request that is used to perform the
 	// evaluation. Only the following fields within SearchRequest are supported; if
@@ -24037,7 +24225,7 @@ func (s GoogleCloudDiscoveryengineV1betaEvaluationEvaluationSpec) MarshalJSON() 
 // GoogleCloudDiscoveryengineV1betaEvaluationEvaluationSpecQuerySetSpec:
 // Describes the specification of the query set.
 type GoogleCloudDiscoveryengineV1betaEvaluationEvaluationSpecQuerySetSpec struct {
-	// SampleQuerySet: Required. The full resource name of the SampleQuerySet used
+	// SampleQuerySet: Optional. The full resource name of the SampleQuerySet used
 	// for the evaluation, in the format of
 	// `projects/{project}/locations/{location}/sampleQuerySets/{sampleQuerySet}`.
 	SampleQuerySet string `json:"sampleQuerySet,omitempty"`
@@ -26846,6 +27034,61 @@ func (s GoogleCloudDiscoveryengineV1betaUserInfo) MarshalJSON() ([]byte, error) 
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudDiscoveryengineV1betaUserLicense: User License information
+// assigned by the admin.
+type GoogleCloudDiscoveryengineV1betaUserLicense struct {
+	// CreateTime: Output only. User created timestamp.
+	CreateTime string `json:"createTime,omitempty"`
+	// LastLoginTime: Output only. User last logged in time. If the user has not
+	// logged in yet, this field will be empty.
+	LastLoginTime string `json:"lastLoginTime,omitempty"`
+	// LicenseAssignmentState: Output only. License assignment state of the user.
+	// If the user is assigned with a license config, the user loggin will be
+	// assigned with the license; If the user's license assignment state is
+	// unassigned or unspecified, no license config will be associated to the user;
+	//
+	// Possible values:
+	//   "LICENSE_ASSIGNMENT_STATE_UNSPECIFIED" - Default value.
+	//   "ASSIGNED" - License assigned to the user.
+	//   "UNASSIGNED" - No license assigned to the user. Deprecated, translated to
+	// NO_LICENSE.
+	//   "NO_LICENSE" - No license assigned to the user.
+	//   "NO_LICENSE_ATTEMPTED_LOGIN" - User attempted to login but no license
+	// assigned to the user. This state is only used for no user first time login
+	// attempt but cannot get license assigned. Users already logged in but cannot
+	// get license assigned will be assigned NO_LICENSE state(License could be
+	// unassigned by admin).
+	LicenseAssignmentState string `json:"licenseAssignmentState,omitempty"`
+	// LicenseConfig: Optional. The full resource name of the
+	// Subscription(LicenseConfig) assigned to the user.
+	LicenseConfig string `json:"licenseConfig,omitempty"`
+	// UpdateTime: Output only. User update timestamp.
+	UpdateTime string `json:"updateTime,omitempty"`
+	// UserPrincipal: Required. Immutable. The user principal of the User, could be
+	// email address or other prinical identifier. This field is immutable. Admin
+	// assign licenses based on the user principal.
+	UserPrincipal string `json:"userPrincipal,omitempty"`
+	// UserProfile: Optional. The user profile. We user user full name(First name +
+	// Last name) as user profile.
+	UserProfile string `json:"userProfile,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "CreateTime") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CreateTime") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1betaUserLicense) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1betaUserLicense
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudDiscoveryengineV1betaWorkspaceConfig: Config to store data store
 // type configuration for workspace data
 type GoogleCloudDiscoveryengineV1betaWorkspaceConfig struct {
@@ -28847,7 +29090,7 @@ type ProjectsLocationsUpdateCmekConfigCall struct {
 //
 //   - name: The name of the CmekConfig of the form
 //     `projects/{project}/locations/{location}/cmekConfig` or
-//     `projects/{project}/locations/{location}/cmekConfigs/{cmekConfig}`.
+//     `projects/{project}/locations/{location}/cmekConfigs/{cmek_config}`.
 func (r *ProjectsLocationsService) UpdateCmekConfig(name string, googleclouddiscoveryenginev1alphacmekconfig *GoogleCloudDiscoveryengineV1alphaCmekConfig) *ProjectsLocationsUpdateCmekConfigCall {
 	c := &ProjectsLocationsUpdateCmekConfigCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -29289,7 +29532,7 @@ type ProjectsLocationsCmekConfigsPatchCall struct {
 //
 //   - name: The name of the CmekConfig of the form
 //     `projects/{project}/locations/{location}/cmekConfig` or
-//     `projects/{project}/locations/{location}/cmekConfigs/{cmekConfig}`.
+//     `projects/{project}/locations/{location}/cmekConfigs/{cmek_config}`.
 func (r *ProjectsLocationsCmekConfigsService) Patch(name string, googleclouddiscoveryenginev1alphacmekconfig *GoogleCloudDiscoveryengineV1alphaCmekConfig) *ProjectsLocationsCmekConfigsPatchCall {
 	c := &ProjectsLocationsCmekConfigsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name

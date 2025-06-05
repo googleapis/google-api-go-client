@@ -1243,10 +1243,10 @@ type ApplicationPolicy struct {
 	// the capability of interacting with Android Device Policy offline.This field
 	// can be set for at most one app.The signing key certificate fingerprint of
 	// the app on the device must match one of the entries in
-	// ApplicationPolicy.signingKeyCerts or the signing key certificate
-	// fingerprints obtained from Play Store for the app to be able to communicate
-	// with Android Device Policy. If the app is not on Play Store and
-	// ApplicationPolicy.signingKeyCerts is not set, a NonComplianceDetail with
+	// signingKeyFingerprintsSha256 or the signing key certificate fingerprints
+	// obtained from Play Store for the app to be able to communicate with Android
+	// Device Policy. If the app is not on Play Store and
+	// signingKeyFingerprintsSha256 is not set, a nonComplianceDetail with
 	// INVALID_VALUE is reported.
 	ExtensionConfig *ExtensionConfig `json:"extensionConfig,omitempty"`
 	// InstallConstraint: Optional. The constraints for installing the app. You can
@@ -2516,7 +2516,9 @@ type DeviceConnectivityManagement struct {
 	// PreferentialNetworkServiceSettings: Optional. Preferential network service
 	// configuration. Setting this field will override preferentialNetworkService.
 	// This can be set on both work profiles and fully managed devices on Android
-	// 13 and above.
+	// 13 and above. See 5G network slicing
+	// (https://developers.google.com/android/management/5g-network-slicing) guide
+	// for more details.
 	PreferentialNetworkServiceSettings *PreferentialNetworkServiceSettings `json:"preferentialNetworkServiceSettings,omitempty"`
 	// TetheringSettings: Controls tethering settings. Based on the value set, the
 	// user is partially or fully disallowed from using different forms of
@@ -3258,7 +3260,7 @@ type ExtensionConfig struct {
 	// always obtained from the Play Store and this field is used to provide
 	// additional signing key certificate fingerprints. However, if the application
 	// is not available on the Play Store, this field needs to be set. A
-	// NonComplianceDetail with INVALID_VALUE is reported if this field is not set
+	// nonComplianceDetail with INVALID_VALUE is reported if this field is not set
 	// when the application is not available on the Play Store.The signing key
 	// certificate fingerprint of the extension app on the device must match one of
 	// the signing key certificate fingerprints obtained from the Play Store or the

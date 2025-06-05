@@ -203,6 +203,59 @@ func (s ComputeFlightEmissionsResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// ComputeTypicalFlightEmissionsRequest: A list of pair of airports (markets)
+// to request the typical emissions for.
+type ComputeTypicalFlightEmissionsRequest struct {
+	// Markets: Required. Request the typical flight emissions estimates for this
+	// market pair. A maximum of 1000 markets can be requested.
+	Markets []*Market `json:"markets,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Markets") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Markets") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ComputeTypicalFlightEmissionsRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod ComputeTypicalFlightEmissionsRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ComputeTypicalFlightEmissionsResponse: The response includes the emissions
+// but also the model version.
+type ComputeTypicalFlightEmissionsResponse struct {
+	// ModelVersion: The model version under which typical flight emission
+	// estimates for all flights in this response were computed.
+	ModelVersion *ModelVersion `json:"modelVersion,omitempty"`
+	// TypicalFlightEmissions: Market's Typical Flight Emissions requested.
+	TypicalFlightEmissions []*TypicalFlightEmissions `json:"typicalFlightEmissions,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "ModelVersion") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ModelVersion") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ComputeTypicalFlightEmissionsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ComputeTypicalFlightEmissionsResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // Date: Represents a whole or partial calendar date, such as a birthday. The
 // time of day and time zone are either specified elsewhere or are
 // insignificant. The date is relative to the Gregorian Calendar. This can
@@ -336,6 +389,30 @@ func (s FlightWithEmissions) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// Market: A pair of airports.
+type Market struct {
+	// Destination: Required. IATA airport code for flight destination, e.g. "JFK".
+	Destination string `json:"destination,omitempty"`
+	// Origin: Required. IATA airport code for flight origin, e.g. "LHR".
+	Origin string `json:"origin,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Destination") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Destination") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s Market) MarshalJSON() ([]byte, error) {
+	type NoMethod Market
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // ModelVersion: Travel Impact Model version. For more information about the
 // model versioning see
 // https://github.com/google/travel-impact-model/#versioning.
@@ -370,6 +447,33 @@ type ModelVersion struct {
 
 func (s ModelVersion) MarshalJSON() ([]byte, error) {
 	type NoMethod ModelVersion
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// TypicalFlightEmissions: Typical flight emission estimates for a certain
+// market
+type TypicalFlightEmissions struct {
+	// EmissionsGramsPerPax: Optional. Typical flight emissions per passenger for
+	// requested market.
+	EmissionsGramsPerPax *EmissionsGramsPerPax `json:"emissionsGramsPerPax,omitempty"`
+	// Market: Required. Matches the flight identifiers in the request. Note: all
+	// IATA codes are capitalized.
+	Market *Market `json:"market,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "EmissionsGramsPerPax") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "EmissionsGramsPerPax") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s TypicalFlightEmissions) MarshalJSON() ([]byte, error) {
+	type NoMethod TypicalFlightEmissions
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -478,5 +582,109 @@ func (c *FlightsComputeFlightEmissionsCall) Do(opts ...googleapi.CallOption) (*C
 		return nil, err
 	}
 	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "travelimpactmodel.flights.computeFlightEmissions", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type FlightsComputeTypicalFlightEmissionsCall struct {
+	s                                    *Service
+	computetypicalflightemissionsrequest *ComputeTypicalFlightEmissionsRequest
+	urlParams_                           gensupport.URLParams
+	ctx_                                 context.Context
+	header_                              http.Header
+}
+
+// ComputeTypicalFlightEmissions: Retrieves typical flight emissions estimates
+// between two airports, also known as a market. If there are no estimates
+// available for a certain market, the response will return the market object
+// with empty emission fields. The request will still be considered successful.
+// Details on how the typical emissions estimates are computed are on GitHub
+// (https://github.com/google/travel-impact-model/blob/main/projects/typical_flight_emissions.md).
+// The request can contain up to 1000 markets. If the request has more than
+// 1000 markets, it will fail with an INVALID_ARGUMENT error.
+func (r *FlightsService) ComputeTypicalFlightEmissions(computetypicalflightemissionsrequest *ComputeTypicalFlightEmissionsRequest) *FlightsComputeTypicalFlightEmissionsCall {
+	c := &FlightsComputeTypicalFlightEmissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.computetypicalflightemissionsrequest = computetypicalflightemissionsrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *FlightsComputeTypicalFlightEmissionsCall) Fields(s ...googleapi.Field) *FlightsComputeTypicalFlightEmissionsCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *FlightsComputeTypicalFlightEmissionsCall) Context(ctx context.Context) *FlightsComputeTypicalFlightEmissionsCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *FlightsComputeTypicalFlightEmissionsCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *FlightsComputeTypicalFlightEmissionsCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.computetypicalflightemissionsrequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/flights:computeTypicalFlightEmissions")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "travelimpactmodel.flights.computeTypicalFlightEmissions", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "travelimpactmodel.flights.computeTypicalFlightEmissions" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *ComputeTypicalFlightEmissionsResponse.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *FlightsComputeTypicalFlightEmissionsCall) Do(opts ...googleapi.CallOption) (*ComputeTypicalFlightEmissionsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ComputeTypicalFlightEmissionsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "travelimpactmodel.flights.computeTypicalFlightEmissions", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }

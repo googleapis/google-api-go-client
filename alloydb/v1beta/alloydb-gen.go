@@ -879,6 +879,8 @@ type ConnectionPoolConfig struct {
 	//   "POOL_MODE_TRANSACTION" - Server is released back to pool after a
 	// transaction finishes.
 	PoolMode string `json:"poolMode,omitempty"`
+	// PoolerCount: Output only. The number of running poolers per instance.
+	PoolerCount int64 `json:"poolerCount,omitempty"`
 	// QueryWaitTimeout: Optional. Deprecated. Use 'flags' instead. The maximum
 	// number of seconds queries are allowed to spend waiting for execution. If the
 	// query is not assigned to a server during that time, the client is
@@ -2298,6 +2300,9 @@ type ObservabilityInstanceConfig struct {
 	// TrackActiveQueries: Track actively running queries on the instance. If not
 	// set, this flag is "off" by default.
 	TrackActiveQueries bool `json:"trackActiveQueries,omitempty"`
+	// TrackClientAddress: Track client address for an instance. If not set,
+	// default value is "off".
+	TrackClientAddress bool `json:"trackClientAddress,omitempty"`
 	// TrackWaitEventTypes: Output only. Track wait event types during query
 	// execution for an instance. This flag is turned "on" by default but tracking
 	// is enabled only after observability enabled flag is also turned on. This is
@@ -3691,7 +3696,10 @@ type StorageDatabasecenterPartnerapiV1mainDatabaseResourceId struct {
 	// spanner.googleapis.com/Instance, spanner.googleapis.com/Database,
 	// firestore.googleapis.com/Database, sqladmin.googleapis.com/Instance,
 	// bigtableadmin.googleapis.com/Cluster, bigtableadmin.googleapis.com/Instance
-	// REQUIRED Please refer go/condor-common-datamodel
+	// oracledatabase.googleapis.com/cloudExadataInfrastructures
+	// oracledatabase.googleapis.com/cloudVmClusters
+	// oracledatabase.googleapis.com/autonomousDatabases REQUIRED Please refer
+	// go/condor-common-datamodel
 	ResourceType string `json:"resourceType,omitempty"`
 	// UniqueId: Required. A service-local token that distinguishes this resource
 	// from other resources within the same service.

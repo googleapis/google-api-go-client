@@ -470,6 +470,9 @@ type Backup struct {
 	// SelectedApplications: Output only. If set, the list of ProtectedApplications
 	// whose resources were included in the Backup.
 	SelectedApplications *NamespacedNames `json:"selectedApplications,omitempty"`
+	// SelectedNamespaceLabels: Output only. If set, the list of labels whose
+	// constituent namespaces were included in the Backup.
+	SelectedNamespaceLabels *ResourceLabels `json:"selectedNamespaceLabels,omitempty"`
 	// SelectedNamespaces: Output only. If set, the list of namespaces that were
 	// included in the Backup.
 	SelectedNamespaces *Namespaces `json:"selectedNamespaces,omitempty"`
@@ -609,6 +612,9 @@ type BackupConfig struct {
 	// SelectedApplications: If set, include just the resources referenced by the
 	// listed ProtectedApplications.
 	SelectedApplications *NamespacedNames `json:"selectedApplications,omitempty"`
+	// SelectedNamespaceLabels: If set, the list of labels whose constituent
+	// namespaces were included in the Backup.
+	SelectedNamespaceLabels *ResourceLabels `json:"selectedNamespaceLabels,omitempty"`
 	// SelectedNamespaces: If set, include just the resources in the listed
 	// namespaces.
 	SelectedNamespaces *Namespaces `json:"selectedNamespaces,omitempty"`
@@ -1496,6 +1502,30 @@ func (s GroupKindDependency) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// Label: A single Kubernetes label-value pair.
+type Label struct {
+	// Key: Optional. The key/name of the label.
+	Key string `json:"key,omitempty"`
+	// Value: Optional. The value of the label.
+	Value string `json:"value,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Key") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Key") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s Label) MarshalJSON() ([]byte, error) {
+	type NoMethod Label
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // ListBackupChannelsResponse: Response message for ListBackupChannels.
 type ListBackupChannelsResponse struct {
 	// BackupChannels: The list of BackupChannels matching the given criteria.
@@ -2106,6 +2136,28 @@ type ResourceFilter struct {
 
 func (s ResourceFilter) MarshalJSON() ([]byte, error) {
 	type NoMethod ResourceFilter
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ResourceLabels: A list of Kubernetes labels.
+type ResourceLabels struct {
+	// ResourceLabels: Optional. A list of Kubernetes label-value pairs.
+	ResourceLabels []*Label `json:"resourceLabels,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ResourceLabels") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ResourceLabels") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ResourceLabels) MarshalJSON() ([]byte, error) {
+	type NoMethod ResourceLabels
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 

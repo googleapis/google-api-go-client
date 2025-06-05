@@ -3564,7 +3564,10 @@ type StorageDatabasecenterPartnerapiV1mainDatabaseResourceId struct {
 	// spanner.googleapis.com/Instance, spanner.googleapis.com/Database,
 	// firestore.googleapis.com/Database, sqladmin.googleapis.com/Instance,
 	// bigtableadmin.googleapis.com/Cluster, bigtableadmin.googleapis.com/Instance
-	// REQUIRED Please refer go/condor-common-datamodel
+	// oracledatabase.googleapis.com/cloudExadataInfrastructures
+	// oracledatabase.googleapis.com/cloudVmClusters
+	// oracledatabase.googleapis.com/autonomousDatabases REQUIRED Please refer
+	// go/condor-common-datamodel
 	ResourceType string `json:"resourceType,omitempty"`
 	// UniqueId: Required. A service-local token that distinguishes this resource
 	// from other resources within the same service.

@@ -119,7 +119,7 @@
               ],
               "parameters": {
                 "dataSource": {
-                  "description": "Required. The primary or supplemental data source from which the product input should be deleted. Format: `accounts/{account}/dataSources/{datasource}`.",
+                  "description": "Required. The primary or supplemental data source from which the product input should be deleted. Format: `accounts/{account}/dataSources/{datasource}`. For example, `accounts/123456/dataSources/104628`.",
                   "location": "query",
                   "type": "string"
                 },
@@ -149,7 +149,7 @@
               ],
               "parameters": {
                 "dataSource": {
-                  "description": "Required. The primary or supplemental product data source name. If the product already exists and data source provided is different, then the product will be moved to a new data source. Only API data sources are supported. Format: `accounts/{account}/dataSources/{datasource}`.",
+                  "description": "Required. The primary or supplemental product data source name. If the product already exists and data source provided is different, then the product will be moved to a new data source. Only API data sources are supported. Format: `accounts/{account}/dataSources/{datasource}`. For example, `accounts/123456/dataSources/104628`.",
                   "location": "query",
                   "type": "string"
                 },
@@ -182,7 +182,7 @@
               ],
               "parameters": {
                 "dataSource": {
-                  "description": "Required. The primary or supplemental product data source where `data_source` name identifies the product input to be updated. Only API data sources are supported. Format: `accounts/{account}/dataSources/{datasource}`.",
+                  "description": "Required. The primary or supplemental product data source where `data_source` name identifies the product input to be updated. Only API data sources are supported. Format: `accounts/{account}/dataSources/{datasource}`. For example, `accounts/123456/dataSources/104628`.",
                   "location": "query",
                   "type": "string"
                 },
@@ -250,7 +250,7 @@
               ],
               "parameters": {
                 "pageSize": {
-                  "description": "The maximum number of products to return. The service may return fewer than this value. The maximum value is 250; values above 250 will be coerced to 250. If unspecified, the maximum number of products will be returned.",
+                  "description": "The maximum number of products to return. The service may return fewer than this value. The maximum value is 1000; values above 1000 will be coerced to 1000. If unspecified, the maximum number of products will be returned.",
                   "format": "int32",
                   "location": "query",
                   "type": "integer"
@@ -281,7 +281,7 @@
       }
     }
   },
-  "revision": "20250427",
+  "revision": "20250603",
   "rootUrl": "https://merchantapi.googleapis.com/",
   "schemas": {
     "Attributes": {
@@ -320,7 +320,7 @@
         },
         "autoPricingMinPrice": {
           "$ref": "Price",
-          "description": "A safeguard in the \"Automated Discounts\" (https://support.google.com/merchants/answer/10295759) and \"Dynamic Promotions\" (https://support.google.com/merchants/answer/13949249) projects, ensuring that discounts on merchants' offers do not fall below this value, thereby preserving the offer's value and profitability."
+          "description": "A safeguard in the \"Automated Discounts\" (https://support.google.com/merchants/answer/10295759) and \"Dynamic Promotions\" (https://support.google.com/merchants/answer/13949249) projects, ensuring that discounts on business offers do not fall below this value, thereby preserving the offer's value and profitability."
         },
         "availability": {
           "description": "Availability status of the item.",
@@ -480,7 +480,7 @@
           "description": "Number and amount of installments to pay for an item."
         },
         "isBundle": {
-          "description": "Whether the item is a merchant-defined bundle. A bundle is a custom grouping of different products sold by a merchant for a single price.",
+          "description": "Whether the item is a business-defined sub-API. A sub-API is a custom grouping of different products sold by a business for a single price.",
           "type": "boolean"
         },
         "itemGroupId": {
@@ -499,7 +499,7 @@
           "type": "string"
         },
         "linkTemplate": {
-          "description": "Link template for merchant hosted local storefront.",
+          "description": "Link template for business hosted local storefront.",
           "type": "string"
         },
         "loyaltyPoints": {
@@ -540,7 +540,7 @@
           "type": "string"
         },
         "mobileLinkTemplate": {
-          "description": "Link template for merchant hosted local storefront optimized for mobile devices.",
+          "description": "Link template for business hosted local storefront optimized for mobile devices.",
           "type": "string"
         },
         "mpn": {
@@ -548,7 +548,7 @@
           "type": "string"
         },
         "multipack": {
-          "description": "The number of identical products in a merchant-defined multipack.",
+          "description": "The number of identical products in a business-defined multipack.",
           "format": "int64",
           "type": "string"
         },
@@ -1105,7 +1105,7 @@
           "type": "string"
         },
         "resolution": {
-          "description": "Whether the issue can be resolved by the merchant.",
+          "description": "Whether the issue can be resolved by the business.",
           "type": "string"
         },
         "severity": {
@@ -1188,7 +1188,7 @@
           "description": "The price for members of the given tier, that is, the instant discount price. Must be smaller or equal to the regular price."
         },
         "programLabel": {
-          "description": "The label of the loyalty program. This is an internal label that uniquely identifies the relationship between a merchant entity and a loyalty program entity. The label must be provided so that the system can associate the assets below (for example, price and points) with a merchant. The corresponding program must be linked to the merchant account.",
+          "description": "The label of the loyalty program. This is an internal label that uniquely identifies the relationship between a business entity and a loyalty program entity. The label must be provided so that the system can associate the assets below (for example, price and points) with a business. The corresponding program must be linked to the Merchant Center account.",
           "type": "string"
         },
         "shippingLabel": {

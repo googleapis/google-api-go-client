@@ -1678,6 +1678,8 @@ type AccountUser struct {
 	PaymentsAnalyst bool `json:"paymentsAnalyst,omitempty"`
 	// PaymentsManager: Whether user can manage payment settings.
 	PaymentsManager bool `json:"paymentsManager,omitempty"`
+	// ReadOnly: Optional. Whether user has standard read-only access.
+	ReadOnly bool `json:"readOnly,omitempty"`
 	// ReportingManager: Whether user is a reporting manager. This role is
 	// equivalent to the Performance and insights role in Merchant Center.
 	ReportingManager bool `json:"reportingManager,omitempty"`

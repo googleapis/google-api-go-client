@@ -206,7 +206,7 @@ type Attributes struct {
 	// AutoPricingMinPrice: A safeguard in the "Automated Discounts"
 	// (https://support.google.com/merchants/answer/10295759) and "Dynamic
 	// Promotions" (https://support.google.com/merchants/answer/13949249) projects,
-	// ensuring that discounts on merchants' offers do not fall below this value,
+	// ensuring that discounts on business offers do not fall below this value,
 	// thereby preserving the offer's value and profitability.
 	AutoPricingMinPrice *Price `json:"autoPricingMinPrice,omitempty"`
 	// Availability: Availability status of the item.
@@ -309,8 +309,8 @@ type Attributes struct {
 	IncludedDestinations []string `json:"includedDestinations,omitempty"`
 	// Installment: Number and amount of installments to pay for an item.
 	Installment *Installment `json:"installment,omitempty"`
-	// IsBundle: Whether the item is a merchant-defined bundle. A bundle is a
-	// custom grouping of different products sold by a merchant for a single price.
+	// IsBundle: Whether the item is a business-defined sub-API. A sub-API is a
+	// custom grouping of different products sold by a business for a single price.
 	IsBundle bool `json:"isBundle,omitempty"`
 	// ItemGroupId: Shared identifier for all variants of the same product.
 	ItemGroupId string `json:"itemGroupId,omitempty"`
@@ -321,7 +321,7 @@ type Attributes struct {
 	LifestyleImageLinks []string `json:"lifestyleImageLinks,omitempty"`
 	// Link: URL directly linking to your item's page on your online store.
 	Link string `json:"link,omitempty"`
-	// LinkTemplate: Link template for merchant hosted local storefront.
+	// LinkTemplate: Link template for business hosted local storefront.
 	LinkTemplate string `json:"linkTemplate,omitempty"`
 	// LoyaltyPoints: Loyalty points that users receive after purchasing the item.
 	// Japan only.
@@ -345,13 +345,13 @@ type Attributes struct {
 	// MobileLink: URL for the mobile-optimized version of your item's landing
 	// page.
 	MobileLink string `json:"mobileLink,omitempty"`
-	// MobileLinkTemplate: Link template for merchant hosted local storefront
+	// MobileLinkTemplate: Link template for business hosted local storefront
 	// optimized for mobile devices.
 	MobileLinkTemplate string `json:"mobileLinkTemplate,omitempty"`
 	// Mpn: Manufacturer Part Number (MPN
 	// (https://support.google.com/merchants/answer/188494#mpn)) of the item.
 	Mpn string `json:"mpn,omitempty"`
-	// Multipack: The number of identical products in a merchant-defined multipack.
+	// Multipack: The number of identical products in a business-defined multipack.
 	Multipack int64 `json:"multipack,omitempty,string"`
 	// Pattern: The item's pattern (for example, polka dots).
 	Pattern string `json:"pattern,omitempty"`
@@ -873,7 +873,7 @@ type ItemLevelIssue struct {
 	// Reviews](https://developers.google.com/merchant-review-feeds).
 	//   "YOUTUBE_CHECKOUT" - YouTube Checkout .
 	ReportingContext string `json:"reportingContext,omitempty"`
-	// Resolution: Whether the issue can be resolved by the merchant.
+	// Resolution: Whether the issue can be resolved by the business.
 	Resolution string `json:"resolution,omitempty"`
 	// Severity: How this issue affects serving of the offer.
 	//
@@ -990,10 +990,10 @@ type LoyaltyProgram struct {
 	// discount price. Must be smaller or equal to the regular price.
 	Price *Price `json:"price,omitempty"`
 	// ProgramLabel: The label of the loyalty program. This is an internal label
-	// that uniquely identifies the relationship between a merchant entity and a
+	// that uniquely identifies the relationship between a business entity and a
 	// loyalty program entity. The label must be provided so that the system can
-	// associate the assets below (for example, price and points) with a merchant.
-	// The corresponding program must be linked to the merchant account.
+	// associate the assets below (for example, price and points) with a business.
+	// The corresponding program must be linked to the Merchant Center account.
 	ProgramLabel string `json:"programLabel,omitempty"`
 	// ShippingLabel: The label of the shipping benefit. If the field has value,
 	// this offer has loyalty shipping benefit. If the field value isn't provided,
@@ -1915,7 +1915,8 @@ func (r *AccountsProductInputsService) Delete(name string) *AccountsProductInput
 
 // DataSource sets the optional parameter "dataSource": Required. The primary
 // or supplemental data source from which the product input should be deleted.
-// Format: `accounts/{account}/dataSources/{datasource}`.
+// Format: `accounts/{account}/dataSources/{datasource}`. For example,
+// `accounts/123456/dataSources/104628`.
 func (c *AccountsProductInputsDeleteCall) DataSource(dataSource string) *AccountsProductInputsDeleteCall {
 	c.urlParams_.Set("dataSource", dataSource)
 	return c
@@ -2029,7 +2030,8 @@ func (r *AccountsProductInputsService) Insert(parent string, productinput *Produ
 // or supplemental product data source name. If the product already exists and
 // data source provided is different, then the product will be moved to a new
 // data source. Only API data sources are supported. Format:
-// `accounts/{account}/dataSources/{datasource}`.
+// `accounts/{account}/dataSources/{datasource}`. For example,
+// `accounts/123456/dataSources/104628`.
 func (c *AccountsProductInputsInsertCall) DataSource(dataSource string) *AccountsProductInputsInsertCall {
 	c.urlParams_.Set("dataSource", dataSource)
 	return c
@@ -2147,7 +2149,8 @@ func (r *AccountsProductInputsService) Patch(name string, productinput *ProductI
 // DataSource sets the optional parameter "dataSource": Required. The primary
 // or supplemental product data source where `data_source` name identifies the
 // product input to be updated. Only API data sources are supported. Format:
-// `accounts/{account}/dataSources/{datasource}`.
+// `accounts/{account}/dataSources/{datasource}`. For example,
+// `accounts/123456/dataSources/104628`.
 func (c *AccountsProductInputsPatchCall) DataSource(dataSource string) *AccountsProductInputsPatchCall {
 	c.urlParams_.Set("dataSource", dataSource)
 	return c
@@ -2390,7 +2393,7 @@ func (r *AccountsProductsService) List(parent string) *AccountsProductsListCall 
 
 // PageSize sets the optional parameter "pageSize": The maximum number of
 // products to return. The service may return fewer than this value. The
-// maximum value is 250; values above 250 will be coerced to 250. If
+// maximum value is 1000; values above 1000 will be coerced to 1000. If
 // unspecified, the maximum number of products will be returned.
 func (c *AccountsProductsListCall) PageSize(pageSize int64) *AccountsProductsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))

@@ -310,6 +310,241 @@ func (s AgentCommand) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// AgentStatus: The schema of agent status data.
+type AgentStatus struct {
+	// AgentName: Output only. The name of the agent.
+	AgentName string `json:"agentName,omitempty"`
+	// AvailableVersion: Output only. The available version of the agent in
+	// artifact registry.
+	AvailableVersion string `json:"availableVersion,omitempty"`
+	// CloudApiAccessFullScopesGranted: Output only. Whether the agent has full
+	// access to Cloud APIs.
+	//
+	// Possible values:
+	//   "UNSPECIFIED_STATE" - The state is unspecified and has not been checked
+	// yet.
+	//   "SUCCESS_STATE" - The state is successful (enabled, granted, fully
+	// functional).
+	//   "FAILURE_STATE" - The state is failed (disabled, denied, not fully
+	// functional).
+	//   "ERROR_STATE" - There was an internal error while checking the state,
+	// state is unknown.
+	CloudApiAccessFullScopesGranted string `json:"cloudApiAccessFullScopesGranted,omitempty"`
+	// ConfigurationErrorMessage: Output only. The error message for the agent
+	// configuration if invalid.
+	ConfigurationErrorMessage string `json:"configurationErrorMessage,omitempty"`
+	// ConfigurationFilePath: Output only. The path to the agent configuration
+	// file.
+	ConfigurationFilePath string `json:"configurationFilePath,omitempty"`
+	// ConfigurationValid: Output only. Whether the agent configuration is valid.
+	//
+	// Possible values:
+	//   "UNSPECIFIED_STATE" - The state is unspecified and has not been checked
+	// yet.
+	//   "SUCCESS_STATE" - The state is successful (enabled, granted, fully
+	// functional).
+	//   "FAILURE_STATE" - The state is failed (disabled, denied, not fully
+	// functional).
+	//   "ERROR_STATE" - There was an internal error while checking the state,
+	// state is unknown.
+	ConfigurationValid string `json:"configurationValid,omitempty"`
+	// InstalledVersion: Output only. The installed version of the agent on the
+	// host.
+	InstalledVersion string `json:"installedVersion,omitempty"`
+	// KernelVersion: Output only. The kernel version of the system.
+	KernelVersion *SapDiscoveryResourceInstancePropertiesKernelVersion `json:"kernelVersion,omitempty"`
+	// References: Output only. Optional references to public documentation.
+	References []*AgentStatusReference `json:"references,omitempty"`
+	// Services: Output only. The services (process metrics, host metrics, etc.).
+	Services []*AgentStatusServiceStatus `json:"services,omitempty"`
+	// SystemdServiceEnabled: Output only. Whether the agent service is enabled in
+	// systemd.
+	//
+	// Possible values:
+	//   "UNSPECIFIED_STATE" - The state is unspecified and has not been checked
+	// yet.
+	//   "SUCCESS_STATE" - The state is successful (enabled, granted, fully
+	// functional).
+	//   "FAILURE_STATE" - The state is failed (disabled, denied, not fully
+	// functional).
+	//   "ERROR_STATE" - There was an internal error while checking the state,
+	// state is unknown.
+	SystemdServiceEnabled string `json:"systemdServiceEnabled,omitempty"`
+	// SystemdServiceRunning: Output only. Whether the agent service is running in
+	// systemd.
+	//
+	// Possible values:
+	//   "UNSPECIFIED_STATE" - The state is unspecified and has not been checked
+	// yet.
+	//   "SUCCESS_STATE" - The state is successful (enabled, granted, fully
+	// functional).
+	//   "FAILURE_STATE" - The state is failed (disabled, denied, not fully
+	// functional).
+	//   "ERROR_STATE" - There was an internal error while checking the state,
+	// state is unknown.
+	SystemdServiceRunning string `json:"systemdServiceRunning,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AgentName") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AgentName") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s AgentStatus) MarshalJSON() ([]byte, error) {
+	type NoMethod AgentStatus
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// AgentStatusConfigValue: The configuration value.
+type AgentStatusConfigValue struct {
+	// IsDefault: Output only. Whether the configuration value is the default value
+	// or overridden.
+	IsDefault bool `json:"isDefault,omitempty"`
+	// Name: Output only. The name of the configuration value.
+	Name string `json:"name,omitempty"`
+	// Value: Output only. The value of the configuration value.
+	Value string `json:"value,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "IsDefault") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "IsDefault") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s AgentStatusConfigValue) MarshalJSON() ([]byte, error) {
+	type NoMethod AgentStatusConfigValue
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// AgentStatusIAMPermission: The IAM permission status.
+type AgentStatusIAMPermission struct {
+	// Granted: Output only. Whether the permission is granted.
+	//
+	// Possible values:
+	//   "UNSPECIFIED_STATE" - The state is unspecified and has not been checked
+	// yet.
+	//   "SUCCESS_STATE" - The state is successful (enabled, granted, fully
+	// functional).
+	//   "FAILURE_STATE" - The state is failed (disabled, denied, not fully
+	// functional).
+	//   "ERROR_STATE" - There was an internal error while checking the state,
+	// state is unknown.
+	Granted string `json:"granted,omitempty"`
+	// Name: Output only. The name of the permission.
+	Name string `json:"name,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Granted") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Granted") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s AgentStatusIAMPermission) MarshalJSON() ([]byte, error) {
+	type NoMethod AgentStatusIAMPermission
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// AgentStatusReference: The reference to public documentation.
+type AgentStatusReference struct {
+	// Name: Output only. The name of the reference.
+	Name string `json:"name,omitempty"`
+	// Url: Output only. The URL of the reference.
+	Url string `json:"url,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Name") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Name") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s AgentStatusReference) MarshalJSON() ([]byte, error) {
+	type NoMethod AgentStatusReference
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// AgentStatusServiceStatus: The status of a service (process metrics, host
+// metrics, etc.).
+type AgentStatusServiceStatus struct {
+	// ConfigValues: Output only. The configuration values for the service.
+	ConfigValues []*AgentStatusConfigValue `json:"configValues,omitempty"`
+	// ErrorMessage: Output only. The error message for the service if it is not
+	// fully functional.
+	ErrorMessage string `json:"errorMessage,omitempty"`
+	// FullyFunctional: Output only. Whether the service is fully functional (all
+	// checks passed).
+	//
+	// Possible values:
+	//   "UNSPECIFIED_STATE" - The state is unspecified and has not been checked
+	// yet.
+	//   "SUCCESS_STATE" - The state is successful (enabled, granted, fully
+	// functional).
+	//   "FAILURE_STATE" - The state is failed (disabled, denied, not fully
+	// functional).
+	//   "ERROR_STATE" - There was an internal error while checking the state,
+	// state is unknown.
+	FullyFunctional string `json:"fullyFunctional,omitempty"`
+	// IamPermissions: Output only. The permissions required for the service.
+	IamPermissions []*AgentStatusIAMPermission `json:"iamPermissions,omitempty"`
+	// Name: Output only. The name of the service.
+	Name string `json:"name,omitempty"`
+	// State: Output only. The state of the service (enabled or disabled in the
+	// configuration).
+	//
+	// Possible values:
+	//   "UNSPECIFIED_STATE" - The state is unspecified and has not been checked
+	// yet.
+	//   "SUCCESS_STATE" - The state is successful (enabled, granted, fully
+	// functional).
+	//   "FAILURE_STATE" - The state is failed (disabled, denied, not fully
+	// functional).
+	//   "ERROR_STATE" - There was an internal error while checking the state,
+	// state is unknown.
+	State string `json:"state,omitempty"`
+	// UnspecifiedStateMessage: Output only. The message to display when the
+	// service state is unspecified.
+	UnspecifiedStateMessage string `json:"unspecifiedStateMessage,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ConfigValues") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ConfigValues") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s AgentStatusServiceStatus) MarshalJSON() ([]byte, error) {
+	type NoMethod AgentStatusServiceStatus
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // BackupProperties: Backup properties.
 type BackupProperties struct {
 	// LatestBackupStatus: Output only. The state of the latest backup.
@@ -459,9 +694,10 @@ type ComponentHealth struct {
 	//   "UNHEALTHY" - unhealthy workload
 	//   "CRITICAL" - has critical issues
 	//   "UNSUPPORTED" - unsupported
-	State string `json:"state,omitempty"`
-	// SubComponentHealthes: Sub component health.
+	State                string             `json:"state,omitempty"`
 	SubComponentHealthes []*ComponentHealth `json:"subComponentHealthes,omitempty"`
+	// SubComponentsHealth: Sub component health.
+	SubComponentsHealth []*ComponentHealth `json:"subComponentsHealth,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Component") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -783,6 +1019,8 @@ func (s HealthCheck) MarshalJSON() ([]byte, error) {
 
 // Insight: A presentation of host resource usage where the workload runs.
 type Insight struct {
+	// AgentStatus: The insights data for the agent status.
+	AgentStatus *AgentStatus `json:"agentStatus,omitempty"`
 	// InstanceId: Required. The instance id where the insight is generated from
 	InstanceId string `json:"instanceId,omitempty"`
 	// SapDiscovery: The insights data for SAP system discovery. This is a copy of
@@ -798,13 +1036,13 @@ type Insight struct {
 	// TorsoValidation: The insights data for workload validation of torso
 	// workloads.
 	TorsoValidation *TorsoValidation `json:"torsoValidation,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "InstanceId") to
+	// ForceSendFields is a list of field names (e.g. "AgentStatus") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "InstanceId") to include in API
+	// NullFields is a list of field names (e.g. "AgentStatus") to include in API
 	// requests with the JSON null value. By default, fields with empty values are
 	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
@@ -816,64 +1054,12 @@ func (s Insight) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// Instance: a vm instance
-type Instance struct {
-	// Name: Output only. name of the VM
-	Name string `json:"name,omitempty"`
-	// Region: Output only. The location of the VM
-	Region string `json:"region,omitempty"`
-	// Status: Output only. The state of the VM
-	//
-	// Possible values:
-	//   "INSTANCESTATE_UNSPECIFIED" - The Status of the VM is unspecified
-	//   "PROVISIONING" - Resources are being allocated for the instance.
-	//   "STAGING" - All required resources have been allocated and the instance is
-	// being started.
-	//   "RUNNING" - The instance is running.
-	//   "STOPPING" - The instance is currently stopping (either being deleted or
-	// killed).
-	//   "STOPPED" - The instance has stopped due to various reasons (user request,
-	// VM preemption, project freezing, etc.).
-	//   "TERMINATED" - The instance has failed in some way.
-	//   "SUSPENDING" - The instance is suspending.
-	//   "SUSPENDED" - The instance is suspended.
-	//   "REPAIRING" - The instance is in repair.
-	//   "DEPROVISIONING" - The instance is in de-provisioning state.
-	Status string `json:"status,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "Name") to unconditionally
-	// include in API requests. By default, fields with empty or default values are
-	// omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
-	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Name") to include in API requests
-	// with the JSON null value. By default, fields with empty values are omitted
-	// from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
-	NullFields []string `json:"-"`
-}
-
-func (s Instance) MarshalJSON() ([]byte, error) {
-	type NoMethod Instance
-	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
-}
-
 // InstanceProperties: Instance Properties.
 type InstanceProperties struct {
 	// InstanceNumber: Optional. Instance number.
 	InstanceNumber string `json:"instanceNumber,omitempty"`
 	// MachineType: Optional. Instance machine type.
 	MachineType string `json:"machineType,omitempty"`
-	// Role: Optional. Instance role.
-	//
-	// Possible values:
-	//   "INSTANCE_ROLE_UNSPECIFIED" - Unspecified role.
-	//   "INSTANCE_ROLE_ASCS" - ASCS role.
-	//   "INSTANCE_ROLE_ERS" - ERS role.
-	//   "INSTANCE_ROLE_APP_SERVER" - APP server.
-	//   "INSTANCE_ROLE_HANA_PRIMARY" - HANA primary role.
-	//   "INSTANCE_ROLE_HANA_SECONDARY" - HANA secondary role.
-	Role string `json:"role,omitempty"`
 	// Roles: Optional. Instance roles.
 	//
 	// Possible values:
@@ -905,34 +1091,6 @@ type InstanceProperties struct {
 
 func (s InstanceProperties) MarshalJSON() ([]byte, error) {
 	type NoMethod InstanceProperties
-	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
-}
-
-// Layer: The database layer
-type Layer struct {
-	// ApplicationType: the application layer
-	ApplicationType string `json:"applicationType,omitempty"`
-	// DatabaseType: Optional. the database layer
-	DatabaseType string `json:"databaseType,omitempty"`
-	// Instances: Optional. instances in a layer
-	Instances []*Instance `json:"instances,omitempty"`
-	// Sid: Output only. system identification of a layer
-	Sid string `json:"sid,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "ApplicationType") to
-	// unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
-	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "ApplicationType") to include in
-	// API requests with the JSON null value. By default, fields with empty values
-	// are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
-	NullFields []string `json:"-"`
-}
-
-func (s Layer) MarshalJSON() ([]byte, error) {
-	type NoMethod Layer
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -1910,6 +2068,8 @@ type SapDiscoveryResourceInstanceProperties struct {
 	InstanceRole string `json:"instanceRole,omitempty"`
 	// IsDrSite: Optional. Instance is part of a DR site.
 	IsDrSite bool `json:"isDrSite,omitempty"`
+	// OsKernelVersion: Optional. The kernel version of the instance.
+	OsKernelVersion *SapDiscoveryResourceInstancePropertiesKernelVersion `json:"osKernelVersion,omitempty"`
 	// VirtualHostname: Optional. A virtual hostname of the instance if it has one.
 	VirtualHostname string `json:"virtualHostname,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AppInstances") to
@@ -1978,6 +2138,68 @@ type SapDiscoveryResourceInstancePropertiesDiskMount struct {
 
 func (s SapDiscoveryResourceInstancePropertiesDiskMount) MarshalJSON() ([]byte, error) {
 	type NoMethod SapDiscoveryResourceInstancePropertiesDiskMount
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// SapDiscoveryResourceInstancePropertiesKernelVersion: KernelVersion
+// encapsulates the kernel version data for the system.
+type SapDiscoveryResourceInstancePropertiesKernelVersion struct {
+	// DistroKernel: Optional. Captures the distro-specific kernel version, the
+	// portion of the string following the first dash.
+	DistroKernel *SapDiscoveryResourceInstancePropertiesKernelVersionVersion `json:"distroKernel,omitempty"`
+	// OsKernel: Optional. Captures the OS-specific kernel version, the portion of
+	// the string up to the first dash.
+	OsKernel *SapDiscoveryResourceInstancePropertiesKernelVersionVersion `json:"osKernel,omitempty"`
+	// RawString: Optional. Raw string of the kernel version.
+	RawString string `json:"rawString,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "DistroKernel") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DistroKernel") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s SapDiscoveryResourceInstancePropertiesKernelVersion) MarshalJSON() ([]byte, error) {
+	type NoMethod SapDiscoveryResourceInstancePropertiesKernelVersion
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// SapDiscoveryResourceInstancePropertiesKernelVersionVersion: Version is
+// reported as Major.Minor.Build.Patch.
+type SapDiscoveryResourceInstancePropertiesKernelVersionVersion struct {
+	// Build: Optional. The build version number.
+	Build int64 `json:"build,omitempty"`
+	// Major: Optional. The major version number.
+	Major int64 `json:"major,omitempty"`
+	// Minor: Optional. The minor version number.
+	Minor int64 `json:"minor,omitempty"`
+	// Patch: Optional. The patch version number.
+	Patch int64 `json:"patch,omitempty"`
+	// Remainder: Optional. A catch-all for any unparsed version components. This
+	// is in case the number of points in the version string exceeds the expected
+	// count of 4.
+	Remainder string `json:"remainder,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Build") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Build") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s SapDiscoveryResourceInstancePropertiesKernelVersionVersion) MarshalJSON() ([]byte, error) {
+	type NoMethod SapDiscoveryResourceInstancePropertiesKernelVersionVersion
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -2509,49 +2731,32 @@ func (s ViolationDetails) MarshalJSON() ([]byte, error) {
 
 // WorkloadProfile: workload resource
 type WorkloadProfile struct {
-	// Application: Optional. The application layer
-	Application *Layer `json:"application,omitempty"`
-	// Ascs: Optional. The ascs layer
-	Ascs *Layer `json:"ascs,omitempty"`
-	// Database: Optional. The database layer
-	Database *Layer `json:"database,omitempty"`
 	// Labels: Optional. such as name, description, version. More example can be
 	// found in deployment
 	Labels map[string]string `json:"labels,omitempty"`
 	// Name: Identifier. name of resource names have the form
-	// 'projects/{project_id}/workloads/{workload_id}'
+	// 'projects/{project_id}/locations/{location}/workloadProfiles/{workload_id}'
 	Name string `json:"name,omitempty"`
 	// RefreshedTime: Required. time when the workload data was refreshed
 	RefreshedTime string `json:"refreshedTime,omitempty"`
 	// SapWorkload: The sap workload content
 	SapWorkload *SapWorkload `json:"sapWorkload,omitempty"`
-	// State: Output only. [output only] the current state if a a workload
-	//
-	// Possible values:
-	//   "STATE_UNSPECIFIED" - unspecified
-	//   "ACTIVE" - ACTIVE state
-	//   "DEPLOYING" - workload is in Deploying state
-	//   "DESTROYING" - The workload is in Destroying state
-	//   "MAINTENANCE" - The Workload is undermaintance
-	State string `json:"state,omitempty"`
 	// WorkloadType: Required. The type of the workload
 	//
 	// Possible values:
 	//   "WORKLOAD_TYPE_UNSPECIFIED" - unspecified workload type
 	//   "S4_HANA" - running sap workload s4/hana
-	//   "SQL_SERVER" - running sqlserver workload
-	//   "THREE_TIER_WEB_APP" - running 3 tier web app workload
 	WorkloadType string `json:"workloadType,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-	// ForceSendFields is a list of field names (e.g. "Application") to
-	// unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
+	// ForceSendFields is a list of field names (e.g. "Labels") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Application") to include in API
+	// NullFields is a list of field names (e.g. "Labels") to include in API
 	// requests with the JSON null value. By default, fields with empty values are
 	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
@@ -2567,9 +2772,10 @@ func (s WorkloadProfile) MarshalJSON() ([]byte, error) {
 // check of workload.
 type WorkloadProfileHealth struct {
 	// CheckTime: The time when the health check was performed.
-	CheckTime string `json:"checkTime,omitempty"`
-	// ComponentHealthes: The detailed condition reports of each component.
+	CheckTime         string             `json:"checkTime,omitempty"`
 	ComponentHealthes []*ComponentHealth `json:"componentHealthes,omitempty"`
+	// ComponentsHealth: The detailed condition reports of each component.
+	ComponentsHealth []*ComponentHealth `json:"componentsHealth,omitempty"`
 	// State: Output only. The health state of the workload.
 	//
 	// Possible values:

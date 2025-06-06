@@ -2593,8 +2593,11 @@ func (s CampaignsListResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// CartData: Contains additional information about cart data. This field may
-// only be used when calling batchinsert; it is not supported by batchupdate.
+// CartData:  *Beta:* This feature is currently in beta. Contains additional
+// information about cart data. This field may only be used when calling
+// batchinsert; it is not supported by batchupdate. Cart data reporting is only
+// supported in SA360. Learn more
+// (https://support.google.com/sa360/topic/13425788)
 type CartData struct {
 	// Items: Data of the items purchased.
 	Items []*CartDataItem `json:"items,omitempty"`
@@ -3225,6 +3228,10 @@ type Conversion struct {
 	Ordinal string `json:"ordinal,omitempty"`
 	// Quantity: The quantity of the conversion. This is a required field.
 	Quantity int64 `json:"quantity,omitempty,string"`
+	// SessionAttributesEncoded: Session attributes for the conversion, encoded as
+	// based64 bytes. This field may only be used when calling batchinsert; it is
+	// not supported by batchupdate.
+	SessionAttributesEncoded string `json:"sessionAttributesEncoded,omitempty"`
 	// TimestampMicros: The timestamp of conversion, in Unix epoch micros. This is
 	// a required field.
 	TimestampMicros int64 `json:"timestampMicros,omitempty,string"`
@@ -5232,8 +5239,9 @@ func (s CrossMediaReachReportCompatibleFields) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// CustomFloodlightVariable: A custom floodlight variable. This field may only
-// be used when calling batchinsert; it is not supported by batchupdate.
+// CustomFloodlightVariable: A custom floodlight variable. Can be used in both
+// batchinsert and batchupdate. Adding this in batchupdate will update or
+// append the variable to the existing list.
 type CustomFloodlightVariable struct {
 	// Kind: Identifies what kind of resource this is. Value: the fixed string
 	// "dfareporting#customFloodlightVariable".

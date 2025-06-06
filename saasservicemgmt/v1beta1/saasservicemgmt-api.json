@@ -14,7 +14,7 @@
   "canonicalName": "SaaS Service Management",
   "description": "",
   "discoveryVersion": "v1",
-  "documentationLink": "https://cloud.google.com/",
+  "documentationLink": "https://cloud.google.com/saas-runtime/docs",
   "fullyEncodeReservedExpansion": true,
   "icons": {
     "x16": "http://www.google.com/images/icons/product/search-16.gif",
@@ -1804,7 +1804,7 @@
       }
     }
   },
-  "revision": "20250514",
+  "revision": "20250528",
   "rootUrl": "https://saasservicemgmt.googleapis.com/",
   "schemas": {
     "Aggregate": {
@@ -3288,7 +3288,7 @@
     }
   },
   "servicePath": "",
-  "title": "SaaS Service Management API",
+  "title": "SaaS Runtime API",
   "version": "v1beta1",
   "version_module": true
 }

@@ -213,7 +213,7 @@ type DataSource struct {
 	//   "AUTOFEED" - This is also known as [Automated
 	// feeds](https://support.google.com/merchants/answer/12158480) used to
 	// automatically build your product data. This type of data source can be
-	// enabled or disabled through the Accounts bundle.
+	// enabled or disabled through the Accounts sub-API.
 	Input string `json:"input,omitempty"`
 	// LocalInventoryDataSource: The local inventory
 	// (https://support.google.com/merchants/answer/7023001) data source.
@@ -1591,7 +1591,9 @@ func (r *AccountsDataSourcesService) Patch(name string, datasource *DataSource) 
 // data source fields to be updated. Fields specified in the update mask
 // without a value specified in the body will be deleted from the data source.
 // Providing special "*" value for full data source replacement is not
-// supported.
+// supported. For example, If you insert `updateMask=displayName` in the
+// request, it will only update the `displayName` leaving all other fields
+// untouched.
 func (c *AccountsDataSourcesPatchCall) UpdateMask(updateMask string) *AccountsDataSourcesPatchCall {
 	c.urlParams_.Set("updateMask", updateMask)
 	return c

@@ -518,8 +518,9 @@ type AddSubnetworkRequest struct {
 	// (https://cloud.google.com/compute/docs/reference/rest/v1/subnetworks) in the
 	// Compute API documentation.
 	Purpose string `json:"purpose,omitempty"`
-	// Region: Required. The name of a region (/compute/docs/regions-zones) for the
-	// subnet, such `europe-west1`.
+	// Region: Required. The name of a region
+	// (https://cloud.google.com/compute/docs/regions-zones) for the subnet, such
+	// `europe-west1`.
 	Region string `json:"region,omitempty"`
 	// RequestedAddress: Optional. The starting address of a range. The address
 	// must be a valid IPv4 address in the x.x.x.x format. This value combined with
@@ -552,8 +553,8 @@ type AddSubnetworkRequest struct {
 	SkipRequestedAddressValidation bool `json:"skipRequestedAddressValidation,omitempty"`
 	// Subnetwork: Required. A name for the new subnet. For information about the
 	// naming requirements, see subnetwork
-	// (/compute/docs/reference/rest/v1/subnetworks) in the Compute API
-	// documentation.
+	// (https://cloud.google.com/compute/docs/reference/rest/v1/subnetworks) in the
+	// Compute API documentation.
 	Subnetwork string `json:"subnetwork,omitempty"`
 	// SubnetworkUsers: A list of members that are granted the
 	// `roles/servicenetworking.subnetworkAdmin` role on the subnet.
@@ -1239,12 +1240,14 @@ func (s ClientLibrarySettings) MarshalJSON() ([]byte, error) {
 
 // CloudSQLConfig: Cloud SQL configuration.
 type CloudSQLConfig struct {
-	// Service: Peering service used for peering with the Cloud SQL project.
-	Service string `json:"service,omitempty"`
-	// UmbrellaNetwork: The name of the umbrella network in the Cloud SQL umbrella
+	// Service: Required. Peering service used for peering with the Cloud SQL
 	// project.
+	Service string `json:"service,omitempty"`
+	// UmbrellaNetwork: Required. The name of the umbrella network in the Cloud SQL
+	// umbrella project.
 	UmbrellaNetwork string `json:"umbrellaNetwork,omitempty"`
-	// UmbrellaProject: The project number of the Cloud SQL umbrella project.
+	// UmbrellaProject: Required. The project number of the Cloud SQL umbrella
+	// project.
 	UmbrellaProject int64 `json:"umbrellaProject,omitempty,string"`
 	// ForceSendFields is a list of field names (e.g. "Service") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -1305,8 +1308,8 @@ func (s CommonLanguageSettings) MarshalJSON() ([]byte, error) {
 // is implemented as a VPC Network Peering connection between a service
 // producer's VPC network and a service consumer's VPC network.
 type Connection struct {
-	// Network: The name of service consumer's VPC network that's connected with
-	// service producer network, in the following format:
+	// Network: Required. The name of service consumer's VPC network that's
+	// connected with service producer network, in the following format:
 	// `projects/{project}/global/networks/{network}`. `{project}` is a project
 	// number, such as in `12345` that includes the VPC service consumer's VPC
 	// network. `{network}` is the name of the service consumer's VPC network.
@@ -3812,9 +3815,9 @@ type PeeredDnsDomain struct {
 	// DnsSuffix: The DNS domain name suffix e.g. `example.com.`. Cloud DNS
 	// requires that a DNS suffix ends with a trailing dot.
 	DnsSuffix string `json:"dnsSuffix,omitempty"`
-	// Name: User assigned name for this resource. Must be unique within the
-	// consumer network. The name must be 1-63 characters long, must begin with a
-	// letter, end with a letter or digit, and only contain lowercase letters,
+	// Name: Required. User assigned name for this resource. Must be unique within
+	// the consumer network. The name must be 1-63 characters long, must begin with
+	// a letter, end with a letter or digit, and only contain lowercase letters,
 	// digits or dashes.
 	Name string `json:"name,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "DnsSuffix") to
@@ -4327,10 +4330,10 @@ type SearchRangeRequest struct {
 	// Actual range will be determined using allocated range for the consumer
 	// peered network and returned in the result.
 	IpPrefixLength int64 `json:"ipPrefixLength,omitempty"`
-	// Network: Network name in the consumer project. This network must have been
-	// already peered with a shared VPC network using CreateConnection method. Must
-	// be in a form 'projects/{project}/global/networks/{network}'. {project} is a
-	// project number, as in '12345' {network} is network name.
+	// Network: Required. Network name in the consumer project. This network must
+	// have been already peered with a shared VPC network using CreateConnection
+	// method. Must be in a form 'projects/{project}/global/networks/{network}'.
+	// {project} is a project number, as in '12345' {network} is network name.
 	Network string `json:"network,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "IpPrefixLength") to
 	// unconditionally include in API requests. By default, fields with empty or

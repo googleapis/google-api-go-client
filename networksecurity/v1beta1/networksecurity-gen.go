@@ -848,16 +848,19 @@ func (s AuthzPolicyAuthzRuleFrom) MarshalJSON() ([]byte, error) {
 // AuthzPolicyAuthzRuleFromRequestSource: Describes the properties of a single
 // source.
 type AuthzPolicyAuthzRuleFromRequestSource struct {
+	// IpBlocks: Optional. A list of IPs or CIDRs to match against the source IP of
+	// a request. Limited to 5 ip_blocks.
+	IpBlocks []*AuthzPolicyAuthzRuleIpBlock `json:"ipBlocks,omitempty"`
 	// Resources: Optional. A list of resources to match against the resource of
 	// the source VM of a request. Limited to 5 resources.
 	Resources []*AuthzPolicyAuthzRuleRequestResource `json:"resources,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "Resources") to
+	// ForceSendFields is a list of field names (e.g. "IpBlocks") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Resources") to include in API
+	// NullFields is a list of field names (e.g. "IpBlocks") to include in API
 	// requests with the JSON null value. By default, fields with empty values are
 	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
@@ -891,6 +894,30 @@ type AuthzPolicyAuthzRuleHeaderMatch struct {
 
 func (s AuthzPolicyAuthzRuleHeaderMatch) MarshalJSON() ([]byte, error) {
 	type NoMethod AuthzPolicyAuthzRuleHeaderMatch
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// AuthzPolicyAuthzRuleIpBlock: Represents a range of IP Addresses.
+type AuthzPolicyAuthzRuleIpBlock struct {
+	// Length: Required. The length of the address range.
+	Length int64 `json:"length,omitempty"`
+	// Prefix: Required. The address prefix.
+	Prefix string `json:"prefix,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Length") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Length") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s AuthzPolicyAuthzRuleIpBlock) MarshalJSON() ([]byte, error) {
+	type NoMethod AuthzPolicyAuthzRuleIpBlock
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -4537,8 +4564,10 @@ type SACRealmSACRealmSymantecOptions struct {
 	// AvailableSymantecSites: Output only. Symantec site IDs that the user can
 	// choose to connect to.
 	AvailableSymantecSites []string `json:"availableSymantecSites,omitempty"`
-	// SecretPath: Optional. A secret ID or secret name can be specified, but it
-	// will be parsed and stored as secret URI in the format of
+	// SecretPath: Optional. API Key used to call Symantec APIs on the user's
+	// behalf. Required if using SYMANTEC_CLOUD_SWG. P4SA account needs permissions
+	// granted to read this secret. A secret ID, secret name, or secret URI can be
+	// specified, but it will be parsed and stored as secret URI in the format of
 	// "projects/{PROJECT_NUMBER}/secrets/my-secret".
 	SecretPath string `json:"secretPath,omitempty"`
 	// SymantecConnectionState: Output only. [Output only] Connection status to

@@ -4045,6 +4045,8 @@ type Rollout struct {
 	// TrafficPercentStrategy: Google Service Control selects service
 	// configurations based on traffic percentage.
 	TrafficPercentStrategy *TrafficPercentStrategy `json:"trafficPercentStrategy,omitempty"`
+	// Universe: The TPC universe which the rollout will be rolled out to.
+	Universe string `json:"universe,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`

@@ -340,6 +340,44 @@ func (s AllowedKeyType) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// AttributeTypeAndValue: AttributeTypeAndValue specifies an attribute type and
+// value. It can use either a OID or enum value to specify the attribute type.
+type AttributeTypeAndValue struct {
+	// ObjectId: Object ID for an attribute type of an attribute and value pair.
+	ObjectId *ObjectId `json:"objectId,omitempty"`
+	// Type: The attribute type of the attribute and value pair.
+	//
+	// Possible values:
+	//   "ATTRIBUTE_TYPE_UNSPECIFIED" - Attribute type is unspecified.
+	//   "COMMON_NAME" - The "common name" of the subject.
+	//   "COUNTRY_CODE" - The country code of the subject.
+	//   "ORGANIZATION" - The organization of the subject.
+	//   "ORGANIZATIONAL_UNIT" - The organizational unit of the subject.
+	//   "LOCALITY" - The locality or city of the subject.
+	//   "PROVINCE" - The province, territory, or regional state of the subject.
+	//   "STREET_ADDRESS" - The street address of the subject.
+	//   "POSTAL_CODE" - The postal code of the subject.
+	Type string `json:"type,omitempty"`
+	// Value: The value for the attribute type.
+	Value string `json:"value,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ObjectId") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ObjectId") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s AttributeTypeAndValue) MarshalJSON() ([]byte, error) {
+	type NoMethod AttributeTypeAndValue
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // AuditConfig: Specifies the audit configuration for a service. The
 // configuration determines which permission types are logged, and what
 // identities, if any, are exempted from logging. An AuditConfig must have one
@@ -669,6 +707,12 @@ type Certificate struct {
 	// certificate's Subject and/or SubjectAltNames are specified in the
 	// certificate request. This mode requires the caller to have the
 	// `privateca.certificates.create` permission.
+	//   "RDN_SEQUENCE" - A mode used to get an accurate representation of the
+	// Subject field's distinguished name. Indicates that the certificate's Subject
+	// and/or SubjectAltNames are specified in the certificate request. When
+	// parsing a PEM CSR this mode will maintain the sequence of RDNs found in the
+	// CSR's subject field in the issued Certificate. This mode requires the caller
+	// to have the `privateca.certificates.create` permission.
 	//   "REFLECTED_SPIFFE" - A mode reserved for special cases. Indicates that the
 	// certificate should have one SPIFFE SubjectAltNames set by the service based
 	// on the caller's identity. This mode will ignore any explicitly specified
@@ -2334,6 +2378,29 @@ func (s ReconciliationOperationMetadata) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// RelativeDistinguishedName: RelativeDistinguishedName specifies a relative
+// distinguished name which will be used to build a distinguished name.
+type RelativeDistinguishedName struct {
+	// Attributes: Attributes describes the attribute value assertions in the RDN.
+	Attributes []*AttributeTypeAndValue `json:"attributes,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Attributes") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Attributes") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s RelativeDistinguishedName) MarshalJSON() ([]byte, error) {
+	type NoMethod RelativeDistinguishedName
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // RevocationDetails: Describes fields that are relavent to the revocation of a
 // Certificate.
 type RevocationDetails struct {
@@ -2587,6 +2654,8 @@ type Subject struct {
 	PostalCode string `json:"postalCode,omitempty"`
 	// Province: The province, territory, or regional state of the subject.
 	Province string `json:"province,omitempty"`
+	// RdnSequence: This field can be used in place of the named subject fields.
+	RdnSequence []*RelativeDistinguishedName `json:"rdnSequence,omitempty"`
 	// StreetAddress: The street address of the subject.
 	StreetAddress string `json:"streetAddress,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "CommonName") to

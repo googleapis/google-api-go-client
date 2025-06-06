@@ -1198,9 +1198,10 @@ func (s GoogleCloudDialogflowCxV3EnvironmentTestCasesConfig) MarshalJSON() ([]by
 // GoogleCloudDialogflowCxV3EnvironmentVersionConfig: Configuration for the
 // version.
 type GoogleCloudDialogflowCxV3EnvironmentVersionConfig struct {
-	// Version: Required. Both flow and playbook versions are supported. Format for
-	// flow version: projects//locations//agents//flows//versions/. Format for
-	// playbook version: projects//locations//agents//playbooks//versions/.
+	// Version: Required. Flow, playbook and tool versions are supported. Format
+	// for flow version: projects//locations//agents//flows//versions/. Format for
+	// playbook version: projects//locations//agents//playbooks//versions/. Format
+	// for tool version: projects//locations//agents//tools//versions/.
 	Version string `json:"version,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Version") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -6609,9 +6610,10 @@ func (s GoogleCloudDialogflowCxV3beta1EnvironmentTestCasesConfig) MarshalJSON() 
 // GoogleCloudDialogflowCxV3beta1EnvironmentVersionConfig: Configuration for
 // the version.
 type GoogleCloudDialogflowCxV3beta1EnvironmentVersionConfig struct {
-	// Version: Required. Both flow and playbook versions are supported. Format for
-	// flow version: projects//locations//agents//flows//versions/. Format for
-	// playbook version: projects//locations//agents//playbooks//versions/.
+	// Version: Required. Flow, playbook and tool versions are supported. Format
+	// for flow version: projects//locations//agents//flows//versions/. Format for
+	// playbook version: projects//locations//agents//playbooks//versions/. Format
+	// for tool version: projects//locations//agents//tools//versions/.
 	Version string `json:"version,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Version") to unconditionally
 	// include in API requests. By default, fields with empty or default values are

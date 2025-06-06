@@ -971,12 +971,14 @@ func (s ClientLibrarySettings) MarshalJSON() ([]byte, error) {
 
 // CloudSQLConfig: Cloud SQL configuration.
 type CloudSQLConfig struct {
-	// Service: Peering service used for peering with the Cloud SQL project.
-	Service string `json:"service,omitempty"`
-	// UmbrellaNetwork: The name of the umbrella network in the Cloud SQL umbrella
+	// Service: Required. Peering service used for peering with the Cloud SQL
 	// project.
+	Service string `json:"service,omitempty"`
+	// UmbrellaNetwork: Required. The name of the umbrella network in the Cloud SQL
+	// umbrella project.
 	UmbrellaNetwork string `json:"umbrellaNetwork,omitempty"`
-	// UmbrellaProject: The project number of the Cloud SQL umbrella project.
+	// UmbrellaProject: Required. The project number of the Cloud SQL umbrella
+	// project.
 	UmbrellaProject int64 `json:"umbrellaProject,omitempty,string"`
 	// ForceSendFields is a list of field names (e.g. "Service") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -1037,8 +1039,8 @@ func (s CommonLanguageSettings) MarshalJSON() ([]byte, error) {
 // is implemented as a VPC Network Peering connection between a service
 // producer's VPC network and a service consumer's VPC network.
 type Connection struct {
-	// Network: The name of service consumer's VPC network that's connected with
-	// service producer network, in the following format:
+	// Network: Required. The name of service consumer's VPC network that's
+	// connected with service producer network, in the following format:
 	// `projects/{project}/global/networks/{network}`. `{project}` is a project
 	// number, such as in `12345` that includes the VPC service consumer's VPC
 	// network. `{network}` is the name of the service consumer's VPC network.
@@ -3266,9 +3268,9 @@ type PeeredDnsDomain struct {
 	// DnsSuffix: The DNS domain name suffix e.g. `example.com.`. Cloud DNS
 	// requires that a DNS suffix ends with a trailing dot.
 	DnsSuffix string `json:"dnsSuffix,omitempty"`
-	// Name: User assigned name for this resource. Must be unique within the
-	// consumer network. The name must be 1-63 characters long, must begin with a
-	// letter, end with a letter or digit, and only contain lowercase letters,
+	// Name: Required. User assigned name for this resource. Must be unique within
+	// the consumer network. The name must be 1-63 characters long, must begin with
+	// a letter, end with a letter or digit, and only contain lowercase letters,
 	// digits or dashes.
 	Name string `json:"name,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "DnsSuffix") to

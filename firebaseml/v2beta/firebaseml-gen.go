@@ -576,6 +576,9 @@ type GoogleCloudAiplatformV1beta1Candidate struct {
 	// SafetyRatings: Output only. List of ratings for the safety of a response
 	// candidate. There is at most one rating per category.
 	SafetyRatings []*GoogleCloudAiplatformV1beta1SafetyRating `json:"safetyRatings,omitempty"`
+	// UrlContextMetadata: Output only. Metadata related to url context retrieval
+	// tool.
+	UrlContextMetadata *GoogleCloudAiplatformV1beta1UrlContextMetadata `json:"urlContextMetadata,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AvgLogprobs") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -2780,6 +2783,59 @@ type GoogleCloudAiplatformV1beta1ToolGoogleSearch struct {
 
 // GoogleCloudAiplatformV1beta1UrlContext: Tool to support URL context.
 type GoogleCloudAiplatformV1beta1UrlContext struct {
+}
+
+// GoogleCloudAiplatformV1beta1UrlContextMetadata: Metadata related to url
+// context retrieval tool.
+type GoogleCloudAiplatformV1beta1UrlContextMetadata struct {
+	// UrlMetadata: Output only. List of url context.
+	UrlMetadata []*GoogleCloudAiplatformV1beta1UrlMetadata `json:"urlMetadata,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "UrlMetadata") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "UrlMetadata") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudAiplatformV1beta1UrlContextMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudAiplatformV1beta1UrlContextMetadata
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudAiplatformV1beta1UrlMetadata: Context of the a single url
+// retrieval.
+type GoogleCloudAiplatformV1beta1UrlMetadata struct {
+	// RetrievedUrl: Retrieved url by the tool.
+	RetrievedUrl string `json:"retrievedUrl,omitempty"`
+	// UrlRetrievalStatus: Status of the url retrieval.
+	//
+	// Possible values:
+	//   "URL_RETRIEVAL_STATUS_UNSPECIFIED" - Default value. This value is unused.
+	//   "URL_RETRIEVAL_STATUS_SUCCESS" - Url retrieval is successful.
+	//   "URL_RETRIEVAL_STATUS_ERROR" - Url retrieval is failed due to error.
+	UrlRetrievalStatus string `json:"urlRetrievalStatus,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "RetrievedUrl") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "RetrievedUrl") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudAiplatformV1beta1UrlMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudAiplatformV1beta1UrlMetadata
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1beta1VertexAISearch: Retrieve from Vertex AI Search

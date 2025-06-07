@@ -3110,6 +3110,66 @@ func (s TimeSeriesTable) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// Treemap: A widget that displays hierarchical data as a treemap.
+type Treemap struct {
+	// DataSets: Required. The collection of datasets used to construct and
+	// populate the treemap. For the rendered treemap rectangles: Color is
+	// determined by the aggregated value for each grouping. Size is proportional
+	// to the count of time series aggregated within that rectangle's segment.
+	DataSets []*TreemapDataSet `json:"dataSets,omitempty"`
+	// TreemapHierarchy: Required. Ordered labels representing the hierarchical
+	// treemap structure.
+	TreemapHierarchy []string `json:"treemapHierarchy,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "DataSets") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DataSets") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s Treemap) MarshalJSON() ([]byte, error) {
+	type NoMethod Treemap
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// TreemapDataSet: The data represented by the treemap. Needs to include the
+// data itself, plus rules on how to organize it hierarchically.
+type TreemapDataSet struct {
+	// Breakdowns: Optional. The collection of breakdowns to be applied to the
+	// dataset. A breakdown is a way to slice the data. For example, you can break
+	// down the data by region.
+	Breakdowns []*Breakdown `json:"breakdowns,omitempty"`
+	// Measures: Optional. A collection of measures. A measure is a measured value
+	// of a property in your data. For example, rainfall in inches, number of units
+	// sold, revenue gained, etc.
+	Measures []*Measure `json:"measures,omitempty"`
+	// TimeSeriesQuery: Required. The query that fetches the relevant data. See
+	// google.monitoring.dashboard.v1.TimeSeriesQuery
+	TimeSeriesQuery *TimeSeriesQuery `json:"timeSeriesQuery,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Breakdowns") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Breakdowns") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s TreemapDataSet) MarshalJSON() ([]byte, error) {
+	type NoMethod TreemapDataSet
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // Type: A protocol buffer message type.
 type Type struct {
 	// Edition: The source edition string, only valid when syntax is
@@ -3211,6 +3271,8 @@ type Widget struct {
 	TimeSeriesTable *TimeSeriesTable `json:"timeSeriesTable,omitempty"`
 	// Title: Optional. The title of the widget.
 	Title string `json:"title,omitempty"`
+	// Treemap: A widget that displays data as a treemap.
+	Treemap *Treemap `json:"treemap,omitempty"`
 	// VisibilityCondition: Optional. If set, this widget is rendered only when the
 	// condition is evaluated to true.
 	VisibilityCondition *VisibilityCondition `json:"visibilityCondition,omitempty"`

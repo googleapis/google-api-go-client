@@ -414,8 +414,8 @@ func (s Market) MarshalJSON() ([]byte, error) {
 }
 
 // ModelVersion: Travel Impact Model version. For more information about the
-// model versioning see
-// https://github.com/google/travel-impact-model/#versioning.
+// model versioning see GitHub
+// (https://github.com/google/travel-impact-model/#versioning).
 type ModelVersion struct {
 	// Dated: Dated versions: Model datasets are recreated with refreshed input
 	// data but no change to the algorithms regularly.
@@ -423,8 +423,8 @@ type ModelVersion struct {
 	// Major: Major versions: Major changes to methodology (e.g. adding new data
 	// sources to the model that lead to major output changes). Such changes will
 	// be infrequent and announced well in advance. Might involve API version
-	// changes, which will respect guidelines in
-	// https://cloud.google.com/endpoints/docs/openapi/versioning-an-api#backwards-incompatible
+	// changes, which will respect Google Cloud API guidelines
+	// (https://cloud.google.com/endpoints/docs/openapi/versioning-an-api#backwards-incompatible)
 	Major int64 `json:"major,omitempty"`
 	// Minor: Minor versions: Changes to the model that, while being consistent
 	// across schema versions, change the model parameters or implementation.
@@ -454,7 +454,10 @@ func (s ModelVersion) MarshalJSON() ([]byte, error) {
 // market
 type TypicalFlightEmissions struct {
 	// EmissionsGramsPerPax: Optional. Typical flight emissions per passenger for
-	// requested market.
+	// requested market. Will not be present if a typical emissions could not be
+	// computed. For the list of reasons why typical flight emissions could not be
+	// computed, see GitHub
+	// (https://github.com/google/travel-impact-model/blob/main/projects/typical_flight_emissions.md#step-7-validate-dataset).
 	EmissionsGramsPerPax *EmissionsGramsPerPax `json:"emissionsGramsPerPax,omitempty"`
 	// Market: Required. Matches the flight identifiers in the request. Note: all
 	// IATA codes are capitalized.
@@ -486,17 +489,17 @@ type FlightsComputeFlightEmissionsCall struct {
 }
 
 // ComputeFlightEmissions: Stateless method to retrieve emission estimates.
-// Details on how emission estimates are computed:
-// https://github.com/google/travel-impact-model The response will contain all
-// entries that match the input flight legs, in the same order. If there are no
-// estimates available for a certain flight leg, the response will return the
-// flight leg object with empty emission fields. The request will still be
-// considered successful. Reasons for missing emission estimates include: * The
-// flight is unknown to the server. * The input flight leg is missing one or
-// more identifiers. * The flight date is in the past. * The aircraft type is
-// not supported by the model. * Missing seat configuration. The request can
-// contain up to 1000 flight legs. If the request has more than 1000 direct
-// flights, if will fail with an INVALID_ARGUMENT error.
+// Details on how emission estimates are computed are in GitHub
+// (https://github.com/google/travel-impact-model) The response will contain
+// all entries that match the input flight legs, in the same order. If there
+// are no estimates available for a certain flight leg, the response will
+// return the flight leg object with empty emission fields. The request will
+// still be considered successful. Reasons for missing emission estimates
+// include: * The flight is unknown to the server. * The input flight leg is
+// missing one or more identifiers. * The flight date is in the past. * The
+// aircraft type is not supported by the model. * Missing seat configuration.
+// The request can contain up to 1000 flight legs. If the request has more than
+// 1000 direct flights, if will fail with an INVALID_ARGUMENT error.
 func (r *FlightsService) ComputeFlightEmissions(computeflightemissionsrequest *ComputeFlightEmissionsRequest) *FlightsComputeFlightEmissionsCall {
 	c := &FlightsComputeFlightEmissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.computeflightemissionsrequest = computeflightemissionsrequest

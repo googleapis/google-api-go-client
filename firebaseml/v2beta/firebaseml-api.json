@@ -206,7 +206,7 @@
       }
     }
   },
-  "revision": "20250601",
+  "revision": "20250604",
   "rootUrl": "https://firebaseml.googleapis.com/",
   "schemas": {
     "Date": {
@@ -496,6 +496,11 @@
           },
           "readOnly": true,
           "type": "array"
+        },
+        "urlContextMetadata": {
+          "$ref": "GoogleCloudAiplatformV1beta1UrlContextMetadata",
+          "description": "Output only. Metadata related to url context retrieval tool.",
+          "readOnly": true
         }
       },
       "type": "object"
@@ -2279,6 +2284,46 @@
       "description": "Tool to support URL context.",
       "id": "GoogleCloudAiplatformV1beta1UrlContext",
       "properties": {},
+      "type": "object"
+    },
+    "GoogleCloudAiplatformV1beta1UrlContextMetadata": {
+      "description": "Metadata related to url context retrieval tool.",
+      "id": "GoogleCloudAiplatformV1beta1UrlContextMetadata",
+      "properties": {
+        "urlMetadata": {
+          "description": "Output only. List of url context.",
+          "items": {
+            "$ref": "GoogleCloudAiplatformV1beta1UrlMetadata"
+          },
+          "readOnly": true,
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudAiplatformV1beta1UrlMetadata": {
+      "description": "Context of the a single url retrieval.",
+      "id": "GoogleCloudAiplatformV1beta1UrlMetadata",
+      "properties": {
+        "retrievedUrl": {
+          "description": "Retrieved url by the tool.",
+          "type": "string"
+        },
+        "urlRetrievalStatus": {
+          "description": "Status of the url retrieval.",
+          "enum": [
+            "URL_RETRIEVAL_STATUS_UNSPECIFIED",
+            "URL_RETRIEVAL_STATUS_SUCCESS",
+            "URL_RETRIEVAL_STATUS_ERROR"
+          ],
+          "enumDescriptions": [
+            "Default value. This value is unused.",
+            "Url retrieval is successful.",
+            "Url retrieval is failed due to error."
+          ],
+          "type": "string"
+        }
+      },
       "type": "object"
     },
     "GoogleCloudAiplatformV1beta1VertexAISearch": {

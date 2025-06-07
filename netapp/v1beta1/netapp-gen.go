@@ -582,19 +582,19 @@ type BackupRetentionPolicy struct {
 	// days for backups in the backup vault.
 	BackupMinimumEnforcedRetentionDays int64 `json:"backupMinimumEnforcedRetentionDays,omitempty"`
 	// DailyBackupImmutable: Optional. Indicates if the daily backups are
-	// immutable. Atleast one of daily_backup_immutable, weekly_backup_immutable,
+	// immutable. At least one of daily_backup_immutable, weekly_backup_immutable,
 	// monthly_backup_immutable and manual_backup_immutable must be true.
 	DailyBackupImmutable bool `json:"dailyBackupImmutable,omitempty"`
 	// ManualBackupImmutable: Optional. Indicates if the manual backups are
-	// immutable. Atleast one of daily_backup_immutable, weekly_backup_immutable,
+	// immutable. At least one of daily_backup_immutable, weekly_backup_immutable,
 	// monthly_backup_immutable and manual_backup_immutable must be true.
 	ManualBackupImmutable bool `json:"manualBackupImmutable,omitempty"`
 	// MonthlyBackupImmutable: Optional. Indicates if the monthly backups are
-	// immutable. Atleast one of daily_backup_immutable, weekly_backup_immutable,
+	// immutable. At least one of daily_backup_immutable, weekly_backup_immutable,
 	// monthly_backup_immutable and manual_backup_immutable must be true.
 	MonthlyBackupImmutable bool `json:"monthlyBackupImmutable,omitempty"`
 	// WeeklyBackupImmutable: Optional. Indicates if the weekly backups are
-	// immutable. Atleast one of daily_backup_immutable, weekly_backup_immutable,
+	// immutable. At least one of daily_backup_immutable, weekly_backup_immutable,
 	// monthly_backup_immutable and manual_backup_immutable must be true.
 	WeeklyBackupImmutable bool `json:"weeklyBackupImmutable,omitempty"`
 	// ForceSendFields is a list of field names (e.g.
@@ -1460,6 +1460,8 @@ func (s Location) MarshalJSON() ([]byte, error) {
 
 // LocationMetadata: Metadata for a given google.cloud.location.Location.
 type LocationMetadata struct {
+	// HasVcp: Output only. Indicates if the location has VCP support.
+	HasVcp bool `json:"hasVcp,omitempty"`
 	// SupportedFlexPerformance: Output only. Supported flex performance in a
 	// location.
 	//
@@ -1477,15 +1479,15 @@ type LocationMetadata struct {
 	//   "STANDARD" - Standard service level.
 	//   "FLEX" - Flex service level.
 	SupportedServiceLevels []string `json:"supportedServiceLevels,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "SupportedFlexPerformance")
-	// to unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
+	// ForceSendFields is a list of field names (e.g. "HasVcp") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "SupportedFlexPerformance") to
-	// include in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. See
+	// NullFields is a list of field names (e.g. "HasVcp") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -2219,11 +2221,11 @@ type StoragePool struct {
 	State string `json:"state,omitempty"`
 	// StateDetails: Output only. State details of the storage pool
 	StateDetails string `json:"stateDetails,omitempty"`
-	// TotalIops: Optional. Custom Performance Total IOPS of the pool If not
+	// TotalIops: Optional. Custom Performance Total IOPS of the pool if not
 	// provided, it will be calculated based on the total_throughput_mibps
 	TotalIops int64 `json:"totalIops,omitempty,string"`
 	// TotalThroughputMibps: Optional. Custom Performance Total Throughput of the
-	// pool (in MiB/s)
+	// pool (in MiBps)
 	TotalThroughputMibps int64 `json:"totalThroughputMibps,omitempty,string"`
 	// VolumeCapacityGib: Output only. Allocated size of all volumes in GIB in the
 	// storage pool

@@ -2748,6 +2748,10 @@ type LogEntry struct {
 	// LogEntry. May be empty if there is no associated AppHub application or
 	// multiple associated applications (such as for VPC flow logs)
 	Apphub *AppHub `json:"apphub,omitempty"`
+	// ApphubDestination: Output only. AppHub application metadata associated with
+	// the destination application. This is only populated if the log represented
+	// "edge"-like data (such as for VPC flow logs) with a source and destination.
+	ApphubDestination *AppHub `json:"apphubDestination,omitempty"`
 	// ErrorGroups: Output only. The Error Reporting
 	// (https://cloud.google.com/error-reporting) error groups associated with this
 	// LogEntry. Error Reporting sets the values for this field during error group
@@ -3027,7 +3031,7 @@ type LogExclusion struct {
 	// Storage buckets:resource.type=gcs_bucket severity<ERROR sample(insertId,
 	// 0.99)
 	Filter string `json:"filter,omitempty"`
-	// Name: Output only. A client-assigned identifier, such as
+	// Name: Optional. A client-assigned identifier, such as
 	// "load-balancer-exclusion". Identifiers are limited to 100 characters and can
 	// include only letters, digits, underscores, hyphens, and periods. First
 	// character has to be alphanumeric.
@@ -3284,7 +3288,7 @@ type LogSink struct {
 	Disabled bool `json:"disabled,omitempty"`
 	// Exclusions: Optional. Log entries that match any of these exclusion filters
 	// will not be exported.If a log entry is matched by both filter and one of
-	// exclusion_filters it will not be exported.
+	// exclusions it will not be exported.
 	Exclusions []*LogExclusion `json:"exclusions,omitempty"`
 	// Filter: Optional. An advanced logs filter
 	// (https://cloud.google.com/logging/docs/view/advanced-queries). The only
@@ -3314,7 +3318,7 @@ type LogSink struct {
 	// results of a ListSinks call from a child resource if the value of the filter
 	// field in its request is either 'in_scope("ALL")' or 'in_scope("ANCESTOR")'.
 	InterceptChildren bool `json:"interceptChildren,omitempty"`
-	// Name: Output only. The client-assigned sink identifier, unique within the
+	// Name: Optional. The client-assigned sink identifier, unique within the
 	// project.For example: "my-syslog-errors-to-pubsub".Sink identifiers are
 	// limited to 100 characters and can include only the following characters:
 	// upper and lower-case alphanumeric characters, underscores, hyphens,
@@ -4046,7 +4050,7 @@ type RecentQuery struct {
 	// LoggingQuery: Logging query that can be executed in Logs Explorer or via
 	// Logging API.
 	LoggingQuery *LoggingQuery `json:"loggingQuery,omitempty"`
-	// Name: Output only. Resource name of the recent query.In the format:
+	// Name: Optional. Resource name of the recent query.In the format:
 	// "projects/[PROJECT_ID]/locations/[LOCATION_ID]/recentQueries/[QUERY_ID]" For
 	// a list of supported locations, see Supported Regions
 	// (https://cloud.google.com/logging/docs/region-support)The QUERY_ID is a

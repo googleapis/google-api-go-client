@@ -191,7 +191,8 @@ type Attributes struct {
 	// AdditionalImageLinks: Additional URLs of images of the item.
 	AdditionalImageLinks []string `json:"additionalImageLinks,omitempty"`
 	// AdsGrouping: Used to group items in an arbitrary way. Only for CPA%,
-	// discouraged otherwise.
+	// discouraged otherwise. For more information, see Display ads attribute
+	// (https://support.google.com/merchants/answer/6069387).
 	AdsGrouping string `json:"adsGrouping,omitempty"`
 	// AdsLabels: Similar to ads_grouping, but only works on CPC.
 	AdsLabels []string `json:"adsLabels,omitempty"`
@@ -203,18 +204,21 @@ type Attributes struct {
 	// AgeGroup: Target age group
 	// (https://support.google.com/merchants/answer/6324463) of the item.
 	AgeGroup string `json:"ageGroup,omitempty"`
-	// AutoPricingMinPrice: A safeguard in the "Automated Discounts"
+	// AutoPricingMinPrice: A safeguard in the [automated discounts]
 	// (https://support.google.com/merchants/answer/10295759) and "Dynamic
 	// Promotions" (https://support.google.com/merchants/answer/13949249) projects,
 	// ensuring that discounts on business offers do not fall below this value,
 	// thereby preserving the offer's value and profitability.
 	AutoPricingMinPrice *Price `json:"autoPricingMinPrice,omitempty"`
-	// Availability: Availability status of the item.
+	// Availability: Availability
+	// (https://support.google.com/merchants/answer/6324448) status of the item.
+	// For example, "in_stock" or "out_of_stock".
 	Availability string `json:"availability,omitempty"`
 	// AvailabilityDate: The day a pre-ordered product becomes available for
 	// delivery, in ISO 8601 (http://en.wikipedia.org/wiki/ISO_8601) format.
 	AvailabilityDate string `json:"availabilityDate,omitempty"`
-	// Brand: Brand of the item.
+	// Brand: Brand (https://support.google.com/merchants/answer/6324351) of the
+	// item. For example, "Google".
 	Brand string `json:"brand,omitempty"`
 	// CanonicalLink: URL for the canonical version of your item's landing page.
 	CanonicalLink string `json:"canonicalLink,omitempty"`
@@ -227,50 +231,65 @@ type Attributes struct {
 	// CloudExportAdditionalProperties: Extra fields to export to the Cloud Retail
 	// program.
 	CloudExportAdditionalProperties []*CloudExportAdditionalProperties `json:"cloudExportAdditionalProperties,omitempty"`
-	// Color: Color of the item.
+	// Color: Color (https://support.google.com/merchants/answer/6324487) of the
+	// item. For example, "red".
 	Color string `json:"color,omitempty"`
-	// Condition: Condition or state of the item.
+	// Condition: Condition (https://support.google.com/merchants/answer/6324469)
+	// or state of the item. For example, "new" or "used".
 	Condition string `json:"condition,omitempty"`
 	// CostOfGoodsSold: Cost of goods sold. Used for gross profit reporting.
 	CostOfGoodsSold *Price `json:"costOfGoodsSold,omitempty"`
-	// CustomLabel0: Custom label 0 for custom grouping of items in a Shopping
-	// campaign.
+	// CustomLabel0: Custom label 0
+	// (https://support.google.com/merchants/answer/6324473) for custom grouping of
+	// items in a Shopping campaign.
 	CustomLabel0 string `json:"customLabel0,omitempty"`
-	// CustomLabel1: Custom label 1 for custom grouping of items in a Shopping
-	// campaign.
+	// CustomLabel1: Custom label 1
+	// (https://support.google.com/merchants/answer/6324473) for custom grouping of
+	// items in a Shopping campaign.
 	CustomLabel1 string `json:"customLabel1,omitempty"`
-	// CustomLabel2: Custom label 2 for custom grouping of items in a Shopping
-	// campaign.
+	// CustomLabel2: Custom label 2
+	// (https://support.google.com/merchants/answer/6324473) for custom grouping of
+	// items in a Shopping campaign.
 	CustomLabel2 string `json:"customLabel2,omitempty"`
-	// CustomLabel3: Custom label 3 for custom grouping of items in a Shopping
-	// campaign.
+	// CustomLabel3: Custom label 3
+	// (https://support.google.com/merchants/answer/6324473) for custom grouping of
+	// items in a Shopping campaign.
 	CustomLabel3 string `json:"customLabel3,omitempty"`
-	// CustomLabel4: Custom label 4 for custom grouping of items in a Shopping
-	// campaign.
+	// CustomLabel4: Custom label 4
+	// (https://support.google.com/merchants/answer/6324473) for custom grouping of
+	// items in a Shopping campaign.
 	CustomLabel4 string `json:"customLabel4,omitempty"`
 	// Description: Description of the item.
 	Description string `json:"description,omitempty"`
 	// DisclosureDate: The date time when an offer becomes visible in search
 	// results across Google’s YouTube surfaces, in ISO 8601
-	// (http://en.wikipedia.org/wiki/ISO_8601) format. See Disclosure date (
-	// https://support.google.com/merchants/answer/13034208) for more information.
+	// (http://en.wikipedia.org/wiki/ISO_8601) format. See Disclosure date
+	// (https://support.google.com/merchants/answer/13034208) for more information.
 	DisclosureDate string `json:"disclosureDate,omitempty"`
 	// DisplayAdsId: An identifier for an item for dynamic remarketing campaigns.
 	DisplayAdsId string `json:"displayAdsId,omitempty"`
 	// DisplayAdsLink: URL directly to your item's landing page for dynamic
 	// remarketing campaigns.
 	DisplayAdsLink string `json:"displayAdsLink,omitempty"`
-	// DisplayAdsSimilarIds: Advertiser-specified recommendations.
+	// DisplayAdsSimilarIds: Advertiser-specified recommendations. For more
+	// information, see Display ads attribute specification
+	// (https://support.google.com/merchants/answer/6069387).
 	DisplayAdsSimilarIds []string `json:"displayAdsSimilarIds,omitempty"`
 	// DisplayAdsTitle: Title of an item for dynamic remarketing campaigns.
 	DisplayAdsTitle string `json:"displayAdsTitle,omitempty"`
-	// DisplayAdsValue: Offer margin for dynamic remarketing campaigns.
+	// DisplayAdsValue: Offer margin for dynamic remarketing campaigns. For more
+	// information, see Display ads attribute
+	// (https://support.google.com/merchants/answer/6069387).
 	DisplayAdsValue float64 `json:"displayAdsValue,omitempty"`
 	// EnergyEfficiencyClass: The energy efficiency class as defined in EU
 	// directive 2010/30/EU.
 	EnergyEfficiencyClass string `json:"energyEfficiencyClass,omitempty"`
 	// ExcludedDestinations: The list of destinations to exclude for this target
-	// (corresponds to unchecked check boxes in Merchant Center).
+	// (corresponds to unchecked check boxes in Merchant Center). For more
+	// information, see Excluded destination
+	// (https://support.google.com/merchants/answer/6324486). Note: We recommend
+	// setting destinations on datasources level for most use cases. Use this field
+	// within products to only setup exceptions.
 	ExcludedDestinations []string `json:"excludedDestinations,omitempty"`
 	// ExpirationDate: Date on which the item should expire, as specified upon
 	// insertion, in ISO 8601 (http://en.wikipedia.org/wiki/ISO_8601) format. The
@@ -285,7 +304,8 @@ type Attributes struct {
 	// FreeShippingThreshold: Conditions to be met for a product to have free
 	// shipping.
 	FreeShippingThreshold []*FreeShippingThreshold `json:"freeShippingThreshold,omitempty"`
-	// Gender: Target gender of the item.
+	// Gender: Target gender (https://support.google.com/merchants/answer/6324479)
+	// of the item. For example, "male" or "female".
 	Gender string `json:"gender,omitempty"`
 	// GoogleProductCategory: Google's category of the item (see Google product
 	// taxonomy (https://support.google.com/merchants/answer/1705911)). When
@@ -306,11 +326,16 @@ type Attributes struct {
 	// IncludedDestinations: The list of destinations to include for this target
 	// (corresponds to checked check boxes in Merchant Center). Default
 	// destinations are always included unless provided in `excludedDestinations`.
+	// For more information, see Included destination
+	// (https://support.google.com/merchants/answer/7501026). Note: We recommend
+	// setting destinations on datasources level for most use cases. Use this field
+	// within products to only setup exceptions.
 	IncludedDestinations []string `json:"includedDestinations,omitempty"`
 	// Installment: Number and amount of installments to pay for an item.
 	Installment *Installment `json:"installment,omitempty"`
-	// IsBundle: Whether the item is a business-defined sub-API. A sub-API is a
-	// custom grouping of different products sold by a business for a single price.
+	// IsBundle: Whether the item is a business-defined sub-API. A [sub-API]
+	// (https://support.google.com/merchants/answer/6324449) is a custom grouping
+	// of different products sold by a business for a single price.
 	IsBundle bool `json:"isBundle,omitempty"`
 	// ItemGroupId: Shared identifier for all variants of the same product.
 	ItemGroupId string `json:"itemGroupId,omitempty"`
@@ -321,7 +346,9 @@ type Attributes struct {
 	LifestyleImageLinks []string `json:"lifestyleImageLinks,omitempty"`
 	// Link: URL directly linking to your item's page on your online store.
 	Link string `json:"link,omitempty"`
-	// LinkTemplate: Link template for business hosted local storefront.
+	// LinkTemplate: Link template
+	// (https://support.google.com/merchants/answer/13871172) for business hosted
+	// local storefront.
 	LinkTemplate string `json:"linkTemplate,omitempty"`
 	// LoyaltyPoints: Loyalty points that users receive after purchasing the item.
 	// Japan only.
@@ -330,7 +357,8 @@ type Attributes struct {
 	// surface loyalty benefits (for example, better pricing, points, etc) to the
 	// user of this item.
 	LoyaltyPrograms []*LoyaltyProgram `json:"loyaltyPrograms,omitempty"`
-	// Material: The material of which the item is made.
+	// Material: The material (https://support.google.com/merchants/answer/6324410)
+	// of which the item is made. For example, "Leather" or "Cotton".
 	Material string `json:"material,omitempty"`
 	// MaxEnergyEfficiencyClass: The energy efficiency class as defined in EU
 	// directive 2010/30/EU.
@@ -345,22 +373,27 @@ type Attributes struct {
 	// MobileLink: URL for the mobile-optimized version of your item's landing
 	// page.
 	MobileLink string `json:"mobileLink,omitempty"`
-	// MobileLinkTemplate: Link template for business hosted local storefront
-	// optimized for mobile devices.
+	// MobileLinkTemplate: Link template
+	// (https://support.google.com/merchants/answer/13870216) for business hosted
+	// local storefront optimized for mobile devices.
 	MobileLinkTemplate string `json:"mobileLinkTemplate,omitempty"`
 	// Mpn: Manufacturer Part Number (MPN
 	// (https://support.google.com/merchants/answer/188494#mpn)) of the item.
 	Mpn string `json:"mpn,omitempty"`
 	// Multipack: The number of identical products in a business-defined multipack.
 	Multipack int64 `json:"multipack,omitempty,string"`
-	// Pattern: The item's pattern (for example, polka dots).
+	// Pattern: The item's pattern
+	// (https://support.google.com/merchants/answer/6324483). For example, polka
+	// dots.
 	Pattern string `json:"pattern,omitempty"`
 	// Pause: Publication of this item will be temporarily paused
 	// (https://support.google.com/merchants/answer/11909930).
 	Pause string `json:"pause,omitempty"`
-	// PickupMethod: The pick up option for the item.
+	// PickupMethod: The pickup
+	// (https://support.google.com/merchants/answer/14634021) option for the item.
 	PickupMethod string `json:"pickupMethod,omitempty"`
-	// PickupSla: Item store pickup timeline.
+	// PickupSla: Item store pickup timeline. For more information, see Pickup SLA
+	// (https://support.google.com/merchants/answer/14635400).
 	PickupSla string `json:"pickupSla,omitempty"`
 	// Price: Price of the item.
 	Price *Price `json:"price,omitempty"`
@@ -369,15 +402,15 @@ type Attributes struct {
 	// ProductHeight: The height of the product in the units provided. The value
 	// must be between 0 (exclusive) and 3000 (inclusive).
 	ProductHeight *ProductDimension `json:"productHeight,omitempty"`
-	// ProductHighlights: Bullet points describing the most relevant highlights of
-	// a product.
+	// ProductHighlights: Bullet points describing the most relevant product
+	// highlights (https://support.google.com/merchants/answer/9216100).
 	ProductHighlights []string `json:"productHighlights,omitempty"`
 	// ProductLength: The length of the product in the units provided. The value
 	// must be between 0 (exclusive) and 3000 (inclusive).
 	ProductLength *ProductDimension `json:"productLength,omitempty"`
 	// ProductTypes: Categories of the item (formatted as in product data
 	// specification
-	// (https://support.google.com/merchants/answer/188494#product_type)).
+	// (https://support.google.com/merchants/answer/7052112#product_category)).
 	ProductTypes []string `json:"productTypes,omitempty"`
 	// ProductWeight: The weight of the product in the units provided. The value
 	// must be between 0 (exclusive) and 2000 (inclusive).
@@ -389,9 +422,9 @@ type Attributes struct {
 	PromotionIds []string `json:"promotionIds,omitempty"`
 	// SalePrice: Advertised sale price of the item.
 	SalePrice *Price `json:"salePrice,omitempty"`
-	// SalePriceEffectiveDate: Date range during which the item is on sale (see
+	// SalePriceEffectiveDate: Date range during which the item is on sale, see
 	// product data specification
-	// (https://support.google.com/merchants/answer/188494#sale_price_effective_date)).
+	// (https://support.google.com/merchants/answer/7052112#price_and_availability).
 	SalePriceEffectiveDate *Interval `json:"salePriceEffectiveDate,omitempty"`
 	// SellOnGoogleQuantity: The quantity of the product that is available for
 	// selling on Google. Supported only for online products.
@@ -409,21 +442,24 @@ type Attributes struct {
 	ShippingWeight *ShippingWeight `json:"shippingWeight,omitempty"`
 	// ShippingWidth: Width of the item for shipping.
 	ShippingWidth *ShippingDimension `json:"shippingWidth,omitempty"`
-	// ShoppingAdsExcludedCountries: List of country codes (ISO 3166-1 alpha-2) to
-	// exclude the offer from Shopping Ads destination. Countries from this list
-	// are removed from countries configured in data source settings.
+	// ShoppingAdsExcludedCountries: List of country codes (ISO 3166-1 alpha-2)
+	// (https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2) to exclude the offer from
+	// Shopping Ads destination. Countries from this list are removed from
+	// countries configured in data source settings.
 	ShoppingAdsExcludedCountries []string `json:"shoppingAdsExcludedCountries,omitempty"`
 	// Size: Size of the item. Only one value is allowed. For variants with
 	// different sizes, insert a separate product for each size with the same
-	// `itemGroupId` value (see https://support.google.com/merchants/answer/6324492
-	// (size definition)).
+	// `itemGroupId` value, see Size
+	// (https://support.google.com/merchants/answer/6324492).
 	Size string `json:"size,omitempty"`
 	// SizeSystem: System in which the size is specified. Recommended for apparel
-	// items.
+	// items. For example, "US", "UK", "DE". For more information, see Size system
+	// (https://support.google.com/merchants/answer/6324502).
 	SizeSystem string `json:"sizeSystem,omitempty"`
 	// SizeTypes: The cut of the item. It can be used to represent combined size
-	// types for apparel items. Maximum two of size types can be provided (see
-	// https://support.google.com/merchants/answer/6324497 (size type)).
+	// types for apparel items. Maximum two of size types can be provided, see Size
+	// type (https://support.google.com/merchants/answer/6324497). For example,
+	// "petite", "plus size".
 	SizeTypes []string `json:"sizeTypes,omitempty"`
 	// StructuredDescription: Structured description, for algorithmically
 	// (AI)-generated descriptions.
@@ -436,7 +472,8 @@ type Attributes struct {
 	SubscriptionCost *SubscriptionCost `json:"subscriptionCost,omitempty"`
 	// SustainabilityIncentives: The list of sustainability incentive programs.
 	SustainabilityIncentives []*ProductSustainabilityIncentive `json:"sustainabilityIncentives,omitempty"`
-	// TaxCategory: The tax category of the product.
+	// TaxCategory: The tax category
+	// (https://support.google.com/merchants/answer/7569847) of the product.
 	TaxCategory string `json:"taxCategory,omitempty"`
 	// Taxes: Tax information.
 	Taxes []*Tax `json:"taxes,omitempty"`
@@ -1273,9 +1310,10 @@ func (s *ProductDimension) UnmarshalJSON(data []byte) error {
 // ProductInput: This resource represents input data you submit for a product,
 // not the processed product that you see in Merchant Center, in Shopping ads,
 // or across Google surfaces. Product inputs, rules and supplemental data
-// source data are combined to create the processed Product. Required product
-// input attributes to pass data validation checks are primarily defined in the
-// Products Data Specification
+// source data are combined to create the processed Product. For more
+// information, see Manage products (/merchant/api/guides/products/overview).
+// Required product input attributes to pass data validation checks are
+// primarily defined in the Products Data Specification
 // (https://support.google.com/merchants/answer/188494). The following
 // attributes are required: feedLabel, contentLanguage and offerId. After
 // inserting, updating, or deleting a product input, it may take several
@@ -1310,9 +1348,11 @@ type ProductInput struct {
 	// attributes can be set per product, with total size of 102.4kB. Underscores
 	// in custom attribute names are replaced by spaces upon insertion.
 	CustomAttributes []*CustomAttribute `json:"customAttributes,omitempty"`
-	// FeedLabel: Required. Immutable. The feed label
-	// (https://developers.google.com/shopping-content/guides/products/feed-labels)
-	// for the product.
+	// FeedLabel: Required. Immutable. The label that lets you categorize and
+	// identify your products. The maximum allowed characters are 20, and the
+	// supported characters are `A-Z`, `0-9`, hyphen, and underscore. The feed
+	// label must not include any spaces. For more information, see Using feed
+	// labels (//support.google.com/merchants/answer/14994087).
 	FeedLabel string `json:"feedLabel,omitempty"`
 	// Name: Identifier. The name of the product input. Format:
 	// `accounts/{account}/productInputs/{productinput}` where the last section

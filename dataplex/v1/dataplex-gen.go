@@ -1021,8 +1021,8 @@ type GoogleCloudDataplexV1AspectTypeMetadataTemplate struct {
 	// record. It defines the nested fields.
 	RecordFields []*GoogleCloudDataplexV1AspectTypeMetadataTemplate `json:"recordFields,omitempty"`
 	// Type: Required. The datatype of this field. The following values are
-	// supported:Primitive types: string integer boolean double datetime. Must be
-	// of the format RFC3339 UTC "Zulu" (Examples: "2014-10-02T15:01:23Z" and
+	// supported:Primitive types: string int bool double datetime. Must be of the
+	// format RFC3339 UTC "Zulu" (Examples: "2014-10-02T15:01:23Z" and
 	// "2014-10-02T15:01:23.045123456Z").Complex types: enum array map record
 	Type string `json:"type,omitempty"`
 	// TypeId: Optional. You can use type id if this definition of the field needs

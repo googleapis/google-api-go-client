@@ -170,6 +170,9 @@ const (
 	// Move a copy of your Starred places list on Maps
 	DataportabilityMapsStarredPlacesScope = "https://www.googleapis.com/auth/dataportability.maps.starred_places"
 
+	// Move a copy of your vehicle profile on Maps
+	DataportabilityMapsVehicleProfileScope = "https://www.googleapis.com/auth/dataportability.maps.vehicle_profile"
+
 	// Move a copy of your Maps activity
 	DataportabilityMyactivityMapsScope = "https://www.googleapis.com/auth/dataportability.myactivity.maps"
 
@@ -337,6 +340,7 @@ func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, err
 		"https://www.googleapis.com/auth/dataportability.maps.questions_answers",
 		"https://www.googleapis.com/auth/dataportability.maps.reviews",
 		"https://www.googleapis.com/auth/dataportability.maps.starred_places",
+		"https://www.googleapis.com/auth/dataportability.maps.vehicle_profile",
 		"https://www.googleapis.com/auth/dataportability.myactivity.maps",
 		"https://www.googleapis.com/auth/dataportability.myactivity.myadcenter",
 		"https://www.googleapis.com/auth/dataportability.myactivity.play",

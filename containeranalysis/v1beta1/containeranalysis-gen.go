@@ -2282,8 +2282,7 @@ func (s ContaineranalysisGoogleDevtoolsCloudbuildV1DependencyGitSourceDependency
 // ContaineranalysisGoogleDevtoolsCloudbuildV1DependencyGitSourceRepository: A
 // repository for a git source.
 type ContaineranalysisGoogleDevtoolsCloudbuildV1DependencyGitSourceRepository struct {
-	// DeveloperConnect: The Developer Connect Git repository link or the url that
-	// matches a repository link in the current project, formatted as
+	// DeveloperConnect: The Developer Connect Git repository link formatted as
 	// `projects/*/locations/*/connections/*/gitRepositoryLink/*`
 	DeveloperConnect string `json:"developerConnect,omitempty"`
 	// Url: Location of the Git repository.
@@ -3252,6 +3251,8 @@ type Discovered struct {
 	//   "ACTIVE" - The resource is continuously analyzed.
 	//   "INACTIVE" - The resource is ignored for continuous analysis.
 	ContinuousAnalysis string `json:"continuousAnalysis,omitempty"`
+	// Files: Files that make up the resource described by the occurrence.
+	Files []*File `json:"files,omitempty"`
 	// LastAnalysisTime: The last time continuous analysis was done for this
 	// resource. Deprecated, do not use.
 	LastAnalysisTime string `json:"lastAnalysisTime,omitempty"`
@@ -3639,6 +3640,27 @@ type ExternalRef struct {
 
 func (s ExternalRef) MarshalJSON() ([]byte, error) {
 	type NoMethod ExternalRef
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+type File struct {
+	Digest map[string]string `json:"digest,omitempty"`
+	Name   string            `json:"name,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Digest") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Digest") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s File) MarshalJSON() ([]byte, error) {
+	type NoMethod File
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 

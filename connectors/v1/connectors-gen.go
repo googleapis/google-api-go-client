@@ -2840,7 +2840,7 @@ func (s EventType) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// EventingConfig: Eventing Configuration of a connection next: 18
+// EventingConfig: Eventing Configuration of a connection next: 19
 type EventingConfig struct {
 	// AdditionalVariables: Optional. Additional eventing related field values
 	AdditionalVariables []*ConfigVariable `json:"additionalVariables,omitempty"`
@@ -2858,6 +2858,10 @@ type EventingConfig struct {
 	EventsListenerIngressEndpoint string `json:"eventsListenerIngressEndpoint,omitempty"`
 	// ListenerAuthConfig: Optional. Auth details for the event listener.
 	ListenerAuthConfig *AuthConfig `json:"listenerAuthConfig,omitempty"`
+	// PrivateConnectivityAllowlistedProjects: Optional. List of projects to be
+	// allowlisted for the service attachment created in the tenant project for
+	// eventing ingress.
+	PrivateConnectivityAllowlistedProjects []string `json:"privateConnectivityAllowlistedProjects,omitempty"`
 	// PrivateConnectivityEnabled: Optional. Private Connectivity Enabled.
 	PrivateConnectivityEnabled bool `json:"privateConnectivityEnabled,omitempty"`
 	// ProxyDestinationConfig: Optional. Proxy for Eventing auto-registration.

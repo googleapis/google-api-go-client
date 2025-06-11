@@ -1628,6 +1628,11 @@ func (s Policy) MarshalJSON() ([]byte, error) {
 // for ACLs, APIs, App Engine Apps, VMs, and other Google Cloud Platform
 // resources.
 type Project struct {
+	// ConfiguredCapabilities: Output only. If this project is a Management
+	// Project, list of capabilities configured on the parent folder. Note,
+	// presence of any capability implies that this is a Management Project.
+	// Example: `folders/123/capabilities/app-management`. OUTPUT ONLY.
+	ConfiguredCapabilities []string `json:"configuredCapabilities,omitempty"`
 	// CreateTime: Output only. Creation time.
 	CreateTime string `json:"createTime,omitempty"`
 	// DeleteTime: Output only. The time at which this resource was requested for
@@ -1681,15 +1686,15 @@ type Project struct {
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-	// ForceSendFields is a list of field names (e.g. "CreateTime") to
+	// ForceSendFields is a list of field names (e.g. "ConfiguredCapabilities") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "CreateTime") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
+	// NullFields is a list of field names (e.g. "ConfiguredCapabilities") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -4637,7 +4642,7 @@ func (c *LocationsTagBindingCollectionsGetCall) Do(opts ...googleapi.CallOption)
 	return ret, nil
 }
 
-type LocationsTagBindingCollectionsPatchCall struct {
+type LocationsTagBindingCollectionsUpdateCall struct {
 	s                    *Service
 	name                 string
 	tagbindingcollection *TagBindingCollection
@@ -4646,8 +4651,7 @@ type LocationsTagBindingCollectionsPatchCall struct {
 	header_              http.Header
 }
 
-// Patch: Updates tag bindings directly attached to a GCP resource. Update_mask
-// can be kept empty or "*".
+// Update: Updates tag bindings directly attached to a GCP resource.
 //
 //   - name: Identifier. The name of the TagBindingCollection, following the
 //     convention:
@@ -4656,44 +4660,37 @@ type LocationsTagBindingCollectionsPatchCall struct {
 //     resource the TagBindings are bound to.
 //     "locations/global/tagBindingCollections/%2f%2fcloudresourcemanager.googleap
 //     is.com%2fprojects%2f123".
-func (r *LocationsTagBindingCollectionsService) Patch(name string, tagbindingcollection *TagBindingCollection) *LocationsTagBindingCollectionsPatchCall {
-	c := &LocationsTagBindingCollectionsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+func (r *LocationsTagBindingCollectionsService) Update(name string, tagbindingcollection *TagBindingCollection) *LocationsTagBindingCollectionsUpdateCall {
+	c := &LocationsTagBindingCollectionsUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
 	c.tagbindingcollection = tagbindingcollection
-	return c
-}
-
-// UpdateMask sets the optional parameter "updateMask": An update mask to
-// selectively update fields.
-func (c *LocationsTagBindingCollectionsPatchCall) UpdateMask(updateMask string) *LocationsTagBindingCollectionsPatchCall {
-	c.urlParams_.Set("updateMask", updateMask)
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
 // details.
-func (c *LocationsTagBindingCollectionsPatchCall) Fields(s ...googleapi.Field) *LocationsTagBindingCollectionsPatchCall {
+func (c *LocationsTagBindingCollectionsUpdateCall) Fields(s ...googleapi.Field) *LocationsTagBindingCollectionsUpdateCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
 // Context sets the context to be used in this call's Do method.
-func (c *LocationsTagBindingCollectionsPatchCall) Context(ctx context.Context) *LocationsTagBindingCollectionsPatchCall {
+func (c *LocationsTagBindingCollectionsUpdateCall) Context(ctx context.Context) *LocationsTagBindingCollectionsUpdateCall {
 	c.ctx_ = ctx
 	return c
 }
 
 // Header returns a http.Header that can be modified by the caller to add
 // headers to the request.
-func (c *LocationsTagBindingCollectionsPatchCall) Header() http.Header {
+func (c *LocationsTagBindingCollectionsUpdateCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
 	}
 	return c.header_
 }
 
-func (c *LocationsTagBindingCollectionsPatchCall) doRequest(alt string) (*http.Response, error) {
+func (c *LocationsTagBindingCollectionsUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.tagbindingcollection)
 	if err != nil {
@@ -4703,7 +4700,7 @@ func (c *LocationsTagBindingCollectionsPatchCall) doRequest(alt string) (*http.R
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v3/{+name}")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("PATCH", urls, body)
+	req, err := http.NewRequest("PUT", urls, body)
 	if err != nil {
 		return nil, err
 	}
@@ -4711,16 +4708,16 @@ func (c *LocationsTagBindingCollectionsPatchCall) doRequest(alt string) (*http.R
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "cloudresourcemanager.locations.tagBindingCollections.patch", "request", internallog.HTTPRequest(req, body.Bytes()))
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "cloudresourcemanager.locations.tagBindingCollections.update", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
-// Do executes the "cloudresourcemanager.locations.tagBindingCollections.patch" call.
+// Do executes the "cloudresourcemanager.locations.tagBindingCollections.update" call.
 // Any non-2xx status code is an error. Response headers are in either
 // *Operation.ServerResponse.Header or (if a response was returned at all) in
 // error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
 // whether the returned error was because http.StatusNotModified was returned.
-func (c *LocationsTagBindingCollectionsPatchCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+func (c *LocationsTagBindingCollectionsUpdateCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
@@ -4750,7 +4747,7 @@ func (c *LocationsTagBindingCollectionsPatchCall) Do(opts ...googleapi.CallOptio
 	if err != nil {
 		return nil, err
 	}
-	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "cloudresourcemanager.locations.tagBindingCollections.patch", "response", internallog.HTTPResponse(res, b))
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "cloudresourcemanager.locations.tagBindingCollections.update", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 

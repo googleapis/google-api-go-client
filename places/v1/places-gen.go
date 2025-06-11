@@ -1821,10 +1821,9 @@ type GoogleMapsPlacesV1PlaceOpeningHours struct {
 	// is open. For secondary opening hours and current secondary opening hours,
 	// this field means whether the secondary hours of this place is active.
 	OpenNow bool `json:"openNow,omitempty"`
-	// Periods: The periods that this place is open during the week. The periods
-	// are in chronological order, starting with Sunday in the place-local
-	// timezone. An empty (but not absent) value indicates a place that is never
-	// open, e.g. because it is closed temporarily for renovations.
+	// Periods: NOTE: The ordering of the `periods` array is independent of the
+	// ordering of the `weekday_descriptions` array. Do not assume they will begin
+	// on the same day.
 	Periods []*GoogleMapsPlacesV1PlaceOpeningHoursPeriod `json:"periods,omitempty"`
 	// SecondaryHoursType: A type string used to identify the type of secondary
 	// hours.
@@ -1854,9 +1853,12 @@ type GoogleMapsPlacesV1PlaceOpeningHours struct {
 	// exceptional hours.
 	SpecialDays []*GoogleMapsPlacesV1PlaceOpeningHoursSpecialDay `json:"specialDays,omitempty"`
 	// WeekdayDescriptions: Localized strings describing the opening hours of this
-	// place, one string for each day of the week. Will be empty if the hours are
-	// unknown or could not be converted to localized text. Example: "Sun:
-	// 18:00–06:00"
+	// place, one string for each day of the week. NOTE: The order of the days and
+	// the start of the week is determined by the locale (language and region). The
+	// ordering of the `periods` array is independent of the ordering of the
+	// `weekday_descriptions` array. Do not assume they will begin on the same day.
+	// Will be empty if the hours are unknown or could not be converted to
+	// localized text. Example: "Sun: 18:00–06:00"
 	WeekdayDescriptions []string `json:"weekdayDescriptions,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "NextCloseTime") to
 	// unconditionally include in API requests. By default, fields with empty or

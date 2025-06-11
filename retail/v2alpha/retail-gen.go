@@ -2995,6 +2995,20 @@ type GoogleCloudRetailV2alphaConversationalSearchRequest struct {
 	SearchParams *GoogleCloudRetailV2alphaConversationalSearchRequestSearchParams `json:"searchParams,omitempty"`
 	// UserInfo: Optional. User information.
 	UserInfo *GoogleCloudRetailV2alphaUserInfo `json:"userInfo,omitempty"`
+	// UserLabels: Optional. The user labels applied to a resource must meet the
+	// following requirements: * Each resource can have multiple labels, up to a
+	// maximum of 64. * Each label must be a key-value pair. * Keys have a minimum
+	// length of 1 character and a maximum length of 63 characters and cannot be
+	// empty. Values can be empty and have a maximum length of 63 characters. *
+	// Keys and values can contain only lowercase letters, numeric characters,
+	// underscores, and dashes. All characters must use UTF-8 encoding, and
+	// international characters are allowed. * The key portion of a label must be
+	// unique. However, you can use the same key with multiple resources. * Keys
+	// must start with a lowercase letter or international character. See Google
+	// Cloud Document
+	// (https://cloud.google.com/resource-manager/docs/creating-managing-labels#requirements)
+	// for more details.
+	UserLabels map[string]string `json:"userLabels,omitempty"`
 	// VisitorId: Required. A unique identifier for tracking visitors. For example,
 	// this could be implemented with an HTTP cookie, which should be able to
 	// uniquely identify a visitor on a single device. This unique identifier
@@ -7451,6 +7465,9 @@ type GoogleCloudRetailV2alphaSearchRequest struct {
 	// `google.com`, `youtube.com`, etc. If this is set, it should be exactly
 	// matched with UserEvent.entity to get search results boosted by entity.
 	Entity string `json:"entity,omitempty"`
+	// ExperimentId: Optional. An ID for the experiment group this search belongs
+	// to.
+	ExperimentId string `json:"experimentId,omitempty"`
 	// FacetSpecs: Facet specifications for faceted search. If empty, no facets are
 	// returned. A maximum of 200 values are allowed. Otherwise, an
 	// INVALID_ARGUMENT error is returned.

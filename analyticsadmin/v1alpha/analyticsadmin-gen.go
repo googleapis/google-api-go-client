@@ -228,6 +228,7 @@ func NewPropertiesService(s *Service) *PropertiesService {
 	rs.RollupPropertySourceLinks = NewPropertiesRollupPropertySourceLinksService(s)
 	rs.SearchAds360Links = NewPropertiesSearchAds360LinksService(s)
 	rs.SubpropertyEventFilters = NewPropertiesSubpropertyEventFiltersService(s)
+	rs.SubpropertySyncConfigs = NewPropertiesSubpropertySyncConfigsService(s)
 	return rs
 }
 
@@ -273,6 +274,8 @@ type PropertiesService struct {
 	SearchAds360Links *PropertiesSearchAds360LinksService
 
 	SubpropertyEventFilters *PropertiesSubpropertyEventFiltersService
+
+	SubpropertySyncConfigs *PropertiesSubpropertySyncConfigsService
 }
 
 func NewPropertiesAccessBindingsService(s *Service) *PropertiesAccessBindingsService {
@@ -500,6 +503,15 @@ func NewPropertiesSubpropertyEventFiltersService(s *Service) *PropertiesSubprope
 }
 
 type PropertiesSubpropertyEventFiltersService struct {
+	s *Service
+}
+
+func NewPropertiesSubpropertySyncConfigsService(s *Service) *PropertiesSubpropertySyncConfigsService {
+	rs := &PropertiesSubpropertySyncConfigsService{s: s}
+	return rs
+}
+
+type PropertiesSubpropertySyncConfigsService struct {
 	s *Service
 }
 
@@ -2344,6 +2356,9 @@ type GoogleAnalyticsAdminV1alphaChangeHistoryChangeChangeHistoryResource struct 
 	// SkadnetworkConversionValueSchema: A snapshot of
 	// SKAdNetworkConversionValueSchema resource in change history.
 	SkadnetworkConversionValueSchema *GoogleAnalyticsAdminV1alphaSKAdNetworkConversionValueSchema `json:"skadnetworkConversionValueSchema,omitempty"`
+	// SubpropertySyncConfig: A snapshot of a SubpropertySyncConfig resource in
+	// change history.
+	SubpropertySyncConfig *GoogleAnalyticsAdminV1alphaSubpropertySyncConfig `json:"subpropertySyncConfig,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Account") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
 	// omitted from API requests. See
@@ -5159,6 +5174,35 @@ func (s GoogleAnalyticsAdminV1alphaListSubpropertyEventFiltersResponse) MarshalJ
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GoogleAnalyticsAdminV1alphaListSubpropertySyncConfigsResponse: Response
+// message for ListSubpropertySyncConfigs RPC.
+type GoogleAnalyticsAdminV1alphaListSubpropertySyncConfigsResponse struct {
+	// NextPageToken: A token, which can be sent as `page_token` to retrieve the
+	// next page. If this field is omitted, there are no subsequent pages.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+	// SubpropertySyncConfigs: List of Subproperty Sync Configs.
+	SubpropertySyncConfigs []*GoogleAnalyticsAdminV1alphaSubpropertySyncConfig `json:"subpropertySyncConfigs,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "NextPageToken") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleAnalyticsAdminV1alphaListSubpropertySyncConfigsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleAnalyticsAdminV1alphaListSubpropertySyncConfigsResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GoogleAnalyticsAdminV1alphaMatchingCondition: Defines a condition for when
 // an Event Edit or Event Creation rule applies to an event.
 type GoogleAnalyticsAdminV1alphaMatchingCondition struct {
@@ -5556,20 +5600,33 @@ func (s GoogleAnalyticsAdminV1alphaProvisionAccountTicketResponse) MarshalJSON()
 // GoogleAnalyticsAdminV1alphaProvisionSubpropertyRequest: Request message for
 // CreateSubproperty RPC.
 type GoogleAnalyticsAdminV1alphaProvisionSubpropertyRequest struct {
+	// CustomDimensionAndMetricSynchronizationMode: Optional. The subproperty
+	// feature synchronization mode for Custom Dimensions and Metrics
+	//
+	// Possible values:
+	//   "SYNCHRONIZATION_MODE_UNSPECIFIED" - Synchronization mode unknown or not
+	// specified.
+	//   "NONE" - Entities are not synchronized. Local edits are allowed on the
+	// Subproperty.
+	//   "ALL" - Entities are synchronized from Parent Property. Local mutations
+	// are not allowed on the Subproperty (Create / Update / Delete)
+	CustomDimensionAndMetricSynchronizationMode string `json:"customDimensionAndMetricSynchronizationMode,omitempty"`
 	// Subproperty: Required. The subproperty to create.
 	Subproperty *GoogleAnalyticsAdminV1alphaProperty `json:"subproperty,omitempty"`
 	// SubpropertyEventFilter: Optional. The subproperty event filter to create on
 	// an ordinary property.
 	SubpropertyEventFilter *GoogleAnalyticsAdminV1alphaSubpropertyEventFilter `json:"subpropertyEventFilter,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "Subproperty") to
-	// unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
+	// ForceSendFields is a list of field names (e.g.
+	// "CustomDimensionAndMetricSynchronizationMode") to unconditionally include in
+	// API requests. By default, fields with empty or default values are omitted
+	// from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Subproperty") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
+	// NullFields is a list of field names (e.g.
+	// "CustomDimensionAndMetricSynchronizationMode") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -6061,6 +6118,7 @@ type GoogleAnalyticsAdminV1alphaSearchChangeHistoryEventsRequest struct {
 	//   "KEY_EVENT" - KeyEvent resource
 	//   "CALCULATED_METRIC" - CalculatedMetric resource
 	//   "REPORTING_DATA_ANNOTATION" - ReportingDataAnnotation resource
+	//   "SUBPROPERTY_SYNC_CONFIG" - SubpropertySyncConfig resource
 	ResourceType []string `json:"resourceType,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Action") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -6334,6 +6392,55 @@ type GoogleAnalyticsAdminV1alphaSubpropertyEventFilterExpressionList struct {
 
 func (s GoogleAnalyticsAdminV1alphaSubpropertyEventFilterExpressionList) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAnalyticsAdminV1alphaSubpropertyEventFilterExpressionList
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleAnalyticsAdminV1alphaSubpropertySyncConfig: Subproperty
+// synchronization configuration controls how ordinary property configurations
+// are synchronized to subproperties. This resource is provisioned
+// automatically for each subproperty.
+type GoogleAnalyticsAdminV1alphaSubpropertySyncConfig struct {
+	// ApplyToProperty: Output only. Immutable. Resource name of the Subproperty
+	// that these settings apply to.
+	ApplyToProperty string `json:"applyToProperty,omitempty"`
+	// CustomDimensionAndMetricSyncMode: Required. Specifies the Custom Dimension /
+	// Metric synchronization mode for the Subproperty. If set to ALL, Custom
+	// Dimension / Metric synchronization will be immediately enabled. Local
+	// configuration of Custom Dimensions / Metrics will not be allowed on the
+	// Subproperty so long as the synchronization mode is set to ALL. If set to
+	// NONE, Custom Dimensions / Metric synchronization is disabled. Custom
+	// Dimensions / Metrics must be configured explicitly on the Subproperty.
+	//
+	// Possible values:
+	//   "SYNCHRONIZATION_MODE_UNSPECIFIED" - Synchronization mode unknown or not
+	// specified.
+	//   "NONE" - Entities are not synchronized. Local edits are allowed on the
+	// Subproperty.
+	//   "ALL" - Entities are synchronized from Parent Property. Local mutations
+	// are not allowed on the Subproperty (Create / Update / Delete)
+	CustomDimensionAndMetricSyncMode string `json:"customDimensionAndMetricSyncMode,omitempty"`
+	// Name: Output only. Identifier. Format:
+	// properties/{ordinary_property_id}/subpropertySyncConfigs/{subproperty_id}
+	// Example: properties/1234/subpropertySyncConfigs/5678
+	Name string `json:"name,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "ApplyToProperty") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ApplyToProperty") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleAnalyticsAdminV1alphaSubpropertySyncConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleAnalyticsAdminV1alphaSubpropertySyncConfig
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -25453,5 +25560,384 @@ func (c *PropertiesSubpropertyEventFiltersPatchCall) Do(opts ...googleapi.CallOp
 		return nil, err
 	}
 	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "analyticsadmin.properties.subpropertyEventFilters.patch", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type PropertiesSubpropertySyncConfigsGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Lookup for a single Subproperty Sync Config.
+//
+//   - name: Resource name of the SubpropertySyncConfig to lookup. Format:
+//     properties/{ordinary_property_id}/subpropertySyncConfigs/{subproperty_id}
+//     Example: properties/1234/subpropertySyncConfigs/5678.
+func (r *PropertiesSubpropertySyncConfigsService) Get(name string) *PropertiesSubpropertySyncConfigsGetCall {
+	c := &PropertiesSubpropertySyncConfigsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *PropertiesSubpropertySyncConfigsGetCall) Fields(s ...googleapi.Field) *PropertiesSubpropertySyncConfigsGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *PropertiesSubpropertySyncConfigsGetCall) IfNoneMatch(entityTag string) *PropertiesSubpropertySyncConfigsGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *PropertiesSubpropertySyncConfigsGetCall) Context(ctx context.Context) *PropertiesSubpropertySyncConfigsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *PropertiesSubpropertySyncConfigsGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *PropertiesSubpropertySyncConfigsGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "analyticsadmin.properties.subpropertySyncConfigs.get", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "analyticsadmin.properties.subpropertySyncConfigs.get" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleAnalyticsAdminV1alphaSubpropertySyncConfig.ServerResponse.Header or
+// (if a response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *PropertiesSubpropertySyncConfigsGetCall) Do(opts ...googleapi.CallOption) (*GoogleAnalyticsAdminV1alphaSubpropertySyncConfig, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleAnalyticsAdminV1alphaSubpropertySyncConfig{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "analyticsadmin.properties.subpropertySyncConfigs.get", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type PropertiesSubpropertySyncConfigsListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: List all Subproperty Sync Configs on a property.
+//
+//   - parent: Resource name of the property. Format: properties/property_id
+//     Example: properties/123.
+func (r *PropertiesSubpropertySyncConfigsService) List(parent string) *PropertiesSubpropertySyncConfigsListCall {
+	c := &PropertiesSubpropertySyncConfigsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The maximum number of
+// resources to return. The service may return fewer than this value, even if
+// there are additional pages. If unspecified, at most 50 resources will be
+// returned. The maximum value is 200; (higher values will be coerced to the
+// maximum)
+func (c *PropertiesSubpropertySyncConfigsListCall) PageSize(pageSize int64) *PropertiesSubpropertySyncConfigsListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": A page token, received
+// from a previous `ListSubpropertySyncConfig` call. Provide this to retrieve
+// the subsequent page. When paginating, all other parameters provided to
+// `ListSubpropertySyncConfig` must match the call that provided the page
+// token.
+func (c *PropertiesSubpropertySyncConfigsListCall) PageToken(pageToken string) *PropertiesSubpropertySyncConfigsListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *PropertiesSubpropertySyncConfigsListCall) Fields(s ...googleapi.Field) *PropertiesSubpropertySyncConfigsListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *PropertiesSubpropertySyncConfigsListCall) IfNoneMatch(entityTag string) *PropertiesSubpropertySyncConfigsListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *PropertiesSubpropertySyncConfigsListCall) Context(ctx context.Context) *PropertiesSubpropertySyncConfigsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *PropertiesSubpropertySyncConfigsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *PropertiesSubpropertySyncConfigsListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+parent}/subpropertySyncConfigs")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "analyticsadmin.properties.subpropertySyncConfigs.list", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "analyticsadmin.properties.subpropertySyncConfigs.list" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleAnalyticsAdminV1alphaListSubpropertySyncConfigsResponse.ServerResponse
+// .Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *PropertiesSubpropertySyncConfigsListCall) Do(opts ...googleapi.CallOption) (*GoogleAnalyticsAdminV1alphaListSubpropertySyncConfigsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleAnalyticsAdminV1alphaListSubpropertySyncConfigsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "analyticsadmin.properties.subpropertySyncConfigs.list", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *PropertiesSubpropertySyncConfigsListCall) Pages(ctx context.Context, f func(*GoogleAnalyticsAdminV1alphaListSubpropertySyncConfigsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+type PropertiesSubpropertySyncConfigsPatchCall struct {
+	s                                                *Service
+	name                                             string
+	googleanalyticsadminv1alphasubpropertysyncconfig *GoogleAnalyticsAdminV1alphaSubpropertySyncConfig
+	urlParams_                                       gensupport.URLParams
+	ctx_                                             context.Context
+	header_                                          http.Header
+}
+
+// Patch: Updates a Subproperty Sync Config.
+//
+//   - name: Output only. Identifier. Format:
+//     properties/{ordinary_property_id}/subpropertySyncConfigs/{subproperty_id}
+//     Example: properties/1234/subpropertySyncConfigs/5678.
+func (r *PropertiesSubpropertySyncConfigsService) Patch(name string, googleanalyticsadminv1alphasubpropertysyncconfig *GoogleAnalyticsAdminV1alphaSubpropertySyncConfig) *PropertiesSubpropertySyncConfigsPatchCall {
+	c := &PropertiesSubpropertySyncConfigsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.googleanalyticsadminv1alphasubpropertysyncconfig = googleanalyticsadminv1alphasubpropertysyncconfig
+	return c
+}
+
+// UpdateMask sets the optional parameter "updateMask": The list of fields to
+// update. Field names must be in snake case (for example, "field_to_update").
+// Omitted fields will not be updated. To replace the entire entity, use one
+// path with the string "*" to match all fields.
+func (c *PropertiesSubpropertySyncConfigsPatchCall) UpdateMask(updateMask string) *PropertiesSubpropertySyncConfigsPatchCall {
+	c.urlParams_.Set("updateMask", updateMask)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *PropertiesSubpropertySyncConfigsPatchCall) Fields(s ...googleapi.Field) *PropertiesSubpropertySyncConfigsPatchCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *PropertiesSubpropertySyncConfigsPatchCall) Context(ctx context.Context) *PropertiesSubpropertySyncConfigsPatchCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *PropertiesSubpropertySyncConfigsPatchCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *PropertiesSubpropertySyncConfigsPatchCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googleanalyticsadminv1alphasubpropertysyncconfig)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PATCH", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "analyticsadmin.properties.subpropertySyncConfigs.patch", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "analyticsadmin.properties.subpropertySyncConfigs.patch" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleAnalyticsAdminV1alphaSubpropertySyncConfig.ServerResponse.Header or
+// (if a response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *PropertiesSubpropertySyncConfigsPatchCall) Do(opts ...googleapi.CallOption) (*GoogleAnalyticsAdminV1alphaSubpropertySyncConfig, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleAnalyticsAdminV1alphaSubpropertySyncConfig{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "analyticsadmin.properties.subpropertySyncConfigs.patch", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }

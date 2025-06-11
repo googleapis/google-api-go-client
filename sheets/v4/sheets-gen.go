@@ -2477,6 +2477,15 @@ func (s CandlestickSeries) MarshalJSON() ([]byte, error) {
 
 // CellData: Data about a specific cell.
 type CellData struct {
+	// ChipRuns: Optional. Runs of chips applied to subsections of the cell.
+	// Properties of a run start at a specific index in the text and continue until
+	// the next run. When reading, all chipped and non-chipped runs are included.
+	// Non-chipped runs will have an empty chip_run.chip. When writing, only runs
+	// with chips are included. Runs containing chips are of length 1 and are
+	// represented in the user-entered text by an “@” placeholder symbol. New
+	// runs will overwrite any prior runs. Writing a new user_entered_value will
+	// erase previous runs.
+	ChipRuns []*ChipRun `json:"chipRuns,omitempty"`
 	// DataSourceFormula: Output only. Information about a data source formula on
 	// the cell. The field is set if user_entered_value is a formula referencing
 	// some DATA_SOURCE sheet, e.g. `=SUM(DataSheet!Column)`.
@@ -2532,15 +2541,15 @@ type CellData struct {
 	// `'Hello'`, or `=NOW()` Note: Dates, Times and DateTimes are represented as
 	// doubles in serial number format.
 	UserEnteredValue *ExtendedValue `json:"userEnteredValue,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "DataSourceFormula") to
+	// ForceSendFields is a list of field names (e.g. "ChipRuns") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "DataSourceFormula") to include in
-	// API requests with the JSON null value. By default, fields with empty values
-	// are omitted from API requests. See
+	// NullFields is a list of field names (e.g. "ChipRuns") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -3021,6 +3030,56 @@ type ChartSpec struct {
 
 func (s ChartSpec) MarshalJSON() ([]byte, error) {
 	type NoMethod ChartSpec
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// Chip: The Smart Chip.
+type Chip struct {
+	// PersonProperties: Properties of a linked person.
+	PersonProperties *PersonProperties `json:"personProperties,omitempty"`
+	// RichLinkProperties: Properties of a rich link.
+	RichLinkProperties *RichLinkProperties `json:"richLinkProperties,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "PersonProperties") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "PersonProperties") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s Chip) MarshalJSON() ([]byte, error) {
+	type NoMethod Chip
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ChipRun: The run of a chip. The chip continues until the start index of the
+// next run.
+type ChipRun struct {
+	// Chip: Optional. The chip of this run.
+	Chip *Chip `json:"chip,omitempty"`
+	// StartIndex: Required. The zero-based character index where this run starts,
+	// in UTF-16 code units.
+	StartIndex int64 `json:"startIndex,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Chip") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Chip") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ChipRun) MarshalJSON() ([]byte, error) {
+	type NoMethod ChipRun
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -6496,6 +6555,38 @@ func (s PasteDataRequest) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// PersonProperties: Properties specific to a linked person.
+type PersonProperties struct {
+	// DisplayFormat: Optional. The display format of the person chip. If not set,
+	// the default display format is used.
+	//
+	// Possible values:
+	//   "DISPLAY_FORMAT_UNSPECIFIED" - Default value, do not use.
+	//   "DEFAULT" - Default display format.
+	//   "LAST_NAME_COMMA_FIRST_NAME" - Last name, first name display format.
+	//   "EMAIL" - Email display format.
+	DisplayFormat string `json:"displayFormat,omitempty"`
+	// Email: Required. The email address linked to this person. This field is
+	// always present.
+	Email string `json:"email,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "DisplayFormat") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DisplayFormat") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s PersonProperties) MarshalJSON() ([]byte, error) {
+	type NoMethod PersonProperties
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // PieChartSpec: A pie chart.
 type PieChartSpec struct {
 	// Domain: The data that covers the domain of the pie chart.
@@ -7458,6 +7549,37 @@ type Response struct {
 
 func (s Response) MarshalJSON() ([]byte, error) {
 	type NoMethod Response
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// RichLinkProperties: Properties of a link to a Google resource (such as a
+// file in Drive, a YouTube video, a Maps address, or a Calendar event). Only
+// Drive files can be written as chips. All other rich link types are read
+// only. URIs cannot exceed 2000 bytes when writing. NOTE: Writing Drive file
+// chips requires at least one of the `drive.file`, `drive.readonly`, or
+// `drive` OAuth scopes.
+type RichLinkProperties struct {
+	// MimeType: Output only. The MIME type
+	// (https://developers.google.com/drive/api/v3/mime-types) of the link, if
+	// there's one (for example, when it's a file in Drive).
+	MimeType string `json:"mimeType,omitempty"`
+	// Uri: Required. The URI to the link. This is always present.
+	Uri string `json:"uri,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "MimeType") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "MimeType") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s RichLinkProperties) MarshalJSON() ([]byte, error) {
+	type NoMethod RichLinkProperties
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 

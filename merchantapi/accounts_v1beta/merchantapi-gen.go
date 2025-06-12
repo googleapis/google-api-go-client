@@ -454,15 +454,16 @@ func (s AcceptTermsOfServiceResponse) MarshalJSON() ([]byte, error) {
 // (/merchant/api/guides/accounts/create-and-configure#accept_the_merchant_cente
 // r_terms_of_service).
 type Accepted struct {
-	// AcceptedBy: The account where the acceptance was recorded. This can be the
-	// account itself or, in the case of subaccounts, the advanced account.
+	// AcceptedBy: Required. The account where the acceptance was recorded. This
+	// can be the account itself or, in the case of subaccounts, the advanced
+	// account.
 	AcceptedBy string `json:"acceptedBy,omitempty"`
-	// TermsOfService: The accepted termsOfService.
+	// TermsOfService: Required. The accepted termsOfService.
 	TermsOfService string `json:"termsOfService,omitempty"`
-	// ValidUntil: When set, it states that the accepted `TermsOfService` is only
-	// valid until the end of this date (in UTC). A new one must be accepted before
-	// then. The information of the required `TermsOfService` is found in the
-	// `Required` message.
+	// ValidUntil: Optional. When set, it states that the accepted `TermsOfService`
+	// is only valid until the end of this date (in UTC). A new one must be
+	// accepted before then. The information of the required `TermsOfService` is
+	// found in the `Required` message.
 	ValidUntil *Date `json:"validUntil,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AcceptedBy") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -2910,7 +2911,7 @@ type PhoneNumber struct {
 	// followed by a phone number that uses a relaxed ITU E.164 format consisting
 	// of the country calling code (1 to 3 digits) and the subscriber number, with
 	// no additional spaces or formatting. For example: - correct: "+15552220123" -
-	// incorrect: "+1 (555) 222-01234 x123". The ITU E.164 format limits the latter
+	// incorrect: "+1 (555) 222-01234 x123" The ITU E.164 format limits the latter
 	// to 12 digits, but in practice not all countries respect that, so we relax
 	// that restriction here. National-only numbers are not allowed. References: -
 	// https://www.itu.int/rec/T-REC-E.164-201011-I -
@@ -2926,7 +2927,7 @@ type PhoneNumber struct {
 	// from the E.164 number to allow for short code extensions in the future.
 	Extension string `json:"extension,omitempty"`
 	// ShortCode: A short code. Reference(s): -
-	// https://en.wikipedia.org/wiki/Short_code
+	// https://wikipedia.org/wiki/Short_code
 	ShortCode *ShortCode `json:"shortCode,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "E164Number") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -3540,10 +3541,11 @@ func (s RequestInventoryVerificationResponse) MarshalJSON() ([]byte, error) {
 
 // Required: Describes the terms of service which are required to be accepted.
 type Required struct {
-	// TermsOfService: The `TermsOfService` that need to be accepted.
+	// TermsOfService: Required. The `TermsOfService` that need to be accepted.
 	TermsOfService string `json:"termsOfService,omitempty"`
-	// TosFileUri: Full URL to the terms of service file. This field is the same as
-	// `TermsOfService.file_uri`, it is added here for convenience only.
+	// TosFileUri: Required. Full URL to the terms of service file. This field is
+	// the same as `TermsOfService.file_uri`, it is added here for convenience
+	// only.
 	TosFileUri string `json:"tosFileUri,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "TermsOfService") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -3780,16 +3782,17 @@ func (s Service) MarshalJSON() ([]byte, error) {
 // `ShippingSettings` resource lets you retrieve and update the shipping
 // settings of your advanced account and all its associated sub-accounts.
 type ShippingSettings struct {
-	// Etag: Required. This field is used for avoid async issue. Make sure shipping
-	// setting data didn't change between get call and insert call. The user should
-	// do following steps： 1. Set etag field as empty string for initial shipping
-	// setting creation. 2. After initial creation, call get method to obtain an
-	// etag and current shipping setting data before call insert. 3. Modify to
-	// wanted shipping setting information. 4. Call insert method with the wanted
-	// shipping setting information with the etag obtained from step 2. 5. If
-	// shipping setting data changed between step 2 and step 4. Insert request will
-	// fail because the etag changes every time the shipping setting data changes.
-	// User should repeate step 2-4 with the new etag.
+	// Etag: Required. This field helps avoid async issues. It ensures that the
+	// shipping setting data doesn't change between the `get` call and the `insert`
+	// call. The user should follow these steps: 1. Set the etag field as an empty
+	// string for the initial shipping setting creation. 2. After the initial
+	// creation, call the `get` method to obtain an etag and the current shipping
+	// setting data before calling `insert`. 3. Modify the shipping setting
+	// information. 4. Call the `insert` method with the shipping setting
+	// information and the etag obtained in step 2. 5. If the shipping setting data
+	// changes between step 2 and step 4, the insert request will fail because the
+	// etag changes every time the shipping setting data changes. In this case, the
+	// user should repeat steps 2-4 with the new etag.
 	Etag string `json:"etag,omitempty"`
 	// Name: Identifier. The resource name of the shipping settings. Format:
 	// `accounts/{account}/shippingSettings`. For example,
@@ -4030,21 +4033,21 @@ func (s TermsOfService) MarshalJSON() ([]byte, error) {
 // `tos_file_uri`. The actual acceptance of the terms of service is done by
 // calling accept on the `TermsOfService` resource.
 type TermsOfServiceAgreementState struct {
-	// Accepted: The accepted terms of service of this kind and for the associated
-	// region_code
+	// Accepted: Optional. The accepted terms of service of this kind and for the
+	// associated region_code
 	Accepted *Accepted `json:"accepted,omitempty"`
 	// Name: Identifier. The resource name of the terms of service version. Format:
 	// `accounts/{account}/termsOfServiceAgreementState/{identifier}` The
 	// identifier format is: `{TermsOfServiceKind}-{country}` For example, an
 	// identifier could be: `MERCHANT_CENTER-EU` or `MERCHANT_CENTER-US`.
 	Name string `json:"name,omitempty"`
-	// RegionCode: Region code as defined by https://cldr.unicode.org/. This is the
-	// country the current state applies to.
+	// RegionCode: Required. Region code as defined by https://cldr.unicode.org/.
+	// This is the country the current state applies to.
 	RegionCode string `json:"regionCode,omitempty"`
-	// Required: The required terms of service
+	// Required: Optional. The required terms of service
 	Required *Required `json:"required,omitempty"`
-	// TermsOfServiceKind: Terms of Service kind associated with the particular
-	// version.
+	// TermsOfServiceKind: Required. Terms of Service kind associated with the
+	// particular version.
 	//
 	// Possible values:
 	//   "TERMS_OF_SERVICE_KIND_UNSPECIFIED" - Default value. This value is unused.
@@ -4734,18 +4737,11 @@ type AccountsListCall struct {
 	header_      http.Header
 }
 
-// List: Lists accounts accessible to the calling user and matching the
-// constraints of the request such as page size or filters. This is not just
-// listing the sub-accounts of an advanced account, but all accounts the
-// calling user has access to including other advanced accounts, linked
-// accounts, standalone accounts and so on. If no filter is provided, then it
-// returns all the accounts the user has access to. This method is eventually
-// consistent, meaning changes such as creating, updating an account or a
-// change of relationships between accounts may not show up in the results
-// immediately. Instead, these changes propagate over a short period, after
-// which the updated information can match the associated predicates. That
-// means, that searching by account name might not return a recently changed
-// account even though it satisfies the predicate.
+// List: Note: For the `accounts.list` method, quota and limits usage are
+// charged for each user, and not for the Merchant Center ID or the advanced
+// account ID. To list several sub-accounts, you should use the
+// `accounts.listSubaccounts` method, which is more suitable for advanced
+// accounts use case.
 func (r *AccountsService) List() *AccountsListCall {
 	c := &AccountsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	return c
@@ -10935,7 +10931,9 @@ type AccountsTermsOfServiceAgreementStatesRetrieveForApplicationCall struct {
 }
 
 // RetrieveForApplication: Retrieves the state of the agreement for the
-// application terms of service.
+// application terms of service. Application terms of service covers
+// permissions related to the usage of data provided through Merchant Center,
+// CSS Center, Manufacturer Center, and more.
 //
 //   - parent: The account for which to get a TermsOfServiceAgreementState
 //     Format: `accounts/{account}`.

@@ -231,10 +231,34 @@ type ProjectsLocationsOperationsService struct {
 
 func NewProjectsLocationsPreviewsService(s *Service) *ProjectsLocationsPreviewsService {
 	rs := &ProjectsLocationsPreviewsService{s: s}
+	rs.ResourceChanges = NewProjectsLocationsPreviewsResourceChangesService(s)
+	rs.ResourceDrifts = NewProjectsLocationsPreviewsResourceDriftsService(s)
 	return rs
 }
 
 type ProjectsLocationsPreviewsService struct {
+	s *Service
+
+	ResourceChanges *ProjectsLocationsPreviewsResourceChangesService
+
+	ResourceDrifts *ProjectsLocationsPreviewsResourceDriftsService
+}
+
+func NewProjectsLocationsPreviewsResourceChangesService(s *Service) *ProjectsLocationsPreviewsResourceChangesService {
+	rs := &ProjectsLocationsPreviewsResourceChangesService{s: s}
+	return rs
+}
+
+type ProjectsLocationsPreviewsResourceChangesService struct {
+	s *Service
+}
+
+func NewProjectsLocationsPreviewsResourceDriftsService(s *Service) *ProjectsLocationsPreviewsResourceDriftsService {
+	rs := &ProjectsLocationsPreviewsResourceDriftsService{s: s}
+	return rs
+}
+
+type ProjectsLocationsPreviewsResourceDriftsService struct {
 	s *Service
 }
 
@@ -965,6 +989,70 @@ func (s ListPreviewsResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// ListResourceChangesResponse: A response to a 'ListResourceChanges' call.
+// Contains a list of ResourceChanges.
+type ListResourceChangesResponse struct {
+	// NextPageToken: A token to request the next page of resources from the
+	// 'ListResourceChanges' method. The value of an empty string means that there
+	// are no more resources to return.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+	// ResourceChanges: List of ResourceChanges.
+	ResourceChanges []*ResourceChange `json:"resourceChanges,omitempty"`
+	// Unreachable: Unreachable resources, if any.
+	Unreachable []string `json:"unreachable,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "NextPageToken") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ListResourceChangesResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ListResourceChangesResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ListResourceDriftsResponse: A response to a 'ListResourceDrifts' call.
+// Contains a list of ResourceDrifts.
+type ListResourceDriftsResponse struct {
+	// NextPageToken: A token to request the next page of resources from the
+	// 'ListResourceDrifts' method. The value of an empty string means that there
+	// are no more resources to return.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+	// ResourceDrifts: List of ResourceDrifts.
+	ResourceDrifts []*ResourceDrift `json:"resourceDrifts,omitempty"`
+	// Unreachable: Unreachable resources, if any.
+	Unreachable []string `json:"unreachable,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "NextPageToken") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ListResourceDriftsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ListResourceDriftsResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // ListResourcesResponse: A response to a 'ListResources' call. Contains a list
 // of Resources.
 type ListResourcesResponse struct {
@@ -1545,6 +1633,72 @@ func (s PreviewResult) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// PropertyChange: A property change represents a change to a property in the
+// state file.
+type PropertyChange struct {
+	// After: Output only. Representations of the object value after the actions.
+	After interface{} `json:"after,omitempty"`
+	// AfterSensitivePaths: Output only. The paths of sensitive fields in `after`.
+	// Paths are relative to `path`.
+	AfterSensitivePaths []string `json:"afterSensitivePaths,omitempty"`
+	// Before: Output only. Representations of the object value before the actions.
+	Before interface{} `json:"before,omitempty"`
+	// BeforeSensitivePaths: Output only. The paths of sensitive fields in
+	// `before`. Paths are relative to `path`.
+	BeforeSensitivePaths []string `json:"beforeSensitivePaths,omitempty"`
+	// Path: Output only. The path of the property change.
+	Path string `json:"path,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "After") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "After") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s PropertyChange) MarshalJSON() ([]byte, error) {
+	type NoMethod PropertyChange
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// PropertyDrift: A property drift represents a drift to a property in the
+// state file.
+type PropertyDrift struct {
+	// After: Output only. Representations of the object value after the actions.
+	After interface{} `json:"after,omitempty"`
+	// AfterSensitivePaths: Output only. The paths of sensitive fields in `after`.
+	// Paths are relative to `path`.
+	AfterSensitivePaths []string `json:"afterSensitivePaths,omitempty"`
+	// Before: Output only. Representations of the object value before the actions.
+	Before interface{} `json:"before,omitempty"`
+	// BeforeSensitivePaths: Output only. The paths of sensitive fields in
+	// `before`. Paths are relative to `path`.
+	BeforeSensitivePaths []string `json:"beforeSensitivePaths,omitempty"`
+	// Path: Output only. The path of the property drift.
+	Path string `json:"path,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "After") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "After") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s PropertyDrift) MarshalJSON() ([]byte, error) {
+	type NoMethod PropertyDrift
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // Resource: Resource represents a Google Cloud Platform resource actuated by
 // IM. Resources are child resources of Revisions.
 type Resource struct {
@@ -1621,6 +1775,139 @@ type ResourceCAIInfo struct {
 
 func (s ResourceCAIInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod ResourceCAIInfo
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ResourceChange: A resource change represents a change to a resource in the
+// state file.
+type ResourceChange struct {
+	// Intent: Output only. The intent of the resource change.
+	//
+	// Possible values:
+	//   "INTENT_UNSPECIFIED" - The default value.
+	//   "CREATE" - The resource will be created.
+	//   "UPDATE" - The resource will be updated.
+	//   "DELETE" - The resource will be deleted.
+	//   "RECREATE" - The resource will be recreated.
+	//   "UNCHANGED" - The resource will be untouched.
+	Intent string `json:"intent,omitempty"`
+	// Name: Identifier. The name of the resource change. Format:
+	// 'projects/{project_id}/locations/{location}/previews/{preview}/resourceChange
+	// s/{resource_change}'.
+	Name string `json:"name,omitempty"`
+	// PropertyChanges: Output only. The property changes of the resource change.
+	PropertyChanges []*PropertyChange `json:"propertyChanges,omitempty"`
+	// TerraformInfo: Output only. Terraform info of the resource change.
+	TerraformInfo *ResourceChangeTerraformInfo `json:"terraformInfo,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "Intent") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Intent") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ResourceChange) MarshalJSON() ([]byte, error) {
+	type NoMethod ResourceChange
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ResourceChangeTerraformInfo: Terraform info of a ResourceChange.
+type ResourceChangeTerraformInfo struct {
+	// Actions: Output only. TF resource actions.
+	Actions []string `json:"actions,omitempty"`
+	// Address: Output only. TF resource address that uniquely identifies the
+	// resource.
+	Address string `json:"address,omitempty"`
+	// Provider: Output only. TF resource provider.
+	Provider string `json:"provider,omitempty"`
+	// ResourceName: Output only. TF resource name.
+	ResourceName string `json:"resourceName,omitempty"`
+	// Type: Output only. TF resource type.
+	Type string `json:"type,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Actions") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Actions") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ResourceChangeTerraformInfo) MarshalJSON() ([]byte, error) {
+	type NoMethod ResourceChangeTerraformInfo
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ResourceDrift: A resource drift represents a drift to a resource in the
+// state file.
+type ResourceDrift struct {
+	// Name: Identifier. The name of the resource drift. Format:
+	// 'projects/{project_id}/locations/{location}/previews/{preview}/resourceDrifts
+	// /{resource_drift}'.
+	Name string `json:"name,omitempty"`
+	// PropertyDrifts: Output only. The property drifts of the resource drift.
+	PropertyDrifts []*PropertyDrift `json:"propertyDrifts,omitempty"`
+	// TerraformInfo: Output only. Terraform info of the resource drift.
+	TerraformInfo *ResourceDriftTerraformInfo `json:"terraformInfo,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "Name") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Name") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ResourceDrift) MarshalJSON() ([]byte, error) {
+	type NoMethod ResourceDrift
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ResourceDriftTerraformInfo: Terraform info of a ResourceChange.
+type ResourceDriftTerraformInfo struct {
+	// Address: Output only. The address of the drifted resource.
+	Address string `json:"address,omitempty"`
+	// Provider: Output only. The provider of the drifted resource.
+	Provider string `json:"provider,omitempty"`
+	// ResourceName: Output only. TF resource name.
+	ResourceName string `json:"resourceName,omitempty"`
+	// Type: Output only. The type of the drifted resource.
+	Type string `json:"type,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Address") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Address") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ResourceDriftTerraformInfo) MarshalJSON() ([]byte, error) {
+	type NoMethod ResourceDriftTerraformInfo
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -5778,6 +6065,569 @@ func (c *ProjectsLocationsPreviewsListCall) Do(opts ...googleapi.CallOption) (*L
 // A non-nil error returned from f will halt the iteration.
 // The provided context supersedes any context provided to the Context method.
 func (c *ProjectsLocationsPreviewsListCall) Pages(ctx context.Context, f func(*ListPreviewsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+type ProjectsLocationsPreviewsResourceChangesGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Get a ResourceChange for a given preview.
+//
+//   - name: The name of the resource change to retrieve. Format:
+//     'projects/{project_id}/locations/{location}/previews/{preview}/resourceChan
+//     ges/{resource_change}'.
+func (r *ProjectsLocationsPreviewsResourceChangesService) Get(name string) *ProjectsLocationsPreviewsResourceChangesGetCall {
+	c := &ProjectsLocationsPreviewsResourceChangesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsPreviewsResourceChangesGetCall) Fields(s ...googleapi.Field) *ProjectsLocationsPreviewsResourceChangesGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsPreviewsResourceChangesGetCall) IfNoneMatch(entityTag string) *ProjectsLocationsPreviewsResourceChangesGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsPreviewsResourceChangesGetCall) Context(ctx context.Context) *ProjectsLocationsPreviewsResourceChangesGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsPreviewsResourceChangesGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsPreviewsResourceChangesGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "config.projects.locations.previews.resourceChanges.get", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "config.projects.locations.previews.resourceChanges.get" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *ResourceChange.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsPreviewsResourceChangesGetCall) Do(opts ...googleapi.CallOption) (*ResourceChange, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ResourceChange{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "config.projects.locations.previews.resourceChanges.get", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsPreviewsResourceChangesListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists ResourceChanges for a given preview.
+//
+//   - parent: The parent in whose context the ResourceChanges are listed. The
+//     parent value is in the format:
+//     'projects/{project_id}/locations/{location}/previews/{preview}'.
+func (r *ProjectsLocationsPreviewsResourceChangesService) List(parent string) *ProjectsLocationsPreviewsResourceChangesListCall {
+	c := &ProjectsLocationsPreviewsResourceChangesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// Filter sets the optional parameter "filter": Lists the resource changes that
+// match the filter expression. A filter expression filters the resource
+// changes listed in the response. The expression must be of the form '{field}
+// {operator} {value}' where operators: '<', '>', '<=', '>=', '!=', '=', ':'
+// are supported (colon ':' represents a HAS operator which is roughly
+// synonymous with equality). {field} can refer to a proto or JSON field, or a
+// synthetic field. Field names can be camelCase or snake_case. Examples: -
+// Filter by name: name =
+// "projects/foo/locations/us-central1/previews/dep/resourceChanges/baz
+func (c *ProjectsLocationsPreviewsResourceChangesListCall) Filter(filter string) *ProjectsLocationsPreviewsResourceChangesListCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// OrderBy sets the optional parameter "orderBy": Field to use to sort the
+// list.
+func (c *ProjectsLocationsPreviewsResourceChangesListCall) OrderBy(orderBy string) *ProjectsLocationsPreviewsResourceChangesListCall {
+	c.urlParams_.Set("orderBy", orderBy)
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": When requesting a page of
+// resource changes, 'page_size' specifies number of resource changes to
+// return. If unspecified, at most 500 will be returned. The maximum value is
+// 1000.
+func (c *ProjectsLocationsPreviewsResourceChangesListCall) PageSize(pageSize int64) *ProjectsLocationsPreviewsResourceChangesListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": Token returned by
+// previous call to 'ListResourceChanges' which specifies the position in the
+// list from where to continue listing the resource changes.
+func (c *ProjectsLocationsPreviewsResourceChangesListCall) PageToken(pageToken string) *ProjectsLocationsPreviewsResourceChangesListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsPreviewsResourceChangesListCall) Fields(s ...googleapi.Field) *ProjectsLocationsPreviewsResourceChangesListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsPreviewsResourceChangesListCall) IfNoneMatch(entityTag string) *ProjectsLocationsPreviewsResourceChangesListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsPreviewsResourceChangesListCall) Context(ctx context.Context) *ProjectsLocationsPreviewsResourceChangesListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsPreviewsResourceChangesListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsPreviewsResourceChangesListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/resourceChanges")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "config.projects.locations.previews.resourceChanges.list", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "config.projects.locations.previews.resourceChanges.list" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *ListResourceChangesResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsPreviewsResourceChangesListCall) Do(opts ...googleapi.CallOption) (*ListResourceChangesResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ListResourceChangesResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "config.projects.locations.previews.resourceChanges.list", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsLocationsPreviewsResourceChangesListCall) Pages(ctx context.Context, f func(*ListResourceChangesResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+type ProjectsLocationsPreviewsResourceDriftsGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Get a ResourceDrift for a given preview.
+//
+//   - name: The name of the resource drift to retrieve. Format:
+//     'projects/{project_id}/locations/{location}/previews/{preview}/resourceDrif
+//     ts/{resource_drift}'.
+func (r *ProjectsLocationsPreviewsResourceDriftsService) Get(name string) *ProjectsLocationsPreviewsResourceDriftsGetCall {
+	c := &ProjectsLocationsPreviewsResourceDriftsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsPreviewsResourceDriftsGetCall) Fields(s ...googleapi.Field) *ProjectsLocationsPreviewsResourceDriftsGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsPreviewsResourceDriftsGetCall) IfNoneMatch(entityTag string) *ProjectsLocationsPreviewsResourceDriftsGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsPreviewsResourceDriftsGetCall) Context(ctx context.Context) *ProjectsLocationsPreviewsResourceDriftsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsPreviewsResourceDriftsGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsPreviewsResourceDriftsGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "config.projects.locations.previews.resourceDrifts.get", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "config.projects.locations.previews.resourceDrifts.get" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *ResourceDrift.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsPreviewsResourceDriftsGetCall) Do(opts ...googleapi.CallOption) (*ResourceDrift, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ResourceDrift{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "config.projects.locations.previews.resourceDrifts.get", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsPreviewsResourceDriftsListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: List ResourceDrifts for a given preview.
+//
+//   - parent: The parent in whose context the ResourceDrifts are listed. The
+//     parent value is in the format:
+//     'projects/{project_id}/locations/{location}/previews/{preview}'.
+func (r *ProjectsLocationsPreviewsResourceDriftsService) List(parent string) *ProjectsLocationsPreviewsResourceDriftsListCall {
+	c := &ProjectsLocationsPreviewsResourceDriftsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// Filter sets the optional parameter "filter": Lists the resource drifts that
+// match the filter expression. A filter expression filters the resource drifts
+// listed in the response. The expression must be of the form '{field}
+// {operator} {value}' where operators: '<', '>', '<=', '>=', '!=', '=', ':'
+// are supported (colon ':' represents a HAS operator which is roughly
+// synonymous with equality). {field} can refer to a proto or JSON field, or a
+// synthetic field. Field names can be camelCase or snake_case. Examples: -
+// Filter by name: name =
+// "projects/foo/locations/us-central1/previews/dep/resourceDrifts/baz
+func (c *ProjectsLocationsPreviewsResourceDriftsListCall) Filter(filter string) *ProjectsLocationsPreviewsResourceDriftsListCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// OrderBy sets the optional parameter "orderBy": Field to use to sort the
+// list.
+func (c *ProjectsLocationsPreviewsResourceDriftsListCall) OrderBy(orderBy string) *ProjectsLocationsPreviewsResourceDriftsListCall {
+	c.urlParams_.Set("orderBy", orderBy)
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": When requesting a page of
+// resource drifts, 'page_size' specifies number of resource drifts to return.
+// If unspecified, at most 500 will be returned. The maximum value is 1000.
+func (c *ProjectsLocationsPreviewsResourceDriftsListCall) PageSize(pageSize int64) *ProjectsLocationsPreviewsResourceDriftsListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": Token returned by
+// previous call to 'ListResourceDrifts' which specifies the position in the
+// list from where to continue listing the resource drifts.
+func (c *ProjectsLocationsPreviewsResourceDriftsListCall) PageToken(pageToken string) *ProjectsLocationsPreviewsResourceDriftsListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsPreviewsResourceDriftsListCall) Fields(s ...googleapi.Field) *ProjectsLocationsPreviewsResourceDriftsListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsPreviewsResourceDriftsListCall) IfNoneMatch(entityTag string) *ProjectsLocationsPreviewsResourceDriftsListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsPreviewsResourceDriftsListCall) Context(ctx context.Context) *ProjectsLocationsPreviewsResourceDriftsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsPreviewsResourceDriftsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsPreviewsResourceDriftsListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/resourceDrifts")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "config.projects.locations.previews.resourceDrifts.list", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "config.projects.locations.previews.resourceDrifts.list" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *ListResourceDriftsResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsPreviewsResourceDriftsListCall) Do(opts ...googleapi.CallOption) (*ListResourceDriftsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ListResourceDriftsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "config.projects.locations.previews.resourceDrifts.list", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsLocationsPreviewsResourceDriftsListCall) Pages(ctx context.Context, f func(*ListResourceDriftsResponse) error) error {
 	c.ctx_ = ctx
 	defer c.PageToken(c.urlParams_.Get("pageToken"))
 	for {

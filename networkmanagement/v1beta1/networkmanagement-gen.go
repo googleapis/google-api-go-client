@@ -685,20 +685,24 @@ func (s CloudFunctionInfo) MarshalJSON() ([]byte, error) {
 
 // CloudRunRevisionEndpoint: Wrapper for Cloud Run revision attributes.
 type CloudRunRevisionEndpoint struct {
+	// ServiceUri: Output only. The URI of the Cloud Run service that the revision
+	// belongs to. The format is:
+	// projects/{project}/locations/{location}/services/{service}
+	ServiceUri string `json:"serviceUri,omitempty"`
 	// Uri: A Cloud Run (https://cloud.google.com/run)
 	// [revision](https://cloud.google.com/run/docs/reference/rest/v1/namespaces.rev
 	// isions/get) URI. The format is:
 	// projects/{project}/locations/{location}/revisions/{revision}
 	Uri string `json:"uri,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "Uri") to unconditionally
-	// include in API requests. By default, fields with empty or default values are
-	// omitted from API requests. See
+	// ForceSendFields is a list of field names (e.g. "ServiceUri") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Uri") to include in API requests
-	// with the JSON null value. By default, fields with empty values are omitted
-	// from API requests. See
+	// NullFields is a list of field names (e.g. "ServiceUri") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -1755,9 +1759,17 @@ type InstanceInfo struct {
 	// attached to (if relevant).
 	PscNetworkAttachmentUri string `json:"pscNetworkAttachmentUri,omitempty"`
 	// Running: Indicates whether the Compute Engine instance is running.
+	// Deprecated: use the `status` field instead.
 	Running bool `json:"running,omitempty"`
 	// ServiceAccount: Service account authorized for the instance.
 	ServiceAccount string `json:"serviceAccount,omitempty"`
+	// Status: The status of the instance.
+	//
+	// Possible values:
+	//   "STATUS_UNSPECIFIED" - Default unspecified value.
+	//   "RUNNING" - The instance is running.
+	//   "NOT_RUNNING" - The instance has any status other than "RUNNING".
+	Status string `json:"status,omitempty"`
 	// Uri: URI of a Compute Engine instance.
 	Uri string `json:"uri,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "DisplayName") to
@@ -7407,7 +7419,7 @@ func (c *ProjectsLocationsVpcFlowLogsConfigsQueryOrgVpcFlowLogsConfigsCall) doRe
 	}
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+parent}:queryOrgVpcFlowLogsConfigs")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+parent}/vpcFlowLogsConfigs:queryOrgVpcFlowLogsConfigs")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("GET", urls, nil)
 	if err != nil {

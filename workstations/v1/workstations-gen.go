@@ -668,6 +668,29 @@ func (s Expr) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GatewayConfig: Configuration options for Cluster HTTP Gateway.
+type GatewayConfig struct {
+	// Http2Enabled: Optional. Whether HTTP/2 is enabled for this workstation
+	// cluster. Defaults to false.
+	Http2Enabled bool `json:"http2Enabled,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Http2Enabled") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Http2Enabled") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GatewayConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GatewayConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GceConfidentialInstanceConfig: A set of Compute Engine Confidential VM
 // instance options.
 type GceConfidentialInstanceConfig struct {
@@ -1895,6 +1918,8 @@ type WorkstationCluster struct {
 	// delete requests to make sure that the client has an up-to-date value before
 	// proceeding.
 	Etag string `json:"etag,omitempty"`
+	// GatewayConfig: Optional. Configuration options for Cluster HTTP Gateway.
+	GatewayConfig *GatewayConfig `json:"gatewayConfig,omitempty"`
 	// Labels: Optional. Labels
 	// (https://cloud.google.com/workstations/docs/label-resources) that are
 	// applied to the workstation cluster and that are also propagated to the

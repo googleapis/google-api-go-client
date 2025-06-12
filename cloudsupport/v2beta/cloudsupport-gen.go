@@ -1252,49 +1252,6 @@ func (s TextContent) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// WorkflowOperationMetadata: Metadata about the operation. Used to lookup the
-// current status.
-type WorkflowOperationMetadata struct {
-	// Namespace: The namespace that the job was scheduled in. Must be included in
-	// the workflow metadata so the workflow status can be retrieved.
-	Namespace string `json:"namespace,omitempty"`
-	// OperationAction: The type of action the operation is classified as.
-	//
-	// Possible values:
-	//   "OPERATION_ACTION_UNSPECIFIED" - Operation action is not specified.
-	//   "CREATE_SUPPORT_ACCOUNT" - Operation pertains to the creation of a new
-	// support account.
-	//   "UPDATE_SUPPORT_ACCOUNT" - Operation pertains to the updating of an
-	// existing support account.
-	//   "PURCHASE_SUPPORT_ACCOUNT" - Operation pertains to the purchasing of a
-	// support plan that may either create or update a support account.
-	OperationAction string `json:"operationAction,omitempty"`
-	// WorkflowOperationType: Which version of the workflow service this operation
-	// came from.
-	//
-	// Possible values:
-	//   "UNKNOWN_OPERATION_TYPE" - Unknown version.
-	//   "WORKFLOWS_V1" - Version 1.
-	//   "WORKFLOWS_V2" - Version 2.
-	WorkflowOperationType string `json:"workflowOperationType,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "Namespace") to
-	// unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
-	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Namespace") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
-	NullFields []string `json:"-"`
-}
-
-func (s WorkflowOperationMetadata) MarshalJSON() ([]byte, error) {
-	type NoMethod WorkflowOperationMetadata
-	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
-}
-
 type CaseClassificationsSearchCall struct {
 	s            *Service
 	urlParams_   gensupport.URLParams

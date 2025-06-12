@@ -644,8 +644,8 @@ type GoogleCloudOrgpolicyV2PolicySpecPolicyRule struct {
 	// can be set only in policies for list constraints.
 	DenyAll bool `json:"denyAll,omitempty"`
 	// Enforce: If `true`, then the policy is enforced. If `false`, then any
-	// configuration is acceptable. This field can be set only in policies for
-	// boolean constraints.
+	// configuration is acceptable. This field can be set in policies for boolean
+	// constraints, custom constraints and managed constraints.
 	Enforce bool `json:"enforce,omitempty"`
 	// Parameters: Optional. Required for managed constraints if parameters are
 	// defined. Passes parameter values when policy enforcement is enabled. Ensure

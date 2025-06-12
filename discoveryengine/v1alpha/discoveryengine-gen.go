@@ -15792,6 +15792,9 @@ type GoogleCloudDiscoveryengineV1alphaPauseEngineRequest struct {
 // GoogleCloudDiscoveryengineV1alphaPrincipal: Principal identifier of a user
 // or a group.
 type GoogleCloudDiscoveryengineV1alphaPrincipal struct {
+	// ExternalEntityId: For 3P application identities which are not present in the
+	// customer identity provider.
+	ExternalEntityId string `json:"externalEntityId,omitempty"`
 	// GroupId: Group identifier. For Google Workspace user account, group_id
 	// should be the google workspace group email. For non-google identity provider
 	// user account, group_id is the mapped group identifier configured during the
@@ -15802,15 +15805,15 @@ type GoogleCloudDiscoveryengineV1alphaPrincipal struct {
 	// account, user_id is the mapped user identifier configured during the
 	// workforcepool config.
 	UserId string `json:"userId,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "GroupId") to unconditionally
-	// include in API requests. By default, fields with empty or default values are
-	// omitted from API requests. See
+	// ForceSendFields is a list of field names (e.g. "ExternalEntityId") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "GroupId") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
+	// NullFields is a list of field names (e.g. "ExternalEntityId") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -16502,7 +16505,7 @@ func (s *GoogleCloudDiscoveryengineV1alphaQualityMetricsTopkMetrics) UnmarshalJS
 
 // GoogleCloudDiscoveryengineV1alphaQuery: Defines a user inputed query.
 type GoogleCloudDiscoveryengineV1alphaQuery struct {
-	// QueryId: Unique Id for the query.
+	// QueryId: Output only. Unique Id for the query.
 	QueryId string `json:"queryId,omitempty"`
 	// Text: Plain text.
 	Text string `json:"text,omitempty"`
@@ -17837,35 +17840,56 @@ type GoogleCloudDiscoveryengineV1alphaSearchRequest struct {
 	// QueryExpansionSpec: The query expansion specification that specifies the
 	// conditions under which query expansion occurs.
 	QueryExpansionSpec *GoogleCloudDiscoveryengineV1alphaSearchRequestQueryExpansionSpec `json:"queryExpansionSpec,omitempty"`
-	// RankingExpression: The ranking expression controls the customized ranking on
-	// retrieval documents. This overrides ServingConfig.ranking_expression. The
-	// syntax and supported features depend on the ranking_expression_backend
-	// value. If ranking_expression_backend is not provided, it defaults to BYOE.
-	// === BYOE === If ranking_expression_backend is not provided or set to `BYOE`,
-	// it should be a single function or multiple functions that are joined by "+".
-	// * ranking_expression = function, { " + ", function }; Supported functions: *
+	// RankingExpression: Optional. The ranking expression controls the customized
+	// ranking on retrieval documents. This overrides
+	// ServingConfig.ranking_expression. The syntax and supported features depend
+	// on the `ranking_expression_backend` value. If `ranking_expression_backend`
+	// is not provided, it defaults to `RANK_BY_EMBEDDING`. If
+	// ranking_expression_backend is not provided or set to `RANK_BY_EMBEDDING`, it
+	// should be a single function or multiple functions that are joined by "+". *
+	// ranking_expression = function, { " + ", function }; Supported functions: *
 	// double * relevance_score * double * dotProduct(embedding_field_path)
 	// Function variables: * `relevance_score`: pre-defined keywords, used for
 	// measure relevance between query and document. * `embedding_field_path`: the
 	// document embedding field used with query embedding vector. * `dotProduct`:
-	// embedding function between embedding_field_path and query embedding vector.
-	// Example ranking expression: If document has an embedding field
+	// embedding function between `embedding_field_path` and query embedding
+	// vector. Example ranking expression: If document has an embedding field
 	// doc_embedding, the ranking expression could be `0.5 * relevance_score + 0.3
-	// * dotProduct(doc_embedding)`. === CLEARBOX === If ranking_expression_backend
-	// is set to `CLEARBOX`, the following expression types (and combinations of
-	// those chained using + or * operators) are supported: * double * signal *
-	// log(signal) * exp(signal) * rr(signal, double > 0) -- reciprocal rank
+	// * dotProduct(doc_embedding)`. If ranking_expression_backend is set to
+	// `RANK_BY_FORMULA`, the following expression types (and combinations of those
+	// chained using + or * operators) are supported: * `double` * `signal` *
+	// `log(signal)` * `exp(signal)` * `rr(signal, double > 0)` -- reciprocal rank
 	// transformation with second argument being a denominator constant. *
-	// is_nan(signal) -- returns 0 if signal is NaN, 1 otherwise. *
-	// fill_nan(signal1, signal2 | double) -- if signal1 is NaN, returns signal2 |
-	// double, else returns signal1. Examples: * 0.2 * gecko_score + 0.8 *
-	// log(bm25_score) * 0.2 * exp(fill_nan(gecko_score, 0)) + 0.3 *
-	// is_nan(bm25_score) * 0.2 * rr(gecko_score, 16) + 0.8 * rr(bm25_score, 32)
-	// The following signals are supported: * gecko_score -- semantic similarity
-	// adjustment * bm25_score -- keyword match adjustment * jetstream_score --
-	// semantic relevance adjustment * pctr_rank -- predicted conversion rate
-	// adjustment as a rank * freshness_rank -- freshness adjustment as a rank *
-	// base_rank -- the default rank of the result
+	// `is_nan(signal)` -- returns 0 if signal is NaN, 1 otherwise. *
+	// `fill_nan(signal1, signal2 | double)` -- if signal1 is NaN, returns signal2
+	// | double, else returns signal1. Here are a few examples of ranking formulas
+	// that use the supported ranking expression types: - `0.2 *
+	// semantic_similarity_score + 0.8 * log(keyword_similarity_score)` -- mostly
+	// rank by the logarithm of `keyword_similarity_score` with slight
+	// `semantic_smilarity_score` adjustment. - `0.2 *
+	// exp(fill_nan(semantic_similarity_score, 0)) + 0.3 *
+	// is_nan(keyword_similarity_score)` -- rank by the exponent of
+	// `semantic_similarity_score` filling the value with 0 if it's NaN, also add
+	// constant 0.3 adjustment to the final score if `semantic_similarity_score` is
+	// NaN. - `0.2 * rr(semantic_similarity_score, 16) + 0.8 *
+	// rr(keyword_similarity_score, 16)` -- mostly rank by the reciprocal rank of
+	// `keyword_similarity_score` with slight adjustment of reciprocal rank of
+	// `semantic_smilarity_score`. The following signals are supported: *
+	// `semantic_similarity_score`: semantic similarity adjustment that is
+	// calculated using the embeddings generated by a proprietary Google model.
+	// This score determines how semantically similar a search query is to a
+	// document. * `keyword_similarity_score`: keyword match adjustment uses the
+	// Best Match 25 (BM25) ranking function. This score is calculated using a
+	// probabilistic model to estimate the probability that a document is relevant
+	// to a given query. * `relevance_score`: semantic relevance adjustment that
+	// uses a proprietary Google model to determine the meaning and intent behind a
+	// user's query in context with the content in the documents. * `pctr_rank`:
+	// predicted conversion rate adjustment as a rank use predicted Click-through
+	// rate (pCTR) to gauge the relevance and attractiveness of a search result
+	// from a user's perspective. A higher pCTR suggests that the result is more
+	// likely to satisfy the user's query and intent, making it a valuable signal
+	// for ranking. * `freshness_rank`: freshness adjustment as a rank *
+	// `base_rank`: the default rank of the result
 	RankingExpression string `json:"rankingExpression,omitempty"`
 	// RankingExpressionBackend: Optional. The backend to use for the ranking
 	// expression evaluation.
@@ -17873,9 +17897,14 @@ type GoogleCloudDiscoveryengineV1alphaSearchRequest struct {
 	// Possible values:
 	//   "RANKING_EXPRESSION_BACKEND_UNSPECIFIED" - Default option for
 	// unspecified/unknown values.
-	//   "BYOE" - Bring your own embedding (BYOE), the default way to evaluate the
-	// ranking expression.
-	//   "CLEARBOX" - The expression is compiled into a Clearbox formula.
+	//   "BYOE" - Deprecated: Use `RANK_BY_EMBEDDING` instead. Ranking by custom
+	// embedding model, the default way to evaluate the ranking expression. Legacy
+	// enum option, `RANK_BY_EMBEDDING` should be used instead.
+	//   "CLEARBOX" - Deprecated: Use `RANK_BY_FORMULA` instead. Ranking by custom
+	// formula. Legacy enum option, `RANK_BY_FORMULA` should be used instead.
+	//   "RANK_BY_EMBEDDING" - Ranking by custom embedding model, the default way
+	// to evaluate the ranking expression.
+	//   "RANK_BY_FORMULA" - Ranking by custom formula.
 	RankingExpressionBackend string `json:"rankingExpressionBackend,omitempty"`
 	// RegionCode: The Unicode country/region code (CLDR) of a location, such as
 	// "US" and "419". For more information, see Standard fields
@@ -17937,6 +17966,11 @@ type GoogleCloudDiscoveryengineV1alphaSearchRequest struct {
 	// SpellCorrectionSpec: The spell correction specification that specifies the
 	// mode under which spell correction takes effect.
 	SpellCorrectionSpec *GoogleCloudDiscoveryengineV1alphaSearchRequestSpellCorrectionSpec `json:"spellCorrectionSpec,omitempty"`
+	// UseLatestData: Uses the Engine, ServingConfig and Control freshly read from
+	// the database. Note: this skips config cache and introduces dependency on
+	// databases, which could significantly increase the API latency. It should
+	// only be used for testing, but not serving end users.
+	UseLatestData bool `json:"useLatestData,omitempty"`
 	// UserInfo: Information about the end user. Highly recommended for analytics
 	// and personalization. UserInfo.user_agent is used to deduce `device_type` for
 	// analytics.
@@ -20248,26 +20282,16 @@ func (s GoogleCloudDiscoveryengineV1alphaSession) MarshalJSON() ([]byte, error) 
 // GoogleCloudDiscoveryengineV1alphaSessionTurn: Represents a turn, including a
 // query from the user and a answer from service.
 type GoogleCloudDiscoveryengineV1alphaSessionTurn struct {
-	// Answer: The resource name of the answer to the user query. Only set if the
-	// answer generation (/answer API call) happened in this turn.
+	// Answer: Optional. The resource name of the answer to the user query. Only
+	// set if the answer generation (/answer API call) happened in this turn.
 	Answer string `json:"answer,omitempty"`
 	// DetailedAnswer: Output only. In ConversationalSearchService.GetSession API,
 	// if GetSessionRequest.include_answer_details is set to true, this field will
 	// be populated when getting answer query session.
 	DetailedAnswer *GoogleCloudDiscoveryengineV1alphaAnswer `json:"detailedAnswer,omitempty"`
-	// Query: The user query.
+	// Query: Optional. The user query. May not be set if this turn is merely
+	// regenerating an answer to a different turn
 	Query *GoogleCloudDiscoveryengineV1alphaQuery `json:"query,omitempty"`
-	// QueryConfigs: Optional. Represents metadata related to the query config, for
-	// example LLM model and version used, model parameters (temperature, grounding
-	// parameters, etc.). We don't want to import directly the
-	// [AnswerGenerationSpec] structure as this will serve a more general purpose
-	// and a wider set of customers. This information is used in particular when
-	// rendering alternative answers to the same prompt, providing visual
-	// information about how each answer was generated. The prefix "google." will
-	// be reserved for the key, and 1P services (Answer, Assistant, etc.) should
-	// always store their information with "google..". 3P services can use anything
-	// not starting with "google."
-	QueryConfigs map[string]string `json:"queryConfigs,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Answer") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
 	// omitted from API requests. See
@@ -25394,35 +25418,56 @@ type GoogleCloudDiscoveryengineV1betaSearchRequest struct {
 	// QueryExpansionSpec: The query expansion specification that specifies the
 	// conditions under which query expansion occurs.
 	QueryExpansionSpec *GoogleCloudDiscoveryengineV1betaSearchRequestQueryExpansionSpec `json:"queryExpansionSpec,omitempty"`
-	// RankingExpression: The ranking expression controls the customized ranking on
-	// retrieval documents. This overrides ServingConfig.ranking_expression. The
-	// syntax and supported features depend on the ranking_expression_backend
-	// value. If ranking_expression_backend is not provided, it defaults to BYOE.
-	// === BYOE === If ranking_expression_backend is not provided or set to `BYOE`,
-	// it should be a single function or multiple functions that are joined by "+".
-	// * ranking_expression = function, { " + ", function }; Supported functions: *
+	// RankingExpression: Optional. The ranking expression controls the customized
+	// ranking on retrieval documents. This overrides
+	// ServingConfig.ranking_expression. The syntax and supported features depend
+	// on the `ranking_expression_backend` value. If `ranking_expression_backend`
+	// is not provided, it defaults to `RANK_BY_EMBEDDING`. If
+	// ranking_expression_backend is not provided or set to `RANK_BY_EMBEDDING`, it
+	// should be a single function or multiple functions that are joined by "+". *
+	// ranking_expression = function, { " + ", function }; Supported functions: *
 	// double * relevance_score * double * dotProduct(embedding_field_path)
 	// Function variables: * `relevance_score`: pre-defined keywords, used for
 	// measure relevance between query and document. * `embedding_field_path`: the
 	// document embedding field used with query embedding vector. * `dotProduct`:
-	// embedding function between embedding_field_path and query embedding vector.
-	// Example ranking expression: If document has an embedding field
+	// embedding function between `embedding_field_path` and query embedding
+	// vector. Example ranking expression: If document has an embedding field
 	// doc_embedding, the ranking expression could be `0.5 * relevance_score + 0.3
-	// * dotProduct(doc_embedding)`. === CLEARBOX === If ranking_expression_backend
-	// is set to `CLEARBOX`, the following expression types (and combinations of
-	// those chained using + or * operators) are supported: * double * signal *
-	// log(signal) * exp(signal) * rr(signal, double > 0) -- reciprocal rank
+	// * dotProduct(doc_embedding)`. If ranking_expression_backend is set to
+	// `RANK_BY_FORMULA`, the following expression types (and combinations of those
+	// chained using + or * operators) are supported: * `double` * `signal` *
+	// `log(signal)` * `exp(signal)` * `rr(signal, double > 0)` -- reciprocal rank
 	// transformation with second argument being a denominator constant. *
-	// is_nan(signal) -- returns 0 if signal is NaN, 1 otherwise. *
-	// fill_nan(signal1, signal2 | double) -- if signal1 is NaN, returns signal2 |
-	// double, else returns signal1. Examples: * 0.2 * gecko_score + 0.8 *
-	// log(bm25_score) * 0.2 * exp(fill_nan(gecko_score, 0)) + 0.3 *
-	// is_nan(bm25_score) * 0.2 * rr(gecko_score, 16) + 0.8 * rr(bm25_score, 32)
-	// The following signals are supported: * gecko_score -- semantic similarity
-	// adjustment * bm25_score -- keyword match adjustment * jetstream_score --
-	// semantic relevance adjustment * pctr_rank -- predicted conversion rate
-	// adjustment as a rank * freshness_rank -- freshness adjustment as a rank *
-	// base_rank -- the default rank of the result
+	// `is_nan(signal)` -- returns 0 if signal is NaN, 1 otherwise. *
+	// `fill_nan(signal1, signal2 | double)` -- if signal1 is NaN, returns signal2
+	// | double, else returns signal1. Here are a few examples of ranking formulas
+	// that use the supported ranking expression types: - `0.2 *
+	// semantic_similarity_score + 0.8 * log(keyword_similarity_score)` -- mostly
+	// rank by the logarithm of `keyword_similarity_score` with slight
+	// `semantic_smilarity_score` adjustment. - `0.2 *
+	// exp(fill_nan(semantic_similarity_score, 0)) + 0.3 *
+	// is_nan(keyword_similarity_score)` -- rank by the exponent of
+	// `semantic_similarity_score` filling the value with 0 if it's NaN, also add
+	// constant 0.3 adjustment to the final score if `semantic_similarity_score` is
+	// NaN. - `0.2 * rr(semantic_similarity_score, 16) + 0.8 *
+	// rr(keyword_similarity_score, 16)` -- mostly rank by the reciprocal rank of
+	// `keyword_similarity_score` with slight adjustment of reciprocal rank of
+	// `semantic_smilarity_score`. The following signals are supported: *
+	// `semantic_similarity_score`: semantic similarity adjustment that is
+	// calculated using the embeddings generated by a proprietary Google model.
+	// This score determines how semantically similar a search query is to a
+	// document. * `keyword_similarity_score`: keyword match adjustment uses the
+	// Best Match 25 (BM25) ranking function. This score is calculated using a
+	// probabilistic model to estimate the probability that a document is relevant
+	// to a given query. * `relevance_score`: semantic relevance adjustment that
+	// uses a proprietary Google model to determine the meaning and intent behind a
+	// user's query in context with the content in the documents. * `pctr_rank`:
+	// predicted conversion rate adjustment as a rank use predicted Click-through
+	// rate (pCTR) to gauge the relevance and attractiveness of a search result
+	// from a user's perspective. A higher pCTR suggests that the result is more
+	// likely to satisfy the user's query and intent, making it a valuable signal
+	// for ranking. * `freshness_rank`: freshness adjustment as a rank *
+	// `base_rank`: the default rank of the result
 	RankingExpression string `json:"rankingExpression,omitempty"`
 	// RankingExpressionBackend: Optional. The backend to use for the ranking
 	// expression evaluation.
@@ -25430,9 +25475,14 @@ type GoogleCloudDiscoveryengineV1betaSearchRequest struct {
 	// Possible values:
 	//   "RANKING_EXPRESSION_BACKEND_UNSPECIFIED" - Default option for
 	// unspecified/unknown values.
-	//   "BYOE" - Bring your own embedding (BYOE), the default way to evaluate the
-	// ranking expression.
-	//   "CLEARBOX" - The expression is compiled into a Clearbox formula.
+	//   "BYOE" - Deprecated: Use `RANK_BY_EMBEDDING` instead. Ranking by custom
+	// embedding model, the default way to evaluate the ranking expression. Legacy
+	// enum option, `RANK_BY_EMBEDDING` should be used instead.
+	//   "CLEARBOX" - Deprecated: Use `RANK_BY_FORMULA` instead. Ranking by custom
+	// formula. Legacy enum option, `RANK_BY_FORMULA` should be used instead.
+	//   "RANK_BY_EMBEDDING" - Ranking by custom embedding model, the default way
+	// to evaluate the ranking expression.
+	//   "RANK_BY_FORMULA" - Ranking by custom formula.
 	RankingExpressionBackend string `json:"rankingExpressionBackend,omitempty"`
 	// RegionCode: The Unicode country/region code (CLDR) of a location, such as
 	// "US" and "419". For more information, see Standard fields

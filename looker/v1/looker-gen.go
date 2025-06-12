@@ -1082,9 +1082,12 @@ type ServiceAttachment struct {
 	//   "CLOSED" - Target service attachment does not exist. This status is a
 	// terminal state.
 	ConnectionStatus string `json:"connectionStatus,omitempty"`
-	// LocalFqdn: Required. Fully qualified domain name that will be used in the
+	// LocalFqdn: Optional. Fully qualified domain name that will be used in the
 	// private DNS record created for the service attachment.
 	LocalFqdn string `json:"localFqdn,omitempty"`
+	// LocalFqdns: Optional. List of fully qualified domain names that will be used
+	// in the private DNS record created for the service attachment.
+	LocalFqdns []string `json:"localFqdns,omitempty"`
 	// TargetServiceAttachmentUri: Required. URI of the service attachment to
 	// connect to. Format:
 	// projects/{project}/regions/{region}/serviceAttachments/{service_attachment}

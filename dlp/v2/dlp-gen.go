@@ -5498,7 +5498,7 @@ func (s GooglePrivacyDlpV2FileSet) MarshalJSON() ([]byte, error) {
 }
 
 // GooglePrivacyDlpV2FileStoreCollection: Match file stores (e.g. buckets)
-// using regex filters.
+// using filters.
 type GooglePrivacyDlpV2FileStoreCollection struct {
 	// IncludeRegexes: Optional. A collection of regular expressions to match a
 	// file store against.

@@ -1468,7 +1468,7 @@ func (s EntitlementsListResponse) MarshalJSON() ([]byte, error) {
 
 // GenerateEnterpriseUpgradeUrlResponse: Response message for generating a URL
 // to upgrade an existing managed Google Play Accounts enterprise to a managed
-// Google domain. **Note:** This feature is not generally available.
+// Google domain.
 type GenerateEnterpriseUpgradeUrlResponse struct {
 	// Url: A URL for an enterprise admin to upgrade their enterprise. The page
 	// can't be rendered in an iframe.
@@ -4680,7 +4680,7 @@ type EnterprisesGenerateEnterpriseUpgradeUrlCall struct {
 
 // GenerateEnterpriseUpgradeUrl: Generates an enterprise upgrade URL to upgrade
 // an existing managed Google Play Accounts enterprise to a managed Google
-// domain. **Note:** This feature is not generally available.
+// domain. See the guide to upgrading an enterprise for more details.
 //
 // - enterpriseId: The ID of the enterprise.
 func (r *EnterprisesService) GenerateEnterpriseUpgradeUrl(enterpriseId string) *EnterprisesGenerateEnterpriseUpgradeUrlCall {

@@ -2669,11 +2669,7 @@ type ProjectsLocationsInstancesGetConfigCall struct {
 	header_      http.Header
 }
 
-// GetConfig: Gets general backend configurations that might also affect the
-// frontend. Location is required by CCFE. Although we could bypass it to send
-// location- less request directly to the backend job, we would need CPE
-// (go/cloud-cpe). Having the location might also be useful depending on the
-// query.
+// GetConfig: Returns various configuration parameters.
 //
 // - name: Format: `projects/{project_id}/locations/{location}`.
 func (r *ProjectsLocationsInstancesService) GetConfig(name string) *ProjectsLocationsInstancesGetConfigCall {

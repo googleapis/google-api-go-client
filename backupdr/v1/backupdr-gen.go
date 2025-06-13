@@ -207,10 +207,22 @@ type ProjectsLocationsBackupPlanAssociationsService struct {
 
 func NewProjectsLocationsBackupPlansService(s *Service) *ProjectsLocationsBackupPlansService {
 	rs := &ProjectsLocationsBackupPlansService{s: s}
+	rs.Revisions = NewProjectsLocationsBackupPlansRevisionsService(s)
 	return rs
 }
 
 type ProjectsLocationsBackupPlansService struct {
+	s *Service
+
+	Revisions *ProjectsLocationsBackupPlansRevisionsService
+}
+
+func NewProjectsLocationsBackupPlansRevisionsService(s *Service) *ProjectsLocationsBackupPlansRevisionsService {
+	rs := &ProjectsLocationsBackupPlansRevisionsService{s: s}
+	return rs
+}
+
+type ProjectsLocationsBackupPlansRevisionsService struct {
 	s *Service
 }
 
@@ -1169,6 +1181,14 @@ type BackupPlan struct {
 	Name string `json:"name,omitempty"`
 	// ResourceType: Required.
 	ResourceType string `json:"resourceType,omitempty"`
+	// RevisionId: Output only. The user friendly revision ID of the
+	// `BackupPlanRevision`. Example: v0, v1, v2, etc.
+	RevisionId string `json:"revisionId,omitempty"`
+	// RevisionName: Output only. The resource id of the `BackupPlanRevision`.
+	// Format:
+	// `projects/{project}/locations/{location}/backupPlans/{backup_plan}/revisions/
+	// {revision_id}`
+	RevisionName string `json:"revisionName,omitempty"`
 	// State: Output only. The `State` for the `BackupPlan`.
 	//
 	// Possible values:
@@ -1212,6 +1232,14 @@ type BackupPlanAssociation struct {
 	// on workload. Format:
 	// projects/{project}/locations/{location}/backupPlans/{backupPlanId}
 	BackupPlan string `json:"backupPlan,omitempty"`
+	// BackupPlanRevisionId: Output only. The user friendly revision ID of the
+	// `BackupPlanRevision`. Example: v0, v1, v2, etc.
+	BackupPlanRevisionId string `json:"backupPlanRevisionId,omitempty"`
+	// BackupPlanRevisionName: Output only. The resource id of the
+	// `BackupPlanRevision`. Format:
+	// `projects/{project}/locations/{location}/backupPlans/{backup_plan}/revisions/
+	// {revision_id}`
+	BackupPlanRevisionName string `json:"backupPlanRevisionName,omitempty"`
 	// CreateTime: Output only. The time when the instance was created.
 	CreateTime string `json:"createTime,omitempty"`
 	// DataSource: Output only. Resource name of data source which will be used as
@@ -1261,6 +1289,51 @@ type BackupPlanAssociation struct {
 
 func (s BackupPlanAssociation) MarshalJSON() ([]byte, error) {
 	type NoMethod BackupPlanAssociation
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// BackupPlanRevision: `BackupPlanRevision` represents a snapshot of a
+// `BackupPlan` at a point in time.
+type BackupPlanRevision struct {
+	// BackupPlanSnapshot: The Backup Plan being encompassed by this revision.
+	BackupPlanSnapshot *BackupPlan `json:"backupPlanSnapshot,omitempty"`
+	// CreateTime: Output only. The timestamp that the revision was created.
+	CreateTime string `json:"createTime,omitempty"`
+	// Name: Output only. Identifier. The resource name of the
+	// `BackupPlanRevision`. Format:
+	// `projects/{project}/locations/{location}/backupPlans/{backup_plan}/revisions/
+	// {revision}`
+	Name string `json:"name,omitempty"`
+	// RevisionId: Output only. The user friendly revision ID of the
+	// `BackupPlanRevision`. Example: v0, v1, v2, etc.
+	RevisionId string `json:"revisionId,omitempty"`
+	// State: Output only. Resource State
+	//
+	// Possible values:
+	//   "STATE_UNSPECIFIED" - State not set.
+	//   "CREATING" - The resource is being created.
+	//   "ACTIVE" - The resource has been created and is fully usable.
+	//   "DELETING" - The resource is being deleted.
+	//   "INACTIVE" - The resource has been created but is not usable.
+	State string `json:"state,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "BackupPlanSnapshot") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "BackupPlanSnapshot") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s BackupPlanRevision) MarshalJSON() ([]byte, error) {
+	type NoMethod BackupPlanRevision
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -2450,6 +2523,16 @@ type GCPBackupPlanInfo struct {
 	// the time of the backup. Format:
 	// projects/{project}/locations/{location}/backupPlans/{backupPlanId}
 	BackupPlan string `json:"backupPlan,omitempty"`
+	// BackupPlanRevisionId: The user friendly id of the backup plan revision which
+	// triggered this backup in case of scheduled backup or used for on demand
+	// backup.
+	BackupPlanRevisionId string `json:"backupPlanRevisionId,omitempty"`
+	// BackupPlanRevisionName: Resource name of the backup plan revision which
+	// triggered this backup in case of scheduled backup or used for on demand
+	// backup. Format:
+	// projects/{project}/locations/{location}/backupPlans/{backupPlanId}/revisions/
+	// {revisionId}
+	BackupPlanRevisionName string `json:"backupPlanRevisionName,omitempty"`
 	// BackupPlanRuleId: The rule id of the backup plan which triggered this backup
 	// in case of scheduled backup or used for
 	BackupPlanRuleId string `json:"backupPlanRuleId,omitempty"`
@@ -2481,6 +2564,11 @@ type GcpBackupConfig struct {
 	BackupPlanAssociation string `json:"backupPlanAssociation,omitempty"`
 	// BackupPlanDescription: The description of the backup plan.
 	BackupPlanDescription string `json:"backupPlanDescription,omitempty"`
+	// BackupPlanRevisionId: The user friendly id of the backup plan revision. E.g.
+	// v0, v1 etc.
+	BackupPlanRevisionId string `json:"backupPlanRevisionId,omitempty"`
+	// BackupPlanRevisionName: The name of the backup plan revision.
+	BackupPlanRevisionName string `json:"backupPlanRevisionName,omitempty"`
 	// BackupPlanRules: The names of the backup plan rules which point to this
 	// backupvault
 	BackupPlanRules []string `json:"backupPlanRules,omitempty"`
@@ -2750,6 +2838,43 @@ type ListBackupPlanAssociationsResponse struct {
 
 func (s ListBackupPlanAssociationsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListBackupPlanAssociationsResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ListBackupPlanRevisionsResponse: The response message for getting a list of
+// `BackupPlanRevision`.
+type ListBackupPlanRevisionsResponse struct {
+	// BackupPlanRevisions: The list of `BackupPlanRevisions` in the project for
+	// the specified location. If the `{location}` value in the request is "-", the
+	// response contains a list of resources from all locations. In case any
+	// location is unreachable, the response will only return backup plans in
+	// reachable locations and the 'unreachable' field will be populated with a
+	// list of unreachable locations.
+	BackupPlanRevisions []*BackupPlanRevision `json:"backupPlanRevisions,omitempty"`
+	// NextPageToken: A token which may be sent as page_token in a subsequent
+	// `ListBackupPlanRevisions` call to retrieve the next page of results. If this
+	// field is omitted or empty, then there are no more results to return.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+	// Unreachable: Locations that could not be reached.
+	Unreachable []string `json:"unreachable,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "BackupPlanRevisions") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "BackupPlanRevisions") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ListBackupPlanRevisionsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ListBackupPlanRevisionsResponse
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -5909,6 +6034,405 @@ func (c *ProjectsLocationsBackupPlansListCall) Do(opts ...googleapi.CallOption) 
 // A non-nil error returned from f will halt the iteration.
 // The provided context supersedes any context provided to the Context method.
 func (c *ProjectsLocationsBackupPlansListCall) Pages(ctx context.Context, f func(*ListBackupPlansResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+type ProjectsLocationsBackupPlansPatchCall struct {
+	s          *Service
+	name       string
+	backupplan *BackupPlan
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Patch: Update a BackupPlan
+//
+//   - name: Output only. Identifier. The resource name of the `BackupPlan`.
+//     Format:
+//     `projects/{project}/locations/{location}/backupPlans/{backup_plan}`.
+func (r *ProjectsLocationsBackupPlansService) Patch(name string, backupplan *BackupPlan) *ProjectsLocationsBackupPlansPatchCall {
+	c := &ProjectsLocationsBackupPlansPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.backupplan = backupplan
+	return c
+}
+
+// RequestId sets the optional parameter "requestId": An optional request ID to
+// identify requests. Specify a unique request ID so that if you must retry
+// your request, the server will know to ignore the request if it has already
+// been completed. The server will guarantee that for at least 60 minutes since
+// the first request. For example, consider a situation where you make an
+// initial request and t he request times out. If you make the request again
+// with the same request ID, the server can check if original operation with
+// the same request ID was received, and if so, will ignore the second request.
+// This prevents clients from accidentally creating duplicate commitments. The
+// request ID must be a valid UUID with the exception that zero UUID is not
+// supported (00000000-0000-0000-0000-000000000000).
+func (c *ProjectsLocationsBackupPlansPatchCall) RequestId(requestId string) *ProjectsLocationsBackupPlansPatchCall {
+	c.urlParams_.Set("requestId", requestId)
+	return c
+}
+
+// UpdateMask sets the optional parameter "updateMask": Required. The list of
+// fields to update. Field mask is used to specify the fields to be overwritten
+// in the BackupPlan resource by the update. The fields specified in the
+// update_mask are relative to the resource, not the full request. A field will
+// be overwritten if it is in the mask. If the user does not provide a mask
+// then the request will fail. Currently, these fields are supported in update:
+// description, schedules, retention period, adding and removing Backup Rules.
+func (c *ProjectsLocationsBackupPlansPatchCall) UpdateMask(updateMask string) *ProjectsLocationsBackupPlansPatchCall {
+	c.urlParams_.Set("updateMask", updateMask)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsBackupPlansPatchCall) Fields(s ...googleapi.Field) *ProjectsLocationsBackupPlansPatchCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsBackupPlansPatchCall) Context(ctx context.Context) *ProjectsLocationsBackupPlansPatchCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsBackupPlansPatchCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsBackupPlansPatchCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.backupplan)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PATCH", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "backupdr.projects.locations.backupPlans.patch", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "backupdr.projects.locations.backupPlans.patch" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsBackupPlansPatchCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "backupdr.projects.locations.backupPlans.patch", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsBackupPlansRevisionsGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Gets details of a single BackupPlanRevision.
+//
+//   - name: The resource name of the `BackupPlanRevision` to retrieve. Format:
+//     `projects/{project}/locations/{location}/backupPlans/{backup_plan}/revision
+//     s/{revision}`.
+func (r *ProjectsLocationsBackupPlansRevisionsService) Get(name string) *ProjectsLocationsBackupPlansRevisionsGetCall {
+	c := &ProjectsLocationsBackupPlansRevisionsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsBackupPlansRevisionsGetCall) Fields(s ...googleapi.Field) *ProjectsLocationsBackupPlansRevisionsGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsBackupPlansRevisionsGetCall) IfNoneMatch(entityTag string) *ProjectsLocationsBackupPlansRevisionsGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsBackupPlansRevisionsGetCall) Context(ctx context.Context) *ProjectsLocationsBackupPlansRevisionsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsBackupPlansRevisionsGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsBackupPlansRevisionsGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "backupdr.projects.locations.backupPlans.revisions.get", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "backupdr.projects.locations.backupPlans.revisions.get" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *BackupPlanRevision.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *ProjectsLocationsBackupPlansRevisionsGetCall) Do(opts ...googleapi.CallOption) (*BackupPlanRevision, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &BackupPlanRevision{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "backupdr.projects.locations.backupPlans.revisions.get", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsBackupPlansRevisionsListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists BackupPlanRevisions in a given project and location.
+//
+//   - parent: The project and location for which to retrieve
+//     `BackupPlanRevisions` information. Format:
+//     `projects/{project}/locations/{location}/backupPlans/{backup_plan}`. In
+//     Cloud BackupDR, locations map to GCP regions, for e.g. **us-central1**.
+func (r *ProjectsLocationsBackupPlansRevisionsService) List(parent string) *ProjectsLocationsBackupPlansRevisionsListCall {
+	c := &ProjectsLocationsBackupPlansRevisionsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The maximum number of
+// `BackupPlans` to return in a single response. If not specified, a default
+// value will be chosen by the service. Note that the response may include a
+// partial list and a caller should only rely on the response's next_page_token
+// to determine if there are more instances left to be queried.
+func (c *ProjectsLocationsBackupPlansRevisionsListCall) PageSize(pageSize int64) *ProjectsLocationsBackupPlansRevisionsListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": The value of
+// next_page_token received from a previous `ListBackupPlans` call. Provide
+// this to retrieve the subsequent page in a multi-page list of results. When
+// paginating, all other parameters provided to `ListBackupPlans` must match
+// the call that provided the page token.
+func (c *ProjectsLocationsBackupPlansRevisionsListCall) PageToken(pageToken string) *ProjectsLocationsBackupPlansRevisionsListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsBackupPlansRevisionsListCall) Fields(s ...googleapi.Field) *ProjectsLocationsBackupPlansRevisionsListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsBackupPlansRevisionsListCall) IfNoneMatch(entityTag string) *ProjectsLocationsBackupPlansRevisionsListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsBackupPlansRevisionsListCall) Context(ctx context.Context) *ProjectsLocationsBackupPlansRevisionsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsBackupPlansRevisionsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsBackupPlansRevisionsListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/revisions")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "backupdr.projects.locations.backupPlans.revisions.list", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "backupdr.projects.locations.backupPlans.revisions.list" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *ListBackupPlanRevisionsResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsBackupPlansRevisionsListCall) Do(opts ...googleapi.CallOption) (*ListBackupPlanRevisionsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ListBackupPlanRevisionsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "backupdr.projects.locations.backupPlans.revisions.list", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsLocationsBackupPlansRevisionsListCall) Pages(ctx context.Context, f func(*ListBackupPlanRevisionsResponse) error) error {
 	c.ctx_ = ctx
 	defer c.PageToken(c.urlParams_.Get("pageToken"))
 	for {

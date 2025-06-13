@@ -1041,8 +1041,10 @@ type AutoscalingPolicy struct {
 	//
 	// Possible values:
 	//   "CLUSTER_TYPE_UNSPECIFIED" - Not set.
-	//   "STANDARD" - Standard dataproc cluster with minimum 2 primary workers.
-	//   "ZERO_SCALE" - Clusters that can be scaled down to zero worker nodes.
+	//   "STANDARD" - Standard dataproc cluster with a minimum of two primary
+	// workers.
+	//   "ZERO_SCALE" - Clusters that can use only secondary workers and be scaled
+	// down to zero secondary worker nodes.
 	ClusterType string `json:"clusterType,omitempty"`
 	// Id: Required. The policy id.The id must contain only letters (a-z, A-Z),
 	// numbers (0-9), underscores (_), and hyphens (-). Cannot begin or end with
@@ -1587,6 +1589,14 @@ type ClusterConfig struct {
 	AutoscalingConfig *AutoscalingConfig `json:"autoscalingConfig,omitempty"`
 	// AuxiliaryNodeGroups: Optional. The node group settings.
 	AuxiliaryNodeGroups []*AuxiliaryNodeGroup `json:"auxiliaryNodeGroups,omitempty"`
+	// ClusterTier: Optional. The tier of the cluster.
+	//
+	// Possible values:
+	//   "CLUSTER_TIER_UNSPECIFIED" - Not set. Works the same as
+	// CLUSTER_TIER_STANDARD.
+	//   "CLUSTER_TIER_STANDARD" - Standard dataproc cluster.
+	//   "CLUSTER_TIER_PREMIUM" - Premium dataproc cluster.
+	ClusterTier string `json:"clusterTier,omitempty"`
 	// ClusterType: Optional. The type of the cluster.
 	//
 	// Possible values:
@@ -1595,7 +1605,8 @@ type ClusterConfig struct {
 	// workers.
 	//   "SINGLE_NODE" -
 	// https://cloud.google.com/dataproc/docs/concepts/configuring-clusters/single-node-clusters
-	//   "ZERO_SCALE" - Clusters that can be scaled down to zero worker nodes.
+	//   "ZERO_SCALE" - Clusters that can use only secondary workers and be scaled
+	// down to zero secondary worker nodes.
 	ClusterType string `json:"clusterType,omitempty"`
 	// ConfigBucket: Optional. A Cloud Storage bucket used to stage job
 	// dependencies, config files, and job driver console output. If you do not

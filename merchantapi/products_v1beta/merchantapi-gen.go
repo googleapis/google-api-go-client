@@ -1119,7 +1119,11 @@ type Product struct {
 	CustomAttributes []*CustomAttribute `json:"customAttributes,omitempty"`
 	// DataSource: Output only. The primary data source of the product.
 	DataSource string `json:"dataSource,omitempty"`
-	// FeedLabel: Output only. The feed label for the product.
+	// FeedLabel: Output only. The feed label lets you categorize and identify your
+	// products. The maximum allowed characters is 20 and the supported characters
+	// are`A-Z`, `0-9`, hyphen and underscore. The feed label must not include any
+	// spaces. For more information, see Using feed labels
+	// (//support.google.com/merchants/answer/14994087)
 	FeedLabel string `json:"feedLabel,omitempty"`
 	// Name: The name of the product. Format:
 	// `accounts/{account}/products/{product}` where the last section `product`

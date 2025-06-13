@@ -12025,6 +12025,18 @@ func (c *ProjectsLocationsVmwareAdminClustersUnenrollCall) Etag(etag string) *Pr
 	return c
 }
 
+// IgnoreErrors sets the optional parameter "ignoreErrors": If set to true, the
+// unenrollment of a vmware admin cluster resource will succeed even if errors
+// occur during unenrollment. This parameter can be used when you want to
+// unenroll admin cluster resource and the on-prem admin cluster is
+// disconnected / unreachable. WARNING: Using this parameter when your admin
+// cluster still exists may result in a deleted GCP admin cluster but existing
+// resourcelink in on-prem admin cluster and membership.
+func (c *ProjectsLocationsVmwareAdminClustersUnenrollCall) IgnoreErrors(ignoreErrors bool) *ProjectsLocationsVmwareAdminClustersUnenrollCall {
+	c.urlParams_.Set("ignoreErrors", fmt.Sprint(ignoreErrors))
+	return c
+}
+
 // ValidateOnly sets the optional parameter "validateOnly": Validate the
 // request without actually doing any updates.
 func (c *ProjectsLocationsVmwareAdminClustersUnenrollCall) ValidateOnly(validateOnly bool) *ProjectsLocationsVmwareAdminClustersUnenrollCall {

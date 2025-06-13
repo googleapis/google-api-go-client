@@ -8291,7 +8291,9 @@ type EnterprisesGenerateEnterpriseUpgradeUrlCall struct {
 
 // GenerateEnterpriseUpgradeUrl: Generates an enterprise upgrade URL to upgrade
 // an existing managed Google Play Accounts enterprise to a managed Google
-// domain.Note: This feature is not generally available.
+// domain. See the guide
+// (https://developers.google.com/android/management/upgrade-an-enterprise) for
+// more details.
 //
 //   - name: The name of the enterprise to be upgraded in the form
 //     enterprises/{enterpriseId}.

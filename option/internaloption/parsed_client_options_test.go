@@ -1,4 +1,4 @@
-// Copyright 2021 Google LLC.
+// Copyright 2025 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -11,6 +11,13 @@ import (
 	"google.golang.org/api/option"
 )
 
+type testReceiver struct {
+	APIKey    string
+	Endpoint  string
+	Scopes    []string
+	UserAgent string
+}
+
 func TestParseClientOptions(t *testing.T) {
 	testEndpoint := "test.example.com"
 	testAPIKey := "testAPIKey"
@@ -22,24 +29,22 @@ func TestParseClientOptions(t *testing.T) {
 		option.WithScopes(testScopes...),
 	}
 
-	got, err := ParseClientOptions(opts...)
+	receiver := &testReceiver{}
+	err := ParseClientOptions(receiver, opts)
 	if err != nil {
-		t.Fatalf("ParseClientOptions(%v) err = %v, want nil", opts, err)
-	}
-	if got == nil {
-		t.Fatalf("ParseClientOptions(%v) got = nil, want non-nil", opts)
+		t.Fatalf("ParseClientOptions(receiver, %v) err = %v, want nil", opts, err)
 	}
 
-	if got.Endpoint != testEndpoint {
-		t.Errorf("ParseClientOptions().Endpoint = %q, want %q", got.Endpoint, testEndpoint)
+	if receiver.Endpoint != testEndpoint {
+		t.Errorf("receiver.Endpoint = %q, want %q", receiver.Endpoint, testEndpoint)
 	}
-	if got.APIKey != testAPIKey {
-		t.Errorf("ParseClientOptions().APIKey = %q, want %q", got.APIKey, testAPIKey)
+	if receiver.APIKey != testAPIKey {
+		t.Errorf("receiver.APIKey = %q, want %q", receiver.APIKey, testAPIKey)
 	}
-	if !cmp.Equal(got.Scopes, testScopes) {
-		t.Errorf("ParseClientOptions().Scopes diff (-got +want):\n%s", cmp.Diff(got.Scopes, testScopes))
+	if !cmp.Equal(receiver.Scopes, testScopes) {
+		t.Errorf("receiver.Scopes diff (-got +want):\n%s", cmp.Diff(receiver.Scopes, testScopes))
 	}
-	if got.UserAgent != "" { // Default UserAgent is set by internal.DialSettings if not overridden.
-		// This test focuses on options passed in, not all defaults.
+	if receiver.UserAgent != "" {
+		t.Errorf("receiver.UserAgent != nil, got %q", receiver.UserAgent)
 	}
 }

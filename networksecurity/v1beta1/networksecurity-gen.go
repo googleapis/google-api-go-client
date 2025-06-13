@@ -3402,12 +3402,12 @@ func (s ListOperationsResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// ListSACAttachmentsResponse: Message for response to listing SACAttachments
+// ListSACAttachmentsResponse: Response for `ListSACAttachments` method.
 type ListSACAttachmentsResponse struct {
 	// NextPageToken: A token identifying a page of results the server should
 	// return.
 	NextPageToken string `json:"nextPageToken,omitempty"`
-	// SacAttachments: The list of SACAttachments
+	// SacAttachments: The list of SACAttachments.
 	SacAttachments []*SACAttachment `json:"sacAttachments,omitempty"`
 	// Unreachable: Locations that could not be reached.
 	Unreachable []string `json:"unreachable,omitempty"`
@@ -3432,12 +3432,12 @@ func (s ListSACAttachmentsResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// ListSACRealmsResponse: Message for response to listing SACRealms
+// ListSACRealmsResponse: Response for `ListSACRealms` method.
 type ListSACRealmsResponse struct {
 	// NextPageToken: A token identifying a page of results the server should
 	// return.
 	NextPageToken string `json:"nextPageToken,omitempty"`
-	// SacRealms: The list of SACRealms
+	// SacRealms: The list of SACRealms.
 	SacRealms []*SACRealm `json:"sacRealms,omitempty"`
 	// Unreachable: Locations that could not be reached.
 	Unreachable []string `json:"unreachable,omitempty"`
@@ -4379,32 +4379,29 @@ func (s Rule) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// SACAttachment: Configuration for an attachment within a SAC realm.
+// SACAttachment: Represents a Secure Access Connect (SAC) Attachment resource.
+// A Secure Access Connect attachment enables NCC Gateway to process traffic
+// with an SSE product.
 type SACAttachment struct {
-	// Country: Optional. ISO-3166 alpha 2 country code used for localization. Only
-	// used for Symantec's API today, and is optional even for gateways connected
-	// to Symantec, since Symantec applies a default if we don't specify it. Not
-	// case-sensitive, since it will be upper-cased when sending to Symantec API.
+	// Country: Optional. Case-insensitive ISO-3166 alpha-2 country code used for
+	// localization. Only valid for Symantec attachments.
 	Country string `json:"country,omitempty"`
-	// CreateTime: Output only. [Output only] Timestamp when the attachment was
-	// created.
+	// CreateTime: Output only. Timestamp when the attachment was created.
 	CreateTime string `json:"createTime,omitempty"`
 	// Labels: Optional. Optional list of labels applied to the resource.
 	Labels map[string]string `json:"labels,omitempty"`
 	// Name: Identifier. Resource name, in the form
 	// `projects/{project}/locations/{location}/sacAttachments/{sac_attachment}`.
 	Name string `json:"name,omitempty"`
-	// NccGateway: Required. Name of the NCC Gateway which connects to the
-	// attachment. ID or full URI can be specified. Full URI is stored either
-	// way，in the form
-	// `projects/{project}/locations/{location}/spokes/{ncc_gateway}`.
+	// NccGateway: Required. NCC Gateway associated with the attachment. This can
+	// be input as an ID or a full resource name. The output always has the form
+	// `projects/{project_number}/locations/{location}/spokes/{ncc_gateway}`.
 	NccGateway string `json:"nccGateway,omitempty"`
-	// SacRealm: Required. Name of the SAC Realm which owns the attachment. The
-	// input can be either an ID for a full name. The output will always be the
-	// full name using project number instead of project ID. The format is
+	// SacRealm: Required. SAC Realm which owns the attachment. This can be input
+	// as an ID or a full resource name. The output always has the form
 	// `projects/{project_number}/locations/{location}/sacRealms/{sac_realm}`.
 	SacRealm string `json:"sacRealm,omitempty"`
-	// State: Output only. [Output only] State of the attachment.
+	// State: Output only. State of the attachment.
 	//
 	// Possible values:
 	//   "STATE_UNSPECIFIED" - No state specified. This should not be used.
@@ -4412,16 +4409,12 @@ type SACAttachment struct {
 	//   "PARTNER_ATTACHED" - Currently attached to a partner.
 	//   "PARTNER_DETACHED" - Was once attached to a partner but has been detached.
 	State string `json:"state,omitempty"`
-	// SymantecOptions: Optional. Required iff the associated realm is of type
-	// SYMANTEC_CLOUD_SWG.
+	// SymantecOptions: Optional. Configuration required for Symantec attachments.
 	SymantecOptions *SACAttachmentSACAttachmentSymantecOptions `json:"symantecOptions,omitempty"`
-	// TimeZone: Optional. tzinfo identifier used for localization. Only used for
-	// Symantec's API today, and is optional even for gateways connected to
-	// Symantec, since Symantec applies a default if we don't specify it. Case
-	// sensitive.
+	// TimeZone: Optional. Case-sensitive tzinfo identifier used for localization.
+	// Only valid for Symantec attachments.
 	TimeZone string `json:"timeZone,omitempty"`
-	// UpdateTime: Output only. [Output only] Timestamp when the attachment was
-	// last updated.
+	// UpdateTime: Output only. Timestamp when the attachment was last updated.
 	UpdateTime string `json:"updateTime,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
@@ -4444,15 +4437,15 @@ func (s SACAttachment) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// SACAttachmentSACAttachmentSymantecOptions: Fields specific to SSEGWs
-// connecting to Symantec Cloud SWG.
+// SACAttachmentSACAttachmentSymantecOptions: Fields specific to attachments
+// associated with Symantec Cloud SWG.
 type SACAttachmentSACAttachmentSymantecOptions struct {
-	// SymantecLocationName: Immutable. Name to be used for when creating a
-	// Location on the customer's behalf in Symantec's Location API. Required iff
-	// sac_realm uses SYMANTEC_CLOUD_SWG. Not to be confused with GCP locations.
+	// SymantecLocationName: Immutable. Name to be used when creating a location on
+	// the customer's behalf in Symantec's Location API. Not to be confused with
+	// GCP locations.
 	SymantecLocationName string `json:"symantecLocationName,omitempty"`
 	// SymantecSite: Immutable. Symantec data center identifier that this
-	// Attachment will connect to. Required iff sac_realm uses SYMANTEC_CLOUD_SWG.
+	// attachment will connect to.
 	SymantecSite string `json:"symantecSite,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "SymantecLocationName") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -4472,19 +4465,21 @@ func (s SACAttachmentSACAttachmentSymantecOptions) MarshalJSON() ([]byte, error)
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// SACRealm: Message describing SACRealm object
+// SACRealm: Represents a Secure Access Connect (SAC) Realm resource. A Secure
+// Access Connect realm establishes a connection between your Google Cloud
+// project and an SSE service.
 type SACRealm struct {
-	// CreateTime: Output only. [Output only] Create time stamp
+	// CreateTime: Output only. Timestamp when the realm was created.
 	CreateTime string `json:"createTime,omitempty"`
-	// Labels: Optional. Labels as key value pairs
+	// Labels: Optional. Optional list of labels applied to the resource.
 	Labels map[string]string `json:"labels,omitempty"`
-	// Name: Identifier. Resource name. It matches the pattern
-	// `projects/{project}/locations/{location}/sacRealms/{sacRealm}`
+	// Name: Identifier. Resource name, in the form
+	// `projects/{project}/locations/global/sacRealms/{sacRealm}`.
 	Name string `json:"name,omitempty"`
-	// PairingKey: Output only. [Output only] Key to be shared with SSE service
-	// provider to establish global handshake
+	// PairingKey: Output only. Key to be shared with SSE service provider during
+	// pairing.
 	PairingKey *SACRealmPairingKey `json:"pairingKey,omitempty"`
-	// SecurityService: Immutable. SSE service provider
+	// SecurityService: Immutable. SSE service provider associated with the realm.
 	//
 	// Possible values:
 	//   "SECURITY_SERVICE_UNSPECIFIED" - The default value. This value is used if
@@ -4493,23 +4488,20 @@ type SACRealm struct {
 	// Access](https://www.paloaltonetworks.com/sase/access).
 	//   "SYMANTEC_CLOUD_SWG" - Symantec Cloud SWG.
 	SecurityService string `json:"securityService,omitempty"`
-	// State: Output only. [Output only] State of the realm
+	// State: Output only. State of the realm.
 	//
 	// Possible values:
-	//   "STATE_UNSPECIFIED" - The default value. This value is used if the state
-	// is omitted.
-	//   "PENDING_PARTNER_ATTACHMENT" - This realm has never been attached to a
-	// partner realm. Used only for Prisma Access.
-	//   "PARTNER_ATTACHED" - This realm is currently attached to a partner.
-	//   "PARTNER_DETACHED" - This realm was once attached to a partner but has
-	// been detached.
-	//   "KEY_EXPIRED" - This realm is not attached to a partner realm, and its
-	// pairing key has expired and needs key regeneration. Used only for Prisma
-	// Access.
+	//   "STATE_UNSPECIFIED" - No state specified. This should not be used.
+	//   "PENDING_PARTNER_ATTACHMENT" - Has never been attached to a partner. Used
+	// only for Prisma Access.
+	//   "PARTNER_ATTACHED" - Currently attached to a partner.
+	//   "PARTNER_DETACHED" - Was once attached to a partner but has been detached.
+	//   "KEY_EXPIRED" - Is not attached to a partner and has an expired pairing
+	// key. Used only for Prisma Access.
 	State string `json:"state,omitempty"`
-	// SymantecOptions: Optional. Required only if using SYMANTEC_CLOUD_SWG.
+	// SymantecOptions: Optional. Configuration required for Symantec realms.
 	SymantecOptions *SACRealmSACRealmSymantecOptions `json:"symantecOptions,omitempty"`
-	// UpdateTime: Output only. [Output only] Update time stamp
+	// UpdateTime: Output only. Timestamp when the realm was last updated.
 	UpdateTime string `json:"updateTime,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
@@ -4533,12 +4525,12 @@ func (s SACRealm) MarshalJSON() ([]byte, error) {
 }
 
 // SACRealmPairingKey: Key to be shared with SSE service provider to establish
-// global handshake
+// global handshake.
 type SACRealmPairingKey struct {
 	// ExpireTime: Output only. Timestamp in UTC of when this resource is
-	// considered expired.
+	// considered expired. It expires 7 days after creation.
 	ExpireTime string `json:"expireTime,omitempty"`
-	// Key: Output only. The name of the key. It expires 7 days after creation.
+	// Key: Output only. Key value.
 	Key string `json:"key,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "ExpireTime") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -4558,27 +4550,26 @@ func (s SACRealmPairingKey) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// SACRealmSACRealmSymantecOptions: Fields specific to realms using
-// SYMANTEC_CLOUD_SWG.
+// SACRealmSACRealmSymantecOptions: Fields specific to realms using Symantec
+// Cloud SWG.
 type SACRealmSACRealmSymantecOptions struct {
-	// AvailableSymantecSites: Output only. Symantec site IDs that the user can
+	// AvailableSymantecSites: Output only. Symantec site IDs which the user can
 	// choose to connect to.
 	AvailableSymantecSites []string `json:"availableSymantecSites,omitempty"`
 	// SecretPath: Optional. API Key used to call Symantec APIs on the user's
-	// behalf. Required if using SYMANTEC_CLOUD_SWG. P4SA account needs permissions
+	// behalf. Required if using Symantec Cloud SWG. P4SA account needs permissions
 	// granted to read this secret. A secret ID, secret name, or secret URI can be
-	// specified, but it will be parsed and stored as secret URI in the format of
-	// "projects/{PROJECT_NUMBER}/secrets/my-secret".
+	// specified, but it will be parsed and stored as a secret URI in the form
+	// `projects/{project_number}/secrets/my-secret`.
 	SecretPath string `json:"secretPath,omitempty"`
-	// SymantecConnectionState: Output only. [Output only] Connection status to
-	// Symantec API.
+	// SymantecConnectionState: Output only. Connection status to Symantec API.
 	//
 	// Possible values:
-	//   "SYMANTEC_CONNECTION_STATE_UNSPECIFIED" - The default value. This value is
-	// used if the state is omitted.
+	//   "SYMANTEC_CONNECTION_STATE_UNSPECIFIED" - No state specified. This should
+	// not be used.
 	//   "SUCCEEDED" - Successfully made a request to Symantec API.
 	//   "READ_SECRET_FAILED" - Cannot access the API key in the provided
-	// secret_path.
+	// `secret_path`.
 	//   "REQUEST_TO_SYMANTEC_FAILED" - Failed to get a successful response from
 	// Symantec API due to an invalid API key or Symantec API unavailability.
 	SymantecConnectionState string `json:"symantecConnectionState,omitempty"`
@@ -21066,7 +21057,7 @@ type ProjectsLocationsSacAttachmentsCreateCall struct {
 
 // Create: Creates a new SACAttachment in a given project and location.
 //
-// - parent: Value for parent.
+// - parent: The parent, in the form `projects/{project}/locations/{location}`.
 func (r *ProjectsLocationsSacAttachmentsService) Create(parent string, sacattachment *SACAttachment) *ProjectsLocationsSacAttachmentsCreateCall {
 	c := &ProjectsLocationsSacAttachmentsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -21090,9 +21081,13 @@ func (c *ProjectsLocationsSacAttachmentsCreateCall) RequestId(requestId string) 
 	return c
 }
 
-// SacAttachmentId sets the optional parameter "sacAttachmentId": Required. Id
-// of the requesting object If auto-generating Id server-side, remove this
-// field and sac_attachment_id from the method_signature of Create RPC
+// SacAttachmentId sets the optional parameter "sacAttachmentId": Required. ID
+// of the created attachment. The ID must be 1-63 characters long, and comply
+// with RFC1035. Specifically, it must be 1-63 characters long and match the
+// regular expression `[a-z]([-a-z0-9]*[a-z0-9])?` which means the first
+// character must be a lowercase letter, and all following characters must be a
+// dash, lowercase letter, or digit, except the last character, which cannot be
+// a dash.
 func (c *ProjectsLocationsSacAttachmentsCreateCall) SacAttachmentId(sacAttachmentId string) *ProjectsLocationsSacAttachmentsCreateCall {
 	c.urlParams_.Set("sacAttachmentId", sacAttachmentId)
 	return c
@@ -21190,9 +21185,10 @@ type ProjectsLocationsSacAttachmentsDeleteCall struct {
 	header_    http.Header
 }
 
-// Delete: Deletes a single SACAttachment.
+// Delete: Deletes the specified attachment.
 //
-// - name: Name of the resource.
+//   - name: Name of the resource, in the form
+//     `projects/{project}/locations/{location}/sacAttachments/{sac_attachment}`.
 func (r *ProjectsLocationsSacAttachmentsService) Delete(name string) *ProjectsLocationsSacAttachmentsDeleteCall {
 	c := &ProjectsLocationsSacAttachmentsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -21304,9 +21300,10 @@ type ProjectsLocationsSacAttachmentsGetCall struct {
 	header_      http.Header
 }
 
-// Get: Gets details of a single SACAttachment.
+// Get: Returns the specified attachment.
 //
-// - name: Name of the resource.
+//   - name: Name of the resource, in the form
+//     `projects/{project}/locations/{location}/sacAttachments/{sac_attachment}`.
 func (r *ProjectsLocationsSacAttachmentsService) Get(name string) *ProjectsLocationsSacAttachmentsGetCall {
 	c := &ProjectsLocationsSacAttachmentsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -21415,21 +21412,22 @@ type ProjectsLocationsSacAttachmentsListCall struct {
 
 // List: Lists SACAttachments in a given project and location.
 //
-// - parent: Parent value for ListSACAttachmentsRequest.
+// - parent: The parent, in the form `projects/{project}/locations/{location}`.
 func (r *ProjectsLocationsSacAttachmentsService) List(parent string) *ProjectsLocationsSacAttachmentsListCall {
 	c := &ProjectsLocationsSacAttachmentsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
 	return c
 }
 
-// Filter sets the optional parameter "filter": Filtering results
+// Filter sets the optional parameter "filter": An expression that filters the
+// list of results.
 func (c *ProjectsLocationsSacAttachmentsListCall) Filter(filter string) *ProjectsLocationsSacAttachmentsListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
 }
 
-// OrderBy sets the optional parameter "orderBy": Hint for how to order the
-// results
+// OrderBy sets the optional parameter "orderBy": Sort the results by a certain
+// order.
 func (c *ProjectsLocationsSacAttachmentsListCall) OrderBy(orderBy string) *ProjectsLocationsSacAttachmentsListCall {
 	c.urlParams_.Set("orderBy", orderBy)
 	return c
@@ -21574,7 +21572,7 @@ type ProjectsLocationsSacRealmsCreateCall struct {
 
 // Create: Creates a new SACRealm in a given project.
 //
-// - parent: Value for parent.
+// - parent: The parent, in the form `projects/{project}/locations/global`.
 func (r *ProjectsLocationsSacRealmsService) Create(parent string, sacrealm *SACRealm) *ProjectsLocationsSacRealmsCreateCall {
 	c := &ProjectsLocationsSacRealmsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -21598,9 +21596,13 @@ func (c *ProjectsLocationsSacRealmsCreateCall) RequestId(requestId string) *Proj
 	return c
 }
 
-// SacRealmId sets the optional parameter "sacRealmId": Required. Id of the
-// requesting object If auto-generating Id server-side, remove this field and
-// sac_realm_id from the method_signature of Create RPC
+// SacRealmId sets the optional parameter "sacRealmId": Required. ID of the
+// created realm. The ID must be 1-63 characters long, and comply with RFC1035.
+// Specifically, it must be 1-63 characters long and match the regular
+// expression `[a-z]([-a-z0-9]*[a-z0-9])?` which means the first character must
+// be a lowercase letter, and all following characters must be a dash,
+// lowercase letter, or digit, except the last character, which cannot be a
+// dash.
 func (c *ProjectsLocationsSacRealmsCreateCall) SacRealmId(sacRealmId string) *ProjectsLocationsSacRealmsCreateCall {
 	c.urlParams_.Set("sacRealmId", sacRealmId)
 	return c
@@ -21698,9 +21700,10 @@ type ProjectsLocationsSacRealmsDeleteCall struct {
 	header_    http.Header
 }
 
-// Delete: Deletes a single SACRealm.
+// Delete: Deletes the specified realm.
 //
-// - name: Name of the resource.
+//   - name: Name of the resource, in the form
+//     `projects/{project}/locations/global/sacRealms/{sacRealm}`.
 func (r *ProjectsLocationsSacRealmsService) Delete(name string) *ProjectsLocationsSacRealmsDeleteCall {
 	c := &ProjectsLocationsSacRealmsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -21812,9 +21815,10 @@ type ProjectsLocationsSacRealmsGetCall struct {
 	header_      http.Header
 }
 
-// Get: Gets details of a single SACRealm.
+// Get: Returns the specified realm.
 //
-// - name: Name of the resource.
+//   - name: Name of the resource, in the form
+//     `projects/{project}/locations/global/sacRealms/{sacRealm}`.
 func (r *ProjectsLocationsSacRealmsService) Get(name string) *ProjectsLocationsSacRealmsGetCall {
 	c := &ProjectsLocationsSacRealmsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -21923,21 +21927,22 @@ type ProjectsLocationsSacRealmsListCall struct {
 
 // List: Lists SACRealms in a given project.
 //
-// - parent: Parent value for ListSACRealmsRequest.
+// - parent: The parent, in the form `projects/{project}/locations/global`.
 func (r *ProjectsLocationsSacRealmsService) List(parent string) *ProjectsLocationsSacRealmsListCall {
 	c := &ProjectsLocationsSacRealmsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
 	return c
 }
 
-// Filter sets the optional parameter "filter": Filtering results
+// Filter sets the optional parameter "filter": An expression that filters the
+// list of results.
 func (c *ProjectsLocationsSacRealmsListCall) Filter(filter string) *ProjectsLocationsSacRealmsListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
 }
 
-// OrderBy sets the optional parameter "orderBy": Hint for how to order the
-// results
+// OrderBy sets the optional parameter "orderBy": Sort the results by a certain
+// order.
 func (c *ProjectsLocationsSacRealmsListCall) OrderBy(orderBy string) *ProjectsLocationsSacRealmsListCall {
 	c.urlParams_.Set("orderBy", orderBy)
 	return c
